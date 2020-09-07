@@ -1,0 +1,35 @@
+<Project>
+  <!--
+  This .targets file is included by RunDrtsLocal.targets, which is built using the Arcade
+  extension point AfterSolutionBuild.targets. This doesn't include any of the custom MSBuild properties
+  that get set during the regular build. That doesn't matter much to us, there isn't really a whole lot
+  of extra stuff we need to do. We only depend on the $(Platform) and $(Configuration) properties to know
+  where to include the rest of the tests.
+  -->
+  <PropertyGroup>
+    <!-- AnyCPU/x86 builds don't produce an output folder in artifacts. This only exists for x64 builds. -->
+    <PlatformFolder Condition="'$(Platform)'=='x64'">x64</PlatformFolder>
+
+    <!-- For the test payload, we default to x86 for AnyCPU platform. --> 
+    <PayloadBaseLocation>$(RepoRoot)artifacts\test\$(Configuration)\$(Platform)\</PayloadBaseLocation>
+    <PayloadDrtLocation>$(PayloadBaseLocation)Test\DRT\</PayloadDrtLocation>
+  </PropertyGroup>
+
+  <!-- 
+  Internal repo use only. When we package the infrastructure and DRTs over to dotnet-wpf-int. Allow that repo to add
+  more DRTs to run. 
+  -->
+  <Import Project="$(RepoRoot)eng\DrtsToRun.props" Condition="Exists('$(RepoRoot)eng\DrtsToRun.props')" />
+
+  <!-- List of DRTs to include that come from dotnet/wpf -->
+  <Import Project="$(MSBuildFileThisDirectory)DrtsToRun.props"/>
+
+  <Target Name="AddDrtsToPayload" BeforeTargets="RunDrts">
+    <ItemGroup>
+      <DrtPayloadContents Include="$(RepoRoot)artifacts\bin\%(DRT.Identity)\$(PlatformFolder)\$(Configuration)\**\*.*"/>
+    </ItemGroup>
+    <Copy SourceFiles="@(DrtPayloadContents)"
+          DestinationFiles="@(DrtPayloadContents->'$(PayloadDrtLocation)%(RecursiveDir)%(Filename)%(Extension)')"  />
+  </Target>
+
+</Project>

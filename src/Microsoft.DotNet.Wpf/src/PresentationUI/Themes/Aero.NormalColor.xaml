@@ -1,0 +1,236 @@
+﻿<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+
+This file contains the "Aero" system theme.
+==================================================================-->
+
+
+
+
+<ResourceDictionary
+    x:Uid="ResourceDictionary_1" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="System"
+    xmlns:ui="clr-namespace:System.Windows.Documents" xmlns:MappingPIGen1="clr-namespace:System.Windows.Documents;assembly=PresentationUI"
+    >
+
+    <!--=================================================================
+        StickyNoteControl Default Style
+    ==================================================================-->
+    <SolidColorBrush x:Uid="SolidColorBrush_1" x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources}, ResourceId=StickyNoteDefaultBackgroundBrush}"
+                     Color="#FFFBF7C8" />
+
+  <!--=================================================================
+        DocumentApplication Default Background
+    ==================================================================-->
+  <DrawingBrush x:Uid="DrawingBrush_1" x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources}, ResourceId=DocumentApplicationDefaultBackgroundBrush}">
+    <DrawingBrush.Drawing>
+      <DrawingGroup x:Uid="DrawingGroup_1">
+        <DrawingGroup.Children>
+          <DrawingCollection x:Uid="DrawingCollection_1">
+            <GeometryDrawing x:Uid="GeometryDrawing_1" Brush="#FFFFFFFF">
+              <GeometryDrawing.Geometry>
+                <RectangleGeometry x:Uid="RectangleGeometry_1" Rect="0,0,80,30" />
+              </GeometryDrawing.Geometry>
+            </GeometryDrawing>
+            <DrawingGroup x:Uid="DrawingGroup_2">
+              <DrawingGroup.Children>
+                <DrawingCollection x:Uid="DrawingCollection_2">
+                  <GeometryDrawing x:Uid="GeometryDrawing_2" Brush="sc#1, 0.258, 0.283, 0.347">
+                    <GeometryDrawing.Geometry>
+                      <RectangleGeometry x:Uid="RectangleGeometry_2" Rect="0,0,80.3333333333333,1" RadiusX="0" RadiusY="0" />
+                    </GeometryDrawing.Geometry>
+                  </GeometryDrawing>
+                </DrawingCollection>
+              </DrawingGroup.Children>
+              <DrawingGroup.Transform>
+                <MatrixTransform x:Uid="MatrixTransform_1" Matrix="1,0,0,1,-0.166666666666664,29" />
+              </DrawingGroup.Transform>
+            </DrawingGroup>
+            <DrawingGroup x:Uid="DrawingGroup_3">
+              <DrawingGroup.Children>
+                <DrawingCollection x:Uid="DrawingCollection_3">
+                  <GeometryDrawing x:Uid="GeometryDrawing_3">
+                    <GeometryDrawing.Brush>
+                      <LinearGradientBrush x:Uid="LinearGradientBrush_1" StartPoint="0,0.5" EndPoint="1,0.5">
+                        <LinearGradientBrush.RelativeTransform>
+                          <TransformGroup x:Uid="TransformGroup_1">
+                            <TranslateTransform x:Uid="TranslateTransform_1" X="-0.5" Y="-0.5" />
+                            <ScaleTransform x:Uid="ScaleTransform_1" ScaleX="1" ScaleY="1" />
+                            <SkewTransform x:Uid="SkewTransform_1" AngleX="0" AngleY="0" />
+                            <RotateTransform x:Uid="RotateTransform_1" Angle="90.055839222773528" />
+                            <TranslateTransform x:Uid="TranslateTransform_2" X="0.5" Y="0.5" />
+                            <TranslateTransform x:Uid="TranslateTransform_3" X="5.5511151231257827E-17" Y="5.5511151231257827E-17" />
+                          </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <LinearGradientBrush.GradientStops>
+                          <GradientStopCollection x:Uid="GradientStopCollection_1">
+                            <GradientStop x:Uid="GradientStop_1" Color="sc#1, 0.638, 0.68, 0.776" Offset="0" />
+                            <GradientStop x:Uid="GradientStop_2" Color="sc#1, 0.956, 0.956, 1" Offset="1" />
+                          </GradientStopCollection>
+                        </LinearGradientBrush.GradientStops>
+                      </LinearGradientBrush>
+                    </GeometryDrawing.Brush>
+                    <GeometryDrawing.Geometry>
+                      <RectangleGeometry x:Uid="RectangleGeometry_3" Rect="0,0,77.9947916666667,12" RadiusX="0" RadiusY="0" />
+                    </GeometryDrawing.Geometry>
+                  </GeometryDrawing>
+                </DrawingCollection>
+              </DrawingGroup.Children>
+              <DrawingGroup.Transform>
+                <MatrixTransform x:Uid="MatrixTransform_2" Matrix="1,0,0,1,1,17" />
+              </DrawingGroup.Transform>
+            </DrawingGroup>
+            <DrawingGroup x:Uid="DrawingGroup_4">
+              <DrawingGroup.Children>
+                <DrawingCollection x:Uid="DrawingCollection_4">
+                  <GeometryDrawing x:Uid="GeometryDrawing_4" Brush="sc#1, 0.638, 0.68, 0.776">
+                    <GeometryDrawing.Geometry>
+                      <RectangleGeometry x:Uid="RectangleGeometry_4" Rect="0,0,77.984375,1.97916666666663" RadiusX="0" RadiusY="0" />
+                    </GeometryDrawing.Geometry>
+                  </GeometryDrawing>
+                </DrawingCollection>
+              </DrawingGroup.Children>
+              <DrawingGroup.Transform>
+                <MatrixTransform x:Uid="MatrixTransform_3" Matrix="1,0,0,1,1.00520833333334,15.0208333333334" />
+              </DrawingGroup.Transform>
+            </DrawingGroup>
+            <DrawingGroup x:Uid="DrawingGroup_5">
+              <DrawingGroup.Children>
+                <DrawingCollection x:Uid="DrawingCollection_5">
+                  <GeometryDrawing x:Uid="GeometryDrawing_5">
+                    <GeometryDrawing.Brush>
+                      <LinearGradientBrush x:Uid="LinearGradientBrush_2" StartPoint="0,0.5" EndPoint="1,0.5">
+                        <LinearGradientBrush.RelativeTransform>
+                          <TransformGroup x:Uid="TransformGroup_2">
+                            <TranslateTransform x:Uid="TranslateTransform_4" X="-0.5" Y="-0.5" />
+                            <ScaleTransform x:Uid="ScaleTransform_2" ScaleX="1" ScaleY="1" />
+                            <SkewTransform x:Uid="SkewTransform_2" AngleX="0" AngleY="0" />
+                            <RotateTransform x:Uid="RotateTransform_2" Angle="90.055839222773528" />
+                            <TranslateTransform x:Uid="TranslateTransform_5" X="0.5" Y="0.5" />
+                            <TranslateTransform x:Uid="TranslateTransform_6" X="5.5511151231257827E-17" Y="5.5511151231257827E-17" />
+                          </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <LinearGradientBrush.GradientStops>
+                          <GradientStopCollection x:Uid="GradientStopCollection_2">
+                            <GradientStop x:Uid="GradientStop_3" Color="sc#1, 0.991, 0.991, 1" Offset="0" />
+                            <GradientStop x:Uid="GradientStop_4" Color="sc#1, 0.823, 0.847, 0.93" Offset="1" />
+                          </GradientStopCollection>
+                        </LinearGradientBrush.GradientStops>
+                      </LinearGradientBrush>
+                    </GeometryDrawing.Brush>
+                    <GeometryDrawing.Geometry>
+                      <RectangleGeometry x:Uid="RectangleGeometry_5" Rect="0,0,77.9895833333335,15.0572916666667" RadiusX="0" RadiusY="0" />
+                    </GeometryDrawing.Geometry>
+                  </GeometryDrawing>
+                </DrawingCollection>
+              </DrawingGroup.Children>
+              <DrawingGroup.Transform>
+                <MatrixTransform x:Uid="MatrixTransform_4" Matrix="1,0,0,1,1,-0.0833333333333712" />
+              </DrawingGroup.Transform>
+            </DrawingGroup>
+            <DrawingGroup x:Uid="DrawingGroup_6">
+              <DrawingGroup.Children>
+                <DrawingCollection x:Uid="DrawingCollection_6">
+                  <GeometryDrawing x:Uid="GeometryDrawing_6" Brush="sc#1, 0.761, 0.791, 0.855">
+                    <GeometryDrawing.Geometry>
+                      <RectangleGeometry x:Uid="RectangleGeometry_6" Rect="0,0,0.989583333333414,1.97916666666663" RadiusX="0" RadiusY="0" />
+                    </GeometryDrawing.Geometry>
+                  </GeometryDrawing>
+                </DrawingCollection>
+              </DrawingGroup.Children>
+              <DrawingGroup.Transform>
+                <MatrixTransform x:Uid="MatrixTransform_5" Matrix="1,0,0,1,79.0104166666667,15.0208333333334" />
+              </DrawingGroup.Transform>
+            </DrawingGroup>
+            <DrawingGroup x:Uid="DrawingGroup_7">
+              <DrawingGroup.Children>
+                <DrawingCollection x:Uid="DrawingCollection_7">
+                  <GeometryDrawing x:Uid="GeometryDrawing_7">
+                    <GeometryDrawing.Brush>
+                      <LinearGradientBrush x:Uid="LinearGradientBrush_3" StartPoint="0,0.5" EndPoint="1,0.5">
+                        <LinearGradientBrush.RelativeTransform>
+                          <TransformGroup x:Uid="TransformGroup_3">
+                            <TranslateTransform x:Uid="TranslateTransform_7" X="-0.5" Y="-0.5" />
+                            <ScaleTransform x:Uid="ScaleTransform_3" ScaleX="1" ScaleY="1" />
+                            <SkewTransform x:Uid="SkewTransform_3" AngleX="0" AngleY="0" />
+                            <RotateTransform x:Uid="RotateTransform_3" Angle="90.055839222773528" />
+                            <TranslateTransform x:Uid="TranslateTransform_8" X="0.5" Y="0.5" />
+                            <TranslateTransform x:Uid="TranslateTransform_9" X="5.5511151231257827E-17" Y="5.5511151231257827E-17" />
+                          </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <LinearGradientBrush.GradientStops>
+                          <GradientStopCollection x:Uid="GradientStopCollection_3">
+                            <GradientStop x:Uid="GradientStop_5" Color="sc#1, 0.768, 0.791, 0.863" Offset="0" />
+                            <GradientStop x:Uid="GradientStop_6" Color="sc#1, 0.973, 0.973, 1" Offset="1" />
+                          </GradientStopCollection>
+                        </LinearGradientBrush.GradientStops>
+                      </LinearGradientBrush>
+                    </GeometryDrawing.Brush>
+                    <GeometryDrawing.Geometry>
+                      <RectangleGeometry x:Uid="RectangleGeometry_7" Rect="0,0,0.979166666666799,12" RadiusX="0" RadiusY="0" />
+                    </GeometryDrawing.Geometry>
+                  </GeometryDrawing>
+                </DrawingCollection>
+              </DrawingGroup.Children>
+              <DrawingGroup.Transform>
+                <MatrixTransform x:Uid="MatrixTransform_6" Matrix="1,0,0,1,79,17" />
+              </DrawingGroup.Transform>
+            </DrawingGroup>
+            <DrawingGroup x:Uid="DrawingGroup_8">
+              <DrawingGroup.Children>
+                <DrawingCollection x:Uid="DrawingCollection_8">
+                  <GeometryDrawing x:Uid="GeometryDrawing_8" Brush="sc#1, 0.761, 0.791, 0.855">
+                    <GeometryDrawing.Geometry>
+                      <RectangleGeometry x:Uid="RectangleGeometry_8" Rect="0,0,0.989583333333417,1.97916666666663" RadiusX="0" RadiusY="0" />
+                    </GeometryDrawing.Geometry>
+                  </GeometryDrawing>
+                </DrawingCollection>
+              </DrawingGroup.Children>
+              <DrawingGroup.Transform>
+                <MatrixTransform x:Uid="MatrixTransform_7" Matrix="1,0,0,1,-0.0104166666666483,15.0208333333334" />
+              </DrawingGroup.Transform>
+            </DrawingGroup>
+            <DrawingGroup x:Uid="DrawingGroup_9">
+              <DrawingGroup.Children>
+                <DrawingCollection x:Uid="DrawingCollection_9">
+                  <GeometryDrawing x:Uid="GeometryDrawing_9">
+                    <GeometryDrawing.Brush>
+                      <LinearGradientBrush x:Uid="LinearGradientBrush_4" StartPoint="0,0.5" EndPoint="1,0.5">
+                        <LinearGradientBrush.RelativeTransform>
+                          <TransformGroup x:Uid="TransformGroup_4">
+                            <TranslateTransform x:Uid="TranslateTransform_10" X="-0.5" Y="-0.5" />
+                            <ScaleTransform x:Uid="ScaleTransform_4" ScaleX="1" ScaleY="1" />
+                            <SkewTransform x:Uid="SkewTransform_4" AngleX="0" AngleY="0" />
+                            <RotateTransform x:Uid="RotateTransform_4" Angle="90.055839222773528" />
+                            <TranslateTransform x:Uid="TranslateTransform_11" X="0.5" Y="0.5" />
+                            <TranslateTransform x:Uid="TranslateTransform_12" X="5.5511151231257827E-17" Y="5.5511151231257827E-17" />
+                          </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <LinearGradientBrush.GradientStops>
+                          <GradientStopCollection x:Uid="GradientStopCollection_4">
+                            <GradientStop x:Uid="GradientStop_7" Color="sc#1, 0.768, 0.791, 0.863" Offset="0" />
+                            <GradientStop x:Uid="GradientStop_8" Color="sc#1, 0.973, 0.973, 1" Offset="1" />
+                          </GradientStopCollection>
+                        </LinearGradientBrush.GradientStops>
+                      </LinearGradientBrush>
+                    </GeometryDrawing.Brush>
+                    <GeometryDrawing.Geometry>
+                      <RectangleGeometry x:Uid="RectangleGeometry_9" Rect="0,0,0.979166666666796,12" RadiusX="0" RadiusY="0" />
+                    </GeometryDrawing.Geometry>
+                  </GeometryDrawing>
+                </DrawingCollection>
+              </DrawingGroup.Children>
+              <DrawingGroup.Transform>
+                <MatrixTransform x:Uid="MatrixTransform_8" Matrix="1,0,0,1,1.06581410364015E-14,17" />
+              </DrawingGroup.Transform>
+            </DrawingGroup>
+          </DrawingCollection>
+        </DrawingGroup.Children>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+  
+</ResourceDictionary>

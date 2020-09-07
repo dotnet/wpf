@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{BFF6C118-3369-43B5-ACA6-D65ED00EEBE0}</ProjectGuid>
+    <TargetFramework>net5.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- 
+      PlatformIndependentPackage = true means that this package does
+      not require the automatic generation of a runtime.json file using
+      the Bait & Switch technique to reference RID specific packages
+    -->
+    <PlatformIndependentPackage>true</PlatformIndependentPackage>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <PackageName>$(MSBuildProjectName.Replace('.ArchNeutral',''))$(TransportPackageNameSuffix)</PackageName>
+    <AssemblyName>$(PackageName)</AssemblyName>
+    <PackageDescription>Project templates for .NET Core WPF Projects</PackageDescription>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackagingContent Include="useSharedDesignerContext.txt" SubFolder="root" />   
+    <PackagingContent Include="content\**\*" SubFolder="root\%(RecursiveDir)" />
+  </ItemGroup>
+</Project>

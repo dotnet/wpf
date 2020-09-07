@@ -1,0 +1,382 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="zh-HANS" original="../Strings.resx">
+    <body>
+      <trans-unit id="Converter_ConvertFromNotSupported">
+        <source>Cannot convert from type.</source>
+        <target state="translated">无法从类型转换。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Converter_ConvertToNotSupported">
+        <source>Cannot convert to type.</source>
+        <target state="translated">无法转换为类型。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustBeOfType">
+        <source>'{0}' must be of type '{1}'.</source>
+        <target state="translated">“{0}”的类型必须是“{1}”。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PTProvider_InvalidDevModeBytes">
+        <source>Invalid DEVMODE bytes</source>
+        <target state="translated">DEVMODE 字节无效</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PTProvider_VerifyAccess">
+        <source>The calling thread cannot access this object because a different thread owns it.</source>
+        <target state="translated">调用线程无法访问此对象，因为另一个线程拥有该对象。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_AlreadyHasRootSequenceOrDocument">
+        <source>Package already has a root DocumentSequence or FixedDocument.</source>
+        <target state="translated">Package 已经有根 DocumentSequence 或 FixedDocument。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_AlreadyHasStartingPart">
+        <source>Container already has Starting Part.</source>
+        <target state="translated">容器已经有 Starting Part。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_AlreadyHasThumbnail">
+        <source>PackagePart already has associated Thumbnail.</source>
+        <target state="translated">PackagePart 已经有关联的 Thumbnail。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_CannotModifyReadOnlyContainer">
+        <source>Cannot modify read-only container.</source>
+        <target state="translated">无法修改只读容器。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_CommitCountPolicyLessThan1">
+        <source>CommitCountPolicy must be greater than zero.</source>
+        <target state="translated">CommitCountPolicy 必须大于零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_DependantsNotCommitted">
+        <source>Not all opened dependents were committed.</source>
+        <target state="translated">未提交所有打开的从属项。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_DocumentWasClosed">
+        <source>XPS document was closed.</source>
+        <target state="translated">已关闭 XPS 文档。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_InvalidContentType">
+        <source>'{0}' ContentType is not valid.</source>
+        <target state="translated">“{0}”ContentType 无效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_InvalidDocUri">
+        <source>Document PackagePart URI is not valid.</source>
+        <target state="translated">文档 PackagePart URI 无效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_InvalidStartingPart">
+        <source>Starting Part is not a valid Package root.</source>
+        <target state="translated">Starting Part 是无效的 Package 根。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_InvalidType">
+        <source>String passed for type is not valid.</source>
+        <target state="translated">视为类型的字符串无效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneDocStructure">
+        <source>FixedDocument has more than one related document structure.</source>
+        <target state="translated">FixedDocument 有多个相关文档结构。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneMetaDataParts">
+        <source>Container has more than one Core Properties relationship.</source>
+        <target state="translated">容器有多个 Core Properties relationship。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOnePrintTicketPart">
+        <source>PackagePart has more than one Print Ticket relationship.</source>
+        <target state="translated">PackagePart 有多个 Print Ticket relationship。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneSigDefParts">
+        <source>Document has more than one Signature Definition relationship.</source>
+        <target state="translated">文档有多个 Signature Definition relationship。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneSigOriginParts">
+        <source>Container has more than one Signature Origin relationship.</source>
+        <target state="translated">容器有多个 Signature Origin relationship。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneStartingParts">
+        <source>Container has more than one Starting Part relationship.</source>
+        <target state="translated">容器有多个 Starting Part relationship。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneStoryFragment">
+        <source>FixedPage has more than one related story fragment.</source>
+        <target state="translated">FixedPage 有多个相关文章段落。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_MoreThanOneThumbnailPart">
+        <source>Document has more than one Thumbnail relationship.</source>
+        <target state="translated">文档有多个 Thumbnail relationship。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotAFixedDocument">
+        <source>PackagePart URI does not correspond to a FixedDocument.</source>
+        <target state="translated">PackagePart URI 与 FixedDocument 不对应。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotAFixedDocumentSequence">
+        <source>PackagePart URI does not correspond to a FixedDocumentSequence.</source>
+        <target state="translated">PackagePart URI 与 FixedDocumentSequence 不对应。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotAFixedPage">
+        <source>PackagePart URI does not correspond to a FixedPage.</source>
+        <target state="translated">PackagePart URI 与 FixedPage 不对应。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotAPrintTicket">
+        <source>Property is not a valid instance of PrintTicket.</source>
+        <target state="translated">属性不是 PrintTicket 的有效实例。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotOpenForReading">
+        <source>Package is not open for reading.</source>
+        <target state="translated">未打开要阅读的 Package。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotSignatureDefinitionElement">
+        <source>ReadXML method expects reader to have just parsed start element.</source>
+        <target state="translated">ReadXML 方法希望读取器只分析开始元素。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotValidSignatureDefinitionAttribute">
+        <source>'{0}' is not a valid attribute.</source>
+        <target state="translated">“{0}”不是有效特性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_NotValidSignatureDefinitionElement">
+        <source>'{0}' is not a valid element.</source>
+        <target state="translated">“{0}”不是有效元素。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_ObfucatedFontNeedGuid">
+        <source>Obfuscated font resources require valid GUID file name.</source>
+        <target state="translated">不确定的字体资源需要有效的 GUID 文件名。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_OnlyWriters">
+        <source>Only writers can call this method.</source>
+        <target state="translated">仅编写器可以调用此方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_OpenDocOrElementAlreadyCalled">
+        <source>OpenDocument or OpenElement already called.</source>
+        <target state="translated">已调用 OpenDocument 或 OpenElement。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_PackageUriNull">
+        <source>XpsDocument URI is null. Use XpsDocument constructor that takes URI parameter.</source>
+        <target state="translated">XpsDocument URI 为空。请使用采用 URI 参数的 XpsDocument 构造函数。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_PanelOrSequenceAlreadyOpen">
+        <source>Current DocumentSequence, FixedDocument, or FixedPage not completed.</source>
+        <target state="translated">未完成当前 DocumentSequence、FixedDocument 或 FixedPage。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_PartFromDifferentContainer">
+        <source>PackagePart belongs to a different container.</source>
+        <target state="translated">PackagePart 属于其他容器。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_PartNotFound">
+        <source>Package must contain an XPS PackagePart.</source>
+        <target state="translated">Package 必须包含 XPS PackagePart。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_PrintTicketAlreadyCommitted">
+        <source>PrintTicket was already committed.</source>
+        <target state="translated">已提交 PrintTicket。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_SequenceCntMustBe1">
+        <source>Count must be 1 when CommitPolicies is set to CommitEntireSequence.</source>
+        <target state="translated">将 CommitPolicies 设置为 CommitEntireSequence 时，计数必须为 1。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_ServiceTypeAlreadyAdded">
+        <source>'{0}' service type already added.</source>
+        <target state="translated">已添加“{0}”服务类型。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_SigningDoesNotMeetPolicy">
+        <source>Document does not meet the signing policy.</source>
+        <target state="translated">文档不符合签名策略。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_SpotIDRequiredAttribute">
+        <source>SpotId is required for a valid XpsSignatureDefinition.</source>
+        <target state="translated">有效的 XpsSignatureDefinition 需要 SpotId。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_UnsupportedImageType">
+        <source>XPS supports only JPG, TIF, WDP, and PNG image types.</source>
+        <target state="translated">XPS 仅支持 JPG、TIF、WDP 和 PNG 图像类型。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachPackaging_UnsupportedThumbnailImageType">
+        <source>Thumbnails support only JPG and PNG image types.</source>
+        <target state="translated">缩略图仅支持 JPG 和 PNG 图像类型。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerializationAsync_NoNgcType">
+        <source>Manager not of type NgcSerializationManagerAsync.</source>
+        <target state="translated">Manager 不是类型 NgcSerializationManagerAsync。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerializationAsync_NoType">
+        <source>Manager not of type XpsSerializationManagerAsync.</source>
+        <target state="translated">Manager 不是类型 XpsSerializationManagerAsync。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_CannotReleaseXmlWriter">
+        <source>Cannot release XmlWriter because it was already released.</source>
+        <target state="translated">无法释放 XmlWriter，因为它已经被释放。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_CycleDetectedInSerialization">
+        <source>Cycle detected. Object was already on the stack.</source>
+        <target state="translated">检测到循环。对象已位于堆栈中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_ExpectedFixedDocument">
+        <source>SerializeObject expected FixedDocument.</source>
+        <target state="translated">SerializeObject 需要 FixedDocument。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_ExpectedFixedDocumentSequence">
+        <source>SerializeObject expected FixedDocumentSequence.</source>
+        <target state="translated">SerializeObject 需要 FixedDocumentSequence。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_ExpectedFixedPage">
+        <source>SerializeObject expected FixedPage.</source>
+        <target state="translated">SerializeObject 需要 FixedPage。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_FixedDocumentInDocument">
+        <source>FixedDocument cannot contain another FixedDocument.</source>
+        <target state="translated">FixedDocument 不能包含另一个 FixedDocument。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_FixedDocumentInPage">
+        <source>FixedPage cannot contain a FixedDocument.</source>
+        <target state="translated">FixedPage 不能包含 FixedDocument。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_FixedPageInPage">
+        <source>FixedPage cannot contain another FixedPage.</source>
+        <target state="translated">FixedPage 不能包含另一个 FixedPage。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_MustHaveSerializationManager">
+        <source>Must have serialization manager.</source>
+        <target state="translated">必须有序列化管理器。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NoFixedDocuments">
+        <source>FixedDocumentSequence must contain at least one FixedDocument.</source>
+        <target state="translated">FixedDocumentSequence 必须至少包含一个 FixedDocument。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NoFixedPageWriter">
+        <source>No fixed page is being written to.</source>
+        <target state="translated">未写入固定页面。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NoFixedPages">
+        <source>FixedDocument must contain at least one FixedPage.</source>
+        <target state="translated">FixedDocument 必须至少包含一个 FixedPage。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NoFontService">
+        <source>No font service is registered with resource policy.</source>
+        <target state="translated">未使用资源策略注册字体服务。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NoImageService">
+        <source>No image service is registered with resource policy.</source>
+        <target state="translated">未使用资源策略注册图像服务。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NoSerializer">
+        <source>Cannot find the appropriate serializer.</source>
+        <target state="translated">无法找到相应的序列化程序。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NotSupported">
+        <source>Serialization of this type of object is not supported.</source>
+        <target state="translated">不支持此类型对象的序列化。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_NotXpsSerializationManagerAsync">
+        <source>SerializationManager passed to XpsSerializerAsync is not XpsSerializationManagerAsync.</source>
+        <target state="translated">传递给 XpsSerializerAsync 的 SerializationManager 不是 XpsSerializationManagerAsync。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_TargetNotPrintTicket">
+        <source>Target must be a PrintTicket.</source>
+        <target state="translated">目标必须是 PrintTicket。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_UnableToInstantiateSerializer">
+        <source>Cannot instantiate a serializer of the given type.</source>
+        <target state="translated">无法实例化给定类型的序列化程序。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_WrongPackagingPolicy">
+        <source>SerializationManager returned packaging policy that was not an XpsPackagingPolicy.</source>
+        <target state="translated">SerializationManager 返回的包装策略不是 XpsPackagingPolicy。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_WrongPropertyTypeForFixedDocument">
+        <source>Serialized FixedDocument is not a complex property.</source>
+        <target state="translated">序列化的 FixedDocument 不是复杂属性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_WrongPropertyTypeForFixedPage">
+        <source>Serialized FixedPage is not a complex property.</source>
+        <target state="translated">序列化的 FixedPage 不是复杂属性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachSerialization_WrongPropertyTypeForPageContent">
+        <source>Serialized PageContent is not a complex property.</source>
+        <target state="translated">序列化的 PageContent 不是复杂属性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsSerializerFactory_DisplayName">
+        <source>XPS Serializer</source>
+        <target state="translated">XPS 序列化程序</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsSerializerFactory_ManufacturerName">
+        <source>Microsoft</source>
+        <target state="translated">Microsoft</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsSerializerFactory_ManufacturerWebsite">
+        <source>http://www.microsoft.com</source>
+        <target state="translated">http://www.microsoft.com</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsSerializerFactory_WriterIsClosed">
+        <source>SerializerWriter was closed.</source>
+        <target state="translated">已关闭 SerializerWriter。</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

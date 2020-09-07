@@ -32,11 +32,7 @@ namespace System.Windows.Markup
         public StaticExtension(
             string   member)
         {
-            if (member == null)
-            {
-                throw new ArgumentNullException(nameof(member));
-            }
-            _member = member;
+            _member = member ?? throw new ArgumentNullException(nameof(member));
         }
 
         /// <summary>
@@ -79,7 +75,7 @@ namespace System.Windows.Markup
                 // Pull out the type substring (this will include any XML prefix, e.g. "av:Button")
 
                 string typeString = _member.Substring(0, dotIndex);
-                if (typeString == string.Empty)
+                if (string.IsNullOrEmpty(typeString))
                 {
                     throw new ArgumentException(SR.Get(SRID.MarkupExtensionBadStatic, _member));
                 }
@@ -104,7 +100,7 @@ namespace System.Windows.Markup
                 // Get the member name substring
 
                 fieldString = _member.Substring(dotIndex + 1, _member.Length - dotIndex - 1);
-                if (fieldString == string.Empty)
+                if (string.IsNullOrEmpty(typeString))
                 {
                     throw new ArgumentException(SR.Get(SRID.MarkupExtensionBadStatic, _member));
                 }
@@ -177,11 +173,7 @@ namespace System.Windows.Markup
             get { return _member; }
             set 
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException(nameof(value));
-                }
-                _member = value;
+                _member = value ?? throw new ArgumentNullException(nameof(value));
             }
         }
 
@@ -191,11 +183,7 @@ namespace System.Windows.Markup
             get { return _memberType; }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException(nameof(value));
-                }
-                _memberType = value;
+                _memberType = value ?? throw new ArgumentNullException(nameof(value));
             }
         }
 

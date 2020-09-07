@@ -29,13 +29,8 @@ namespace System.Xaml
 
         public NameScopeDictionary(INameScope underlyingNameScope)
         {
-            if (underlyingNameScope == null)
-            {
-                throw new ArgumentNullException(nameof(underlyingNameScope));
-            }
-
             _names = new FrugalObjectList<string>();
-            _underlyingNameScope = underlyingNameScope;
+            _underlyingNameScope = underlyingNameScope ?? throw new ArgumentNullException(nameof(underlyingNameScope));
         }
 
         public void RegisterName(string name, object scopedElement)
@@ -46,7 +41,7 @@ namespace System.Xaml
             if (scopedElement == null)
                 throw new ArgumentNullException(nameof(scopedElement));
 
-            if (name == string.Empty)
+            if (name.Length == 0)
                 throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
 
             if (!NameValidationHelper.IsValidIdentifierName(name))
@@ -87,7 +82,7 @@ namespace System.Xaml
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            if (name == string.Empty)
+            if (name.Length == 0)
                 throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
 
             if (_underlyingNameScope != null)
@@ -113,7 +108,7 @@ namespace System.Xaml
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            if (name == string.Empty)
+            if (name.Length == 0)
                 throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
 
             if (_underlyingNameScope != null)
@@ -212,7 +207,7 @@ namespace System.Xaml
             {
                 get
                 {
-                    return this.Current;
+                    return Current;
                 }
             }
 
@@ -237,7 +232,7 @@ namespace System.Xaml
         #region IEnumerable methods
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
         #endregion
 

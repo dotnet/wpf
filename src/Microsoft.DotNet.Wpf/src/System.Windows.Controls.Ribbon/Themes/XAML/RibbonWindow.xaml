@@ -1,0 +1,1510 @@
+﻿
+    <!-- [[Generic]] -->
+    <shell:WindowChrome x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=WindowChromeGeneric}" x:Shared="False"/>
+
+    <shell:WindowChrome x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=WindowChromeAeroLiteWithGlass}" x:Shared="False" NonClientFrameEdges="Bottom"/>
+
+    <shell:WindowChrome x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=WindowChromeAeroLiteBasic}" x:Shared="False" />
+
+    <shell:WindowChrome x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=WindowChromeAeroWithGlass}" x:Shared="False" NonClientFrameEdges="Bottom"/>
+
+    <shell:WindowChrome x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=WindowChromeAeroBasic}" x:Shared="False" CornerRadius="9,9,0,0"/>
+
+    <LinearGradientBrush EndPoint="0,0" StartPoint="1,0" x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=ActiveCaptionGradient}" x:Shared="False">
+        <GradientStop Color="{DynamicResource {x:Static SystemColors.GradientActiveCaptionColorKey}}" Offset="0"/>
+        <GradientStop Color="{DynamicResource {x:Static SystemColors.ActiveCaptionColorKey}}" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush EndPoint="0,0" StartPoint="1,0" x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=InactiveCaptionGradient}" x:Shared="False">
+        <GradientStop Color="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionColorKey}}" Offset="0"/>
+        <GradientStop Color="{DynamicResource {x:Static SystemColors.InactiveCaptionColorKey}}" Offset="1"/>
+    </LinearGradientBrush>
+
+
+<!--=================================================================
+        RibbonWindow
+    ==================================================================-->
+
+    <primitives:RibbonWindowSmallIconConverter x:Key="RibbonWindowSmallIconConverter"/>
+    <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=RibbonWindowStyle}" TargetType="{x:Type ribbon:RibbonWindow}">
+        <Setter Property="shell:WindowChrome.WindowChrome" Value="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=WindowChromeGeneric}}"/>
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+
+    <!--=================================================================
+            Classic (the default template)
+        ==================================================================-->
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ribbon:RibbonWindow}">
+                    <ControlTemplate.Resources>
+                        <Style TargetType="{x:Type Button}" x:Key="ClassicButtonStyle">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+                                            <Border x:Name="OuterTopLeftBorder" BorderThickness="1,1,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+                                            <Border x:Name="OuterBottomRightBorder" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                                            <Border x:Name="InnerTopLeftBorder" BorderThickness="1,1,0,0" Margin="1" BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
+                                            <Border x:Name="InnerBottomRightBorder" BorderThickness="0,0,1,1" Margin="1" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                                            <ContentPresenter HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center"/>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter TargetName="OuterTopLeftBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                                                <Setter TargetName="OuterBottomRightBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+                                                <Setter TargetName="InnerTopLeftBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                                                <Setter TargetName="InnerBottomRightBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ControlTemplate.Resources>
+
+                    <Grid>
+                        <Border Name="NonClientAreaBorder"
+#ifdef Net45
+                                BorderThickness="{Binding Path=(SystemParameters.WindowNonClientFrameThickness)}"
+#else
+                                BorderThickness="{Binding Path=WindowNonClientFrameThickness, Source={x:Static windows:SystemParameters2.Current}}"
+#endif
+                                BorderBrush="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+                            <Border Name="PART_ClientAreaBorder"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"/>
+                        </Border>
+
+                        <Border BorderThickness="1,1,0,0"
+                                BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
+
+                        <Border BorderThickness="0,0,1,1"
+                                BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+
+                        <Border Name="WindowHighlightBorder"
+                                BorderThickness="1,1,0,0"
+                                Margin="1"
+                                BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+
+                        <Border Name="WindowShadowBorder"
+                                BorderThickness="0,0,1,1"
+                                Margin="1"
+                                BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+
+                        <Border Name="MiddleBorder"
+                                BorderThickness="1"
+                                Margin="2"
+                                BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
+
+                        <Grid Name="ButtonPanel"
+                              Margin="{Binding Path=(shell:WindowChrome.WindowChrome).ResizeBorderThickness, RelativeSource={RelativeSource TemplatedParent}}"
+                              Height="{Binding Path=(shell:WindowChrome.WindowChrome).CaptionHeight, RelativeSource={RelativeSource TemplatedParent}}"
+                              Background="{DynamicResource {ComponentResourceKey ResourceId=ActiveCaptionGradient, TypeInTargetAssembly={x:Type ribbon:Ribbon}}}"
+                              VerticalAlignment="Top">
+                            <Image Name="PART_Icon"
+                                   shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                   Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Icon, Converter={StaticResource RibbonWindowSmallIconConverter}}"
+#ifdef Net45
+                                   Width="{Binding Path=(SystemParameters.SmallIconWidth)}"
+                                   Height="{Binding Path=(SystemParameters.SmallIconHeight)}"
+#else
+                                   Width="{Binding Path=SmallIconSize.Width, Source={x:Static windows:SystemParameters2.Current}}"
+                                   Height="{Binding Path=SmallIconSize.Height, Source={x:Static windows:SystemParameters2.Current}}"
+#endif
+                                   Margin="3,0,0,0"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+
+#ifdef Net45
+                            <Grid HorizontalAlignment="Right"
+                                  Height="{Binding Path=(SystemParameters.WindowCaptionButtonHeight)}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="{Binding Path=(SystemParameters.WindowCaptionButtonWidth)}"/>
+                                    <ColumnDefinition Width="{Binding Path=(SystemParameters.WindowCaptionButtonWidth)}"/>
+                                    <ColumnDefinition Width="2"/>
+                                    <ColumnDefinition Width="{Binding Path=(SystemParameters.WindowCaptionButtonWidth)}"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0"
+                                        Margin="4,2,-4,3"
+                                        Padding="0,0,2,0">
+                                    <Button Name="PART_MinimizeWindowButton"
+                                            shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                            Command="windows:SystemCommands.MinimizeWindowCommand"
+                                            Focusable="False"
+                                            Style="{StaticResource ClassicButtonStyle}">
+                                        <Path x:Name="MinimizeWindowButtonGlyph"
+                                              Stroke="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
+                                              StrokeThickness="2">
+                                            <Path.Data>
+                                                <PathGeometry>
+                                                    <PathFigure StartPoint="0,6">
+                                                        <LineSegment Point="6,6"/>
+                                                    </PathFigure>
+                                                </PathGeometry>
+                                            </Path.Data>
+                                        </Path>
+                                    </Button>
+                                </Border>
+                                <Border Grid.Column="1"
+                                        Margin="2,2,-2,3"
+                                        Padding="0,0,2,0">
+                                    <Grid>
+                                        <Button Name="PART_RestoreWindowButton"
+                                                shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                                Command="windows:SystemCommands.RestoreWindowCommand"
+                                                Focusable="False"
+                                                Style="{StaticResource ClassicButtonStyle}"
+                                                Visibility="Collapsed">
+                                            <Path x:Name="RestoreWindowButtonGlyph"
+                                                  Stroke="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
+                                                  StrokeThickness="1">
+                                                <Path.Data>
+                                                    <PathGeometry>
+                                                        <PathFigure StartPoint="0,3" IsClosed="False">
+                                                            <LineSegment Point="0,8" />
+                                                            <LineSegment Point="5,8" />
+                                                            <LineSegment Point="5,3" />
+                                                            <LineSegment Point="0,3" />
+                                                            <LineSegment Point="0,4" />
+                                                            <LineSegment Point="5,4" />
+                                                            <LineSegment Point="5,5" />
+                                                            <LineSegment Point="7,5" />
+                                                            <LineSegment Point="7,0" />
+                                                            <LineSegment Point="2,0" />
+                                                            <LineSegment Point="2,1" />
+                                                            <LineSegment Point="7,1" />
+                                                        </PathFigure>
+                                                        <PathFigure StartPoint="2,1" IsClosed="False">
+                                                            <LineSegment Point="2,3" />
+                                                        </PathFigure>
+                                                    </PathGeometry>
+                                                </Path.Data>
+                                            </Path>
+                                        </Button>
+                                        <Button Name="PART_MaximizeWindowButton"
+                                                shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                                Command="windows:SystemCommands.MaximizeWindowCommand"
+                                                Focusable="False"
+                                                Style="{StaticResource ClassicButtonStyle}">
+                                            <Path x:Name="MaximizeWindowButtonGlyph"
+                                                  Stroke="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
+                                                  StrokeThickness="1">
+                                                <Path.Data>
+                                                    <PathGeometry>
+                                                        <PathFigure StartPoint="0,0" IsClosed="False">
+                                                            <LineSegment Point="0,8" />
+                                                            <LineSegment Point="8,8" />
+                                                            <LineSegment Point="8,0" />
+                                                            <LineSegment Point="0,0" />
+                                                        </PathFigure>
+                                                        <PathFigure StartPoint="0.5,1">
+                                                            <LineSegment Point="7.5,1" />
+                                                        </PathFigure>
+                                                    </PathGeometry>
+                                                </Path.Data>
+                                            </Path>
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                                <Border Grid.Column="3"
+                                        Margin="0,2,0,3"
+                                        Padding="0,0,2,0">
+                                    <Button Name="PART_CloseWindowButton"
+                                            shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                            Command="windows:SystemCommands.CloseWindowCommand"
+                                            Focusable="False"
+                                            Style="{StaticResource ClassicButtonStyle}">
+                                        <Path x:Name="CloseWindowButtonGlyph"
+                                              Stroke="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
+                                              StrokeThickness="1.5">
+                                            <Path.Data>
+                                                <PathGeometry>
+                                                    <PathFigure StartPoint="0,0">
+                                                        <LineSegment Point="8,7"/>
+                                                    </PathFigure>
+                                                    <PathFigure StartPoint="8,0">
+                                                        <LineSegment Point="0,7"/>
+                                                    </PathFigure>
+                                                </PathGeometry>
+                                            </Path.Data>
+                                        </Path>
+                                    </Button>
+                                </Border>
+                            </Grid>
+#else
+                            <Grid HorizontalAlignment="Right"
+                                  Width="{Binding Path=WindowCaptionButtonsLocation.Width, Source={x:Static windows:SystemParameters2.Current}}"
+                                  Height="{Binding Path=WindowCaptionButtonsLocation.Height, Source={x:Static windows:SystemParameters2.Current}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Name="PART_MinimizeWindowButton"
+                                        Grid.Column="1"
+                                        Margin="0,2"
+                                        shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                        Command="windows:SystemCommands.MinimizeWindowCommand"
+                                        Focusable="False"
+                                        Style="{StaticResource ClassicButtonStyle}">
+                                    <Path x:Name="MinimizeWindowButtonGlyph"
+                                          Stroke="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
+                                          StrokeThickness="2">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathFigure StartPoint="0,6">
+                                                    <LineSegment Point="6,6"/>
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Button>
+                                <Button Name="PART_RestoreWindowButton"
+                                        Grid.Column="2"
+                                        Margin="0,2"
+                                        shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                        Command="windows:SystemCommands.RestoreWindowCommand"
+                                        Focusable="False"
+                                        Style="{StaticResource ClassicButtonStyle}"
+                                        Visibility="Collapsed">
+                                    <Path x:Name="RestoreWindowButtonGlyph"
+                                          Stroke="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
+                                          StrokeThickness="1">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathFigure StartPoint="0,3" IsClosed="False">
+                                                    <LineSegment Point="0,8" />
+                                                    <LineSegment Point="5,8" />
+                                                    <LineSegment Point="5,3" />
+                                                    <LineSegment Point="0,3" />
+                                                    <LineSegment Point="0,4" />
+                                                    <LineSegment Point="5,4" />
+                                                    <LineSegment Point="5,5" />
+                                                    <LineSegment Point="7,5" />
+                                                    <LineSegment Point="7,0" />
+                                                    <LineSegment Point="2,0" />
+                                                    <LineSegment Point="2,1" />
+                                                    <LineSegment Point="7,1" />
+                                                </PathFigure>
+                                                <PathFigure StartPoint="2,1" IsClosed="False">
+                                                    <LineSegment Point="2,3" />
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Button>
+                                <Button Name="PART_MaximizeWindowButton"
+                                        Grid.Column="2"
+                                        Margin="0,2"
+                                        shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                        Command="windows:SystemCommands.MaximizeWindowCommand"
+                                        Focusable="False"
+                                        Style="{StaticResource ClassicButtonStyle}">
+                                    <Path x:Name="MaximizeWindowButtonGlyph"
+                                          Stroke="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
+                                          StrokeThickness="1">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathFigure StartPoint="0,0" IsClosed="False">
+                                                    <LineSegment Point="0,8" />
+                                                    <LineSegment Point="8,8" />
+                                                    <LineSegment Point="8,0" />
+                                                    <LineSegment Point="0,0" />
+                                                </PathFigure>
+                                                <PathFigure StartPoint="0.5,1">
+                                                    <LineSegment Point="7.5,1" />
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Button>
+                                <Button Name="PART_CloseWindowButton"
+                                        Grid.Column="4"
+                                        Margin="0,2"
+                                        shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                        Command="windows:SystemCommands.CloseWindowCommand"
+                                        Focusable="False"
+                                        Style="{StaticResource ClassicButtonStyle}">
+                                    <Path x:Name="CloseWindowButtonGlyph"
+                                          Stroke="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
+                                          StrokeThickness="1.5">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathFigure StartPoint="0,0">
+                                                    <LineSegment Point="8,7"/>
+                                                </PathFigure>
+                                                <PathFigure StartPoint="8,0">
+                                                    <LineSegment Point="0,7"/>
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Button>
+                            </Grid>
+#endif
+                        </Grid>
+
+                        <Border BorderThickness="{Binding Path=(shell:WindowChrome.WindowChrome).ResizeBorderThickness, RelativeSource={RelativeSource TemplatedParent}}">
+                          <Grid>
+                            <AdornerDecorator>
+                                <ContentPresenter Name="PART_RootContentPresenter"/>
+                            </AdornerDecorator>
+                            <ResizeGrip x:Name="WindowResizeGrip"
+                                        shell:WindowChrome.ResizeGripDirection="BottomRight"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Bottom"
+                                        Visibility="Collapsed"
+                                        IsTabStop="false"/>
+                          </Grid>
+                        </Border>
+
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsActive" Value="False">
+                            <Setter TargetName="ButtonPanel" Property="Background" Value="{DynamicResource {ComponentResourceKey ResourceId=InactiveCaptionGradient, TypeInTargetAssembly={x:Type ribbon:Ribbon}}}"/>
+                            <Setter TargetName="MiddleBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}"/>
+                        </Trigger>
+                        <Trigger Property="WindowState" Value="Maximized">
+                            <Setter TargetName="PART_MaximizeWindowButton" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="PART_RestoreWindowButton" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+#ifdef Net45
+                        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                        <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                            <Setter TargetName="PART_MinimizeWindowButton" Property="Width" Value="18"/>
+                            <Setter TargetName="PART_MaximizeWindowButton" Property="Width" Value="18"/>
+                            <Setter TargetName="PART_RestoreWindowButton" Property="Width" Value="18"/>
+                            <Setter TargetName="PART_CloseWindowButton" Property="Width" Value="18"/>
+                        </DataTrigger>
+                        <Trigger Property="Icon" Value="{x:Null}">
+#ifdef Net45
+                            <Setter TargetName="PART_Icon" Property="Source" Value="/System.Windows.Controls.Ribbon;component/Images/DefaultSystemIcon.png"/>
+#else
+                            <Setter TargetName="PART_Icon" Property="Source" Value="/RibbonControlsLibrary;component/Images/DefaultSystemIcon.png"/>
+#endif
+                        </Trigger>
+                        <MultiTrigger>
+                            <!-- There may be perf implications b/c of the following conditions.  We may cause
+                                                         an extra layout to happen when WindowState changes to Minimized and ResizeMode
+                                                         is set to CanResizeWithGrip.
+                                                         NavigationWindow's style requires the ResizeMode condition tag even though
+                                                         Window's style already takes care of this condition.
+                                                         -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Window.ResizeMode"
+                                           Value="CanResizeWithGrip"/>
+                                <Condition Property="Window.WindowState"
+                                           Value="Normal"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="WindowResizeGrip"
+                                    Property="Visibility"
+                                    Value="Visible"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!-- [[AeroLite.NormalColor, Aero2.NormalColor]] -->
+
+    <primitives:RibbonWindowSmallIconConverter x:Key="RibbonWindowSmallIconConverter"/>
+    <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=RibbonWindowStyle}" TargetType="{x:Type ribbon:RibbonWindow}">
+        <Setter Property="shell:WindowChrome.WindowChrome" Value="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=WindowChromeAeroLiteBasic}}" />
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ribbon:RibbonWindow}">
+                    <ControlTemplate.Resources>
+
+                        <Style TargetType="{x:Type Button}" x:Key="AeroLiteCaptionBaseButtonStyle">
+                            <Style.Resources>
+                                <SolidColorBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroLiteCaptionButton}" Color="Transparent" />
+                                <SolidColorBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroLiteCaptionButtonBorder}" Color="Transparent" />
+                                <SolidColorBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroLiteCaptionButtonHover}" Color="#FF239CC8" />
+                                <SolidColorBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroLiteCaptionButtonHoverBorder}" Color="#FF00749E" />
+                                <SolidColorBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroLiteCaptionButtonPressed}" Color="#FF00749E" />
+                                <SolidColorBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroLiteCaptionButtonPressedBorder}" Color="#FF025A7A" />
+                            </Style.Resources>
+                            <Setter Property="Background" Value="{DynamicResource {ComponentResourceKey {x:Type RibbonWindow}, AeroLiteCaptionButton}}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey {x:Type RibbonWindow}, AeroLiteCaptionButtonBorder}}"/>
+                            <Setter Property="Padding" Value="7,6,7,6"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Grid>
+                                            <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                                    Background="{TemplateBinding Background}"
+                                                    BorderThickness="1"
+                                                    Width="{TemplateBinding Width}"
+                                                    Height="{TemplateBinding Height}">
+                                                <Rectangle Margin="{TemplateBinding Padding}"
+                                                           Fill="{TemplateBinding Foreground}"/>
+                                            </Border>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="{DynamicResource {ComponentResourceKey {x:Type RibbonWindow}, AeroLiteCaptionButtonHover}}"/>
+                                                <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey {x:Type RibbonWindow}, AeroLiteCaptionButtonHoverBorder}}"/>
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter Property="Background" Value="{DynamicResource {ComponentResourceKey {x:Type RibbonWindow}, AeroLiteCaptionButtonPressed}}"/>
+                                                <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey {x:Type RibbonWindow}, AeroLiteCaptionButtonPressedBorder}}"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
+                        <Style BasedOn="{StaticResource AeroLiteCaptionBaseButtonStyle}" TargetType="{x:Type Button}" x:Key="AeroLiteMinimizeButtonStyle">
+                            <Setter Property="Padding" Value="9,11,9,6"/>
+                        </Style>
+
+                        <Style BasedOn="{StaticResource AeroLiteCaptionBaseButtonStyle}" TargetType="{x:Type Button}" x:Key="AeroLiteRestoreButtonStyle">
+                            <Setter Property="Padding" Value="6,5,6,5"/>
+                        </Style>
+
+                        <Style BasedOn="{StaticResource AeroLiteCaptionBaseButtonStyle}" TargetType="{x:Type Button}" x:Key="AeroLiteCloseButtonStyle">
+                            <Setter Property="Padding" Value="16,6,16,6"/>
+                            <Style.Resources>
+                                <SolidColorBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroLiteCaptionButton}" Color="#FFCF6550" />
+                                <SolidColorBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroLiteCaptionButtonBorder}" Color="#FFB65141" />
+                                <SolidColorBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroLiteCaptionButtonHover}" Color="#FFE8735C" />
+                                <SolidColorBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroLiteCaptionButtonHoverBorder}" Color="#FFC05241" />
+                                <SolidColorBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroLiteCaptionButtonPressed}" Color="#FF913D2C" />
+                                <SolidColorBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroLiteCaptionButtonPressedBorder}" Color="#FF7F3124" />
+                            </Style.Resources>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="False"/>
+                                        <Condition Binding="{Binding Path=IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="BorderBrush" Value="Transparent"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+
+                        <SolidColorBrush x:Key="ActiveWindowBorder" Color="#FF38A5E7" />
+                        <SolidColorBrush x:Key="InactiveWindowBorder" Color="#FF9CC8E2" />
+
+                    </ControlTemplate.Resources>
+
+                    <Grid>
+
+                        <Border Name="NonClientAreaBorder"
+#ifdef Net45
+                                BorderThickness="{Binding Path=(SystemParameters.WindowNonClientFrameThickness)}"
+#else
+                                BorderThickness="{Binding Path=WindowNonClientFrameThickness, Source={x:Static windows:SystemParameters2.Current}}"
+#endif
+                                BorderBrush="{StaticResource ActiveWindowBorder}">
+                            <Border Name="PART_ClientAreaBorder"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"/>
+                        </Border>
+
+                        <Border Name="OuterBorder"
+                                BorderThickness="1"
+                                BorderBrush="Black">
+                            <Grid x:Name="TitleGrid"
+                                  VerticalAlignment="Top"
+#ifdef Net45
+                                  Height="{Binding Path=(SystemParameters.WindowCaptionButtonHeight)}">
+#else
+                                  Height="{Binding Path=WindowCaptionButtonsLocation.Height, Source={x:Static windows:SystemParameters2.Current}}">
+#endif
+
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Bottom">
+                                    <Rectangle Visibility="Hidden"
+                                               Width="{Binding Path=(shell:WindowChrome.WindowChrome).ResizeBorderThickness.Left, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Image Name="PART_Icon"
+                                           VerticalAlignment="Bottom"
+                                           shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                           Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Icon, Converter={StaticResource RibbonWindowSmallIconConverter}}"
+#ifdef Net45
+                                           Width="{Binding Path=(SystemParameters.SmallIconWidth)}"
+                                           Height="{Binding Path=(SystemParameters.SmallIconHeight)}"/>
+#else
+                                           Width="{Binding Path=SmallIconSize.Width, Source={x:Static windows:SystemParameters2.Current}}"
+                                           Height="{Binding Path=SmallIconSize.Height, Source={x:Static windows:SystemParameters2.Current}}"/>
+#endif
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Stretch">
+                                    <Button Name="PART_MinimizeWindowButton" Focusable="False"
+                                            shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                            Command="windows:SystemCommands.MinimizeWindowCommand"
+                                            Style="{StaticResource AeroLiteMinimizeButtonStyle}"
+                                            Width="29">
+                                        <Button.Foreground>
+                                            <DrawingBrush>
+                                                <DrawingBrush.Drawing>
+                                                    <DrawingGroup>
+                                                        <GeometryDrawing>
+                                                            <GeometryDrawing.Pen>
+                                                                <Pen Brush="Black" Thickness="2"/>
+                                                            </GeometryDrawing.Pen>
+                                                            <GeometryDrawing.Geometry>
+                                                                <PathGeometry>
+                                                                    <PathFigure StartPoint="0,0">
+                                                                        <LineSegment Point="10,0" />
+                                                                    </PathFigure>
+                                                                </PathGeometry>
+                                                            </GeometryDrawing.Geometry>
+                                                        </GeometryDrawing>
+                                                    </DrawingGroup>
+                                                </DrawingBrush.Drawing>
+                                            </DrawingBrush>
+                                        </Button.Foreground>
+                                    </Button>
+                                    <Button Name="PART_MaximizeWindowButton" Focusable="False"
+                                            shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                            Command="windows:SystemCommands.MaximizeWindowCommand"
+                                            Style="{StaticResource AeroLiteCaptionBaseButtonStyle}"
+                                            Width="26">
+                                        <Button.Foreground>
+                                            <DrawingBrush>
+                                                <DrawingBrush.Drawing>
+                                                    <DrawingGroup>
+                                                        <GeometryDrawing>
+                                                            <GeometryDrawing.Pen>
+                                                                <Pen Brush="Black" Thickness="2"/>
+                                                            </GeometryDrawing.Pen>
+                                                            <GeometryDrawing.Geometry>
+                                                                <PathGeometry>
+                                                                    <PathFigure StartPoint="0,0" IsClosed="True">
+                                                                        <LineSegment Point="10,0" />
+                                                                        <LineSegment Point="10,8" />
+                                                                        <LineSegment Point="0,8" />
+                                                                    </PathFigure>
+                                                                </PathGeometry>
+                                                            </GeometryDrawing.Geometry>
+                                                        </GeometryDrawing>
+                                                    </DrawingGroup>
+                                                </DrawingBrush.Drawing>
+                                            </DrawingBrush>
+                                        </Button.Foreground>
+                                    </Button>
+                                    <Button Name="PART_RestoreWindowButton" Focusable="False"
+                                            shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                            Command="windows:SystemCommands.RestoreWindowCommand"
+                                            Style="{StaticResource AeroLiteRestoreButtonStyle}"
+                                            Width="26"
+                                            Visibility="Collapsed">
+                                        <Button.Foreground>
+                                            <DrawingBrush>
+                                                <DrawingBrush.Drawing>
+                                                    <DrawingGroup>
+                                                        <GeometryDrawing>
+                                                            <GeometryDrawing.Pen>
+                                                                <Pen Brush="Black" Thickness="2"/>
+                                                            </GeometryDrawing.Pen>
+                                                            <GeometryDrawing.Geometry>
+                                                                <PathGeometry>
+                                                                    <PathFigure StartPoint="0,3" IsClosed="True">
+                                                                        <LineSegment Point="8,3" />
+                                                                        <LineSegment Point="8,11" />
+                                                                        <LineSegment Point="0,11" />
+                                                                    </PathFigure>
+                                                                </PathGeometry>
+                                                            </GeometryDrawing.Geometry>
+                                                        </GeometryDrawing>
+                                                        <GeometryDrawing>
+                                                            <GeometryDrawing.Pen>
+                                                                <Pen Brush="Black" Thickness="1"/>
+                                                            </GeometryDrawing.Pen>
+                                                            <GeometryDrawing.Geometry>
+                                                                <PathGeometry>
+                                                                    <PathFigure StartPoint="2,0">
+                                                                        <LineSegment Point="11,0" />
+                                                                        <LineSegment Point="11,9" />
+                                                                    </PathFigure>
+                                                                </PathGeometry>
+                                                            </GeometryDrawing.Geometry>
+                                                        </GeometryDrawing>
+                                                    </DrawingGroup>
+                                                </DrawingBrush.Drawing>
+                                            </DrawingBrush>
+                                        </Button.Foreground>
+                                    </Button>
+                                    <Button Name="PART_CloseWindowButton" Focusable="False"
+                                            shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                            Command="windows:SystemCommands.CloseWindowCommand"
+                                            Style="{StaticResource AeroLiteCloseButtonStyle}"
+                                            Width="44">
+                                        <Button.Foreground>
+                                            <DrawingBrush>
+                                                <DrawingBrush.Drawing>
+                                                    <DrawingGroup>
+                                                        <GeometryDrawing Brush="Black">
+                                                            <GeometryDrawing.Pen>
+                                                                <Pen Brush="Black" Thickness="1"/>
+                                                            </GeometryDrawing.Pen>
+                                                            <GeometryDrawing.Geometry>
+                                                                <PathGeometry>
+                                                                    <PathFigure StartPoint="0,0" IsClosed="True">
+                                                                        <LineSegment Point="0.5,0" />
+                                                                        <LineSegment Point="6,6" />
+                                                                        <LineSegment Point="5.5,6" />
+                                                                    </PathFigure>
+                                                                    <PathFigure StartPoint="5.5,0" IsClosed="True">
+                                                                        <LineSegment Point="6,0" />
+                                                                        <LineSegment Point="0.5,6" />
+                                                                        <LineSegment Point="0,6" />
+                                                                    </PathFigure>
+                                                                </PathGeometry>
+                                                            </GeometryDrawing.Geometry>
+                                                        </GeometryDrawing>
+                                                    </DrawingGroup>
+                                                </DrawingBrush.Drawing>
+                                            </DrawingBrush>
+                                        </Button.Foreground>
+                                    </Button>
+                                    <Rectangle Visibility="Hidden"
+                                               Width="{Binding Path=(shell:WindowChrome.WindowChrome).ResizeBorderThickness.Right, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </StackPanel>
+
+                            </Grid>
+                        </Border>
+
+                        <Border BorderThickness="{Binding Path=(shell:WindowChrome.WindowChrome).ResizeBorderThickness, RelativeSource={RelativeSource TemplatedParent}}">
+                          <Grid>
+                            <AdornerDecorator>
+                                <ContentPresenter Name="PART_RootContentPresenter"/>
+                            </AdornerDecorator>
+                            <ResizeGrip x:Name="WindowResizeGrip"
+                                        shell:WindowChrome.ResizeGripDirection="BottomRight"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Bottom"
+                                        Visibility="Collapsed"
+                                        IsTabStop="false"/>
+                          </Grid>
+                        </Border>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsActive" Value="False">
+                            <Setter TargetName="NonClientAreaBorder" Property="BorderBrush" Value="{StaticResource InactiveWindowBorder}"/>
+                        </Trigger>
+                        <Trigger Property="WindowState" Value="Maximized">
+                            <Setter TargetName="TitleGrid" Property="Margin" Value="0,5,0,0"/>
+                            <Setter TargetName="PART_MaximizeWindowButton" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="PART_RestoreWindowButton" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="Icon" Value="{x:Null}">
+#ifdef Net45
+                            <Setter TargetName="PART_Icon" Property="Source" Value="/System.Windows.Controls.Ribbon;component/Images/DefaultSystemIcon.png"/>
+#else
+                            <Setter TargetName="PART_Icon" Property="Source" Value="/RibbonControlsLibrary;component/Images/DefaultSystemIcon.png"/>
+#endif
+                        </Trigger>
+                        <MultiTrigger>
+                            <!-- There may be perf implications b/c of the following conditions.  We may cause
+                                                         an extra layout to happen when WindowState changes to Minimized and ResizeMode
+                                                         is set to CanResizeWithGrip.
+                                                         NavigationWindow's style requires the ResizeMode condition tag even though
+                                                         Window's style already takes care of this condition.
+                                                         -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Window.ResizeMode"
+                                           Value="CanResizeWithGrip"/>
+                                <Condition Property="Window.WindowState"
+                                           Value="Normal"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="WindowResizeGrip"
+                                    Property="Visibility"
+                                    Value="Visible"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+
+    <!--=================================================================
+            AeroLite with Glass
+        ==================================================================-->
+
+#ifdef Net45
+            <DataTrigger Binding="{Binding Path=(SystemParameters.IsGlassEnabled)}" Value="True">
+#else
+            <DataTrigger Binding="{Binding Path=IsGlassEnabled, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                <Setter Property="shell:WindowChrome.WindowChrome" Value="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=WindowChromeAeroLiteWithGlass}}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ribbon:RibbonWindow}">
+                            <Grid>
+                                <!-- We must place our template bindings on a separate Border since PART_RootContentPresenter extends into
+                                     non-client area, and setting BorderBrush or Background should only affect client area.
+                                     This deviates from Window, where setting Window.BorderThickness indents the Window.Content.
+                                  -->
+                                <Border Name="PART_ClientAreaBorder"
+#ifdef Net45
+                                        Margin="{Binding Path=(SystemParameters.WindowNonClientFrameThickness)}"
+#else
+                                        Margin="{Binding Path=WindowNonClientFrameThickness, Source={x:Static windows:SystemParameters2.Current}}"
+#endif
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"/>
+
+                                <Border BorderThickness="{Binding Path=(shell:WindowChrome.WindowChrome).ResizeBorderThickness, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <Grid>
+                                        <Image Name="PART_Icon"
+                                               shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                               Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Icon, Converter={StaticResource RibbonWindowSmallIconConverter}}"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Top"
+#ifdef Net45
+                                               Width="{Binding Path=(SystemParameters.SmallIconWidth)}"
+                                               Height="{Binding Path=(SystemParameters.SmallIconHeight)}"/>
+#else
+                                               Width="{Binding Path=SmallIconSize.Width, Source={x:Static windows:SystemParameters2.Current}}"
+                                               Height="{Binding Path=SmallIconSize.Height, Source={x:Static windows:SystemParameters2.Current}}"/>
+#endif
+                                        <AdornerDecorator>
+                                            <ContentPresenter Name="PART_RootContentPresenter"/>
+                                        </AdornerDecorator>
+                                        <ResizeGrip x:Name="WindowResizeGrip"
+                                                    shell:WindowChrome.ResizeGripDirection="BottomRight"
+                                                    HorizontalAlignment="Right"
+                                                    VerticalAlignment="Bottom"
+                                                    Visibility="Collapsed"
+                                                    IsTabStop="false"/>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Icon" Value="{x:Null}">
+#ifdef Net45
+                                    <Setter TargetName="PART_Icon" Property="Source" Value="/System.Windows.Controls.Ribbon;component/Images/GlassyDefaultSystemIcon.png"/>
+#else
+                                    <Setter TargetName="PART_Icon" Property="Source" Value="/RibbonControlsLibrary;component/Images/GlassyDefaultSystemIcon.png"/>
+#endif
+                                </Trigger>
+                                <Trigger Property="WindowState" Value="Maximized">
+                                    <Setter TargetName="PART_Icon" Property="Margin" Value="0,2,0,0"/>
+                                </Trigger>
+                                <MultiTrigger>
+                                    <!-- There may be perf implications b/c of the following conditions.  We may cause
+                                                                 an extra layout to happen when WindowState changes to Minimized and ResizeMode
+                                                                 is set to CanResizeWithGrip.
+                                                                 NavigationWindow's style requires the ResizeMode condition tag even though
+                                                                 Window's style already takes care of this condition.
+                                                                 -->
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="Window.ResizeMode"
+                                                   Value="CanResizeWithGrip"/>
+                                        <Condition Property="Window.WindowState"
+                                                   Value="Normal"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter TargetName="WindowResizeGrip"
+                                            Property="Visibility"
+                                            Value="Visible"/>
+                                </MultiTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- [[Aero.NormalColor]] -->
+
+    <primitives:RibbonWindowSmallIconConverter x:Key="RibbonWindowSmallIconConverter"/>
+    <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=RibbonWindowStyle}" TargetType="{x:Type ribbon:RibbonWindow}">
+        <Setter Property="shell:WindowChrome.WindowChrome" Value="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=WindowChromeAeroBasic}}" />
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ribbon:RibbonWindow}">
+                    <ControlTemplate.Resources>
+
+                        <Style TargetType="{x:Type Button}" x:Key="AeroCaptionBaseButtonStyle">
+                            <Style.Resources>
+                                <LinearGradientBrush x:Key="AeroCaptionButtonGradient" StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FFC3D4E7" Offset="0"/>
+                                    <GradientStop Color="#FFBFD3E8" Offset="0.47"/>
+                                    <GradientStop Color="#FF98B1CC" Offset="0.47"/>
+                                    <GradientStop Color="#FFB7D0E9" Offset="1"/>
+                                </LinearGradientBrush>
+                                <LinearGradientBrush x:Key="ActiveAeroCaptionButtonBorderGradient" StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FF5D6F88" Offset="0.0"/>
+                                    <GradientStop Color="#FF697A92" Offset="1.0"/>
+                                </LinearGradientBrush>
+                                <LinearGradientBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroCaptionButtonHighlightGradient}" StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FFDFE8F2" Offset="0"/>
+                                    <GradientStop Color="#FFDDE7F3" Offset="0.47"/>
+                                    <GradientStop Color="#FFC8D5E4" Offset="0.47"/>
+                                    <GradientStop Color="#FFD9E7F4" Offset="1"/>
+                                </LinearGradientBrush>
+                                <LinearGradientBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroCaptionButtonHoverHighlightGradient}" StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FFD6EBFA" Offset="0"/>
+                                    <GradientStop Color="#FFBBDDF3" Offset="0.47"/>
+                                    <GradientStop Color="#FF8EB4CE" Offset="0.47"/>
+                                    <GradientStop Color="#FF8CD1EE" Offset="0.87"/>
+                                    <GradientStop Color="#FF89E0F4" Offset="0.87"/>
+                                    <GradientStop Color="#FF85EFF9" Offset="1"/>
+                                </LinearGradientBrush>
+                                <LinearGradientBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroCaptionButtonPressedHighlightGradient}" StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FFACBEC9" Offset="0"/>
+                                    <GradientStop Color="#FF90A2B1" Offset="0.47"/>
+                                    <GradientStop Color="#FF667888" Offset="0.47"/>
+                                    <GradientStop Color="#FF68939F" Offset="0.73"/>
+                                    <GradientStop Color="#FF6BADB4" Offset="0.73"/>
+                                    <GradientStop Color="#FF67E6E4" Offset="1"/>
+                                </LinearGradientBrush>
+                                <LinearGradientBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroCaptionButtonHoverGradient}" StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FFAAD5F3" Offset="0"/>
+                                    <GradientStop Color="#FF81C0EA" Offset="0.47"/>
+                                    <GradientStop Color="#FF2D73A3" Offset="0.47"/>
+                                    <GradientStop Color="#FF24C6EB" Offset="1"/>
+                                </LinearGradientBrush>
+                                <LinearGradientBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroCaptionButtonPressedGradient}" StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FF7F9AAC" Offset="0"/>
+                                    <GradientStop Color="#FF5D778C" Offset="0.47"/>
+                                    <GradientStop Color="#FF203B52" Offset="0.47"/>
+                                    <GradientStop Color="#FF1F4158" Offset="0.68"/>
+                                    <GradientStop Color="#FF236273" Offset="0.68"/>
+                                    <GradientStop Color="#FF27C9C8" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Style.Resources>
+                            <Setter Property="Background" Value="{StaticResource AeroCaptionButtonGradient}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource ActiveAeroCaptionButtonBorderGradient}"/>
+                            <Setter Property="Padding" Value="8,2"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <ControlTemplate.Resources>
+                                            <LinearGradientBrush x:Key="InactiveBorderGradient" StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#FF838EA8" Offset="0.0"/>
+                                                <GradientStop Color="#FF8893AD" Offset="1.0"/>
+                                            </LinearGradientBrush>
+                                            <LinearGradientBrush x:Key="GlyphBackgroundBorderInactiveBrush" StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#FFBDCBDA" Offset="0.0"/>
+                                                <GradientStop Color="#FFCEDCEB" Offset="1"/>
+                                            </LinearGradientBrush>
+                                            <LinearGradientBrush x:Key="InnerHighlightInactiveBrush" StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#FFD1DBE5" Offset="0.0"/>
+                                                <GradientStop Color="#FFDFE8F3" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </ControlTemplate.Resources>
+                                        <Grid>
+                                            <Border CornerRadius="2" BorderBrush="{TemplateBinding BorderBrush}"
+                                                    Background="{TemplateBinding Background}"
+                                                    BorderThickness="1"
+                                                    Width="{TemplateBinding Width}"
+                                                    Height="{TemplateBinding Height}">
+                                                <Border Name="InnerHighlightBorder" CornerRadius="2" BorderBrush="{DynamicResource {ComponentResourceKey {x:Type RibbonWindow}, AeroCaptionButtonHighlightGradient}}" BorderThickness="1"/>
+                                            </Border>
+                                            <Border x:Name="GlyphBackgroundBorder" Margin="2">
+                                                <Rectangle Margin="{TemplateBinding Padding}" Fill="{TemplateBinding Foreground}"/>
+                                            </Border>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding Path=IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="False"/>
+                                                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionBrushKey}}"/>
+                                                <Setter Property="BorderBrush" Value="{StaticResource InactiveBorderGradient}"/>
+                                                <Setter TargetName="GlyphBackgroundBorder" Property="Background" Value="{StaticResource GlyphBackgroundBorderInactiveBrush}"/>
+                                                <Setter TargetName="InnerHighlightBorder" Property="BorderBrush" Value="{StaticResource InnerHighlightInactiveBrush}"/>
+                                            </MultiDataTrigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="{DynamicResource {ComponentResourceKey {x:Type RibbonWindow}, AeroCaptionButtonHoverGradient}}"/>
+                                                <Setter TargetName="InnerHighlightBorder" Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey {x:Type RibbonWindow}, AeroCaptionButtonHoverHighlightGradient}}"/>
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter TargetName="InnerHighlightBorder" Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey {x:Type RibbonWindow}, AeroCaptionButtonPressedHighlightGradient}}"/>
+                                                <Setter Property="Background" Value="{DynamicResource {ComponentResourceKey {x:Type RibbonWindow}, AeroCaptionButtonPressedGradient}}"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
+                        <Style BasedOn="{StaticResource AeroCaptionBaseButtonStyle}" TargetType="{x:Type Button}" x:Key="AeroMinimizeButtonStyle">
+                            <Setter Property="Padding" Value="8,6,8,2"/>
+                        </Style>
+
+                        <Style BasedOn="{StaticResource AeroCaptionBaseButtonStyle}" TargetType="{x:Type Button}" x:Key="AeroRestoreButtonStyle">
+                            <Setter Property="Padding" Value="7,1,8,1"/>
+                        </Style>
+
+                        <Style BasedOn="{StaticResource AeroCaptionBaseButtonStyle}" TargetType="{x:Type Button}" x:Key="AeroCloseButtonStyle">
+                            <Style.Resources>
+                                <LinearGradientBrush x:Key="AeroCloseButtonGradient" StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FFE9A99C" Offset="0.0"/>
+                                    <GradientStop Color="#FFDF9587" Offset="0.47"/>
+                                    <GradientStop Color="#FFB8432C" Offset="0.47"/>
+                                    <GradientStop Color="#FFD27F6F" Offset="1"/>
+                                </LinearGradientBrush>
+                                <SolidColorBrush x:Key="ActiveAeroCloseButtonBorderBrush" Color="#FF431422"/>
+                                <LinearGradientBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroCaptionButtonHighlightGradient}" StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FFF4D3CC" Offset="0.0"/>
+                                    <GradientStop Color="#FFEDC4BD" Offset="0.47"/>
+                                    <GradientStop Color="#FFD99A8E" Offset="0.47"/>
+                                    <GradientStop Color="#FFECC6C0" Offset="1"/>
+                                </LinearGradientBrush>
+                                <LinearGradientBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroCaptionButtonHoverHighlightGradient}" StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FFFDE4E0" Offset="0.0"/>
+                                    <GradientStop Color="#FFFCCEC6" Offset="0.47"/>
+                                    <GradientStop Color="#FFE78977" Offset="0.47"/>
+                                    <GradientStop Color="#FFEEB495" Offset="0.87"/>
+                                    <GradientStop Color="#FFF3CCA4" Offset="0.87"/>
+                                    <GradientStop Color="#FFFAEE6B" Offset="1"/>
+                                </LinearGradientBrush>
+                                <LinearGradientBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroCaptionButtonPressedHighlightGradient}" StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FFDDC7BC" Offset="0.0"/>
+                                    <GradientStop Color="#FFCCB0A5" Offset="0.47"/>
+                                    <GradientStop Color="#FFB28176" Offset="0.47"/>
+                                    <GradientStop Color="#FFC2A489" Offset="0.87"/>
+                                    <GradientStop Color="#FFCDB697" Offset="0.87"/>
+                                    <GradientStop Color="#FFF2E682" Offset="1"/>
+                                </LinearGradientBrush>
+                                <LinearGradientBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroCaptionButtonHoverGradient}" StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FFFCC8BF" Offset="0.0"/>
+                                    <GradientStop Color="#FFFAA99A" Offset="0.47"/>
+                                    <GradientStop Color="#FFD22302" Offset="0.47"/>
+                                    <GradientStop Color="#FFE5934D" Offset="1"/>
+                                </LinearGradientBrush>
+                                <LinearGradientBrush x:Key="{ComponentResourceKey {x:Type RibbonWindow}, AeroCaptionButtonPressedGradient}" StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FFC49982" Offset="0.0"/>
+                                    <GradientStop Color="#FFB37B63" Offset="0.47"/>
+                                    <GradientStop Color="#FF831800" Offset="0.47"/>
+                                    <GradientStop Color="#FF831800" Offset="0.68"/>
+                                    <GradientStop Color="#FF832A01" Offset="0.68"/>
+                                    <GradientStop Color="#FFB98C47" Offset="1"/>
+                                </LinearGradientBrush>
+                                <SolidColorBrush x:Key="AeroCloseButtonHoverBorderBrush" Color="#FF720000"/>
+                            </Style.Resources>
+                            <Setter Property="Background" Value="{StaticResource AeroCloseButtonGradient}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource ActiveAeroCloseButtonBorderBrush}"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                        <Condition Binding="{Binding Path=IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="BorderBrush" Value="{StaticResource AeroCloseButtonHoverBorderBrush}"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+
+                        <SolidColorBrush x:Key="InactiveWindowBorderTopHighlightBrush" Color="#FFE2E6EF"/>
+                        <SolidColorBrush x:Key="InactiveWindowBorderHighlightBrush" Color="#FFE9ECF3"/>
+
+                        <SolidColorBrush x:Key="OuterBorderDisabledBrush" Color="#FF4C4C4C"/>
+
+                        <LinearGradientBrush x:Key="InactiveWindowTopBorderOverlayBrush" StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#02FFFFFF" Offset="0.0"/>
+                            <GradientStop Color="#FF4C4C4C" Offset="0.33"/>
+                        </LinearGradientBrush>
+
+                        <LinearGradientBrush x:Key="ActiveWindowBorderShadowBrush" StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#FFC1EEF5" Offset="0.0"/>
+                            <GradientStop Color="#FF83DEF4" Offset="0.2"/>
+                            <GradientStop Color="#FF42CFF2" Offset="0.5"/>
+                            <GradientStop Color="#FF28CFE4" Offset="0.95"/>
+                        </LinearGradientBrush>
+
+                        <LinearGradientBrush x:Key="AeroBasicCaptionButtonGlyphBrush" StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#FFFFFFFF" Offset="0.0"/>
+                            <GradientStop Color="#FFFAFAFA" Offset="0.47"/>
+                            <GradientStop Color="#FFE9E9E9" Offset="0.47"/>
+                            <GradientStop Color="#FFD7D7D7" Offset="1"/>
+                        </LinearGradientBrush>
+
+                        <LinearGradientBrush x:Key="AeroActiveTitlePanelOverlayBrush" StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#3000365D" Offset="0.0"/>
+                            <GradientStop Color="#00000000" Offset="1.0"/>
+                        </LinearGradientBrush>
+
+                        <LinearGradientBrush x:Key="AeroInactiveTitlePanelOverlayBrush" StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#1D001A2A" Offset="0.0"/>
+                            <GradientStop Color="#00000000" Offset="1.0"/>
+                        </LinearGradientBrush>
+
+                        <LinearGradientBrush x:Key="AeroActiveWindowBackgroundSideOverlayBrush" StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#00FFFFFF" Offset="0.0"/>
+                            <GradientStop Color="#00FFFFFF" Offset="0.30"/>
+                            <GradientStop Color="#70FFFFFF" Offset="0.85"/>
+                            <GradientStop Color="#80FFFFFF" Offset="0.98"/>
+                            <GradientStop Color="#70FFFFFF" Offset="0.99"/>
+                            <GradientStop Color="#00FFFFFF" Offset="1.0"/>
+                        </LinearGradientBrush>
+
+                        <LinearGradientBrush x:Key="AeroInactiveWindowBackgroundTopOverlayBrush" StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#16000000" Offset="0.0"/>
+                            <GradientStop Color="#00000000" Offset="0.33"/>
+                        </LinearGradientBrush>
+
+                    </ControlTemplate.Resources>
+
+                    <Grid>
+
+                        <Border Name="NonClientAreaBorder"
+#ifdef Net45
+                                BorderThickness="{Binding Path=(SystemParameters.WindowNonClientFrameThickness)}"
+#else
+                                BorderThickness="{Binding Path=WindowNonClientFrameThickness, Source={x:Static windows:SystemParameters2.Current}}"
+#endif
+                                BorderBrush="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}">
+                            <Border Name="PART_ClientAreaBorder"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"/>
+                        </Border>
+
+                        <StackPanel>
+                            <!-- The title panel has a shadow gradient on top of it so that it is darker than the rest of the window. -->
+                            <Border Name="TitlePanelOverlay"
+                                    VerticalAlignment="Top"
+                                    Background="{StaticResource AeroActiveTitlePanelOverlayBrush}"
+#ifdef Net45
+                                    Height="{Binding Path=(SystemParameters.WindowNonClientFrameThickness).Top}"/>
+#else
+                                    Height="{Binding Path=WindowNonClientFrameThickness.Top, Source={x:Static windows:SystemParameters2.Current}}"/>
+#endif
+
+                            <!-- Windows in Aero have a highlight gradient on the sides near the top. -->
+                            <Grid Height="90">
+                                <Rectangle x:Name="AeroLeftHighlightOverlay"
+                                           Fill="{StaticResource AeroActiveWindowBackgroundSideOverlayBrush}"
+                                           Width="{Binding Path=(shell:WindowChrome.WindowChrome).ResizeBorderThickness.Left, RelativeSource={RelativeSource TemplatedParent}}"
+                                           HorizontalAlignment="Left"/>
+                                <Rectangle x:Name="AeroRightHighlightOverlay"
+                                           Fill="{StaticResource AeroActiveWindowBackgroundSideOverlayBrush}"
+                                           Width="{Binding Path=(shell:WindowChrome.WindowChrome).ResizeBorderThickness.Right, RelativeSource={RelativeSource TemplatedParent}}"
+                                           HorizontalAlignment="Right"/>
+                            </Grid>
+                        </StackPanel>
+
+                        <Border Name="OuterBorder"
+                                BorderThickness="1"
+                                BorderBrush="Black"
+#ifdef Net45
+                                CornerRadius="{Binding Path=(SystemParameters.WindowCornerRadius)}">
+#else
+                                CornerRadius="{Binding Path=WindowCornerRadius, Source={x:Static windows:SystemParameters2.Current}}">
+#endif
+                            <Grid>
+                                <Border Name="WindowHighlightBorder"
+                                        BorderThickness="1,1,0,0"
+                                        BorderBrush="White"
+#ifdef Net45
+                                        CornerRadius="{Binding Path=(SystemParameters.WindowCornerRadius)}">
+#else
+                                        CornerRadius="{Binding Path=WindowCornerRadius, Source={x:Static windows:SystemParameters2.Current}}">
+#endif
+
+                                    <Grid VerticalAlignment="Top"
+                                          Margin="{Binding Path=(shell:WindowChrome.WindowChrome).ResizeBorderThickness, RelativeSource={RelativeSource TemplatedParent}}">
+
+                                        <Image Name="PART_Icon"
+                                               shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                               Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Icon, Converter={StaticResource RibbonWindowSmallIconConverter}}"
+                                               HorizontalAlignment="Left"
+#ifdef Net45
+                                               Width="{Binding Path=(SystemParameters.SmallIconWidth)}"
+                                               Height="{Binding Path=(SystemParameters.SmallIconHeight)}"/>
+#else
+                                               Width="{Binding Path=SmallIconSize.Width, Source={x:Static windows:SystemParameters2.Current}}"
+                                               Height="{Binding Path=SmallIconSize.Height, Source={x:Static windows:SystemParameters2.Current}}"/>
+#endif
+
+                                        <StackPanel Orientation="Horizontal"
+                                                    HorizontalAlignment="Right"
+#ifdef Net45
+                                                    Height="{Binding Path=(SystemParameters.WindowCaptionButtonHeight)}">
+#else
+                                                    Height="{Binding Path=WindowCaptionButtonsLocation.Height, Source={x:Static windows:SystemParameters2.Current}}">
+#endif
+                                            <Button Name="PART_MinimizeWindowButton" Focusable="False"
+                                                    shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                                    Command="windows:SystemCommands.MinimizeWindowCommand"
+                                                    Style="{StaticResource AeroMinimizeButtonStyle}"
+#ifdef Net45
+                                                    Margin="0,0,0,4"
+#endif
+                                                    Width="31">
+                                                <Button.Foreground>
+                                                    <DrawingBrush>
+                                                        <DrawingBrush.Drawing>
+                                                            <DrawingGroup>
+                                                                <GeometryDrawing Brush="{StaticResource AeroBasicCaptionButtonGlyphBrush}">
+                                                                    <GeometryDrawing.Pen>
+                                                                        <Pen Brush="Black" Thickness="5"/>
+                                                                    </GeometryDrawing.Pen>
+                                                                    <GeometryDrawing.Geometry>
+                                                                        <PathGeometry>
+                                                                            <PathFigure StartPoint="10,20" IsClosed="True">
+                                                                                <LineSegment Point="10,40" />
+                                                                                <LineSegment Point="20,50" />
+                                                                                <LineSegment Point="100,50" />
+                                                                                <LineSegment Point="110,40" />
+                                                                                <LineSegment Point="110,20" />
+                                                                                <LineSegment Point="100,10" />
+                                                                                <LineSegment Point="20,10" />
+                                                                            </PathFigure>
+                                                                        </PathGeometry>
+                                                                    </GeometryDrawing.Geometry>
+                                                                </GeometryDrawing>
+                                                            </DrawingGroup>
+                                                        </DrawingBrush.Drawing>
+                                                    </DrawingBrush>
+                                                </Button.Foreground>
+                                            </Button>
+                                            <Button Name="PART_MaximizeWindowButton" Focusable="False"
+                                                    shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                                    Command="windows:SystemCommands.MaximizeWindowCommand"
+                                                    Style="{StaticResource AeroCaptionBaseButtonStyle}"
+#ifdef Net45
+                                                    Margin="2,0,0,4"
+#else
+                                                    Margin="2,0,0,0"
+#endif
+                                                    Width="31">
+                                                <Button.Foreground>
+                                                    <DrawingBrush>
+                                                        <DrawingBrush.Drawing>
+                                                            <DrawingGroup>
+                                                                <GeometryDrawing Brush="{StaticResource AeroBasicCaptionButtonGlyphBrush}">
+                                                                    <GeometryDrawing.Pen>
+                                                                        <Pen Brush="Black" Thickness="5"/>
+                                                                    </GeometryDrawing.Pen>
+                                                                    <GeometryDrawing.Geometry>
+                                                                        <PathGeometry>
+                                                                            <PathFigure StartPoint="10,20" IsClosed="True">
+                                                                                <LineSegment Point="10,80" />
+                                                                                <LineSegment Point="20,90" />
+                                                                                <LineSegment Point="100,90" />
+                                                                                <LineSegment Point="110,80" />
+                                                                                <LineSegment Point="110,20" />
+                                                                                <LineSegment Point="100,10" />
+                                                                                <LineSegment Point="20,10" />
+                                                                            </PathFigure>
+                                                                            <PathFigure StartPoint="40,40" IsClosed="True">
+                                                                                <LineSegment Point="40,60" />
+                                                                                <LineSegment Point="80,60" />
+                                                                                <LineSegment Point="80,40" />
+                                                                            </PathFigure>
+                                                                        </PathGeometry>
+                                                                    </GeometryDrawing.Geometry>
+                                                                </GeometryDrawing>
+                                                            </DrawingGroup>
+                                                        </DrawingBrush.Drawing>
+                                                    </DrawingBrush>
+                                                </Button.Foreground>
+                                            </Button>
+                                            <Button Name="PART_RestoreWindowButton" Focusable="False"
+                                                    shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                                    Command="windows:SystemCommands.RestoreWindowCommand"
+                                                    Style="{StaticResource AeroRestoreButtonStyle}"
+#ifdef Net45
+                                                    Margin="2,0,0,4"
+#else
+                                                    Margin="2,0,0,0"
+#endif
+                                                    Width="31"
+                                                    Visibility="Collapsed">
+                                                <Button.Foreground>
+                                                    <DrawingBrush>
+                                                        <DrawingBrush.Drawing>
+                                                            <DrawingGroup>
+                                                                <GeometryDrawing Brush="{StaticResource AeroBasicCaptionButtonGlyphBrush}">
+                                                                    <GeometryDrawing.Pen>
+                                                                        <Pen Brush="Black" Thickness="5"/>
+                                                                    </GeometryDrawing.Pen>
+                                                                    <GeometryDrawing.Geometry>
+                                                                        <PathGeometry>
+                                                                            <PathFigure StartPoint="40,10" IsClosed="True">
+                                                                                <LineSegment Point="40,60" />
+                                                                                <LineSegment Point="50,70" />
+                                                                                <LineSegment Point="100,70" />
+                                                                                <LineSegment Point="110,60" />
+                                                                                <LineSegment Point="110,10" />
+                                                                                <LineSegment Point="100,0" />
+                                                                                <LineSegment Point="50,0" />
+                                                                            </PathFigure>
+                                                                            <PathFigure StartPoint="60,30" IsClosed="True">
+                                                                                <LineSegment Point="60,50" />
+                                                                                <LineSegment Point="90,50" />
+                                                                                <LineSegment Point="90,30" />
+                                                                            </PathFigure>
+                                                                        </PathGeometry>
+                                                                    </GeometryDrawing.Geometry>
+                                                                </GeometryDrawing>
+                                                                <GeometryDrawing Brush="{StaticResource AeroBasicCaptionButtonGlyphBrush}">
+                                                                    <GeometryDrawing.Pen>
+                                                                        <Pen Brush="Black" Thickness="5"/>
+                                                                    </GeometryDrawing.Pen>
+                                                                    <GeometryDrawing.Geometry>
+                                                                        <PathGeometry>
+                                                                            <PathFigure StartPoint="0,40" IsClosed="True">
+                                                                                <LineSegment Point="0,90" />
+                                                                                <LineSegment Point="10,100" />
+                                                                                <LineSegment Point="60,100" />
+                                                                                <LineSegment Point="70,90" />
+                                                                                <LineSegment Point="70,40" />
+                                                                                <LineSegment Point="60,30" />
+                                                                                <LineSegment Point="10,30" />
+                                                                            </PathFigure>
+                                                                            <PathFigure StartPoint="20,60" IsClosed="True">
+                                                                                <LineSegment Point="20,80" />
+                                                                                <LineSegment Point="50,80" />
+                                                                                <LineSegment Point="50,60" />
+                                                                            </PathFigure>
+                                                                        </PathGeometry>
+                                                                    </GeometryDrawing.Geometry>
+                                                                </GeometryDrawing>
+                                                            </DrawingGroup>
+                                                        </DrawingBrush.Drawing>
+                                                    </DrawingBrush>
+                                                </Button.Foreground>
+                                            </Button>
+                                            <Button Name="PART_CloseWindowButton" Focusable="False"
+                                                    shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                                    Command="windows:SystemCommands.CloseWindowCommand"
+                                                    Style="{StaticResource AeroCloseButtonStyle}"
+#ifdef Net45
+                                                    Margin="2,0,0,4"
+#else
+                                                    Margin="2,0,0,0"
+#endif
+                                                    Width="31">
+                                                <Button.Foreground>
+                                                    <DrawingBrush>
+                                                        <DrawingBrush.Drawing>
+                                                            <DrawingGroup>
+                                                                <GeometryDrawing Brush="{StaticResource AeroBasicCaptionButtonGlyphBrush}">
+                                                                    <GeometryDrawing.Pen>
+                                                                        <Pen Brush="Black" Thickness="5"/>
+                                                                    </GeometryDrawing.Pen>
+                                                                    <GeometryDrawing.Geometry>
+                                                                        <PathGeometry>
+                                                                            <PathFigure StartPoint="10,20" IsClosed="True">
+                                                                                <LineSegment Point="40,50" />
+                                                                                <LineSegment Point="10,80" />
+                                                                                <LineSegment Point="20,90" />
+                                                                                <LineSegment Point="40,90" />
+                                                                                <LineSegment Point="60,70" />
+                                                                                <LineSegment Point="80,90" />
+                                                                                <LineSegment Point="100,90" />
+                                                                                <LineSegment Point="110,80" />
+                                                                                <LineSegment Point="80,50" />
+                                                                                <LineSegment Point="110,20" />
+                                                                                <LineSegment Point="100,10" />
+                                                                                <LineSegment Point="80,10" />
+                                                                                <LineSegment Point="60,30" />
+                                                                                <LineSegment Point="40,10" />
+                                                                                <LineSegment Point="20,10" />
+                                                                            </PathFigure>
+                                                                        </PathGeometry>
+                                                                    </GeometryDrawing.Geometry>
+                                                                </GeometryDrawing>
+                                                            </DrawingGroup>
+                                                        </DrawingBrush.Drawing>
+                                                    </DrawingBrush>
+                                                </Button.Foreground>
+                                            </Button>
+                                        </StackPanel>
+
+                                    </Grid>
+                                </Border>
+
+                                <Border Name="WindowShadowBorder"
+                                        BorderThickness="0,0,1,1"
+                                        BorderBrush="{StaticResource ActiveWindowBorderShadowBrush}"
+#ifdef Net45
+                                        CornerRadius="{Binding Path=(SystemParameters.WindowCornerRadius)}"/>
+#else
+                                        CornerRadius="{Binding Path=WindowCornerRadius, Source={x:Static windows:SystemParameters2.Current}}"/>
+#endif
+                            </Grid>
+                        </Border>
+
+                        <Border BorderThickness="{Binding Path=(shell:WindowChrome.WindowChrome).ResizeBorderThickness, RelativeSource={RelativeSource TemplatedParent}}">
+                          <Grid>
+                            <AdornerDecorator>
+                                <ContentPresenter Name="PART_RootContentPresenter"/>
+                            </AdornerDecorator>
+                            <ResizeGrip x:Name="WindowResizeGrip"
+                                        shell:WindowChrome.ResizeGripDirection="BottomRight"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Bottom"
+                                        Visibility="Collapsed"
+                                        IsTabStop="false"/>
+                          </Grid>
+                        </Border>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsActive" Value="False">
+                            <!-- Gray out the outer border. -->
+                            <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{StaticResource OuterBorderDisabledBrush}"/>
+
+                            <!-- The shadow gradient over the title panel becomes less pronounced. -->
+                            <Setter TargetName="TitlePanelOverlay" Property="Background" Value="{StaticResource AeroInactiveTitlePanelOverlayBrush}"/>
+
+                            <!-- Gray out the window highlighting effect. -->
+                            <Setter TargetName="AeroLeftHighlightOverlay" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="AeroRightHighlightOverlay" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="WindowHighlightBorder" Property="BorderBrush" Value="{StaticResource InactiveWindowBorderHighlightBrush}"/>
+                            <Setter TargetName="WindowShadowBorder" Property="BorderBrush" Value="{StaticResource InactiveWindowBorderHighlightBrush}"/>
+                            <Setter TargetName="NonClientAreaBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionBrushKey}}"/>
+                        </Trigger>
+                        <Trigger Property="WindowState" Value="Maximized">
+                            <Setter TargetName="PART_MaximizeWindowButton" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="PART_RestoreWindowButton" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="Icon" Value="{x:Null}">
+#ifdef Net45
+                            <Setter TargetName="PART_Icon" Property="Source" Value="/System.Windows.Controls.Ribbon;component/Images/DefaultSystemIcon.png"/>
+#else
+                            <Setter TargetName="PART_Icon" Property="Source" Value="/RibbonControlsLibrary;component/Images/DefaultSystemIcon.png"/>
+#endif
+                        </Trigger>
+                        <MultiTrigger>
+                            <!-- There may be perf implications b/c of the following conditions.  We may cause
+                                                         an extra layout to happen when WindowState changes to Minimized and ResizeMode
+                                                         is set to CanResizeWithGrip.
+                                                         NavigationWindow's style requires the ResizeMode condition tag even though
+                                                         Window's style already takes care of this condition.
+                                                         -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Window.ResizeMode"
+                                           Value="CanResizeWithGrip"/>
+                                <Condition Property="Window.WindowState"
+                                           Value="Normal"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="WindowResizeGrip"
+                                    Property="Visibility"
+                                    Value="Visible"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+
+    <!--=================================================================
+            Aero with Glass
+        ==================================================================-->
+
+#ifdef Net45
+            <DataTrigger Binding="{Binding Path=(SystemParameters.IsGlassEnabled)}" Value="True">
+#else
+            <DataTrigger Binding="{Binding Path=IsGlassEnabled, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                <Setter Property="shell:WindowChrome.WindowChrome" Value="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=WindowChromeAeroWithGlass}}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ribbon:RibbonWindow}">
+                            <Grid>
+                                <!-- We must place our template bindings on a separate Border since PART_RootContentPresenter extends into
+                                     non-client area, and setting BorderBrush or Background should only affect client area.
+                                     This deviates from Window, where setting Window.BorderThickness indents the Window.Content.
+                                  -->
+                                <Border Name="PART_ClientAreaBorder"
+#ifdef Net45
+                                        Margin="{Binding Path=(SystemParameters.WindowNonClientFrameThickness)}"
+#else
+                                        Margin="{Binding Path=WindowNonClientFrameThickness, Source={x:Static windows:SystemParameters2.Current}}"
+#endif
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"/>
+
+                                <Border BorderThickness="{Binding Path=(shell:WindowChrome.WindowChrome).ResizeBorderThickness, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <Grid>
+                                        <Image Name="PART_Icon"
+                                               shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                               Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Icon, Converter={StaticResource RibbonWindowSmallIconConverter}}"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Top"
+#ifdef Net45
+                                               Width="{Binding Path=(SystemParameters.SmallIconWidth)}"
+                                               Height="{Binding Path=(SystemParameters.SmallIconHeight)}"/>
+#else
+                                               Width="{Binding Path=SmallIconSize.Width, Source={x:Static windows:SystemParameters2.Current}}"
+                                               Height="{Binding Path=SmallIconSize.Height, Source={x:Static windows:SystemParameters2.Current}}"/>
+#endif
+                                        <AdornerDecorator>
+                                            <ContentPresenter Name="PART_RootContentPresenter"/>
+                                        </AdornerDecorator>
+                                        <ResizeGrip x:Name="WindowResizeGrip"
+                                                    shell:WindowChrome.ResizeGripDirection="BottomRight"
+                                                    HorizontalAlignment="Right"
+                                                    VerticalAlignment="Bottom"
+                                                    Visibility="Collapsed"
+                                                    IsTabStop="false"/>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Icon" Value="{x:Null}">
+#ifdef Net45
+                                    <Setter TargetName="PART_Icon" Property="Source" Value="/System.Windows.Controls.Ribbon;component/Images/GlassyDefaultSystemIcon.png"/>
+#else
+                                    <Setter TargetName="PART_Icon" Property="Source" Value="/RibbonControlsLibrary;component/Images/GlassyDefaultSystemIcon.png"/>
+#endif
+                                </Trigger>
+                                <Trigger Property="WindowState" Value="Maximized">
+                                    <Setter TargetName="PART_Icon" Property="Margin" Value="0,2,0,0"/>
+                                </Trigger>
+                                <MultiTrigger>
+                                    <!-- There may be perf implications b/c of the following conditions.  We may cause
+                                                                 an extra layout to happen when WindowState changes to Minimized and ResizeMode
+                                                                 is set to CanResizeWithGrip.
+                                                                 NavigationWindow's style requires the ResizeMode condition tag even though
+                                                                 Window's style already takes care of this condition.
+                                                                 -->
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="Window.ResizeMode"
+                                                   Value="CanResizeWithGrip"/>
+                                        <Condition Property="Window.WindowState"
+                                                   Value="Normal"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter TargetName="WindowResizeGrip"
+                                            Property="Visibility"
+                                            Value="Visible"/>
+                                </MultiTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>

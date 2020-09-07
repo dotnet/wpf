@@ -1,38 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <VersionPrefix>4.8.0</VersionPrefix>
-    <PreReleaseVersionLabel>prerelease</PreReleaseVersionLabel>
-    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <VersionPrefix>6.0.0</VersionPrefix>
+    <PreReleaseVersionLabel>alpha</PreReleaseVersionLabel>
+    <PreReleaseVersionIteration>1</PreReleaseVersionIteration>
+    <SystemIOPackagingVersion>6.0.0-alpha.1.20428.2</SystemIOPackagingVersion>
+    <SystemResourcesExtensionsVersion>6.0.0-alpha.1.20428.2</SystemResourcesExtensionsVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
-    <!-- Packages that come from https://github.com/dotnet/corefx -->
-    <MicrosoftWin32RegistryPackageVersion>4.6.0-preview.19079.11</MicrosoftWin32RegistryPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>4.6.0-preview.19079.11</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>4.6.0-preview.19079.11</SystemDiagnosticsEventLogPackageVersion>
-    <SystemReflectionEmitPackageVersion>4.6.0-preview.19079.11</SystemReflectionEmitPackageVersion>
-    <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview.19079.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemSecurityAccessControlPackageVersion>4.6.0-preview.19079.11</SystemSecurityAccessControlPackageVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>4.6.0-preview.19079.11</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>4.6.0-preview.19079.11</SystemSecurityPermissionsPackageVersion>
-    <SystemSecurityPrincipalWindowsPackageVersion>4.6.0-preview.19079.11</SystemSecurityPrincipalWindowsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>4.6.0-preview.19079.11</SystemWindowsExtensionsPackageVersion>
-    <SystemCodeDomPackageVersion>4.6.0-preview.19079.11</SystemCodeDomPackageVersion>
-    <!-- Packages that come from https://github.com/dotnet/corefxlab -->
+    <MicrosoftPrivateWinformsVersion>6.0.0-alpha.1.20455.1</MicrosoftPrivateWinformsVersion>
+  </PropertyGroup>
+  <!-- Packages that come from https://github.com/dotnet/coreclr -->
+  <PropertyGroup>
+    <MicrosoftNETCoreRuntimeCoreCLRVersion>5.0.0-alpha1.19562.1</MicrosoftNETCoreRuntimeCoreCLRVersion>
+    <MicrosoftNETCoreILDAsmVersion>6.0.0-alpha.1.20428.2</MicrosoftNETCoreILDAsmVersion>
+    <MicrosoftNETCoreILAsmVersion>6.0.0-alpha.1.20428.2</MicrosoftNETCoreILAsmVersion>
+  </PropertyGroup>
+  <!-- Packages that come from https://github.com/dotnet/core-setup -->
+  <PropertyGroup>
+    <MicrosoftNETCoreAppInternalVersion>6.0.0-alpha.1.20428.2</MicrosoftNETCoreAppInternalVersion>
+    <MicrosoftNETCorePlatformsVersion>6.0.0-alpha.1.20428.2</MicrosoftNETCorePlatformsVersion>
+    <SystemDrawingCommonVersion>6.0.0-alpha.1.20428.2</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>6.0.0-alpha.1.20428.2</SystemDirectoryServicesVersion>
+    <SystemReflectionMetadataLoadContextVersion>6.0.0-alpha.1.20428.2</SystemReflectionMetadataLoadContextVersion>
+  </PropertyGroup>
+  <!-- Packages that come from https://github.com/dotnet/corefx via core-setup coherency parent dependency -->
+  <PropertyGroup>
+    <MicrosoftWin32RegistryPackageVersion>6.0.0-alpha.1.20428.2</MicrosoftWin32RegistryPackageVersion>
+    <SystemCodeDomPackageVersion>6.0.0-alpha.1.20428.2</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>6.0.0-alpha.1.20428.2</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>6.0.0-alpha.1.20428.2</SystemDiagnosticsEventLogPackageVersion>
+    <SystemReflectionEmitPackageVersion>5.0.0-alpha.1.19563.6</SystemReflectionEmitPackageVersion>
+    <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
+    <SystemSecurityAccessControlPackageVersion>6.0.0-alpha.1.20428.2</SystemSecurityAccessControlPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>6.0.0-alpha.1.20428.2</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>6.0.0-alpha.1.20428.2</SystemSecurityPermissionsPackageVersion>
+    <SystemSecurityPrincipalWindowsPackageVersion>6.0.0-alpha.1.20428.2</SystemSecurityPrincipalWindowsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>6.0.0-alpha.1.20428.2</SystemWindowsExtensionsPackageVersion>
+  </PropertyGroup>
+  <!-- Packages that come from https://github.com/dotnet/arcade -->
+  <PropertyGroup>
+    <MicrosoftDotNetApiCompatVersion>5.0.0-beta.20453.7</MicrosoftDotNetApiCompatVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>5.0.0-beta.20453.7</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetGenAPIVersion>5.0.0-beta.20453.7</MicrosoftDotNetGenAPIVersion>
+  </PropertyGroup>
+  <!-- Packages that come from https://github.com/dotnet/corefxlab -->
+  <PropertyGroup>
     <SystemReflectionTypeLoaderPackageVersion>0.1.0-preview2-181205-2</SystemReflectionTypeLoaderPackageVersion>
-    <!-- Maintain System.CodeDom PackageVersion at 4.4.0. See https://github.com/Microsoft/msbuild/issues/3627 -->
+  </PropertyGroup>
+  <!-- Maintain System.CodeDom PackageVersion at 4.4.0. See https://github.com/Microsoft/msbuild/issues/3627 -->
+  <!-- Pin specific versions of S.Memory so that it would supply AssemblyVersion=4.0.1.0. See https://github.com/dotnet/runtime/issues/31672 -->
+  <PropertyGroup>
     <SystemCodeDomPackageVersionForPresentationBuildTasks>4.4.0</SystemCodeDomPackageVersionForPresentationBuildTasks>
-    <!-- Other Packages that require manual updating-->
-    <AccessibilityPackageVersion>4.6.0-alpha-27128-8</AccessibilityPackageVersion>
+  </PropertyGroup>
+  <!-- Other Packages that require manual updating-->
+  <PropertyGroup>
     <MicrosoftBuildFrameworkPackageVersion>15.9.20</MicrosoftBuildFrameworkPackageVersion>
     <MicrosoftBuildUtilitiesCorePackageVersion>15.9.20</MicrosoftBuildUtilitiesCorePackageVersion>
-    <XUnitRunnerConsoleVersion>2.4.0</XUnitRunnerConsoleVersion>
-    <XUnitRunnerVisualStudioVersion>2.4.0</XUnitRunnerVisualStudioVersion>
     <XUnitVersion>2.4.0</XUnitVersion>
+    <XUnitRunnerConsoleVersion>$(XUnitVersion)</XUnitRunnerConsoleVersion>
+    <XUnitRunnerVisualStudioVersion>$(XUnitVersion)</XUnitRunnerVisualStudioVersion>
+    <!-- 
+        Also in global.json 
+        Used in Wpf.Cpp.PrivateTools.props/targets 
+    <MsvcurtC1xxVersion>0.0.1.2</MsvcurtC1xxVersion>
+    -->
+    <!--
+    This is the version of the test infrastructure package is compiled against. This should be
+    removed as part of https://github.com/dotnet/wpf/issues/816 
+    -->
+    <MicrosoftDotNetWpfTestPackageVersion>1.0.0-beta.19263.1</MicrosoftDotNetWpfTestPackageVersion>
+    <!-- These versions are specified in global.json -->
+    <StrawberryPerlVersion>5.28.1.1-1</StrawberryPerlVersion>
+    <NetFramework48RefAssembliesVersion>0.0.0.1</NetFramework48RefAssembliesVersion>
+    <NetFramework472IlToolsVersion>0.0.0.1</NetFramework472IlToolsVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <!-- This is required to restore System.Reflection.Typeloader successfully -->
-    <RestoreSources>$(RestoreSources);https://dotnet.myget.org/F/dotnet-corefxlab/api/v3/index.json</RestoreSources>
+    <RestoreSources>
+      $(RestoreSources);
+      https://dotnet.myget.org/F/dotnet-corefxlab/api/v3/index.json;
+      https://dotnetfeed.blob.core.windows.net/dotnet-windowsdesktop/index.json;
+      https://dotnetfeed.blob.core.windows.net/dotnet-coreclr/index.json;
+      https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json;
+    </RestoreSources>
+  </PropertyGroup>
+  <!--Package names-->
+  <PropertyGroup>
+    <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
+    <MicrosoftPrivateWinformsPackage>Microsoft.Private.Winforms</MicrosoftPrivateWinformsPackage>
+    <SystemDrawingCommonPackage>System.Drawing.Common</SystemDrawingCommonPackage>
+    <SystemDirectoryServicesPackage>System.DirectoryServices</SystemDirectoryServicesPackage>
+    <MicrosoftDotNetWpfDncEngPackage>Microsoft.DotNet.Wpf.DncEng</MicrosoftDotNetWpfDncEngPackage>
+    <SystemIOPackagingPackage>System.IO.Packaging</SystemIOPackagingPackage>
+    <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MicrosoftDotNetWpfDncEngVersion>6.0.0-alpha.1.20455.3</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

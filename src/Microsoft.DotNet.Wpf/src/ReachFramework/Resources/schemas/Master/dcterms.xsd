@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:dc="http://purl.org/dc/elements/1.1/"
+           xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+           targetNamespace="http://purl.org/dc/terms/"
+           xmlns="http://purl.org/dc/terms/"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+  <xs:annotation>
+    <xs:documentation xml:lang="en">
+      DCterms XML Schema
+      XML Schema for http://purl.org/dc/terms/ namespace
+
+      Created 2003-04-02
+
+      Created by 
+
+      Tim Cole (t-cole3@uiuc.edu)
+      Tom Habing (thabing@uiuc.edu)
+      Jane Hunter (jane@dstc.edu.au)
+      Pete Johnston (p.johnston@ukoln.ac.uk),
+      Carl Lagoze (lagoze@cs.cornell.edu)
+
+      This schema declares XML elements for the DC elements and
+      DC element refinements from the http://purl.org/dc/terms/ namespace.
+      
+      It reuses the complexType dc:SimpleLiteral, imported from the dc.xsd
+      schema, which permits simple element content, and makes the xml:lang
+      attribute available.
+
+      This complexType permits the derivation of other complexTypes
+      which would permit child elements.
+
+      DC elements are declared as substitutable for the abstract element dc:any, and 
+      DC element refinements are defined as substitutable for the base elements 
+      which they refine.
+
+      This means that the default type for all XML elements (i.e. all DC elements and 
+      element refinements) is dc:SimpleLiteral.
+
+      Encoding schemes are defined as complexTypes which are restrictions
+      of the dc:SimpleLiteral complexType. These complexTypes restrict 
+      values to an appropriates syntax or format using data typing,
+      regular expressions, or enumerated lists.
+  
+      In order to specify one of these encodings an xsi:type attribute must 
+      be used in the instance document.
+
+      Also, note that one shortcoming of this approach is that any type can be 
+      applied to any of the elements or refinements.  There is no convenient way
+      to restrict types to specific elements using this approach.
+
+    </xs:documentation>
+
+  </xs:annotation>
+
+
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace">
+  </xs:import>
+
+   <xs:import namespace="http://purl.org/dc/elements/1.1/"
+/>
+
+   <xs:import namespace="http://purl.org/dc/dcmitype/"
+/>
+
+   <xs:element name="alternative" substitutionGroup="dc:title"/>
+
+   <xs:element name="tableOfContents" substitutionGroup="dc:description"/>
+   <xs:element name="abstract" substitutionGroup="dc:description"/>
+
+   <xs:element name="created" substitutionGroup="dc:date"/>
+   <xs:element name="valid" substitutionGroup="dc:date"/>
+   <xs:element name="available" substitutionGroup="dc:date"/>
+   <xs:element name="issued" substitutionGroup="dc:date"/>
+   <xs:element name="modified" substitutionGroup="dc:date"/>
+   <xs:element name="dateAccepted" substitutionGroup="dc:date"/>
+   <xs:element name="dateCopyrighted" substitutionGroup="dc:date"/>
+   <xs:element name="dateSubmitted" substitutionGroup="dc:date"/>
+
+   <xs:element name="extent" substitutionGroup="dc:format"/>
+   <xs:element name="medium" substitutionGroup="dc:format"/>
+
+   <xs:element name="isVersionOf" substitutionGroup="dc:relation"/>
+   <xs:element name="hasVersion" substitutionGroup="dc:relation"/>
+   <xs:element name="isReplacedBy" substitutionGroup="dc:relation"/>
+   <xs:element name="replaces" substitutionGroup="dc:relation"/>
+   <xs:element name="isRequiredBy" substitutionGroup="dc:relation"/>
+   <xs:element name="requires" substitutionGroup="dc:relation"/>
+   <xs:element name="isPartOf" substitutionGroup="dc:relation"/>
+   <xs:element name="hasPart" substitutionGroup="dc:relation"/>
+   <xs:element name="isReferencedBy" substitutionGroup="dc:relation"/>
+   <xs:element name="references" substitutionGroup="dc:relation"/>
+   <xs:element name="isFormatOf" substitutionGroup="dc:relation"/>
+   <xs:element name="hasFormat" substitutionGroup="dc:relation"/>
+   <xs:element name="conformsTo" substitutionGroup="dc:relation"/>
+
+   <xs:element name="spatial" substitutionGroup="dc:coverage"/>
+   <xs:element name="temporal" substitutionGroup="dc:coverage"/>
+
+   <xs:element name="audience" substitutionGroup="dc:any"/>
+
+   <xs:element name="mediator" substitutionGroup="audience"/>
+   <xs:element name="educationLevel" substitutionGroup="audience"/>
+
+   <xs:element name="accessRights" substitutionGroup="dc:rights"/>
+
+   <xs:element name="bibliographicCitation" substitutionGroup="dc:identifier"/>
+
+  <xs:complexType name="LCSH">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited"/>
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="MESH">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited"/>
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="DDC">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited"/>
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="LCC">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited"/>
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="UDC">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited"/>
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="Period">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited"/>
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="W3CDTF">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+           <xs:union memberTypes="xs:gYear xs:gYearMonth xs:date xs:dateTime"/>
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited"/>
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType> 
+
+  <xs:complexType name="DCMIType">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="dcmitype:DCMIType"/>
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited"/>
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="IMT">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited"/>
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="URI">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:anyURI"/>
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited"/>
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType> 
+
+  <xs:complexType name="ISO639-2">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited"/>
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="RFC1766">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:language"/>
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited"/>
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="RFC3066">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:language"/>
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited"/>
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="Point">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited"/>
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ISO3166">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited"/>
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="Box">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited"/>
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="TGN">
+   <xs:simpleContent>
+    <xs:restriction base="dc:SimpleLiteral">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+        <xs:attribute ref="xml:lang" use="prohibited"/>
+    </xs:restriction>
+   </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:group name="elementsAndRefinementsGroup">
+  	<xs:annotation>
+    	<xs:documentation xml:lang="en">
+    		This group is included as a convenience for schema authors
+            who need to refer to all the DC elements and element refinements 
+            in the http://purl.org/dc/elements/1.1/ and 
+            http://purl.org/dc/terms namespaces. 
+            N.B. Refinements available via substitution groups.
+    	</xs:documentation>
+  	</xs:annotation>
+
+  <xs:sequence>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+	<xs:element ref="dc:any" />
+    </xs:choice>
+  </xs:sequence>
+  </xs:group>	
+
+  <xs:complexType name="elementOrRefinementContainer">
+  	<xs:annotation>
+    	<xs:documentation xml:lang="en">
+    		This is included as a convenience for schema authors who need to define a root
+    		or container element for all of the DC elements and element refinements.
+    	</xs:documentation>
+  	</xs:annotation>
+
+    <xs:choice>
+      <xs:group ref="elementsAndRefinementsGroup"/>
+    </xs:choice>
+  </xs:complexType>
+
+
+</xs:schema>

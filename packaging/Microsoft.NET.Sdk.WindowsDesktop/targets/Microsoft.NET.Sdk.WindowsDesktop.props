@@ -1,0 +1,165 @@
+<Project>
+  <ItemGroup Condition=" '$(_EnableWindowsDesktopGlobbing)' == 'true' ">
+    <ApplicationDefinition Include="App.xaml"
+                           Condition="'$(EnableDefaultApplicationDefinition)' != 'false' And Exists('$(MSBuildProjectDirectory)/App.xaml') And '$(MSBuildProjectExtension)' == '.csproj'">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </ApplicationDefinition>
+    <ApplicationDefinition Include="Application.xaml"
+                           Condition="'$(EnableDefaultApplicationDefinition)' != 'false' And Exists('$(MSBuildProjectDirectory)/Application.xaml') And '$(MSBuildProjectExtension)' == '.vbproj'">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </ApplicationDefinition>
+
+    <Page Include="**/*.xaml"
+          Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);@(ApplicationDefinition)"
+          Condition="'$(EnableDefaultPageItems)' != 'false'" >
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+
+
+    <!-- 
+      See https://github.com/dotnet/wpf/issues/685
+      Visual Studio would prefer that we remove **/*.xaml instead of 
+      being more precise.
+
+      <None Remove="@(Page)"
+              Condition="'$(EnableDefaultPageItems)' != 'false'" />
+      <None Remove="@(ApplicationDefinition)"
+            Condition="'$(EnableDefaultApplicationDefinition)' != 'false'" />
+    -->
+    <None Remove="**/*.xaml"
+          Condition="'$(EnableDefaultApplicationDefinition)' != 'false' And '$(EnableDefaultPageItems)' != 'false'" />
+  </ItemGroup>
+
+  
+  <ItemGroup Condition=" '$(_EnableWindowsDesktopNetCoreFrameworkReferences)' == 'true' ">
+
+    <FrameworkReference Include="Microsoft.WindowsDesktop.App" IsImplicitlyDefined="true"
+                        Condition="('$(UseWPF)' == 'true') And ('$(UseWindowsForms)' == 'true')"/>
+
+    <FrameworkReference Include="Microsoft.WindowsDesktop.App.WPF" IsImplicitlyDefined="true"
+                        Condition="('$(UseWPF)' == 'true') And ('$(UseWindowsForms)' != 'true')"/>
+
+    <FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" IsImplicitlyDefined="true"
+                        Condition="('$(UseWPF)' != 'true') And ('$(UseWindowsForms)' == 'true')"/>
+  </ItemGroup>
+  
+
+  <!--
+    Traditionally, Visual Studio has supplied these references for .NET Framework based
+    WPF Projects: 
+    
+    .NET 3.x:   PresentationCore, PresentationFramework, WindowsBase 
+    .NET 4.x:   PresentationCore, PresentationFramework, WindowsBase, System.Xaml 
+
+
+    Microsoft.NET.WindowsDesktop.SDK will supply the following references to .NET Framework based 
+    WPF Projects: 
+    
+    .NET 3.x:   PresentationCore, PresentationFramework, WindowsBase 
+    
+    .NET 4.0:   PresentationCore, PresentationFramework, WindowsBase, System.Xaml, 
+                UIAutomationClient, UIAutomationClientSideProviders, UIAutomationProvider, UIAutomationTypes
+                
+    .NET 4.5+:  PresentationCore, PresentationFramework, WindowsBase, System.Xaml, 
+                UIAutomationClient, UIAutomationClientSideProviders, UIAutomationProvider, UIAutomationTypes
+                System.Windows.Controls.Ribbon
+
+  -->
+  <ItemGroup Condition=" '$(_EnableWindowsDesktopNETFrameworkImplicitReference)' == 'true' ">
+
+    <!--
+      The following 3 _WpfCommonNetFxReference items normally require Condition="'$(_TargetFrameworkVersionValue)' >= '3.0'", since
+      they are supported on .NET Framework 3.0 and above. 
+      
+      This condition is implicitly satisfied by '$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)' 
+      in the outer ItemGroup
+    -->
+    <_WpfCommonNetFxReference Include="WindowsBase" /> 
+    <_WpfCommonNetFxReference Include="PresentationCore" />
+    <_WpfCommonNetFxReference Include="PresentationFramework" />
+
+    <_WpfCommonNetFxReference Include="System.Xaml" Condition="'$(_TargetFrameworkVersionValue)' != '' And '$(_TargetFrameworkVersionValue)' >= '4.0'">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </_WpfCommonNetFxReference>
+    <_WpfCommonNetFxReference Include="UIAutomationClient" Condition="'$(_TargetFrameworkVersionValue)' != '' And '$(_TargetFrameworkVersionValue)' >= '4.0'" />
+    <_WpfCommonNetFxReference Include="UIAutomationClientSideProviders" Condition="'$(_TargetFrameworkVersionValue)' != '' And '$(_TargetFrameworkVersionValue)' >= '4.0'" />
+    <_WpfCommonNetFxReference Include="UIAutomationProvider" Condition="'$(_TargetFrameworkVersionValue)' != '' And '$(_TargetFrameworkVersionValue)' >= '4.0'" />
+    <_WpfCommonNetFxReference Include="UIAutomationTypes" Condition="'$(_TargetFrameworkVersionValue)' != '' And '$(_TargetFrameworkVersionValue)' >= '4.0'" />
+
+    <_WpfCommonNetFxReference Include="System.Windows.Controls.Ribbon" Condition="'$(_TargetFrameworkVersionValue)' != '' And '$(_TargetFrameworkVersionValue)' >= '4.5'" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(_EnableWindowsDesktopNETFrameworkImplicitReference)' == 'true' ">
+    
+    <_SDKImplicitReference Include="@(_WpfCommonNetFxReference)"
+                       Condition="'$(UseWPF)' == 'true'"/>
+    
+    <_SDKImplicitReference Include="System.Windows.Forms"
+                        Condition="('$(UseWindowsForms)' == 'true') " />
+    
+    <_SDKImplicitReference Include="WindowsFormsIntegration"
+                       Condition=" ('$(UseWindowsForms)' == 'true') And ('$(UseWPF)' == 'true') "/>
+  </ItemGroup>
+  
+  
+  <!-- 
+        Supported (and unsupported) TargetFrameworks 
+        
+        Visual Studio Project System determines the list of valid TargetFrameworks to show 
+        in the Project properties by querying SupportedTargetFramework values. 
+        
+        The Project System does not refer to this list at this time for .NET Framework TFM's.
+  -->
+
+  <!-- 
+    When WindowsDesktop SDK is used without setting UseWPF or UseWinForms, it shows a (suppressible) warning and functions much
+    like Microsoft.NET.Sdk
+    
+    Likewise, when WindowsDesktop SDK is used with a netcore TFM that is less than 3.0, it will simply act as if it were an
+    Microsoft.NET.Sdk project (and show a suppressible build-time warning). 
+    
+    Detect these situations and skip updates to @(SupportedTargetFramework) etc. 
+  --> 
+  <ItemGroup Condition=" '$(_RemoveUnsupportedTargetFrameworksForWindowsDesktop)' == 'true' ">
+
+    <!-- 
+        Windows Forms and WPF are supported only on .NET Core 3.0+
+    -->
+    <_UnsupportedNETCoreAppTargetFramework Include=".NETCoreApp,Version=v1.0" />
+    <_UnsupportedNETCoreAppTargetFramework Include=".NETCoreApp,Version=v1.1" />
+    <_UnsupportedNETCoreAppTargetFramework Include=".NETCoreApp,Version=v2.0" />
+    <_UnsupportedNETCoreAppTargetFramework Include=".NETCoreApp,Version=v2.1" />
+    <_UnsupportedNETCoreAppTargetFramework Include=".NETCoreApp,Version=v2.2" />
+
+    <!--
+        Windows Forms and WPF are not supported an any .NET Standard targets
+    -->
+    <_UnsupportedNETStandardTargetFramework Include="@(SupportedNETStandardTargetFramework)" />
+
+    <!--
+        Windows Forms was supported since .NET Framework 1.0, and is currently supported on 
+        .NET Framework 2.0+. 
+        
+        WPF is supported on .NET Framework and WPF are supported on .NET Framework 3.0+
+        
+        In practice, the WindowsDesktop SDK is only supported on .NET Framework 3.0+ - this is controlled
+        by $(_WindowsDesktopSdkTargetFrameworkVersionFloor), defined as 3.0, which applies to both .NETFramework
+        and .NETCore.
+        
+        Here, we will encode .NET Framework 3.0 as the lowest supported version for both Windows Forms and WPF. 
+        
+        The SDK does not define versions < 2.0 in @(SupportedNETFrameworkTargetFramework) list, so none of those
+        need to be excluded here - removing 2.0 would suffice.
+    -->
+    <_UnsupportedNETFrameworkTargetFramework Include=".NETFramework,Version=v2.0" />
+
+    <SupportedNETCoreAppTargetFramework Remove="@(_UnsupportedNETCoreAppTargetFramework)" />
+    <SupportedNETStandardTargetFramework Remove="@(_UnsupportedNETStandardTargetFramework)" />
+    <SupportedNETFrameworkTargetFramework Remove="@(_UnsupportedNETFrameworkTargetFramework)" />
+    
+    <SupportedTargetFramework Remove="@(_UnsupportedNETCoreAppTargetFramework);@(_UnsupportedNETStandardTargetFramework);@(_UnsupportedNETFrameworkTargetFramework)" />
+  </ItemGroup>
+</Project>

@@ -163,8 +163,8 @@ namespace MS.Internal.Xaml.Context
             XamlType xamlType = ServiceProvider_ResolveXamlType(qName);
             if (xamlType == null || xamlType.UnderlyingType == null)
             {
-                XamlTypeName name = XamlTypeName.Parse(qName, this._serviceProviderContext);
-                xamlType = this.GetXamlType(name, true, true);
+                XamlTypeName name = XamlTypeName.Parse(qName, _serviceProviderContext);
+                xamlType = GetXamlType(name, true, true);
                 throw new XamlParseException(SR.Get(SRID.TypeNotFound, xamlType.GetQualifiedName()));
             }
             return xamlType.UnderlyingType;
@@ -399,8 +399,6 @@ namespace MS.Internal.Xaml.Context
                                     // If there is no ambientControl or if ambientControl says YES, then get the property value.
                                     if (ambientCtrl == null || ambientCtrl.IsAmbientPropertyAvailable(prop.Name))
                                     {
-                                        // Demand for XamlLoadPermission will fail if we're trying to
-                                        // access an internal property from a partial-trust ME/TC
                                         returnAmbientValue = true;
                                         value = _runtime.GetValue(inst, prop);
                                     }

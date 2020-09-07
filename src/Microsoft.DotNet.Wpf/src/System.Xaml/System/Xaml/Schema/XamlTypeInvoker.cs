@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,41 +12,20 @@ using System.Windows.Markup;
 
 namespace System.Xaml.Schema
 {
-    /// <SecurityNote>
-    /// This class uses SafeReflectionInvoker to invoke all user-supplied methods
-    /// and constructors, including the "add methods" for collections.   Normally
-    /// these are merely public methods from standard interfaces like IList, but
-    /// they can be spoofed by a derived class that overrides GetAddMethod.
-    /// </SecurityNote>
     public class XamlTypeInvoker
     {
         private static XamlTypeInvoker s_Unknown;
-        private static object[] s_emptyObjectArray = new object[0];
+        private static object[] s_emptyObjectArray = Array.Empty<object>();
 
         private Dictionary<XamlType, MethodInfo> _addMethods;
         internal MethodInfo EnumeratorMethod { get; set; }
         private XamlType _xamlType;
 
-        /// <SecurityNote>
-        /// Critical: Used in combination with GetUninitializedObject to ensure that the object
-        ///           is initialized.
-        ///           Can be used to instantiate object bypassing ctor access checks.
-        /// </SecurityNote>
-        [SecurityCritical]
         private Action<object> _constructorDelegate;
 
-        /// <SecurityNote>
-        /// Critical: Used to determine whether it's safe to instantiate this object via _constructorDelegate,
-        ///           and thus bypass security checks.
-        /// </SecurityNote>
-        [SecurityCritical]
         private ThreeValuedBool _isPublic;
 
         // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
-        /// <SecurityNote>
-        /// Critical: Used to determine whether we need to demand ReflectionPermission before instantiating this type
-        /// </SecurityNote>
-        [SecurityCritical]
         private ThreeValuedBool _isInSystemXaml;
         // ^^^^^----- End of unused members.  -----^^^^^
 
@@ -56,11 +35,7 @@ namespace System.Xaml.Schema
 
         public XamlTypeInvoker(XamlType type)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-            _xamlType = type;
+            _xamlType = type ?? throw new ArgumentNullException(nameof(type));
         }
 
         public static XamlTypeInvoker UnknownInvoker
@@ -169,11 +144,6 @@ namespace System.Xaml.Schema
             return CreateInstanceWithActivator(_xamlType.UnderlyingType, arguments);
         }
 
-        /// <SecurityNote>
-        /// Because this is a public virtual method, idempotence cannot be guaranteed.
-        /// S.X doesn't use this method at all; but any externals consumers who are doing security checks
-        /// based on the returned method should make sure that they are resillient to changing results.
-        /// </SecurityNote>
         public virtual MethodInfo GetAddMethod(XamlType contentType)
         {
             if (contentType == null)
@@ -234,11 +204,6 @@ namespace System.Xaml.Schema
             return null;
         }
 
-        /// <SecurityNote>
-        /// Because this is a public virtual method, idempotence cannot be guaranteed.
-        /// S.X doesn't use this method at all; but any externals consumers who are doing security checks
-        /// based on the returned method should make sure that they are resillient to changing results.
-        /// </SecurityNote>
         public virtual MethodInfo GetEnumeratorMethod()
         {
             return _xamlType.GetEnumeratorMethod;
@@ -265,14 +230,8 @@ namespace System.Xaml.Schema
         }
 
         // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
-        /// <SecurityNote>
-        /// Critical: Sets critical field _isInSystemXaml
-        /// Safe: Gets the result from SafeCritical SafeReflectionInvoker.IsInSystemXaml.
-        ///       Uses the type's UnderlyingSystemType, which is what's actually created by Activator.CreateInstance.
-        /// </SecurityNote>
         private bool IsInSystemXaml
         {
-            [SecuritySafeCritical]
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Retained per servicing policy.")]
             get
             {
@@ -287,14 +246,8 @@ namespace System.Xaml.Schema
         }
         // ^^^^^----- End of unused members.  -----^^^^^
 
-        /// <SecurityNote>
-        /// Critical: Sets critical field _isPublic
-        /// Safe: Gets the result from SafeCritical method TypeReflector.IsPublic.
-        ///       Uses the type's UnderlyingSystemType, which is what's actually created by Activator.CreateInstance.
-        /// </SecurityNote>
         private bool IsPublic
         {
-            [SecuritySafeCritical]
             get
             {
                 if (_isPublic == ThreeValuedBool.NotSet)
@@ -311,11 +264,6 @@ namespace System.Xaml.Schema
             get { return _xamlType == null || _xamlType.UnderlyingType == null; }
         }
 
-        /// <SecurityNote>
-        /// Critical: See explanation in SafeReflectionInvoker.
-        /// Safe: See explanation in SafeReflectionInvoker.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private object CreateInstanceWithActivator(Type type, object[] arguments)
         {
             return SafeReflectionInvoker.CreateInstance(type, arguments);
@@ -346,14 +294,8 @@ namespace System.Xaml.Schema
                 return inst;
             }
 
-            /// <SecurityNote>
-            /// Critical: Calls critical method FormatterServices.GetUninitializedObject
-            /// Safe: Never leaks the uninitialized object, always calls constructor first.
-            /// </SecurityNote>
 #if TARGETTING35SP1
-            [SecurityTreatAsSafe, SecurityCritical]
 #else
-            [SecuritySafeCritical]
 #endif
             private static object CallCtorDelegate(XamlTypeInvoker type)
             {
@@ -362,24 +304,13 @@ namespace System.Xaml.Schema
                 return inst;
             }
 
-            /// <SecurityNote>
-            /// Must NOT be critical: we don't want to accidentally satisfy SecurityCritical or
-            /// LinkDemand from the target of the invocation.
-            /// </SecurityNote>
             private static void InvokeDelegate(Action<object> action, object argument)
             {
                 action.Invoke(argument);
             }
 
-            /// <SecurityNote>
-            /// Critical: sets critical field XamlType.ConstructorDelegate
-            /// Safe: gets the value from reflection. Doesn't set it if it's non-public
-            ///       (so it can't be accidentally reused on a partial-trust callstack).
-            /// </SecurityNote>
 #if TARGETTING35SP1
-            [SecurityTreatAsSafe, SecurityCritical]
 #else
-            [SecuritySafeCritical]
 #endif
             // returns true if a delegate is available, false if not
             private static bool EnsureConstructorDelegate(XamlTypeInvoker type)
@@ -395,49 +326,36 @@ namespace System.Xaml.Schema
                 if (s_securityFailureWithCtorDelegate == ThreeValuedBool.NotSet)
                 {
                     s_securityFailureWithCtorDelegate =
-#if PARTIALTRUST
-                        !AppDomain.CurrentDomain.PermissionSet.IsUnrestricted() ? ThreeValuedBool.True : ThreeValuedBool.False;
-#else
                         ThreeValuedBool.False;
-#endif
                 }
                 if (s_securityFailureWithCtorDelegate == ThreeValuedBool.True)
                 {
                     return false;
                 }
 
-                try
+                Type underlyingType = type._xamlType.UnderlyingType.UnderlyingSystemType;
+                // Look up public ctors only, for equivalence with Activator.CreateInstance
+                ConstructorInfo tConstInfo = underlyingType.GetConstructor(Type.EmptyTypes);
+                if (tConstInfo == null)
                 {
-                    Type underlyingType = type._xamlType.UnderlyingType.UnderlyingSystemType;
-                    // Look up public ctors only, for equivalence with Activator.CreateInstance
-                    ConstructorInfo tConstInfo = underlyingType.GetConstructor(Type.EmptyTypes);
-                    if (tConstInfo == null)
-                    {
-                        // Throwing MissingMethodException for equivalence with Activator.CreateInstance
-                        throw new MissingMethodException(SR.Get(SRID.NoDefaultConstructor, underlyingType.FullName));
-                    }
-                    if ((tConstInfo.IsSecurityCritical && !tConstInfo.IsSecuritySafeCritical) ||
-                        (tConstInfo.Attributes & MethodAttributes.HasSecurity) == MethodAttributes.HasSecurity ||
-                        (underlyingType.Attributes & TypeAttributes.HasSecurity) == TypeAttributes.HasSecurity)
-                    {
-                        // We don't want to bypass security checks for a critical or demanding ctor,
-                        // so just treat it as if it were non-public
-                        type._isPublic = ThreeValuedBool.False;
-                        return false;
-                    }
-                    IntPtr constPtr = tConstInfo.MethodHandle.GetFunctionPointer();
-                    // This requires Reflection Permission
-                    Action<object> ctorDelegate = ctorDelegate =
-                        (Action<object>)s_actionCtor.Invoke(new object[] { null, constPtr });
-                    type._constructorDelegate = ctorDelegate;
-                    return true;
-
+                    // Throwing MissingMethodException for equivalence with Activator.CreateInstance
+                    throw new MissingMethodException(SR.Get(SRID.NoDefaultConstructor, underlyingType.FullName));
                 }
-                catch (SecurityException)
+                if ((tConstInfo.IsSecurityCritical && !tConstInfo.IsSecuritySafeCritical) ||
+                    (tConstInfo.Attributes & MethodAttributes.HasSecurity) == MethodAttributes.HasSecurity ||
+                    (underlyingType.Attributes & TypeAttributes.HasSecurity) == TypeAttributes.HasSecurity)
                 {
-                    s_securityFailureWithCtorDelegate = ThreeValuedBool.True;
+                    // We don't want to bypass security checks for a critical or demanding ctor,
+                    // so just treat it as if it were non-public
+                    type._isPublic = ThreeValuedBool.False;
                     return false;
                 }
+                IntPtr constPtr = tConstInfo.MethodHandle.GetFunctionPointer();
+                // This requires Reflection Permission
+                Action<object> ctorDelegate = ctorDelegate =
+                    (Action<object>)s_actionCtor.Invoke(new object[] { null, constPtr });
+                type._constructorDelegate = ctorDelegate;
+                return true;
             }
         }
 

@@ -70,8 +70,8 @@ namespace MS.Internal.Xaml.Context
 
         public override string ToString()
         {
-            string type = (this.XamlType == null) ? string.Empty : this.XamlType.Name;
-            string prop = (this.Member == null) ? "-" : this.Member.Name;
+            string type = (XamlType == null) ? string.Empty : XamlType.Name;
+            string prop = (Member == null) ? "-" : Member.Name;
             string inst = (Instance == null) ? "-" : ((Instance is string) ? Instance.ToString() : "*");
             string coll = (Collection == null) ? "-" : "*";
             string res = KS.Fmt("{0}.{1} inst={2} coll={3}",

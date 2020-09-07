@@ -1,0 +1,27 @@
+<Project>
+  <!-- 
+    See comment about UsePrivateCppTools in Wpf.Cpp.props
+  -->
+  <PropertyGroup>
+    <!--       
+      msvcurt-c1xx should reference a blob hosted in azure storage
+      
+      MsvcurtNetCoreLib                     -> msvcurt[d]_netcore.lib
+      FrontEndPath                          -> c1xx.dll 
+      BackEndPath                           -> c2.dll (optional)
+      ClToolExe (requires ClToolPath)       ->  cl.exe (optional)
+      LinkToolExe (requires LinkToolPath)   -> link.exe (optional)
+      
+      Some of these properties are defined in Wpf.Cpp.PrivateTools.targets
+    -->
+    <MsvcurtC1xxToolsPath>$(RepoRoot).tools\native\bin\msvcurt-c1xx\$(MsvcurtC1xxVersion)\$(Architecture)\</MsvcurtC1xxToolsPath>
+    <MsvcurtNetCoreLib>$(MsvcurtC1xxToolsPath)msvcurt$(LibSuffix)_netcore.lib</MsvcurtNetCoreLib>
+    <!-- End optional section -->
+  </PropertyGroup>
+
+  <ItemDefinitionGroup Condition="'$(ManagedCxx)'=='true' and '$(ExplicitCrts)'=='true'">
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies);$(MsvcurtNetCoreLib)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>

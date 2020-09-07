@@ -1,0 +1,267 @@
+;
+;  This file contains trace information used to generate wrapper
+;  classes.
+;
+;  The format of the info is a set of sections, where each section
+;  contains:
+;
+;      [TraceName,TraceArea,WrapperClassName]
+;      Trace1=1,,{"Base message 1","Param1","Param2"}
+;      Trace2=,,{"Base message 2","Param1","Param2"}
+;      Trace3=AUTO,,{"Base message 3","InParam1","InParam2"}
+;      Trace4=PREVIOUS,,{"Base message 4","OutParam1","OutParam2"}
+;      Trace5=,FORMAT,{"{0} is broken","Param1","Param2"}
+;      ...
+;      [end]
+;
+;  These sections break down as follows ...
+;
+;  TraceName:  This is the name of the trace source, and the name that you use to enable
+;  this group of traces in the .config file.  This should be named with the appropriate
+;  CLR namespace for the feature area.  If the feature area doesn't have its own namespace,
+;  e.g. the code is in the root System.Windows namespace, either use a class name, or
+;  what the namespace would be if it had one.
+;
+;  TraceArea: This is the name of the area and is used to construct the static property
+;  names for the PresenationTraceSources class.
+;
+;  WrapperClassName: This is the name of a class that will be generated to wrap
+;  the trace messages that follow.  By convention, this should start with "Trace".
+;
+;  Trace detail:
+;      In the trace details, the first comma-delimited value is the trace ID (integer),
+;      and each trace ID should generally be unique within the section.
+;      The keyword 'AUTO' may be used to auto-generate the id: (= max_id_in_section + 1)
+;      The keyword 'PREVIOUS' will repeat the last used id.  Blank is the same as 'AUTO'.
+;      Trace strings with hard-coded ID should be listed before the AUTO ones to avoid duplicate ID.
+;
+;      The second value indicates whether the message should be treated as a format string:
+;      blank or '0' means NOT a format string.
+;
+;      The remainder is a string array:
+;      The first string in the array is the basic message, and the remaining strings correspond
+;      to the variable argument list in the trace call.
+;
+;
+;  Example:
+;
+;  [System.Windows,Area,TraceClass]
+;  TraceBasic=,,{"basic msg", "data1", "data2"}
+;  TraceFormat=,FORMAT,{"{0} is doing something to {1}.", "data1", "data2"}
+;  [end]
+;
+;  In code, the TraceClass is used like this:
+;
+;  // basic message
+;  TraceClass.Trace(TraceEventType.Error, TraceClass.TraceBasic, data1, data2 );
+;
+;  // message with format string
+;  TraceClass.Trace(TraceEventType.Error, TraceClass.TraceFormat( arg1, arg2 ), data1, data2 );
+;
+
+[System.Windows.Data,DataBinding,TraceData]
+;BindingExpression
+CannotCreateDefaultValueConverter=,FORMAT,{"Cannot create default converter to perform '{2}' conversions between types '{0}' and '{1}'. Consider using Converter property of Binding."}
+NoMentor=,,{"Cannot find governing FrameworkElement or FrameworkContentElement for target element."}
+NoDataContext=,,{"Cannot find element that provides DataContext."}
+NoSource=,FORMAT,{"Cannot find source for binding with reference '{0}'."}
+BadValueAtTransfer=,,{"Value produced by BindingExpression is not valid for target property.", "Value"}
+BadConverterForTransfer=,FORMAT,{"'{0}' converter failed to convert value '{1}' (type '{2}'); fallback value will be used, if available."}
+BadConverterForUpdate=,FORMAT,{"ConvertBack cannot convert value '{0}' (type '{1}')."}
+WorkerUpdateFailed=,,{"Cannot save value from target back to source."}
+RequiresExplicitCulture=,,{"Binding for property cannot use the target element's Language for conversion; if a culture is required, ConverterCulture must be explicitly specified on the Binding.", "Property"}
+NoValueToTransfer=,,{"Cannot retrieve value using the binding and no valid fallback value exists; using default instead."}
+FallbackConversionFailed=,FORMAT,{"Fallback value '{0}' (type '{1}') cannot be converted for use in '{2}' (type '{3}')."}
+TargetNullValueConversionFailed=,FORMAT,{"TargetNullValue '{0}' (type '{1}') cannot be converted for use in '{2}' (type '{3}')."}
+BindingGroupNameMatchFailed=,FORMAT,{"No BindingGroup found with name matching '{0}'."}
+
+;BindingGroup
+BindingGroupWrongProperty=,FORMAT,{"BindingGroup used as a value of property '{0}' on object of type '{1}'.  This may disable its normal behavior."}
+BindingGroupMultipleInheritance=,,{"BindingGroup used as a value of multiple properties.  This disables its normal behavior."}
+SharesProposedValuesRequriesImplicitBindingGroup=,FORMAT,{"Binding expression '{0}' with BindingGroupName '{1}' has joined BindingGroup '{2}' with SharesProposedValues='true'.  The SharesProposedValues feature only works for binding expressions that implicitly join a binding group."}
+
+;ClrBindingWorker
+CannotGetClrRawValue=,FORMAT,{"Cannot get '{0}' value (type '{1}') from '{2}' (type '{3}')."}
+CannotSetClrRawValue=,FORMAT,{"'{3}' is not a valid value for '{0}' of '{2}'."}
+MissingDataItem=,,{"BindingExpression has no source data item. This could happen when currency is moved to a null data item or moved off the list."}
+MissingInfo=,,{"BindingExpression cannot retrieve value due to missing information."}
+NullDataItem=,,{"BindingExpression cannot retrieve value from null data item. This could happen when binding is detached or when binding to a Nullable type that has no value."}
+
+;DefaultValueConverter
+DefaultValueConverterFailed=,FORMAT,{"Cannot convert '{0}' from type '{1}' to type '{2}' with default conversions; consider using Converter property of Binding."}
+DefaultValueConverterFailedForCulture=,FORMAT,{"Cannot convert '{0}' from type '{1}' to type '{2}' for '{3}' culture with default conversions; consider using Converter property of Binding."}
+
+;Helper
+StyleAndStyleSelectorDefined=,FORMAT,{"Both '{0}Style' and '{0}StyleSelector' are set;  '{0}StyleSelector' will be ignored."}
+TemplateAndTemplateSelectorDefined=,FORMAT,{"Both '{0}Template' and '{0}TemplateSelector' are set;  '{0}TemplateSelector' will be ignored."}
+
+;ItemsControl
+ItemTemplateForDirectItem=,,{"ItemTemplate and ItemTemplateSelector are ignored for items already of the ItemsControl's container type", "Type"}
+
+;MultiBindingExpressions
+BadMultiConverterForUpdate=,FORMAT,{"'{0}' MultiValueConverter failed to convert back value '{1}' (type '{2}'). Check the converter's ConvertBack method."}
+MultiValueConverterMissingForTransfer=,,{"MultiBinding failed because it has no valid Converter."}
+MultiValueConverterMissingForUpdate=,,{"MultiBinding cannot update value on source item because there is no valid Converter."}
+MultiValueConverterMismatch=,,{"MultiValueConverter did not return the same number of values as the count of inner bindings.", "Converter", "Expected", "Returned"}
+MultiBindingHasNoConverter=,,{"Cannot set MultiBinding because MultiValueConverter must be specified."}
+UnsetValueInMultiBindingExpressionUpdate=,FORMAT,{"'{0}' MultiValueConverter returned UnsetValue after converting '{1}' for source binding '{2}' (type '{3}')."}
+
+;ObjectDataProvider
+ObjectDataProviderHasNoSource=,,{"ObjectDataProvider needs either an ObjectType or ObjectInstance."}
+ObjDPCreateFailed=,,{"ObjectDataProvider cannot create object", "Type", "Error"}
+ObjDPInvokeFailed=,,{"ObjectDataProvider: Failure trying to invoke method on type", "Method", "Type", "Error"}
+
+;ObjectRef
+RefPreviousNotInContext=,,{"Cannot find previous element for use as RelativeSource because there is no parent in generated context."}
+RefNoWrapperInChildren=,,{"Cannot find previous element for use as RelativeSource because children cannot be found for parent element."}
+RefAncestorTypeNotSpecified=,,{"Reference error: cannot find ancestor element; no AncestorType was specified on RelativeSource."}
+RefAncestorLevelInvalid=,,{"Reference error: cannot find ancestor element; AncestorLevel on RelativeSource must be greater than 0."}
+
+;PropertyPathWorker
+ClrReplaceItem=,FORMAT,{"BindingExpression path error: '{0}' property not found on '{2}' '{1}'."}
+NullItem=,FORMAT,{"BindingExpression path error: '{0}' property not found for '{1}' because data item is null.  This could happen because the data provider has not produced any data yet."}
+PlaceholderItem=,FORMAT,{"BindingExpression path error: '{0}' property not found for '{1}' because data item is the NewItemPlaceholder."}
+DataErrorInfoFailed=,FORMAT,{"Cannot obtain IDataErrorInfo.Error[{0}] from source of type {1} - {2} '{3}'"}
+DisallowTwoWay=,FORMAT,{"Binding mode has been changed to OneWay because source property '{0}.{1}' has a non-public setter."}
+
+;XmlBindingWorker
+XmlBindingToNonXml=,,{"BindingExpression with XPath cannot bind to non-XML object.", "XPath"}
+XmlBindingToNonXmlCollection=,,{"BindingExpression with XPath cannot bind to a collection with non-XML objects.", "XPath"}
+CannotGetXmlNodeCollection=,,{"XML binding failed. Cannot obtain result node collection because of bad source node or bad Path.", "SourceNode", "Path"}
+BadXPath=,FORMAT,{"XPath '{0}' returned no results on XmlNode '{1}'"}
+
+;XmlDataProvider
+XmlDPInlineDocError=,,{"XmlDataProvider cannot load inline document because of load or parse error in XML."}
+XmlNamespaceNotSet=,,{"XmlDataProvider has inline XML that does not explicitly set its XmlNamespace (xmlns=\"\")."}
+XmlDPAsyncDocError=,,{"XmlDataProvider cannot load asynchronous document from Source because of load or parse error in XML stream.", "Source"}
+XmlDPSelectNodesFailed=,,{"Cannot select nodes because XPath for Binding is not valid", "XPath"}
+
+;CollectionView
+CollectionViewIsUnsupported=,,{"Using CollectionView directly is not fully supported.  The basic features work, although with some inefficiencies, but advanced features may encounter known bugs.  Consider using a derived class to avoid these problems."}
+CollectionChangedWithoutNotification=,FORMAT,{"Collection of type '{0}' has been changed without raising a CollectionChanged event.  Support for this is incomplete and inconsistent, and will be removed completely in a future version of WPF.  Consider either (a) implementing INotifyCollectionChanged, or (b) avoiding changes to this type of collection."}
+
+;DataGrid
+CannotSort=,FORMAT,{"Cannot sort by '{0}'"}
+
+;Extended trace messages for Binding et al. - visible by setting TraceLevel
+CreatedExpression=,FORMAT,{"Created {0} for {1}"}
+CreatedExpressionInParent=,FORMAT,{"Created {0} for {1} within {2}"}
+BindingPath=,FORMAT,{"  Path: {0}"}
+BindingXPathAndPath=,FORMAT,{"  XPath: {0}  Path: {1}"}
+ResolveDefaultMode=,FORMAT,{"{0}: Default mode resolved to {1}"}
+ResolveDefaultUpdate=,FORMAT,{"{0}: Default update trigger resolved to {1}"}
+AttachExpression=,FORMAT,{"{0}: Attach to {1}.{2} (hash={3})"}
+DetachExpression=,FORMAT,{"{0}: Detach"}
+UseMentor=,FORMAT,{"{0}: Use Framework mentor {1}"}
+DeferAttachToContext=,FORMAT,{"{0}: Resolve source deferred"}
+SourceRequiresTreeContext=,FORMAT,{"{0}: {1} requires tree context"}
+AttachToContext=,FORMAT,{"{0}: Resolving source {1}"}
+PathRequiresTreeContext=,FORMAT,{"{0}: Path '{1}' requires namespace information"}
+NoMentorExtended=,FORMAT,{"{0}: Framework mentor not found"}
+ContextElement=,FORMAT,{"{0}: Found data context element: {1} ({2})"}
+NullDataContext=,FORMAT,{"{0}: DataContext is null"}
+RelativeSource=,FORMAT,{"  RelativeSource.{0} found {1}"}
+AncestorLookup=,FORMAT,{"    Lookup ancestor of type {0}:  queried {1}"}
+ElementNameQuery=,FORMAT,{"    Lookup name {0}:  queried {1}"}
+ElementNameQueryTemplate=,FORMAT,{"    Lookup name {0}:  queried template of {1}"}
+UseCVS=,FORMAT,{"{0}: Use View from {1}"}
+UseDataProvider=,FORMAT,{"{0}: Use Data from {1}"}
+ActivateItem=,FORMAT,{"{0}: Activate with root item {1}"}
+Deactivate=,FORMAT,{"{0}: Deactivate"}
+GetRawValue=,FORMAT,{"{0}: TransferValue - got raw value {1}"}
+ConvertDBNull=,FORMAT,{"{0}: TransferValue - converted DBNull to {1}"}
+UserConverter=,FORMAT,{"{0}: TransferValue - user's converter produced {1}"}
+NullConverter=,FORMAT,{"{0}: TransferValue - null-value conversion produced {1}"}
+DefaultConverter=,FORMAT,{"{0}: TransferValue - implicit converter produced {1}"}
+FormattedValue=,FORMAT,{"{0}: TransferValue - string formatting produced {1}"}
+FormattingFailed=,FORMAT,{"{0}: TransferValue - string formatting failed, using format '{1}'"}
+BadValueAtTransferExtended=,FORMAT,{"{0}: TransferValue - value {1} is not valid for target"}
+UseFallback=,FORMAT,{"{0}: TransferValue - using fallback/default value {1}"}
+TransferValue=,FORMAT,{"{0}: TransferValue - using final value {1}"}
+UpdateRawValue=,FORMAT,{"{0}: Update - got raw value {1}"}
+ValidationRuleFailed=,FORMAT,{"{0}: Update - {1} failed"}
+UserConvertBack=,FORMAT,{"{0}: Update - user's converter produced {1}"}
+DefaultConvertBack=,FORMAT,{"{0}: Update - implicit converter produced {1}"}
+Update=,FORMAT,{"{0}: Update - using final value {1}"}
+GotEvent=,FORMAT,{"{0}: Got {1} event from {2}"}
+GotPropertyChanged=,FORMAT,{"{0}: Got PropertyChanged event from {1} for {2}"}
+PriorityTransfer=,FORMAT,{"{0}: TransferValue '{1}' from child {2} - {3}"}
+ChildNotAttached=,FORMAT,{"{0}: One or more children have not resolved sources"}
+GetRawValueMulti=,FORMAT,{"{0}: TransferValue - got raw value {1}: {2}"}
+UserConvertBackMulti=,FORMAT,{"{0}: Update - multiconverter produced value {1}: {2}"}
+GetValue=,FORMAT,{"{0}: GetValue at level {1} from {2} using {3}: {4}"}
+SetValue=,FORMAT,{"{0}: SetValue at level {1} to {2} using {3}: {4}"}
+ReplaceItemShort=,FORMAT,{"{0}: Replace item at level {1} with {2}"}
+ReplaceItemLong=,FORMAT,{"{0}: Replace item at level {1} with {2}, using accessor {3}"}
+GetInfo_Reuse=,FORMAT,{"{0}:   Item at level {1} has same type - reuse accessor {2}"}
+GetInfo_Null=,FORMAT,{"{0}:   Item at level {1} is null - no accessor"}
+GetInfo_Cache=,FORMAT,{"{0}:   At level {1} using cached accessor for {2}.{3}: {4}"}
+GetInfo_Property=,FORMAT,{"{0}:   At level {1} - for {2}.{3} found accessor {4}"}
+GetInfo_Indexer=,FORMAT,{"{0}:   At level {1} - for {2}[{3}] found accessor {4}"}
+XmlContextNode=,FORMAT,{"{0}: Context for XML binding set to {1}"}
+XmlNewCollection=,FORMAT,{"{0}: Building collection from {1}"}
+XmlSynchronizeCollection=,FORMAT,{"{0}: Synchronizing collection with {1}"}
+SelectNodes=,FORMAT,{"{0}: SelectNodes at {1} using XPath {2}: {3}"}
+
+;Extended trace messages for DataSourceProvider et al. - visible by setting TraceLevel
+BeginQuery=,FORMAT,{"{0}: Begin query ({1})"}
+QueryFinished=,FORMAT,{"{0}: Query finished ({1}) with data {2} and error {3}"}
+QueryResult=,FORMAT,{"{0}: Update result (on UI thread) with data {1}"}
+XmlLoadSource=,FORMAT,{"{0}: Request download ({1}) from {2}"}
+XmlLoadDoc=,FORMAT,{"{0}: Load document from stream"}
+XmlLoadInline=,FORMAT,{"{0}: Load inline document"}
+XmlBuildCollection=,FORMAT,{"{0}: Build XmlNode collection"}
+[end]
+
+[System.Windows.Documents,Documents,TracePageFormatting]
+FormatPage=,,{"Formatting page", "PageContext", "PtsContext"}
+PageFormattingError=,,{"Error. Page formatting engine could not complete the formatting operation.", "PtsContext", "Message"}
+[end]
+
+[System.Windows.ResourceDictionary,ResourceDictionary,TraceResourceDictionary]
+AddResource=,,{"Resource has been added to ResourceDictionary", "Dictionary", "ResourceKey", "Value"}
+RealizeDeferContent=,,{"Delayed creation of resource", "Dictionary", "ResourceKey", "Value"}
+FoundResourceOnElement=,,{"Found resource item on an element", "Element", "ResourceKey", "Value" }
+FoundResourceInStyle=,,{"Found resource item in a style", "Dictionary", "ResourceKey", "Style", "Element", "Value" }
+FoundResourceInTemplate=,,{"Found resource item in a template", "Dictionary", "ResourceKey", "Template", "Element", "Value" }
+FoundResourceInThemeStyle=,,{"Found resource item in a theme style", "Dictionary", "ResourceKey", "ThemeStyle", "Element", "Value" }
+FoundResourceInApplication=,,{"Found resource item in application", "ResourceKey", "Value" }
+FoundResourceInTheme=,,{"Found resource item in theme", "Dictionary", "ResourceKey", "Value" }
+ResourceNotFound=,,{"Resource not found", "ResourceKey" }
+NewResourceDictionary=,,{"New resource dictionary set", "Owner", "OldDictionary", "NewDictionary" }
+FindResource=,,{"Searching for resource", "Element", "ResourceKey"}
+SetKey=,,{"Deferred resource has been added to ResourceDictionary", "Dictionary", "ResourceKey"}
+[end]
+
+[System.Windows.Markup,Markup,TraceMarkup]
+AddValueToAddChild=,,{"Add value to IAddChild", "Object", "Value"}
+AddValueToArray=,,{"Add value to an array property", "Object", "Property", "Value"}
+AddValueToDictionary=,,{"Add value to a dictionary property", "Object", "Property", "Key", "Value"}
+AddValueToList=,,{"Add value to a collection property", "Object", "Property", "Value"}
+BeginInit=,,{"Start initialization of object (ISupportInitialize.BeginInit)", "Object" }
+CreateMarkupExtension=,,{"Create MarkupExtension", "Type", "MarkupExtension"}
+CreateObject=,,{"Create object", "Type", "Value" }
+EndInit=,,{"End initialization of object (ISupportInitialize.EndInit)", "Object" }
+Load=,,{"Load xaml/baml", "Value"}
+ProcessConstructorParameter=,,{"Convert constructor parameter", "Type", "ConverterType", "Value"}
+ProvideValue=,,{"Converted a MarkupExtension", "MarkupExtension", "Object", "Property", "Value"}
+SetCPA=,,{"Set property value to the ContentProperty", "Object", "Value"}
+SetPropertyValue=,,{"Set property value", "Object", "PropertyName", "Value"}
+ThrowException=,,{"A xaml exception has been thrown", "Exception"}
+TypeConvert=,,{"Converted value", "TypeConverter", "String", "Value"}
+TypeConvertFallback=,,{"Type conversion failed, using fallback", "TypeConverter", "String", "Value"}
+[end]
+
+[System.Windows.Interop.HwndHost,HwndHost,TraceHwndHost]
+HwndHostIn3D=,,{"An HwndHost may not be embedded in a 3D scene."}
+[end]
+
+[System.Windows.Shell,Shell,TraceShell]
+NotOnWindows7=,,{"Shell integration features are not being applied because the host OS does not support the feature."}
+ExplorerTaskbarTimeout=,,{"Communication with Explorer timed out while trying to update the taskbar item for the window."}
+ExplorerTaskbarRetrying=,,{"Making another attempt to update the taskbar."}
+ExplorerTaskbarNotRunning=,,{"Halting attempts at Shell integration with the taskbar because it appears that Explorer is not running."}
+NativeTaskbarError=,FORMAT,{"The native ITaskbarList3 interface failed a method call with error {0}."}
+RejectingJumpItemsBecauseCatastrophicFailure=,,{"Failed to apply items to the JumpList because the native interfaces failed."}
+RejectingJumpListCategoryBecauseNoRegisteredHandler=,FORMAT,{"Rejecting the category {0} from the jump list because this application is not registered for file types contained in the list.  JumpPath items will be removed and the operation will be retried."}
+[end]

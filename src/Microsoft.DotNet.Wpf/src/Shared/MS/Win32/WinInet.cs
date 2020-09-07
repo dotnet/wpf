@@ -14,16 +14,8 @@ internal static class WinInet
     /// Will return the location of the internet cache folder.
     /// </summary>
     /// <returns>The location of the internet cache folder.</returns>
-    /// <SecurityNote>
-    /// Critical: 
-    ///  1) Calls several Marshal methods which have a link demand on them.
-    ///  2) Calls NativeMethods.GetUrlCacheConfigInfo which is SecurityCritical.
-    /// Not Safe:
-    ///  2) Returns a Path that may leak information about the system.
-    /// </SecurityNote>
     internal static Uri InternetCacheFolder
     {
-        [SecurityCritical]
         get
         {
             // copied value 260 from orginal implementation in BitmapDownload.cs 

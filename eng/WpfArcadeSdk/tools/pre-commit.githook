@@ -1,0 +1,51 @@
+#!/bin/sh
+
+# WPF generated files should only be modified by the file generation scripts.
+
+# This hook prevents users from committing generated files locally.  Generated 
+# files should only be modified by the file generation scripts.  The hook 
+# references a list of generated files that are not allowed to be committed.
+# If any generated files are staged, the hook will exit with a non-zero
+# status and stop the commit.
+
+# To disable the pre-commit check, use 'git commit --no-verify'.
+# Please try to keep this script as basic and easy to read as possible.
+
+# Note that the generated file list must use Unix line endings and remain sorted.
+GENERATED_FILE_LIST="eng/WpfArcadeSdk/tools/WPF_Generated_Files.txt" 
+TEMP_FILE_NAME="WPF_Staged_Files.tmp"
+
+# Redirect output to stderr.
+exec 1>&2
+
+# Git staged files
+STAGED_FILES=$(git diff --cached --name-only)
+
+# Git repo root
+REPO_ROOT=$(git rev-parse --show-toplevel | sort)
+
+# Path of temporary file containing a list of staged files
+TEMP_FILE_FULL_PATH=$REPO_ROOT/$TEMP_FILE_NAME
+
+# Create the temporary file containing a list of staged files(always overwrite)
+echo "$STAGED_FILES" > "$TEMP_FILE_FULL_PATH"
+
+# Find any staged files that intersect with the generated file list
+STAGED_GENERATED_FILES=$(comm -12 $TEMP_FILE_FULL_PATH $GENERATED_FILE_LIST) 
+
+# Remove temporary file
+[ -f $TEMP_FILE_FULL_PATH ] && $(rm $TEMP_FILE_FULL_PATH)
+
+# If any generated files have been staged, issue an error message and prevent
+# the user from committing their change locally. 
+if test -n "$STAGED_GENERATED_FILES"
+then
+    echo "Error: WPF generated staged files detected. These files must not be modified."
+    echo "$STAGED_GENERATED_FILES"
+
+    exit 1
+fi
+
+
+
+

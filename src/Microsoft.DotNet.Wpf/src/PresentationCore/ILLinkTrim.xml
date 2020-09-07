@@ -1,0 +1,7 @@
+<linker>
+  <!-- Include dependencies of DirectWriteForwarder, which is not
+       analyzed by the linker. -->
+  <assembly fullname="System.Diagnostics.Debug" />
+  <assembly fullname="mscorlib" />
+  <assembly fullname="netstandard" />  
+</linker>

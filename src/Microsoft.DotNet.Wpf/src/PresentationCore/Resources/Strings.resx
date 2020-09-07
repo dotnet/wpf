@@ -1,0 +1,2512 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AccessKeyManager_NotAUnicodeCharacter" xml:space="preserve">
+    <value>'{0}' is not a single Unicode character.</value>
+  </data>
+  <data name="AcquireBreakRecordFailure" xml:space="preserve">
+    <value>Text formatting engine cannot acquire break record due to error: '{0}'.</value>
+  </data>
+  <data name="AcquirePenaltyModuleFailure" xml:space="preserve">
+    <value>Text formatting engine cannot acquire text penalty module due to error: '{0}'.</value>
+  </data>
+  <data name="AddText_Invalid" xml:space="preserve">
+    <value>Cannot add text to '{0}'.</value>
+  </data>
+  <data name="AllGesturesMustExistAlone" xml:space="preserve">
+    <value>If AllGestures is specified, it must be the only ApplicationGesture in the ApplicationGesture array.</value>
+  </data>
+  <data name="Animation_AnimationTimelineTypeMismatch" xml:space="preserve">
+    <value>AnimationTimeline of type '{0}' cannot be used to animate the '{1}' property of type '{2}'.</value>
+  </data>
+  <data name="Animation_CalculatedValueIsInvalidForProperty" xml:space="preserve">
+    <value>The animation(s) applied to the '{0}' property calculate a current value of '{1}', which is not a valid value for the property.</value>
+  </data>
+  <data name="Animation_ChildMustBeKeyFrame" xml:space="preserve">
+    <value>A child of KeyFrameAnimation in XAML must be a KeyFrame of a compatible type.</value>
+  </data>
+  <data name="Animation_ChildTypeMismatch" xml:space="preserve">
+    <value>One of the animations in the timeline is a '{0}' and cannot be used to animate a property of type '{1}'.</value>
+  </data>
+  <data name="Animation_DependencyPropertyIsNotAnimatable" xml:space="preserve">
+    <value>'{0}' property is not animatable on '{1}' class because the IsAnimationProhibited flag has been set on the UIPropertyMetadata used to associate the property with the class.</value>
+  </data>
+  <data name="Animation_Exception" xml:space="preserve">
+    <value>Cannot animate the '{0}' property on a '{1}' using a '{2}'. For details see the inner exception.</value>
+  </data>
+  <data name="Animation_InvalidBaseValue" xml:space="preserve">
+    <value>'{0}' is not a valid '{1}' value for class '{2}'. This value might have been supplied by the base value of the property being animated or the output value of another animation applied to the same property.</value>
+  </data>
+  <data name="Animation_InvalidResolvedKeyTimes" xml:space="preserve">
+    <value>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}] has specified KeyTime '{2}', which resolves to time {3}Animation_InvalidAnimationUsingKeyFramesDuration</value>
+    <comment>'{0}' must have either a TimeSpan for its Duration or a TimeSpan for the KeyTime of its last KeyFrame. This '{0}' has a Duration of '{1}' and a KeyTime of '{2}' for its last KeyFrame, so the KeyTimes cannot be resolved.</comment>
+  </data>
+  <data name="Animation_InvalidTimeKeyTime" xml:space="preserve">
+    <value>'{2}' KeyTime value is not valid for key frame at index {1} of this '{0}' because it is greater than animation's Duration value '{3}'.</value>
+  </data>
+  <data name="Animation_Invalid_DefaultValue" xml:space="preserve">
+    <value>'{0}' cannot use default {1} value of '{2}'.</value>
+  </data>
+  <data name="Animation_KeySpline_InvalidValue" xml:space="preserve">
+    <value>Cannot set '{0}' to '{1}'. KeySpline values must be between 0.0 and 1.0.</value>
+  </data>
+  <data name="Animation_KeyTime_InvalidPercentValue" xml:space="preserve">
+    <value>'{0}' is not a valid Percent value for a KeyTime. The Percent value must be a number from 0.0 to 1.0.</value>
+  </data>
+  <data name="Animation_KeyTime_LessThanZero" xml:space="preserve">
+    <value>Cannot create a KeyTime with the value '{0}' because it is less than zero.</value>
+  </data>
+  <data name="Animation_NoAnimationsSpecified" xml:space="preserve">
+    <value>'{0}' value is not valid because it contains no animations.</value>
+  </data>
+  <data name="Animation_NoTextChildren" xml:space="preserve">
+    <value>KeyFrameAnimation objects cannot have text objects as children.</value>
+  </data>
+  <data name="Animation_ReturnedUnsetValueInstance" xml:space="preserve">
+    <value>A '{0}' on the '{1}' property of a '{2}' returned a current value of UnsetValue.Instance, which is not valid.</value>
+  </data>
+  <data name="Animation_UnrecognizedHandoffBehavior" xml:space="preserve">
+    <value>The HandoffBehavior value is not valid.</value>
+  </data>
+  <data name="AnimEffect_AlreadyAttached" xml:space="preserve">
+    <value>This AnimationEffect is already attached to a UIElement.</value>
+  </data>
+  <data name="AnimEffect_CollectionInUse" xml:space="preserve">
+    <value>This AnimationEffectCollection is already being used by another UIElement.</value>
+  </data>
+  <data name="AnimEffect_NoVisual" xml:space="preserve">
+    <value>This AnimationEffect is not attached to a Visual.</value>
+  </data>
+  <data name="ApplicationGestureArrayLengthIsZero" xml:space="preserve">
+    <value>The ApplicationGesture array must contain at least one member.</value>
+  </data>
+  <data name="ApplicationGestureIsInvalid" xml:space="preserve">
+    <value>The specified ApplicationGesture is not valid.</value>
+  </data>
+  <data name="AutomationDispatcherShutdown" xml:space="preserve">
+    <value>Automation client cannot access UI because application is shutting down.</value>
+  </data>
+  <data name="AutomationTimeout" xml:space="preserve">
+    <value>Timeout occurred while attempting to access UI. The application might be busy or unresponsive.</value>
+  </data>
+  <data name="Automation_InvalidConnectedPeer" xml:space="preserve">
+    <value>'{0}' is not a valid System.Windows.Automation.AutomationPeer. It is expected to be associated with a Window known to Automation.</value>
+  </data>
+  <data name="Automation_InvalidEventId" xml:space="preserve">
+    <value>'{0}' is not a valid System.Windows.Automation.AutomationEvent.</value>
+  </data>
+  <data name="Automation_InvalidSynchronizedInputType" xml:space="preserve">
+    <value>'{0}' is not a valid System.Windows.Automation.SynchronizedInputType.</value>
+  </data>
+  <data name="Automation_RecursivePublicCall" xml:space="preserve">
+    <value>Recursive call to Automation Peer API is not valid.</value>
+  </data>
+  <data name="Automation_UnsupportedUIAutomationEventAssociation" xml:space="preserve">
+    <value>Unsupported UI Automation event association.</value>
+  </data>
+  <data name="BitmapCacheBrush_OpacityChanged" xml:space="preserve">
+    <value>BitmapCacheBrush does not support Opacity.</value>
+  </data>
+  <data name="BitmapCacheBrush_RelativeTransformChanged" xml:space="preserve">
+    <value>BitmapCacheBrush does not support RelativeTransform.</value>
+  </data>
+  <data name="BitmapCacheBrush_TransformChanged" xml:space="preserve">
+    <value>BitmapCacheBrush does not support Transform.</value>
+  </data>
+  <data name="BrowseBackKeyDisplayString" xml:space="preserve">
+    <value>Alt+Left;Backspace</value>
+  </data>
+  <data name="BrowseBackText" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="BrowseForwardKeyDisplayString" xml:space="preserve">
+    <value>Alt+Right;Shift+Backspace</value>
+  </data>
+  <data name="BrowseForwardText" xml:space="preserve">
+    <value>Forward</value>
+  </data>
+  <data name="BrowseHomeKeyDisplayString" xml:space="preserve">
+    <value>Alt+Home;BrowserHome</value>
+  </data>
+  <data name="BrowseHomeText" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="BrowseStopKeyDisplayString" xml:space="preserve">
+    <value>Alt+Esc;BrowserStop</value>
+  </data>
+  <data name="BrowseStopText" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="BrushUnknownBamlType" xml:space="preserve">
+    <value>Unrecognized brush type in BAML file.</value>
+  </data>
+  <data name="ByteRangeDownloaderDisposed" xml:space="preserve">
+    <value>Cannot access a disposed HTTP byte range downloader.</value>
+  </data>
+  <data name="ByteRangeDownloaderErroredOut" xml:space="preserve">
+    <value>Byte range request failed.</value>
+  </data>
+  <data name="ByteRangeRequestIsNotSupported" xml:space="preserve">
+    <value>Server does not support byte range request.</value>
+  </data>
+  <data name="CancelPrintText" xml:space="preserve">
+    <value>Cancel Print</value>
+  </data>
+  <data name="CannotAttachVisualTwice" xml:space="preserve">
+    <value>Cannot attach a Visual that is already attached.</value>
+  </data>
+  <data name="CannotBothBeNull" xml:space="preserve">
+    <value>'{0}' and '{1}' cannot both be null.</value>
+  </data>
+  <data name="CannotConvertStringToType" xml:space="preserve">
+    <value>Cannot convert string value '{0}' to type '{1}'.</value>
+  </data>
+  <data name="CannotConvertType" xml:space="preserve">
+    <value>Cannot convert type '{0}' to '{1}'.</value>
+  </data>
+  <data name="CannotModifyReadOnlyContainer" xml:space="preserve">
+    <value>Cannot modify a read-only container.</value>
+  </data>
+  <data name="CannotModifyVisualChildrenDuringTreeWalk" xml:space="preserve">
+    <value>Cannot modify the Visual children for this node because a tree walk is in progress.</value>
+  </data>
+  <data name="CannotNavigateToApplicationResourcesInWebBrowser" xml:space="preserve">
+    <value>Cannot navigate to application resource '{0}' by using a WebBrowser control. For URI navigation, the resource must be at the application's site of origin. Use the pack://siteoforigin:,,,/ prefix to avoid hard-coding the URI.</value>
+  </data>
+  <data name="CannotRetrievePartsOfWriteOnlyContainer" xml:space="preserve">
+    <value>Cannot get part or part information from a write-only container.</value>
+  </data>
+  <data name="Channel_InvalidCommandBufferPointer" xml:space="preserve">
+    <value>Cannot read from the specified command buffer pointer.</value>
+  </data>
+  <data name="CharacterMetrics_MissingRequiredField" xml:space="preserve">
+    <value>The Metrics property of CharacterMetrics is missing a required field.</value>
+  </data>
+  <data name="CharacterMetrics_NegativeHorizontalAdvance" xml:space="preserve">
+    <value>CharacterMetrics is not valid. The horizontal advance (defined as the sum of BlackBoxWidth, LeftSideBearing, and RightSideBearing) cannot be negative.</value>
+  </data>
+  <data name="CharacterMetrics_NegativeVerticalAdvance" xml:space="preserve">
+    <value>CharacterMetrics is not valid. The vertical advance (defined as the sum of BlackBoxHeight, TopSideBearing, and BottomSideBearing) cannot be negative.</value>
+  </data>
+  <data name="CharacterMetrics_TooManyFields" xml:space="preserve">
+    <value>The Metrics property of CharacterMetrics has too many fields.</value>
+  </data>
+  <data name="ClassTypeIllegal" xml:space="preserve">
+    <value>Class handlers can be registered only for UIElement or ContentElement and their subtypes.</value>
+  </data>
+  <data name="CloneBreakRecordFailure" xml:space="preserve">
+    <value>Text formatting engine cannot clone break record due to error: '{0}'.</value>
+  </data>
+  <data name="CloseText" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ClusterMapEntriesShouldNotDecrease" xml:space="preserve">
+    <value>A cluster map entry must be greater than or equal to a previous entry.</value>
+  </data>
+  <data name="ClusterMapEntryShouldPointWithinGlyphIndices" xml:space="preserve">
+    <value>A cluster map entry must point to a valid glyph indices element.</value>
+  </data>
+  <data name="ClusterMapFirstEntryMustBeZero" xml:space="preserve">
+    <value>The first element in the cluster map must equal zero.</value>
+  </data>
+  <data name="CodePointOutOfRange" xml:space="preserve">
+    <value>'{0}' character is outside the Unicode code point range.</value>
+  </data>
+  <data name="CollectionDuplicateKey" xml:space="preserve">
+    <value>'{0}' key already exists in the collection.</value>
+  </data>
+  <data name="CollectionEnumerationError" xml:space="preserve">
+    <value>Collection was modified during enumeration.</value>
+  </data>
+  <data name="CollectionIsFixedSize" xml:space="preserve">
+    <value>This collection is fixed size.</value>
+  </data>
+  <data name="CollectionNumberOfElementsMustBeGreaterThanZero" xml:space="preserve">
+    <value>The number of elements in this collection must be greater than zero.</value>
+  </data>
+  <data name="CollectionNumberOfElementsMustBeLessOrEqualTo" xml:space="preserve">
+    <value>The number of elements in this collection must be less than or equal to '{0}'.</value>
+  </data>
+  <data name="CollectionNumberOfElementsShouldBeEqualTo" xml:space="preserve">
+    <value>The number of elements in this collection should equal '{0}'.</value>
+  </data>
+  <data name="CollectionOnlyAcceptsCommandBindings" xml:space="preserve">
+    <value>Collection accepts only objects of type CommandBinding.</value>
+  </data>
+  <data name="CollectionOnlyAcceptsInputBindings" xml:space="preserve">
+    <value>Collection accepts only objects of type InputBinding.</value>
+  </data>
+  <data name="CollectionOnlyAcceptsInputGestures" xml:space="preserve">
+    <value>Collection accepts only objects of type InputGesture.</value>
+  </data>
+  <data name="Collection_BadDestArray" xml:space="preserve">
+    <value>Destination array is not compatible with objects within '{0}'.</value>
+  </data>
+  <data name="Collection_BadRank" xml:space="preserve">
+    <value>Input array is not a valid rank.</value>
+  </data>
+  <data name="Collection_BadType" xml:space="preserve">
+    <value>Cannot add instance of type '{1}' to a collection of type '{0}'. Only items of type '{2}' are allowed.</value>
+  </data>
+  <data name="Collection_CopyTo_ArrayCannotBeMultidimensional" xml:space="preserve">
+    <value>Cannot pass multidimensional array to the CopyTo method on a collection.</value>
+  </data>
+  <data name="Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength" xml:space="preserve">
+    <value>'{0}' parameter value is equal to or greater than the length of the '{1}' parameter value.</value>
+  </data>
+  <data name="Collection_CopyTo_NumberOfElementsExceedsArrayLength" xml:space="preserve">
+    <value>The number of elements in this collection is greater than the available space from '{0}' to the end of destination '{1}'.</value>
+  </data>
+  <data name="Collection_NoNull" xml:space="preserve">
+    <value>Cannot add null to the collection.</value>
+  </data>
+  <data name="ColorContext_FileTooLarge" xml:space="preserve">
+    <value>File is too large to be a valid ColorContext.</value>
+  </data>
+  <data name="Color_ColorContextNotsRGB_or_scRGB" xml:space="preserve">
+    <value>Color context must be sRGB or scRGB for this operation.</value>
+  </data>
+  <data name="Color_ColorContextTypeMismatch" xml:space="preserve">
+    <value>Color context types mismatch.</value>
+  </data>
+  <data name="Color_DimensionMismatch" xml:space="preserve">
+    <value>Color context dimensions mismatch.</value>
+  </data>
+  <data name="Color_NullColorContext" xml:space="preserve">
+    <value>Color context is null.</value>
+  </data>
+  <data name="CompatibilityPreferencesSealed" xml:space="preserve">
+    <value>The property '{0}' cannot be changed. The '{1}' class has been sealed.</value>
+  </data>
+  <data name="CompileFeatureSet_InvalidTypographyProperties" xml:space="preserve">
+    <value>Typography properties are not valid.</value>
+  </data>
+  <data name="CompositeFontAttributeValue1" xml:space="preserve">
+    <value>Invalid value for {0} attribute.</value>
+  </data>
+  <data name="CompositeFontAttributeValue2" xml:space="preserve">
+    <value>Invalid value for {0} attribute: {1}</value>
+  </data>
+  <data name="CompositeFontInvalidUnicodeRange" xml:space="preserve">
+    <value>Unicode range is not valid.</value>
+  </data>
+  <data name="CompositeFontMissingAttribute" xml:space="preserve">
+    <value>Missing required attribute '{0}'.</value>
+  </data>
+  <data name="CompositeFontMissingElement" xml:space="preserve">
+    <value>Missing required element '{0}'.</value>
+  </data>
+  <data name="CompositeFontSignificantWhitespace" xml:space="preserve">
+    <value>The composite font contains significant whitespace where none is expected.</value>
+  </data>
+  <data name="CompositeFontUnknownAttribute" xml:space="preserve">
+    <value>'{0}' attribute in XML namespace '{1}' not recognized. Note that attribute names are case sensitive.</value>
+  </data>
+  <data name="CompositeFontUnknownElement" xml:space="preserve">
+    <value>'{0}' element in XML namespace '{1}' not recognized. Note that element names are case sensitive.</value>
+  </data>
+  <data name="CompositeFont_DuplicateTypeface" xml:space="preserve">
+    <value>A FontFamily cannot have more than one FamilyTypeface with the same Style, Weight, and Stretch.</value>
+  </data>
+  <data name="CompositeFont_TooManyFamilyMaps" xml:space="preserve">
+    <value>The FontFamily cannot hold any more FamilyMaps.</value>
+  </data>
+  <data name="CompositionTarget_RootVisual_HasParent" xml:space="preserve">
+    <value>The root Visual of a VisualTarget cannot have a parent.</value>
+  </data>
+  <data name="ConstructorRecursion" xml:space="preserve">
+    <value>Possible constructor recursion detected.</value>
+  </data>
+  <data name="ContextMenuKeyDisplayString" xml:space="preserve">
+    <value>Shift+F10;Apps</value>
+  </data>
+  <data name="ContextMenuText" xml:space="preserve">
+    <value>Context Menu</value>
+  </data>
+  <data name="Converter_ConvertFromNotSupported" xml:space="preserve">
+    <value>Cannot convert from type.</value>
+  </data>
+  <data name="Converter_ConvertToNotSupported" xml:space="preserve">
+    <value>Cannot convert to type.</value>
+  </data>
+  <data name="CopyKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+C;Ctrl+Insert</value>
+  </data>
+  <data name="CopyText" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="CorrectionListKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CorrectionListKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CorrectionListText" xml:space="preserve">
+    <value>Correction List</value>
+  </data>
+  <data name="CountOfBitsGreatThanRemainingBits" xml:space="preserve">
+    <value>Count must be less than or equal to remaining number of bits in stream.</value>
+  </data>
+  <data name="CountOfBitsOutOfRange" xml:space="preserve">
+    <value>Count must be less than or equal to bits per byte and greater than zero.</value>
+  </data>
+  <data name="CreateBreaksFailure" xml:space="preserve">
+    <value>Text formatting engine cannot format breakpoints due to error: '{0}'.</value>
+  </data>
+  <data name="CreateContextFailure" xml:space="preserve">
+    <value>Text formatting engine cannot create text formatting context due to error: '{0}'.</value>
+  </data>
+  <data name="CreateLineFailure" xml:space="preserve">
+    <value>Text formatting engine cannot format a line of text due to error: '{0}'.</value>
+  </data>
+  <data name="CreateParaBreakingSessionFailure" xml:space="preserve">
+    <value>Text formatting engine cannot format a paragraph cache due to error: '{0}'.</value>
+  </data>
+  <data name="CurrentDispatcherNotFound" xml:space="preserve">
+    <value>Current dispatcher cannot be found.</value>
+  </data>
+  <data name="Cursor_InvalidStream" xml:space="preserve">
+    <value>Failed to load cursor from the stream.</value>
+  </data>
+  <data name="Cursor_LoadImageFailure" xml:space="preserve">
+    <value>Failed to load cursor file '{0}'.</value>
+  </data>
+  <data name="Cursor_UnsupportedFormat" xml:space="preserve">
+    <value>'{0}' has unsupported extension for cursor.</value>
+  </data>
+  <data name="CutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+X;Shift+Delete</value>
+  </data>
+  <data name="CutText" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="D3DImage_AARequires9Ex" xml:space="preserve">
+    <value>An antialiased back buffer requires a IDirect3DDevice9Ex device.</value>
+  </data>
+  <data name="D3DImage_InvalidDevice" xml:space="preserve">
+    <value>Back buffer's device is not valid.</value>
+  </data>
+  <data name="D3DImage_InvalidPool" xml:space="preserve">
+    <value>Back buffer's pool does not meet the requirements for the resource type.</value>
+  </data>
+  <data name="D3DImage_InvalidUsage" xml:space="preserve">
+    <value>Back buffer's usage does not meet the requirements for the resource type.</value>
+  </data>
+  <data name="D3DImage_MustHaveBackBuffer" xml:space="preserve">
+    <value>Cannot call this method without a back buffer.</value>
+  </data>
+  <data name="D3DImage_SurfaceTooBig" xml:space="preserve">
+    <value>Back buffer's size is too large.</value>
+  </data>
+  <data name="DataObject_CannotSetDataOnAFozenOLEDataDbject" xml:space="preserve">
+    <value>Cannot SetData on a frozen OLE data object.</value>
+  </data>
+  <data name="DataObject_DataFormatNotPresentOnDataObject" xml:space="preserve">
+    <value>'{0}' data format is not present on DataObject.</value>
+  </data>
+  <data name="DataObject_DataObjectMustHaveAtLeastOneFormat" xml:space="preserve">
+    <value>Data object must have at least one format.</value>
+  </data>
+  <data name="DataObject_EmptyFormatNotAllowed" xml:space="preserve">
+    <value>Empty string is not a valid value for parameter 'format'.</value>
+  </data>
+  <data name="DataObject_FileDropListHasInvalidFileDropPath" xml:space="preserve">
+    <value>'{0}' file drop path is not valid.</value>
+  </data>
+  <data name="DataObject_FileDropListIsEmpty" xml:space="preserve">
+    <value>'{0}' must contain at least one file drop path.</value>
+  </data>
+  <data name="DataObject_NotImplementedEnumFormatEtc" xml:space="preserve">
+    <value>'{0}' dwDirection parameter value is not supported.</value>
+  </data>
+  <data name="DecompressPacketDataFailed" xml:space="preserve">
+    <value>Decompression of packet data failed.</value>
+  </data>
+  <data name="DecompressPropertyFailed" xml:space="preserve">
+    <value>Decompression of property data failed.</value>
+  </data>
+  <data name="DecreaseZoomKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="DecreaseZoomKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="DecreaseZoomText" xml:space="preserve">
+    <value>Decrease Zoom</value>
+  </data>
+  <data name="DeleteKeyDisplayString" xml:space="preserve">
+    <value>Del</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DirectoryNotFoundExceptionWithFileName" xml:space="preserve">
+    <value>Cannot find a part of the path '{0}'.</value>
+  </data>
+  <data name="DragDrop_DragActionInvalid" xml:space="preserve">
+    <value>'{0}' DragAction is not valid.</value>
+  </data>
+  <data name="DragDrop_DragDropEffectsInvalid" xml:space="preserve">
+    <value>'{0}' DragDropEffects is not valid.</value>
+  </data>
+  <data name="DrawingContext_TooManyPops" xml:space="preserve">
+    <value>This Pop operation has no corresponding Push to remove from the stack because the stack depth of the DrawingContext is zero.</value>
+  </data>
+  <data name="DrawingGroup_AlreadyOpen" xml:space="preserve">
+    <value>This object has an outstanding DrawingContext. The DrawingContext must be Closed or Disposed before making Open or Append calls.</value>
+  </data>
+  <data name="DrawingGroup_CannotAppendToFrozenCollection" xml:space="preserve">
+    <value>Cannot append to a frozen DrawingGroup.Children collection.</value>
+  </data>
+  <data name="DrawingGroup_CannotAppendToNullCollection" xml:space="preserve">
+    <value>Cannot append to a null DrawingGroup.Children collection.</value>
+  </data>
+  <data name="DuplicateApplicationGestureFound" xml:space="preserve">
+    <value>Duplicate ApplicationGesture values are not allowed.</value>
+  </data>
+  <data name="DuplicateEventName" xml:space="preserve">
+    <value>RoutedEvent Name '{0}' for OwnerType '{1}' already used.</value>
+  </data>
+  <data name="DuplicateStrokeAdded" xml:space="preserve">
+    <value>Duplicate Stroke in StrokeCollectionChangedEventArgs.Added.</value>
+  </data>
+  <data name="Effect_20ShaderUsing30Registers" xml:space="preserve">
+    <value>A pixel shader using Pixel Shader Model 2.0 cannot be set because registers only available in Pixel Shader Model 3.0 are being used.</value>
+  </data>
+  <data name="Effect_CombinedLegacyAndNew" xml:space="preserve">
+    <value>BitmapEffect and Effect cannot be combined on a Visual.</value>
+  </data>
+  <data name="Effect_No_ContextInputSource" xml:space="preserve">
+    <value>Cannot call BitmapEffect.GetOutput directly with a ContextInputSource. Provide a valid BitmapSource.</value>
+  </data>
+  <data name="Effect_No_InputSource" xml:space="preserve">
+    <value>There is no input set.</value>
+  </data>
+  <data name="Effect_PixelFormat" xml:space="preserve">
+    <value>'{0}' PixelFormat is not supported for this operation.</value>
+  </data>
+  <data name="Effect_RenderThreadError" xml:space="preserve">
+    <value>An error occurred on the render thread with a user-supplied shader.</value>
+  </data>
+  <data name="Effect_Shader20ConstantRegisterLimit" xml:space="preserve">
+    <value>Pixel Shader Model 2.0 requires floating point constants to be in registers [0-31].</value>
+  </data>
+  <data name="Effect_Shader20SamplerRegisterLimit" xml:space="preserve">
+    <value>Pixel Shader Model 2.0 requires sampler constants to be in registers [0-3].</value>
+  </data>
+  <data name="Effect_Shader30BoolConstantRegisterLimit" xml:space="preserve">
+    <value>Pixel Shader Model 3.0 requires boolean constants to be in registers [0-15].</value>
+  </data>
+  <data name="Effect_Shader30FloatConstantRegisterLimit" xml:space="preserve">
+    <value>Pixel Shader Model 3.0 requires floating point constants to be in registers [0-223].</value>
+  </data>
+  <data name="Effect_Shader30IntConstantRegisterLimit" xml:space="preserve">
+    <value>Pixel Shader Model 3.0 requires integer constants to be in registers [0-15].</value>
+  </data>
+  <data name="Effect_Shader30SamplerRegisterLimit" xml:space="preserve">
+    <value>Pixel Shader Model 3.0 requires sampler constants to be in registers [0-7].</value>
+  </data>
+  <data name="Effect_ShaderBytecodeSize" xml:space="preserve">
+    <value>Shader bytecode must be an integral number of 4-byte words.</value>
+  </data>
+  <data name="Effect_ShaderBytecodeSource" xml:space="preserve">
+    <value>No shader bytecode present.  Must either set UriSource or call SetStreamSource.</value>
+  </data>
+  <data name="Effect_ShaderConstantType" xml:space="preserve">
+    <value>Shader constant of type '{0}' is not allowed.</value>
+  </data>
+  <data name="Effect_ShaderEffectPadding" xml:space="preserve">
+    <value>Padding must be non-negative.</value>
+  </data>
+  <data name="Effect_ShaderPixelShaderSet" xml:space="preserve">
+    <value>PixelShader must be set on ShaderEffect.</value>
+  </data>
+  <data name="Effect_ShaderSamplerType" xml:space="preserve">
+    <value>Pixel shader sampler must be Effect.ImplicitInput, or an instance of BitmapCacheBrush, VisualBrush, or ImageBrush.</value>
+  </data>
+  <data name="Effect_ShaderSeekableStream" xml:space="preserve">
+    <value>PixelShader only accepts seekable streams.</value>
+  </data>
+  <data name="Effect_SourceUriMustBeFileOrPack" xml:space="preserve">
+    <value>Uri must be a file or pack Uri.</value>
+  </data>
+  <data name="EmptyArray" xml:space="preserve">
+    <value>Empty arrays are not a valid argument value.</value>
+  </data>
+  <data name="EmptyArrayNotAllowedAsArgument" xml:space="preserve">
+    <value>The array cannot be empty.</value>
+  </data>
+  <data name="EmptyDataToLoad" xml:space="preserve">
+    <value>No data to load.</value>
+  </data>
+  <data name="EmptyScToReplace" xml:space="preserve">
+    <value>Collection cannot be empty.</value>
+  </data>
+  <data name="EmptyScToReplaceWith" xml:space="preserve">
+    <value>The replacement StrokeCollection cannot be empty.</value>
+  </data>
+  <data name="EndHitTestingCalled" xml:space="preserve">
+    <value>EndHitTesting has already been called on the IncrementalHitTester.</value>
+  </data>
+  <data name="EndOfStreamReached" xml:space="preserve">
+    <value>End of stream reached.</value>
+  </data>
+  <data name="Enumerator_CollectionChanged" xml:space="preserve">
+    <value>The enumerator is not valid because the collection changed.</value>
+  </data>
+  <data name="Enumerator_NotStarted" xml:space="preserve">
+    <value>The enumerator has not been started.</value>
+  </data>
+  <data name="Enumerator_ReachedEnd" xml:space="preserve">
+    <value>The enumerator has reached the end of the collection.</value>
+  </data>
+  <data name="Enumerator_VerifyContext" xml:space="preserve">
+    <value>No current object to return.</value>
+  </data>
+  <data name="EnumLineFailure" xml:space="preserve">
+    <value>Text formatting engine cannot enumerate contents in a line due to error: '{0}'.</value>
+  </data>
+  <data name="Enum_Invalid" xml:space="preserve">
+    <value>'{0}' enumeration value is not valid.</value>
+  </data>
+  <data name="EPExists" xml:space="preserve">
+    <value>ExtendedProperty is already part of the ExtendedPropertyCollection.</value>
+  </data>
+  <data name="EPGuidNotFound" xml:space="preserve">
+    <value>The GUID is not part of the ExtendedPropertyCollection.</value>
+  </data>
+  <data name="EPNotFound" xml:space="preserve">
+    <value>Property not set.</value>
+  </data>
+  <data name="EventArgIsNull" xml:space="preserve">
+    <value>Event arguments must be non-null.</value>
+  </data>
+  <data name="ExtendSelectionDownKeyDisplayString" xml:space="preserve">
+    <value>Shift+Down</value>
+  </data>
+  <data name="ExtendSelectionDownText" xml:space="preserve">
+    <value>Extend Selection Down</value>
+  </data>
+  <data name="ExtendSelectionLeftKeyDisplayString" xml:space="preserve">
+    <value>Shift+Left</value>
+  </data>
+  <data name="ExtendSelectionLeftText" xml:space="preserve">
+    <value>Extend Selection Left</value>
+  </data>
+  <data name="ExtendSelectionRightKeyDisplayString" xml:space="preserve">
+    <value>Shift+Right</value>
+  </data>
+  <data name="ExtendSelectionRightText" xml:space="preserve">
+    <value>Extend Selection Right</value>
+  </data>
+  <data name="ExtendSelectionUpKeyDisplayString" xml:space="preserve">
+    <value>Shift+Up</value>
+  </data>
+  <data name="ExtendSelectionUpText" xml:space="preserve">
+    <value>Extend Selection Up</value>
+  </data>
+  <data name="FaceIndexMustBePositiveOrZero" xml:space="preserve">
+    <value>Font face index must be greater than or equal to zero.</value>
+  </data>
+  <data name="FaceIndexValidOnlyForTTC" xml:space="preserve">
+    <value>Nonzero font face index values are valid only for TrueType collections (.ttc).</value>
+  </data>
+  <data name="FamilyCollection_CannotFindCompositeFontsLocation" xml:space="preserve">
+    <value>Cannot load system composite fonts. Location not found.</value>
+  </data>
+  <data name="FamilyMap_TargetNotSet" xml:space="preserve">
+    <value>Cannot add FamilyMap because Target property is not set.</value>
+  </data>
+  <data name="FavoritesKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+I</value>
+  </data>
+  <data name="FavoritesText" xml:space="preserve">
+    <value>Favorites</value>
+  </data>
+  <data name="FileFormatException" xml:space="preserve">
+    <value>Input file or data stream does not conform to the expected file format specification.</value>
+  </data>
+  <data name="FileFormatExceptionWithFileName" xml:space="preserve">
+    <value>'{0}' file does not conform to the expected file format specification.</value>
+  </data>
+  <data name="FileNotFoundExceptionWithFileName" xml:space="preserve">
+    <value>Cannot find file '{0}'.</value>
+  </data>
+  <data name="FindKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+F</value>
+  </data>
+  <data name="FindText" xml:space="preserve">
+    <value>Find</value>
+  </data>
+  <data name="FirstPageKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="FirstPageKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="FirstPageText" xml:space="preserve">
+    <value>First Page</value>
+  </data>
+  <data name="FloatUnknownBamlType" xml:space="preserve">
+    <value>Unrecognized float type in BAML file.</value>
+  </data>
+  <data name="FlushNotSupported" xml:space="preserve">
+    <value>Stream does not support Flush.</value>
+  </data>
+  <data name="FontFamily_ReadOnly" xml:space="preserve">
+    <value>A named FontFamily object cannot be modified.</value>
+  </data>
+  <data name="Freezable_CantBeFrozen" xml:space="preserve">
+    <value>Specified value of type '{0}' must have IsFrozen set to false to modify.</value>
+  </data>
+  <data name="Freezable_CloneInvalidType" xml:space="preserve">
+    <value>Clone of an instance of type '{0}' is null or not an instance of '{0}'.</value>
+  </data>
+  <data name="Freezable_Reentrant" xml:space="preserve">
+    <value>Cannot change FreezableCollection during a CollectionChanged event.</value>
+  </data>
+  <data name="Freezable_UnexpectedChange" xml:space="preserve">
+    <value>Unknown/unexpected change event</value>
+  </data>
+  <data name="GeneralTransform_TransformFailed" xml:space="preserve">
+    <value>The transform is not defined for the point.</value>
+  </data>
+  <data name="General_BadType" xml:space="preserve">
+    <value>The object passed to '{0}' is not a valid type.</value>
+  </data>
+  <data name="General_Expected_Type" xml:space="preserve">
+    <value>Expected object of type '{0}'.</value>
+  </data>
+  <data name="General_ObjectIsReadOnly" xml:space="preserve">
+    <value>The object is marked 'Read Only'.</value>
+  </data>
+  <data name="Geometry_BadNumber" xml:space="preserve">
+    <value>Arithmetic error found while trying to perform this operation.</value>
+  </data>
+  <data name="GestureRecognizerNotAvailable" xml:space="preserve">
+    <value>No gesture recognizer is available on the system.</value>
+  </data>
+  <data name="GetPenaltyModuleHandleFailure" xml:space="preserve">
+    <value>Text formatting engine cannot retrieve penalty module handle due to error: '{0}'.</value>
+  </data>
+  <data name="GetResponseFailed" xml:space="preserve">
+    <value>Cannot get response for web request to '{0}'.</value>
+  </data>
+  <data name="GlyphAreaTooBig" xml:space="preserve">
+    <value>Values for advanceWidths and glyphOffsets constitute too large of a GlyphRun. The area of its bounding box, measured in renderingEmSize squares, is '{0}' but it cannot exceed '{1}'.</value>
+  </data>
+  <data name="GlyphCoordinateTooBig" xml:space="preserve">
+    <value> advanceWidths and glyphOffsets constitute coordinate too large for glyph at index '{0}'. For renderingEmSize '{1}' the values cannot exceed '{2}'.</value>
+  </data>
+  <data name="GlyphIndexOutOfRange" xml:space="preserve">
+    <value>'{0}' glyph index is not valid for the specified font.</value>
+  </data>
+  <data name="GlyphTypefaceNotRecorded" xml:space="preserve">
+    <value>Glyph typeface URI does not point to a previously recorded glyph typeface.</value>
+  </data>
+  <data name="GoToPageKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GoToPageKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GoToPageText" xml:space="preserve">
+    <value>Go To Page</value>
+  </data>
+  <data name="HandlerTypeIllegal" xml:space="preserve">
+    <value>Handler type is mismatched.</value>
+  </data>
+  <data name="HelpKeyDisplayString" xml:space="preserve">
+    <value>F1</value>
+  </data>
+  <data name="HelpText" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="HitTest_Invalid" xml:space="preserve">
+    <value>'{0}' HitTestParameters are not supported on '{1}'.</value>
+  </data>
+  <data name="HitTest_Singular" xml:space="preserve">
+    <value>Hit testing with a singular MatrixCamera is not supported.</value>
+  </data>
+  <data name="HwndSourceDisposed" xml:space="preserve">
+    <value>Cannot access a disposed HwndSource.</value>
+  </data>
+  <data name="HwndTarget_HardwareNotSupportDueToProtocolMismatch" xml:space="preserve">
+    <value>Due to protocol mismatch hardware support is not available.</value>
+  </data>
+  <data name="HwndTarget_InvalidWindowHandle" xml:space="preserve">
+    <value>The specified handle is not a valid window handle.</value>
+  </data>
+  <data name="HwndTarget_InvalidWindowProcess" xml:space="preserve">
+    <value>The specified window does not belong to the current process.</value>
+  </data>
+  <data name="HwndTarget_InvalidWindowThread" xml:space="preserve">
+    <value>The specified window does not belong to the current thread.</value>
+  </data>
+  <data name="HwndTarget_WindowAlreadyHasContent" xml:space="preserve">
+    <value>Another HwndTarget is associated with this window.</value>
+  </data>
+  <data name="IAnimatable_CantAnimateSealedDO" xml:space="preserve">
+    <value>Cannot animate the '{0}' property on '{1}' because the object is sealed or frozen.</value>
+  </data>
+  <data name="Image_AlphaThresholdOutOfRange" xml:space="preserve">
+    <value>Alpha threshold must be from 0 through 100.</value>
+  </data>
+  <data name="Image_BadDimensions" xml:space="preserve">
+    <value>The bitmap specified does not have the correct dimensions.</value>
+  </data>
+  <data name="Image_BadMetadataHeader" xml:space="preserve">
+    <value>The image has corrupted metadata header.</value>
+  </data>
+  <data name="Image_BadPixelFormat" xml:space="preserve">
+    <value>'{0}' not a valid pixel format.</value>
+  </data>
+  <data name="Image_BadStreamData" xml:space="preserve">
+    <value>The stream is corrupted.</value>
+  </data>
+  <data name="Image_BadVersion" xml:space="preserve">
+    <value>DLL version not correct.</value>
+  </data>
+  <data name="Image_CannotCreateTempFile" xml:space="preserve">
+    <value>Unable to create temporary file for download.</value>
+  </data>
+  <data name="Image_CantBeFrozen" xml:space="preserve">
+    <value>The Image passed to the ImageVisualManager cannot be frozen.</value>
+  </data>
+  <data name="Image_CantDealWithStream" xml:space="preserve">
+    <value>The codec cannot use the type of stream provided.</value>
+  </data>
+  <data name="Image_CantDealWithUri" xml:space="preserve">
+    <value>The codec cannot use the type of URI provided.</value>
+  </data>
+  <data name="Image_CodecPresent" xml:space="preserve">
+    <value>Codec added more than once.</value>
+  </data>
+  <data name="Image_ColorContextInvalid" xml:space="preserve">
+    <value>Color context is not valid.</value>
+  </data>
+  <data name="Image_ColorTransformInvalid" xml:space="preserve">
+    <value>Color transform is not valid.</value>
+  </data>
+  <data name="Image_ComponentNotFound" xml:space="preserve">
+    <value>No imaging component suitable to complete this operation was found.</value>
+  </data>
+  <data name="Image_ContentTypeDoesNotMatchDecoder" xml:space="preserve">
+    <value>The mime type registered with the system does not match the mime type of the file.</value>
+  </data>
+  <data name="Image_DecoderError" xml:space="preserve">
+    <value>The image decoder cannot decode the image. The image might be corrupted.</value>
+  </data>
+  <data name="Image_DisplayStateInvalid" xml:space="preserve">
+    <value>The system display state is not valid.</value>
+  </data>
+  <data name="Image_DuplicateMetadataPresent" xml:space="preserve">
+    <value>Duplicate copies of metadata present.</value>
+  </data>
+  <data name="Image_EncoderNoColorContext" xml:space="preserve">
+    <value>The designated BitmapEncoder does not support ColorContexts.</value>
+  </data>
+  <data name="Image_EncoderNoGlobalMetadata" xml:space="preserve">
+    <value>The designated BitmapEncoder does not support global metadata.</value>
+  </data>
+  <data name="Image_EncoderNoGlobalThumbnail" xml:space="preserve">
+    <value>The designated BitmapEncoder does not support global thumbnails.</value>
+  </data>
+  <data name="Image_EncoderNoPreview" xml:space="preserve">
+    <value>The designated BitmapEncoder does not support previews.</value>
+  </data>
+  <data name="Image_EndInitWithoutBeginInit" xml:space="preserve">
+    <value>Cannot call EndInit without a matching BeginInit call.</value>
+  </data>
+  <data name="Image_FrameMissing" xml:space="preserve">
+    <value>The image is missing a frame.</value>
+  </data>
+  <data name="Image_FreezableCloneNotAllowed" xml:space="preserve">
+    <value>This class does not support cloning.</value>
+  </data>
+  <data name="Image_GuidEmpty" xml:space="preserve">
+    <value>Empty GUID is not valid for '{0}'.</value>
+  </data>
+  <data name="Image_HeaderError" xml:space="preserve">
+    <value>The image cannot be decoded. The image header might be corrupted.</value>
+  </data>
+  <data name="Image_IndexedPixelFormatRequiresPalette" xml:space="preserve">
+    <value>Must specify a palette when using an indexed pixel format.</value>
+  </data>
+  <data name="Image_InInitialize" xml:space="preserve">
+    <value>Already in an initializing state.</value>
+  </data>
+  <data name="Image_InitializationIncomplete" xml:space="preserve">
+    <value>BitmapImage initialization is not complete. Call the EndInit method to complete the initialization.</value>
+  </data>
+  <data name="Image_InplaceMetadataNoCopy" xml:space="preserve">
+    <value>InPlaceBitmapMetadataWriter cannot be copied.</value>
+  </data>
+  <data name="Image_InsufficientBuffer" xml:space="preserve">
+    <value>Buffer size is not sufficient.</value>
+  </data>
+  <data name="Image_InsufficientBufferSize" xml:space="preserve">
+    <value>Buffer not large enough to copy memory.</value>
+  </data>
+  <data name="Image_InternalError" xml:space="preserve">
+    <value>An error occurred.</value>
+  </data>
+  <data name="Image_InvalidArrayForPixel" xml:space="preserve">
+    <value>Cannot match the type of this array to a pixel format.</value>
+  </data>
+  <data name="Image_InvalidColorContext" xml:space="preserve">
+    <value>Bitmap color context is not valid.</value>
+  </data>
+  <data name="Image_InvalidQueryCharacter" xml:space="preserve">
+    <value>Character is not valid in metadata query request.</value>
+  </data>
+  <data name="Image_InvalidQueryRequest" xml:space="preserve">
+    <value>Metadata query request is not valid.</value>
+  </data>
+  <data name="Image_LockCountLimit" xml:space="preserve">
+    <value>The lock count cannot exceed UInt32.MaxValue.</value>
+  </data>
+  <data name="Image_MetadataInitializationIncomplete" xml:space="preserve">
+    <value>BitmapMetadata initialization incomplete.</value>
+  </data>
+  <data name="Image_MetadataNotCompatible" xml:space="preserve">
+    <value>The bitmap metadata is not compatible with this container format.</value>
+  </data>
+  <data name="Image_MetadataNotSupported" xml:space="preserve">
+    <value>BitmapMetadata is not available on BitmapImage.</value>
+  </data>
+  <data name="Image_MetadataReadOnly" xml:space="preserve">
+    <value>Bitmap metadata cannot be changed.</value>
+  </data>
+  <data name="Image_MetadataSizeFixed" xml:space="preserve">
+    <value>Cannot add any more top-level metadata blocks.</value>
+  </data>
+  <data name="Image_MustBeLocked" xml:space="preserve">
+    <value>Cannot call this method while the image is unlocked.</value>
+  </data>
+  <data name="Image_NeitherArgument" xml:space="preserve">
+    <value>Property '{0}' or property '{1}' must be set.</value>
+  </data>
+  <data name="Image_NoArgument" xml:space="preserve">
+    <value>'{0}' property is not set.</value>
+  </data>
+  <data name="Image_NoCodecsFound" xml:space="preserve">
+    <value>No codec found that can decode the specified file.</value>
+  </data>
+  <data name="Image_NoDecodeFrames" xml:space="preserve">
+    <value>Image does not contain any frames.</value>
+  </data>
+  <data name="Image_NoFrames" xml:space="preserve">
+    <value>Cannot save an image with no frames.</value>
+  </data>
+  <data name="Image_NoPalette" xml:space="preserve">
+    <value>The specified image does not contain a palette.</value>
+  </data>
+  <data name="Image_NoPixelFormatFound" xml:space="preserve">
+    <value>No information was found about this pixel format.</value>
+  </data>
+  <data name="Image_NoThumbnail" xml:space="preserve">
+    <value>Bitmap does not contain thumbnail.</value>
+  </data>
+  <data name="Image_NotInitialized" xml:space="preserve">
+    <value>BitmapImage has not been initialized.  Call the BeginInit method, set the appropriate properties, and then call the EndInit method.</value>
+  </data>
+  <data name="Image_OnlyOneInit" xml:space="preserve">
+    <value>Cannot set the initializing state more than once.</value>
+  </data>
+  <data name="Image_OnlyOneSave" xml:space="preserve">
+    <value>Cannot call Save on an Encoder more than once.</value>
+  </data>
+  <data name="Image_OnlyOrthogonal" xml:space="preserve">
+    <value>Transform must be a combination of scales, flips, and 90 degree rotations.</value>
+  </data>
+  <data name="Image_OriginalStreamReadOnly" xml:space="preserve">
+    <value>In place editing of bitmap metadata is not allowed because the original source is not writable.</value>
+  </data>
+  <data name="Image_Overflow" xml:space="preserve">
+    <value>The image data generated an overflow during processing.</value>
+  </data>
+  <data name="Image_PaletteColorsDoNotMatchFormat" xml:space="preserve">
+    <value>The number of colors in the palette is larger than the maximum allowed by the supplied pixel format.</value>
+  </data>
+  <data name="Image_PaletteFixedType" xml:space="preserve">
+    <value>Must use a fixed palette type. '{0}' not supported here.</value>
+  </data>
+  <data name="Image_PaletteZeroColors" xml:space="preserve">
+    <value>Cannot create a palette with less than 1 color or more than 256 colors.</value>
+  </data>
+  <data name="Image_PropertyNotFound" xml:space="preserve">
+    <value>Property cannot be found.</value>
+  </data>
+  <data name="Image_PropertyNotSupported" xml:space="preserve">
+    <value>This codec does not support the specified property.</value>
+  </data>
+  <data name="Image_PropertySize" xml:space="preserve">
+    <value>Property is corrupted.</value>
+  </data>
+  <data name="Image_PropertyUnexpectedType" xml:space="preserve">
+    <value>Unexpected property type or value.</value>
+  </data>
+  <data name="Image_RequestOnlyValidAtMetadataRoot" xml:space="preserve">
+    <value>The metadata query is valid only at the root of the metadata hierarchy.</value>
+  </data>
+  <data name="Image_SetPropertyOutsideBeginEndInit" xml:space="preserve">
+    <value>Cannot set this property outside a BeginInit/EndInit block.</value>
+  </data>
+  <data name="Image_SingularMatrix" xml:space="preserve">
+    <value>Cannot invert singular matrix.</value>
+  </data>
+  <data name="Image_SizeOptionsAngle" xml:space="preserve">
+    <value>Bad Rotation parameter. Only Rotate0, Rotate90, Rotate180, and Rotate270 are supported.</value>
+  </data>
+  <data name="Image_SizeOutOfRange" xml:space="preserve">
+    <value>The image dimensions are out of the range supported by this codec.</value>
+  </data>
+  <data name="Image_StreamNotAvailable" xml:space="preserve">
+    <value>Metadata stream is not available for this operation.</value>
+  </data>
+  <data name="Image_StreamRead" xml:space="preserve">
+    <value>Cannot read from the stream.</value>
+  </data>
+  <data name="Image_StreamWrite" xml:space="preserve">
+    <value>Cannot write to the stream.</value>
+  </data>
+  <data name="Image_TooManyScanlines" xml:space="preserve">
+    <value>The bitmap has too many scanlines for the specified encoder.</value>
+  </data>
+  <data name="Image_TooMuchMetadata" xml:space="preserve">
+    <value>Commit unsuccessful because too much metadata changed.</value>
+  </data>
+  <data name="Image_UnexpectedMetadataType" xml:space="preserve">
+    <value>Unexpected type of metadata.</value>
+  </data>
+  <data name="Image_UnknownFormat" xml:space="preserve">
+    <value>The image format is unrecognized.</value>
+  </data>
+  <data name="Image_UnsupportedOperation" xml:space="preserve">
+    <value>Operation not supported.</value>
+  </data>
+  <data name="Image_UnsupportedPixelFormat" xml:space="preserve">
+    <value>Pixel format not supported.</value>
+  </data>
+  <data name="Image_WrongState" xml:space="preserve">
+    <value>Operation caused an invalid state.</value>
+  </data>
+  <data name="IncompatibleStylusPointDescriptions" xml:space="preserve">
+    <value>The StylusPointDescriptions are incompatible. Use the StylusPointDescription.GetCommonDescription method to find a common StylusPointDescription and then call StylusPointCollection.Reformat to return a compatible StylusPointCollection.</value>
+  </data>
+  <data name="IncreaseZoomKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="IncreaseZoomKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="IncreaseZoomText" xml:space="preserve">
+    <value>Increase Zoom</value>
+  </data>
+  <data name="InInitialization" xml:space="preserve">
+    <value>The object is already being initialized.</value>
+  </data>
+  <data name="InitializationIncomplete" xml:space="preserve">
+    <value>The operation fails because the object is not fully initialized.</value>
+  </data>
+  <data name="InitializingCompressorFailed" xml:space="preserve">
+    <value>Cannot initialize compressor.</value>
+  </data>
+  <data name="InnerRequestNotAllowed" xml:space="preserve">
+    <value>InnerRequest not available for preloaded packages.</value>
+  </data>
+  <data name="InputBinding_ExpectedInputGesture" xml:space="preserve">
+    <value>Gesture accepts only objects of type '{0}'.</value>
+  </data>
+  <data name="InputLanguageManager_NotReadyToChangeCurrentLanguage" xml:space="preserve">
+    <value>InputLanguageManager is not ready to change the current input languages.</value>
+  </data>
+  <data name="InputMethod_InvalidConversionMode" xml:space="preserve">
+    <value>'{0}' is not a valid ImeConversionMode.</value>
+  </data>
+  <data name="InputMethod_InvalidSentenceMode" xml:space="preserve">
+    <value>'{0}' is not a valid ImeSentenceMode.</value>
+  </data>
+  <data name="InputProviderSiteDisposed" xml:space="preserve">
+    <value>The InputProviderSite has already been disposed.</value>
+  </data>
+  <data name="InputScope_InvalidInputScopeName" xml:space="preserve">
+    <value>'{0}' is not a valid InputScopeName.</value>
+  </data>
+  <data name="IntegerCollectionLengthLessThanZero" xml:space="preserve">
+    <value>Integer collection size cannot be negative.</value>
+  </data>
+  <data name="InvalidAbsoluteUriInFontFamilyName" xml:space="preserve">
+    <value>An absolute URI in a font family name must have file:// scheme.</value>
+  </data>
+  <data name="InvalidAdditionalDataForStylusPoint" xml:space="preserve">
+    <value>The additional data passed in does not match what is expected based on the StylusPointDescription.</value>
+  </data>
+  <data name="InvalidBufferLength" xml:space="preserve">
+    <value>Maximum buffer length must be within actual buffer length.</value>
+  </data>
+  <data name="InvalidByteRanges" xml:space="preserve">
+    <value>Byte ranges are not valid in '{0}'.</value>
+  </data>
+  <data name="InvalidCursorType" xml:space="preserve">
+    <value>'{0}' cursor type is not valid.</value>
+  </data>
+  <data name="InvalidDataInISF" xml:space="preserve">
+    <value>The specified data is invalid, see inner exception for details.</value>
+  </data>
+  <data name="InvalidDataTypeForExtendedProperty" xml:space="preserve">
+    <value>Property data must be a non-reference variant compatible type.</value>
+  </data>
+  <data name="InvalidDiameter" xml:space="preserve">
+    <value>The value is out of range.</value>
+  </data>
+  <data name="InvalidDrawingAttributesHeight" xml:space="preserve">
+    <value>Height must be greater than or equal to DrawingAttributes.MinHeight and less than or equal to DrawingAttribute.MaxHeight.</value>
+  </data>
+  <data name="InvalidDrawingAttributesWidth" xml:space="preserve">
+    <value>Width must be greater than or equal to DrawingAttributes.MinWidth and less than or equal to DrawingAttribute.MaxWidth.</value>
+  </data>
+  <data name="InvalidEpInIsf" xml:space="preserve">
+    <value>Extended property data type is not valid.</value>
+  </data>
+  <data name="InvalidEventHandle" xml:space="preserve">
+    <value>The event handle is not usable.</value>
+  </data>
+  <data name="InvalidGuid" xml:space="preserve">
+    <value>GUID cannot be empty.</value>
+  </data>
+  <data name="InvalidIsButtonForId" xml:space="preserve">
+    <value>The specified GUID represents a button, so isButton must be true.</value>
+  </data>
+  <data name="InvalidIsButtonForId2" xml:space="preserve">
+    <value>The specified GUID does not represent a button, so isButton must be false.</value>
+  </data>
+  <data name="InvalidMatrixContainsInfinity" xml:space="preserve">
+    <value>Infinity member value is not valid in Matrix.</value>
+  </data>
+  <data name="InvalidMatrixContainsNaN" xml:space="preserve">
+    <value>NaN is not a valid value for Matrix member.</value>
+  </data>
+  <data name="InvalidMinMaxForButton" xml:space="preserve">
+    <value>StylusPointPropertyInfos that are buttons must have a minimum of 0 and a maximum of 1.</value>
+  </data>
+  <data name="InvalidPartName" xml:space="preserve">
+    <value>The part name does not correspond to its content type.</value>
+  </data>
+  <data name="InvalidPermissionStateValue" xml:space="preserve">
+    <value>PermissionState value '{0}' is not valid for this Permission.</value>
+  </data>
+  <data name="InvalidPermissionType" xml:space="preserve">
+    <value>Permission type is not valid. Expected '{0}'.</value>
+  </data>
+  <data name="InvalidPressureValue" xml:space="preserve">
+    <value>Pressure must be a value between 0 and 1.</value>
+  </data>
+  <data name="InvalidRemovedStroke" xml:space="preserve">
+    <value>The stroke being removed does not exist in the current collection.</value>
+  </data>
+  <data name="InvalidReplacedStroke" xml:space="preserve">
+    <value>The stroke being replaced does not exist in the current collection.</value>
+  </data>
+  <data name="InvalidScheme" xml:space="preserve">
+    <value>HTTP byte range downloader can support only HTTP or HTTPS schemes.</value>
+  </data>
+  <data name="InvalidSiteOfOriginUri" xml:space="preserve">
+    <value>'{0}' must be a relative URI for site of origin.</value>
+  </data>
+  <data name="InvalidSizeSpecified" xml:space="preserve">
+    <value>The specified size is less than the information decoded in the ISF stream.</value>
+  </data>
+  <data name="InvalidStream" xml:space="preserve">
+    <value>Stream is not valid.</value>
+  </data>
+  <data name="InvalidSttValue" xml:space="preserve">
+    <value>Translation is not valid.</value>
+  </data>
+  <data name="InvalidStylusPointCollectionZeroCount" xml:space="preserve">
+    <value>StylusPointCollection cannot be empty when attached to a Stroke.</value>
+  </data>
+  <data name="InvalidStylusPointConstructionZeroLengthCollection" xml:space="preserve">
+    <value>The specified collection cannot be empty.</value>
+  </data>
+  <data name="InvalidStylusPointDescription" xml:space="preserve">
+    <value>StylusPointDescription must contain at least X, Y and NormalPressure in that order.</value>
+  </data>
+  <data name="InvalidStylusPointDescriptionButtonsMustBeLast" xml:space="preserve">
+    <value>When constructing a StylusPointDescription, any StylusPointPropertyInfos that represent buttons must be placed at the end of the collection.</value>
+  </data>
+  <data name="InvalidStylusPointDescriptionDuplicatesFound" xml:space="preserve">
+    <value>StylusPointDescription cannot contain duplicate StylusPointPropertyInfos.</value>
+  </data>
+  <data name="InvalidStylusPointDescriptionSubset" xml:space="preserve">
+    <value>The specified StylusPointDescription must be a subset.</value>
+  </data>
+  <data name="InvalidStylusPointDescriptionTooManyButtons" xml:space="preserve">
+    <value>StylusPointDescription supports no more than 31 buttons.</value>
+  </data>
+  <data name="InvalidStylusPointProperty" xml:space="preserve">
+    <value>The StylusPoint does not support the specified StylusPointProperty.</value>
+  </data>
+  <data name="InvalidStylusPointPropertyInfoResolution" xml:space="preserve">
+    <value>Resolution must be at least 0.0f.</value>
+  </data>
+  <data name="InvalidStylusPointXYNaN" xml:space="preserve">
+    <value>Value cannot be Double.NaN.</value>
+  </data>
+  <data name="InvalidTempFileName" xml:space="preserve">
+    <value>Cannot have empty name of a temporary file.</value>
+  </data>
+  <data name="InvalidTextDecorationCollectionString" xml:space="preserve">
+    <value>The requested TextDecorationCollection string is not valid: '{0}'.</value>
+  </data>
+  <data name="InvalidValueOfType" xml:space="preserve">
+    <value>Invalid value '{0}' for type '{1}'.</value>
+  </data>
+  <data name="InvalidValueType" xml:space="preserve">
+    <value>Value must be of type '{0}'.</value>
+  </data>
+  <data name="InvalidValueType1" xml:space="preserve">
+    <value>Value must be of type '{0}' or '{1}'.</value>
+  </data>
+  <data name="Invalid_IInputElement" xml:space="preserve">
+    <value>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</value>
+  </data>
+  <data name="Invalid_isfData_Length" xml:space="preserve">
+    <value>The length of the ISF data must be greater than zero.</value>
+  </data>
+  <data name="Invalid_URI" xml:space="preserve">
+    <value>The URI specified is invalid.</value>
+  </data>
+  <data name="IOBufferOverflow" xml:space="preserve">
+    <value>A read or write operation references a location outside the bounds of the buffer provided.</value>
+  </data>
+  <data name="IOExceptionWithFileName" xml:space="preserve">
+    <value>I/O error when opening file '{0}'.</value>
+  </data>
+  <data name="IsfOperationFailed" xml:space="preserve">
+    <value>InkSerializedFormat operation failed.</value>
+  </data>
+  <data name="KeyboardSinkAlreadyOwned" xml:space="preserve">
+    <value>The specified keyboard sink is already owned by a site.</value>
+  </data>
+  <data name="KeyboardSinkMustBeAnElement" xml:space="preserve">
+    <value>The specified keyboard sink must be a UIElement.</value>
+  </data>
+  <data name="KeyboardSinkNotAChild" xml:space="preserve">
+    <value>The specified keyboard sink is not a child of this source.</value>
+  </data>
+  <data name="KeyGesture_Invalid" xml:space="preserve">
+    <value>'{0}+{1}' key and modifier combination is not supported for KeyGesture.</value>
+  </data>
+  <data name="LastPageKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LastPageKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LastPageText" xml:space="preserve">
+    <value>Last Page</value>
+  </data>
+  <data name="LayoutManager_DeepRecursion" xml:space="preserve">
+    <value>Layout recursion reached allowed limit to avoid stack overflow: '{0}'. Either the tree contains a loop or is too deep.</value>
+  </data>
+  <data name="Manipulation_InvalidManipulationMode" xml:space="preserve">
+    <value>An unrecognized ManipulationMode flag was encountered.</value>
+  </data>
+  <data name="Manipulation_ManipulationNotActive" xml:space="preserve">
+    <value>Manipulation is not active on the specified element.</value>
+  </data>
+  <data name="Manipulation_ManipulationNotEnabled" xml:space="preserve">
+    <value>IsManipulationEnabled is not set to true on the specified element.</value>
+  </data>
+  <data name="Matrix3D_NotInvertible" xml:space="preserve">
+    <value>Cannot invert the matrix, because the matrix is not invertible.</value>
+  </data>
+  <data name="MatrixNotInvertible" xml:space="preserve">
+    <value>The specified Matrix must be invertible.</value>
+  </data>
+  <data name="MediaBoostBassKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaBoostBassKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaBoostBassText" xml:space="preserve">
+    <value>Boost Bass</value>
+  </data>
+  <data name="MediaChannelDownKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaChannelDownKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaChannelDownText" xml:space="preserve">
+    <value>Channel Down</value>
+  </data>
+  <data name="MediaChannelUpKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaChannelUpKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaChannelUpText" xml:space="preserve">
+    <value>Channel Up</value>
+  </data>
+  <data name="MediaContext_APINotAllowed" xml:space="preserve">
+    <value>Cannot call this API during the OnRender callback. During OnRender, only drawing operations that draw the content of the Visual can be performed.</value>
+  </data>
+  <data name="MediaContext_InfiniteLayoutLoop" xml:space="preserve">
+    <value>An infinite loop appears to have resulted from cross-dependent views.</value>
+  </data>
+  <data name="MediaContext_InfiniteTickLoop" xml:space="preserve">
+    <value>An infinite loop appears to have resulted from repeatedly invalidating the TimeManager during the Layout/Render process.</value>
+  </data>
+  <data name="MediaContext_NoBadShaderHandler" xml:space="preserve">
+    <value>Invalid user-specified pixel shader.  Register a PixelShader.InvalidPixelShaderEncountered event handler to avoid this exception being raised.</value>
+  </data>
+  <data name="MediaContext_OutOfVideoMemory" xml:space="preserve">
+    <value>Out of video memory.</value>
+  </data>
+  <data name="MediaContext_RenderThreadError" xml:space="preserve">
+    <value>An unspecified error occurred on the render thread.</value>
+  </data>
+  <data name="MediaDecreaseBassKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaDecreaseBassKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaDecreaseBassText" xml:space="preserve">
+    <value>Decrease Bass</value>
+  </data>
+  <data name="MediaDecreaseMicrophoneVolumeKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaDecreaseMicrophoneVolumeKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaDecreaseMicrophoneVolumeText" xml:space="preserve">
+    <value>Decrease Microphone Volume</value>
+  </data>
+  <data name="MediaDecreaseTrebleKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaDecreaseTrebleKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaDecreaseTrebleText" xml:space="preserve">
+    <value>Decrease Treble</value>
+  </data>
+  <data name="MediaDecreaseVolumeKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaDecreaseVolumeKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaDecreaseVolumeText" xml:space="preserve">
+    <value>Decrease Volume</value>
+  </data>
+  <data name="MediaFastForwardKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaFastForwardKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaFastForwardText" xml:space="preserve">
+    <value>Fast Forward</value>
+  </data>
+  <data name="MediaIncreaseBassKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaIncreaseBassKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaIncreaseBassText" xml:space="preserve">
+    <value>Increase Bass</value>
+  </data>
+  <data name="MediaIncreaseMicrophoneVolumeKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaIncreaseMicrophoneVolumeKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaIncreaseMicrophoneVolumeText" xml:space="preserve">
+    <value>Increase Microphone Volume</value>
+  </data>
+  <data name="MediaIncreaseTrebleKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaIncreaseTrebleKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaIncreaseTrebleText" xml:space="preserve">
+    <value>Increase Treble</value>
+  </data>
+  <data name="MediaIncreaseVolumeKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaIncreaseVolumeKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaIncreaseVolumeText" xml:space="preserve">
+    <value>Increase Volume</value>
+  </data>
+  <data name="MediaMuteMicrophoneVolumeKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaMuteMicrophoneVolumeKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaMuteMicrophoneVolumeText" xml:space="preserve">
+    <value>Mute Microphone Volume</value>
+  </data>
+  <data name="MediaMuteVolumeKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaMuteVolumeKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaMuteVolumeText" xml:space="preserve">
+    <value>Mute Volume</value>
+  </data>
+  <data name="MediaNextTrackKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaNextTrackKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaNextTrackText" xml:space="preserve">
+    <value>Next Track</value>
+  </data>
+  <data name="MediaPauseKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaPauseKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaPauseText" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="MediaPlayKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaPlayKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaPlayText" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="MediaPreviousTrackKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaPreviousTrackKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaPreviousTrackText" xml:space="preserve">
+    <value>Previous Track</value>
+  </data>
+  <data name="MediaRecordKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaRecordKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaRecordText" xml:space="preserve">
+    <value>Record</value>
+  </data>
+  <data name="MediaRewindKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaRewindKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaRewindText" xml:space="preserve">
+    <value>Rewind</value>
+  </data>
+  <data name="MediaSelectKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaSelectKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaSelectText" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="MediaStopKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaStopKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaStopText" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="MediaSystem_ApiInvalidContext" xml:space="preserve">
+    <value>This API was accessed with arguments from the wrong context.</value>
+  </data>
+  <data name="MediaSystem_OutOfOrderConnectOrDisconnect" xml:space="preserve">
+    <value>Received an out of order connect or disconnect message.</value>
+  </data>
+  <data name="MediaToggleMicrophoneOnOffKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaToggleMicrophoneOnOffKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaToggleMicrophoneOnOffText" xml:space="preserve">
+    <value>Toggle Microphone OnOff</value>
+  </data>
+  <data name="MediaTogglePlayPauseKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaTogglePlayPauseKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaTogglePlayPauseText" xml:space="preserve">
+    <value>Toggle Play Pause</value>
+  </data>
+  <data name="Media_DownloadFailed" xml:space="preserve">
+    <value>Media file download failed.</value>
+  </data>
+  <data name="Media_FileFormatNotSupported" xml:space="preserve">
+    <value>Installed codecs do not support the media file format.</value>
+  </data>
+  <data name="Media_FileNotFound" xml:space="preserve">
+    <value>Cannot find the media file.</value>
+  </data>
+  <data name="Media_HardwareVideoAccelerationNotAvailable" xml:space="preserve">
+    <value>Display driver must support video acceleration for video or audio playback.</value>
+  </data>
+  <data name="Media_InsufficientVideoResources" xml:space="preserve">
+    <value>There are insufficient video resources available for video or audio playback.</value>
+  </data>
+  <data name="Media_InvalidArgument" xml:space="preserve">
+    <value>Value does not fall within the expected range.</value>
+  </data>
+  <data name="Media_InvalidWmpVersion" xml:space="preserve">
+    <value>Windows Media Player version 10 or later is required.</value>
+  </data>
+  <data name="Media_LogonFailure" xml:space="preserve">
+    <value>Access was denied on the media file.</value>
+  </data>
+  <data name="Media_NotAllowedWhileTimingEngineInControl" xml:space="preserve">
+    <value>Cannot perform this operation while a clock is assigned to the media player.</value>
+  </data>
+  <data name="Media_PackURIsAreNotSupported" xml:space="preserve">
+    <value>Only site-of-origin pack URIs are supported for media.</value>
+  </data>
+  <data name="Media_PlayerIsClosed" xml:space="preserve">
+    <value>No operations are valid on a closed media player except open and close.</value>
+  </data>
+  <data name="Media_PlaylistFormatNotSupported" xml:space="preserve">
+    <value>Unrecognized playlist file format.</value>
+  </data>
+  <data name="Media_StreamClosed" xml:space="preserve">
+    <value>Cannot access the stream after it is closed.</value>
+  </data>
+  <data name="Media_UninitializedResource" xml:space="preserve">
+    <value>Accessed an uninitialized media resource.</value>
+  </data>
+  <data name="Media_UnknownChannelType" xml:space="preserve">
+    <value>Channel type is not recognized.</value>
+  </data>
+  <data name="Media_UnknownMediaExecption" xml:space="preserve">
+    <value>An unknown media error occurred.</value>
+  </data>
+  <data name="Media_UriNotSpecified" xml:space="preserve">
+    <value>Must specify URI.</value>
+  </data>
+  <data name="MethodCallNotAllowed" xml:space="preserve">
+    <value>The '{0}' method cannot be called at this time.</value>
+  </data>
+  <data name="MilErr_UnsupportedVersion" xml:space="preserve">
+    <value>Mismatched versions of PresentationCore.dll, Milcore.dll, WindowsCodecs.dll, or D3d9.dll. Check that these DLLs come from the same source.</value>
+  </data>
+  <data name="Mismatched_RoutedEvent" xml:space="preserve">
+    <value>RoutedEvent in RoutedEventArgs and EventRoute are mismatched.</value>
+  </data>
+  <data name="MoveDownKeyDisplayString" xml:space="preserve">
+    <value>Down</value>
+  </data>
+  <data name="MoveDownText" xml:space="preserve">
+    <value>Move Down</value>
+  </data>
+  <data name="MoveFocusBackKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+Left</value>
+  </data>
+  <data name="MoveFocusBackText" xml:space="preserve">
+    <value>Move Focus Back</value>
+  </data>
+  <data name="MoveFocusDownKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+Down</value>
+  </data>
+  <data name="MoveFocusDownText" xml:space="preserve">
+    <value>Move Focus Down</value>
+  </data>
+  <data name="MoveFocusForwardKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+Right</value>
+  </data>
+  <data name="MoveFocusForwardText" xml:space="preserve">
+    <value>Move Focus Forward</value>
+  </data>
+  <data name="MoveFocusPageDownKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+PageDown</value>
+  </data>
+  <data name="MoveFocusPageDownText" xml:space="preserve">
+    <value>Move Focus Page Down</value>
+  </data>
+  <data name="MoveFocusPageUpKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+PageUp</value>
+  </data>
+  <data name="MoveFocusPageUpText" xml:space="preserve">
+    <value>Move Focus Page Up</value>
+  </data>
+  <data name="MoveFocusUpKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+Up</value>
+  </data>
+  <data name="MoveFocusUpText" xml:space="preserve">
+    <value>Move Focus Up</value>
+  </data>
+  <data name="MoveLeftKeyDisplayString" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="MoveLeftText" xml:space="preserve">
+    <value>Move Left</value>
+  </data>
+  <data name="MoveRightKeyDisplayString" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="MoveRightText" xml:space="preserve">
+    <value>Move Right</value>
+  </data>
+  <data name="MoveToEndKeyDisplayString" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="MoveToEndText" xml:space="preserve">
+    <value>Move To End</value>
+  </data>
+  <data name="MoveToHomeKeyDisplayString" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="MoveToHomeText" xml:space="preserve">
+    <value>Move To Home</value>
+  </data>
+  <data name="MoveToPageDownKeyDisplayString" xml:space="preserve">
+    <value>PageDown</value>
+  </data>
+  <data name="MoveToPageDownText" xml:space="preserve">
+    <value>Move To Page Down</value>
+  </data>
+  <data name="MoveToPageUpKeyDisplayString" xml:space="preserve">
+    <value>PageUp</value>
+  </data>
+  <data name="MoveToPageUpText" xml:space="preserve">
+    <value>Move To Page Up</value>
+  </data>
+  <data name="MoveUpKeyDisplayString" xml:space="preserve">
+    <value>Up</value>
+  </data>
+  <data name="MoveUpText" xml:space="preserve">
+    <value>Move Up</value>
+  </data>
+  <data name="MultiSingleton" xml:space="preserve">
+    <value>Cannot have more than one '{0}' instance in the same AppDomain.</value>
+  </data>
+  <data name="NavigateJournalKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NavigateJournalKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NavigateJournalText" xml:space="preserve">
+    <value>Navigate Journal</value>
+  </data>
+  <data name="NewKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+N</value>
+  </data>
+  <data name="NewText" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="NextPageKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NextPageKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NextPageText" xml:space="preserve">
+    <value>Next Page</value>
+  </data>
+  <data name="NonCLSException" xml:space="preserve">
+    <value>Text formatting engine encountered a non-CLS exception.</value>
+  </data>
+  <data name="NonPackAppAbsoluteUriNotAllowed" xml:space="preserve">
+    <value>Unsupported Uri syntax. Method expects a relative Uri or a pack://application:,,,/ form of absolute Uri.</value>
+  </data>
+  <data name="NonWhiteSpaceInAddText" xml:space="preserve">
+    <value>Text content is not allowed on this element. Cannot add the text '{0}'.</value>
+  </data>
+  <data name="NotACommandText" xml:space="preserve">
+    <value>Not a Command</value>
+  </data>
+  <data name="NotAllowedPackageUri" xml:space="preserve">
+    <value>The package URI is not allowed in the package store.</value>
+  </data>
+  <data name="NotAllowedToAccessStagingArea" xml:space="preserve">
+    <value>Only PreProcessInput and PostProcessInput events can access InputManager staging area.</value>
+  </data>
+  <data name="NotInInitialization" xml:space="preserve">
+    <value>The object is not being initialized.</value>
+  </data>
+  <data name="NullBaseUriParam" xml:space="preserve">
+    <value>'{0}' parameter cannot be null unless '{1}' is an absolute URI.</value>
+  </data>
+  <data name="NullHwnd" xml:space="preserve">
+    <value>Hwnd of zero is not valid.</value>
+  </data>
+  <data name="OffsetNegative" xml:space="preserve">
+    <value>Offset must be non-negative.</value>
+  </data>
+  <data name="OleRegisterDragDropFailure" xml:space="preserve">
+    <value>OleRegisterDragDrop failed with return code '{0}' and window handle '{1}'.</value>
+  </data>
+  <data name="OleRevokeDragDropFailure" xml:space="preserve">
+    <value>OleRevokeDragDrop failed with return code '{0}' and window handle '{1}'.</value>
+  </data>
+  <data name="OleServicesContext_oleInitializeFailure" xml:space="preserve">
+    <value>OleInitialize failed for '{0}'.</value>
+  </data>
+  <data name="OleServicesContext_ThreadMustBeSTA" xml:space="preserve">
+    <value>Current thread must be set to single thread apartment (STA) mode before OLE calls can be made.</value>
+  </data>
+  <data name="OnlyAcceptsKeyMessages" xml:space="preserve">
+    <value>Keyboard processing can only process keyboard messages.</value>
+  </data>
+  <data name="OnlyOneInitialization" xml:space="preserve">
+    <value>The object is already initialized and cannot be initialized again.</value>
+  </data>
+  <data name="OpenKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+O</value>
+  </data>
+  <data name="OpenText" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="OptimalParagraphMustWrap" xml:space="preserve">
+    <value>Paragraph must be allowed to wrap in total-fit formatting.</value>
+  </data>
+  <data name="PackageAlreadyExists" xml:space="preserve">
+    <value>A package with the same URI is already in the package store.</value>
+  </data>
+  <data name="PackWebRequestCachePolicyIllegal" xml:space="preserve">
+    <value>Cache policy is not valid.</value>
+  </data>
+  <data name="PaginatorMissingContentPosition" xml:space="preserve">
+    <value>Specified ContentPosition is not valid for this element.</value>
+  </data>
+  <data name="PaginatorNegativePageNumber" xml:space="preserve">
+    <value>Page number cannot be negative.</value>
+  </data>
+  <data name="ParameterCannotBeGreaterThan" xml:space="preserve">
+    <value>The parameter value cannot be greater than '{0}'.</value>
+  </data>
+  <data name="ParameterCannotBeLessThan" xml:space="preserve">
+    <value>The parameter value cannot be less than '{0}'.</value>
+  </data>
+  <data name="ParameterCannotBeNegative" xml:space="preserve">
+    <value>Parameter must be greater than or equal to zero.</value>
+  </data>
+  <data name="ParameterMustBeBetween" xml:space="preserve">
+    <value>The parameter value must be between '{0}' and '{1}'.</value>
+  </data>
+  <data name="ParameterMustBeGreaterThanZero" xml:space="preserve">
+    <value>The parameter value must be greater than zero.</value>
+  </data>
+  <data name="ParameterValueCannotBeInfinity" xml:space="preserve">
+    <value>The parameter value must be finite.</value>
+  </data>
+  <data name="ParameterValueCannotBeNaN" xml:space="preserve">
+    <value>The parameter value must be a number.</value>
+  </data>
+  <data name="ParameterValueCannotBeNegative" xml:space="preserve">
+    <value>'{0}' parameter value cannot be negative.</value>
+  </data>
+  <data name="ParameterValueMustBeGreaterThanZero" xml:space="preserve">
+    <value>'{0}' parameter value must be greater than zero.</value>
+  </data>
+  <data name="Parsers_IllegalToken" xml:space="preserve">
+    <value>Token is not valid.</value>
+  </data>
+  <data name="Parsers_IllegalToken_250_Chars" xml:space="preserve">
+    <value>Token is not valid because it is more than 250 characters.</value>
+  </data>
+  <data name="Parser_BadForm" xml:space="preserve">
+    <value>Incorrect form '{0}' found parsing '{1}' string.</value>
+  </data>
+  <data name="Parser_Empty" xml:space="preserve">
+    <value>Empty string not allowed.</value>
+  </data>
+  <data name="Parser_UnexpectedToken" xml:space="preserve">
+    <value>Unexpected token '{0}' encountered at position '{1}'.</value>
+  </data>
+  <data name="PasteKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+V;Shift+Insert</value>
+  </data>
+  <data name="PasteText" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="PathGeometry_InternalReadBackError" xml:space="preserve">
+    <value>Internal error in newly produced path figures.</value>
+  </data>
+  <data name="PathTooLongExceptionWithFileName" xml:space="preserve">
+    <value>'{0}' file name is longer than the system-defined maximum length.</value>
+  </data>
+  <data name="Penservice_Disposed" xml:space="preserve">
+    <value>Cannot access a disposed pen service.</value>
+  </data>
+  <data name="PenService_InvalidPacketData" xml:space="preserve">
+    <value>Unexpected size of packet from pen service.</value>
+  </data>
+  <data name="PenService_WindowAlreadyRegistered" xml:space="preserve">
+    <value>The window is already registered for stylus input.</value>
+  </data>
+  <data name="PenService_WindowNotRegistered" xml:space="preserve">
+    <value>The window is not registered for stylus input.</value>
+  </data>
+  <data name="PreviousPageKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PreviousPageKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PreviousPageText" xml:space="preserve">
+    <value>Previous Page</value>
+  </data>
+  <data name="PrintKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+P</value>
+  </data>
+  <data name="PrintPreviewKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+F2</value>
+  </data>
+  <data name="PrintPreviewText" xml:space="preserve">
+    <value>Print Preview</value>
+  </data>
+  <data name="PrintText" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="PropertiesKeyDisplayString" xml:space="preserve">
+    <value>F4</value>
+  </data>
+  <data name="PropertiesText" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="PropertyCannotBeNegative" xml:space="preserve">
+    <value>'{0}' property value must be greater than or equal to zero.</value>
+  </data>
+  <data name="PropertyMustBeGreaterThanZero" xml:space="preserve">
+    <value>'{0}' property value must be greater than zero.</value>
+  </data>
+  <data name="PropertyOfClassCannotBeGreaterThan" xml:space="preserve">
+    <value>'{0}' property of the '{1}' class must be less than or equal to '{2}'.</value>
+  </data>
+  <data name="PropertyOfClassCannotBeNull" xml:space="preserve">
+    <value>'{0}' property of the '{1}' class cannot be null.</value>
+  </data>
+  <data name="PropertyOfClassMustBeGreaterThanZero" xml:space="preserve">
+    <value>'{0}' property of the '{1}' class must be greater than zero.</value>
+  </data>
+  <data name="PropertyValueCannotBeNaN" xml:space="preserve">
+    <value>'{0}' property value cannot be NaN.</value>
+  </data>
+  <data name="Quaternion_ZeroAxisSpecified" xml:space="preserve">
+    <value>Zero axis of rotation specified.</value>
+  </data>
+  <data name="QueryLineFailure" xml:space="preserve">
+    <value>Text formatting engine cannot query text information due to error: '{0}'.</value>
+  </data>
+  <data name="ReadCountNegative" xml:space="preserve">
+    <value>Count of bytes to read cannot be negative.</value>
+  </data>
+  <data name="ReadOnlyInputGesturesCollection" xml:space="preserve">
+    <value>Operation not supported on a read-only InputGestureCollection.</value>
+  </data>
+  <data name="Rect3D_CannotCallMethod" xml:space="preserve">
+    <value>Cannot call the method.</value>
+  </data>
+  <data name="Rect3D_CannotModifyEmptyRect" xml:space="preserve">
+    <value>Cannot modify this property on the Empty Rect3D.</value>
+  </data>
+  <data name="Rect_Empty" xml:space="preserve">
+    <value>Rectangle cannot be empty.</value>
+  </data>
+  <data name="RedoKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+Y</value>
+  </data>
+  <data name="RedoText" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="ReentrantVisualTreeChangeError" xml:space="preserve">
+    <value>The visual tree has been changed during a '{0}' event.</value>
+  </data>
+  <data name="ReentrantVisualTreeChangeWarning" xml:space="preserve">
+    <value>WARNING. The visual tree has been changed during a '{0}' event.  This is not supported in a production application.  Be sure to correct this before shipping the application.</value>
+  </data>
+  <data name="RefreshKeyDisplayString" xml:space="preserve">
+    <value>F5</value>
+  </data>
+  <data name="RefreshText" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="RelievePenaltyResourceFailure" xml:space="preserve">
+    <value>Text formatting engine cannot release penalty resource due to error: '{0}'.</value>
+  </data>
+  <data name="ReplaceKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+H</value>
+  </data>
+  <data name="ReplaceText" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="RequestAlreadyStarted" xml:space="preserve">
+    <value>The operation is not allowed after the first request is made.</value>
+  </data>
+  <data name="RequiresSTA" xml:space="preserve">
+    <value>The calling thread must be STA, because many UI components require this.</value>
+  </data>
+  <data name="ResourceNotFoundUnderCacheOnlyPolicy" xml:space="preserve">
+    <value>Current CachePolicy is CacheOnly but the requested resource does not exist in the cache.</value>
+  </data>
+  <data name="RoutedEventArgsMustHaveRoutedEvent" xml:space="preserve">
+    <value>Every RoutedEventArgs must have a non-null RoutedEvent associated with it.</value>
+  </data>
+  <data name="RoutedEventCannotChangeWhileRouting" xml:space="preserve">
+    <value>Cannot change the RoutedEvent property while the RoutedEvent is being routed.</value>
+  </data>
+  <data name="SaveAsText" xml:space="preserve">
+    <value>Save As</value>
+  </data>
+  <data name="SaveKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+S</value>
+  </data>
+  <data name="SaveText" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SCDataChanged" xml:space="preserve">
+    <value>The Strokes have changed.</value>
+  </data>
+  <data name="SCErasePath" xml:space="preserve">
+    <value>Path of erasing stroke cannot be null.</value>
+  </data>
+  <data name="SCEraseShape" xml:space="preserve">
+    <value>Erasing Shape cannot be null.</value>
+  </data>
+  <data name="SchemaInvalidForTransport" xml:space="preserve">
+    <value>Cannot resolve current inner request URI schema. Bypass cache only for resolvable schema types such as http, ftp, or file.</value>
+  </data>
+  <data name="ScopeMustBeUIElementOrContent" xml:space="preserve">
+    <value>The scope must be a UIElement or ContentElement.</value>
+  </data>
+  <data name="ScrollByLineKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ScrollByLineKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ScrollByLineText" xml:space="preserve">
+    <value>Scroll By Line</value>
+  </data>
+  <data name="ScrollPageDownKeyDisplayString" xml:space="preserve">
+    <value>PageDown</value>
+  </data>
+  <data name="ScrollPageDownText" xml:space="preserve">
+    <value>Scroll Page Down</value>
+  </data>
+  <data name="ScrollPageLeftKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ScrollPageLeftKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ScrollPageLeftText" xml:space="preserve">
+    <value>Scroll Page Left</value>
+  </data>
+  <data name="ScrollPageRightKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ScrollPageRightKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ScrollPageRightText" xml:space="preserve">
+    <value>Scroll Page Right</value>
+  </data>
+  <data name="ScrollPageUpKeyDisplayString" xml:space="preserve">
+    <value>PageUp</value>
+  </data>
+  <data name="ScrollPageUpText" xml:space="preserve">
+    <value>Scroll Page Up</value>
+  </data>
+  <data name="SearchKey" xml:space="preserve">
+    <value>F3</value>
+  </data>
+  <data name="SearchKeyDisplayString" xml:space="preserve">
+    <value>F3</value>
+  </data>
+  <data name="SearchText" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SecurityExceptionForSettingSandboxExternalToTrue" xml:space="preserve">
+    <value>Cannot set SandboxExternalContent to true in partial trust.</value>
+  </data>
+  <data name="SeekNegative" xml:space="preserve">
+    <value>Cannot set seek pointer to a negative position.</value>
+  </data>
+  <data name="SeekOriginInvalid" xml:space="preserve">
+    <value>SeekOrigin value is not valid.</value>
+  </data>
+  <data name="SelectAllKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+A</value>
+  </data>
+  <data name="SelectAllText" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="SelectToEndKeyDisplayString" xml:space="preserve">
+    <value>Shift+End</value>
+  </data>
+  <data name="SelectToEndText" xml:space="preserve">
+    <value>Select To End</value>
+  </data>
+  <data name="SelectToHomeKeyDisplayString" xml:space="preserve">
+    <value>Shift+Home</value>
+  </data>
+  <data name="SelectToHomeText" xml:space="preserve">
+    <value>Select To Home</value>
+  </data>
+  <data name="SelectToPageDownKeyDisplayString" xml:space="preserve">
+    <value>Shift+PageDown</value>
+  </data>
+  <data name="SelectToPageDownText" xml:space="preserve">
+    <value>Select To PageDown</value>
+  </data>
+  <data name="SelectToPageUpKeyDisplayString" xml:space="preserve">
+    <value>Shift+PageUp</value>
+  </data>
+  <data name="SelectToPageUpText" xml:space="preserve">
+    <value>Select To PageUp</value>
+  </data>
+  <data name="SetBreakingFailure" xml:space="preserve">
+    <value>Text formatting engine cannot set breaking conditions due to error: '{0}'.</value>
+  </data>
+  <data name="SetDocFailure" xml:space="preserve">
+    <value>Text formatting engine cannot set document context due to error: '{0}'.</value>
+  </data>
+  <data name="SetFocusFailed" xml:space="preserve">
+    <value>The target element cannot receive focus.</value>
+  </data>
+  <data name="SetLengthNotSupported" xml:space="preserve">
+    <value>Stream does not support SetLength.</value>
+  </data>
+  <data name="SetTabsFailure" xml:space="preserve">
+    <value>Text formatting engine cannot set tab stop due to error: '{0}'.</value>
+  </data>
+  <data name="SidewaysRTLTextIsNotSupported" xml:space="preserve">
+    <value>Sideways right to left text is not supported.</value>
+  </data>
+  <data name="Size3D_CannotModifyEmptySize" xml:space="preserve">
+    <value>Cannot modify this property on the Empty Size3D.</value>
+  </data>
+  <data name="Size3D_DimensionCannotBeNegative" xml:space="preserve">
+    <value>Cannot set a negative dimension.</value>
+  </data>
+  <data name="SourceNotSet" xml:space="preserve">
+    <value>Must set Source in RoutedEventArgs before building event route or invoking handlers.</value>
+  </data>
+  <data name="SpecificNumberCultureRequired" xml:space="preserve">
+    <value>The CultureInfo object used for number substitution must be a specific culture, not a neutral culture or InvariantCulture.</value>
+  </data>
+  <data name="StopKeyDisplayString" xml:space="preserve">
+    <value>Esc</value>
+  </data>
+  <data name="StopText" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="StreamGeometry_NeedBeginFigure" xml:space="preserve">
+    <value>BeginFigure must be called before this API.</value>
+  </data>
+  <data name="StringEmpty" xml:space="preserve">
+    <value>Parameter cannot be a zero-length string.</value>
+  </data>
+  <data name="StrokeCollectionCountTooBig" xml:space="preserve">
+    <value>Maximum number of strokes is two.</value>
+  </data>
+  <data name="StrokeCollectionIsReadOnly" xml:space="preserve">
+    <value>The specified StrokeCollection is read-only.</value>
+  </data>
+  <data name="StrokeIsDuplicated" xml:space="preserve">
+    <value>A duplicate stroke cannot be added to StrokeCollection.</value>
+  </data>
+  <data name="StrokesNotContiguously" xml:space="preserve">
+    <value>The strokes being replaced must exist contiguously in the current StrokeCollection.</value>
+  </data>
+  <data name="Stylus_CanOnlyCallForDownMoveOrUp" xml:space="preserve">
+    <value>NotifyWhenProcessed can be called only during OnStylusDown, OnStylusMove, or OnStylusUp.</value>
+  </data>
+  <data name="Stylus_EnumeratorFailure" xml:space="preserve">
+    <value>No current object to return.</value>
+  </data>
+  <data name="Stylus_IndexOutOfRange" xml:space="preserve">
+    <value>'{0}' is not a valid index in the collection.</value>
+  </data>
+  <data name="Stylus_InvalidMax" xml:space="preserve">
+    <value>'{0}' must be greater than or equal to '{1}'.</value>
+  </data>
+  <data name="Stylus_MatrixNotInvertable" xml:space="preserve">
+    <value>Matrix is not invertible.</value>
+  </data>
+  <data name="Stylus_MustBeDownToCallReset" xml:space="preserve">
+    <value>Stylus or Mouse must be in the down state when calling Reset.</value>
+  </data>
+  <data name="Stylus_PenContextFailure" xml:space="preserve">
+    <value>Stylus input encountered an error.</value>
+  </data>
+  <data name="Stylus_PlugInIsDuplicated" xml:space="preserve">
+    <value>'{0}' already exists in the collection.</value>
+  </data>
+  <data name="Stylus_PlugInIsNull" xml:space="preserve">
+    <value>'{0}' must be non-null.</value>
+  </data>
+  <data name="Stylus_PlugInNotExist" xml:space="preserve">
+    <value>'{0}' does not exist in the collection.</value>
+  </data>
+  <data name="Stylus_StylusPointsCantBeEmpty" xml:space="preserve">
+    <value>Count of points must be greater than zero.</value>
+  </data>
+  <data name="TextBreakpointHasBeenDisposed" xml:space="preserve">
+    <value>Text breakpoint was previously disposed.</value>
+  </data>
+  <data name="TextCompositionManager_NoInputManager" xml:space="preserve">
+    <value>'{0}' does not have a valid InputManager.</value>
+  </data>
+  <data name="TextCompositionManager_TextCompositionHasDone" xml:space="preserve">
+    <value>'{0}' has already finished.</value>
+  </data>
+  <data name="TextCompositionManager_TextCompositionHasStarted" xml:space="preserve">
+    <value>'{0}' has already started.</value>
+  </data>
+  <data name="TextCompositionManager_TextCompositionNotStarted" xml:space="preserve">
+    <value>'{0}' has not yet started.</value>
+  </data>
+  <data name="TextComposition_NullResultText" xml:space="preserve">
+    <value>Result text cannot be null.</value>
+  </data>
+  <data name="TextFormatterReentranceProhibited" xml:space="preserve">
+    <value>Cannot reenter Text formatting engine during optimal paragraph formatting.</value>
+  </data>
+  <data name="TextLineHasBeenDisposed" xml:space="preserve">
+    <value>Text line was previously disposed.</value>
+  </data>
+  <data name="TextObjectMetrics_WidthOutOfRange" xml:space="preserve">
+    <value>The return value of TextEmbeddedObject.Format contains an out-of-range value for the Width property.</value>
+  </data>
+  <data name="TextPenaltyModuleHasBeenDisposed" xml:space="preserve">
+    <value>Text penalty module was previously disposed.</value>
+  </data>
+  <data name="TextProvider_InvalidChild" xml:space="preserve">
+    <value>'{0}' parameter value is not a valid child element of the text provider.</value>
+  </data>
+  <data name="TextRangeProvider_InvalidRangeProvider" xml:space="preserve">
+    <value>'{0}' parameter value is not a valid ITextRangeProvider.</value>
+  </data>
+  <data name="TextRunPropertiesCannotBeNull" xml:space="preserve">
+    <value>The Properties member of this text run cannot be null.</value>
+  </data>
+  <data name="Timing_AccelAndDecelGreaterThanOne" xml:space="preserve">
+    <value>The sum of AccelerationRatio and DecelerationRatio must be less than or equal to one.</value>
+  </data>
+  <data name="Timing_CanSlipOnlyOnSimpleTimelines" xml:space="preserve">
+    <value>CanSlip is supported only on timelines without AutoReverse, AccelerationRatio, or DecelerationRatio.</value>
+  </data>
+  <data name="Timing_ChildMustBeTimeline" xml:space="preserve">
+    <value>A child of a Timeline in "XAML" must also be a Timeline or a class that derives from Timeline.</value>
+  </data>
+  <data name="Timing_CreateClockMustReturnNewClock" xml:space="preserve">
+    <value>The {0}.CreateClock method returned a pre-existing object, rather than a new object inheriting from TimelineClock.</value>
+  </data>
+  <data name="Timing_DifferentThreads" xml:space="preserve">
+    <value>The specified timeline belongs to a different thread than this timeline.</value>
+  </data>
+  <data name="Timing_EnumeratorInvalidated" xml:space="preserve">
+    <value>The enumeration is no longer valid because the collection it enumerates has changed.</value>
+  </data>
+  <data name="Timing_EnumeratorOutOfRange" xml:space="preserve">
+    <value>The enumerator is out of range.</value>
+  </data>
+  <data name="Timing_InvalidArgAccelAndDecel" xml:space="preserve">
+    <value>Property value must be between 0.0 and 1.0.</value>
+  </data>
+  <data name="Timing_InvalidArgFiniteNonNegative" xml:space="preserve">
+    <value>Property value must be finite and greater than or equal to zero.</value>
+  </data>
+  <data name="Timing_InvalidArgFinitePositive" xml:space="preserve">
+    <value>Property value must be finite and greater than zero.</value>
+  </data>
+  <data name="Timing_InvalidArgNonNegative" xml:space="preserve">
+    <value>Property value must be greater than or equal to zero or indefinite.</value>
+  </data>
+  <data name="Timing_InvalidArgPositive" xml:space="preserve">
+    <value>Property value must be greater than zero or indefinite.</value>
+  </data>
+  <data name="Timing_NoTextChildren" xml:space="preserve">
+    <value>Timeline objects cannot have text objects as children.</value>
+  </data>
+  <data name="Timing_NotTimeSpan" xml:space="preserve">
+    <value>Unable to return a TimeSpan property value for a Duration value of '{0}'. Check the HasTimeSpan property before requesting the TimeSpan property value from a Duration.</value>
+  </data>
+  <data name="Timing_OperationEnqueuedOutOfOrder" xml:space="preserve">
+    <value>A timing operation has been not been queued in the appropriate order.</value>
+  </data>
+  <data name="Timing_RepeatBehaviorInvalidIterationCount" xml:space="preserve">
+    <value>'{0}' is not a valid IterationCount value for a RepeatBehavior structure. An IterationCount value must represent a number that is greater than or equal to zero but not infinite.</value>
+  </data>
+  <data name="Timing_RepeatBehaviorInvalidRepeatDuration" xml:space="preserve">
+    <value>'{0}' is not a valid RepeatDuration value for a RepeatBehavior structure. A RepeatDuration value must be a TimeSpan value greater than or equal to zero ticks.</value>
+  </data>
+  <data name="Timing_RepeatBehaviorNotIterationCount" xml:space="preserve">
+    <value>'{0}' RepeatBehavior does not represent an iteration count and does not have an IterationCount value.</value>
+  </data>
+  <data name="Timing_RepeatBehaviorNotRepeatDuration" xml:space="preserve">
+    <value>'{0}' RepeatBehavior does not represent a repeat duration and does not have a RepeatDuration value.</value>
+  </data>
+  <data name="Timing_SeekDestinationAmbiguousDueToSlip" xml:space="preserve">
+    <value>The ClockController.Seek method was called with arguments that describe a seek destination that seeks a child with Slip but no defined duration. It is unclear if we are seeking the child or seeking past the child's duration.</value>
+  </data>
+  <data name="Timing_SeekDestinationIndefinite" xml:space="preserve">
+    <value>The ClockController.Seek method was called using TimeSeekOrigin.Duration as the seekOrigin parameter for a Clock that has a duration of Forever. Clocks that have duration of Forever must use TimeSeekOrigin.BeginTime.</value>
+  </data>
+  <data name="Timing_SeekDestinationNegative" xml:space="preserve">
+    <value>The ClockController.Seek method was called with arguments that describe a seek destination with a negative value. The seek destination must be a time greater than or equal to zero.</value>
+  </data>
+  <data name="Timing_SkipToFillDestinationIndefinite" xml:space="preserve">
+    <value>Cannot call the ClockController.SkipToFill method for a Clock that has a Duration or RepeatDuration of Forever, because this Clock will never reach its fill period.</value>
+  </data>
+  <data name="Timing_SlipBehavior_SlipOnlyOnSimpleTimelines" xml:space="preserve">
+    <value>SlipBehavior.Slip is supported only on root ParallelTimelines that do not reverse, accelerate, decelerate, or have a RepeatBehavior specified as a Duration.</value>
+  </data>
+  <data name="Timing_SlipBehavior_SyncOnlyWithSimpleParents" xml:space="preserve">
+    <value>Clocks with CanSlip cannot have parents or ancestors with AutoReverse, AccelerationRatio, or DecelerationRatio.</value>
+  </data>
+  <data name="TokenizerHelperEmptyToken" xml:space="preserve">
+    <value>Empty token encountered at position {0} while parsing '{1}'.</value>
+  </data>
+  <data name="TokenizerHelperExtraDataEncountered" xml:space="preserve">
+    <value>Extra data encountered at position {0} while parsing '{1}'.</value>
+  </data>
+  <data name="TokenizerHelperMissingEndQuote" xml:space="preserve">
+    <value>Missing end quote encountered while parsing '{0}'.</value>
+  </data>
+  <data name="TokenizerHelperPrematureStringTermination" xml:space="preserve">
+    <value>Premature string termination encountered while parsing '{0}'.</value>
+  </data>
+  <data name="TooManyGlyphRuns" xml:space="preserve">
+    <value>Too many glyph runs in the scene to render.</value>
+  </data>
+  <data name="TooManyRoutedEvents" xml:space="preserve">
+    <value>RoutedEvent/EventPrivateKey limit exceeded. Routed events or EventPrivateKey for CLR events are typically static class members registered with field initializers or static constructors. In this case, routed events or EventPrivateKeys might be getting initialized in instance constructors, causing the limit to be exceeded.</value>
+  </data>
+  <data name="Touch_Category" xml:space="preserve">
+    <value>Touch</value>
+  </data>
+  <data name="Touch_DeviceAlreadyActivated" xml:space="preserve">
+    <value>The TouchDevice is already activated.</value>
+  </data>
+  <data name="Touch_DeviceNotActivated" xml:space="preserve">
+    <value>The TouchDevice is not activated.</value>
+  </data>
+  <data name="TreeLoop" xml:space="preserve">
+    <value>Potential cycle in tree found while building the event route.</value>
+  </data>
+  <data name="TypeMetadataCannotChangeAfterUse" xml:space="preserve">
+    <value>Cannot change property metadata after it has been associated with a property.</value>
+  </data>
+  <data name="UIElement_Layout_InfinityArrange" xml:space="preserve">
+    <value>Cannot call Arrange on a UIElement with infinite size or NaN. Parent of type '{0}' invokes the UIElement. Arrange called on element of type '{1}'.</value>
+  </data>
+  <data name="UIElement_Layout_NaNMeasure" xml:space="preserve">
+    <value>UIElement.Measure(availableSize) cannot be called with NaN size.</value>
+  </data>
+  <data name="UIElement_Layout_NaNReturned" xml:space="preserve">
+    <value>Layout measurement override of element '{0}' should not return NaN values as its DesiredSize.</value>
+  </data>
+  <data name="UIElement_Layout_PositiveInfinityReturned" xml:space="preserve">
+    <value>Layout measurement override of element '{0}' should not return PositiveInfinity as its DesiredSize, even if Infinity is passed in as available size.</value>
+  </data>
+  <data name="UnauthorizedAccessExceptionWithFileName" xml:space="preserve">
+    <value>Access denied to the path '{0}'.</value>
+  </data>
+  <data name="UndoKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+Z</value>
+  </data>
+  <data name="UndoText" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="UnexpectedParameterType" xml:space="preserve">
+    <value>Parameter is unexpected type '{0}'. Expected type is '{1}'.</value>
+  </data>
+  <data name="UnexpectedStroke" xml:space="preserve">
+    <value>Unexpected Stroke in PropertyDataChangedEventArgs.Owner.</value>
+  </data>
+  <data name="UnknownPathOperationType" xml:space="preserve">
+    <value>Unknown path operation attempted.</value>
+  </data>
+  <data name="UnknownStroke" xml:space="preserve">
+    <value>Unrecognized Stroke in PropertyDataChangedEventArgs.Owner.</value>
+  </data>
+  <data name="UnknownStroke1" xml:space="preserve">
+    <value>Unrecognized Stroke in Stroke.Invalidated event arguments.</value>
+  </data>
+  <data name="UnknownStroke3" xml:space="preserve">
+    <value>Unrecognized Stroke in StrokeCollectionChangedEventArgs.Removed.</value>
+  </data>
+  <data name="UnspecifiedGestureConstructionException" xml:space="preserve">
+    <value>Failed to initialize GestureRecognizer.</value>
+  </data>
+  <data name="UnspecifiedGestureException" xml:space="preserve">
+    <value>Gesture recognition failed.</value>
+  </data>
+  <data name="UnspecifiedSetEnabledGesturesException" xml:space="preserve">
+    <value>Failed to set enabled gestures.</value>
+  </data>
+  <data name="Unsupported_MouseAction" xml:space="preserve">
+    <value>Unsupported MouseAction '{0}'.</value>
+  </data>
+  <data name="UriMustBeAbsolute" xml:space="preserve">
+    <value>URI must be absolute. Relative URIs are not supported.</value>
+  </data>
+  <data name="UriMustBeFileOrPack" xml:space="preserve">
+    <value>Font family Uri should have either file:// or pack://application: scheme.</value>
+  </data>
+  <data name="UriNotAbsolute" xml:space="preserve">
+    <value>URI must be absolute.</value>
+  </data>
+  <data name="UriSchemeMismatch" xml:space="preserve">
+    <value>This factory supports only URIs with the '{0}' scheme.</value>
+  </data>
+  <data name="UsesPerPixelOpacityIsObsolete" xml:space="preserve">
+    <value>UsesPerPixelOpacity is obsolete and should not be set when using UsesPerPixelTransparency</value>
+  </data>
+  <data name="ValueNotValidForGuid" xml:space="preserve">
+    <value>Value is not valid for the specified GUID.</value>
+  </data>
+  <data name="Viewport2DVisual3D_MaterialGroupIsInteractiveMaterial" xml:space="preserve">
+    <value>MaterialGroup cannot be an interactive Material (IsVisualHostMaterial is true).</value>
+  </data>
+  <data name="Viewport2DVisual3D_MultipleInteractiveMaterials" xml:space="preserve">
+    <value>Viewport2DVisual3D supports only one interactive Material.</value>
+  </data>
+  <data name="VisualCannotBeDetached" xml:space="preserve">
+    <value>Specified Visual cannot be detached.</value>
+  </data>
+  <data name="VisualCollection_EntryInUse" xml:space="preserve">
+    <value>Specified index is already in use. Disconnect the Visual child at the specified index first.</value>
+  </data>
+  <data name="VisualCollection_NotEnoughCapacity" xml:space="preserve">
+    <value>Number of entries exceeds specified capacity of the VisualCollection.</value>
+  </data>
+  <data name="VisualCollection_ReadOnly" xml:space="preserve">
+    <value>This VisualCollection is read only and cannot be modified.</value>
+  </data>
+  <data name="VisualCollection_VisualHasParent" xml:space="preserve">
+    <value>Specified Visual is already a child of another Visual or the root of a CompositionTarget.</value>
+  </data>
+  <data name="VisualTarget_AnotherTargetAlreadyConnected" xml:space="preserve">
+    <value>Another target is already connected to this HostVisual.</value>
+  </data>
+  <data name="Visual_ArgumentOutOfRange" xml:space="preserve">
+    <value>Specified index is out of range or child at index is null. Do not call this method if VisualChildrenCount returns zero, indicating that the Visual has no children.</value>
+  </data>
+  <data name="Visual_CannotTransformPoint" xml:space="preserve">
+    <value>This Visual cannot transform the given point.</value>
+  </data>
+  <data name="Visual_HasParent" xml:space="preserve">
+    <value>Must disconnect specified child from current parent Visual before attaching to new parent Visual.</value>
+  </data>
+  <data name="Visual_NoCommonAncestor" xml:space="preserve">
+    <value>The specified Visual and this Visual do not share a common ancestor, so there is no valid transformation between the two Visuals.</value>
+  </data>
+  <data name="Visual_NoPresentationSource" xml:space="preserve">
+    <value>This Visual is not connected to a PresentationSource.</value>
+  </data>
+  <data name="Visual_NotA3DVisual" xml:space="preserve">
+    <value>'{0}' is not a Visual3D.</value>
+  </data>
+  <data name="Visual_NotADescendant" xml:space="preserve">
+    <value>The specified Visual is not a descendant of this Visual.</value>
+  </data>
+  <data name="Visual_NotAnAncestor" xml:space="preserve">
+    <value>The specified Visual is not an ancestor of this Visual.</value>
+  </data>
+  <data name="Visual_NotAVisual" xml:space="preserve">
+    <value>'{0}' is not a Visual or Visual3D.</value>
+  </data>
+  <data name="Visual_NotChild" xml:space="preserve">
+    <value>Specified Visual is not a child of this Visual.</value>
+  </data>
+  <data name="WebRequestTimeout" xml:space="preserve">
+    <value>WebRequest timed out. Response did not arrive before the specified Timeout period elapsed.</value>
+  </data>
+  <data name="WebResponseCloseFailure" xml:space="preserve">
+    <value>Error closing the WebResponse.</value>
+  </data>
+  <data name="WebResponseFailure" xml:space="preserve">
+    <value>Error processing WebResponse.</value>
+  </data>
+  <data name="WebResponsePartNotFound" xml:space="preserve">
+    <value>Requested PackagePart not found in target resource.</value>
+  </data>
+  <data name="WIC_NotInitialized" xml:space="preserve">
+    <value>Object must be initialized before operation can be performed.</value>
+  </data>
+  <data name="WriteNotSupported" xml:space="preserve">
+    <value>Stream does not support writing.</value>
+  </data>
+  <data name="WrongFirstSegment" xml:space="preserve">
+    <value>The required pattern for URI containing ";component" is "AssemblyName;Vxxxx;PublicKey;component", where Vxxxx is the assembly version and PublicKey is the 16-character string representing the assembly public key token. Vxxxx and PublicKey are optional.</value>
+  </data>
+  <data name="XmlLangGetCultureFailure" xml:space="preserve">
+    <value>There is no registered CultureInfo with the IetfLanguageTag '{0}'.</value>
+  </data>
+  <data name="XmlLangGetSpecificCulture" xml:space="preserve">
+    <value>Cannot find non-neutral culture related to '{0}'.</value>
+  </data>
+  <data name="XmlLangMalformed" xml:space="preserve">
+    <value>'{0}' language tag must be empty or must conform to grammar defined in IETF RFC 3066.</value>
+  </data>
+  <data name="ZoomKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ZoomKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ZoomText" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
+  <data name="PenImcDllVerificationFailed" xml:space="preserve">
+    <value>{0} failed to load from static constructor.</value>
+  </data>
+  <data name="PenImcSxSRegistrationFailed" xml:space="preserve">
+    <value>SxS COM registration of {0} failed.</value>
+  </data>
+</root>

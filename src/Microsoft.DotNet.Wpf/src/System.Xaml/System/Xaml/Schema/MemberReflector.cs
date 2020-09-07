@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,16 +23,8 @@ namespace System.Xaml.Schema
         private NullableReference<XamlValueConverter<XamlDeferringLoader>> _deferringLoader;
         private NullableReference<object> _defaultValue;
 
-        /// <SecurityNote>
-        /// Critical: We cache visibility check based on this member, so it must be idempotent
-        /// </SecurityNote>
-        [SecurityCritical]
         private NullableReference<MethodInfo> _getter;
 
-        /// <SecurityNote>
-        /// Critical: We cache visibility check based on this member, so it must be idempotent
-        /// </SecurityNote>
-        [SecurityCritical]
         private NullableReference<MethodInfo> _setter;
 
         private NullableReference<XamlValueConverter<TypeConverter>> _typeConverter;
@@ -59,11 +51,6 @@ namespace System.Xaml.Schema
             _memberBits |= GetValidMask((int)BoolMemberBits.Event);
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical fields _getter and _setter
-        /// Safe: Constructor is single-threaded, so idempotence is preserved
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal MemberReflector(MethodInfo getter, MethodInfo setter, bool isEvent)
             : this(isEvent)
         {
@@ -72,14 +59,9 @@ namespace System.Xaml.Schema
         }
 
         ///<summary>Ctor used by directives</summary>
-        /// <SecurityNote>
-        /// Critical: Accesses critical fields _getter and _setter
-        /// Safe: Constructor is single-threaded, so idempotence is preserved
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal MemberReflector(XamlType type, XamlValueConverter<TypeConverter> typeConverter)
         {
-            this.Type = type;
+            Type = type;
             _typeConverter.Value = typeConverter;
             _designerSerializationVisibility = DesignerSerializationVisibility.Visible;
             _memberBits = (int)BoolMemberBits.Directive | (int)BoolMemberBits.AllValid;
@@ -91,13 +73,8 @@ namespace System.Xaml.Schema
             _valueSerializer.Value = null;
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical fields _getter and _setter
-        /// Safe: We set to constant value of null, so idempotence is preserved
-        /// </SecurityNote>
         internal static MemberReflector UnknownReflector
         {
-            [SecuritySafeCritical]
             get
             {
                 if (s_UnknownReflector == null)
@@ -178,25 +155,14 @@ namespace System.Xaml.Schema
             get { return _designerSerializationVisibility != VisibilityInvalid; }
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _getter
-        /// Safe: Maintains idempotence via NullableReference.SetIfNull, which uses CompareExchange
-        /// </SecurityNote>
         internal MethodInfo Getter
         {
-            [SecuritySafeCritical]
             get { return _getter.Value; }
-            [SecuritySafeCritical]
             set { _getter.SetIfNull(value); }
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _getter
-        /// Safe: Doesn't modify field
-        /// </SecurityNote>
         internal bool GetterIsSet
         {
-            [SecuritySafeCritical]
             get { return _getter.IsSet; }
         }
 
@@ -205,25 +171,14 @@ namespace System.Xaml.Schema
         // No need to check valid flag, this is set at creation
         internal bool IsUnknown { get { return (_memberBits & (int)BoolMemberBits.Unknown) != 0; } }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _setter
-        /// Safe: Maintains idempotence via NullableReference.SetIfNull, which uses CompareExchange
-        /// </SecurityNote>
         internal MethodInfo Setter
         {
-            [SecuritySafeCritical]
             get { return _setter.Value; }
-            [SecuritySafeCritical]
             set { _setter.SetIfNull(value); }
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _setter
-        /// Safe: Doesn't modify field
-        /// </SecurityNote>
         internal bool SetterIsSet
         {
-            [SecuritySafeCritical]
             get { return _setter.IsSet; }
         }
 

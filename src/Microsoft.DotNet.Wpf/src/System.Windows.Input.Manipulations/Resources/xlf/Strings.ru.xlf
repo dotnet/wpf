@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="ru" original="../Strings.resx">
+    <body>
+      <trans-unit id="ArgumentOutOfRange">
+        <source>Value of {0} is outside of the allowed range.</source>
+        <target state="translated">Значение {0} находится вне допустимого диапазона.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotChangeParameterDuringInertia">
+        <source>The value of {0} cannot be changed while the inertia processor is running.</source>
+        <target state="translated">Значение {0} нельзя изменить во время выполнения обработчика инерции.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IllegalPivotRadius">
+        <source>Value of {0} must be either NaN, or a finite value greater than or equal to 1.</source>
+        <target state="translated">Значение {0} должно быть либо нечисловым (NaN), либо конечным, большим или равным 1.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InertiaParametersUnspecified1and2">
+        <source>Either {0}, or {1} and {2}, needs to be specified.</source>
+        <target state="translated">Нужно указать {0} либо {1} и {2}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InertiaParametersUnspecified2">
+        <source>Either {0} or {1} needs to be specified.</source>
+        <target state="translated">Нужно указать {0} либо {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InertiaProcessorInvalidRadius">
+        <source>InitialRadius should be a finite number, greater than or equal to 1.</source>
+        <target state="translated">Значение свойства InitialRadius должно быть конечным числом, большим или равным 1.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTimestamp">
+        <source>Timestamp values must not decrease.</source>
+        <target state="translated">Значения timestamp (метки времени) не должны уменьшаться.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoInertiaVelocitiesSpecified">
+        <source>At least one of the following must be specified: linear velocity ({0} or {1}), angular velocity ({2}), or expansion velocity ({3} or {4}).</source>
+        <target state="translated">Нужно задать по меньшей мере одно из следующих значений: линейная скорость ({0} или {1}), угловая скорость ({2}) или скорость расширения ({3} или {4}).</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyProportionalExpansionSupported">
+        <source>Currently, only proportional expansion is supported. {0} must equal {1}.</source>
+        <target state="translated">Сейчас поддерживается только пропорциональное расширение. {0} и {1} должны быть равны.</target>
+        <note>{0} and {1} are the names of arguments.</note>
+      </trans-unit>
+      <trans-unit id="ValueMustBeFinite">
+        <source>Value of {0} must be finite.</source>
+        <target state="translated">Значение {0} должно быть конечным.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueMustBeFiniteNonNegative">
+        <source>Value of {0} must be finite and non-negative.</source>
+        <target state="translated">Значение {0} должно быть конечным и неотрицательным.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueMustBeFiniteOrNaN">
+        <source>Value of {0} must be finite or NaN.</source>
+        <target state="translated">Значение {0} должно быть конечным или нечисловым (NaN).</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

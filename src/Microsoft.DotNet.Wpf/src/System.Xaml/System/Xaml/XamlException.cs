@@ -72,14 +72,8 @@ namespace System.Xaml
             LinePosition = info.GetInt32("Offset");
         }
 
-        /// <SecurityNote>
-        /// Critical: calls Critical method Exception.GetObjectData
-        /// </SecurityNote>
 #if TARGETTING35SP1
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
-        [SecurityTreatAsSafe, SecurityCritical]
 #else
-        [SecurityCritical]
 #endif
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
@@ -174,14 +168,8 @@ namespace System.Xaml
             ParentType = (XamlType)info.GetValue("ParentType", typeof(XamlType));
         }
 
-        /// <SecurityNote>
-        /// Critical: calls Critical method Exception.GetObjectData
-        /// </SecurityNote>
 #if TARGETTING35SP1
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
-        [SecurityTreatAsSafe, SecurityCritical]
 #else
-        [SecurityCritical]
 #endif
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {

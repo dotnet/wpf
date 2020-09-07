@@ -48,6 +48,8 @@ namespace Microsoft.Internal.Interop
     {
         #region Static OS Members
 
+        internal static bool IsOsWindows10RS5OrGreater { get; set; }
+
         internal static bool IsOsWindows10RS3OrGreater { get; set; }
 
         internal static bool IsOsWindows10RS2OrGreater { get; set; }
@@ -88,9 +90,10 @@ namespace Microsoft.Internal.Interop
 
         #region Constructor
 
-        [SecurityCritical]
         static OSVersionHelper()
         {
+            IsOsWindows10RS5OrGreater = IsWindows10RS5OrGreater();
+
             IsOsWindows10RS3OrGreater = IsWindows10RS3OrGreater();
 
             IsOsWindows10RS2OrGreater = IsWindows10RS2OrGreater();
@@ -132,92 +135,78 @@ namespace Microsoft.Internal.Interop
 
         #region DLL Imports
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
+        [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        static extern bool IsWindows10RS5OrGreater();
+
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows10RS3OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows10RS2OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows10RS1OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows10TH2OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows10TH1OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows10OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows8Point1OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows8OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows7SP1OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows7OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindowsVistaSP2OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindowsVistaSP1OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindowsVistaOrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindowsXPSP3OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindowsXPSP2OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindowsXPSP1OrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindowsXPOrGreater();
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindowsServer();
@@ -230,6 +219,8 @@ namespace Microsoft.Internal.Interop
         {
             switch (osVer)
             {
+                case OperatingSystemVersion.Windows10RS5:
+                    return IsOsWindows10RS5OrGreater;
                 case OperatingSystemVersion.Windows10RS3:
                     return IsOsWindows10RS3OrGreater;
                 case OperatingSystemVersion.Windows10RS2:
@@ -265,7 +256,11 @@ namespace Microsoft.Internal.Interop
 
         internal static OperatingSystemVersion GetOsVersion()
         {
-            if (IsOsWindows10RS3OrGreater)
+            if (IsOsWindows10RS5OrGreater)
+            {
+                return OperatingSystemVersion.Windows10RS5;
+            }
+            else if (IsOsWindows10RS3OrGreater)
             {
                 return OperatingSystemVersion.Windows10RS3;
             }

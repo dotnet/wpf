@@ -1,0 +1,203 @@
+﻿<!-- [[Generic]] -->
+
+    <!--=================================================================
+            Shared Theme Resources
+        ==================================================================-->
+
+<!-- Ribbon Visual States -->
+<LinearGradientBrush x:Key="MouseOverBackgroundBrushKey" StartPoint="0,0" EndPoint="0,1" >
+    <GradientStop Offset="0" Color="#FFFEFBF4" />
+    <GradientStop Offset="0.19" Color="#FFFDE7CE" />
+    <GradientStop Offset="0.39" Color="#FFFDDEB8" />
+    <GradientStop Offset="0.39" Color="#FFFFCE6B" />
+    <GradientStop Offset="0.79" Color="#FFFFDE9A" />
+    <GradientStop Offset="1" Color="#FFFFEBAA" />
+</LinearGradientBrush>
+<SolidColorBrush x:Key="MouseOverBorderBrushKey" Color="#FFFFB700" />
+<LinearGradientBrush x:Key="PressedBackgroundBrushKey" StartPoint="0,0" EndPoint="0,1" >
+    <GradientStop Offset="0" Color="#FFE3C085" />
+    <GradientStop Offset="0.19" Color="#FFF4CC89" />
+    <GradientStop Offset="0.36" Color="#FFF5C777" />
+    <GradientStop Offset="0.36" Color="#FFF5BB56" />
+    <GradientStop Offset="0.79" Color="#FFF4CE9A" />
+    <GradientStop Offset="1" Color="#FFF3E28D" />
+</LinearGradientBrush>
+<SolidColorBrush x:Key="PressedBorderBrushKey" Color="#FFC29B29" />
+<LinearGradientBrush x:Key="CheckedBackgroundBrushKey" StartPoint="0,0" EndPoint="0,1" >
+    <GradientStop Offset="0" Color="#FFFFDCA0" />
+    <GradientStop Offset="0.18" Color="#FFFFD692" />
+    <GradientStop Offset="0.39" Color="#FFFFC45D" />
+    <GradientStop Offset="1" Color="#FFFFD178" />
+</LinearGradientBrush>
+
+<SolidColorBrush x:Key="RibbonButtonMouseOverInnerBorderBrushKey" Color="#80FFFFFF"  />
+<SolidColorBrush x:Key="RibbonApplicationMenuBackgroundBrushKey" Color="#B8FFFFFF" />
+<SolidColorBrush x:Key="RibbonTextBoxOverlayBrushKey" Color="#EEFFFFFF"  />
+
+<!-- We use this brush to achieve the exact same gray foreground color for disabled text as Win7 ribbon. 
+     However, since this is not from SystemColors, we still need to use triggers to set the disabled
+     foreground color to SystemColors.GrayTextBrushKey when in high-contrast. -->
+<SolidColorBrush x:Key="RibbonDisabledForegroundBrushKey" Color="#FF9E9E9E" />
+
+<!--RibbonToggleButton and RibbonRadioButton-->
+
+<LinearGradientBrush x:Key="RibbonToggleButtonCheckedInnerBorderBrushKey" StartPoint="0,0" EndPoint="0,1" >
+    <GradientStop Offset="0" Color="#FFE7CBAD" />
+    <GradientStop Offset="0.1" Color="#FFF7D7B5" />
+    <GradientStop Offset="0.36" Color="#FFFFD38C" />
+    <GradientStop Offset="0.36" Color="#FFFFC75A" />
+    <GradientStop Offset="1" Color="#FFFFEFA5" />
+</LinearGradientBrush>
+
+<!-- RibbonGalleryItem and RibbonToggleButton -->
+    
+<LinearGradientBrush x:Key="RibbonHighlightedSelectedBackgroundBrushKey" StartPoint="0,0" EndPoint="0,1" >
+    <GradientStop Offset="0" Color="#40FFFEFE" />
+    <GradientStop Offset="0.39" Color="#40FFFEFE" />
+    <GradientStop Offset="0.39" Color="#20FFCE68" />
+    <GradientStop Offset="0.69" Color="#20FFCE68" />
+    <GradientStop Offset="1" Color="#10FFFFFF" />
+</LinearGradientBrush>
+
+<!-- RibbonComboBox -->
+<system:Double x:Key="RibbonTextBoxHeight">20.0</system:Double>
+
+<system:Double x:Key="RibbonSmallControlHeight">22.0</system:Double>
+
+<!-- Ribbon, RibbonGroup -->
+<system:Double x:Key="RibbonHeight">91.0</system:Double>
+<system:Double x:Key="RibbonHighContrastHeight">94.0</system:Double>
+
+<!-- RibbonToolTip -->
+<system:Int32 x:Key="RibbonToolTipInitialShowDelayKey">900</system:Int32>
+<system:Int32 x:Key="RibbonToolTipShowDurationKey">20000</system:Int32>
+<system:Int32 x:Key="RibbonToolTipBetweenShowDelayKey">0</system:Int32>
+
+<!-- RibbonToolTip, RibbonMenuItem -->
+<Color x:Key="RibbonShadowColorKey">#71000000</Color>
+
+<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverterKey" />
+
+<!-- Generic Ribbon Resources -->
+<Geometry x:Key="DownArrowGeometryKey">M 0 0 L 2.5 3 L 5 0 Z</Geometry>
+<Geometry x:Key="CheckMarkGeometryKey">M 0,5.1 L 1.7,5.2 L 3.4,7.1 L 8,0.4 L 9.2,0 L 3.3,10.8 Z</Geometry>
+<Geometry x:Key="CheckMarkHighContrastGeometryKey">M10,1.2L4.5,7.3 1.5,5 1.5,7.5 4.5,10 4.5,10 10,4Z</Geometry>
+<Geometry x:Key="RightArrowGeometryKey">M 0,0 L 4,3.5 L 0,7 Z</Geometry>
+
+<!-- RibbonDropDownButton -->
+<SolidColorBrush x:Key="RibbonDropDownBackgroundBrushKey" Color="#F0FFFFFF" />
+    
+<!-- DropDown controls -->
+<SolidColorBrush x:Key="ResizeGripperBackgroundBrush" Color="#FFE5EFF9" />
+<SolidColorBrush x:Key="ResizeThumbPathBrush" Color="#FF6C747D" />
+<DrawingBrush x:Key="ResizeThumbDrawingBrush"
+              Viewbox="0,0,3,3"
+              Viewport="0,0,3,3"
+              TileMode="Tile"
+              ViewportUnits="Absolute"
+              ViewboxUnits="Absolute">
+    <DrawingBrush.Drawing>
+        <DrawingGroup>
+            <DrawingGroup.Children>
+                <GeometryDrawing Brush="{StaticResource ResizeThumbPathBrush}"
+                                 Geometry="M 0,0 L 2,0 L 2,2 L 0,2 z "/>
+            </DrawingGroup.Children>
+        </DrawingGroup>
+    </DrawingBrush.Drawing>
+</DrawingBrush>
+
+<!-- Used in DropDown controls that can resize both Horizontally and Vertically -->
+<Style x:Key="BottomRightCornerGripperStyle" TargetType="{x:Type Thumb}">
+    <Setter Property="Width" Value="11"/>
+    <Setter Property="Height" Value="11"/>
+    <Setter Property="VerticalAlignment" Value="Bottom" />
+    <Setter Property="HorizontalAlignment" Value="Right" />
+    <Setter Property="Cursor" Value="SizeNWSE"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type Thumb}">
+                <Border Background="Transparent">
+                    <Path Margin="0,0,2,2" 
+                          Data="M 9,0 L 11,0 L 11,11 L 0,11 L 0,9 L 3,9 L 3,6 L 6,6 L 6,3 L 9,3 z"
+                          Fill="{StaticResource ResizeThumbDrawingBrush}">
+                    </Path>
+                </Border>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+    <Style.Triggers>
+        <Trigger Property="FlowDirection" Value="RightToLeft">
+            <Setter Property="Cursor" Value="SizeNESW" />
+        </Trigger>
+    </Style.Triggers>
+</Style>
+    
+<Style x:Key="BottomLeftCornerGripperStyle" TargetType="{x:Type Thumb}">
+    <Setter Property="Width" Value="11"/>
+    <Setter Property="Height" Value="11"/>
+    <Setter Property="VerticalAlignment" Value="Bottom" />
+    <Setter Property="HorizontalAlignment" Value="Left" />
+    <Setter Property="Cursor" Value="SizeNESW"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type Thumb}">
+                <Border Background="Transparent">
+                    <Path Margin="2,0,0,2" 
+                          Data="M 0,0 L 2,0 L 2,3 L 5,3 L 5,6 L 8,6 L 8,9 L 11,9 L 11,11 L 0,11 z"
+                          Fill="{StaticResource ResizeThumbDrawingBrush}">
+                    </Path>
+                </Border>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+    <Style.Triggers>
+        <Trigger Property="FlowDirection" Value="RightToLeft">
+            <Setter Property="Cursor" Value="SizeNWSE" />
+        </Trigger>
+    </Style.Triggers>
+</Style>
+    
+<Style x:Key="TopRightCornerGripperStyle" TargetType="{x:Type Thumb}">
+    <Setter Property="Width" Value="11"/>
+    <Setter Property="Height" Value="11"/>
+    <Setter Property="VerticalAlignment" Value="Top" />
+    <Setter Property="HorizontalAlignment" Value="Right" />
+    <Setter Property="Cursor" Value="SizeNESW"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type Thumb}">
+                <Border Background="Transparent">
+                    <Path Margin="0,2,2,0"
+                          Data="M 0,0 L 0,3 L 3,3 L 3,6 L 6,6 L 6,9 L 9,9 L 9,11 L 11,11 L 11,0 z"
+                          Fill="{StaticResource ResizeThumbDrawingBrush}">
+                    </Path>
+                </Border>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+    <Style.Triggers>
+        <Trigger Property="FlowDirection" Value="RightToLeft">
+            <Setter Property="Cursor" Value="SizeNWSE" />
+        </Trigger>
+    </Style.Triggers>
+</Style>
+
+<!-- Used in DropDown controls that can resize only Vertically -->
+<Style x:Key="VerticalGripperStyle" TargetType="{x:Type Thumb}">
+    <Setter Property="Height" Value="11"/>
+    <Setter Property="Cursor" Value="SizeNS"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type Thumb}">
+                <Border Background="Transparent">
+                    <Path Margin="0,0,2,2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Fill="{StaticResource ResizeThumbDrawingBrush}">
+                        <Path.Data>
+                            <RectangleGeometry Rect="0,0,11,3" />
+                        </Path.Data>
+                    </Path>
+                </Border>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+

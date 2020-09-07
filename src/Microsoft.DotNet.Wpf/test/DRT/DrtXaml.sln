@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrtXaml.Tests", "DrtXaml\DrtXaml\DrtXaml.Tests.csproj", "{FAB114A2-2C6C-4372-A6BB-BC087B646E3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrtXaml", "DrtXaml\DrtXaml\DrtXaml.csproj", "{FAB114A2-2C6C-4372-A6BB-BC087B646E3A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestServices", "..\Common\TestServices\TestServices.csproj", "{387F3700-8C0B-4CEC-A68A-1725F656A249}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestServices", "..\Common\DRT\TestServices\TestServices.csproj", "{387F3700-8C0B-4CEC-A68A-1725F656A249}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamlTestClasses", "DrtXaml\XamlTestClasses\XamlTestClasses.csproj", "{3C1FC36C-E3E6-4EED-9ECA-CFF2EB950486}"
 EndProject

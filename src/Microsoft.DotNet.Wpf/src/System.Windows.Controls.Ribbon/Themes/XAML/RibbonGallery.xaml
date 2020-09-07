@@ -1,0 +1,152 @@
+﻿<!-- [[Generic]] -->
+
+    <!--=================================================================
+            RibbonGallery
+        ==================================================================-->
+
+    <Style x:Key="{x:Type ribbon:RibbonGallery}"  TargetType="{x:Type ribbon:RibbonGallery}">
+        <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Ribbon.BorderBrush}" />
+        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=Ribbon.Background}" />
+        <Setter Property="BorderThickness" Value="0,1" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Visible"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem}" />
+        <Setter Property="PreviewCommandParameter" Value="{Binding RelativeSource={RelativeSource Self}, Path=HighlightedItem}" />
+        
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+              <ItemsPanelTemplate>
+                <primitives:RibbonGalleryCategoriesPanel Name="ItemsHostPanel" IsItemsHost="True"/>
+              </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ribbon:RibbonGallery}">
+                    <Border x:Name="Border"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="True">
+                        <Border x:Name="InnerBorder"
+                                Background="{StaticResource RibbonDropDownBackgroundBrushKey}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid x:Name="FilterHost">
+                                    <ContentPresenter x:Name="PART_FilterContentPane"
+                                                      ContentSource="FilterPaneContent"/>
+                                    <ribbon:RibbonFilterMenuButton x:Name="PART_FilterMenuButton"
+                                                                   Style="{TemplateBinding FilterMenuButtonStyle}"
+                                                                   ItemContainerStyleSelector="{TemplateBinding FilterItemContainerStyleSelector}"
+                                                                   ItemTemplateSelector="{TemplateBinding FilterItemTemplateSelector}"
+                                                                   HorizontalContentAlignment="Left"
+                                                                   Visibility="Collapsed"/>
+                                </Grid>
+                                <ScrollViewer x:Name="PART_ScrollViewer" 
+                                              Grid.Row="1" 
+                                              Padding="{TemplateBinding Padding}" 
+                                              Focusable="False">
+#ifdef Net40
+                                    <Grid RenderOptions.ClearTypeHint="Enabled">
+                                            <Canvas x:Name="BackgroundCanvas"
+                                                    Height="0"
+                                                    Width="0"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Top">
+                                                <Rectangle x:Name="OpaqueRect"
+                                                           Height="{Binding ElementName=Border,Path=ActualHeight}"
+                                                           Width="{Binding ElementName=Border,Path=ActualWidth}"
+                                                           Fill="{Binding ElementName=Border,Path=Background}" />
+                                                <Rectangle x:Name="OverlayRect"
+                                                           Height="{Binding ElementName=Border,Path=ActualHeight}"
+                                                           Width="{Binding ElementName=Border,Path=ActualWidth}"
+                                                           Fill="{StaticResource RibbonDropDownBackgroundBrushKey}" />
+                                            </Canvas>
+#endif
+                                            <ItemsPresenter x:Name="ItemsPresenter"
+                                                            KeyboardNavigation.DirectionalNavigation="Continue"
+                                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+#ifdef Net40
+                                    </Grid>
+#endif
+                                </ScrollViewer>
+                            </Grid>
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+#ifdef Net40
+                        <Trigger SourceName="PART_ScrollViewer"
+                                 Property="ScrollViewer.CanContentScroll"
+                                 Value="false">
+                            <Setter TargetName="OpaqueRect" 
+                                    Property="Canvas.Top" 
+                                    Value="{Binding ElementName=PART_ScrollViewer, Path=VerticalOffset}" />
+                            <Setter TargetName="OpaqueRect" 
+                                    Property="Canvas.Left" 
+                                    Value="{Binding ElementName=PART_ScrollViewer, Path=HorizontalOffset}" />
+                            <Setter TargetName="OverlayRect" 
+                                    Property="Canvas.Top" 
+                                    Value="{Binding ElementName=PART_ScrollViewer, Path=VerticalOffset}" />
+                            <Setter TargetName="OverlayRect" 
+                                    Property="Canvas.Left" 
+                                    Value="{Binding ElementName=PART_ScrollViewer, Path=HorizontalOffset}" />
+                        </Trigger>
+#endif
+#ifdef IN_RIBBON_GALLERY
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource AncestorType=InRibbonGallery}}" Value="False"/>
+                                <Condition Binding="{Binding Path=IsCollapsed, RelativeSource={RelativeSource AncestorType=InRibbonGallery}}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="BorderThickness" Value="0"/>
+                        </MultiDataTrigger>
+#ifdef Net40
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource AncestorType=InRibbonGallery}}" Value="False"/>
+                                <Condition Binding="{Binding Path=IsCollapsed, RelativeSource={RelativeSource AncestorType=InRibbonGallery}}" Value="False"/>
+                                <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource AncestorType=InRibbonGallery}}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="OverlayRect" Property="Fill" Value="White" />
+                        </MultiDataTrigger>
+#endif
+#endif
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+                        </Trigger>
+                        <Trigger Property="CanUserFilter" Value="False">
+                            <Setter TargetName="FilterHost" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="FilterPaneContent" Value="{x:Null}"/>
+                                <Condition Property="FilterPaneContentTemplate" Value="{x:Null}"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_FilterMenuButton" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="PART_FilterContentPane" Property="Visibility" Value="Collapsed"/>
+                        </MultiTrigger>
+#ifdef Net45
+                        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                        <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+#ifdef Net40
+                            <Setter TargetName="BackgroundCanvas" Property="Visibility" Value="Collapsed" />
+#endif
+                            <Setter TargetName="Border" Property="Background" Value="Transparent"/>
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                            <Setter TargetName="InnerBorder" Property="Background" Value="Transparent" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>

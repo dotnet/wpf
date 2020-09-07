@@ -1,0 +1,35 @@
+<Project>
+  <!-- 
+    Explicitly import Microsoft.NETCore.Platforms to prevent using the one from the SDK, which
+    usually lags behind the version that WPF gets from CoreFx packages 
+  -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.Platforms" 
+                      Version="$(MicrosoftNETCorePlatformsVersion)" 
+                      Condition="'$(MSBuildProjectExtension)'!='.vcxproj'"/>
+    
+    <AdditionalPackageReference Include="Microsoft.NETCore.Platforms" 
+                                Version="$(MicrosoftNETCorePlatformsVersion)" 
+                                Condition="'$(ManagedCxx)'=='true'"/>
+    
+    <FrameworkReference Update="Microsoft.NETCore.App"
+                      Condition="'$(MicrosoftNETCoreAppInternalVersion)'!='' 
+                             And '$(NoTargets)'!='true' 
+                             And '$(TargetFrameworkIdentifier)' == '.NETCoreApp' 
+                             And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v5.0') 
+                             And '$(MSBuildProjectExtension)'!='.vcxproj'">
+      <TargetingPackVersion>$(MicrosoftNETCoreAppInternalVersion)</TargetingPackVersion>
+    </FrameworkReference>
+
+    <!-- 
+      Workaround - this should be removed when our tests are converted from Microsoft.NET.Sdk.WindowsDesktop => Microsoft.NET.Sdk
+      project
+    -->
+    <KnownFrameworkReference Remove="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <!-- If TargetFramework is not one of the supported .NET Core versions, then reset RuntimeFrameworkVersion -->
+    <RuntimeFrameworkVersion Condition="('$(TargetFrameworkIdentifier)' != '.NETCoreApp') Or ('$(TargetFrameworkVersion)' != 'v3.0' And '$(TargetFrameworkVersion)' != 'v3.1' And '$(TargetFrameworkVersion)' == 'v5.0')" />
+  </PropertyGroup>
+</Project>

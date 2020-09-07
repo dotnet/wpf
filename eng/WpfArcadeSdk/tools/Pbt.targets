@@ -1,0 +1,122 @@
+<Project>
+  <PropertyGroup>
+    <!--
+      This should be defined before Microsoft.WinFX.targets in imported.
+      It's OK if there is no DLL realized at this location - we just need to have the property define.
+
+      It is also OK for a DLL to NOT exist at the time <UsingTask> is encountered against this assembly path.
+      We must ensure that an actual DLL exists at this location prior to the very first execution of a Task from within this assembly.
+    -->
+    <_PresentationBuildTasksAssembly Condition="'$(InternalMarkupCompilation)'=='true' And Exists('$(LocalMicrosoftWinFXTargets)')">$(PbtDir)PresentationBuildTasks.dll</_PresentationBuildTasksAssembly>
+
+    <!--
+     When PresentationBuildTasks project is not present locally (presumably because in our split-repo build model, it has been moved off of the repo
+     being built (typically, dotnet-wpf-int) over to GitHub (dotnet/wpf), we will leverage WindowsDesktop Sdk package directly as a 'transport package'
+     for providing PresentationBuildTasks.dll and related props+targets. These targets require UseWpf=true to be set.
+
+     Also see additional note in Pbt.props
+    -->
+    <UseWpf Condition="'$(InternalMarkupCompilation)'=='true' And !Exists('$(LocalMicrosoftWinFXTargets)')"></UseWpf>
+
+    <!--
+        When markup compilation is involved, WPF generates .g.cs files via the GenerateTemporaryTargetAssembly task.
+        These do not always have the correct full-paths to their respective .xaml files annotated in them in the #line directives.
+        This can cause compile errors if these files are included in Source Link.
+        https://github.com/dotnet/wpf/issues/1718
+    -->
+    <EmbedUntrackedSources Condition="'$(InternalMarkupCompilation)'=='true'">false</EmbedUntrackedSources>
+  </PropertyGroup>
+  <!--
+    Internal PBT compilation requires that we use <NetCoreReference>
+    This is so that the copy of ref\WindowsBase.dll inherited from Microsoft.NetCore.App
+    does not make its way through to markup-compilation.
+
+    In addition to this, our codebase requires that all references to Microsoft.NetCore.App
+    be explicitly enumerated through the use of <NetCoreReference> to avoid inadvertent additions
+    to assembly references during code-changes.
+  -->
+  <ItemGroup Condition="'$(InternalMarkupCompilation)'=='true'">
+    <NetCoreReference Include="mscorlib" />
+    <NetCoreReference Include="System" />
+    <NetCoreReference Include="System.ComponentModel.TypeConverter" />
+    <NetCoreReference Include="System.Runtime" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(InternalMarkupCompilation)'=='true' And Exists('$(LocalMicrosoftWinFXTargets)')">
+    <PrepareResourceNamesDependsOn>
+      $(PrepareResourceNamesDependsOn);
+      EnsurePbtPath
+    </PrepareResourceNamesDependsOn>
+
+    <MarkupCompilePass1DependsOn>
+      $(MarkupCompilePass1DependsOn);
+      EnsurePbtPath
+    </MarkupCompilePass1DependsOn>
+  </PropertyGroup>
+
+  <!--
+    This target ensures that
+      (a) PresentationBuildTasks.dll is built locally
+      (b) The TFM of the assembly matches the build toolset currently being used (netcore vs netframework)
+      (c) The assembly is placed at $(_PresentationBuildTasksAssembly)
+      (d) This is all done prior to the first ever use of a task from within this assembly by Microsoft.WinFX.targets
+  -->
+  <Target Name="EnsurePbtPath"
+          Condition="'$(InternalMarkupCompilation)'=='true' And Exists('$(LocalMicrosoftWinFXTargets)')"
+          DependsOnTargets="$(EnsurePbtPathDependsOn)"
+          BeforeTargets="ResolveProjectReferences">
+    <MakeDir Condition="!Exists('$(PbtDir)')"
+             Directories="$(PbtDir)" />
+
+    <MSBuild Projects="$(WpfSourceDir)PresentationBuildTasks\PresentationBuildTasks.csproj"
+             Condition="!Exists('$(_PresentationBuildTasksAssembly)') And Exists('$(LocalMicrosoftWinFXTargets)')"
+             Properties="CopyTransitiveReferences=true;PublishDir=$(PbtDir);TargetFramework=$(PbtTfm);Platform=AnyCPU"
+             Targets="Clean;Build;Publish" />
+  </Target>
+
+  <Target Name="PreventResourcesSourceGenerationForPbtGeneratedResource"
+          AfterTargets="MainResourcesGeneration"
+          Condition="'$(InternalMarkupCompilation)'=='true'">
+    <!--
+      Add the following metadata to $(IntermediateOutputPath)$(_ResourceNameInMainAssembly) within @(EmbeddedResource)
+              <XlfInput>false</XlfInput>
+              <GenerateSource>false</GenerateSource
+
+      This ensures that PBT generated resources are not inadvertently picked up by Xlf source generator.
+    -->
+    <ItemGroup Condition="'$(_ResourceNameInMainAssembly)'!=''">
+      <EmbeddedResource Condition="'%(EmbeddedResource.Identity)'=='$(IntermediateOutputPath)$(_ResourceNameInMainAssembly)'">
+        <XlfInput>false</XlfInput>
+        <GenerateSource>false</GenerateSource>
+      </EmbeddedResource>
+    </ItemGroup>
+  </Target>
+
+  <!--
+    If local PresentationBuildTasks project is present, then import WinFX.targets from local sources;
+    otherwise import Microsoft.NET.Sdk.WindowsDesktop.targets from Microsoft.NET.Sdk.WindowsDesktop
+  -->
+  <Import Project="$(WpfSourceDir)PresentationBuildTasks\Microsoft.WinFX.targets"
+          Condition="'$(InternalMarkupCompilation)'=='true' And Exists('$(LocalMicrosoftWinFXTargets)') "/>
+
+  <!--
+    _WindowsDesktopSdkTargetFrameworkVersionFloor, _UndefinedTargetFrameworkVersion and _TargetFrameworkVersionValue are
+    defined in Microsoft.NET.WindowDesktop.props.
+
+    These need to be defined before Microsoft.NET.Sdk.WindowsDesktop.targets is imported.
+  -->
+  <PropertyGroup Condition="'$(InternalMarkupCompilation)'=='true' And !Exists('$(LocalMicrosoftWinFXTargets)') ">
+    <_WindowsDesktopSdkTargetFrameworkVersionFloor Condition="'$(_WindowsDesktopSdkTargetFrameworkVersionFloor)' == ''">3.0</_WindowsDesktopSdkTargetFrameworkVersionFloor>
+
+    <!--  Represents an undefined TFV value. -->
+    <_UndefinedTargetFrameworkVersion>0.0</_UndefinedTargetFrameworkVersion>
+
+    <!-- Initial/Default value set to 'undefined'. Updated in Microsoft.NET.WindowsDesktop.targets -->
+    <_TargetFrameworkVersionValue>$(_UndefinedTargetFrameworkVersion)</_TargetFrameworkVersionValue>
+
+  </PropertyGroup>
+  <Import Sdk="Microsoft.NET.Sdk.WindowsDesktop"
+          Project="../targets/Microsoft.NET.Sdk.WindowsDesktop.targets"
+          Condition="'$(InternalMarkupCompilation)'=='true' And !Exists('$(LocalMicrosoftWinFXTargets)') "/>
+
+</Project>

@@ -1,0 +1,97 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="dogfood">
+
+  <Import Project="$(_NTDRIVE)$(_NTROOT)\wpf\src\Microsoft.WPF.Product.Settings.targets" />
+
+  <PropertyGroup> 
+    <TargetType>COPY</TargetType>    
+  </PropertyGroup>
+    
+  <ItemGroup>
+    <ThemeXaml Include="..\Aero\Themes\Aero.NormalColor.xaml" />
+    <ThemeXaml Include="..\Aero2\Themes\Aero2.NormalColor.xaml" />
+    <ThemeXaml Include="..\AeroLite\Themes\AeroLite.NormalColor.xaml" />
+    <ThemeXaml Include="..\Classic\Themes\Classic.xaml" />
+    <ThemeXaml Include="..\Luna\Themes\Luna.Homestead.xaml" />
+    <ThemeXaml Include="..\Luna\Themes\Luna.NormalColor.xaml" />
+    <ThemeXaml Include="..\Luna\Themes\Luna.Metallic.xaml" />
+    <ThemeXaml Include="..\Royale\Themes\Royale.NormalColor.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <StyleXaml Include="..\XAML\BrowserWindow.xaml" />
+    <StyleXaml Include="..\XAML\Button.xaml" />
+    <StyleXaml Include="..\XAML\Calendar.xaml" />
+    <StyleXaml Include="..\XAML\CheckBox.xaml" />
+    <StyleXaml Include="..\XAML\CollectionViewGroup.xaml" />
+    <StyleXaml Include="..\XAML\ComboBox.xaml" />
+    <StyleXaml Include="..\XAML\ComboBoxItem.xaml" />
+    <StyleXaml Include="..\XAML\ContentControl.xaml" />
+    <StyleXaml Include="..\XAML\ContextMenu.xaml" />
+    <StyleXaml Include="..\XAML\DocumentViewer.xaml" />
+    <StyleXaml Include="..\XAML\DataGrid.xaml" />
+    <StyleXaml Include="..\XAML\DatePicker.xaml" />
+    <StyleXaml Include="..\XAML\Expander.xaml" />
+    <StyleXaml Include="..\XAML\FocusVisual.xaml" />
+    <StyleXaml Include="..\XAML\Frame.xaml" />
+    <StyleXaml Include="..\XAML\GridSplitter.xaml" />
+    <StyleXaml Include="..\XAML\GroupBox.xaml" />
+    <StyleXaml Include="..\XAML\GroupItem.xaml" />
+    <StyleXaml Include="..\XAML\HeaderedContentControl.xaml" />
+    <StyleXaml Include="..\XAML\Hyperlink.xaml" />
+    <StyleXaml Include="..\XAML\ItemsControl.xaml" />
+    <StyleXaml Include="..\XAML\Label.xaml" />
+    <StyleXaml Include="..\XAML\ListBox.xaml" />
+    <StyleXaml Include="..\XAML\ListBoxItem.xaml" />
+    <StyleXaml Include="..\XAML\ListView.xaml" />
+    <StyleXaml Include="..\XAML\ListViewItem.xaml" />
+    <StyleXaml Include="..\XAML\Menu.xaml" />
+    <StyleXaml Include="..\XAML\MenuItem.xaml" />
+    <StyleXaml Include="..\XAML\NavigationWindow.xaml" />
+    <StyleXaml Include="..\XAML\Page.xaml" />
+    <StyleXaml Include="..\XAML\ProgressBar.xaml" />
+    <StyleXaml Include="..\XAML\RadioButton.xaml" />
+    <StyleXaml Include="..\XAML\ResizeGrip.xaml" />
+    <StyleXaml Include="..\XAML\ScrollBar.xaml" />
+    <StyleXaml Include="..\XAML\ScrollViewer.xaml" />
+    <StyleXaml Include="..\XAML\Separator.xaml" />
+    <StyleXaml Include="..\XAML\Slider.xaml" />
+    <StyleXaml Include="..\XAML\StatusBar.xaml" />
+    <StyleXaml Include="..\XAML\TabControl.xaml" />
+    <StyleXaml Include="..\XAML\TabItem.xaml" />
+    <StyleXaml Include="..\XAML\TextBox.xaml" />
+    <StyleXaml Include="..\XAML\Thumb.xaml" />
+    <StyleXaml Include="..\XAML\ToolBar.xaml" />
+    <StyleXaml Include="..\XAML\ToolTip.xaml" />
+    <StyleXaml Include="..\XAML\TreeView.xaml" />
+    <StyleXaml Include="..\XAML\TreeViewItem.xaml" />
+    <StyleXaml Include="..\XAML\UserControl.xaml" />
+    <StyleXaml Include="..\XAML\Window.xaml" />
+  </ItemGroup>
+
+  <Import Project="$(_NTDRIVE)$(_NTROOT)\tools\Microsoft.DevDiv.Native.targets" />
+
+  <PropertyGroup>
+    <BuildGeneratedDependsOn>
+      GenerateThemes;
+      $(BuildGeneratedDependsOn)
+    </BuildGeneratedDependsOn>
+  </PropertyGroup>
+
+  <Target Name="GenerateThemes" 
+       Inputs="@(StyleXaml);@(ThemeXaml)"
+       Outputs="$(OutputPath)sdk\%(ThemeXaml.FileName)%(ThemeXaml.Extension).sdk" >
+
+     <MakeDir Condition="!Exists('$(IntermediateOutputDirectory)')" Directories="$(IntermediateOutputDirectory)" />
+
+     <Exec Command="$(PerlCommand) ThemeGenerator.pl $(IntermediateOutputDirectory)\%(ThemeXaml.FileName)%(ThemeXaml.Extension).sdk $(IntermediateOutputDirectory)\%(ThemeXaml.FileName)%(ThemeXaml.Extension) %(ThemeXaml.Identity) @(StyleXaml, ' ')" 
+        Outputs="$(IntermediateOutputDirectory)\%(ThemeXaml.FileName)%(ThemeXaml.Extension).sdk;$(IntermediateOutputDirectory)\%(ThemeXaml.FileName)%(ThemeXaml.Extension)" 
+        StandardOutputImportance="normal" />
+
+     <ItemGroup>
+       <DataFile Include="$(IntermediateOutputDirectory)\%(ThemeXaml.FileName)%(ThemeXaml.Extension).sdk">
+         <SubFolder>sdk</SubFolder>
+       </DataFile>
+     </ItemGroup>
+  </Target>
+
+</Project>

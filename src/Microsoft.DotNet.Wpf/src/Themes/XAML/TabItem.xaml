@@ -1,0 +1,1488 @@
+<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor]] -->
+
+ 
+   
+    <Style x:Key="TabItemFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="3,3,3,1"
+                               StrokeThickness="1"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeDashArray="1 2"
+                               SnapsToDevicePixels="true"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+   
+   
+    <!--=================================================================
+        TabItem
+    ==================================================================-->
+
+    <LinearGradientBrush x:Key="TabItemHotBackground"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#EAF6FD"
+                          Offset="0.15"/>
+            <GradientStop Color="#D9F0FC"
+                          Offset=".5"/>
+            <GradientStop Color="#BEE6FD"
+                          Offset=".5"/>
+            <GradientStop Color="#A7D9F5"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="TabItemSelectedBackground"
+                     Color="#F9F9F9"/>
+    <SolidColorBrush x:Key="TabItemDisabledBackground"
+                     Color="#F4F4F4"/>
+    <SolidColorBrush x:Key="TabItemHotBorderBrush"
+                     Color="#3C7FB1"/>
+    <SolidColorBrush x:Key="TabItemDisabledBorderBrush"
+                     Color="#FFC9C7BA"/>
+    <Style x:Key="{x:Type TabItem}"
+           TargetType="{x:Type TabItem}">
+        <Setter Property="FocusVisualStyle"
+                Value="{StaticResource TabItemFocusVisual}"/>
+        <Setter Property="Foreground"
+                Value="Black"/>
+        <Setter Property="Padding"
+                Value="6,1,6,1"/>
+        <Setter Property="BorderBrush"
+                Value="{StaticResource TabControlNormalBorderBrush}"/>
+        <Setter Property="Background"
+                Value="{StaticResource ButtonNormalBackground}"/>
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment"
+                Value="Stretch"/>
+        <!--Setter Property="TabStripPlacement" Value="{Binding Path=TabStripPlacement,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" /-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Grid SnapsToDevicePixels="true">
+                        <!-- Header Border -->
+                        <Border Name="Bd"
+                                Padding="{TemplateBinding Padding}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="1,1,1,0">
+                            <ContentPresenter Name="Content"
+                                              ContentSource="Header"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              HorizontalAlignment="{Binding Path=HorizontalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                              VerticalAlignment="{Binding Path=VerticalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                              RecognizesAccessKey="True"/>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                            <Setter TargetName="Bd"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemHotBackground}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected"
+                                 Value="true">
+                            <Setter Property="Panel.ZIndex"
+                                    Value="1"/>
+                            <Setter TargetName="Bd"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemSelectedBackground}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="false"/>
+                                <Condition Property="IsMouseOver"
+                                           Value="true"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Bd"
+                                    Property="BorderBrush"
+                                    Value="{StaticResource TabItemHotBorderBrush}"/>
+                        </MultiTrigger>
+                        <Trigger Property="TabStripPlacement"
+                                 Value="Bottom">
+                            <Setter TargetName="Bd"
+                                    Property="BorderThickness"
+                                    Value="1,0,1,1"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement"
+                                 Value="Left">
+                            <Setter TargetName="Bd"
+                                    Property="BorderThickness"
+                                    Value="1,1,0,1"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement"
+                                 Value="Right">
+                            <Setter TargetName="Bd"
+                                    Property="BorderThickness"
+                                    Value="0,1,1,1"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <!-- Selected and Top -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Top"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-2,-2,-2,-1"/>
+                            <Setter TargetName="Content"
+                                    Property="Margin"
+                                    Value="0,0,0,1"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <!-- Selected and Bottom -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Bottom"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-2,-1,-2,-2"/>
+                            <Setter TargetName="Content"
+                                    Property="Margin"
+                                    Value="0,1,0,0"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <!-- Selected and Left -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Left"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-2,-2,-1,-2"/>
+                            <Setter TargetName="Content"
+                                    Property="Margin"
+                                    Value="0,0,1,0"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <!-- Selected and Right -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Right"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-1,-2,-2,-2"/>
+                            <Setter TargetName="Content"
+                                    Property="Margin"
+                                    Value="1,0,0,0"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter TargetName="Bd"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemDisabledBackground}"/>
+                            <Setter TargetName="Bd"
+                                    Property="BorderBrush"
+                                    Value="{StaticResource TabItemDisabledBorderBrush}"/>
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[Classic]] -->
+
+    <Style x:Key="TabItemFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="4,4,4,2"
+                               StrokeThickness="1"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeDashArray="1 2"
+                               SnapsToDevicePixels="true"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+  
+    
+    <!--=================================================================
+        TabItem
+    ==================================================================-->
+    <Style x:Key="{x:Type TabItem}"
+           TargetType="{x:Type TabItem}">
+        <Setter Property="FocusVisualStyle"
+                Value="{StaticResource TabItemFocusVisual}"/>
+        <Setter Property="Padding"
+                Value="12,2,12,2"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment"
+                Value="Stretch"/>
+        <!--Setter Property="TabStripPlacement" Value="{Binding Path=TabStripPlacement,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" /-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <theme:ClassicBorderDecorator x:Name="ClassicBorder"
+                                                  SnapsToDevicePixels="true"
+                                                  BorderStyle="TabTop"
+                                                  Background="{TemplateBinding Background}"
+                                                  BorderBrush="{x:Static theme:ClassicBorderDecorator.ClassicBorderBrush}"
+                                                  BorderThickness="2">
+                        <ContentPresenter
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          HorizontalAlignment="{Binding Path=HorizontalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                          VerticalAlignment="{Binding Path=VerticalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                          ContentSource="Header"
+                                          Margin="{TemplateBinding Padding}"
+                                          RecognizesAccessKey="True"/>
+                    </theme:ClassicBorderDecorator>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected"
+                                 Value="true">
+                            <Setter Property="Panel.ZIndex"
+                                    Value="1"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement"
+                                 Value="Bottom">
+                            <Setter Property="BorderStyle"
+                                    Value="TabBottom"
+                                    TargetName="ClassicBorder"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement"
+                                 Value="Left">
+                            <Setter Property="BorderStyle"
+                                    Value="TabLeft"
+                                    TargetName="ClassicBorder"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement"
+                                 Value="Right">
+                            <Setter Property="BorderStyle"
+                                    Value="TabRight"
+                                    TargetName="ClassicBorder"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <!-- Selected and Top -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Top"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-2"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <!-- Selected and Bottom -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Bottom"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-2"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <!-- Selected and Left -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Left"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Padding"
+                                    Value="11,2,14,2"/>
+                            <Setter Property="Margin"
+                                    Value="-2"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <!-- Selected and Right -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Right"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Padding"
+                                    Value="14,2,11,2"/>
+                            <Setter Property="Margin"
+                                    Value="-2"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[AeroLite.NormalColor]] -->
+
+    <Style TargetType="{x:Type TabItem}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Background" Value="{StaticResource TabItem.Static.Background}" />
+        <Setter Property="BorderBrush" Value="{StaticResource TabItem.Static.Border}" />
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="6,2"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
+                        <Border x:Name="mainBorder" 
+                            BorderThickness="1" 
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Margin="0">
+                            <Border x:Name="innerBorder" 
+                                BorderThickness="1" 
+                                Background="{StaticResource TabItem.Selected.Background}"
+                                BorderBrush="{StaticResource TabItem.Selected.Border}"
+                                Margin="-1" 
+                                Opacity="0" />
+                        </Border>                           
+                        <ContentPresenter x:Name="contentPresenter" 
+                            ContentSource="Header" 
+                            HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                            VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                            Focusable="False" 
+                            Margin="{TemplateBinding Padding}"
+                            RecognizesAccessKey="True"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="mainBorder" Property="Background" Value="{StaticResource TabItem.MouseOver.Background}" />
+                            <Setter TargetName="mainBorder" Property="BorderBrush" Value="{StaticResource TabItem.MouseOver.Border}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="contentPresenter" Property="Opacity" Value="0.56" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter Property="Panel.ZIndex" Value="1"/>
+                            <Setter Property="Margin" Value="-2"/>
+                            <Setter TargetName="innerBorder" Property="Opacity" Value="1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+<!-- [[Aero2.NormalColor]] -->
+
+    <Style TargetType="{x:Type TabItem}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Background" Value="{StaticResource TabItem.Static.Background}" />
+        <Setter Property="BorderBrush" Value="{StaticResource TabItem.Static.Border}" />
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="6,2,6,2"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
+                        <Border x:Name="mainBorder" 
+                            BorderThickness="1,1,1,0" 
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Margin="0">
+                            <Border x:Name="innerBorder" 
+                                BorderThickness="1,1,1,0" 
+                                Background="{StaticResource TabItem.Selected.Background}"
+                                BorderBrush="{StaticResource TabItem.Selected.Border}"
+                                Margin="-1"
+                                Opacity="0" />
+                        </Border>                           
+                        <ContentPresenter x:Name="contentPresenter" 
+                            ContentSource="Header" 
+                            HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                            VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                            Focusable="False" 
+                            Margin="{TemplateBinding Padding}"
+                            RecognizesAccessKey="True"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" />
+                    <Condition Binding="{Binding Path=TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="mainBorder" Property="Background" Value="{StaticResource TabItem.MouseOver.Background}" />
+                            <Setter TargetName="mainBorder" Property="BorderBrush" Value="{StaticResource TabItem.MouseOver.Border}" />
+                <Setter TargetName="innerBorder" Property="BorderThickness" Value="1,1,0,1" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="1,1,0,1" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" />
+                    <Condition Binding="{Binding Path=TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="mainBorder" Property="Background" Value="{StaticResource TabItem.MouseOver.Background}" />
+                            <Setter TargetName="mainBorder" Property="BorderBrush" Value="{StaticResource TabItem.MouseOver.Border}" />
+                <Setter TargetName="innerBorder" Property="BorderThickness" Value="1,0,1,1" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="1,0,1,1" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" />
+                    <Condition Binding="{Binding Path=TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="mainBorder" Property="Background" Value="{StaticResource TabItem.MouseOver.Background}" />
+                            <Setter TargetName="mainBorder" Property="BorderBrush" Value="{StaticResource TabItem.MouseOver.Border}" />
+                <Setter TargetName="innerBorder" Property="BorderThickness" Value="0,1,1,1" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="0,1,1,1" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" />
+                    <Condition Binding="{Binding Path=TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="mainBorder" Property="Background" Value="{StaticResource TabItem.MouseOver.Background}" />
+                            <Setter TargetName="mainBorder" Property="BorderBrush" Value="{StaticResource TabItem.MouseOver.Border}" />
+                <Setter TargetName="innerBorder" Property="BorderThickness" Value="1,1,1,0" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="1,1,1,0" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}" Value="false" />
+                    <Condition Binding="{Binding Path=TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="contentPresenter" Property="Opacity" Value="0.56" />
+                            <Setter TargetName="mainBorder" Property="Background" Value="{StaticResource TabItem.Disabled.Background}" />
+                <Setter TargetName="mainBorder" Property="BorderBrush" Value="{StaticResource TabItem.Disabled.Border}" />
+                <Setter TargetName="innerBorder" Property="BorderThickness" Value="1,1,0,1" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="1,1,0,1" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}" Value="false" />
+                    <Condition Binding="{Binding Path=TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="contentPresenter" Property="Opacity" Value="0.56" />
+                            <Setter TargetName="mainBorder" Property="Background" Value="{StaticResource TabItem.Disabled.Background}" />
+                            <Setter TargetName="mainBorder" Property="BorderBrush" Value="{StaticResource TabItem.Disabled.Border}" />
+                <Setter TargetName="innerBorder" Property="BorderThickness" Value="1,0,1,1" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="1,0,1,1" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}" Value="false" />
+                    <Condition Binding="{Binding Path=TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="contentPresenter" Property="Opacity" Value="0.56" />
+                        <Setter TargetName="mainBorder" Property="Background" Value="{StaticResource TabItem.Disabled.Background}" />
+                            <Setter TargetName="mainBorder" Property="BorderBrush" Value="{StaticResource TabItem.Disabled.Border}" />
+                <Setter TargetName="innerBorder" Property="BorderThickness" Value="0,1,1,1" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="0,1,1,1" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}" Value="false" />
+                    <Condition Binding="{Binding Path=TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="contentPresenter" Property="Opacity" Value="0.56" />
+                            <Setter TargetName="mainBorder" Property="Background" Value="{StaticResource TabItem.Disabled.Background}" />
+                                <Setter TargetName="mainBorder" Property="BorderBrush" Value="{StaticResource TabItem.Disabled.Border}" />
+                <Setter TargetName="innerBorder" Property="BorderThickness" Value="1,1,1,0" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="1,1,1,0" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}" Value="false" />
+                    <Condition Binding="{Binding Path=TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="innerBorder" Property="BorderThickness" Value="1,1,0,1" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="1,1,0,1" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
+                    <Condition Binding="{Binding Path=TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Panel.ZIndex" Value="1"/>
+                            <Setter Property="Margin" Value="-2,-2,0,-2"/>
+                                <Setter TargetName="innerBorder" Property="Opacity" Value="1" /> 
+                <Setter TargetName="innerBorder" Property="BorderThickness" Value="1,1,0,1" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="1,1,0,1" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}" Value="false" />
+                    <Condition Binding="{Binding Path=TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="innerBorder" Property="BorderThickness" Value="1,0,1,1" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="1,0,1,1" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
+                    <Condition Binding="{Binding Path=TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Panel.ZIndex" Value="1"/>
+                            <Setter Property="Margin" Value="-2,0,-2,-2"/>
+                                <Setter TargetName="innerBorder" Property="Opacity" Value="1" /> 
+                <Setter TargetName="innerBorder" Property="BorderThickness" Value="1,0,1,1" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="1,0,1,1" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}" Value="false" />
+                    <Condition Binding="{Binding Path=TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="innerBorder" Property="BorderThickness" Value="0,1,1,1" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="0,1,1,1" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
+                    <Condition Binding="{Binding Path=TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Panel.ZIndex" Value="1"/>
+                                <Setter Property="Margin" Value="0,-2,-2,-2"/>
+                                <Setter TargetName="innerBorder" Property="Opacity" Value="1" /> 
+                <Setter TargetName="innerBorder" Property="BorderThickness" Value="0,1,1,1" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="0,1,1,1" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}" Value="false" />
+                    <Condition Binding="{Binding Path=TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="innerBorder" Property="BorderThickness" Value="1,1,1,0" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="1,1,1,0" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
+                    <Condition Binding="{Binding Path=TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Panel.ZIndex" Value="1"/>
+                            <Setter Property="Margin" Value="-2,-2,-2,0"/>
+                                <Setter TargetName="innerBorder" Property="Opacity" Value="1" /> 
+                <Setter TargetName="innerBorder" Property="BorderThickness" Value="1,1,1,0" />
+                <Setter TargetName="mainBorder" Property="BorderThickness" Value="1,1,1,0" />
+            </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+<!-- [[Luna.Homestead]] -->
+
+
+    <Style x:Key="TabItemFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="3,3,3,1"
+                               StrokeThickness="1"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeDashArray="1 2"
+                               SnapsToDevicePixels="true"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    
+    
+    
+  
+    <!--=================================================================
+        TabItem
+    ==================================================================-->
+    <LinearGradientBrush x:Key="TabItemNormalBackground"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#FFFFFFFF"
+                          Offset="0"/>
+            <GradientStop Color="#FFECEBE6"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="TabItemHotBackground"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#FFFFFFFF"
+                          Offset="0"/>
+            <GradientStop Color="#FFECEBE6"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="TabItemSelectedBackground"
+                     Color="#FFFCFCFE"/>
+    <SolidColorBrush x:Key="TabItemDisabledBackground"
+                     Color="#FFF5F4EA"/>
+    <SolidColorBrush x:Key="TabItemSelectedBorderBackround"
+                     Color="#FFE39658"/>
+    <SolidColorBrush x:Key="TabItemSelectedBorderBrush"
+                     Color="#FFCF7225"/>
+    <SolidColorBrush x:Key="TabItemHotBorderBackround"
+                     Color="#FFE39658"/>
+    <SolidColorBrush x:Key="TabItemHotBorderBrush"
+                     Color="#FFCE7121"/>
+    <SolidColorBrush x:Key="TabItemDisabledBorderBrush"
+                     Color="#FFC9C7BA"/>
+    <Style x:Key="{x:Type TabItem}"
+           TargetType="{x:Type TabItem}">
+        <Setter Property="FocusVisualStyle"
+                Value="{StaticResource TabItemFocusVisual}"/>
+        <Setter Property="Padding"
+                Value="12,2,12,2"/>
+        <Setter Property="BorderThickness"
+                Value="1,1,1,0"/>
+        <Setter Property="BorderBrush"
+                Value="{StaticResource TabControlNormalBorderBrush}"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{StaticResource TabItemNormalBackground}"/>
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment"
+                Value="Stretch"/>
+        <!--Setter Property="TabStripPlacement" Value="{Binding Path=TabStripPlacement,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" /-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Border SnapsToDevicePixels="true">
+                        <Grid Margin="0,0,1,0">
+                            <Grid x:Name="Transform">
+                                <!-- Header Border -->
+                                <Border Name="Bd"
+                                        CornerRadius="3,3,0,0"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"/>
+                                <!-- Top part used for orange highlight -->
+                                <Border x:Name="HighlightBorder"
+                                        Height="3"
+                                        BorderThickness="1,1,1,0"
+                                        CornerRadius="3,3,0,0"
+                                        VerticalAlignment="Top"/>
+                            </Grid>
+                            <!-- Header Content -->
+                            <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter ContentSource="Header"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                  HorizontalAlignment="{Binding Path=HorizontalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                                  VerticalAlignment="{Binding Path=VerticalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                                  RecognizesAccessKey="True"/>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                            <Setter TargetName="HighlightBorder"
+                                    Property="BorderBrush"
+                                    Value="{StaticResource TabItemHotBorderBrush}"/>
+                            <Setter TargetName="HighlightBorder"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemHotBorderBackround}"/>
+                            <Setter TargetName="Bd"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemHotBackground}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected"
+                                 Value="true">
+                            <Setter Property="Panel.ZIndex"
+                                    Value="1"/>
+                            <Setter TargetName="HighlightBorder"
+                                    Property="BorderBrush"
+                                    Value="{StaticResource TabItemSelectedBorderBrush}"/>
+                            <Setter TargetName="HighlightBorder"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemSelectedBorderBackround}"/>
+                            <Setter TargetName="Bd"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemSelectedBackground}"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement"
+                                 Value="Bottom">
+                            <Setter Property="LayoutTransform"
+                                    TargetName="Transform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="1"
+                                                    ScaleY="-1"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement"
+                                 Value="Left">
+                            <Setter Property="LayoutTransform"
+                                    TargetName="Transform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement"
+                                 Value="Right">
+                            <Setter Property="LayoutTransform"
+                                    TargetName="Transform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="90"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            <Setter TargetName="Bd"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemDisabledBackground}"/>
+                            <Setter TargetName="Bd"
+                                    Property="BorderBrush"
+                                    Value="{StaticResource TabItemDisabledBorderBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <!-- Selected and Top -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Top"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-2,-2,-2,-1"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <!-- Selected and Bottom -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Bottom"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-2"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <!-- Selected and Left -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Left"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-2,-2,-1,-2"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <!-- Selected and Right -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Right"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-1,-2,-2,-2"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[Luna.Metallic]] -->
+ 
+
+
+    <Style x:Key="TabItemFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="3,3,3,1"
+                               StrokeThickness="1"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeDashArray="1 2"
+                               SnapsToDevicePixels="true"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    
+    <!--=================================================================
+        TabItem
+    ==================================================================-->
+    <LinearGradientBrush x:Key="TabItemNormalBackground"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#FFFFFFFF"
+                          Offset="0"/>
+            <GradientStop Color="#FFBDBEDE"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="TabItemHotBackground"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#FFFFFFFF"
+                          Offset="0"/>
+            <GradientStop Color="#FFBDBEDE"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="TabItemSelectedBackground"
+                     Color="#FFFCFCFE"/>
+    <SolidColorBrush x:Key="TabItemDisabledBackground"
+                     Color="#FFF5F4EA"/>
+    <SolidColorBrush x:Key="TabItemSelectedBorderBackround"
+                     Color="#FFFFC73C"/>
+    <SolidColorBrush x:Key="TabItemSelectedBorderBrush"
+                     Color="#FFE68B2C"/>
+    <SolidColorBrush x:Key="TabItemHotBorderBackround"
+                     Color="#FFFFC73C"/>
+    <SolidColorBrush x:Key="TabItemHotBorderBrush"
+                     Color="#FFE68B2C"/>
+    <SolidColorBrush x:Key="TabItemDisabledBorderBrush"
+                     Color="#FFC9C7BA"/>
+    <Style x:Key="{x:Type TabItem}"
+           TargetType="{x:Type TabItem}">
+        <Setter Property="FocusVisualStyle"
+                Value="{StaticResource TabItemFocusVisual}"/>
+        <Setter Property="Padding"
+                Value="12,2,12,2"/>
+        <Setter Property="BorderThickness"
+                Value="1,1,1,0"/>
+        <Setter Property="BorderBrush"
+                Value="{StaticResource TabControlNormalBorderBrush}"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{StaticResource TabItemNormalBackground}"/>
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment"
+                Value="Stretch"/>
+        <!--Setter Property="TabStripPlacement" Value="{Binding Path=TabStripPlacement,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" /-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Border SnapsToDevicePixels="true">
+                        <Grid Margin="0,0,1,0">
+                            <Grid x:Name="Transform">
+                                <!-- Header Border -->
+                                <Border CornerRadius="3,3,0,0"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"/>
+                                <!-- Top part used for orange highlight -->
+                                <Border x:Name="HighlightBorder"
+                                        Height="3"
+                                        BorderThickness="1,1,1,0"
+                                        CornerRadius="3,3,0,0"
+                                        VerticalAlignment="Top"/>
+                            </Grid>
+                            <!-- Header Content -->
+                            <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter ContentSource="Header"
+                                                  RecognizesAccessKey="True"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                  HorizontalAlignment="{Binding Path=HorizontalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                                  VerticalAlignment="{Binding Path=VerticalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                            <Setter TargetName="HighlightBorder"
+                                    Property="BorderBrush"
+                                    Value="{StaticResource TabItemHotBorderBrush}"/>
+                            <Setter TargetName="HighlightBorder"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemHotBorderBackround}"/>
+                            <Setter Property="Background"
+                                    Value="{StaticResource TabItemHotBackground}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected"
+                                 Value="true">
+                            <Setter Property="Panel.ZIndex"
+                                    Value="1"/>
+                            <Setter TargetName="HighlightBorder"
+                                    Property="BorderBrush"
+                                    Value="{StaticResource TabItemSelectedBorderBrush}"/>
+                            <Setter TargetName="HighlightBorder"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemSelectedBorderBackround}"/>
+                            <Setter Property="Background"
+                                    Value="{StaticResource TabItemSelectedBackground}"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement"
+                                 Value="Bottom">
+                            <Setter Property="LayoutTransform"
+                                    TargetName="Transform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="1"
+                                                    ScaleY="-1"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement"
+                                 Value="Left">
+                            <Setter Property="LayoutTransform"
+                                    TargetName="Transform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement"
+                                 Value="Right">
+                            <Setter Property="LayoutTransform"
+                                    TargetName="Transform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="90"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            <Setter Property="Background"
+                                    Value="{StaticResource TabItemDisabledBackground}"/>
+                            <Setter Property="BorderBrush"
+                                    Value="{StaticResource TabItemDisabledBorderBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <!-- Selected and Top -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Top"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-2,-2,-2,-1"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <!-- Selected and Bottom -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Bottom"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-2"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <!-- Selected and Left -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Left"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-2,-2,-1,-2"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <!-- Selected and Right -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Right"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-1,-2,-2,-2"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[Luna.NormalColor]] -->
+
+ 
+    <Style x:Key="TabItemFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                   <Rectangle Margin="3,3,3,1"
+                               StrokeThickness="1"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeDashArray="1 2"
+                               SnapsToDevicePixels="true"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    
+   
+
+  
+  
+    <!--=================================================================
+        TabItem
+    ==================================================================-->
+    <LinearGradientBrush x:Key="TabItemNormalBackground"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#FFFFFFFF"
+                          Offset="0"/>
+            <GradientStop Color="#FFECEBE6"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="TabItemHotBackground"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#FFFFFFFF"
+                          Offset="0"/>
+            <GradientStop Color="#FFECEBE6"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="TabItemSelectedBackground"
+                     Color="#FFFCFCFE"/>
+    <SolidColorBrush x:Key="TabItemDisabledBackground"
+                     Color="#FFF5F4EA"/>
+    <SolidColorBrush x:Key="TabItemSelectedBorderBackround"
+                     Color="#FFFFC73C"/>
+    <SolidColorBrush x:Key="TabItemSelectedBorderBrush"
+                     Color="#FFE68B2C"/>
+    <SolidColorBrush x:Key="TabItemHotBorderBackround"
+                     Color="#FFFFC73C"/>
+    <SolidColorBrush x:Key="TabItemHotBorderBrush"
+                     Color="#FFE68B2C"/>
+    <SolidColorBrush x:Key="TabItemDisabledBorderBrush"
+                     Color="#FFC9C7BA"/>
+    <Style x:Key="{x:Type TabItem}"
+           TargetType="{x:Type TabItem}">
+        <Setter Property="FocusVisualStyle"
+                Value="{StaticResource TabItemFocusVisual}"/>
+        <Setter Property="Padding"
+                Value="12,2,12,2"/>
+        <Setter Property="BorderThickness"
+                Value="1,1,1,0"/>
+        <Setter Property="BorderBrush"
+                Value="{StaticResource TabControlNormalBorderBrush}"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{StaticResource TabItemNormalBackground}"/>
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment"
+                Value="Stretch"/>
+        <!--Setter Property="TabStripPlacement" Value="{Binding Path=TabStripPlacement,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" /-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Border SnapsToDevicePixels="true">
+                        <Grid Margin="0,0,1,0">
+                            <Grid x:Name="Transform">
+                                <!-- Header Border -->
+                                <Border Name="Bd"
+                                        CornerRadius="3,3,0,0"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"/>
+                                <!-- Top part used for orange highlight -->
+                                <Border x:Name="HighlightBorder"
+                                        Height="3"
+                                        BorderThickness="1,1,1,0"
+                                        CornerRadius="3,3,0,0"
+                                        VerticalAlignment="Top"/>
+                            </Grid>
+                            <!-- Header Content -->
+                            <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter ContentSource="Header"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                  HorizontalAlignment="{Binding Path=HorizontalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                                  VerticalAlignment="{Binding Path=VerticalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                                  RecognizesAccessKey="True"/>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                            <Setter TargetName="HighlightBorder"
+                                    Property="BorderBrush"
+                                    Value="{StaticResource TabItemHotBorderBrush}"/>
+                            <Setter TargetName="HighlightBorder"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemHotBorderBackround}"/>
+                            <Setter TargetName="Bd"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemHotBackground}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected"
+                                 Value="true">
+                            <Setter Property="Panel.ZIndex"
+                                    Value="1"/>
+                            <Setter TargetName="HighlightBorder"
+                                    Property="BorderBrush"
+                                    Value="{StaticResource TabItemSelectedBorderBrush}"/>
+                            <Setter TargetName="HighlightBorder"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemSelectedBorderBackround}"/>
+                            <Setter TargetName="Bd"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemSelectedBackground}"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement"
+                                 Value="Bottom">
+                            <Setter Property="LayoutTransform"
+                                    TargetName="Transform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="1"
+                                                    ScaleY="-1"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement"
+                                 Value="Left">
+                            <Setter Property="LayoutTransform"
+                                    TargetName="Transform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement"
+                                 Value="Right">
+                            <Setter Property="LayoutTransform"
+                                    TargetName="Transform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="90"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            <Setter TargetName="Bd"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemDisabledBackground}"/>
+                            <Setter TargetName="Bd"
+                                    Property="BorderBrush"
+                                    Value="{StaticResource TabItemDisabledBorderBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <!-- Selected and Top -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Top"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-2,-2,-2,-1"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <!-- Selected and Bottom -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Bottom"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-2"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <!-- Selected and Left -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Left"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-2,-2,-1,-2"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <!-- Selected and Right -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Right"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-1,-2,-2,-2"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+<!-- [[Royale.NormalColor]] -->
+
+
+    
+    <Style x:Key="TabItemFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="3,3,3,1"
+                               StrokeThickness="1"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeDashArray="1 2"
+                               SnapsToDevicePixels="true"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+   
+ 
+    <!--=================================================================
+        TabItem
+    ==================================================================-->
+    <LinearGradientBrush x:Key="TabItemNormalBackground"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#FFFFFFFF"
+                          Offset="0"/>
+            <GradientStop Color="#FFFFFFFF"
+                          Offset="0.2"/>
+            <GradientStop Color="#FFB0C4DC"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="TabItemHotBackground"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#FFFFFFFF"
+                          Offset="0"/>
+            <GradientStop Color="#FFFFFFFF"
+                          Offset="0.3"/>
+            <GradientStop Color="#FFC6DAF2"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="TabItemSelectedBackground"
+                     Color="#FFFCFCFE"/>
+    <SolidColorBrush x:Key="TabItemDisabledBackground"
+                     Color="#FFF5F4EA"/>
+    <SolidColorBrush x:Key="TabItemSelectedBorderBackround"
+                     Color="#FFFFC73C"/>
+    <SolidColorBrush x:Key="TabItemSelectedBorderBrush"
+                     Color="#FFE68B2C"/>
+    <SolidColorBrush x:Key="TabItemHotBorderBackround"
+                     Color="#FFFFC73C"/>
+    <SolidColorBrush x:Key="TabItemHotBorderBrush"
+                     Color="#FFE68B2C"/>
+    <Style x:Key="{x:Type TabItem}"
+           TargetType="{x:Type TabItem}">
+        <Setter Property="FocusVisualStyle"
+                Value="{StaticResource TabItemFocusVisual}"/>
+        <Setter Property="Padding"
+                Value="12,2,12,2"/>
+        <Setter Property="BorderThickness"
+                Value="1,1,1,0"/>
+        <Setter Property="BorderBrush"
+                Value="{StaticResource TabControlNormalBorderBrush}"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{StaticResource TabItemNormalBackground}"/>
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment"
+                Value="Stretch"/>
+        <!--Setter Property="TabStripPlacement" Value="{Binding Path=TabStripPlacement,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" /-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Border SnapsToDevicePixels="true">
+                        <Grid Margin="0,0,1,0">
+                            <Grid x:Name="Transform">
+                                <!-- Header Border -->
+                                <Border Name="Bd"
+                                        CornerRadius="3,3,0,0"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"/>
+                                <!-- Top part used for orange highlight -->
+                                <Border x:Name="HighlightBorder"
+                                        Height="3"
+                                        BorderThickness="1,1,1,0"
+                                        CornerRadius="3,3,0,0"
+                                        VerticalAlignment="Top"/>
+                            </Grid>
+                            <!-- Header Content -->
+                            <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter ContentSource="Header"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                  HorizontalAlignment="{Binding Path=HorizontalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                                  VerticalAlignment="{Binding Path=VerticalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                                  RecognizesAccessKey="True"/>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                            <Setter TargetName="HighlightBorder"
+                                    Property="BorderBrush"
+                                    Value="{StaticResource TabItemHotBorderBrush}"/>
+                            <Setter TargetName="HighlightBorder"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemHotBorderBackround}"/>
+                            <Setter TargetName="Bd"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemHotBackground}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected"
+                                 Value="true">
+                            <Setter Property="Panel.ZIndex"
+                                    Value="1"/>
+                            <Setter TargetName="HighlightBorder"
+                                    Property="BorderBrush"
+                                    Value="{StaticResource TabItemSelectedBorderBrush}"/>
+                            <Setter TargetName="HighlightBorder"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemSelectedBorderBackround}"/>
+                            <Setter TargetName="Bd"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemSelectedBackground}"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement"
+                                 Value="Bottom">
+                            <Setter Property="LayoutTransform"
+                                    TargetName="Transform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="1"
+                                                    ScaleY="-1"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement"
+                                 Value="Left">
+                            <Setter Property="LayoutTransform"
+                                    TargetName="Transform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement"
+                                 Value="Right">
+                            <Setter Property="LayoutTransform"
+                                    TargetName="Transform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="90"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            <Setter TargetName="Bd"
+                                    Property="Background"
+                                    Value="{StaticResource TabItemDisabledBackground}"/>
+                            <Setter TargetName="Bd"
+                                    Property="BorderBrush"
+                                    Value="{StaticResource TabItemDisabledBorderBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <!-- Selected and Top -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Top"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-2,-2,-2,-1"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <!-- Selected and Bottom -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Bottom"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-2"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <!-- Selected and Left -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Left"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-2,-2,-1,-2"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <!-- Selected and Right -->
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="true"/>
+                                <Condition Property="TabStripPlacement"
+                                           Value="Right"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="-1,-2,-2,-2"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+

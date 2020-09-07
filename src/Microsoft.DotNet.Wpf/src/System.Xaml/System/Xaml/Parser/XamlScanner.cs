@@ -782,8 +782,11 @@ namespace MS.Internal.Xaml.Parser
                 throw new XamlInternalException(SR.Get(SRID.AttributeUnhandledKind));
             }
 
+            // (GetFixedDocumentSequence raises Exception "UnicodeString property does not
+            // contain enough characters to correspond to the contents of Indices property.")
+            // 
             // XamlText.Paste normally converts CRLF to LF, even in attribute values.
-            // When the property is Glyphs.UnicodeString, disable this (Dev11 796882);
+            // When the property is Glyphs.UnicodeString, disable this;
             // the length of the string must correspond to the number of entries in
             // the corresponding Glyphs.Indices property.
             XamlMember attrProperty = attr.Property;

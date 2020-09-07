@@ -1,9 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>XamlTestClasses</AssemblyName>
     <RootNamespace>XamlTestClasses</RootNamespace>
     <Platforms>AnyCPU;x64</Platforms>
-    <UseWPF>true</UseWPF>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -14,5 +13,9 @@
   <ItemGroup>
     <ProjectReference Include="..\XamlTestClasses.FriendWithKey\XamlTestClasses.FriendWithKey.csproj" />
     <ProjectReference Include="..\XamlTestClasses.FriendWithoutKey\XamlTestClasses.FriendWithoutKey.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
   </ItemGroup>
 </Project>

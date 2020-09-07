@@ -1,0 +1,204 @@
+<Project>
+  <ItemGroup>
+    <PackageReference Include="$(MicrosoftPrivateWinformsPackage)"
+                      Version="$(MicrosoftPrivateWinformsVersion)"
+                      ExcludeAssets="All"
+                      GeneratePathProperty="True"
+                      Condition="'$(MSBuildProjectExtension)'!='.vcxproj' 
+                              And '$(TargetFrameworkIdentifier)' == '.NETCoreApp' 
+                              And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v5.0') 
+                              And '$(NoAutoMicrosoftPrivateWinformsReference)'!='true'"/>
+
+    <!--
+      When @(NetCoreReference) is non-empty, exclude all assets (ExcludeAssets = All) and re-add them in 
+      ResolveMicrosoftNetCoreAppReferences target
+    -->
+    <PackageReference Update="Microsoft.NETCore.App"
+                      GeneratePathProperty="true"
+                      ExcludeAssets="All"
+                      Condition="'@(NetCoreReference)'!='' And '$(DoNotLimitMicrosoftNetCoreReferences)'!='true' And '$(MSBuildProjectExtension)'!='.vcxproj' And '$(DisableImplicitFrameworkReferences)' != 'true' And '$(TargetFrameworkIdentifier)' == '.NETCoreApp'" />
+
+    <PackageReference Update="Microsoft.NETCore.App"
+                    GeneratePathProperty="true"
+                    Condition="('@(NetCoreReference)'=='' Or '$(DoNotLimitMicrosoftNetCoreReferences)' == 'true') And '$(MSBuildProjectExtension)'!='.vcxproj' And '$(DisableImplicitFrameworkReferences)' != 'true' And '$(TargetFrameworkIdentifier)' == '.NETCoreApp'" />
+  </ItemGroup>
+
+  <Target Name="GeneratePathPropertyforMicrosoftWindowsDesktopApp"
+          AfterTargets="ResolveFrameworkReferences">
+    <ItemGroup>
+      <PackageReference Update="Microsoft.WindowsDesktop.App"
+                        GeneratePathProperty="true" />
+    </ItemGroup>
+  </Target>
+
+  <PropertyGroup>
+    <ResolveAssemblyReferencesDependsOn>
+      ResolveMicrosoftDotNetWpfGitHubReferences;
+      ResolveMicrosoftDotNetWpfDncEngReferencesForCpp;
+      ResolveWinFormsReferences;
+      $(ResolveAssemblyReferencesDependsOn)
+    </ResolveAssemblyReferencesDependsOn>
+  </PropertyGroup>
+
+
+  <Target
+    Name="LimitNetCoreAppReferences"
+    AfterTargets="ResolveTargetingPackAssets;ResolveTargetingPacks"
+    Returns="@(Reference)"
+    Condition="'@(NetCoreReference)' != '' And '@(Reference)' != ''">
+    <!--
+      Example
+      <NetCoreReference Include="Microsoft.CSharp" />
+    -->
+
+    <!--
+       Save Microsoft.NETCore.App.Ref assemblies, and remove those from @(Reference)
+     -->
+    <ItemGroup>
+      <_netCoreAppSdkReference Remove="@(_netCoreAppSdkReference)" />
+      <_netCoreAppSdkReference Include="@(Reference)"
+                               Condition="'%(Reference.NuGetPackageId)'=='Microsoft.NETCore.App.Ref'">
+        <OriginalPath>%(Reference.Identity)</OriginalPath>
+      </_netCoreAppSdkReference>
+
+      <Reference Remove="@(_netCoreAppSdkReference)" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_netCoreAppReferences Remove="@(_netCoreAppReferences)" />
+    </ItemGroup>
+    <FilterItem1ByItem2 Item1="@(_netCoreAppSdkReference->'%(FileName)')"
+                        Item2="@(NetCoreReference)"
+                        Metadata2="Identity"
+                        PreserveItem1Metadata="true">
+      <Output ItemName="_netCoreAppReferences" TaskParameter="Result" />
+    </FilterItem1ByItem2>
+
+    <ItemGroup>
+      <Reference Include="@(_netCoreAppReferences->'%(OriginalPath)')" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="LimitWindowsDesktopAppReferences"
+        AfterTargets="ResolveTargetingPacks;ResolveTargetingPackAsssets"
+        Returns="@(Reference)"
+        Condition="'@(WindowsDesktopReference)'!='' and '@(Reference)' != ''">
+    <!--
+      Example
+      <WindowsDesktopReference Include="PresentationCore" />
+    -->
+
+    <!--
+       Save Microsoft.WindowsDesktop.App.Ref assemblies, and remove those from @(Reference)
+     -->
+    <ItemGroup>
+      <_windowsDesktopAppSdkReference Remove="@(_windowsDesktopAppSdkReference)" />
+      <_windowsDesktopAppSdkReference Include="@(Reference)"
+                                      Condition="'%(Reference.NuGetPackageId)'=='Microsoft.WindowsDesktop.App.Ref'">
+        <OriginalPath>%(Reference.Identity)</OriginalPath>
+      </_windowsDesktopAppSdkReference>
+
+      <Reference Remove="@(_windowsDesktopAppSdkReference)" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_windowsDesktopAppReferences Remove="@(_windowsDesktopAppReferences)" />
+    </ItemGroup>
+    <FilterItem1ByItem2 Item1="@(_windowsDesktopAppSdkReference->'%(FileName)')"
+                        Item2="@(WindowsDesktopReference)"
+                        Metadata2="Identity"
+                        PreserveItem1Metadata="true">
+      <Output ItemName="_windowsDesktopAppReferences" TaskParameter="Result" />
+    </FilterItem1ByItem2>
+
+    <ItemGroup>
+      <Reference Include="@(_windowsDesktopAppReferences->'%(OriginalPath)')" />
+    </ItemGroup>
+  </Target>
+
+  <Target
+    Name="ResolveMicrosoftDotNetWpfGitHubReferences"
+    Returns="@(ReferencePath)"
+    Condition="'@(MicrosoftDotNetWpfGitHubReference)'!='' 
+           And '$(MSBuildProjectExtension)' != '.vcxproj'
+           And '$(TargetFrameworkIdentifier)' == '.NETCoreApp' 
+           And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v5.0') 
+           and '$(DoNotLimitMicrosoftDotNetWpfGitHubReferences)'!='true'">
+    <!-- 
+    In your project, Add a references to WPF GitHub transport package like this:
+      <ItemGroup>
+        <MicrosoftDotNetWpfGitHubReference Include="System.Xaml" />
+      </ItemGroup>
+      
+      It will get translated into something like this:
+      <ItemGroup>
+        <Reference Include="C:\Users\username\.nuget\packages\microsoft.dotnet.wpf.github\4.8.0-preview4.19174.2\ref\netcoreapp3.0\System.Xaml.dll" />
+      </ItemGroup>
+    -->
+    <PropertyGroup>
+      <!-- Since WPF reference assemblies do not carry internals, we need to directly reference the RID-specific lib assemblies from dotnet_wpf_int builds. -->
+      <WpfGitHubRidSpecificPackagePath Condition="'$(WpfRuntimeIdentifier)'=='win-x86' And '$(Configuration)' != 'Debug'">$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_GitHub)</WpfGitHubRidSpecificPackagePath>
+      <WpfGitHubRidSpecificPackagePath Condition="'$(WpfRuntimeIdentifier)'=='win-x86' And '$(Configuration)' == 'Debug'">$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_GitHub_Debug)</WpfGitHubRidSpecificPackagePath>
+      
+      <WpfGitHubRidSpecificPackagePath Condition="'$(WpfRuntimeIdentifier)'=='win-x64' And '$(Configuration)' != 'Debug'">$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_GitHub)</WpfGitHubRidSpecificPackagePath>
+      <WpfGitHubRidSpecificPackagePath Condition="'$(WpfRuntimeIdentifier)'=='win-x64' And '$(Configuration)' == 'Debug'">$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_GitHub_Debug)</WpfGitHubRidSpecificPackagePath>
+    </PropertyGroup>
+    <ItemGroup>
+      <Reference Include="$(WpfGitHubRidSpecificPackagePath)\lib\$(TargetFramework)\%(MicrosoftDotNetWpfGitHubReference.Identity).dll"
+                 Condition="Exists('$(WpfGitHubRidSpecificPackagePath)\lib\$(TargetFramework)\%(MicrosoftDotNetWpfGitHubReference.Identity).dll')">
+        <NuGetPackageId>runtime.$(WpfRuntimeIdentifier).$(GitHubTransportPackageName)</NuGetPackageId>
+      </Reference>
+    </ItemGroup>
+  </Target>
+
+  <Target
+    Name="ResolveMicrosoftDotNetWpfDncEngReferencesForCpp"
+    Returns="@(Link)"
+    Condition="'@(MicrosoftDotNetWpfGitHubReference)'!='' 
+           And '$(MSBuildProjectExtension)' == '.vcxproj'
+           and '$(DoNotLimitMicrosoftDotNetWpfGitHubReferences)'!='true'">
+    <!-- 
+      Normally, we would use lib files from RID-specific Microsoft.DotNet.Wpf.DncEng package directly. Since this package 
+      was most likley not restored prior to the start of the build, it had to be restored from with the CppHelper target, and the libs in this package
+      are now enumerated within @(NuGetReferencesForCpp) item. 
+    -->
+    
+    <!-- 
+      Select items from with @(NuGetReferencesForCpp) (which is a proxy for Microsoft.DotNet.Wpf.DncEng's native libs)
+      that were requested in MicrosoftDotNetWpfGitHubReference
+    -->
+    <FilterItem1ByItem2 Item1="@(NuGetReferencesForCpp->'%(FileName)')"
+                        Item2="@(MicrosoftDotNetWpfGitHubReference)" 
+                        Metadata2="Identity"
+                        PreserveItem1Metadata="true">
+      <Output ItemName="_nugetLibReferencesForCpp" TaskParameter="Result" />
+    </FilterItem1ByItem2>
+    
+    <ItemGroup>
+      <Link Include="@(_nugetLibReferencesForCpp->'%(FilePath)')" />   
+    </ItemGroup>
+  </Target>
+
+  <!-- 
+    In your project, Add a references to WinForms transport package like this:
+      <ItemGroup>
+        <MicrosoftPrivateWinFormsReference Include="Accessbility" />
+      </ItemGroup>
+      
+    It will get translated into something like this:
+      <ItemGroup>
+        <Reference Include="C:\Users\username\.nuget\packages\microsoft.private.winforms\4.8.0-preview4.19170.4\lib\netcoreapp3.0\Accessibility.dll" />
+      </ItemGroup>
+   -->
+  <Target Name="ResolveWinFormsReferences"
+          Condition="'@(MicrosoftPrivateWinFormsReference)'!='' 
+                 And '$(TargetFrameworkIdentifier)' == '.NETCoreApp' 
+                 And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v5.0') ">
+    <ItemGroup>
+      <Reference Include="$(PkgMicrosoft_Private_Winforms)\ref\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll"
+                 Condition="Exists('$(PkgMicrosoft_Private_Winforms)\ref\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll')">
+        <NuGetPackageId>Microsoft.Private.Winforms</NuGetPackageId>
+      </Reference>
+    </ItemGroup>
+  </Target>
+</Project>

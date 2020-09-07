@@ -1,0 +1,432 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="zh-HANS" original="../System.Printing.resx">
+    <body>
+      <trans-unit id="ArgumentException.InvalidHandle">
+        <source>Handle value is not valid.</source>
+        <target state="translated">句柄值无效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArgumentException.InvalidValue">
+        <source>Value is not valid.</source>
+        <target state="translated">值无效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArgumentException.NonNegativeValue">
+        <source>Value must be non-negative.</source>
+        <target state="translated">值必须是非负数。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArgumentException.PositiveValue">
+        <source>Value must be positive.</source>
+        <target state="translated">值必须为正的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.AddXmlnsFailAtRootElement">
+        <source>Cannot add standard namespace declaration at root element.</source>
+        <target state="translated">无法在根元素处添加标准命名空间声明。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.InvalidRootElement">
+        <source>Root element is not valid: NamespaceURI='{0}', LocalName='{1}'.</source>
+        <target state="translated">根元素无效: NamespaceURI='{0}'、LocalName='{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.InvalidXMLIntValue">
+        <source>'{0}' integer value at line number '{1}' line position '{2}' is not valid.</source>
+        <target state="translated">在行号“{1}”行位置“{2}”处的“{0}”整数值无效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.MissingRequiredChildElement">
+        <source>Must have '{0}' child element at line number '{1}' line position '{2}'.</source>
+        <target state="translated">行号“{1}”行位置“{2}”处必须具有“{0}”子元素。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.ParameterDefMissOrInvalid">
+        <source>Referenced {0} {1} is either missing or not valid.</source>
+        <target state="translated">引用的 {0} {1} 缺失或无效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.PrivateXMLTextValue">
+        <source>Private text value '{0}' found at line number '{1}' line position '{2}'.</source>
+        <target state="translated">在行号“{1}”行位置“{2}”处找到专用文本值“{0}”。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.RootChildMissingAttribute">
+        <source>'{0}' child element of root element is missing the required '{1}' attribute.</source>
+        <target state="translated">根元素的“{0}”子元素缺少必需的“{1}”特性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.RootInvalidAttribute">
+        <source>'{1}' value not valid for root element attribute '{0}'.</source>
+        <target state="translated">“{1}”值对根元素特性“{0}”无效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.RootInvalidChildElement">
+        <source>'{0}' is not a valid child element of root element.</source>
+        <target state="translated">“{0}”不是根元素的有效子元素。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.RootMissingAttribute">
+        <source>Root element is missing required attribute '{0}'.</source>
+        <target state="translated">根元素缺少必需的特性“{0}”。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.VersionNotSupported">
+        <source>'{0}' version number is not supported.</source>
+        <target state="translated">不支持“{0}”版本号。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.XMLNotWellFormed">
+        <source>XML is not well-formed.</source>
+        <target state="translated">XML 格式错误。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IndexOutOfRangeException.InvalidSize">
+        <source>'{0}' array should be the same size as array '{1}'.</source>
+        <target state="translated">“{0}”数组应与数组“{1}”大小相同。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintConfig.Provider.BindFail">
+        <source>PrintTicket provider failed to bind to printer. Win32 error: {0}</source>
+        <target state="translated">PrintTicket 提供程序无法绑定到打印机。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintConfig.Provider.DevMode2PTFail">
+        <source>PrintTicket provider failed to convert DEVMODE to PrintTicket. Win32 error: {0}</source>
+        <target state="translated">PrintTicket 提供程序无法将 DEVMODE 转换为 PrintTicket。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintConfig.Provider.GetPrintCapFail">
+        <source>PrintTicket provider failed to retrieve PrintCapabilities. Win32 error: {0}</source>
+        <target state="translated">PrintTicket 提供程序无法检索 PrintCapabilities。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintConfig.Provider.MergeValidateFail">
+        <source>PrintTicket provider failed to merge and validate PrintTicket. Win32 error: {0}</source>
+        <target state="translated">PrintTicket 提供程序无法合并和验证 PrintTicket。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintConfig.Provider.PT2DevModeFail">
+        <source>PrintTicket provider failed to convert PrintTicket to DEVMODE. Win32 error: {0}</source>
+        <target state="translated">PrintTicket 提供程序无法将 PrintTicket 转换为 DEVMODE。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintConfig.Provider.PTStreamContentFail">
+        <source>{0} stream content reading failed.</source>
+        <target state="translated">{0} 流内容读取失败。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.CommitPrintSystemAttributesException">
+        <source>An exception occurred while committing the properties.</source>
+        <target state="translated">提交属性时发生异常。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.Generic">
+        <source>Print System exception.</source>
+        <target state="translated">Print System 异常。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintJob.PopulateJobProperties">
+        <source>An exception occurred while populating the object. Win32 error: {0}</source>
+        <target state="translated">填充对象时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.AddPrinter">
+        <source>An exception occurred while installing a print queue. Win32 error: {0}</source>
+        <target state="translated">安装打印队列时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Commit">
+        <source>An exception occurred while committing the properties for the PrintQueue object. Win32 error: {0}</source>
+        <target state="translated">提交 PrintQueue 对象的属性时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Generic">
+        <source>An exception occurred while creating the PrintQueue object. Win32 error: {0}</source>
+        <target state="translated">创建 PrintQueue 对象时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.GetUninitializedProperty">
+        <source>An exception occurred while initializing an attribute of the PrintQueue object. Win32 error: {0}</source>
+        <target state="translated">初始化 PrintQueue 对象的特性时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Pause">
+        <source>An exception occurred while the queue was paused. Win32 error: {0}</source>
+        <target state="translated">队列暂停时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Populate">
+        <source>An exception occurred while populating the properties for the PrintQueue object. Win32 error: {0}</source>
+        <target state="translated">填充 PrintQueue 对象的属性时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Purge">
+        <source>An exception occurred while the queue was purged. Win32 error: {0}</source>
+        <target state="translated">清除队列时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Refresh">
+        <source>An exception occurred while refreshing the properties for the PrintQueue object. Win32 error: {0}</source>
+        <target state="translated">刷新 PrintQueue 对象的属性时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Resume">
+        <source>An exception occurred while the queue was resumed. Win32 error: {0}</source>
+        <target state="translated">恢复队列时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.XpsDeviceQuery">
+        <source>An exception occurred while querying the identity of the device.</source>
+        <target state="translated">查询设备的标识时发生异常。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueueStream.Flush">
+        <source>An exception occurred while trying to flush the print queue stream. Win32 error: {0}</source>
+        <target state="translated">尝试刷新打印队列流时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueueStream.Write">
+        <source>An exception occurred while trying to write to the print queue stream. Win32 error: {0}</source>
+        <target state="translated">尝试写入打印队列流时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueues.Enumerate">
+        <source>An exception occurred while enumerating PrintQueue objects. Win32 error: {0}</source>
+        <target state="translated">枚举 PrintQueue 对象时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.AddConnection">
+        <source>An exception occurred while creating the printer connection. Win32 error: {0}</source>
+        <target state="translated">创建打印机连接时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.AddPrinter">
+        <source>An exception occurred while installing the print queue. Win32 error: {0}</source>
+        <target state="translated">安装打印队列时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.Commit">
+        <source>An exception occurred while committing the properties for the PrintServer object. Win32 error: {0}</source>
+        <target state="translated">提交 PrintServer 对象的属性时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.DeletePrintQueue">
+        <source>An exception occurred while deleting a print queue. Win32 error: {0}</source>
+        <target state="translated">删除打印队列时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.Generic">
+        <source>An exception occurred while creating the PrintServer object. Win32 error: {0}</source>
+        <target state="translated">创建 PrintServer 对象时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.GetDefaultPrinter">
+        <source>An exception occurred while getting the default printer. Win32 error: {0}</source>
+        <target state="translated">获取默认打印机时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.GetUninitializedProperty">
+        <source>An exception occurred while initializing an attribute of the PrintQueue object. Win32 error: {0}</source>
+        <target state="translated">初始化 PrintQueue 对象的特性时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.InstallPrintQueue">
+        <source>An exception occurred while installing a print queue. Win32 error: {0}</source>
+        <target state="translated">安装打印队列时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.MajorVersionCannotChange">
+        <source>The major version of a PrintServer object cannot be changed. </source>
+        <target state="translated">无法更改 PrintServer 对象的主要版本。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.MinorVersionCannotChange">
+        <source>The minor version of a PrintServer object cannot be changed.</source>
+        <target state="translated">无法更改 PrintServer 对象的次要版本。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.NameCannotChange">
+        <source>The name of a PrintServer object cannot be changed. </source>
+        <target state="translated">无法更改 PrintServer 对象的名称。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.Refresh">
+        <source>An exception occurred while refreshing the properties for the PrintServer object. Win32 error: {0}</source>
+        <target state="translated">刷新 PrintServer 对象的属性时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.SetDefaultPrinter">
+        <source>An exception occurred while setting the default printer. Win32 error: {0}</source>
+        <target state="translated">设置默认打印机时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.SubSystemVersionCannotChange">
+        <source>The OS version of a PrintServer object cannot be changed.</source>
+        <target state="translated">无法更改 PrintServer 对象的 OS 版本。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemAttributeValueDictionary.IsReadOnly">
+        <source>The collection is read-only.</source>
+        <target state="translated">该集合为只读。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemJobInfo.AddJob">
+        <source>An exception occurred while adding a job. Win32 error: {0}</source>
+        <target state="translated">添加作业时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemJobInfo.Create">
+        <source>An exception occurred while creating print job information. Check inner exception for details.</source>
+        <target state="translated">创建打印作业信息时发生异常。有关详细信息，请查看内部异常。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemJobInfo.Deleted">
+        <source>The print job was deleted.</source>
+        <target state="translated">打印作业已删除。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemJobInfo.Generic">
+        <source>An exception occurred while setting the print job. Win32 error: {0}</source>
+        <target state="translated">设置打印作业时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemJobInfo.Refresh">
+        <source>An exception occurred while refreshing print job information. Win32 error: {0}</source>
+        <target state="translated">刷新打印作业信息时发生异常。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemJobInfo.XpsDocumentEvent">
+        <source>An exception occurred while calling XpsDocumentEvent.</source>
+        <target state="translated">调用 XpsDocumentEvent 时发生异常。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintingCancelled.Generic">
+        <source>Printing was canceled. Win32 error: {0}</source>
+        <target state="translated">打印已取消。Win32 错误: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PropertyIsReadOnly">
+        <source>Property is read-only.</source>
+        <target state="translated">属性为只读状态。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.UnknownWin32Error">
+        <source>Unknown Win32 error</source>
+        <target state="translated">未知的 Win32 错误</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemJobInfo_disableXPSOMPrinting_RegValue">
+        <source>DisableXPSOMPrinting</source>
+        <target state="translated">DisableXPSOMPrinting</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemSecurity.AccessLevel">
+        <source>SecurityElement does not have a valid "AccessLevel" attribute.</source>
+        <target state="translated">SecurityElement 没有有效的“AccessLevel”特性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemSecurity.Class">
+        <source>SecurityElement does not have a valid "class" attribute.</source>
+        <target state="translated">SecurityElement 没有有效的“class”特性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemSecurity.State">
+        <source>PermissionState value is not valid.</source>
+        <target state="translated">PermissionState 值无效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemSecurity.Type">
+        <source>IPermission type is not valid.</source>
+        <target state="translated">IPermission 类型无效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemUNCPathResolver.Attribute">
+        <source>Attribute type is not valid.</source>
+        <target state="translated">特性类型无效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemUNCPathResolver.Entries">
+        <source>IDictionaryEnumerator does not have valid entries.</source>
+        <target state="translated">IDictionaryEnumerator 没有有效的条目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemUNCPathResolver.Printer">
+        <source>UNC printer name is not valid.</source>
+        <target state="translated">UNC 打印机名称无效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemUNCPathResolver.Server">
+        <source>UNC server name is not valid.</source>
+        <target state="translated">UNC 服务器名称无效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemUNCPathResolver.UNC">
+        <source>UNC name is not valid.</source>
+        <target state="translated">UNC 名称无效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RegKeyBasePath">
+        <source>HKEY_CURRENT_USER\Software\Microsoft\.NETFramework\Windows Presentation Foundation\Printing</source>
+        <target state="translated">HKEY_CURRENT_USER\Software\Microsoft\.NETFramework\Windows Presentation Foundation\Printing</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.BatchAsync">
+        <source>Batch Writer is using asynchronous writes and cannot process synchronous writes.</source>
+        <target state="translated">批处理编写器正在使用异步写入，无法处理同步写入。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.BatchDoneWriting">
+        <source>Batch Writer is done writing and cannot process any more batch write requests.</source>
+        <target state="translated">批处理编写器已完成写入，因此无法处理更多批处理写入请求。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.BatchMode">
+        <source>Document Writer is in batch mode and cannot process non-batch write requests.</source>
+        <target state="translated">文档编写器处于批处理模式，因此无法处理非批处理写入请求。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.BatchSync">
+        <source>Batch Writer is using synchronous writes and cannot process asynchronous writes.</source>
+        <target state="translated">批处理编写器正在使用同步写入，无法处理异步写入。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.Cancelled">
+        <source>Write has already been canceled.</source>
+        <target state="translated">已取消写入操作。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.DoneWriting">
+        <source>Document Writer is done writing and cannot process any more write requests.</source>
+        <target state="translated">文档编写器已完成写入，因此无法处理更多写入请求。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.InvalidState">
+        <source>Writer state not valid.</source>
+        <target state="translated">编写器状态无效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.WriteNotCalled">
+        <source>Must call Write before calling cancel.</source>
+        <target state="translated">在调用取消前，必须调用 Write。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsPrintJobStream.CommitTimeout_RegValue">
+        <source>CommitXpsPrintJobStreamTimeout</source>
+        <target state="translated">CommitXpsPrintJobStreamTimeout</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsWriter.InvalidXps">
+        <source>The XpsDocument has no FixedDocumentSequence.</source>
+        <target state="translated">XpsDocument 没有 FixedDocumentSequence。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsWriter.WriteNotCalledEndBatchWrite">
+        <source>Must call Write before calling EndBatchWrite.</source>
+        <target state="translated">在调用 EndBatchWrite 前，必须调用 Write。</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

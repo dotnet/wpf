@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{B73BB4AB-68DE-4B91-BBB0-AB4F2D504AC3}</ProjectGuid>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+    <!-- We ignore this warning because we want to pack powershell scripts that won't be executed as part of installing this package. -->
+    <NoWarn>$(NoWarn);NU5111</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- 
+      PlatformIndependentPackage = true means that this package does
+      not require the automatic generation of a runtime.json file using
+      the Bait & Switch technique to reference RID specific packages
+    -->
+    <PlatformIndependentPackage>true</PlatformIndependentPackage>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <PackageName>$(MSBuildProjectName.Replace('.ArchNeutral',''))$(TransportPackageNameSuffix)</PackageName>
+    <AssemblyName>$(PackageName)</AssemblyName>
+    <PackageDescription>WPF Build props/targets transport package shared between dotnet/wpf and dotnet-wpf-int</PackageDescription>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\Sdk\*" SubFolder="root\Sdk" />
+    <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\tools\*" SubFolder="root\tools" />
+    <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\tools\CodeGen\*" SubFolder="root\tools\CodeGen" />
+    <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\tools\CodeGen\AvTrace\*" SubFolder="root\tools\CodeGen\AvTrace" />
+    <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\tools\WppConfig\*" SubFolder="root\tools\WppConfig" />
+    <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\tools\WppConfig\rev1\*" SubFolder="root\tools\WppConfig\rev1" />
+    <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\tools\CodeAnalysis\*" SubFolder="root\tools\CodeAnalysis" />
+  </ItemGroup>
+
+  <!-- 
+    Pack $(WpfSharedDir) and $(WpfCommonDir) sources for use by dotnet-wpf-int
+  -->
+  <ItemGroup>
+    <PackagingContent Include="$(WpfSharedDir)**\*" SubFolder="root\Src\Shared\%(RecursiveDir)" />
+    <PackagingContent Include="$(WpfCommonDir)**\*" SubFolder="root\Src\Common\%(RecursiveDir)" />
+    
+    <PackagingContent Include="$(WpfGraphicsDir)core\**\*.h*" SubFolder="root\Src\WpfGfx\core\%(RecursiveDir)" />
+    <PackagingContent Include="$(WpfGraphicsDir)core\**\*.inl" SubFolder="root\Src\WpfGfx\core\%(RecursiveDir)" />
+    <PackagingContent Include="$(WpfGraphicsDir)common\**\*.h*" SubFolder="root\Src\WpfGfx\common\%(RecursiveDir)" />
+    <PackagingContent Include="$(WpfGraphicsDir)common\**\*.in*" SubFolder="root\Src\WpfGfx\common\%(RecursiveDir)" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,352 @@
+﻿    <!-- [[Generic]] -->
+
+    <!-- RibbonCheckBox -->
+    <SolidColorBrush x:Key="RibbonCheckBoxBorderBrushKey" Color="#FFB5BEDE" />
+    <LinearGradientBrush x:Key="RibbonCheckBoxBackgroundBrushKey" StartPoint="0,0" EndPoint="1,1" >
+        <GradientStop Offset="0" Color="#FFE7E7F7" />
+        <GradientStop Offset="1" Color="White" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="RibbonCheckBoxInnerBorderBrushKey" StartPoint="0,0" EndPoint="1,1" >
+        <GradientStop Offset="0" Color="#80F7F7FF" />
+        <GradientStop Offset="1" Color="#F0F7F7FF" />
+    </LinearGradientBrush>
+
+    <!-- HighContrast -->
+    <LinearGradientBrush x:Key="RibbonCheckBoxHighContrastOuterBorderBrushKey" StartPoint="0,0" EndPoint="1,1" x:Shared="False" >
+        <GradientStop Offset="0" Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}" />
+        <GradientStop Offset="0.5" Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}" />
+        <GradientStop Offset="0.5" Color="{DynamicResource {x:Static SystemColors.ControlLightLightColorKey}}" />
+        <GradientStop Offset="1" Color="{DynamicResource {x:Static SystemColors.ControlLightLightColorKey}}" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="RibbonCheckBoxHighContrastOuterBackgroundBrushKey" StartPoint="0,0" EndPoint="1,1" x:Shared="False" >
+        <GradientStop Offset="0" Color="{DynamicResource {x:Static SystemColors.ControlDarkDarkColorKey}}" />
+        <GradientStop Offset="0.5" Color="{DynamicResource {x:Static SystemColors.ControlDarkDarkColorKey}}" />
+        <GradientStop Offset="0.5" Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" />
+        <GradientStop Offset="1" Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" />
+    </LinearGradientBrush>
+
+    <!--=================================================================
+        RibbonCheckBox
+        ==================================================================-->
+
+    <Style x:Key="{x:Type ribbon:RibbonCheckBox}" TargetType="{x:Type ribbon:RibbonCheckBox}">
+        <Setter Property="Background" Value="{StaticResource RibbonCheckBoxBackgroundBrushKey}" />
+        <Setter Property="BorderBrush" Value="{StaticResource RibbonCheckBoxBorderBrushKey}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="MouseOverBorderBrush" Value="{Binding RelativeSource={RelativeSource Self},Path=Ribbon.MouseOverBorderBrush}" />
+        <Setter Property="MouseOverBackground" Value="{Binding RelativeSource={RelativeSource Self},Path=Ribbon.MouseOverBackground}" />
+        <Setter Property="PressedBorderBrush" Value="{Binding RelativeSource={RelativeSource Self},Path=Ribbon.PressedBorderBrush}" />
+        <Setter Property="PressedBackground" Value="{Binding RelativeSource={RelativeSource Self},Path=Ribbon.PressedBackground}" />
+        <Setter Property="CheckedBorderBrush" Value="{Binding RelativeSource={RelativeSource Self},Path=Ribbon.CheckedBorderBrush}" />
+        <Setter Property="CheckedBackground" Value="{Binding RelativeSource={RelativeSource Self},Path=Ribbon.CheckedBackground}" />
+        <Setter Property="FocusedBorderBrush" Value="{Binding RelativeSource={RelativeSource Self},Path=Ribbon.FocusedBorderBrush}" />
+        <Setter Property="FocusedBackground" Value="{Binding RelativeSource={RelativeSource Self},Path=Ribbon.FocusedBackground}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="ToolTipService.InitialShowDelay" Value="{StaticResource RibbonToolTipInitialShowDelayKey}" />
+        <Setter Property="ToolTipService.ShowDuration" Value="{StaticResource RibbonToolTipShowDurationKey}" />
+        <Setter Property="ToolTipService.BetweenShowDelay" Value="{StaticResource RibbonToolTipBetweenShowDelayKey}" />
+        <Setter Property="QuickAccessToolBarControlSizeDefinition">
+            <Setter.Value>
+                <ribbon:RibbonControlSizeDefinition ImageSize="Collapsed" IsLabelVisible="True" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ribbon:RibbonCheckBox}">
+                    <Border x:Name="MainBorder" Margin="1">
+                        <StackPanel x:Name="StackPanel"
+                                    Background="Transparent"
+                                    Orientation="Vertical"
+                                    Margin="1"
+                                    SnapsToDevicePixels="True">
+                            <Image x:Name="Image"
+                                   Source="{TemplateBinding LargeImageSource}"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   Height="32"
+                                   Width="32"
+                                   Margin="1"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                            <Grid x:Name="Grid"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="Center">
+                                  <Grid VerticalAlignment="Top"
+                                        HorizontalAlignment="Center"
+                                        Margin="1">
+                                    <Grid.ColumnDefinitions>
+                                      <ColumnDefinition Width="Auto" />
+                                      <ColumnDefinition Width="Auto" />
+                                      <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center">
+                                        <Border x:Name="PART_CheckBorder"
+                                                Background="White"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                Height="13"
+                                                Width="13">
+                                            <Grid>
+                                                <Border x:Name="MiddleBorder"
+                                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                                        Background="{TemplateBinding Background}"
+                                                        BorderThickness="1"
+                                                        Margin="1" />
+                                                <Border x:Name="InnerBorder"
+                                                        Background="Transparent"
+                                                        BorderBrush="{StaticResource RibbonCheckBoxInnerBorderBrushKey}"
+                                                        BorderThickness="1"
+                                                        Margin="1" />
+                                                <Path x:Name="CheckMark"
+                                                      Stroke="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
+                                                      Fill="{TemplateBinding Foreground}"
+                                                      StrokeThickness="0.4"
+                                                      Data="{StaticResource CheckMarkGeometryKey}"
+                                                      FlowDirection="LeftToRight"
+                                                      Opacity="0" />
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                    <Image x:Name="SmallImage"
+                                           Grid.Column="1"
+                                           Source="{TemplateBinding SmallImageSource}"
+                                           RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                           Height="16"
+                                           Width="16"
+                                           Margin="2,0,1,0"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                           Visibility="Collapsed" />
+                                    <Grid x:Name="TwoLineTextPanel"
+                                          Grid.Column="2"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center">
+                                        <ribbon:RibbonTwoLineText x:Name="TwoLineText"
+                                                                  Text="{TemplateBinding Label}"
+                                                                  TextAlignment="Center"
+                                                                  LineHeight="13px"
+                                                                  LineStackingStrategy="BlockLineHeight"
+                                                                  Margin="5,0,5,0" />
+                                        <Rectangle x:Name="FocusVisual"
+                                                   Margin="1"
+                                                   StrokeThickness="1"
+                                                   Stroke="Black"
+                                                   StrokeDashArray="1 2"
+                                                   Visibility="Collapsed"/>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+
+                        <!-- Large Variant -->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ControlSizeDefinition.ImageSize}" Value="Large">
+                            <Setter Property="MinWidth" Value="44" />
+                            <Setter Property="Height" Value="66"/>
+                            <Setter TargetName="Grid" Property="MinHeight" Value="26" />
+                            <Setter TargetName="TwoLineText" Property="HasTwoLines" Value="True" />
+                        </DataTrigger>
+
+                        <!-- Medium or Small Variant -->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ControlSizeDefinition.ImageSize}" Value="Small">
+                            <Setter Property="MinWidth" Value="22"/>
+                            <Setter Property="Height" Value="{StaticResource RibbonSmallControlHeight}"/>
+                            <Setter TargetName="Image" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="SmallImage" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="TwoLineText" Property="Margin" Value="2,0,2,0" />
+                            <Setter TargetName="StackPanel" Property="Orientation" Value="Horizontal" />
+                            <Setter TargetName="TwoLineText" Property="HasTwoLines" Value="False" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=ControlSizeDefinition.ImageSize}" Value="Small"/>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsInQuickAccessToolBar}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Height" Value="Auto"/>
+                        </MultiDataTrigger>
+
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ControlSizeDefinition.IsLabelVisible}" Value="False" >
+                            <Setter TargetName="TwoLineTextPanel" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ControlSizeDefinition.ImageSize}" Value="Collapsed" >
+                            <Setter TargetName="Image" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="SmallImage" Property="Visibility" Value="Collapsed" />
+                            <Setter Property="Height" Value="{StaticResource RibbonSmallControlHeight}"/>
+                        </DataTrigger>
+
+                        <!-- IsEnabled -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Image" Property="Opacity" Value="0.5" />
+                            <Setter TargetName="SmallImage" Property="Opacity" Value="0.5" />
+                            <Setter TargetName="PART_CheckBorder" Property="Opacity" Value="0.5" />
+                            <Setter TargetName="MainBorder" Property="TextElement.Foreground" Value="{StaticResource RibbonDisabledForegroundBrushKey}"/>
+                        </Trigger>
+
+
+#ifdef Net45
+                        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                        <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                            <Setter TargetName="PART_CheckBorder" Property="BorderBrush" Value="{StaticResource RibbonCheckBoxHighContrastOuterBorderBrushKey}" />
+                            <Setter TargetName="PART_CheckBorder" Property="Background" Value="{StaticResource RibbonCheckBoxHighContrastOuterBackgroundBrushKey}" />
+                            <Setter TargetName="MiddleBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                            <Setter TargetName="MiddleBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                            <Setter TargetName="CheckMark" Property="Fill" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" />
+                            <Setter TargetName="CheckMark" Property="Data" Value="{StaticResource CheckMarkHighContrastGeometryKey}" />
+                            <Setter TargetName="InnerBorder" Property="BorderBrush" Value="Transparent" />
+                            <Setter TargetName="FocusVisual" Property="Stroke" Value="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" />
+                            <Setter TargetName="MainBorder" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
+                        </DataTrigger>
+
+                        <!-- IsMouseOver -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+#ifdef Net45
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False"/>
+#else
+                                <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="False"/>
+#endif
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="PART_CheckBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MouseOverBorderBrush}" />
+                            <Setter TargetName="MiddleBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MouseOverBorderBrush}" />
+                            <Setter TargetName="MiddleBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MouseOverBackground}" />
+                        </MultiDataTrigger>
+
+                        <!-- IsChecked -->
+                        <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False"/>
+#else
+                                <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="False"/>
+#endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="CheckMark" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiDataTrigger.EnterActions>
+                            <MultiDataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="CheckMark" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.4" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiDataTrigger.ExitActions>
+                            <Setter TargetName="PART_CheckBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CheckedBorderBrush}" />
+                            <Setter TargetName="MiddleBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CheckedBorderBrush}" />
+                            <Setter TargetName="MiddleBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CheckedBackground}" />
+                        </MultiDataTrigger>
+
+                        <!-- IsFocused -->
+                        <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False"/>
+#else
+                            <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="False"/>
+#endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsKeyboardFocused}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                            <Setter TargetName="PART_CheckBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FocusedBorderBrush}" />
+                            <Setter TargetName="MiddleBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FocusedBorderBrush}" />
+                            <Setter TargetName="MiddleBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FocusedBackground}" />
+                        </MultiDataTrigger>
+
+                        <Trigger Property="ShowKeyboardCues" Value="True">
+                            <Setter TargetName="FocusVisual" Property="Visibility" Value="Visible" />
+                        </Trigger>
+
+                        <!-- IsPressed -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+#ifdef Net45
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False"/>
+#else
+                                <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="False"/>
+#endif
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="PART_CheckBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PressedBorderBrush}" />
+                            <Setter TargetName="MiddleBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PressedBorderBrush}" />
+                            <Setter TargetName="MiddleBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PressedBackground}" />
+                        </MultiDataTrigger>
+
+                        <!-- (IsMouseOver || IsKeyboardFocused) && (IsChecked || IsPressed) -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="InnerBorder" Property="Background" Value="{StaticResource RibbonHighlightedSelectedBackgroundBrushKey}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="IsKeyboardFocused" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="InnerBorder" Property="Background" Value="{StaticResource RibbonHighlightedSelectedBackgroundBrushKey}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsPressed" Value="True" />
+                                <Condition Property="IsKeyboardFocused" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="InnerBorder" Property="Background" Value="{StaticResource RibbonHighlightedSelectedBackgroundBrushKey}" />
+                        </MultiTrigger>
+
+                        <!-- IsInControlGroup -->
+                        <Trigger Property="IsInControlGroup" Value="True">
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Ribbon.BorderBrush}" />
+                            <Setter TargetName="MainBorder" Property="BorderThickness" Value="0,0,1,0" />
+                        </Trigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+#ifdef Net45
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                                <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="CheckMark" Property="Opacity" Value="1" />
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsInControlGroup}" Value="True" />
+#ifdef Net45
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                                <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" />
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEnabled}" Value="False" />
+#ifdef Net45
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                                <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="MainBorder" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>

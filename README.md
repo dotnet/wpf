@@ -7,36 +7,28 @@ Windows Presentation Foundation (WPF) is a UI framework for building Windows des
 
 WPF applications are based on a vector graphics architecture. This enables applications to look great on high DPI monitors, as they can be infinitely scaled. WPF also includes a flexible hosting model, which makes it straightforward to host a video in a button, for example. The visual designer provided in Visual Studio makes it easy to build WPF application, with drag-in-drop and/or direct editing of XAML markup.
 
-> Note: The WPF visual designer is not yet available and will be part of a Visual Studio 2019 update.
-
 See the [WPF Roadmap](roadmap.md) to learn about project priorities, status and ship dates.
 
-[WinForms](https://github.com/dotnet/winforms) is another UI framework for building Windows desktop applications that is supported on .NET Core. WPF and WinForms applications only run on Windows. They are part of the `Microsoft.NET.Sdk.WindowsDesktop` SDK. You are recommended to use Visual Studio 2019 Preview 2 to use WPF and WinForms with .NET Core.
+[WinForms](https://github.com/dotnet/winforms) is another UI framework for building Windows desktop applications that is supported on .NET Core. WPF and WinForms applications only run on Windows. They are part of the `Microsoft.NET.Sdk.WindowsDesktop` SDK. You are recommended to use [Visual Studio 2019](https://visualstudio.microsoft.com/vs/) to use WPF and WinForms with .NET Core.
 
 ## Getting started
 
-* [.NET Core 3.0 SDK Preview 2](https://www.microsoft.com/net/download)
+* [.NET Core 3.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.0)
 * [Getting started instructions](Documentation/getting-started.md)
 * [Contributing guide](Documentation/contributing.md)
+* [Migrating .NET Framework WPF Apps to .NET Core](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework)
 
 ## Status
 
-We are in the process of doing four projects with WPF:
-
-* Port WPF to .NET Core.
-* Publish source to GitHub.
-* Publish (and in some cases write) tests to GitHub and enable automated testing infrastructure.
-* Enable the Visual Studio WPF designer to work with WPF running on .NET Core.
-
-We are part-away through porting WPF to .NET Core, and will complete that for .NET Core 3.0. We intend to bring the codebase up to functionality and performance parity with .NET Framework.
-
-We have published only a small part of the WPF source. We will continue to publish WPF components as part of the .NET Core 3 project. We will publish source and tests at the same time for each component.
+- We are currently in planning for .NET 5. 
+- We have completed publishing WPF sources. You can learn more about this at https://github.com/dotnet/wpf/issues/2554. 
+- We have completed porting WPF to .NET Core as part of .NET Core 3.0, you can learn more about what was done [here](https://github.com/dotnet/wpf/issues/1936).
 
 See the [WPF roadmap](roadmap.md) to learn about the schedule for specific WPF components.
 
-We have published very few tests and have very limited coverage for PRs at this time as a result. We will add more tests in 2019, however, it will be a progressive process. We welcome test contributions to increase coverage and help us validate PRs more easily.
+We have published few tests and have limited coverage for PRs at this time as a result. We will add more tests in 2019 and 2020, however, it will be a progressive process. 
 
-The Visual Studio WPF designer is not yet available. In short, we need to move to an out-of-proc model (relative to Visual Studio) with the designer. This work will be part of Visual Studio 2019.
+The Visual Studio WPF designer is now available as part of Visual Studio 2019. 
 
 ## How to Engage, Contribute and Provide Feedback
 
@@ -54,9 +46,12 @@ They should not be filed on this repo.
 
 ## Relationship to .NET Framework
 
-This code base is a fork of the WPF code in the .NET Framework. We intend to release .NET Core 3.0 with WPF having parity with the .NET Framework version. Over time, the two implementations may diverge.
+This code base is a fork of the WPF code in the .NET Framework. .NET Core 3.0 was released with a goal of WPF having parity with the .NET Framework version. Over time, the two implementations may diverge.
 
 The [Update on .NET Core 3.0 and .NET Framework 4.8](https://blogs.msdn.microsoft.com/dotnet/2018/10/04/update-on-net-core-3-0-and-net-framework-4-8/) provides a good description of the forward-looking differences between .NET Core and .NET Framework.
+
+This [update](https://devblogs.microsoft.com/dotnet/net-core-is-the-future-of-net/) states how going forward .NET Core is the future of .NET. and .NET Framework 4.8 will be the last major version of .NET Framework.
+
 
 ## Code of Conduct
 

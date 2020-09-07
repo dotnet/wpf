@@ -1,0 +1,85 @@
+<Project ToolsVersion="14.0" InitialTargets="GenerateModuleDefinitionFile;IncludeModuleDefinitionInputFileInCompilationListInVSBuild" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+
+  <PropertyGroup>
+    <!-- When building inside VS, we are having trouble running the CL task directly, so use a two-step process to generate the module definition -->
+    <UseTwoStepModuleDefinitionGenerator Condition="'$(BuildingInsideVisualStudio)'=='true'">true</UseTwoStepModuleDefinitionGenerator>
+    <UseTwoStepModuleDefinitionGenerator Condition="'$(BuildingInsideVisualStudio)'!='true'">false</UseTwoStepModuleDefinitionGenerator>
+
+    <!-- When building inside Arcade SDK, calling the CL task seems to always fail. Always use two-step module def generation for now -->
+    <UseTwoStepModuleDefinitionGenerator>true</UseTwoStepModuleDefinitionGenerator>
+  </PropertyGroup>
+  
+  <!--                                  Create the Module Definition File                           -->
+
+  <!-- Create the module definition file                                        -->
+  <!-- PresentationNative.def has C++ style single line comments                -->
+  <!-- We will use the C++ preprocessor to strip out the comments and produce   -->
+  <!---$(IntermediateOutputPath)PresentationNative.i sans any comments          -->
+  <Target 
+    Name="GenerateModuleDefinitionFile" 
+    Condition="'$(UseTwoStepModuleDefinitionGenerator)'=='false'"
+    BeforeTargets="Build" 
+    Inputs="$(ModuleDefinitionInputFile)" 
+    Outputs="$(IntermediateOutputPath)$(ModuleDefinitionOutputFile)">
+    <MakeDir Condition="!Exists('$(IntermediateOutputPath)')" Directories="$(IntermediateOutputPath)" />
+    <CL
+      Sources="$(ModuleDefinitionInputFile)"
+      PreprocessOutputPath="$(IntermediateOutputPath)$(ModuleDefinitionOutputFile)"
+      CompileAs="CompileAsCpp"
+      PreprocessToFile="true"
+      PreprocessSuppressLineNumbers="true"
+      WarningLevel="TurnOffAllWarnings"
+      AdditionalIncludeDirectories="$(AdditionalIncludeDirectories);$(WpfSharedDir)\inc"
+      AdditionalOptions="$(AdditionalOptions) /DDLL_NAME=$(TargetName)"/>
+  </Target>
+  
+  
+  <!-- Include the Module definition file to the ClCompile list, and mark it for preprocessing only -->
+  <!-- This should be done before Build. This step will generate a $(ModuleDefinitionOutputFile) in -->
+  <!-- the same directory as $(ModuleDefinitionInputFile). This file will have to be moved to       -->
+  <!-- $(IntermediateOutputPath) before it can be used                                              -->
+  <Target
+    Name="IncludeModuleDefinitionInputFileInCompilationListInVSBuild"
+    Condition="'$(UseTwoStepModuleDefinitionGenerator)'=='true'"
+    BeforeTargets="Build">
+    <ItemGroup>
+      <ClCompile Include="$(ModuleDefinitionInputFile)">
+        <PreCompiledHeader>NotUsing</PreCompiledHeader>
+        <CompileAs>CompileAsCpp</CompileAs>
+        <WarningLevel>TurnOffAllWarnings</WarningLevel>
+        <PreProcessToFile>true</PreProcessToFile>
+        <PreProcessSuppressLineNumbers>true</PreProcessSuppressLineNumbers>
+        <AdditionalOptions>$(AdditionalOptions) /DDLL_NAME=$(TargetName)</AdditionalOptions>
+
+        <ForcedIncludeFiles/>
+        <ObjectFileName/>
+        <LinkCompiled>false</LinkCompiled>
+        <LibCompiled>false</LibCompiled>
+      </ClCompile>
+    </ItemGroup>
+  </Target>
+
+  <!-- Move the Module definition file to $(IntermediateOutputPath)                                 -->
+  <Target 
+    Name="GenerateModuleDefinitionFileInVSBuild" 
+    Condition="'$(UseTwoStepModuleDefinitionGenerator)'=='true'"
+    BeforeTargets="Link" AfterTargets="Build" 
+    Inputs="$(ModuleDefinitionOutputFile)" Outputs="$(IntermediateOutputPath)$(ModuleDefinitionOutputFile)">
+    <MakeDir Condition="!Exists('$(IntermediateOutputPath)')" Directories="$(IntermediateOutputPath)" />
+    <Move
+        SourceFiles="$(ModuleDefinitionOutputFile)"
+        DestinationFolder="$(IntermediateOutputPath)"
+        OverwriteReadOnlyFiles="true" />
+  </Target>
+
+  <!-- Make sure that the temporary $(ModuleDefinitionOutputFile) is cleaned up when the 'Clean' target is run -->
+  <Target
+    Name="CleanTemporaryModuleFile"
+    Condition="'$(BuildingInsideVisualStudio)'=='true'"
+    BeforeTargets="Clean">
+    <Delete
+      Condition="Exists('$(ModuleDefinitionOutputFile)')"
+      Files="$(ModuleDefinitionOutputFile)"/>
+  </Target>
+</Project>

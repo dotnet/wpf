@@ -1,0 +1,46 @@
+<Project>
+  <PropertyGroup>
+    <LocalMicrosoftWinFXTargets>$(RepoRoot)src\Microsoft.DotNet.Wpf\src\PresentationBuildTasks\Microsoft.WinFX.targets</LocalMicrosoftWinFXTargets>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="Exists('$(LocalMicrosoftWinFXTargets)')">
+    <PbtTfm Condition="'$(MSBuildRuntimeType)'=='Core'">netcoreapp2.1</PbtTfm>
+    <PbtTfm Condition="'$(MSBuildRuntimeType)'!='Core'">net472</PbtTfm>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="Exists('$(LocalMicrosoftWinFXTargets)')">
+    <PbtDir>$(ArtifactsTmpDir)PresentationBuildTasks\$(PbtTfm)\</PbtDir>
+  </PropertyGroup>
+
+  <!--
+    Local markup compilation uses $(InternalMarkupCompilation) instead of $(UseWpf). Suppress the
+    corresponding SDK warning.
+  -->
+  <PropertyGroup>
+    <MSBuildWarningsAsMessages>$(MSBuildWarningsAsMessages);NETSDK1106</MSBuildWarningsAsMessages>
+  </PropertyGroup>
+
+  <!--
+    We will use Microsoft.NET.Sdk.WindowsDesktop targets directly when local PresentationBuildTasks is not available
+    We do not need to import Microsoft.NET.Sdk.WindowsDesktop.props from the Sdk - this only provides us with
+    WPF references and Page, ApplicationDefinition globbing functionality - neither of which is used by our projects.
+
+    If we had needed to use this props file, we'd have imported it like this:
+
+    <PropertyGroup Condition="!Exists('$(LocalMicrosoftWinFXTargets)') And '$(InternalMarkupCompilation)'=='true'">
+      <UseWpf>true</UseWpf>
+    </PropertyGroup>
+    <Import Sdk="Microsoft.NET.Sdk.WindowsDesktop"
+            Project="../targets/Microsoft.NET.Sdk.WindowsDesktop.props"
+            Condition="!Exists('$(LocalMicrosoftWinFXTargets)') And '$(InternalMarkupCompilation)'=='true'"/>
+
+    The use of Microsoft.NET.Sdk.WindowsDesktop doesn't break the source-build promise.
+      - Microsoft.NET.Sdk.WindowsDesktop is built from sources
+      - It is used for compilation of assemblies in dotnet-wpf-int (the internal WPF repo), and serves as a
+        'transport package' for PresentationBuildTasks.dll and related props+targets file.
+      - When the corresponding projects move from dotnet-wpf-int to dotnet/wpf in the future, their build will
+        fall back to use local PBT project outputs for their compilation (instead of using WindowsDesktop Sdk package
+        as a convenient 'transport package').
+  -->
+
+</Project>

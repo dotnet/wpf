@@ -1,0 +1,42 @@
+This folder contains all XPS related XML Schemas (XSDs).
+
+The MASTER schemas are located in schemas\Master.
+
+Schemas used for publication in the XPS specification are located in schemas\Publish. DO NOT EDIT MANUALLY.
+Schemas used for valiating loaders are located in schemas\Validation. DO NOT EDIT MANUALLY.
+
+
+Procedure for editing Schemas:
+==============================
+
+1. Go to schemas\Master
+2. Check out the schema you want to edit
+3. Perform edits
+4. Go to generator, run generate
+5. Optional: If your schema change is relevant for the XPS documentation, please notify jessmc or oliverfo
+
+
+
+Procudure for including Schemas in your code:
+=============================================
+
+1. In the assembly where you want to use the schema, add the respective .resources file from the generated folder.
+
+2. Use the following snippet in your code to create a validating XML reader:
+
+        private XmlSchemaSet GetXmlSchemaSet()
+        {
+            ResourceManager resourceManager = new ResourceManager( "Schemas_S0", Assembly.GetExecutingAssembly());
+            byte [] rdkey = (byte[])resourceManager.GetObject("rdkey.xsd");
+            byte [] s0 = (byte[])resourceManager.GetObject("s0schema.xsd");
+
+			XmlSchemaSet xss = new XmlSchemaSet();
+
+			xss.Add(null, new XmlTextReader(new MemoryStream(rdkey)));
+			xss.Add(null, new XmlTextReader(new MemoryStream(s0)));
+			xss.Compile();
+
+			resourceManager.ReleaseAllResources();
+			
+			return xss;
+        }        

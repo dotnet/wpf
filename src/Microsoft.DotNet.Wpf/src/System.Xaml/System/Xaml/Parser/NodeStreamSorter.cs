@@ -84,7 +84,7 @@ namespace MS.Internal.Xaml
 #if DEBUG
             public override string ToString()
             {
-                return String.Format(TypeConverterHelper.InvariantEnglishUS, "Depth[{0}] {1}", this.Depth, this.XamlNodeType);
+                return String.Format(TypeConverterHelper.InvariantEnglishUS, "Depth[{0}] {1}", Depth, XamlNodeType);
             }
 #endif
         }

@@ -1,0 +1,93 @@
+<Project>
+  <!-- Importing Arcade's Sdk.props should always be the first thing we do. However this is not a hard rule, 
+       it's just a convention for ensuring correctness and consistency in our build environment. If anything 
+       does need to be imported before, it should be documented why it is needed. -->
+  <Import Project="Sdk.props" Sdk="Microsoft.DotNet.Arcade.Sdk" />
+
+  <PropertyGroup>
+    <WpfArcadeSdkRoot>$([System.IO.Directory]::GetParent("$(MSBuildThisFileDirectory.TrimEnd('\'))"))\</WpfArcadeSdkRoot>
+    <WpfArcadeSdkToolsDir>$(WpfArcadeSdkRoot)tools\</WpfArcadeSdkToolsDir>
+  </PropertyGroup>
+  
+  <Import Project="$(WpfArcadeSdkToolsDir)FolderPaths.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)ShippingProjects.props" />
+
+  <PropertyGroup>
+    <GenXmlStringTable>$(WpfArcadeSdkToolsDir)GenXmlStringTable.pl</GenXmlStringTable>
+    <LangVersion Condition="'$(LangVersion)'==''">8.0</LangVersion>
+    <CLSCompliant Condition="'$(CLSCompliant)'==''">true</CLSCompliant>
+    <IncludeDllSafeSearchPathAttribute Condition="'$(IncludeDllSafeSearchPathAttribute )'==''">true</IncludeDllSafeSearchPathAttribute>
+
+    <!--
+    Properly calculates the RuntimeIdentifier based on the Platform type. We don't want to affect the build by actually setting RuntimeIdentifier.
+    Those that are interested in setting the RuntimeIdentifier or having a property that mirrors it can use this one here.
+    -->
+    <WpfRuntimeIdentifier Condition="('$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32') Or $(Platform.EndsWith('64'))">win-$(Platform)</WpfRuntimeIdentifier>
+    <WpfRuntimeIdentifier Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32' or '$(Platform)'=='x86'">win-x86</WpfRuntimeIdentifier>
+  </PropertyGroup>
+
+  <Import Project="$(WpfArcadeSdkToolsDir)RuntimeFrameworkReference.props"/>
+  <Import Project="$(WpfArcadeSdkToolsDir)SystemResources.props"/>
+  <Import Project="$(WpfArcadeSdkToolsDir)TargetFrameworks.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)VersionSuffix.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)GenerateProgramFileForTests.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)ReferenceAssembly.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)ExtendedAssemblyInfo.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)Packaging.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)ProjectReferences.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)Redist.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)Pbt.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)Signing.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)CodeGen.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)ApiCompat.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)GenApi.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)Publishing.props" />
+  
+  <PropertyGroup>
+    <DebugType>full</DebugType>
+    <DebugType Condition="'$(Configuration)'=='Release'">pdbonly</DebugType>
+    
+    <PerlCommand>"$(RepoRoot).tools\native\bin\strawberry-perl\$(StrawberryPerlVersion)\portableshell.bat"</PerlCommand>
+    
+    <WpfCppProps>$(WpfArcadeSdkToolsDir)Wpf.Cpp.props</WpfCppProps>
+    <GenerateModuleDefinitionFileTargets>$(WpfArcadeSdkToolsDir)GenerateModuleDefinitionFile.targets</GenerateModuleDefinitionFileTargets>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <NoTargetsProps>$(WpfArcadeSdkToolsDir)NoTargets.props</NoTargetsProps>
+    <NoTargetsTargets>$(WpfArcadeSdkToolsDir)NoTargets.targets</NoTargetsTargets>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!--
+      Temporarily suppress NU3027
+      https://github.com/dotnet/arcade/issues/2304
+      
+      NU5131, NU5128 - Our transport packages do not conform to the layout NuGet wants.
+    -->
+    <NoWarn>$(NoWarn);NU3027;NU5131;NU5128</NoWarn>
+    
+    <!-- 
+        Suppress NU1605 (Package downgrade warnings) when building inside Visual Studio
+    -->
+    <NoWarn Condition="'$(BuildingInsideVisualStudio)'=='true'">$(NoWarn);NU1605</NoWarn>
+
+    <!-- 
+
+      Support for suppressing warnings by supplying /p:AdditionalNoWarn=0123;4567 from 
+      dotnet.exe/msbuild commandline.
+      
+      Helpful for debugging, and/or working through transient build problems, compiler issues etc. 
+      
+      Note that it is not possible to supply /p:NoWarn=0123;4567 successfully - this will cause the 
+      <NoWarn>$(NoWarn);....</NoWarn> property specifications in projects/props/targets to be overridden
+      and ignored, in turn resulting in additional build-failures. 
+      
+      ** Note**: AdditionalNoWarn should not be used in projects/props/targets.
+    -->
+    <NoWarn Condition="'$(AdditionalNoWarn)' != '' And '$(NoWarn)' != ''">$(AdditionalNoWarn);$(NoWarn)</NoWarn>
+  </PropertyGroup>
+
+  <!-- When an Sdk-style project sets NoTargets=true, it will produce no assemblies -->
+  <Import Project="$(NoTargetsProps)" Condition="'$(NoTargets)'=='true'"/>
+</Project>

@@ -1,0 +1,102 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{152C4B33-3B53-4180-B8BC-7BB0BC91A2ED}</ProjectGuid>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>$(DefineConstants);UIAUTOMATIONTYPES</DefineConstants>
+    <NoWarn>$(NoWarn);0618</NoWarn>
+    <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp5.0</TargetFramework>  
+    <EnableDefaultItems>false</EnableDefaultItems>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Strings.resx" />
+    <Compile Include="$(WpfSharedDir)\RefAssemblyAttrs.cs" />
+    <Compile Include="$(WpfSharedDir)\System\Windows\Interop\OperatingSystemVersion.cs" />
+    <Compile Include="$(WpfSharedDir)\System\Windows\Interop\OSVersionHelper.cs" />
+    <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityCriticalDataForSet.cs" />
+    <Compile Include="$(WpfSharedDir)\MS\Internal\FriendAccessAllowedAttribute.cs" />
+    <Compile Include="$(WpfSharedDir)\MS\Win32\ExternDll.cs" />
+    <Compile Include="$(WpfSharedDir)\MS\Win32\HandleCollector.cs" />
+    <Compile Include="$(WpfSharedDir)\MS\Win32\LoadLibraryHelper.cs" />
+    <Compile Include="$(WpfSharedDir)\MS\Win32\NativeMethodsCLR.cs" />
+    <Compile Include="$(WpfSharedDir)\MS\Win32\NativeMethodsOther.cs" />
+    <Compile Include="$(WpfSharedDir)\MS\Win32\NativeMethodsSetLastError.cs" />
+    <Compile Include="$(WpfSharedDir)\MS\Win32\UnsafeNativeMethodsCLR.cs" />
+    <Compile Include="MS\Internal\Automation\AutomationIdentifierConstants.cs" />
+    <Compile Include="MS\Internal\Automation\CodeQuality_Approved.cs" />
+    <Compile Include="MS\Internal\Automation\UiaCoreTypesApi.cs" />
+    <Compile Include="System\Windows\Automation\AsyncContentLoadedEventArgs.cs" />
+    <Compile Include="System\Windows\Automation\AsyncContentLoadedState.cs" />
+    <Compile Include="System\Windows\Automation\AutomationElementIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\AutomationEvent.cs" />
+    <Compile Include="System\Windows\Automation\AutomationEventArgs.cs" />
+    <Compile Include="System\Windows\Automation\AutomationIdentifier.cs" />
+    <Compile Include="System\Windows\Automation\AutomationPattern.cs" />
+    <Compile Include="System\Windows\Automation\AutomationProperty.cs" />
+    <Compile Include="System\Windows\Automation\AutomationPropertyChangedEventArgs.cs" />
+    <Compile Include="System\Windows\Automation\AutomationTextAttribute.cs" />
+    <Compile Include="System\Windows\Automation\ControlType.cs" />
+    <Compile Include="System\Windows\Automation\DockPatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\ElementNotAvailableException.cs" />
+    <Compile Include="System\Windows\Automation\ElementNotEnabledException.cs" />
+    <Compile Include="System\Windows\Automation\ExpandCollapsePatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\GridItemPatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\GridPatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\InvokePatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\ItemContainerPatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\MultipleViewPatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\NoClickablePointException.cs" />
+    <Compile Include="System\Windows\Automation\OrientationType.cs" />
+    <Compile Include="System\Windows\Automation\ProxyAssemblyNotLoadedException.cs" />
+    <Compile Include="System\Windows\Automation\RangeValuePatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\ScrollItemPatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\ScrollPatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\SelectionItemPatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\SelectionPatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\StructureChangedEventArgs.cs" />
+    <Compile Include="System\Windows\Automation\SynchronizedInputPatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\TableItemPatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\TablePatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\TextPatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\TogglePatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\TransformPatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\TreeScope.cs" />
+    <Compile Include="System\Windows\Automation\ValuePatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\VirtualizedItemPatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\WindowClosedEventArgs.cs" />
+    <Compile Include="System\Windows\Automation\WindowPatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\Text\TextEnums.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\ref\UIAutomationTypes-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <NetCoreReference Include="netstandard" />
+    <NetCoreReference Include="Microsoft.Win32.Primitives" />
+    <NetCoreReference Include="System" />
+    <NetCoreReference Include="System.Runtime" />
+    <NetCoreReference Include="System.Resources.ResourceManager" />
+    <NetCoreReference Include="System.Runtime.InteropServices" />
+    <NetCoreReference Include="System.Threading" />
+    <NetCoreReference Include="System.Threading.Thread" />
+    <NetCoreReference Include="System.Diagnostics.Tools" />
+    <NetCoreReference Include="System.Diagnostics.Debug" />
+    <NetCoreReference Include="System.Runtime.Extensions" />
+    <MicrosoftPrivateWinFormsReference Include="Accessibility" />
+  </ItemGroup>
+
+  <ItemGroup>
+  </ItemGroup>
+
+</Project>

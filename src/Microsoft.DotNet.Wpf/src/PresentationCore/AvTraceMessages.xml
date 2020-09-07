@@ -1,0 +1,117 @@
+<!--
+  This file contains trace information used to generate wrapper classes.
+
+  The format of the info is a set of Sources, where each Source contains:
+  
+  Name:  This is the name of the trace source, and the name that you use to enable
+  this group of traces in the .config file.  This should be named with the appropriate
+  CLR namespace for the feature area.  If the feature area doesn't have its own namespace,
+  e.g. the code is in the root System.Windows namespace, either use a class name, or
+  what the namespace would be if it had one.
+
+  SourceName: This is the name of the area and is used to construct the static property
+  names for the PresenationTraceSources class.
+
+  TraceNameOverride [Optional]: By default, this is "Trace" followed by the Source.Name property.
+  This property allows you to specify a different name then the default that is provided.
+
+  TraceDetails:
+      Message: Basic message for the event
+      Parameters [Optional]: Variable argument list for parameter names in the trace call
+ -->
+<Sources>
+  <Source Name="RoutedEvent" SourceName="System.Windows.RoutedEvent">
+    <TraceDetails Name="RaiseEvent">
+      <Labels Message="Raise RoutedEvent">
+        <Parameter>RoutedEvent</Parameter>
+        <Parameter>Element</Parameter>
+        <Parameter>RoutedEventArgs</Parameter>
+        <Parameter>Handled</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="ReRaiseEventAs">
+      <Labels Message="Raise RoutedEvent">
+        <Parameter>RoutedEvent</Parameter>
+        <Parameter>Element</Parameter>
+        <Parameter>RoutedEventArgs</Parameter>
+        <Parameter>Handled</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="HandleEvent">
+      <Labels Message="RoutedEvent has set Handled">
+        <Parameter>Handled</Parameter>
+        <Parameter>EventOwnerType</Parameter>
+        <Parameter>EventName</Parameter>
+        <Parameter>RoutedEventArgs</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="InvokeHandlers">
+      <Labels Message="InvokeHandlers">
+        <Parameter>Element</Parameter>
+        <Parameter>RoutedEventArgs</Parameter>
+        <Parameter>Handled</Parameter>
+      </Labels>
+    </TraceDetails>
+  </Source>
+  <Source Name="Animation" SourceName="System.Windows.Media.Animation">
+    <TraceDetails Name="StoryboardBegin">
+      <Labels Message="Storyboard has begun">
+        <Parameter>Storyboard</Parameter>
+        <Parameter>StoryboardName</Parameter>
+        <Parameter>TargetElement</Parameter>
+        <Parameter>Namescope</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="StoryboardPause">
+      <Labels Message="Storyboard has been paused">
+        <Parameter>Storyboard</Parameter>
+        <Parameter>StoryboardName</Parameter>
+        <Parameter>TargetElement</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="StoryboardRemove">
+      <Labels Message="Storyboard has been removed">
+        <Parameter>Storyboard</Parameter>
+        <Parameter>StoryboardName</Parameter>
+        <Parameter>TargetElement</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="StoryboardResume">
+      <Labels Message="Storyboard has been resumed">
+        <Parameter>Storyboard</Parameter>
+        <Parameter>StoryboardName</Parameter>
+        <Parameter>TargetElement</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="StoryboardStop">
+      <Labels Message="Storyboard has been stopped">
+        <Parameter>Storyboard</Parameter>
+        <Parameter>StoryboardName</Parameter>
+        <Parameter>TargetElement</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="StoryboardNotApplied">
+      <Labels Message="Unable to perform action because the specified Storyboard was never applied to this object for interactive control.">
+        <Parameter>Action</Parameter>
+        <Parameter>Storyboard</Parameter>
+        <Parameter>TargetElement</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="AnimateStorageValidationFailed">
+      <Labels Message="Animated property failed validation. Animated value not set.">
+        <Parameter>AnimationStorage</Parameter>
+        <Parameter>AnimatedValue</Parameter>
+        <Parameter>AnimatedObject</Parameter>
+        <Parameter>AnimatedProperty</Parameter>
+      </Labels>
+    </TraceDetails>
+    <TraceDetails Name="AnimateStorageValidationNoLongerFailing">
+      <Labels Message="Animated property no longer failing validation.">
+        <Parameter>AnimationStorage</Parameter>
+        <Parameter>AnimatedValue</Parameter>
+        <Parameter>AnimatedObject</Parameter>
+        <Parameter>AnimatedProperty</Parameter>
+      </Labels>
+    </TraceDetails>
+  </Source>
+</Sources>

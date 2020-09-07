@@ -25,11 +25,6 @@ namespace MS.Win32
             return handle;
         }
 
-        /// <SecurityNote>
-        /// Critical - Accepts and returns critical SafeHandle type.
-        /// Safe - Does not perform operations on the critical handle, does not leak handle information.
-        /// </SecurityNote>
-        [System.Security.SecuritySafeCritical]
         internal static SafeHandle Add(SafeHandle handle, int type) {
             handleTypes[type - 1].Add();
             return handle;
@@ -69,11 +64,6 @@ namespace MS.Win32
             return handle ; 
         }
 
-        /// <SecurityNote>
-        /// Critical - Accepts and returns critical SafeHandle type.
-        /// Safe - Does not perform operations on the critical handle, does not leak handle information.
-        /// </SecurityNote>
-        [System.Security.SecuritySafeCritical]
         internal static SafeHandle Remove(SafeHandle handle, int type) {
             handleTypes[type - 1].Remove();
             return handle ; 
@@ -147,7 +137,6 @@ namespace MS.Win32
             ///     Determines if this handle type needs a garbage collection pass.
             /// </devdoc>
             internal bool NeedCollection() {
-
                 if (handleCount > threshHold) {
                     threshHold = handleCount + ((handleCount * deltaPercent) / 100);
 #if DEBUG_HANDLECOLLECTOR
@@ -184,5 +173,4 @@ namespace MS.Win32
             }
         }
     }
-
 }

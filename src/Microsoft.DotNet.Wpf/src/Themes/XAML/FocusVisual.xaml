@@ -1,0 +1,87 @@
+<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor, Aero2.NormalColor, AeroLite.NormalColor, Classic, Luna.HomeStead, Luna.Metallic, Luna.NormalColor, Royale.NormalColor]] -->
+ 
+    <!--=================================================================
+        FocusVisual
+    ==================================================================-->
+    <Style x:Key="{x:Static SystemParameters.FocusVisualStyleKey}">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle StrokeThickness="1"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeDashArray="1 2"
+                               SnapsToDevicePixels="true" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="CheckRadioHighContrastFocusVisual">
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <Grid>
+              <Rectangle Margin="13,0,1,1"
+                         StrokeThickness="1"
+                         Stroke="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"
+                         SnapsToDevicePixels="true"/>
+              <Rectangle Margin="13,0,1,1"
+                         StrokeThickness="1"
+                         Stroke="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"
+                         StrokeDashArray="2 2"
+                         SnapsToDevicePixels="true"/>
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style x:Key="EmptyCheckRadioHighContrastFocusVisual">
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <Grid>
+              <Rectangle Margin="1,0,1,1"
+                         StrokeThickness="1"
+                         Stroke="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"
+                         SnapsToDevicePixels="true"/>
+              <Rectangle Margin="1,0,1,1"
+                         StrokeThickness="1"
+                         Stroke="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"
+                         StrokeDashArray="2 2"
+                         SnapsToDevicePixels="true"/>
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+<!-- [[AeroLite.NormalColor, Aero2.NormalColor]] -->
+
+    <!-- Focus Visual -->
+    <Style x:Key="FocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="OptionMarkFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="14,0,0,0" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+

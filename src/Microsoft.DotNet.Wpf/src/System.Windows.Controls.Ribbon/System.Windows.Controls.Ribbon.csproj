@@ -1,0 +1,228 @@
+﻿<Project Sdk="Microsoft.Net.Sdk">
+
+  <PropertyGroup>
+
+    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <DefineConstants>$(DefineConstants);RIBBON_IN_FRAMEWORK</DefineConstants>
+    <NoWarn>$(NoWarn);0618</NoWarn>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+
+    <!-- Enable Markup compilation using our own internally build PresentationBuildTasks.dll --> 
+    <InternalMarkupCompilation>true</InternalMarkupCompilation>
+    <NoInternalTypeHelper>true</NoInternalTypeHelper>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+
+    <Compile Include="AssemblyAttrs.cs" />
+
+    <Compile Include="Resources\SR.cs" />
+    <Compile Include="$(WpfCommonDir)src\System\SR.cs">
+        <Link>Common\System\SR.cs</Link>
+    </Compile>
+
+    <EmbeddedResource Include="Resources\Strings.resx" />
+
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonApplicationMenuAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonButtonAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonCheckBoxAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonControlAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonControlDataAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonControlGroupAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonRadioButtonAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonTextBoxAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonToggleButtonAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonToolTipAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonComboBoxAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonContextMenuAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonContextualTabGroupAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonContextualTabGroupDataAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonContextualTabGroupItemsControlAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonGalleryAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonGalleryCategoryAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonGalleryCategoryDataAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonGalleryItemAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonGalleryItemDataAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonGroupAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonGroupDataAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonGroupHeaderAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonMenuButtonAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonMenuItemDataAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonMenuItemAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonQuickAccessToolBarAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonSeparatorAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonSplitButtonAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonTabAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonTabDataAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonTabHeaderAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonTabHeaderDataAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonTabHeaderItemsControlAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonTitleAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Automation\Peers\RibbonTwoLineTextAutomationPeer.cs" />
+    <Compile Include="Microsoft\Windows\Controls\ActivatingKeyTipEventArgs.cs" />
+    <Compile Include="Microsoft\Windows\Controls\GenericValueConverters.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Generated\PropertyHelper.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Generated\TreeHelper.cs" />
+    <Compile Include="Microsoft\Windows\Controls\KeyTipAccessedEventArgs.cs" />
+    <Compile Include="Microsoft\Windows\Controls\KeyTipAdorner.cs" />
+    <Compile Include="Microsoft\Windows\Controls\KeyTipControl.cs" />
+    <Compile Include="Microsoft\Windows\Controls\KeyTipHorizontalPlacement.cs" />
+    <Compile Include="Microsoft\Windows\Controls\KeyTipService.cs" />
+    <Compile Include="Microsoft\Windows\Controls\KeyTipVerticalPlacement.cs" />
+    <Compile Include="Microsoft\Windows\Controls\TextSearchInternal.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\NativeMethods.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\Primitives\IContainsStarLayoutManager.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\Primitives\IProvideStarLayoutInfo.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\Primitives\IProvideStarLayoutInfoBase.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\Primitives\ISupportStarLayout.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\Primitives\RibbonContextualTabGroupsPanel.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\Primitives\RibbonGalleryCategoriesPanel.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\Primitives\RibbonGalleryItemsPanel.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\Primitives\RibbonGroupItemsPanel.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\Primitives\RibbonGroupsPanel.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\Primitives\RibbonMenuItemsPanel.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\Primitives\RibbonQuickAccessToolBarOverflowPanel.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\Primitives\RibbonQuickAccessToolBarPanel.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\Primitives\RibbonScrollButtonVisibilityConverter.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\Primitives\RibbonTabHeadersPanel.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\Primitives\RibbonTabsPanel.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\Primitives\RibbonTitlePanel.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\Primitives\RibbonWindowSmallIconConverter.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\Primitives\StarLayoutInfo.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\Ribbon.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonApplicationMenu.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonApplicationMenuItem.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonApplicationMenuItemLevel.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonApplicationSplitMenuItem.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonButton.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonCheckBox.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonComboBox.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonCommands.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonContextMenu.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonContextualTabGroup.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonContextualTabGroupItemsControl.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonControl.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonContentPresenter.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonControlGroup.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonControlLength.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonControlLengthConverter.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonControlLengthUnitType.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonControlService.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonControlSizeDefinition.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonControlSizeDefinitionCollection.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonDismissPopupEventArgs.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonDismissPopupEventHandler.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonDismissPopupMode.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonDropDownHelper.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonFilterMenuButton.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonGallery.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonGalleryCategory.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonGalleryItem.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonGroup.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonGroupSizeDefinition.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonGroupSizeDefinitionBase.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonGroupSizeDefinitionBaseCollection.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonGroupTemplateSizeDefinition.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonHelper.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonImageSize.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonKeyTipAndContentSyncHelper.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonMenuButton.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonMenuItem.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonQuickAccessToolBar.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonQuickAccessToolBarCloneEventArgs.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonQuickAccessToolBarCloneEventHandler.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonRadioButton.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonSeparator.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonSplitButton.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonSplitButtonLabelPosition.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonSplitMenuItem.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonTab.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonTabHeader.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonTabHeaderItemsControl.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonTextBox.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonToggleButton.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonToolTip.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonToolTipService.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonTwoLineText.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\RibbonWindow.cs" />
+    <Compile Include="Microsoft\Windows\Controls\Ribbon\StringCollectionConverter.cs" />
+    <Compile Include="Microsoft\Windows\Input\CommandHelpers.cs" />
+    <Compile Include="Microsoft\Windows\Input\IPreviewCommand.cs" />
+    <Compile Include="Microsoft\Windows\Input\IPreviewCommandSource.cs" />
+    <Compile Include="MS\Internal\Generated\DoubleUtil.cs" />
+
+  </ItemGroup>
+
+  <!-- Theme files -->
+  <ItemGroup>
+    <Page Include="Themes\Aero.NormalColor.xaml" />
+    <Page Include="Themes\AeroLite.NormalColor.xaml" />
+    <Page Include="Themes\Aero2.NormalColor.xaml" />
+    <Page Include="Themes\Generic.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\DefaultSystemIcon.png" />
+    <Resource Include="Images\GlassyDefaultSystemIcon.png" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
+
+    <ProjectReference Include="$(WpfSourceDir)Themes\PresentationFramework.Classic\PresentationFramework.Classic.csproj" />
+
+    <ProjectReference Include="$(WpfSourceDir)System.Windows.Controls.Ribbon\ref\System.Windows.Controls.Ribbon-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+
+  </ItemGroup>
+
+  <!-- 
+    Minimal set of references needed to build System.Windows.Controls.Ribbon 
+  -->
+  <ItemGroup>
+
+    <NetCoreReference Include="netstandard" />
+    <NetCoreReference Include="System.Collections" />
+    <NetCoreReference Include="System.Collections.Generic" />
+    <NetCoreReference Include="System.Collections.NonGeneric" />
+    <NetCoreReference Include="System.ComponentModel" />
+    <NetCoreReference Include="System.ComponentModel.Primitives" />
+    <NetCoreReference Include="System.Diagnostics.Debug" />
+    <NetCoreReference Include="System.Diagnostics.Process" />
+    <NetCoreReference Include="System.Diagnostics.Tools" />
+    <NetCoreReference Include="System.Diagnostics.TraceSource" />
+    <NetCoreReference Include="System.Drawing.Common" />
+    <NetCoreReference Include="System.Drawing.Primitives" />
+    <NetCoreReference Include="System.IO" />
+    <NetCoreReference Include="System.IO.FileSystem" />
+    <NetCoreReference Include="System.ObjectModel" />
+    <NetCoreReference Include="System.Resources.ResourceManager" />
+    <NetCoreReference Include="System.Runtime.Extensions" />
+    <NetCoreReference Include="System.Runtime.InteropServices" />
+    <NetCoreReference Include="System.Security.Cryptography.Algorithms" />
+    <NetCoreReference Include="System.Security.Cryptography.Primitives" />
+    <NetCoreReference Include="System.Security.Cryptography.X509Certificates" />
+    <NetCoreReference Include="System.Threading" />
+    <NetCoreReference Include="System.Threading.Thread" />
+    <NetCoreReference Include="System.Threading.ThreadPool" />
+
+    <NetCoreReference Include="System.ComponentModel.TypeConverter" />
+    <NetCoreReference Include="System.Collections.Concurrent" />
+    <NetCoreReference Include="System.Collections.Specialized" />
+    <NetCoreReference Include="System.Xml.ReaderWriter" />
+    <NetCoreReference Include="Microsoft.Win32.Primitives" />
+
+  </ItemGroup>
+
+</Project>

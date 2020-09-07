@@ -39,6 +39,16 @@ namespace MS.Internal.Xaml.Parser
         //
         // Attribute and Directive values can be markup extensions.
 
+        ///////////////////////////
+        //  XamlPullParser Exception Strings 
+        //
+        private const string ElementRuleException = "Element ::= . EmptyElement | ( StartElement ElementBody ).";
+        private const string EmptyElementRuleException = "EmptyElement ::= . EMPTYELEMENT DIRECTIVE* ATTRIBUTE*.";
+        private const string StartElementRuleException = "StartElement ::= . ELEMENT DIRECTIVE*.";
+        private const string ElementBodyRuleException = "ElementBody ::= ATTRIBUTE* ( PropertyElement | Content )* . ENDTAG.";
+        private const string PropertyElementRuleException = "PropertyElement ::= EmptyPropertyElement | NonemptyPropertyElement";
+        private const string EmptyPropertyElementRuleException = "EmptyPropertyElement ::= EMPTYPROPERTYELEMENT.";
+        private const string NonemptyPropertyElementRuleException = "NonemptyPropertyElement ::= . PROPERTYELEMENT Content? ENDTAG.";
 
         ///////////////////////////
         //  Document::= PREFIXDEFINITION* Element
@@ -98,8 +108,7 @@ namespace MS.Internal.Xaml.Parser
                 }
                 break;
             default:
-                throw new XamlUnexpectedParseException(_xamlScanner, nodeType,
-                    SR.Get(SRID.ElementRuleException));
+                throw new XamlUnexpectedParseException(_xamlScanner, nodeType, ElementRuleException);
             }
         }
 
@@ -111,7 +120,7 @@ namespace MS.Internal.Xaml.Parser
             if (_xamlScanner.NodeType != ScannerNodeType.EMPTYELEMENT)
             {
                 throw new XamlUnexpectedParseException(_xamlScanner, _xamlScanner.NodeType,
-                    SR.Get(SRID.EmptyElementRuleException));
+                    EmptyElementRuleException);
             }
             yield return Logic_StartObject(_xamlScanner.Type, _xamlScanner.Namespace);
             _xamlScanner.Read();
@@ -158,7 +167,7 @@ namespace MS.Internal.Xaml.Parser
             if (_xamlScanner.NodeType != ScannerNodeType.ELEMENT)
             {
                 throw new XamlUnexpectedParseException(_xamlScanner, _xamlScanner.NodeType,
-                    SR.Get(SRID.StartElementRuleException));
+                    StartElementRuleException);
             }
             yield return Logic_StartObject(_xamlScanner.Type, _xamlScanner.Namespace);
             _xamlScanner.Read();
@@ -276,7 +285,7 @@ namespace MS.Internal.Xaml.Parser
             if (_xamlScanner.NodeType != ScannerNodeType.ENDTAG)
             {
                 throw new XamlUnexpectedParseException(_xamlScanner, _xamlScanner.NodeType,
-                    SR.Get(SRID.ElementBodyRuleException));
+                    ElementBodyRuleException);
             }
             yield return Logic_EndObject();
             _xamlScanner.Read();
@@ -309,7 +318,7 @@ namespace MS.Internal.Xaml.Parser
                     break;
                 default:
                     throw new XamlUnexpectedParseException(_xamlScanner, nodeType,
-                        SR.Get(SRID.PropertyElementRuleException));
+                        PropertyElementRuleException);
             }
         }
 
@@ -321,7 +330,7 @@ namespace MS.Internal.Xaml.Parser
             if (_xamlScanner.NodeType != ScannerNodeType.EMPTYPROPERTYELEMENT)
             {
                 throw new XamlUnexpectedParseException(_xamlScanner, _xamlScanner.NodeType,
-                    SR.Get(SRID.EmptyPropertyElementRuleException));
+                    EmptyPropertyElementRuleException);
             }
             yield return Logic_StartMember(_xamlScanner.PropertyElement);
             yield return Logic_EndMember();
@@ -340,7 +349,7 @@ namespace MS.Internal.Xaml.Parser
             if (_xamlScanner.NodeType != ScannerNodeType.PROPERTYELEMENT)
             {
                 throw new XamlUnexpectedParseException(_xamlScanner, _xamlScanner.NodeType,
-                    SR.Get(SRID.NonemptyPropertyElementRuleException));
+                    NonemptyPropertyElementRuleException);
             }
             yield return Logic_StartMember(_xamlScanner.PropertyElement);
             _xamlScanner.Read();
@@ -398,7 +407,7 @@ namespace MS.Internal.Xaml.Parser
             if (_xamlScanner.NodeType != ScannerNodeType.ENDTAG)
             {
                 throw new XamlUnexpectedParseException(_xamlScanner, _xamlScanner.NodeType,
-                    SR.Get(SRID.NonemptyPropertyElementRuleException));
+                    NonemptyPropertyElementRuleException);
             }
             yield return Logic_EndMember();
             _xamlScanner.Read();
@@ -553,7 +562,7 @@ namespace MS.Internal.Xaml.Parser
                         yield return Logic_LineInfo();
                     }
 
-                    if (trimmed == string.Empty)
+                    if (string.IsNullOrEmpty(trimmed))
                     {
                         break;
                     }
@@ -633,7 +642,7 @@ namespace MS.Internal.Xaml.Parser
                     {
                         yield return Logic_LineInfo();
                     }
-                    if (trimmed == string.Empty)
+                    if (string.IsNullOrEmpty(trimmed))
                     {
                         break;
                     }
@@ -1177,13 +1186,11 @@ namespace MS.Internal.Xaml.Parser
     {
         public XamlUnexpectedParseException() { }
 
-        // FxCop says this is never called
-        //public XamlUnexpectedParseException(string message)
-        //    : base(message) { }
+        public XamlUnexpectedParseException(string message)
+            : base(message) { }
 
-        // FxCop says this is never called
-        //public XamlUnexpectedParseException(string message, Exception innerException)
-        //    : base(message, innerException) { }
+        public XamlUnexpectedParseException(string message, Exception innerException)
+            : base(message, innerException) { }
 
         public XamlUnexpectedParseException(XamlScanner xamlScanner, ScannerNodeType nodetype, string parseRule)
             : base(xamlScanner, SR.Get(SRID.UnexpectedNodeType, nodetype.ToString(), parseRule)) { }

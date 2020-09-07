@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="cs" original="../Strings.resx">
+    <body>
+      <trans-unit id="GenericInvalidArgument">
+        <source>The argument '{0}' was of an invalid type or had an invalid value.</source>
+        <target state="translated">Argument {0} byl neplatného typu nebo měl neplatnou hodnotu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndMustBeNonNULL">
+        <source>hwnd must not be IntPtr.Zero (0) or null.</source>
+        <target state="translated">Vlastnost hwnd nesmí mít hodnotu IntPtr.Zero (0) nebo null.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

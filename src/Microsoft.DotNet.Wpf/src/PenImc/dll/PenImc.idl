@@ -1,0 +1,123 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+
+// PenImc.idl : IDL source for PenImc
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (PenImc.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(75C6AAEE-2BA4-4008-B523-4F1E033FF049),
+	nonextensible,
+	helpstring("IPimcContext3 Interface"),
+	pointer_default(unique)
+]
+interface IPimcContext3 : IUnknown{
+    [helpstring("method ShutdownComm")             ] HRESULT ShutdownComm();
+    [helpstring("method GetPacketDescriptionInfo") ] HRESULT GetPacketDescriptionInfo([out] INT * pcProps, [out] INT * pcButtons);
+    [helpstring("method GetPacketPropertyInfo")    ] HRESULT GetPacketPropertyInfo([in] INT iProp, [out] GUID * pGuid, [out] INT * piMin, [out] INT * piMax, [out] INT * piUnits, [out] FLOAT *pflResolution);
+    [helpstring("method GetPacketButtonInfo")      ] HRESULT GetPacketButtonInfo([in] INT iButton, [out] GUID * pGuid);
+    [helpstring("method GetLastSystemEventData")   ] HRESULT GetLastSystemEventData([out] INT * piEvent, [out] INT * piModifier, [out] INT * piKey, [out] INT * piX, [out] INT * piY, [out] INT * piCursorMode, [out] INT * piButtonState);
+};
+
+[
+	object,
+	uuid(CEB1EF24-BB4E-498B-9DF7-12887ED0EB24),
+	nonextensible,
+	helpstring("IPimcTablet3 Interface"),
+	pointer_default(unique)
+]
+interface IPimcTablet3 : IUnknown{
+    [helpstring("method GetKey")               ] HRESULT GetKey               ([out] INT * pKey);
+    [helpstring("method GetName")              ] HRESULT GetName              ([out] LPWSTR * ppszName);
+    [helpstring("method GetPlugAndPlayId")     ] HRESULT GetPlugAndPlayId     ([out] LPWSTR * ppszPlugAndPlayId);
+    [helpstring("method GetTabletAndDisplaySize")] HRESULT GetTabletAndDisplaySize  ([out] INT * piTabletWidth, [out] INT * piTabletHeight, [out] INT * piDisplayWidth, [out] INT * piDisplayHeight);
+    [helpstring("method GetHardwareCaps")      ] HRESULT GetHardwareCaps      ([out] INT * piCaps);
+    [helpstring("method GetDeviceType")        ] HRESULT GetDeviceType        ([out] INT * piDevType);
+    [helpstring("method RefreshCursorInfo")    ] HRESULT RefreshCursorInfo    ();
+    [helpstring("method GetCursorCount")       ] HRESULT GetCursorCount       ([out] INT * pcCursors);
+    [helpstring("method GetCursorInfo")        ] HRESULT GetCursorInfo        ([in] INT iCursor, [out] LPWSTR * ppszName, [out] INT * pId, [out] BOOL * pfInverted);
+    [helpstring("method GetCursorButtonCount") ] HRESULT GetCursorButtonCount ([in] INT iCursor, [out] INT * pcButtons);
+    [helpstring("method GetCursorButtonInfo")  ] HRESULT GetCursorButtonInfo  ([in] INT iCursor, [in] INT iButton, [out] LPWSTR * ppszName, [out] GUID * pGuid);
+    [helpstring("method IsPropertySupported")  ] HRESULT IsPropertySupported  ([in] GUID guid, [out] BOOL * pfSupported);
+    [helpstring("method GetPropertyInfo")      ] HRESULT GetPropertyInfo      ([in] GUID guid, [out] INT * piMin, [out] INT * piMax, [out] INT * piUnit, [out] FLOAT *pflResolution);
+    [helpstring("method CreateContext")] HRESULT CreateContext([in] INT_PTR hwnd, [in]BOOL fEnable, [in]UINT timeout, [out]IPimcContext3** ppCtx, [out] INT * pKey, [out] hyper * pHandle);
+    [helpstring("method GetPacketDescriptionInfo") ] HRESULT GetPacketDescriptionInfo([out] INT * pcProps, [out] INT * pcButtons);
+    [helpstring("method GetPacketPropertyInfo")    ] HRESULT GetPacketPropertyInfo([in] INT iProp, [out] GUID * pGuid, [out] INT * piMin, [out] INT * piMax, [out] INT * piUnits, [out] FLOAT *pflResolution);
+    [helpstring("method GetPacketButtonInfo")      ] HRESULT GetPacketButtonInfo([in] INT iButton, [out] GUID * pGuid);
+};
+
+[
+	object,
+	uuid(BD2C38C2-E064-41D0-A999-940F526219C2),
+	nonextensible,
+	helpstring("IPimcManager3 Interface"),
+	pointer_default(unique)
+]
+interface IPimcManager3 : IUnknown {
+    [helpstring("method GetTabletCount")] HRESULT GetTabletCount([out] ULONG* pcTablets);
+    [helpstring("method GetTablet")     ] HRESULT GetTablet([in] ULONG iTablet, [out] IPimcTablet3** ppTablet);
+};
+
+[
+	object,
+	uuid(74D2B283-EDB3-4A8D-8088-445E8766C872),
+	nonextensible,
+	helpstring("IPimcSurrogate3 Interface"),
+	pointer_default(unique)
+]
+interface IPimcSurrogate3 : IUnknown {
+    [helpstring("method GetWisptisITabletManager")] HRESULT GetWisptisITabletManager([out] IUnknown** ppTabletManagerUnknown);
+};
+
+[
+	uuid(33363EEE-828A-4DFC-BB3C-AB9628E6DD62),
+	version(2.0),
+	helpstring("PenIMC v4 2.0 Type Library")
+]
+library PenImcLib4v3
+{
+	importlib("stdole2.tlb");
+
+	[
+		uuid(F269D7C4-EF22-48A1-A503-4E0A620FC746),
+		helpstring("PimcSurrogate3 Class")
+	]
+	coclass PimcSurrogate3
+	{
+		[default] interface IPimcSurrogate3;
+	};
+
+	[
+		uuid(DB88ADFD-BEC7-47B8-A6B5-58CA3DA2B8D6),
+		helpstring("PimcManager3 Class")
+	]
+	coclass PimcManager3
+	{
+		[default] interface IPimcManager3;
+	};
+	[
+		uuid(A50E4FEE-6A0C-4AD6-8FDE-8E3EC75956BF),
+		helpstring("PimcContext3 Class")
+	]
+	coclass PimcContext3
+	{
+		[default] interface IPimcContext3;
+	};
+	[
+		uuid(8E44D1B9-D701-4E65-9917-0FF7488A7F96),
+		helpstring("PimcTablet3 Class")
+	]
+	coclass PimcTablet3
+	{
+		[default] interface IPimcTablet3;
+	};
+};
+

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="pt-BR" original="../Strings.resx">
+    <body>
+      <trans-unit id="Host_CannotRotateWindowsFormsHost">
+        <source>A WindowsFormsHost cannot be rotated. To suppress this error, handle the LayoutError event and set ThrowException to false.</source>
+        <target state="translated">WindowsFormsHost não pode ser girado. Para anular esse erro, manipule o evento LayoutError e defina ThrowException como falso.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Host_ChildCantBeTopLevelForm">
+        <source>The child control cannot be a top-level form.</source>
+        <target state="translated">O controle filho não pode ser um formulário de nível mais alto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WFI_ArgumentNullOrEmpty">
+        <source>'{0}' cannot be null or empty.</source>
+        <target state="translated">'{0}' não pode ser nulo nem vazio.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WFI_NullArgument">
+        <source>'{0}' cannot be null.</source>
+        <target state="translated">'{0}' não pode ser nulo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WFI_PropertyDoesntExist">
+        <source>'{0}' property does not exist on type '{1}'.</source>
+        <target state="translated">A propriedade '{0}' não existe no tipo '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WFI_PropertyMapError">
+        <source>An error occurred when applying a property map. For details, see the inner exception.</source>
+        <target state="translated">Erro ao aplicar o mapa de uma propriedade. Para obter detalhes, consulte a exceção interna.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WFI_PropertyMappingExists">
+        <source>'{0}' property is already mapped. Remove the existing mapping before adding a new one.</source>
+        <target state="translated">A propriedade '{0}' já está mapeada. Remova o mapeamento existente antes de adicionar outro.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

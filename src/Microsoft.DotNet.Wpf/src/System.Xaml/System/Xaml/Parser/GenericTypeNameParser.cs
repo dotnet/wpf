@@ -263,11 +263,7 @@ namespace MS.Internal.Xaml.Parser
             TypeNameFrame frame = new TypeNameFrame();
             frame.Name = name;
             string ns = _prefixResolver(prefix);
-            if (ns == null)
-            {
-                throw new TypeNameParserException(SR.Get(SRID.PrefixNotFound, prefix));
-            }
-            frame.Namespace = ns;
+            frame.Namespace = ns ?? throw new TypeNameParserException(SR.Get(SRID.PrefixNotFound, prefix));
             _stack.Push(frame);
         }
 

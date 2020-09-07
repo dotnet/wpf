@@ -1,0 +1,21 @@
+# Nominal timestamp: 2004/11/17-21:38:31
+# 
+# Auto-generated from winmain-450k-newerupdatedlist.txt dated 2004/10/20
+# with additional 13288 files from Vikram dated 2004/11/06
+# See DavePr or LisaGra or RajeshM or JFeltis for questions.
+# 
+FILE  r1defwpp.ini
+$TAG ENGR
+$MODULE: build_tools_wppconfig
+$OWNER: jtolman
+$KEYWORDS: 
+$ENDTAG
+
+FILE *
+$TAG ENGR
+$MODULE: build_tools_wppconfig
+$OWNER: josesua
+$KEYWORDS: 
+$ENDTAG
+
+# checksum: 0020-008292397-00

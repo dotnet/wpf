@@ -1,0 +1,392 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);REACHFRAMEWORK;</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>$(NoWarn);0618</NoWarn>   
+    <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <Platforms>AnyCPU;x64</Platforms>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp5.0</TargetFramework>  
+    <EnableDefaultItems>false</EnableDefaultItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Strings.resx" />
+    <EmbeddedResource Include="$(WpfSourceDir)System.Printing\Resources\System.Printing.resx">
+      <GenerateSource>false</GenerateSource>
+      <LogicalName>System.Printing.resources</LogicalName>
+      <ManifestResourceName>System.Printing.resources</ManifestResourceName>
+    </EmbeddedResource>
+    
+    <!-- 
+        Workaround for https://github.com/dotnet/wpf/issues/1385
+        ReadyToRun images of WPF applications crash 
+        
+        When producing ReadyToRun images, the ILLinker is configured to skip 
+        C++/CLI images. See https://github.com/mono/linker/issues/651 and 
+        https://github.com/mono/linker/pull/658. 
+        
+        In turn, this results in the failure of the dependencies of such assemblies from being
+        identified and included in the ReadyToRun images. 
+        
+        This linker hint exists to ensure that such dependencies are included. We need
+        to place these hints in an assembly that has a reference to the corresponding
+        C++/CLI assembly. 
+        
+             PresentationCore -> DirectWriteFowarder
+             ReachFramework -> System.Printing
+    -->    
+    <EmbeddedResource Condition="Exists('ILLinkTrim.xml')" Include="ILLinkTrim.xml">
+      <XlfInput>false</XlfInput>
+      <LogicalName>$(AssemblyName).xml</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Include="$(WpfCommonDir)src\System\SR.cs">
+        <Link>Common\System\SR.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSharedDir)\RefAssemblyAttrs.cs" />
+    <Compile Include="$(WpfSharedDir)\MS\Internal\SafeSecurityHelper.cs" />
+    <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityHelper.cs" />
+    <Compile Include="$(WpfSharedDir)\MS\Internal\UriComparer.cs " />
+    <Compile Include="$(WpfSharedDir)\MS\Utility\BindUriHelper.cs" />
+    <Compile Include="SR.cs" />
+    <Compile Include="Serialization\Manager\IXpsSerializationManager.cs" />
+    <Compile Include="Serialization\Manager\IXpsSerializationManagerAsync.cs" />
+    <Compile Include="Serialization\Manager\XpsOMHierarchySimulator.cs" />
+    <Compile Include="Serialization\Manager\XpsOMSerializationManager.cs" />
+    <Compile Include="Serialization\Manager\XpsOMSerializationManagerAsync.cs" />
+    <Compile Include="Serialization\Manager\XpsOMDocumentSequenceSerializer.cs" />
+    <Compile Include="Serialization\Manager\XpsOMDocumentSequenceSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\XpsOMFixedDocumentSerializer.cs" />
+    <Compile Include="Serialization\Manager\XpsOMFixedDocumentSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\XpsOMFixedPageSerializer.cs" />
+    <Compile Include="Serialization\Manager\XpsOMFixedPageSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\XpsOMDocumentPaginatorSerializer.cs" />
+    <Compile Include="Serialization\Manager\XpsOMDocumentPaginatorSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\XpsOMDocumentPageSerializer.cs" />
+    <Compile Include="Serialization\Manager\XpsOMDocumentPageSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\XpsOMPackagingPolicy.cs" />
+    <Compile Include="Serialization\Manager\XpsSerializationManager.cs" />
+    <Compile Include="Serialization\Manager\XpsSerializationManagerAsync.cs" />
+    <Compile Include="Serialization\Manager\XpsDocumentEvent.cs" />
+    <Compile Include="Serialization\Manager\ReachFixedDocumentSerializer.cs" />
+    <Compile Include="Serialization\Manager\ReachFixedDocumentSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\XpsTokenContext.cs" />
+    <Compile Include="Serialization\Manager\ReachSerializer.cs" />
+    <Compile Include="Serialization\Manager\ReachSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\ReachFixedPageSerializer.cs" />
+    <Compile Include="Serialization\Manager\ReachFixedPageSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\ReachDocumentPageSerializer.cs" />
+    <Compile Include="Serialization\Manager\ReachDocumentPageSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\ReachDocumentReferenceSerializer.cs" />
+    <Compile Include="Serialization\Manager\ReachDocumentReferenceSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\ReachDocumentReferenceCollectionSerializer.cs" />
+    <Compile Include="Serialization\Manager\ReachDocumentReferenceCollectionSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\ReachDocumentSequenceSerializer.cs" />
+    <Compile Include="Serialization\Manager\ReachDocumentSequenceSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\ReachIDocumentPaginatorSerializer.cs" />
+    <Compile Include="Serialization\Manager\ReachIDocumentPaginatorSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\ReachPageContentCollectionSerializer.cs" />
+    <Compile Include="Serialization\Manager\ReachPageContentCollectionSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\ReachUIElementCollectionSerializer.cs" />
+    <Compile Include="Serialization\Manager\ReachUIElementCollectionSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\ReachPageContentSerializer.cs" />
+    <Compile Include="Serialization\Manager\ReachPageContentSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\XpsPackagingPolicy.cs" />
+    <Compile Include="Serialization\Manager\NullPackagingPolicy.cs" />
+    <Compile Include="Serialization\Manager\ReachVisualSerializer.cs" />
+    <Compile Include="Serialization\Manager\ReachVisualSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\MetroSerializationManager.cs" />
+    <Compile Include="Serialization\Manager\NGCSerializationManager.cs" />
+    <Compile Include="Serialization\Manager\NGCSerializationManagerAsync.cs" />
+    <Compile Include="Serialization\Manager\NGCSerializer.cs" />
+    <Compile Include="Serialization\Manager\NGCSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\NGCPageContentCollectionSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\NGCPageContentSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\NGCUIElementCollectionSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\ReachBasicContext.cs" />
+    <Compile Include="Serialization\Manager\ReachObjectContext.cs" />
+    <Compile Include="Serialization\Manager\ReachSerializationCacheItems.cs" />
+    <Compile Include="Serialization\Manager\ReachSerializationUtils.cs" />
+    <Compile Include="Serialization\Manager\ReachNamespaceInfo.cs" />
+    <Compile Include="Serialization\Manager\ReachSerializableProperties.cs" />
+    <Compile Include="Serialization\Manager\ReachPrintTicketSerializer.cs" />
+    <Compile Include="Serialization\Manager\ReachPrintTicketSerializerAsync.cs" />
+    <Compile Include="Serialization\Manager\XpsLiterals.cs" />
+    <Compile Include="Serialization\RCW\XPS_COLOR_TYPE_UNION.cs" />
+    <Compile Include="Serialization\RCW\IOpcPartUri.cs" />
+    <Compile Include="Serialization\RCW\IOpcUri.cs" />
+    <Compile Include="Serialization\RCW\IPrintDocumentPackageTarget.cs" />
+    <Compile Include="Serialization\RCW\IPrintDocumentPackageStatusEvent.cs" />
+    <Compile Include="Serialization\RCW\ISequentialStream.cs" />
+    <Compile Include="Serialization\RCW\IUri.cs" />
+    <Compile Include="Serialization\RCW\IXpsDocumentPackageTarget.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMBrush.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMCanvas.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMColorProfileResource.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMColorProfileResourceCollection.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMCoreProperties.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMDashCollection.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMDictionary.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMDocument.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMDocumentCollection.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMDocumentSequence.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMDocumentStructureResource.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMFontResource.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMFontResourceCollection.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMGeometry.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMGeometryFigure.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMGeometryFigureCollection.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMGlyphs.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMGlyphsEditor.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMGradientBrush.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMGradientStop.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMGradientStopCollection.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMImageBrush.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMImageResource.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMImageResourceCollection.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMLinearGradientBrush.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMMatrixTransform.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMNameCollection.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMObjectFactory.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMPackage.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMPackageWriter.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMPage.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMPageReference.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMPageReferenceCollection.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMPart.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMPartResources.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMPartUriCollection.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMPath.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMPrintTicketResource.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMRadialGradientBrush.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMRemoteDictionaryResource.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMRemoteDictionaryResourceCollection.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMResource.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMShareable.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMSignatureBlockResource.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMSignatureBlockResourceCollection.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMSolidColorBrush.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMStoryFragmentsResource.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMThumbnailGenerator.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMTileBrush.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMVisual.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMVisualBrush.cs" />
+    <Compile Include="Serialization\RCW\IXpsOMVisualCollection.cs" />
+    <Compile Include="Serialization\RCW\PrintDocumentPackageCompletion.cs" />
+    <Compile Include="Serialization\RCW\PrintDocumentPackageStatus.cs" />
+    <Compile Include="Serialization\RCW\PrintDocumentPackageStatusProvider.cs" />
+    <Compile Include="Serialization\RCW\tagSTATSTG.cs" />
+    <Compile Include="Serialization\RCW\Uri_PROPERTY.cs" />
+    <Compile Include="Serialization\RCW\XpsOMThumbnailGenerator.cs" />
+    <Compile Include="Serialization\RCW\XpsOMThumbnailGeneratorClass.cs" />
+    <Compile Include="Serialization\RCW\XPS_COLOR.cs" />
+    <Compile Include="Serialization\RCW\XPS_COLOR_INTERPOLATION.cs" />
+    <Compile Include="Serialization\RCW\XPS_COLOR_TYPE.cs" />
+    <Compile Include="Serialization\RCW\XPS_DASH.cs" />
+    <Compile Include="Serialization\RCW\XPS_DASH_CAP.cs" />
+    <Compile Include="Serialization\RCW\XPS_DOCUMENT_TYPE.cs" />
+    <Compile Include="Serialization\RCW\XPS_FILL_RULE.cs" />
+    <Compile Include="Serialization\RCW\XPS_FONT_EMBEDDING.cs" />
+    <Compile Include="Serialization\RCW\XPS_GLYPH_INDEX.cs" />
+    <Compile Include="Serialization\RCW\XPS_GLYPH_MAPPING.cs" />
+    <Compile Include="Serialization\RCW\XPS_IMAGE_TYPE.cs" />
+    <Compile Include="Serialization\RCW\XPS_INTERLEAVING.cs" />
+    <Compile Include="Serialization\RCW\XPS_LINE_CAP.cs" />
+    <Compile Include="Serialization\RCW\XPS_LINE_JOIN.cs" />
+    <Compile Include="Serialization\RCW\XPS_MATRIX.cs" />
+    <Compile Include="Serialization\RCW\XPS_OBJECT_TYPE.cs" />
+    <Compile Include="Serialization\RCW\XPS_POINT.cs" />
+    <Compile Include="Serialization\RCW\XPS_RECT.cs" />
+    <Compile Include="Serialization\RCW\XPS_SCRGB_COLOR.cs" />
+    <Compile Include="Serialization\RCW\XPS_SEGMENT_STROKE_PATTERN.cs" />
+    <Compile Include="Serialization\RCW\XPS_SEGMENT_TYPE.cs" />
+    <Compile Include="Serialization\RCW\XPS_SIZE.cs" />
+    <Compile Include="Serialization\RCW\XPS_SPREAD_METHOD.cs" />
+    <Compile Include="Serialization\RCW\XPS_SRGB_COLOR.cs" />
+    <Compile Include="Serialization\RCW\XPS_STYLE_SIMULATION.cs" />
+    <Compile Include="Serialization\RCW\XPS_THUMBNAIL_SIZE.cs" />
+    <Compile Include="Serialization\RCW\XPS_TILE_MODE.cs" />
+    <Compile Include="Serialization\RCW\_FILETIME.cs" />
+    <Compile Include="Serialization\RCW\_LARGE_INTEGER.cs" />
+    <Compile Include="Serialization\RCW\_SECURITY_ATTRIBUTES.cs" />
+    <Compile Include="Serialization\RCW\_SYSTEMTIME.cs" />
+    <Compile Include="Serialization\RCW\_ULARGE_INTEGER.cs" />
+    <Compile Include="packaging\XpsDigitalSignature.cs" />
+    <Compile Include="Packaging\XpsFixedDocumentSequenceReaderWriter.cs" />
+    <Compile Include="Packaging\DocumentStructureProvider.cs" />
+    <Compile Include="Packaging\XpsFixedDocumentReaderWriter.cs" />
+    <Compile Include="Packaging\XpsFixedPageReaderWriter.cs" />
+    <Compile Include="Packaging\XPSSignatureDefinition.cs" />
+    <Compile Include="Packaging\PartEditor.cs" />
+    <Compile Include="Packaging\XpsFont.cs" />
+    <Compile Include="Packaging\XpsImage.cs" />
+    <Compile Include="Packaging\XpsColorContext.cs" />
+    <Compile Include="Packaging\XpsResourceDictionary.cs" />
+    <Compile Include="Packaging\XpsThumbnail.cs" />
+    <Compile Include="Packaging\XpsInterleavingPolicy.cs" />
+    <Compile Include="Packaging\XpsManager.cs" />
+    <Compile Include="Packaging\XpsPartBase.cs" />
+    <Compile Include="Packaging\XpsDocument.cs" />
+    <Compile Include="Packaging\XpsResource.cs" />
+    <Compile Include="Packaging\XpsResourcePolicy.cs" />
+    <Compile Include="Packaging\XpsStructure.cs" />
+    <Compile Include="Serialization\VisualSerializer.cs" />
+    <Compile Include="Serialization\VisualTreeFlattener.cs" />
+    <Compile Include="Serialization\ColorTypeConverter.cs" />
+    <Compile Include="Serialization\DrawingContextFlattener.cs" />
+    <Compile Include="Serialization\TreeWalkProgress.cs" />
+    <Compile Include="Serialization\XpsFontSubsetter.cs" />
+    <Compile Include="Serialization\FontTypeConverter.cs" />
+    <Compile Include="Serialization\ImageSourceTypeConverter.cs" />
+    <Compile Include="Serialization\XpsFontSerializationService.cs" />
+    <Compile Include="Serialization\XpsImageSerializationService.cs" />
+    <Compile Include="Serialization\Crc32.cs" />
+    <Compile Include="SerializerFactory\XpsSerializerFactory.cs" />
+    <Compile Include="SerializerFactory\XpsSerializerWriter.cs" />
+    <Compile Include="AlphaFlattener\Primitive.cs" />
+    <Compile Include="AlphaFlattener\PrimitiveList.cs" />
+    <Compile Include="AlphaFlattener\Utility.cs" />
+    <Compile Include="AlphaFlattener\BrushProxy.cs" />
+    <Compile Include="AlphaFlattener\ImageProxy.cs" />
+    <Compile Include="AlphaFlattener\Interfaces.cs" />
+    <Compile Include="AlphaFlattener\DrawingContext.cs" />
+    <Compile Include="AlphaFlattener\Flattener.cs" />
+    <Compile Include="AlphaFlattener\PrimitiveRenderer.cs" />
+    <Compile Include="AlphaFlattener\MetroDevice.cs" />
+    <Compile Include="AlphaFlattener\SegmentTree.cs" />
+    <Compile Include="AlphaFlattener\Optimizer.cs" />
+    <Compile Include="PrintSystemExceptions\InteropWin32ApiThunk.cs" />
+    <Compile Include="PrintSystemExceptions\PrintSystemException.cs" />
+    <Compile Include="PrintConfig\FallbackPTProvider.cs" />
+    <Compile Include="PrintConfig\JobCollate.cs" />
+    <Compile Include="PrintConfig\JobDuplex.cs" />
+    <Compile Include="PrintConfig\DocumentNUp.cs" />
+    <Compile Include="PrintConfig\JobStaple.cs" />
+    <Compile Include="PrintConfig\PageCanvasSize.cs" />
+    <Compile Include="PrintConfig\PageCopyCount.cs" />
+    <Compile Include="PrintConfig\PageDeviceFont.cs" />
+    <Compile Include="PrintConfig\PageMediaSize.cs" />
+    <Compile Include="PrintConfig\PageMediaType.cs" />
+    <Compile Include="PrintConfig\PageOrientation.cs" />
+    <Compile Include="PrintConfig\PageOutputColor.cs" />
+    <Compile Include="PrintConfig\PageResolution.cs" />
+    <Compile Include="PrintConfig\PageScaling.cs" />
+    <Compile Include="PrintConfig\PageTrueTypeFont.cs" />
+    <Compile Include="PrintConfig\JobPageOrder.cs" />
+    <Compile Include="PrintConfig\PageBorderless.cs" />
+    <Compile Include="PrintConfig\PageOutputQuality.cs" />
+    <Compile Include="PrintConfig\PhotoPrintingIntent.cs" />
+    <Compile Include="PrintConfig\JobInputBins.cs" />
+    <Compile Include="PrintConfig\ParameterRefs.cs" />
+    <Compile Include="PrintConfig\PrintCapabilitesWriter.cs" />
+    <Compile Include="PrintConfig\PrintSchema.cs" />
+    <Compile Include="PrintConfig\PrintSchemaShim.cs" />
+    <Compile Include="PrintConfig\PrtCap_Base.cs" />
+    <Compile Include="PrintConfig\PrtCap_Builder.cs" />
+    <Compile Include="PrintConfig\PrtCap_Public.cs" />
+    <Compile Include="PrintConfig\PrtCap_Public_Simple.cs" />
+    <Compile Include="PrintConfig\PrtCap_Reader.cs" />
+    <Compile Include="PrintConfig\PrtTicket_Base.cs " />
+    <Compile Include="PrintConfig\PrtTicket_Editor.cs" />
+    <Compile Include="PrintConfig\PrtTicket_Public.cs" />
+    <Compile Include="PrintConfig\PrtTicket_Public_Simple.cs" />
+    <Compile Include="PrintConfig\PTConverter.cs" />
+    <Compile Include="PrintConfig\PTManager.cs " />
+    <Compile Include="PrintConfig\PTProvider.cs" />
+    <Compile Include="PrintConfig\PTUtility.cs" />
+    <Compile Include="PrintConfig\PTProviderBase.cs" />
+    <Compile Include="Exceptions\XpsException.cs" />
+    <Compile Include="Exceptions\XpsPackagingException.cs" />
+    <Compile Include="Exceptions\XpsSerializationException.cs" />
+    <Compile Include="MS\Internal\Printing\MostFrequentlyUsedCache.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\DeviceCap.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\PRINTER_INFO_2.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\PRINTER_INFO_8_AND_9.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\DeviceCapability.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\DevModeCollate.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\DevModeColor.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\DevModeDitherTypes.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\DevModeDuplex.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\DevModeFields.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\DevModeICMIntents.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\DevModeICMMethod.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\DevModeMediaTypes.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\DevModeNUp.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\DevModeOrientation.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\DevModePaperSizes.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\DevModePaperSources.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\DevModeResolutions.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\DevModeTrueTypeOption.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\DevMode.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\SafeWinSpoolPrinterHandle.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\UnsafeNativeMethods.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\COMPSTUISRID.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\DocumentPropertiesFlags.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\HGlobalBuffer.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\LoadLibraryExFlags.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\SafeModuleHandle.cs" />
+    <Compile Include="MS\Internal\Printing\Configuration\WinSpoolPrinterCapabilities.cs" />
+    <Compile Include="MS\Internal\Printing\TestHook.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NetCoreReference Include="Microsoft.Win32.Primitives" />
+    <NetCoreReference Include="netstandard" />
+    <NetCoreReference Include="System.Collections" />
+    <NetCoreReference Include="System.Collections.NonGeneric" />
+    <NetCoreReference Include="System.Collections.Specialized" />
+    <NetCoreReference Include="System.ComponentModel" />
+    <NetCoreReference Include="System.ComponentModel.EventBasedAsync" />    
+    <NetCoreReference Include="System.ComponentModel.Primitives" />
+    <NetCoreReference Include="System.ComponentModel.TypeConverter" />
+    <NetCoreReference Include="System.Console" />
+    <NetCoreReference Include="System.Diagnostics.Debug" />
+    <NetCoreReference Include="System.Diagnostics.Tools" />
+    <NetCoreReference Include="System.IO.FileSystem" />
+    <NetCoreReference Include="System.Net.Primitives" />    
+    <NetCoreReference Include="System.Net.Requests" />
+    <NetCoreReference Include="System.Net.WebHeaderCollection" />
+    <NetCoreReference Include="System.ObjectModel" />
+    <NetCoreReference Include="System.Runtime" />
+    <NetCoreReference Include="System.Runtime.Extensions" />
+    <NetCoreReference Include="System.Runtime.InteropServices" />
+    <NetCoreReference Include="System.Resources.ResourceManager" />
+    <NetCoreReference Include="System.Security.Cryptography" />
+    <NetCoreReference Include="System.Security.Cryptography.X509Certificates" />
+    <NetCoreReference Include="System.Text.RegularExpressions" />
+    <NetCoreReference Include="System.Threading" />
+    <NetCoreReference Include="System.Threading.Thread" />
+    <NetCoreReference Include="System.Xml" />
+    <NetCoreReference Include="System.Xml.Document" />
+    <NetCoreReference Include="System.Xml.ReaderWriter" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </ProjectReference>
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)ReachFramework\ref\ReachFramework-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(WpfCycleBreakersDir)PresentationFramework\PresentationFramework-ReachFramework-impl-cycle.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Printing\ref\System.Printing-ref.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="$(SystemSecurityCryptographyXmlPackageVersion)" />
+    <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
+  </ItemGroup>
+</Project>

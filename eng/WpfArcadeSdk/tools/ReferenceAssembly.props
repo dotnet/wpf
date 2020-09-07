@@ -1,0 +1,17 @@
+<Project>
+
+  <PropertyGroup>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    <ArtifactsReferenceAssemblyDir Condition="'$(ArtifactsReferenceAssemblyDir)'==''">$(ArtifactsDir)ref\</ArtifactsReferenceAssemblyDir>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsShipping)'!='false' and '$(IsPackagingProject)'!='true' and '$(IsRedistProject)'!='true'">
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <!-- Categorize the repo location based on the hand crafted assembly location. -->
+  <PropertyGroup>
+    <ReferenceProjectRepoLocation Condition="$(ExternalHandCraftedReferenceProjects.Contains('$(NormalizedMSBuildProjectName);'))">External</ReferenceProjectRepoLocation>
+  </PropertyGroup>
+
+</Project>

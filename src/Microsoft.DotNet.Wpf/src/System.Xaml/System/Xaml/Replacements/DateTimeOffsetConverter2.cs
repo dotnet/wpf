@@ -30,12 +30,6 @@ namespace System.Windows.Markup
             return base.CanConvertFrom(context, sourceType);
         }
 
-        /// <SecurityNote>
-        /// Critical: Uses InstanceDescriptor, which LinkDemands
-        /// Safe: InstanceDescriptor for DateTimeOffset doesn't contain any private data.
-        ///       Also, the Descriptor is returned intact to the caller, who would need to satisfy a LinkDemand to do anything with it.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             if ((destinationType == typeof(string)) && (value is DateTimeOffset))

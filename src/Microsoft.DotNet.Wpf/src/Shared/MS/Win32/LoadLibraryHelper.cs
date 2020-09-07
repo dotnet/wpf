@@ -8,7 +8,6 @@ namespace MS.Win32
 {
     using System;
     using System.Security;
-    using System.Security.Permissions;
     using System.Runtime.InteropServices;
 
 
@@ -23,11 +22,6 @@ namespace MS.Win32
         /// KB2533623 introduced kernel32!AddDllDirectoryName. We look for this 
         /// method to determine the result of this method.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: Calls into P/Invoke methods
-        ///     Safe: Returns a safe boolean to the caller
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private static bool IsKnowledgeBase2533623OrGreater()
         {
             const string AddDllDirectoryName = nameof(AddDllDirectoryName);
@@ -77,12 +71,6 @@ namespace MS.Win32
         /// The folowing flags require KB2532445. We do not provide any support for safely using this flag, and 
         /// leave it up to a future change to this implementation to add the right checks.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: 
-        ///         Calls into Critical P/Invoke methods
-        ///         Returns native module handle
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static IntPtr SecureLoadLibraryEx(string lpFileName, IntPtr hFile, UnsafeNativeMethods.LoadLibraryFlags dwFlags)
         {
             if (!IsKnowledgeBase2533623OrGreater())

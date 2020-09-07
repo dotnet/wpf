@@ -1,0 +1,88 @@
+﻿<!-- PresentationFramework.Aero2 -->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+
+    <TargetFramework>netcoreapp5.0</TargetFramework>  
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <Platforms>AnyCPU;x64</Platforms>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+
+    <!-- THEME_AERO2 #DEFINE is used in KnownTypeHelper.cs -->
+    <DefineConstants>$(DefineConstants);THEME_AERO2</DefineConstants>
+
+    <!-- Explicitly include source files to compile -->
+    <EnableDefaultItems>false</EnableDefaultItems>
+
+    <!-- Enable Markup compilation using our own internally build PresentationBuildTasks.dll --> 
+    <InternalMarkupCompilation>true</InternalMarkupCompilation>
+    <NoInternalTypeHelper>true</NoInternalTypeHelper>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+  </PropertyGroup>
+
+  <!-- Compile Targets -->
+  <ItemGroup>
+    <Page Include="Themes\Aero2.NormalColor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="$(WpfSharedDir)\RefAssemblyAttrs.cs" />
+    <Compile Include="$(WpfSourceDir)\Themes\Shared\Microsoft\Windows\Themes\DataGridHeaderBorder.cs" />
+    <Compile Include="$(WpfSourceDir)\Themes\Shared\Microsoft\Windows\Themes\PlatformCulture.cs" />
+    <Compile Include="$(WpfSourceDir)\Themes\Shared\Microsoft\Windows\Themes\SystemDropShadowChrome.cs" />
+    <Compile Include="$(WpfSourceDir)\Themes\Shared\Microsoft\Windows\Themes\KnownTypeHelper.cs" />
+    <Compile Include="Microsoft\Windows\Themes\ScrollChrome.cs" />
+    <Compile Include="Microsoft\Windows\Themes\ScrollGlyph.cs" />
+    <Compile Include="Microsoft\Windows\Themes\ButtonChrome.cs" />
+    <Compile Include="Microsoft\Windows\Themes\ListBoxChrome.cs" />
+    <Compile Include="Microsoft\Windows\Themes\BulletChrome.cs" />
+    <Compile Include="Microsoft\Windows\Themes\ProgressBarHighlightConverter.cs" />
+    <Compile Include="Microsoft\Windows\Themes\DataGridHeaderBorder.cs" />
+  </ItemGroup>
+
+  <!-- Project References -->
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)PresentationUI\PresentationUI.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
+
+    <ProjectReference Include="$(WpfSourceDir)Themes\PresentationFramework.Aero2\ref\PresentationFramework.Aero2-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+
+  <!-- Minimal set of .NET core references -->
+  <ItemGroup>
+    <NetCoreReference Include="netstandard" />
+    <NetCoreReference Include="System.Collections" />
+    <NetCoreReference Include="System.Collections.Generic" />
+    <NetCoreReference Include="System.Collections.NonGeneric" />
+    <NetCoreReference Include="System.ComponentModel" />
+    <NetCoreReference Include="System.ComponentModel.Primitives" />
+    <NetCoreReference Include="System.Diagnostics.Debug" />
+    <NetCoreReference Include="System.Diagnostics.Process" />
+    <NetCoreReference Include="System.Diagnostics.Tools" />
+    <NetCoreReference Include="System.Diagnostics.TraceSource" />
+    <NetCoreReference Include="System.Drawing.Common" />
+    <NetCoreReference Include="System.Drawing.Primitives" />
+    <NetCoreReference Include="System.IO" />
+    <NetCoreReference Include="System.IO.FileSystem" />
+    <NetCoreReference Include="System.ObjectModel" />
+    <NetCoreReference Include="System.Resources.ResourceManager" />
+    <NetCoreReference Include="System.Runtime.Extensions" />
+    <NetCoreReference Include="System.Runtime.InteropServices" />
+    <NetCoreReference Include="System.Security.Cryptography.Algorithms" />
+    <NetCoreReference Include="System.Security.Cryptography.Primitives" />
+    <NetCoreReference Include="System.Security.Cryptography.X509Certificates" />
+    <NetCoreReference Include="System.Threading" />
+    <NetCoreReference Include="System.Threading.Thread" />
+    <NetCoreReference Include="System.Threading.ThreadPool" />
+
+    <!-- Additional references beyond the minimal set for PresentationFramework.Aero2 -->
+    <NetCoreReference Include="System.ComponentModel.TypeConverter" />
+    <NetCoreReference Include="System.Collections.Concurrent" />
+  </ItemGroup>
+
+</Project>
+

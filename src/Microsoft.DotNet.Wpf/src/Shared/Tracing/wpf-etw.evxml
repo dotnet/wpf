@@ -1,0 +1,2945 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+
+** GENERATED FILE **
+Modifications to this file will be lost.  Edit wpf-etw.man and run EventTraceCodeGen.cmd to update this file.
+
+This file is a manifest for standalone use with XPerfInfo for describing ETW events on Windows XP.
+
+-->
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1">
+<instrumentation xmlns="urn:schemas-microsoft-com:asm.v1">
+  <events>
+      <eventSubTypes/>
+      <!-- VisualCacheUpdate -->
+      <event guid="{A4FDB257-F156-48f6-B0F5-C4A944B553FB}">
+          <diagnosticInstance version="0">
+              <!-- VisualCacheUpdate -->
+              <classification subType="/VisualCacheUpdate/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <uX> %UInt32; </uX>
+                      <uY> %UInt32; </uY>
+                      <uWidth> %UInt32; </uWidth>
+                      <uHeight> %UInt32; </uHeight>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXFlushPage -->
+      <event guid="{5303d552-28ab-4dac-8bcd-0f7d5675a158}">
+          <diagnosticInstance version="0">
+              <!-- WClientDRXFlushPageStart -->
+              <classification subType="/WClientDRXFlushPage/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXFlushPageStop -->
+              <classification subType="/WClientDRXFlushPage/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXReleaseWriter -->
+      <event guid="{5303d552-28ab-4dac-8bcd-0f7d5675a15b}">
+          <diagnosticInstance version="0">
+              <!-- WClientDRXReleaseWriterStart -->
+              <classification subType="/WClientDRXReleaseWriter/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXReleaseWriterEnd -->
+              <classification subType="/WClientDRXReleaseWriter/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- TouchMoveReported -->
+      <event guid="{FD718E3F-5462-4227-A610-75D5BF8967A2}">
+          <diagnosticInstance version="0">
+              <!-- TouchMoveReported -->
+              <classification subType="/TouchMoveReported/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int32; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientMeasure -->
+      <event guid="{3005e67b-129c-4ced-bcaa-91d7d73b1544}">
+          <diagnosticInstance version="0">
+              <!-- WClientMeasureAbort -->
+              <classification subType="/WClientMeasure/MeasureAbort" subTypeValue="10" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <LoopDurationMS> %Int32; </LoopDurationMS>
+                      <loopCounter> %Int32; </loopCounter>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientMeasureElementBegin -->
+              <classification subType="/WClientMeasure/MeasureElementBegin" subTypeValue="11" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int64; </Id>
+                      <Width> %Double; </Width>
+                      <Height> %Double; </Height>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientMeasureElementEnd -->
+              <classification subType="/WClientMeasure/MeasureElementEnd" subTypeValue="12" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int64; </Id>
+                      <Width> %Double; </Width>
+                      <Height> %Double; </Height>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- ReleaseOnChannel -->
+      <event guid="{8a61870b-a794-477e-9093-282e09eabe59}">
+          <diagnosticInstance version="0">
+              <!-- ReleaseOnChannel -->
+              <classification subType="/ReleaseOnChannel/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <ChannelPtr> %Pointer; </ChannelPtr>
+                      <ResourceHandle> %UInt32; </ResourceHandle>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- TouchUpReported -->
+      <event guid="{C2AC85A3-E16B-4d07-90DE-1E686394B831}">
+          <diagnosticInstance version="0">
+              <!-- TouchUpReported -->
+              <classification subType="/TouchUpReported/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int32; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXGetVisual -->
+      <event guid="{5303d552-28ab-4dac-8bcd-0f7d5675a159}">
+          <diagnosticInstance version="0">
+              <!-- WClientDRXGetVisualStart -->
+              <classification subType="/WClientDRXGetVisual/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXGetVisualEnd -->
+              <classification subType="/WClientDRXGetVisual/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WPFElementID -->
+      <event guid="{A060D980-4C18-4953-81DF-CFDFD345C5CA}">
+          <diagnosticInstance version="0">
+              <!-- PerfElementIDName -->
+              <classification subType="/WPFElementID/ElementName" subTypeValue="10" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int64; </Id>
+                      <Type> %String; </Type>
+                      <Name> %String; </Name>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- PerfElementIDAssignment -->
+              <classification subType="/WPFElementID/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int64; </Id>
+                      <Type> %String; </Type>
+                      <Data> %String; </Data>
+                      <AssemblyID> %Int64; </AssemblyID>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- CreateWpfGfxResource -->
+      <event guid="{9de2b56b-79a4-497c-88f2-d5bedc042a9d}">
+          <diagnosticInstance version="0">
+              <!-- CreateWpfGfxResource -->
+              <classification subType="/CreateWpfGfxResource/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <ResourcePtr> %Pointer; </ResourcePtr>
+                      <ChannelHandle> %UInt32; </ChannelHandle>
+                      <ResourceHandle> %UInt32; </ResourceHandle>
+                      <ResourceType> %UInt32; </ResourceType>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- UnexpectedSoftwareFallback -->
+      <event guid="{7d2c8338-c13c-4c5c-867a-c56c980354e4}">
+          <diagnosticInstance version="0">
+              <!-- UnexpectedSoftwareFallback -->
+              <classification subType="/UnexpectedSoftwareFallback/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Reason> %UInt32; </Reason>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- DrawBitmap -->
+      <event guid="{a7f1ef9d-9bb9-4c7d-93ad-11919b122fa2}">
+          <diagnosticInstance version="0">
+              <!-- DrawBitmapInfo -->
+              <classification subType="/DrawBitmap/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Bitmap> %Pointer; </Bitmap>
+                      <width> %UInt32; </width>
+                      <height> %UInt32; </height>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXRaster -->
+      <event guid="{5303d552-28ab-4dac-8bcd-0f7d5675a15e}">
+          <diagnosticInstance version="0">
+              <!-- WClientDRXRasterStart -->
+              <classification subType="/WClientDRXRaster/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXRasterEnd -->
+              <classification subType="/WClientDRXRaster/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- CreateChannel -->
+      <event guid="{1c415c02-1446-480c-a81e-b2967ee7e20a}">
+          <diagnosticInstance version="0">
+              <!-- CreateChannel -->
+              <classification subType="/CreateChannel/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <ChannelPtr> %Pointer; </ChannelPtr>
+                      <ChannelHandle> %UInt32; </ChannelHandle>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- CreateOrAddOnChnl -->
+      <event guid="{a9ee6bda-f0df-4e2d-a3dd-25ca8fb39f1f}">
+          <diagnosticInstance version="0">
+              <!-- CreateOrAddResourceOnChannel -->
+              <classification subType="/CreateOrAddOnChnl/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <PerfEltId> %Int64; </PerfEltId>
+                      <ChannelPtr> %Pointer; </ChannelPtr>
+                      <ResourceHandle> %UInt32; </ResourceHandle>
+                      <ResourceType> %UInt32; </ResourceType>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientPotentialIRTResource -->
+      <event guid="{4055bbd6-ba41-4bd0-bc0d-6b67965229be}">
+          <diagnosticInstance version="0">
+              <!-- WClientPotentialIRTResource -->
+              <classification subType="/WClientPotentialIRTResource/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Pointer> %Pointer; </Pointer>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- DWMDraw_ -->
+      <event guid="{c4e8f367-3ba1-4c75-b985-facbb4274dd7}">
+          <diagnosticInstance version="0">
+              <!-- DWMDraw_BitmapStart -->
+              <classification subType="/DWMDraw_/BitmapStart" subTypeValue="56" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Z> %Int32; </Z>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DWMDraw_BitmapEnd -->
+              <classification subType="/DWMDraw_/BitmapEnd" subTypeValue="57" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Z> %Int32; </Z>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DWMDraw_RectangleStart -->
+              <classification subType="/DWMDraw_/RectangleStart" subTypeValue="58" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Z> %Int32; </Z>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DWMDraw_RectangleEnd -->
+              <classification subType="/DWMDraw_/RectangleEnd" subTypeValue="59" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Z> %Int32; </Z>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DWMDraw_GeometryStart -->
+              <classification subType="/DWMDraw_/GeometryStart" subTypeValue="60" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Z> %Int32; </Z>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DWMDraw_GeometryEnd -->
+              <classification subType="/DWMDraw_/GeometryEnd" subTypeValue="61" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Z> %Int32; </Z>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DWMDraw_ImageStart -->
+              <classification subType="/DWMDraw_/ImageStart" subTypeValue="62" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Z> %Int32; </Z>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DWMDraw_ImageEnd -->
+              <classification subType="/DWMDraw_/ImageEnd" subTypeValue="63" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Z> %Int32; </Z>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DWMDraw_GlyphRunStart -->
+              <classification subType="/DWMDraw_/GlyphRunStart" subTypeValue="64" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Z> %Int32; </Z>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DWMDraw_GlyphRunEnd -->
+              <classification subType="/DWMDraw_/GlyphRunEnd" subTypeValue="65" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Z> %Int32; </Z>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DWMDraw_BeginLayerStart -->
+              <classification subType="/DWMDraw_/BeginLayerStart" subTypeValue="68" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <left> %Float; </left>
+                      <top> %Float; </top>
+                      <right> %Float; </right>
+                      <bottom> %Float; </bottom>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DWMDraw_BeginLayerEnd -->
+              <classification subType="/DWMDraw_/BeginLayerEnd" subTypeValue="69" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <left> %Float; </left>
+                      <top> %Float; </top>
+                      <right> %Float; </right>
+                      <bottom> %Float; </bottom>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DWMDraw_EndLayerStart -->
+              <classification subType="/DWMDraw_/EndLayerStart" subTypeValue="70" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DWMDraw_EndLayerEnd -->
+              <classification subType="/DWMDraw_/EndLayerEnd" subTypeValue="71" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DWMDraw_ClippedBitmapStart -->
+              <classification subType="/DWMDraw_/ClippedBitmapStart" subTypeValue="78" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Z> %Int32; </Z>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DWMDraw_ClippedBitmapEnd -->
+              <classification subType="/DWMDraw_/ClippedBitmapEnd" subTypeValue="79" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Z> %Int32; </Z>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DWMDraw_Info -->
+              <classification subType="/DWMDraw_/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <left> %Float; </left>
+                      <top> %Float; </top>
+                      <right> %Float; </right>
+                      <bottom> %Float; </bottom>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientParseXaml -->
+      <event guid="{3164257a-c9be-4c36-9d8f-09b18ac880a6}">
+          <diagnosticInstance version="0">
+              <!-- WClientParseXamlBegin -->
+              <classification subType="/WClientParseXaml/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <URI> %String; </URI>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientParseXamlEnd -->
+              <classification subType="/WClientParseXaml/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <URI> %String; </URI>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- VisualCacheAlloc -->
+      <event guid="{85EB64F6-DC84-43c6-B14C-3BD607F42C0D}">
+          <diagnosticInstance version="0">
+              <!-- VisualCacheAlloc -->
+              <classification subType="/VisualCacheAlloc/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <uX> %UInt32; </uX>
+                      <uY> %UInt32; </uY>
+                      <uWidth> %UInt32; </uWidth>
+                      <uHeight> %UInt32; </uHeight>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientArrange -->
+      <event guid="{4b0ef3d1-0cbb-4847-b98f-16408e7e83f3}">
+          <diagnosticInstance version="0">
+              <!-- WClientArrangeElementBegin -->
+              <classification subType="/WClientArrange/ArrangeElementBegin" subTypeValue="11" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int64; </Id>
+                      <Top> %Double; </Top>
+                      <Left> %Double; </Left>
+                      <Width> %Double; </Width>
+                      <Height> %Double; </Height>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientArrangeElementEnd -->
+              <classification subType="/WClientArrange/ArrangeElementEnd" subTypeValue="12" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int64; </Id>
+                      <Top> %Double; </Top>
+                      <Left> %Double; </Left>
+                      <Width> %Double; </Width>
+                      <Height> %Double; </Height>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- SetClip -->
+      <event guid="{6acaf5f0-d340-4373-a851-fea1267aa210}">
+          <diagnosticInstance version="0">
+              <!-- SetClipInfo -->
+              <classification subType="/SetClip/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <left> %UInt32; </left>
+                      <top> %UInt32; </top>
+                      <right> %UInt32; </right>
+                      <bottom> %UInt32; </bottom>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- ManipulationEventRaised -->
+      <event guid="{51F685EB-B111-400d-B3E3-46022F66A894}">
+          <diagnosticInstance version="0">
+              <!-- ManipulationEventRaised -->
+              <classification subType="/ManipulationEventRaised/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int32; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientLayout -->
+      <event guid="{a3edb710-21fc-4f91-97f4-ac2b0df1c20f}">
+          <diagnosticInstance version="0">
+              <!-- WClientLayoutAbort -->
+              <classification subType="/WClientLayout/Abort" subTypeValue="10" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <LoopDurationMS> %Int32; </LoopDurationMS>
+                      <loopCounter> %Int32; </loopCounter>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientLayoutFireSizeChangedBegin -->
+              <classification subType="/WClientLayout/FireSizeChangedBegin" subTypeValue="11" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientLayoutFireSizeChangedEnd -->
+              <classification subType="/WClientLayout/FireSizeChangedEnd" subTypeValue="12" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientLayoutFireLayoutUpdatedBegin -->
+              <classification subType="/WClientLayout/FireLayoutUpdatedBegin" subTypeValue="13" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientLayoutFireLayoutUpdatedEnd -->
+              <classification subType="/WClientLayout/FireLayoutUpdatedEnd" subTypeValue="14" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientLayoutFireAutomationEventsBegin -->
+              <classification subType="/WClientLayout/FireAutomationEventsBegin" subTypeValue="15" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientLayoutFireAutomationEventsEnd -->
+              <classification subType="/WClientLayout/FireAutomationEventsEnd" subTypeValue="16" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientLayoutException -->
+              <classification subType="/WClientLayout/Exception" subTypeValue="17" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientLayoutInvalidated -->
+              <classification subType="/WClientLayout/Invalidated" subTypeValue="18" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- ManipulationReportFrame -->
+      <event guid="{E185D096-6EB9-41be-81F4-75D924425872}">
+          <diagnosticInstance version="0">
+              <!-- ManipulationReportFrame -->
+              <classification subType="/ManipulationReportFrame/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int32; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXGetPrintCap -->
+      <event guid="{5303d552-28ab-4dac-8bcd-0f7d5675a15c}">
+          <diagnosticInstance version="0">
+              <!-- WClientDRXGetPrintCapStart -->
+              <classification subType="/WClientDRXGetPrintCap/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXGetPrintCapEnd -->
+              <classification subType="/WClientDRXGetPrintCap/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXPTProvider -->
+      <event guid="{5303d552-28ab-4dac-8bcd-0f7d5675a15d}">
+          <diagnosticInstance version="0">
+              <!-- WClientDRXPTProviderStart -->
+              <classification subType="/WClientDRXPTProvider/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXPTProviderEnd -->
+              <classification subType="/WClientDRXPTProvider/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- BitmapCopy -->
+      <event guid="{5c02c62f-aec1-4f0c-b4a7-511d280184fd}">
+          <diagnosticInstance version="0">
+              <!-- BitmapCopyInfo -->
+              <classification subType="/BitmapCopy/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <width> %UInt32; </width>
+                      <height> %UInt32; </height>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientOnRender -->
+      <event guid="{3A475CEF-0E2A-449b-986E-EFFF5D6260E7}">
+          <diagnosticInstance version="0">
+              <!-- WClientOnRenderBegin -->
+              <classification subType="/WClientOnRender/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientOnRenderEnd -->
+              <classification subType="/WClientOnRender/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- PenThreadPoolThreadAcquisition -->
+      <event guid="{6C325C36-4D5F-4328-B1C6-E164796DFE2B}">
+          <diagnosticInstance version="0">
+              <!-- PenThreadPoolThreadAcquisition -->
+              <classification subType="/PenThreadPoolThreadAcquisition/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int32; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientCreateIRT -->
+      <event guid="{d56e7b1e-e24c-4b0b-9c4a-8881f7005633}">
+          <diagnosticInstance version="0">
+              <!-- WClientCreateIRT -->
+              <classification subType="/WClientCreateIRT/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <ResourcePtr> %Pointer; </ResourcePtr>
+                      <ParentResourcePtr> %Pointer; </ParentResourcePtr>
+                      <Reason> %UInt32; </Reason>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- DWMDraw_Clear -->
+      <event guid="{c8960930-bf29-4c06-8574-d4be803f13f9}">
+          <diagnosticInstance version="0">
+              <!-- DWMDraw_ClearStart -->
+              <classification subType="/DWMDraw_Clear/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <left> %Float; </left>
+                      <top> %Float; </top>
+                      <right> %Float; </right>
+                      <bottom> %Float; </bottom>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DWMDraw_ClearEnd -->
+              <classification subType="/DWMDraw_Clear/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientParseXamlBamlInfo -->
+      <event guid="{00c117d0-8234-4efa-ace3-73ba1c655f28}">
+          <diagnosticInstance version="0">
+              <!-- WClientParseXamlBamlInfo -->
+              <classification subType="/WClientParseXamlBamlInfo/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <PerfElementID> %Int64; </PerfElementID>
+                      <LineNumber> %Int32; </LineNumber>
+                      <LinePosition> %Int32; </LinePosition>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- TouchDownReported -->
+      <event guid="{837AD37A-8CEF-4c0c-944A-AE3B1F1C2557}">
+          <diagnosticInstance version="0">
+              <!-- TouchDownReported -->
+              <classification subType="/TouchDownReported/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int32; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- UpdateVisualState -->
+      <event guid="{07a7dd63-b52d-4eff-ac3f-2448daf97499}">
+          <diagnosticInstance version="0">
+              <!-- UpdateVisualStateStart -->
+              <classification subType="/UpdateVisualState/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- UpdateVisualStateEnd -->
+              <classification subType="/UpdateVisualState/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- StylusEventQueued -->
+      <event guid="{41ECD0F8-F5A6-4aae-9E85-CAECE119B853}">
+          <diagnosticInstance version="0">
+              <!-- StylusEventQueued -->
+              <classification subType="/StylusEventQueued/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int32; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXSerializeTree -->
+      <event guid="{5303d552-28ab-4dac-8bcd-0f7d5675a15a}">
+          <diagnosticInstance version="0">
+              <!-- WClientDRXSerializeTreeStart -->
+              <classification subType="/WClientDRXSerializeTree/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXSerializeTreeEnd -->
+              <classification subType="/WClientDRXSerializeTree/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- GetAnnotations -->
+      <event guid="{cd9f6017-7e64-4c61-b9ed-5c2fc8c4d849}">
+          <diagnosticInstance version="2">
+              <!-- GetAnnotationsBegin -->
+              <classification subType="/GetAnnotations/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- GetAnnotationsEnd -->
+              <classification subType="/GetAnnotations/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXSavePage -->
+      <event guid="{b0e3e78b-9ac7-473c-8903-b5d212399e3b}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXSavePageBegin -->
+              <classification subType="/WClientDRXSavePage/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXSavePageEnd -->
+              <classification subType="/WClientDRXSavePage/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXInstantiated -->
+      <event guid="{9de677e1-914a-426c-bcd9-2ccdea3648df}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXInstantiated -->
+              <classification subType="/WClientDRXInstantiated/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientUceRender -->
+      <event guid="{92ca500c-67b1-447f-9497-cfd6d52a5b0e}">
+          <diagnosticInstance version="2">
+              <!-- WClientUceRenderBegin -->
+              <classification subType="/WClientUceRender/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %UInt64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientUceRenderEnd -->
+              <classification subType="/WClientUceRender/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %UInt64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientCreateVisual -->
+      <event guid="{2dbecf62-51ea-493a-8dd0-4bee1ccbe8aa}">
+          <diagnosticInstance version="2">
+              <!-- WClientCreateVisual -->
+              <classification subType="/WClientCreateVisual/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int32; </Id>
+                      <HWND> %Int64; </HWND>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- DeserializeAnnotation -->
+      <event guid="{2e32c255-d6db-4de7-9e62-9586377778d5}">
+          <diagnosticInstance version="2">
+              <!-- DeserializeAnnotationBegin -->
+              <classification subType="/DeserializeAnnotation/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DeserializeAnnotationEnd -->
+              <classification subType="/DeserializeAnnotation/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXGetPage -->
+      <event guid="{a0c17259-c6b1-4850-a9ab-13659fe6dc58}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXGetPageBegin -->
+              <classification subType="/WClientDRXGetPage/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXGetPageEnd -->
+              <classification subType="/WClientDRXGetPage/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientPostRender -->
+      <event guid="{fb69cd45-c00d-4c23-9765-69c00344b2c5}">
+          <diagnosticInstance version="2">
+              <!-- WClientPostRender -->
+              <classification subType="/WClientPostRender/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientAnimRenderHandler -->
+      <event guid="{521c1c8d-faaa-435b-ad8c-1d64442bfd70}">
+          <diagnosticInstance version="2">
+              <!-- WClientAnimRenderHandlerBegin -->
+              <classification subType="/WClientAnimRenderHandler/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientAnimRenderHandlerEnd -->
+              <classification subType="/WClientAnimRenderHandler/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXConvertImage -->
+      <event guid="{17fddfdc-a1be-43b3-b2ee-f5e89b7b1b26}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXConvertImageBegin -->
+              <classification subType="/WClientDRXConvertImage/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXConvertImageEnd -->
+              <classification subType="/WClientDRXConvertImage/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXReadStream -->
+      <event guid="{c2b15025-7812-4e44-8b68-7d734303438a}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXReadStreamBegin -->
+              <classification subType="/WClientDRXReadStream/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Count> %Int32; </Count>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXReadStreamEnd -->
+              <classification subType="/WClientDRXReadStream/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Result> %Int32; </Result>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- AddAttachedSN -->
+      <event guid="{9ca660f6-8d7c-4a90-a92f-74482d9cc1cf}">
+          <diagnosticInstance version="2">
+              <!-- AddAttachedSNBegin -->
+              <classification subType="/AddAttachedSN/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- AddAttachedSNEnd -->
+              <classification subType="/AddAttachedSN/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientCompileScene -->
+      <event guid="{af36fcb5-58e5-48d0-88d0-d8f4dcb56a12}">
+          <diagnosticInstance version="2">
+              <!-- WClientCompileSceneBegin -->
+              <classification subType="/WClientCompileScene/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientCompileSceneEnd -->
+              <classification subType="/WClientCompileScene/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- LayerEvent -->
+      <event guid="{ead9a51b-d3d3-4b0b-8d25-e4914ed4c1ed}">
+          <diagnosticInstance version="2">
+              <!-- LayerEventStart -->
+              <classification subType="/LayerEvent/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- LayerEventEnd -->
+              <classification subType="/LayerEvent/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXFind -->
+      <event guid="{ff8efb74-efaa-424d-9022-ee8d21ad804e}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXFindBegin -->
+              <classification subType="/WClientDRXFind/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXFindEnd -->
+              <classification subType="/WClientDRXFind/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- RemoveAttachedHighlight -->
+      <event guid="{4c81d490-9004-49d1-87d7-289d53a314ef}">
+          <diagnosticInstance version="2">
+              <!-- RemoveAttachedHighlightBegin -->
+              <classification subType="/RemoveAttachedHighlight/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- RemoveAttachedHighlightEnd -->
+              <classification subType="/RemoveAttachedHighlight/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientResourceCacheMiss -->
+      <event guid="{0420755f-d416-4f15-939f-3e2cd3fcea23}">
+          <diagnosticInstance version="2">
+              <!-- WClientResourceCacheMiss -->
+              <classification subType="/WClientResourceCacheMiss/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- DeleteTextNote -->
+      <event guid="{7626a2f9-9a61-43a3-b7cc-bb84c2493aa7}">
+          <diagnosticInstance version="2">
+              <!-- DeleteTextNoteBegin -->
+              <classification subType="/DeleteTextNote/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DeleteTextNoteEnd -->
+              <classification subType="/DeleteTextNote/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientMeasure -->
+      <event guid="{3005e67b-129c-4ced-bcaa-91d7d73b1544}">
+          <diagnosticInstance version="2">
+              <!-- WClientMeasureBegin -->
+              <classification subType="/WClientMeasure/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientMeasureEnd -->
+              <classification subType="/WClientMeasure/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Count> %Int32; </Count>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXLoadPrimitive -->
+      <event guid="{d0b70c99-450e-4872-a2d4-fbfb1dc797fa}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXLoadPrimitiveBegin -->
+              <classification subType="/WClientDRXLoadPrimitive/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXLoadPrimitiveEnd -->
+              <classification subType="/WClientDRXLoadPrimitive/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- LoadAnnotations -->
+      <event guid="{cf3a283e-c004-4e7d-b3b9-cc9b582a4a5f}">
+          <diagnosticInstance version="2">
+              <!-- LoadAnnotationsBegin -->
+              <classification subType="/LoadAnnotations/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- LoadAnnotationsEnd -->
+              <classification subType="/LoadAnnotations/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientUIContextDispatch -->
+      <event guid="{2481a374-999f-4ad2-9f22-6b7c8e2a5db0}">
+          <diagnosticInstance version="2">
+              <!-- WClientUIContextDispatchEnd -->
+              <classification subType="/WClientUIContextDispatch/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientUcePresent -->
+      <event guid="{4c48d6ef-ac14-4d84-ba37-49a94ba8d2af}">
+          <diagnosticInstance version="2">
+              <!-- WClientUcePresentBegin -->
+              <classification subType="/WClientUcePresent/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %UInt64; </Id>
+                      <QPCCurrentTime> %UInt64; </QPCCurrentTime>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientUcePresentEnd -->
+              <classification subType="/WClientUcePresent/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %UInt64; </Id>
+                      <QPCCurrentTime> %UInt64; </QPCCurrentTime>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- GetAnnotationByLoc -->
+      <event guid="{741a41bc-8ecd-43d1-a7f1-d2faca7362ef}">
+          <diagnosticInstance version="2">
+              <!-- GetAnnotationByLocBegin -->
+              <classification subType="/GetAnnotationByLoc/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- GetAnnotationByLocEnd -->
+              <classification subType="/GetAnnotationByLoc/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- CreateHighlight -->
+      <event guid="{c2a5edb8-ac73-41ef-a943-a8a49fa284b1}">
+          <diagnosticInstance version="2">
+              <!-- CreateHighlightBegin -->
+              <classification subType="/CreateHighlight/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- CreateHighlightEnd -->
+              <classification subType="/CreateHighlight/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientUcePrecompute -->
+      <event guid="{de51ae60-46ad-4cc0-9a29-426a87e88e9f}">
+          <diagnosticInstance version="2">
+              <!-- WClientUcePrecomputeBegin -->
+              <classification subType="/WClientUcePrecompute/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %UInt64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientUcePrecomputeEnd -->
+              <classification subType="/WClientUcePrecompute/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %UInt64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- DeleteAnnotation -->
+      <event guid="{4d832230-952a-4464-80af-aab2ac861703}">
+          <diagnosticInstance version="2">
+              <!-- DeleteAnnotationBegin -->
+              <classification subType="/DeleteAnnotation/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DeleteAnnotationEnd -->
+              <classification subType="/DeleteAnnotation/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientQPCFrequency -->
+      <event guid="{30ee0097-084c-408b-9038-73bed0479873}">
+          <diagnosticInstance version="2">
+              <!-- WClientQPCFrequency -->
+              <classification subType="/WClientQPCFrequency/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <QPCFrequency> %Int64; </QPCFrequency>
+                      <QPCCurrentTime> %Int64; </QPCCurrentTime>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- DeleteInkNote -->
+      <event guid="{bf7e2a93-9d6a-453e-badb-3f8f60075cf2}">
+          <diagnosticInstance version="2">
+              <!-- DeleteInkNoteBegin -->
+              <classification subType="/DeleteInkNote/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- DeleteInkNoteEnd -->
+              <classification subType="/DeleteInkNote/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- Navigation -->
+      <event guid="{6ffb9c25-5c8a-4091-989c-5b596ab286a0}">
+          <diagnosticInstance version="2">
+              <!-- Wpf_NavigationAsyncWorkItem -->
+              <classification subType="/Navigation/NavigationAsyncWorkItem" subTypeValue="11" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- Wpf_NavigationWebResponseReceived -->
+              <classification subType="/Navigation/NavigationWebResponseReceived" subTypeValue="12" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- Wpf_NavigationEnd -->
+              <classification subType="/Navigation/NavigationEnd" subTypeValue="14" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- Wpf_NavigationContentRendered -->
+              <classification subType="/Navigation/NavigationContentRendered" subTypeValue="15" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- Wpf_NavigationStart -->
+              <classification subType="/Navigation/NavigationStart" subTypeValue="10" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <NavigationMode> %String; </NavigationMode>
+                      <UriOrObject> %String; </UriOrObject>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- Wpf_NavigationLaunchBrowser -->
+              <classification subType="/Navigation/NavigationLaunchBrowser" subTypeValue="13" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <URI> %String; </URI>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- Wpf_NavigationPageFunctionReturn -->
+              <classification subType="/Navigation/NavigationPageFunctionReturn" subTypeValue="16" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <PF> %String; </PF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- CreateStickyNote -->
+      <event guid="{e3dbffac-1e92-4f48-a65a-c290bd5f5f15}">
+          <diagnosticInstance version="2">
+              <!-- CreateStickyNoteBegin -->
+              <classification subType="/CreateStickyNote/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- CreateStickyNoteEnd -->
+              <classification subType="/CreateStickyNote/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXSerialization -->
+      <event guid="{0527276c-d3f4-4293-b88c-ecdf7cac4430}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXSerializationBegin -->
+              <classification subType="/WClientDRXSerialization/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXSerializationEnd -->
+              <classification subType="/WClientDRXSerialization/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- AddAttachedMH -->
+      <event guid="{7ea1d548-ca17-ca17-a1a8-f1857db6302e}">
+          <diagnosticInstance version="2">
+              <!-- AddAttachedMHBegin -->
+              <classification subType="/AddAttachedMH/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- AddAttachedMHEnd -->
+              <classification subType="/AddAttachedMH/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXPageDown -->
+      <event guid="{d7cdeb52-5ba3-4e02-b114-385a61e7ba9d}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXPageDown -->
+              <classification subType="/WClientDRXPageDown/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <VerticalOffset> %Int32; </VerticalOffset>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXEndDoc -->
+      <event guid="{743dd3cf-bbce-4e69-a4db-85226ec6a445}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXEndDocBegin -->
+              <classification subType="/WClientDRXEndDoc/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXEndDocEnd -->
+              <classification subType="/WClientDRXEndDoc/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXStyleCreated -->
+      <event guid="{69737c35-1636-43be-a352-428ca36d1b2c}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXStyleCreated -->
+              <classification subType="/WClientDRXStyleCreated/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientRenderHandler -->
+      <event guid="{7723d8b7-488b-4f80-b089-46a4c6aca1c4}">
+          <diagnosticInstance version="2">
+              <!-- WClientRenderHandlerBegin -->
+              <classification subType="/WClientRenderHandler/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientRenderHandlerEnd -->
+              <classification subType="/WClientRenderHandler/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientInterlockedRender -->
+      <event guid="{7FE9630D-93DD-45B1-9459-21C7A4113174}">
+          <diagnosticInstance version="2">
+              <!-- WClientInterlockedRenderBegin -->
+              <classification subType="/WClientInterlockedRender/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientInterlockedRenderEnd -->
+              <classification subType="/WClientInterlockedRender/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXTreeFlatten -->
+      <event guid="{b4557454-212b-4f57-b9ca-2ba9d58273b3}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXTreeFlattenBegin -->
+              <classification subType="/WClientDRXTreeFlatten/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXTreeFlattenEnd -->
+              <classification subType="/WClientDRXTreeFlatten/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXOpenPackage -->
+      <event guid="{2b8f75f3-f8f9-4075-b914-5ae853c76276}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXOpenPackageBegin -->
+              <classification subType="/WClientDRXOpenPackage/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXOpenPackageEnd -->
+              <classification subType="/WClientDRXOpenPackage/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- SerializeAnnotation -->
+      <event guid="{0148924b-5bea-43e9-b3ed-399ca13b35eb}">
+          <diagnosticInstance version="2">
+              <!-- SerializeAnnotationBegin -->
+              <classification subType="/SerializeAnnotation/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- SerializeAnnotationEnd -->
+              <classification subType="/SerializeAnnotation/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXStartDoc -->
+      <event guid="{f3fba666-fa0f-4487-b846-9f204811bf3d}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXStartDocBegin -->
+              <classification subType="/WClientDRXStartDoc/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXStartDocEnd -->
+              <classification subType="/WClientDRXStartDoc/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientTimeManagerTick -->
+      <event guid="{ea3b4b66-b25f-4e5d-8bd4-ec62bb44583e}">
+          <diagnosticInstance version="2">
+              <!-- WClientTimeManagerTickBegin -->
+              <classification subType="/WClientTimeManagerTick/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <TickTime> %Int64; </TickTime>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientTimeManagerTickEnd -->
+              <classification subType="/WClientTimeManagerTick/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXConvertFont -->
+      <event guid="{88fc2d42-b1de-4588-8c3b-dc5bec03a9ac}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXConvertFontBegin -->
+              <classification subType="/WClientDRXConvertFont/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXConvertFontEnd -->
+              <classification subType="/WClientDRXConvertFont/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientResourceBamlAssembly -->
+      <event guid="{19df4373-6680-4a04-8c77-d2f6809ca703}">
+          <diagnosticInstance version="2">
+              <!-- WClientResourceBamlAssembly -->
+              <classification subType="/WClientResourceBamlAssembly/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <AssemblyName> %String; </AssemblyName>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientString -->
+      <event guid="{6b3c0258-9ddb-4579-8660-41c3ada25c34}">
+          <diagnosticInstance version="2">
+              <!-- WClientString -->
+              <classification subType="/WClientString/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Info> %String; </Info>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientStringBegin -->
+              <classification subType="/WClientString/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Info> %String; </Info>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientStringEnd -->
+              <classification subType="/WClientString/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Info> %String; </Info>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientUIContextIdle -->
+      <event guid="{c626ebef-0780-487f-81d7-38d3f0a6f05e}">
+          <diagnosticInstance version="2">
+              <!-- WClientUIContextIdle -->
+              <classification subType="/WClientUIContextIdle/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientParseRdrCrInst -->
+      <event guid="{8ba8f51c-0775-4adf-9eed-b1654ca088f5}">
+          <diagnosticInstance version="2">
+              <!-- WClientParseRdrCrInstBegin -->
+              <classification subType="/WClientParseRdrCrInst/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientParseRdrCrInstEnd -->
+              <classification subType="/WClientParseRdrCrInst/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientUceProcessQueue -->
+      <event guid="{b7c7f692-f2b4-447a-b5df-fa6c314889ae}">
+          <diagnosticInstance version="2">
+              <!-- WClientUceProcessQueueBegin -->
+              <classification subType="/WClientUceProcessQueue/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %UInt64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientUceProcessQueueEnd -->
+              <classification subType="/WClientUceProcessQueue/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %UInt64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientUceProcessQueueInfo -->
+              <classification subType="/WClientUceProcessQueue/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <BatchSize> %UInt64; </BatchSize>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- AddAnnotation -->
+      <event guid="{8f4b2faa-24d6-4ee2-9935-bbf845f758a2}">
+          <diagnosticInstance version="2">
+              <!-- AddAnnotationBegin -->
+              <classification subType="/AddAnnotation/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- AddAnnotationEnd -->
+              <classification subType="/AddAnnotation/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXGetStream -->
+      <event guid="{3f4510eb-9ee8-4b80-9ec7-775efeb1ba72}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXGetStreamBegin -->
+              <classification subType="/WClientDRXGetStream/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXGetStreamEnd -->
+              <classification subType="/WClientDRXGetStream/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXAlphaFlatten -->
+      <event guid="{302f02e9-f025-4083-abd5-2ce3aaa9a3cf}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXAlphaFlattenBegin -->
+              <classification subType="/WClientDRXAlphaFlatten/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXAlphaFlattenEnd -->
+              <classification subType="/WClientDRXAlphaFlatten/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXEndPage -->
+      <event guid="{e20fddf4-17a6-4e5f-8693-3dd7cb049422}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXEndPageBegin -->
+              <classification subType="/WClientDRXEndPage/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXEndPageEnd -->
+              <classification subType="/WClientDRXEndPage/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientResourceFind -->
+      <event guid="{228d90d5-7e19-4480-9e56-3af2e90f8da6}">
+          <diagnosticInstance version="2">
+              <!-- WClientResourceFindBegin -->
+              <classification subType="/WClientResourceFind/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Key> %String; </Key>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientResourceFindEnd -->
+              <classification subType="/WClientResourceFind/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- UpdateAnnotationWithSNC -->
+      <event guid="{205e0a58-3c7d-495d-b3ed-18c3fb38923f}">
+          <diagnosticInstance version="2">
+              <!-- UpdateAnnotationWithSNCBegin -->
+              <classification subType="/UpdateAnnotationWithSNC/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- UpdateAnnotationWithSNCEnd -->
+              <classification subType="/UpdateAnnotationWithSNC/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientParseRdrCrInFTyp -->
+      <event guid="{0da15d58-c3a7-40de-9113-72db0c4a9351}">
+          <diagnosticInstance version="2">
+              <!-- WClientParseRdrCrInFTypBegin -->
+              <classification subType="/WClientParseRdrCrInFTyp/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientParseRdrCrInFTypEnd -->
+              <classification subType="/WClientParseRdrCrInFTyp/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Type> %String; </Type>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXStartPage -->
+      <event guid="{5303d552-28ab-4dac-8bcd-0f7d5675a157}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXStartPageBegin -->
+              <classification subType="/WClientDRXStartPage/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXStartPageEnd -->
+              <classification subType="/WClientDRXStartPage/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientMediaRender -->
+      <event guid="{6827e447-0e0e-4b5e-ae81-b79a00ec8349}">
+          <diagnosticInstance version="2">
+              <!-- WClientMediaRenderBegin -->
+              <classification subType="/WClientMediaRender/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int32; </Id>
+                      <QPCExpectedPresentTime> %Int64; </QPCExpectedPresentTime>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientMediaRenderEnd -->
+              <classification subType="/WClientMediaRender/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientUceCheckDeviceState -->
+      <event guid="{76601d6d-c6d4-4e8d-ac6e-3f9b4f1745e0}">
+          <diagnosticInstance version="2">
+              <!-- WClientUceCheckDeviceStateInfo -->
+              <classification subType="/WClientUceCheckDeviceState/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <hwnd> %Pointer; </hwnd>
+                      <hr> %UInt32; </hr>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientUceResponse -->
+      <event guid="{4c253b24-7230-4fa1-9748-ac4c59cf288c}">
+          <diagnosticInstance version="2">
+              <!-- WClientUceResponse -->
+              <classification subType="/WClientUceResponse/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %UInt32; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- AnnotationInkChanged -->
+      <event guid="{1228e154-f171-426e-b672-5ee19b755edf}">
+          <diagnosticInstance version="2">
+              <!-- AnnotationInkChangedBegin -->
+              <classification subType="/AnnotationInkChanged/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- AnnotationInkChangedEnd -->
+              <classification subType="/AnnotationInkChanged/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXInvalidateView -->
+      <event guid="{3be3740f-0a31-4d22-a2a3-4d4b6d3ab899}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXInvalidateView -->
+              <classification subType="/WClientDRXInvalidateView/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientParseBaml -->
+      <event guid="{8a1e3af5-3a6d-4582-86d1-5901471ebbde}">
+          <diagnosticInstance version="2">
+              <!-- WClientParseBamlBegin -->
+              <classification subType="/WClientParseBaml/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <URI> %String; </URI>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientParseBamlEnd -->
+              <classification subType="/WClientParseBaml/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <URI> %String; </URI>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientResourceCacheValue -->
+      <event guid="{3b253e2d-72a5-489e-8c65-56c1e6c859b5}">
+          <diagnosticInstance version="2">
+              <!-- WClientResourceCacheValue -->
+              <classification subType="/WClientResourceCacheValue/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientUceNotifyPresent -->
+      <event guid="{24cd1476-e145-4e5a-8bfc-50c36bbdf9cc}">
+          <diagnosticInstance version="2">
+              <!-- WClientUceNotifyPresent -->
+              <classification subType="/WClientUceNotifyPresent/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <QPCLastPresentationTime> %Int64; </QPCLastPresentationTime>
+                      <PresentationResults> %Int64; </PresentationResults>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientPropParentCheck -->
+      <event guid="{831bea07-5a2c-434c-8ef8-7eba41c881fb}">
+          <diagnosticInstance version="2">
+              <!-- WClientPropParentCheck -->
+              <classification subType="/WClientPropParentCheck/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int32; </Id>
+                      <TypeAndName> %String; </TypeAndName>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientResourceCacheNull -->
+      <event guid="{7866a65b-2f38-43b6-abd2-df433bbca073}">
+          <diagnosticInstance version="2">
+              <!-- WClientResourceCacheNull -->
+              <classification subType="/WClientResourceCacheNull/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXPageVisible -->
+      <event guid="{2ae7c601-0aec-4c99-ba80-2eca712d1b97}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXPageVisible -->
+              <classification subType="/WClientDRXPageVisible/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <FirstVisiblePage> %Int32; </FirstVisiblePage>
+                      <LastVisiblePage> %Int32; </LastVisiblePage>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientFontCache -->
+      <event guid="{f3362106-b861-4980-9aac-b1ef0bab75aa}">
+          <diagnosticInstance version="2">
+              <!-- WClientFontCache -->
+              <classification subType="/WClientFontCache/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientArrange -->
+      <event guid="{4b0ef3d1-0cbb-4847-b98f-16408e7e83f3}">
+          <diagnosticInstance version="2">
+              <!-- WClientArrangeBegin -->
+              <classification subType="/WClientArrange/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientArrangeAbort -->
+              <classification subType="/WClientArrange/ArrangeAbort" subTypeValue="10" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <LoopDurationMS> %Int32; </LoopDurationMS>
+                      <loopCounter> %Int32; </loopCounter>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientArrangeEnd -->
+              <classification subType="/WClientArrange/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Count> %Int32; </Count>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXGetDevMode -->
+      <event guid="{573ea8dc-db6c-42c0-91f8-964e39cb6a70}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXGetDevModeBegin -->
+              <classification subType="/WClientDRXGetDevMode/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXGetDevModeEnd -->
+              <classification subType="/WClientDRXGetDevMode/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientInputMessage -->
+      <event guid="{4ac79bac-7dfb-4402-a910-fdafe16f29b2}">
+          <diagnosticInstance version="2">
+              <!-- WClientInputMessage -->
+              <classification subType="/WClientInputMessage/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int32; </Id>
+                      <HWND> %Int64; </HWND>
+                      <Msg> %Int32; </Msg>
+                      <WParam> %Int32; </WParam>
+                      <LParam> %Int32; </LParam>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXSaveXps -->
+      <event guid="{ba0320d5-2294-4067-8b19-ef9cddad4b1a}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXSaveXpsBegin -->
+              <classification subType="/WClientDRXSaveXps/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXSaveXpsEnd -->
+              <classification subType="/WClientDRXSaveXps/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- ClearHighlight -->
+      <event guid="{e1a59147-d28d-4c5f-b980-691be2fd4208}">
+          <diagnosticInstance version="2">
+              <!-- ClearHighlightBegin -->
+              <classification subType="/ClearHighlight/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- ClearHighlightEnd -->
+              <classification subType="/ClearHighlight/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientUICommitChannel -->
+      <event guid="{f9c0372e-60bd-46c9-bc64-94fe5fd31fe4}">
+          <diagnosticInstance version="2">
+              <!-- WClientUICommitChannel -->
+              <classification subType="/WClientUICommitChannel/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int32; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXLineDown -->
+      <event guid="{b67ab12c-29bf-4020-b678-f043925b8235}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXLineDown -->
+              <classification subType="/WClientDRXLineDown/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <VerticalOffset> %Int32; </VerticalOffset>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXCommitPage -->
+      <event guid="{7d7ee18d-aea5-493f-9ef2-bbdb36fcaa78}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXCommitPageBegin -->
+              <classification subType="/WClientDRXCommitPage/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXCommitPageEnd -->
+              <classification subType="/WClientDRXCommitPage/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientLayout -->
+      <event guid="{a3edb710-21fc-4f91-97f4-ac2b0df1c20f}">
+          <diagnosticInstance version="2">
+              <!-- WClientLayoutEnd -->
+              <classification subType="/WClientLayout/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WpfHost -->
+      <event guid="{5ff6b585-7fb9-4189-beb3-54c82ce4d7d1}">
+          <diagnosticInstance version="2">
+              <!-- WpfHost_DocObjHostCreated -->
+              <classification subType="/WpfHost/DocObjHostCreated" subTypeValue="10" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_XappLauncherAppStartup -->
+              <classification subType="/WpfHost/XappLauncherAppStartup" subTypeValue="13" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_XappLauncherAppExit -->
+              <classification subType="/WpfHost/XappLauncherAppExit" subTypeValue="14" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <AttemptDownload> %Byte; </AttemptDownload>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_DocObjHostRunApplicationStart -->
+              <classification subType="/WpfHost/DocObjHostRunApplicationStart" subTypeValue="15" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_DocObjHostRunApplicationEnd -->
+              <classification subType="/WpfHost/DocObjHostRunApplicationEnd" subTypeValue="16" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_ClickOnceActivationStart -->
+              <classification subType="/WpfHost/ClickOnceActivationStart" subTypeValue="17" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Direct> %Byte; </Direct>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_ClickOnceActivationEnd -->
+              <classification subType="/WpfHost/ClickOnceActivationEnd" subTypeValue="18" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_InitAppProxyStart -->
+              <classification subType="/WpfHost/InitAppProxyStart" subTypeValue="19" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_InitAppProxyEnd -->
+              <classification subType="/WpfHost/InitAppProxyEnd" subTypeValue="20" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_AppProxyCtor -->
+              <classification subType="/WpfHost/AppProxyCtor" subTypeValue="30" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_RootBrowserWindowSetupStart -->
+              <classification subType="/WpfHost/RootBrowserWindowSetupStart" subTypeValue="31" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_RootBrowserWindowSetupEnd -->
+              <classification subType="/WpfHost/RootBrowserWindowSetupEnd" subTypeValue="32" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_AppProxyRunStart -->
+              <classification subType="/WpfHost/AppProxyRunStart" subTypeValue="33" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_AppProxyRunEnd -->
+              <classification subType="/WpfHost/AppProxyRunEnd" subTypeValue="34" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_AppDomainManagerCctor -->
+              <classification subType="/WpfHost/AppDomainManagerCctor" subTypeValue="40" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_ApplicationActivatorCreateInstanceStart -->
+              <classification subType="/WpfHost/ApplicationActivatorCreateInstanceStart" subTypeValue="41" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <URI> %String; </URI>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_ApplicationActivatorCreateInstanceEnd -->
+              <classification subType="/WpfHost/ApplicationActivatorCreateInstanceEnd" subTypeValue="42" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_DetermineApplicationTrustStart -->
+              <classification subType="/WpfHost/DetermineApplicationTrustStart" subTypeValue="43" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_DetermineApplicationTrustEnd -->
+              <classification subType="/WpfHost/DetermineApplicationTrustEnd" subTypeValue="44" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_FirstTimeActivation -->
+              <classification subType="/WpfHost/FirstTimeActivation" subTypeValue="50" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_GetDownloadPageStart -->
+              <classification subType="/WpfHost/GetDownloadPageStart" subTypeValue="51" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Page> %String; </Page>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_GetDownloadPageEnd -->
+              <classification subType="/WpfHost/GetDownloadPageEnd" subTypeValue="52" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_DownloadDeplManifestStart -->
+              <classification subType="/WpfHost/DownloadDeplManifestStart" subTypeValue="53" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_DownloadDeplManifestEnd -->
+              <classification subType="/WpfHost/DownloadDeplManifestEnd" subTypeValue="54" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_AssertAppRequirementsStart -->
+              <classification subType="/WpfHost/AssertAppRequirementsStart" subTypeValue="55" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_AssertAppRequirementsEnd -->
+              <classification subType="/WpfHost/AssertAppRequirementsEnd" subTypeValue="56" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_DownloadApplicationStart -->
+              <classification subType="/WpfHost/DownloadApplicationStart" subTypeValue="57" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_DownloadApplicationEnd -->
+              <classification subType="/WpfHost/DownloadApplicationEnd" subTypeValue="58" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_DownloadProgressUpdate -->
+              <classification subType="/WpfHost/DownloadProgressUpdate" subTypeValue="59" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Bytes> %UInt32; </Bytes>
+                      <Total> %UInt32; </Total>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_XappLauncherAppNavigated -->
+              <classification subType="/WpfHost/XappLauncherAppNavigated" subTypeValue="60" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_UpdateBrowserCommandsStart -->
+              <classification subType="/WpfHost/UpdateBrowserCommandsStart" subTypeValue="70" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_UpdateBrowserCommandsEnd -->
+              <classification subType="/WpfHost/UpdateBrowserCommandsEnd" subTypeValue="71" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_PostShutdown -->
+              <classification subType="/WpfHost/PostShutdown" subTypeValue="80" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_AbortingActivation -->
+              <classification subType="/WpfHost/AbortingActivation" subTypeValue="81" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_IBHSRunStart -->
+              <classification subType="/WpfHost/IBHSRunStart" subTypeValue="11" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Path> %String; </Path>
+                      <AppId> %String; </AppId>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHost_IBHSRunEnd -->
+              <classification subType="/WpfHost/IBHSRunEnd" subTypeValue="12" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <ExitCode> %UInt32; </ExitCode>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXLayout -->
+      <event guid="{34fbea40-0238-498f-b12a-631f5a8ef9a5}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXLayoutBegin -->
+              <classification subType="/WClientDRXLayout/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXLayoutEnd -->
+              <classification subType="/WClientDRXLayout/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientAppRun -->
+      <event guid="{08a719d6-ea79-4abc-9799-38eded602133}">
+          <diagnosticInstance version="2">
+              <!-- WClientAppRun -->
+              <classification subType="/WClientAppRun/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientAppCtor -->
+      <event guid="{f9f048c6-2011-4d0a-812a-23a4a4d801f5}">
+          <diagnosticInstance version="2">
+              <!-- WClientAppCtor -->
+              <classification subType="/WClientAppCtor/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- RemoveAttachedSN -->
+      <event guid="{8c4c69f7-1185-46df-a5f5-e31ac7e96c07}">
+          <diagnosticInstance version="2">
+              <!-- RemoveAttachedSNBegin -->
+              <classification subType="/RemoveAttachedSN/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- RemoveAttachedSNEnd -->
+              <classification subType="/RemoveAttachedSN/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientParseFefCrInst -->
+      <event guid="{f7555161-6c1a-4a12-828d-8492a7699a49}">
+          <diagnosticInstance version="2">
+              <!-- WClientParseFefCrInstBegin -->
+              <classification subType="/WClientParseFefCrInst/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientParseFefCrInstEnd -->
+              <classification subType="/WClientParseFefCrInst/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDesktopRTCreate -->
+      <event guid="{2e62c3bf-7c51-43fb-8cdc-915d4abc09dd}">
+          <diagnosticInstance version="2">
+              <!-- WClientDesktopRTCreateBegin -->
+              <classification subType="/WClientDesktopRTCreate/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Hwnd> %UInt64; </Hwnd>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDesktopRTCreateEnd -->
+              <classification subType="/WClientDesktopRTCreate/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Hwnd> %UInt64; </Hwnd>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientUIResponse -->
+      <event guid="{ab29585b-4794-4465-91e6-9df5861c88c5}">
+          <diagnosticInstance version="2">
+              <!-- WClientUIResponse -->
+              <classification subType="/WClientUIResponse/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <ContextID> %Int32; </ContextID>
+                      <ResponseID> %Int32; </ResponseID>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- AddAttachedHighlight -->
+      <event guid="{56d2cae5-5ec0-44fb-98c2-453e87a0877b}">
+          <diagnosticInstance version="2">
+              <!-- AddAttachedHighlightBegin -->
+              <classification subType="/AddAttachedHighlight/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- AddAttachedHighlightEnd -->
+              <classification subType="/AddAttachedHighlight/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientParseXml -->
+      <event guid="{bf86e5bf-3fb4-442f-a34a-b207a3b19c3b}">
+          <diagnosticInstance version="2">
+              <!-- WClientParseXmlBegin -->
+              <classification subType="/WClientParseXml/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <URI> %String; </URI>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientParseXmlEnd -->
+              <classification subType="/WClientParseXml/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <URI> %String; </URI>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientResourceStock -->
+      <event guid="{06f0fee4-72dd-4802-bd3d-0985139fa91a}">
+          <diagnosticInstance version="2">
+              <!-- WClientResourceStock -->
+              <classification subType="/WClientResourceStock/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Key> %String; </Key>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXPageJump -->
+      <event guid="{f068b137-7b09-44a1-84d0-4ff1592e0ac1}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXPageJump -->
+              <classification subType="/WClientDRXPageJump/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <PageNumber> %Int32; </PageNumber>
+                      <FirstVisiblePage> %Int32; </FirstVisiblePage>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- UpdateSNCWithAnnotation -->
+      <event guid="{59c337ce-9cc2-4a86-9bfa-061fe954086b}">
+          <diagnosticInstance version="2">
+              <!-- UpdateSNCWithAnnotationBegin -->
+              <classification subType="/UpdateSNCWithAnnotation/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- UpdateSNCWithAnnotationEnd -->
+              <classification subType="/UpdateSNCWithAnnotation/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- AnnotationTextChanged -->
+      <event guid="{8bb912b9-39dd-4208-ad62-be66fe5b7ba5}">
+          <diagnosticInstance version="2">
+              <!-- AnnotationTextChangedBegin -->
+              <classification subType="/AnnotationTextChanged/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- AnnotationTextChangedEnd -->
+              <classification subType="/AnnotationTextChanged/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WpfHostUm -->
+      <event guid="{ed251760-7bbc-4b25-8328-cd7f271fee89}">
+          <diagnosticInstance version="2">
+              <!-- WpfHostUm_WinMainStart -->
+              <classification subType="/WpfHostUm/WinMainStart" subTypeValue="30" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_WinMainEnd -->
+              <classification subType="/WpfHostUm/WinMainEnd" subTypeValue="31" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <ReturnCode> %UInt32; </ReturnCode>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_InvokingBrowser -->
+              <classification subType="/WpfHostUm/InvokingBrowser" subTypeValue="32" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <URL> %String; </URL>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_LaunchingRestrictedProcess -->
+              <classification subType="/WpfHostUm/LaunchingRestrictedProcess" subTypeValue="33" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_EnteringMessageLoop -->
+              <classification subType="/WpfHostUm/EnteringMessageLoop" subTypeValue="34" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_ClassFactoryCreateInstance -->
+              <classification subType="/WpfHostUm/ClassFactoryCreateInstance" subTypeValue="35" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_ReadingDeplManifestStart -->
+              <classification subType="/WpfHostUm/ReadingDeplManifestStart" subTypeValue="40" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <URL> %String; </URL>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_ReadingDeplManifestEnd -->
+              <classification subType="/WpfHostUm/ReadingDeplManifestEnd" subTypeValue="41" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <URL> %String; </URL>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_ReadingAppManifestStart -->
+              <classification subType="/WpfHostUm/ReadingAppManifestStart" subTypeValue="42" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <URL> %String; </URL>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_ReadingAppManifestEnd -->
+              <classification subType="/WpfHostUm/ReadingAppManifestEnd" subTypeValue="43" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_ParsingMarkupVersionStart -->
+              <classification subType="/WpfHostUm/ParsingMarkupVersionStart" subTypeValue="44" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_ParsingMarkupVersionEnd -->
+              <classification subType="/WpfHostUm/ParsingMarkupVersionEnd" subTypeValue="45" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_IPersistFileLoad -->
+              <classification subType="/WpfHostUm/IPersistFileLoad" subTypeValue="50" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <URL> %String; </URL>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_IPersistMonikerLoadStart -->
+              <classification subType="/WpfHostUm/IPersistMonikerLoadStart" subTypeValue="51" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_IPersistMonikerLoadEnd -->
+              <classification subType="/WpfHostUm/IPersistMonikerLoadEnd" subTypeValue="52" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <ReturnCode> %UInt32; </ReturnCode>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_BindProgress -->
+              <classification subType="/WpfHostUm/BindProgress" subTypeValue="53" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Code> %UInt32; </Code>
+                      <Text> %String; </Text>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_OnStopBinding -->
+              <classification subType="/WpfHostUm/OnStopBinding" subTypeValue="54" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <ReturnCode> %UInt32; </ReturnCode>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_VersionAttach -->
+              <classification subType="/WpfHostUm/VersionAttach" subTypeValue="60" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_VersionActivateStart -->
+              <classification subType="/WpfHostUm/VersionActivateStart" subTypeValue="61" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_VersionActivateEnd -->
+              <classification subType="/WpfHostUm/VersionActivateEnd" subTypeValue="62" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_StartingCLRStart -->
+              <classification subType="/WpfHostUm/StartingCLRStart" subTypeValue="90" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_StartingCLREnd -->
+              <classification subType="/WpfHostUm/StartingCLREnd" subTypeValue="91" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_IHlinkTargetNavigateStart -->
+              <classification subType="/WpfHostUm/IHlinkTargetNavigateStart" subTypeValue="95" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Location> %String; </Location>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_IHlinkTargetNavigateEnd -->
+              <classification subType="/WpfHostUm/IHlinkTargetNavigateEnd" subTypeValue="96" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_ReadyStateChanged -->
+              <classification subType="/WpfHostUm/ReadyStateChanged" subTypeValue="97" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <State> %UInt32; </State>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_InitDocHostStart -->
+              <classification subType="/WpfHostUm/InitDocHostStart" subTypeValue="98" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_InitDocHostEnd -->
+              <classification subType="/WpfHostUm/InitDocHostEnd" subTypeValue="99" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_MergingMenusStart -->
+              <classification subType="/WpfHostUm/MergingMenusStart" subTypeValue="100" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_MergingMenusEnd -->
+              <classification subType="/WpfHostUm/MergingMenusEnd" subTypeValue="101" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_UIActivationStart -->
+              <classification subType="/WpfHostUm/UIActivationStart" subTypeValue="102" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_UIActivationEnd -->
+              <classification subType="/WpfHostUm/UIActivationEnd" subTypeValue="103" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_LoadingResourceDLLStart -->
+              <classification subType="/WpfHostUm/LoadingResourceDLLStart" subTypeValue="104" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_LoadingResourceDLLEnd -->
+              <classification subType="/WpfHostUm/LoadingResourceDLLEnd" subTypeValue="105" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <URL> %String; </URL>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_OleCmdQueryStatusStart -->
+              <classification subType="/WpfHostUm/OleCmdQueryStatusStart" subTypeValue="106" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <GUID_Data1> %UInt32; </GUID_Data1>
+                      <CmdId> %UInt32; </CmdId>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_OleCmdQueryStatusEnd -->
+              <classification subType="/WpfHostUm/OleCmdQueryStatusEnd" subTypeValue="107" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <CmdFlags> %UInt32; </CmdFlags>
+                      <HResult> %UInt32; </HResult>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_OleCmdExecStart -->
+              <classification subType="/WpfHostUm/OleCmdExecStart" subTypeValue="108" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <GUID_Data1> %UInt32; </GUID_Data1>
+                      <CmdId> %UInt32; </CmdId>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_OleCmdExecEnd -->
+              <classification subType="/WpfHostUm/OleCmdExecEnd" subTypeValue="109" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <ReturnCode> %UInt32; </ReturnCode>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_ProgressPageShown -->
+              <classification subType="/WpfHostUm/ProgressPageShown" subTypeValue="110" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_AdHocProfile1Start -->
+              <classification subType="/WpfHostUm/AdHocProfile1Start" subTypeValue="152" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_AdHocProfile1End -->
+              <classification subType="/WpfHostUm/AdHocProfile1End" subTypeValue="153" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_AdHocProfile2Start -->
+              <classification subType="/WpfHostUm/AdHocProfile2Start" subTypeValue="154" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Location> %String; </Location>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WpfHostUm_AdHocProfile2End -->
+              <classification subType="/WpfHostUm/AdHocProfile2End" subTypeValue="155" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- GetAnnotationById -->
+      <event guid="{3d27753f-eb8a-4e75-9d5b-82fba55cded1}">
+          <diagnosticInstance version="2">
+              <!-- GetAnnotationByIdBegin -->
+              <classification subType="/GetAnnotationById/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- GetAnnotationByIdEnd -->
+              <classification subType="/GetAnnotationById/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXPageLoaded -->
+      <event guid="{66028645-e022-4d90-a7bd-a8ccdacdb2e1}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXPageLoaded -->
+              <classification subType="/WClientDRXPageLoaded/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <PageNumber> %Int32; </PageNumber>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- RemoveAttachedMH -->
+      <event guid="{296c7961-b975-450b-8975-bf862b6c7159}">
+          <diagnosticInstance version="2">
+              <!-- RemoveAttachedMHBegin -->
+              <classification subType="/RemoveAttachedMH/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- RemoveAttachedMHEnd -->
+              <classification subType="/RemoveAttachedMH/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXZoom -->
+      <event guid="{2e5045a1-8dac-4c90-9995-3260de166c8f}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXZoom -->
+              <classification subType="/WClientDRXZoom/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Zoom> %Int32; </Zoom>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientParseInstVisTree -->
+      <event guid="{a8c3b9c0-562b-4509-becb-a08e481a7273}">
+          <diagnosticInstance version="2">
+              <!-- WClientParseInstVisTreeBegin -->
+              <classification subType="/WClientParseInstVisTree/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientParseInstVisTreeEnd -->
+              <classification subType="/WClientParseInstVisTree/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Message> %String; </Message>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientPrecomputeScene -->
+      <event guid="{3331420f-7a3b-42b6-8dfe-aabf472801da}">
+          <diagnosticInstance version="2">
+              <!-- WClientPrecomputeSceneBegin -->
+              <classification subType="/WClientPrecomputeScene/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientPrecomputeSceneEnd -->
+              <classification subType="/WClientPrecomputeScene/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientDRXEnsureOM -->
+      <event guid="{28e3a8bb-aebb-48e8-86b6-32759b47fcbe}">
+          <diagnosticInstance version="2">
+              <!-- WClientDRXEnsureOMBegin -->
+              <classification subType="/WClientDRXEnsureOM/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+              <!-- WClientDRXEnsureOMEnd -->
+              <classification subType="/WClientDRXEnsureOM/Stop" subTypeValue="2" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientScheduleRender -->
+      <event guid="{6d5aeaf3-a433-4daa-8b31-d8ae49cf6bd1}">
+          <diagnosticInstance version="2">
+              <!-- WClientScheduleRender -->
+              <classification subType="/WClientScheduleRender/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <RenderDelay> %Int32; </RenderDelay>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientUIContextPost -->
+      <event guid="{76287aef-f674-4061-a60a-76f95550efeb}">
+          <diagnosticInstance version="3">
+              <!-- WClientUIContextPost -->
+              <classification subType="/WClientUIContextPost/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Priority> %UInt32; </Priority>
+                      <Operation> %String; </Operation>
+                      <Id> %Int64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientUIContextDispatch -->
+      <event guid="{2481a374-999f-4ad2-9f22-6b7c8e2a5db0}">
+          <diagnosticInstance version="3">
+              <!-- WClientUIContextDispatchBegin -->
+              <classification subType="/WClientUIContextDispatch/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Priority> %UInt32; </Priority>
+                      <Operation> %String; </Operation>
+                      <Id> %Int64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientUIContextPromote -->
+      <event guid="{632d4e9e-b988-4b32-ab2a-b37aa34927ee}">
+          <diagnosticInstance version="3">
+              <!-- WClientUIContextPromote -->
+              <classification subType="/WClientUIContextPromote/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Priority> %UInt32; </Priority>
+                      <Operation> %String; </Operation>
+                      <Id> %Int64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientUIContextAbort -->
+      <event guid="{39404da9-413f-4581-a0a1-4715168b5ad8}">
+          <diagnosticInstance version="3">
+              <!-- WClientUIContextAbort -->
+              <classification subType="/WClientUIContextAbort/Info" subTypeValue="0" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Priority> %UInt32; </Priority>
+                      <Operation> %String; </Operation>
+                      <Id> %Int64; </Id>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+      <!-- WClientLayout -->
+      <event guid="{a3edb710-21fc-4f91-97f4-ac2b0df1c20f}">
+          <diagnosticInstance version="3">
+              <!-- WClientLayoutBegin -->
+              <classification subType="/WClientLayout/Start" subTypeValue="1" />
+              <template>
+                  <Microsoft-Windows-WPF>
+                      <Id> %Int64; </Id>
+                      <source> %Byte; </source>
+                  </Microsoft-Windows-WPF>
+              </template>
+          </diagnosticInstance>
+      </event>
+  </events>
+</instrumentation>
+</assembly>

@@ -1,0 +1,191 @@
+<Project>
+  <ItemGroup>
+    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(GitHubTransportPackageName)"
+                      Version="$(MicrosoftDotNetWpfGitHubVersion)"
+                      ExcludeAssets="All"
+                      GeneratePathProperty="True"
+                      Condition="'$(MSBuildProjectExtension)'!='.vcxproj' 
+                             And '$(TargetFrameworkIdentifier)' == '.NETCoreApp' 
+                             And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v5.0')
+                             And '$(NoAutoMicrosoftDotNetWpfGitHubPackageReference)'!='true'
+                             And '$(MicrosoftDotNetWpfGitHubPackage)'!=''"/>
+
+    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(GitHubTransportPackageName)"
+                  Version="$(MicrosoftDotNetWpfGitHubVersion)"
+                  ExcludeAssets="All"
+                  GeneratePathProperty="True"
+                  Condition="'$(MSBuildProjectExtension)'=='.vcxproj' 
+                             And '$(CLRSupport)' != 'true'
+                             And '$(NoAutoMicrosoftDotNetWpfGitHubPackageReference)'!='true'
+                             And '$(MicrosoftDotNetWpfGitHubPackage)'!=''"/>
+    
+  </ItemGroup>
+  <ItemGroup>
+    <WpfProjectPath Include="System.Xaml" ProjectPath="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <WpfProjectPath Include="WindowsBase" ProjectPath="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <WpfProjectPath Include="DirectWriteForwarder" ProjectPath="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </WpfProjectPath>
+    <WpfProjectPath Include="System.Windows.Input.Manipulations" ProjectPath="$(WpfSourceDir)System.Windows.Input.Manipulations\System.Windows.Input.Manipulations.csproj" />
+    <WpfProjectPath Include="WindowsFormsIntegration" ProjectPath="$(WpfSourceDir)WindowsFormsIntegration\WindowsFormsIntegration.csproj" />
+
+    <WpfProjectPath Include="PresentationCore" ProjectPath="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+    <WpfProjectPath Include="PresentationFramework" ProjectPath="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
+    <WpfProjectPath Include="PresentationUI" ProjectPath="$(WpfSourceDir)PresentationUI\PresentationUI.csproj" />
+    <WpfProjectPath Include="ReachFramework" ProjectPath="$(WpfSourceDir)ReachFramework\ReachFramework.csproj" />
+    <WpfProjectPath Include="System.Printing" ProjectPath="$(WpfSourceDir)System.Printing\System.Printing.csproj">
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </WpfProjectPath>
+    <WpfProjectPath Include="System.Windows.Controls.Ribbon" ProjectPath="$(WpfSourceDir)System.Windows.Controls.Ribbon\System.Windows.Controls.Ribbon.csproj" />
+    <WpfProjectPath Include="System.Windows.Presentation" ProjectPath="$(WpfSourceDir)System.Windows.Presentation\System.Windows.Presentation.csproj" />
+
+    <WpfProjectPath Include="PresentationBuildTasks" ProjectPath="$(WpfSourceDir)PresentationBuildTasks\PresentationBuildTasks.csproj" />
+
+    <WpfProjectPath Include="PresentationFramework.Aero" ProjectPath="$(WpfSourceDir)Themes\PresentationFramework.Aero\PresentationFramework.Aero.csproj" />
+    <WpfProjectPath Include="PresentationFramework.Aero2" ProjectPath="$(WpfSourceDir)Themes\PresentationFramework.Aero2\PresentationFramework.Aero2.csproj" />
+    <WpfProjectPath Include="PresentationFramework.AeroLite" ProjectPath="$(WpfSourceDir)Themes\PresentationFramework.AeroLite\PresentationFramework.AeroLite.csproj" />
+    <WpfProjectPath Include="PresentationFramework.Classic" ProjectPath="$(WpfSourceDir)Themes\PresentationFramework.Classic\PresentationFramework.Classic.csproj" />
+    <WpfProjectPath Include="PresentationFramework.Luna" ProjectPath="$(WpfSourceDir)Themes\PresentationFramework.Luna\PresentationFramework.Luna.csproj" />
+    <WpfProjectPath Include="PresentationFramework.Royale" ProjectPath="$(WpfSourceDir)Themes\PresentationFramework.Royale\PresentationFramework.Royale.csproj" />
+
+    <WpfProjectPath Include="UIAutomationTypes" ProjectPath="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
+    <WpfProjectPath Include="UIAutomationProvider" ProjectPath="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
+    <WpfProjectPath Include="UIAutomationClient" ProjectPath="$(WpfSourceDir)UIAutomation\UIAutomationClient\UIAutomationClient.csproj" />
+    <WpfProjectPath Include="UIAutomationClientSideProviders" ProjectPath="$(WpfSourceDir)UIAutomation\UIAutomationClientSideProviders\UIAutomationClientSideProviders.csproj" />
+
+
+    <WpfProjectPath Include="PresentationNative_cor3" ProjectPath="$(WpfSourceDir)PresentationNative\dll\PresentationNative.vcxproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Content</OutputItemType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </WpfProjectPath>
+    <WpfProjectPath Include="WpfGfx_cor3" ProjectPath="$(WpfSourceDir)WpfGfx\core\dll\WpfGfx.vcxproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Content</OutputItemType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>    
+    </WpfProjectPath>
+    <WpfProjectPath Include="PenImc_cor3" ProjectPath="$(WpfSourceDir)PenImc\dll\PenImc.vcxproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Content</OutputItemType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </WpfProjectPath>
+
+    <WpfProjectPath Include="bilinearspan" ProjectPath="$(WpfSourceDir)WpfGfx\core\sw\bilinearspan\bilinearspan.vcxproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Content</OutputItemType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </WpfProjectPath>
+
+  </ItemGroup>
+
+  <PropertyGroup>
+    <PrepareForBuildDependsOn>
+      EnsureWpfProjectReference;
+      $(PrepareForBuildDependsOn)
+    </PrepareForBuildDependsOn>
+    <CoreBuildDependsOn>
+      EnsureWpfProjectReference;
+      $(CoreBuildDependsOn)
+    </CoreBuildDependsOn>
+    <CoreCompileDependsOn>
+      EnsureWpfProjectReference;
+      $(CoreCompileDependsOn)
+    </CoreCompileDependsOn>
+    <ResolveReferencesDependsOn>
+      EnsureWpfProjectReference;
+      $(ResolveReferencesDependsOn)
+      </ResolveReferencesDependsOn>
+    <MarkupCompilePass1DependsOn>
+      EnsureWpfProjectReference;
+      $(MarkupCompilePass1DependsOn)
+    </MarkupCompilePass1DependsOn>
+  </PropertyGroup>
+  
+
+
+  <Target Name="EnsureWpfProjectReference" 
+          DependsOnTargets="$(EnsureWpfProjectReferenceDependsOn)"
+          BeforeTargets="ResolveProjectReferences"
+          Returns="@(ProjectReference);@(MicrosoftDotNetWpfGitHubReference)">
+    <!-- 
+      For each @(WpfProjectReference) that is found locally, include it directly into @(ProjectReference)
+    -->
+    <ItemGroup>
+      <_wpfProjectPath Include="@(WpfProjectPath)">
+        <AssemblyName>%(WpfProjectPath.Identity)</AssemblyName>
+      </_wpfProjectPath>
+      <_wpfProjectPathAvailableLocally Include="@(WpfProjectPath)"
+                                        Condition="Exists('%(ProjectPath)')" />
+    </ItemGroup>
+
+    <FilterItem1ByItem2 Item1="@(ProjectReference)"
+                        PreserveItem1Metadata="true"
+                        Item2="@(_wpfProjectPathAvailableLocally)"
+                        Metadata2="ProjectPath"
+                        TreatItemsAsPaths="true">
+      <Output ItemName="_wpfProjectReference" TaskParameter="Result" />
+      <Output ItemName="_unmatchedProjectReference" TaskParameter="UnmatchedReferences" />
+    </FilterItem1ByItem2>
+
+    <ItemGroup>
+      <ProjectReference Include="@(_wpfProjectReference)" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_unmatchedProjectReferenceWithConfiguration Remove="@(_unmatchedProjectReferenceWithConfiguration)" />
+      <_unmatched_ProjectReferenceWithConfiguration Remove="@(_unmatched_ProjectReferenceWithConfiguration)" />
+    </ItemGroup>
+    <FilterItem1ByItem2 Item1="@(ProjectReferenceWithConfiguration)"
+                        PreserveItem1Metadata="true"
+                        Item2="@(_wpfProjectPathAvailableLocally)"
+                        Metadata2="ProjectPath"
+                        TreatItemsAsPaths="true">
+      <Output ItemName="_unmatchedProjectReferenceWithConfiguration" TaskParameter="UnmatchedReferences" />
+    </FilterItem1ByItem2>
+    <FilterItem1ByItem2 Item1="@(_ProjectReferenceWithConfiguration)"
+                    PreserveItem1Metadata="true"
+                    Item2="@(_wpfProjectPathAvailableLocally)"
+                    Metadata2="ProjectPath"
+                    TreatItemsAsPaths="true">
+      <Output ItemName="_unmatched_ProjectReferenceWithConfiguration" TaskParameter="UnmatchedReferences" />
+    </FilterItem1ByItem2>
+    <ItemGroup>
+      <ProjectReferenceWithConfiguration Remove="@(_unmatchedProjectReferenceWithConfiguration)" />
+      <_ProjectReferenceWithConfiguration Remove="@(_unmatched_ProjectReferenceWithConfiguration)" />
+      <_MSBuildProjectReferenceNonExistent Remove="@(_unmatchedProjectReferenceWithConfiguration)" />
+    </ItemGroup>
+    
+
+    <FilterItem1ByItem2 Item1="@(_unmatchedProjectReference)"
+                        PreserveItem1Metadata="true"
+                        Item2="@(WpfProjectPath)"
+                        Metadata2="ProjectPath"
+                        TreatItemsAsPaths="true">
+      <Output ItemName="_wpfUnmatchedProjectReference" TaskParameter="Result" />
+    </FilterItem1ByItem2>
+
+    <ItemGroup>
+      <ProjectReference Remove="@(_wpfUnmatchedProjectReference)"/>
+    </ItemGroup>
+
+    <FilterItem1ByItem2 Item1="@(_wpfProjectPath->'%(ProjectPath)')"
+                        PreserveItem1Metadata="true"
+                        Item2="@(_wpfUnmatchedProjectReference)"
+                        PreserveItem2Metadata="true"
+                        Metadata2="Identity"
+                        TreatItemsAsPaths="true">
+      <Output ItemName="_microsoftDotNetWpfGitHubReference" TaskParameter="Result" />
+    </FilterItem1ByItem2>
+
+    <ItemGroup>
+      <MicrosoftDotNetWpfGitHubReference Include="@(_microsoftDotNetWpfGitHubReference->'%(AssemblyName)')" />
+    </ItemGroup>
+
+    <Message Text="ProjectReference: @(ProjectReference)" />
+    <Message Text="MicrosoftDotNetWpfGitHubReference: @(MicrosoftDotNetWpfGitHubReference)" />
+  </Target>
+</Project>

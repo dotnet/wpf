@@ -1,0 +1,2822 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="zh-HANT" original="../Strings.resx">
+    <body>
+      <trans-unit id="AccessibilitySwitchDependencyNotSatisfied">
+        <source>Desktop applications setting AppContext switch '{0}' to false are required to opt in to all earlier accessibility improvements. To do this, ensure that the AppContext switch '{1}' is set to 'false', then 'Switch.UseLegacyAccessibilityFeatures' and all 'Switch.UseLegacyAccessibilityFeatures.M' switches, when M &lt; {2}, evaluate to false as well. Note that, if a switch for a particular set of accessibility improvements is not present, its value is determined by the target framework version. You can remedy this by adding these switches and setting their value to false.</source>
+        <target state="translated">將 AppContext 參數 '{0}' 設定為 false 的桌面應用程式，必須加入先前的所有協助工具改善。若要這樣做，請確認 AppContext 參數 '{1}' 已設為 'false'，接著當 M &lt; {2} 時，'Switch.UseLegacyAccessibilityFeatures' 和所有 'Switch.UseLegacyAccessibilityFeatures.M' 參數也都評估為 false。請注意，若沒有一組特定的協助工具改善參數，則會依目標 Framework 版本判斷其值。新增這些參數並將其值設定為 false，可解決此問題。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Arg_ArrayPlusOffTooSmall">
+        <source>Destination array is not long enough to copy all the items in the collection. Check array index and length.</source>
+        <target state="translated">目的地陣列的長度不足以複製集合中的所有項目。請檢查陣列索引以及長度。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Arg_NonZeroLowerBound">
+        <source>The lower bound of target array must be zero.</source>
+        <target state="translated">目標陣列的下限必須為零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Arg_RankMultiDimNotSupported">
+        <source>Only single dimensional arrays are supported for the requested action.</source>
+        <target state="translated">所要求的動作只支援一維陣列。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArgumentOutOfRange_NeedNonNegNum">
+        <source>Non-negative number required.</source>
+        <target state="translated">需要非負數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Argument_InvalidArrayType">
+        <source>Target array type is not compatible with the type of items in the collection.</source>
+        <target state="translated">目標陣列類型與集合中項目的類型不相容。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttemptedToCreateDuplicateFileName">
+        <source>Cannot create file because the specified file name is already in use.</source>
+        <target state="translated">因為指定的檔案名稱已在使用中，所以無法建立該檔案。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadPackageFormat">
+        <source>Format error in package.</source>
+        <target state="translated">套件中發生格式錯誤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadPropertyForGroup">
+        <source>Cannot group by property '{0}' because it cannot be found on type '{1}'.</source>
+        <target state="translated">因為類型 '{1}' 上找不到屬性 '{0}'，所以無法依該屬性分組。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadSignatureTimeFormatString">
+        <source>Time format string is not valid.</source>
+        <target state="translated">時間格式字串無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadXml">
+        <source>'{0}' attribute is not valid XML.</source>
+        <target state="translated">'{0}' 屬性並非有效的 XML。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BufferOffsetNegative">
+        <source>Buffer offset cannot be negative.</source>
+        <target state="translated">緩衝區位移不能為負數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BufferTooSmall">
+        <source>Buffer is too small to accommodate the specified parameters.</source>
+        <target state="translated">緩衝區太小，無法容納指定的參數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFAPIFailure">
+        <source>Compound File API failure.</source>
+        <target state="translated">複合檔案 API 失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_CorruptMetadataStream">
+        <source>Object metadata stream in the package is corrupt and the content is not valid.</source>
+        <target state="translated">套件中的物件中繼資料串流損毀，所以內容無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_CorruptMetadataStream_DuplicateKey">
+        <source>Object metadata stream in the package is corrupt with duplicated key tags.</source>
+        <target state="translated">套件中的物件中繼資料串流損毀，金鑰標籤重複。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_CorruptMetadataStream_Root">
+        <source>Object metadata stream in the package is corrupt and the root tag is not valid.</source>
+        <target state="translated">套件中的物件中繼資料串流損毀，所以根標籤無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_ObjectMustBeCompoundFileMetadataKey">
+        <source>Object used as metadata key must be an instance of the CompoundFileMetadataKey class.</source>
+        <target state="translated">用作為中繼資料金鑰的物件，必須是 CompoundFileMetadataKey 類別的執行個體。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_ReadOnlyContainer">
+        <source>Cannot perform this operation when the package is in read-only mode.</source>
+        <target state="translated">套件為唯讀模式時，無法執行此作業。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_TypeTableFormat">
+        <source>Failed to read a stream type table - the data appears to be a different format.</source>
+        <target state="translated">無法讀取資料流類型表 - 資料似乎是不同的格式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_UnicodeCharInvalid">
+        <source>Unicode character is not valid.</source>
+        <target state="translated">Unicode 字元無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_ValueMustBeString">
+        <source>Only strings can be used as value.</source>
+        <target state="translated">只有字串才可用作為值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_XMLCharInvalid">
+        <source>XML character is not valid.</source>
+        <target state="translated">XML 字元無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFRCorrupt">
+        <source>CompoundFileReference: Corrupted CompoundFileReference.</source>
+        <target state="translated">CompoundFileReference: CompoundFileReference 損毀。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFRCorruptMultiStream">
+        <source>CompoundFileReference: Corrupted CompoundFileReference - multiple stream components found.</source>
+        <target state="translated">CompoundFileReference: CompoundFileReference 損毀 - 找到多個資料流元件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFRCorruptStgFollowStm">
+        <source>CompoundFileReference: Corrupted CompoundFileReference - storage component cannot follow stream component.</source>
+        <target state="translated">CompoundFileReference: CompoundFileReference 損毀 - 儲存體元件不能接在資料流元件之後。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CallbackParameterInvalid">
+        <source>Caller-supplied parameter to callback function is not of expected type.</source>
+        <target state="translated">由呼叫者提供用於回呼函式的參數，並非應有的類型。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotCompareDiffTypes">
+        <source>Cannot compare different types.</source>
+        <target state="translated">無法比較不同的類型。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotCreateAccessDenied">
+        <source>Cannot create data storage because access is denied.</source>
+        <target state="translated">因為拒絕存取，所以無法建立資料儲存區。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotCreateAsReadOnly">
+        <source>Cannot create a read-only stream.</source>
+        <target state="translated">無法建立唯讀資料流。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotCreateContainerOnReadOnlyStream">
+        <source>Cannot create new package on a read-only stream.</source>
+        <target state="translated">無法對唯讀資料流建立新的套件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotCreateInReadOnly">
+        <source>Cannot create a stream in a read-only package.</source>
+        <target state="translated">無法在唯讀套件中建立資料流。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotCreateStorageRootOnNonReadableStream">
+        <source>Cannot create StorageRoot on a nonreadable stream.</source>
+        <target state="translated">無法在非可讀取的資料流上建立 StorageRoot。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotDelete">
+        <source>Cannot delete element.</source>
+        <target state="translated">無法刪除項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotDeleteAccessDenied">
+        <source>Cannot delete element because access is denied.</source>
+        <target state="translated">因為拒絕存取，所以無法刪除項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotDeleteInReadOnly">
+        <source>Cannot delete read-only packages.</source>
+        <target state="translated">無法刪除唯讀套件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotDeleteNonEmptyStorage">
+        <source>Cannot delete because the storage is not empty. Try a recursive delete with Delete(true).</source>
+        <target state="translated">因為儲存體並非空的，所以無法刪除。請利用 Delete(true) 嘗試遞迴刪除。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotDeleteRoot">
+        <source>Cannot delete the root StorageInfo.</source>
+        <target state="translated">無法刪除根 StorageInfo。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotOnNonExistStorage">
+        <source>Cannot perform this function on a storage that does not exist.</source>
+        <target state="translated">無法於不存在的儲存體上執行此函式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotOpenStorage">
+        <source>Cannot open data storage.</source>
+        <target state="translated">無法開啟資料儲存區。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotOperateOnStreamWhichDoesNotSupportSeeking">
+        <source>Cannot operate on stream that does not support seeking.</source>
+        <target state="translated">無法在不支援搜尋的資料流上進行作業。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotReadDataFromStreamWhichDoesNotSupportReading">
+        <source>Cannot read data from stream that does not support reading.</source>
+        <target state="translated">無法在不支援讀取的資料流上讀取資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotReadInWriteOnlyMode">
+        <source>Cannot perform a read operation in write-only mode.</source>
+        <target state="translated">無法在唯寫模式下執行讀取作業。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotReadWriteInReadOnlyWriteOnlyMode">
+        <source>Cannot perform a read/write operation in write-only or read-only modes.</source>
+        <target state="translated">無法在唯寫或唯讀模式下執行讀取/寫入作業。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotWriteDataToStreamWhichDoesNotSupportWriting">
+        <source>Cannot write data to stream that does not support writing.</source>
+        <target state="translated">無法對不支援寫入的資料流寫入資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotWriteInReadOnlyMode">
+        <source>Cannot perform a write operation in read-only mode.</source>
+        <target state="translated">無法在唯讀模式下執行寫入作業。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanOnlyCounterSignSignatureParts">
+        <source>Can only countersign parts with Digital Signature ContentType.</source>
+        <target state="translated">只可利用數位簽章 ContentType 副署組件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotChangeAfterSealed">
+        <source>Cannot modify a '{0}' after it is sealed.</source>
+        <target state="translated">密封 '{0}' 之後即無法再修改。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotChangeCryptoProvider">
+        <source>Cannot change CryptoProvider after the rights management transform settings are fixed.</source>
+        <target state="translated">版權管理移轉設定固定之後，即無法變更 CryptoProvider。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotChangePublishLicense">
+        <source>Cannot change publish license after the rights management transform settings are fixed.</source>
+        <target state="translated">版權管理移轉設定固定之後，即無法變更發行授權。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotConvertStringToType">
+        <source>Cannot convert string value '{0}' to type '{1}'.</source>
+        <target state="translated">無法將字串值 '{0}' 轉換為類型 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotMakeStreamLengthNegative">
+        <source>Stream length cannot be negative.</source>
+        <target state="translated">資料流長度不可為負數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotModifyReadOnlyContainer">
+        <source>Cannot modify a read-only container.</source>
+        <target state="translated">無法修改唯讀容器。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotRemoveSignatureFromReadOnlyFile">
+        <source>Cannot remove signature from read-only file.</source>
+        <target state="translated">無法從唯讀檔案移除簽章。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotRetrievePartsOfWriteOnlyContainer">
+        <source>Cannot get part or part information from a write-only container.</source>
+        <target state="translated">無法從唯寫容器取得組件或組件資訊。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotSignReadOnlyFile">
+        <source>Cannot sign read-only file.</source>
+        <target state="translated">無法簽署唯讀檔案。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CertSelectionDialogMessage">
+        <source>Select a certificate</source>
+        <target state="translated">選取憑證</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CertSelectionDialogTitle">
+        <source>Digital Signature</source>
+        <target state="translated">數位簽章</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CertificateKeyTypeNotSupported">
+        <source>Signing certificate must be of type DSA or RSA.</source>
+        <target state="translated">簽署憑證的類型必須為 DSA 或 RSA。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CertificatePartContentTypeMismatch">
+        <source>Certificate part is not of the correct type.</source>
+        <target state="translated">憑證組件並非正確的類型。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ClearOnReadOnlyObjectNotAllowed">
+        <source>Cannot clear properties on object '{0}' because it is in a read-only state.</source>
+        <target state="translated">因為物件 '{0}' 上的屬性為唯讀狀態，所以無法清除。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CombinationOfAccessibilitySwitchesNotSupported">
+        <source>Desktop applications are required to opt in to all earlier accessibility improvements to get the later improvements. To do this, ensure that if the AppContext switch 'Switch.UseLegacyAccessibilityFeatures.N' is set to 'false', then 'Switch.UseLegacyAccessibilityFeatures' and all 'Switch.UseLegacyAccessibilityFeatures.M' switches, when M &lt; N, evaluate to false as well. Note that, if a switch for a particular set of accessibility improvements is not present, its value is determined by the target framework version. You can remedy this by adding these switches and setting their value to false.</source>
+        <target state="translated">傳統型應用程式必須加入所有較舊的協助工具改進，才能取得較新的改進。如果要這麼做，請確認 AppContext 參數 'Switch.UseLegacyAccessibilityFeatures.N' 是否設定為 'false'，然後確認 'Switch.UseLegacyAccessibilityFeatures' 與所有 'Switch.UseLegacyAccessibilityFeatures.M' 參數，當 M &lt; N 時，也同樣評估為 'false'。請注意，若未提供一組特定協助工具改進的參數，其值將取決於目標 Framework 版本。您可以新增這些參數並將其值設定為 false 來解決此問題。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompatibilityPreferencesSealed">
+        <source>The property '{0}' cannot be changed. The '{1}' class has been sealed.</source>
+        <target state="translated">無法變更屬性 '{0}'。'{1}' 類別已密封。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompoundFilePathNullEmpty">
+        <source>CompoundFile path must be non-empty.</source>
+        <target state="translated">CompoundFile 路徑不得是空的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompressLengthMismatch">
+        <source>Compressed part has inconsistent data length.</source>
+        <target state="translated">壓縮的組件其資料長度不一致。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContainerAndPartModeIncompatible">
+        <source>FileMode/FileAccess for Part.GetStream is not compatible with FileMode/FileAccess used to open the Package.</source>
+        <target state="translated">Part.GetStream 的 FileMode/FileAccess 與用於開啟 Package 的 FileMode/FileAccess 不相容。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContainerCanNotOpen">
+        <source>Cannot open specified package file.</source>
+        <target state="translated">無法開啟指定的套件檔。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContainerNotFound">
+        <source>Cannot find specified package file.</source>
+        <target state="translated">找不到指定的套件檔。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContentTypeCannotHaveLeadingTrailingLWS">
+        <source>ContentType string cannot have leading/trailing Linear White Spaces [LWS - RFC 2616].</source>
+        <target state="translated">ContentType 字串不可有前置/後置 Linear White Spaces [LWS - RFC 2616]。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConvertFromException">
+        <source>'{0}' ValueSerializer cannot convert from '{1}'.</source>
+        <target state="translated">無法從 '{1}' 轉換 '{0}' ValueSerializer。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConvertToException">
+        <source>'{0}' ValueSerializer cannot convert '{1}' to '{2}'.</source>
+        <target state="translated">'{0}' ValueSerializer 無法將 '{1}' 轉換為 '{2}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CorePropertiesElementExpected">
+        <source>Unrecognized root element in Core Properties part.</source>
+        <target state="translated">Core Properties 組件中有無法辨識的根項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CorruptStream">
+        <source>Stream operation failed because stream is corrupted.</source>
+        <target state="translated">因為資料流損毀，所以資料流作業失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CorruptedData">
+        <source>File contains corrupted data.</source>
+        <target state="translated">檔案包含損毀的資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CreateModeMustBeCreateOrOpen">
+        <source>Create mode parameter must be either FileMode.Create or FileMode.Open.</source>
+        <target state="translated">建立模式參數必須是 FileMode.Create 或 FileMode.Open。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CreateNewOnNonEmptyStream">
+        <source>CreateNew is not a valid FileMode for a nonempty stream.</source>
+        <target state="translated">對非空的資料流來說，CreateNew 並非有效的 FileMode。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CryptoProviderCanNotDecrypt">
+        <source>Cannot perform stream operation because CryptoProvider is not set to allow decryption.</source>
+        <target state="translated">因為 CryptoProvider 未設定為允許解密，所以無法執行資料流作業。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CryptoProviderCanNotMergeBlocks">
+        <source>Only cryptographic providers based on a block cipher are supported.</source>
+        <target state="translated">只支援區塊編碼器形式的密碼編譯提供者。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CryptoProviderDisposed">
+        <source>CryptoProvider object was disposed.</source>
+        <target state="translated">已處置 CryptoProvider 物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CryptoProviderIsNotReady">
+        <source>The CryptoProvider cannot encrypt or decrypt.</source>
+        <target state="translated">CryptoProvider 無法加密或解密。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Cryptography_InvalidHandle">
+        <source>{0} is an invalid handle.</source>
+        <target state="translated">{0} 不是有效的控制代碼。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CurrentChangingCannotBeCanceled">
+        <source>The CollectionView that originates this CurrentChanging event is in a state that does not allow the event to be canceled. Check CurrentChangingEventArgs.IsCancelable before assigning to this CurrentChangingEventArgs.Cancel property.</source>
+        <target state="translated">產生此 CurrentChanging 事件的 CollectionView，狀態為不允許取消該事件。在將 CurrentChangingEventArgs.IsCancelable 指派到此 CurrentChangingEventArgs.Cancel 屬性之前，請先檢查。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DTypeNotSupportForSystemType">
+        <source>'{0}' type does not have a matching DependencyObjectType.</source>
+        <target state="translated">類型 '{0}' 沒有相符的 DependencyObjectType。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DanglingMetadataRelationship">
+        <source>The target of the Core Properties relationship does not reference an existing part.</source>
+        <target state="translated">Core Properties 關聯性的目標，未參考現有的組件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataSpaceLabelInUse">
+        <source>The given data space label name is already in use.</source>
+        <target state="translated">指定的資料空間標籤名稱已在使用中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataSpaceLabelInvalidEmpty">
+        <source>Empty string is not a valid data space label.</source>
+        <target state="translated">空字串並非有效的資料空間標籤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataSpaceLabelUndefined">
+        <source>Specified data space label has not been defined.</source>
+        <target state="translated">尚未定義指定的資料空間標籤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataSpaceManagerDisposed">
+        <source>DataSpaceManager object was disposed.</source>
+        <target state="translated">已處置 DataSpaceManager 物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataSpaceMapEntryInvalid">
+        <source>DataSpace map entry is not valid.</source>
+        <target state="translated">DataSpace 對應項目無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DecryptionRightIsNotGranted">
+        <source>Decryption right is not granted.</source>
+        <target state="translated">未授與解密權限。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultTagDoesNotMatchSchema">
+        <source>Default tag is not valid per the schema. Verify that attributes are correct.</source>
+        <target state="translated">就結構描述來說，預設的標籤無效。請確認屬性皆正確。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultValueAutoAssignFailed">
+        <source>Cannot automatically generate a valid default value for property '{0}'. Specify a default value explicitly when owner type '{1}' is registering this DependencyProperty.</source>
+        <target state="translated">無法為屬性 '{0}' 自動產生有效的預設值。當擁有者類型 '{1}' 登錄此 DependencyProperty 時，請明確地指定預設值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultValueInvalid">
+        <source>Default value for '{0}' property is not valid because ValidateValueCallback failed.</source>
+        <target state="translated">因為 ValidateValueCallback 失敗，所以 '{0}' 屬性的預設值無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultValueMayNotBeExpression">
+        <source>An Expression object is not a valid default value for a DependencyProperty.</source>
+        <target state="translated">Expression 物件對 DependencyProperty 來說，並非有效的預設值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultValueMayNotBeUnset">
+        <source>Default value cannot be 'Unset'.</source>
+        <target state="translated">預設值不可為 'Unset'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultValueMustBeFreeThreaded">
+        <source>Default value for the '{0}' property cannot be bound to a specific thread.</source>
+        <target state="translated">'{0}' 屬性的預設值不可繫結到特定的執行緒。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultValuePropertyTypeMismatch">
+        <source>Default value type does not match type of property '{0}'.</source>
+        <target state="translated">預設值類型與屬性 '{0}' 的類型不符。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DelimiterLeading">
+        <source>Cannot have leading path delimiter.</source>
+        <target state="translated">不可有前置路徑分隔符號。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DelimiterTrailing">
+        <source>Cannot have trailing path delimiter.</source>
+        <target state="translated">不可有後置路徑分隔符號。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DictionaryIsReadOnly">
+        <source>The dictionary is read-only.</source>
+        <target state="translated">目錄為唯讀目錄。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigCannotLocateCertificate">
+        <source>Cannot locate the selected digital certificate.</source>
+        <target state="translated">找不到選取的數位憑證。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigDuplicateCertificate">
+        <source>Certificate error. Multiple certificates found with the same thumbprint.</source>
+        <target state="translated">憑證錯誤。相同指紋中發現多個憑證。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DispatcherHasShutdown">
+        <source>Cannot perform requested operation because the Dispatcher shut down.</source>
+        <target state="translated">因為 Dispatcher 已關機，所以無法執行要求的作業。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DispatcherPriorityAwaiterInvalid">
+        <source>The DispatcherPriorityAwaiter was not configured with a valid Dispatcher.  The only supported usage is from Dispatcher.Yield.</source>
+        <target state="translated">未對 DispatcherPriorityAwaiter 設定有效的 Dispatcher。唯一支援的用法是從 Dispatcher.Yield 使用。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DispatcherProcessingDisabled">
+        <source>Cannot perform this operation while dispatcher processing is suspended.</source>
+        <target state="translated">當發送器處理暫止時，無法執行此作業。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DispatcherProcessingDisabledButStillPumping">
+        <source>Dispatcher processing has been suspended, but messages are still being processed.</source>
+        <target state="translated">發送器處理已暫止，但訊息仍在繼續處理中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DispatcherRequestProcessingFailed">
+        <source>The Dispatcher is unable to request processing.  This is often because the application has starved the Dispatcher's message pump.</source>
+        <target state="translated">Dispatcher 無法要求處理。這種情況常會因為應用程式急需 Dispatcher 的訊息傾印而發生。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DispatcherYieldNoAvailableDispatcher">
+        <source>The thread calling Dispatcher.Yield does not have a current Dispatcher.</source>
+        <target state="translated">呼叫 Dispatcher.Yield 的執行緒沒有目前的 Dispatcher。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateCorePropertyName">
+        <source>More than one '{0}' property found.</source>
+        <target state="translated">發現一個以上的 '{0}' 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateObjectId">
+        <source>Duplicate object ID found. IDs must be unique within the signature XML.</source>
+        <target state="translated">找到重複的物件識別碼。在簽章 XML 中，識別碼在必須是獨一的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicatePiecesFound">
+        <source>Duplicate pieces found in the package.</source>
+        <target state="translated">套件中找到重複的部分。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateSignature">
+        <source>Duplicates not allowed - signature part already exists.</source>
+        <target state="translated">不得重複 - 簽章組件已存在。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ElementIsNotEmptyElement">
+        <source>'{0}' element must be empty.</source>
+        <target state="translated">'{0}' 項目必須是空的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EmptySignatureId">
+        <source>Signature Identifier cannot be empty.</source>
+        <target state="translated">簽章識別碼不可為空的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EncodingNotSupported">
+        <source>Encoding format is not supported. Only UTF-8 and UTF-16 are supported.</source>
+        <target state="translated">不支援編碼格式。只支援 UTF-8 與 UTF-16。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EncryptedDataStreamCorrupt">
+        <source>Encrypted data stream is corrupted.</source>
+        <target state="translated">加密的資料串流已損毀。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EncryptedPackageEnvelopeDisposed">
+        <source>EncryptedPackageEnvelope object was disposed.</source>
+        <target state="translated">已處置 EncryptedPackageEnvelope 物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EncryptionRightIsNotGranted">
+        <source>Encryption right is not granted.</source>
+        <target state="translated">未授與加密權限。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enum_Invalid">
+        <source>'{0}' enumeration value is not valid.</source>
+        <target state="translated">'{0}' 列舉值無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enumerator_VerifyContext">
+        <source>No current object to return.</source>
+        <target state="translated">沒有可傳回的目前物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EventNotFound">
+        <source>'{1}' event not found on type '{0}'.</source>
+        <target state="translated">在類型 '{0}' 上找不到 '{1}' 事件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExceptionFilterCodeNotPresent">
+        <source>Exception Filter Code is not built and installed properly.</source>
+        <target state="translated">未正確地建置及安裝例外篩選代碼。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExcessiveLengthPrefix">
+        <source>Length prefix specifies {0} characters, which exceeds the maximum of {1} characters.</source>
+        <target state="translated">長度前置詞指定了 {0} 個字元，但如此超過上限 {1} 個字元。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedRelationshipsElementTag">
+        <source>Relationships tag expected at root level.</source>
+        <target state="translated">根層級應要有 Relationships 標籤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedVersionPairObject">
+        <source>Expected a VersionPair object.</source>
+        <target state="translated">應為 VersionPair 物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectingParameterValuePairs">
+        <source>';' must be followed by parameter=value pair.</source>
+        <target state="translated">';' 之後必須接著成對的 parameter=value。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectingSemicolon">
+        <source>Semicolon separator is required between two valid parameter=value pairs.</source>
+        <target state="translated">兩對有效的 parameter=value 之間需要一個分號分隔符號。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileAccessInvalid">
+        <source>FileAccess value is not valid.</source>
+        <target state="translated">FileAccess 值無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileAlreadyExists">
+        <source>File already exists.</source>
+        <target state="translated">檔案已存在。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileDoesNotExists">
+        <source>Cannot find specified file.</source>
+        <target state="translated">找不到指定的機器。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatException">
+        <source>Input file or data stream does not conform to the expected file format specification.</source>
+        <target state="translated">輸入檔或資料流不符合預期的檔案格式規格。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatExceptionWithFileName">
+        <source>'{0}' file does not conform to the expected file format specification.</source>
+        <target state="translated">'{0}' 檔案不符合預期的檔案格式規格。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileModeInvalid">
+        <source>FileMode value is not valid.</source>
+        <target state="translated">FileMode 值無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileModeUnsupported">
+        <source>FileMode value is not supported.</source>
+        <target state="translated">不支援 FileMode 值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileShareInvalid">
+        <source>FileShare value is not valid.</source>
+        <target state="translated">FileShare 值無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileShareUnsupported">
+        <source>FileShare value is not supported.</source>
+        <target state="translated">不支援 FileShare 值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FragmentMustStartWithHash">
+        <source>The 'fragment' parameter must start with a number sign.</source>
+        <target state="translated">'fragment' 參數必須以數字符號 (#) 開頭。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_AttemptToUseInnerValueWithDifferentThread">
+        <source>Cannot use a DependencyObject that belongs to a different thread than its parent Freezable.</source>
+        <target state="translated">不可使用屬於與其父 Freezable 不同執行緒的 DependencyObject。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_CantBeFrozen">
+        <source>Specified value of type '{0}' must have IsFrozen set to false to modify.</source>
+        <target state="translated">所指定型別 '{0}' 的值必須將 IsFrozen 設定為 false，才能進行修改。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_CantFreeze">
+        <source>This Freezable cannot be frozen.</source>
+        <target state="translated">無法凍結此 Freezable。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_NotAContext">
+        <source>The provided DependencyObject is not a context for this Freezable.</source>
+        <target state="translated">提供的 DependencyObject 並非此 Freezable 的內容。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_UnregisteredHandler">
+        <source>Handler has not been registered with this event.</source>
+        <target state="translated">處理常式尚未註冊此事件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalList_CannotPromoteBeyondArray">
+        <source>Cannot promote from Array.</source>
+        <target state="translated">無法從陣列升級。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalList_TargetMapCannotHoldAllData">
+        <source>Cannot promote from '{0}' to '{1}' because the target map is too small.</source>
+        <target state="translated">因為目標對應太小，所以無法從 '{0}' 升階到 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalMap_CannotPromoteBeyondHashtable">
+        <source>Cannot promote from Hashtable.</source>
+        <target state="translated">無法從 Hashtable 升階。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalMap_TargetMapCannotHoldAllData">
+        <source>Cannot promote from '{0}' to '{1}' because the target map is too small.</source>
+        <target state="translated">因為目標對應太小，所以無法從 '{0}' 升階到 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="General_Expected_Type">
+        <source>Expected object of type '{0}'.</source>
+        <target state="translated">必須是型別為 '{0}' 的物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetContentTypeCoreNotImplemented">
+        <source>PackagePart subclass must implement GetContentTypeCore method if passing a null value for the content type when PackagePart object is constructed.</source>
+        <target state="translated">建構 PackagePart 物件時，若為內容類型傳遞了 null 值，PackagePart 子類別就必須實作 GetContentTypeCore 方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetOlePropertyFailed">
+        <source>OLE property ID {0} cannot be read (error {1}).</source>
+        <target state="translated">無法讀取 OLE 屬性識別碼 {0} (錯誤 {1})。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HashAlgorithmMustBeReusable">
+        <source>Reusable hash algorithm must be specified.</source>
+        <target state="translated">必須指定可重複使用的雜湊演算法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndSubclassMultipleAttach">
+        <source>HwndSubclass.Attach has already been called;  it cannot be called again.</source>
+        <target state="translated">已呼叫過 HwndSubclass.Attach，不可再次呼叫。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ILockBytesStreamMustSeek">
+        <source>Streams for exposure as ILockBytes must be seekable.</source>
+        <target state="translated">必須可以搜尋公開為 ILockBytes 的資料流。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IOBufferOverflow">
+        <source>Read or write operation references location outside the bounds of the buffer provided.</source>
+        <target state="translated">讀取或寫入作業參考了位於所提供之緩衝區範圍以外的位置。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IncompatibleModeOrAccess">
+        <source>Cannot open package because FileMode or FileAccess value is not valid for the stream.</source>
+        <target state="translated">因為 FileMode 或 FileAccess 值對資料流無效，所以無法開啟套件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InnerPackageUriHasFragment">
+        <source>Package URI obtained from the pack URI cannot contain a Fragment.</source>
+        <target state="translated">從封包 URI 所取得的套件 URI 不可包含 Fragment。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidArgumentValue">
+        <source>'{1}' is not a valid value for '{0}'.</source>
+        <target state="translated">'{1}' 不是 '{0}' 的有效值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidAuthenticationTypeString">
+        <source>Authentication type string (the part before the colon) is not valid in user ID '{0}'.</source>
+        <target state="translated">使用者識別碼 '{0}' 中的驗證類型字串 (冒號前的部分) 無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCondition01">
+        <source>Cannot locate information for stream that should exist. This is an internally inconsistent condition.</source>
+        <target state="translated">找不到應存在資料流的資訊。此為內部不一致的情況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDocumentPropertyType">
+        <source>'{0}' document property type is not valid.</source>
+        <target state="translated">'{0}' 文件屬性類型無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDocumentPropertyVariantType">
+        <source>'{0}' document property variant type is not valid.</source>
+        <target state="translated">'{0}' 文件屬性變化類型無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidEvent">
+        <source>Event argument is invalid.</source>
+        <target state="translated">事件引數無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidLinearWhiteSpaceCharacter">
+        <source>A Linear White Space character is not valid.</source>
+        <target state="translated">Linear White Space 字元無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidParameterValue">
+        <source>Parameter value must be a valid token or a quoted string as per RFC 2616.</source>
+        <target state="translated">根據 RFC 2616 的規定，參數值必須是有效的語彙基元或是括起來的字串。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidParameterValuePair">
+        <source>Parameter and value pair is not valid. Expected form is parameter=value.</source>
+        <target state="translated">成對的參數與值無效。格式應為 parameter=value。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPartUri">
+        <source>Part URI is not valid per rules defined in the Open Packaging Conventions specification.</source>
+        <target state="translated">根據開放式封裝慣例 (Open Packaging Convention) 規格中所定義的規則，組件 URI 無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionLevel">
+        <source>Permission level is not valid.</source>
+        <target state="translated">使用權限等級無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionState">
+        <source>Permission state is not valid.</source>
+        <target state="translated">使用權限狀態無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionStateValue">
+        <source>PermissionState value '{0}' is not valid for this Permission.</source>
+        <target state="translated">PermissionState 值 '{0}' 對此權限無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionType">
+        <source>Permission type is not valid. Expected '{0}'.</source>
+        <target state="translated">使用權限類型無效。應該是 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPriority">
+        <source>Specified priority is not valid.</source>
+        <target state="translated">指定的優先順序無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPriorityRangeOrder">
+        <source>The minimum priority must be less than or equal to the maximum priority.</source>
+        <target state="translated">優先順序下限必須小於或等於優先順序上限。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPropertyNameInCorePropertiesPart">
+        <source>'{0}' property name is not valid in Core Properties part.</source>
+        <target state="translated">Core Properties 組件中的 '{0}' 屬性名稱無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPropertyValue">
+        <source>'{0}' is not a valid value for property '{1}'.</source>
+        <target state="translated">'{0}' 對屬性 '{1}' 來說，並非有效的值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPublishLicense">
+        <source>Signed Publish License is not valid.</source>
+        <target state="translated">已簽署的發行授權無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidRelationshipType">
+        <source>Relationship Type cannot contain only spaces or be empty.</source>
+        <target state="translated">關聯類型不可只包含空格或是空的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStringFormat">
+        <source>String format is not valid.</source>
+        <target state="translated">字串格式無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTableType">
+        <source>Internal table type value is not valid. This is an internally inconsistent condition.</source>
+        <target state="translated">內部表格類型值無效。此為內部不一致的情況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidToken">
+        <source>A token is not valid. Refer to RFC 2616 for correct grammar of content types.</source>
+        <target state="translated">語彙基元無效。請參考 RFC 2616 以了解內容類型的正確文法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTransformFeatureName">
+        <source>Feature name in the transform's primary stream is '{0}', but expected '{1}'.</source>
+        <target state="translated">轉換的主要資料流中功能名稱為 '{0}'，但應為 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypePrefixedUserName">
+        <source>User ID in use license stream is not of the form "authenticationType:userName".</source>
+        <target state="translated">所使用授權資料流中的使用者識別碼，並非 "authenticationType:userName" 格式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeSubType">
+        <source>ContentType string is not valid. Expected format is type/subtype.</source>
+        <target state="translated">ContentType 字串無效。格式應為 type/subtype。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidUriAttribute">
+        <source>Uri attribute in Reference tag must refer using fragment identifiers.</source>
+        <target state="translated">Reference 標籤中的 URI 屬性，必須使用 Fragment 識別項進行參考。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidValueForTheAttribute">
+        <source>'{0}' attribute value is not valid.</source>
+        <target state="translated">'{0}' 屬性值無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidXmlBaseAttributePresent">
+        <source>Relationships XML elements cannot specify attribute '{0}'.</source>
+        <target state="translated">關聯性 XML 項目無法指定屬性 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvariantFailure">
+        <source>Unrecoverable system error.</source>
+        <target state="translated">無法復原的系統錯誤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LengthNotSupported">
+        <source>Stream does not support Length property.</source>
+        <target state="translated">資料流不支援 Length 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ListenerDidNotHandleEvent">
+        <source>Listener did not handle requested event.</source>
+        <target state="translated">接聽程式並未處理要求的事件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ListenerDidNotHandleEventDetail">
+        <source>Listener of type '{0}' registered with event manager of type '{1}', but then did not handle the event. The listener is coded incorrectly.</source>
+        <target state="translated">類型 '{0}' 的接聽程式已登錄為類型 '{1}' 的事件管理員，但其並未處理該事件。此接聽程式的編碼不正確。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalValueEnumerationInvalidated">
+        <source>Current local value enumeration is outdated because one or more local values have been set since its creation.</source>
+        <target state="translated">因為一或多個區域值於建立之後已加以設定，所以目前的區域值列舉已過期。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalValueEnumerationOutOfBounds">
+        <source>Local value enumeration position is out of range.</source>
+        <target state="translated">區域值列舉位置超出範圍。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalValueEnumerationReset">
+        <source>Local value enumeration position is before the start, need to call MoveNext first.</source>
+        <target state="translated">區域值列舉位置位於開頭之前，需要先呼叫 MoveNext。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MalformedCompoundFilePath">
+        <source>CompoundFileReference: malformed path encountered.</source>
+        <target state="translated">CompoundFileReference: 發生路徑格式不正確。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionArrayBadType">
+        <source>Items in the array must be type '{0}'. One or more items cannot be cast to this type.</source>
+        <target state="translated">陣列中之項目的型別必須是 '{0}'。一或多個項目無法轉型為此型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionArrayType">
+        <source>Must set ArrayType before calling ProvideValue on ArrayExtension.</source>
+        <target state="translated">必須先設定 ArrayType，然後再於 ArrayExtension 上呼叫 ProvideValue。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionBadStatic">
+        <source>'{0}' StaticExtension value cannot be resolved to an enumeration, static field, or static property.</source>
+        <target state="translated">'{0}' StaticExtension 值無法解析為列舉、靜態欄位或靜態屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionNoContext">
+        <source>Markup extension '{0}' requires '{1}' be implemented in the IServiceProvider for ProvideValue.</source>
+        <target state="translated">標記延伸 '{0}' 要求要在 ProvideValue 的 IServiceProvider 中實作 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionStaticMember">
+        <source>StaticExtension must have Member property set before ProvideValue can be called.</source>
+        <target state="translated">StaticExtension 必須設定 Member 屬性，才能呼叫 ProvideValue。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionTypeName">
+        <source>TypeExtension must have TypeName property set before ProvideValue can be called.</source>
+        <target state="translated">TypeExtension 必須設定 TypeName 屬性，才能呼叫 ProvideValue。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionTypeNameBad">
+        <source>'{0}' string is not valid for type.</source>
+        <target state="translated">'{0}' 字串對於型別而言是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MethodAvailableOnlyInStreamingCreation">
+        <source>'{0}' method can only be called on a package opened in streaming mode.</source>
+        <target state="translated">只有於串流模式下開啟的套件上，才可呼叫 '{0}' 方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MismatchedDispatchers">
+        <source>Objects must be created by the same thread.</source>
+        <target state="translated">物件必須由相同的執行緒建立。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingCreateDefaultValue">
+        <source>Default value factory user must override PropertyMetadata.CreateDefaultValue.</source>
+        <target state="translated">預設值出廠使用者必須覆寫 PropertyMetadata.CreateDefaultValue。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoreThanOneMetadataRelationships">
+        <source>Package has more than one Core Properties relationship.</source>
+        <target state="translated">套件有一個以上的 Core Properties 關聯性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoreThanOnePackageSpecificReference">
+        <source>Expected exactly one Package-specific Reference tag.</source>
+        <target state="translated">應剛好有一個套件專屬的 Reference 標籤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToDestNotExist">
+        <source>MoveTo Destination storage does not exist.</source>
+        <target state="translated">MoveTo Destination 儲存體不存在。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToNYI">
+        <source>IStorage/IStream::MoveTo not supported.</source>
+        <target state="translated">不支援 IStorage/IStream::MoveTo。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MultipleRelationshipTransformsFound">
+        <source>There must be at most one relationship transform specified for a given relationship part.</source>
+        <target state="translated">對指定的關聯性組件來說，最多只能指定一個關聯性轉換。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MultipleRightsManagementEncryptionTransformFound">
+        <source>Document contains multiple Rights Management Encryption Transforms.</source>
+        <target state="translated">文件包含多個 Rights Management 加密轉換。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MultipleSignatureOrigins">
+        <source>Multiple signature origin relationships found.</source>
+        <target state="translated">找到多個簽章原始關聯性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustBeOfType">
+        <source>'{0}' must be of type '{1}'.</source>
+        <target state="translated">'{0}' 必須是類型 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NYIDefault">
+        <source>This feature is not supported.</source>
+        <target state="translated">不支援此功能。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameAlreadyInUse">
+        <source>'{0}' name is already in use.</source>
+        <target state="translated">'{0}' 名稱已在使用中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameCanNotHaveDelimiter">
+        <source>'{0}' cannot contain the path delimiter: '{1}'.</source>
+        <target state="translated">'{0}' 不可包含路徑分隔符號: '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeDuplicateNamesNotAllowed">
+        <source>Cannot register duplicate Name '{0}' in this scope.</source>
+        <target state="translated">無法在此範圍中登錄重複的 Name '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeInvalidIdentifierName">
+        <source>'{0}' name is not valid for identifier.</source>
+        <target state="translated">'{0}' 名稱對於識別碼而言是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeNameNotEmptyString">
+        <source>Name cannot be an empty string.</source>
+        <target state="translated">Name 不能是空字串。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeNameNotFound">
+        <source>'{0}' Name is not found.</source>
+        <target state="translated">找不到 '{0}' Name。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeNotFound">
+        <source>No NameScope found to {1} the Name '{0}'.</source>
+        <target state="translated">找不到 {1} Name '{0}' 的 NameScope。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameTableCorruptMem">
+        <source>Name table data is corrupt in memory.</source>
+        <target state="translated">記憶體中的名稱資料表資料已損毀。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameTableCorruptStg">
+        <source>Name table data is corrupt in data storage.</source>
+        <target state="translated">資料儲存區中的名稱資料表資料已損毀。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameTableVersionMismatchRead">
+        <source>Name table cannot be read by this version of the program.</source>
+        <target state="translated">此版本的程式無法讀取名稱資料表。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameTableVersionMismatchWrite">
+        <source>Name table cannot be updated by this version of the program.</source>
+        <target state="translated">此版本的程式無法更新名稱資料表。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamedAPIFailure">
+        <source>Failed call to '{0}'.</source>
+        <target state="translated">無法呼叫 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoCounterSignUnsignedContainer">
+        <source>Cannot countersign an unsigned package.</source>
+        <target state="translated">無法副署未簽署的套件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoDependencyProperty">
+        <source>No dependency property {0} on {1}.</source>
+        <target state="translated">{1} 上沒有任何相依性屬性 {0}。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoExternalTargetForMetadataRelationship">
+        <source>TargetMode for a Core Properties relationship must be 'Internal'.</source>
+        <target state="translated">Core Properties 關聯性的 TargetMode 必須是「內部」。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoMulticastHandlers">
+        <source>WeakEventManager supports only delegates with one target.</source>
+        <target state="translated">WeakEventManager 只支援具有一個目標的委派。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPrivilegesForPublishLicenseDecryption">
+        <source>CryptoProvider does not have privileges required for decryption of the PublishLicense.</source>
+        <target state="translated">CryptoProvider 沒有解密 PublishLicense 所需的權限。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPublishLicenseStream">
+        <source>File does not contain a stream to hold the publish license.</source>
+        <target state="translated">檔案未包含可保留發行授權的資料流。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoStructuredContentInsideProperties">
+        <source>Core Properties part: core property elements can contain only text data.</source>
+        <target state="translated">Core Properties 組件: 核心屬性項目只可包含文字資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoUseLicenseStorage">
+        <source>File does not contain a storage to hold use licenses.</source>
+        <target state="translated">檔案未包含可保留使用授權的儲存體。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAUniqueRelationshipId">
+        <source>'{0}' ID conflicts with the ID of an existing relationship for the specified source.</source>
+        <target state="translated">'{0}' 識別碼與指定來源的現有關聯性相識別碼相衝突。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAValidRelationshipPartUri">
+        <source>PackageRelationship part URI syntax is not valid.</source>
+        <target state="translated">PackageRelationship 組件 URI 語法無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAValidXmlIdString">
+        <source>'{0}' ID is not a valid XSD ID.</source>
+        <target state="translated">'{0}' 識別碼並非有效的 XSD 識別碼。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedMultiDisk">
+        <source>Multidisk ZIP format is not supported.</source>
+        <target state="translated">不支援多重磁碟 ZIP 格式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedVersionNeededToExtract">
+        <source>ZIP archive contains unsupported data structures.</source>
+        <target state="translated">ZIP 封存包含不受支援的資料結構。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupported_ReadOnlyCollection">
+        <source>Collection is read-only.</source>
+        <target state="translated">集合是唯讀的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NothingToSign">
+        <source>Must specify an item to sign.</source>
+        <target state="translated">必須指定要簽署的項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NullContentTypeProvided">
+        <source>GetContentTypeCore method cannot return null for the content type stream.</source>
+        <target state="translated">GetContentTypeCore 方法無法為內容類型資料流傳回 null。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NullStreamReturned">
+        <source>Returned stream for the part is null.</source>
+        <target state="translated">為組件所傳回的資料流為 null。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectDisposed">
+        <source>Package object was closed and disposed, so cannot carry out operations on this object or any stream opened on a part of this package.</source>
+        <target state="translated">套件物件已關閉且已處置，所以無法在此物件或此套件組件上所開啟的任何資料流上，進行作業。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OffsetNegative">
+        <source>Offset must be greater than or equal to zero.</source>
+        <target state="translated">位移必須大於或等於 0。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyFileShareReadAndFileShareNoneSupported">
+        <source>Only FileShare.Read and FileShare.None are supported.</source>
+        <target state="translated">只支援 FileShare.Read 與 FileShare.None。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyPassportOrWindowsAuthenticatedUsersAreAllowed">
+        <source>User must be either Windows or Passport authenticated. Other authentication types are not allowed in this context.</source>
+        <target state="translated">使用者必須經過 Windows 或 Passport 的驗證。在此內容中不得進行其他類型的驗證。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyStreamingProductionIsSupported">
+        <source>Streaming consumption of packages not supported.</source>
+        <target state="translated">不支援套件的串流取用。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyWriteOperationsAreSupportedInStreamingCreation">
+        <source>Only write operations are supported in streaming production.</source>
+        <target state="translated">產生串流時只支援寫入作業。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OperationIsNotSupportedInStreamingProduction">
+        <source>Package.{0} is not supported in streaming production.</source>
+        <target state="translated">產生串流時不支援 Package.{0}。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OperationViolatesWriteOnceSemantics">
+        <source>Write-once semantics in streaming production precludes the use of '{0}'.</source>
+        <target state="translated">產生串流時的單次寫入語意，不可使用 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OverrideTagDoesNotMatchSchema">
+        <source>Override tag is not valid per the schema. Verify that attributes are correct.</source>
+        <target state="translated">就結構描述來說，Override 標籤無效。請確認屬性皆正確。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OverridingMetadataDoesNotMatchBaseMetadataType">
+        <source>Metadata override and base metadata must be of the same type or derived type.</source>
+        <target state="translated">中繼資料覆寫與基底中繼資料，必須是相同類型或衍生類型。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageNotFound">
+        <source>Document does not contain a package.</source>
+        <target state="translated">文件未包含任何套件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackagePartDeleted">
+        <source>Part was deleted.</source>
+        <target state="translated">組件已刪除。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackagePartRelationshipDoesNotExist">
+        <source>PackageRelationship with specified ID does not exist for the source part.</source>
+        <target state="translated">對來源組件來說，不存在具備指定識別碼的 PackageRelationship。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageRelationshipDoesNotExist">
+        <source>PackageRelationship with specified ID does not exist at the Package level.</source>
+        <target state="translated">在 Package 層級不存在具備指定識別碼的 PackageRelationship。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageSignatureCorruption">
+        <source>Signature structures are corrupted in this package.</source>
+        <target state="translated">此套件中的簽章結構已損毀。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageSignatureObjectTagRequired">
+        <source>Required Package-specific Object tag is missing.</source>
+        <target state="translated">缺少必要的 Package 專屬 Object 標籤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageSignatureReferenceTagRequired">
+        <source>Required Package-specific Reference tag is missing.</source>
+        <target state="translated">缺少必要的 Package 專屬 Reference 標籤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageSpecificReferenceTagMustBeUnique">
+        <source>Specified reference object conflicts with predefined Package specific reference.</source>
+        <target state="translated">指定的參考物件與預先定義的 Package 專屬參考相衝突。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterCannotBeNegative">
+        <source>Parameter must be greater than or equal to zero.</source>
+        <target state="translated">參數必須大於或等於零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterMustBeBetween">
+        <source>The parameter value must be between '{0}' and '{1}'.</source>
+        <target state="translated">參數值必須介於 '{0}' 到 '{1}' 之間。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParentContainerClosed">
+        <source>Cannot access part because parent package was closed.</source>
+        <target state="translated">因為父套件已關閉，所以無法存取組件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAssemblyLoadVersionMismatch">
+        <source>Cannot load assembly '{0}' because a different version of that same assembly is loaded '{1}'.</source>
+        <target state="translated">因為已載入相同組件的不同版本 '{1}'，所以無法載入組件 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsHigh">
+        <source>Too many attributes are specified for '{0}'.</source>
+        <target state="translated">為 '{0}' 指定太多屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsLow">
+        <source>'{0}' requires more attributes.</source>
+        <target state="translated">'{0}' 需要更多屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartAlreadyExists">
+        <source>Cannot add part for the specified URI because it is already in the package.</source>
+        <target state="translated">因為組件已存在於套件中，所以無法為指定的 URI 新增組件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartDoesNotExist">
+        <source>Specified part does not exist in the package.</source>
+        <target state="translated">套件中沒有指定的組件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartNamePrefixExists">
+        <source>Cannot add part to the package. Part names cannot be derived from another part name by appending segments to it.</source>
+        <target state="translated">無法對套件新增組件。組件名稱無法利用對其附加區段的方法，從另一個組件衍生。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartReferenceUriMalformed">
+        <source>Malformed Part URI in Reference tag.</source>
+        <target state="translated">Reference 標籤中出現格式不正確的 Part URI。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartToSignMissing">
+        <source>Specified part to sign does not exist.</source>
+        <target state="translated">指定要簽署的組件不存在。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartUriCannotHaveAFragment">
+        <source>Part URI cannot contain a Fragment component.</source>
+        <target state="translated">Part URI 不可包含 Fragment 元件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartUriIsEmpty">
+        <source>Part URI is empty.</source>
+        <target state="translated">Part URI 是空的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartUriShouldNotEndWithForwardSlash">
+        <source>Part URI cannot end with a forward slash.</source>
+        <target state="translated">Part URI 不可用斜線作為結尾。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartUriShouldNotStartWithTwoForwardSlashes">
+        <source>Part URI cannot start with two forward slashes.</source>
+        <target state="translated">Part URI 不可用兩個斜線作為開頭。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartUriShouldStartWithForwardSlash">
+        <source>Part URI must start with a forward slash.</source>
+        <target state="translated">Part URI 必須用斜線作為開頭。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PathHasEmptyElement">
+        <source>Path string cannot include an empty element.</source>
+        <target state="translated">路徑字串不可包含空的項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PieceDoesNotExist">
+        <source>Cannot find piece with the specified piece number.</source>
+        <target state="translated">找不到具備指定項目編號的項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyAlreadyRegistered">
+        <source>'{0}' property was already registered by '{1}'.</source>
+        <target state="translated">'{1}' 已登錄了 '{0}' 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyNotReadOnly">
+        <source>This method overrides metadata only on read-only properties. This property is not read-only.</source>
+        <target state="translated">此方法只會覆寫唯讀屬性上的中繼資料，但此屬性並非唯讀屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyStartTagExpected">
+        <source>Core Properties part: A property start-tag was expected.</source>
+        <target state="translated">Core Properties 組件: 應為屬性的開頭標籤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyWrongNumbOfAttribsDefinedOn">
+        <source>Unexpected number of attributes is found on '{0}'.</source>
+        <target state="translated">在 '{0}' 中的屬性數目不對。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PublishLicenseNotFound">
+        <source>Document does not contain a publish license.</source>
+        <target state="translated">文件未包含發行授權。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PublishLicenseStreamCorrupt">
+        <source>Document's publish license stream is corrupted.</source>
+        <target state="translated">文件的發行授權資料流損毀。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PublishLicenseStreamHeaderTooLong">
+        <source>Variable-length header in publish license stream is {0} bytes, which exceeds the maximum length of {1} bytes.</source>
+        <target state="translated">發行授權資料流中的變數長度標頭為 {0} 個位元組，超過了長度上限 {1} 個位元組。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QualifiedNameHasWrongFormat">
+        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
+        <target state="translated">'{0}' 型別名稱不是預期的格式 'className, assembly'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachOutOfRange">
+        <source>'{0}' index is beyond maximum '{1}'.</source>
+        <target state="translated">'{0}' 索引超過上限 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadBufferTooSmall">
+        <source>Buffer too small to hold results of Read.</source>
+        <target state="translated">緩衝區太小，無法保留讀取的結果。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadCountNegative">
+        <source>Count of bytes to read cannot be negative.</source>
+        <target state="translated">要讀取的位元組計數不能為負數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadNotSupported">
+        <source>Stream does not support reading.</source>
+        <target state="translated">資料流不支援讀取。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyChangeNotAllowed">
+        <source>'{0}' property was registered as read-only and cannot be modified without an authorization key.</source>
+        <target state="translated">'{0}' 屬性已登錄為唯讀屬性，因而無法在沒有授權金鑰的情況下修改。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyDesignerCoersionNotAllowed">
+        <source>'{0}' is registered as read-only, so its value cannot be coerced by using the DesignerCoerceValueCallback.</source>
+        <target state="translated">{0}' 已登錄為唯讀，所以其值不可使用 DesignerCoerceValueCallback 強行取值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyKeyNotAuthorized">
+        <source>Property key is not authorized to modify property '{0}'.</source>
+        <target state="translated">屬性金鑰沒有權限可修改屬性 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyOverrideKeyNotAuthorized">
+        <source>Property key is not authorized to override metadata of property '{0}'.</source>
+        <target state="translated">屬性金鑰沒有權限可覆寫屬性 '{0}' 的中繼資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyOverrideNotAllowed">
+        <source>'{0}' property was registered as read-only and its metadata cannot be overridden without an authorization key.</source>
+        <target state="translated">'{0}' 屬性已登錄為唯讀屬性，因而無法在沒有授權金鑰的情況下覆寫其中繼資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyStream">
+        <source>Cannot write to read-only stream.</source>
+        <target state="translated">無法寫入唯讀資料流。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReaderVersionError">
+        <source>File contains data in format version {0}, but the software can only read that data in format version {1} or lower.</source>
+        <target state="translated">檔案所包含的資料格式為版本 {0}，但該軟體只可讀取版本 {1} 或更舊版的資料格式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Rect_CannotCallMethod">
+        <source>Cannot call this method on the Empty Rect.</source>
+        <target state="translated">無法在 Empty Rect 上呼叫此方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Rect_CannotModifyEmptyRect">
+        <source>Cannot modify this property on the Empty Rect.</source>
+        <target state="translated">無法在 Empty Rect 上修改此屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReferenceIsNull">
+        <source>Value cannot be null. Object reference: '{0}'.</source>
+        <target state="translated">值不能為 null。物件參考: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipPartIncorrectContentType">
+        <source>Incorrect content type for PackageRelationship part.</source>
+        <target state="translated">對 PackageRelationship 組件來說，內容類型不正確。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipPartUriExpected">
+        <source>PackageRelationship part URI is expected.</source>
+        <target state="translated">應為 PackageRelationship 組件 URI。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipPartUriNotExpected">
+        <source>PackageRelationship part URI is not expected.</source>
+        <target state="translated">不應為 PackageRelationship 組件 URI。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipPartsCannotHaveRelationships">
+        <source>PackageRelationship parts cannot have relationships to other parts.</source>
+        <target state="translated">PackageRelationship 組件不可有對其他組件的關聯性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipTagDoesntMatchSchema">
+        <source>Relationship tag contains incorrect attribute.</source>
+        <target state="translated">Relationship 標籤包含的屬性不正確。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipTargetMustBeRelative">
+        <source>PackageRelationship target must be relative URI if TargetMode is Internal.</source>
+        <target state="translated">若 TargetMode 為 Internal，則 PackageRelationship 目標必須是相對的 URI。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipToRelationshipIllegal">
+        <source>PackageRelationship cannot target another PackageRelationship.</source>
+        <target state="translated">PackageRelationship 無法以另一個 PackageRelationship 作為目標。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipTransformNotFollowedByCanonicalizationTransform">
+        <source>Relationship transform must be followed by an XML canonicalization transform.</source>
+        <target state="translated">關聯性轉換其後必須接著 XML 標準化轉換。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipsTagHasExtraAttributes">
+        <source>Relationships tag has extra attributes.</source>
+        <target state="translated">Relationships 標籤有額外的屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequiredAttributeEmpty">
+        <source>'{0}' tag requires a nonempty '{1}' attribute.</source>
+        <target state="translated">'{0}' 標籤需要非空的 '{1}' 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequiredAttributeMissing">
+        <source>'{0}' tag requires attribute '{1}'.</source>
+        <target state="translated">'{0}' 標籤需要屬性 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequiredRelationshipAttributeMissing">
+        <source>Relationship tag requires attribute '{0}'.</source>
+        <target state="translated">Relationship 標籤需要屬性 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequiredTagNotFound">
+        <source>Required tag '{0}' not found.</source>
+        <target state="translated">找不到必要的標籤 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequiredXmlAttributeMissing">
+        <source>Required attribute '{0}' not found.</source>
+        <target state="translated">找不到必要的屬性 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementEncryptionTransformNotFound">
+        <source>Document does not contain any rights management-protected streams.</source>
+        <target state="translated">文件未包含任何受版權管理所保護的資料流。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionAborted">
+        <source>Command interrupted.</source>
+        <target state="translated">命令已中斷。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionActivationFailed">
+        <source>Activation failed.</source>
+        <target state="translated">啟用失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionAdEntryNotFound">
+        <source>Ad entry not found.</source>
+        <target state="translated">找不到 Ad 項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionAlreadyInProgress">
+        <source>Rights management server transaction already in progress.</source>
+        <target state="translated">版權管理伺服器交易已在處理中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionAuthenticationFailed">
+        <source>Authentication failed.</source>
+        <target state="translated">驗證失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBadGetInfoQuery">
+        <source>Get information query is not valid.</source>
+        <target state="translated">取得資訊查詢無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindAccessPrincipalNotEnabling">
+        <source>Binding access principal is not enabling.</source>
+        <target state="translated">繫結存取主體未啟用。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindAccessUnsatisfied">
+        <source>Binding access unsatisfied.</source>
+        <target state="translated">未滿足繫結存取。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindContentNotInEndUseLicense">
+        <source>Binding content not in the End Use License.</source>
+        <target state="translated">繫結內容不在使用者授權中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindIndicatedPrincipalMissing">
+        <source>Principal provided for binding is missing.</source>
+        <target state="translated">未對繫結提供主體。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindIntervalTimeViolated">
+        <source>Binding time interval is violated.</source>
+        <target state="translated">違反繫結時間間隔。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindMachineNotFoundInGroupIdentity">
+        <source>Machine is not found in group identity certificate.</source>
+        <target state="translated">群組身分識別憑證中找不到電腦。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindNoApplicableRevocationList">
+        <source>Binding missing application revocation list.</source>
+        <target state="translated">繫結缺少應用程式撤銷清單。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindNoSatisfiedRightsGroup">
+        <source>Binding cannot find a satisfied rights group.</source>
+        <target state="translated">繫結找不到滿足的權限群組。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindPolicyViolation">
+        <source>Binding policy violation.</source>
+        <target state="translated">違反繫結原則。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindRevocationListStale">
+        <source>Binding revocation list is stale.</source>
+        <target state="translated">繫結撤銷清單已過時。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindRevokedIssuer">
+        <source>Issuer has been revoked.</source>
+        <target state="translated">已撤銷簽發者。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindRevokedLicense">
+        <source>License has been revoked.</source>
+        <target state="translated">已撤銷授權。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindRevokedModule">
+        <source>Module has been revoked.</source>
+        <target state="translated">已撤銷模組。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindRevokedPrincipal">
+        <source>Principal has been revoked.</source>
+        <target state="translated">已撤銷主體。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindRevokedResource">
+        <source>Resource has been revoked.</source>
+        <target state="translated">已撤銷資源。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindSpecifiedWorkMissing">
+        <source>Cannot find content specified for binding.</source>
+        <target state="translated">找不到為繫結所指定的內容。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindValidityTimeViolated">
+        <source>Binding validity time violated.</source>
+        <target state="translated">違反繫結有效時間。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBrokenCertChain">
+        <source>Broken certificate chain.</source>
+        <target state="translated">憑證鏈結中斷。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionClockRollbackDetected">
+        <source>Clock rollback detected.</source>
+        <target state="translated">偵測到時鐘復原。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionCryptoOperationUnsupported">
+        <source>Crypto operation not supported.</source>
+        <target state="translated">不支援加密作業。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionDebuggerDetected">
+        <source>Debugger detected.</source>
+        <target state="translated">偵測到偵錯工具。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionEmailNotVerified">
+        <source>E-mail not verified.</source>
+        <target state="translated">未驗證電子郵件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionEnablingPrincipalFailure">
+        <source>Enabling principal failure.</source>
+        <target state="translated">啟用主體失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionEncryptionNotPermitted">
+        <source>Encryption not permitted.</source>
+        <target state="translated">不允許加密。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionEnvironmentCannotLoad">
+        <source>Cannot load environment.</source>
+        <target state="translated">無法載入環境。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionEnvironmentNotLoaded">
+        <source>Environment not loaded.</source>
+        <target state="translated">未載入環境。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionExpiredOfficialIssuanceLicenseTemplate">
+        <source>Expired official Publish License template.</source>
+        <target state="translated">正式發行授權範本已過期。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionGenericMessage">
+        <source>Rights management operation failed.</source>
+        <target state="translated">版權管理作業失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionGlobalOptionAlreadySet">
+        <source>Global option is already set.</source>
+        <target state="translated">已設定全域選項。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionGroupIdentityNotSet">
+        <source>Group identity not set.</source>
+        <target state="translated">未設定群組身分識別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionHidCorrupted">
+        <source>Hardware ID corrupted.</source>
+        <target state="translated">硬體識別碼損毀。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionHidInvalid">
+        <source>Hardware ID is not valid.</source>
+        <target state="translated">硬體識別碼無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionIdMismatch">
+        <source>ID mismatch.</source>
+        <target state="translated">識別碼不符。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionIncompatibleObjects">
+        <source>Incompatible objects.</source>
+        <target state="translated">物件不相容。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInfoNotInLicense">
+        <source>Information not found.</source>
+        <target state="translated">找不到資訊。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInfoNotPresent">
+        <source>Information not found.</source>
+        <target state="translated">找不到資訊。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInstallationFailed">
+        <source>Installation failed.</source>
+        <target state="translated">安裝失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidAlgorithmType">
+        <source>Algorithm type is not valid.</source>
+        <target state="translated">演算法類型無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidClientLicensorCertificate">
+        <source>Client Licensor Certificate is not valid.</source>
+        <target state="translated">用戶端授權人憑證無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidEmail">
+        <source>E-mail address is not valid.</source>
+        <target state="translated">電子郵件地址無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidEncodingType">
+        <source>Encoding type is not valid.</source>
+        <target state="translated">編碼類型無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidHandle">
+        <source>Handle is not valid.</source>
+        <target state="translated">控制代碼無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidIssuanceLicenseTemplate">
+        <source>Issuance license template is not valid because of incorrectly formatted string.</source>
+        <target state="translated">因為字串格式不正確，所以發行授權範本無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidKeyLength">
+        <source>Key size length is not valid.</source>
+        <target state="translated">金鑰大小長度無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidLicense">
+        <source>License is not valid.</source>
+        <target state="translated">授權無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidLicenseSignature">
+        <source>License signature is not valid.</source>
+        <target state="translated">授權簽章無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidLockboxPath">
+        <source>Lockbox path is not valid.</source>
+        <target state="translated">Lockbox 路徑無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidLockboxType">
+        <source>Lockbox type is not valid.</source>
+        <target state="translated">Lockbox 類型無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidNumericalValue">
+        <source>Numerical value is not valid.</source>
+        <target state="translated">數值無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidRegistryPath">
+        <source>Registry path is not valid.</source>
+        <target state="translated">登錄路徑無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidServerResponse">
+        <source>Server response is not valid.</source>
+        <target state="translated">伺服器回應無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidTimeInfo">
+        <source>Time information is not valid.</source>
+        <target state="translated">時間資訊無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidVersion">
+        <source>Version is not valid.</source>
+        <target state="translated">版本無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionKeyTypeUnsupported">
+        <source>Key type not supported.</source>
+        <target state="translated">不支援金鑰類型。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionLibraryFail">
+        <source>Library fail.</source>
+        <target state="translated">程式庫失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionLibraryUnsupportedPlugIn">
+        <source>Unsupported library plug-in.</source>
+        <target state="translated">程式庫外掛程式不受支援。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionLicenseAcquisitionFailed">
+        <source>License acquisition failed.</source>
+        <target state="translated">取得授權失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionLicenseBindingToWindowsIdentityFailed">
+        <source>License binding to Windows Identity failed (NTLM bind failure).</source>
+        <target state="translated">繫結至 Windows 身分識別的授權失敗 (NTLM 繫結失敗)。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionManifestPolicyViolation">
+        <source>Manifest policy violation.</source>
+        <target state="translated">違反資訊清單原則。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionMetadataNotSet">
+        <source>Metadata not set.</source>
+        <target state="translated">未設定中繼資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNeedsGroupIdentityActivation">
+        <source>User identity must be activated.</source>
+        <target state="translated">必須啟用使用者身分識別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNeedsMachineActivation">
+        <source>Machine must be activated.</source>
+        <target state="translated">必須啟動電腦。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNoAesCryptoProvider">
+        <source>No AES Crypto provider found.</source>
+        <target state="translated">找不到任何 AES Crypto 提供者。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNoConnect">
+        <source>Connection failed.</source>
+        <target state="translated">連線失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNoDistributionPointUrlFound">
+        <source>Distribution Point URL was not set.</source>
+        <target state="translated">未設定發佈點 URL。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNoLicense">
+        <source>License not found.</source>
+        <target state="translated">找不到授權。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNoMoreData">
+        <source>No more data.</source>
+        <target state="translated">沒有更多的資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNotAChain">
+        <source>Not a certificate chain.</source>
+        <target state="translated">並非憑證鏈結。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNotSet">
+        <source>Not set.</source>
+        <target state="translated">未設定。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionOutOfQuota">
+        <source>Transaction quota exceeded.</source>
+        <target state="translated">已超出交易配額。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionOutdatedModule">
+        <source>Outdated module.</source>
+        <target state="translated">模組已過期。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionOwnerLicenseNotFound">
+        <source>Owner's license not found.</source>
+        <target state="translated">找不到擁有者的授權。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionQueryReportsNoResults">
+        <source>Query reports no results.</source>
+        <target state="translated">查詢未回報任何結果。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionRecordNotFound">
+        <source>Record not found.</source>
+        <target state="translated">找不到記錄。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionRequestDenied">
+        <source>Rights management server denied request.</source>
+        <target state="translated">版權管理伺服器拒絕了要求。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionRevocationInfoNotSet">
+        <source>Revocation information not set.</source>
+        <target state="translated">未設定撤銷資訊。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionRightNotGranted">
+        <source>Right not granted.</source>
+        <target state="translated">未授與版權。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionRightNotSet">
+        <source>Right not set.</source>
+        <target state="translated">未設定版權。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionServerError">
+        <source>Server side error.</source>
+        <target state="translated">伺服器端錯誤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionServerNotFound">
+        <source>Server not found.</source>
+        <target state="translated">找不到伺服器。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionServiceGone">
+        <source>Service gone.</source>
+        <target state="translated">服務已結束。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionServiceMoved">
+        <source>Service moved.</source>
+        <target state="translated">服務已移動。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionServiceNotFound">
+        <source>Service not found.</source>
+        <target state="translated">找不到服務。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionTooManyCertificates">
+        <source>Cannot have more than one certificate.</source>
+        <target state="translated">不可有一個以上的憑證。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionTooManyLoadedEnvironments">
+        <source>Cannot load more than one environment.</source>
+        <target state="translated">無法載入一個以上的環境。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionUnexpectedException">
+        <source>Unexpected exception.</source>
+        <target state="translated">非預期的例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionUseDefault">
+        <source>Use default.</source>
+        <target state="translated">使用預設值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionValidityTimeViolation">
+        <source>License validity time violation.</source>
+        <target state="translated">違反授權有效時間。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SeekFailed">
+        <source>Cannot seek to given position.</source>
+        <target state="translated">無法搜尋至指定位置。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SeekNegative">
+        <source>Cannot set seek pointer to a negative position.</source>
+        <target state="translated">無法搜尋負值位置的指標。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SeekNotSupported">
+        <source>Stream does not support Seek.</source>
+        <target state="translated">資料流不支援 Seek。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SeekOriginInvalid">
+        <source>SeekOrigin value is not valid.</source>
+        <target state="translated">SeekOrigin 值無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ServiceTypeAlreadyAdded">
+        <source>This serviceType is already registered to another service.</source>
+        <target state="translated">此 serviceType 已在其他服務登錄。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetLengthNotSupported">
+        <source>Stream does not support SetLength.</source>
+        <target state="translated">Stream 不支援 SetLength。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetOnReadOnlyObjectNotAllowed">
+        <source>Cannot set a property on object '{0}' because it is in a read-only state.</source>
+        <target state="translated">因為物件 '{0}' 上的屬性為唯讀狀態，所以無法設定。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetPositionNotSupported">
+        <source>Stream does not support setting the Position property.</source>
+        <target state="translated">Stream 不支援設定 Position 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ShareableExpressionsCannotChangeSources">
+        <source>Shareable Expression cannot use ChangeSources method.</source>
+        <target state="translated">可共用的 Expression 無法使用 ChangeSources 方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SharingNonSharableExpression">
+        <source>Cannot set Expression. It is marked as 'NonShareable' and has already been used.</source>
+        <target state="translated">無法設定 Expression。其標示為 'NonShareable' 且已在使用中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureDeleted">
+        <source>Signature was deleted.</source>
+        <target state="translated">已刪除簽章。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureObjectIdMustBeUnique">
+        <source>Object identifiers must be unique within the same signature.</source>
+        <target state="translated">Object identifiers 在相同的簽章中不得重複。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureOriginNotFound">
+        <source>Relationship was found to the signature origin but the part is missing. Package signature structures are corrupted.</source>
+        <target state="translated">已發現與簽章原點的關聯性，但遺漏了該組件。套件簽章結構已損毀。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignaturePackageObjectTagMustBeUnique">
+        <source>Specified object ID conflicts with predefined Package Object ID.</source>
+        <target state="translated">指定的物件識別碼與預先定義的套件物件識別碼相衝突。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Size_CannotModifyEmptySize">
+        <source>Cannot modify this property on the Empty Size.</source>
+        <target state="translated">無法修改 Empty Size 上的此屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Size_HeightCannotBeNegative">
+        <source>Height must be non-negative.</source>
+        <target state="translated">高度必須是非負數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Size_WidthAndHeightCannotBeNegative">
+        <source>Width and Height must be non-negative.</source>
+        <target state="translated">寬度與高度必須是非負數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Size_WidthCannotBeNegative">
+        <source>Width must be non-negative.</source>
+        <target state="translated">寬度必須是非負數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SortDescriptionPropertyNameCannotBeEmpty">
+        <source>SortDescription must have a nonempty property name.</source>
+        <target state="translated">SortDescription 不得是空的屬性名稱。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SourceChangeExpressionMismatch">
+        <source>Expression is not in use on DependencyObject. Cannot change DependencySource array.</source>
+        <target state="translated">DependencyObject 中未使用 Expression。無法變更 DependencySource 陣列。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SourcesMustBeInSameThread">
+        <source>Must create DependencySource on same Thread as the DependencyObject.</source>
+        <target state="translated">必須在和 DependencyObject 相同的 Thread 上建立 DependencySource。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SpecialMethodMustBePublic">
+        <source>ShouldSerializeProperty and ResetProperty methods must be public ('{0}').</source>
+        <target state="translated">ShouldSerializeProperty 與 ResetProperty 方法必須為公用 ('{0}')。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SplashScreenIsLoading">
+        <source>Please wait while the application opens</source>
+        <target state="translated">請稍候應用程式開啟</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StorageAlreadyExist">
+        <source>Storage already exists.</source>
+        <target state="translated">儲存體已存在。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StorageBasedPackagePropertiesDiposed">
+        <source>PackageProperties object was disposed.</source>
+        <target state="translated">已處置 PackageProperties 物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StorageFlagsUnsupported">
+        <source>This combination of flags is not supported.</source>
+        <target state="translated">不支援此旗標組合。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StorageInfoDisposed">
+        <source>StorageInfo object was disposed.</source>
+        <target state="translated">已處置 StorageInfo 物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StorageNotExist">
+        <source>Storage does not exist.</source>
+        <target state="translated">儲存體不存在。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StorageRootDisposed">
+        <source>StorageRoot object was disposed.</source>
+        <target state="translated">已處置 StorageRoot 物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamAlreadyExist">
+        <source>Stream already exists.</source>
+        <target state="translated">資料流已存在。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamDoesNotSupportWrite">
+        <source>Cannot change content of a read-only stream.</source>
+        <target state="translated">無法變更唯讀資料流的內容。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamInfoDisposed">
+        <source>StreamInfo object was disposed.</source>
+        <target state="translated">已處置 StreamInfo 物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamLengthNegative">
+        <source>Stream length cannot be negative.</source>
+        <target state="translated">資料流長度不可為負數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamNameNotValid">
+        <source>Stream name cannot be '{0}'.</source>
+        <target state="translated">資料流名稱不可為 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamNeedsReadWriteAccess">
+        <source>The stream on which the encrypted package is created must have read/write access.</source>
+        <target state="translated">建立加密套件所在的資料流，必須要有讀取/寫入權限。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamNotExist">
+        <source>Cannot perform this function on a stream that does not exist.</source>
+        <target state="translated">無法於不存在的資料流上執行此函式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamObjectDisposed">
+        <source>Cannot access Stream object because it was closed or disposed.</source>
+        <target state="translated">因為 Stream 物件已關閉或已處置，所以無法存取。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamPositionNegative">
+        <source>Negative stream position not supported.</source>
+        <target state="translated">不支援負的資料流位置。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamTimeStampNotImplemented">
+        <source>Stream time stamp not implemented in OLE32 implementation of Compound Files.</source>
+        <target state="translated">在複合檔案實作 OLE32 時，未實作資料流時間戳記。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamingModeNotSupportedForConsumption">
+        <source>Streaming mode is supported only for creating packages.</source>
+        <target state="translated">只有在建立套件時，才支援資料流模式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamingPackageProductionImpliesWriteOnlyAccess">
+        <source>Must have write-only access to produce a package in streaming mode.</source>
+        <target state="translated">必須要有唯寫權限才可在串流模式下產生套件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamingPackageProductionRequiresSingleWriter">
+        <source>Cannot have concurrent write accesses on package being produced in streaming mode.</source>
+        <target state="translated">正在串流模式下產生的套件中，不可有同時的寫入存取。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringCanNotBeReservedName">
+        <source>'{0}' cannot start with the reserved character range 0x01-0x1F.</source>
+        <target state="translated">'{0}' 不可是範圍在 0x01-0x1F 之間的保留字元。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringEmpty">
+        <source>Parameter cannot be a zero-length string.</source>
+        <target state="translated">參數不能是零長度字串。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TargetNotMediaPermissionLevel">
+        <source>Target is not a MediaPermission.</source>
+        <target state="translated">目標並非 MediaPermission。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TargetNotWebBrowserPermissionLevel">
+        <source>Target is not a WebBrowserPermission.</source>
+        <target state="translated">目標並非 WebBrowserPermission。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">
+        <source>A thread cannot wait on operations already running on the same thread.</source>
+        <target state="translated">執行緒無法等待已在相同執行緒上執行的作業。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TimeSpanPeriodOutOfRange_TooLarge">
+        <source>TimeSpan period must be less than or equal to Int32.MaxValue.</source>
+        <target state="translated">TimeSpan 期間必須小於或等於 Int32.MaxValue。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TimeSpanPeriodOutOfRange_TooSmall">
+        <source>TimeSpan period must be greater than or equal to zero.</source>
+        <target state="translated">TimeSpan 期間必須大於或等於零。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TimeStampNotAvailable">
+        <source>Requested time stamp is not available.</source>
+        <target state="translated">要求的時間戳記無法使用。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToStringNull">
+        <source>(null)</source>
+        <target state="translated">(null)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperEmptyToken">
+        <source>Empty token encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">剖析 '{1}' 時，位置 {0} 出現空的語彙基元。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperExtraDataEncountered">
+        <source>Extra data encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">剖析 '{1}' 時，位置 {0} 出現額外的資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperMissingEndQuote">
+        <source>Missing end quote encountered while parsing '{0}'.</source>
+        <target state="translated">剖析 '{0}' 時遺失結尾引號。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperPrematureStringTermination">
+        <source>Premature string termination encountered while parsing '{0}'.</source>
+        <target state="translated">剖析 '{0}' 時發現字串過早結束。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyDependencyProperties">
+        <source>DependencyProperty limit has been exceeded upon registration of '{0}'. Dependency properties are normally static class members registered with static field initializers or static constructors. In this case, there may be dependency properties accidentally getting initialized in instance constructors and thus causing the maximum limit to be exceeded.</source>
+        <target state="translated">根據 '{0}' 的登錄情況，已超出 DependencyProperty 的限制。Dependency 屬性一般會註冊為靜態欄位初始設定式或靜態建構函式的靜態類別成員。在這種情況下，在執行個體建構函式中有些相依性屬性會意外地初始化，因而會發生超出上限的情況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformLabelInUse">
+        <source>Transform label name is already in use.</source>
+        <target state="translated">轉換標籤名稱已在使用。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformLabelUndefined">
+        <source>Data space transform stack includes undefined transform labels.</source>
+        <target state="translated">資料空間轉換堆疊包含了未定義的轉換標籤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformObjectConstructorParam">
+        <source>Transform object type is required to have a constructor which takes a TransformEnvironment object.</source>
+        <target state="translated">需要轉換物件類型，才可有能利用 TransformEnvironment 物件的建構函式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformObjectImplementIDataTransform">
+        <source>Transform object type is required to implement IDataTransform interface.</source>
+        <target state="translated">需要轉換物件類型才可執行 IDataTransform 介面。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformObjectInitFailed">
+        <source>Stream transformation failed due to uninitialized data transform objects.</source>
+        <target state="translated">因為尚未初始化資料轉換物件，所以資料流轉換失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformParametersFixed">
+        <source>Cannot change Transform parameters after the transform is initialized.</source>
+        <target state="translated">初始化轉換之後，即無法變更 Transform 參數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformStackValid">
+        <source>Transform stack must have at least one transform.</source>
+        <target state="translated">轉換堆疊至少必須要有一個轉換。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformTypeUnsupported">
+        <source>Transform identifier type is not supported.</source>
+        <target state="translated">不支援轉換識別碼類型。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Transform_NotInvertible">
+        <source>Transform is not invertible.</source>
+        <target state="translated">轉換不可逆。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TruncateAppendModesNotSupported">
+        <source>Truncate and Append FileModes are not supported.</source>
+        <target state="translated">不支援 Truncate 與 Append FileModes。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeMetadataAlreadyInUse">
+        <source>Metadata is already associated with a type and property. A new one must be created.</source>
+        <target state="translated">中繼資料已與類型和屬性相關聯。必須建立新的中繼資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeMetadataAlreadyRegistered">
+        <source>PropertyMetadata is already registered for type '{0}'.</source>
+        <target state="translated">已為類型 '{0}' 註冊了 PropertyMetadata。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeMetadataCannotChangeAfterUse">
+        <source>Cannot change property metadata after it has been associated with a property.</source>
+        <target state="translated">當屬性中繼資料與屬性關聯時，即無法變更。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeMustBeDependencyObjectDerived">
+        <source>'{0}' type must derive from DependencyObject.</source>
+        <target state="translated">'{0}' 類型必須衍生自 DependencyObject。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypesElementExpected">
+        <source>Required Types tag not found.</source>
+        <target state="translated">找不到必要的 Types 標籤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypesTagHasExtraAttributes">
+        <source>Types tag has attributes not valid per the schema.</source>
+        <target state="translated">根據架構的情況，Types 標籤有無效的屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypesXmlDoesNotMatchSchema">
+        <source>Content Types XML does not match schema.</source>
+        <target state="translated">內容 Types XML 與架構不符。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="URIShouldNotBeAbsolute">
+        <source>Cannot be an absolute URI.</source>
+        <target state="translated">不可是絕對 URI。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnableToCreateOnStream">
+        <source>Cannot create package on stream.</source>
+        <target state="translated">不可在資料流上建立套件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnableToCreateStorage">
+        <source>Cannot create data storage.</source>
+        <target state="translated">不可建立資料儲存區。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnableToCreateStream">
+        <source>Cannot create data stream.</source>
+        <target state="translated">不可建立資料串流。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnableToLocateResource">
+        <source>Cannot locate resource '{0}'.</source>
+        <target state="translated">找不到資源 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnableToOpenStream">
+        <source>Cannot open data stream.</source>
+        <target state="translated">不可開啟資料串流。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedXmlTag">
+        <source>Unexpected tag '{0}'.</source>
+        <target state="translated">出現未預期的 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownDCDateTimeXsiType">
+        <source>Unknown xsi:type for DateTime on '{0}'.</source>
+        <target state="translated">在 '{0}' 上 DateTime 有不明的 xsi:type。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownDocumentProperty">
+        <source>Unrecognized document property: FMTID = '{0}', property ID = '{1}'.</source>
+        <target state="translated">無法辨識文件屬性: FMTID = '{0}'，屬性識別碼 = '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownExpressionMode">
+        <source>Unrecognized Expression 'Mode' value.</source>
+        <target state="translated">無法辨識 Expression 的 'Mode' 值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownNamespaceInCorePropertiesPart">
+        <source>Unrecognized namespace in Core Properties part.</source>
+        <target state="translated">無法辨識 Core Properties 組件中的命名空間。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownReferenceComponentType">
+        <source>Unrecognized reference component type.</source>
+        <target state="translated">無法辨識參考元件類型。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownReferenceSerialize">
+        <source>Cannot serialize unknown CompoundFileReference subclass.</source>
+        <target state="translated">無法序列化不明的 CompoundFileReference 子類別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownTagEncountered">
+        <source>Unrecognized tag found in Relationships XML.</source>
+        <target state="translated">Relationships XML 中發現無法辨識的標籤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedCanonicalizationMethod">
+        <source>Unsupported canonicalization method specified.</source>
+        <target state="translated">不支援指定的標準化方法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedCombinationOfModeAccess">
+        <source>Cannot get stream with FileMode.Create, FileMode.CreateNew, FileMode.Truncate, FileMode.Append when access is FileAccess.Read.</source>
+        <target state="translated">存取權為 FileAccess.Read 時，無法取得 FileMode.Create、FileMode.CreateNew、FileMode.Truncate、FileMode.Append 的資料流。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedCombinationOfModeAccessShareStreaming">
+        <source>Cannot get stream with FileMode.Create, FileMode.CreateNew, FileMode.Truncate, FileMode.Append when access is FileAccess.Read.</source>
+        <target state="translated">存取權為 FileAccess.Read 時，無法取得 FileMode.Create、FileMode.CreateNew、FileMode.Truncate、FileMode.Append 的資料流。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedHashAlgorithm">
+        <source>Unsupported hash algorithm specified.</source>
+        <target state="translated">不支援指定的雜湊演算法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedTransformAlgorithm">
+        <source>Unsupported transform algorithm specified.</source>
+        <target state="translated">不支援指定的轉換演算法。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedTypeEncounteredWhenBuildingStgEnum">
+        <source>Encountered unsupported type of storage element when building storage enumerator.</source>
+        <target state="translated">建置儲存體列舉時，出現不受支援的儲存體項目類型。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Unsupported_Key">
+        <source>Unrecognized Key '{0}'.</source>
+        <target state="translated">無法辨識 Key '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Unsupported_Modifier">
+        <source>Unrecognized ModifierKeys '{0}'.</source>
+        <target state="translated">無法辨識 ModifierKeys '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UpdaterVersionError">
+        <source>File contains data in format version {0}, but the software can only update that data in format version {1} or lower.</source>
+        <target state="translated">檔案所包含的資料格式為版本 {0}，但該軟體只可更新版本為 {1} 或更舊版的資料格式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UriShouldBeAbsolute">
+        <source>Must have absolute URI.</source>
+        <target state="translated">必須要有絕對 URI。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UriShouldBePackScheme">
+        <source>URI must contain pack:// scheme.</source>
+        <target state="translated">URI 必須包含 pack:// 配置。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UseLicenseStreamCorrupt">
+        <source>One of the document's use licenses is corrupted.</source>
+        <target state="translated">其中一個文件使用授權損毀。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UserHasNoClientLicensorCert">
+        <source>User does not have a client licensor certificate.</source>
+        <target state="translated">使用者沒有用戶端授權人憑證。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UserIsNotActivated">
+        <source>User is not activated.</source>
+        <target state="translated">使用者未啟用。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VerifyAccess">
+        <source>The calling thread cannot access this object because a different thread owns it.</source>
+        <target state="translated">呼叫執行緒無法存取此物件，因為此物件屬於另一個執行緒。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Verify_ApartmentState">
+        <source>This operation requires the thread's apartment state to be '{0}'.</source>
+        <target state="translated">此作業需要執行緒的 Apartment 狀態為 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Verify_AreNotEqual">
+        <source>The argument can not be equal to '{0}'.</source>
+        <target state="translated">引數不可等於 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Verify_FileExists">
+        <source>No file exists at '{0}'.</source>
+        <target state="translated">'{0}' 沒有任何檔案。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Verify_NeitherNullNorEmpty">
+        <source>The argument can neither be null nor empty.</source>
+        <target state="translated">引數不可為 null 或空的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VersionNumberComponentNegative">
+        <source>Major and minor version number components cannot be negative.</source>
+        <target state="translated">主要與次要版本號碼元件不可為負數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VersionStreamMissing">
+        <source>Cannot find version stream.</source>
+        <target state="translated">找不到版本資料流。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VersionUpdateFailure">
+        <source>Cannot update version because of a version field size mismatch.</source>
+        <target state="translated">因為版本欄位大小不符，所以無法更新版本。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WPF_UILanguage">
+        <source>en</source>
+        <target state="translated">zh-Hant</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WpfDllConsistencyErrorData">
+        <source>DLL Name: {0} DLL Location: {1}</source>
+        <target state="translated">DLL 名稱: {0} DLL 位置: {1}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WpfDllConsistencyErrorHeader">
+        <source>Failed WPF DLL consistency checks. Expected location: {0}.</source>
+        <target state="translated">WPF DLL 一致性檢查失敗。應為位置: {0}。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteBufferTooSmall">
+        <source>Buffer of bytes to be written is too small.</source>
+        <target state="translated">要寫入的緩衝區位元組太小。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteCountNegative">
+        <source>Count of bytes to write cannot be negative.</source>
+        <target state="translated">要讀取的位元組計數不可為負數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteFailure">
+        <source>Cannot write all data as specified.</source>
+        <target state="translated">無法依指定寫入所有資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteNotSupported">
+        <source>Stream does not support writing.</source>
+        <target state="translated">資料流不支援寫入。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteOnlyStream">
+        <source>Cannot read from write-only stream.</source>
+        <target state="translated">無法從唯寫資料流讀取。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteOnlyUnsupported">
+        <source>Write-only mode is not supported.</source>
+        <target state="translated">不支援唯寫模式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteSizeNegative">
+        <source>Cannot write a negative number of bytes.</source>
+        <target state="translated">無法寫入負數的位元組。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WrongContentTypeForPropertyPart">
+        <source>The Core Properties relationship references a part that has an incorrect content type.</source>
+        <target state="translated">Core Properties 關聯性參考了其內容不正確的組件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WrongDocumentPropertyVariantType">
+        <source>'{0}' document property in property set '{1}' is of incorrect variant type '{2}'. Expected type '{3}'.</source>
+        <target state="translated">屬性集 '{1}' 中的 '{0}' 文件屬性，是不正確的變化類型 '{2}'。應為類型 '{3}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceAfterFallback">
+        <source>Choice cannot follow a Fallback.</source>
+        <target state="translated">Choice 不能跟在 Fallback 後面。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceNotFound">
+        <source>AlternateContent must contain one or more Choice elements.</source>
+        <target state="translated">AlternateContent 必須包含一或多個 Choice 項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceOnlyInAC">
+        <source>Choice is valid only in AlternateContent.</source>
+        <target state="translated">Choice 只有在 AlternateContent 中才有效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRCompatCycle">
+        <source>There is a cycle of XML compatibility definitions, such that namespace '{0}' overrides itself. This could be due to inconsistent XmlnsCompatibilityAttributes in different assemblies. Please change the definitions to eliminate this cycle.</source>
+        <target state="translated">XML 相容性定義出現循環的現象，例如命名空間 '{0}' 要覆寫本身。這可能是因為不同組件中的 XmlnsCompatibilityAttributes 不一致所致。請變更定義來消除此循環。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicatePreserve">
+        <source>Duplicate Preserve declaration for element {1} in namespace '{0}'.</source>
+        <target state="translated">在命名空間 '{0}' 中發現項目 {1} 重複宣告了 Preserve。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateProcessContent">
+        <source>Duplicate ProcessContent declaration for element '{1}' in namespace '{0}'.</source>
+        <target state="translated">在命名空間 '{0}' 中發現項目 '{1}' 重複宣告了 ProcessContent。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardPreserve">
+        <source>Duplicate wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">發現命名空間 '{0}' 的重複萬用字元 Preserve 宣告。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardProcessContent">
+        <source>Duplicate wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">發現命名空間 '{0}' 的重複萬用字元 ProcessContent 宣告。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRFallbackOnlyInAC">
+        <source>Fallback is valid only in AlternateContent.</source>
+        <target state="translated">Fallback 只有在 AlternateContent 中才有效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidACChild">
+        <source>'{0}' element is not a valid child of AlternateContent. Only Choice and Fallback elements are valid children of an AlternateContent element.</source>
+        <target state="translated">'{0}' 項目不是 AlternateContent 的有效子項目。只有 Choice 與 Fallback 項目才是 AlternateContent 項目的有效子項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidAttribInElement">
+        <source>'{0}' attribute is not valid for '{1}' element.</source>
+        <target state="translated">'{0}' 屬性對於 '{1}' 項目而言無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidFormat">
+        <source>'{0}' format is not valid.</source>
+        <target state="translated">'{0}' 格式無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidPreserve">
+        <source>Cannot have both a specific and a wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">不能為命名空間 '{0}' 同時指定特定與萬用字元 Preserve 宣告。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidProcessContent">
+        <source>Cannot have both a specific and a wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">不能為命名空間 '{0}' 同時指定特定與萬用字元 ProcessContent 宣告。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidRequiresAttribute">
+        <source>Requires attribute must contain a valid namespace prefix.</source>
+        <target state="translated">Requires 屬性必須包含有效的命名空間前置詞。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidXMLName">
+        <source>'{0}' attribute value is not a valid XML name.</source>
+        <target state="translated">'{0}' 屬性值不是有效的 XML 名稱。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMultipleFallbackFound">
+        <source>AlternateContent must contain only one Fallback element.</source>
+        <target state="translated">AlternateContent 只能包含一個 Fallback 項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMustUnderstandFailed">
+        <source>MustUnderstand condition failed on namespace '{0}'</source>
+        <target state="translated">命名空間 '{0}' 的 MustUnderstand 條件失敗</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSPreserveNotIgnorable">
+        <source>'{0}' namespace cannot preserve items; it must be declared Ignorable first.</source>
+        <target state="translated">'{0}' 命名空間無法保留項目; 必須先將它宣告為 Ignorable。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSProcessContentNotIgnorable">
+        <source>'{0}' namespace cannot process content; it must be declared Ignorable first.</source>
+        <target state="translated">'{0}' 命名空間無法處理內容; 必須先將它宣告為 Ignorable。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRRequiresAttribNotFound">
+        <source>Choice must contain Requires attribute.</source>
+        <target state="translated">Choice 必須包含 Requires 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUndefinedPrefix">
+        <source>'{0}' prefix is not defined.</source>
+        <target state="translated">未定義 '{0}' 前置詞。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatAttrib">
+        <source>Unrecognized compatibility attribute '{0}'.</source>
+        <target state="translated">無法識別的相容性屬性 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatElement">
+        <source>Unrecognized Compatibility element '{0}'.</source>
+        <target state="translated">無法識別的相容性項目 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlSignatureParseError">
+        <source>Error parsing XML Signature.</source>
+        <target state="translated">剖析 XML 簽章時發生錯誤。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XsdDateTimeExpected">
+        <source>Core Properties part: Text data of XSD type 'DateTime' was expected.</source>
+        <target state="translated">Core Properties 組件: 應為 XSD 類型 'DateTime' 的 XSD 文字資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZLibVersionError">
+        <source>Compression requires ZLib library version {0}.</source>
+        <target state="translated">壓縮需要版本 {0} 的 ZLib 程式庫。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZeroLengthFeatureID">
+        <source>Feature ID string cannot have zero length.</source>
+        <target state="translated">功能識別碼字串的長度不可為 0。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Zip64StructuresTooLarge">
+        <source>ZIP archive contains data structures too large to fit in memory.</source>
+        <target state="translated">ZIP 封存包含的資料結構太大，無法放入記憶體中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZipArchiveDisposed">
+        <source>ZIP archive was closed and disposed.</source>
+        <target state="translated">ZIP 封存已關閉且已經過處置。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZipFileItemDisposed">
+        <source>ZIP file was closed, disposed, or deleted.</source>
+        <target state="translated">ZIP 檔案已關閉且已經過處置或已刪除。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZipNotSupportedCompressionMethod">
+        <source>ZIP archive contains data compressed using an unsupported algorithm.</source>
+        <target state="translated">ZIP 封存包含使用不受支援的演算法所壓縮的資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZipNotSupportedEncryptedArchive">
+        <source>ZIP archive contains unsupported encrypted data.</source>
+        <target state="translated">ZIP 封存包含不受支援的加密資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZipNotSupportedSignedArchive">
+        <source>ZIP archive contains unsupported signature data.</source>
+        <target state="translated">ZIP 封存包含不受支援的簽章資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZipZeroSizeFileIsNotValidArchive">
+        <source>Archive file cannot be size 0.</source>
+        <target state="translated">封存檔案不可為大小 0。</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

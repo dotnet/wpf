@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>XamlTestClasses.FriendWithoutKey</AssemblyName>
     <RootNamespace>XamlTestClasses.FriendWithoutKey</RootNamespace>
     <Platforms>AnyCPU;x64</Platforms>
-    <UseWPF>true</UseWPF>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
 </Project>

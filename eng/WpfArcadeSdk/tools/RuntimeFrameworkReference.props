@@ -1,0 +1,14 @@
+<Project>
+  <PropertyGroup>
+    <RuntimeFrameworkVersion Condition="'$(MicrosoftNETCoreAppInternalVersion)'!='' And 
+                                        '$(NoTargets)'!='true' And 
+                                         '$(TargetFrameworkIdentifier)' == '.NETCoreApp' And 
+                                         ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v5.0')">$(MicrosoftNETCoreAppInternalVersion)</RuntimeFrameworkVersion>
+  </PropertyGroup>
+
+  <!-- workaround for package downgrade in Microsoft.NetCore.Platforms -->
+  <PropertyGroup>
+    <DisableImplicitNETCorePlatformsReference>true</DisableImplicitNETCorePlatformsReference>
+  </PropertyGroup>
+  
+</Project>

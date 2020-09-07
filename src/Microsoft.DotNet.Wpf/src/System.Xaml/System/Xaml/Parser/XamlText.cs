@@ -80,6 +80,9 @@ namespace MS.Internal.Xaml.Parser
             {
                 if (convertCRLFtoLF)
                 {
+                    // (GetFixedDocumentSequence raises Exception "UnicodeString property does not contain
+                    // enough characters to correspond to the contents of Indices property.")
+                    // 
                     // Convert CRLF into just LF.  Including attribute text values.
                     // Attribute text is internal set to "preserve" to prevent (other) processing.
                     // We processing attribute values in this way because 3.x did it.
@@ -88,11 +91,11 @@ namespace MS.Internal.Xaml.Parser
                     // Note that the code actually just removes CR.  Thus it affects
                     // attribute values that contain CR without LF, which can
                     // arise by explicit user declaration:  <Element Prop="a&#13;b" />
-                    // This is the root cause of Dev11 796882.  I'm leaving it as-is, in
+                    // This is the root cause of the GetFixedDocumentSequence bug.  I'm leaving it as-is, in
                     // case there are compat issues, but if the intent was to convert
                     // CRLF to LF, it should really say   Replace("\r\n", "\n")
                     //
-                    // To fix 796882, we don't do any substitutions if the
+                    // To fix the GetFixedDocumentSequence bug, we don't do any substitutions if the
                     // property is Glyphs.UnicodeString, which should never be changed
                     // without changing the corresponding Glyphs.Indices property.
                     // See XamlScanner.EnqueueAnotherAttribute for the fixed call.

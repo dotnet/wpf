@@ -1,0 +1,1207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="tr" original="../Strings.resx">
+    <body>
+      <trans-unit id="AnalysisResult">
+        <source>Analysis Result : '{0}'.</source>
+        <target state="translated">Çözümleme Sonucu : '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AppDefIsNotRequired">
+        <source>MC1002: Library project file cannot specify ApplicationDefinition element.</source>
+        <target state="translated">MC1002: Kitaplık proje dosyası ApplicationDefinition öğesi belirtemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ApplicationDefinitionFile">
+        <source>Input: Markup ApplicationDefinition file: '{0}'.</source>
+        <target state="translated">Giriş: İşaretleme ApplicationDefinition dosyası: '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttributeNotAllowedOnCodeTag">
+        <source>MC6015: '{0}' cannot be set on the '{1}:{2}' tag.</source>
+        <target state="translated">MC6015: '{0}' '{1}:{2}' etiketinde ayarlanamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadUidTask">
+        <source>UM1001: Unrecognized UidManager task name '{0}'.</source>
+        <target state="translated">UM1001: Tanınmayan UidManager görev adı '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CheckingUids">
+        <source>Checking Uids in file '{0}' ...</source>
+        <target state="translated">'{0}' dosyasındaki Uid'ler denetleniyor ...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CommentFileGenerated">
+        <source>Generated localization directives file: '{0}' .</source>
+        <target state="translated">Oluşturulan yerelleştirme yönergeleri dosyası: '{0}' .</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CommentFileGenerating">
+        <source>Generating localization directives file: '{0}' ...</source>
+        <target state="translated">Yerelleştirme yönergeleri dosyası oluşturuluyor: '{0}' ...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompilationDone">
+        <source>Markup compilation is done.</source>
+        <target state="translated">İşaretleme derlemesi tamamlandı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompileSucceed_Pass1">
+        <source>MarkupCompilePass1 successfully generated BAML or source code files.</source>
+        <target state="translated">MarkupCompilePass1, BAML veya kaynak kodu dosyalarını başarıyla oluşturdu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompileSucceed_Pass2">
+        <source>MarkupCompilePass2 successfully generated BAML or source code files.</source>
+        <target state="translated">MarkupCompilePass2 BAML veya kaynak kodu dosyalarını başarıyla oluşturdu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContainingTagNotGeneric">
+        <source>MC6011: '{0}' event has a generic event handler delegate type '{1}'. The type parameters of '{1}' cannot be bound with an appropriate type argument because the containing tag '{2}' is not a generic type.</source>
+        <target state="translated">MC6011: '{0}' olayı genel bir olay işleyicisi temsilci türü '{1}' içeriyor. İçeren etiket '{2}' genel türde olduğundan, '{1}' tür parametreleri uygun bir tür bağımsız değişkenine bağlanamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CurrentDirectory">
+        <source>Current project directory is '{0}'.</source>
+        <target state="translated">Geçerli proje dizini '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefinitionAttributeNotAllowed">
+        <source>MC6022: Only a root tag can specify attribute '{0}:{1}'.</source>
+        <target state="translated">MC6022: Yalnızca bir kök etiket öznitelik belirtebilir '{0}:{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefinitionTagNotAllowedAtRoot">
+        <source>MC6010: '{0}:{1}' cannot be specified as the root element.</source>
+        <target state="translated">MC6010: '{0}:{1}' kök öğe olarak belirtilemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefnTagsCannotBeNested">
+        <source>MC6004: '{0}:{1}' contains '{2}'. '{0}:{1}' can contain only a CDATA or text section.</source>
+        <target state="translated">MC6004: '{0}:{1}' öğesi '{2}' içeriyor. '{0}:{1}' yalnızca CDATA veya metin bölümü içerebilir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DoCompilation">
+        <source>Started the markup compilation.</source>
+        <target state="translated">İşaretleme derlemesi başlatıldı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EmptyEventStringNotAllowed">
+        <source>MC6030: {0}="{1}" is not valid. '{0}' event attribute value cannot be a string that is empty or has only white space.</source>
+        <target state="translated">MC6030: {0}="{1}" geçerli değil. '{0}' olay öznitelik değeri boş olan veya yalnızca boşluk içeren bir dize olamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FieldModifierNotAllowed">
+        <source>MC6021: {0}:FieldModifier cannot be specified on this tag because it has either no {0}:Name or Name attribute set, or the tag is locally defined and has a Name attribute set, which is not allowed.</source>
+        <target state="translated">MC6021: {0}:Name veya Name özniteliği kümesi olmadığı ya da etiket yerel olarak tanımlanmadığı ve izin verilmeyen bir Name özniteliği kümesine sahip olduğu için {0}:FieldModifier bu etikette belirtilemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileNotFound">
+        <source>BG1002: File '{0}' cannot be found.</source>
+        <target state="translated">BG1002: '{0}' dosyası bulunamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileResolved">
+        <source>Input file '{0}' is resolved to new relative path '{1}' at directory '{2}'.</source>
+        <target state="translated">'{0}' giriş dosyası '{2}' dizininde yeni '{1}' göreli yoluna çözümlendi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FilesFailedUidCheck">
+        <source>UM1004: {0} files failed Uid check.</source>
+        <target state="translated">UM1004: {0} dosya Uid denetiminde başarısız oldu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FilesPassedUidCheck">
+        <source>Uids valid in {0} files.</source>
+        <target state="translated">{0} dosyadaki Uid'ler geçerli.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FilesRemovedUid">
+        <source>Uids removed from {0} files.</source>
+        <target state="translated">{0} dosyadan Uid'ler kaldırıldı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FilesUpdatedUid">
+        <source>Uids updated in {0} files.</source>
+        <target state="translated">{0} dosyada Uid'ler güncelleştirildi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GeneratedBamlFile">
+        <source>Generated BAML file: '{0}'.</source>
+        <target state="translated">Oluşturulan BAML dosyası: '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GeneratedCodeFile">
+        <source>Generated code file: '{0}'.</source>
+        <target state="translated">Oluşturulan kod dosyası: '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IllegalCDataTextScoping">
+        <source>MC6003: '{0}:{1}' contains '{2}'. '{0}:{1}' cannot contain nested content.</source>
+        <target state="translated">MC6003: '{0}:{1}' öğesi '{2}' içeriyor. '{0}:{1}' iç içe geçmiş içerik içeremez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IntermediateDirectoryError">
+        <source>UM1006: '{0}' directory does not exist and cannot be created.</source>
+        <target state="translated">UM1006: '{0}' dizini yok ve oluşturulamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InternalTypeHelperNotRequired">
+        <source>InternalTypeHelper class is not required for this project, make file '{0}' empty.</source>
+        <target state="translated">InternalTypeHelper sınıfı bu proje için gerekli değil, '{0}' dosyasını boşaltın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidAssemblyVersion">
+        <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
+        <target state="translated">MC1005: Geçersiz AssemblyVersion saptandı: {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidBaseClassName">
+        <source>MC6018: '{0}' class name is not valid for the locally defined XAML root element.</source>
+        <target state="translated">MC6018: '{0}' sınıf adı yerel olarak tanımlanmış XAML kök öğesi için geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidBaseClassNamespace">
+        <source>MC6019: '{0}' namespace is not valid for the locally defined XAML root element '{1}'.</source>
+        <target state="translated">MC6019: '{0}' ad alanı yerel olarak tanımlanmış XAML kök öğesi '{1}' için geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidClassName">
+        <source>MC6027: {0}:{1}="{2}" is not valid. '{2}' is not a valid {3}class name.</source>
+        <target state="translated">MC6027: {0}:{1}="{2}" geçerli değil. '{2}' geçerli bir {3}sınıf adı değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCulture">
+        <source>FC1001: The UICulture value '{0}' set in the project file is not valid.</source>
+        <target state="translated">FC1001: Proje dosyasında belirlenen UICulture değeri '{0}' geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCustomSerialize">
+        <source>MC4402: Serializer does not support custom BAML serialization operations.</source>
+        <target state="translated">MC4402: Serileştirici özel BAML serileştirme işlemlerini desteklemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDeSerialize">
+        <source>MC4401: Serializer does not support Convert operations.</source>
+        <target state="translated">MC4401: Seri hale getirici Convert işlemlerini desteklemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDefaultCLRNamespace">
+        <source>MC6029: '{0}' name is not valid in the default namespace '{1}'. Correct the RootNamespace tag value in the project file.</source>
+        <target state="translated">MC6029: '{0}' adı '{1}' varsayılan ad alanında geçerli değil. Proje dosyasında RootNamespace etiket değerini düzeltin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidEventHandlerName">
+        <source>MC6005: {0}="{1}" is not valid. '{1}' is not a valid event handler method name. Only instance methods on the generated or code-behind class are valid.</source>
+        <target state="translated">MC6005: {0}="{1}" geçerli değil. '{1}' geçerli bir olay işleyicisi metot adı değil. Yalnızca, oluşturulan veya kod ardında bulunan sınıftaki örnek metotları geçerlidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidLocCommentTarget">
+        <source>LC1001: Localization comment target property is not valid in string '{0}'.</source>
+        <target state="translated">LC1001: Yerelleştirme açıklama hedefi özelliği '{0}' dizesinde geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidLocCommentValue">
+        <source>LC1002: Localization comment value is not valid for target property '{0}' in string '{1}'.</source>
+        <target state="translated">LC1002: Yerelleştirme açıklaması değeri '{1}' dizesindeki '{0}' hedef özelliği için geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidLocalizabilityValue">
+        <source>LC1004: Localizability attribute setting '{0}' is not valid.</source>
+        <target state="translated">LC1004: Yerelleştirilebilirlik öznitelik ayarı '{0}' geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidMarkupFile">
+        <source>MC6001: Markup file is not valid. Specify a source markup file with an .xaml extension.</source>
+        <target state="translated">MC6001: İşaretleme dosyası geçerli değil. Uzantısı .xaml olan bir kaynak işaretleme dosyası belirtin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeName">
+        <source>MC6028: {0}:TypeArguments="{1}" is not valid. '{2}' is not a valid type name reference for the generic argument at position '{3}'.</source>
+        <target state="translated">MC6028: {0}:TypeArguments="{1}" geçerli değil. '{2}', '{3}' konumundaki genel bağımsız değişken için geçerli bir tür adı başvurusu değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidXml">
+        <source>MC3000: '{0}' XML is not valid.</source>
+        <target state="translated">MC3000: '{0}' XML geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalNamePropertyNotAllowed">
+        <source>MC6023: Because '{0}' is implemented in the same assembly, you must set the {1}:Name attribute rather than the Name attribute.</source>
+        <target state="translated">MC6023: '{0}' aynı bütünleştirilmiş kodda yürütüldüğü için, Name özniteliği yerine {1}:Name özniteliğini ayarlamanız gerekir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalRefAppDefFile">
+        <source>Input: Local reference markup ApplicationDefinition file is '{0}'.</source>
+        <target state="translated">Giriş: Yerel başvuru işaretleme ApplicationDefinition dosyası '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalRefGeneratedBamlFile">
+        <source>Generated BAML file: '{0}'.</source>
+        <target state="translated">Oluşturulan BAML dosyası: '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalRefMarkupPage">
+        <source>Input: Local reference markup Page file: '{0}'.</source>
+        <target state="translated">Giriş: Yerel başvuru işaretleme Page dosyası: '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MatchingTypeArgsNotFoundInRefType">
+        <source>MC6012: '{0}' event has a generic event handler delegate type '{1}'. The type parameter '{2}' on '{1}' does not match any type parameters on the containing generic tag '{3}'.</source>
+        <target state="translated">MC6012: '{0}' olayı genel bir olay işleyicisi temsilci türü '{1}' içeriyor. '{1}' öğesindeki tür parametresi '{2}' içeren '{3}' genel etiketindeki herhangi bir tür parametresiyle eşleşmiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingClassDefinitionForCodeTag">
+        <source>MC6026: '{0}' root element requires a {1}:Class attribute because '{2}' contains a {1}:Code tag. Either remove {1}:Code and its contents, or add a {1}:Class attribute to the root element.</source>
+        <target state="translated">MC6026: '{2}' bir {1}:Code etiketi içerdiğinden '{0}' kök öğesi için bir {1}:Class özniteliği gerekiyor. {1}:Code öğesini ve içeriğini kaldırın veya kök öğeye {1}:Class özniteliği ekleyin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingClassDefinitionForEvent">
+        <source>MC6024: '{0}' root element requires a {1}:Class attribute to support event handlers in the XAML file. Either remove the event handler for the {2} event, or add a {1}:Class attribute to the root element.</source>
+        <target state="translated">MC6024: '{0}' kök öğesinin XAML dosyasındaki olay işleyicilerini desteklemesi için {1}:Class özniteliği gerekiyor. {2} olayının olay işleyicisini kaldırın veya kök öğeye {1}:Class özniteliği ekleyin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingClassDefinitionForTypeArgs">
+        <source>MC6025: '{0}' root element is a generic type and requires a {1}:Class attribute to support the {1}:TypeArguments attribute specified on the root element tag.</source>
+        <target state="translated">MC6025: '{0}' kök öğesi genel türde ve kök öğe etiketinde belirtilen {1}:TypeArguments özniteliğini desteklemesi için {1}:Class özniteliği gerekiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingClassWithFieldModifier">
+        <source>MC6031: {0}:FieldModifier attribute cannot be specified because a {0}:Class attribute is also required to generate a Name field with the specified access modifier. Either add a {0}:Class attribute on the root tag or remove the {0}:FieldModifier attribute.</source>
+        <target state="translated">MC6031: Belirtilen erişim değiştiricisiyle bir Name alanı oluşturmak için bir {0}:Class özniteliği de gerektiğinden {0}:FieldModifier özniteliği belirtilemez. Kök etikete bir {0}:Class özniteliği ekleyin veya {0}:FieldModifier özniteliğini kaldırın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingClassWithModifier">
+        <source>MC6009: {0}:ClassModifier attribute cannot be specified on the root tag because a {0}:Class attribute is also required. Either add a {0}:Class attribute or remove the {0}:ClassModifier attribute.</source>
+        <target state="translated">MC6009: Bir {0}:Class özniteliği de gerektiğinden {0}:ClassModifier özniteliği kök etikette belirtilemez. Bir {0}:Class özniteliği ekleyin veya {0}:ClassModifier özniteliğini kaldırın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingClassWithSubClass">
+        <source>MC6016: {0}:Class attribute is missing. It is required when a {0}:Subclass attribute is specified.</source>
+        <target state="translated">MC6016: {0}:Class özniteliği eksik. Bu öznitelik bir {0}:Subclass özniteliği belirtildiğinde gereklidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoreResourcesFiles">
+        <source>RG1002: ResourcesGenerator can generate only one .resources file at a time. The OutputResourcesFile property in the project file must be set to one file.</source>
+        <target state="translated">RG1002: ResourcesGenerator bir kerede yalnızca bir .resources dosyası oluşturabilir. Proje dosyasındaki OutputResourcesFile özelliği bir dosyaya ayarlanmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MultipleSplashScreenImages">
+        <source>MC1004: Project file cannot specify more than one SplashScreen element.</source>
+        <target state="translated">MC1004: Proje dosyası birden fazla SplashScreen öğesi belirtemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MultipleUidUse">
+        <source>UM1002: Uid "{0}" for element '{1}' is not unique.</source>
+        <target state="translated">UM1002: '{1}' öğesi için "{0}" Uid'si benzersiz değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MutlipleApplicationFiles">
+        <source>MC1003: Project file cannot specify more than one ApplicationDefinition element.</source>
+        <target state="translated">MC1003: Proje dosyası birden fazla ApplicationDefinition öğesi belirtemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamedResDictItemWarning">
+        <source>A '{0}' is named '{1}'. Do not name ResourceDictionary contents because their instantiation is deferred.</source>
+        <target state="translated">Bir '{0}' '{1}' olarak adlandırılmış. Örneklerinin oluşturulması gecikmeli olduğundan ResourceDictionary içeriğini adlandırmayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NonClsError">
+        <source>BG1001: Unknown CLS exception.</source>
+        <target state="translated">BG1001: Bilinmeyen CLS özel durumu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OutputType">
+        <source>OutputType is '{0}'.</source>
+        <target state="translated">OutputType '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAbandonedTypeConverterText">
+        <source>MC3001: TypeConverter syntax error encountered while processing initialization string '{0}'. Property elements are not allowed on objects created via TypeConverter.</source>
+        <target state="translated">MC3001: '{0}' dizesi başlatılırken TypeConverter sözdizimi hatasıyla karşılaşıldı. TypeConverter ile oluşturulan nesnelerde özellik öğelerine izin verilmez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAssemblyLoadVersionMismatch">
+        <source>MC3099: Cannot load assembly '{0}' because a different version of that same assembly is loaded '{1}'.</source>
+        <target state="translated">MC3099: Aynı bütünleştirilmiş kodun farklı bir sürümü yüklendiğinden '{0}' bütünleştirilmiş kodu yüklenemiyor '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAsyncOnRoot">
+        <source>MC3002: The AsyncRecords attribute must be set on the root tag.</source>
+        <target state="translated">MC3002: AsyncRecords özniteliği kök etikette ayarlanmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttachedPropInheritError">
+        <source>MC3015: The attached property '{0}' is not defined on '{1}' or one of its base classes.</source>
+        <target state="translated">MC3015: Eklenen '{0}' özelliği '{1}' üzerinde veya temel sınıflarından birinde tanımlı değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsHigh">
+        <source>MC3003: There are too many attributes specified for '{0}'.</source>
+        <target state="translated">MC3003: '{0}' için belirtilmiş çok fazla öznitelik var.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsLow">
+        <source>MC3004: There are not enough attributes specified for '{0}'.</source>
+        <target state="translated">MC3004: '{0}' için belirtilmiş yeterli öznitelik yok.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeNamespaceMisMatch">
+        <source>MC3005: The property '{0}' must be in the default namespace or in the element namespace '{1}'.</source>
+        <target state="translated">MC3005: '{0}' özelliği varsayılan ad alanında veya '{1}' öğe ad alanında olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadAssemblyName">
+        <source>MC3006: Mapper.SetAssemblyPath cannot accept an empty assemblyName.</source>
+        <target state="translated">MC3006: Mapper.SetAssemblyPath boş bir assemblyName kabul edemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadAssemblyPath">
+        <source>MC3007: Mapper.SetAssemblyPath cannot accept an empty assemblyPath.</source>
+        <target state="translated">MC3007: Mapper.SetAssemblyPath boş bir assemblyPath kabul edemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadChild">
+        <source>MC3008: An element of type '{0}' cannot be set on the complex property '{1}'. They are not compatible types.</source>
+        <target state="translated">MC3008: '{0}' türünde bir öğe '{1}' karmaşık özelliğinde ayarlanamaz. Bunlar uyumlu türler değildir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadConstructorParams">
+        <source>MC3009: Cannot find a public constructor for '{0}' that takes {1} arguments.</source>
+        <target state="translated">MC3009: '{0}' için {1} bağımsız değişken alan genel bir oluşturucu bulunamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadKey">
+        <source>MC3012: A key for a dictionary cannot be of type '{0}'. Only String, TypeExtension, and StaticExtension are supported.</source>
+        <target state="translated">MC3012: Bir sözlük anahtarı '{0}' türünde olamaz. Yalnızca String, TypeExtension ve StaticExtension desteklenir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadMemberReference">
+        <source>MC3029: '{0}' member is not valid because it does not have a qualifying type name.</source>
+        <target state="translated">MC3029: Niteleyici bir tür adı olmadığından '{0}' üyesi geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadName">
+        <source>MC3010: '{0}' Name property value is not valid. Name must start with a letter or an underscore and can contain only letters, digits, and underscores.</source>
+        <target state="translated">MC3010: '{0}' Name özellik değeri geçerli değil. Name bir harf veya alt çizgiyle başlamalıdır ve yalnızca harf, sayı ve alt çizgiler içerebilir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadString">
+        <source>MC3094: Cannot convert string value '{0}' to type '{1}'.</source>
+        <target state="translated">MC3094: '{0}' dize değeri '{1}' türüne dönüştürülemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadSyncMode">
+        <source>MC3013: SynchronousMode property value is not valid. Valid values are Async and Sync.</source>
+        <target state="translated">MC3013: SynchronousMode özellik değeri geçerli değil. Geçerli değerler Async ve Sync değerleridir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadTypeInArrayProperty">
+        <source>MC3014: The object being added to an array property is not a valid type. The array is of type '{0}' but the object being added is of type '{1}'.</source>
+        <target state="translated">MC3014: Bir dizi özelliğine eklenen nesne geçerli türde değil. Dizi '{0}' türünde, ancak eklenen nesne '{1}' türünde.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadUidOrNameME">
+        <source>MC3079: MarkupExtensions are not allowed for Uid or Name property values, so '{0}' is not valid.</source>
+        <target state="translated">MC3079: Uid veya Name özellik değerleri için MarkupExtensions kullanılamaz, bu yüzden '{0}' geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCanOnlyHaveOneChild">
+        <source>MC3089: The object '{0}' already has a child and cannot add '{1}'. '{0}' can accept only one child.</source>
+        <target state="translated">MC3089: '{0}' nesnesinin zaten alt öğesi var ve '{1}' eklemez. '{0}' yalnızca bir alt öğe kabul edebilir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCannotAddAnyChildren">
+        <source>MC3028: Cannot add content to object of type '{0}'.</source>
+        <target state="translated">MC3028: '{0}' türünde nesneye içerik eklenemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCantGetProperty">
+        <source>MC3081: '{0}' is a read-only property of type IList or IDictionary and cannot be set because it does not have a public or internal get accessor.</source>
+        <target state="translated">MC3081: '{0}' IList veya IDictionary türünde salt okunur bir özelliktir ve genel veya iç alma erişenine sahip olmadığı için ayarlanamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCantSetAttribute">
+        <source>MC3080: The {0} '{1}' cannot be set because it does not have an accessible {2} accessor.</source>
+        <target state="translated">MC3080: {0} '{1}' erişilebilir bir {2} erişenine sahip olmadığı için ayarlanamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCantSetContentProperty">
+        <source>MC3087: Cannot set content property '{0}' on element '{1}'. '{0}' has incorrect access level or its assembly does not allow access.</source>
+        <target state="translated">MC3087: '{1}' öğesinde '{0}' içerik özelliği ayarlanamaz. '{0}' yanlış erişim düzeyinde veya bütünleştirilmiş kodu erişime izin vermiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCantSetTriggerCondition">
+        <source>MC3082: '{0}' cannot be set as the value of a Trigger's Property attribute because it does not have a public or internal get accessor.</source>
+        <target state="translated">MC3082: '{0}' genel veya iç alma erişenine sahip olmadığı için bir Trigger Property özniteliği olarak ayarlanamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCompatDuplicate">
+        <source>MC3016: Two new namespaces cannot be compatible with the same old namespace using an XmlnsCompatibility attribute.�'{0}' namespace is already marked compatible with '{1}'.</source>
+        <target state="translated">MC3016: İki yeni ad alanı, XmlnsCompatibility özniteliğini kullanan aynı eski ad alanıyla uyumlu olamaz.�'{0}' ad alanı zaten '{1}' ile uyumlu olarak işaretlenmiş.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserContentMustBeContiguous">
+        <source>MC3088: Property elements cannot be in the middle of an element's content.  They must be before or after the content.</source>
+        <target state="translated">MC3088: Özellik öğeleri bir öğenin içeriğinin ortasında olamaz. İçerikten önce veya sonra gelmelidirler.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDefTag">
+        <source>MC3017: 'Code' tag from xaml namespace found in XAML file. To load this file, you must compile it.</source>
+        <target state="translated">MC3017: XAML dosyasında xaml ad alanından 'Code' etiketi bulundu. Bu dosyayı yüklemek için, derlemeniz gerekir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDefaultConverterElement">
+        <source>MC3061: The Element type '{0}' does not have an associated TypeConverter to parse the string '{1}'.</source>
+        <target state="translated">MC3061: '{0}' öğe türü '{1}' dizesini ayrıştırmak için ilişkilendirilmiş bir TypeConverter'a sahip değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDictionarySealed">
+        <source>MC3018: Cannot modify data in a sealed XmlnsDictionary.</source>
+        <target state="translated">MC3018: Korumalı bir XmlnsDictionary içindeki veriler değiştirilemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDupDictionaryKey">
+        <source>MC3020: The dictionary key '{0}' is already used. Key attributes are used as keys when inserting objects into a dictionary and must be unique.</source>
+        <target state="translated">MC3020: '{0}' sözlük anahtarı zaten kullanılıyor. Anahtar öznitelikleri, bir sözlüğe nesne eklerken anahtar olarak kullanılırlar ve benzersiz olmaları gerekir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDuplicateMarkupExtensionProperty">
+        <source>MC3033: The property '{0}' has already been set on this markup extension and can only be set once.</source>
+        <target state="translated">MC3033: '{0}' özelliği bu işaretleme uzantısında zaten ayarlanmış durumda ve yalnızca bir kez ayarlanabilir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDuplicateProperty1">
+        <source>MC3024: '{0}' property has already been set and can be set only once.</source>
+        <target state="translated">MC3024: '{0}' özelliği zaten ayarlanmış ve yalnızca bir kez ayarlanabilir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDuplicateProperty2">
+        <source>MC3025: Property '{0}' and '{1}' refer to the same property. Duplicate property settings are not allowed.</source>
+        <target state="translated">MC3025: '{0}' ve '{1}' özelliği aynı özelliğe başvuruda bulunuyor. Yinelenen özellik ayarlarına izin verilmez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserEmptyComplexProp">
+        <source>MC3026: '{0}' property element cannot be empty. It must contain child elements or text.</source>
+        <target state="translated">MC3026: '{0}' özellik öğesi boş olamaz. Alt öğeler veya metin içermesi gerekir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserEntityReference">
+        <source>MC3027: The EntityReference &amp;{0}; is not recognized.</source>
+        <target state="translated">MC3027: EntityReference &amp;{0}; tanınmıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserEventDelegateTypeNotAccessible">
+        <source>MC3083: Cannot access the delegate type '{0}' for the '{1}' event. '{0}' has incorrect access level or its assembly does not allow access.</source>
+        <target state="translated">MC3083: '{1}' olayı için '{0}' temsilci türüne erişilemiyor. '{0}' yanlış erişim düzeyinde veya bütünleştirilmiş kodu erişime izin vermiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserIEnumerableIAddChild">
+        <source>MC3030: '{0}' property is a read-only IEnumerable property, which means that '{1}' must implement IAddChild.</source>
+        <target state="translated">MC3030: '{0}' özelliği salt okunur bir IEnumerable özelliğidir ve buna göre '{1}' IAddChild uygulamalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserInvalidContentPropertyAttribute">
+        <source>MC3078: Invalid ContentPropertyAttribute on type '{0}', property '{1}' not found.</source>
+        <target state="translated">MC3078: '{0}' türünde geçersiz ContentPropertyAttribute, özellik '{1}' bulunamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserInvalidKnownType">
+        <source>Known type value {0}='{1}' is not a valid known type.</source>
+        <target state="translated">Bilinen tür değeri{0}='{1}' geçerli bir bilinen tür değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserInvalidStaticMember">
+        <source>MC3011: Cannot find the static member '{0}' on the type '{1}'.</source>
+        <target state="translated">MC3011: '{1}' türünde statik üye '{0}' bulunamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserKeysAreStrings">
+        <source>MC3031: Keys and values in XmlnsDictionary must be strings.</source>
+        <target state="translated">MC3031: XmlnsDictionary içindeki anahtarlar ve değerler dize olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserLineAndOffset">
+        <source>Line {0} Position {1}</source>
+        <target state="translated">Satır {0} Konum {1}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMapPIMissingKey">
+        <source>MC3037: Missing XmlNamespace, Assembly or ClrNamespace in Mapping instruction.</source>
+        <target state="translated">MC3037: Mapping yönergesinde XmlNamespace, Assembly veya ClrNamespace.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMappingUriInvalid">
+        <source>'{0}' mapping URI is not valid.</source>
+        <target state="translated">'{0}' eşleme URI'si geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionBadConstructorParam">
+        <source>MC3040: Format is not valid for MarkupExtension that specifies constructor arguments in '{0}'.</source>
+        <target state="translated">MC3040: '{0}' içinde oluşturucu bağımsız değişkenleri belirten MarkupExtension için biçim geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionBadDelimiter">
+        <source>MC3041: Markup extensions require a single '=' between name and value, and a single ',' between constructor parameters and name/value pairs. The arguments '{0}' are not valid.</source>
+        <target state="translated">MC3041: İşaretleme uzantıları ad ve değer arasında tek bir '=' ve oluşturucu parametreleriyle ad/değer çiftleri arasında tek bir ',' gerektirir. '{0}' bağımsız değişkenleri geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionDelimiterBeforeFirstAttribute">
+        <source>MC3091: '{0}' is not valid. Markup extensions require only spaces between the markup extension name and the first parameter. Cannot have comma or equals sign before the first parameter.</source>
+        <target state="translated">MC3091: '{0}' geçerli değil. İşaretleme uzantıları biçimlendirme uzantısı adıyla ilk parametre arasında yalnızca boşluklar olmasını gerektirir. İlk parametreden önce virgül veya eşittir işareti olamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionInvalidClosingBracketCharacers">
+        <source>MC8001: Encountered a closing BracketCharacter '{0}' at Line Number '{1}' and Line Position '{2}' without a corresponding opening BracketCharacter.</source>
+        <target state="translated">MC8001: '{1}' numaralı satırın '{2}' konumunda, karşılık gelen bir açılış ayracı olmayan '{0}' kapanış ayracı ile karşılaşıldı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionMalformedBracketCharacers">
+        <source>MC8002: BracketCharacter '{0}' at Line Number '{1}' and Line Position '{2}' does not have a corresponding opening/closing BracketCharacter.</source>
+        <target state="translated">MC8002: '{1}' numaralı satırın '{2}' konumundaki '{0}' ayracı için karşılık gelen bir açılış/kapanış ayracı yok.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionNoEndCurlie">
+        <source>MC3038: MarkupExtension expressions must end with a '}'.</source>
+        <target state="translated">MC3038: MarkupExtension ifadelerinin sonunda a '}' olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionNoNameValue">
+        <source>MC3042: Name/value pairs in MarkupExtensions must have the format 'Name = Value' and each pair is separated by a comma. '{0}' does not follow this format.</source>
+        <target state="translated">MC3042: MarkupExtensions içindeki ad/değer çiftleri 'Ad = Değer' biçiminde olmalı ve her çift bir virgülle ayrılır. '{0}' bu biçime uymuyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionNoQuotesInName">
+        <source>MC3043: Names and Values in a MarkupExtension cannot contain quotes. The MarkupExtension arguments '{0}' are not valid.</source>
+        <target state="translated">MC3043: MarkupExtension içindeki Adlar ve Değerler tırnak işareti içeremez. MarkupExtension bağımsız değişkenleri '{0}' geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionTrailingGarbage">
+        <source>MC3044: The text '{1}' is not allowed after the closing '{0}' of a MarkupExtension expression.</source>
+        <target state="translated">MC3044: MarkupExtension ifadesinin '{0}' kapanışından sonra '{1}' metnine izin verilmez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionUnknownAttr">
+        <source>MC3045: Unknown property '{0}' for type '{1}' encountered while parsing a Markup Extension.</source>
+        <target state="translated">MC3045: Markup Extension ayrıştırılırken '{1}' türü için bilinmeyen '{0}' özelliği bulundu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMetroUnknownAttribute">
+        <source>MC3046: Unknown attribute '{0}' in the '{1}' namespace. Note that only the Key attribute is currently supported in this namespace.</source>
+        <target state="translated">MC3046: '{1}' ad alanında bilinmeyen '{0}' özelliği. Bu ad alanında şu anda yalnızca Key özniteliğinin desteklendiğini unutmayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMultiBamls">
+        <source>MC3047: Internal parser error - Cannot use multiple writable BAML records at the same time.</source>
+        <target state="translated">MC3047: İç ayrıştırıcı hatası - Aynı anda birden fazla yazılabilir BAML kaydı kullanılamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNestedComplexProp">
+        <source>'{0}' property element cannot be nested directly inside another property element.</source>
+        <target state="translated">'{0}' özellik öğesi doğrudan başka bir özellik öğesinin içinde basamak durumunda olamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoAttrArray">
+        <source>MC3049: Cannot place attributes on Array tags.</source>
+        <target state="translated">MC3049: Array etiketlerine öznitelik yerleştirilemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoBamlAsync">
+        <source>MC3021: Asynchronous loading is not supported when compiling a XAML file, so a SynchronousMode of '{0}' is not allowed.</source>
+        <target state="translated">MC3021: XAML dosyası derlenirken zaman uyumsuz yükleme desteklenmediği için, '{0}' türünde SynchronousMode'a izin verilmez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoChildrenTag">
+        <source>MC3051: The type '{0}' does not support element content.</source>
+        <target state="translated">MC3051: '{0}' türü öğe içeriğini desteklemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoDictionaryKey">
+        <source>MC3022: All objects added to an IDictionary must have a Key attribute or some other type of key associated with them.</source>
+        <target state="translated">MC3022: Bir IDictionary öğesine eklenen tüm nesnelerin bir Key özniteliği veya kendilerine atanmış başka tür anahtarı olması gerekir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoDictionaryName">
+        <source>MC3023: The Key attribute can only be used on a tag contained in a Dictionary (such as a ResourceDictionary).</source>
+        <target state="translated">MC3023: Key özniteliği yalnızca bir Dictionary içinde (örneğin ResourceDictionary) yer alan bir etikette kullanılabilir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoDigitEnums">
+        <source>MC3032: '{1}' cannot be used as a value for '{0}'. Numbers are not valid enumeration values.</source>
+        <target state="translated">MC3032: '{0}' için '{1}' değer olarak kullanılamaz. Sayılar geçerli sabit listesi değeri değildir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoEventTag">
+        <source>MC3053: Cannot use property element syntax to specify event handler '{0}'.</source>
+        <target state="translated">MC3053: '{0}' olay işleyicisini belirtmek için özellik öğesi sözdizimi kullanılamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoEvents">
+        <source>MC3052: XAML file that contains events must be compiled.</source>
+        <target state="translated">MC3052: Olay içeren XAML dosyasının derlenmesi gerekir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoNameOnType">
+        <source>MC3054: The type '{0}' cannot have a Name attribute. Value types and types without a default constructor can be used as items within a ResourceDictionary.</source>
+        <target state="translated">MC3054: '{0}' türü Name özniteliğine sahip olamaz. Değer türleri ve varsayılan oluşturucusu olmayan türler bir ResourceDictionary içinde öğe olarak kullanılabilir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoNameUnderDefinitionScopeType">
+        <source>MC3093: Cannot set Name attribute value '{0}' on element '{1}'. '{1}' is under the scope of element '{2}', which already had a name registered when it was defined in another scope.</source>
+        <target state="translated">MC3093: '{1}' öğesinde Name öznitelik değeri '{0}' ayarlanamaz. '{1}' öğesi, başka bir kapsamda tanımlandığı sırada zaten bir adı olan '{2}' öğesinin kapsamındadır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoNamespace">
+        <source>MC3056: No NamespaceURI is defined for the object '{0}'.</source>
+        <target state="translated">MC3056: '{0}' nesnesi için NamespaceURI tanımlanmadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoNestedXmlDataIslands">
+        <source>MC3084: Cannot nest XML data islands.</source>
+        <target state="translated">MC3084: XML veri adaları iç içe yerleştirilemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoPropOnComplexProp">
+        <source>MC3057: Cannot set properties on property elements.</source>
+        <target state="translated">MC3057: Özellik öğelerinde özellikler ayarlanamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoSerializer">
+        <source>MC3058: Cannot find a custom serializer for '{0}' so it cannot be parsed.</source>
+        <target state="translated">MC3058: '{0}' için özel bir seri hale getirici bulunamadığından ayrıştırılamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoSetterChild">
+        <source>MC3059: Style setters do not support child elements. A tag of type '{0}' is not allowed.</source>
+        <target state="translated">MC3059: Stil ayarlayıcılar alt öğeleri desteklemez. '{0}' türünde etikete izin verilmiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoType">
+        <source>MC3050: Cannot find the type '{0}'. Note that type names are case sensitive.</source>
+        <target state="translated">MC3050: '{0}' türü bulunamıyor. Tür adlarında büyük/küçük harf ayrımı olduğunu unutmayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNotMarkupExtension">
+        <source>MC3048: '{0}' value is not a valid MarkupExtension expression. Cannot resolve '{1}' in namespace '{2}'. '{1}' must be a subclass of MarkupExtension.</source>
+        <target state="translated">MC3048: '{0}' değeri geçerli bir MarkupExtension ifadesi değil. '{2}' ad alanında '{1}' çözümlenemiyor. '{1}' MarkupExtension'ın alt sınıfı olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserPrefixNSElement">
+        <source>MC3062: '{0}' XML namespace prefix does not map to a NamespaceURI, so element '{1}' cannot be resolved.</source>
+        <target state="translated">MC3062: '{0}' XML ad alanı öneki bir NamespaceURI ile eşleşmediğinden '{1}' öğesi çözümlenemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserPrefixNSProperty">
+        <source>MC3100: '{0}' XML namespace prefix does not map to a namespace URI, so cannot resolve property '{1}'.</source>
+        <target state="translated">MC3100: '{0}' XML ad alanı öneki bir ad alanı URI'siyle eşlemediğinden '{1}' özelliği çözümlenemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserPropNoValue">
+        <source>MC3063: Property '{0}' does not have a value.</source>
+        <target state="translated">MC3063: '{0}' özelliğinde değer yok.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserPublicType">
+        <source>MC3064: Only public or internal classes can be used within markup. '{0}' type is not public or internal.</source>
+        <target state="translated">MC3064: İşaretleme içinde yalnızca genel veya iç sınıflar kullanılabilir. '{0}' türü genel veya iç tür değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserReadOnlyProp">
+        <source>MC3065: '{0}' property is read-only and cannot be set from markup.</source>
+        <target state="translated">MC3065: '{0}' özelliği salt okunur ve işaretlemeden ayarlanamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserResourceKeyType">
+        <source>MC3066: The type reference cannot find a public type named '{0}'.</source>
+        <target state="translated">MC3066: Tür başvurusu '{0}' adında genel bir tür bulamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserStaticMemberNotAllowed">
+        <source>MC3019: Cannot reference the static member '{0}' on the type '{1}' as it is not accessible.</source>
+        <target state="translated">MC3019: '{1}' türündeki '{0}' statik üyesi erişilebilir durumda olmadığı için başvuruda bulunulamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserSyncOnRoot">
+        <source>MC3067: SynchronousMode attribute must be on the root tag.</source>
+        <target state="translated">MC3067: SynchronousMode özniteliği kök etikette olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserTextInComplexProp">
+        <source>MC3069: Cannot have both the text '{0}' and the child element '{1}' within a property element.</source>
+        <target state="translated">MC3069: Bir özellik öğesi içinde '{0}' metni ile '{1}' alt öğesi birlikte bulunamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserTextInvalidInArrayOrDictionary">
+        <source>MC3068: Text is not valid under an IDictionary or Array property.</source>
+        <target state="translated">MC3068: Metin bir IDictionary veya Array özelliği altında geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserTooManyAssemblies">
+        <source>MC3070: A single XAML file cannot reference more than 4,096 different assemblies.</source>
+        <target state="translated">MC3070: Tek bir XAML dosyası 4,096'dan fazla farklı derlemeye başvuruda bulunamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserTypeConverterTextNeedsEndElement">
+        <source>MC3095: Close tag must immediately follow TypeConverter initialization string '{0}'.</source>
+        <target state="translated">MC3095: Kapanış etiketi hemen TypeConverter başlatma dizesi '{0}' sonrasında olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserTypeConverterTextUnusable">
+        <source>MC3090: TypeConverter syntax error encountered while processing initialization string '{0}'.  Element attributes are not allowed on objects created via TypeConverter.</source>
+        <target state="translated">MC3090: '{0}' dizesi başlatılırken TypeConverter sözdizimi hatasıyla karşılaşıldı. TypeConverter ile oluşturulan nesnelerde öğe özniteliklerine izin verilmez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserUndeclaredNS">
+        <source>MC3071: '{0}' is an undeclared namespace.</source>
+        <target state="translated">MC3071: '{0}' bildirilmemiş bir ad alanıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserUnknownAttribute">
+        <source>MC3072: The property '{0}' does not exist in XML namespace '{1}'.</source>
+        <target state="translated">MC3072: '{0}' özelliği '{1}' XML ad alanında yok.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserUnknownDefAttribute">
+        <source>MC3073: The attribute '{0}' does not exist in XML namespace 'http://schemas.microsoft.com/winfx/2006/xaml'.</source>
+        <target state="translated">MC3073: '{0}' özniteliği 'http://schemas.microsoft.com/winfx/2006/xaml' adresindeki XML ad alanında yok.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserUnknownTag">
+        <source>MC3074: The tag '{0}' does not exist in XML namespace '{1}'.</source>
+        <target state="translated">MC3074: '{0}' etiketi '{1}' XML ad alanında yok.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserUnknownXmlType">
+        <source>MC3075: Unrecognized XML node type '{0}' found when determining if the current tag is a property element.</source>
+        <target state="translated">MC3075: Geçerli etiketin bir özellik öğesi olup olmadığı belirlenirken tanınmayan XML düğüm türü '{0}' bulundu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserXmlIslandMissing">
+        <source>MC3086: Parent element or property '{0}' requires an XML data island. To distinguish an XML island from surrounding XAML, wrap the XML data island in &lt;x:XData&gt; ... &lt;/x:XData&gt;.</source>
+        <target state="translated">MC3086: Üst öğe veya '{0}' özelliği için bir XML veri adası gerekiyor. Bir XML veri adasını, çevreleyen XAML'den ayırmak için, XML veri adasını &lt;x:XData&gt; ... &lt;/x:XData&gt; içinde sarmalayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserXmlIslandUnexpected">
+        <source>MC3085: '{0}' element or property cannot contain an XML data island.</source>
+        <target state="translated">MC3085: '{0}' öğesi veya özelliği XML veri adası içeremez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserXmlLangPropertyValueInvalid">
+        <source>MC3092: XmlLangProperty attribute must specify a property name.</source>
+        <target state="translated">MC3092: XmlLangProperty özniteliğinin bir özellik adı belirtmesi gerekir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserXmlReaderNoLineInfo">
+        <source>MC3077: The class '{0}' does not implement IXmlLineInfo. This is required to get position information for the XAML being parsed.</source>
+        <target state="translated">MC3077: '{0}' sınıfı IXmlLineInfo uygulamaz. Bu, ayrıştırılan XAML için konum bilgisi almak için gereklidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Parser_UnexpectedToken">
+        <source>MC3098: Unexpected token '{0}' at position '{1}'.</source>
+        <target state="translated">MC3098: '{1}' konumunda beklenmeyen '{0}' belirteci.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Parsers_IllegalToken">
+        <source>MC3096: Token is not valid.</source>
+        <target state="translated">MC3096: Belirteç geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PreparingCompile">
+        <source>Preparing for the markup compilation...</source>
+        <target state="translated">İşaretleme derlemesi için hazırlanıyor...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QualifiedNameHasWrongFormat">
+        <source>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</source>
+        <target state="translated">MC4301: '{0}' tür adı beklenen 'className, assembly' biçiminde değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadResourceFile">
+        <source>Reading Resource file: '{0}'...</source>
+        <target state="translated">Resource dosyası okunuyor: '{0}'...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RecompiledXaml">
+        <source>Recompiled XAML file : '{0}'.</source>
+        <target state="translated">XAML dosyası yeniden derlendi : '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReferenceFile">
+        <source>Input: Assembly Reference file: '{0}'.</source>
+        <target state="translated">Giriş: Bütünleştirilmiş Kod Reference dosyası: '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ResourceId">
+        <source>Resource ID is '{0}'.</source>
+        <target state="translated">Kaynak Kimliği '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ResourceTooBig">
+        <source>RG1001: Input resource file '{0}' exceeds maximum size of {1} bytes.</source>
+        <target state="translated">RG1001: '{0}' giriş kaynak dosyası {1} baytlık en fazla boyut sınırını aşıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ResourcesGenerated">
+        <source>Generated .resources file: '{0}'.</source>
+        <target state="translated">.resources dosyası oluşturuldu: '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ResourcesGenerating">
+        <source>Generating .resources file: '{0}'...</source>
+        <target state="translated">.resources dosyası oluşturuluyor: '{0}'...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RoutedEventNotRegistered">
+        <source>MC6006: {0}.{1}="{2}" is not valid. '{1}' must be a RoutedEvent registered with a name that ends with the keyword "Event".</source>
+        <target state="translated">MC6006: {0}.{1}="{2}" geçerli değil. '{1}' "Event" anahtar sözcüğüyle biten bir adla kaydedilmiş bir RoutedEvent olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SourceFileNameNeeded">
+        <source>UM1005: You must pass markup files to the task.</source>
+        <target state="translated">UM1005: Göreve işaretleme dosyaları geçirmeniz gerekir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SourceNameNotSupportedForStyleTriggers">
+        <source>MC4110: SourceName property cannot be set within Style.Triggers section.</source>
+        <target state="translated">MC4110: SourceName özelliği Style.Triggers bölümü içinde ayarlanamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleImpliedAndComplexChildren">
+        <source>MC4001: Style does not support both {0} tags and Style.{1} property tags for a single Style. Use one or the other.</source>
+        <target state="translated">MC4001: Style, tek bir Style için {0} etiketlerinin ve Style.{1} özellik etiketlerinin ikisini birden destelemiyor. Birini veya diğerini kullanın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleKnownTagWrongLocation">
+        <source>MC4002: The Style property tag '{0}' can only be specified directly under a Style tag.</source>
+        <target state="translated">MC4002: Style özellik etiketi '{0}' yalnızca doğrudan bir Style etiketi altında belirtilebilir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleNoPropOrEvent">
+        <source>MC4005: Cannot find the Style {0} '{1}' on the type '{2}'.</source>
+        <target state="translated">MC4005: '{2}' türünde Style {0} '{1}' bulunamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleNoTarget">
+        <source>MC4003: Cannot resolve the Style {0} '{1}'. Verify that the owning type is the Style's TargetType, or use Class.Property syntax to specify the {0}.</source>
+        <target state="translated">MC4003: Style {0} '{1}' çözümlenemiyor. Sahip olan türün Style'ın TargetType öğesi olduğunu doğrulayın veya {0} belirtmek için Class.Property sözdizimini kullanın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleNoTopLevelElement">
+        <source>MC4004: Style cannot contain child '{0}'. Style child must be a Setter because it is added to the Setters collection.</source>
+        <target state="translated">MC4004: Style, '{0}' alt öğesini içeremez. Style alt öğesi Setters koleksiyonuna eklendiği için bir Setter olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleTagNotSupported">
+        <source>MC4006: Tags of type '{0}' are not supported in Style sections.</source>
+        <target state="translated">MC4006: '{0}' türünde etiketler Style bölümlerinde desteklenmez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleTargetNoEvents">
+        <source>MC4007: The event '{0}' cannot be specified on a Target tag in a Style. Use an EventSetter instead.</source>
+        <target state="translated">MC4007: '{0}' olayı bir Style içinde Target etiketinde belirtilemez. Bunun yerine EventSetter kullanın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleTextNotSupported">
+        <source>MC4008: The text '{0}' is not allowed at this location within a Style section.</source>
+        <target state="translated">MC4008: Bir Style bölümü içinde bu konumda '{0}' metnine izin verilmez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleUnknownProp">
+        <source>MC4009: The property '{0}' cannot be set on Style.</source>
+        <target state="translated">MC4009: Style içinde '{0}' özelliği ayarlanamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SubSubClassingNotAllowed">
+        <source>MC6017: '{0}' cannot be the root of a XAML file because it was defined using XAML.</source>
+        <target state="translated">MC6017: XAML kullanılarak tanımlandığı için, '{0}' bir XAML dosyasının kökü olamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TargetIsNotSupported">
+        <source>BG1004: Target Type '{0}' is not supported by this task.</source>
+        <target state="translated">BG1004: '{0}' Hedef Türü bu görev tarafından desteklenmiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TargetNameNotSupportedForStyleSetters">
+        <source>MC4011: TargetName property cannot be set on a Style Setter.</source>
+        <target state="translated">MC4011: TargetName özelliği bir Style Setter içinde ayarlanamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TaskLogo">
+        <source>Microsoft (R) Build Task '{0}' Version '{1}'.</source>
+        <target state="translated">Microsoft (R) Build Task '{0}' Sürüm '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TaskRight">
+        <source>Copyright (C) Microsoft Corporation 2005. All rights reserved.</source>
+        <target state="translated">Telif hakkı (C) Microsoft Corporation 2005. Tüm hakları saklıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateDupName">
+        <source>MC4101: The Name '{0}' has already been defined. Names must be unique.</source>
+        <target state="translated">MC4101: Name '{0}' zaten tanımlanmış. Name değerleri benzersiz olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateInvalidRootElementTag">
+        <source>MC4108: The root of a Template content section cannot contain an element of type '{0}'. Only FrameworkElement and FrameworkContentElement types are valid.</source>
+        <target state="translated">MC4108: Bir Template içerik bölümünün kökü '{0}' türünde öğe içeremez. Yalnızca FrameworkElement ve FrameworkContentElement türleri geçerlidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateKnownTagWrongLocation">
+        <source>MC4103: The template property tag '{0}' can only be specified immediately after a ControlTemplate tag.</source>
+        <target state="translated">MC4103: '{0}' şablon özellik etiketi yalnızca bir ControlTemplate etiketinden hemen sonra belirtilebilir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateNoMultipleRoots">
+        <source>MC4107: A template can have only a single root element. '{0}' is not allowed.</source>
+        <target state="translated">MC4107: Bir şablonun yalnızca tek bir kök öğesi olabilir. '{0}' öğesine izin verilmiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateNoProp">
+        <source>MC4109: Cannot find the Template Property '{0}' on the type '{1}'.</source>
+        <target state="translated">MC4109: '{1}' türünde '{0}' Şablon Özelliği bulunamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateNoTarget">
+        <source>MC4106: Cannot resolve the Template Property '{0}'. Verify that the owning type is the Style's TargetType, or use Class.Property syntax to specify the property.</source>
+        <target state="translated">MC4106: '{0}' Şablon Özelliği çözümlenemiyor. Sahip olan türün Style'ın TargetType'ı olduğunu doğrulayın veya özelliği belirtmek için Class.Property sözdizimini kullanın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateNoTriggerTarget">
+        <source>MC4111: Cannot find the Trigger target '{0}'.  (The target must appear before any Setters, Triggers, or Conditions that use it.)</source>
+        <target state="translated">MC4111: Trigger hedefi '{0}' bulunamıyor. (Hedef kendisini kullanan tüm Setter, Trigger veya Condition'lardan önce olmalıdır.)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateTagNotSupported">
+        <source>MC4102: Tags of type '{0}' are not supported in template sections.</source>
+        <target state="translated">MC4102: '{0}' türünde etiketler şablon bölümlerinde desteklenmez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateTextNotSupported">
+        <source>MC4105: The text '{0}' is not allowed at this location within a template section.</source>
+        <target state="translated">MC4105: Bir şablon bölümünde bu konumda '{0}' metnine izin verilmez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateUnknownProp">
+        <source>MC4104: The property '{0}' cannot be set as a property element on template. Only Triggers and Storyboards are allowed as property elements.</source>
+        <target state="translated">MC4104: '{0}' özelliği şablonda özellik öğesi olarak ayarlanamaz. Özellik öğesi olarak yalnızca Triggers ve Storyboards'a izin verilir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperEmptyToken">
+        <source>MC7004: Empty token encountered while parsing.</source>
+        <target state="translated">MC7004: Ayrıştırma sırasında boş belirteç bulundu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperExtraDataEncountered">
+        <source>MC7003: Extra data encountered after token while parsing.</source>
+        <target state="translated">MC7003: Ayrıştırma sırasında, belirteçten sonra fazladan veri bulundu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperMissingEndQuote">
+        <source>MC7002: Missing end quote encountered while parsing token.</source>
+        <target state="translated">MC7002: Belirteç ayrıştırılırken eksik bitiş tırnak işareti bulundu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperPrematureStringTermination">
+        <source>MC7001: Premature string termination encountered.</source>
+        <target state="translated">MC7001: Erken dize sonu bulundu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UidMissing">
+        <source>UM1003: Uid is missing for element '{0}'.</source>
+        <target state="translated">UM1003: '{0}' öğesi için Uid eksik.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownBuildError">
+        <source>Unknown build error, '{0}' </source>
+        <target state="translated">Bilinmeyen oluşturma hatası, '{0}' </target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownClassModifier">
+        <source>MC6013: {0}:ClassModifier="{1}" is not valid for the language {2}.</source>
+        <target state="translated">MC6013: {0}:ClassModifier="{1}" {2} dili için geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownDefinitionTag">
+        <source>MC6002: Unrecognized tag '{0}:{1}' in namespace 'http://schemas.microsoft.com/winfx/2006/xaml'. Note that tag names are case sensitive.</source>
+        <target state="translated">MC6002: 'http://schemas.microsoft.com/winfx/2006/xaml' ad alanında tanınmayan '{0}:{1}' etiketi. Etiket adlarında büyük/küçük harf ayrımı olduğunu unutmayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownEventAttribute">
+        <source>MC6007: '{1}' is not valid. '{0}' is not an event on '{2}'.</source>
+        <target state="translated">MC6007: '{1}' geçerli değil. '{0}' '{2}' üzerinde bir olay değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownFieldModifier">
+        <source>MC6014: {0}:FieldModifier="{1}" is not valid for the language {2}.</source>
+        <target state="translated">MC6014: {0}:FieldModifier="{1}" {2} dili için geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownGenericType">
+        <source>MC6020: {0}:TypeArguments='{1}' is not valid on the tag '{2}'. Either '{2}' is not a generic type or the number of Type arguments in the attribute is wrong. Remove the {0}:TypeArguments attribute because it is allowed only on generic types, or fix its value to match the arity of the generic type '{2}'.</source>
+        <target state="translated">MC6020: {0}:TypeArguments='{1}' '{2}' etiketinde geçerli değil. '{2}' genel türde değil veya öznitelikteki Type bağımsız değişkenlerinin sayısı yanlış. Yalnızca genel türlerde izin verildiğinden {0}:TypeArguments özniteliğini kaldırın ya da değerini '{2}' genel türünün eşliğine uygun şekilde düzeltin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownLanguage">
+        <source>MC6008: '{0}' is not installed properly on this machine. It must be listed in the &lt;compilers&gt; section of machine.config.</source>
+        <target state="translated">MC6008: '{0}' bu makineye düzgün yüklenmedi. machine.config içinde &lt;compilers&gt; bölümünde listelenmesi gerekir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownPathOperationType">
+        <source>Unknown path operation attempted.</source>
+        <target state="translated">Bilinmeyen yol işlemi denendi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnmatchedLocComment">
+        <source>LC1003: Localization comment has no value set for target property: '{0}'.</source>
+        <target state="translated">LC1003: Yerelleştirme açıklamasında hedef özellik için ayarlanmış değer yok: '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VersionNumberComponentNegative">
+        <source>MC4501: Major and minor version number components cannot be negative.</source>
+        <target state="translated">MC4501: Birincil ve ikincil sürüm numarası bileşenleri negatif olamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WinFXAssemblyMissing">
+        <source>MC6000: Project file must include the .NET Framework assembly '{0}' in the reference list.</source>
+        <target state="translated">MC6000: Proje dosyasının başvuru listesinde .NET Framework bütünleştirilmiş kodunu '{0}' içermesi gerekir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WrongLocalizationPropertySetting_Pass1">
+        <source>MC1001: The LocalizationDirectivesToLocFile property value is not valid and must be changed to None, CommentsOnly, or All for the MarkupCompilePass1 task.</source>
+        <target state="translated">MC1001: LocalizationDirectivesToLocFile özellik değeri geçerli değil ve MarkupCompilePass1 görevi için None, CommentsOnly veya All olarak değiştirilmesi gerekiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WrongPropertySetting">
+        <source>BG1003: The project file contains a property value that is not valid.</source>
+        <target state="translated">BG1003: Proje dosyası geçerli olmayan bir özellik değeri içeriyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceAfterFallback">
+        <source>MC4602: Choice cannot follow a Fallback.</source>
+        <target state="translated">MC4602: Choice, bir Fallback'ten sonra olamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceNotFound">
+        <source>MC4606: AlternateContent must contain one or more Choice elements.</source>
+        <target state="translated">MC4606: AlternateContent bir veya daha fazla Choice öğesi içermelidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceOnlyInAC">
+        <source>MC4601: Choice valid only in AlternateContent.</source>
+        <target state="translated">MC4601: Choice yalnızca AlternateContent içinde geçerlidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRCompatCycle">
+        <source>MC4640: Namespace '{0}' is marked as compatible with itself using XmlnsCompatibilityAttribute. A namespace cannot directly or indirectly override itself.</source>
+        <target state="translated">MC4640: '{0}' ad alanı XmlnsCompatibilityAttribute kullanılarak kendiyle uyumlu olarak işaretlendi. Bir ad alanı doğrudan veya dolaylı olarak kendini geçersiz kılamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicatePreserve">
+        <source>MC4631: Duplicate Preserve declaration for element '{1}' in namespace '{0}'.</source>
+        <target state="translated">MC4631: '{0}' ad alanındaki '{1}' öğesi için yinelenen Preserve bildirimi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateProcessContent">
+        <source>MC4617: Duplicate ProcessContent declaration for element '{1}' in namespace '{0}'.</source>
+        <target state="translated">MC4617: '{0}' ad alanındaki '{1}' öğesi için yinelenen ProcessContent bildirimi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardPreserve">
+        <source>MC4633: Duplicate wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">MC4633: '{0}' ad alanı için yinelenen joker karakterli Preserve bildirimi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardProcessContent">
+        <source>MC4619: Duplicate wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">MC4619: '{0}' ad alanı için yinelenen joker karakterli ProcessContent bildirimi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRFallbackOnlyInAC">
+        <source>MC4605: Fallback valid only in AlternateContent.</source>
+        <target state="translated">MC4605: Fallback yalnızca AlternateContent içinde geçerli.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidACChild">
+        <source>MC4610: '{0}' element is not a valid child of AlternateContent. Only Choice and Fallback elements are valid children of an AlternateContent element.</source>
+        <target state="translated">MC4610: '{0}' öğesi AlternateContent'in geçerli bir alt öğesi değil. Yalnızca Choice ve Fallback bir AlternateContent öğesinin geçerli alt öğeleridir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidAttribInElement">
+        <source>MC4608: '{0}' attribute is not valid for element '{1}'.</source>
+        <target state="translated">MC4608: '{0}' özniteliği '{1}' öğesi için geçerli değildir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidFormat">
+        <source>MC4611: '{0}' format is not valid.</source>
+        <target state="translated">MC4611: '{0}' biçimi geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidPreserve">
+        <source>MC4632: Cannot have both a specific and a wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">MC4632: '{0}' ad alanı için hem belirli, hem de joker Preserve bildirimi olamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidProcessContent">
+        <source>MC4618: Cannot have both a specific and a wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">MC4618: '{0}' ad alanı için hem belirli, hem joker ProcessContent bildirimi olamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidRequiresAttribute">
+        <source>MC4604: Requires attribute must contain a valid namespace prefix.</source>
+        <target state="translated">MC4604: Requires özniteliği, geçerli bir ad alanı öneki içermelidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidXMLName">
+        <source>MC4634: '{0}' attribute value is not a valid XML name.</source>
+        <target state="translated">MC4634: '{0}' özellik değeri geçerli bir XML adı değildir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMultipleFallbackFound">
+        <source>MC4607: AlternateContent must contain only one Fallback element.</source>
+        <target state="translated">MC4607: AlternateContent yalnızca bir Fallback öğesi içermelidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMustUnderstandFailed">
+        <source>MC4626: MustUnderstand condition failed on namespace '{0}'.</source>
+        <target state="translated">MC4626: MustUnderstand koşulu '{0}' ad alanında başarısız oldu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSPreserveNotIgnorable">
+        <source>MC4630: Namespace '{0}' has items declared to be preserved but is not declared ignorable.</source>
+        <target state="translated">MC4630: '{0}' ad alanında korunması bildirilmiş öğeler var, ancak bunların yok sayılması bildirilmemiş.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSProcessContentNotIgnorable">
+        <source>MC4615: '{0}' namespace is declared ProcessContent but is not declared Ignorable.</source>
+        <target state="translated">MC4615: '{0}' ad alanı ProcessContent olarak bildirildi, ancak Ignorable olarak bildirilmedi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRRequiresAttribNotFound">
+        <source>MC4603: Choice must contain a Requires attribute.</source>
+        <target state="translated">MC4603: Choice bir Requires özniteliği içermelidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUndefinedPrefix">
+        <source>MC4612: '{0}' prefix is not defined.</source>
+        <target state="translated">MC4612: '{0}' öneki tanımlı değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatAttrib">
+        <source>MC4614: Unrecognized compatibility attribute '{0}'.</source>
+        <target state="translated">MC4614: Tanınmayan uyumluluk özniteliği '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatElement">
+        <source>MC4609: Unrecognized compatibility element '{0}'.</source>
+        <target state="translated">MC4609: Tanınmayan uyumluluk öğesi '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZeroLengthFeatureID">
+        <source>MC4502: The feature ID string cannot have length 0.</source>
+        <target state="translated">MC4502: Özellik kimliği dizesinin uzunluğu 0 olamaz.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

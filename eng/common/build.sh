@@ -10,28 +10,37 @@ set -e
 usage()
 {
   echo "Common settings:"
-  echo "  --configuration <value>    Build configuration: 'Debug' or 'Release' (short: --c)"
+  echo "  --configuration <value>    Build configuration: 'Debug' or 'Release' (short: -c)"
   echo "  --verbosity <value>        Msbuild verbosity: q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic] (short: -v)"
   echo "  --binaryLog                Create MSBuild binary log (short: -bl)"
-  echo ""
-  echo "Actions:"
-  echo "  --restore                  Restore dependencies (short: -r)"
-  echo "  --build                    Build all projects (short: -b)"
-  echo "  --rebuild                  Rebuild all projects"
-  echo "  --test                     Run all unit tests (short: -t)"
-  echo "  --sign                     Sign build outputs"
-  echo "  --publish                  Publish artifacts (e.g. symbols)"
-  echo "  --pack                     Package build outputs into NuGet packages and Willow components"
   echo "  --help                     Print help and exit (short: -h)"
   echo ""
+
+  echo "Actions:"
+  echo "  --restore                  Restore dependencies (short: -r)"
+  echo "  --build                    Build solution (short: -b)"
+  echo "  --rebuild                  Rebuild solution"
+  echo "  --test                     Run all unit tests in the solution (short: -t)"
+  echo "  --integrationTest          Run all integration tests in the solution"
+  echo "  --performanceTest          Run all performance tests in the solution"
+  echo "  --pack                     Package build outputs into NuGet packages and Willow components"
+  echo "  --sign                     Sign build outputs"
+  echo "  --publish                  Publish artifacts (e.g. symbols)"
+  echo "  --clean                    Clean the solution"
+  echo ""
+
   echo "Advanced settings:"
   echo "  --projects <value>       Project or solution file(s) to build"
   echo "  --ci                     Set when running on CI server"
+  echo "  --excludeCIBinarylog     Don't output binary log (short: -nobl)"
   echo "  --prepareMachine         Prepare machine for CI run, clean up processes after build"
   echo "  --nodeReuse <value>      Sets nodereuse msbuild parameter ('true' or 'false')"
   echo "  --warnAsError <value>    Sets warnaserror msbuild parameter ('true' or 'false')"
+  echo "  --useDefaultDotnetInstall <value> Use dotnet-install.* scripts from public location as opposed to from eng common folder"
+  
   echo ""
-  echo "Command line arguments starting with '/p:' are passed through to MSBuild."
+  echo "Command line arguments not listed above are passed thru to msbuild."
+  echo "Arguments can also be passed in with a single hyphen."
 }
 
 source="${BASH_SOURCE[0]}"
@@ -50,100 +59,116 @@ restore=false
 build=false
 rebuild=false
 test=false
-pack=false
-publish=false
 integration_test=false
 performance_test=false
+pack=false
+publish=false
 sign=false
 public=false
 ci=false
+clean=false
 
 warn_as_error=true
 node_reuse=true
 binary_log=false
+exclude_ci_binary_log=false
+pipelines_log=false
 
 projects=''
 configuration='Debug'
 prepare_machine=false
 verbosity='minimal'
-properties=''
+runtime_source_feed=''
+runtime_source_feed_key=''
+use_default_dotnet_install=false
 
+properties=''
 while [[ $# > 0 ]]; do
-  opt="$(echo "$1" | awk '{print tolower($0)}')"
+  opt="$(echo "${1/#--/-}" | awk '{print tolower($0)}')"
   case "$opt" in
-    --help|-h)
+    -help|-h)
       usage
       exit 0
       ;;
-    --configuration|-c)
+    -clean)
+      clean=true
+      ;;
+    -configuration|-c)
       configuration=$2
       shift
       ;;
-    --verbosity|-v)
+    -verbosity|-v)
       verbosity=$2
       shift
       ;;
-    --binarylog|-bl)
+    -binarylog|-bl)
       binary_log=true
       ;;
-    --restore|-r)
+    -excludeCIBinarylog|-nobl)
+      exclude_ci_binary_log=true
+      ;;
+    -pipelineslog|-pl)
+      pipelines_log=true
+      ;;
+    -restore|-r)
       restore=true
       ;;
-    --build|-b)
+    -build|-b)
       build=true
       ;;
-    --rebuild)
+    -rebuild)
       rebuild=true
       ;;
-    --pack)
+    -pack)
       pack=true
       ;;
-    --test|-t)
+    -test|-t)
       test=true
       ;;
-    --integrationtest)
+    -integrationtest)
       integration_test=true
       ;;
-    --performancetest)
+    -performancetest)
       performance_test=true
       ;;
-    --sign)
+    -sign)
       sign=true
       ;;
-    --publish)
+    -publish)
       publish=true
       ;;
-    --preparemachine)
+    -preparemachine)
       prepare_machine=true
       ;;
-    --projects)
+    -projects)
       projects=$2
       shift
       ;;
-    --ci)
+    -ci)
       ci=true
       ;;
-    --warnaserror)
+    -warnaserror)
       warn_as_error=$2
       shift
       ;;
-    --nodereuse)
+    -nodereuse)
       node_reuse=$2
       shift
       ;;
-    /p:*)
-      properties="$properties $1"
+    -runtimesourcefeed)
+      runtime_source_feed=$2
+      shift
       ;;
-    /m:*)
-      properties="$properties $1"
+    -runtimesourcefeedkey)
+      runtime_source_feed_key=$2
+      shift
       ;;
-    /bl:*)
-      properties="$properties $1"
+    -usedefaultdotnetinstall)
+      use_default_dotnet_install=$2
+      shift
       ;;
     *)
-      echo "Invalid argument: $1"
-      usage
-      exit 1
+      properties="$properties $1"
       ;;
   esac
 
@@ -151,8 +176,11 @@ while [[ $# > 0 ]]; do
 done
 
 if [[ "$ci" == true ]]; then
-  binary_log=true
+  pipelines_log=true
   node_reuse=false
+  if [[ "$exclude_ci_binary_log" == false ]]; then
+    binary_log=true
+  fi
 fi
 
 . "$scriptroot/tools.sh"
@@ -191,23 +219,21 @@ function Build {
     /p:PerformanceTest=$performance_test \
     /p:Sign=$sign \
     /p:Publish=$publish \
-    /p:ContinuousIntegrationBuild=$ci \
     $properties
 
   ExitWithExitCode 0
 }
 
-# Import custom tools configuration, if present in the repo.
-configure_toolset_script="$eng_root/configure-toolset.sh"
-if [[ -a "$configure_toolset_script" ]]; then
-  . "$configure_toolset_script"
+if [[ "$clean" == true ]]; then
+  if [ -d "$artifacts_dir" ]; then
+    rm -rf $artifacts_dir
+    echo "Artifacts directory deleted."
+  fi
+  exit 0
 fi
 
-# TODO: https://github.com/dotnet/arcade/issues/1468
-# Temporary workaround to avoid breaking change.
-# Remove once repos are updated.
-if [[ -n "${useInstalledDotNetCli:-}" ]]; then
-  use_installed_dotnet_cli="$useInstalledDotNetCli"
+if [[ "$restore" == true ]]; then
+  InitializeNativeTools
 fi
 
 Build

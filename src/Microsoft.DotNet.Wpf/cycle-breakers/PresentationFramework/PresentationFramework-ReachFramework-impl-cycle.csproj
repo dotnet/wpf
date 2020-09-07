@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>PresentationFramework</AssemblyName>
+    <PackageId>PresentationFramework-ReachFramework-impl-cycle</PackageId>
+    <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>    
+    <!-- don't sign nor binplace this non-shipping assembly -->
+    <ShouldWriteSigningRequired>false</ShouldWriteSigningRequired>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Platforms>AnyCPU;x64</Platforms>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <!--The field '{0}' is never used -->
+    <NoWarn>$(NoWarn);0169</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp5.0</TargetFramework>  
+    <EnableDefaultItems>false</EnableDefaultItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="PresentationFramework.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NetCoreReference Include="System.Collections" />
+    <NetCoreReference Include="System.Collections.NonGeneric" />
+    <NetCoreReference Include="System.Collections.Specialized" />
+    <NetCoreReference Include="System.ComponentModel" />
+    <NetCoreReference Include="System.ComponentModel.EventBasedAsync" />    
+    <NetCoreReference Include="System.ComponentModel.Primitives" />
+    <NetCoreReference Include="System.ComponentModel.TypeConverter" />
+    <NetCoreReference Include="System.Dynamic.Runtime" />    
+    <NetCoreReference Include="System.Linq.Expressions" />    
+    <NetCoreReference Include="System.Net.Primitives" />    
+    <NetCoreReference Include="System.Net.Requests" />
+    <NetCoreReference Include="System.Net.WebHeaderCollection" />
+    <NetCoreReference Include="System.ObjectModel" />
+    <NetCoreReference Include="System.Runtime" />
+    <NetCoreReference Include="System.Resources.ResourceManager" />
+    <NetCoreReference Include="System.Runtime.Extensions" />
+    <NetCoreReference Include="System.Runtime.InteropServices" />
+    <NetCoreReference Include="System.Xml" />
+    <NetCoreReference Include="System.Xml.Document" />
+    <NetCoreReference Include="System.Xml.ReaderWriter" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(WpfCycleBreakersDir)ReachFramework\ReachFramework-PresentationFramework-api-cycle.csproj" />
+    <ProjectReference Include="$(WpfCycleBreakersDir)System.Printing\System.Printing-PresentationFramework-api-cycle.csproj" />  
+  </ItemGroup>
+</Project>

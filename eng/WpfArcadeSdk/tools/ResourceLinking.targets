@@ -1,0 +1,20 @@
+<Project>
+  <!--
+   C++ linker is not good at trucking along reousrces from a library all the way to a DLL 
+   In order to do this, we have to explicitly include compiled .res files as an input to the linker 
+   This target is a helper that to assist with this workaround 
+   Incorporate the res files like this: 
+   <AdditionalLinkerInputs Include="resource.res" /> 
+   When "IncorporateAdditionalLinkerInputs" target runs, it will ensure that all resources mentioned in @(AdditionalLinkerInputs) 
+   are included when the final DLL is linked. 
+   -->
+  <Target Name="IncorporateAdditionalLinkerInputs" BeforeTargets="GetResolvedLinkLibs" Condition="'@(AdditionalLinkerInputs)'!=''">
+    <ItemGroup>
+      <LibFullPath Include="@(AdditionalLinkerInputs)">
+        <ProjectType>$(ConfigurationType)</ProjectType>
+        <FileType>lib</FileType>
+        <ResolveableAssembly>false</ResolveableAssembly>
+      </LibFullPath>
+    </ItemGroup>
+  </Target>
+</Project>

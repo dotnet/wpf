@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            <xsd:complexType>
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="data">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" />
+                            <xsd:attribute name="type" type="xsd:string" />
+                            <xsd:attribute name="mimetype" type="xsd:string" />
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="resheader">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" />
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
+            </xsd:complexType>
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="ResMimeType">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="Version">
+        <value>1.0.0.0</value>
+    </resheader>
+    <resheader name="Reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="Writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="PrintSystemException.Generic">
+        <value>Print System exception.</value>
+    </data>
+    <data name="PrintSystemException.PrintingCancelled.Generic">
+        <value>Printing was canceled. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintQueue.Populate">
+        <value>An exception occurred while populating the properties for the PrintQueue object. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintQueue.Refresh">
+        <value>An exception occurred while refreshing the properties for the PrintQueue object. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintQueue.GetUninitializedProperty">
+        <value>An exception occurred while initializing an attribute of the PrintQueue object. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintQueues.Enumerate">
+        <value>An exception occurred while enumerating PrintQueue objects. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintQueue.Commit">
+        <value>An exception occurred while committing the properties for the PrintQueue object. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.CommitPrintSystemAttributesException">
+        <value>An exception occurred while committing the properties.</value>
+    </data>
+    <data name="PrintSystemException.PrintQueue.Generic">
+        <value>An exception occurred while creating the PrintQueue object. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintServer.Refresh">
+        <value>An exception occurred while refreshing the properties for the PrintServer object. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintServer.Commit">
+        <value>An exception occurred while committing the properties for the PrintServer object. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintServer.GetUninitializedProperty">
+        <value>An exception occurred while initializing an attribute of the PrintQueue object. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PropertyIsReadOnly">
+        <value>Property is read-only.</value>
+    </data>
+    <data name="PrintSystemException.PrintServer.Generic">
+        <value>An exception occurred while creating the PrintServer object. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintServer.NameCannotChange">
+        <value>The name of a PrintServer object cannot be changed. </value>
+    </data>
+    <data name="PrintSystemException.PrintServer.InstallPrintQueue">
+        <value>An exception occurred while installing a print queue. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintServer.MajorVersionCannotChange">
+        <value>The major version of a PrintServer object cannot be changed. </value>
+    </data>
+    <data name="PrintSystemException.PrintServer.MinorVersionCannotChange">
+        <value>The minor version of a PrintServer object cannot be changed.</value>
+    </data>
+    <data name="PrintSystemException.PrintServer.SubSystemVersionCannotChange">
+        <value>The OS version of a PrintServer object cannot be changed.</value>
+    </data>
+    <data name="PrintSystemException.PrintServer.AddConnection">
+        <value>An exception occurred while creating the printer connection. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintServer.SetDefaultPrinter">
+        <value>An exception occurred while setting the default printer. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintServer.AddPrinter">
+        <value>An exception occurred while installing the print queue. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintServer.DeletePrintQueue">
+        <value>An exception occurred while deleting a print queue. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintQueue.AddPrinter">
+        <value>An exception occurred while installing a print queue. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintServer.GetDefaultPrinter">
+        <value>An exception occurred while getting the default printer. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.UnknownWin32Error">
+        <value>Unknown Win32 error</value>
+    </data>
+    <data name="PrintSystemException.PrintQueue.Purge">
+        <value>An exception occurred while the queue was purged. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintQueue.Pause">
+        <value>An exception occurred while the queue was paused. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintQueue.Resume">
+        <value>An exception occurred while the queue was resumed. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintQueue.XpsDeviceQuery">
+        <value>An exception occurred while querying the identity of the device.</value>
+    </data>
+    <data name="PrintSystemException.PrintQueueStream.Flush">
+        <value>An exception occurred while trying to flush the print queue stream. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintQueueStream.Write">
+        <value>An exception occurred while trying to write to the print queue stream. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintSystemJobInfo.AddJob">
+        <value>An exception occurred while adding a job. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintSystemJobInfo.Create">
+        <value>An exception occurred while creating print job information. Check inner exception for details.</value>
+    </data>
+    <data name="PrintSystemException.PrintSystemJobInfo.Refresh">
+        <value>An exception occurred while refreshing print job information. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintSystemJobInfo.Deleted">
+        <value>The print job was deleted.</value>
+    </data>
+    <data name="PrintSystemException.PrintSystemJobInfo.XpsDocumentEvent">
+        <value>An exception occurred while calling XpsDocumentEvent.</value>
+    </data>
+    <data name="PrintSystemException.PrintSystemJobInfo.Generic">
+        <value>An exception occurred while setting the print job. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemException.PrintSystemAttributeValueDictionary.IsReadOnly">
+        <value>The collection is read-only.</value>
+    </data>
+    <data name="PrintSystemException.PrintJob.PopulateJobProperties">
+        <value>An exception occurred while populating the object. Win32 error: {0}</value>
+    </data>
+    <data name="PrintSystemSecurity.State">
+        <value>PermissionState value is not valid.</value>
+    </data>
+    <data name="PrintSystemSecurity.Type">
+        <value>IPermission type is not valid.</value>
+    </data>
+    <data name="PrintSystemSecurity.Class">
+        <value>SecurityElement does not have a valid "class" attribute.</value>
+    </data>
+    <data name="PrintSystemSecurity.AccessLevel">
+        <value>SecurityElement does not have a valid "AccessLevel" attribute.</value>
+    </data>
+    <data name="PrintSystemUNCPathResolver.Printer">
+        <value>UNC printer name is not valid.</value>
+    </data>
+    <data name="PrintSystemUNCPathResolver.Server">
+        <value>UNC server name is not valid.</value>
+    </data>
+    <data name="PrintSystemUNCPathResolver.Attribute">
+        <value>Attribute type is not valid.</value>
+    </data>
+    <data name="PrintSystemUNCPathResolver.UNC">
+        <value>UNC name is not valid.</value>
+    </data>
+    <data name="PrintSystemUNCPathResolver.Entries">
+        <value>IDictionaryEnumerator does not have valid entries.</value>
+    </data>
+    <data name="FormatException.XMLNotWellFormed">
+        <value>XML is not well-formed.</value>
+    </data>
+    <data name="FormatException.InvalidRootElement">
+        <value>Root element is not valid: NamespaceURI='{0}', LocalName='{1}'.</value>
+    </data>
+    <data name="FormatException.RootMissingAttribute">
+        <value>Root element is missing required attribute '{0}'.</value>
+    </data>
+    <data name="FormatException.RootInvalidAttribute">
+        <value>'{1}' value not valid for root element attribute '{0}'.</value>
+    </data>
+    <data name="FormatException.VersionNotSupported">
+        <value>'{0}' version number is not supported.</value>
+    </data>
+    <data name="FormatException.RootInvalidChildElement">
+        <value>'{0}' is not a valid child element of root element.</value>
+    </data>
+    <data name="FormatException.RootChildMissingAttribute">
+        <value>'{0}' child element of root element is missing the required '{1}' attribute.</value>
+    </data>
+    <data name="FormatException.AddXmlnsFailAtRootElement">
+        <value>Cannot add standard namespace declaration at root element.</value>
+    </data>
+    <data name="FormatException.ParameterDefMissOrInvalid">
+        <value>Referenced {0} {1} is either missing or not valid.</value>
+    </data>
+    <data name="FormatException.MissingRequiredChildElement">
+        <value>Must have '{0}' child element at line number '{1}' line position '{2}'.</value>
+    </data>
+    <data name="FormatException.InvalidXMLIntValue">
+        <value>'{0}' integer value at line number '{1}' line position '{2}' is not valid.</value>
+    </data>
+    <data name="FormatException.PrivateXMLTextValue">
+        <value>Private text value '{0}' found at line number '{1}' line position '{2}'.</value>
+    </data>
+    <data name="ArgumentException.PositiveValue">
+        <value>Value must be positive.</value>
+    </data>
+    <data name="ArgumentException.NonNegativeValue">
+        <value>Value must be non-negative.</value>
+    </data>
+    <data name="ArgumentException.InvalidHandle">
+        <value>Handle value is not valid.</value>
+    </data>
+    <data name="ArgumentException.InvalidValue">
+        <value>Value is not valid.</value>
+    </data>
+    <data name="IndexOutOfRangeException.InvalidSize">
+        <value>'{0}' array should be the same size as array '{1}'.</value>
+    </data>
+    <data name="PrintConfig.Provider.BindFail">
+        <value>PrintTicket provider failed to bind to printer. Win32 error: {0}</value>
+    </data>
+    <data name="PrintConfig.Provider.GetPrintCapFail">
+        <value>PrintTicket provider failed to retrieve PrintCapabilities. Win32 error: {0}</value>
+    </data>
+    <data name="PrintConfig.Provider.MergeValidateFail">
+        <value>PrintTicket provider failed to merge and validate PrintTicket. Win32 error: {0}</value>
+    </data>
+    <data name="PrintConfig.Provider.DevMode2PTFail">
+        <value>PrintTicket provider failed to convert DEVMODE to PrintTicket. Win32 error: {0}</value>
+    </data>
+    <data name="PrintConfig.Provider.PT2DevModeFail">
+        <value>PrintTicket provider failed to convert PrintTicket to DEVMODE. Win32 error: {0}</value>
+    </data>
+    <data name="PrintConfig.Provider.PTStreamContentFail">
+        <value>{0} stream content reading failed.</value>
+    </data>
+    <data name="XPSWriter.InvalidState">
+        <value>Writer state not valid.</value>
+    </data>
+    <data name="XPSWriter.DoneWriting">
+        <value>Document Writer is done writing and cannot process any more write requests.</value>
+    </data>
+    <data name="XPSWriter.WriteNotCalled">
+        <value>Must call Write before calling cancel.</value>
+    </data>
+    <data name="XPSWriter.Cancelled">
+        <value>Write has already been canceled.</value>
+    </data>
+    <data name="XPSWriter.BatchMode">
+        <value>Document Writer is in batch mode and cannot process non-batch write requests.</value>
+    </data>
+    <data name="XPSWriter.BatchSync">
+        <value>Batch Writer is using synchronous writes and cannot process asynchronous writes.</value>
+    </data>
+    <data name="XPSWriter.BatchAsync">
+        <value>Batch Writer is using asynchronous writes and cannot process synchronous writes.</value>
+    </data>
+    <data name="XPSWriter.BatchDoneWriting">
+        <value>Batch Writer is done writing and cannot process any more batch write requests.</value>
+    </data>
+    <data name="XpsWriter.WriteNotCalledEndBatchWrite">
+        <value>Must call Write before calling EndBatchWrite.</value>
+    </data>
+    <data name="XpsWriter.InvalidXps">
+        <value>The XpsDocument has no FixedDocumentSequence.</value>
+    </data>
+    <data name="RegKeyBasePath">
+        <value>HKEY_CURRENT_USER\Software\Microsoft\.NETFramework\Windows Presentation Foundation\Printing</value>
+    </data>
+    <data name="XpsPrintJobStream.CommitTimeout_RegValue">
+        <value>CommitXpsPrintJobStreamTimeout</value>
+    </data>
+    <data name="PrintSystemJobInfo_disableXPSOMPrinting_RegValue" xml:space="preserve">
+        <value>DisableXPSOMPrinting</value>
+    </data>
+</root>

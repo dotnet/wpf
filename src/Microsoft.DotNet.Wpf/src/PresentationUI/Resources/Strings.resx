@@ -1,0 +1,867 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CertSelectionDialogMessage" xml:space="preserve">
+    <value>Select a certificate</value>
+  </data>
+  <data name="CertSelectionDialogTitle" xml:space="preserve">
+    <value>Digital Signature</value>
+  </data>
+  <data name="DigitalSignatureMessageActionInvalidatesSignature" xml:space="preserve">
+    <value>The changes that you selected will invalidate one or more signatures that are applied to this document.\r\n\r\nAre you sure you want to continue?</value>
+  </data>
+  <data name="DigitalSignatureMessageAddRequestsBeforeSigning" xml:space="preserve">
+    <value>You are about to apply the first digital signature to this document.\r\n\r\nIf this document must be signed by other users, you need to request their signatures before you sign by using the Digital Signatures menu.\r\n\r\nAfter you sign this document, changes to the document will invalidate your signature.  Are you sure you want to continue?</value>
+  </data>
+  <data name="DigitalSignatureMessageAddRequestsBeforeSigningTitle" xml:space="preserve">
+    <value>Digital Signatures - Document Is Not Signed</value>
+  </data>
+  <data name="DigitalSignatureMessageDocumentNotSignable" xml:space="preserve">
+    <value>This document cannot be signed because it contains content that cannot be displayed.</value>
+  </data>
+  <data name="DigitalSignatureMessageDocumentNotSignableTitle" xml:space="preserve">
+    <value>Digital Signatures</value>
+  </data>
+  <data name="DigitalSignatureMessageSignNoPending" xml:space="preserve">
+    <value>This document has no pending signatures. Are you sure you want to sign it anyway?</value>
+  </data>
+  <data name="DigitalSignatureMessageSignNow" xml:space="preserve">
+    <value>Do you want to sign this document now?\r\n\r\nYou have just defined information about who is required to sign this document. You should digitally sign the document to ensure tamper evidence if someone tries to modify it. If you still want to modify this document then you should not sign it now.</value>
+  </data>
+  <data name="DigitalSignatureMessageSignNowTitle" xml:space="preserve">
+    <value>Sign XPS Document</value>
+  </data>
+  <data name="DigitalSignatureMessageSignPending" xml:space="preserve">
+    <value>You have not selected any of the pending signatures requested by the publisher of this document. Are you sure you want to continue?</value>
+  </data>
+  <data name="DigitalSignatureNoFixedDocumentSequence" xml:space="preserve">
+    <value>The document does not contain a valid FixedDocumentSequence.</value>
+  </data>
+  <data name="DigitalSignatureWarnErrorGeneric" xml:space="preserve">
+    <value>The following error occurred while signing the document:\r\n{0}</value>
+  </data>
+  <data name="DigitalSignatureWarnErrorReadOnlyInputError" xml:space="preserve">
+    <value>Requested signer and reason for signing must be entered before adding this requested signature.</value>
+  </data>
+  <data name="DigitalSignatureWarnErrorReadOnlyNoMoreRequest" xml:space="preserve">
+    <value>This document has been signed already and cannot be signed again.</value>
+  </data>
+  <data name="DigitalSignatureWarnErrorRMSigningMessage" xml:space="preserve">
+    <value>You do not have permission to sign this document.</value>
+  </data>
+  <data name="DigitalSignatureWarnErrorRMSigningMessageNoCerts" xml:space="preserve">
+    <value>Signing process failed. To sign this document, you need to obtain a digital certificate.</value>
+  </data>
+  <data name="DigitalSignatureWarnErrorSigningErrorTitle" xml:space="preserve">
+    <value>XPS Document Signing Error</value>
+  </data>
+  <data name="DigSigIntentString1" xml:space="preserve">
+    <value>&lt;None&gt;</value>
+  </data>
+  <data name="DigSigIntentString2" xml:space="preserve">
+    <value>I am the author of this document.</value>
+  </data>
+  <data name="DigSigIntentString3" xml:space="preserve">
+    <value>I have reviewed the contents of this document.</value>
+  </data>
+  <data name="DigSigIntentString4" xml:space="preserve">
+    <value>I have reviewed and approve the contents of this document.</value>
+  </data>
+  <data name="DigSigIntentString5" xml:space="preserve">
+    <value>I agree with the terms defined in this document.</value>
+  </data>
+  <data name="DigSigIntentString6" xml:space="preserve">
+    <value>I attest to the accuracy and integrity of this document.</value>
+  </data>
+  <data name="DigSigRequestTitle" xml:space="preserve">
+    <value>Request Digital Signatures</value>
+  </data>
+  <data name="DigSigSumColumnHeaderIntent" xml:space="preserve">
+    <value>Intent:</value>
+  </data>
+  <data name="DigSigSumColumnHeaderLocale" xml:space="preserve">
+    <value>Locale:</value>
+  </data>
+  <data name="DigSigSumColumnHeaderName" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="DigSigSumColumnHeaderSignatureStatus" xml:space="preserve">
+    <value>Signature Status:</value>
+  </data>
+  <data name="DigSigSumColumnHeaderSignBy" xml:space="preserve">
+    <value>Sign By:</value>
+  </data>
+  <data name="DigSigSumDone" xml:space="preserve">
+    <value>&amp;Done</value>
+  </data>
+  <data name="DigSigSumRequestAdd" xml:space="preserve">
+    <value>&amp;Add...</value>
+  </data>
+  <data name="DigSigSumRequestDelete" xml:space="preserve">
+    <value>De&amp;lete</value>
+  </data>
+  <data name="DigSigSumSign" xml:space="preserve">
+    <value>&amp;Sign...</value>
+  </data>
+  <data name="DigSigSumTitle" xml:space="preserve">
+    <value>Digital Signature Summary</value>
+  </data>
+  <data name="DigSigSumViewCert" xml:space="preserve">
+    <value>View &amp;Certificate...</value>
+  </data>
+  <data name="DocumentApplicationDocumentViewerFocusToolBarCommand" xml:space="preserve">
+    <value>Give focus to the main toolbar.</value>
+  </data>
+  <data name="DocumentApplicationDocumentViewerRequestSignersCommand" xml:space="preserve">
+    <value>Request signatures</value>
+  </data>
+  <data name="DocumentApplicationDocumentViewerShowRMCredentialManagerCommand" xml:space="preserve">
+    <value>Restrict permission as...</value>
+  </data>
+  <data name="DocumentApplicationDocumentViewerShowRMPermissionsCommand" xml:space="preserve">
+    <value>View my permissions</value>
+  </data>
+  <data name="DocumentApplicationDocumentViewerShowRMPublishingUICommand" xml:space="preserve">
+    <value>Set permissions</value>
+  </data>
+  <data name="DocumentApplicationDocumentViewerShowSignatureSummaryCommand" xml:space="preserve">
+    <value>View signature details</value>
+  </data>
+  <data name="DocumentApplicationDocumentViewerSignCommand" xml:space="preserve">
+    <value>Sign this document</value>
+  </data>
+  <data name="DocumentPropertiesDialogAuthorLabel" xml:space="preserve">
+    <value>Author:</value>
+  </data>
+  <data name="DocumentPropertiesDialogCategoryLabel" xml:space="preserve">
+    <value>Category:</value>
+  </data>
+  <data name="DocumentPropertiesDialogContentLabel" xml:space="preserve">
+    <value>Content:</value>
+  </data>
+  <data name="DocumentPropertiesDialogDateFormat" xml:space="preserve">
+    <value>{0:F}</value>
+  </data>
+  <data name="DocumentPropertiesDialogDescriptionLabel" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="DocumentPropertiesDialogDocumentCreatedLabel" xml:space="preserve">
+    <value>Published:</value>
+  </data>
+  <data name="DocumentPropertiesDialogDocumentDetailBoxLabel" xml:space="preserve">
+    <value>Authoring Information</value>
+  </data>
+  <data name="DocumentPropertiesDialogDocumentModifiedLabel" xml:space="preserve">
+    <value>Edited:</value>
+  </data>
+  <data name="DocumentPropertiesDialogDocumentPrintedLabel" xml:space="preserve">
+    <value>Printed:</value>
+  </data>
+  <data name="DocumentPropertiesDialogDocumentPropertiesMustExist" xml:space="preserve">
+    <value>DocumentProperties must exist.</value>
+  </data>
+  <data name="DocumentPropertiesDialogFileAccessedLabel" xml:space="preserve">
+    <value>Accessed:</value>
+  </data>
+  <data name="DocumentPropertiesDialogFileCreatedLabel" xml:space="preserve">
+    <value>Created:</value>
+  </data>
+  <data name="DocumentPropertiesDialogFileModifiedLabel" xml:space="preserve">
+    <value>Modified:</value>
+  </data>
+  <data name="DocumentPropertiesDialogFileSizeBytesUnit" xml:space="preserve">
+    <value>bytes</value>
+  </data>
+  <data name="DocumentPropertiesDialogFileSizeFormat" xml:space="preserve">
+    <value>{{0:#,#.{0}}} {{1}} ({{2:#,#}} {{3}})</value>
+  </data>
+  <data name="DocumentPropertiesDialogFileSizeKBUnit" xml:space="preserve">
+    <value>KB</value>
+  </data>
+  <data name="DocumentPropertiesDialogFileSizeMBUnit" xml:space="preserve">
+    <value>MB</value>
+  </data>
+  <data name="DocumentPropertiesDialogFileSystemBoxLabel" xml:space="preserve">
+    <value>File System</value>
+  </data>
+  <data name="DocumentPropertiesDialogIdentifierLabel" xml:space="preserve">
+    <value>Identifier:</value>
+  </data>
+  <data name="DocumentPropertiesDialogInfoLabel" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="DocumentPropertiesDialogKeywordsLabel" xml:space="preserve">
+    <value>Keywords:</value>
+  </data>
+  <data name="DocumentPropertiesDialogLanguageLabel" xml:space="preserve">
+    <value>Language:</value>
+  </data>
+  <data name="DocumentPropertiesDialogLastSavedByLabel" xml:space="preserve">
+    <value>Last Saved By:</value>
+  </data>
+  <data name="DocumentPropertiesDialogNotAvailable" xml:space="preserve">
+    <value>Not Available</value>
+  </data>
+  <data name="DocumentPropertiesDialogOkButtonLabel" xml:space="preserve">
+    <value>&amp;Close</value>
+  </data>
+  <data name="DocumentPropertiesDialogRevisionLabel" xml:space="preserve">
+    <value>Revision:</value>
+  </data>
+  <data name="DocumentPropertiesDialogSizeLabel" xml:space="preserve">
+    <value>Size:</value>
+  </data>
+  <data name="DocumentPropertiesDialogStatusLabel" xml:space="preserve">
+    <value>Status:</value>
+  </data>
+  <data name="DocumentPropertiesDialogSubjectLabel" xml:space="preserve">
+    <value>Subject:</value>
+  </data>
+  <data name="DocumentPropertiesDialogSummaryLabel" xml:space="preserve">
+    <value>Content</value>
+  </data>
+  <data name="DocumentPropertiesDialogTitle" xml:space="preserve">
+    <value>XPS Document Properties</value>
+  </data>
+  <data name="DocumentPropertiesDialogTitleLabel" xml:space="preserve">
+    <value>Title:</value>
+  </data>
+  <data name="DocumentPropertiesDialogVersionLabel" xml:space="preserve">
+    <value>Version:</value>
+  </data>
+  <data name="DocumentSignatureManagerAppliedToolTip" xml:space="preserve">
+    <value>Click here to verify the signer's identity.</value>
+  </data>
+  <data name="DocumentSignatureManagerDefaultToolTip" xml:space="preserve">
+    <value>Sign this document using a digital signature.</value>
+  </data>
+  <data name="DocumentSignatureManagerInvalid" xml:space="preserve">
+    <value>This document is signed. However, there are problems with one or more signatures. Click here for more information...</value>
+  </data>
+  <data name="DocumentSignatureManagerUndetermined" xml:space="preserve">
+    <value>This document contains digital signatures that will be checked when the download is complete. Click here to verify the signer's identity...</value>
+  </data>
+  <data name="DocumentSignatureManagerValid" xml:space="preserve">
+    <value>This document is signed. All signatures are valid. Click here to view the signer's identity...</value>
+  </data>
+  <data name="DocumentStreamCanNoLongerOpen" xml:space="preserve">
+    <value>Can no longer open file.</value>
+  </data>
+  <data name="DocumentStreamMustBeFileSource" xml:space="preserve">
+    <value>Operation valid only on file based sources.</value>
+  </data>
+  <data name="DocumentStreamMustBeTemporary" xml:space="preserve">
+    <value>Operation valid only on temporary documents.</value>
+  </data>
+  <data name="DocumentStreamMustBeXpsFile" xml:space="preserve">
+    <value>Only XPS documents are supported.</value>
+  </data>
+  <data name="FileManagementDestinationIsReadOnly" xml:space="preserve">
+    <value>Cannot save to this file because it is read-only.</value>
+  </data>
+  <data name="FileManagementNoAccessToDestination" xml:space="preserve">
+    <value>Cannot save to the target location.</value>
+  </data>
+  <data name="FileManagementNoAccessToSource" xml:space="preserve">
+    <value>Cannot open from the target location.</value>
+  </data>
+  <data name="FileManagementNoTemporaryFileAccess" xml:space="preserve">
+    <value>Cannot create a temporary file; some features will not be available.</value>
+  </data>
+  <data name="FileManagementSaveExt" xml:space="preserve">
+    <value>.xps</value>
+  </data>
+  <data name="FileManagementSaveFilter" xml:space="preserve">
+    <value>Document (*.xps)|*.xps</value>
+  </data>
+  <data name="FileManagementStreamProxyIsReadOnly" xml:space="preserve">
+    <value>Cannot change target because stream proxy is read-only.</value>
+  </data>
+  <data name="FileManagementTitleError" xml:space="preserve">
+    <value>File Access Error</value>
+  </data>
+  <data name="PackageControllerStreamCorruption" xml:space="preserve">
+    <value>Source and destination cannot be same stream.</value>
+  </data>
+  <data name="PackagePartTypeNotWritable" xml:space="preserve">
+    <value>Writing to parts with the provided content type is not supported.</value>
+  </data>
+  <data name="PackagingCircularReference" xml:space="preserve">
+    <value>Value returned from writeable factory delegate refers to self.</value>
+  </data>
+  <data name="PackagingWriteableDelegateGaveNullPart" xml:space="preserve">
+    <value>Delegate returned a null writing part.</value>
+  </data>
+  <data name="PackagingWriteableDelegateGaveNullStream" xml:space="preserve">
+    <value>Delegate returned a null writing stream.</value>
+  </data>
+  <data name="PackagingWriteNotSupported" xml:space="preserve">
+    <value>This instance cannot perform write operations.</value>
+  </data>
+  <data name="PageTextBoxToolTip" xml:space="preserve">
+    <value>Type the number of the page that you want to view.</value>
+  </data>
+  <data name="PeoplePickerErrorConditionFromOpenQueryWindow" xml:space="preserve">
+    <value>An error was returned from OpenQueryWindow while invoking the Find Users, Contacts, and Groups dialog box, HRESULT={0}.</value>
+  </data>
+  <data name="PeoplePickerInvalidParentWindow" xml:space="preserve">
+    <value>The parent HWND passed to the Find Users, Contacts, and Groups dialog box is not valid.</value>
+  </data>
+  <data name="ProgressBarKiloBytesStringFormat" xml:space="preserve">
+    <value>{0} KB</value>
+  </data>
+  <data name="ProgressBarPercentageStringFormat" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
+  <data name="RequestSignatureDialogAdd" xml:space="preserve">
+    <value>&amp;Add</value>
+  </data>
+  <data name="RequestSignatureDialogCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="RequestSignatureDialogIntentLabel" xml:space="preserve">
+    <value>Reason for signing this document (choose one or create your own):</value>
+  </data>
+  <data name="RequestSignatureDialogLocationLabel" xml:space="preserve">
+    <value>Location (for example, city name):</value>
+  </data>
+  <data name="RequestSignatureDialogRequestSignerNameLabel" xml:space="preserve">
+    <value>Requested signer's name or role:</value>
+  </data>
+  <data name="RequestSignatureDialogSignatureAppliedByDateLabel" xml:space="preserve">
+    <value>Signature must be applied by:</value>
+  </data>
+  <data name="RequestSignatureDialogTitle" xml:space="preserve">
+    <value>Add Requested Signature</value>
+  </data>
+  <data name="RightsManagementExceptionNoRightsForOperation" xml:space="preserve">
+    <value>The user does not have sufficient rights to perform the operation.</value>
+  </data>
+  <data name="RightsManagementWarnErrorClockModified" xml:space="preserve">
+    <value>Cannot open this document because the system clock has been modified.</value>
+  </data>
+  <data name="RightsManagementWarnErrorConfigurationError" xml:space="preserve">
+    <value>This application has detected a problem with your Rights Management configuration. Contact your network administrator or support personnel.</value>
+  </data>
+  <data name="RightsManagementWarnErrorDebuggerDetected" xml:space="preserve">
+    <value>Cannot open or publish documents with restricted permissions because a debugging application has been detected.</value>
+  </data>
+  <data name="RightsManagementWarnErrorExpiredPermission" xml:space="preserve">
+    <value>Cannot open this document because your permissions have expired.</value>
+  </data>
+  <data name="RightsManagementWarnErrorFailedToLoadTemplate" xml:space="preserve">
+    <value>Cannot load the requested template. Select a different template and contact your network administrator or support personnel.</value>
+  </data>
+  <data name="RightsManagementWarnErrorFailedToRemoveUser" xml:space="preserve">
+    <value>Cannot remove this account because it is in use.</value>
+  </data>
+  <data name="RightsManagementWarnErrorGenericFailure" xml:space="preserve">
+    <value>Failed to initialize rights management. Contact your network administrator or support personnel.</value>
+  </data>
+  <data name="RightsManagementWarnErrorInvalidContent" xml:space="preserve">
+    <value>Cannot open this document with restricted permissions because the content is invalid or corrupted.</value>
+  </data>
+  <data name="RightsManagementWarnErrorInvalidTemplate" xml:space="preserve">
+    <value>Cannot sign with the requested template. Select a different template and contact your network administrator or support personnel.</value>
+  </data>
+  <data name="RightsManagementWarnErrorNoAddress" xml:space="preserve">
+    <value>Enter a valid e-mail address for whom to add rights.</value>
+  </data>
+  <data name="RightsManagementWarnErrorNoPermission" xml:space="preserve">
+    <value>You do not have permission to open this document with this account. Would you like to use a different account or create a new account?</value>
+  </data>
+  <data name="RightsManagementWarnErrorNoReferralAddress" xml:space="preserve">
+    <value>Enter a valid e-mail address to contact for permissions.</value>
+  </data>
+  <data name="RightsManagementWarnErrorRMNotInstalled" xml:space="preserve">
+    <value>The Windows Rights Management Services Client (RMS) is required in order for you to be able to open and create XPS documents with restricted permissions. Do you want to download and install Windows RMS Client now?</value>
+  </data>
+  <data name="RightsManagementWarnErrorServerError" xml:space="preserve">
+    <value>Cannot verify your permissions to this document because the server that manages permissions for this document is not available.</value>
+  </data>
+  <data name="RightsManagementWarnErrorTemporaryActivationNotSupported" xml:space="preserve">
+    <value>The server does not support temporary activation.</value>
+  </data>
+  <data name="RightsManagementWarnErrorTitle" xml:space="preserve">
+    <value>XPS Document Rights Management Error</value>
+  </data>
+  <data name="RMAppliedToolTip" xml:space="preserve">
+    <value>View my permissions for this document.</value>
+  </data>
+  <data name="RMCredManagementAdd" xml:space="preserve">
+    <value>&amp;Add...</value>
+  </data>
+  <data name="RMCredManagementCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="RMCredManagementDialog" xml:space="preserve">
+    <value>User Accounts</value>
+  </data>
+  <data name="RMCredManagementInstruction" xml:space="preserve">
+    <value>Select one of the following user accounts to create or open content with restricted permission. To use an account not listed below, click Add.</value>
+  </data>
+  <data name="RMCredManagementOk" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="RMCredManagementPassportAccount" xml:space="preserve">
+    <value>{0} (Passport)</value>
+  </data>
+  <data name="RMCredManagementRemove" xml:space="preserve">
+    <value>&amp;Remove</value>
+  </data>
+  <data name="RMCredManagementUnknownAccount" xml:space="preserve">
+    <value>{0} (Unknown)</value>
+  </data>
+  <data name="RMCredManagementWindowsAccount" xml:space="preserve">
+    <value>{0}</value>
+  </data>
+  <data name="RMDefaultToolTip" xml:space="preserve">
+    <value>Choose who can view or manage this document and for how long.</value>
+  </data>
+  <data name="RMEnrollmentCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="RMEnrollmentNext" xml:space="preserve">
+    <value>&amp;Next</value>
+  </data>
+  <data name="RMEnrollmentPage1a" xml:space="preserve">
+    <value>To publish or access XPS documents with restricted permissions, you need a user account.</value>
+  </data>
+  <data name="RMEnrollmentPage1b" xml:space="preserve">
+    <value>You can use your network credentials (the account you use to log on to your company network) or your .NET Passport.</value>
+  </data>
+  <data name="RMEnrollmentPage1c" xml:space="preserve">
+    <value>Privacy Statement: </value>
+  </data>
+  <data name="RMEnrollmentPage1d" xml:space="preserve">
+    <value>Each time you set up a user account to publish or access XPS documents with restricted permissions, computers that certify user accounts and manage permissions to the document check your user name and e-mail address. Your account password is not used during this process.</value>
+  </data>
+  <data name="RMEnrollmentPage1e" xml:space="preserve">
+    <value>To continue, click Next.</value>
+  </data>
+  <data name="RMEnrollmentPage2a" xml:space="preserve">
+    <value>Choose the account you want to use to open protected documents.</value>
+  </data>
+  <data name="RMEnrollmentPage2b" xml:space="preserve">
+    <value>In the future, this account will be used automatically to open protected documents. You can change this setting later. Your document may need to be reloaded to use the new account.</value>
+  </data>
+  <data name="RMEnrollmentPage2c" xml:space="preserve">
+    <value>N&amp;etwork user account</value>
+  </data>
+  <data name="RMEnrollmentPage2e" xml:space="preserve">
+    <value>.NET &amp;Passport account</value>
+  </data>
+  <data name="RMEnrollmentPage3b" xml:space="preserve">
+    <value>Please wait while we finish setting up your account.</value>
+  </data>
+  <data name="RMEnrollmentPage3c" xml:space="preserve">
+    <value>Activating your account</value>
+  </data>
+  <data name="RMEnrollmentTitle" xml:space="preserve">
+    <value>Rights Management Configuration</value>
+  </data>
+  <data name="RMPermissionsAnnotatePermission" xml:space="preserve">
+    <value>Annotate</value>
+  </data>
+  <data name="RMPermissionsAuthenticatedAs" xml:space="preserve">
+    <value>You have permission to view this document as:</value>
+  </data>
+  <data name="RMPermissionsCloseButton" xml:space="preserve">
+    <value>&amp;Close</value>
+  </data>
+  <data name="RMPermissionsCopyPermission" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="RMPermissionsExpiresOn" xml:space="preserve">
+    <value>This document expires on: </value>
+  </data>
+  <data name="RMPermissionsHavePermissions" xml:space="preserve">
+    <value>You have the following permissions:</value>
+  </data>
+  <data name="RMPermissionsNoExpiration" xml:space="preserve">
+    <value>This document never expires</value>
+  </data>
+  <data name="RMPermissionsOwnerPermission" xml:space="preserve">
+    <value>Owner</value>
+  </data>
+  <data name="RMPermissionsPrintPermission" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="RMPermissionsRequestFrom" xml:space="preserve">
+    <value>Request additional permissions from:</value>
+  </data>
+  <data name="RMPermissionsSignPermission" xml:space="preserve">
+    <value>Sign</value>
+  </data>
+  <data name="RMPermissionsTitle" xml:space="preserve">
+    <value>Permissions</value>
+  </data>
+  <data name="RMPermissionsUnknownOwner" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="RMPermissionsViewPermission" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="RMProtected" xml:space="preserve">
+    <value>This document is restricted. Click here to view your permissions...</value>
+  </data>
+  <data name="RMProviderExceptionNoPackageToDecrypt" xml:space="preserve">
+    <value>No encrypted package to decrypt.</value>
+  </data>
+  <data name="RMProviderExceptionNoPublishLicense" xml:space="preserve">
+    <value>Document protected with rights management does not have publish license.</value>
+  </data>
+  <data name="RMProviderExceptionNoRightsToDocument" xml:space="preserve">
+    <value>The current user does not have permission to access the document.</value>
+  </data>
+  <data name="RMProviderExceptionNotOwnerOfDocument" xml:space="preserve">
+    <value>Only the owner of a document is allowed to publish it.</value>
+  </data>
+  <data name="RMProviderExceptionNoUseLicense" xml:space="preserve">
+    <value>The current user has no use license for the document.</value>
+  </data>
+  <data name="RMPublishingAddUserButton" xml:space="preserve">
+    <value>&amp;Add User</value>
+  </data>
+  <data name="RMPublishingAddUserButtonToolTip" xml:space="preserve">
+    <value>Type an e-mail address, and then add the user to the list so you can apply permissions.</value>
+  </data>
+  <data name="RMPublishingAnyoneButton" xml:space="preserve">
+    <value>Everyone</value>
+  </data>
+  <data name="RMPublishingAnyoneButtonToolTip" xml:space="preserve">
+    <value>Allow all users to read the document, or apply other permissions for all users.</value>
+  </data>
+  <data name="RMPublishingAnyoneUserDisplay" xml:space="preserve">
+    <value>Everyone</value>
+  </data>
+  <data name="RMPublishingCancelButton" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="RMPublishingCopyHeader" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="RMPublishingExpiresOn" xml:space="preserve">
+    <value>Permissions e&amp;xpire on</value>
+  </data>
+  <data name="RMPublishingMainContentGroupLabel" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="RMPublishingOwnerHeader" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="RMPublishingPeoplePickerButton" xml:space="preserve">
+    <value>People Picker</value>
+  </data>
+  <data name="RMPublishingPeoplePickerButtonToolTip" xml:space="preserve">
+    <value>Find users, contacts, and groups.</value>
+  </data>
+  <data name="RMPublishingPermissionsRadio" xml:space="preserve">
+    <value>Apply permissions</value>
+  </data>
+  <data name="RMPublishingPrintHeader" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="RMPublishingReadHeader" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="RMPublishingRemoveButton" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="RMPublishingRemoveButtonToolTip" xml:space="preserve">
+    <value>Remove permissions for selected users, contacts, or groups.</value>
+  </data>
+  <data name="RMPublishingRequestPermissionsFrom" xml:space="preserve">
+    <value>Users can re&amp;quest additional permissions from:</value>
+  </data>
+  <data name="RMPublishingSaveAsButton" xml:space="preserve">
+    <value>Sa&amp;ve As...</value>
+  </data>
+  <data name="RMPublishingSaveAsButtonToolTip" xml:space="preserve">
+    <value>Save a copy of the document and apply selected permissions to the copy only.</value>
+  </data>
+  <data name="RMPublishingSaveButton" xml:space="preserve">
+    <value>&amp;Save</value>
+  </data>
+  <data name="RMPublishingSaveButtonToolTip" xml:space="preserve">
+    <value>Apply selected permissions to the current document.</value>
+  </data>
+  <data name="RMPublishingSelectTemplate" xml:space="preserve">
+    <value>Select one of your company's predefined templates:</value>
+  </data>
+  <data name="RMPublishingSignHeader" xml:space="preserve">
+    <value>Sign</value>
+  </data>
+  <data name="RMPublishingTemplateRadio" xml:space="preserve">
+    <value>Apply permissions using a template</value>
+  </data>
+  <data name="RMPublishingTitle" xml:space="preserve">
+    <value>Permissions</value>
+  </data>
+  <data name="RMPublishingUnrestrictedRadio" xml:space="preserve">
+    <value>Do not apply permissions</value>
+  </data>
+  <data name="RMPublishingUnrestrictedText" xml:space="preserve">
+    <value>All users can view this document, digitally sign it, or change permissions. To decide who can access the document and for how long, apply permissions. You can apply permissions to this version of the document, or save a copy of the document and then apply changes to the copy only.</value>
+  </data>
+  <data name="RMPublishingUserHeader" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="RMPublishingUserSeparator" xml:space="preserve">
+    <value>;</value>
+  </data>
+  <data name="ServerSideTemplateDisplayNone" xml:space="preserve">
+    <value>&lt;none&gt;</value>
+  </data>
+  <data name="SignatureResourceHelperCertificateStatusCannotBeVerified" xml:space="preserve">
+    <value>Certificate cannot be verified</value>
+  </data>
+  <data name="SignatureResourceHelperCertificateStatusCorrupted" xml:space="preserve">
+    <value>Certificate is corrupted</value>
+  </data>
+  <data name="SignatureResourceHelperCertificateStatusExpired" xml:space="preserve">
+    <value>Certificate has expired</value>
+  </data>
+  <data name="SignatureResourceHelperCertificateStatusIssuerNotTrusted" xml:space="preserve">
+    <value>Certificate issuer is not trusted</value>
+  </data>
+  <data name="SignatureResourceHelperCertificateStatusNoCertificate" xml:space="preserve">
+    <value>Certificate is missing</value>
+  </data>
+  <data name="SignatureResourceHelperCertificateStatusOk" xml:space="preserve">
+    <value>Certificate is valid</value>
+  </data>
+  <data name="SignatureResourceHelperCertificateStatusRevoked" xml:space="preserve">
+    <value>Certificate has been revoked</value>
+  </data>
+  <data name="SignatureResourceHelperCertificateStatusVerifying" xml:space="preserve">
+    <value>Certificate is being verified</value>
+  </data>
+  <data name="SignatureResourceHelperMissingCertificate" xml:space="preserve">
+    <value>The certificate was null, which is not valid for the current certificate status.</value>
+  </data>
+  <data name="SignatureResourceHelperNone" xml:space="preserve">
+    <value>&lt;none&gt;</value>
+  </data>
+  <data name="SignatureResourceHelperSignatureStatusInvalid" xml:space="preserve">
+    <value>Document has been modified since signed</value>
+  </data>
+  <data name="SignatureResourceHelperSignatureStatusUnverifiable" xml:space="preserve">
+    <value>Not all signed content can be displayed</value>
+  </data>
+  <data name="SignatureResourceHelperSignatureStatusValid" xml:space="preserve">
+    <value>Signature is valid</value>
+  </data>
+  <data name="SignatureResourceHelperSignatureStatusValidCertInvalid" xml:space="preserve">
+    <value>Document has not been modified since signed</value>
+  </data>
+  <data name="SignatureResourceHelperSummaryBreakLine" xml:space="preserve">
+    <value>{0}\r\n</value>
+  </data>
+  <data name="SignatureResourceHelperSummaryFormat" xml:space="preserve">
+    <value>{0}{1}Signed by {2} on {3:d}\r\n{4}</value>
+  </data>
+  <data name="SignatureResourceHelperValidSigSummaryPending" xml:space="preserve">
+    <value>Signature pending:\r\n{0}\r\nSign by {1:d}\r\n{2}</value>
+  </data>
+  <data name="SignatureResourcesFormatForAccessibility" xml:space="preserve">
+    <value>Summary: {0} Name: {1} Intent: {2} Locale: {3} Sign By: {4}</value>
+  </data>
+  <data name="SigningDialogActionlabel" xml:space="preserve">
+    <value>The following will invalidate your signature:</value>
+  </data>
+  <data name="SigningDialogAddDigSigCheckBox" xml:space="preserve">
+    <value>Apply additional &amp;digital signatures to this document</value>
+  </data>
+  <data name="SigningDialogAddDocPropCheckBox" xml:space="preserve">
+    <value>Add or modify document &amp;properties (for example, author or keywords)</value>
+  </data>
+  <data name="SigningDialogCancelButton" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="SigningDialogLocationLabel" xml:space="preserve">
+    <value>Location (for example, city name):</value>
+  </data>
+  <data name="SigningDialogNA" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="SigningDialogReasonLabel" xml:space="preserve">
+    <value>Reason for signing this document (choose one or create your own): </value>
+  </data>
+  <data name="SigningDialogSignButton" xml:space="preserve">
+    <value>&amp;Sign and Save</value>
+  </data>
+  <data name="SigningDialogSignerlabel" xml:space="preserve">
+    <value>Signing as '{0}'</value>
+  </data>
+  <data name="SigningDialogSignSaveAsButton" xml:space="preserve">
+    <value>Sign and Save &amp;As...</value>
+  </data>
+  <data name="SigningDialogTitle" xml:space="preserve">
+    <value>Signing XPS Document</value>
+  </data>
+  <data name="SigningProgressLabel" xml:space="preserve">
+    <value>Signing XPS document.</value>
+  </data>
+  <data name="SigningProgressTitle" xml:space="preserve">
+    <value>Signing</value>
+  </data>
+  <data name="ValidationProgressLabel" xml:space="preserve">
+    <value>Validating content. Please wait.</value>
+  </data>
+  <data name="ValidationProgressTitle" xml:space="preserve">
+    <value>Digital Signatures</value>
+  </data>
+  <data name="WPF_UILanguage" xml:space="preserve">
+    <value>en</value>
+  </data>
+  <data name="XpsViewerGenericException" xml:space="preserve">
+    <value>There has been an exception in this application.</value>
+  </data>
+  <data name="XpsViewerRightsManagementException" xml:space="preserve">
+    <value>An XPS viewer rights management operation failed.</value>
+  </data>
+  <data name="ZoomComboBoxItem100" xml:space="preserve">
+    <value>100%</value>
+  </data>
+  <data name="ZoomComboBoxItem150" xml:space="preserve">
+    <value>150%</value>
+  </data>
+  <data name="ZoomComboBoxItem25" xml:space="preserve">
+    <value>25%</value>
+  </data>
+  <data name="ZoomComboBoxItem250" xml:space="preserve">
+    <value>250%</value>
+  </data>
+  <data name="ZoomComboBoxItem400" xml:space="preserve">
+    <value>400%</value>
+  </data>
+  <data name="ZoomComboBoxItem50" xml:space="preserve">
+    <value>50%</value>
+  </data>
+  <data name="ZoomComboBoxItem75" xml:space="preserve">
+    <value>75%</value>
+  </data>
+  <data name="ZoomComboBoxToolTip" xml:space="preserve">
+    <value>Select a zoom percentage or type a zoom percent.</value>
+  </data>
+  <data name="ZoomPercentageConverterStringFormat" xml:space="preserve">
+    <value>{0:0.##}%</value>
+  </data>
+</root>

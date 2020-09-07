@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="zh-Hans" original="../Strings.resx">
+    <body>
+      <trans-unit id="Host_CannotRotateWindowsFormsHost">
+        <source>A WindowsFormsHost cannot be rotated. To suppress this error, handle the LayoutError event and set ThrowException to false.</source>
+        <target state="translated">WindowsFormsHost 无法旋转。要消除此错误，请处理 LayoutError 事件，并将 ThrowException 设置为 false。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Host_ChildCantBeTopLevelForm">
+        <source>The child control cannot be a top-level form.</source>
+        <target state="translated">子控件不能为顶级窗体。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WFI_ArgumentNullOrEmpty">
+        <source>'{0}' cannot be null or empty.</source>
+        <target state="translated">“{0}”不能为 null 或空。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WFI_NullArgument">
+        <source>'{0}' cannot be null.</source>
+        <target state="translated">“{0}”不能为 null。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WFI_PropertyDoesntExist">
+        <source>'{0}' property does not exist on type '{1}'.</source>
+        <target state="translated">“{0}”属性在类型“{1}”上不存在。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WFI_PropertyMapError">
+        <source>An error occurred when applying a property map. For details, see the inner exception.</source>
+        <target state="translated">应用属性映射时出现错误。有关详细信息，请参阅内部异常。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WFI_PropertyMappingExists">
+        <source>'{0}' property is already mapped. Remove the existing mapping before adding a new one.</source>
+        <target state="translated">“{0}”属性已经映射。请在添加新映射之前删除现有映射。</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

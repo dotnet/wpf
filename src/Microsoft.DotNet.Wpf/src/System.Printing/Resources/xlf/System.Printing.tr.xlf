@@ -1,0 +1,432 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="tr" original="../System.Printing.resx">
+    <body>
+      <trans-unit id="ArgumentException.InvalidHandle">
+        <source>Handle value is not valid.</source>
+        <target state="translated">İşleyici değeri geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArgumentException.InvalidValue">
+        <source>Value is not valid.</source>
+        <target state="translated">Değer geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArgumentException.NonNegativeValue">
+        <source>Value must be non-negative.</source>
+        <target state="translated">Değer, negatif olmayan bir değer olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArgumentException.PositiveValue">
+        <source>Value must be positive.</source>
+        <target state="translated">Değer pozitif olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.AddXmlnsFailAtRootElement">
+        <source>Cannot add standard namespace declaration at root element.</source>
+        <target state="translated">Kök öğeye standart ad alanı bildirimi eklenemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.InvalidRootElement">
+        <source>Root element is not valid: NamespaceURI='{0}', LocalName='{1}'.</source>
+        <target state="translated">Kök öğe geçerli değil: NamespaceURI='{0}', LocalName='{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.InvalidXMLIntValue">
+        <source>'{0}' integer value at line number '{1}' line position '{2}' is not valid.</source>
+        <target state="translated">'{1}' satır numarasındaki '{2}' satır konumunda '{0}' tamsayı değeri geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.MissingRequiredChildElement">
+        <source>Must have '{0}' child element at line number '{1}' line position '{2}'.</source>
+        <target state="translated">'{1}' satır numarasındaki '{2}' satır konumunda '{0}' alt öğesi olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.ParameterDefMissOrInvalid">
+        <source>Referenced {0} {1} is either missing or not valid.</source>
+        <target state="translated">Başvurulan {0} {1} eksik veya geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.PrivateXMLTextValue">
+        <source>Private text value '{0}' found at line number '{1}' line position '{2}'.</source>
+        <target state="translated">'{1}' satır numarasındaki '{2}' satır konumunda '{0}' özel metin değeri bulundu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.RootChildMissingAttribute">
+        <source>'{0}' child element of root element is missing the required '{1}' attribute.</source>
+        <target state="translated">Kök öğenin '{0}' alt öğesinde gerekli '{1}' özniteliği eksik.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.RootInvalidAttribute">
+        <source>'{1}' value not valid for root element attribute '{0}'.</source>
+        <target state="translated">'{1}' değeri, kök öğe özniteliği '{0}' için geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.RootInvalidChildElement">
+        <source>'{0}' is not a valid child element of root element.</source>
+        <target state="translated">'{0}', kök öğenin geçerli bir alt öğesi değildir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.RootMissingAttribute">
+        <source>Root element is missing required attribute '{0}'.</source>
+        <target state="translated">Kök öğede gerekli '{0}' özniteliği eksik.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.VersionNotSupported">
+        <source>'{0}' version number is not supported.</source>
+        <target state="translated">'{0}' sürüm numarası desteklenmez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FormatException.XMLNotWellFormed">
+        <source>XML is not well-formed.</source>
+        <target state="translated">XML iyi biçimde değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IndexOutOfRangeException.InvalidSize">
+        <source>'{0}' array should be the same size as array '{1}'.</source>
+        <target state="translated">'{0}' dizisi '{1}' dizisiyle aynı boyutta olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintConfig.Provider.BindFail">
+        <source>PrintTicket provider failed to bind to printer. Win32 error: {0}</source>
+        <target state="translated">PrintTicket sağlayıcısı yazıcıya bağlayamadı. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintConfig.Provider.DevMode2PTFail">
+        <source>PrintTicket provider failed to convert DEVMODE to PrintTicket. Win32 error: {0}</source>
+        <target state="translated">PrintTicket sağlayıcısı DEVMODE'u PrintTicket'e dönüştüremedi. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintConfig.Provider.GetPrintCapFail">
+        <source>PrintTicket provider failed to retrieve PrintCapabilities. Win32 error: {0}</source>
+        <target state="translated">PrintTicket sağlayıcısı PrintCapabilities alamadı. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintConfig.Provider.MergeValidateFail">
+        <source>PrintTicket provider failed to merge and validate PrintTicket. Win32 error: {0}</source>
+        <target state="translated">PrintTicket sağlayıcısı PrintTicket'i birleştirmeyi ve doğrulamayı başaramadı. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintConfig.Provider.PT2DevModeFail">
+        <source>PrintTicket provider failed to convert PrintTicket to DEVMODE. Win32 error: {0}</source>
+        <target state="translated">PrintTicket sağlayıcısı PrintTicket'ı DEVMODE'a dönüştüremedi. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintConfig.Provider.PTStreamContentFail">
+        <source>{0} stream content reading failed.</source>
+        <target state="translated">{0} akış içeriği okunamadı.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.CommitPrintSystemAttributesException">
+        <source>An exception occurred while committing the properties.</source>
+        <target state="translated">Özellikler uygulanırken özel bir durum oluştu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.Generic">
+        <source>Print System exception.</source>
+        <target state="translated">Print System özel durumu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintJob.PopulateJobProperties">
+        <source>An exception occurred while populating the object. Win32 error: {0}</source>
+        <target state="translated">Nesne yerleştirilirken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.AddPrinter">
+        <source>An exception occurred while installing a print queue. Win32 error: {0}</source>
+        <target state="translated">Bir yazdırma sırası yüklenirken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Commit">
+        <source>An exception occurred while committing the properties for the PrintQueue object. Win32 error: {0}</source>
+        <target state="translated">PrintQueue nesnesi için özellikler uygulanırken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Generic">
+        <source>An exception occurred while creating the PrintQueue object. Win32 error: {0}</source>
+        <target state="translated">PrintQueue nesnesi oluşturulurken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.GetUninitializedProperty">
+        <source>An exception occurred while initializing an attribute of the PrintQueue object. Win32 error: {0}</source>
+        <target state="translated">PrintQueue nesnesinin bir özniteliği başlatılırken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Pause">
+        <source>An exception occurred while the queue was paused. Win32 error: {0}</source>
+        <target state="translated">Sıra duraklatıldığında özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Populate">
+        <source>An exception occurred while populating the properties for the PrintQueue object. Win32 error: {0}</source>
+        <target state="translated">PrintQueue nesnesinin özellikleri yerleştirilirken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Purge">
+        <source>An exception occurred while the queue was purged. Win32 error: {0}</source>
+        <target state="translated">Sıra temizlenirken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Refresh">
+        <source>An exception occurred while refreshing the properties for the PrintQueue object. Win32 error: {0}</source>
+        <target state="translated">PrintQueue nesnesinin özellikleri yenilenirken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.Resume">
+        <source>An exception occurred while the queue was resumed. Win32 error: {0}</source>
+        <target state="translated">Sıra devam ettirilirken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueue.XpsDeviceQuery">
+        <source>An exception occurred while querying the identity of the device.</source>
+        <target state="translated">Aygıtın kimliği sorgulanırken özel durum oluştu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueueStream.Flush">
+        <source>An exception occurred while trying to flush the print queue stream. Win32 error: {0}</source>
+        <target state="translated">Yazdırma sırası akışı temizlenmeye çalışılırken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueueStream.Write">
+        <source>An exception occurred while trying to write to the print queue stream. Win32 error: {0}</source>
+        <target state="translated">Yazdırma sırası akışına yazmaya çalışırken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintQueues.Enumerate">
+        <source>An exception occurred while enumerating PrintQueue objects. Win32 error: {0}</source>
+        <target state="translated">PrintQueue nesneleri numaralandırılırken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.AddConnection">
+        <source>An exception occurred while creating the printer connection. Win32 error: {0}</source>
+        <target state="translated">Yazıcı bağlantısı oluşturulurken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.AddPrinter">
+        <source>An exception occurred while installing the print queue. Win32 error: {0}</source>
+        <target state="translated">Yazdırma sırası yüklenirken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.Commit">
+        <source>An exception occurred while committing the properties for the PrintServer object. Win32 error: {0}</source>
+        <target state="translated">PrintServer nesnesinin özellikleri uygulanırken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.DeletePrintQueue">
+        <source>An exception occurred while deleting a print queue. Win32 error: {0}</source>
+        <target state="translated">Yazdırma sırası silinirken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.Generic">
+        <source>An exception occurred while creating the PrintServer object. Win32 error: {0}</source>
+        <target state="translated">PrintServer nesnesi oluşturulurken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.GetDefaultPrinter">
+        <source>An exception occurred while getting the default printer. Win32 error: {0}</source>
+        <target state="translated">Varsayılan yazıcı alınırken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.GetUninitializedProperty">
+        <source>An exception occurred while initializing an attribute of the PrintQueue object. Win32 error: {0}</source>
+        <target state="translated">PrintQueue nesnesinin bir özniteliği başlatılırken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.InstallPrintQueue">
+        <source>An exception occurred while installing a print queue. Win32 error: {0}</source>
+        <target state="translated">Bir yazdırma sırası yüklenirken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.MajorVersionCannotChange">
+        <source>The major version of a PrintServer object cannot be changed. </source>
+        <target state="translated">Bir PrintServer nesnesinin birincil sürümü değiştirilemez. </target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.MinorVersionCannotChange">
+        <source>The minor version of a PrintServer object cannot be changed.</source>
+        <target state="translated">Bir PrintServer nesnesinin ikincil sürümü değiştirilemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.NameCannotChange">
+        <source>The name of a PrintServer object cannot be changed. </source>
+        <target state="translated">Bir PrintServer nesnesinin adı değiştirilemez. </target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.Refresh">
+        <source>An exception occurred while refreshing the properties for the PrintServer object. Win32 error: {0}</source>
+        <target state="translated">PrintServer nesnesinin özellikleri yenilenirken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.SetDefaultPrinter">
+        <source>An exception occurred while setting the default printer. Win32 error: {0}</source>
+        <target state="translated">Varsayılan yazıcı ayarlanırken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintServer.SubSystemVersionCannotChange">
+        <source>The OS version of a PrintServer object cannot be changed.</source>
+        <target state="translated">Bir PrintServer nesnesinin işletim sistemi sürümü değiştirilemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemAttributeValueDictionary.IsReadOnly">
+        <source>The collection is read-only.</source>
+        <target state="translated">Koleksiyon salt okunur.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemJobInfo.AddJob">
+        <source>An exception occurred while adding a job. Win32 error: {0}</source>
+        <target state="translated">İş eklenirken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemJobInfo.Create">
+        <source>An exception occurred while creating print job information. Check inner exception for details.</source>
+        <target state="translated">Yazdırma işi bilgileri oluşturulurken özel durum oluştu. Ayrıntılar için iç özel durumu denetleyin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemJobInfo.Deleted">
+        <source>The print job was deleted.</source>
+        <target state="translated">Yazdırma işi silindi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemJobInfo.Generic">
+        <source>An exception occurred while setting the print job. Win32 error: {0}</source>
+        <target state="translated">Yazdırma işi ayarlanırken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemJobInfo.Refresh">
+        <source>An exception occurred while refreshing print job information. Win32 error: {0}</source>
+        <target state="translated">Yazdırma işi bilgileri yenilenirken özel durum oluştu. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintSystemJobInfo.XpsDocumentEvent">
+        <source>An exception occurred while calling XpsDocumentEvent.</source>
+        <target state="translated">XpsDocumentEvent çağırılırken özel durum oluştu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PrintingCancelled.Generic">
+        <source>Printing was canceled. Win32 error: {0}</source>
+        <target state="translated">Yazdırma iptal edildi. Win32 hatası: {0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.PropertyIsReadOnly">
+        <source>Property is read-only.</source>
+        <target state="translated">Özellik salt okunur.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemException.UnknownWin32Error">
+        <source>Unknown Win32 error</source>
+        <target state="translated">Bilinmeyen Win32 hatası</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemJobInfo_disableXPSOMPrinting_RegValue">
+        <source>DisableXPSOMPrinting</source>
+        <target state="translated">DisableXPSOMPrinting</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemSecurity.AccessLevel">
+        <source>SecurityElement does not have a valid "AccessLevel" attribute.</source>
+        <target state="translated">SecurityElement geçerli bir "AccessLevel" özniteliğine sahip değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemSecurity.Class">
+        <source>SecurityElement does not have a valid "class" attribute.</source>
+        <target state="translated">SecurityElement geçerli bir "class" özniteliğine sahip değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemSecurity.State">
+        <source>PermissionState value is not valid.</source>
+        <target state="translated">PermissionState değeri geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemSecurity.Type">
+        <source>IPermission type is not valid.</source>
+        <target state="translated">IPermission türü geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemUNCPathResolver.Attribute">
+        <source>Attribute type is not valid.</source>
+        <target state="translated">Öznitelik türü geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemUNCPathResolver.Entries">
+        <source>IDictionaryEnumerator does not have valid entries.</source>
+        <target state="translated">IDictionaryEnumerator geçerli girişlere sahip değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemUNCPathResolver.Printer">
+        <source>UNC printer name is not valid.</source>
+        <target state="translated">UNC yazıcı adı geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemUNCPathResolver.Server">
+        <source>UNC server name is not valid.</source>
+        <target state="translated">UNC sunucu adı geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintSystemUNCPathResolver.UNC">
+        <source>UNC name is not valid.</source>
+        <target state="translated">UNC adı geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RegKeyBasePath">
+        <source>HKEY_CURRENT_USER\Software\Microsoft\.NETFramework\Windows Presentation Foundation\Printing</source>
+        <target state="translated">HKEY_CURRENT_USER\Software\Microsoft\.NETFramework\Windows Presentation Foundation\Printing</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.BatchAsync">
+        <source>Batch Writer is using asynchronous writes and cannot process synchronous writes.</source>
+        <target state="translated">Toplu İşlem Yazarı zaman uyumsuz yazmalar kullanıyor ve zaman uyumlu yazmaları işleyemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.BatchDoneWriting">
+        <source>Batch Writer is done writing and cannot process any more batch write requests.</source>
+        <target state="translated">Toplu İşlem Yazarı yazmayı tamamladı ve daha fazla toplu işlem yazma isteklerini işleyemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.BatchMode">
+        <source>Document Writer is in batch mode and cannot process non-batch write requests.</source>
+        <target state="translated">Belge Yazarı toplu işlem kodunda ve toplu işlem dışı yazma isteklerini işleyemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.BatchSync">
+        <source>Batch Writer is using synchronous writes and cannot process asynchronous writes.</source>
+        <target state="translated">Toplu İşlem Yazarı zaman uyumlu yazmalar kullanıyor ve zaman uyumsuz yazmaları işleyemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.Cancelled">
+        <source>Write has already been canceled.</source>
+        <target state="translated">Yazma zaten iptal edildi.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.DoneWriting">
+        <source>Document Writer is done writing and cannot process any more write requests.</source>
+        <target state="translated">Belge Yazarı yazmayı tamamladı ve daha fazla yazma isteklerini işleyemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.InvalidState">
+        <source>Writer state not valid.</source>
+        <target state="translated">Yazar durumu geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XPSWriter.WriteNotCalled">
+        <source>Must call Write before calling cancel.</source>
+        <target state="translated">İptal işlemi çağırılmadan önce Write çağırılmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsPrintJobStream.CommitTimeout_RegValue">
+        <source>CommitXpsPrintJobStreamTimeout</source>
+        <target state="translated">CommitXpsPrintJobStreamTimeout</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsWriter.InvalidXps">
+        <source>The XpsDocument has no FixedDocumentSequence.</source>
+        <target state="translated">XpsDocument, FixedDocumentSequence içermiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsWriter.WriteNotCalledEndBatchWrite">
+        <source>Must call Write before calling EndBatchWrite.</source>
+        <target state="translated">EndBatchWrite çağırılmadan önce Write çağırılmalıdır.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -274,7 +274,7 @@ namespace System.Windows.Ink
         /// <summary>
         /// Guid used for identifying the Custom Stroke
         /// </summary>
-        /// <remarks>NTRAID#T2-17751-2003/11/26-stfisher: SPECISSUE: Should we hide the CustomStrokes and StrokeLattice data?</remarks>
+        /// <remarks>Should we hide the CustomStrokes and StrokeLattice data?</remarks>
         internal static readonly Guid InkCustomStrokes     = KnownIdCache.TabletInternalIdTable[(int)KnownIdCache.TabletInternalIdIndex.InkCustomStrokes];
 
         /// <summary>
@@ -296,7 +296,6 @@ namespace System.Windows.Ink
         internal static string ConvertToString (Guid id)
         {
 
-            // Assert Reflection permissions shouldn't be required since we are only accessing public members
             if (null == PublicMemberInfo)
             {
                 PublicMemberInfo = typeof(KnownIds).FindMembers(System.Reflection.MemberTypes.Field,

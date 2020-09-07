@@ -104,25 +104,21 @@ namespace System.Xaml
 
         void InitializeXamlXmlWriter(XmlWriter xmlWriter, XamlSchemaContext schemaContext, XamlXmlWriterSettings settings)
         {
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
-            this.schemaContext = schemaContext;
+            this.schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
 
-            this.output = xmlWriter;
+            output = xmlWriter;
             this.settings = settings == null ? new XamlXmlWriterSettings() : settings.Copy() as XamlXmlWriterSettings;
 
-            this.currentState = Start.State;
+            currentState = Start.State;
 
-            this.namespaceScopes = new Stack<Frame>();
-            this.namespaceScopes.Push(new Frame { AllocatingNodeType = XamlNodeType.StartObject });
+            namespaceScopes = new Stack<Frame>();
+            namespaceScopes.Push(new Frame { AllocatingNodeType = XamlNodeType.StartObject });
 
-            this.prefixAssignmentHistory = new Dictionary<string, string>() { {"xml", XamlLanguage.Xml1998Namespace} };
-            this.meNodesStack = new Stack<List<XamlNode>>();
-            this.meWriter = new XamlMarkupExtensionWriter(this);
+            prefixAssignmentHistory = new Dictionary<string, string>() { {"xml", XamlLanguage.Xml1998Namespace} };
+            meNodesStack = new Stack<List<XamlNode>>();
+            meWriter = new XamlMarkupExtensionWriter(this);
 
-            this.ppStateInfo = new PositionalParameterStateInfo(this);
+            ppStateInfo = new PositionalParameterStateInfo(this);
         }
 
         protected override void Dispose(bool disposing)
@@ -131,9 +127,9 @@ namespace System.Xaml
             {
                 if (disposing && !IsDisposed)
                 {
-                    if (this.settings.CloseOutput)
+                    if (settings.CloseOutput)
                     {
-                        this.output.Close();
+                        output.Close();
                     }
                     else
                     {
@@ -144,14 +140,14 @@ namespace System.Xaml
             }
             finally
             {
-                ((IDisposable)this.output).Dispose();
+                ((IDisposable)output).Dispose();
                 base.Dispose(disposing);
             }
         }
 
         public void Flush()
         {
-            this.output.Flush();
+            output.Flush();
         }
 
         public override void WriteGetObject()
@@ -166,7 +162,7 @@ namespace System.Xaml
                 type = frame.Member.Type;
             }
 
-            this.currentState.WriteObject(this, type, true);
+            currentState.WriteObject(this, type, true);
         }
 
         public override void WriteStartObject(XamlType type)
@@ -183,7 +179,7 @@ namespace System.Xaml
                 throw new ArgumentException(SR.Get(SRID.TypeHasInvalidXamlName, type.Name), nameof(type));
             }
 
-            this.currentState.WriteObject(this, type, false);
+            currentState.WriteObject(this, type, false);
 
             if (type.TypeArguments != null)
             {
@@ -194,7 +190,7 @@ namespace System.Xaml
         public override void WriteEndObject()
         {
             CheckIsDisposed();
-            this.currentState.WriteEndObject(this);
+            currentState.WriteEndObject(this);
         }
 
         public override void WriteStartMember(XamlMember property)
@@ -211,13 +207,13 @@ namespace System.Xaml
                 throw new ArgumentException(SR.Get(SRID.MemberHasInvalidXamlName, property.Name), nameof(property));
             }
 
-            this.currentState.WriteStartMember(this, property);
+            currentState.WriteStartMember(this, property);
         }
 
         public override void WriteEndMember()
         {
             CheckIsDisposed();
-            this.currentState.WriteEndMember(this);
+            currentState.WriteEndMember(this);
         }
 
         public override void WriteValue(object value)
@@ -235,7 +231,7 @@ namespace System.Xaml
                 {
                     throw new ArgumentException(SR.Get(SRID.XamlXmlWriterCannotWriteNonstringValue), nameof(value));
                 }
-                this.currentState.WriteValue(this, s);
+                currentState.WriteValue(this, s);
             }
         }
 
@@ -263,12 +259,12 @@ namespace System.Xaml
                 throw new ArgumentException(SR.Get(SRID.NamespaceDeclarationCannotBeXml), nameof(namespaceDeclaration));
             }
 
-            this.currentState.WriteNamespace(this, namespaceDeclaration);
+            currentState.WriteNamespace(this, namespaceDeclaration);
         }
 
         public XamlXmlWriterSettings Settings
         {
-            get { return this.settings.Copy() as XamlXmlWriterSettings; }
+            get { return settings.Copy() as XamlXmlWriterSettings; }
         }
 
         public override XamlSchemaContext SchemaContext
@@ -312,7 +308,7 @@ namespace System.Xaml
 
         internal static bool HasSignificantWhitespace(string s)
         {
-            if (s == string.Empty)
+            if (string.IsNullOrEmpty(s))
             {
                 return false;
             }
@@ -499,7 +495,7 @@ namespace System.Xaml
                 prefix = basePrefix + index.ToString(TypeConverterHelper.InvariantEnglishUS);
             }
 
-            if (prefix != string.Empty)
+            if (!string.IsNullOrEmpty(prefix))
             {
                 XmlConvert.VerifyNCName(prefix);
             }
@@ -510,7 +506,7 @@ namespace System.Xaml
         void CheckMemberForUniqueness(XamlMember property)
         {
             // If we're not assuming the input is valid, then we need to do the checking...
-            if (!this.settings.AssumeValidInput)
+            if (!settings.AssumeValidInput)
             {
                 // Find the top most object frame.
                 Frame objectFrame = namespaceScopes.Peek();
@@ -578,12 +574,12 @@ namespace System.Xaml
             {
                 chosenNamespace = namespaces[0];
                 prefix = DefinePrefix(chosenNamespace);
-                this.currentState.WriteNamespace(this, new NamespaceDeclaration(chosenNamespace, prefix));
+                currentState.WriteNamespace(this, new NamespaceDeclaration(chosenNamespace, prefix));
             }
             else if (IsShadowed(chosenNamespace, prefix))
             {
                 prefix = DefinePrefix(chosenNamespace);
-                this.currentState.WriteNamespace(this, new NamespaceDeclaration(chosenNamespace, prefix));
+                currentState.WriteNamespace(this, new NamespaceDeclaration(chosenNamespace, prefix));
             }
 
             if (type.TypeArguments != null)
@@ -649,7 +645,7 @@ namespace System.Xaml
         {
             string prefix = LookupPrefix(type.GetXamlNamespaces(), out _);
             string typeName = GetTypeName(type);
-            string typeNamePrefixed = (prefix == string.Empty) ? typeName : prefix + ":" + typeName;
+            string typeNamePrefixed = string.IsNullOrEmpty(prefix) ? typeName : prefix + ":" + typeName;
 
             // save the subscript
             string subscript;
@@ -891,7 +887,7 @@ namespace System.Xaml
 
             static void WriteStartAttribute(XamlXmlWriter writer, string prefix, string local, string ns)
             {
-                if (prefix == string.Empty)
+                if (string.IsNullOrEmpty(prefix))
                 {
                     writer.output.WriteStartAttribute(local);
                 }
@@ -1751,7 +1747,7 @@ namespace System.Xaml
             public override void WriteValue(XamlXmlWriter writer, string value)
             {
                 var property = writer.namespaceScopes.Peek().Member;
-                if (XamlLanguage.String.CanAssignTo(property.Type) && value != string.Empty)
+                if (XamlLanguage.String.CanAssignTo(property.Type) && !string.IsNullOrEmpty(value))
                 {
                     writer.namespaceScopes.Peek().IsContent = true;
                     writer.WriteDeferredNamespaces(XamlNodeType.StartObject);
@@ -1760,6 +1756,7 @@ namespace System.Xaml
                 }
                 else
                 {
+                    Debug.Assert(value != null);
                     writer.namespaceScopes.Peek().IsContent = false;
                     writer.currentState = InMemberTryAttributes.State;
                     writer.currentState.WriteValue(writer, value);

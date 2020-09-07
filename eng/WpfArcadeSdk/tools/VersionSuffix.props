@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <WpfVersionSuffix>_cor3</WpfVersionSuffix>
+  </PropertyGroup>
+</Project>

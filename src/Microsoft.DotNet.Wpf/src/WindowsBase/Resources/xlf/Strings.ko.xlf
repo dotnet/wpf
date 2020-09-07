@@ -1,0 +1,2822 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="ko" original="../Strings.resx">
+    <body>
+      <trans-unit id="AccessibilitySwitchDependencyNotSatisfied">
+        <source>Desktop applications setting AppContext switch '{0}' to false are required to opt in to all earlier accessibility improvements. To do this, ensure that the AppContext switch '{1}' is set to 'false', then 'Switch.UseLegacyAccessibilityFeatures' and all 'Switch.UseLegacyAccessibilityFeatures.M' switches, when M &lt; {2}, evaluate to false as well. Note that, if a switch for a particular set of accessibility improvements is not present, its value is determined by the target framework version. You can remedy this by adding these switches and setting their value to false.</source>
+        <target state="translated">모든 이전 접근성 개선 사항을 옵트인(opt in)하려면 데스크톱 애플리케이션 설정 AppContext 스위치 '{0}'이(가) false여야 합니다. 이렇게 하려면 AppContext 스위치 '{1}'을(를) 'false'로 설정한 다음, M &lt; {2}일 때 'Switch.UseLegacyAccessibilityFeatures' 및 모든 'Switch.UseLegacyAccessibilityFeatures.M' 스위치도 false로 계산되는지 확인합니다. 특정 접근성 개선 사항 집합의 스위치가 없는 경우 해당 값은 대상 프레임워크 버전에 따라 결정됩니다. 이러한 스위치를 추가하고 값을 false로 설정하면 해결할 수 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Arg_ArrayPlusOffTooSmall">
+        <source>Destination array is not long enough to copy all the items in the collection. Check array index and length.</source>
+        <target state="translated">대상 배열이 컬렉션의 모든 항목을 복사하기에 충분히 길지 않습니다. 배열 인덱스와 길이를 확인하세요.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Arg_NonZeroLowerBound">
+        <source>The lower bound of target array must be zero.</source>
+        <target state="translated">대상 배열의 하한은 0이어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Arg_RankMultiDimNotSupported">
+        <source>Only single dimensional arrays are supported for the requested action.</source>
+        <target state="translated">요청한 동작에 대해 1차원 배열만 지원됩니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArgumentOutOfRange_NeedNonNegNum">
+        <source>Non-negative number required.</source>
+        <target state="translated">음수가 아닌 수가 필요합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Argument_InvalidArrayType">
+        <source>Target array type is not compatible with the type of items in the collection.</source>
+        <target state="translated">대상 배열 형식이 컬렉션의 항목 형식과 호환되지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttemptedToCreateDuplicateFileName">
+        <source>Cannot create file because the specified file name is already in use.</source>
+        <target state="translated">지정한 파일 이름이 이미 사용 중이므로 파일을 만들 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadPackageFormat">
+        <source>Format error in package.</source>
+        <target state="translated">패키지에 형식 오류가 발생했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadPropertyForGroup">
+        <source>Cannot group by property '{0}' because it cannot be found on type '{1}'.</source>
+        <target state="translated">'{1}' 형식에서 찾을 수 없어 '{0}' 속성으로 그룹화할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadSignatureTimeFormatString">
+        <source>Time format string is not valid.</source>
+        <target state="translated">필터 형식 문자열이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadXml">
+        <source>'{0}' attribute is not valid XML.</source>
+        <target state="translated">'{0}' 특성은 유효한 XML이 아닙니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BufferOffsetNegative">
+        <source>Buffer offset cannot be negative.</source>
+        <target state="translated">버퍼 오프셋은 음수일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BufferTooSmall">
+        <source>Buffer is too small to accommodate the specified parameters.</source>
+        <target state="translated">버퍼가 지정한 매개 변수를 수용하기에 너무 작습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFAPIFailure">
+        <source>Compound File API failure.</source>
+        <target state="translated">복합 파일 API 실패입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_CorruptMetadataStream">
+        <source>Object metadata stream in the package is corrupt and the content is not valid.</source>
+        <target state="translated">패키지의 개체 메타데이터 스트림이 손상되었으며 콘텐츠가 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_CorruptMetadataStream_DuplicateKey">
+        <source>Object metadata stream in the package is corrupt with duplicated key tags.</source>
+        <target state="translated">패키지의 개체 메타데이터 스트림이 중복된 키 태그로 손상되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_CorruptMetadataStream_Root">
+        <source>Object metadata stream in the package is corrupt and the root tag is not valid.</source>
+        <target state="translated">패키지의 개체 메타데이터 스트림이 손상되었으며 루트 태그가 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_ObjectMustBeCompoundFileMetadataKey">
+        <source>Object used as metadata key must be an instance of the CompoundFileMetadataKey class.</source>
+        <target state="translated">메타데이터 키로 사용되는 개체는 CompoundFileMetadataKey 클래스의 인스턴스여야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_ReadOnlyContainer">
+        <source>Cannot perform this operation when the package is in read-only mode.</source>
+        <target state="translated">패키지가 읽기 전용 모드인 경우에는 이 작업을 수행할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_TypeTableFormat">
+        <source>Failed to read a stream type table - the data appears to be a different format.</source>
+        <target state="translated">스트림 형식 테이블을 읽지 못했습니다. 데이터가 다른 형식인 것 같습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_UnicodeCharInvalid">
+        <source>Unicode character is not valid.</source>
+        <target state="translated">유니코드 문자가 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_ValueMustBeString">
+        <source>Only strings can be used as value.</source>
+        <target state="translated">문자열만 값으로 사용할 수 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_XMLCharInvalid">
+        <source>XML character is not valid.</source>
+        <target state="translated">XML 문자가 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFRCorrupt">
+        <source>CompoundFileReference: Corrupted CompoundFileReference.</source>
+        <target state="translated">CompoundFileReference: 손상된 CompoundFileReference입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFRCorruptMultiStream">
+        <source>CompoundFileReference: Corrupted CompoundFileReference - multiple stream components found.</source>
+        <target state="translated">CompoundFileReference: 손상된 CompoundFileReference - 여러 개의 스트림 구성 요소가 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFRCorruptStgFollowStm">
+        <source>CompoundFileReference: Corrupted CompoundFileReference - storage component cannot follow stream component.</source>
+        <target state="translated">CompoundFileReference: 손상된 CompoundFileReference - 스토리지 구성 요소는 스트림 구성 요소를 따를 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CallbackParameterInvalid">
+        <source>Caller-supplied parameter to callback function is not of expected type.</source>
+        <target state="translated">콜백 함수에 대해 호출자가 제공한 매개 변수가 필요한 형식이 아닙니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotCompareDiffTypes">
+        <source>Cannot compare different types.</source>
+        <target state="translated">다른 형식을 비교할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotCreateAccessDenied">
+        <source>Cannot create data storage because access is denied.</source>
+        <target state="translated">액세스가 거부되어 데이터 스토리지를 만들 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotCreateAsReadOnly">
+        <source>Cannot create a read-only stream.</source>
+        <target state="translated">읽기 전용 스트림을 만들 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotCreateContainerOnReadOnlyStream">
+        <source>Cannot create new package on a read-only stream.</source>
+        <target state="translated">읽기 전용 스트림에 새 패키지를 만들 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotCreateInReadOnly">
+        <source>Cannot create a stream in a read-only package.</source>
+        <target state="translated">읽기 전용 패키지에 스트림을 만들 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotCreateStorageRootOnNonReadableStream">
+        <source>Cannot create StorageRoot on a nonreadable stream.</source>
+        <target state="translated">읽을 수 없는 스트림에 StorageRoot를 만들 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotDelete">
+        <source>Cannot delete element.</source>
+        <target state="translated">요소를 삭제할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotDeleteAccessDenied">
+        <source>Cannot delete element because access is denied.</source>
+        <target state="translated">액세스가 거부되어 요소를 삭제할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotDeleteInReadOnly">
+        <source>Cannot delete read-only packages.</source>
+        <target state="translated">읽기 전용 패키지를 삭제할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotDeleteNonEmptyStorage">
+        <source>Cannot delete because the storage is not empty. Try a recursive delete with Delete(true).</source>
+        <target state="translated">스토리지가 비어 있지 않아 삭제할 수 없습니다. Delete(true)를 사용하여 재귀 삭제를 시도하세요.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotDeleteRoot">
+        <source>Cannot delete the root StorageInfo.</source>
+        <target state="translated">루트 StorageInfo를 삭제할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotOnNonExistStorage">
+        <source>Cannot perform this function on a storage that does not exist.</source>
+        <target state="translated">존재하지 않는 스토리지에서 이 함수를 수행할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotOpenStorage">
+        <source>Cannot open data storage.</source>
+        <target state="translated">데이터 스토리지를 열 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotOperateOnStreamWhichDoesNotSupportSeeking">
+        <source>Cannot operate on stream that does not support seeking.</source>
+        <target state="translated">검색을 지원하지 않는 스트림에 대해 작업할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotReadDataFromStreamWhichDoesNotSupportReading">
+        <source>Cannot read data from stream that does not support reading.</source>
+        <target state="translated">읽기를 지원하지 않는 스트림에서 데이터를 읽을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotReadInWriteOnlyMode">
+        <source>Cannot perform a read operation in write-only mode.</source>
+        <target state="translated">쓰기 전용 모드에서 읽기 작업을 수행할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotReadWriteInReadOnlyWriteOnlyMode">
+        <source>Cannot perform a read/write operation in write-only or read-only modes.</source>
+        <target state="translated">쓰기 전용 또는 읽기 전용 모드에서 읽기/쓰기 작업을 수행할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotWriteDataToStreamWhichDoesNotSupportWriting">
+        <source>Cannot write data to stream that does not support writing.</source>
+        <target state="translated">쓰기를 지원하지 않는 스트림에 데이터를 쓸 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotWriteInReadOnlyMode">
+        <source>Cannot perform a write operation in read-only mode.</source>
+        <target state="translated">읽기 전용 모드에서 쓰기 작업을 수행할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanOnlyCounterSignSignatureParts">
+        <source>Can only countersign parts with Digital Signature ContentType.</source>
+        <target state="translated">디지털 시그니처 ContentType으로만 파트에 연대 서명할 수 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotChangeAfterSealed">
+        <source>Cannot modify a '{0}' after it is sealed.</source>
+        <target state="translated">봉인된 후에는 '{0}'을(를) 수정할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotChangeCryptoProvider">
+        <source>Cannot change CryptoProvider after the rights management transform settings are fixed.</source>
+        <target state="translated">권한 관리 변환 설정이 수정된 후에는 CryptoProvider를 변경할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotChangePublishLicense">
+        <source>Cannot change publish license after the rights management transform settings are fixed.</source>
+        <target state="translated">권한 관리 변환 설정이 수정된 후에는 게시 라이선스를 변경할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotConvertStringToType">
+        <source>Cannot convert string value '{0}' to type '{1}'.</source>
+        <target state="translated">문자열 값 '{0}'을(를) '{1}' 형식으로 변환할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotMakeStreamLengthNegative">
+        <source>Stream length cannot be negative.</source>
+        <target state="translated">스트림 길이는 음수일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotModifyReadOnlyContainer">
+        <source>Cannot modify a read-only container.</source>
+        <target state="translated">읽기 전용 컨테이너를 수정할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotRemoveSignatureFromReadOnlyFile">
+        <source>Cannot remove signature from read-only file.</source>
+        <target state="translated">읽기 전용 파일에서 시그니처를 제거할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotRetrievePartsOfWriteOnlyContainer">
+        <source>Cannot get part or part information from a write-only container.</source>
+        <target state="translated">쓰기 전용 컨테이너에서 파트 또는 파트 정보를 가져올 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotSignReadOnlyFile">
+        <source>Cannot sign read-only file.</source>
+        <target state="translated">읽기 전용 파일에 서명할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CertSelectionDialogMessage">
+        <source>Select a certificate</source>
+        <target state="translated">인증서 선택</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CertSelectionDialogTitle">
+        <source>Digital Signature</source>
+        <target state="translated">디지털 서명</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CertificateKeyTypeNotSupported">
+        <source>Signing certificate must be of type DSA or RSA.</source>
+        <target state="translated">서명 인증서는 DSA 또는 RSA 형식이어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CertificatePartContentTypeMismatch">
+        <source>Certificate part is not of the correct type.</source>
+        <target state="translated">인증서 파트가 올바른 형식이 아닙니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ClearOnReadOnlyObjectNotAllowed">
+        <source>Cannot clear properties on object '{0}' because it is in a read-only state.</source>
+        <target state="translated">'{0}' 개체는 읽기 전용 상태이므로 개체의 속성을 지울 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CombinationOfAccessibilitySwitchesNotSupported">
+        <source>Desktop applications are required to opt in to all earlier accessibility improvements to get the later improvements. To do this, ensure that if the AppContext switch 'Switch.UseLegacyAccessibilityFeatures.N' is set to 'false', then 'Switch.UseLegacyAccessibilityFeatures' and all 'Switch.UseLegacyAccessibilityFeatures.M' switches, when M &lt; N, evaluate to false as well. Note that, if a switch for a particular set of accessibility improvements is not present, its value is determined by the target framework version. You can remedy this by adding these switches and setting their value to false.</source>
+        <target state="translated">데스크톱 응용 프로그램은 이전의 모든 접근성 개선 사항을 옵트인하여 이후의 개선 사항을 받아야 합니다. 이렇게 하려면 AppContext 스위치 'Switch.UseLegacyAccessibilityFeatures.N'이 'false'로 설정되어 있는지 확인한 다음 M &lt; N일 때 'Switch.UseLegacyAccessibilityFeatures' 및 모든 'Switch.UseLegacyAccessibilityFeatures.M' 스위치도 false로 계산되는지 확인합니다. 특정 접근성 개선 사항 집합에 대한 스위치가 없는 경우 해당 값은 대상 프레임워크 버전에 따라 결정됩니다. 이러한 스위치를 추가하고 값을 false로 설정하여 이 문제를 해결할 수 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompatibilityPreferencesSealed">
+        <source>The property '{0}' cannot be changed. The '{1}' class has been sealed.</source>
+        <target state="translated">'{0}' 속성을 변경할 수 없습니다. '{1}' 클래스가 봉인되어 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompoundFilePathNullEmpty">
+        <source>CompoundFile path must be non-empty.</source>
+        <target state="translated">CompoundFile 경로는 비어 있을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompressLengthMismatch">
+        <source>Compressed part has inconsistent data length.</source>
+        <target state="translated">압축된 파트의 데이터 길이가 일치하지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContainerAndPartModeIncompatible">
+        <source>FileMode/FileAccess for Part.GetStream is not compatible with FileMode/FileAccess used to open the Package.</source>
+        <target state="translated">Part.GetStream의 FileMode/FileAccess가 패키지를 여는 데 사용된 FileMode/FileAccess와 호환되지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContainerCanNotOpen">
+        <source>Cannot open specified package file.</source>
+        <target state="translated">지정한 패키지 파일을 열 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContainerNotFound">
+        <source>Cannot find specified package file.</source>
+        <target state="translated">지정한 패키지 파일을 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContentTypeCannotHaveLeadingTrailingLWS">
+        <source>ContentType string cannot have leading/trailing Linear White Spaces [LWS - RFC 2616].</source>
+        <target state="translated">ContentType 문자열에 선행/후행 Linear White Space[LWS - RFC 2616]를 사용할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConvertFromException">
+        <source>'{0}' ValueSerializer cannot convert from '{1}'.</source>
+        <target state="translated">'{0}' ValueSerializer는 '{1}'에서 변환할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConvertToException">
+        <source>'{0}' ValueSerializer cannot convert '{1}' to '{2}'.</source>
+        <target state="translated">'{0}' ValueSerializer가 '{1}'을(를) '{2}'(으)로 변환할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CorePropertiesElementExpected">
+        <source>Unrecognized root element in Core Properties part.</source>
+        <target state="translated">Core Properties 파트에 인식할 수 없는 루트 요소가 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CorruptStream">
+        <source>Stream operation failed because stream is corrupted.</source>
+        <target state="translated">스트림이 손상되어 스트림 작업이 실패했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CorruptedData">
+        <source>File contains corrupted data.</source>
+        <target state="translated">파일에 손상된 데이터가 포함되어 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CreateModeMustBeCreateOrOpen">
+        <source>Create mode parameter must be either FileMode.Create or FileMode.Open.</source>
+        <target state="translated">만들기 모드 매개 변수는 FileMode.Create 또는 FileMode.Open이어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CreateNewOnNonEmptyStream">
+        <source>CreateNew is not a valid FileMode for a nonempty stream.</source>
+        <target state="translated">CreateNew는 비어 있지 않은 스트림에 유효한 FileMode가 아닙니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CryptoProviderCanNotDecrypt">
+        <source>Cannot perform stream operation because CryptoProvider is not set to allow decryption.</source>
+        <target state="translated">CryptoProvider가 암호 해독을 허용하도록 설정되지 않았으므로 스트림 작업을 수행할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CryptoProviderCanNotMergeBlocks">
+        <source>Only cryptographic providers based on a block cipher are supported.</source>
+        <target state="translated">블록 암호 기반의 암호화 공급자만 지원됩니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CryptoProviderDisposed">
+        <source>CryptoProvider object was disposed.</source>
+        <target state="translated">CryptoProvider 개체가 삭제되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CryptoProviderIsNotReady">
+        <source>The CryptoProvider cannot encrypt or decrypt.</source>
+        <target state="translated">CryptoProvider가 암호화하거나 암호를 해독할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Cryptography_InvalidHandle">
+        <source>{0} is an invalid handle.</source>
+        <target state="translated">{0}은(는) 잘못된 핸들입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CurrentChangingCannotBeCanceled">
+        <source>The CollectionView that originates this CurrentChanging event is in a state that does not allow the event to be canceled. Check CurrentChangingEventArgs.IsCancelable before assigning to this CurrentChangingEventArgs.Cancel property.</source>
+        <target state="translated">이 CurrentChanging 이벤트를 발생하는 CollectionView가 이벤트 취소를 허용하지 않는 상태입니다. 이 CurrentChangingEventArgs.Cancel 속성에 할당하기 전에 CurrentChangingEventArgs.IsCancelable을 확인하세요.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DTypeNotSupportForSystemType">
+        <source>'{0}' type does not have a matching DependencyObjectType.</source>
+        <target state="translated">'{0}' 형식에 일치하는 DependencyObjectType이 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DanglingMetadataRelationship">
+        <source>The target of the Core Properties relationship does not reference an existing part.</source>
+        <target state="translated">Core Properties relationship의 대상이 기존 파트를 참조하지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataSpaceLabelInUse">
+        <source>The given data space label name is already in use.</source>
+        <target state="translated">지정된 데이터 공간 레이블 이름이 이미 사용 중입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataSpaceLabelInvalidEmpty">
+        <source>Empty string is not a valid data space label.</source>
+        <target state="translated">빈 문자열은 유효한 데이터 공간 레이블이 아닙니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataSpaceLabelUndefined">
+        <source>Specified data space label has not been defined.</source>
+        <target state="translated">지정한 데이터 공간 레이블이 정의되지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataSpaceManagerDisposed">
+        <source>DataSpaceManager object was disposed.</source>
+        <target state="translated">DataSpaceManager 개체가 삭제되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataSpaceMapEntryInvalid">
+        <source>DataSpace map entry is not valid.</source>
+        <target state="translated">DataSpace 맵 항목이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DecryptionRightIsNotGranted">
+        <source>Decryption right is not granted.</source>
+        <target state="translated">암호 해독 권한이 부여되지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultTagDoesNotMatchSchema">
+        <source>Default tag is not valid per the schema. Verify that attributes are correct.</source>
+        <target state="translated">스키마별 Default 태그가 잘못되었습니다. 특성이 올바른지 확인하세요.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultValueAutoAssignFailed">
+        <source>Cannot automatically generate a valid default value for property '{0}'. Specify a default value explicitly when owner type '{1}' is registering this DependencyProperty.</source>
+        <target state="translated">'{0}' 속성에 유효한 기본값을 자동으로 생성할 수 없습니다. 소유자 형식 '{1}'이(가) 이 DependencyProperty를 등록할 때 명시적으로 기본값을 지정하세요.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultValueInvalid">
+        <source>Default value for '{0}' property is not valid because ValidateValueCallback failed.</source>
+        <target state="translated">ValidateValueCallback이 실패하여 '{0}' 속성의 기본값이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultValueMayNotBeExpression">
+        <source>An Expression object is not a valid default value for a DependencyProperty.</source>
+        <target state="translated">DependencyProperty의 기본값이 잘못된 Expression 개체입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultValueMayNotBeUnset">
+        <source>Default value cannot be 'Unset'.</source>
+        <target state="translated">기본값은 'Unset'일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultValueMustBeFreeThreaded">
+        <source>Default value for the '{0}' property cannot be bound to a specific thread.</source>
+        <target state="translated">'{0}' 속성의 기본값을 특정 스레드에 바인딩할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultValuePropertyTypeMismatch">
+        <source>Default value type does not match type of property '{0}'.</source>
+        <target state="translated">기본값 형식이 '{0}' 속성의 형식과 일치하지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DelimiterLeading">
+        <source>Cannot have leading path delimiter.</source>
+        <target state="translated">선행 경로 구분 기호를 포함할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DelimiterTrailing">
+        <source>Cannot have trailing path delimiter.</source>
+        <target state="translated">후행 경로 구분 기호를 포함할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DictionaryIsReadOnly">
+        <source>The dictionary is read-only.</source>
+        <target state="translated">사전이 읽기 전용입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigCannotLocateCertificate">
+        <source>Cannot locate the selected digital certificate.</source>
+        <target state="translated">선택한 디지털 인증서를 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigDuplicateCertificate">
+        <source>Certificate error. Multiple certificates found with the same thumbprint.</source>
+        <target state="translated">인증서 오류입니다. 동일한 지문을 사용하는 인증서가 여러 개 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DispatcherHasShutdown">
+        <source>Cannot perform requested operation because the Dispatcher shut down.</source>
+        <target state="translated">Dispatcher가 종료되어 요청한 작업을 수행할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DispatcherPriorityAwaiterInvalid">
+        <source>The DispatcherPriorityAwaiter was not configured with a valid Dispatcher.  The only supported usage is from Dispatcher.Yield.</source>
+        <target state="translated">DispatcherPriorityAwaiter가 유효한 Dispatcher로 구성되지 않았습니다. Dispatcher.Yield에서만 사용할 수 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DispatcherProcessingDisabled">
+        <source>Cannot perform this operation while dispatcher processing is suspended.</source>
+        <target state="translated">디스패처 처리가 일시 중단된 동안에는 이 작업을 수행할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DispatcherProcessingDisabledButStillPumping">
+        <source>Dispatcher processing has been suspended, but messages are still being processed.</source>
+        <target state="translated">디스패처 처리는 일시 중단되었지만 메시지가 여전히 처리되고 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DispatcherRequestProcessingFailed">
+        <source>The Dispatcher is unable to request processing.  This is often because the application has starved the Dispatcher's message pump.</source>
+        <target state="translated">Dispatcher에서 처리를 요청할 수 없습니다. 주로 응용 프로그램에 Dispatcher의 메시지 펌프가 없으므로 이러한 문제가 발생합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DispatcherYieldNoAvailableDispatcher">
+        <source>The thread calling Dispatcher.Yield does not have a current Dispatcher.</source>
+        <target state="translated">Dispatcher.Yield를 호출하는 스레드에 현재 Dispatcher가 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateCorePropertyName">
+        <source>More than one '{0}' property found.</source>
+        <target state="translated">두 개 이상의 '{0}' 속성이 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateObjectId">
+        <source>Duplicate object ID found. IDs must be unique within the signature XML.</source>
+        <target state="translated">중복된 개체 ID가 있습니다. ID는 시그니처 XML 내에서 고유해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicatePiecesFound">
+        <source>Duplicate pieces found in the package.</source>
+        <target state="translated">패키지에 중복된 조각이 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateSignature">
+        <source>Duplicates not allowed - signature part already exists.</source>
+        <target state="translated">중복 항목은 허용되지 않습니다. 시그니처 파트가 이미 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ElementIsNotEmptyElement">
+        <source>'{0}' element must be empty.</source>
+        <target state="translated">'{0}' 요소는 비어 있어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EmptySignatureId">
+        <source>Signature Identifier cannot be empty.</source>
+        <target state="translated">시그니처 식별자는 비어 있을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EncodingNotSupported">
+        <source>Encoding format is not supported. Only UTF-8 and UTF-16 are supported.</source>
+        <target state="translated">인코딩 형식이 지원되지 않습니다. UTF-8 및 UTF-16만 지원됩니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EncryptedDataStreamCorrupt">
+        <source>Encrypted data stream is corrupted.</source>
+        <target state="translated">암호화된 데이터 스트림이 손상되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EncryptedPackageEnvelopeDisposed">
+        <source>EncryptedPackageEnvelope object was disposed.</source>
+        <target state="translated">EncryptedPackageEnvelope 개체가 삭제되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EncryptionRightIsNotGranted">
+        <source>Encryption right is not granted.</source>
+        <target state="translated">암호화 권한이 부여되지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enum_Invalid">
+        <source>'{0}' enumeration value is not valid.</source>
+        <target state="translated">'{0}' 열거형 값이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enumerator_VerifyContext">
+        <source>No current object to return.</source>
+        <target state="translated">반환할 현재 개체가 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EventNotFound">
+        <source>'{1}' event not found on type '{0}'.</source>
+        <target state="translated">'{0}' 형식에 '{1}' 이벤트가 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExceptionFilterCodeNotPresent">
+        <source>Exception Filter Code is not built and installed properly.</source>
+        <target state="translated">예외 필터 코드가 제대로 빌드 및 설치되지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExcessiveLengthPrefix">
+        <source>Length prefix specifies {0} characters, which exceeds the maximum of {1} characters.</source>
+        <target state="translated">길이 접두사가 {0}자를 지정하여, 최댓값인 {1}자를 초과합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedRelationshipsElementTag">
+        <source>Relationships tag expected at root level.</source>
+        <target state="translated">루트 수준에 관계 태그가 필요합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedVersionPairObject">
+        <source>Expected a VersionPair object.</source>
+        <target state="translated">VersionPair 개체가 필요합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectingParameterValuePairs">
+        <source>';' must be followed by parameter=value pair.</source>
+        <target state="translated">';' 뒤에 parameter=value 쌍이 와야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectingSemicolon">
+        <source>Semicolon separator is required between two valid parameter=value pairs.</source>
+        <target state="translated">두 개의 유효한 parameter=value 쌍 사이에 세미콜론 구분 기호가 필요합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileAccessInvalid">
+        <source>FileAccess value is not valid.</source>
+        <target state="translated">FileAccess 값이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileAlreadyExists">
+        <source>File already exists.</source>
+        <target state="translated">파일이 이미 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileDoesNotExists">
+        <source>Cannot find specified file.</source>
+        <target state="translated">지정한 파일을 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatException">
+        <source>Input file or data stream does not conform to the expected file format specification.</source>
+        <target state="translated">입력 파일 또는 데이터 스트림이 필요한 파일 형식 사양에 맞지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatExceptionWithFileName">
+        <source>'{0}' file does not conform to the expected file format specification.</source>
+        <target state="translated">'{0}' 파일이 필요한 파일 형식 사양에 맞지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileModeInvalid">
+        <source>FileMode value is not valid.</source>
+        <target state="translated">FileMode 값이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileModeUnsupported">
+        <source>FileMode value is not supported.</source>
+        <target state="translated">FileMode 값이 지원되지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileShareInvalid">
+        <source>FileShare value is not valid.</source>
+        <target state="translated">FileShare 값이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileShareUnsupported">
+        <source>FileShare value is not supported.</source>
+        <target state="translated">FileShare 값이 지원되지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FragmentMustStartWithHash">
+        <source>The 'fragment' parameter must start with a number sign.</source>
+        <target state="translated">'fragment' 매개 변수는 숫자 기호로 시작해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_AttemptToUseInnerValueWithDifferentThread">
+        <source>Cannot use a DependencyObject that belongs to a different thread than its parent Freezable.</source>
+        <target state="translated">부모 Freezable과 다른 스레드에 속하는 DependencyObject를 사용할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_CantBeFrozen">
+        <source>Specified value of type '{0}' must have IsFrozen set to false to modify.</source>
+        <target state="translated">'{0}' 형식의 지정된 값을 수정하려면 IsFrozen을 false로 설정해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_CantFreeze">
+        <source>This Freezable cannot be frozen.</source>
+        <target state="translated">이 Freezable은 고정할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_NotAContext">
+        <source>The provided DependencyObject is not a context for this Freezable.</source>
+        <target state="translated">제공한 DependencyObject는 이 Freezable에 대한 컨텍스트가 아닙니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_UnregisteredHandler">
+        <source>Handler has not been registered with this event.</source>
+        <target state="translated">처리기가 이 이벤트에 등록되지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalList_CannotPromoteBeyondArray">
+        <source>Cannot promote from Array.</source>
+        <target state="translated">Array에서 승격할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalList_TargetMapCannotHoldAllData">
+        <source>Cannot promote from '{0}' to '{1}' because the target map is too small.</source>
+        <target state="translated">대상 맵이 너무 작아 '{0}'에서 '{1}'(으)로 승격할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalMap_CannotPromoteBeyondHashtable">
+        <source>Cannot promote from Hashtable.</source>
+        <target state="translated">Hashtable에서 승격할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalMap_TargetMapCannotHoldAllData">
+        <source>Cannot promote from '{0}' to '{1}' because the target map is too small.</source>
+        <target state="translated">대상 맵이 너무 작아 '{0}'에서 '{1}'(으)로 승격할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="General_Expected_Type">
+        <source>Expected object of type '{0}'.</source>
+        <target state="translated">'{0}' 형식의 개체가 필요합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetContentTypeCoreNotImplemented">
+        <source>PackagePart subclass must implement GetContentTypeCore method if passing a null value for the content type when PackagePart object is constructed.</source>
+        <target state="translated">PackagePart 개체를 생성할 때 콘텐츠 형식에 대해 null 값을 전달하는 경우 PackagePart 서브클래스가 GetContentTypeCore 메서드를 구현해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetOlePropertyFailed">
+        <source>OLE property ID {0} cannot be read (error {1}).</source>
+        <target state="translated">OLE 속성 ID {0}을(를) 읽을 수 없습니다(오류 {1}).</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HashAlgorithmMustBeReusable">
+        <source>Reusable hash algorithm must be specified.</source>
+        <target state="translated">재사용 가능한 해시 알고리즘을 지정해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndSubclassMultipleAttach">
+        <source>HwndSubclass.Attach has already been called;  it cannot be called again.</source>
+        <target state="translated">HwndSubclass.Attach가 이미 호출되었습니다. 다시 호출할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ILockBytesStreamMustSeek">
+        <source>Streams for exposure as ILockBytes must be seekable.</source>
+        <target state="translated">ILockBytes로 노출하려면 스트림을 찾을 수 있어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IOBufferOverflow">
+        <source>Read or write operation references location outside the bounds of the buffer provided.</source>
+        <target state="translated">읽기 또는 쓰기 작업이 제공된 버퍼의 경계를 벗어난 위치를 참조합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IncompatibleModeOrAccess">
+        <source>Cannot open package because FileMode or FileAccess value is not valid for the stream.</source>
+        <target state="translated">FileMode 또는 FileAccess 값이 스트림에 유효하지 않으므로 패키지를 열 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InnerPackageUriHasFragment">
+        <source>Package URI obtained from the pack URI cannot contain a Fragment.</source>
+        <target state="translated">Pack URI에서 가져온 패키지 URI에 Fragment를 포함할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidArgumentValue">
+        <source>'{1}' is not a valid value for '{0}'.</source>
+        <target state="translated">'{1}'은(는) '{0}'에 유효한 값이 아닙니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidAuthenticationTypeString">
+        <source>Authentication type string (the part before the colon) is not valid in user ID '{0}'.</source>
+        <target state="translated">사용자 ID '{0}'의 인증 형식 문자열(콜론 앞에 있는 파트)이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCondition01">
+        <source>Cannot locate information for stream that should exist. This is an internally inconsistent condition.</source>
+        <target state="translated">존재해야 하는 스트림에 대한 정보를 찾을 수 없습니다. 내부적으로 일치하지 않는 상태입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDocumentPropertyType">
+        <source>'{0}' document property type is not valid.</source>
+        <target state="translated">'{0}' 문서 속성 형식이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDocumentPropertyVariantType">
+        <source>'{0}' document property variant type is not valid.</source>
+        <target state="translated">'{0}' 문서 속성 변형 형식이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidEvent">
+        <source>Event argument is invalid.</source>
+        <target state="translated">이벤트 인수가 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidLinearWhiteSpaceCharacter">
+        <source>A Linear White Space character is not valid.</source>
+        <target state="translated">Linear White Space 문자가 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidParameterValue">
+        <source>Parameter value must be a valid token or a quoted string as per RFC 2616.</source>
+        <target state="translated">매개 변수 값은 RFC 2616을 기준으로 유효한 토큰 또는 따옴표 붙은 문자열이어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidParameterValuePair">
+        <source>Parameter and value pair is not valid. Expected form is parameter=value.</source>
+        <target state="translated">매개 변수 및 값 쌍이 잘못되었습니다. 필요한 형식은 parameter=value입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPartUri">
+        <source>Part URI is not valid per rules defined in the Open Packaging Conventions specification.</source>
+        <target state="translated">Open Packaging Conventions 사양에 정의된 규칙을 기준으로 파트 URI가 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionLevel">
+        <source>Permission level is not valid.</source>
+        <target state="translated">권한 수준이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionState">
+        <source>Permission state is not valid.</source>
+        <target state="translated">권한 상태가 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionStateValue">
+        <source>PermissionState value '{0}' is not valid for this Permission.</source>
+        <target state="translated">PermissionState 값 '{0}'은(는) 이 권한에 대해 올바르지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionType">
+        <source>Permission type is not valid. Expected '{0}'.</source>
+        <target state="translated">사용 권한 형식이 잘못되었습니다. '{0}'이(가) 필요합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPriority">
+        <source>Specified priority is not valid.</source>
+        <target state="translated">지정한 속성이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPriorityRangeOrder">
+        <source>The minimum priority must be less than or equal to the maximum priority.</source>
+        <target state="translated">최소 우선 순위는 최대 우선 순위보다 작거나 같아야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPropertyNameInCorePropertiesPart">
+        <source>'{0}' property name is not valid in Core Properties part.</source>
+        <target state="translated">Core Properties 파트의 '{0}' 속성 이름이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPropertyValue">
+        <source>'{0}' is not a valid value for property '{1}'.</source>
+        <target state="translated">'{0}'은(는) '{1}' 속성의 유효한 값이 아닙니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPublishLicense">
+        <source>Signed Publish License is not valid.</source>
+        <target state="translated">서명된 게시 라이선스가 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidRelationshipType">
+        <source>Relationship Type cannot contain only spaces or be empty.</source>
+        <target state="translated">관계 형식은 공백만 포함하거나 비어 있을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStringFormat">
+        <source>String format is not valid.</source>
+        <target state="translated">문자열 형식이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTableType">
+        <source>Internal table type value is not valid. This is an internally inconsistent condition.</source>
+        <target state="translated">내부 테이블 형식 값이 잘못되었습니다. 내부적으로 일치하지 않는 상태입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidToken">
+        <source>A token is not valid. Refer to RFC 2616 for correct grammar of content types.</source>
+        <target state="translated">토큰이 잘못되었습니다. 콘텐츠 형식의 올바른 구문은 RFC 2616을 참조하세요.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTransformFeatureName">
+        <source>Feature name in the transform's primary stream is '{0}', but expected '{1}'.</source>
+        <target state="translated">변환의 기본 스트림에서 기능 이름이 '{0}'(이)지만 필요한 이름은 '{1}'입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypePrefixedUserName">
+        <source>User ID in use license stream is not of the form "authenticationType:userName".</source>
+        <target state="translated">사용 라이선스 스트림의 사용자 ID가 "authenticationType:userName" 형식이 아닙니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeSubType">
+        <source>ContentType string is not valid. Expected format is type/subtype.</source>
+        <target state="translated">ContentType 문자열이 잘못되었습니다. 필요한 형식은 type/subtype입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidUriAttribute">
+        <source>Uri attribute in Reference tag must refer using fragment identifiers.</source>
+        <target state="translated">Reference 태그 내에 있는 URI 특성은 조각 식별자 사용을 참조해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidValueForTheAttribute">
+        <source>'{0}' attribute value is not valid.</source>
+        <target state="translated">'{0}' 특성 값이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidXmlBaseAttributePresent">
+        <source>Relationships XML elements cannot specify attribute '{0}'.</source>
+        <target state="translated">관계 XML 요소에서 '{0}' 특성을 지정할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvariantFailure">
+        <source>Unrecoverable system error.</source>
+        <target state="translated">복구할 수 없는 시스템 오류입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LengthNotSupported">
+        <source>Stream does not support Length property.</source>
+        <target state="translated">스트림이 Length 속성을 지원하지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ListenerDidNotHandleEvent">
+        <source>Listener did not handle requested event.</source>
+        <target state="translated">수신기가 요청한 이벤트를 처리하지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ListenerDidNotHandleEventDetail">
+        <source>Listener of type '{0}' registered with event manager of type '{1}', but then did not handle the event. The listener is coded incorrectly.</source>
+        <target state="translated">'{0}' 형식의 수신기가 '{1}' 형식의 이벤트 관리자에 등록되었지만 이벤트를 처리하지 않았습니다. 수신기가 잘못 코딩되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalValueEnumerationInvalidated">
+        <source>Current local value enumeration is outdated because one or more local values have been set since its creation.</source>
+        <target state="translated">현재 로컬 값 열거형이 만들어진 후에 하나 이상의 로컬 값이 설정되었기 때문에 열거형이 만료되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalValueEnumerationOutOfBounds">
+        <source>Local value enumeration position is out of range.</source>
+        <target state="translated">로컬 값 열거형 위치가 범위를 벗어났습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalValueEnumerationReset">
+        <source>Local value enumeration position is before the start, need to call MoveNext first.</source>
+        <target state="translated">로컬 값 열거형 위치가 시작 앞에 있습니다. MoveNext를 먼저 호출해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MalformedCompoundFilePath">
+        <source>CompoundFileReference: malformed path encountered.</source>
+        <target state="translated">CompoundFileReference: 잘못된 형식의 경로가 발견되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionArrayBadType">
+        <source>Items in the array must be type '{0}'. One or more items cannot be cast to this type.</source>
+        <target state="translated">배열에 있는 항목은 '{0}' 형식이어야 합니다. 이 형식에 대해 하나 이상의 항목을 캐스팅할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionArrayType">
+        <source>Must set ArrayType before calling ProvideValue on ArrayExtension.</source>
+        <target state="translated">ArrayExtension에서 ProvideValue를 호출하기 전에 ArrayType을 설정해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionBadStatic">
+        <source>'{0}' StaticExtension value cannot be resolved to an enumeration, static field, or static property.</source>
+        <target state="translated">'{0}' StaticExtension 값을 열거형, 정적 필드 또는 정적 속성으로 확인할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionNoContext">
+        <source>Markup extension '{0}' requires '{1}' be implemented in the IServiceProvider for ProvideValue.</source>
+        <target state="translated">태그 확장 '{0}'을(를) 사용하려면 IServiceProvider에서 ProvideValue에 대해 '{1}'이(가) 구현되어 있어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionStaticMember">
+        <source>StaticExtension must have Member property set before ProvideValue can be called.</source>
+        <target state="translated">ProvideValue를 호출하려면 먼저 StaticExtension에서 Member 속성을 설정해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionTypeName">
+        <source>TypeExtension must have TypeName property set before ProvideValue can be called.</source>
+        <target state="translated">ProvideValue를 호출하려면 먼저 TypeExtension에서 TypeName 속성을 설정해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionTypeNameBad">
+        <source>'{0}' string is not valid for type.</source>
+        <target state="translated">'{0}' 문자열은 형식에 사용할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MethodAvailableOnlyInStreamingCreation">
+        <source>'{0}' method can only be called on a package opened in streaming mode.</source>
+        <target state="translated">'{0}' 메서드는 스트리밍 모드로 열린 패키지에서만 호출할 수 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MismatchedDispatchers">
+        <source>Objects must be created by the same thread.</source>
+        <target state="translated">동일한 스레드에서 개체를 만들어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingCreateDefaultValue">
+        <source>Default value factory user must override PropertyMetadata.CreateDefaultValue.</source>
+        <target state="translated">기본값 팩터리 사용자가 PropertyMetadata.CreateDefaultValue를 재정의해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoreThanOneMetadataRelationships">
+        <source>Package has more than one Core Properties relationship.</source>
+        <target state="translated">패키지에 두 개 이상의 Core Properties relationship이 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoreThanOnePackageSpecificReference">
+        <source>Expected exactly one Package-specific Reference tag.</source>
+        <target state="translated">정확히 Package 특정 Reference 태그 하나만 필요합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToDestNotExist">
+        <source>MoveTo Destination storage does not exist.</source>
+        <target state="translated">MoveTo Destination 스토리지가 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToNYI">
+        <source>IStorage/IStream::MoveTo not supported.</source>
+        <target state="translated">IStorage/IStream::MoveTo가 지원되지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MultipleRelationshipTransformsFound">
+        <source>There must be at most one relationship transform specified for a given relationship part.</source>
+        <target state="translated">지정된 관계 파트에 대해 관계 변환을 최대 하나만 지정해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MultipleRightsManagementEncryptionTransformFound">
+        <source>Document contains multiple Rights Management Encryption Transforms.</source>
+        <target state="translated">문서에 여러 개의 Rights Management Encryption Transforms가 포함되어 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MultipleSignatureOrigins">
+        <source>Multiple signature origin relationships found.</source>
+        <target state="translated">여러 개의 시그니처 원본 관계가 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustBeOfType">
+        <source>'{0}' must be of type '{1}'.</source>
+        <target state="translated">'{0}'은(는) '{1}' 형식이어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NYIDefault">
+        <source>This feature is not supported.</source>
+        <target state="translated">이 기능은 지원되지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameAlreadyInUse">
+        <source>'{0}' name is already in use.</source>
+        <target state="translated">'{0}'은(는) 이미 사용 중인 이름입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameCanNotHaveDelimiter">
+        <source>'{0}' cannot contain the path delimiter: '{1}'.</source>
+        <target state="translated">'{0}'에 경로 구분 기호 '{1}'을(를) 포함할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeDuplicateNamesNotAllowed">
+        <source>Cannot register duplicate Name '{0}' in this scope.</source>
+        <target state="translated">이 범위에서는 중복 Name '{0}'을(를) 등록할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeInvalidIdentifierName">
+        <source>'{0}' name is not valid for identifier.</source>
+        <target state="translated">식별자에 대한 '{0}' 이름이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeNameNotEmptyString">
+        <source>Name cannot be an empty string.</source>
+        <target state="translated">Name은 빈 문자열일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeNameNotFound">
+        <source>'{0}' Name is not found.</source>
+        <target state="translated">Name '{0}'을(를) 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeNotFound">
+        <source>No NameScope found to {1} the Name '{0}'.</source>
+        <target state="translated">Name '{0}'의 {1}에 대한 NameScope가 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameTableCorruptMem">
+        <source>Name table data is corrupt in memory.</source>
+        <target state="translated">메모리에서 이름 테이블 데이터가 손상되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameTableCorruptStg">
+        <source>Name table data is corrupt in data storage.</source>
+        <target state="translated">데이터 스토리지에서 이름 테이블 데이터가 손상되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameTableVersionMismatchRead">
+        <source>Name table cannot be read by this version of the program.</source>
+        <target state="translated">이 버전의 프로그램에서는 이름 테이블을 읽을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameTableVersionMismatchWrite">
+        <source>Name table cannot be updated by this version of the program.</source>
+        <target state="translated">이 버전의 프로그램에서는 이름 테이블을 업데이트할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamedAPIFailure">
+        <source>Failed call to '{0}'.</source>
+        <target state="translated">'{0}'을(를) 호출하지 못했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoCounterSignUnsignedContainer">
+        <source>Cannot countersign an unsigned package.</source>
+        <target state="translated">서명되지 않은 패키지에 연대 서명할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoDependencyProperty">
+        <source>No dependency property {0} on {1}.</source>
+        <target state="translated">{1}에 종속성 속성 {0}이(가) 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoExternalTargetForMetadataRelationship">
+        <source>TargetMode for a Core Properties relationship must be 'Internal'.</source>
+        <target state="translated">Core Properties relationship의 TargetMode는 'Internal'이어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoMulticastHandlers">
+        <source>WeakEventManager supports only delegates with one target.</source>
+        <target state="translated">WeakEventManager는 하나의 대상이 지정된 대리자만 지원합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPrivilegesForPublishLicenseDecryption">
+        <source>CryptoProvider does not have privileges required for decryption of the PublishLicense.</source>
+        <target state="translated">CryptoProvider에 PublishLicense의 암호를 해독하는 데 필요한 권한이 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPublishLicenseStream">
+        <source>File does not contain a stream to hold the publish license.</source>
+        <target state="translated">파일에 게시 라이선스를 보관할 스트림이 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoStructuredContentInsideProperties">
+        <source>Core Properties part: core property elements can contain only text data.</source>
+        <target state="translated">Core Properties 파트: 핵심 속성 요소에는 텍스트 데이터만 포함할 수 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoUseLicenseStorage">
+        <source>File does not contain a storage to hold use licenses.</source>
+        <target state="translated">파일에 사용자 라이선스를 보관할 스토리지가 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAUniqueRelationshipId">
+        <source>'{0}' ID conflicts with the ID of an existing relationship for the specified source.</source>
+        <target state="translated">지정된 소스에 대한 기존 관계의 ID와 '{0}' ID가 충돌합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAValidRelationshipPartUri">
+        <source>PackageRelationship part URI syntax is not valid.</source>
+        <target state="translated">PackageRelationship 파트 URI 구문이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAValidXmlIdString">
+        <source>'{0}' ID is not a valid XSD ID.</source>
+        <target state="translated">'{0}' ID는 유효한 XSD ID가 아닙니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedMultiDisk">
+        <source>Multidisk ZIP format is not supported.</source>
+        <target state="translated">다중 디스크 ZIP 형식이 지원되지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedVersionNeededToExtract">
+        <source>ZIP archive contains unsupported data structures.</source>
+        <target state="translated">ZIP 보관 파일에 지원되지 않는 데이터 구조가 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupported_ReadOnlyCollection">
+        <source>Collection is read-only.</source>
+        <target state="translated">읽기 전용 컬렉션입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NothingToSign">
+        <source>Must specify an item to sign.</source>
+        <target state="translated">서명할 항목을 지정해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NullContentTypeProvided">
+        <source>GetContentTypeCore method cannot return null for the content type stream.</source>
+        <target state="translated">GetContentTypeCore 메서드가 콘텐츠 형식 스트림에 대해 null을 반환할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NullStreamReturned">
+        <source>Returned stream for the part is null.</source>
+        <target state="translated">파트에 대해 반환된 스트림이 null입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectDisposed">
+        <source>Package object was closed and disposed, so cannot carry out operations on this object or any stream opened on a part of this package.</source>
+        <target state="translated">Package 개체가 닫히고 삭제되었으므로, 이 패키지의 파트에서 열린 임의의 스트림 또는 이 개체에서 작업을 수행할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OffsetNegative">
+        <source>Offset must be greater than or equal to zero.</source>
+        <target state="translated">Offset은 0보다 크거나 같아야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyFileShareReadAndFileShareNoneSupported">
+        <source>Only FileShare.Read and FileShare.None are supported.</source>
+        <target state="translated">FileShare.Read 및 FileShare.None만 지원됩니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyPassportOrWindowsAuthenticatedUsersAreAllowed">
+        <source>User must be either Windows or Passport authenticated. Other authentication types are not allowed in this context.</source>
+        <target state="translated">사용자는 Windows 또는 Passport 인증을 받아야 합니다. 이 컨텍스트에서는 다른 인증 형식이 허용되지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyStreamingProductionIsSupported">
+        <source>Streaming consumption of packages not supported.</source>
+        <target state="translated">패키지의 스트리밍 사용이 지원되지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyWriteOperationsAreSupportedInStreamingCreation">
+        <source>Only write operations are supported in streaming production.</source>
+        <target state="translated">스트리밍 프로덕션에서는 쓰기 작업만 지원됩니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OperationIsNotSupportedInStreamingProduction">
+        <source>Package.{0} is not supported in streaming production.</source>
+        <target state="translated">스트리밍 프로덕션에서는 Package.{0}이(가) 지원되지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OperationViolatesWriteOnceSemantics">
+        <source>Write-once semantics in streaming production precludes the use of '{0}'.</source>
+        <target state="translated">스트리밍 프로덕션의 한 번 쓰기 의미 체계는 '{0}'의 사용을 허용하지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OverrideTagDoesNotMatchSchema">
+        <source>Override tag is not valid per the schema. Verify that attributes are correct.</source>
+        <target state="translated">스키마별 Override 태그가 잘못되었습니다. 특성이 올바른지 확인하세요.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OverridingMetadataDoesNotMatchBaseMetadataType">
+        <source>Metadata override and base metadata must be of the same type or derived type.</source>
+        <target state="translated">메타데이터 재정의 및 기본 메타데이터는 같은 형식이거나 파생 형식이어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageNotFound">
+        <source>Document does not contain a package.</source>
+        <target state="translated">문서에 패키지가 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackagePartDeleted">
+        <source>Part was deleted.</source>
+        <target state="translated">파트가 삭제되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackagePartRelationshipDoesNotExist">
+        <source>PackageRelationship with specified ID does not exist for the source part.</source>
+        <target state="translated">소스 파트에 지정된 ID를 가진 PackageRelationship이 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageRelationshipDoesNotExist">
+        <source>PackageRelationship with specified ID does not exist at the Package level.</source>
+        <target state="translated">Package 수준에 지정된 ID를 가진 PackageRelationship이 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageSignatureCorruption">
+        <source>Signature structures are corrupted in this package.</source>
+        <target state="translated">이 패키지의 시그니처 구조가 손상되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageSignatureObjectTagRequired">
+        <source>Required Package-specific Object tag is missing.</source>
+        <target state="translated">필수 Package 특정 Object 태그가 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageSignatureReferenceTagRequired">
+        <source>Required Package-specific Reference tag is missing.</source>
+        <target state="translated">필수 Package 특정 Reference 태그가 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageSpecificReferenceTagMustBeUnique">
+        <source>Specified reference object conflicts with predefined Package specific reference.</source>
+        <target state="translated">지정한 참조 개체가 미리 정의된 Package 특정 참조와 충돌합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterCannotBeNegative">
+        <source>Parameter must be greater than or equal to zero.</source>
+        <target state="translated">매개 변수는 0보다 크거나 같아야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterMustBeBetween">
+        <source>The parameter value must be between '{0}' and '{1}'.</source>
+        <target state="translated">매개 변수 값은 '{0}'과(와) '{1}' 사이에 있어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParentContainerClosed">
+        <source>Cannot access part because parent package was closed.</source>
+        <target state="translated">부모 패키지가 닫혔으므로 파트에 액세스할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAssemblyLoadVersionMismatch">
+        <source>Cannot load assembly '{0}' because a different version of that same assembly is loaded '{1}'.</source>
+        <target state="translated">같은 어셈블리의 다른 버전 {1}이(가) 로드되었므로 '{0}' 어셈블리를 로드할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsHigh">
+        <source>Too many attributes are specified for '{0}'.</source>
+        <target state="translated">'{0}'에 대해 너무 많은 특성을 지정했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsLow">
+        <source>'{0}' requires more attributes.</source>
+        <target state="translated">'{0}'에 더 많은 특성이 필요합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartAlreadyExists">
+        <source>Cannot add part for the specified URI because it is already in the package.</source>
+        <target state="translated">패키지에 이미 있으므로 지정한 URI에 대한 파트를 추가할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartDoesNotExist">
+        <source>Specified part does not exist in the package.</source>
+        <target state="translated">지정한 파트가 패키지에 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartNamePrefixExists">
+        <source>Cannot add part to the package. Part names cannot be derived from another part name by appending segments to it.</source>
+        <target state="translated">패키지에 파트를 추가할 수 없습니다. 세그먼트를 추가하여 다른 파트 이름에서 파트 이름을 파생할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartReferenceUriMalformed">
+        <source>Malformed Part URI in Reference tag.</source>
+        <target state="translated">Reference 태그에 잘못된 형식의 파트 URI가 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartToSignMissing">
+        <source>Specified part to sign does not exist.</source>
+        <target state="translated">존재하지 않는 파트를 서명할 파트로 지정했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartUriCannotHaveAFragment">
+        <source>Part URI cannot contain a Fragment component.</source>
+        <target state="translated">파트 URI에 Fragment 구성 요소를 포함할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartUriIsEmpty">
+        <source>Part URI is empty.</source>
+        <target state="translated">파트 URI가 비어 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartUriShouldNotEndWithForwardSlash">
+        <source>Part URI cannot end with a forward slash.</source>
+        <target state="translated">파트 URI를 슬래시로 끝낼 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartUriShouldNotStartWithTwoForwardSlashes">
+        <source>Part URI cannot start with two forward slashes.</source>
+        <target state="translated">파트 URI를 두 개의 슬래시로 시작할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartUriShouldStartWithForwardSlash">
+        <source>Part URI must start with a forward slash.</source>
+        <target state="translated">파트 URI는 슬래시로 시작해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PathHasEmptyElement">
+        <source>Path string cannot include an empty element.</source>
+        <target state="translated">경로 문자열에 빈 요소를 포함할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PieceDoesNotExist">
+        <source>Cannot find piece with the specified piece number.</source>
+        <target state="translated">지정된 조각 번호의 조각을 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyAlreadyRegistered">
+        <source>'{0}' property was already registered by '{1}'.</source>
+        <target state="translated">'{1}'이(가) '{0}' 속성을 이미 등록했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyNotReadOnly">
+        <source>This method overrides metadata only on read-only properties. This property is not read-only.</source>
+        <target state="translated">이 메서드는 읽기 전용 속성의 메타데이터만 재정의합니다. 이 속성은 읽기 전용이 아닙니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyStartTagExpected">
+        <source>Core Properties part: A property start-tag was expected.</source>
+        <target state="translated">Core Properties 파트: start-tag 속성이 필요합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyWrongNumbOfAttribsDefinedOn">
+        <source>Unexpected number of attributes is found on '{0}'.</source>
+        <target state="translated">'{0}'에 예기치 않은 개수의 특성이 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PublishLicenseNotFound">
+        <source>Document does not contain a publish license.</source>
+        <target state="translated">문서에 게시 라이선스가 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PublishLicenseStreamCorrupt">
+        <source>Document's publish license stream is corrupted.</source>
+        <target state="translated">문서의 게시 라이선스 스트림이 손상되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PublishLicenseStreamHeaderTooLong">
+        <source>Variable-length header in publish license stream is {0} bytes, which exceeds the maximum length of {1} bytes.</source>
+        <target state="translated">게시 라이선스 스트림의 가변 길이 헤더가 {0}바이트로, 최대 길이인 {1}바이트를 초과합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QualifiedNameHasWrongFormat">
+        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
+        <target state="translated">'{0}' 형식 이름에 'className, assembly' 형식이 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachOutOfRange">
+        <source>'{0}' index is beyond maximum '{1}'.</source>
+        <target state="translated">'{0}' 인덱스는 최댓값 '{1}'을(를) 초과합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadBufferTooSmall">
+        <source>Buffer too small to hold results of Read.</source>
+        <target state="translated">버퍼가 너무 작아서 Read 결과를 보관할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadCountNegative">
+        <source>Count of bytes to read cannot be negative.</source>
+        <target state="translated">읽을 바이트 개수는 음수일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadNotSupported">
+        <source>Stream does not support reading.</source>
+        <target state="translated">스트림이 읽기를 지원하지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyChangeNotAllowed">
+        <source>'{0}' property was registered as read-only and cannot be modified without an authorization key.</source>
+        <target state="translated">'{0}' 속성은 읽기 전용으로 등록되었으므로 인증 키가 없으면 수정할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyDesignerCoersionNotAllowed">
+        <source>'{0}' is registered as read-only, so its value cannot be coerced by using the DesignerCoerceValueCallback.</source>
+        <target state="translated">'{0}'은(는) 읽기 전용으로 등록되었으므로 DesignerCoerceValueCallback을 사용하여 해당 값을 강제 변환할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyKeyNotAuthorized">
+        <source>Property key is not authorized to modify property '{0}'.</source>
+        <target state="translated">속성 키에 '{0}' 속성을 수정할 수 있는 권한이 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyOverrideKeyNotAuthorized">
+        <source>Property key is not authorized to override metadata of property '{0}'.</source>
+        <target state="translated">속성 키에 '{0}' 속성의 메타데이터를 재정의할 수 있는 권한이 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyOverrideNotAllowed">
+        <source>'{0}' property was registered as read-only and its metadata cannot be overridden without an authorization key.</source>
+        <target state="translated">'{0}' 속성은 읽기 전용으로 등록되었으므로 인증 키가 없으면 해당 메타데이터를 재정의할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyStream">
+        <source>Cannot write to read-only stream.</source>
+        <target state="translated">읽기 전용 스트림에 쓸 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReaderVersionError">
+        <source>File contains data in format version {0}, but the software can only read that data in format version {1} or lower.</source>
+        <target state="translated">파일에 형식 버전 {0}의 데이터가 있지만, 소프트웨어는 형식 버전 {1} 이하의 데이터만 읽을 수 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Rect_CannotCallMethod">
+        <source>Cannot call this method on the Empty Rect.</source>
+        <target state="translated">Empty Rect에서 이 메서드를 호출할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Rect_CannotModifyEmptyRect">
+        <source>Cannot modify this property on the Empty Rect.</source>
+        <target state="translated">Empty Rect에서 이 속성을 수정할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReferenceIsNull">
+        <source>Value cannot be null. Object reference: '{0}'.</source>
+        <target state="translated">값은 null일 수 없습니다. 개체 참조: '{0}'</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipPartIncorrectContentType">
+        <source>Incorrect content type for PackageRelationship part.</source>
+        <target state="translated">PackageRelationship 파트에 대해 잘못된 콘텐츠 형식입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipPartUriExpected">
+        <source>PackageRelationship part URI is expected.</source>
+        <target state="translated">PackageRelationship 파트 URI가 필요합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipPartUriNotExpected">
+        <source>PackageRelationship part URI is not expected.</source>
+        <target state="translated">PackageRelationship 파트 URI가 필요하지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipPartsCannotHaveRelationships">
+        <source>PackageRelationship parts cannot have relationships to other parts.</source>
+        <target state="translated">PackageRelationship 파트에는 다른 파트에 대한 관계가 있을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipTagDoesntMatchSchema">
+        <source>Relationship tag contains incorrect attribute.</source>
+        <target state="translated">Relationship 태그에 잘못된 특성이 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipTargetMustBeRelative">
+        <source>PackageRelationship target must be relative URI if TargetMode is Internal.</source>
+        <target state="translated">TargetMode가 Internal인 경우 PackageRelationship 대상은 상대 URI여야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipToRelationshipIllegal">
+        <source>PackageRelationship cannot target another PackageRelationship.</source>
+        <target state="translated">PackageRelationship은 다른 PackageRelationship을 대상으로 할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipTransformNotFollowedByCanonicalizationTransform">
+        <source>Relationship transform must be followed by an XML canonicalization transform.</source>
+        <target state="translated">관계 변환 뒤에 XML 정규화 변환이 와야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipsTagHasExtraAttributes">
+        <source>Relationships tag has extra attributes.</source>
+        <target state="translated">Relationships 태그에 추가 특성이 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequiredAttributeEmpty">
+        <source>'{0}' tag requires a nonempty '{1}' attribute.</source>
+        <target state="translated">'{0}' 태그에 비어 있지 않은 '{1}' 특성이 필요합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequiredAttributeMissing">
+        <source>'{0}' tag requires attribute '{1}'.</source>
+        <target state="translated">'{0}' 태그에 '{1}' 특성이 필요합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequiredRelationshipAttributeMissing">
+        <source>Relationship tag requires attribute '{0}'.</source>
+        <target state="translated">Relationship 태그에 '{0}' 특성이 필요합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequiredTagNotFound">
+        <source>Required tag '{0}' not found.</source>
+        <target state="translated">필수 태그 '{0}'을(를) 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequiredXmlAttributeMissing">
+        <source>Required attribute '{0}' not found.</source>
+        <target state="translated">필수 특성 '{0}'을(를) 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementEncryptionTransformNotFound">
+        <source>Document does not contain any rights management-protected streams.</source>
+        <target state="translated">문서에 권한 관리로 보호된 스트림이 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionAborted">
+        <source>Command interrupted.</source>
+        <target state="translated">명령이 중단되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionActivationFailed">
+        <source>Activation failed.</source>
+        <target state="translated">활성화에 실패했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionAdEntryNotFound">
+        <source>Ad entry not found.</source>
+        <target state="translated">Ad 항목을 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionAlreadyInProgress">
+        <source>Rights management server transaction already in progress.</source>
+        <target state="translated">권한 관리 서버 트랜잭션이 이미 진행 중입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionAuthenticationFailed">
+        <source>Authentication failed.</source>
+        <target state="translated">인증에 실패했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBadGetInfoQuery">
+        <source>Get information query is not valid.</source>
+        <target state="translated">정보 가져오기 쿼리가 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindAccessPrincipalNotEnabling">
+        <source>Binding access principal is not enabling.</source>
+        <target state="translated">바인딩 액세스 보안 주체를 사용할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindAccessUnsatisfied">
+        <source>Binding access unsatisfied.</source>
+        <target state="translated">바인딩 액세스가 충족되지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindContentNotInEndUseLicense">
+        <source>Binding content not in the End Use License.</source>
+        <target state="translated">End Use License에 바인딩 콘텐츠가 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindIndicatedPrincipalMissing">
+        <source>Principal provided for binding is missing.</source>
+        <target state="translated">바인딩을 위해 제공된 보안 주체가 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindIntervalTimeViolated">
+        <source>Binding time interval is violated.</source>
+        <target state="translated">바인딩 시간 간격을 위반했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindMachineNotFoundInGroupIdentity">
+        <source>Machine is not found in group identity certificate.</source>
+        <target state="translated">그룹 ID 인증서에서 머신을 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindNoApplicableRevocationList">
+        <source>Binding missing application revocation list.</source>
+        <target state="translated">바인딩에 애플리케이션 해지 목록이 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindNoSatisfiedRightsGroup">
+        <source>Binding cannot find a satisfied rights group.</source>
+        <target state="translated">바인딩이 충족되는 권한 그룹을 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindPolicyViolation">
+        <source>Binding policy violation.</source>
+        <target state="translated">바인딩 정책을 위반했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindRevocationListStale">
+        <source>Binding revocation list is stale.</source>
+        <target state="translated">바인딩 해지 목록이 부실합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindRevokedIssuer">
+        <source>Issuer has been revoked.</source>
+        <target state="translated">발급자가 해지되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindRevokedLicense">
+        <source>License has been revoked.</source>
+        <target state="translated">라이선스가 해지되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindRevokedModule">
+        <source>Module has been revoked.</source>
+        <target state="translated">모듈이 해지되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindRevokedPrincipal">
+        <source>Principal has been revoked.</source>
+        <target state="translated">보안 주체가 해지되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindRevokedResource">
+        <source>Resource has been revoked.</source>
+        <target state="translated">리소스가 해지되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindSpecifiedWorkMissing">
+        <source>Cannot find content specified for binding.</source>
+        <target state="translated">바인딩에 대해 지정된 콘텐츠를 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindValidityTimeViolated">
+        <source>Binding validity time violated.</source>
+        <target state="translated">바인딩 유효 기간을 위반했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBrokenCertChain">
+        <source>Broken certificate chain.</source>
+        <target state="translated">인증서 체인이 끊어졌습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionClockRollbackDetected">
+        <source>Clock rollback detected.</source>
+        <target state="translated">클록 롤백을 검색했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionCryptoOperationUnsupported">
+        <source>Crypto operation not supported.</source>
+        <target state="translated">암호화 작업이 지원되지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionDebuggerDetected">
+        <source>Debugger detected.</source>
+        <target state="translated">디버거를 검색했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionEmailNotVerified">
+        <source>E-mail not verified.</source>
+        <target state="translated">전자 메일을 확인하지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionEnablingPrincipalFailure">
+        <source>Enabling principal failure.</source>
+        <target state="translated">보안 주체를 사용할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionEncryptionNotPermitted">
+        <source>Encryption not permitted.</source>
+        <target state="translated">암호화가 허용되지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionEnvironmentCannotLoad">
+        <source>Cannot load environment.</source>
+        <target state="translated">환경을 로드할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionEnvironmentNotLoaded">
+        <source>Environment not loaded.</source>
+        <target state="translated">환경이 로드되지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionExpiredOfficialIssuanceLicenseTemplate">
+        <source>Expired official Publish License template.</source>
+        <target state="translated">공식 Publish License 템플릿이 만료되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionGenericMessage">
+        <source>Rights management operation failed.</source>
+        <target state="translated">권한 관리 작업에 실패했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionGlobalOptionAlreadySet">
+        <source>Global option is already set.</source>
+        <target state="translated">글로벌 옵션이 이미 설정되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionGroupIdentityNotSet">
+        <source>Group identity not set.</source>
+        <target state="translated">그룹 ID가 설정되지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionHidCorrupted">
+        <source>Hardware ID corrupted.</source>
+        <target state="translated">하드웨어 ID가 손상되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionHidInvalid">
+        <source>Hardware ID is not valid.</source>
+        <target state="translated">하드웨어 ID가 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionIdMismatch">
+        <source>ID mismatch.</source>
+        <target state="translated">ID가 일치하지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionIncompatibleObjects">
+        <source>Incompatible objects.</source>
+        <target state="translated">호환되지 않는 개체입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInfoNotInLicense">
+        <source>Information not found.</source>
+        <target state="translated">정보를 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInfoNotPresent">
+        <source>Information not found.</source>
+        <target state="translated">정보를 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInstallationFailed">
+        <source>Installation failed.</source>
+        <target state="translated">설치하지 못했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidAlgorithmType">
+        <source>Algorithm type is not valid.</source>
+        <target state="translated">알고리즘 형식이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidClientLicensorCertificate">
+        <source>Client Licensor Certificate is not valid.</source>
+        <target state="translated">클라이언트 사용 허가자 인증서가 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidEmail">
+        <source>E-mail address is not valid.</source>
+        <target state="translated">전자 메일 주소가 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidEncodingType">
+        <source>Encoding type is not valid.</source>
+        <target state="translated">인코딩 형식이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidHandle">
+        <source>Handle is not valid.</source>
+        <target state="translated">핸들이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidIssuanceLicenseTemplate">
+        <source>Issuance license template is not valid because of incorrectly formatted string.</source>
+        <target state="translated">잘못된 형식의 문자열 때문에 발급 라이선스 템플릿이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidKeyLength">
+        <source>Key size length is not valid.</source>
+        <target state="translated">키 크기 길이가 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidLicense">
+        <source>License is not valid.</source>
+        <target state="translated">라이선스가 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidLicenseSignature">
+        <source>License signature is not valid.</source>
+        <target state="translated">라이선스 시그니처가 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidLockboxPath">
+        <source>Lockbox path is not valid.</source>
+        <target state="translated">Lockbox 경로가 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidLockboxType">
+        <source>Lockbox type is not valid.</source>
+        <target state="translated">Lockbox 형식이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidNumericalValue">
+        <source>Numerical value is not valid.</source>
+        <target state="translated">숫자 값이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidRegistryPath">
+        <source>Registry path is not valid.</source>
+        <target state="translated">레지스트리 경로가 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidServerResponse">
+        <source>Server response is not valid.</source>
+        <target state="translated">서버 응답이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidTimeInfo">
+        <source>Time information is not valid.</source>
+        <target state="translated">시간 정보가 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidVersion">
+        <source>Version is not valid.</source>
+        <target state="translated">버전이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionKeyTypeUnsupported">
+        <source>Key type not supported.</source>
+        <target state="translated">키 형식이 지원되지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionLibraryFail">
+        <source>Library fail.</source>
+        <target state="translated">라이브러리 오류입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionLibraryUnsupportedPlugIn">
+        <source>Unsupported library plug-in.</source>
+        <target state="translated">지원되지 않는 라이브러리 플러그 인입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionLicenseAcquisitionFailed">
+        <source>License acquisition failed.</source>
+        <target state="translated">라이선스를 취득하지 못했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionLicenseBindingToWindowsIdentityFailed">
+        <source>License binding to Windows Identity failed (NTLM bind failure).</source>
+        <target state="translated">Windows ID에 대한 라이선스 바인딩이 실패했습니다(NTLM 바인딩 실패).</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionManifestPolicyViolation">
+        <source>Manifest policy violation.</source>
+        <target state="translated">매니페스트 정책을 위반했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionMetadataNotSet">
+        <source>Metadata not set.</source>
+        <target state="translated">메타데이터가 설정되지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNeedsGroupIdentityActivation">
+        <source>User identity must be activated.</source>
+        <target state="translated">사용자 ID를 활성화해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNeedsMachineActivation">
+        <source>Machine must be activated.</source>
+        <target state="translated">머신을 활성화해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNoAesCryptoProvider">
+        <source>No AES Crypto provider found.</source>
+        <target state="translated">AES 암호화 공급자를 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNoConnect">
+        <source>Connection failed.</source>
+        <target state="translated">연결에 실패했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNoDistributionPointUrlFound">
+        <source>Distribution Point URL was not set.</source>
+        <target state="translated">배포 지점 URL이 설정되지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNoLicense">
+        <source>License not found.</source>
+        <target state="translated">라이선스를 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNoMoreData">
+        <source>No more data.</source>
+        <target state="translated">데이터가 더 이상 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNotAChain">
+        <source>Not a certificate chain.</source>
+        <target state="translated">인증서 체인이 아닙니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNotSet">
+        <source>Not set.</source>
+        <target state="translated">설정되지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionOutOfQuota">
+        <source>Transaction quota exceeded.</source>
+        <target state="translated">트랜잭션 할당량을 초과했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionOutdatedModule">
+        <source>Outdated module.</source>
+        <target state="translated">만료된 모듈입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionOwnerLicenseNotFound">
+        <source>Owner's license not found.</source>
+        <target state="translated">소유자의 라이선스를 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionQueryReportsNoResults">
+        <source>Query reports no results.</source>
+        <target state="translated">쿼리 보고서에 결과가 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionRecordNotFound">
+        <source>Record not found.</source>
+        <target state="translated">레코드를 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionRequestDenied">
+        <source>Rights management server denied request.</source>
+        <target state="translated">권한 관리 서버가 요청을 거부했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionRevocationInfoNotSet">
+        <source>Revocation information not set.</source>
+        <target state="translated">해지 정보가 설정되지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionRightNotGranted">
+        <source>Right not granted.</source>
+        <target state="translated">권한이 허가되지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionRightNotSet">
+        <source>Right not set.</source>
+        <target state="translated">권한이 설정되지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionServerError">
+        <source>Server side error.</source>
+        <target state="translated">서버 쪽 오류입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionServerNotFound">
+        <source>Server not found.</source>
+        <target state="translated">서버를 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionServiceGone">
+        <source>Service gone.</source>
+        <target state="translated">서비스가 끝났습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionServiceMoved">
+        <source>Service moved.</source>
+        <target state="translated">서비스를 이동했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionServiceNotFound">
+        <source>Service not found.</source>
+        <target state="translated">서비스를 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionTooManyCertificates">
+        <source>Cannot have more than one certificate.</source>
+        <target state="translated">두 개 이상의 인증서를 사용할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionTooManyLoadedEnvironments">
+        <source>Cannot load more than one environment.</source>
+        <target state="translated">두 개 이상의 환경을 로드할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionUnexpectedException">
+        <source>Unexpected exception.</source>
+        <target state="translated">예기치 않은 예외입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionUseDefault">
+        <source>Use default.</source>
+        <target state="translated">기본값을 사용합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionValidityTimeViolation">
+        <source>License validity time violation.</source>
+        <target state="translated">라이선스 유효 기간을 위반했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SeekFailed">
+        <source>Cannot seek to given position.</source>
+        <target state="translated">지정한 위치를 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SeekNegative">
+        <source>Cannot set seek pointer to a negative position.</source>
+        <target state="translated">검색 포인터를 음의 위치로 설정할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SeekNotSupported">
+        <source>Stream does not support Seek.</source>
+        <target state="translated">스트림이 Seek를 지원하지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SeekOriginInvalid">
+        <source>SeekOrigin value is not valid.</source>
+        <target state="translated">SeekOrigin 값이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ServiceTypeAlreadyAdded">
+        <source>This serviceType is already registered to another service.</source>
+        <target state="translated">이 serviceType이 다른 서비스에 이미 등록되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetLengthNotSupported">
+        <source>Stream does not support SetLength.</source>
+        <target state="translated">Stream이 SetLength를 지원하지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetOnReadOnlyObjectNotAllowed">
+        <source>Cannot set a property on object '{0}' because it is in a read-only state.</source>
+        <target state="translated">'{0}' 개체는 읽기 전용 상태이므로 개체의 속성을 설정할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetPositionNotSupported">
+        <source>Stream does not support setting the Position property.</source>
+        <target state="translated">Stream이 Position 속성 설정을 지원하지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ShareableExpressionsCannotChangeSources">
+        <source>Shareable Expression cannot use ChangeSources method.</source>
+        <target state="translated">공유할 수 있는 Expression에 ChangeSources 메서드를 사용할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SharingNonSharableExpression">
+        <source>Cannot set Expression. It is marked as 'NonShareable' and has already been used.</source>
+        <target state="translated">Expression을 설정할 수 없습니다. 'NonShareable'로 표시되어 있으며, 이미 사용되고 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureDeleted">
+        <source>Signature was deleted.</source>
+        <target state="translated">시그니처가 삭제되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureObjectIdMustBeUnique">
+        <source>Object identifiers must be unique within the same signature.</source>
+        <target state="translated">개체 식별자는 같은 시그니처 내에서 고유해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureOriginNotFound">
+        <source>Relationship was found to the signature origin but the part is missing. Package signature structures are corrupted.</source>
+        <target state="translated">시그니처 원본에 대한 관계는 있지만 파트가 없습니다. 패키지 시그니처 구조가 손상되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignaturePackageObjectTagMustBeUnique">
+        <source>Specified object ID conflicts with predefined Package Object ID.</source>
+        <target state="translated">지정한 개체 ID가 미리 정의된 패키지 개체 ID와 충돌합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Size_CannotModifyEmptySize">
+        <source>Cannot modify this property on the Empty Size.</source>
+        <target state="translated">Empty Size에서 이 속성을 수정할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Size_HeightCannotBeNegative">
+        <source>Height must be non-negative.</source>
+        <target state="translated">높이는 음수일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Size_WidthAndHeightCannotBeNegative">
+        <source>Width and Height must be non-negative.</source>
+        <target state="translated">너비와 높이는 음수일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Size_WidthCannotBeNegative">
+        <source>Width must be non-negative.</source>
+        <target state="translated">너비는 음수일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SortDescriptionPropertyNameCannotBeEmpty">
+        <source>SortDescription must have a nonempty property name.</source>
+        <target state="translated">SortDescription에 비어 있지 않은 속성 이름이 있어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SourceChangeExpressionMismatch">
+        <source>Expression is not in use on DependencyObject. Cannot change DependencySource array.</source>
+        <target state="translated">DependencyObject에서 Expression을 사용하고 있지 않습니다. DependencySource 배열을 변경할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SourcesMustBeInSameThread">
+        <source>Must create DependencySource on same Thread as the DependencyObject.</source>
+        <target state="translated">DependencyObject와 같은 스레드에서 DependencySource를 만들어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SpecialMethodMustBePublic">
+        <source>ShouldSerializeProperty and ResetProperty methods must be public ('{0}').</source>
+        <target state="translated">ShouldSerializeProperty 및 ResetProperty 메서드는 공용이어야 합니다('{0}').</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SplashScreenIsLoading">
+        <source>Please wait while the application opens</source>
+        <target state="translated">애플리케이션이 열리는 동안 잠시 기다려 주세요.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StorageAlreadyExist">
+        <source>Storage already exists.</source>
+        <target state="translated">스토리지가 이미 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StorageBasedPackagePropertiesDiposed">
+        <source>PackageProperties object was disposed.</source>
+        <target state="translated">PackageProperties 개체가 삭제되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StorageFlagsUnsupported">
+        <source>This combination of flags is not supported.</source>
+        <target state="translated">이 플래그 조합은 지원되지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StorageInfoDisposed">
+        <source>StorageInfo object was disposed.</source>
+        <target state="translated">StorageInfo 개체가 삭제되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StorageNotExist">
+        <source>Storage does not exist.</source>
+        <target state="translated">스토리지가 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StorageRootDisposed">
+        <source>StorageRoot object was disposed.</source>
+        <target state="translated">StorageRoot 개체가 삭제되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamAlreadyExist">
+        <source>Stream already exists.</source>
+        <target state="translated">스트림이 이미 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamDoesNotSupportWrite">
+        <source>Cannot change content of a read-only stream.</source>
+        <target state="translated">읽기 전용 스트림의 콘텐츠를 변경할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamInfoDisposed">
+        <source>StreamInfo object was disposed.</source>
+        <target state="translated">StreamInfo 개체가 삭제되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamLengthNegative">
+        <source>Stream length cannot be negative.</source>
+        <target state="translated">스트림 길이는 음수일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamNameNotValid">
+        <source>Stream name cannot be '{0}'.</source>
+        <target state="translated">스트림 이름은 '{0}'일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamNeedsReadWriteAccess">
+        <source>The stream on which the encrypted package is created must have read/write access.</source>
+        <target state="translated">암호화된 패키지가 만들어지는 스트림에는 읽기/쓰기 권한이 있어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamNotExist">
+        <source>Cannot perform this function on a stream that does not exist.</source>
+        <target state="translated">존재하지 않는 스트림에서 이 함수를 수행할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamObjectDisposed">
+        <source>Cannot access Stream object because it was closed or disposed.</source>
+        <target state="translated">Stream 개체가 닫히거나 삭제되었으므로 해당 개체에 액세스할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamPositionNegative">
+        <source>Negative stream position not supported.</source>
+        <target state="translated">음수 스트림 위치는 지원되지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamTimeStampNotImplemented">
+        <source>Stream time stamp not implemented in OLE32 implementation of Compound Files.</source>
+        <target state="translated">Compound Files의 OLE32 구현 시 스트림 타임스탬프가 구현되지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamingModeNotSupportedForConsumption">
+        <source>Streaming mode is supported only for creating packages.</source>
+        <target state="translated">스트리밍 모드는 패키지를 만드는 경우에만 지원됩니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamingPackageProductionImpliesWriteOnlyAccess">
+        <source>Must have write-only access to produce a package in streaming mode.</source>
+        <target state="translated">스트리밍 모드에서 패키지를 만들려면 쓰기 전용 권한이 있어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamingPackageProductionRequiresSingleWriter">
+        <source>Cannot have concurrent write accesses on package being produced in streaming mode.</source>
+        <target state="translated">스트리밍 모드에서 만들어지는 패키지에 대해 동시 쓰기 권한을 보유할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringCanNotBeReservedName">
+        <source>'{0}' cannot start with the reserved character range 0x01-0x1F.</source>
+        <target state="translated">'{0}'은(는) 예약된 문자 범위 0x01-0x1F로 시작될 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringEmpty">
+        <source>Parameter cannot be a zero-length string.</source>
+        <target state="translated">매개 변수 문자열의 길이는 0일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TargetNotMediaPermissionLevel">
+        <source>Target is not a MediaPermission.</source>
+        <target state="translated">대상이 MediaPermission이 아닙니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TargetNotWebBrowserPermissionLevel">
+        <source>Target is not a WebBrowserPermission.</source>
+        <target state="translated">대상이 WebBrowserPermission이 아닙니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">
+        <source>A thread cannot wait on operations already running on the same thread.</source>
+        <target state="translated">스레드는 같은 스레드에서 이미 실행 중인 작업에 대해 대기할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TimeSpanPeriodOutOfRange_TooLarge">
+        <source>TimeSpan period must be less than or equal to Int32.MaxValue.</source>
+        <target state="translated">TimeSpan 기간은 Int32.MaxValue보다 작거나 같아야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TimeSpanPeriodOutOfRange_TooSmall">
+        <source>TimeSpan period must be greater than or equal to zero.</source>
+        <target state="translated">TimeSpan 기간은 0보다 크거나 같아야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TimeStampNotAvailable">
+        <source>Requested time stamp is not available.</source>
+        <target state="translated">요청한 타임스탬프를 사용할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToStringNull">
+        <source>(null)</source>
+        <target state="translated">(null)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperEmptyToken">
+        <source>Empty token encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">'{1}'을(를) 구문 분석하는 동안 위치 {0}에서 비어 있는 토큰이 발견되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperExtraDataEncountered">
+        <source>Extra data encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">'{1}'을(를) 구문 분석하는 동안 위치 {0}에서 추가 데이터가 발견되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperMissingEndQuote">
+        <source>Missing end quote encountered while parsing '{0}'.</source>
+        <target state="translated">'{0}'을(를) 구문 분석하는 동안 닫는 따옴표가 없음을 발견했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperPrematureStringTermination">
+        <source>Premature string termination encountered while parsing '{0}'.</source>
+        <target state="translated">'{0}'을(를) 구문 분석하는 동안 중간에 중단된 문자열이 발견되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyDependencyProperties">
+        <source>DependencyProperty limit has been exceeded upon registration of '{0}'. Dependency properties are normally static class members registered with static field initializers or static constructors. In this case, there may be dependency properties accidentally getting initialized in instance constructors and thus causing the maximum limit to be exceeded.</source>
+        <target state="translated">'{0}' 등록 시 DependencyProperty 한도를 초과했습니다. 종속성 속성은 일반적으로 정적 필드 이니셜라이저 또는 정적 생성자에 등록된 정적 클래스 멤버입니다. 이 경우에는 종속성 속성이 실수로 인스턴스 생성자에서 초기화되어 최대 한도를 초과했을 수 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformLabelInUse">
+        <source>Transform label name is already in use.</source>
+        <target state="translated">변환 레이블 이름이 이미 사용 중입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformLabelUndefined">
+        <source>Data space transform stack includes undefined transform labels.</source>
+        <target state="translated">데이터 공간 변환 스택에 정의되지 않은 변환 레이블이 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformObjectConstructorParam">
+        <source>Transform object type is required to have a constructor which takes a TransformEnvironment object.</source>
+        <target state="translated">Transform 개체 형식에는 TransformEnvironment 개체를 사용하는 생성자가 있어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformObjectImplementIDataTransform">
+        <source>Transform object type is required to implement IDataTransform interface.</source>
+        <target state="translated">IDataTransform 인터페이스를 구현하려면 Transform 개체 형식이 필요합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformObjectInitFailed">
+        <source>Stream transformation failed due to uninitialized data transform objects.</source>
+        <target state="translated">초기화되지 않은 데이터 변환 개체로 인해 스트림 변환에 실패했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformParametersFixed">
+        <source>Cannot change Transform parameters after the transform is initialized.</source>
+        <target state="translated">변환이 초기화되면 Transform 매개 변수를 변경할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformStackValid">
+        <source>Transform stack must have at least one transform.</source>
+        <target state="translated">변환 스택에는 최소한 하나의 변환이 있어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformTypeUnsupported">
+        <source>Transform identifier type is not supported.</source>
+        <target state="translated">변환 식별자 형식이 지원되지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Transform_NotInvertible">
+        <source>Transform is not invertible.</source>
+        <target state="translated">반대로 변환할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TruncateAppendModesNotSupported">
+        <source>Truncate and Append FileModes are not supported.</source>
+        <target state="translated">Truncate 및 Append FileModes가 지원되지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeMetadataAlreadyInUse">
+        <source>Metadata is already associated with a type and property. A new one must be created.</source>
+        <target state="translated">메타데이터가 이미 형식 및 속성과 연결되어 있습니다. 새로 만들어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeMetadataAlreadyRegistered">
+        <source>PropertyMetadata is already registered for type '{0}'.</source>
+        <target state="translated">'{0}' 형식에 대한 PropertyMetadata가 이미 등록되어 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeMetadataCannotChangeAfterUse">
+        <source>Cannot change property metadata after it has been associated with a property.</source>
+        <target state="translated">속성과 연결된 후에는 속성 메타데이터를 변경할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeMustBeDependencyObjectDerived">
+        <source>'{0}' type must derive from DependencyObject.</source>
+        <target state="translated">'{0}' 형식은 DependencyObject에서 파생되어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypesElementExpected">
+        <source>Required Types tag not found.</source>
+        <target state="translated">필수 Types 태그를 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypesTagHasExtraAttributes">
+        <source>Types tag has attributes not valid per the schema.</source>
+        <target state="translated">Types 태그에 스키마별로 유효하지 않은 특성이 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypesXmlDoesNotMatchSchema">
+        <source>Content Types XML does not match schema.</source>
+        <target state="translated">Content Types XML이 스키마와 일치하지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="URIShouldNotBeAbsolute">
+        <source>Cannot be an absolute URI.</source>
+        <target state="translated">절대 URI일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnableToCreateOnStream">
+        <source>Cannot create package on stream.</source>
+        <target state="translated">스트림에서 패키지를 만들 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnableToCreateStorage">
+        <source>Cannot create data storage.</source>
+        <target state="translated">데이터 스토리지를 만들 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnableToCreateStream">
+        <source>Cannot create data stream.</source>
+        <target state="translated">데이터 스트림을 만들 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnableToLocateResource">
+        <source>Cannot locate resource '{0}'.</source>
+        <target state="translated">'{0}' 리소스가 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnableToOpenStream">
+        <source>Cannot open data stream.</source>
+        <target state="translated">데이터 스트림을 열 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedXmlTag">
+        <source>Unexpected tag '{0}'.</source>
+        <target state="translated">'{0}'은(는) 예기치 않은 태그입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownDCDateTimeXsiType">
+        <source>Unknown xsi:type for DateTime on '{0}'.</source>
+        <target state="translated">'{0}'에 DateTime에 대한 알 수 없는 xsi:type이 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownDocumentProperty">
+        <source>Unrecognized document property: FMTID = '{0}', property ID = '{1}'.</source>
+        <target state="translated">인식할 수 없는 문서 속성: FMTID = '{0}', 속성 ID = '{1}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownExpressionMode">
+        <source>Unrecognized Expression 'Mode' value.</source>
+        <target state="translated">인식할 수 없는 Expression 'Mode' 값입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownNamespaceInCorePropertiesPart">
+        <source>Unrecognized namespace in Core Properties part.</source>
+        <target state="translated">Core Properties 파트에 인식할 수 없는 네임스페이스가 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownReferenceComponentType">
+        <source>Unrecognized reference component type.</source>
+        <target state="translated">인식할 수 없는 참조 구성 요소 형식입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownReferenceSerialize">
+        <source>Cannot serialize unknown CompoundFileReference subclass.</source>
+        <target state="translated">알 수 없는 CompoundFileReference 서브클래스를 직렬화할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownTagEncountered">
+        <source>Unrecognized tag found in Relationships XML.</source>
+        <target state="translated">Relationships XML에 인식할 수 없는 태그가 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedCanonicalizationMethod">
+        <source>Unsupported canonicalization method specified.</source>
+        <target state="translated">지원되지 않는 정규화 메서드를 지정했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedCombinationOfModeAccess">
+        <source>Cannot get stream with FileMode.Create, FileMode.CreateNew, FileMode.Truncate, FileMode.Append when access is FileAccess.Read.</source>
+        <target state="translated">FileAccess.Read로 액세스한 경우 FileMode.Create, FileMode.CreateNew, FileMode.Truncate 및 FileMode.Append를 사용하는 스트림을 가져올 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedCombinationOfModeAccessShareStreaming">
+        <source>Cannot get stream with FileMode.Create, FileMode.CreateNew, FileMode.Truncate, FileMode.Append when access is FileAccess.Read.</source>
+        <target state="translated">FileAccess.Read로 액세스한 경우 FileMode.Create, FileMode.CreateNew, FileMode.Truncate 및 FileMode.Append를 사용하는 스트림을 가져올 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedHashAlgorithm">
+        <source>Unsupported hash algorithm specified.</source>
+        <target state="translated">지원되지 않는 해시 알고리즘을 지정했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedTransformAlgorithm">
+        <source>Unsupported transform algorithm specified.</source>
+        <target state="translated">지원되지 않는 변환 알고리즘을 지정했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedTypeEncounteredWhenBuildingStgEnum">
+        <source>Encountered unsupported type of storage element when building storage enumerator.</source>
+        <target state="translated">스토리지 열거자를 빌드하는 동안 지원되지 않는 형식의 스토리지 요소를 발견했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Unsupported_Key">
+        <source>Unrecognized Key '{0}'.</source>
+        <target state="translated">인식할 수 없는 Key '{0}'입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Unsupported_Modifier">
+        <source>Unrecognized ModifierKeys '{0}'.</source>
+        <target state="translated">인식할 수 없는 ModifierKeys '{0}'입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UpdaterVersionError">
+        <source>File contains data in format version {0}, but the software can only update that data in format version {1} or lower.</source>
+        <target state="translated">파일에 형식 버전 {0}의 데이터가 있지만, 소프트웨어는 형식 버전 {1} 이하의 데이터만 업데이트할 수 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UriShouldBeAbsolute">
+        <source>Must have absolute URI.</source>
+        <target state="translated">절대 URI가 있어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UriShouldBePackScheme">
+        <source>URI must contain pack:// scheme.</source>
+        <target state="translated">URI에 pack:// 체계가 포함되어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UseLicenseStreamCorrupt">
+        <source>One of the document's use licenses is corrupted.</source>
+        <target state="translated">문서의 사용 라이선스 중 하나가 손상되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UserHasNoClientLicensorCert">
+        <source>User does not have a client licensor certificate.</source>
+        <target state="translated">사용자에게 클라이언트 사용 허가자 인증서가 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UserIsNotActivated">
+        <source>User is not activated.</source>
+        <target state="translated">사용자가 활성화되지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VerifyAccess">
+        <source>The calling thread cannot access this object because a different thread owns it.</source>
+        <target state="translated">다른 스레드가 이 개체를 소유하고 있어 호출 스레드가 해당 개체에 액세스할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Verify_ApartmentState">
+        <source>This operation requires the thread's apartment state to be '{0}'.</source>
+        <target state="translated">이 작업을 수행하려면 스레드의 아파트가 '{0}' 상태여야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Verify_AreNotEqual">
+        <source>The argument can not be equal to '{0}'.</source>
+        <target state="translated">인수는 '{0}'(과)와 같을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Verify_FileExists">
+        <source>No file exists at '{0}'.</source>
+        <target state="translated">'{0}'에 파일이 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Verify_NeitherNullNorEmpty">
+        <source>The argument can neither be null nor empty.</source>
+        <target state="translated">인수는 null이거나 비어 있을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VersionNumberComponentNegative">
+        <source>Major and minor version number components cannot be negative.</source>
+        <target state="translated">주 버전 및 부 버전 번호 구성 요소는 음수일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VersionStreamMissing">
+        <source>Cannot find version stream.</source>
+        <target state="translated">버전 스트림을 찾을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VersionUpdateFailure">
+        <source>Cannot update version because of a version field size mismatch.</source>
+        <target state="translated">버전 필드 크기가 일치하지 않으므로 버전을 업데이트할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WPF_UILanguage">
+        <source>en</source>
+        <target state="translated">ko</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WpfDllConsistencyErrorData">
+        <source>DLL Name: {0} DLL Location: {1}</source>
+        <target state="translated">DLL 이름: {0} DLL 위치: {1}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WpfDllConsistencyErrorHeader">
+        <source>Failed WPF DLL consistency checks. Expected location: {0}.</source>
+        <target state="translated">WPF DLL 일관성 확인에 실패했습니다. 예상 위치: {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteBufferTooSmall">
+        <source>Buffer of bytes to be written is too small.</source>
+        <target state="translated">기록할 바이트 버퍼가 너무 작습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteCountNegative">
+        <source>Count of bytes to write cannot be negative.</source>
+        <target state="translated">기록할 바이트 개수는 음수일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteFailure">
+        <source>Cannot write all data as specified.</source>
+        <target state="translated">지정한 대로 모든 데이터를 쓸 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteNotSupported">
+        <source>Stream does not support writing.</source>
+        <target state="translated">스트림이 쓰기를 지원하지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteOnlyStream">
+        <source>Cannot read from write-only stream.</source>
+        <target state="translated">쓰기 전용 스트림에서 읽을 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteOnlyUnsupported">
+        <source>Write-only mode is not supported.</source>
+        <target state="translated">쓰기 전용 모드는 지원되지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteSizeNegative">
+        <source>Cannot write a negative number of bytes.</source>
+        <target state="translated">음수 바이트 수를 쓸 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WrongContentTypeForPropertyPart">
+        <source>The Core Properties relationship references a part that has an incorrect content type.</source>
+        <target state="translated">Core Properties relationship이 잘못된 콘텐츠 형식의 파트를 참조합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WrongDocumentPropertyVariantType">
+        <source>'{0}' document property in property set '{1}' is of incorrect variant type '{2}'. Expected type '{3}'.</source>
+        <target state="translated">속성 설정 '{1}'에서 '{0}' 문서 속성의 변형 형식 '{2}'이(가) 잘못되었습니다. 필요한 형식은 '{3}'입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceAfterFallback">
+        <source>Choice cannot follow a Fallback.</source>
+        <target state="translated">Choice는 Fallback 뒤에 올 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceNotFound">
+        <source>AlternateContent must contain one or more Choice elements.</source>
+        <target state="translated">AlternateContent에는 하나 이상의 Choice 요소가 있어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceOnlyInAC">
+        <source>Choice is valid only in AlternateContent.</source>
+        <target state="translated">Choice는 AlternateContent에서만 사용할 수 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRCompatCycle">
+        <source>There is a cycle of XML compatibility definitions, such that namespace '{0}' overrides itself. This could be due to inconsistent XmlnsCompatibilityAttributes in different assemblies. Please change the definitions to eliminate this cycle.</source>
+        <target state="translated">'{0}' 네임스페이스가 자신을 재정의하는 XML 호환성 정의 순환이 있습니다. 다른 어셈블리의 XmlnsCompatibilityAttributes가 일치하지 않기 때문일 수 있습니다. 정의를 변경하여 이 순환을 제거하세요.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicatePreserve">
+        <source>Duplicate Preserve declaration for element {1} in namespace '{0}'.</source>
+        <target state="translated">'{0}' 네임스페이스에서 {1} 요소에 대한 Preserve 선언이 중복되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateProcessContent">
+        <source>Duplicate ProcessContent declaration for element '{1}' in namespace '{0}'.</source>
+        <target state="translated">'{0}' 네임스페이스에서 '{1}' 요소에 대한 ProcessContent 선언이 중복되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardPreserve">
+        <source>Duplicate wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">'{0}' 네임스페이스에 대한 와일드카드 Preserve 선언이 중복되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardProcessContent">
+        <source>Duplicate wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">'{0}' 네임스페이스에 대한 와일드카드 ProcessContent 선언이 중복되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRFallbackOnlyInAC">
+        <source>Fallback is valid only in AlternateContent.</source>
+        <target state="translated">Fallback은 AlternateContent에서만 사용할 수 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidACChild">
+        <source>'{0}' element is not a valid child of AlternateContent. Only Choice and Fallback elements are valid children of an AlternateContent element.</source>
+        <target state="translated">'{0}' 요소는 AlternateContent의 잘못된 자식입니다. Choice 및 Fallback 요소만 AlternateContent 요소의 올바른 자식입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidAttribInElement">
+        <source>'{0}' attribute is not valid for '{1}' element.</source>
+        <target state="translated">'{0}' 특성은 '{1}' 요소에 유효하지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidFormat">
+        <source>'{0}' format is not valid.</source>
+        <target state="translated">'{0}' 형식이 잘못되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidPreserve">
+        <source>Cannot have both a specific and a wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">'{0}' 네임스페이스에 대한 특정 및 와일드카드 Preserve 선언을 함께 사용할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidProcessContent">
+        <source>Cannot have both a specific and a wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">'{0}' 네임스페이스에 대한 특정 및 와일드카드 ProcessContent 선언을 함께 사용할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidRequiresAttribute">
+        <source>Requires attribute must contain a valid namespace prefix.</source>
+        <target state="translated">Requires 특성에 올바른 네임스페이스 접두사가 있어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidXMLName">
+        <source>'{0}' attribute value is not a valid XML name.</source>
+        <target state="translated">'{0}' 특성 값이 잘못된 XML 이름입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMultipleFallbackFound">
+        <source>AlternateContent must contain only one Fallback element.</source>
+        <target state="translated">AlternateContent에는 Fallback 요소가 하나만 있어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMustUnderstandFailed">
+        <source>MustUnderstand condition failed on namespace '{0}'</source>
+        <target state="translated">'{0}' 네임스페이스에서 MustUnderstand 조건이 충족되지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSPreserveNotIgnorable">
+        <source>'{0}' namespace cannot preserve items; it must be declared Ignorable first.</source>
+        <target state="translated">'{0}' 네임스페이스가 항목을 유지할 수 없으므로 먼저 Ignorable로 선언되어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSProcessContentNotIgnorable">
+        <source>'{0}' namespace cannot process content; it must be declared Ignorable first.</source>
+        <target state="translated">'{0}' 네임스페이스가 콘텐츠를 처리할 수 없으므로 먼저 Ignorable로 선언되어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRRequiresAttribNotFound">
+        <source>Choice must contain Requires attribute.</source>
+        <target state="translated">Choice에 Requires 특성이 있어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUndefinedPrefix">
+        <source>'{0}' prefix is not defined.</source>
+        <target state="translated">'{0}' 접두사가 정의되지 않았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatAttrib">
+        <source>Unrecognized compatibility attribute '{0}'.</source>
+        <target state="translated">인식할 수 없는 호환성 특성 '{0}'입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatElement">
+        <source>Unrecognized Compatibility element '{0}'.</source>
+        <target state="translated">인식할 수 없는 호환성 요소 '{0}'입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlSignatureParseError">
+        <source>Error parsing XML Signature.</source>
+        <target state="translated">XML 시그니처를 구문 분석하는 중 오류가 발생했습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XsdDateTimeExpected">
+        <source>Core Properties part: Text data of XSD type 'DateTime' was expected.</source>
+        <target state="translated">Core Properties 파트: XSD 형식 'DateTime'의 텍스트 데이터가 필요합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZLibVersionError">
+        <source>Compression requires ZLib library version {0}.</source>
+        <target state="translated">압축하려면 ZLib 라이브러리 버전 {0}이(가) 필요합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZeroLengthFeatureID">
+        <source>Feature ID string cannot have zero length.</source>
+        <target state="translated">기능 ID 문자열은 길이가 0일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Zip64StructuresTooLarge">
+        <source>ZIP archive contains data structures too large to fit in memory.</source>
+        <target state="translated">ZIP 보관 파일에 포함된 데이터 구조가 너무 커서 메모리에 들어가지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZipArchiveDisposed">
+        <source>ZIP archive was closed and disposed.</source>
+        <target state="translated">ZIP 보관 파일이 닫혔으며 삭제되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZipFileItemDisposed">
+        <source>ZIP file was closed, disposed, or deleted.</source>
+        <target state="translated">ZIP 파일이 닫혔거나 삭제되었습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZipNotSupportedCompressionMethod">
+        <source>ZIP archive contains data compressed using an unsupported algorithm.</source>
+        <target state="translated">ZIP 보관 파일에 지원되지 않는 알고리즘을 사용하여 압축된 데이터가 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZipNotSupportedEncryptedArchive">
+        <source>ZIP archive contains unsupported encrypted data.</source>
+        <target state="translated">ZIP 보관 파일에 지원되지 않는 암호화된 데이터가 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZipNotSupportedSignedArchive">
+        <source>ZIP archive contains unsupported signature data.</source>
+        <target state="translated">ZIP 보관 파일에 지원되지 않는 시그니처 데이터가 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZipZeroSizeFileIsNotValidArchive">
+        <source>Archive file cannot be size 0.</source>
+        <target state="translated">보관 파일의 크기는 0일 수 없습니다.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

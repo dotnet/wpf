@@ -1,9 +1,14 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
+using System.Diagnostics.CodeAnalysis;
 namespace System.Xaml
 {
+    [SuppressMessage(
+        "Microsoft.Design",
+        "CA1063:ImplementIDisposableCorrectly",
+        Justification = @"This API has already shipped and in order to ensure compat for the
+        initial .NET Core 3 release, this won't be fixed. It could be addressed at a later time.")]
     public abstract class XamlReader: IDisposable
     {
         public abstract bool Read();

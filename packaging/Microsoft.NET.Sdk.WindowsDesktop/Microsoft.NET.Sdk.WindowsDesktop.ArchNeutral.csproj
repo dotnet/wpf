@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{440d06b8-e3de-4c0d-ad25-cd4f43d836e1}</ProjectGuid>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- 
+      PlatformIndependentPackage = true means that this package does
+      not require the automatic generation of a runtime.json file using
+      the Bait & Switch technique to reference RID specific packages
+    -->
+    <PlatformIndependentPackage>true</PlatformIndependentPackage>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <PackageName>$(MSBuildProjectName.Replace('.ArchNeutral',''))$(TransportPackageNameSuffix)</PackageName>
+    <AssemblyName>$(PackageName)</AssemblyName>
+    <PackageDescription>WindowsDesktop SDK</PackageDescription>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackagingContent Include="Sdk\*" SubFolder="root\Sdk" />
+    <PackagingContent Include="targets\*" SubFolder="root\targets" />
+    <PackagingContent Include="useSharedDesignerContext.txt" SubFolder="root" />
+  </ItemGroup>
+</Project>

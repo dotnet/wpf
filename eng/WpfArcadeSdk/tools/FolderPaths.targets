@@ -1,0 +1,25 @@
+<Project>
+  <PropertyGroup>
+    <!-- $(WpfSharedDir) is present in the current repository -->
+    <WpfSharedDir Condition="'$(WpfSharedDir)'=='' And Exists('$(WpfSourceDir)shared\')">$(WpfSourceDir)shared\</WpfSharedDir>
+    <!-- Consume from NuGet cache -->
+    <WpfTransportedSharedDir Condition="'$(WpfTransportedSharedDir)'=='' And Exists('$(WpfArcadeSdkRoot)src\shared\')">$(WpfArcadeSdkRoot)src\shared\</WpfTransportedSharedDir>
+    <!-- Consume from $(WpfTestArcadeWpfSdkPath) -->
+    <WpfTransportedSharedDir Condition="'$(WpfTransportedSharedDir)'=='' And Exists('$(WpfArcadeSdkRoot)..\..\src\Microsoft.DotNet.Wpf\src\Shared\')">$(WpfArcadeSdkRoot)..\..\src\Microsoft.DotNet.Wpf\src\Shared\</WpfTransportedSharedDir>
+
+    <!-- $(WpfCommonDir) is present in the current repository -->
+    <WpfCommonDir Condition="'$(WpfCommonDir)'=='' And Exists('$(WpfSourceDir)Common\') And '$(RepositoryName)'!='dotnet-wpf-int'">$(WpfSourceDir)Common\</WpfCommonDir>
+    <!-- Consume from NuGet cache -->
+    <WpfTransportedCommonDir Condition="'$(WpfTransportedCommonDir)'=='' And Exists('$(WpfArcadeSdkRoot)src\Common\')">$(WpfArcadeSdkRoot)src\Common\</WpfTransportedCommonDir>
+    <!-- Consume from $(WpfTestArcadeWpfSdkPath) -->
+    <WpfTransportedCommonDir Condition="'$(WpfTransportedCommonDir)'=='' And Exists('$(WpfArcadeSdkRoot)..\..\src\Microsoft.DotNet.Wpf\src\Common\')">$(WpfArcadeSdkRoot)..\..\src\Microsoft.DotNet.Wpf\src\Common\</WpfTransportedCommonDir>
+
+    <WpfTransportedGraphicsDir Condition="'$(WpfTransportedGraphicsDir)'=='' And Exists('$(WpfArcadeSdkRoot)src\WpfGfx\')">$(WpfArcadeSdkRoot)src\WpfGfx\</WpfTransportedGraphicsDir>
+    <WpfTransportedGraphicsDir Condition="'$(WpfTransportedGraphicsDir)'=='' And Exists('$(WpfArcadeSdkRoot)..\..\src\Microsoft.DotNet.Wpf\src\WpfGfx\')">$(WpfArcadeSdkRoot)..\..\src\Microsoft.DotNet.Wpf\src\WpfGfx\</WpfTransportedGraphicsDir>
+
+    <WpfTransportedGraphicsPath>$(WpfTransportedGraphicsDir)</WpfTransportedGraphicsPath>
+
+    <WpfTracingDir Condition="'$(WpfTracingDir)' == '' And Exists('$(WpfSharedDir)Tracing\')">$(WpfSharedDir)Tracing\</WpfTracingDir>
+    <WpfTracingDir Condition="'$(WpfTracingDir)' == '' And Exists('$(WpfTransportedSharedDir)Tracing\')">$(WpfTransportedSharedDir)Tracing\</WpfTracingDir>
+  </PropertyGroup>
+</Project>

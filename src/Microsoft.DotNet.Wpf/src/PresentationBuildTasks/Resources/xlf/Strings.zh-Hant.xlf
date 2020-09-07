@@ -1,0 +1,1207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="zh-HANT" original="../Strings.resx">
+    <body>
+      <trans-unit id="AnalysisResult">
+        <source>Analysis Result : '{0}'.</source>
+        <target state="translated">分析結果: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AppDefIsNotRequired">
+        <source>MC1002: Library project file cannot specify ApplicationDefinition element.</source>
+        <target state="translated">MC1002: 程式庫專案檔無法指定 ApplicationDefinition 項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ApplicationDefinitionFile">
+        <source>Input: Markup ApplicationDefinition file: '{0}'.</source>
+        <target state="translated">輸入: 標記 ApplicationDefinition 檔案: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttributeNotAllowedOnCodeTag">
+        <source>MC6015: '{0}' cannot be set on the '{1}:{2}' tag.</source>
+        <target state="translated">MC6015: 無法在 '{1}:{2}' 標記上設定 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadUidTask">
+        <source>UM1001: Unrecognized UidManager task name '{0}'.</source>
+        <target state="translated">UM1001: 無法識別的 UidManager 工作名稱 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CheckingUids">
+        <source>Checking Uids in file '{0}' ...</source>
+        <target state="translated">正在檢查檔案 '{0}' 中的 Uid...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CommentFileGenerated">
+        <source>Generated localization directives file: '{0}' .</source>
+        <target state="translated">已產生的當地語系化指示詞檔案: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CommentFileGenerating">
+        <source>Generating localization directives file: '{0}' ...</source>
+        <target state="translated">正在產生當地語系化指示詞檔案: '{0}'...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompilationDone">
+        <source>Markup compilation is done.</source>
+        <target state="translated">標記編譯完成。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompileSucceed_Pass1">
+        <source>MarkupCompilePass1 successfully generated BAML or source code files.</source>
+        <target state="translated">MarkupCompilePass1 已順利產生 BAML 或原始程式碼檔案。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompileSucceed_Pass2">
+        <source>MarkupCompilePass2 successfully generated BAML or source code files.</source>
+        <target state="translated">MarkupCompilePass2 已順利產生 BAML 或原始程式碼檔案。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContainingTagNotGeneric">
+        <source>MC6011: '{0}' event has a generic event handler delegate type '{1}'. The type parameters of '{1}' cannot be bound with an appropriate type argument because the containing tag '{2}' is not a generic type.</source>
+        <target state="translated">MC6011: '{0}' 事件具有泛用事件處理常式委派型別 '{1}'。'{1}' 的型別參數無法與適當的型別引數繫結，因為包含標記 '{2}' 不是泛型型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CurrentDirectory">
+        <source>Current project directory is '{0}'.</source>
+        <target state="translated">目前的專案目錄是 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefinitionAttributeNotAllowed">
+        <source>MC6022: Only a root tag can specify attribute '{0}:{1}'.</source>
+        <target state="translated">MC6022: 只有根標記可以指定屬性 '{0}:{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefinitionTagNotAllowedAtRoot">
+        <source>MC6010: '{0}:{1}' cannot be specified as the root element.</source>
+        <target state="translated">MC6010: 無法指定 '{0}:{1}' 做為根項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefnTagsCannotBeNested">
+        <source>MC6004: '{0}:{1}' contains '{2}'. '{0}:{1}' can contain only a CDATA or text section.</source>
+        <target state="translated">MC6004: '{0}:{1}' 包含 '{2}'。'{0}:{1}' 只能包含 CDATA 或文字區段。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DoCompilation">
+        <source>Started the markup compilation.</source>
+        <target state="translated">已開始進行標記編譯。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EmptyEventStringNotAllowed">
+        <source>MC6030: {0}="{1}" is not valid. '{0}' event attribute value cannot be a string that is empty or has only white space.</source>
+        <target state="translated">MC6030: {0}="{1}" 無效。'{0}' 事件屬性值不可以是空字串或只包含空白字元的字串。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FieldModifierNotAllowed">
+        <source>MC6021: {0}:FieldModifier cannot be specified on this tag because it has either no {0}:Name or Name attribute set, or the tag is locally defined and has a Name attribute set, which is not allowed.</source>
+        <target state="translated">MC6021: 無法在此標記上指定 {0}:FieldModifier，因為它並未設定 {0}:Name 或 Name 屬性，或是標記已在本機定義且已設定 Name 屬性，上述兩種情況都是不允許的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileNotFound">
+        <source>BG1002: File '{0}' cannot be found.</source>
+        <target state="translated">BG1002: 找不到檔案 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileResolved">
+        <source>Input file '{0}' is resolved to new relative path '{1}' at directory '{2}'.</source>
+        <target state="translated">輸入檔案 '{0}' 已解析為新的相對路徑 '{1}' (於目錄 '{2}')。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FilesFailedUidCheck">
+        <source>UM1004: {0} files failed Uid check.</source>
+        <target state="translated">UM1004: 無法針對 {0} 檔案執行 Uid 檢查。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FilesPassedUidCheck">
+        <source>Uids valid in {0} files.</source>
+        <target state="translated">{0} 檔案中的 Uid 正確。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FilesRemovedUid">
+        <source>Uids removed from {0} files.</source>
+        <target state="translated">已從 {0} 檔案移除 Uid。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FilesUpdatedUid">
+        <source>Uids updated in {0} files.</source>
+        <target state="translated">已更新 {0} 檔案中的 Uid。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GeneratedBamlFile">
+        <source>Generated BAML file: '{0}'.</source>
+        <target state="translated">已產生 BAML 檔案: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GeneratedCodeFile">
+        <source>Generated code file: '{0}'.</source>
+        <target state="translated">已產生程式碼檔案: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IllegalCDataTextScoping">
+        <source>MC6003: '{0}:{1}' contains '{2}'. '{0}:{1}' cannot contain nested content.</source>
+        <target state="translated">MC6003: '{0}:{1}' 包含 '{2}'。'{0}:{1}' 不能包含巢狀內容。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IntermediateDirectoryError">
+        <source>UM1006: '{0}' directory does not exist and cannot be created.</source>
+        <target state="translated">UM1006: '{0}' 目錄不存在，且無法建立該目錄。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InternalTypeHelperNotRequired">
+        <source>InternalTypeHelper class is not required for this project, make file '{0}' empty.</source>
+        <target state="translated">對於此專案，InternalTypeHelper 類別不是必要項目，將檔案 '{0}' 清空。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidAssemblyVersion">
+        <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
+        <target state="translated">MC1005：偵測到無效的 AssemblyVersion: {0}。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidBaseClassName">
+        <source>MC6018: '{0}' class name is not valid for the locally defined XAML root element.</source>
+        <target state="translated">MC6018: 對於 XAML 根項目而言，在本機定義的 '{0}' 類別名稱是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidBaseClassNamespace">
+        <source>MC6019: '{0}' namespace is not valid for the locally defined XAML root element '{1}'.</source>
+        <target state="translated">MC6019: 對於在本機定義的 XAML 根項目 '{1}' 而言，'{0}' 命名空間是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidClassName">
+        <source>MC6027: {0}:{1}="{2}" is not valid. '{2}' is not a valid {3}class name.</source>
+        <target state="translated">MC6027: {0}:{1}="{2}" 無效。'{2}' 不是有效的 {3} 類別名稱。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCulture">
+        <source>FC1001: The UICulture value '{0}' set in the project file is not valid.</source>
+        <target state="translated">FC1001: 在專案檔中設定的 UICulture 值 '{0}' 無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCustomSerialize">
+        <source>MC4402: Serializer does not support custom BAML serialization operations.</source>
+        <target state="translated">MC4402: 序列化程式不支援自訂 BAML 序列化操作。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDeSerialize">
+        <source>MC4401: Serializer does not support Convert operations.</source>
+        <target state="translated">MC4401: 序列化程式不支援 Convert 操作。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDefaultCLRNamespace">
+        <source>MC6029: '{0}' name is not valid in the default namespace '{1}'. Correct the RootNamespace tag value in the project file.</source>
+        <target state="translated">MC6029: 預設命名空間 '{1}' 中的 '{0}' 名稱無效。請更正專案檔中的 RootNamespace 標記值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidEventHandlerName">
+        <source>MC6005: {0}="{1}" is not valid. '{1}' is not a valid event handler method name. Only instance methods on the generated or code-behind class are valid.</source>
+        <target state="translated">MC6005: {0}="{1}" 無效。'{1}' 不是有效的事件處理常式方法名稱。只有已產生之類別或程式碼後置類別中的執行個體方法是有效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidLocCommentTarget">
+        <source>LC1001: Localization comment target property is not valid in string '{0}'.</source>
+        <target state="translated">LC1001: '{0}' 字串中的當地語系化註解目標屬性無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidLocCommentValue">
+        <source>LC1002: Localization comment value is not valid for target property '{0}' in string '{1}'.</source>
+        <target state="translated">LC1002: '{1}' 字串中目標屬性 '{0}' 的當地語系化註解值無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidLocalizabilityValue">
+        <source>LC1004: Localizability attribute setting '{0}' is not valid.</source>
+        <target state="translated">LC1004: 可當地語系化屬性設定 '{0}' 無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidMarkupFile">
+        <source>MC6001: Markup file is not valid. Specify a source markup file with an .xaml extension.</source>
+        <target state="translated">MC6001: 標記檔案無效。請指定具有 .xaml 副檔名的來源標記檔案。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeName">
+        <source>MC6028: {0}:TypeArguments="{1}" is not valid. '{2}' is not a valid type name reference for the generic argument at position '{3}'.</source>
+        <target state="translated">MC6028: {0}:TypeArguments="{1}" 無效。'{2}' 不是泛型引數 (位置 '{3}') 的有效型別名稱參考。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidXml">
+        <source>MC3000: '{0}' XML is not valid.</source>
+        <target state="translated">MC3000: '{0}' XML 無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalNamePropertyNotAllowed">
+        <source>MC6023: Because '{0}' is implemented in the same assembly, you must set the {1}:Name attribute rather than the Name attribute.</source>
+        <target state="translated">MC6023: 因為 '{0}' 是實作於相同的組件中，您必須設定 {1}:Name 屬性，而非 Name 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalRefAppDefFile">
+        <source>Input: Local reference markup ApplicationDefinition file is '{0}'.</source>
+        <target state="translated">輸入: 本機參考標記 ApplicationDefinition 檔案是 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalRefGeneratedBamlFile">
+        <source>Generated BAML file: '{0}'.</source>
+        <target state="translated">已產生 BAML 檔案: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalRefMarkupPage">
+        <source>Input: Local reference markup Page file: '{0}'.</source>
+        <target state="translated">輸入: 本機參考標記 Page 檔案: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MatchingTypeArgsNotFoundInRefType">
+        <source>MC6012: '{0}' event has a generic event handler delegate type '{1}'. The type parameter '{2}' on '{1}' does not match any type parameters on the containing generic tag '{3}'.</source>
+        <target state="translated">MC6012: '{0}' 事件具有泛用事件處理常式委派型別 '{1}'。'{1}' 上的型別參數 '{2}' 不符合容器泛用標記 '{3}' 上的任何型別參數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingClassDefinitionForCodeTag">
+        <source>MC6026: '{0}' root element requires a {1}:Class attribute because '{2}' contains a {1}:Code tag. Either remove {1}:Code and its contents, or add a {1}:Class attribute to the root element.</source>
+        <target state="translated">MC6026: '{0}' 根項目需要 {1}:Class 屬性，因為 '{2}' 包含 {1}:Code 標記。請移除 {1}:Code 與其內容，或新增 {1}:Class 屬性至根項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingClassDefinitionForEvent">
+        <source>MC6024: '{0}' root element requires a {1}:Class attribute to support event handlers in the XAML file. Either remove the event handler for the {2} event, or add a {1}:Class attribute to the root element.</source>
+        <target state="translated">MC6024: '{0}' 根項目需要 {1}:Class 屬性，才能支援 XAML 檔案中的事件處理常式。請移除 {2} 事件的事件處理常式，或新增 {1}:Class 屬性至根項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingClassDefinitionForTypeArgs">
+        <source>MC6025: '{0}' root element is a generic type and requires a {1}:Class attribute to support the {1}:TypeArguments attribute specified on the root element tag.</source>
+        <target state="translated">MC6025: '{0}' 根項目是泛型型別，且需要 {1}:Class 屬性，才能支援根項目標記中指定的 {1}:TypeArguments 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingClassWithFieldModifier">
+        <source>MC6031: {0}:FieldModifier attribute cannot be specified because a {0}:Class attribute is also required to generate a Name field with the specified access modifier. Either add a {0}:Class attribute on the root tag or remove the {0}:FieldModifier attribute.</source>
+        <target state="translated">MC6031: 無法指定 {0}:FieldModifier 屬性，因為必須也要有 {0}:Class 屬性，才能使用指定的存取修飾詞產生 Name 欄位。請在根標記新增 {0}:Class 屬性，或移除 {0}:FieldModifier 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingClassWithModifier">
+        <source>MC6009: {0}:ClassModifier attribute cannot be specified on the root tag because a {0}:Class attribute is also required. Either add a {0}:Class attribute or remove the {0}:ClassModifier attribute.</source>
+        <target state="translated">MC6009: 無法在根標記上指定 {0}:ClassModifier 屬性，因為也必須指定 {0}:Class 屬性。請新增 {0}:Class 屬性，或移除 {0}:ClassModifier 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingClassWithSubClass">
+        <source>MC6016: {0}:Class attribute is missing. It is required when a {0}:Subclass attribute is specified.</source>
+        <target state="translated">MC6016: {0}:Class 屬性遺失。指定 {0}:Subclass 屬性時，也必須指定此屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoreResourcesFiles">
+        <source>RG1002: ResourcesGenerator can generate only one .resources file at a time. The OutputResourcesFile property in the project file must be set to one file.</source>
+        <target state="translated">RG1002: ResourcesGenerator 一次只能產生一個 .resources 檔案。專案檔中的 OutputResourcesFile 屬性必須設定至一個檔案。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MultipleSplashScreenImages">
+        <source>MC1004: Project file cannot specify more than one SplashScreen element.</source>
+        <target state="translated">MC1004: 專案檔無法指定多個 SplashScreen 項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MultipleUidUse">
+        <source>UM1002: Uid "{0}" for element '{1}' is not unique.</source>
+        <target state="translated">UM1002: 項目 '{1}' 的 Uid "{0}" 不是唯一的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MutlipleApplicationFiles">
+        <source>MC1003: Project file cannot specify more than one ApplicationDefinition element.</source>
+        <target state="translated">MC1003: 專案檔無法指定多個 ApplicationDefinition 項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamedResDictItemWarning">
+        <source>A '{0}' is named '{1}'. Do not name ResourceDictionary contents because their instantiation is deferred.</source>
+        <target state="translated">'{0}' 已命名為 '{1}'。請勿將 ResourceDictionary 內容命名，因為具現化已延後。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NonClsError">
+        <source>BG1001: Unknown CLS exception.</source>
+        <target state="translated">BG1001: 不明的 CLS 例外狀況。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OutputType">
+        <source>OutputType is '{0}'.</source>
+        <target state="translated">OutputType 是 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAbandonedTypeConverterText">
+        <source>MC3001: TypeConverter syntax error encountered while processing initialization string '{0}'. Property elements are not allowed on objects created via TypeConverter.</source>
+        <target state="translated">MC3001: 處理初始化字串 '{0}' 時發生 TypeConverter 語法錯誤。透過 TypeConverter 建立的物件上不允許屬性項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAssemblyLoadVersionMismatch">
+        <source>MC3099: Cannot load assembly '{0}' because a different version of that same assembly is loaded '{1}'.</source>
+        <target state="translated">MC3099: 無法載入組件 '{0}'，因為已載入相同組件的不同版本 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAsyncOnRoot">
+        <source>MC3002: The AsyncRecords attribute must be set on the root tag.</source>
+        <target state="translated">MC3002: 必須在根標記上設定 AsyncRecords 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttachedPropInheritError">
+        <source>MC3015: The attached property '{0}' is not defined on '{1}' or one of its base classes.</source>
+        <target state="translated">MC3015: 附加的屬性 '{0}' 不是在 '{1}' 或它的其中一個基底類別上所定義。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsHigh">
+        <source>MC3003: There are too many attributes specified for '{0}'.</source>
+        <target state="translated">MC3003: 為 '{0}' 指定的屬性太多。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsLow">
+        <source>MC3004: There are not enough attributes specified for '{0}'.</source>
+        <target state="translated">MC3004: 為 '{0}' 指定的屬性數目不足。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeNamespaceMisMatch">
+        <source>MC3005: The property '{0}' must be in the default namespace or in the element namespace '{1}'.</source>
+        <target state="translated">MC3005: 屬性 '{0}' 必須位於預設的命名空間，或是位於項目命名空間 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadAssemblyName">
+        <source>MC3006: Mapper.SetAssemblyPath cannot accept an empty assemblyName.</source>
+        <target state="translated">MC3006: Mapper.SetAssemblyPath 無法接受空的 assemblyName。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadAssemblyPath">
+        <source>MC3007: Mapper.SetAssemblyPath cannot accept an empty assemblyPath.</source>
+        <target state="translated">MC3007: Mapper.SetAssemblyPath 無法接受空的 assemblyPath。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadChild">
+        <source>MC3008: An element of type '{0}' cannot be set on the complex property '{1}'. They are not compatible types.</source>
+        <target state="translated">MC3008: 無法在複雜屬性 '{1}' 上設定型別為 '{0}' 的項目。它們不是相容的型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadConstructorParams">
+        <source>MC3009: Cannot find a public constructor for '{0}' that takes {1} arguments.</source>
+        <target state="translated">MC3009: 找不到取得 {1} 個引數之 '{0}' 的公用建構函式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadKey">
+        <source>MC3012: A key for a dictionary cannot be of type '{0}'. Only String, TypeExtension, and StaticExtension are supported.</source>
+        <target state="translated">MC3012: 字典的索引鍵型別不能是 '{0}'。只支援 String、TypeExtension 與 StaticExtension。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadMemberReference">
+        <source>MC3029: '{0}' member is not valid because it does not have a qualifying type name.</source>
+        <target state="translated">MC3029: '{0}' 成員無效，因為它沒有合格的型別名稱。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadName">
+        <source>MC3010: '{0}' Name property value is not valid. Name must start with a letter or an underscore and can contain only letters, digits, and underscores.</source>
+        <target state="translated">MC3010: '{0}' Name 屬性值無效。Name 的開頭必須是字母或底線，而且只能包含字母、數字或底線。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadString">
+        <source>MC3094: Cannot convert string value '{0}' to type '{1}'.</source>
+        <target state="translated">MC3094: 無法將字串值 '{0}' 轉換為型別 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadSyncMode">
+        <source>MC3013: SynchronousMode property value is not valid. Valid values are Async and Sync.</source>
+        <target state="translated">MC3013: SynchronousMode 屬性值無效。有效值是 Async 和 Sync。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadTypeInArrayProperty">
+        <source>MC3014: The object being added to an array property is not a valid type. The array is of type '{0}' but the object being added is of type '{1}'.</source>
+        <target state="translated">MC3014: 要新增到陣列屬性之物件的型別無效。陣列型別為 '{0}'，但要新增之物件的型別為 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserBadUidOrNameME">
+        <source>MC3079: MarkupExtensions are not allowed for Uid or Name property values, so '{0}' is not valid.</source>
+        <target state="translated">MC3079: Uid 或 Name 屬性值不允許 MarkupExtensions，因此 '{0}' 無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCanOnlyHaveOneChild">
+        <source>MC3089: The object '{0}' already has a child and cannot add '{1}'. '{0}' can accept only one child.</source>
+        <target state="translated">MC3089: 物件 '{0}' 已有子系，且無法新增 '{1}'。'{0}' 只能接受一個子系。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCannotAddAnyChildren">
+        <source>MC3028: Cannot add content to object of type '{0}'.</source>
+        <target state="translated">MC3028: 無法將內容新增至型別為 '{0}' 的物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCantGetProperty">
+        <source>MC3081: '{0}' is a read-only property of type IList or IDictionary and cannot be set because it does not have a public or internal get accessor.</source>
+        <target state="translated">MC3081: '{0}' 是型別為 IList 或 IDictionary 的唯讀屬性且無法設定，因為它沒有公用或內部 get 存取子。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCantSetAttribute">
+        <source>MC3080: The {0} '{1}' cannot be set because it does not have an accessible {2} accessor.</source>
+        <target state="translated">MC3080: 無法新增 {0} '{1}'，因為它沒有可存取的 {2} 存取子。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCantSetContentProperty">
+        <source>MC3087: Cannot set content property '{0}' on element '{1}'. '{0}' has incorrect access level or its assembly does not allow access.</source>
+        <target state="translated">MC3087: 無法在 '{1}' 上設定內容屬性 '{0}'。'{0}' 具有不正確的存取層級，或其組件不允許存取。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCantSetTriggerCondition">
+        <source>MC3082: '{0}' cannot be set as the value of a Trigger's Property attribute because it does not have a public or internal get accessor.</source>
+        <target state="translated">MC3082: '{0}' 無法設定為 Trigger 之 Property 屬性的值，因為它沒有公用或內部 get 存取子。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserCompatDuplicate">
+        <source>MC3016: Two new namespaces cannot be compatible with the same old namespace using an XmlnsCompatibility attribute.�'{0}' namespace is already marked compatible with '{1}'.</source>
+        <target state="translated">MC3016: 兩個新的命名空間無法與使用 XmlnsCompatibility 屬性的相同舊版命名空間相容。�'{0}' 命名空間已標示為與 '{1}' 相容。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserContentMustBeContiguous">
+        <source>MC3088: Property elements cannot be in the middle of an element's content.  They must be before or after the content.</source>
+        <target state="translated">MC3088: 屬性項目不能位於項目內容的中間。它們必須位於內容的前面或後面。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDefTag">
+        <source>MC3017: 'Code' tag from xaml namespace found in XAML file. To load this file, you must compile it.</source>
+        <target state="translated">MC3017: 在 XAML 檔案中找到來自 xaml 命名空間的 'Code' 標記。若要載入此檔案，您必須將它編譯。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDefaultConverterElement">
+        <source>MC3061: The Element type '{0}' does not have an associated TypeConverter to parse the string '{1}'.</source>
+        <target state="translated">MC3061: 項目型別 '{0}' 沒有關聯的 TypeConverter 可剖析字串 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDictionarySealed">
+        <source>MC3018: Cannot modify data in a sealed XmlnsDictionary.</source>
+        <target state="translated">MC3018: 無法修改已密封之 XmlnsDictionary 中的資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDupDictionaryKey">
+        <source>MC3020: The dictionary key '{0}' is already used. Key attributes are used as keys when inserting objects into a dictionary and must be unique.</source>
+        <target state="translated">MC3020: 字典索引鍵 '{0}' 已使用。插入物件至字典時，會使用索引鍵屬性做為索引鍵，它們必須是唯一的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDuplicateMarkupExtensionProperty">
+        <source>MC3033: The property '{0}' has already been set on this markup extension and can only be set once.</source>
+        <target state="translated">MC3033: 已在此標記延伸上設定屬性 '{0}'，且只能設定一次。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDuplicateProperty1">
+        <source>MC3024: '{0}' property has already been set and can be set only once.</source>
+        <target state="translated">MC3024: 已設定 '{0}' 屬性，且只能設定一次。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserDuplicateProperty2">
+        <source>MC3025: Property '{0}' and '{1}' refer to the same property. Duplicate property settings are not allowed.</source>
+        <target state="translated">MC3025: 屬性 '{0}' 與 '{1}' 代表相同屬性。不允許重複的屬性設定。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserEmptyComplexProp">
+        <source>MC3026: '{0}' property element cannot be empty. It must contain child elements or text.</source>
+        <target state="translated">MC3026: '{0}' 屬性項目不能是空的。它必須包含子項目或文字。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserEntityReference">
+        <source>MC3027: The EntityReference &amp;{0}; is not recognized.</source>
+        <target state="translated">MC3027: 無法識別 EntityReference &amp;{0};。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserEventDelegateTypeNotAccessible">
+        <source>MC3083: Cannot access the delegate type '{0}' for the '{1}' event. '{0}' has incorrect access level or its assembly does not allow access.</source>
+        <target state="translated">MC3083: 無法存取 '{1}' 事件的委派型別 '{0}'。'{0}' 具有不正確的存取層級，或其組件不允許存取。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserIEnumerableIAddChild">
+        <source>MC3030: '{0}' property is a read-only IEnumerable property, which means that '{1}' must implement IAddChild.</source>
+        <target state="translated">MC3030: '{0}' 屬性是唯讀的 IEnumerable 屬性，這表示 '{1}' 必須實作 IAddChild。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserInvalidContentPropertyAttribute">
+        <source>MC3078: Invalid ContentPropertyAttribute on type '{0}', property '{1}' not found.</source>
+        <target state="translated">MC3078: 在型別 '{0}'，屬性 '{1}' 上找不到無效的 ContentPropertyAttribute。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserInvalidKnownType">
+        <source>Known type value {0}='{1}' is not a valid known type.</source>
+        <target state="translated">已知型別值 {0}='{1}' 不是有效的已知型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserInvalidStaticMember">
+        <source>MC3011: Cannot find the static member '{0}' on the type '{1}'.</source>
+        <target state="translated">MC3011: 在型別 '{1}' 上找不到靜態成員 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserKeysAreStrings">
+        <source>MC3031: Keys and values in XmlnsDictionary must be strings.</source>
+        <target state="translated">MC3031: XmlnsDictionary 中的索引鍵與值必須是字串。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserLineAndOffset">
+        <source>Line {0} Position {1}</source>
+        <target state="translated">行 {0} 位置 {1}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMapPIMissingKey">
+        <source>MC3037: Missing XmlNamespace, Assembly or ClrNamespace in Mapping instruction.</source>
+        <target state="translated">MC3037: Mapping 指示中遺失 XmlNamespace、Assembly 或 ClrNamespace。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMappingUriInvalid">
+        <source>'{0}' mapping URI is not valid.</source>
+        <target state="translated">'{0}' mapping URI 無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionBadConstructorParam">
+        <source>MC3040: Format is not valid for MarkupExtension that specifies constructor arguments in '{0}'.</source>
+        <target state="translated">MC3040: 在 '{0}' 中指定建構函式引數之 MarkupExtension 的格式不正確。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionBadDelimiter">
+        <source>MC3041: Markup extensions require a single '=' between name and value, and a single ',' between constructor parameters and name/value pairs. The arguments '{0}' are not valid.</source>
+        <target state="translated">MC3041: 標記延伸要求名稱與值之間必須使用一個 '=' 來分隔; 而建構函式參數與名稱/值組之間則必須使用一個 ',' 來分隔。引數 '{0}' 無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionDelimiterBeforeFirstAttribute">
+        <source>MC3091: '{0}' is not valid. Markup extensions require only spaces between the markup extension name and the first parameter. Cannot have comma or equals sign before the first parameter.</source>
+        <target state="translated">MC3091: '{0}' 無效。標記延伸要求標記延伸名稱與第一個參數之間只能有一個空格。第一個參數之前不能有逗號或等號。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionInvalidClosingBracketCharacers">
+        <source>MC8001: Encountered a closing BracketCharacter '{0}' at Line Number '{1}' and Line Position '{2}' without a corresponding opening BracketCharacter.</source>
+        <target state="translated">MC8001: 在行號 '{1}' 與行位置 '{2}' 發生結尾 BracketCharacter '{0}' 而沒有相對應的開頭 BracketCharacter。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionMalformedBracketCharacers">
+        <source>MC8002: BracketCharacter '{0}' at Line Number '{1}' and Line Position '{2}' does not have a corresponding opening/closing BracketCharacter.</source>
+        <target state="translated">MC8002: 行號 '{1}' 與行位置 '{2}' 的 BracketCharacter '{0}' 沒有相對應的開頭/結尾 BracketCharacter。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionNoEndCurlie">
+        <source>MC3038: MarkupExtension expressions must end with a '}'.</source>
+        <target state="translated">MC3038: MarkupExtension 運算式的結尾必須是 '}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionNoNameValue">
+        <source>MC3042: Name/value pairs in MarkupExtensions must have the format 'Name = Value' and each pair is separated by a comma. '{0}' does not follow this format.</source>
+        <target state="translated">MC3042: MarkupExtensions 中的名稱/值組格式必須是 'Name = Value'，而每一組之間必須以逗號分則。'{0}' 未依照此格式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionNoQuotesInName">
+        <source>MC3043: Names and Values in a MarkupExtension cannot contain quotes. The MarkupExtension arguments '{0}' are not valid.</source>
+        <target state="translated">MC3043: MarkupExtension 中的名稱與值不能包含引號。MarkupExtension 引數 '{0}' 無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionTrailingGarbage">
+        <source>MC3044: The text '{1}' is not allowed after the closing '{0}' of a MarkupExtension expression.</source>
+        <target state="translated">MC3044: MarkupExtension 運算式的右 '{0}' 之後不允許文字 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMarkupExtensionUnknownAttr">
+        <source>MC3045: Unknown property '{0}' for type '{1}' encountered while parsing a Markup Extension.</source>
+        <target state="translated">MC3045: 剖析 Markup Extension 時，發現型別 '{1}' 的未知屬性 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMetroUnknownAttribute">
+        <source>MC3046: Unknown attribute '{0}' in the '{1}' namespace. Note that only the Key attribute is currently supported in this namespace.</source>
+        <target state="translated">MC3046: 在 '{1}' 命名空間中發現未知屬性 '{0}'。請注意，目前此命名空間中只支援 Key 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserMultiBamls">
+        <source>MC3047: Internal parser error - Cannot use multiple writable BAML records at the same time.</source>
+        <target state="translated">MC3047: 內部剖析器錯誤 - 無法同時使用多筆可寫入的 BAML 記錄。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNestedComplexProp">
+        <source>'{0}' property element cannot be nested directly inside another property element.</source>
+        <target state="translated">'{0}' 無法以巢狀結構方式直接放入另一個屬性項目中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoAttrArray">
+        <source>MC3049: Cannot place attributes on Array tags.</source>
+        <target state="translated">MC3049: 無法將屬性放置在 Array 標記上。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoBamlAsync">
+        <source>MC3021: Asynchronous loading is not supported when compiling a XAML file, so a SynchronousMode of '{0}' is not allowed.</source>
+        <target state="translated">MC3021: 編譯 XAML 檔案時，不支援非同步載入，因此不允許 '{0}' 的 SynchronousMode。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoChildrenTag">
+        <source>MC3051: The type '{0}' does not support element content.</source>
+        <target state="translated">MC3051: 型別 '{0}' 不支援項目內容。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoDictionaryKey">
+        <source>MC3022: All objects added to an IDictionary must have a Key attribute or some other type of key associated with them.</source>
+        <target state="translated">MC3022: 新增至 IDictionary 的所有物件必須具有 Key 屬性 (或是與其關聯的某些型別的索引鍵)。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoDictionaryName">
+        <source>MC3023: The Key attribute can only be used on a tag contained in a Dictionary (such as a ResourceDictionary).</source>
+        <target state="translated">MC3023: Key 屬性只能用於包含在 Dictionary (例如 ResourceDictionary) 中的標記上。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoDigitEnums">
+        <source>MC3032: '{1}' cannot be used as a value for '{0}'. Numbers are not valid enumeration values.</source>
+        <target state="translated">MC3032: '{1}' 無法用做為 '{0}' 的值。數字不是有效的列舉值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoEventTag">
+        <source>MC3053: Cannot use property element syntax to specify event handler '{0}'.</source>
+        <target state="translated">MC3053: 無法使用屬性項目語法來指定事件處理常式 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoEvents">
+        <source>MC3052: XAML file that contains events must be compiled.</source>
+        <target state="translated">MC3052: 必須編譯包含事件的 XAML 檔案。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoNameOnType">
+        <source>MC3054: The type '{0}' cannot have a Name attribute. Value types and types without a default constructor can be used as items within a ResourceDictionary.</source>
+        <target state="translated">MC3054: 型別 '{0}' 不能具有 Name 屬性。沒有預設建構函式的實值型別與類型，可做為 ResourceDictionary 中的項目使用。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoNameUnderDefinitionScopeType">
+        <source>MC3093: Cannot set Name attribute value '{0}' on element '{1}'. '{1}' is under the scope of element '{2}', which already had a name registered when it was defined in another scope.</source>
+        <target state="translated">MC3093: 無法在項目 '{1}' 上設定 Name 屬性值 '{0}'。'{1}' 屬於項目 '{2}' 的範圍，當它在另一個範圍定義時，已經有已登錄的名稱。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoNamespace">
+        <source>MC3056: No NamespaceURI is defined for the object '{0}'.</source>
+        <target state="translated">MC3056: 尚未針對物件 '{0}' 定義 NamespaceURI。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoNestedXmlDataIslands">
+        <source>MC3084: Cannot nest XML data islands.</source>
+        <target state="translated">MC3084: 無法將 XML 資料島變更為巢狀結構。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoPropOnComplexProp">
+        <source>MC3057: Cannot set properties on property elements.</source>
+        <target state="translated">MC3057: 無法設定屬性項目的內容。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoSerializer">
+        <source>MC3058: Cannot find a custom serializer for '{0}' so it cannot be parsed.</source>
+        <target state="translated">MC3058: 找不到 '{0}' 的自訂序列化程式，因此無法剖析。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoSetterChild">
+        <source>MC3059: Style setters do not support child elements. A tag of type '{0}' is not allowed.</source>
+        <target state="translated">MC3059: 樣式設定者不支援子項目。不允許型別為 '{0}' 的標記。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNoType">
+        <source>MC3050: Cannot find the type '{0}'. Note that type names are case sensitive.</source>
+        <target state="translated">MC3050: 找不到型別 '{0}'。請注意，型別名稱會區分大小寫。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserNotMarkupExtension">
+        <source>MC3048: '{0}' value is not a valid MarkupExtension expression. Cannot resolve '{1}' in namespace '{2}'. '{1}' must be a subclass of MarkupExtension.</source>
+        <target state="translated">MC3048: '{0}' 值不是有效的 MarkupExtension 運算式。無法解析命名空間 '{2}' 中的 '{1}'。'{1}' 必須是 MarkupExtension 的子類別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserPrefixNSElement">
+        <source>MC3062: '{0}' XML namespace prefix does not map to a NamespaceURI, so element '{1}' cannot be resolved.</source>
+        <target state="translated">MC3062: '{0}' XML 命名空間前置詞未對應到 NamespaceURI，因此無法解析項目 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserPrefixNSProperty">
+        <source>MC3100: '{0}' XML namespace prefix does not map to a namespace URI, so cannot resolve property '{1}'.</source>
+        <target state="translated">MC3100: '{0}' XML 命名空間未對應至命名空間 URI，因此無法解析屬性 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserPropNoValue">
+        <source>MC3063: Property '{0}' does not have a value.</source>
+        <target state="translated">MC3063: 屬性 '{0}' 沒有值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserPublicType">
+        <source>MC3064: Only public or internal classes can be used within markup. '{0}' type is not public or internal.</source>
+        <target state="translated">MC3064: 只能在標記中使用公用或內部類別。'{0}' 型別並非公用或內部。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserReadOnlyProp">
+        <source>MC3065: '{0}' property is read-only and cannot be set from markup.</source>
+        <target state="translated">MC3065: '{0}' 屬性是唯讀的，而且無法從標記設定。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserResourceKeyType">
+        <source>MC3066: The type reference cannot find a public type named '{0}'.</source>
+        <target state="translated">MC3066: 型別參考找不到名為 '{0}' 的公用型別。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserStaticMemberNotAllowed">
+        <source>MC3019: Cannot reference the static member '{0}' on the type '{1}' as it is not accessible.</source>
+        <target state="translated">MC3019: 無法參考型別 '{1}' 上的靜態成員 '{0}'，因為它無法存取。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserSyncOnRoot">
+        <source>MC3067: SynchronousMode attribute must be on the root tag.</source>
+        <target state="translated">MC3067: 必須在根標記上設定 SynchronousMode 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserTextInComplexProp">
+        <source>MC3069: Cannot have both the text '{0}' and the child element '{1}' within a property element.</source>
+        <target state="translated">MC3069: 屬性項目中不能同時存在文字 '{0}' 與子項目 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserTextInvalidInArrayOrDictionary">
+        <source>MC3068: Text is not valid under an IDictionary or Array property.</source>
+        <target state="translated">MC3068: 在 IDictionary 或 Array 屬性下，文字是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserTooManyAssemblies">
+        <source>MC3070: A single XAML file cannot reference more than 4,096 different assemblies.</source>
+        <target state="translated">MC3070: 單一 XAML 檔案無法參考超過 4,096 個不同的組件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserTypeConverterTextNeedsEndElement">
+        <source>MC3095: Close tag must immediately follow TypeConverter initialization string '{0}'.</source>
+        <target state="translated">MC3095: 結束標記必須緊接在 TypeConverter 初始化字串 '{0}' 後方。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserTypeConverterTextUnusable">
+        <source>MC3090: TypeConverter syntax error encountered while processing initialization string '{0}'.  Element attributes are not allowed on objects created via TypeConverter.</source>
+        <target state="translated">MC3090: 處理初始化字串時發生 TypeConverter 語法錯誤 '{0}'。透過 TypeConverter 建立的物件上不允許使用項目屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserUndeclaredNS">
+        <source>MC3071: '{0}' is an undeclared namespace.</source>
+        <target state="translated">MC3071: '{0}' 是未宣告的命名空間。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserUnknownAttribute">
+        <source>MC3072: The property '{0}' does not exist in XML namespace '{1}'.</source>
+        <target state="translated">MC3072: 屬性 '{0}' 不存在於 XML 命名空間 '{1}' 中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserUnknownDefAttribute">
+        <source>MC3073: The attribute '{0}' does not exist in XML namespace 'http://schemas.microsoft.com/winfx/2006/xaml'.</source>
+        <target state="translated">MC3073: 屬性 '{0}' 不存在於 XML 命名空間 'http://schemas.microsoft.com/winfx/2006/xaml' 中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserUnknownTag">
+        <source>MC3074: The tag '{0}' does not exist in XML namespace '{1}'.</source>
+        <target state="translated">MC3074: 標記 '{0}' 不存在於 XML 命名空間  '{1}' 中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserUnknownXmlType">
+        <source>MC3075: Unrecognized XML node type '{0}' found when determining if the current tag is a property element.</source>
+        <target state="translated">MC3075: 判斷目前的標記是否為屬性項目時，發現無法識別的 XML 節點類型 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserXmlIslandMissing">
+        <source>MC3086: Parent element or property '{0}' requires an XML data island. To distinguish an XML island from surrounding XAML, wrap the XML data island in &lt;x:XData&gt; ... &lt;/x:XData&gt;.</source>
+        <target state="translated">MC3086: 父項目或屬性 '{0}' 需要 XML 資料島。為區分 XML 資料島與週邊 XAML，請將 XML 資料島包裝在 &lt;x:XData&gt; ... &lt;/x:XData&gt; 中。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserXmlIslandUnexpected">
+        <source>MC3085: '{0}' element or property cannot contain an XML data island.</source>
+        <target state="translated">MC3085: '{0}' 項目或屬性不能包含 XML 資料島。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserXmlLangPropertyValueInvalid">
+        <source>MC3092: XmlLangProperty attribute must specify a property name.</source>
+        <target state="translated">MC3092: XmlLangProperty 屬性必須指定屬性名稱。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserXmlReaderNoLineInfo">
+        <source>MC3077: The class '{0}' does not implement IXmlLineInfo. This is required to get position information for the XAML being parsed.</source>
+        <target state="translated">MC3077: 類別 '{0}' 並未實作 IXmlLineInfo。必須實作，才能取得即將剖析之 XAML 的位置資訊。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Parser_UnexpectedToken">
+        <source>MC3098: Unexpected token '{0}' at position '{1}'.</source>
+        <target state="translated">MC3098: 非預期的語彙基元 '{0}'，位置 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Parsers_IllegalToken">
+        <source>MC3096: Token is not valid.</source>
+        <target state="translated">MC3096: 語彙基元無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PreparingCompile">
+        <source>Preparing for the markup compilation...</source>
+        <target state="translated">正在準備標記編譯...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QualifiedNameHasWrongFormat">
+        <source>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</source>
+        <target state="translated">MC4301: 型別名稱 '{0}' 不是預期的格式 'className, assembly'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadResourceFile">
+        <source>Reading Resource file: '{0}'...</source>
+        <target state="translated">正在讀取 Resource 檔案: '{0}'...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RecompiledXaml">
+        <source>Recompiled XAML file : '{0}'.</source>
+        <target state="translated">已重新編譯 XAML 檔案: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReferenceFile">
+        <source>Input: Assembly Reference file: '{0}'.</source>
+        <target state="translated">輸入: 組件 Reference 檔案: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ResourceId">
+        <source>Resource ID is '{0}'.</source>
+        <target state="translated">資源識別碼是 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ResourceTooBig">
+        <source>RG1001: Input resource file '{0}' exceeds maximum size of {1} bytes.</source>
+        <target state="translated">RG1001: 輸入資源檔案 '{0}' 超過 {1} 位元組的大小上限。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ResourcesGenerated">
+        <source>Generated .resources file: '{0}'.</source>
+        <target state="translated">已產生 .resources 檔案: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ResourcesGenerating">
+        <source>Generating .resources file: '{0}'...</source>
+        <target state="translated">正在產生 .resources 檔案: '{0}'...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RoutedEventNotRegistered">
+        <source>MC6006: {0}.{1}="{2}" is not valid. '{1}' must be a RoutedEvent registered with a name that ends with the keyword "Event".</source>
+        <target state="translated">MC6006: {0}.{1}="{2}" 無效。'{1}' 必須是以結尾是關鍵字 "Event" 之名稱登錄的 RoutedEvent。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SourceFileNameNeeded">
+        <source>UM1005: You must pass markup files to the task.</source>
+        <target state="translated">UM1005: 您必須將標記檔案傳遞給工作。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SourceNameNotSupportedForStyleTriggers">
+        <source>MC4110: SourceName property cannot be set within Style.Triggers section.</source>
+        <target state="translated">MC4110: 無法在 Style.Triggers 區段中設定 SourceName 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleImpliedAndComplexChildren">
+        <source>MC4001: Style does not support both {0} tags and Style.{1} property tags for a single Style. Use one or the other.</source>
+        <target state="translated">MC4001: Style 無法同時支援 {0} 標記與 Style.{1} 屬性標記做為單一 Style。請使用其中一個。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleKnownTagWrongLocation">
+        <source>MC4002: The Style property tag '{0}' can only be specified directly under a Style tag.</source>
+        <target state="translated">MC4002: 只能在 Style 標記下直接指定 Style 屬性標記 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleNoPropOrEvent">
+        <source>MC4005: Cannot find the Style {0} '{1}' on the type '{2}'.</source>
+        <target state="translated">MC4005: 在型別 '{2}' 中找不到 Style {0} '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleNoTarget">
+        <source>MC4003: Cannot resolve the Style {0} '{1}'. Verify that the owning type is the Style's TargetType, or use Class.Property syntax to specify the {0}.</source>
+        <target state="translated">MC4003: 無法解析 Style {0} '{1}'。請確定擁有者型別是 Style 的 TargetType，或使用 Class.Property 語法來指定 {0}。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleNoTopLevelElement">
+        <source>MC4004: Style cannot contain child '{0}'. Style child must be a Setter because it is added to the Setters collection.</source>
+        <target state="translated">MC4004: Style 不能包含子 '{0}'。Style 子項目必須是 Setter，因為它會新增到 Setters 集合。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleTagNotSupported">
+        <source>MC4006: Tags of type '{0}' are not supported in Style sections.</source>
+        <target state="translated">MC4006: Style 區段中不支援型別為 '{0}' 的標記。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleTargetNoEvents">
+        <source>MC4007: The event '{0}' cannot be specified on a Target tag in a Style. Use an EventSetter instead.</source>
+        <target state="translated">MC4007: 無法在 Style 中的 Target 標記上指定事件 '{0}'。請使用 EventSetter 來替代。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleTextNotSupported">
+        <source>MC4008: The text '{0}' is not allowed at this location within a Style section.</source>
+        <target state="translated">MC4008: 不允許在 Style 區段中的此位置使用文字 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StyleUnknownProp">
+        <source>MC4009: The property '{0}' cannot be set on Style.</source>
+        <target state="translated">MC4009: 無法在 Style 上設定屬性 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SubSubClassingNotAllowed">
+        <source>MC6017: '{0}' cannot be the root of a XAML file because it was defined using XAML.</source>
+        <target state="translated">MC6017: '{0}' 無法做為 XAML 檔案的根，因為它是使用 XAML 定義。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TargetIsNotSupported">
+        <source>BG1004: Target Type '{0}' is not supported by this task.</source>
+        <target state="translated">BG1004: 此工作不支援目標型別 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TargetNameNotSupportedForStyleSetters">
+        <source>MC4011: TargetName property cannot be set on a Style Setter.</source>
+        <target state="translated">MC4011: 無法在 Style Setter 上設定 TargetName 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TaskLogo">
+        <source>Microsoft (R) Build Task '{0}' Version '{1}'.</source>
+        <target state="translated">Microsoft (R) 建置工作 '{0}' 版本 '{1}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TaskRight">
+        <source>Copyright (C) Microsoft Corporation 2005. All rights reserved.</source>
+        <target state="translated">Copyright (C) Microsoft Corporation 2005. 著作權所有，並保留一切權利。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateDupName">
+        <source>MC4101: The Name '{0}' has already been defined. Names must be unique.</source>
+        <target state="translated">MC4101: 已定義 Name '{0}'。名稱必須是唯一的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateInvalidRootElementTag">
+        <source>MC4108: The root of a Template content section cannot contain an element of type '{0}'. Only FrameworkElement and FrameworkContentElement types are valid.</source>
+        <target state="translated">MC4108: Template 內容區段的根不能包含型別為 '{0}' 的項目。只有 FrameworkElement 與 FrameworkContentElement 型別是有效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateKnownTagWrongLocation">
+        <source>MC4103: The template property tag '{0}' can only be specified immediately after a ControlTemplate tag.</source>
+        <target state="translated">MC4103: 樣板屬性標記 '{0}' 只能緊接在 ControlTemplate 標記之後指定。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateNoMultipleRoots">
+        <source>MC4107: A template can have only a single root element. '{0}' is not allowed.</source>
+        <target state="translated">MC4107: 樣板只能有一個根項目。不允許 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateNoProp">
+        <source>MC4109: Cannot find the Template Property '{0}' on the type '{1}'.</source>
+        <target state="translated">MC4109: 在型別 '{1}' 上找不到樣板屬性 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateNoTarget">
+        <source>MC4106: Cannot resolve the Template Property '{0}'. Verify that the owning type is the Style's TargetType, or use Class.Property syntax to specify the property.</source>
+        <target state="translated">MC4106: 無法解析樣板屬性 '{0}'。請確定擁有者型別是 Style 的 TargetType，或使用 Class.Property 語法來指定屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateNoTriggerTarget">
+        <source>MC4111: Cannot find the Trigger target '{0}'.  (The target must appear before any Setters, Triggers, or Conditions that use it.)</source>
+        <target state="translated">MC4111: 找不到 Trigger 目標 '{0}' (目標必須出現在任何使用它的 Setters、Triggers 或 Conditions 前面)。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateTagNotSupported">
+        <source>MC4102: Tags of type '{0}' are not supported in template sections.</source>
+        <target state="translated">MC4102: 樣板區段不支援型別為 '{0}' 的標記。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateTextNotSupported">
+        <source>MC4105: The text '{0}' is not allowed at this location within a template section.</source>
+        <target state="translated">MC4105: 不允許在樣板區段的此位置使用 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TemplateUnknownProp">
+        <source>MC4104: The property '{0}' cannot be set as a property element on template. Only Triggers and Storyboards are allowed as property elements.</source>
+        <target state="translated">MC4104: 無法在樣板上將屬性 '{0}' 設定為屬性項目。只允許將 Triggers 與 Storyboards 設定為屬性項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperEmptyToken">
+        <source>MC7004: Empty token encountered while parsing.</source>
+        <target state="translated">MC7004: 剖析時發現空白的語彙基元。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperExtraDataEncountered">
+        <source>MC7003: Extra data encountered after token while parsing.</source>
+        <target state="translated">MC7003: 剖析時在語彙基元後發現額外資料。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperMissingEndQuote">
+        <source>MC7002: Missing end quote encountered while parsing token.</source>
+        <target state="translated">MC7002: 剖析語彙基元時發現遺失結尾引號。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperPrematureStringTermination">
+        <source>MC7001: Premature string termination encountered.</source>
+        <target state="translated">MC7001: 字串過早結束。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UidMissing">
+        <source>UM1003: Uid is missing for element '{0}'.</source>
+        <target state="translated">UM1003: 項目 '{0}' 遺失 Uid。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownBuildError">
+        <source>Unknown build error, '{0}' </source>
+        <target state="translated">不明的建置錯誤 '{0}'</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownClassModifier">
+        <source>MC6013: {0}:ClassModifier="{1}" is not valid for the language {2}.</source>
+        <target state="translated">MC6013: {0}:ClassModifier="{1}" 對於語言 {2} 而言是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownDefinitionTag">
+        <source>MC6002: Unrecognized tag '{0}:{1}' in namespace 'http://schemas.microsoft.com/winfx/2006/xaml'. Note that tag names are case sensitive.</source>
+        <target state="translated">MC6002: 在命名空間 'http://schemas.microsoft.com/winfx/2006/xaml' 中發現無法識別的標記 '{0}:{1}'。請注意，標記名稱會區分大小寫。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownEventAttribute">
+        <source>MC6007: '{1}' is not valid. '{0}' is not an event on '{2}'.</source>
+        <target state="translated">MC6007: '{1}' 無效。'{0}' 不是 '{2}' 上的事件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownFieldModifier">
+        <source>MC6014: {0}:FieldModifier="{1}" is not valid for the language {2}.</source>
+        <target state="translated">MC6014: {0}:FieldModifier="{1}" 對於語言 {2} 而言是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownGenericType">
+        <source>MC6020: {0}:TypeArguments='{1}' is not valid on the tag '{2}'. Either '{2}' is not a generic type or the number of Type arguments in the attribute is wrong. Remove the {0}:TypeArguments attribute because it is allowed only on generic types, or fix its value to match the arity of the generic type '{2}'.</source>
+        <target state="translated">MC6020: {0}:TypeArguments='{1}' 在標記 '{2}' 上是無效的。'{2}' 不是泛型型別，或屬性中的 Type 引數數目錯誤。請移除 {0}:TypeArguments 屬性，因為它只能用於泛型型別; 或是修正此值以符合泛型型別 '{2}' 的引數數目要求。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownLanguage">
+        <source>MC6008: '{0}' is not installed properly on this machine. It must be listed in the &lt;compilers&gt; section of machine.config.</source>
+        <target state="translated">MC6008: '{0}' 並未正確安裝在此電腦上。它必須列示於 machine.config 的 &lt;compilers&gt; 區段。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownPathOperationType">
+        <source>Unknown path operation attempted.</source>
+        <target state="translated">已嘗試不明的路徑操作。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnmatchedLocComment">
+        <source>LC1003: Localization comment has no value set for target property: '{0}'.</source>
+        <target state="translated">LC1003: 未設定目標屬性的當地語系化註解: '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VersionNumberComponentNegative">
+        <source>MC4501: Major and minor version number components cannot be negative.</source>
+        <target state="translated">MC4501: 主要與次要版本號碼元件不能為負數。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WinFXAssemblyMissing">
+        <source>MC6000: Project file must include the .NET Framework assembly '{0}' in the reference list.</source>
+        <target state="translated">MC6000: 專案檔必須在參考清單中包含 .NET Framework 組件 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WrongLocalizationPropertySetting_Pass1">
+        <source>MC1001: The LocalizationDirectivesToLocFile property value is not valid and must be changed to None, CommentsOnly, or All for the MarkupCompilePass1 task.</source>
+        <target state="translated">MC1001: LocalizationDirectivesToLocFile 屬性值無效，而且必須針對 MarkupCompilePass1 工作變更為 None、CommentsOnly 或 All。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WrongPropertySetting">
+        <source>BG1003: The project file contains a property value that is not valid.</source>
+        <target state="translated">BG1003: 專案檔包含無效的屬性值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceAfterFallback">
+        <source>MC4602: Choice cannot follow a Fallback.</source>
+        <target state="translated">MC4602: Choice 不能緊接在 Fallback 後面。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceNotFound">
+        <source>MC4606: AlternateContent must contain one or more Choice elements.</source>
+        <target state="translated">MC4606: AlternateContent 必須包含一或多個 Choice 項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceOnlyInAC">
+        <source>MC4601: Choice valid only in AlternateContent.</source>
+        <target state="translated">MC4601: Choice 只在 AlternateContent 中是有效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRCompatCycle">
+        <source>MC4640: Namespace '{0}' is marked as compatible with itself using XmlnsCompatibilityAttribute. A namespace cannot directly or indirectly override itself.</source>
+        <target state="translated">MC4640: 命名空間 '{0}' 已用 XmlnsCompatibilityAttribute 標記為與其本身相容。命名空間不能直接或間接覆寫本身。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicatePreserve">
+        <source>MC4631: Duplicate Preserve declaration for element '{1}' in namespace '{0}'.</source>
+        <target state="translated">MC4631: 在命名空間 '{0}' 中發現項目 '{1}' 的重複 Preserve 宣告。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateProcessContent">
+        <source>MC4617: Duplicate ProcessContent declaration for element '{1}' in namespace '{0}'.</source>
+        <target state="translated">MC4617: 在命名空間 '{0}' 中發現項目 '{1}' 的 ProcessContent 重複宣告。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardPreserve">
+        <source>MC4633: Duplicate wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">MC4633: 發現命名空間 '{0}' 的重複萬用字元 Preserve 宣告。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardProcessContent">
+        <source>MC4619: Duplicate wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">MC4619: 發現命名空間 '{0}' 的重複萬用字元 ProcessContent 宣告。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRFallbackOnlyInAC">
+        <source>MC4605: Fallback valid only in AlternateContent.</source>
+        <target state="translated">MC4605: Fallback 只在 AlternateContent 中是有效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidACChild">
+        <source>MC4610: '{0}' element is not a valid child of AlternateContent. Only Choice and Fallback elements are valid children of an AlternateContent element.</source>
+        <target state="translated">MC4610: '{0}' 項目不是 AlternateContent 的有效子項目。只有 Choice 與 Fallback 項目是 AlternateContent 項目的有效子項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidAttribInElement">
+        <source>MC4608: '{0}' attribute is not valid for element '{1}'.</source>
+        <target state="translated">MC4608: '{0}' 屬性對於項目 '{1}' 而言是無效的。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidFormat">
+        <source>MC4611: '{0}' format is not valid.</source>
+        <target state="translated">MC4611: '{0}' 格式無效。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidPreserve">
+        <source>MC4632: Cannot have both a specific and a wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">MC4632: 無法為命名空間 '{0}' 同時指定特定與萬用字元 Preserve 宣告。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidProcessContent">
+        <source>MC4618: Cannot have both a specific and a wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">MC4618: 無法為命名空間 '{0}' 同時指定特定與萬用字元 ProcessContent 宣告。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidRequiresAttribute">
+        <source>MC4604: Requires attribute must contain a valid namespace prefix.</source>
+        <target state="translated">MC4604: Requires 屬性必須包含有效的命名空間前置詞。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidXMLName">
+        <source>MC4634: '{0}' attribute value is not a valid XML name.</source>
+        <target state="translated">MC4634: '{0}' 屬性值不是有效的 XML 名稱。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMultipleFallbackFound">
+        <source>MC4607: AlternateContent must contain only one Fallback element.</source>
+        <target state="translated">MC4607: AlternateContent 必須只包含一個 Fallback 項目。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMustUnderstandFailed">
+        <source>MC4626: MustUnderstand condition failed on namespace '{0}'.</source>
+        <target state="translated">MC4626: 在命名空間 '{0}' 上發生 MustUnderstand 條件失敗。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSPreserveNotIgnorable">
+        <source>MC4630: Namespace '{0}' has items declared to be preserved but is not declared ignorable.</source>
+        <target state="translated">MC4630: 命名空間 '{0}' 包含已宣告為要保留的項目，但並非宣告為可略過。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSProcessContentNotIgnorable">
+        <source>MC4615: '{0}' namespace is declared ProcessContent but is not declared Ignorable.</source>
+        <target state="translated">MC4615: '{0}' 命名空間已宣告 ProcessContent，但並非宣告為 Ignorable。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRRequiresAttribNotFound">
+        <source>MC4603: Choice must contain a Requires attribute.</source>
+        <target state="translated">MC4603: Choice 必須包含 Requires 屬性。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUndefinedPrefix">
+        <source>MC4612: '{0}' prefix is not defined.</source>
+        <target state="translated">MC4612: 未定義 '{0}' 前置詞。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatAttrib">
+        <source>MC4614: Unrecognized compatibility attribute '{0}'.</source>
+        <target state="translated">MC4614: 無法識別的相容性屬性 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatElement">
+        <source>MC4609: Unrecognized compatibility element '{0}'.</source>
+        <target state="translated">MC4609: 無法識別的相容性項目 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZeroLengthFeatureID">
+        <source>MC4502: The feature ID string cannot have length 0.</source>
+        <target state="translated">MC4502: 功能識別碼的字串長度不能為 0。</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

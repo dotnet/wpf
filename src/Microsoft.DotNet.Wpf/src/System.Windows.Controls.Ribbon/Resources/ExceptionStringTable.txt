@@ -1,0 +1,58 @@
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; US-EN String Table
+; Default Resource (used for English and non-represented locales)
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; InRibbonGallery UIAutomation
+InRibbonGallery_ScrollUpButtonAutomationName=Row Up
+InRibbonGallery_ScrollDownButtonAutomationName=Row Down
+
+; RibbonGallery 'All' filter
+RibbonGallery_AllFilter=All
+
+; RibbonContextMenu
+RibbonContextMenu_AddToQAT=_Add to Quick Access Toolbar
+RibbonContextMenu_AddGalleryToQAT=_Add gallery to Quick Access Toolbar
+RibbonContextMenu_RemoveFromQAT=_Remove from Quick Access Toolbar
+RibbonContextMenu_ShowQATAbove=_Show Quick Access Toolbar above the Ribbon
+RibbonContextMenu_ShowQATBelow=_Show Quick Access Toolbar below the Ribbon
+RibbonContextMenu_MinimizeTheRibbon=Mi_nimize the Ribbon
+RibbonContextMenu_MaximizeTheRibbon=Ma_ximize the Ribbon
+
+; RibbonQuickAccessToolBar - overflow button tooltip
+RibbonQuickAccessToolBar_OverflowButtonToolTip=More controls
+
+; KeyTips - Characters used to assign key tips to controls in the QAT (after numbers) without a unique accelerator. All of these should be directly available on the typical keyboard for a locale and should be useable in key tips.
+QATKeyTipCharacters=ABCDEFGHIJKLMNOPQRSTUVWXYZ
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;                          Exception Strings
+;
+; The following section is for all strings that will be used by exceptions
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+RibbonWindow_ExtendUnShownGlass=Window must be shown before extending glass
+
+; Ribbon
+Ribbon_ContextualTabHeadersSourceInvalid=Cannot set both ContextualTabGroupHeadersSource and ContextualTabGroupHeaders.
+
+;UI Automation Exceptions
+UIA_OperationCannotBePerformed=Cannot perform operation.
+VirtualizedElement=Element does not exist or it is virtualized.
+ResizeParametersNotValid=Resize parameters out of bounds.
+SetFocusFailed=The target element cannot receive focus.
+
+; Misc Layout
+InvalidCtorParameterNoNaN='{0}' parameter cannot be NaN.
+InvalidCtorParameterNoInfinityForStarSize='{0}' parameter cannot be Infinity for RibbonControlLengthUnitType.Star.
+InvalidCtorParameterUnknownRibbonControlLengthUnitType='{0}' parameter is not valid. Valid values are RibbonControlLengthUnitType.Auto, RibbonControlLengthUnitType.Pixel, RibbonControlLengthUnitType.Item, or RibbonControlLengthUnitType.Star.
+RibbonGroupsPanel_InvalidRegistrationParameter=RibbonGroupsPanel RegisterStarLayoutProvider and UnregisterStarLayoutProvider accepts only IProvideStarLayoutInfo instances.
+InvalidMenuButtonOrItemContainer='{0}' can only host a RibbonMenuItem, RibbonSplitMenuItem, RibbonGallery or RibbonSeparator. '{1}' is an invalid container.
+InvalidApplicationMenuOrItemContainer='{0}' can only host a RibbonApplicationMenuItem, RibbonApplicationSplitMenuItem, RibbonGallery or RibbonSeparator. '{1}' is an invalid container.
+
+; KeyTips
+ElementNotKeyTipScope=Element is not a valid KeyTip scope.
+InvalidKeyTipOffset=Offset cannot be infinity or NaN.

@@ -1,0 +1,2822 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="es" original="../Strings.resx">
+    <body>
+      <trans-unit id="AccessibilitySwitchDependencyNotSatisfied">
+        <source>Desktop applications setting AppContext switch '{0}' to false are required to opt in to all earlier accessibility improvements. To do this, ensure that the AppContext switch '{1}' is set to 'false', then 'Switch.UseLegacyAccessibilityFeatures' and all 'Switch.UseLegacyAccessibilityFeatures.M' switches, when M &lt; {2}, evaluate to false as well. Note that, if a switch for a particular set of accessibility improvements is not present, its value is determined by the target framework version. You can remedy this by adding these switches and setting their value to false.</source>
+        <target state="translated">Las aplicaciones de escritorio con el modificador AppContext "{0}" establecido en false deben participar en todas las mejoras de accesibilidad anteriores. Para ello, asegúrese de que, si el modificador de AppContext "{1}" se establece en "false", "Switch.UseLegacyAccessibilityFeatures" y todos los modificadores "Switch.UseLegacyAccessibilityFeatures.M" se evalúan como false también cuando M &lt; {2}. Tenga en cuenta que, si falta un modificador para un determinado conjunto de mejoras de accesibilidad, su valor viene determinado por la versión de la plataforma de destino. Para remediarlo, agregue estos modificadores y establezca su valor en false.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Arg_ArrayPlusOffTooSmall">
+        <source>Destination array is not long enough to copy all the items in the collection. Check array index and length.</source>
+        <target state="translated">La matriz de destino no es lo suficientemente larga para copiar todos los elementos de la colección. Compruebe el índice y la longitud de la matriz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Arg_NonZeroLowerBound">
+        <source>The lower bound of target array must be zero.</source>
+        <target state="translated">El límite inferior de la matriz de destino debe ser cero.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Arg_RankMultiDimNotSupported">
+        <source>Only single dimensional arrays are supported for the requested action.</source>
+        <target state="translated">Sólo se admiten matrices de una sola dimensión para la acción solicitada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ArgumentOutOfRange_NeedNonNegNum">
+        <source>Non-negative number required.</source>
+        <target state="translated">Número no negativo requerido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Argument_InvalidArrayType">
+        <source>Target array type is not compatible with the type of items in the collection.</source>
+        <target state="translated">El tipo de matriz de destino no es compatible con el tipo de elementos de la colección.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AttemptedToCreateDuplicateFileName">
+        <source>Cannot create file because the specified file name is already in use.</source>
+        <target state="translated">No se puede crear el archivo porque el nombre de archivo especificado ya está en uso.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadPackageFormat">
+        <source>Format error in package.</source>
+        <target state="translated">Error de formato en el paquete.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadPropertyForGroup">
+        <source>Cannot group by property '{0}' because it cannot be found on type '{1}'.</source>
+        <target state="translated">No se puede agrupar por la propiedad "{0}" porque no se puede encontrar en el tipo "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadSignatureTimeFormatString">
+        <source>Time format string is not valid.</source>
+        <target state="translated">La cadena de formato de hora no es válida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BadXml">
+        <source>'{0}' attribute is not valid XML.</source>
+        <target state="translated">El atributo "{0}" no es un XML válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BufferOffsetNegative">
+        <source>Buffer offset cannot be negative.</source>
+        <target state="translated">El desplazamiento del búfer no puede ser negativo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BufferTooSmall">
+        <source>Buffer is too small to accommodate the specified parameters.</source>
+        <target state="translated">El búfer es demasiado pequeño para acomodar los parámetros especificados.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFAPIFailure">
+        <source>Compound File API failure.</source>
+        <target state="translated">Error de la API del archivo compuesto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_CorruptMetadataStream">
+        <source>Object metadata stream in the package is corrupt and the content is not valid.</source>
+        <target state="translated">La secuencia de metadatos del objeto en el paquete está dañada y el contenido no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_CorruptMetadataStream_DuplicateKey">
+        <source>Object metadata stream in the package is corrupt with duplicated key tags.</source>
+        <target state="translated">La secuencia de metadatos del objeto en el paquete está dañada con etiquetas de clave duplicadas.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_CorruptMetadataStream_Root">
+        <source>Object metadata stream in the package is corrupt and the root tag is not valid.</source>
+        <target state="translated">La secuencia de metadatos del objeto en el paquete está dañada y la etiqueta raíz no es válida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_ObjectMustBeCompoundFileMetadataKey">
+        <source>Object used as metadata key must be an instance of the CompoundFileMetadataKey class.</source>
+        <target state="translated">El objeto utilizado como clave de metadatos debe ser una instancia de la clase CompoundFileMetadataKey.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_ReadOnlyContainer">
+        <source>Cannot perform this operation when the package is in read-only mode.</source>
+        <target state="translated">No se puede realizar esta operación cuando el paquete está en modo de solo lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_TypeTableFormat">
+        <source>Failed to read a stream type table - the data appears to be a different format.</source>
+        <target state="translated">Error al leer una tabla de tipo de secuencia: los datos parecen tener un formato diferente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_UnicodeCharInvalid">
+        <source>Unicode character is not valid.</source>
+        <target state="translated">El carácter Unicode no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_ValueMustBeString">
+        <source>Only strings can be used as value.</source>
+        <target state="translated">Solo las cadenas se pueden usar como valor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFM_XMLCharInvalid">
+        <source>XML character is not valid.</source>
+        <target state="translated">El carácter XML no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFRCorrupt">
+        <source>CompoundFileReference: Corrupted CompoundFileReference.</source>
+        <target state="translated">CompoundFileReference: CompoundFileReference dañado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFRCorruptMultiStream">
+        <source>CompoundFileReference: Corrupted CompoundFileReference - multiple stream components found.</source>
+        <target state="translated">CompoundFileReference: Corrupted CompoundFileReference - se encontraron varios componentes de la secuencia.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CFRCorruptStgFollowStm">
+        <source>CompoundFileReference: Corrupted CompoundFileReference - storage component cannot follow stream component.</source>
+        <target state="translated">CompoundFileReference: Corrupted CompoundFileReference - el componente de almacenamiento no puede seguir al componente de secuencia.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CallbackParameterInvalid">
+        <source>Caller-supplied parameter to callback function is not of expected type.</source>
+        <target state="translated">El parámetro proporcionado por el autor de la llamada a la función de devolución de llamada no es del tipo esperado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotCompareDiffTypes">
+        <source>Cannot compare different types.</source>
+        <target state="translated">No se pueden comparar tipos diferentes.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotCreateAccessDenied">
+        <source>Cannot create data storage because access is denied.</source>
+        <target state="translated">No se puede crear el almacenamiento de datos porque el acceso se ha denegado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotCreateAsReadOnly">
+        <source>Cannot create a read-only stream.</source>
+        <target state="translated">No se puede crear una secuencia de solo lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotCreateContainerOnReadOnlyStream">
+        <source>Cannot create new package on a read-only stream.</source>
+        <target state="translated">No se puede crear un nuevo paquete en una secuencia de solo lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotCreateInReadOnly">
+        <source>Cannot create a stream in a read-only package.</source>
+        <target state="translated">No se puede crear una secuencia en un paquete de solo lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotCreateStorageRootOnNonReadableStream">
+        <source>Cannot create StorageRoot on a nonreadable stream.</source>
+        <target state="translated">No se puede crear un elemento StorageRoot en una secuencia que no se puede leer.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotDelete">
+        <source>Cannot delete element.</source>
+        <target state="translated">No se puede eliminar el elemento.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotDeleteAccessDenied">
+        <source>Cannot delete element because access is denied.</source>
+        <target state="translated">No se puede eliminar el elemento porque el acceso está denegado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotDeleteInReadOnly">
+        <source>Cannot delete read-only packages.</source>
+        <target state="translated">No se pueden eliminar paquetes de solo lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotDeleteNonEmptyStorage">
+        <source>Cannot delete because the storage is not empty. Try a recursive delete with Delete(true).</source>
+        <target state="translated">No se puede eliminar porque el almacenamiento no está vacío. Intente una eliminación recursiva con Delete(true).</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotDeleteRoot">
+        <source>Cannot delete the root StorageInfo.</source>
+        <target state="translated">No se puede eliminar el valor StorageInfo raíz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotOnNonExistStorage">
+        <source>Cannot perform this function on a storage that does not exist.</source>
+        <target state="translated">No se puede realizar esta función en un almacenamiento que no existe.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotOpenStorage">
+        <source>Cannot open data storage.</source>
+        <target state="translated">No se puede abrir el almacenamiento de datos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotOperateOnStreamWhichDoesNotSupportSeeking">
+        <source>Cannot operate on stream that does not support seeking.</source>
+        <target state="translated">No se puede operar en una secuencia que no admite la búsqueda.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotReadDataFromStreamWhichDoesNotSupportReading">
+        <source>Cannot read data from stream that does not support reading.</source>
+        <target state="translated">No se pueden leer datos de secuencias que no admiten la lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotReadInWriteOnlyMode">
+        <source>Cannot perform a read operation in write-only mode.</source>
+        <target state="translated">No se puede realizar una operación de lectura en modo de solo escritura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotReadWriteInReadOnlyWriteOnlyMode">
+        <source>Cannot perform a read/write operation in write-only or read-only modes.</source>
+        <target state="translated">No se puede realizar una operación de lectura/escritura en modo de solo escritura o solo lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotWriteDataToStreamWhichDoesNotSupportWriting">
+        <source>Cannot write data to stream that does not support writing.</source>
+        <target state="translated">No se pueden escribir datos en una secuencia que no admite la escritura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanNotWriteInReadOnlyMode">
+        <source>Cannot perform a write operation in read-only mode.</source>
+        <target state="translated">No se puede realizar una operación de escritura en modo de solo lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CanOnlyCounterSignSignatureParts">
+        <source>Can only countersign parts with Digital Signature ContentType.</source>
+        <target state="translated">Solo se pueden contrafirmar partes con ContentType de firma digital.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotChangeAfterSealed">
+        <source>Cannot modify a '{0}' after it is sealed.</source>
+        <target state="translated">No se puede modificar un "{0}" después de que se proteja.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotChangeCryptoProvider">
+        <source>Cannot change CryptoProvider after the rights management transform settings are fixed.</source>
+        <target state="translated">No se puede cambiar CryptoProvider después de que se haya corregido la configuración de transformación de la administración de derechos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotChangePublishLicense">
+        <source>Cannot change publish license after the rights management transform settings are fixed.</source>
+        <target state="translated">No se puede cambiar la licencia de publicación después de que se haya corregido la configuración de transformación de la administración de derechos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotConvertStringToType">
+        <source>Cannot convert string value '{0}' to type '{1}'.</source>
+        <target state="translated">No se puede convertir el valor de cadena "{0}" al tipo "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotMakeStreamLengthNegative">
+        <source>Stream length cannot be negative.</source>
+        <target state="translated">La longitud de la secuencia no puede ser negativa.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotModifyReadOnlyContainer">
+        <source>Cannot modify a read-only container.</source>
+        <target state="translated">No se puede modificar un contenedor de solo lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotRemoveSignatureFromReadOnlyFile">
+        <source>Cannot remove signature from read-only file.</source>
+        <target state="translated">No se puede quitar la firma de un archivo de solo lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotRetrievePartsOfWriteOnlyContainer">
+        <source>Cannot get part or part information from a write-only container.</source>
+        <target state="translated">No se puede obtener una parte o información de una parte desde un contenedor de sólo lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotSignReadOnlyFile">
+        <source>Cannot sign read-only file.</source>
+        <target state="translated">No se puede firmar un archivo de solo lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CertSelectionDialogMessage">
+        <source>Select a certificate</source>
+        <target state="translated">Seleccione un certificado</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CertSelectionDialogTitle">
+        <source>Digital Signature</source>
+        <target state="translated">Firma digital</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CertificateKeyTypeNotSupported">
+        <source>Signing certificate must be of type DSA or RSA.</source>
+        <target state="translated">El certificado de firma debe ser del tipo DSA o RSA.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CertificatePartContentTypeMismatch">
+        <source>Certificate part is not of the correct type.</source>
+        <target state="translated">La parte del certificado no es del tipo correcto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ClearOnReadOnlyObjectNotAllowed">
+        <source>Cannot clear properties on object '{0}' because it is in a read-only state.</source>
+        <target state="translated">No se pueden borrar las propiedades en el objeto "{0}" porque está en un estado de solo lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CombinationOfAccessibilitySwitchesNotSupported">
+        <source>Desktop applications are required to opt in to all earlier accessibility improvements to get the later improvements. To do this, ensure that if the AppContext switch 'Switch.UseLegacyAccessibilityFeatures.N' is set to 'false', then 'Switch.UseLegacyAccessibilityFeatures' and all 'Switch.UseLegacyAccessibilityFeatures.M' switches, when M &lt; N, evaluate to false as well. Note that, if a switch for a particular set of accessibility improvements is not present, its value is determined by the target framework version. You can remedy this by adding these switches and setting their value to false.</source>
+        <target state="translated">Las aplicaciones de escritorio deben participar en todas las mejoras de accesibilidad anteriores para obtener las últimas mejoras. Para ello, asegúrese de que, si el modificador de AppContext "Switch.UseLegacyAccessibilityFeatures.N" se establece en "false", "Switch.UseLegacyAccessibilityFeatures" y todos los modificadores "Switch.UseLegacyAccessibilityFeatures.M" , cuando M &lt; N, se evalúan como false también. Tenga en cuenta que, si falta un modificador para un determinado conjunto de mejoras de accesibilidad, su valor viene determinado por la versión de la plataforma de destino. Puede remediar esto agregando estos modificadores y estableciendo su valor en false.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompatibilityPreferencesSealed">
+        <source>The property '{0}' cannot be changed. The '{1}' class has been sealed.</source>
+        <target state="translated">La propiedad "{0}" no se puede cambiar. La clase "{1}" se ha protegido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompoundFilePathNullEmpty">
+        <source>CompoundFile path must be non-empty.</source>
+        <target state="translated">La ruta de acceso de CompoundFile no debe estar vacía.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompressLengthMismatch">
+        <source>Compressed part has inconsistent data length.</source>
+        <target state="translated">La parte comprimida tiene una longitud de datos incoherente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContainerAndPartModeIncompatible">
+        <source>FileMode/FileAccess for Part.GetStream is not compatible with FileMode/FileAccess used to open the Package.</source>
+        <target state="translated">Los valores de FileMode/FileAccess para Part.GetStream no son compatibles con los valores de FileMode/FileAccess utilizados para abrir el paquete.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContainerCanNotOpen">
+        <source>Cannot open specified package file.</source>
+        <target state="translated">No se puede abrir el archivo del paquete especificado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContainerNotFound">
+        <source>Cannot find specified package file.</source>
+        <target state="translated">No se encuentra el archivo del paquete especificado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContentTypeCannotHaveLeadingTrailingLWS">
+        <source>ContentType string cannot have leading/trailing Linear White Spaces [LWS - RFC 2616].</source>
+        <target state="translated">La cadena ContentType no puede tener espacios en blanco lineales iniciales/finales [LWS - RFC 2616].</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConvertFromException">
+        <source>'{0}' ValueSerializer cannot convert from '{1}'.</source>
+        <target state="translated">ValueSerializer "{0}" no puede convertir de "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConvertToException">
+        <source>'{0}' ValueSerializer cannot convert '{1}' to '{2}'.</source>
+        <target state="translated">ValueSerializer "{0}" no puede convertir "{1}" a "{2}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CorePropertiesElementExpected">
+        <source>Unrecognized root element in Core Properties part.</source>
+        <target state="translated">Elemento raíz no reconocido en la parte Core Properties.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CorruptStream">
+        <source>Stream operation failed because stream is corrupted.</source>
+        <target state="translated">La operación de la secuencia dio error porque la secuencia está dañada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CorruptedData">
+        <source>File contains corrupted data.</source>
+        <target state="translated">El archivo contiene datos dañados.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CreateModeMustBeCreateOrOpen">
+        <source>Create mode parameter must be either FileMode.Create or FileMode.Open.</source>
+        <target state="translated">El parámetro de modo de creación debe ser FileMode.Create o FileMode.Open.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CreateNewOnNonEmptyStream">
+        <source>CreateNew is not a valid FileMode for a nonempty stream.</source>
+        <target state="translated">CreateNew no es un valor FileMode válido para una secuencia no vacía.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CryptoProviderCanNotDecrypt">
+        <source>Cannot perform stream operation because CryptoProvider is not set to allow decryption.</source>
+        <target state="translated">No se puede realizar la operación de secuencia porque la propiedad CryptoProvider no está configurada para permitir el descifrado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CryptoProviderCanNotMergeBlocks">
+        <source>Only cryptographic providers based on a block cipher are supported.</source>
+        <target state="translated">Solo se admiten proveedores criptográficos basados en cifrado de bloques.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CryptoProviderDisposed">
+        <source>CryptoProvider object was disposed.</source>
+        <target state="translated">El objeto CryptoProvider se eliminó.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CryptoProviderIsNotReady">
+        <source>The CryptoProvider cannot encrypt or decrypt.</source>
+        <target state="translated">El objeto CryptoProvider no puede cifrar o descifrar.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Cryptography_InvalidHandle">
+        <source>{0} is an invalid handle.</source>
+        <target state="translated">{0} es un controlador no válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CurrentChangingCannotBeCanceled">
+        <source>The CollectionView that originates this CurrentChanging event is in a state that does not allow the event to be canceled. Check CurrentChangingEventArgs.IsCancelable before assigning to this CurrentChangingEventArgs.Cancel property.</source>
+        <target state="translated">El objeto CollectionView que origina este evento CurrentChanging se encuentra en un estado que no permite que se cancele el evento. Active CurrentChangingEventArgs.IsCancelable antes de asignar a esta propiedad CurrentChangingEventArgs.Cancel.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DTypeNotSupportForSystemType">
+        <source>'{0}' type does not have a matching DependencyObjectType.</source>
+        <target state="translated">El tipo "{0}" no tiene un valor DependencyObjectType coincidente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DanglingMetadataRelationship">
+        <source>The target of the Core Properties relationship does not reference an existing part.</source>
+        <target state="translated">El objetivo de la relación Core Properties no hace referencia a una parte existente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataSpaceLabelInUse">
+        <source>The given data space label name is already in use.</source>
+        <target state="translated">El nombre de etiqueta del espacio de datos proporcionado ya está en uso.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataSpaceLabelInvalidEmpty">
+        <source>Empty string is not a valid data space label.</source>
+        <target state="translated">La cadena vacía no es una etiqueta de espacio de datos válida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataSpaceLabelUndefined">
+        <source>Specified data space label has not been defined.</source>
+        <target state="translated">La etiqueta del espacio de datos especificada no se ha definido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataSpaceManagerDisposed">
+        <source>DataSpaceManager object was disposed.</source>
+        <target state="translated">El objeto DataSpaceManager se ha eliminado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataSpaceMapEntryInvalid">
+        <source>DataSpace map entry is not valid.</source>
+        <target state="translated">La entrada de asignación DataSpace no es válida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DecryptionRightIsNotGranted">
+        <source>Decryption right is not granted.</source>
+        <target state="translated">El derecho de descifrado no está concedido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultTagDoesNotMatchSchema">
+        <source>Default tag is not valid per the schema. Verify that attributes are correct.</source>
+        <target state="translated">La etiqueta predeterminada no es válida de acuerdo con el esquema. Compruebe que los atributos son correctos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultValueAutoAssignFailed">
+        <source>Cannot automatically generate a valid default value for property '{0}'. Specify a default value explicitly when owner type '{1}' is registering this DependencyProperty.</source>
+        <target state="translated">No se puede generar automáticamente un valor predeterminado válido para la propiedad "{0}". Especifique un valor predeterminado explícitamente cuando el tipo de propietario "{1}" esté registrando esta propiedad DependencyProperty.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultValueInvalid">
+        <source>Default value for '{0}' property is not valid because ValidateValueCallback failed.</source>
+        <target state="translated">El valor predeterminado para la propiedad "{0}" no es válido porque se produjo un error en ValidateValueCallback.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultValueMayNotBeExpression">
+        <source>An Expression object is not a valid default value for a DependencyProperty.</source>
+        <target state="translated">Un objeto Expression no es un valor predeterminado válido para DependencyProperty.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultValueMayNotBeUnset">
+        <source>Default value cannot be 'Unset'.</source>
+        <target state="translated">El valor predeterminado no puede ser "Unset".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultValueMustBeFreeThreaded">
+        <source>Default value for the '{0}' property cannot be bound to a specific thread.</source>
+        <target state="translated">El valor predeterminado para la propiedad "{0}" no se puede vincular con un subproceso específico.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DefaultValuePropertyTypeMismatch">
+        <source>Default value type does not match type of property '{0}'.</source>
+        <target state="translated">El tipo de valor predeterminado no coincide con el tipo de propiedad "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DelimiterLeading">
+        <source>Cannot have leading path delimiter.</source>
+        <target state="translated">No puede tener un delimitador de ruta de acceso inicial.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DelimiterTrailing">
+        <source>Cannot have trailing path delimiter.</source>
+        <target state="translated">No puede tener un delimitador de ruta de acceso final.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DictionaryIsReadOnly">
+        <source>The dictionary is read-only.</source>
+        <target state="translated">El diccionario es de solo lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigCannotLocateCertificate">
+        <source>Cannot locate the selected digital certificate.</source>
+        <target state="translated">No se puede ubicar el certificado digital seleccionado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigDuplicateCertificate">
+        <source>Certificate error. Multiple certificates found with the same thumbprint.</source>
+        <target state="translated">Error de certificado. Se encontraron varios certificados con la misma huella digital.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DispatcherHasShutdown">
+        <source>Cannot perform requested operation because the Dispatcher shut down.</source>
+        <target state="translated">No se puede realizar la operación solicitada porque el distribuidor se apagó.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DispatcherPriorityAwaiterInvalid">
+        <source>The DispatcherPriorityAwaiter was not configured with a valid Dispatcher.  The only supported usage is from Dispatcher.Yield.</source>
+        <target state="translated">El valor DispatcherPriorityAwaiter no se configuró con un distribuidor válido. El único uso admitido es de Dispatcher.Yield.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DispatcherProcessingDisabled">
+        <source>Cannot perform this operation while dispatcher processing is suspended.</source>
+        <target state="translated">No se puede realizar esta operación mientras el procesamiento del distribuidor está suspendido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DispatcherProcessingDisabledButStillPumping">
+        <source>Dispatcher processing has been suspended, but messages are still being processed.</source>
+        <target state="translated">Se ha suspendido el procesamiento del distribuidor, pero los mensajes aún se están procesando.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DispatcherRequestProcessingFailed">
+        <source>The Dispatcher is unable to request processing.  This is often because the application has starved the Dispatcher's message pump.</source>
+        <target state="translated">Dispatcher no puede solicitar el procesamiento. Esto suele deberse a que la aplicación ha impedido el suministro de mensajes de Dispatcher.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DispatcherYieldNoAvailableDispatcher">
+        <source>The thread calling Dispatcher.Yield does not have a current Dispatcher.</source>
+        <target state="translated">El subproceso que llama a Dispatcher.Yield no tiene un distribuidor actual.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateCorePropertyName">
+        <source>More than one '{0}' property found.</source>
+        <target state="translated">Se encontró más de una propiedad "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateObjectId">
+        <source>Duplicate object ID found. IDs must be unique within the signature XML.</source>
+        <target state="translated">Se encontró un ID de objeto duplicado. Los ID deben ser únicos dentro del XML de la firma.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicatePiecesFound">
+        <source>Duplicate pieces found in the package.</source>
+        <target state="translated">Se encontraron piezas duplicadas en el paquete.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateSignature">
+        <source>Duplicates not allowed - signature part already exists.</source>
+        <target state="translated">No se permiten duplicados: la parte de la firma ya existe.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ElementIsNotEmptyElement">
+        <source>'{0}' element must be empty.</source>
+        <target state="translated">El elemento "{0}" debe estar vacío.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EmptySignatureId">
+        <source>Signature Identifier cannot be empty.</source>
+        <target state="translated">El identificador de firma no puede estar vacío.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EncodingNotSupported">
+        <source>Encoding format is not supported. Only UTF-8 and UTF-16 are supported.</source>
+        <target state="translated">El formato de codificación no se admite. Solo se admiten UTF-8 y UTF-16.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EncryptedDataStreamCorrupt">
+        <source>Encrypted data stream is corrupted.</source>
+        <target state="translated">La secuencia de datos cifrados está dañada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EncryptedPackageEnvelopeDisposed">
+        <source>EncryptedPackageEnvelope object was disposed.</source>
+        <target state="translated">El objeto EncryptedPackageEnvelope se eliminó.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EncryptionRightIsNotGranted">
+        <source>Encryption right is not granted.</source>
+        <target state="translated">El derecho de cifrado no está concedido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enum_Invalid">
+        <source>'{0}' enumeration value is not valid.</source>
+        <target state="translated">El valor de enumeración '{0}' no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enumerator_VerifyContext">
+        <source>No current object to return.</source>
+        <target state="translated">No hay ningún objeto actual para devolver.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EventNotFound">
+        <source>'{1}' event not found on type '{0}'.</source>
+        <target state="translated">No se encontró el evento "{1}" en el tipo "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExceptionFilterCodeNotPresent">
+        <source>Exception Filter Code is not built and installed properly.</source>
+        <target state="translated">El código de filtro de excepciones no está compilado e instalado correctamente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExcessiveLengthPrefix">
+        <source>Length prefix specifies {0} characters, which exceeds the maximum of {1} characters.</source>
+        <target state="translated">El prefijo de longitud especifica {0} caracteres, que supera el máximo de {1} caracteres.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedRelationshipsElementTag">
+        <source>Relationships tag expected at root level.</source>
+        <target state="translated">Se espera una etiqueta de relaciones a nivel de raíz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectedVersionPairObject">
+        <source>Expected a VersionPair object.</source>
+        <target state="translated">Se esperaba un objeto VersionPair.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectingParameterValuePairs">
+        <source>';' must be followed by parameter=value pair.</source>
+        <target state="translated">";" debe ir seguido por el par de parámetro=valor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExpectingSemicolon">
+        <source>Semicolon separator is required between two valid parameter=value pairs.</source>
+        <target state="translated">Se requiere un separador de punto y coma entre dos pares válidos de parámetro=valor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileAccessInvalid">
+        <source>FileAccess value is not valid.</source>
+        <target state="translated">El valor FileAccess no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileAlreadyExists">
+        <source>File already exists.</source>
+        <target state="translated">El archivo ya existe.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileDoesNotExists">
+        <source>Cannot find specified file.</source>
+        <target state="translated">No se encuentra el archivo especificado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatException">
+        <source>Input file or data stream does not conform to the expected file format specification.</source>
+        <target state="translated">El archivo de entrada o el flujo de datos no se ajusta a la especificación de formato de archivo esperada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatExceptionWithFileName">
+        <source>'{0}' file does not conform to the expected file format specification.</source>
+        <target state="translated">El archivo '{0}' no se ajusta a la especificación de formato de archivo esperada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileModeInvalid">
+        <source>FileMode value is not valid.</source>
+        <target state="translated">El valor FileMode no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileModeUnsupported">
+        <source>FileMode value is not supported.</source>
+        <target state="translated">El valor FileMode no se admite.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileShareInvalid">
+        <source>FileShare value is not valid.</source>
+        <target state="translated">El valor FileShare no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileShareUnsupported">
+        <source>FileShare value is not supported.</source>
+        <target state="translated">El valor FileShare no se admite.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FragmentMustStartWithHash">
+        <source>The 'fragment' parameter must start with a number sign.</source>
+        <target state="translated">El parámetro "fragment" debe comenzar con un signo numérico.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_AttemptToUseInnerValueWithDifferentThread">
+        <source>Cannot use a DependencyObject that belongs to a different thread than its parent Freezable.</source>
+        <target state="translated">No se puede usar un objeto DependencyObject que pertenece a un subproceso diferente al de su objeto Freezable principal.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_CantBeFrozen">
+        <source>Specified value of type '{0}' must have IsFrozen set to false to modify.</source>
+        <target state="translated">El valor especificado de tipo '{0}' debe tener IsFrozen establecido en falso para poder ser modificado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_CantFreeze">
+        <source>This Freezable cannot be frozen.</source>
+        <target state="translated">Este objeto Freezable no puede estar inmovilizado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_NotAContext">
+        <source>The provided DependencyObject is not a context for this Freezable.</source>
+        <target state="translated">El objeto DependencyObject proporcionado no es un contexto para este objeto Freezable.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_UnregisteredHandler">
+        <source>Handler has not been registered with this event.</source>
+        <target state="translated">No se ha registrado un controlador con este evento.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalList_CannotPromoteBeyondArray">
+        <source>Cannot promote from Array.</source>
+        <target state="translated">No se puede promover desde una matriz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalList_TargetMapCannotHoldAllData">
+        <source>Cannot promote from '{0}' to '{1}' because the target map is too small.</source>
+        <target state="translated">No se puede promover de "{0}" a "{1}" porque la asignación de destino es demasiado pequeña.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalMap_CannotPromoteBeyondHashtable">
+        <source>Cannot promote from Hashtable.</source>
+        <target state="translated">No se puede promover desde un elemento Hashtable.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FrugalMap_TargetMapCannotHoldAllData">
+        <source>Cannot promote from '{0}' to '{1}' because the target map is too small.</source>
+        <target state="translated">No se puede promover de "{0}" a "{1}" porque la asignación de destino es demasiado pequeña.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="General_Expected_Type">
+        <source>Expected object of type '{0}'.</source>
+        <target state="translated">Se esperaba un tipo de objeto '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetContentTypeCoreNotImplemented">
+        <source>PackagePart subclass must implement GetContentTypeCore method if passing a null value for the content type when PackagePart object is constructed.</source>
+        <target state="translated">La subclase PackagePart debe implementar el método GetContentTypeCore si pasa un valor null para el tipo de contenido cuando se construye el objeto PackagePart.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetOlePropertyFailed">
+        <source>OLE property ID {0} cannot be read (error {1}).</source>
+        <target state="translated">El ID de propiedad OLE {0} no se puede leer (error {1}).</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HashAlgorithmMustBeReusable">
+        <source>Reusable hash algorithm must be specified.</source>
+        <target state="translated">Se debe especificar un algoritmo hash reutilizable.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndSubclassMultipleAttach">
+        <source>HwndSubclass.Attach has already been called;  it cannot be called again.</source>
+        <target state="translated">Ya se ha llamado a HwndSubclass.Attach; no se le puede volver a llamar.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ILockBytesStreamMustSeek">
+        <source>Streams for exposure as ILockBytes must be seekable.</source>
+        <target state="translated">Es necesario que se pueda buscar en las secuencias para exposición como ILockBytes.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IOBufferOverflow">
+        <source>Read or write operation references location outside the bounds of the buffer provided.</source>
+        <target state="translated">Una operación de lectura o escritura hace referencia a una ubicación que reside fuera de los límites del búfer proporcionado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IncompatibleModeOrAccess">
+        <source>Cannot open package because FileMode or FileAccess value is not valid for the stream.</source>
+        <target state="translated">No se puede abrir el paquete porque el valor FileMode o FileAccess no es válido para la secuencia.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InnerPackageUriHasFragment">
+        <source>Package URI obtained from the pack URI cannot contain a Fragment.</source>
+        <target state="translated">El URI del paquete obtenido del URI del paquete no puede contener un objeto Fragment.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidArgumentValue">
+        <source>'{1}' is not a valid value for '{0}'.</source>
+        <target state="translated">"{1}" no es un valor válido para "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidAuthenticationTypeString">
+        <source>Authentication type string (the part before the colon) is not valid in user ID '{0}'.</source>
+        <target state="translated">La cadena de tipo de autenticación (la parte antes de los dos puntos) no es válida en el ID de usuario "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCondition01">
+        <source>Cannot locate information for stream that should exist. This is an internally inconsistent condition.</source>
+        <target state="translated">No se puede encontrar la información para la transmisión que debería existir. Esta es una condición internamente incoherente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDocumentPropertyType">
+        <source>'{0}' document property type is not valid.</source>
+        <target state="translated">El tipo de propiedad de documento "{0}" no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDocumentPropertyVariantType">
+        <source>'{0}' document property variant type is not valid.</source>
+        <target state="translated">El tipo de variante de propiedad de documento "{0}" no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidEvent">
+        <source>Event argument is invalid.</source>
+        <target state="translated">El argumento de evento no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidLinearWhiteSpaceCharacter">
+        <source>A Linear White Space character is not valid.</source>
+        <target state="translated">Un carácter de espacio en blanco lineal no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidParameterValue">
+        <source>Parameter value must be a valid token or a quoted string as per RFC 2616.</source>
+        <target state="translated">El valor del parámetro debe ser un token válido o una cadena entre comillas según RFC 2616.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidParameterValuePair">
+        <source>Parameter and value pair is not valid. Expected form is parameter=value.</source>
+        <target state="translated">El par de parámetro y valor no es válido. El formato esperado es parámetro=valor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPartUri">
+        <source>Part URI is not valid per rules defined in the Open Packaging Conventions specification.</source>
+        <target state="translated">El URI de la parte no es válido según las reglas definidas en la especificación de Convenciones de empaquetado abierto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionLevel">
+        <source>Permission level is not valid.</source>
+        <target state="translated">Nivel de permiso no válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionState">
+        <source>Permission state is not valid.</source>
+        <target state="translated">Estado de permiso no válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionStateValue">
+        <source>PermissionState value '{0}' is not valid for this Permission.</source>
+        <target state="translated">El valor de PermissionState '{0}' no es válido para este permiso.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionType">
+        <source>Permission type is not valid. Expected '{0}'.</source>
+        <target state="translated">El tipo de permiso no es válido. Se esperaba '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPriority">
+        <source>Specified priority is not valid.</source>
+        <target state="translated">La prioridad especificada no es válida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPriorityRangeOrder">
+        <source>The minimum priority must be less than or equal to the maximum priority.</source>
+        <target state="translated">La prioridad mínima debe ser igual o inferior a la prioridad máxima</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPropertyNameInCorePropertiesPart">
+        <source>'{0}' property name is not valid in Core Properties part.</source>
+        <target state="translated">El nombre de la propiedad "{0}" no es válido en la parte Core Properties.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPropertyValue">
+        <source>'{0}' is not a valid value for property '{1}'.</source>
+        <target state="translated">"{0}" no es un valor válido para la propiedad "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPublishLicense">
+        <source>Signed Publish License is not valid.</source>
+        <target state="translated">La licencia de publicación firmada no es válida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidRelationshipType">
+        <source>Relationship Type cannot contain only spaces or be empty.</source>
+        <target state="translated">El tipo de relación no puede contener solo espacios ni estar vacío.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStringFormat">
+        <source>String format is not valid.</source>
+        <target state="translated">El formato de cadena no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTableType">
+        <source>Internal table type value is not valid. This is an internally inconsistent condition.</source>
+        <target state="translated">El valor del tipo de tabla interna no es válido. Esta es una condición internamente incoherente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidToken">
+        <source>A token is not valid. Refer to RFC 2616 for correct grammar of content types.</source>
+        <target state="translated">Un token no es válido. Consulte RFC 2616 para conocer la gramática correcta de los tipos de contenido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTransformFeatureName">
+        <source>Feature name in the transform's primary stream is '{0}', but expected '{1}'.</source>
+        <target state="translated">El nombre de la característica en la secuencia principal de la transformación es "{0}", pero se esperaba "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypePrefixedUserName">
+        <source>User ID in use license stream is not of the form "authenticationType:userName".</source>
+        <target state="translated">El ID de usuario en la secuencia de licencia de uso no tiene el formato "authenticationType: userName".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTypeSubType">
+        <source>ContentType string is not valid. Expected format is type/subtype.</source>
+        <target state="translated">La cadena ContentType no es válida. El formato esperado es tipo/subtipo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidUriAttribute">
+        <source>Uri attribute in Reference tag must refer using fragment identifiers.</source>
+        <target state="translated">Debe hacerse referencia al atributo URI en la etiqueta de referencia usando identificadores de fragmentos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidValueForTheAttribute">
+        <source>'{0}' attribute value is not valid.</source>
+        <target state="translated">El valor del atributo "{0}" no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidXmlBaseAttributePresent">
+        <source>Relationships XML elements cannot specify attribute '{0}'.</source>
+        <target state="translated">Los elementos XML de las relaciones no pueden especificar el atributo "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvariantFailure">
+        <source>Unrecoverable system error.</source>
+        <target state="translated">Error del sistema irrecuperable.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LengthNotSupported">
+        <source>Stream does not support Length property.</source>
+        <target state="translated">La secuencia no admite la propiedad Length.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ListenerDidNotHandleEvent">
+        <source>Listener did not handle requested event.</source>
+        <target state="translated">El cliente de escucha no controló el evento solicitado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ListenerDidNotHandleEventDetail">
+        <source>Listener of type '{0}' registered with event manager of type '{1}', but then did not handle the event. The listener is coded incorrectly.</source>
+        <target state="translated">El cliente de escucha del tipo "{0}" se registró con el administrador de eventos del tipo "{1}", pero luego no controló el evento. El cliente de escucha está codificado de manera incorrecta.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalValueEnumerationInvalidated">
+        <source>Current local value enumeration is outdated because one or more local values have been set since its creation.</source>
+        <target state="translated">La enumeración del valor local actual está obsoleta porque se han establecido uno o varios valores locales desde su creación.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalValueEnumerationOutOfBounds">
+        <source>Local value enumeration position is out of range.</source>
+        <target state="translated">La posición de enumeración del valor local está fuera de rango.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LocalValueEnumerationReset">
+        <source>Local value enumeration position is before the start, need to call MoveNext first.</source>
+        <target state="translated">La posición de enumeración del valor local está antes del inicio, primero debe llamar a MoveNext.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MalformedCompoundFilePath">
+        <source>CompoundFileReference: malformed path encountered.</source>
+        <target state="translated">CompoundFileReference: se encontró una ruta de acceso con formato incorrecto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionArrayBadType">
+        <source>Items in the array must be type '{0}'. One or more items cannot be cast to this type.</source>
+        <target state="translated">Los elementos de la matriz deben ser de tipo '{0}'. Uno o más elementos no se pueden convertir en este tipo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionArrayType">
+        <source>Must set ArrayType before calling ProvideValue on ArrayExtension.</source>
+        <target state="translated">Debe establecer ArrayType antes de llamar a ProvideValue en ArrayExtension.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionBadStatic">
+        <source>'{0}' StaticExtension value cannot be resolved to an enumeration, static field, or static property.</source>
+        <target state="translated">El valor de StaticExtension '{0}' no se puede resolver en una enumeración, un campo estático o una propiedad estática.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionNoContext">
+        <source>Markup extension '{0}' requires '{1}' be implemented in the IServiceProvider for ProvideValue.</source>
+        <target state="translated">La extensión de marcado "{0}" requiere que "{1}" se implemente en IServiceProvider para ProvideValue.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionStaticMember">
+        <source>StaticExtension must have Member property set before ProvideValue can be called.</source>
+        <target state="translated">StaticExtension debe tener la propiedad Member establecida para poder llamar a ProvideValue.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionTypeName">
+        <source>TypeExtension must have TypeName property set before ProvideValue can be called.</source>
+        <target state="translated">TypeExtension debe tener la propiedad TypeName establecida para poder llamar a ProvideValue.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MarkupExtensionTypeNameBad">
+        <source>'{0}' string is not valid for type.</source>
+        <target state="translated">La cadena '{0}' no es válida para el tipo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MethodAvailableOnlyInStreamingCreation">
+        <source>'{0}' method can only be called on a package opened in streaming mode.</source>
+        <target state="translated">El método "{0}" solo puede llamarse en un paquete abierto en el modo de streaming.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MismatchedDispatchers">
+        <source>Objects must be created by the same thread.</source>
+        <target state="translated">Los objetos deben crearse por el mismo subproceso.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MissingCreateDefaultValue">
+        <source>Default value factory user must override PropertyMetadata.CreateDefaultValue.</source>
+        <target state="translated">El usuario de fábrica de valor predeterminado debe anular PropertyMetadata.CreateDefaultValue.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoreThanOneMetadataRelationships">
+        <source>Package has more than one Core Properties relationship.</source>
+        <target state="translated">El paquete tiene más de una relación Core Properties.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoreThanOnePackageSpecificReference">
+        <source>Expected exactly one Package-specific Reference tag.</source>
+        <target state="translated">Se esperaba exactamente una etiqueta de referencia específica del paquete.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToDestNotExist">
+        <source>MoveTo Destination storage does not exist.</source>
+        <target state="translated">El almacenamiento MoveTo Destination no existe.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToNYI">
+        <source>IStorage/IStream::MoveTo not supported.</source>
+        <target state="translated">No se admite IStorage/IStream::MoveTo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MultipleRelationshipTransformsFound">
+        <source>There must be at most one relationship transform specified for a given relationship part.</source>
+        <target state="translated">Debe haber como máximo una transformación de relación especificada para una parte de relación determinada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MultipleRightsManagementEncryptionTransformFound">
+        <source>Document contains multiple Rights Management Encryption Transforms.</source>
+        <target state="translated">El documento contiene múltiples transformaciones de cifrado de Rights Management.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MultipleSignatureOrigins">
+        <source>Multiple signature origin relationships found.</source>
+        <target state="translated">Se han encontrado múltiples relaciones de origen de firma.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MustBeOfType">
+        <source>'{0}' must be of type '{1}'.</source>
+        <target state="translated">"{0}" debe ser de tipo "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NYIDefault">
+        <source>This feature is not supported.</source>
+        <target state="translated">Esta característica no se admite.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameAlreadyInUse">
+        <source>'{0}' name is already in use.</source>
+        <target state="translated">El nombre "{0}" ya está en uso.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameCanNotHaveDelimiter">
+        <source>'{0}' cannot contain the path delimiter: '{1}'.</source>
+        <target state="translated">"{0}" no puede contener el delimitador de ruta: "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeDuplicateNamesNotAllowed">
+        <source>Cannot register duplicate Name '{0}' in this scope.</source>
+        <target state="translated">No se puede registrar Name '{0}' duplicado en este ámbito.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeInvalidIdentifierName">
+        <source>'{0}' name is not valid for identifier.</source>
+        <target state="translated">El nombre '{0}' no es válido para el identificador.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeNameNotEmptyString">
+        <source>Name cannot be an empty string.</source>
+        <target state="translated">Name no puede ser una cadena vacía.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeNameNotFound">
+        <source>'{0}' Name is not found.</source>
+        <target state="translated">No se encuentra Name '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameScopeNotFound">
+        <source>No NameScope found to {1} the Name '{0}'.</source>
+        <target state="translated">No se encontró ningún NameScope para {1} el Name "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameTableCorruptMem">
+        <source>Name table data is corrupt in memory.</source>
+        <target state="translated">Los datos de la tabla de nombres están dañados en la memoria.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameTableCorruptStg">
+        <source>Name table data is corrupt in data storage.</source>
+        <target state="translated">Los datos de la tabla de nombres están dañados en el almacenamiento de datos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameTableVersionMismatchRead">
+        <source>Name table cannot be read by this version of the program.</source>
+        <target state="translated">La tabla de nombres no puede leerse por esta versión del programa.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NameTableVersionMismatchWrite">
+        <source>Name table cannot be updated by this version of the program.</source>
+        <target state="translated">La tabla de nombres no puede actualizarse por esta versión del programa.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NamedAPIFailure">
+        <source>Failed call to '{0}'.</source>
+        <target state="translated">Error de llamada a "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoCounterSignUnsignedContainer">
+        <source>Cannot countersign an unsigned package.</source>
+        <target state="translated">No se puede contrafirmar un paquete no firmado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoDependencyProperty">
+        <source>No dependency property {0} on {1}.</source>
+        <target state="translated">Ninguna propiedad de dependencia {0} en {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoExternalTargetForMetadataRelationship">
+        <source>TargetMode for a Core Properties relationship must be 'Internal'.</source>
+        <target state="translated">El valor TargetMode para una relación Core Properties debe ser "Internal".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoMulticastHandlers">
+        <source>WeakEventManager supports only delegates with one target.</source>
+        <target state="translated">WeakEventManager sólo admite delegados con un destino.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPrivilegesForPublishLicenseDecryption">
+        <source>CryptoProvider does not have privileges required for decryption of the PublishLicense.</source>
+        <target state="translated">CryptoProvider no tiene los privilegios necesarios para el descifrado de PublishLicense.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoPublishLicenseStream">
+        <source>File does not contain a stream to hold the publish license.</source>
+        <target state="translated">El archivo no contiene una secuencia para contener la licencia de publicación.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoStructuredContentInsideProperties">
+        <source>Core Properties part: core property elements can contain only text data.</source>
+        <target state="translated">Parte Core Properties: los elementos de la propiedad principal pueden contener solo datos de texto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoUseLicenseStorage">
+        <source>File does not contain a storage to hold use licenses.</source>
+        <target state="translated">El archivo no contiene un almacenamiento para contener licencias de uso.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAUniqueRelationshipId">
+        <source>'{0}' ID conflicts with the ID of an existing relationship for the specified source.</source>
+        <target state="translated">El ID "{0}" entra en conflicto con el ID de una relación existente para el origen especificado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAValidRelationshipPartUri">
+        <source>PackageRelationship part URI syntax is not valid.</source>
+        <target state="translated">La sintaxis del URI de la parte de PackageRelationship no es válida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAValidXmlIdString">
+        <source>'{0}' ID is not a valid XSD ID.</source>
+        <target state="translated">El ID "{0}" no es una ID de XSD válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedMultiDisk">
+        <source>Multidisk ZIP format is not supported.</source>
+        <target state="translated">No se admite el formato ZIP multidisco.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupportedVersionNeededToExtract">
+        <source>ZIP archive contains unsupported data structures.</source>
+        <target state="translated">El archivo ZIP contiene estructuras de datos no compatibles.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotSupported_ReadOnlyCollection">
+        <source>Collection is read-only.</source>
+        <target state="translated">La colección es de sólo lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NothingToSign">
+        <source>Must specify an item to sign.</source>
+        <target state="translated">Debe especificar un elemento para firmar.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NullContentTypeProvided">
+        <source>GetContentTypeCore method cannot return null for the content type stream.</source>
+        <target state="translated">El método GetContentTypeCore no puede devolver un valor null para la secuencia de tipo de contenido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NullStreamReturned">
+        <source>Returned stream for the part is null.</source>
+        <target state="translated">La secuencia devuelta para la parte es nula.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ObjectDisposed">
+        <source>Package object was closed and disposed, so cannot carry out operations on this object or any stream opened on a part of this package.</source>
+        <target state="translated">El objeto del paquete se cerró y se eliminó, por lo que no se pueden realizar operaciones en este objeto ni en ninguna secuencia abierta en una parte de este paquete.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OffsetNegative">
+        <source>Offset must be greater than or equal to zero.</source>
+        <target state="translated">Offset debe ser mayor o igual que 0.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyFileShareReadAndFileShareNoneSupported">
+        <source>Only FileShare.Read and FileShare.None are supported.</source>
+        <target state="translated">Solo se admiten FileShare.Read y FileShare.None.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyPassportOrWindowsAuthenticatedUsersAreAllowed">
+        <source>User must be either Windows or Passport authenticated. Other authentication types are not allowed in this context.</source>
+        <target state="translated">El usuario debe estar autenticado en Windows o Passport. Otros tipos de autenticación no se permiten en este contexto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyStreamingProductionIsSupported">
+        <source>Streaming consumption of packages not supported.</source>
+        <target state="translated">No se admite el consumo de paquetes en streaming.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyWriteOperationsAreSupportedInStreamingCreation">
+        <source>Only write operations are supported in streaming production.</source>
+        <target state="translated">Solo se admiten operaciones de escritura en la producción en streaming.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OperationIsNotSupportedInStreamingProduction">
+        <source>Package.{0} is not supported in streaming production.</source>
+        <target state="translated">El paquete {0} no es compatible con la producción en streaming.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OperationViolatesWriteOnceSemantics">
+        <source>Write-once semantics in streaming production precludes the use of '{0}'.</source>
+        <target state="translated">La semántica de escritura única en la producción en streaming impide el uso de "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OverrideTagDoesNotMatchSchema">
+        <source>Override tag is not valid per the schema. Verify that attributes are correct.</source>
+        <target state="translated">La etiqueta de anulación no es válida de acuerdo con el esquema. Compruebe que los atributos son correctos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OverridingMetadataDoesNotMatchBaseMetadataType">
+        <source>Metadata override and base metadata must be of the same type or derived type.</source>
+        <target state="translated">La anulación de metadatos y los metadatos base deben ser del mismo tipo o tipo derivado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageNotFound">
+        <source>Document does not contain a package.</source>
+        <target state="translated">El documento no contiene un paquete.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackagePartDeleted">
+        <source>Part was deleted.</source>
+        <target state="translated">La parte se eliminó.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackagePartRelationshipDoesNotExist">
+        <source>PackageRelationship with specified ID does not exist for the source part.</source>
+        <target state="translated">El valor PackageRelationship con el ID especificado no existe para la parte de origen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageRelationshipDoesNotExist">
+        <source>PackageRelationship with specified ID does not exist at the Package level.</source>
+        <target state="translated">El valor PackageRelationship con el ID especificado no existe a nivel de paquete.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageSignatureCorruption">
+        <source>Signature structures are corrupted in this package.</source>
+        <target state="translated">Las estructuras de firma están dañadas en este paquete.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageSignatureObjectTagRequired">
+        <source>Required Package-specific Object tag is missing.</source>
+        <target state="translated">Falta la etiqueta Object específica del paquete requerida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageSignatureReferenceTagRequired">
+        <source>Required Package-specific Reference tag is missing.</source>
+        <target state="translated">Falta la etiqueta Reference específica del paquete requerida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageSpecificReferenceTagMustBeUnique">
+        <source>Specified reference object conflicts with predefined Package specific reference.</source>
+        <target state="translated">El objeto de referencia especificado entra en conflicto con la referencia específica de paquete predefinida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterCannotBeNegative">
+        <source>Parameter must be greater than or equal to zero.</source>
+        <target state="translated">El parámetro debe ser mayor que o igual a cero.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterMustBeBetween">
+        <source>The parameter value must be between '{0}' and '{1}'.</source>
+        <target state="translated">El valor del parámetro debe estar comprendido entre "{0}" y "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParentContainerClosed">
+        <source>Cannot access part because parent package was closed.</source>
+        <target state="translated">No se puede acceder a la parte porque el paquete principal se cerró.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAssemblyLoadVersionMismatch">
+        <source>Cannot load assembly '{0}' because a different version of that same assembly is loaded '{1}'.</source>
+        <target state="translated">No se puede cargar el ensamblado "{0}" porque hay cargada una versión diferente del mismo ensamblado, "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsHigh">
+        <source>Too many attributes are specified for '{0}'.</source>
+        <target state="translated">Se han especificado demasiados atributos para '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParserAttributeArgsLow">
+        <source>'{0}' requires more attributes.</source>
+        <target state="translated">'{0}' requiere más atributos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartAlreadyExists">
+        <source>Cannot add part for the specified URI because it is already in the package.</source>
+        <target state="translated">No se puede agregar una parte para el URI especificado porque ya está en el paquete.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartDoesNotExist">
+        <source>Specified part does not exist in the package.</source>
+        <target state="translated">La parte especificada no existe en el paquete.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartNamePrefixExists">
+        <source>Cannot add part to the package. Part names cannot be derived from another part name by appending segments to it.</source>
+        <target state="translated">No se puede agregar la parte al paquete. Los nombres de las partes no pueden derivarse de otro nombre de parte agregándole segmentos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartReferenceUriMalformed">
+        <source>Malformed Part URI in Reference tag.</source>
+        <target state="translated">URI de parte con formato incorrecto en la etiqueta de referencia.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartToSignMissing">
+        <source>Specified part to sign does not exist.</source>
+        <target state="translated">La parte especificada para firmar no existe.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartUriCannotHaveAFragment">
+        <source>Part URI cannot contain a Fragment component.</source>
+        <target state="translated">El URI de parte no puede contener un componente de fragmento.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartUriIsEmpty">
+        <source>Part URI is empty.</source>
+        <target state="translated">El URI de parte está vacío.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartUriShouldNotEndWithForwardSlash">
+        <source>Part URI cannot end with a forward slash.</source>
+        <target state="translated">El URI de parte no puede terminar con una barra diagonal.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartUriShouldNotStartWithTwoForwardSlashes">
+        <source>Part URI cannot start with two forward slashes.</source>
+        <target state="translated">El URI de parte no puede iniciar con dos barras diagonales.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PartUriShouldStartWithForwardSlash">
+        <source>Part URI must start with a forward slash.</source>
+        <target state="translated">El URI de parte debe iniciar con una barra diagonal.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PathHasEmptyElement">
+        <source>Path string cannot include an empty element.</source>
+        <target state="translated">La cadena de la ruta de acceso no puede incluir un elemento vacío.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PieceDoesNotExist">
+        <source>Cannot find piece with the specified piece number.</source>
+        <target state="translated">No se puede encontrar la pieza con el número de pieza especificado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyAlreadyRegistered">
+        <source>'{0}' property was already registered by '{1}'.</source>
+        <target state="translated">La propiedad "{0}" ya estaba registrada por "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyNotReadOnly">
+        <source>This method overrides metadata only on read-only properties. This property is not read-only.</source>
+        <target state="translated">Este método reemplaza los metadatos solo en las propiedades de solo lectura. Esta propiedad no es de solo lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyStartTagExpected">
+        <source>Core Properties part: A property start-tag was expected.</source>
+        <target state="translated">Parte Core Properties: se esperaba una etiqueta de inicio de propiedad.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyWrongNumbOfAttribsDefinedOn">
+        <source>Unexpected number of attributes is found on '{0}'.</source>
+        <target state="translated">Se ha encontrado un número inesperado de atributos en "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PublishLicenseNotFound">
+        <source>Document does not contain a publish license.</source>
+        <target state="translated">El documento no contiene una licencia de publicación.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PublishLicenseStreamCorrupt">
+        <source>Document's publish license stream is corrupted.</source>
+        <target state="translated">La secuencia de la licencia de publicación del documento está dañada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PublishLicenseStreamHeaderTooLong">
+        <source>Variable-length header in publish license stream is {0} bytes, which exceeds the maximum length of {1} bytes.</source>
+        <target state="translated">El encabezado de longitud variable en la secuencia de licencias de publicación es de {0} bytes, que supera la longitud máxima de {1} bytes.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QualifiedNameHasWrongFormat">
+        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
+        <target state="translated">El nombre de tipo '{0}' no tiene el formato esperado 'nombreDeClase, ensamblado'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReachOutOfRange">
+        <source>'{0}' index is beyond maximum '{1}'.</source>
+        <target state="translated">El índice "{0}" está por encima del máximo "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadBufferTooSmall">
+        <source>Buffer too small to hold results of Read.</source>
+        <target state="translated">Búfer demasiado pequeño para contener los resultados de la lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadCountNegative">
+        <source>Count of bytes to read cannot be negative.</source>
+        <target state="translated">El recuento de bytes de lectura no puede ser negativo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadNotSupported">
+        <source>Stream does not support reading.</source>
+        <target state="translated">La secuencia no admite lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyChangeNotAllowed">
+        <source>'{0}' property was registered as read-only and cannot be modified without an authorization key.</source>
+        <target state="translated">La propiedad "{0}" se registró como de solo lectura y no se puede modificar sin una clave de autorización.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyDesignerCoersionNotAllowed">
+        <source>'{0}' is registered as read-only, so its value cannot be coerced by using the DesignerCoerceValueCallback.</source>
+        <target state="translated">"{0}" se registró como de solo lectura, por lo que su valor no puede forzarse mediante el uso de DesignerCoerceValueCallback.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyKeyNotAuthorized">
+        <source>Property key is not authorized to modify property '{0}'.</source>
+        <target state="translated">La clave de propiedad no está autorizada para modificar la propiedad "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyOverrideKeyNotAuthorized">
+        <source>Property key is not authorized to override metadata of property '{0}'.</source>
+        <target state="translated">La clave de propiedad no está autorizada para anular los metadatos de la propiedad "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyOverrideNotAllowed">
+        <source>'{0}' property was registered as read-only and its metadata cannot be overridden without an authorization key.</source>
+        <target state="translated">La propiedad "{0}" se registró como de solo lectura y sus metadatos no se pueden anular sin una clave de autorización.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyStream">
+        <source>Cannot write to read-only stream.</source>
+        <target state="translated">No se puede escribir en la secuencia de solo lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReaderVersionError">
+        <source>File contains data in format version {0}, but the software can only read that data in format version {1} or lower.</source>
+        <target state="translated">El archivo contiene datos en la versión de formato {0}, pero el software solo puede leer esos datos en la versión de formato {1} o inferior.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Rect_CannotCallMethod">
+        <source>Cannot call this method on the Empty Rect.</source>
+        <target state="translated">No se puede llamar a este método en Empty Rect.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Rect_CannotModifyEmptyRect">
+        <source>Cannot modify this property on the Empty Rect.</source>
+        <target state="translated">No se puede modificar esta propiedad en Empty Rect.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReferenceIsNull">
+        <source>Value cannot be null. Object reference: '{0}'.</source>
+        <target state="translated">El valor no puede ser NULL. Referencia de objeto: '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipPartIncorrectContentType">
+        <source>Incorrect content type for PackageRelationship part.</source>
+        <target state="translated">Tipo de contenido incorrecto para la parte PackageRelationship.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipPartUriExpected">
+        <source>PackageRelationship part URI is expected.</source>
+        <target state="translated">Se espera el URI de la parte de PackageRelationship.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipPartUriNotExpected">
+        <source>PackageRelationship part URI is not expected.</source>
+        <target state="translated">No se espera el URI de la parte de PackageRelationship.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipPartsCannotHaveRelationships">
+        <source>PackageRelationship parts cannot have relationships to other parts.</source>
+        <target state="translated">Las partes de PackageRelationship no pueden tener relaciones con otras partes.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipTagDoesntMatchSchema">
+        <source>Relationship tag contains incorrect attribute.</source>
+        <target state="translated">La etiqueta de relación contiene un atributo incorrecto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipTargetMustBeRelative">
+        <source>PackageRelationship target must be relative URI if TargetMode is Internal.</source>
+        <target state="translated">El destino de PackageRelationship debe ser un URI relativo si el valor de TargetMode es Internal.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipToRelationshipIllegal">
+        <source>PackageRelationship cannot target another PackageRelationship.</source>
+        <target state="translated">PackageRelationship no puede tener como destino otro PackageRelationship.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipTransformNotFollowedByCanonicalizationTransform">
+        <source>Relationship transform must be followed by an XML canonicalization transform.</source>
+        <target state="translated">La transformación de relación debe ir seguida de una transformación de canonización XML.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelationshipsTagHasExtraAttributes">
+        <source>Relationships tag has extra attributes.</source>
+        <target state="translated">La etiqueta de relaciones tiene atributos adicionales.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequiredAttributeEmpty">
+        <source>'{0}' tag requires a nonempty '{1}' attribute.</source>
+        <target state="translated">La etiqueta "{0}" requiere un atributo no vacío "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequiredAttributeMissing">
+        <source>'{0}' tag requires attribute '{1}'.</source>
+        <target state="translated">La etiqueta "{0}" requiere el atributo "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequiredRelationshipAttributeMissing">
+        <source>Relationship tag requires attribute '{0}'.</source>
+        <target state="translated">La etiqueta de relación requiere el atributo "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequiredTagNotFound">
+        <source>Required tag '{0}' not found.</source>
+        <target state="translated">No se encuentra la etiqueta "{0}" requerida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequiredXmlAttributeMissing">
+        <source>Required attribute '{0}' not found.</source>
+        <target state="translated">No se encuentra el atributo "{0}" requerido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementEncryptionTransformNotFound">
+        <source>Document does not contain any rights management-protected streams.</source>
+        <target state="translated">El documento no contiene ninguna secuencia protegida con administración de derechos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionAborted">
+        <source>Command interrupted.</source>
+        <target state="translated">Comando interrumpido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionActivationFailed">
+        <source>Activation failed.</source>
+        <target state="translated">Error de activación</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionAdEntryNotFound">
+        <source>Ad entry not found.</source>
+        <target state="translated">No se encuentra la entrada AD.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionAlreadyInProgress">
+        <source>Rights management server transaction already in progress.</source>
+        <target state="translated">La transacción del servidor de administración de derechos ya está en curso.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionAuthenticationFailed">
+        <source>Authentication failed.</source>
+        <target state="translated">Error de autenticación.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBadGetInfoQuery">
+        <source>Get information query is not valid.</source>
+        <target state="translated">La consulta para obtener información no es válida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindAccessPrincipalNotEnabling">
+        <source>Binding access principal is not enabling.</source>
+        <target state="translated">La entidad de seguridad de acceso de enlace no está habilitada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindAccessUnsatisfied">
+        <source>Binding access unsatisfied.</source>
+        <target state="translated">Acceso de enlace no satisfecho.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindContentNotInEndUseLicense">
+        <source>Binding content not in the End Use License.</source>
+        <target state="translated">Contenido de enlace no incluido en el contrato de licencia para el usuario final.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindIndicatedPrincipalMissing">
+        <source>Principal provided for binding is missing.</source>
+        <target state="translated">Falta la entidad de seguridad proporcionada para el enlace.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindIntervalTimeViolated">
+        <source>Binding time interval is violated.</source>
+        <target state="translated">Se infringió el intervalo de enlace.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindMachineNotFoundInGroupIdentity">
+        <source>Machine is not found in group identity certificate.</source>
+        <target state="translated">La máquina no se encuentra en el certificado de identidad de grupo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindNoApplicableRevocationList">
+        <source>Binding missing application revocation list.</source>
+        <target state="translated">Falta la lista de revocación de aplicaciones en el enlace.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindNoSatisfiedRightsGroup">
+        <source>Binding cannot find a satisfied rights group.</source>
+        <target state="translated">El enlace no puede encontrar un grupo de derechos satisfecho.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindPolicyViolation">
+        <source>Binding policy violation.</source>
+        <target state="translated">Infracción de directiva de enlace.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindRevocationListStale">
+        <source>Binding revocation list is stale.</source>
+        <target state="translated">La lista de revocación de enlaces es obsoleta.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindRevokedIssuer">
+        <source>Issuer has been revoked.</source>
+        <target state="translated">Se ha revocado el emisor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindRevokedLicense">
+        <source>License has been revoked.</source>
+        <target state="translated">Se ha revocado la licencia.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindRevokedModule">
+        <source>Module has been revoked.</source>
+        <target state="translated">Se ha revocado el módulo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindRevokedPrincipal">
+        <source>Principal has been revoked.</source>
+        <target state="translated">Se ha revocado la entidad de seguridad.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindRevokedResource">
+        <source>Resource has been revoked.</source>
+        <target state="translated">Se ha revocado el recurso.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindSpecifiedWorkMissing">
+        <source>Cannot find content specified for binding.</source>
+        <target state="translated">No se puede encontrar el contenido especificado para el enlace.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBindValidityTimeViolated">
+        <source>Binding validity time violated.</source>
+        <target state="translated">Se ha infringido el tiempo de validez del enlace.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionBrokenCertChain">
+        <source>Broken certificate chain.</source>
+        <target state="translated">Se ha roto la cadena de certificados.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionClockRollbackDetected">
+        <source>Clock rollback detected.</source>
+        <target state="translated">Se ha detectado una reversión de reloj.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionCryptoOperationUnsupported">
+        <source>Crypto operation not supported.</source>
+        <target state="translated">Operación criptográfica no admitida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionDebuggerDetected">
+        <source>Debugger detected.</source>
+        <target state="translated">Depurador detectado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionEmailNotVerified">
+        <source>E-mail not verified.</source>
+        <target state="translated">No se ha comprobado el correo electrónico.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionEnablingPrincipalFailure">
+        <source>Enabling principal failure.</source>
+        <target state="translated">Error al habilitar la entidad de seguridad.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionEncryptionNotPermitted">
+        <source>Encryption not permitted.</source>
+        <target state="translated">Cifrado no permitido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionEnvironmentCannotLoad">
+        <source>Cannot load environment.</source>
+        <target state="translated">No se puede cargar el entorno.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionEnvironmentNotLoaded">
+        <source>Environment not loaded.</source>
+        <target state="translated">Entorno no cargado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionExpiredOfficialIssuanceLicenseTemplate">
+        <source>Expired official Publish License template.</source>
+        <target state="translated">La plantilla de la licencia de publicación oficial ha expirado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionGenericMessage">
+        <source>Rights management operation failed.</source>
+        <target state="translated">Error de una operación de administración de derechos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionGlobalOptionAlreadySet">
+        <source>Global option is already set.</source>
+        <target state="translated">La opción global ya está establecida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionGroupIdentityNotSet">
+        <source>Group identity not set.</source>
+        <target state="translated">Identidad de grupo ya establecida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionHidCorrupted">
+        <source>Hardware ID corrupted.</source>
+        <target state="translated">ID de hardware dañado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionHidInvalid">
+        <source>Hardware ID is not valid.</source>
+        <target state="translated">El ID de hardware no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionIdMismatch">
+        <source>ID mismatch.</source>
+        <target state="translated">No coinciden los ID.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionIncompatibleObjects">
+        <source>Incompatible objects.</source>
+        <target state="translated">Objetos incompatibles.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInfoNotInLicense">
+        <source>Information not found.</source>
+        <target state="translated">No se encontró información.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInfoNotPresent">
+        <source>Information not found.</source>
+        <target state="translated">No se encontró información.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInstallationFailed">
+        <source>Installation failed.</source>
+        <target state="translated">Error de instalación.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidAlgorithmType">
+        <source>Algorithm type is not valid.</source>
+        <target state="translated">El tipo de algoritmo no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidClientLicensorCertificate">
+        <source>Client Licensor Certificate is not valid.</source>
+        <target state="translated">El certificado del emisor de licencias de cliente no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidEmail">
+        <source>E-mail address is not valid.</source>
+        <target state="translated">La dirección de correo electrónico no es válida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidEncodingType">
+        <source>Encoding type is not valid.</source>
+        <target state="translated">El tipo de codificación no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidHandle">
+        <source>Handle is not valid.</source>
+        <target state="translated">El identificador no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidIssuanceLicenseTemplate">
+        <source>Issuance license template is not valid because of incorrectly formatted string.</source>
+        <target state="translated">La plantilla de licencia de emisión no es válida porque hay una cadena con formato incorrecto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidKeyLength">
+        <source>Key size length is not valid.</source>
+        <target state="translated">La longitud del tamaño de la clave no es válida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidLicense">
+        <source>License is not valid.</source>
+        <target state="translated">La licencia no es válida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidLicenseSignature">
+        <source>License signature is not valid.</source>
+        <target state="translated">La signatura de licencia no es válida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidLockboxPath">
+        <source>Lockbox path is not valid.</source>
+        <target state="translated">Ruta de acceso de Lockbox no válida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidLockboxType">
+        <source>Lockbox type is not valid.</source>
+        <target state="translated">Tipo de Lockbox no válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidNumericalValue">
+        <source>Numerical value is not valid.</source>
+        <target state="translated">El valor numérico no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidRegistryPath">
+        <source>Registry path is not valid.</source>
+        <target state="translated">La ruta de acceso del Registro no es válida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidServerResponse">
+        <source>Server response is not valid.</source>
+        <target state="translated">La respuesta del servidor no es válida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidTimeInfo">
+        <source>Time information is not valid.</source>
+        <target state="translated">La información de tiempo no es válida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionInvalidVersion">
+        <source>Version is not valid.</source>
+        <target state="translated">La versión no es válida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionKeyTypeUnsupported">
+        <source>Key type not supported.</source>
+        <target state="translated">Tipo no admitido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionLibraryFail">
+        <source>Library fail.</source>
+        <target state="translated">Error de biblioteca.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionLibraryUnsupportedPlugIn">
+        <source>Unsupported library plug-in.</source>
+        <target state="translated">Complemento de biblioteca no compatible.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionLicenseAcquisitionFailed">
+        <source>License acquisition failed.</source>
+        <target state="translated">Error en la adquisición de licencia.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionLicenseBindingToWindowsIdentityFailed">
+        <source>License binding to Windows Identity failed (NTLM bind failure).</source>
+        <target state="translated">Error en el enlace de la licencia a Windows Identity (error de enlace NTML)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionManifestPolicyViolation">
+        <source>Manifest policy violation.</source>
+        <target state="translated">Infracción de directiva de manifiesto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionMetadataNotSet">
+        <source>Metadata not set.</source>
+        <target state="translated">Metadatos no establecidos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNeedsGroupIdentityActivation">
+        <source>User identity must be activated.</source>
+        <target state="translated">Debe activarse la identidad del usuario.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNeedsMachineActivation">
+        <source>Machine must be activated.</source>
+        <target state="translated">Debe activarse el equipo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNoAesCryptoProvider">
+        <source>No AES Crypto provider found.</source>
+        <target state="translated">No se ha encontrado ningún proveedor de AES Crypto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNoConnect">
+        <source>Connection failed.</source>
+        <target state="translated">No se pudo realizar la conexión.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNoDistributionPointUrlFound">
+        <source>Distribution Point URL was not set.</source>
+        <target state="translated">La URL del punto de distribución no se estableció.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNoLicense">
+        <source>License not found.</source>
+        <target state="translated">No se encuentra la licencia.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNoMoreData">
+        <source>No more data.</source>
+        <target state="translated">No hay más datos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNotAChain">
+        <source>Not a certificate chain.</source>
+        <target state="translated">No es una cadena de certificados.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionNotSet">
+        <source>Not set.</source>
+        <target state="translated">No establecido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionOutOfQuota">
+        <source>Transaction quota exceeded.</source>
+        <target state="translated">Se ha excedido la cuota de transacción.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionOutdatedModule">
+        <source>Outdated module.</source>
+        <target state="translated">Módulo obsoleto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionOwnerLicenseNotFound">
+        <source>Owner's license not found.</source>
+        <target state="translated">No se encuentra la licencia de propietario.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionQueryReportsNoResults">
+        <source>Query reports no results.</source>
+        <target state="translated">La consulta no dio resultados.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionRecordNotFound">
+        <source>Record not found.</source>
+        <target state="translated">Registro no encontrado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionRequestDenied">
+        <source>Rights management server denied request.</source>
+        <target state="translated">El servidor de administración de derechos denegó la solicitud.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionRevocationInfoNotSet">
+        <source>Revocation information not set.</source>
+        <target state="translated">Información de revocación no establecida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionRightNotGranted">
+        <source>Right not granted.</source>
+        <target state="translated">Derecho no concedido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionRightNotSet">
+        <source>Right not set.</source>
+        <target state="translated">Derecho no establecido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionServerError">
+        <source>Server side error.</source>
+        <target state="translated">Error en el lado del servidor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionServerNotFound">
+        <source>Server not found.</source>
+        <target state="translated">No se encontró el servidor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionServiceGone">
+        <source>Service gone.</source>
+        <target state="translated">El servicio se ha ido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionServiceMoved">
+        <source>Service moved.</source>
+        <target state="translated">El servicio se ha movido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionServiceNotFound">
+        <source>Service not found.</source>
+        <target state="translated">Servicio no encontrado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionTooManyCertificates">
+        <source>Cannot have more than one certificate.</source>
+        <target state="translated">No se puede tener más de un certificado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionTooManyLoadedEnvironments">
+        <source>Cannot load more than one environment.</source>
+        <target state="translated">No se puede cargar más de un entorno.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionUnexpectedException">
+        <source>Unexpected exception.</source>
+        <target state="translated">Excepción inesperada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionUseDefault">
+        <source>Use default.</source>
+        <target state="translated">Usar predeterminado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RmExceptionValidityTimeViolation">
+        <source>License validity time violation.</source>
+        <target state="translated">Infracción de tiempo de validez de la licencia.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SeekFailed">
+        <source>Cannot seek to given position.</source>
+        <target state="translated">No se puede realizar una llamada en la posición especificada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SeekNegative">
+        <source>Cannot set seek pointer to a negative position.</source>
+        <target state="translated">No se puede establecer el puntero de llamada en una posición negativa.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SeekNotSupported">
+        <source>Stream does not support Seek.</source>
+        <target state="translated">La secuencia no admite Seek.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SeekOriginInvalid">
+        <source>SeekOrigin value is not valid.</source>
+        <target state="translated">El valor SeekOrigin no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ServiceTypeAlreadyAdded">
+        <source>This serviceType is already registered to another service.</source>
+        <target state="translated">Este serviceType está ya registrado en otro servicio.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetLengthNotSupported">
+        <source>Stream does not support SetLength.</source>
+        <target state="translated">La secuencia no admite SetLength.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetOnReadOnlyObjectNotAllowed">
+        <source>Cannot set a property on object '{0}' because it is in a read-only state.</source>
+        <target state="translated">No se puede establecer una propiedad en el objeto "{0}" porque está en un estado de solo lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetPositionNotSupported">
+        <source>Stream does not support setting the Position property.</source>
+        <target state="translated">Stream no admite el establecimiento de la propiedad Position.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ShareableExpressionsCannotChangeSources">
+        <source>Shareable Expression cannot use ChangeSources method.</source>
+        <target state="translated">Shareable Expression no puede usar el método ChangeSources.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SharingNonSharableExpression">
+        <source>Cannot set Expression. It is marked as 'NonShareable' and has already been used.</source>
+        <target state="translated">No se puede establecer la expresión. Está marcada como "NonShareable" y ya se ha utilizado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureDeleted">
+        <source>Signature was deleted.</source>
+        <target state="translated">Se eliminó la firma.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureObjectIdMustBeUnique">
+        <source>Object identifiers must be unique within the same signature.</source>
+        <target state="translated">Los identificadores de objeto deben ser únicos dentro de la misma firma.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureOriginNotFound">
+        <source>Relationship was found to the signature origin but the part is missing. Package signature structures are corrupted.</source>
+        <target state="translated">Se encontró una relación con el origen de la firma pero falta la parte. Las estructuras de firma del paquete están dañadas.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignaturePackageObjectTagMustBeUnique">
+        <source>Specified object ID conflicts with predefined Package Object ID.</source>
+        <target state="translated">El ID de objeto especificado entra en conflicto con el ID de objeto de paquete predefinido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Size_CannotModifyEmptySize">
+        <source>Cannot modify this property on the Empty Size.</source>
+        <target state="translated">No se puede modificar esta propiedad en Empty Size.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Size_HeightCannotBeNegative">
+        <source>Height must be non-negative.</source>
+        <target state="translated">Height no puede ser negativo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Size_WidthAndHeightCannotBeNegative">
+        <source>Width and Height must be non-negative.</source>
+        <target state="translated">Width y Height no pueden ser negativos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Size_WidthCannotBeNegative">
+        <source>Width must be non-negative.</source>
+        <target state="translated">Width no puede ser negativo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SortDescriptionPropertyNameCannotBeEmpty">
+        <source>SortDescription must have a nonempty property name.</source>
+        <target state="translated">SortDescription debe tener un nombre de propiedad no vacío.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SourceChangeExpressionMismatch">
+        <source>Expression is not in use on DependencyObject. Cannot change DependencySource array.</source>
+        <target state="translated">La expresión no se utiliza en DependencyObject. No se puede cambiar la matriz DependencySource.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SourcesMustBeInSameThread">
+        <source>Must create DependencySource on same Thread as the DependencyObject.</source>
+        <target state="translated">Debe crear DependencySource en el mismo subproceso que DependencyObject.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SpecialMethodMustBePublic">
+        <source>ShouldSerializeProperty and ResetProperty methods must be public ('{0}').</source>
+        <target state="translated">Los métodos ShouldSerializeProperty y ResetProperty deben ser públicos ("{0}").</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SplashScreenIsLoading">
+        <source>Please wait while the application opens</source>
+        <target state="translated">Espere mientras se abre la aplicación</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StorageAlreadyExist">
+        <source>Storage already exists.</source>
+        <target state="translated">El almacenamiento ya existe.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StorageBasedPackagePropertiesDiposed">
+        <source>PackageProperties object was disposed.</source>
+        <target state="translated">El objeto PackageProperties se eliminó.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StorageFlagsUnsupported">
+        <source>This combination of flags is not supported.</source>
+        <target state="translated">Esta combinación de marcas no se admite.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StorageInfoDisposed">
+        <source>StorageInfo object was disposed.</source>
+        <target state="translated">El objeto StorageInfo se eliminó.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StorageNotExist">
+        <source>Storage does not exist.</source>
+        <target state="translated">El almacén no existe.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StorageRootDisposed">
+        <source>StorageRoot object was disposed.</source>
+        <target state="translated">El objeto StorageRoot se eliminó.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamAlreadyExist">
+        <source>Stream already exists.</source>
+        <target state="translated">La secuencia ya existe.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamDoesNotSupportWrite">
+        <source>Cannot change content of a read-only stream.</source>
+        <target state="translated">No se puede cambiar el contenido de la secuencia de solo lectura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamInfoDisposed">
+        <source>StreamInfo object was disposed.</source>
+        <target state="translated">El objeto StreamInfo se eliminó.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamLengthNegative">
+        <source>Stream length cannot be negative.</source>
+        <target state="translated">La longitud de la secuencia no puede ser negativa.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamNameNotValid">
+        <source>Stream name cannot be '{0}'.</source>
+        <target state="translated">El nombre de la secuencia no puede ser "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamNeedsReadWriteAccess">
+        <source>The stream on which the encrypted package is created must have read/write access.</source>
+        <target state="translated">La secuencia en que se crea el paquete cifrado debe tener acceso de lectura/escritura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamNotExist">
+        <source>Cannot perform this function on a stream that does not exist.</source>
+        <target state="translated">No se puede realizar esta función en una secuencia que no existe.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamObjectDisposed">
+        <source>Cannot access Stream object because it was closed or disposed.</source>
+        <target state="translated">No se puede acceder al objeto Stream porque se cerró o se eliminó.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamPositionNegative">
+        <source>Negative stream position not supported.</source>
+        <target state="translated">La posición de secuencia negativa no se admite.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamTimeStampNotImplemented">
+        <source>Stream time stamp not implemented in OLE32 implementation of Compound Files.</source>
+        <target state="translated">La marca de tiempo de la secuencia no se implementó en la implementación de OLE32 de archivos compuestos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamingModeNotSupportedForConsumption">
+        <source>Streaming mode is supported only for creating packages.</source>
+        <target state="translated">El modo de streaming solo se admite para crear paquetes.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamingPackageProductionImpliesWriteOnlyAccess">
+        <source>Must have write-only access to produce a package in streaming mode.</source>
+        <target state="translated">Debe tener acceso de solo escritura para producir un paquete en modo de streaming.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamingPackageProductionRequiresSingleWriter">
+        <source>Cannot have concurrent write accesses on package being produced in streaming mode.</source>
+        <target state="translated">No se pueden tener accesos de escritura simultáneos en el paquete que se produce en el modo de streaming.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringCanNotBeReservedName">
+        <source>'{0}' cannot start with the reserved character range 0x01-0x1F.</source>
+        <target state="translated">"{0}" no puede comenzar con el rango de caracteres reservado 0x01-0x1F.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringEmpty">
+        <source>Parameter cannot be a zero-length string.</source>
+        <target state="translated">El parámetro no puede ser una cadena de longitud cero.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TargetNotMediaPermissionLevel">
+        <source>Target is not a MediaPermission.</source>
+        <target state="translated">El destino no es un elemento MediaPermission.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TargetNotWebBrowserPermissionLevel">
+        <source>Target is not a WebBrowserPermission.</source>
+        <target state="translated">El destino no es un elemento WebBrowserPermission.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">
+        <source>A thread cannot wait on operations already running on the same thread.</source>
+        <target state="translated">Un subproceso no puede esperar en las operaciones que ya se están ejecutando en el mismo subproceso.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TimeSpanPeriodOutOfRange_TooLarge">
+        <source>TimeSpan period must be less than or equal to Int32.MaxValue.</source>
+        <target state="translated">El período de TimeSpan debe ser menor o igual a Int32.MaxValue.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TimeSpanPeriodOutOfRange_TooSmall">
+        <source>TimeSpan period must be greater than or equal to zero.</source>
+        <target state="translated">El período de TimeSpan debe ser mayor o igual a cero.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TimeStampNotAvailable">
+        <source>Requested time stamp is not available.</source>
+        <target state="translated">La marca de tiempo solicitada no está disponible.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToStringNull">
+        <source>(null)</source>
+        <target state="translated">(nulo)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperEmptyToken">
+        <source>Empty token encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">Se encontró un token vacío en la posición {0} al analizar "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperExtraDataEncountered">
+        <source>Extra data encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">Se encontraron datos adicionales en la posición {0} al analizar "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperMissingEndQuote">
+        <source>Missing end quote encountered while parsing '{0}'.</source>
+        <target state="translated">Al analizar '{0}', se detectó que falta la comilla final.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperPrematureStringTermination">
+        <source>Premature string termination encountered while parsing '{0}'.</source>
+        <target state="translated">Se detectó una finalización prematura de la cadena al analizar '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyDependencyProperties">
+        <source>DependencyProperty limit has been exceeded upon registration of '{0}'. Dependency properties are normally static class members registered with static field initializers or static constructors. In this case, there may be dependency properties accidentally getting initialized in instance constructors and thus causing the maximum limit to be exceeded.</source>
+        <target state="translated">El límite de DependencyProperty se ha superado en el registro de "{0}". Las propiedades de dependencia normalmente son miembros de clase estática registrados con inicializadores de campo estático o constructores estáticos. En este caso, es posible que se inicialicen involuntariamente propiedades de dependencia en los constructores de la instancia y que, por lo tanto, se supere el límite máximo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformLabelInUse">
+        <source>Transform label name is already in use.</source>
+        <target state="translated">El nombre de la etiqueta de transformación ya está en uso.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformLabelUndefined">
+        <source>Data space transform stack includes undefined transform labels.</source>
+        <target state="translated">La pila de transformación del espacio de datos incluye etiquetas de transformación sin definir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformObjectConstructorParam">
+        <source>Transform object type is required to have a constructor which takes a TransformEnvironment object.</source>
+        <target state="translated">Es necesario que el tipo de objeto de transformación tenga un constructor que tome un objeto TransformEnvironment.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformObjectImplementIDataTransform">
+        <source>Transform object type is required to implement IDataTransform interface.</source>
+        <target state="translated">El tipo de objeto de transformación es necesario para implementar la interfaz IDataTransform.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformObjectInitFailed">
+        <source>Stream transformation failed due to uninitialized data transform objects.</source>
+        <target state="translated">No se pudo realizar la transformación de la secuencia debido a que hay objetos de transformación de datos sin inicializar.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformParametersFixed">
+        <source>Cannot change Transform parameters after the transform is initialized.</source>
+        <target state="translated">No se pueden cambiar los parámetros de transformación después de que la transformación se haya inicializado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformStackValid">
+        <source>Transform stack must have at least one transform.</source>
+        <target state="translated">La pila de transformación debe tener al menos una transformación.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TransformTypeUnsupported">
+        <source>Transform identifier type is not supported.</source>
+        <target state="translated">El tipo de identificador de transformación no se admite.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Transform_NotInvertible">
+        <source>Transform is not invertible.</source>
+        <target state="translated">La transformación no se puede invertir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TruncateAppendModesNotSupported">
+        <source>Truncate and Append FileModes are not supported.</source>
+        <target state="translated">Truncate y Append FileModes no se admiten.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeMetadataAlreadyInUse">
+        <source>Metadata is already associated with a type and property. A new one must be created.</source>
+        <target state="translated">Los metadatos ya están asociados con un tipo y una propiedad. Se deben crear otros nuevos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeMetadataAlreadyRegistered">
+        <source>PropertyMetadata is already registered for type '{0}'.</source>
+        <target state="translated">El valor PropertyMetadata ya está registrado para el tipo "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeMetadataCannotChangeAfterUse">
+        <source>Cannot change property metadata after it has been associated with a property.</source>
+        <target state="translated">No se pueden cambiar los metadatos de propiedad una vez asociados a una propiedad.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeMustBeDependencyObjectDerived">
+        <source>'{0}' type must derive from DependencyObject.</source>
+        <target state="translated">El tipo "{0}" debe derivarse de DependencyObject.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypesElementExpected">
+        <source>Required Types tag not found.</source>
+        <target state="translated">No se encuentra la etiqueta de tipos requeridos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypesTagHasExtraAttributes">
+        <source>Types tag has attributes not valid per the schema.</source>
+        <target state="translated">La etiqueta de tipos tiene atributos no válidos de acuerdo con el esquema.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypesXmlDoesNotMatchSchema">
+        <source>Content Types XML does not match schema.</source>
+        <target state="translated">El XML de tipos de contenido no coincide con el esquema.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="URIShouldNotBeAbsolute">
+        <source>Cannot be an absolute URI.</source>
+        <target state="translated">No puede ser un URI absoluto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnableToCreateOnStream">
+        <source>Cannot create package on stream.</source>
+        <target state="translated">No se puede crear el paquete en la secuencia.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnableToCreateStorage">
+        <source>Cannot create data storage.</source>
+        <target state="translated">No se puede crear el almacenamiento de datos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnableToCreateStream">
+        <source>Cannot create data stream.</source>
+        <target state="translated">No se puede crear la secuencia de datos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnableToLocateResource">
+        <source>Cannot locate resource '{0}'.</source>
+        <target state="translated">No se encuentra el recurso '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnableToOpenStream">
+        <source>Cannot open data stream.</source>
+        <target state="translated">No se puede abrir la secuencia de datos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedXmlTag">
+        <source>Unexpected tag '{0}'.</source>
+        <target state="translated">Etiqueta inesperada "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownDCDateTimeXsiType">
+        <source>Unknown xsi:type for DateTime on '{0}'.</source>
+        <target state="translated">xsi:type desconocido para DateTime en "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownDocumentProperty">
+        <source>Unrecognized document property: FMTID = '{0}', property ID = '{1}'.</source>
+        <target state="translated">Propiedad de documento no reconocida: FMTID = "{0}", ID de propiedad = "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownExpressionMode">
+        <source>Unrecognized Expression 'Mode' value.</source>
+        <target state="translated">Valor "Mode" de expresión no reconocido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownNamespaceInCorePropertiesPart">
+        <source>Unrecognized namespace in Core Properties part.</source>
+        <target state="translated">Espacio de nombres no reconocido en la parte Core Properties.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownReferenceComponentType">
+        <source>Unrecognized reference component type.</source>
+        <target state="translated">Tipo de componente de referencia no reconocido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownReferenceSerialize">
+        <source>Cannot serialize unknown CompoundFileReference subclass.</source>
+        <target state="translated">No se puede serializar la subclase CompoundFileReference desconocida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownTagEncountered">
+        <source>Unrecognized tag found in Relationships XML.</source>
+        <target state="translated">Se encontró una etiqueta no reconocida en el XML de relaciones.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedCanonicalizationMethod">
+        <source>Unsupported canonicalization method specified.</source>
+        <target state="translated">Se especificó un método de canonización no admitido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedCombinationOfModeAccess">
+        <source>Cannot get stream with FileMode.Create, FileMode.CreateNew, FileMode.Truncate, FileMode.Append when access is FileAccess.Read.</source>
+        <target state="translated">No se puede obtener la secuencia con FileMode.Create, FileMode.CreateNew, FileMode.Truncate, FileMode.Append cuando el acceso es FileAccess.Read.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedCombinationOfModeAccessShareStreaming">
+        <source>Cannot get stream with FileMode.Create, FileMode.CreateNew, FileMode.Truncate, FileMode.Append when access is FileAccess.Read.</source>
+        <target state="translated">No se puede obtener la secuencia con FileMode.Create, FileMode.CreateNew, FileMode.Truncate, FileMode.Append cuando el acceso es FileAccess.Read.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedHashAlgorithm">
+        <source>Unsupported hash algorithm specified.</source>
+        <target state="translated">Se ha especificado un algoritmo de hash no admitido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedTransformAlgorithm">
+        <source>Unsupported transform algorithm specified.</source>
+        <target state="translated">Se ha especificado un algoritmo de transformación no admitido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnsupportedTypeEncounteredWhenBuildingStgEnum">
+        <source>Encountered unsupported type of storage element when building storage enumerator.</source>
+        <target state="translated">Se encontró un tipo de elemento de almacenamiento no admitido al compilar un enumerador de almacenamiento.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Unsupported_Key">
+        <source>Unrecognized Key '{0}'.</source>
+        <target state="translated">Clave no reconocida "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Unsupported_Modifier">
+        <source>Unrecognized ModifierKeys '{0}'.</source>
+        <target state="translated">Valores ModifierKey no reconocidos "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UpdaterVersionError">
+        <source>File contains data in format version {0}, but the software can only update that data in format version {1} or lower.</source>
+        <target state="translated">El archivo contiene datos en la versión de formato {0}, pero el software solo puede actualizar esos datos en la versión de formato {1} o inferior.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UriShouldBeAbsolute">
+        <source>Must have absolute URI.</source>
+        <target state="translated">Debe tener un URI absoluto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UriShouldBePackScheme">
+        <source>URI must contain pack:// scheme.</source>
+        <target state="translated">El URI debe contener un esquema pack://.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UseLicenseStreamCorrupt">
+        <source>One of the document's use licenses is corrupted.</source>
+        <target state="translated">Una de las licencias de uso del documento está dañada.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UserHasNoClientLicensorCert">
+        <source>User does not have a client licensor certificate.</source>
+        <target state="translated">El usuario no tiene un certificado del emisor de licencias de cliente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UserIsNotActivated">
+        <source>User is not activated.</source>
+        <target state="translated">El usuario no está activado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VerifyAccess">
+        <source>The calling thread cannot access this object because a different thread owns it.</source>
+        <target state="translated">El subproceso que realiza la llamada no puede obtener acceso a este objeto porque el propietario es otro subproceso.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Verify_ApartmentState">
+        <source>This operation requires the thread's apartment state to be '{0}'.</source>
+        <target state="translated">Esta operación requiere que el estado del apartamento del subproceso sea "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Verify_AreNotEqual">
+        <source>The argument can not be equal to '{0}'.</source>
+        <target state="translated">El argumento no puede ser igual a "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Verify_FileExists">
+        <source>No file exists at '{0}'.</source>
+        <target state="translated">No hay ningún archivo en "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Verify_NeitherNullNorEmpty">
+        <source>The argument can neither be null nor empty.</source>
+        <target state="translated">El argumento no puede ser nulo ni estar vacío.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VersionNumberComponentNegative">
+        <source>Major and minor version number components cannot be negative.</source>
+        <target state="translated">Los componentes principal y secundario del número de versión no pueden ser negativos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VersionStreamMissing">
+        <source>Cannot find version stream.</source>
+        <target state="translated">No se puede encontrar la secuencia de la versión.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VersionUpdateFailure">
+        <source>Cannot update version because of a version field size mismatch.</source>
+        <target state="translated">No se puede actualizar la versión debido a una falta de coincidencia de tamaño del campo de la versión.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WPF_UILanguage">
+        <source>en</source>
+        <target state="translated">es</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WpfDllConsistencyErrorData">
+        <source>DLL Name: {0} DLL Location: {1}</source>
+        <target state="translated">Nombre de DLL: {0} Ubicación de DLL: {1}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WpfDllConsistencyErrorHeader">
+        <source>Failed WPF DLL consistency checks. Expected location: {0}.</source>
+        <target state="translated">Error en las comprobaciones de coherencia de WPF. Ubicación esperada: {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteBufferTooSmall">
+        <source>Buffer of bytes to be written is too small.</source>
+        <target state="translated">El búfer de bytes para escribir es demasiado pequeño.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteCountNegative">
+        <source>Count of bytes to write cannot be negative.</source>
+        <target state="translated">El recuento de bytes de escritura no puede ser negativo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteFailure">
+        <source>Cannot write all data as specified.</source>
+        <target state="translated">No se pueden escribir todos los datos como se especifica.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteNotSupported">
+        <source>Stream does not support writing.</source>
+        <target state="translated">La secuencia no admite escritura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteOnlyStream">
+        <source>Cannot read from write-only stream.</source>
+        <target state="translated">No se puede leer desde una secuencia de solo escritura.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteOnlyUnsupported">
+        <source>Write-only mode is not supported.</source>
+        <target state="translated">El modo de solo escritura no se admite.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteSizeNegative">
+        <source>Cannot write a negative number of bytes.</source>
+        <target state="translated">No se puede escribir un número negativo de bytes.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WrongContentTypeForPropertyPart">
+        <source>The Core Properties relationship references a part that has an incorrect content type.</source>
+        <target state="translated">La relación Core Properties hace referencia a una parte que tiene un tipo de contenido incorrecto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WrongDocumentPropertyVariantType">
+        <source>'{0}' document property in property set '{1}' is of incorrect variant type '{2}'. Expected type '{3}'.</source>
+        <target state="translated">La propiedad de documento "{0}" en el conjunto de propiedades "{1}" es del tipo de variante incorrecta "{2}". Tipo esperado "{3}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceAfterFallback">
+        <source>Choice cannot follow a Fallback.</source>
+        <target state="translated">Un elemento Fallback no puede ir seguido de un elemento Choice.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceNotFound">
+        <source>AlternateContent must contain one or more Choice elements.</source>
+        <target state="translated">AlternateContent debe contener uno o varios elementos Choice.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRChoiceOnlyInAC">
+        <source>Choice is valid only in AlternateContent.</source>
+        <target state="translated">Choice sólo es válido en AlternateContent.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRCompatCycle">
+        <source>There is a cycle of XML compatibility definitions, such that namespace '{0}' overrides itself. This could be due to inconsistent XmlnsCompatibilityAttributes in different assemblies. Please change the definitions to eliminate this cycle.</source>
+        <target state="translated">Hay un ciclo de definiciones de compatibilidad XML, de forma que el espacio de nombres "{0}" se invalida a sí mismo. Esto puede deberse a valores XmlnsCompatibilityAttributes incoherentes en diferentes ensamblados. Cambie las definiciones para eliminar este ciclo.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicatePreserve">
+        <source>Duplicate Preserve declaration for element {1} in namespace '{0}'.</source>
+        <target state="translated">Declaración Preserve duplicada para el elemento {1} en el espacio de nombres "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateProcessContent">
+        <source>Duplicate ProcessContent declaration for element '{1}' in namespace '{0}'.</source>
+        <target state="translated">Declaración ProcessContent duplicada para el elemento "{1}" en el espacio de nombres "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardPreserve">
+        <source>Duplicate wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">Declaración Preserve de comodín duplicada para el espacio de nombres '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRDuplicateWildcardProcessContent">
+        <source>Duplicate wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">Declaración ProcessContent de comodín duplicada para el espacio de nombres '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRFallbackOnlyInAC">
+        <source>Fallback is valid only in AlternateContent.</source>
+        <target state="translated">Fallback sólo es válido en AlternateContent.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidACChild">
+        <source>'{0}' element is not a valid child of AlternateContent. Only Choice and Fallback elements are valid children of an AlternateContent element.</source>
+        <target state="translated">El elemento '{0}' no es un elemento secundario válido de AlternateContent. Sólo Choice y Fallback son elementos secundarios válidos de un elemento AlternateContent.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidAttribInElement">
+        <source>'{0}' attribute is not valid for '{1}' element.</source>
+        <target state="translated">El atributo "{0}" no es válido para el elemento "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidFormat">
+        <source>'{0}' format is not valid.</source>
+        <target state="translated">El formato de '{0}' no es válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidPreserve">
+        <source>Cannot have both a specific and a wildcard Preserve declaration for namespace '{0}'.</source>
+        <target state="translated">No se pueden tener una declaración Preserve específica y otra de comodín para el espacio de nombres '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidProcessContent">
+        <source>Cannot have both a specific and a wildcard ProcessContent declaration for namespace '{0}'.</source>
+        <target state="translated">No se pueden tener una declaración ProcessContent específica y otra de comodín para el espacio de nombres '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidRequiresAttribute">
+        <source>Requires attribute must contain a valid namespace prefix.</source>
+        <target state="translated">El atributo Requires debe contener un prefijo de espacio de nombres válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRInvalidXMLName">
+        <source>'{0}' attribute value is not a valid XML name.</source>
+        <target state="translated">El valor del atributo '{0}' no es un nombre XML válido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMultipleFallbackFound">
+        <source>AlternateContent must contain only one Fallback element.</source>
+        <target state="translated">AlternateContent sólo debe contener un elemento Fallback.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRMustUnderstandFailed">
+        <source>MustUnderstand condition failed on namespace '{0}'</source>
+        <target state="translated">Error de la condición MustUnderstand en el espacio de nombres "{0}"</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSPreserveNotIgnorable">
+        <source>'{0}' namespace cannot preserve items; it must be declared Ignorable first.</source>
+        <target state="translated">El espacio de nombres '{0}' no puede conservar los elementos; se debe declarar primero como Ignorable.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRNSProcessContentNotIgnorable">
+        <source>'{0}' namespace cannot process content; it must be declared Ignorable first.</source>
+        <target state="translated">El espacio de nombres '{0}' no puede procesar el contenido; se debe declarar primero como Ignorable.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRRequiresAttribNotFound">
+        <source>Choice must contain Requires attribute.</source>
+        <target state="translated">Choice debe contener un atributo Requires</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUndefinedPrefix">
+        <source>'{0}' prefix is not defined.</source>
+        <target state="translated">El prefijo '{0}' no está definido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatAttrib">
+        <source>Unrecognized compatibility attribute '{0}'.</source>
+        <target state="translated">Atributo de compatibilidad '{0}' no reconocido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XCRUnknownCompatElement">
+        <source>Unrecognized Compatibility element '{0}'.</source>
+        <target state="translated">Elemento de compatibilidad '{0}' no reconocido.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlSignatureParseError">
+        <source>Error parsing XML Signature.</source>
+        <target state="translated">Error al analizar la firma XML.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XsdDateTimeExpected">
+        <source>Core Properties part: Text data of XSD type 'DateTime' was expected.</source>
+        <target state="translated">Parte Core Properties: se esperaban datos de texto del tipo XSD "DateTime".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZLibVersionError">
+        <source>Compression requires ZLib library version {0}.</source>
+        <target state="translated">La compresión requiere la versión de la biblioteca ZLib {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZeroLengthFeatureID">
+        <source>Feature ID string cannot have zero length.</source>
+        <target state="translated">La cadena del ID de la característica no puede tener longitud de cero.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Zip64StructuresTooLarge">
+        <source>ZIP archive contains data structures too large to fit in memory.</source>
+        <target state="translated">El archivo ZIP contiene estructuras de datos demasiado grandes para caber en la memoria.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZipArchiveDisposed">
+        <source>ZIP archive was closed and disposed.</source>
+        <target state="translated">El archivo ZIP se cerró y eliminó.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZipFileItemDisposed">
+        <source>ZIP file was closed, disposed, or deleted.</source>
+        <target state="translated">El archivo ZIP se cerró, retiró o eliminó.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZipNotSupportedCompressionMethod">
+        <source>ZIP archive contains data compressed using an unsupported algorithm.</source>
+        <target state="translated">El archivo ZIP contiene datos comprimidos que usan un algoritmo no compatible.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZipNotSupportedEncryptedArchive">
+        <source>ZIP archive contains unsupported encrypted data.</source>
+        <target state="translated">El archivo ZIP contiene datos cifrados no compatibles.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZipNotSupportedSignedArchive">
+        <source>ZIP archive contains unsupported signature data.</source>
+        <target state="translated">El archivo ZIP contiene datos de firma no compatibles.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZipZeroSizeFileIsNotValidArchive">
+        <source>Archive file cannot be size 0.</source>
+        <target state="translated">El archivo de archivado no puede ser de tamaño 0.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

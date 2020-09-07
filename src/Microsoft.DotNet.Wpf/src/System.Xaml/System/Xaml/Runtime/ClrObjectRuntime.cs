@@ -234,7 +234,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 if(property.IsDirective)
                 {
-                    value = this.CreateInstance(property.Type, null);
+                    value = CreateInstance(property.Type, null);
                 }
                 else if(!failIfWriteOnly)
                 {

@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://purl.org/dc/elements/1.1/" targetNamespace="http://purl.org/dc/elements/1.1/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace">
+  </xs:import>
+
+  <xs:complexType name="SimpleLiteral">
+        <xs:complexContent mixed="true">
+    <xs:restriction base="xs:anyType">
+     <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="0" />
+     </xs:sequence>
+     <xs:attribute ref="xml:lang" use="optional" />
+    </xs:restriction>
+   </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="any" type="SimpleLiteral" abstract="true" />
+
+  <xs:element name="title" substitutionGroup="any" />
+  <xs:element name="creator" substitutionGroup="any" />
+  <xs:element name="subject" substitutionGroup="any" />
+  <xs:element name="description" substitutionGroup="any" />
+  <xs:element name="publisher" substitutionGroup="any" />
+  <xs:element name="contributor" substitutionGroup="any" />
+  <xs:element name="date" substitutionGroup="any" />
+  <xs:element name="type" substitutionGroup="any" />
+  <xs:element name="format" substitutionGroup="any" />
+  <xs:element name="identifier" substitutionGroup="any" />
+  <xs:element name="source" substitutionGroup="any" />
+  <xs:element name="language" substitutionGroup="any" />
+  <xs:element name="relation" substitutionGroup="any" />
+  <xs:element name="coverage" substitutionGroup="any" />
+  <xs:element name="rights" substitutionGroup="any" />
+
+  <xs:group name="elementsGroup">
+  	<xs:sequence>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="any" />
+    </xs:choice>
+    </xs:sequence>
+  </xs:group>
+
+  <xs:complexType name="elementContainer">
+  	<xs:choice>
+      <xs:group ref="elementsGroup" />
+    </xs:choice>
+  </xs:complexType>
+
+
+</xs:schema>

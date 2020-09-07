@@ -1,0 +1,321 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net472;netcoreapp2.1</TargetFrameworks>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <EnablePInvokeAnalyzer>true</EnablePInvokeAnalyzer>
+
+    <!--
+      Clear AssemblyVersion => it will ensure that the AssemblyVersion is > 4.0.0.0.
+      In turn, this will ensure that the net4x PresentationBuildTasks.dll
+      is always loaded directly instead of being matched against the GAC copy of the
+      PresentationBuildTasks 4.0.0.0 that comes form the .NET Framework.
+      -->
+    <AssemblyVersion />
+
+    <!--
+            Suppressed Compiler Warnings:
+
+                CS1058: A previous catch clause already catches all exceptions. All exceptions
+                thrown will be wrapped in a System.Runtime.CompilerServices.RuntimeWrappedException
+    -->
+    <NoWarn>$(NoWarn);1058</NoWarn>
+
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <AssemblyName>PresentationBuildTasks</AssemblyName>
+    <DefineConstants>$(DefineConstants);PBTCOMPILER;PARSERM8BC;NEWLOADER;IGNORABLESUPPORT;ONLYMARKUPEXTENSIONS</DefineConstants>
+    <BinPlaceRuntime>false</BinPlaceRuntime>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup Condition="'$(CopyTransitiveReferences)'=='true'">
+    <PackageReference>
+      <PrivateAssets>None</PrivateAssets>
+    </PackageReference>
+  </ItemDefinitionGroup>
+  <PropertyGroup>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+
+  <!--
+    Incorporate Microsoft.WinFX.targets in nuget packages under
+    content\targets\
+  -->
+  <ItemGroup>
+    <PackagingContent Include="$(MSBuildThisFileDirectory)Microsoft.WinFX.targets" SubFolder="root\targets" />
+  </ItemGroup>
+
+  <!--
+    Limit the assemblies that are packaged into Microsoft.NET.Sdk.WindowsDesktop
+  -->
+  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
+    <PackagingAssemblyContent Include="PresentationBuildTasks.dll" />
+    <PackagingAssemblyContent Include="System.Collections.Immutable.dll" />
+    <PackagingAssemblyContent Include="System.Memory.dll" />
+    <PackagingAssemblyContent Include="System.Numerics.Vectors.dll" />
+    <PackagingAssemblyContent Include="System.Reflection.Metadata.dll" />
+    <PackagingAssemblyContent Include="System.Reflection.MetadataLoadContext.dll" />
+    <PackagingAssemblyContent Include="System.Runtime.CompilerServices.Unsafe.dll" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp2.1'">
+    <PackagingAssemblyContent Include="PresentationBuildTasks.dll" />
+    <PackagingAssemblyContent Include="System.Reflection.MetadataLoadContext.dll" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+      <EmbeddedResource Include="Resources\Strings.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(WpfCommonDir)src\System\LocalAppContext.cs" />
+    <Compile Include="$(WpfCommonDir)src\System\AppContextDefaultValues.cs" />
+    <Compile Include="System\AppContextDefaultValues.cs" />
+    <Compile Include="MS\Internal\BuildTasksAppContextSwitches.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Compile Include="SR.cs" />
+    <Compile Include="$(WpfCommonDir)src\System\SR.cs" >
+      <Link>Common\System\SR.cs</Link>
+    </Compile>
+
+    <Compile Include="$(WpfSharedDir)\RefAssemblyAttrs.cs">
+      <Link>Shared\RefAssemblyAttrs.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSharedDir)\MS\Internal\ResourceIDHelper.cs">
+      <Link>Shared\MS\Internal\ResourceIDHelper.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityHelper.cs">
+      <Link>Shared\MS\Internal\SecurityHelper.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSharedDir)\MS\Internal\TokenizerHelper.cs">
+      <Link>Shared\MS\Internal\TokenizerHelper.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSharedDir)\System\Windows\Markup\ReflectionHelper.cs">
+      <Link>Shared\System\Windows\Markup\ReflectionHelper.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSharedDir)\MS\Internal\Xaml\Parser\SpecialBracketCharacters.cs">
+      <Link>Shared\MS\Internal\Xaml\Parser\SpecialBracketCharacters.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSharedDir)\MS\Internal\CriticalExceptions.cs">
+      <Link>Shared\MS\Internal\CriticalExceptions.cs</Link>
+    </Compile>
+
+    <Compile Include="$(WpfSourceDir)\WindowsBase\System\Windows\Markup\DateTimeConverter2.cs">
+      <Link>WindowsBase\System\Windows\Markup\DateTimeConverter2.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\WindowsBase\System\Windows\Markup\TypeTypeConverter.cs">
+      <Link>WindowsBase\System\Windows\Markup\TypeTypeConverter.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSharedDir)\System\Windows\Markup\RuntimeIdentifierPropertyAttribute.cs">
+      <Link>Shared\System\Windows\Markup\RuntimeIdentifierPropertyAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSharedDir)\System\Windows\Markup\TypeConverterHelper.cs">
+      <Link>Shared\System\Windows\Markup\TypeConverterHelper.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSharedDir)\System\Windows\Markup\XmlCompatibilityReader.cs">
+      <Link>Shared\System\Windows\Markup\XmlCompatibilityReader.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSharedDir)\System\Windows\Markup\XmlWrappingReader.cs">
+      <Link>Shared\System\Windows\Markup\XmlWrappingReader.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\WindowsBase\System\IO\Packaging\Compoundfile\FormatVersion.cs">
+      <Link>WindowsBase\System\IO\Packaging\Compoundfile\FormatVersion.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\WindowsBase\System\IO\Packaging\Compoundfile\versionPair.cs">
+      <Link>WindowsBase\System\IO\Packaging\Compoundfile\versionPair.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\WindowsBase\MS\Internal\IO\Packaging\Compoundfile\ContainerUtilities.cs">
+      <Link>WindowsBase\MS\Internal\IO\Packaging\Compoundfile\ContainerUtilities.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\internal\Media\XamlSerializationHelper.cs">
+      <Link>PresentationCore\MS\internal\Media\XamlSerializationHelper.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\internal\Media\ParserStreamGeometryContext.cs">
+      <Link>PresentationCore\MS\internal\Media\ParserStreamGeometryContext.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\System\Windows\Media\StreamGeometryContext.cs">
+      <Link>PresentationCore\System\Windows\Media\StreamGeometryContext.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\System\Windows\Media\ParsersCommon.cs">
+      <Link>PresentationCore\System\Windows\Media\ParsersCommon.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\System\Windows\LocalizationCategory.cs">
+      <Link>PresentationCore\System\Windows\LocalizationCategory.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\System\Windows\Media\Knowncolors.cs">
+      <Link>PresentationCore\System\Windows\Media\Knowncolors.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\System\Windows\Modifiability.cs">
+      <Link>PresentationCore\System\Windows\Modifiability.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\System\Windows\Readability.cs">
+      <Link>PresentationCore\System\Windows\Readability.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\AttributeData.cs">
+      <Link>PresentationFramework\System\Windows\Markup\AttributeData.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\BamlBinaryWriter.cs">
+      <Link>PresentationFramework\System\Windows\Markup\BamlBinaryWriter.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\BamlMapTable.cs">
+      <Link>PresentationFramework\System\Windows\Markup\BamlMapTable.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\BamlRecords.cs">
+      <Link>PresentationFramework\System\Windows\Markup\BamlRecords.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\BamlRecordWriter.cs">
+      <Link>PresentationFramework\System\Windows\Markup\BamlRecordWriter.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\BamlRecordHelper.cs">
+      <Link>PresentationFramework\System\Windows\Markup\BamlRecordHelper.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\BamlVersionHeader.cs">
+      <Link>PresentationFramework\System\Windows\Markup\BamlVersionHeader.cs</Link>
+    </Compile>
+
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\KnownTypes.cs">
+      <Link>PresentationFramework\System\Windows\Markup\KnownTypes.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\KnownTypesHelper.cs">
+      <Link>PresentationFramework\System\Windows\Markup\KnownTypesHelper.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlTypeMapper.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XamlTypeMapper.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\MarkupExtensionParser.cs">
+      <Link>PresentationFramework\System\Windows\Markup\MarkupExtensionParser.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\ParserContext.cs">
+      <Link>PresentationFramework\System\Windows\Markup\ParserContext.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\ParserHooks.cs">
+      <Link>PresentationFramework\System\Windows\Markup\ParserHooks.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\ParserStack.cs">
+      <Link>PresentationFramework\System\Windows\Markup\ParserStack.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\StyleModeStack.cs">
+      <Link>PresentationFramework\System\Windows\Markup\StyleModeStack.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\StyleXamlParser.cs">
+      <Link>PresentationFramework\System\Windows\Markup\StyleXamlParser.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\TemplateXamlParser.cs">
+      <Link>PresentationFramework\System\Windows\Markup\TemplateXamlParser.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\TreeBuilder.cs">
+      <Link>PresentationFramework\System\Windows\Markup\TreeBuilder.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\TypeContext.cs">
+      <Link>PresentationFramework\System\Windows\Markup\TypeContext.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlBrushSerializer.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XamlBrushSerializer.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlPoint3DCollectionSerializer.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XamlPoint3DCollectionSerializer.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlVector3DCollectionSerializer.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XamlVector3DCollectionSerializer.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlPointCollectionSerializer.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XamlPointCollectionSerializer.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlInt32CollectionSerializer.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XamlInt32CollectionSerializer.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlPathDataSerializer.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XamlPathDataSerializer.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlNodes.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XamlNodes.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XAMLParseException.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XAMLParseException.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlParser.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XamlParser.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlSerializer.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XamlSerializer.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlStyleSerializer.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XamlStyleSerializer.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlTemplateSerializer.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XamlTemplateSerializer.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlReaderConstants.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XamlReaderConstants.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlReaderHelper.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XamlReaderHelper.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XmlAttributeProperties.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XmlAttributeProperties.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XmlnsCache.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XmlnsCache.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XmlnsDictionary.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XmlnsDictionary.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\SystemResourceKey.cs">
+      <Link>PresentationFramework\System\Windows\SystemResourceKey.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\MS\Internal\Globalization\LocalizationComments.cs">
+      <Link>PresentationFramework\MS\Internal\Globalization\LocalizationComments.cs</Link>
+    </Compile>
+
+    <Compile Include="MS\Internal\Localization\LocalizationDirectivesToLocFile.cs" />
+    <Compile Include="MS\Internal\Localization\LocalizationParserHooks.cs" />
+    <Compile Include="MS\Internal\MarkupCompiler\AssemblyVersionParseException.cs" />
+    <Compile Include="MS\Internal\MarkupCompiler\CompilationUnit.cs" />
+    <Compile Include="MS\Internal\MarkupCompiler\FileUnit.cs" />
+    <Compile Include="MS\Internal\MarkupCompiler\MarkupCompiler.cs" />
+    <Compile Include="MS\Internal\MarkupCompiler\ParserExtension.cs" />
+    <Compile Include="MS\Internal\MarkupCompiler\VersionHelper.cs" />
+    <Compile Include="MS\Internal\Shared\SourceFileInfo.cs" />
+    <Compile Include="MS\Internal\Tasks\Shared.cs" />
+    <Compile Include="MS\Internal\Tasks\TaskHelper.cs" />
+    <Compile Include="MS\Internal\Tasks\CompilerWrapper.cs" />
+    <Compile Include="MS\Internal\Tasks\CompilerState.cs" />
+    <Compile Include="MS\Internal\Tasks\CompilerLocalReference.cs" />
+    <Compile Include="MS\Internal\Tasks\IncrementalCompileAnalyzer.cs" />
+    <Compile Include="MS\Internal\Tasks\IPersistFileCheckSum.cs" />
+    <Compile Include="MS\Internal\Tasks\IVsMSBuildTaskFileManager.cs" />
+    <Compile Include="MS\Internal\Tasks\TaskFileService.cs" />
+    <Compile Include="Microsoft\Build\Tasks\Windows\MergeLocalizationDirectives.cs" />
+    <Compile Include="Microsoft\Build\Tasks\Windows\MarkupCompilePass1.cs" />
+    <Compile Include="Microsoft\Build\Tasks\Windows\MarkupCompilePass2.cs" />
+    <Compile Include="Microsoft\Build\Tasks\Windows\FileClassifier.cs" />
+    <Compile Include="Microsoft\Build\Tasks\Windows\UidManager.cs" />
+    <Compile Include="Microsoft\Build\Tasks\Windows\UpdateManifestForBrowserApplication.cs" />
+    <Compile Include="Microsoft\Build\Tasks\Windows\ResourcesGenerator.cs" />
+    <Compile Include="Microsoft\Build\Tasks\Windows\GenerateTemporaryTargetAssembly.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Build.Framework" Version="$(MicrosoftBuildFrameworkPackageVersion)" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="$(MicrosoftBuildUtilitiesCorePackageVersion)" />
+    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="$(SystemReflectionMetadataLoadContextVersion)" />
+
+    <!--
+      Provide specific/old versions for PresentationBuildTasks which needs to run inside MSBuild
+    -->
+    <PackageReference Include="System.CodeDom" Version="$(SystemCodeDomPackageVersionForPresentationBuildTasks)" />
+  </ItemGroup>
+
+</Project>

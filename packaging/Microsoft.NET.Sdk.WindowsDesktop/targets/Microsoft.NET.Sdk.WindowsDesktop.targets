@@ -1,0 +1,161 @@
+<Project>
+
+  <PropertyGroup>
+    <_MicrosoftNetSdkWindowsDesktop>true</_MicrosoftNetSdkWindowsDesktop>
+    <EnableDefaultPageItems Condition="'$(EnableDefaultPageItems)' == ''">true</EnableDefaultPageItems>
+    <EnableDefaultApplicationDefinition Condition="'$(EnableDefaultApplicationDefinition)' == ''">true</EnableDefaultApplicationDefinition>
+    <DefaultXamlRuntime Condition="'$(DefaultXamlRuntime)'==''">Wpf</DefaultXamlRuntime>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- 
+    WindowsDesktop SDK supports WPF and WinForms on 
+      - .NET Core 3.0 and greater
+      - .NET Framework 3.0 and greater
+   
+    Note that on .NET Framework versions < 4.0, additional workarounds may be required to build applications 
+    using the SDK style projects. For e.g., see https://github.com/microsoft/msbuild/issues/1333
+    
+    Irrespective of whether '$(TargetFrameworkIdentifier)' is '.NETCoreApp' or '.NETFramework', 
+    the minimum value of $(_TargetFrameworkVersionValue) we will be testing for is '3.0'
+    
+  -->
+    <_WindowsDesktopSdkTargetFrameworkVersionFloor>3.0</_WindowsDesktopSdkTargetFrameworkVersionFloor>
+
+    <!-- 
+      Represents an undefined TFV value. This will be used in comparisons of _TargetFrameworkVersionValue (defined in Microsoft.NET.WindowsDesktop.targets)
+      to identify when a TFV is undefined
+    -->
+    <_UndefinedTargetFrameworkVersion>0.0</_UndefinedTargetFrameworkVersion>
+  </PropertyGroup>
+
+
+  <!-- 
+    $(TargetFrameworkVersion), $(_TargetFrameworkVersionWithoutV) etc. are defined in 
+    Microsoft.NET.Sdk\targets\Microsoft.NET.TargetFrameworkInference.targets. 
+    
+    Microsoft.NET.Sdk.targets is included prior to this file by Sdk.targets, so it is safe to define _TargetFrameworkValue
+    here. 
+    
+    _TargetFrameworkValue will be used in WindowsDesktop SDK as reliable proxy for _TargetFrameworkVersionWithoutV. 
+    _TargetFrameworkVersionWithoutV can be empty ('') or it can be a numeric value (e.g., '3.0') - which makes it hard to work with
+    esp. in outer builds.  _TargetFrameworkValue will always be guaranteed to have a numeric value ('0.0' or a valid TFM). 
+    
+    _TargetFrameworkVersionValue will be used in Microsoft.NET.Sdk.WindowsDesktop.props in Item conditions. This will be valid
+    because Items are evaluated after Properties (see https://docs.microsoft.com/en-us/visualstudio/msbuild/comparing-properties-and-items?view=vs-2019). 
+    
+    Note:
+      Please see https://github.com/microsoft/msbuild/issues/3212 for a discussion about the use of 
+      the private $(_TargetFrameworkVersionWithoutV) property - which will likely remain supported and
+      is safe to use here. 
+  -->
+  <PropertyGroup>
+    <_TargetFrameworkVersionValue>$([MSBuild]::ValueOrDefault('$(_TargetFrameworkVersionWithoutV)', '$(_UndefinedTargetFrameworkVersion)'))</_TargetFrameworkVersionValue>
+  </PropertyGroup>
+
+    <!-- PropertyGroup flags control if Itemgroups in Microsoft.NET.Sdk.WindowsDesktop.props file is being imported -->
+  <PropertyGroup>
+      <_EnableWindowsDesktopGlobbing Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And
+                         ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And
+                         ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">true</_EnableWindowsDesktopGlobbing>
+      <_EnableWindowsDesktopNetCoreFrameworkReferences Condition="('$(DisableImplicitFrameworkReferences)' != 'true') And
+                      ('$(TargetFrameworkIdentifier)' == '.NETCoreApp') And
+                      ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And
+                      ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">true</_EnableWindowsDesktopNetCoreFrameworkReferences>
+      <_EnableWindowsDesktopNETFrameworkImplicitReference Condition="('$(DisableImplicitFrameworkReferences)' != 'true') And
+                        ('$(TargetFrameworkIdentifier)' == '.NETFramework') And
+                        ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And
+                        ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">true</_EnableWindowsDesktopNETFrameworkImplicitReference>
+      <_RemoveUnsupportedTargetFrameworksForWindowsDesktop Condition="('$(UseWPF)' == 'true' Or '$(UseWindowsForms)' == 'true') And
+                        '$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)' And
+                        '$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)'">true</_RemoveUnsupportedTargetFrameworksForWindowsDesktop>
+  </PropertyGroup>
+
+  
+  <Import Project="Microsoft.WinFX.targets" />
+
+  <ItemGroup Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And 
+                         ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
+
+    <!--
+         In the WindowsDesktop .props, we globbed all .xaml files as Page items.  If any of those files are included
+         as Resource, Content then remove them from the Page items.
+    -->
+    <Page Remove="@(Resource);@(Content)"
+          Condition="'$(EnableDefaultPageItems)' != 'false'" />
+
+    <!--
+        ApplicationDefinition must also be removed from Page.  Otherwise, PresentationBuildTasks will include the
+        generated code for the ApplicationDefinition twice.  We cannot do this in all cases in the props file as
+        ApplicationDefinition isn't available at that point in the evaluation when EnableDefaultApplicationDefinition
+        is false.  We unconditionally remove it here as ApplicationDefinition is considered a special singleton Item 
+        in WPF.
+    -->
+    <Page Remove="@(ApplicationDefinition)" />
+    
+    <!--
+         The WindowsDesktop props file removes "**/*.xaml" from None if both EnableDefaultApplicationDefinition and 
+         EnableDefaultPageItems are true.  This is done so that we remove any implicitly globbed XAML files from None
+         in support of Visual Studio.  
+         
+         In the case where one or both of these properties are not true, the WindowsDesktop props file does not remove
+         any XAML files from None.  Under those conditions, removing None from Page here will remove explicitly specified
+         pages causing compilation errors.  We match the condition from the WindowsDesktop props file here so that we only
+         remove None from Page when we are guaranteed to not need those items.
+    -->
+    <Page Remove="@(None)"
+          Condition="'$(EnableDefaultApplicationDefinition)' != 'false' and '$(EnableDefaultPageItems)' != 'false'" />
+  </ItemGroup>
+
+  <!-- Generate error if there are duplicate page items.  The task comes from the .NET SDK, and this target follows
+       the pattern in the CheckForDuplicateItems task, where the .NET SDK checks for duplicate items for the item
+       types it knows about. -->
+  <Target Name="CheckForDuplicatePageItems" 
+          BeforeTargets="_CheckForInvalidConfigurationAndPlatform;CoreCompile"
+          DependsOnTargets="CheckForDuplicateItems"
+          Condition="('$(UseWPF)' == 'true') And ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
+
+    <CheckForDuplicateItems
+      Items="@(Page)"
+      ItemName="Page"
+      DefaultItemsEnabled="$(EnableDefaultItems)"
+      DefaultItemsOfThisTypeEnabled="$(EnableDefaultPageItems)"
+      PropertyNameToDisableDefaultItems="EnableDefaultPageItems"
+      MoreInformationLink="$(DefaultItemsMoreInformationLink)"
+      ContinueOnError="$(ContinueOnError)">
+      <Output TaskParameter="DeduplicatedItems" ItemName="DeduplicatedPageItems" />
+    </CheckForDuplicateItems>
+
+    <ItemGroup Condition="'$(DesignTimeBuild)' == 'true' And '@(DeduplicatedPageItems)' != ''">
+      <Page Remove="@(Page)" />
+      <Page Include="@(DeduplicatedPageItems)" />
+    </ItemGroup>
+
+  </Target>
+
+  <!-- 
+    This warning can be suppressed by setting $(MSBuildWarningsAsMessages) property, like this:
+    <PropertyGroup>
+      <MSBuildWarningsAsMessages>$(MSBuildWarningsAsMessages);NETSDK1106</MSBuildWarningsAsMessages>
+    </PropertyGroup>
+  --> 
+  <Target Name="_WindowsDesktopFrameworkRequiresUseWpfOrUseWindowsForms"
+          BeforeTargets="_CheckForInvalidConfigurationAndPlatform"
+          Condition="('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
+    <NetSdkWarning ResourceName="WindowsDesktopFrameworkRequiresUseWpfOrUseWindowsForms" 
+                   Condition="'$(UseWpf)' != 'true' And '$(UseWindowsForms)' != 'true'"/>
+  </Target>
+
+    <!-- 
+    This warning can be suppressed by setting $(MSBuildWarningsAsMessages) property, like this:
+    <PropertyGroup>
+      <MSBuildWarningsAsMessages>$(MSBuildWarningsAsMessages);NETSDK1105</MSBuildWarningsAsMessages>
+    </PropertyGroup>
+  --> 
+  <Target Name="_WindowsDesktopFrameworkRequiresVersion30"
+        BeforeTargets="_CheckForInvalidConfigurationAndPlatform"
+        Condition="('$(TargetFrameworkIdentifier)' == '.NETCoreApp') And 
+                  ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And ('$(_TargetFrameworkVersionValue)' &lt; '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
+    <NetSdkWarning ResourceName="WindowsDesktopFrameworkRequiresVersion30" />
+  </Target>
+</Project>

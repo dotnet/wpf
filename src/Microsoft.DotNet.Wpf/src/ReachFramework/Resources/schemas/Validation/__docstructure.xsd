@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://schemas.microsoft.com/xps/2005/06/documentstructure" xmlns="http://schemas.microsoft.com/xps/2005/06/documentstructure" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" blockDefault="#all">
+
+	<xs:import namespace="http://www.w3.org/XML/1998/namespace" />
+
+	<!-- ===============DocumentStructure Part=================== -->
+	<!-- Complex Types -->
+	<xs:complexType name="CT_DocumentStructure">
+		<xs:sequence>
+			<xs:element ref="DocumentStructure.Outline" minOccurs="0" />
+			<xs:element ref="Story" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CT_CP_Outline">
+ 		<xs:sequence>
+ 			<xs:element ref="DocumentOutline" />
+ 		</xs:sequence>
+ 	</xs:complexType>
+	<xs:complexType name="CT_DocumentOutline">
+		<xs:sequence>
+			<xs:element ref="OutlineEntry" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attributeGroup ref="AG_DocumentOutline" />
+	</xs:complexType>
+	<xs:complexType name="CT_OutlineEntry">
+		<xs:attributeGroup ref="AG_OutlineEntry" />
+	</xs:complexType>
+	<xs:complexType name="CT_Story">
+		<xs:sequence>
+			<xs:element ref="StoryFragmentReference" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attributeGroup ref="AG_Story" />
+	</xs:complexType>
+	<xs:complexType name="CT_StoryFragmentReference">
+		<xs:attributeGroup ref="AG_StoryFragmentReference" />
+	</xs:complexType>
+	<!-- Simple Types -->
+	<!-- A Name (ID with pattern restriction according to XPS spec) -->
+	<xs:simpleType name="ST_Name">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(\p{Lu}|\p{Ll}|\p{Lo}|\p{Lt}|\p{Nl})(\p{Lu}|\p{Ll}|\p{Lo}|\p{Lt}|\p{Nl}|\p{Mn}|\p{Mc}|\p{Nd}|\p{Lm}|_)*" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- A Unique Name (ID with pattern restriction according to XPS spec) -->
+	<xs:simpleType name="ST_NameUnique">
+		<xs:restriction base="xs:ID">
+			<xs:pattern value="(\p{Lu}|\p{Ll}|\p{Lo}|\p{Lt}|\p{Nl})(\p{Lu}|\p{Ll}|\p{Lo}|\p{Lt}|\p{Nl}|\p{Mn}|\p{Mc}|\p{Nd}|\p{Lm}|_)*" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- integer greater than or equal to 1 inclusive -->
+	<xs:simpleType name="ST_IntGEOne">
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Elements -->
+	<xs:element name="DocumentStructure" type="CT_DocumentStructure">
+		</xs:element>
+	<xs:element name="DocumentStructure.Outline" type="CT_CP_Outline">
+		</xs:element>
+	<xs:element name="DocumentOutline" type="CT_DocumentOutline">
+		</xs:element>
+	<xs:element name="OutlineEntry" type="CT_OutlineEntry">
+		</xs:element>
+	<xs:element name="Story" type="CT_Story">
+		</xs:element>
+	<xs:element name="StoryFragmentReference" type="CT_StoryFragmentReference">
+		</xs:element>
+	<!-- Attribute Groups -->
+	<xs:attributeGroup name="AG_DocumentOutline">
+		<xs:attribute ref="xml:lang" use="required">
+			</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="AG_OutlineEntry">
+		<xs:attribute name="OutlineLevel" type="ST_IntGEOne" use="optional">
+			</xs:attribute>
+		<xs:attribute name="OutlineTarget" type="xs:anyURI" use="required">
+			</xs:attribute>
+		<xs:attribute name="Description" type="xs:string" use="required">
+			</xs:attribute>
+		<xs:attribute ref="xml:lang" use="optional">
+			</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="AG_Story">
+		<xs:attribute name="StoryName" type="xs:string" use="required">
+			</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="AG_StoryFragmentReference">
+		<xs:attribute name="FragmentName" type="xs:string" use="optional">
+			</xs:attribute>
+		<xs:attribute name="Page" type="ST_IntGEOne" use="required">
+			</xs:attribute>
+	</xs:attributeGroup>
+	<!-- =====================StoryFragments Part==================== -->
+	<!-- Complex Types -->
+	<xs:complexType name="CT_StoryFragments">
+		<xs:sequence>
+			<xs:element ref="StoryFragment" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CT_StoryFragment">
+		<xs:sequence>
+			<xs:element ref="StoryBreak" minOccurs="0" />
+			<xs:choice maxOccurs="unbounded">
+				<xs:element ref="SectionStructure" />
+				<xs:element ref="ParagraphStructure" />
+				<xs:element ref="ListStructure" />
+				<xs:element ref="TableStructure" />
+				<xs:element ref="FigureStructure" />
+			</xs:choice>
+			<xs:element ref="StoryBreak" minOccurs="0" />
+		</xs:sequence>
+		<xs:attributeGroup ref="AG_StoryFragment" />
+	</xs:complexType>
+	<xs:complexType name="CT_Break">
+		</xs:complexType>
+	<xs:complexType name="CT_Section">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element ref="ParagraphStructure" />
+			<xs:element ref="ListStructure" />
+			<xs:element ref="TableStructure" />
+			<xs:element ref="FigureStructure" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="CT_Paragraph">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element ref="NamedElement" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="CT_Table">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element ref="TableRowGroupStructure" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="CT_TableRowGroup">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element ref="TableRowStructure" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="CT_TableRow">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element ref="TableCellStructure" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="CT_TableCell">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element ref="ParagraphStructure" />
+			<xs:element ref="ListStructure" />
+			<xs:element ref="TableStructure" />
+			<xs:element ref="FigureStructure" />
+		</xs:choice>
+		<xs:attributeGroup ref="AG_TableCell" />
+	</xs:complexType>
+	<xs:complexType name="CT_List">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element ref="ListItemStructure" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="CT_ListItem">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element ref="ParagraphStructure" />
+			<xs:element ref="ListStructure" />
+			<xs:element ref="TableStructure" />
+			<xs:element ref="FigureStructure" />
+		</xs:choice>
+		<xs:attributeGroup ref="AG_ListItem" />
+	</xs:complexType>
+	<xs:complexType name="CT_Figure">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element ref="NamedElement" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="CT_NamedElement">
+		<xs:attributeGroup ref="AG_NamedElement" />
+	</xs:complexType>
+	<!-- Simple Types -->
+	<!-- FragmentType enumeration -->
+	<xs:simpleType name="ST_FragmentType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Content" />
+			<xs:enumeration value="Header" />
+			<xs:enumeration value="Footer" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ST_Location">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([0-9][0-9]*)(\,[0-9][0-9]*)*" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ST_TableSpan">
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ST_ElementIndex">
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="0" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Elements -->
+	<xs:element name="StoryFragments" type="CT_StoryFragments">
+		</xs:element>
+	<xs:element name="StoryFragment" type="CT_StoryFragment">
+		</xs:element>
+	<xs:element name="StoryBreak" type="CT_Break">
+		</xs:element>
+	<xs:element name="SectionStructure" type="CT_Section">
+		</xs:element>
+	<xs:element name="ParagraphStructure" type="CT_Paragraph">
+		</xs:element>
+	<xs:element name="TableStructure" type="CT_Table">
+		</xs:element>
+	<xs:element name="TableRowGroupStructure" type="CT_TableRowGroup">
+		</xs:element>
+	<xs:element name="TableRowStructure" type="CT_TableRow">
+		</xs:element>
+	<xs:element name="TableCellStructure" type="CT_TableCell">
+		</xs:element>
+	<xs:element name="ListStructure" type="CT_List">
+		</xs:element>
+	<xs:element name="ListItemStructure" type="CT_ListItem">
+		</xs:element>
+	<xs:element name="FigureStructure" type="CT_Figure">
+		</xs:element>
+	<xs:element name="NamedElement" type="CT_NamedElement">
+		</xs:element>
+	<!-- Attribute Groups -->
+	<xs:attributeGroup name="AG_StoryFragment">
+		<xs:attribute name="StoryName" type="xs:string" use="optional">
+			</xs:attribute>
+		<xs:attribute name="FragmentName" type="xs:string" use="optional">
+			</xs:attribute>
+		<xs:attribute name="FragmentType" type="ST_FragmentType" use="required">
+			</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="AG_TableCell">
+		<xs:attribute name="RowSpan" type="ST_TableSpan" use="optional">
+			</xs:attribute>
+		<xs:attribute name="ColumnSpan" type="ST_TableSpan" use="optional">
+			</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="AG_ListItem">
+		<xs:attribute name="Marker" type="ST_NameUnique" use="optional">
+			</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="AG_NamedElement">
+		<xs:attribute name="NameReference" type="ST_Name" use="required">
+			</xs:attribute>
+	</xs:attributeGroup>
+</xs:schema>

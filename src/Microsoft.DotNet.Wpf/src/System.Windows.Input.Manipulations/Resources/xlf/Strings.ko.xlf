@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="ko" original="../Strings.resx">
+    <body>
+      <trans-unit id="ArgumentOutOfRange">
+        <source>Value of {0} is outside of the allowed range.</source>
+        <target state="translated">{0} 값은 허용되는 범위 밖에 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotChangeParameterDuringInertia">
+        <source>The value of {0} cannot be changed while the inertia processor is running.</source>
+        <target state="translated">비활성 프로세서가 실행 중인 동안에는 {0} 값을 변경할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IllegalPivotRadius">
+        <source>Value of {0} must be either NaN, or a finite value greater than or equal to 1.</source>
+        <target state="translated">{0} 값은 NaN이거나 1보다 크거나 같은 유한한 값이어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InertiaParametersUnspecified1and2">
+        <source>Either {0}, or {1} and {2}, needs to be specified.</source>
+        <target state="translated">{0} 또는 {1}과(와) {2}을(를) 지정해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InertiaParametersUnspecified2">
+        <source>Either {0} or {1} needs to be specified.</source>
+        <target state="translated">{0} 또는 {1}을(를) 지정해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InertiaProcessorInvalidRadius">
+        <source>InitialRadius should be a finite number, greater than or equal to 1.</source>
+        <target state="translated">InitialRadius는 1보다 크거나 같은 유한한 값이어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTimestamp">
+        <source>Timestamp values must not decrease.</source>
+        <target state="translated">타임스탬프 값은 줄어들 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NoInertiaVelocitiesSpecified">
+        <source>At least one of the following must be specified: linear velocity ({0} or {1}), angular velocity ({2}), or expansion velocity ({3} or {4}).</source>
+        <target state="translated">선형 속도({0} 또는 {1}), 각속도({2}), 확장 속도({3} 또는 {4}) 중에 최소한 하나를 지정해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyProportionalExpansionSupported">
+        <source>Currently, only proportional expansion is supported. {0} must equal {1}.</source>
+        <target state="translated">현재 비례 확장만 지원됩니다. {0}은(는) {1}과(와) 같아야 합니다.</target>
+        <note>{0} and {1} are the names of arguments.</note>
+      </trans-unit>
+      <trans-unit id="ValueMustBeFinite">
+        <source>Value of {0} must be finite.</source>
+        <target state="translated">{0} 값은 유한해야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueMustBeFiniteNonNegative">
+        <source>Value of {0} must be finite and non-negative.</source>
+        <target state="translated">{0} 값은 음수가 아닌 유한한 값이어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueMustBeFiniteOrNaN">
+        <source>Value of {0} must be finite or NaN.</source>
+        <target state="translated">{0} 값은 유한하거나 NaN이어야 합니다.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

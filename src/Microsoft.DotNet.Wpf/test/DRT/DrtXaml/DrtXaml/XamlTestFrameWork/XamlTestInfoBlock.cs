@@ -94,7 +94,6 @@ namespace DrtXaml.XamlTestFramework
                 {
                     if (ExpectedExceptionType == e.GetType())
                     {
-                        // TODO: Bug 736396
                         //if((ExpectedInnerExceptionType == null && e.InnerException == null) || (ExpectedInnerExceptionType == e.InnerException.GetType()))
                             return;
                     }

@@ -1,0 +1,29 @@
+<!-- [[Generic]] -->
+
+    <!--=================================================================
+            RibbonControl
+        ==================================================================-->
+
+    <Style x:Key="{x:Type ribbon:RibbonControl}" TargetType="{x:Type ribbon:RibbonControl}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ControlSizeDefinition.MinWidth.RibbonControlLengthUnitType}" Value="Pixel">
+                <Setter Property="MinWidth" Value="{Binding RelativeSource={RelativeSource Self}, Path=ControlSizeDefinition.MinWidth.Value}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ControlSizeDefinition.MaxWidth.RibbonControlLengthUnitType}" Value="Pixel">
+                <Setter Property="MaxWidth" Value="{Binding RelativeSource={RelativeSource Self}, Path=ControlSizeDefinition.MaxWidth.Value}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ControlSizeDefinition.Width.RibbonControlLengthUnitType}" Value="Pixel">
+                <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource Self}, Path=ControlSizeDefinition.Width.Value}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ControlSizeDefinition.Width.RibbonControlLengthUnitType}" Value="Auto">
+                <Setter Property="Width" Value="Auto"/>
+            </DataTrigger>
+        </Style.Triggers>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ribbon:RibbonControl}">
+                    <ribbon:RibbonContentPresenter x:Name="PART_ContentPresenter" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>

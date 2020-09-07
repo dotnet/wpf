@@ -1,0 +1,158 @@
+﻿<!--
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+
+Description: Download App Error Page.
+-->
+<Grid x:Uid="Grid_1" 
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+      x:Class="Microsoft.Internal.DeploymentUI.InstallationErrorPage" x:ClassModifier="internal" xml:lang="en-US">
+    <Grid.Background>
+        <LinearGradientBrush x:Uid="LinearGradientBrush_1" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop x:Uid="GradientStop_1" Color="#FFFFFF" Offset="0" />
+            <GradientStop x:Uid="GradientStop_2" Color="#E8EAEF" Offset="1" />
+        </LinearGradientBrush>
+    </Grid.Background>
+
+    <Grid x:Uid="Grid_3" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Uid="ColumnDefinition_1" Width="*" />
+            <ColumnDefinition x:Uid="ColumnDefinition_2" Width="Auto" />
+            <ColumnDefinition x:Uid="ColumnDefinition_3" Width="Auto" />
+            <ColumnDefinition x:Uid="ColumnDefinition_4" Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition x:Uid="RowDefinition_1" Height="2*" />
+            <RowDefinition x:Uid="RowDefinition_2" Height="Auto" />
+            <RowDefinition x:Uid="RowDefinition_3" Height="Auto" />
+            <RowDefinition x:Uid="RowDefinition_4" Height="3*" />
+        </Grid.RowDefinitions>
+
+        <Canvas x:Uid="Canvas_1" Grid.Column="1" Grid.Row="1" Margin="0,3,0,0" Width="55">
+            <Grid Grid.Column="0" x:Uid="RedWarning" Width="44" Height="44" Name="RedWarning" Visibility="Visible">
+                <Ellipse x:Uid="Ellipse_1">
+                    <Ellipse.Fill>
+                        <LinearGradientBrush x:Uid="LinearGradientBrush_14" StartPoint="0,0" EndPoint="0,1">
+                            <GradientBrush.GradientStops>
+                                <GradientStopCollection x:Uid="GradientStopCollection_4">
+                                    <GradientStop x:Uid="GradientStop_32" Color="OrangeRed" Offset="0" />
+                                    <GradientStop x:Uid="GradientStop_33" Color="DarkRed" Offset="1" />
+                                </GradientStopCollection>
+                            </GradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Ellipse.Fill>
+                    <Ellipse.Stroke>
+                        <LinearGradientBrush x:Uid="LinearGradientBrush_15" StartPoint="0,0" EndPoint="0,1">
+                            <GradientBrush.GradientStops>
+                                <GradientStopCollection x:Uid="GradientStopCollection_5">
+                                    <GradientStop x:Uid="GradientStop_34" Color="transparent" Offset="0" />
+                                    <GradientStop x:Uid="GradientStop_35" Color="#44ffffff" Offset="1" />
+                                </GradientStopCollection>
+                            </GradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Ellipse.Stroke>
+                </Ellipse>
+                <Ellipse x:Uid="Ellipse_2" Opacity="0.5" Stroke="transparent" Margin="1">
+                    <Ellipse.Fill>
+                        <LinearGradientBrush x:Uid="LinearGradientBrush_16" StartPoint="0,0" EndPoint="0,1">
+                            <GradientBrush.GradientStops>
+                                <GradientStopCollection x:Uid="GradientStopCollection_6">
+                                    <GradientStop x:Uid="GradientStop_36" Color="white" Offset="0" />
+                                    <GradientStop x:Uid="GradientStop_37" Color="transparent" Offset="1" />
+                                </GradientStopCollection>
+                            </GradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Path x:Uid="Path_1" Stretch="Fill" Width="19.878" Height="19.878" StrokeThickness="5" Stroke="White" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="M 0,0 L 1,1 M 1,0 L 0,1" />
+            </Grid>
+
+            <Grid x:Uid="Grid_2" Grid.Column="0" Width="44" Height="44" Visibility="Visible"  Canvas.Top="80" 
+               Canvas.Left="0" >
+                <Ellipse x:Uid="Ellipse_3" >
+                    <Ellipse.Fill>
+                        <LinearGradientBrush  x:Uid="LinearGradientBrush_17" StartPoint="0,0" EndPoint="0,1">
+                            <GradientBrush.GradientStops>
+                                <GradientStopCollection x:Uid="GradientStopCollection_7">
+                                    <GradientStop  x:Uid="GradientStop_38" Color="OrangeRed" Offset="0" />
+                                    <GradientStop x:Uid="GradientStop_39" Color="DarkRed" Offset="1" />
+                                </GradientStopCollection>
+                            </GradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Ellipse.Fill>
+                    <Ellipse.Stroke>
+                        <LinearGradientBrush x:Uid="LinearGradientBrush_18" StartPoint="0,0" EndPoint="0,1">
+                            <GradientBrush.GradientStops>
+                                <GradientStopCollection x:Uid="GradientStopCollection_8">
+                                    <GradientStop x:Uid="GradientStop_40" Color="transparent" Offset="0" />
+                                    <GradientStop x:Uid="GradientStop_41" Color="#44ffffff" Offset="1" />
+                                </GradientStopCollection>
+                            </GradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Ellipse.Stroke>
+                </Ellipse>
+                <Ellipse x:Uid="Ellipse_4" Opacity="0.5" Stroke="transparent" Margin="1">
+                    <Ellipse.Fill>
+                        <LinearGradientBrush x:Uid="LinearGradientBrush_19" StartPoint="0,0" EndPoint="0,1">
+                            <GradientBrush.GradientStops>
+                                <GradientStopCollection x:Uid="GradientStopCollection_9">
+                                    <GradientStop  x:Uid="GradientStop_42" Color="white" Offset="0" />
+                                    <GradientStop x:Uid="GradientStop_43" Color="transparent" Offset="1" />
+                                </GradientStopCollection>
+                            </GradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Path x:Uid="Path_2" Stretch="Fill" Width="19.878" Height="19.878" StrokeThickness="5" Stroke="White" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="M 0,0 L 1,1 M 1,0 L 0,1" />
+                <Grid.OpacityMask>
+                    <LinearGradientBrush  x:Uid="LinearGradientBrush_20" StartPoint="0,1" EndPoint="0,0">
+                        <GradientStop  x:Uid="GradientStop_44" Offset="0" Color="#3000" />
+                        <GradientStop x:Uid="GradientStop_45" Offset="0.9" Color="Transparent" />
+                    </LinearGradientBrush>
+                </Grid.OpacityMask>
+                <Grid.RenderTransform>
+                    <ScaleTransform x:Uid="ScaleTransform_2" ScaleX="1" ScaleY="-0.85" />
+                </Grid.RenderTransform>
+            </Grid>
+
+
+        </Canvas>
+
+        <StackPanel x:Uid="StackPanel_1" Grid.Column="2" Grid.Row="1">
+            <StackPanel.Resources>
+                <Style x:Uid="Style_1" TargetType="{x:Type TextBlock}">
+                    <Setter x:Uid="Setter_1" Property="FontFamily" Value="Segoe UI, Trebuchet MS" />
+                    <Setter x:Uid="Setter_2" Property="FontSize" Value="14px" />
+                    <Setter x:Uid="Setter_3" Property="Foreground" Value="#666" />
+                    <Setter x:Uid="Setter_4" Property="Margin" Value="2" />
+                </Style>
+            </StackPanel.Resources>
+
+
+            <TextBlock Name="txtTitle" x:Uid="Title" FontSize="18px" Foreground="#4465A2" MaxWidth="400" TextTrimming="CharacterEllipsis"/>
+
+            <TextBlock Name="Text" x:Uid="Text" Width="300" TextWrapping="Wrap"/>
+
+            <TextBlock Margin="0,8,0,8" x:Uid="SupportUri" Width="300" Name="SupportUriText" TextWrapping="WrapWithOverflow" Visibility="Collapsed" >
+                More information about this application can be found by visiting the site
+                <Hyperlink Name="SupportHyperLink" x:Uid="SupportHyperLink" >here</Hyperlink>
+            </TextBlock>
+
+
+        </StackPanel>
+
+
+        <Button x:Uid="LogFileButton" Name="LogFileButton" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,0,0" Padding="16,1" Visibility="Collapsed" Click="OnShowLog">
+            <TextBlock x:Uid="LogFileButtonText" TextWrapping="WrapWithOverflow">Open Error Log</TextBlock>
+        </Button>
+        <Button x:Uid="RetryButton" Name="RetryButton"  Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,0,0" Padding="16,1" Visibility="Collapsed" Click="OnRetry" >
+            <TextBlock x:Uid="RetryButtonText" TextWrapping="WrapWithOverflow">Retry</TextBlock>
+        </Button>
+        <Button x:Uid="GetWinFXButton" Name="GetWinFXButton" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,0,0" Padding="16,1" Visibility="Collapsed" Click="OnGetWinFX" >
+            <TextBlock x:Uid="GetWinFXText" TextWrapping="WrapWithOverflow">Install .Net Framework</TextBlock>
+        </Button>
+    </Grid>
+</Grid>

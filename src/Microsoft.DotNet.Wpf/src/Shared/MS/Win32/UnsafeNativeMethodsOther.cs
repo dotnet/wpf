@@ -13,7 +13,6 @@ namespace MS.Win32
     using System.Runtime.ConstrainedExecution;
     using System.Runtime.InteropServices;
     using System;
-    using System.Security.Permissions;
     using System.Collections;
     using System.IO;
     using System.Text;
@@ -38,21 +37,12 @@ namespace MS.Win32
 
     using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
-    //[SuppressUnmanagedCodeSecurity()]
     [FriendAccessAllowed]
     internal partial class UnsafeNativeMethods
     {
-        /// <SecurityNote>
-        ///     Critical: This elevates to unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Kernel32, CharSet=CharSet.Unicode, SetLastError=true, EntryPoint="GetTempFileName")]
         internal static extern uint _GetTempFileName(string tmpPath, string prefix, uint uniqueIdOrZero, StringBuilder tmpFileName);
 
-        /// <SecurityNote>
-        ///     Critical: This elevates to unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static uint GetTempFileName(string tmpPath, string prefix, uint uniqueIdOrZero, StringBuilder tmpFileName)
         {
             uint result = _GetTempFileName(tmpPath, prefix, uniqueIdOrZero, tmpFileName);
@@ -64,10 +54,6 @@ namespace MS.Win32
             return result;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This elevates to unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical,SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Shell32, CharSet = System.Runtime.InteropServices.CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern int ExtractIconEx(
                                         string szExeFileName,
@@ -76,38 +62,18 @@ namespace MS.Win32
                                         out NativeMethods.IconHandle phiconSmall,
                                         int nIcons);
 
-        /// <SecurityNote>
-        ///     Critical: This elevates to unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical,SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.User32, CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError=true)]
         internal static extern NativeMethods.IconHandle CreateIcon(IntPtr hInstance, int nWidth, int nHeight, byte cPlanes, byte cBitsPixel, byte[] lpbANDbits, byte[] lpbXORbits);
 
-        /// <SecurityNote>
-        ///     Critical: This elevates to unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.User32, SetLastError = true)]
         public static extern bool CreateCaret(HandleRef hwnd, NativeMethods.BitmapHandle hbitmap, int width, int height);
 
-        /// <SecurityNote>
-        ///     Critical: This elevates to unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.User32, SetLastError = true)]
         public static extern bool ShowCaret(HandleRef hwnd);
 
-        /// <SecurityNote>
-        ///     Critical: This elevates to unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.User32, SetLastError = true)]
         public static extern bool HideCaret(HandleRef hwnd);
 
-        /// <SecurityNote>
-        ///     Critical: This elevates to unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
         public static extern bool ShowWindowAsync(HandleRef hWnd, int nCmdShow);
 
@@ -128,32 +94,12 @@ namespace MS.Win32
                     IntPtr hinst, string stName, int nType, int cxDesired, int cyDesired, int nFlags);
         */
 
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///
-        ///     Could be a candidate for safe - as the only information disclosed is whether
-        ///     a certain security measure is on or off.
-        ///     Likely this determination could be made by trying certain actions and failing.
-        ///</SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity ]
         [DllImport( ExternDll.Urlmon, ExactSpelling=true)]
         internal static extern int CoInternetIsFeatureEnabled( int featureEntry , int dwFlags );
 
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity ]
         [DllImport( ExternDll.Urlmon, ExactSpelling=true)]
         internal static extern int CoInternetSetFeatureEnabled( int featureEntry , int dwFlags, bool fEnable );
 
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///
-        ///     Could be a candidate for safe - as the only information disclosed is whether
-        ///     a certain security measure is on or off.
-        ///     Likely this determination could be made by trying certain actions and failing.
-        ///</SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity ]
         [DllImport( ExternDll.Urlmon, ExactSpelling=true)]
         internal static extern int CoInternetIsFeatureZoneElevationEnabled(
                                                             [MarshalAs(UnmanagedType.LPWStr)] string szFromURL,
@@ -163,23 +109,11 @@ namespace MS.Win32
                                                             );
 
 
-        ///<SecurityNote>
-        ///     Critical - call is SUC'ed
-        ///</SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.PresentationHostDll, EntryPoint = "ProcessUnhandledException")]
         internal static extern void ProcessUnhandledException_DLL([MarshalAs(UnmanagedType.BStr)] string errMsg);
 
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity ]
         [DllImport(ExternDll.Kernel32, CharSet=CharSet.Unicode)]
         internal static extern bool GetVersionEx([In, Out] NativeMethods.OSVERSIONINFOEX ver);
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity ]
         [DllImport( ExternDll.Urlmon, ExactSpelling=true)]
         internal static extern int CoInternetCreateSecurityManager(
                                                                     [MarshalAs(UnmanagedType.Interface)] object pIServiceProvider,
@@ -189,11 +123,6 @@ namespace MS.Win32
 
 
 
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical(SecurityCriticalScope.Everything)]
-        [SuppressUnmanagedCodeSecurity]
         [ComImport, ComVisible(false), Guid("79eac9ee-baf9-11ce-8c82-00aa004ba90b"), System.Runtime.InteropServices.InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         internal interface IInternetSecurityManager
         {
@@ -201,10 +130,6 @@ namespace MS.Win32
 
             unsafe void GetSecuritySite( /* [out] */ void **ppSite);
 
-            ///<SecurityNote>
-            ///     Critical - performs an elevation.
-            ///</SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             void MapUrlToZone(
                                 [In, MarshalAs(UnmanagedType.BStr)]
                                         string pwszUrl,
@@ -245,15 +170,12 @@ namespace MS.Win32
         /// </summary>
         /// <param name="hMem"></param>
         /// <returns></returns>
+        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported. 
         [DllImport(ExternDll.Kernel32, SetLastError = true), ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
+        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported. 
         internal static extern IntPtr LocalFree(IntPtr hMem);
 
 #if BASE_NATIVEMETHODS
-        /// <SecurityNote>
-        ///  SecurityCritical: This code returns a critical resource obtained under an elevation.
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Kernel32, SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal unsafe static extern SafeFileHandle CreateFile(
           string lpFileName,
@@ -267,33 +189,17 @@ namespace MS.Win32
 
 
 #if BASE_NATIVEMETHODS
-        /// <SecurityNote>
-        ///     Critical: This code is critical because it can be used to
-        ///     pass and force arbitrary data into the tree. We should
-        ///     consider yanking it out all the way
-        /// </SecurityNote>
 
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
         internal static extern IntPtr GetMessageExtraInfo();
 #endif
 
 #if BASE_NATIVEMETHODS
-        ///<SecurityNote>
-        /// Critical as this code performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Kernel32, EntryPoint="WaitForMultipleObjectsEx", SetLastError = true, CharSet = CharSet.Auto)]
         private static extern int IntWaitForMultipleObjectsEx(int nCount, IntPtr[] pHandles, bool bWaitAll, int dwMilliseconds, bool bAlertable);
 
         public const int WAIT_FAILED = unchecked((int)0xFFFFFFFF);
 
-        ///<SecurityNote>
-        /// Critical - calls IntWaitForMultipleObjectsEx (the real PInvoke method)
-        ///</SecurityNote>
-        [SecurityCritical]
         internal static int WaitForMultipleObjectsEx(int nCount, IntPtr[] pHandles, bool bWaitAll, int dwMilliseconds, bool bAlertable)
         {
             int result = IntWaitForMultipleObjectsEx(nCount, pHandles, bWaitAll, dwMilliseconds, bAlertable);
@@ -305,18 +211,9 @@ namespace MS.Win32
             return result;
         }
 
-        ///<SecurityNote>
-        /// Critical as this code performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.User32, EntryPoint="MsgWaitForMultipleObjectsEx", SetLastError=true, ExactSpelling = true, CharSet = CharSet.Auto)]
         private static extern int IntMsgWaitForMultipleObjectsEx(int nCount, IntPtr[] pHandles, int dwMilliseconds, int dwWakeMask, int dwFlags);
 
-        ///<SecurityNote>
-        /// Critical - calls IntMsgWaitForMultipleObjectsEx (the real PInvoke method)
-        ///</SecurityNote>
-        [SecurityCritical]
         internal static int MsgWaitForMultipleObjectsEx(int nCount, IntPtr[] pHandles, int dwMilliseconds, int dwWakeMask, int dwFlags)
         {
             int result = IntMsgWaitForMultipleObjectsEx(nCount, pHandles, dwMilliseconds, dwWakeMask, dwFlags);
@@ -329,18 +226,9 @@ namespace MS.Win32
         }
 #endif
 
-        /// <SecurityNote>
-        ///     Critical: This code elevates to unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.User32, EntryPoint="RegisterClassEx", CharSet=CharSet.Unicode, SetLastError=true, BestFitMapping=false)]
         internal static extern UInt16 IntRegisterClassEx(NativeMethods.WNDCLASSEX_D wc_d);
 
-        ///<SecurityNote>
-        /// Critical - calls IntRegisterClassEx (the real PInvoke method)
-        ///</SecurityNote>
-        [SecurityCritical]
         internal static UInt16 RegisterClassEx(NativeMethods.WNDCLASSEX_D wc_d)
         {
             UInt16 result = IntRegisterClassEx(wc_d);
@@ -352,17 +240,9 @@ namespace MS.Win32
             return result;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code elevates to unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical,SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.User32, EntryPoint="UnregisterClass",CharSet = CharSet.Auto, SetLastError = true, BestFitMapping=false)]
         internal static extern int IntUnregisterClass(IntPtr atomString /*lpClassName*/ , IntPtr hInstance);
 
-        ///<SecurityNote>
-        /// Critical - calls IntUnregisterClass (the real PInvoke method)
-        ///</SecurityNote>
-        [SecurityCritical]
         internal static void UnregisterClass(IntPtr atomString /*lpClassName*/ , IntPtr hInstance)
         {
             int result = IntUnregisterClass(atomString, hInstance);
@@ -374,28 +254,16 @@ namespace MS.Win32
 
 #if !DRT
 
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", EntryPoint="ChangeWindowMessageFilter", SetLastError=true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool IntChangeWindowMessageFilter(WindowMessage message, MSGFLT dwFlag);
 
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", EntryPoint = "ChangeWindowMessageFilterEx", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool IntChangeWindowMessageFilterEx(IntPtr hwnd, WindowMessage message, MSGFLT action, [In, Out, Optional] ref CHANGEFILTERSTRUCT pChangeFilterStruct);
 
         // Note that processes at or below SECURITY_MANDATORY_LOW_RID are not allowed to change the message filter.
         // If those processes call this function, it will fail and generate the extended error code, ERROR_ACCESS_DENIED.
-        ///<SecurityNote>
-        ///     Critical - calls SecurityCritical methods IntChangeWindowMessageFilter and IntChangeWindowMessageFilterEx.
-        ///</SecurityNote>
-        [SecurityCritical]
         internal static MS.Internal.Interop.HRESULT ChangeWindowMessageFilterEx(IntPtr hwnd, WindowMessage message, MSGFLT action, out MSGFLTINFO extStatus)
         {
             extStatus = MSGFLTINFO.NONE;
@@ -430,24 +298,16 @@ namespace MS.Win32
             return MS.Internal.Interop.HRESULT.S_OK;
         }
 
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Urlmon, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         private static extern MS.Internal.Interop.HRESULT ObtainUserAgentString(int dwOption, StringBuilder userAgent, ref int length);
 
-        ///<SecurityNote>
-        ///     Critical - performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical]
         internal static string ObtainUserAgentString()
         {
             int length = MS.Win32.NativeMethods.MAX_PATH;
             StringBuilder userAgentBuffer = new StringBuilder(length);
             MS.Internal.Interop.HRESULT hr = ObtainUserAgentString(0 /*reserved. must be 0*/, userAgentBuffer, ref length);
 
-            // Dev10 821573 - Installing .NET 4.0 adds two parts to the user agent string, i.e.
+            // Installing .NET 4.0 adds two parts to the user agent string, i.e.
             // .NET4.0C and .NET4.0E, potentially causing the user agent string to overflow its
             // documented maximum length of MAX_PATH. Turns out ObtainUserAgentString can return
             // a longer string if asked to do so. Therefore we grow the string dynamically when
@@ -471,26 +331,13 @@ namespace MS.Win32
 
         // note that this method exists in UnsafeNativeMethodsCLR.cs but with a different signature
         // using a HandleRef for the hWnd instead of an IntPtr, and not using an IntPtr for lParam
-        /// <SecurityNote>
-        ///     Critical: This code has the ability to send a message to the wndproc. It exists purely for
-        ///     the secure close scenario. For any other scenario please use the SendMessage call
-        /// </SecurityNote>
         [DllImport(ExternDll.User32,EntryPoint="SendMessage", CharSet = CharSet.Auto)]
-        [SecurityCritical,SuppressUnmanagedCodeSecurity]
         internal static extern IntPtr UnsafeSendMessage(IntPtr hWnd, WindowMessage msg, IntPtr wParam, IntPtr lParam);
 
-        /// <SecurityNote>
-        ///     Critical: Registering for system broadcast messages
-        /// </SecurityNote>
         [DllImport(ExternDll.User32,EntryPoint="RegisterPowerSettingNotification")]
-        [SecurityCritical,SuppressUnmanagedCodeSecurity]
         unsafe internal static extern IntPtr RegisterPowerSettingNotification(IntPtr hRecipient, Guid *pGuid, int Flags);
 
-        /// <SecurityNote>
-        ///     Critical: Unregistering for system broadcast messages
-        /// </SecurityNote>
         [DllImport(ExternDll.User32,EntryPoint="UnregisterPowerSettingNotification")]
-        [SecurityCritical,SuppressUnmanagedCodeSecurity]
         unsafe internal static extern IntPtr UnregisterPowerSettingNotification(IntPtr hPowerNotify);
 
 /*
@@ -502,18 +349,10 @@ namespace MS.Win32
 */
 
         // private  DllImport - that takes an IconHandle.
-        /// <SecurityNote>
-        ///     Critical: This code causes elevation to unmanaged code
-        /// </SecurityNote>
-        [SecurityCritical,SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr SendMessage( HandleRef hWnd, WindowMessage msg, IntPtr wParam, NativeMethods.IconHandle iconHandle );
 #endif
 
-        /// <SecurityNote>
-        ///     Critical: This code causes elevation to unmanaged code
-        /// </SecurityNote>
-        [SecurityCritical,SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Kernel32, ExactSpelling = true, CharSet = CharSet.Auto)]
         internal static extern void SetLastError(int dwErrorCode);
 
@@ -526,80 +365,39 @@ namespace MS.Win32
         /// <param name="pbAlpha"></param>
         /// <param name="pdwFlags"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical: This code calls into unmanaged code
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll")]
         public static extern bool GetLayeredWindowAttributes(
                 HandleRef hwnd, IntPtr pcrKey, IntPtr pbAlpha, IntPtr pdwFlags);
         internal sealed class SafeFileMappingHandle : SafeHandleZeroOrMinusOneIsInvalid
         {
-            /// <SecurityNote>
-            ///   Critical: base class enforces link demand and inheritance demand
-            /// </SecurityNote>
-            [SecurityCritical]
             internal SafeFileMappingHandle(IntPtr handle) : base(false)
             {
                 SetHandle(handle);
             }
 
-            /// <SecurityNote>
-            ///   Critical: base class enforces link demand and inheritance demand
-            ///   TreatAsSafe: Creating this is ok, accessing the pointer is bad
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             internal SafeFileMappingHandle() : base(true)
             {
             }
 
-            /// <SecurityNote>
-            ///   Critical: base class enforces link demand and inheritance demand
-            ///   TreatAsSafe: This call is safe
-            /// </SecurityNote>
             public override bool IsInvalid
             {
-                [SecurityCritical,SecurityTreatAsSafe]
                 get
                 {
                     return handle == IntPtr.Zero;
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical - as this function does an elevation to close a handle.
-            ///     TreatAsSafe - as this can at best be used to destabilize one's own app.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             protected override bool ReleaseHandle()
             {
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert();
-                try
-                {
-                    return CloseHandleNoThrow(new HandleRef(null, handle));
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
-                }
+                return CloseHandleNoThrow(new HandleRef(null, handle));
             }
         }
         internal sealed class SafeViewOfFileHandle : SafeHandleZeroOrMinusOneIsInvalid
         {
-            ///<SecurityNote>
-            ///    Critical: This code calls into a base class which link demands for unmanaged code
-            ///    TreatAsSafe:Creating this is ok it is acessing the pointers in it that can be risky
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             internal SafeViewOfFileHandle() : base(true) { }
 
-            /// <SecurityNote>
-            /// Critical: This code accesses an unsafe object (pointer) and returns it as a pointer
-            /// </SecurityNote>
             internal unsafe void* Memory
             {
-                [SecurityCritical]
                 get
                 {
                     Debug.Assert(handle != IntPtr.Zero);
@@ -607,49 +405,20 @@ namespace MS.Win32
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical - as this function does an elevation to close a handle.
-            ///     TreatAsSafe - as this can at best be used to destabilize one's own app.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             override protected bool ReleaseHandle()
             {
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert();
-                try
-                {
-                    return UnsafeNativeMethods.UnmapViewOfFileNoThrow(new HandleRef(null, handle));
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
-                }
+                return UnsafeNativeMethods.UnmapViewOfFileNoThrow(new HandleRef(null, handle));
             }
         }
 
-        /// <SecurityNote>
-        ///  SecurityCritical: This code returns critical resource obtained under an elevation.
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Kernel32, SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal unsafe static extern SafeFileMappingHandle CreateFileMapping(SafeFileHandle hFile, NativeMethods.SECURITY_ATTRIBUTES lpFileMappingAttributes, int flProtect, uint dwMaximumSizeHigh, uint dwMaximumSizeLow, string lpName);
 
-        /// <SecurityNote>
-        ///  SecurityCritical: This code returns a critical resource obtained under an elevation.
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Kernel32, SetLastError = true)]
         internal static extern SafeViewOfFileHandle MapViewOfFileEx(SafeFileMappingHandle hFileMappingObject, int dwDesiredAccess, int dwFileOffsetHigh, int dwFileOffsetLow, IntPtr dwNumberOfBytesToMap, IntPtr lpBaseAddress);
 #endif // BASE_NATIVEMETHODS
 
 
-        ///<SecurityNote>
-        /// Critical: LinkDemand on Marshal.GetLastWin32Error
-        /// TreatAsSafe: Getting an error code isn't unsafe
-        /// Note: If a SupressUnmanagedCodeSecurity attribute is ever added to IntsetWindowLong(Ptr), we'd need to be Critical
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static IntPtr SetWindowLong(HandleRef hWnd, int nIndex, IntPtr dwNewLong)
         {
             IntPtr result = IntPtr.Zero;
@@ -669,10 +438,6 @@ namespace MS.Win32
             return result;
         }
 
-        /// <SecurityNote>
-        /// Critical - it calls IntCriticalSetWindowLongPtr() / IntCriticalSetWindowLong(), which are Critical
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static IntPtr CriticalSetWindowLong(HandleRef hWnd, int nIndex, IntPtr dwNewLong)
         {
             IntPtr result = IntPtr.Zero;
@@ -692,10 +457,6 @@ namespace MS.Win32
             return result;
         }
 
-        /// <SecurityNote>
-        /// Critical - This calls SetLatError() and IntCriticalSetWindowLongPtr() / IntCriticalSetWindowLong(), which are Critical
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static IntPtr CriticalSetWindowLong(HandleRef hWnd, int nIndex, NativeMethods.WndProc dwNewLong)
         {
             int errorCode;
@@ -724,10 +485,6 @@ namespace MS.Win32
             return retVal;
         }
 
-        /// <SecurityNote>
-        ///  SecurityCritical: This code happens to return a critical resource and causes unmanaged code elevation
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static IntPtr GetWindowLongPtr(HandleRef hWnd, int nIndex )
         {
             IntPtr result = IntPtr.Zero;
@@ -760,10 +517,6 @@ namespace MS.Win32
             return result;
         }
 
-        /// <SecurityNote>
-        ///  SecurityCritical: This code happens to return a critical resource and causes unmanaged code elevation
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static Int32 GetWindowLong(HandleRef hWnd, int nIndex )
         {
             int iResult = 0;
@@ -798,11 +551,6 @@ namespace MS.Win32
             return iResult;
         }
 
-        ///<SecurityNote>
-        /// Critical: Call critical method IntGetWindowLongWndProc and IntGetWindowLongWndProcPtr that causes unmanaged code elevation.
-        /// LinkDemand on Win32Exception constructor but throwing an exception isn't unsafe
-        ///</SecurityNote>
-        [SecurityCritical]
         internal static NativeMethods.WndProc GetWindowLongWndProc(HandleRef hWnd)
         {
             NativeMethods.WndProc returnValue = null;
@@ -829,10 +577,6 @@ namespace MS.Win32
             return returnValue;
         }
 
-        ///<SecurityNote>
-        /// Critical - Unmanaged code permission is supressed.
-        ///</SecurityNote>
-        [SuppressUnmanagedCodeSecurity, SecurityCritical]
         [DllImport("winmm.dll", CharSet = CharSet.Unicode)]
         internal static extern bool PlaySound([In]string soundName, IntPtr hmod, SafeNativeMethods.PlaySoundFlags soundFlags);
 
@@ -848,20 +592,11 @@ namespace MS.Win32
         // See also Application.Get/SetCookie().
         //!!!
 
-        /// <SecurityNote>
-        /// SecurityCritical - calls unmanaged code.
-        /// </SecurityNote>
         [DllImport(ExternDll.Wininet, SetLastError=true, ExactSpelling=true, EntryPoint="InternetGetCookieExW", CharSet=CharSet.Unicode)]
-        [SuppressUnmanagedCodeSecurity, SecurityCritical]
         internal static extern bool InternetGetCookieEx([In]string Url, [In]string cookieName,
             [Out] StringBuilder cookieData, [In, Out] ref UInt32 pchCookieData, uint flags, IntPtr reserved);
 
-        /// <SecurityNote>
-        /// SecurityCritical - calls unmanaged code.
-        /// </SecurityNote>
         [DllImport(ExternDll.Wininet, SetLastError = true, ExactSpelling = true, EntryPoint = "InternetSetCookieExW", CharSet = CharSet.Unicode)]
-        [SuppressUnmanagedCodeSecurity]
-        [SecurityCritical]
         internal static extern uint InternetSetCookieEx([In]string Url, [In]string CookieName, [In]string cookieData, uint flags, [In] string p3pHeader);
 
 #if DRT_NATIVEMETHODS
@@ -873,20 +608,10 @@ namespace MS.Win32
         /////////////////////////////
         // needed by Framework
 
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code
-        /// </SecurityNote>
         [DllImport(ExternDll.Kernel32, ExactSpelling = true, CharSet = CharSet.Unicode)]
-        [SuppressUnmanagedCodeSecurity]
-        [SecurityCritical]
         internal static extern int GetLocaleInfoW(int locale, int type, string data, int dataSize);
 
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code
-        /// </SecurityNote>
         [DllImport(ExternDll.Kernel32, ExactSpelling = true, SetLastError = true)]
-        [SuppressUnmanagedCodeSecurity]
-        [SecurityCritical]
         internal static extern int FindNLSString(int locale, uint flags, [MarshalAs(UnmanagedType.LPWStr)]string sourceString, int sourceCount, [MarshalAs(UnmanagedType.LPWStr)]string findString, int findCount, out int found);
 
 
@@ -905,12 +630,6 @@ namespace MS.Win32
         [DllImport(ExternDll.User32, EntryPoint = "SetWindowText", CharSet = CharSet.Auto, SetLastError = true, BestFitMapping = false)]
         private static extern bool IntSetWindowText(HandleRef hWnd, string text);
 
-        ///<SecurityNote>
-        /// Critical: LinkDemand on Win32Exception constructor
-        /// TreatAsSafe: Throwing an exception isn't unsafe
-        /// Note: If a SupressUnmanagedCodeSecurity attribute is ever added to IntSetWindowText, we'd need to be Critical
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void SetWindowText(HandleRef hWnd, string text)
         {
             if (IntSetWindowText(hWnd, text) == false)
@@ -918,12 +637,10 @@ namespace MS.Win32
                 throw new Win32Exception();
             }
         }
-        /// <SecurityNote>
-        ///     Critical: This code calls into unmanaged code
-        /// </SecurityNote>
-        [SecurityCritical,SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.User32, EntryPoint = "GetIconInfo", CharSet = CharSet.Auto, SetLastError = true)]
+        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported. 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported. 
         private static extern bool GetIconInfoImpl(HandleRef hIcon, [Out] ICONINFO_IMPL piconinfo);
 
         [StructLayout(LayoutKind.Sequential)]
@@ -940,10 +657,6 @@ namespace MS.Win32
         // note that a different-signature version of this method is defined in SafeNativeMethodsCLR.cs, but
         // this appears to be an intentional override of the functionality.  Seems odd if the real method
         // is really safe to reimplement it in an unsafe manner.  Need to review this.
-        /// <SecurityNote>
-        ///     Critical: This code calls into unmanaged code GetIconInfoImpl
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void GetIconInfo(HandleRef hIcon, out NativeMethods.ICONINFO piconinfo)
         {
             bool success = false;
@@ -951,7 +664,9 @@ namespace MS.Win32
             piconinfo = new NativeMethods.ICONINFO();
             ICONINFO_IMPL iconInfoImpl = new ICONINFO_IMPL();
 
+            #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported. 
             SRCS.RuntimeHelpers.PrepareConstrainedRegions(); // Mark the following as special
+            #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported. 
             try
             {
                 // Intentionally empty
@@ -995,12 +710,6 @@ namespace MS.Win32
         private static extern bool IntGetWindowPlacement(HandleRef hWnd, ref NativeMethods.WINDOWPLACEMENT placement);
 
         // note:  this method exists in UnsafeNativeMethodsCLR.cs, but that method does not have the if/throw implemntation
-        ///<SecurityNote>
-        /// Critical: LinkDemand on Win32Exception constructor
-        /// TreatAsSafe: Throwing an exception isn't unsafe
-        /// Note: If a SupressUnmanagedCodeSecurity attribute is ever added to IntGetWindowPlacement, we'd need to be Critical
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void GetWindowPlacement(HandleRef hWnd, ref NativeMethods.WINDOWPLACEMENT placement)
         {
             if (IntGetWindowPlacement(hWnd, ref placement) == false)
@@ -1014,12 +723,6 @@ namespace MS.Win32
         private static extern bool IntSetWindowPlacement(HandleRef hWnd, [In] ref NativeMethods.WINDOWPLACEMENT placement);
 
         // note: this method appears in UnsafeNativeMethodsCLR.cs but does not have the if/throw block
-        ///<SecurityNote>
-        /// Critical: LinkDemand on Win32Exception constructor
-        /// Note: If a SupressUnmanagedCodeSecurity attribute is ever added to IntSetWindowPlacement, we'd need to be Critical
-        /// TreatAsSafe: Throwing an exception isn't unsafe
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void SetWindowPlacement(HandleRef hWnd, [In] ref NativeMethods.WINDOWPLACEMENT placement)
         {
             if (IntSetWindowPlacement(hWnd, ref placement) == false)
@@ -1035,19 +738,9 @@ namespace MS.Win32
         //    [In, Out] ref ulong nSize);
 
 
-        ///<SecurityNote>
-        /// Critical as this code performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto, BestFitMapping = false)]
         internal static extern bool SystemParametersInfo(int nAction, int nParam, [In, Out] NativeMethods.ANIMATIONINFO anim, int nUpdate);
 
-        ///<SecurityNote>
-        /// Critical as this code performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern bool SystemParametersInfo(int nAction, int nParam, [In, Out] NativeMethods.ICONMETRICS metrics, int nUpdate);
 
@@ -1087,7 +780,6 @@ namespace MS.Win32
         //  HWND hwnd - The handle to the Target window that will receive feedback
         //
         //---------------------------------------------------------------------------
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Uxtheme, CharSet = CharSet.Unicode)]
         public static extern bool BeginPanningFeedback(HandleRef hwnd);
 
@@ -1117,7 +809,6 @@ namespace MS.Win32
         //        the second call would be with the parameter as 20 pixels as opposed to 10
         //   Eg : UpdatePanningFeedback(hwnd, 10, 10, TRUE)
         //
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Uxtheme, CharSet = CharSet.Unicode)]
         public static extern bool UpdatePanningFeedback(
             HandleRef hwnd,
@@ -1139,7 +830,6 @@ namespace MS.Win32
         //                      Either way, the method will try to restore the moved window.
         //                      The latter case exists for compatibility with legacy apps.
         //
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Uxtheme, CharSet = CharSet.Unicode)]
         public static extern bool EndPanningFeedback(
             HandleRef hwnd,
@@ -1151,11 +841,9 @@ namespace MS.Win32
         [DllImport(ExternDll.Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
         public static extern bool SetEvent(IntPtr hEvent);
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Kernel32, SetLastError = true, ExactSpelling = true, CharSet = CharSet.Auto)]
         public static extern int SetEvent([In] SafeWaitHandle hHandle);
 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Kernel32, SetLastError = true, ExactSpelling = true, CharSet = CharSet.Auto)]
         public static extern int WaitForSingleObject([In] SafeWaitHandle hHandle, [In] int dwMilliseconds);
 
@@ -1169,11 +857,6 @@ namespace MS.Win32
 #if BASE_NATIVEMETHODS
 
 
-        ///<SecurityNote>
-        /// Critical as this code performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern int GetMouseMovePointsEx(
                                         uint  cbSize,
@@ -1209,11 +892,6 @@ namespace MS.Win32
             internal long QuadPart;
         }
 
-        ///<SecurityNote>
-        /// Critical as this code performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Kernel32, SetLastError = true)]
         internal static extern bool GetFileSizeEx(
             SafeFileHandle hFile,
@@ -1339,11 +1017,6 @@ namespace MS.Win32
         internal const int SDDL_REVISION = SDDL_REVISION_1;
 
 
-        ///<SecurityNote>
-        /// Critical as this code performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Kernel32, SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern SafeFileMappingHandle OpenFileMapping(
             int dwDesiredAccess,
@@ -1351,11 +1024,6 @@ namespace MS.Win32
             string lpName
             );
 
-        ///<SecurityNote>
-        /// Critical as this code performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Kernel32, SetLastError = true)]
         internal static extern IntPtr VirtualAlloc(
             IntPtr lpAddress,
@@ -1379,11 +1047,6 @@ namespace MS.Win32
             internal IntPtr hwnd;
         }
 
-        ///<SecurityNote>
-        /// Critical as this code performs an elevation (via SuppressUnmanagedCodeSecurity)
-        ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Ole32, ExactSpelling = true, CharSet = CharSet.Auto)]
         public static extern int OleIsCurrentClipboard(IComDataObject pDataObj);
 
@@ -1410,11 +1073,6 @@ namespace MS.Win32
             return err >= STATUS_SUCCESS;
         }
 
-        ///<SecurityNote>
-        /// Critical: LinkDemand on Win32Exception constructor
-        /// TreatAsSafe: Throwing an exception isn't unsafe
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void NtCheck(int err)
         {
             if (!NtSuccess(err))
@@ -1434,10 +1092,6 @@ namespace MS.Win32
         // COM Helper Methods
         //
 
-        ///<SecurityNote>
-        ///     Critical:    Satisfies a LinkDemand on releasecom call.
-        ///</SecurityNote>
-        [SecurityCritical]
         internal static int SafeReleaseComObject(object o)
         {
             int refCount = 0;
@@ -1455,10 +1109,6 @@ namespace MS.Win32
         }
 
 #if WINDOWS_BASE
-        ///<SecurityNote>
-        /// Critical as this code performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.Wininet, EntryPoint = "GetUrlCacheConfigInfoW", SetLastError=true)]
         internal static extern bool GetUrlCacheConfigInfo(
             ref NativeMethods.InternetCacheConfigInfo pInternetCacheConfigInfo,
@@ -1467,36 +1117,20 @@ namespace MS.Win32
             );
 #endif
 
-        /// <SecurityNote>
-        ///     Critical: takes an hwnd, calls unmanaged code
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport("WtsApi32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool WTSRegisterSessionNotification(IntPtr hwnd, uint dwFlags);
 
-        /// <SecurityNote>
-        ///     Critical: takes an hwnd, calls unmanaged code
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport("WtsApi32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool WTSUnRegisterSessionNotification(IntPtr hwnd);
 
-        /// <SecurityNote>
-        ///     Critical: Calls unmanaged code.  Returns native process handle.
-        /// </SecurityNote>
-        [SecurityCritical]
         [DllImport(ExternDll.Kernel32, SetLastError = true)]
         public static extern IntPtr GetCurrentProcess();
 
         public const int DUPLICATE_CLOSE_SOURCE = 1;
         public const int DUPLICATE_SAME_ACCESS = 2;
 
-        /// <SecurityNote>
-        ///     Critical: Calls unmanaged code.  Returns native process handle.
-        /// </SecurityNote>
-        [SecurityCritical]
         [DllImport(ExternDll.Kernel32, SetLastError = true)]
         public static extern bool DuplicateHandle(
             IntPtr hSourceProcess,
@@ -1544,19 +1178,11 @@ namespace MS.Win32
         {
             public NativeMethods.ProfileType dwType; // profile type
 
-            /// <SecurityNote>
-            ///     Critical: Pointer field.
-            /// </SecurityNote>
-            [SecurityCritical]
             public void*       pProfileData;         // either the filename of the profile or buffer containing profile depending upon dwtype
             public uint        cbDataSize;           // size in bytes of pProfileData
         };
 
         /// <summary>The IsIconic function determines whether the specified window is minimized (iconic).</summary>
-        /// <SecurityNote>
-        ///     Critical: Calls unmanaged code.
-        /// </SecurityNote>
-        [SecurityCritical,SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.User32)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsIconic(IntPtr hWnd);
@@ -1591,10 +1217,6 @@ namespace MS.Win32
 
         public delegate IntPtr HookProc(int code, IntPtr wParam, IntPtr lParam);
 
-        /// <SecurityNote>
-        ///     Critical: Calls unmanaged code.
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         public static HandleRef SetWindowsHookEx(HookType idHook, HookProc lpfn, IntPtr hMod, int dwThreadId)
         {
             IntPtr result = IntSetWindowsHookEx(idHook, lpfn, hMod, dwThreadId);
@@ -1606,24 +1228,12 @@ namespace MS.Win32
             return new HandleRef(lpfn, result);
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls unmanaged code.
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.User32, EntryPoint = "SetWindowsHookExW", SetLastError = true)]
         private static extern IntPtr IntSetWindowsHookEx(HookType idHook, HookProc lpfn, IntPtr hMod, int dwThreadId);
 
-        /// <SecurityNote>
-        ///     Critical: Calls unmanaged code.
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.User32, SetLastError = true)]
         public static extern bool UnhookWindowsHookEx(HandleRef hhk);
 
-        /// <SecurityNote>
-        ///     Critical: Calls unmanaged code.
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.User32, SetLastError = true)]
         public static extern IntPtr CallNextHookEx(HandleRef hhk, int nCode, IntPtr wParam, IntPtr lParam);
     }

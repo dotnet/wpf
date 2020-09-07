@@ -34,10 +34,10 @@ namespace System.Xaml.MS.Impl
 
         public const string ReferenceName = "__ReferenceID";
         public static readonly char[] WhitespaceChars = new char[] { ' ', '\t', '\n', '\r', '\f' };
-        public static readonly char SpaceChar = ' ';
-        public static readonly char TabChar = '\t';
-        public static readonly char NewlineChar = '\n';
-        public static readonly char ReturnChar = '\r';
+        public const char SpaceChar = ' ';
+        public const char TabChar = '\t';
+        public const char NewlineChar = '\n';
+        public const char ReturnChar = '\r';
 
         public const string CreateDelegateHelper = "_CreateDelegate";
         public const string CreateDelegate = "CreateDelegate";

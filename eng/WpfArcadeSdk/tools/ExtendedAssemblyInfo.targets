@@ -1,0 +1,350 @@
+<Project>
+
+  <!-- 
+    Microsoft.NET.DefaultAssemblyInfo.targets initializes $(Version) based on $(VersionPrefix) (which is defined in eng\Versions.props)
+    Tish is part of the .NET Core SDK and primarily defined for C# today. We reuses this here for C++/CLI
+  -->
+  <Import Sdk="Microsoft.Net.Sdk" Project="..\targets\Microsoft.NET.DefaultAssemblyInfo.targets" Condition="'$(MSBuildProjectExtension)'=='.vcxproj'"/>
+  
+  <!-- 
+    Defines [assembly: AssemblyMetadata()] attributes 
+    These must be defined in a Target because they depend on source-control information being
+    initialized first
+  -->
+  <Target Name="InitializeAssemblyAttributeInformation"
+          DependsOnTargets="_InitializeAssemblyVersion;InitializeSourceControlInformation"
+          Condition="'$(SourceControlInformationFeatureSupported)' == 'true'">
+    <PropertyGroup>
+      <AssemblyTitle Condition="'$(AssemblyTitle)'==''">$(AssemblyName)</AssemblyTitle>
+
+      <AssemblyDescription Condition="'$(Description)'==''">$(AssemblyTitle)</AssemblyDescription>
+      <AssemblyDescription Condition="'$(Description)'!=''">$(Description)</AssemblyDescription>
+
+      <AssemblyInformationalVersion Condition="'$(InformationalVersion)'!=''">$(InformationalVersion)</AssemblyInformationalVersion>
+      <AssemblyInformationalVersion Condition="'$(InformationalVersion)'=='' and '$(Version)'!=''">$(Version)</AssemblyInformationalVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <AssemblyMetadata Include="FileVersion" Condition="'$(FileVersion)'!=''">
+        <Value>$(FileVersion)</Value>
+      </AssemblyMetadata>
+
+      <AssemblyMetadata Include="BuiltBy" Condition="'$(COMPUTERNAME)'!=''">
+        <Value>$(COMPUTERNAME)</Value>
+      </AssemblyMetadata>
+
+      <AssemblyMetadata Include="Repository" Condition="'$(ScmRepositoryUrl)'!=''">
+        <Value>$(ScmRepositoryUrl)</Value>
+      </AssemblyMetadata>
+
+      <AssemblyMetadata Include="Commit" Condition="'$(SourceRevisionId)'!=''">
+        <Value>$(SourceRevisionId)</Value>
+      </AssemblyMetadata>
+
+      <!-- 
+        Crossgen wants to detect when an assembly is built from C++/CLI sources, 
+        since it is unable to function correctly today (ostensibly due to bugs). Since
+        /clr:pure is deprecated and WPF will eventually switch over to /clr (i.e., IJW),
+        Crossgen will eventually (i.e., in the near-term) fail to work on C++/CLI 
+        assemblies anyway. 
+
+        Crossgen will detect [assembly: AssemblyMetadta("Language", "C++")] and
+        skip those assemblies. WPF will add this attribute to assemblies that are
+        compiled from C++/CLI sources. 
+
+        WPF will also add [assembly: AssemblyMetadata("Language, "C#")] to C#
+        assemblies.
+        
+        https://github.com/dotnet/wpf/issues/587
+      --> 
+      <AssemblyMetadata Include="Language" Condition="'$(Language)'!=''">
+        <Value>$(Language)</Value>
+      </AssemblyMetadata>
+    </ItemGroup>
+  </Target>
+  
+  <!-- 
+    Immediately after GenerateAssemblyInfo target runs, use the value of $(GeneratedAssemblyInfoFile), 
+    which is typically of the form Projectname.AssemblyInfo.cs, and create $(GeneratedExtendedAssemblyInfoFile)
+    in the form Projectname.AssemblyInfo.Extended.cs
+  -->
+  <Target Name="CreateGenerateAssemblyInfoFileProperty"
+          AfterTargets="GenerateAssemblyInfo">
+    <ItemGroup>
+      <_GeneratedAssemblyInfoFile Remove="@(_GeneratedAssemblyInfoFile)" />
+      <_GeneratedAssemblyInfoFile Include="$(GeneratedAssemblyInfoFile)" />
+
+      <!-- Change .extension to Extended.extension -->
+      <_GeneratedExtendedAssemblyInfoFile Remove="@(_GeneratedExtendedAssemblyInfoFile)" />
+      <_GeneratedExtendedAssemblyInfoFile Include="%(_GeneratedAssemblyInfoFile.RootDir)%(_GeneratedAssemblyInfoFile.Directory)%(_GeneratedAssemblyInfoFile.Filename).Extended%(_GeneratedAssemblyInfoFile.Extension)" />
+    </ItemGroup>
+
+    <PropertyGroup>
+      <GeneratedExtendedAssemblyInfoFile>@(_GeneratedExtendedAssemblyInfoFile)</GeneratedExtendedAssemblyInfoFile>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="GenerateExtendedAssemblyInfo"
+     BeforeTargets="CoreCompile"
+     DependsOnTargets="CreateGenerateAssemblyInfoFileProperty;InitializeAssemblyAttributeInformation"
+     Condition="'$(GenerateAssemblyInfo)' == 'true'">
+
+    <CallTarget Targets="CoreGenerateExtendedAssemblyInfo" />
+  </Target>
+
+  <!-- 
+    Define an inline MSBuild Task to parse @(ExtendedAssemblyInfo) ItemGroup
+    
+    Input: 
+    
+      An ItemGroup containing assembly-level Attribute information. 
+      Typical format for ExtendedAssemblyInfo looks like this: 
+    
+      <ItemGroup>
+        <ExtendedAssemblyInfo Include="AttributeType">
+          <Parameter1>true</Parameter1>
+          <IsLiteral1>true</IsLiteral1>
+          
+          <Parameter2>https://www.microsoft.com</Parameter2>
+        </ExtendedAssemblyInfo>
+      </ItemGroup>
+      
+        Attribute Type:    The type (full type name) is specified as the identity element (Include=)
+        Parameters:        Parameters are specified in metadata values Parameter1, Parameter2, Parameter3, etc. 
+                            Parameters are treated as strings by default. 
+                            Literal parameters (for e.g., numbers, boolean literals, enums etc.) should be indicated as IsLiteral=true corresponding to the parameter position. 
+                            For e.g., for Parameter6, indicate it as <IsLiteral6>true</IsLiteral>                            
+      Output: 
+      
+        ItemGroup of fully resolved C# Attribute definitions that are ready to be used in a source file.
+  -->
+  <UsingTask TaskName="ParseExtendedAssemblyInfo"
+             TaskFactory="CodeTaskFactory"
+             AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <ExtendedAssemblyInfo ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+      <Result ParameterType="Microsoft.Build.Framework.ITaskItem[]" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.Collections" />
+      <Using Namespace="System.Collections.Generic" />
+      <Using Namespace="System.Globalization" />
+      <Using Namespace="System.Linq" />
+      <Using Namespace="System.Text.RegularExpressions" />
+      <Reference Include="System.Linq" />
+      <Reference Include="System.Core" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[  
+            if (ExtendedAssemblyInfo.Length > 0)
+            {
+                Result = new TaskItem[ExtendedAssemblyInfo.Length];
+                for (int i = 0; i < ExtendedAssemblyInfo.Length; i++)
+                {
+                    ITaskItem item = ExtendedAssemblyInfo[i];
+                    string attr = item.GetMetadata("Identity"); // This is the Attribute type
+
+                    List<string> parameters = new List<string>();
+
+                    var metadataNames = item.MetadataNames.Cast<string>().ToList(); // Obtain all the Metadata names
+
+                    // Parameter names are of the form Parameter1, Parameter2, etc. 
+                    // Parameter0 is not allowed.
+                    var parameterNames = metadataNames.Where((m) => Regex.IsMatch(m, @"Parameter\d+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant));
+                    parameterNames = parameterNames.Where((m) => !m.Equals("Parameter0", StringComparison.InvariantCultureIgnoreCase));
+
+                    // Order the parameter names in ascending order, then iterate through them
+                    var parameterNamesAscending = parameterNames.OrderBy((m) => Int32.Parse(m.Replace("Parameter", string.Empty)));
+                    foreach (var parameter in parameterNamesAscending)
+                    {
+                        string paramValue = item.GetMetadata(parameter);
+
+                        bool isLiteral = false;
+                        string isLiteralMetadataName = parameter.Replace("Parameter", "IsLiteral");
+                        if (metadataNames.Contains(isLiteralMetadataName))
+                        {
+                            Boolean.TryParse(item.GetMetadata(isLiteralMetadataName), out isLiteral);
+                        }
+
+                        if (isLiteral)
+                        {
+                            // The parameter is a literal, include it as-is
+                            parameters.Add(paramValue);
+                        }
+                        else
+                        {
+                            // The parameter is NOT a litera, included it surrounded by double-quotes
+                            parameters.Add("\"" + paramValue + "\""); ;
+                        }
+                    }
+
+                    // Separate the parameters by commas
+                    string p = string.Join<string>(",", parameters);
+
+                    // Construct the resolved attribute declaration
+                    //  [assembly: <attributeType> <comma-separated list of attribute parameters>]
+                    // For e.g., 
+                    //  [assembly: ComVisible(true)]
+                    //  [assembly:  MetadataAttribute("Servicing","true")]
+                    // Save the result and continue
+                    string assemblyAttribute = string.Format("[assembly: {0}({1})]", attr, p);
+                    Result[i] = new TaskItem(assemblyAttribute);
+                }
+            }
+]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <!-- 
+    Generates additional assembly-level attributes after MSBuild supplied GenerateAssemblyInfo target runs
+    Input:
+      ExtendedAssemblyInfo ItemGroup (see documentation for ParseExtendedAssemblyInfo Task)
+    Output:
+      Generates $(GeneratedExtendedAssemblyInfoFile), which is of the form Projectname.AssemblyInfo.Extended.cs. See
+      documentation for CreateGenerateAssemblyInfoFileProperty Target for additional details.
+      This file is included in the current build automatically and compiled.
+    Remarks:
+      i. The following namespaces are automatically included. Attributes from these namespaces do not have to be fully
+        qualified:
+          using System;
+          using System.Reflection;
+          using System.Runtime.InteropServices;
+          using System.Runtime.Versioning;
+      ii. Only C# code-generation is supported as of this time. If VB support is desired, then update GenerateExtendedAssemblyInfo Target
+          with the relevant logic for VB.
+          
+    Example:
+      Input:
+        <ItemGroup>
+          <ExtendedAssemblyInfo Include="ComVisible">
+            <Parameter1>true</Parameter1>
+            <IsLiteral1>true</IsLiteral1>
+          </ExtendedAssemblyInfo>
+
+          <ExtendedAssemblyInfo Include="DefaultDllImportSearchPaths">
+            <Parameter1>DllImportSearchPath.System32 | DllImportSearchPath.AssemblyDirectory</Parameter1>
+            <IsLiteral1>true</IsLiteral1>
+          </ExtendedAssemblyInfo>
+
+          <ExtendedAssemblyInfo Include="AssemblyMetadata">
+            <Parameter1>.NETFramework</Parameter1>
+            <Parameter2/>
+          </ExtendedAssemblyInfo>
+
+          <ExtendedAssemblyInfo Include="AssemblyMetadata">
+            <Parameter1>Serviceable</Parameter1>
+            <Parameter2>true</Parameter2>
+          </ExtendedAssemblyInfo>
+        </ItemGroup>
+        
+        
+      Generated file contents:
+      
+        // <auto-generated>
+        //     This code was generated by a tool
+        //      Target:   GenerateExtendedAssemblyInfo
+        //      Filename: AssemblyInfoGenerator.targets
+        //
+        //     Changes to this file may cause incorrect behavior and will be lost if
+        //     the code is regenerated.
+        // </auto-generated>
+
+
+        using System;
+        using System.Reflection;
+        using System.Runtime.InteropServices;
+        using System.Runtime.Versioning;
+
+        [assembly: ComVisible(true)]
+        [assembly: DefaultDllImportSearchPaths(DllImportSearchPath.System32 | DllImportSearchPath.AssemblyDirectory)]
+        [assembly: AssemblyMetadata(".NETFramework","")]
+        [assembly: AssemblyMetadata("Serviceable","true")]
+
+        // <auto-generated />
+  -->
+  <Target Name="CoreGenerateExtendedAssemblyInfo"
+          Condition="('$(Language)'=='VB' or '$(Language)'=='C#') and '@(ExtendedAssemblyInfo)'!=''"
+          Outputs="$(GeneratedExtendedAssemblyInfoFile)">
+
+    <Error Condition="'$(Language)'=='VB'"
+       Text="ExtendedAssemblyInfo generation for VB has not been implemented yet" />
+
+    <Error Condition="'$(GeneratedExtendedAssemblyInfoFile)'==''"
+           Text="GeneratedExtendedAssemblyInfoFile MSBuild property is empty - can not generate ExtendedAssemblyInfo" />
+
+    <!--
+      If there is any AssemblyMetadata defined, then incorporate it
+      into ExtendedAssembyInfo
+    -->
+    <ItemGroup>
+      <_ExtendedAssemblyMetadata Remove="@(_ExtendedAssemblyMetadata)" />
+      <_ExtendedAssemblyMetadata Include="@(AssemblyMetadata)"
+                                 Condition="'@(AssemblyMetadata)'!=''"
+                                 AttributeName="AssemblyMetadata">
+        <Parameter1>%(Identity)</Parameter1>
+        <Parameter2>%(Value)</Parameter2>
+      </_ExtendedAssemblyMetadata>
+
+      <ExtendedAssemblyInfo Include="@(_ExtendedAssemblyMetadata->'%(AttributeName)')"
+                            Condition="'@(_ExtendedAssemblyMetadata)'!=''" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Compile Remove="$(GeneratedExtendedAssemblyInfoFile)" />
+    </ItemGroup>
+
+    <ParseExtendedAssemblyInfo ExtendedAssemblyInfo="@(ExtendedAssemblyInfo)">
+      <Output ItemName="ExtendedAttributeInfo" TaskParameter="Result" />
+    </ParseExtendedAssemblyInfo>
+
+    <ItemGroup>
+      <ExtendedAssemblyInfoFileContent Remove="@(ExtendedAssemblyInfoFileContent )" />
+      <ExtendedAssemblyInfoFileContent Include="Comments">
+        <Text>
+          <![CDATA[
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool
+//      Target:   GenerateExtendedAssemblyInfo
+//      Filename: $(MSBuildThisFile)
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+]]>
+        </Text>
+      </ExtendedAssemblyInfoFileContent>
+      <ExtendedAssemblyInfoFileContent Include="Usings">
+        <Text>
+          <![CDATA[
+using System;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
+]]>
+        </Text>
+      </ExtendedAssemblyInfoFileContent>
+      <ExtendedAssemblyInfoFileContent Include="Attributes" Text="%(ExtendedAttributeInfo.Identity)"/>
+      <ExtendedAssemblyInfoFileContent Include="Postscript">
+        <Text>
+          <![CDATA[
+//------------------------------------------------------------------------------
+// <auto-generated />
+//------------------------------------------------------------------------------
+        ]]>
+        </Text>
+      </ExtendedAssemblyInfoFileContent>
+    </ItemGroup>
+
+    <Delete Condition="Exists('$(GeneratedExtendedAssemblyInfoFile)')" Files="$(GeneratedExtendedAssemblyInfoFile)" />
+    <WriteLinesToFile Lines="@(ExtendedAssemblyInfoFileContent->'%(Text)')"
+                      File="$(GeneratedExtendedAssemblyInfoFile)"
+                      Overwrite="true" />
+
+    <ItemGroup>
+      <Compile Include="$(GeneratedExtendedAssemblyInfoFile)" />
+    </ItemGroup>
+  </Target>
+</Project>

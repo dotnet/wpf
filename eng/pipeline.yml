@@ -1,32 +1,44 @@
+#
+# This file should be kept in sync across https://www.github.com/dotnet/wpf and dotnet-wpf-int repos. 
+#
+# 
+
 parameters:
-
-  # Needed because agent pool can't be read from a user-defined variable (Azure DevOps limitation)
-  # Defaults to dotnet-external-temp-vs2019
-  agentPool: dotnet-external-temp-vs2019
-
   # Needed because runAsPublic is used in template expressions, which can't read from user-defined variables
   # Defaults to true
   runAsPublic: true
+  repoName: dotnet/wpf
 
 jobs:
 - template: /eng/common/templates/jobs/jobs.yml
   parameters:
     enableMicrobuild: true
     enablePublishBuildArtifacts: true
-    enablePublishTestResults: true
+    enablePublishTestResults: false # tests run in helix
     enablePublishBuildAssets: true
+    enablePublishUsingPipelines: $(_PublishUsingPipelines)
     enableTelemetry: true
-    helixRepo: dotnet/wpf
+    helixRepo: $(repoName)
 
     jobs:
     - job: Windows_NT
-      pool: ${{ parameters.agentPool }}
+      timeoutInMinutes: 120  # how long to run the job before automatically cancelling; see https://github.com/dotnet/wpf/issues/952
+      pool:
+        # For public jobs, use the hosted pool.  For internal jobs use the internal pool.
+        # Will eventually change this to two BYOC pools.
+        # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
+        ${{ if eq(variables['System.TeamProject'], 'public') }}:
+          name: NetCorePublic-Pool
+          queue: BuildPool.Windows.10.Amd64.VS2019.Pre.Open
+        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+          name: NetCoreInternal-Pool
+          queue: buildpool.windows.10.amd64.vs2019.pre
       variables:
         # needed for signing
         - name: _TeamName
           value: DotNetCore
         - name: _SignType
-          value: test
+          value: real
         - name: _SignArgs
           value: ''
 
@@ -39,6 +51,25 @@ jobs:
           value: ''
         - name: _OfficialBuildIdArgs
           value: ''
+        - name: _Platform
+          value: x86
+        - name: _PlatformArgs
+          value: /p:Platform=$(_Platform)
+        - name: _PublicBuildPipeline  # We will run Helix tests when building in the open, but do not repeat when building and publishing again using the internal build-pipeline
+          value: true
+        - name: _TestHelixAgentPool
+          value: 'Windows.10.Amd64.ClientRS5.Open' # Preferred:'Windows.10.Amd64.Open%3bWindows.7.Amd64.Open%3bWindows.10.Amd64.ClientRS5.Open'; See https://github.com/dotnet/wpf/issues/952
+        - name: _HelixStagingDir
+          value: $(BUILD.STAGINGDIRECTORY)\helix\functests
+        - name: _HelixSource
+          value: ${{ parameters.repoName }}/$(Build.SourceBranch)
+        - name: _HelixToken
+          value: ''
+        - name: _HelixCreator
+          value: ${{ parameters.repoName }}
+        - name: _InternalRuntimeDownloadArgs
+          value: ''
+
 
         # Override some values if we're building internally
         - ${{ if eq(parameters.runAsPublic, 'false') }}:
@@ -51,6 +82,7 @@ jobs:
             value: true
           - group: DotNet-Blob-Feed
           - group: DotNet-Symbol-Server-Pats
+          - group: DotNet-HelixApi-Access
           - name: _PublishBlobFeedUrl
             value: https://dotnetfeed.blob.core.windows.net/dotnet-windowsdesktop/index.json
 
@@ -63,23 +95,62 @@ jobs:
             value: /p:DotNetPublishBlobFeedKey=$(dotnetfeed-storage-access-key-1)
               /p:DotNetPublishBlobFeedUrl=$(_PublishBlobFeedUrl)
               /p:DotNetPublishToBlobFeed=$(_DotNetPublishToBlobFeed)
+              /p:DotNetPublishUsingPipelines=$(_PublishUsingPipelines)
+              /p:DotNetArtifactsCategory=$(_DotNetArtifactsCategory)
               /p:DotNetSymbolServerTokenMsdl=$(microsoft-symbol-server-pat)
               /p:DotNetSymbolServerTokenSymWeb=$(symweb-symbol-server-pat)
           - name: _OfficialBuildIdArgs
             value: /p:OfficialBuildId=$(BUILD.BUILDNUMBER)
+          - name: _PublicBuildPipeline
+            value: false
+          - name: _HelixSource
+            value: official/${{ parameters.repoName }}/$(Build.SourceBranch)
+          - name: _HelixToken
+            value: '$(HelixApiAccessToken)' # from DotNet-HelixApi-Access group
+          - name: _HelixCreator
+            value: '' #if _HelixToken is set, Creator must be empty
+          - name: _TestHelixAgentPool
+            value: 'Windows.10.Amd64.ClientRS5' # Preferred: 'Windows.10.Amd64%3bWindows.7.Amd64%3bWindows.10.Amd64.ClientRS5'
+          - group: DotNet-MSRC-Storage
+          - name: _InternalRuntimeDownloadArgs
+            value: /p:DotNetRuntimeSourceFeed=https://dotnetclimsrc.blob.core.windows.net/dotnet
+              /p:DotNetRuntimeSourceFeedKey=$(dotnetclimsrc-read-sas-token-base64)
+
       strategy:
         matrix:
-          Build_Debug:
-            _BuildConfig: Debug
-            # override some variables for debug
-            _PublishType: none
-            _SignType: test
-            _DotNetPublishToBlobFeed : false
-          Build_Release:
+          ${{ if eq(parameters.runAsPublic, 'true') }}:
+            Build_Debug_x86:
+              _BuildConfig: Debug
+              # override some variables for debug
+              # _SignType has to be real for package publishing to succeed - do not override to test.
+          Build_Release_x86:
             _BuildConfig: Release
+          ${{ if eq(parameters.runAsPublic, 'true') }}:
+            Build_Debug_x64:
+              _BuildConfig: Debug
+              # override some variables for debug
+              # _SignType has to be real for package publishing to succeed - do not override to test.
+              _Platform: x64
+          Build_Release_x64:
+            _BuildConfig: Release
+            _Platform: x64
       steps:
       - checkout: self
         clean: true
+
+      # Set VSO Variable(s)
+      - powershell: eng\pre-build.ps1
+        displayName: Pre-Build - Set VSO Variables
+
+      - ${{ if ne(variables['System.TeamProject'], 'public') }}:
+        - task: PowerShell@2
+          displayName: Setup Private Feeds Credentials
+          inputs:
+            filePath: $(Build.SourcesDirectory)/eng/common/SetupNugetSources.ps1
+            arguments: -ConfigFile $(Build.SourcesDirectory)/NuGet.config -Password $Env:Token
+          env:
+            Token: $(dn-bot-dnceng-artifact-feeds-rw)
+
       # Use utility script to run script command dependent on agent OS.
       - script: eng\common\cibuild.cmd
           -configuration $(_BuildConfig) 
@@ -87,4 +158,37 @@ jobs:
           $(_PublishArgs)
           $(_SignArgs)
           $(_OfficialBuildIdArgs)
+          $(_PlatformArgs)
+          $(_InternalRuntimeDownloadArgs)
         displayName: Windows Build / Publish
+        # This condition should be kept in sync with the condition for 'Run DRTs' step 
+        #   When building on a regular pipeline (!_HelixPipeline), build as usual 
+        #   When building on a Helix pipeline, only build Release configs
+        #   (!_HelixPipeline) ||
+        #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
+        condition: or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')))
+
+      # Run DRTs
+      - powershell: eng\common\cibuild.cmd
+          -configuration $(_BuildConfig)
+          $(_OfficialBuildIdArgs) 
+          $(_PlatformArgs)
+          -projects $(Build.SourcesDirectory)\eng\helixpublish.proj
+          /bl:$(BUILD.SOURCESDIRECTORY)\artifacts\log\$(_BuildConfig)\HelixDrt.binlog
+        displayName: Run Developer Regression Tests on Helix Machine (Release)
+        env:
+          HelixSource: $(_HelixSource)
+          HelixType: 'tests/drt'
+          HelixBuild: $(Build.BuildNumber)
+          HelixTargetQueues: $(_TestHelixAgentPool)
+          HelixAccessToken: $(_HelixToken)              # only defined for internal CI
+          Creator: $(_HelixCreator)
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+        # This condition should be kept in sync with the condition for cibuild.cmd step with displayName: "Windows Build / Publish"
+        # Only run ...
+        # ...When building on a Helix pipeline, only build Release configs
+        #
+        #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
+        #
+        condition: and(succeeded(), eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))
+

@@ -32,7 +32,6 @@ namespace BamlTestClasses40
         {
             return string.Format("Path: {0} , Mode: {1}", Path, Mode);
         }
-        [CLSCompliant(false)]
         [MarkupExtensionBracketCharacters('(',')')]
         [MarkupExtensionBracketCharacters('[',']')]
         [ConstructorArgument("value")]
@@ -44,7 +43,6 @@ namespace BamlTestClasses40
             set { _value = value; }
         }
 
-        [CLSCompliant(false)]
         [ConstructorArgument("value2")]
         [MarkupExtensionBracketCharacters('$','^')]
 #pragma warning disable CS3021 // Type or member does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute
@@ -71,7 +69,6 @@ namespace BamlTestClasses40
             return Path;
         }
 
-        [CLSCompliant(false)]
         [MarkupExtensionBracketCharacters('[',']')]
         [MarkupExtensionBracketCharacters('(', ')')]
 #pragma warning disable CS3021 // Type or member does not need a CLSCompliant attribute because the assembly does not have a CLSCompliant attribute

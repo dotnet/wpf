@@ -1,0 +1,840 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="TaskLogo" xml:space="preserve">
+    <value>Microsoft (R) Build Task '{0}' Version '{1}'.</value>
+  </data>
+  <data name="TaskRight" xml:space="preserve">
+    <value>Copyright (C) Microsoft Corporation 2005. All rights reserved.</value>
+  </data>
+  <data name="CurrentDirectory" xml:space="preserve">
+    <value>Current project directory is '{0}'.</value>
+  </data>
+  <data name="OutputType" xml:space="preserve">
+    <value>OutputType is '{0}'.</value>
+  </data>
+  <data name="FileResolved" xml:space="preserve">
+    <value>Input file '{0}' is resolved to new relative path '{1}' at directory '{2}'.</value>
+  </data>
+  <data name="CompileSucceed_Pass1" xml:space="preserve">
+    <value>MarkupCompilePass1 successfully generated BAML or source code files.</value>
+  </data>
+  <data name="PreparingCompile" xml:space="preserve">
+    <value>Preparing for the markup compilation...</value>
+  </data>
+  <data name="DoCompilation" xml:space="preserve">
+    <value>Started the markup compilation.</value>
+  </data>
+  <data name="CompilationDone" xml:space="preserve">
+    <value>Markup compilation is done.</value>
+  </data>
+  <data name="ApplicationDefinitionFile" xml:space="preserve">
+    <value>Input: Markup ApplicationDefinition file: '{0}'.</value>
+  </data>
+  <data name="ReferenceFile" xml:space="preserve">
+    <value>Input: Assembly Reference file: '{0}'.</value>
+  </data>
+  <data name="AnalysisResult" xml:space="preserve">
+    <value>Analysis Result : '{0}'.</value>
+  </data>
+  <data name="RecompiledXaml" xml:space="preserve">
+    <value>Recompiled XAML file : '{0}'.</value>
+  </data>
+  <data name="GeneratedCodeFile" xml:space="preserve">
+    <value>Generated code file: '{0}'.</value>
+  </data>
+  <data name="GeneratedBamlFile" xml:space="preserve">
+    <value>Generated BAML file: '{0}'.</value>
+  </data>
+  <data name="CompileSucceed_Pass2" xml:space="preserve">
+    <value>MarkupCompilePass2 successfully generated BAML or source code files.</value>
+  </data>
+  <data name="LocalRefAppDefFile" xml:space="preserve">
+    <value>Input: Local reference markup ApplicationDefinition file is '{0}'.</value>
+  </data>
+  <data name="LocalRefMarkupPage" xml:space="preserve">
+    <value>Input: Local reference markup Page file: '{0}'.</value>
+  </data>
+  <data name="LocalRefGeneratedBamlFile" xml:space="preserve">
+    <value>Generated BAML file: '{0}'.</value>
+  </data>
+  <data name="InternalTypeHelperNotRequired" xml:space="preserve">
+    <value>InternalTypeHelper class is not required for this project, make file '{0}' empty.</value>
+  </data>
+  <data name="ResourcesGenerating" xml:space="preserve">
+    <value>Generating .resources file: '{0}'...</value>
+  </data>
+  <data name="ResourcesGenerated" xml:space="preserve">
+    <value>Generated .resources file: '{0}'.</value>
+  </data>
+  <data name="ReadResourceFile" xml:space="preserve">
+    <value>Reading Resource file: '{0}'...</value>
+  </data>
+  <data name="ResourceId" xml:space="preserve">
+    <value>Resource ID is '{0}'.</value>
+  </data>
+  <data name="CheckingUids" xml:space="preserve">
+    <value>Checking Uids in file '{0}' ...</value>
+  </data>
+  <data name="FilesUpdatedUid" xml:space="preserve">
+    <value>Uids updated in {0} files.</value>
+  </data>
+  <data name="FilesRemovedUid" xml:space="preserve">
+    <value>Uids removed from {0} files.</value>
+  </data>
+  <data name="FilesPassedUidCheck" xml:space="preserve">
+    <value>Uids valid in {0} files.</value>
+  </data>
+  <data name="CommentFileGenerating" xml:space="preserve">
+    <value>Generating localization directives file: '{0}' ...</value>
+  </data>
+  <data name="CommentFileGenerated" xml:space="preserve">
+    <value>Generated localization directives file: '{0}' .</value>
+  </data>
+  <data name="ParserLineAndOffset" xml:space="preserve">
+    <value>Line {0} Position {1}</value>
+  </data>
+  <data name="ParserInvalidKnownType" xml:space="preserve">
+    <value>Known type value {0}='{1}' is not a valid known type.</value>
+  </data>
+  <data name="UnknownPathOperationType" xml:space="preserve">
+    <value>Unknown path operation attempted.</value>
+  </data>
+  <data name="UnknownBuildError" xml:space="preserve">
+    <value>Unknown build error, '{0}' </value>
+  </data>
+  <data name="NonClsError" xml:space="preserve">
+    <value>BG1001: Unknown CLS exception.</value>
+  </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>BG1002: File '{0}' cannot be found.</value>
+  </data>
+  <data name="WrongPropertySetting" xml:space="preserve">
+    <value>BG1003: The project file contains a property value that is not valid.</value>
+  </data>
+  <data name="TargetIsNotSupported" xml:space="preserve">
+    <value>BG1004: Target Type '{0}' is not supported by this task.</value>
+  </data>
+  <data name="WrongLocalizationPropertySetting_Pass1" xml:space="preserve">
+    <value>MC1001: The LocalizationDirectivesToLocFile property value is not valid and must be changed to None, CommentsOnly, or All for the MarkupCompilePass1 task.</value>
+  </data>
+  <data name="AppDefIsNotRequired" xml:space="preserve">
+    <value>MC1002: Library project file cannot specify ApplicationDefinition element.</value>
+  </data>
+  <data name="MutlipleApplicationFiles" xml:space="preserve">
+    <value>MC1003: Project file cannot specify more than one ApplicationDefinition element.</value>
+  </data>
+  <data name="MultipleSplashScreenImages" xml:space="preserve">
+    <value>MC1004: Project file cannot specify more than one SplashScreen element.</value>
+  </data>
+  <data name="InvalidAssemblyVersion" xml:space="preserve">
+    <value>MC1005: Invalid AssemblyVersion detected: {0}.</value>
+  </data>
+  <data name="InvalidCulture" xml:space="preserve">
+    <value>FC1001: The UICulture value '{0}' set in the project file is not valid.</value>
+  </data>
+  <data name="ResourceTooBig" xml:space="preserve">
+    <value>RG1001: Input resource file '{0}' exceeds maximum size of {1} bytes.</value>
+  </data>
+  <data name="MoreResourcesFiles" xml:space="preserve">
+    <value>RG1002: ResourcesGenerator can generate only one .resources file at a time. The OutputResourcesFile property in the project file must be set to one file.</value>
+  </data>
+  <data name="BadUidTask" xml:space="preserve">
+    <value>UM1001: Unrecognized UidManager task name '{0}'.</value>
+  </data>
+  <data name="MultipleUidUse" xml:space="preserve">
+    <value>UM1002: Uid "{0}" for element '{1}' is not unique.</value>
+  </data>
+  <data name="UidMissing" xml:space="preserve">
+    <value>UM1003: Uid is missing for element '{0}'.</value>
+  </data>
+  <data name="FilesFailedUidCheck" xml:space="preserve">
+    <value>UM1004: {0} files failed Uid check.</value>
+  </data>
+  <data name="SourceFileNameNeeded" xml:space="preserve">
+    <value>UM1005: You must pass markup files to the task.</value>
+  </data>
+  <data name="IntermediateDirectoryError" xml:space="preserve">
+    <value>UM1006: '{0}' directory does not exist and cannot be created.</value>
+  </data>
+  <data name="InvalidLocCommentTarget" xml:space="preserve">
+    <value>LC1001: Localization comment target property is not valid in string '{0}'.</value>
+  </data>
+  <data name="InvalidLocCommentValue" xml:space="preserve">
+    <value>LC1002: Localization comment value is not valid for target property '{0}' in string '{1}'.</value>
+  </data>
+  <data name="UnmatchedLocComment" xml:space="preserve">
+    <value>LC1003: Localization comment has no value set for target property: '{0}'.</value>
+  </data>
+  <data name="InvalidLocalizabilityValue" xml:space="preserve">
+    <value>LC1004: Localizability attribute setting '{0}' is not valid.</value>
+  </data>
+  <data name="InvalidXml" xml:space="preserve">
+    <value>MC3000: '{0}' XML is not valid.</value>
+  </data>
+  <data name="ParserAbandonedTypeConverterText" xml:space="preserve">
+    <value>MC3001: TypeConverter syntax error encountered while processing initialization string '{0}'. Property elements are not allowed on objects created via TypeConverter.</value>
+  </data>
+  <data name="ParserAsyncOnRoot" xml:space="preserve">
+    <value>MC3002: The AsyncRecords attribute must be set on the root tag.</value>
+  </data>
+  <data name="ParserAttributeArgsHigh" xml:space="preserve">
+    <value>MC3003: There are too many attributes specified for '{0}'.</value>
+  </data>
+  <data name="ParserAttributeArgsLow" xml:space="preserve">
+    <value>MC3004: There are not enough attributes specified for '{0}'.</value>
+  </data>
+  <data name="ParserAttributeNamespaceMisMatch" xml:space="preserve">
+    <value>MC3005: The property '{0}' must be in the default namespace or in the element namespace '{1}'.</value>
+  </data>
+  <data name="ParserBadAssemblyName" xml:space="preserve">
+    <value>MC3006: Mapper.SetAssemblyPath cannot accept an empty assemblyName.</value>
+  </data>
+  <data name="ParserBadAssemblyPath" xml:space="preserve">
+    <value>MC3007: Mapper.SetAssemblyPath cannot accept an empty assemblyPath.</value>
+  </data>
+  <data name="ParserBadChild" xml:space="preserve">
+    <value>MC3008: An element of type '{0}' cannot be set on the complex property '{1}'. They are not compatible types.</value>
+  </data>
+  <data name="ParserBadConstructorParams" xml:space="preserve">
+    <value>MC3009: Cannot find a public constructor for '{0}' that takes {1} arguments.</value>
+  </data>
+  <data name="ParserBadName" xml:space="preserve">
+    <value>MC3010: '{0}' Name property value is not valid. Name must start with a letter or an underscore and can contain only letters, digits, and underscores.</value>
+  </data>
+  <data name="ParserInvalidStaticMember" xml:space="preserve">
+    <value>MC3011: Cannot find the static member '{0}' on the type '{1}'.</value>
+  </data>
+  <data name="ParserBadKey" xml:space="preserve">
+    <value>MC3012: A key for a dictionary cannot be of type '{0}'. Only String, TypeExtension, and StaticExtension are supported.</value>
+  </data>
+  <data name="ParserBadSyncMode" xml:space="preserve">
+    <value>MC3013: SynchronousMode property value is not valid. Valid values are Async and Sync.</value>
+  </data>
+  <data name="ParserBadTypeInArrayProperty" xml:space="preserve">
+    <value>MC3014: The object being added to an array property is not a valid type. The array is of type '{0}' but the object being added is of type '{1}'.</value>
+  </data>
+  <data name="ParserAttachedPropInheritError" xml:space="preserve">
+    <value>MC3015: The attached property '{0}' is not defined on '{1}' or one of its base classes.</value>
+  </data>
+  <data name="ParserCompatDuplicate" xml:space="preserve">
+    <value>MC3016: Two new namespaces cannot be compatible with the same old namespace using an XmlnsCompatibility attribute.�'{0}' namespace is already marked compatible with '{1}'.</value>
+  </data>
+  <data name="ParserDefTag" xml:space="preserve">
+    <value>MC3017: 'Code' tag from xaml namespace found in XAML file. To load this file, you must compile it.</value>
+  </data>
+  <data name="ParserDictionarySealed" xml:space="preserve">
+    <value>MC3018: Cannot modify data in a sealed XmlnsDictionary.</value>
+  </data>
+  <data name="ParserStaticMemberNotAllowed" xml:space="preserve">
+    <value>MC3019: Cannot reference the static member '{0}' on the type '{1}' as it is not accessible.</value>
+  </data>
+  <data name="ParserDupDictionaryKey" xml:space="preserve">
+    <value>MC3020: The dictionary key '{0}' is already used. Key attributes are used as keys when inserting objects into a dictionary and must be unique.</value>
+  </data>
+  <data name="ParserNoBamlAsync" xml:space="preserve">
+    <value>MC3021: Asynchronous loading is not supported when compiling a XAML file, so a SynchronousMode of '{0}' is not allowed.</value>
+  </data>
+  <data name="ParserNoDictionaryKey" xml:space="preserve">
+    <value>MC3022: All objects added to an IDictionary must have a Key attribute or some other type of key associated with them.</value>
+  </data>
+  <data name="ParserNoDictionaryName" xml:space="preserve">
+    <value>MC3023: The Key attribute can only be used on a tag contained in a Dictionary (such as a ResourceDictionary).</value>
+  </data>
+  <data name="ParserDuplicateProperty1" xml:space="preserve">
+    <value>MC3024: '{0}' property has already been set and can be set only once.</value>
+  </data>
+  <data name="ParserDuplicateProperty2" xml:space="preserve">
+    <value>MC3025: Property '{0}' and '{1}' refer to the same property. Duplicate property settings are not allowed.</value>
+  </data>
+  <data name="ParserEmptyComplexProp" xml:space="preserve">
+    <value>MC3026: '{0}' property element cannot be empty. It must contain child elements or text.</value>
+  </data>
+  <data name="ParserEntityReference" xml:space="preserve">
+    <value>MC3027: The EntityReference &amp;{0}; is not recognized.</value>
+  </data>
+  <data name="ParserCannotAddAnyChildren" xml:space="preserve">
+    <value>MC3028: Cannot add content to object of type '{0}'.</value>
+  </data>
+  <data name="ParserBadMemberReference" xml:space="preserve">
+    <value>MC3029: '{0}' member is not valid because it does not have a qualifying type name.</value>
+  </data>
+  <data name="ParserIEnumerableIAddChild" xml:space="preserve">
+    <value>MC3030: '{0}' property is a read-only IEnumerable property, which means that '{1}' must implement IAddChild.</value>
+  </data>
+  <data name="ParserKeysAreStrings" xml:space="preserve">
+    <value>MC3031: Keys and values in XmlnsDictionary must be strings.</value>
+  </data>
+  <data name="ParserNoDigitEnums" xml:space="preserve">
+    <value>MC3032: '{1}' cannot be used as a value for '{0}'. Numbers are not valid enumeration values.</value>
+  </data>
+  <data name="ParserDuplicateMarkupExtensionProperty" xml:space="preserve">
+    <value>MC3033: The property '{0}' has already been set on this markup extension and can only be set once.</value>
+  </data>
+  <data name="ParserMapPIMissingKey" xml:space="preserve">
+    <value>MC3037: Missing XmlNamespace, Assembly or ClrNamespace in Mapping instruction.</value>
+  </data>
+  <data name="ParserMappingUriInvalid" xml:space="preserve">
+    <value>'{0}' mapping URI is not valid.</value>
+  </data>
+  <data name="ParserMarkupExtensionNoEndCurlie" xml:space="preserve">
+    <value>MC3038: MarkupExtension expressions must end with a '}'.</value>
+  </data>
+  <data name="ParserMarkupExtensionBadConstructorParam" xml:space="preserve">
+    <value>MC3040: Format is not valid for MarkupExtension that specifies constructor arguments in '{0}'.</value>
+  </data>
+  <data name="ParserMarkupExtensionBadDelimiter" xml:space="preserve">
+    <value>MC3041: Markup extensions require a single '=' between name and value, and a single ',' between constructor parameters and name/value pairs. The arguments '{0}' are not valid.</value>
+  </data>
+  <data name="ParserMarkupExtensionNoNameValue" xml:space="preserve">
+    <value>MC3042: Name/value pairs in MarkupExtensions must have the format 'Name = Value' and each pair is separated by a comma. '{0}' does not follow this format.</value>
+  </data>
+  <data name="ParserMarkupExtensionNoQuotesInName" xml:space="preserve">
+    <value>MC3043: Names and Values in a MarkupExtension cannot contain quotes. The MarkupExtension arguments '{0}' are not valid.</value>
+  </data>
+  <data name="ParserMarkupExtensionTrailingGarbage" xml:space="preserve">
+    <value>MC3044: The text '{1}' is not allowed after the closing '{0}' of a MarkupExtension expression.</value>
+  </data>
+  <data name="ParserMarkupExtensionUnknownAttr" xml:space="preserve">
+    <value>MC3045: Unknown property '{0}' for type '{1}' encountered while parsing a Markup Extension.</value>
+  </data>
+  <data name="ParserMetroUnknownAttribute" xml:space="preserve">
+    <value>MC3046: Unknown attribute '{0}' in the '{1}' namespace. Note that only the Key attribute is currently supported in this namespace.</value>
+  </data>
+  <data name="ParserMultiBamls" xml:space="preserve">
+    <value>MC3047: Internal parser error - Cannot use multiple writable BAML records at the same time.</value>
+  </data>
+  <data name="ParserNestedComplexProp" xml:space="preserve">
+    <value>'{0}' property element cannot be nested directly inside another property element.</value>
+  </data>
+  <data name="ParserNotMarkupExtension" xml:space="preserve">
+    <value>MC3048: '{0}' value is not a valid MarkupExtension expression. Cannot resolve '{1}' in namespace '{2}'. '{1}' must be a subclass of MarkupExtension.</value>
+  </data>
+  <data name="ParserNoAttrArray" xml:space="preserve">
+    <value>MC3049: Cannot place attributes on Array tags.</value>
+  </data>
+  <data name="ParserNoType" xml:space="preserve">
+    <value>MC3050: Cannot find the type '{0}'. Note that type names are case sensitive.</value>
+  </data>
+  <data name="ParserNoChildrenTag" xml:space="preserve">
+    <value>MC3051: The type '{0}' does not support element content.</value>
+  </data>
+  <data name="ParserNoEvents" xml:space="preserve">
+    <value>MC3052: XAML file that contains events must be compiled.</value>
+  </data>
+  <data name="ParserNoEventTag" xml:space="preserve">
+    <value>MC3053: Cannot use property element syntax to specify event handler '{0}'.</value>
+  </data>
+  <data name="ParserNoNameOnType" xml:space="preserve">
+    <value>MC3054: The type '{0}' cannot have a Name attribute. Value types and types without a default constructor can be used as items within a ResourceDictionary.</value>
+  </data>
+  <data name="ParserNoNamespace" xml:space="preserve">
+    <value>MC3056: No NamespaceURI is defined for the object '{0}'.</value>
+  </data>
+  <data name="ParserNoPropOnComplexProp" xml:space="preserve">
+    <value>MC3057: Cannot set properties on property elements.</value>
+  </data>
+  <data name="ParserNoSerializer" xml:space="preserve">
+    <value>MC3058: Cannot find a custom serializer for '{0}' so it cannot be parsed.</value>
+  </data>
+  <data name="ParserNoSetterChild" xml:space="preserve">
+    <value>MC3059: Style setters do not support child elements. A tag of type '{0}' is not allowed.</value>
+  </data>
+  <data name="ParserDefaultConverterElement" xml:space="preserve">
+    <value>MC3061: The Element type '{0}' does not have an associated TypeConverter to parse the string '{1}'.</value>
+  </data>
+  <data name="ParserPrefixNSElement" xml:space="preserve">
+    <value>MC3062: '{0}' XML namespace prefix does not map to a NamespaceURI, so element '{1}' cannot be resolved.</value>
+  </data>
+  <data name="ParserPropNoValue" xml:space="preserve">
+    <value>MC3063: Property '{0}' does not have a value.</value>
+  </data>
+  <data name="ParserPublicType" xml:space="preserve">
+    <value>MC3064: Only public or internal classes can be used within markup. '{0}' type is not public or internal.</value>
+  </data>
+  <data name="ParserReadOnlyProp" xml:space="preserve">
+    <value>MC3065: '{0}' property is read-only and cannot be set from markup.</value>
+  </data>
+  <data name="ParserResourceKeyType" xml:space="preserve">
+    <value>MC3066: The type reference cannot find a public type named '{0}'.</value>
+  </data>
+  <data name="ParserSyncOnRoot" xml:space="preserve">
+    <value>MC3067: SynchronousMode attribute must be on the root tag.</value>
+  </data>
+  <data name="ParserTextInvalidInArrayOrDictionary" xml:space="preserve">
+    <value>MC3068: Text is not valid under an IDictionary or Array property.</value>
+  </data>
+  <data name="ParserTextInComplexProp" xml:space="preserve">
+    <value>MC3069: Cannot have both the text '{0}' and the child element '{1}' within a property element.</value>
+  </data>
+  <data name="ParserTooManyAssemblies" xml:space="preserve">
+    <value>MC3070: A single XAML file cannot reference more than 4,096 different assemblies.</value>
+  </data>
+  <data name="ParserUndeclaredNS" xml:space="preserve">
+    <value>MC3071: '{0}' is an undeclared namespace.</value>
+  </data>
+  <data name="ParserUnknownAttribute" xml:space="preserve">
+    <value>MC3072: The property '{0}' does not exist in XML namespace '{1}'.</value>
+  </data>
+  <data name="ParserUnknownDefAttribute" xml:space="preserve">
+    <value>MC3073: The attribute '{0}' does not exist in XML namespace 'http://schemas.microsoft.com/winfx/2006/xaml'.</value>
+  </data>
+  <data name="ParserUnknownTag" xml:space="preserve">
+    <value>MC3074: The tag '{0}' does not exist in XML namespace '{1}'.</value>
+  </data>
+  <data name="ParserUnknownXmlType" xml:space="preserve">
+    <value>MC3075: Unrecognized XML node type '{0}' found when determining if the current tag is a property element.</value>
+  </data>
+  <data name="ParserXmlReaderNoLineInfo" xml:space="preserve">
+    <value>MC3077: The class '{0}' does not implement IXmlLineInfo. This is required to get position information for the XAML being parsed.</value>
+  </data>
+  <data name="ParserInvalidContentPropertyAttribute" xml:space="preserve">
+    <value>MC3078: Invalid ContentPropertyAttribute on type '{0}', property '{1}' not found.</value>
+  </data>
+  <data name="ParserBadUidOrNameME" xml:space="preserve">
+    <value>MC3079: MarkupExtensions are not allowed for Uid or Name property values, so '{0}' is not valid.</value>
+  </data>
+  <data name="ParserCantSetAttribute" xml:space="preserve">
+    <value>MC3080: The {0} '{1}' cannot be set because it does not have an accessible {2} accessor.</value>
+  </data>
+  <data name="ParserCantGetProperty" xml:space="preserve">
+    <value>MC3081: '{0}' is a read-only property of type IList or IDictionary and cannot be set because it does not have a public or internal get accessor.</value>
+  </data>
+  <data name="ParserCantSetTriggerCondition" xml:space="preserve">
+    <value>MC3082: '{0}' cannot be set as the value of a Trigger's Property attribute because it does not have a public or internal get accessor.</value>
+  </data>
+  <data name="ParserEventDelegateTypeNotAccessible" xml:space="preserve">
+    <value>MC3083: Cannot access the delegate type '{0}' for the '{1}' event. '{0}' has incorrect access level or its assembly does not allow access.</value>
+  </data>
+  <data name="ParserNoNestedXmlDataIslands" xml:space="preserve">
+    <value>MC3084: Cannot nest XML data islands.</value>
+  </data>
+  <data name="ParserXmlIslandUnexpected" xml:space="preserve">
+    <value>MC3085: '{0}' element or property cannot contain an XML data island.</value>
+  </data>
+  <data name="ParserXmlIslandMissing" xml:space="preserve">
+    <value>MC3086: Parent element or property '{0}' requires an XML data island. To distinguish an XML island from surrounding XAML, wrap the XML data island in &lt;x:XData&gt; ... &lt;/x:XData&gt;.</value>
+  </data>
+  <data name="ParserCantSetContentProperty" xml:space="preserve">
+    <value>MC3087: Cannot set content property '{0}' on element '{1}'. '{0}' has incorrect access level or its assembly does not allow access.</value>
+  </data>
+  <data name="ParserContentMustBeContiguous" xml:space="preserve">
+    <value>MC3088: Property elements cannot be in the middle of an element's content.  They must be before or after the content.</value>
+  </data>
+  <data name="ParserCanOnlyHaveOneChild" xml:space="preserve">
+    <value>MC3089: The object '{0}' already has a child and cannot add '{1}'. '{0}' can accept only one child.</value>
+  </data>
+  <data name="ParserTypeConverterTextUnusable" xml:space="preserve">
+    <value>MC3090: TypeConverter syntax error encountered while processing initialization string '{0}'.  Element attributes are not allowed on objects created via TypeConverter.</value>
+  </data>
+  <data name="ParserMarkupExtensionDelimiterBeforeFirstAttribute" xml:space="preserve">
+    <value>MC3091: '{0}' is not valid. Markup extensions require only spaces between the markup extension name and the first parameter. Cannot have comma or equals sign before the first parameter.</value>
+  </data>
+  <data name="ParserXmlLangPropertyValueInvalid" xml:space="preserve">
+    <value>MC3092: XmlLangProperty attribute must specify a property name.</value>
+  </data>
+  <data name="ParserNoNameUnderDefinitionScopeType" xml:space="preserve">
+    <value>MC3093: Cannot set Name attribute value '{0}' on element '{1}'. '{1}' is under the scope of element '{2}', which already had a name registered when it was defined in another scope.</value>
+  </data>
+  <data name="ParserBadString" xml:space="preserve">
+    <value>MC3094: Cannot convert string value '{0}' to type '{1}'.</value>
+  </data>
+  <data name="ParserTypeConverterTextNeedsEndElement" xml:space="preserve">
+    <value>MC3095: Close tag must immediately follow TypeConverter initialization string '{0}'.</value>
+  </data>
+  <data name="Parsers_IllegalToken" xml:space="preserve">
+    <value>MC3096: Token is not valid.</value>
+  </data>
+  <data name="Parser_UnexpectedToken" xml:space="preserve">
+    <value>MC3098: Unexpected token '{0}' at position '{1}'.</value>
+  </data>
+  <data name="ParserAssemblyLoadVersionMismatch" xml:space="preserve">
+    <value>MC3099: Cannot load assembly '{0}' because a different version of that same assembly is loaded '{1}'.</value>
+  </data>
+  <data name="ParserPrefixNSProperty" xml:space="preserve">
+    <value>MC3100: '{0}' XML namespace prefix does not map to a namespace URI, so cannot resolve property '{1}'.</value>
+  </data>
+  <data name="StyleImpliedAndComplexChildren" xml:space="preserve">
+    <value>MC4001: Style does not support both {0} tags and Style.{1} property tags for a single Style. Use one or the other.</value>
+  </data>
+  <data name="StyleKnownTagWrongLocation" xml:space="preserve">
+    <value>MC4002: The Style property tag '{0}' can only be specified directly under a Style tag.</value>
+  </data>
+  <data name="StyleNoTarget" xml:space="preserve">
+    <value>MC4003: Cannot resolve the Style {0} '{1}'. Verify that the owning type is the Style's TargetType, or use Class.Property syntax to specify the {0}.</value>
+  </data>
+  <data name="StyleNoTopLevelElement" xml:space="preserve">
+    <value>MC4004: Style cannot contain child '{0}'. Style child must be a Setter because it is added to the Setters collection.</value>
+  </data>
+  <data name="StyleNoPropOrEvent" xml:space="preserve">
+    <value>MC4005: Cannot find the Style {0} '{1}' on the type '{2}'.</value>
+  </data>
+  <data name="StyleTagNotSupported" xml:space="preserve">
+    <value>MC4006: Tags of type '{0}' are not supported in Style sections.</value>
+  </data>
+  <data name="StyleTargetNoEvents" xml:space="preserve">
+    <value>MC4007: The event '{0}' cannot be specified on a Target tag in a Style. Use an EventSetter instead.</value>
+  </data>
+  <data name="StyleTextNotSupported" xml:space="preserve">
+    <value>MC4008: The text '{0}' is not allowed at this location within a Style section.</value>
+  </data>
+  <data name="StyleUnknownProp" xml:space="preserve">
+    <value>MC4009: The property '{0}' cannot be set on Style.</value>
+  </data>
+  <data name="TargetNameNotSupportedForStyleSetters" xml:space="preserve">
+    <value>MC4011: TargetName property cannot be set on a Style Setter.</value>
+  </data>
+  <data name="TemplateDupName" xml:space="preserve">
+    <value>MC4101: The Name '{0}' has already been defined. Names must be unique.</value>
+  </data>
+  <data name="TemplateTagNotSupported" xml:space="preserve">
+    <value>MC4102: Tags of type '{0}' are not supported in template sections.</value>
+  </data>
+  <data name="TemplateKnownTagWrongLocation" xml:space="preserve">
+    <value>MC4103: The template property tag '{0}' can only be specified immediately after a ControlTemplate tag.</value>
+  </data>
+  <data name="TemplateUnknownProp" xml:space="preserve">
+    <value>MC4104: The property '{0}' cannot be set as a property element on template. Only Triggers and Storyboards are allowed as property elements.</value>
+  </data>
+  <data name="TemplateTextNotSupported" xml:space="preserve">
+    <value>MC4105: The text '{0}' is not allowed at this location within a template section.</value>
+  </data>
+  <data name="TemplateNoTarget" xml:space="preserve">
+    <value>MC4106: Cannot resolve the Template Property '{0}'. Verify that the owning type is the Style's TargetType, or use Class.Property syntax to specify the property.</value>
+  </data>
+  <data name="TemplateNoMultipleRoots" xml:space="preserve">
+    <value>MC4107: A template can have only a single root element. '{0}' is not allowed.</value>
+  </data>
+  <data name="TemplateInvalidRootElementTag" xml:space="preserve">
+    <value>MC4108: The root of a Template content section cannot contain an element of type '{0}'. Only FrameworkElement and FrameworkContentElement types are valid.</value>
+  </data>
+  <data name="TemplateNoProp" xml:space="preserve">
+    <value>MC4109: Cannot find the Template Property '{0}' on the type '{1}'.</value>
+  </data>
+  <data name="SourceNameNotSupportedForStyleTriggers" xml:space="preserve">
+    <value>MC4110: SourceName property cannot be set within Style.Triggers section.</value>
+  </data>
+  <data name="TemplateNoTriggerTarget" xml:space="preserve">
+    <value>MC4111: Cannot find the Trigger target '{0}'.  (The target must appear before any Setters, Triggers, or Conditions that use it.)</value>
+  </data>
+  <data name="QualifiedNameHasWrongFormat" xml:space="preserve">
+    <value>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</value>
+  </data>
+  <data name="InvalidDeSerialize" xml:space="preserve">
+    <value>MC4401: Serializer does not support Convert operations.</value>
+  </data>
+  <data name="InvalidCustomSerialize" xml:space="preserve">
+    <value>MC4402: Serializer does not support custom BAML serialization operations.</value>
+  </data>
+  <data name="VersionNumberComponentNegative" xml:space="preserve">
+    <value>MC4501: Major and minor version number components cannot be negative.</value>
+  </data>
+  <data name="ZeroLengthFeatureID" xml:space="preserve">
+    <value>MC4502: The feature ID string cannot have length 0.</value>
+  </data>
+  <data name="XCRChoiceOnlyInAC" xml:space="preserve">
+    <value>MC4601: Choice valid only in AlternateContent.</value>
+  </data>
+  <data name="XCRChoiceAfterFallback" xml:space="preserve">
+    <value>MC4602: Choice cannot follow a Fallback.</value>
+  </data>
+  <data name="XCRRequiresAttribNotFound" xml:space="preserve">
+    <value>MC4603: Choice must contain a Requires attribute.</value>
+  </data>
+  <data name="XCRInvalidRequiresAttribute" xml:space="preserve">
+    <value>MC4604: Requires attribute must contain a valid namespace prefix.</value>
+  </data>
+  <data name="XCRFallbackOnlyInAC" xml:space="preserve">
+    <value>MC4605: Fallback valid only in AlternateContent.</value>
+  </data>
+  <data name="XCRChoiceNotFound" xml:space="preserve">
+    <value>MC4606: AlternateContent must contain one or more Choice elements.</value>
+  </data>
+  <data name="XCRMultipleFallbackFound" xml:space="preserve">
+    <value>MC4607: AlternateContent must contain only one Fallback element.</value>
+  </data>
+  <data name="XCRInvalidAttribInElement" xml:space="preserve">
+    <value>MC4608: '{0}' attribute is not valid for element '{1}'.</value>
+  </data>
+  <data name="XCRUnknownCompatElement" xml:space="preserve">
+    <value>MC4609: Unrecognized compatibility element '{0}'.</value>
+  </data>
+  <data name="XCRInvalidACChild" xml:space="preserve">
+    <value>MC4610: '{0}' element is not a valid child of AlternateContent. Only Choice and Fallback elements are valid children of an AlternateContent element.</value>
+  </data>
+  <data name="XCRInvalidFormat" xml:space="preserve">
+    <value>MC4611: '{0}' format is not valid.</value>
+  </data>
+  <data name="XCRUndefinedPrefix" xml:space="preserve">
+    <value>MC4612: '{0}' prefix is not defined.</value>
+  </data>
+  <data name="XCRUnknownCompatAttrib" xml:space="preserve">
+    <value>MC4614: Unrecognized compatibility attribute '{0}'.</value>
+  </data>
+  <data name="XCRNSProcessContentNotIgnorable" xml:space="preserve">
+    <value>MC4615: '{0}' namespace is declared ProcessContent but is not declared Ignorable.</value>
+  </data>
+  <data name="XCRDuplicateProcessContent" xml:space="preserve">
+    <value>MC4617: Duplicate ProcessContent declaration for element '{1}' in namespace '{0}'.</value>
+  </data>
+  <data name="XCRInvalidProcessContent" xml:space="preserve">
+    <value>MC4618: Cannot have both a specific and a wildcard ProcessContent declaration for namespace '{0}'.</value>
+  </data>
+  <data name="XCRDuplicateWildcardProcessContent" xml:space="preserve">
+    <value>MC4619: Duplicate wildcard ProcessContent declaration for namespace '{0}'.</value>
+  </data>
+  <data name="XCRMustUnderstandFailed" xml:space="preserve">
+    <value>MC4626: MustUnderstand condition failed on namespace '{0}'.</value>
+  </data>
+  <data name="XCRNSPreserveNotIgnorable" xml:space="preserve">
+    <value>MC4630: Namespace '{0}' has items declared to be preserved but is not declared ignorable.</value>
+  </data>
+  <data name="XCRDuplicatePreserve" xml:space="preserve">
+    <value>MC4631: Duplicate Preserve declaration for element '{1}' in namespace '{0}'.</value>
+  </data>
+  <data name="XCRInvalidPreserve" xml:space="preserve">
+    <value>MC4632: Cannot have both a specific and a wildcard Preserve declaration for namespace '{0}'.</value>
+  </data>
+  <data name="XCRDuplicateWildcardPreserve" xml:space="preserve">
+    <value>MC4633: Duplicate wildcard Preserve declaration for namespace '{0}'.</value>
+  </data>
+  <data name="XCRInvalidXMLName" xml:space="preserve">
+    <value>MC4634: '{0}' attribute value is not a valid XML name.</value>
+  </data>
+  <data name="XCRCompatCycle" xml:space="preserve">
+    <value>MC4640: Namespace '{0}' is marked as compatible with itself using XmlnsCompatibilityAttribute. A namespace cannot directly or indirectly override itself.</value>
+  </data>
+  <data name="WinFXAssemblyMissing" xml:space="preserve">
+    <value>MC6000: Project file must include the .NET Framework assembly '{0}' in the reference list.</value>
+  </data>
+  <data name="InvalidMarkupFile" xml:space="preserve">
+    <value>MC6001: Markup file is not valid. Specify a source markup file with an .xaml extension.</value>
+  </data>
+  <data name="UnknownDefinitionTag" xml:space="preserve">
+    <value>MC6002: Unrecognized tag '{0}:{1}' in namespace 'http://schemas.microsoft.com/winfx/2006/xaml'. Note that tag names are case sensitive.</value>
+  </data>
+  <data name="IllegalCDataTextScoping" xml:space="preserve">
+    <value>MC6003: '{0}:{1}' contains '{2}'. '{0}:{1}' cannot contain nested content.</value>
+  </data>
+  <data name="DefnTagsCannotBeNested" xml:space="preserve">
+    <value>MC6004: '{0}:{1}' contains '{2}'. '{0}:{1}' can contain only a CDATA or text section.</value>
+  </data>
+  <data name="InvalidEventHandlerName" xml:space="preserve">
+    <value>MC6005: {0}="{1}" is not valid. '{1}' is not a valid event handler method name. Only instance methods on the generated or code-behind class are valid.</value>
+  </data>
+  <data name="RoutedEventNotRegistered" xml:space="preserve">
+    <value>MC6006: {0}.{1}="{2}" is not valid. '{1}' must be a RoutedEvent registered with a name that ends with the keyword "Event".</value>
+  </data>
+  <data name="UnknownEventAttribute" xml:space="preserve">
+    <value>MC6007: '{1}' is not valid. '{0}' is not an event on '{2}'.</value>
+  </data>
+  <data name="UnknownLanguage" xml:space="preserve">
+    <value>MC6008: '{0}' is not installed properly on this machine. It must be listed in the &lt;compilers&gt; section of machine.config.</value>
+  </data>
+  <data name="MissingClassWithModifier" xml:space="preserve">
+    <value>MC6009: {0}:ClassModifier attribute cannot be specified on the root tag because a {0}:Class attribute is also required. Either add a {0}:Class attribute or remove the {0}:ClassModifier attribute.</value>
+  </data>
+  <data name="DefinitionTagNotAllowedAtRoot" xml:space="preserve">
+    <value>MC6010: '{0}:{1}' cannot be specified as the root element.</value>
+  </data>
+  <data name="ContainingTagNotGeneric" xml:space="preserve">
+    <value>MC6011: '{0}' event has a generic event handler delegate type '{1}'. The type parameters of '{1}' cannot be bound with an appropriate type argument because the containing tag '{2}' is not a generic type.</value>
+  </data>
+  <data name="MatchingTypeArgsNotFoundInRefType" xml:space="preserve">
+    <value>MC6012: '{0}' event has a generic event handler delegate type '{1}'. The type parameter '{2}' on '{1}' does not match any type parameters on the containing generic tag '{3}'.</value>
+  </data>
+  <data name="UnknownClassModifier" xml:space="preserve">
+    <value>MC6013: {0}:ClassModifier="{1}" is not valid for the language {2}.</value>
+  </data>
+  <data name="UnknownFieldModifier" xml:space="preserve">
+    <value>MC6014: {0}:FieldModifier="{1}" is not valid for the language {2}.</value>
+  </data>
+  <data name="AttributeNotAllowedOnCodeTag" xml:space="preserve">
+    <value>MC6015: '{0}' cannot be set on the '{1}:{2}' tag.</value>
+  </data>
+  <data name="MissingClassWithSubClass" xml:space="preserve">
+    <value>MC6016: {0}:Class attribute is missing. It is required when a {0}:Subclass attribute is specified.</value>
+  </data>
+  <data name="SubSubClassingNotAllowed" xml:space="preserve">
+    <value>MC6017: '{0}' cannot be the root of a XAML file because it was defined using XAML.</value>
+  </data>
+  <data name="InvalidBaseClassName" xml:space="preserve">
+    <value>MC6018: '{0}' class name is not valid for the locally defined XAML root element.</value>
+  </data>
+  <data name="InvalidBaseClassNamespace" xml:space="preserve">
+    <value>MC6019: '{0}' namespace is not valid for the locally defined XAML root element '{1}'.</value>
+  </data>
+  <data name="UnknownGenericType" xml:space="preserve">
+    <value>MC6020: {0}:TypeArguments='{1}' is not valid on the tag '{2}'. Either '{2}' is not a generic type or the number of Type arguments in the attribute is wrong. Remove the {0}:TypeArguments attribute because it is allowed only on generic types, or fix its value to match the arity of the generic type '{2}'.</value>
+  </data>
+  <data name="FieldModifierNotAllowed" xml:space="preserve">
+    <value>MC6021: {0}:FieldModifier cannot be specified on this tag because it has either no {0}:Name or Name attribute set, or the tag is locally defined and has a Name attribute set, which is not allowed.</value>
+  </data>
+  <data name="DefinitionAttributeNotAllowed" xml:space="preserve">
+    <value>MC6022: Only a root tag can specify attribute '{0}:{1}'.</value>
+  </data>
+  <data name="LocalNamePropertyNotAllowed" xml:space="preserve">
+    <value>MC6023: Because '{0}' is implemented in the same assembly, you must set the {1}:Name attribute rather than the Name attribute.</value>
+  </data>
+  <data name="MissingClassDefinitionForEvent" xml:space="preserve">
+    <value>MC6024: '{0}' root element requires a {1}:Class attribute to support event handlers in the XAML file. Either remove the event handler for the {2} event, or add a {1}:Class attribute to the root element.</value>
+  </data>
+  <data name="MissingClassDefinitionForTypeArgs" xml:space="preserve">
+    <value>MC6025: '{0}' root element is a generic type and requires a {1}:Class attribute to support the {1}:TypeArguments attribute specified on the root element tag.</value>
+  </data>
+  <data name="MissingClassDefinitionForCodeTag" xml:space="preserve">
+    <value>MC6026: '{0}' root element requires a {1}:Class attribute because '{2}' contains a {1}:Code tag. Either remove {1}:Code and its contents, or add a {1}:Class attribute to the root element.</value>
+  </data>
+  <data name="InvalidClassName" xml:space="preserve">
+    <value>MC6027: {0}:{1}="{2}" is not valid. '{2}' is not a valid {3}class name.</value>
+  </data>
+  <data name="InvalidTypeName" xml:space="preserve">
+    <value>MC6028: {0}:TypeArguments="{1}" is not valid. '{2}' is not a valid type name reference for the generic argument at position '{3}'.</value>
+  </data>
+  <data name="InvalidDefaultCLRNamespace" xml:space="preserve">
+    <value>MC6029: '{0}' name is not valid in the default namespace '{1}'. Correct the RootNamespace tag value in the project file.</value>
+  </data>
+  <data name="EmptyEventStringNotAllowed" xml:space="preserve">
+    <value>MC6030: {0}="{1}" is not valid. '{0}' event attribute value cannot be a string that is empty or has only white space.</value>
+  </data>
+  <data name="MissingClassWithFieldModifier" xml:space="preserve">
+    <value>MC6031: {0}:FieldModifier attribute cannot be specified because a {0}:Class attribute is also required to generate a Name field with the specified access modifier. Either add a {0}:Class attribute on the root tag or remove the {0}:FieldModifier attribute.</value>
+  </data>
+  <data name="NamedResDictItemWarning" xml:space="preserve">
+    <value>A '{0}' is named '{1}'. Do not name ResourceDictionary contents because their instantiation is deferred.</value>
+  </data>
+  <data name="TokenizerHelperPrematureStringTermination" xml:space="preserve">
+    <value>MC7001: Premature string termination encountered.</value>
+  </data>
+  <data name="TokenizerHelperMissingEndQuote" xml:space="preserve">
+    <value>MC7002: Missing end quote encountered while parsing token.</value>
+  </data>
+  <data name="TokenizerHelperExtraDataEncountered" xml:space="preserve">
+    <value>MC7003: Extra data encountered after token while parsing.</value>
+  </data>
+  <data name="TokenizerHelperEmptyToken" xml:space="preserve">
+    <value>MC7004: Empty token encountered while parsing.</value>
+  </data>
+  <data name="ParserMarkupExtensionInvalidClosingBracketCharacers" xml:space="preserve">
+    <value>MC8001: Encountered a closing BracketCharacter '{0}' at Line Number '{1}' and Line Position '{2}' without a corresponding opening BracketCharacter.</value>
+  </data>
+  <data name="ParserMarkupExtensionMalformedBracketCharacers" xml:space="preserve">
+    <value>MC8002: BracketCharacter '{0}' at Line Number '{1}' and Line Position '{2}' does not have a corresponding opening/closing BracketCharacter.</value>
+  </data>
+</root>

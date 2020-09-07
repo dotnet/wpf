@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+   <WpfCodeGenDir>$(WpfArcadeSdkToolsDir)CodeGen\</WpfCodeGenDir>
+  </PropertyGroup>
+</Project>

@@ -396,12 +396,12 @@ namespace System.Windows.Controls
                     switch (stretch) 
                     {
                         case Stretch.Uniform:       //Find minimum scale that we use for both axes
-                            double minscale = scaleX < scaleY ? scaleX : scaleY;
+                            double minscale = Math.Min(scaleX, scaleY);
                             scaleX = scaleY = minscale;
                             break;
 
                         case Stretch.UniformToFill: //Find maximum scale that we use for both axes
-                            double maxscale = scaleX > scaleY ? scaleX : scaleY;
+                            double maxscale = Math.Max(scaleX, scaleY);
                             scaleX = scaleY = maxscale;
                             break;
 

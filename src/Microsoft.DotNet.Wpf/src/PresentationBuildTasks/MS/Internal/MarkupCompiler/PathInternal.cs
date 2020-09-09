@@ -76,10 +76,10 @@ namespace MS.Internal
 
             // Trailing separators aren't significant for comparison
             int relativeToLength = relativeTo.Length;
-            if (EndsInDirectorySeparator(relativeTo.AsSpan()))
+            if (DoesEndInDirectorySeparator(relativeTo.AsSpan()))
                 relativeToLength--;
 
-            bool pathEndsInSeparator = EndsInDirectorySeparator(path.AsSpan());
+            bool pathEndsInSeparator = DoesEndInDirectorySeparator(path.AsSpan());
             int pathLength = path.Length;
             if (pathEndsInSeparator)
                 pathLength--;
@@ -97,7 +97,7 @@ namespace MS.Internal
             //  C:\Foo\Bar C:\Bar\Bar L3, S2 -> ..\..\Bar\Bar
             //  C:\Foo\Foo C:\Foo\Bar L7, S1 -> ..\Bar
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             // Add parent segments for segments past the common on the "from" path
             if (commonLength < relativeToLength)
@@ -152,7 +152,7 @@ namespace MS.Internal
         /// </summary>
         internal static int GetCommonPathLength(string first, string second, bool ignoreCase)
         {
-            int commonChars = EqualStartingCharacterCount(first, second, ignoreCase: ignoreCase);
+            int commonChars = EqualStartingCharacterCount(first, second, ignoreCase);
 
             // If nothing matches
             if (commonChars == 0)
@@ -357,13 +357,13 @@ namespace MS.Internal
         /// <summary>
         /// Returns true if the path ends in a directory separator.
         /// </summary>
-        public static bool EndsInDirectorySeparator(ReadOnlySpan<char> path)
+        public static bool DoesEndInDirectorySeparator(ReadOnlySpan<char> path)
             => path.Length > 0 && PathInternal.IsDirectorySeparator(path[path.Length - 1]);
 
         /// <summary>
         /// Returns true if the path ends in a directory separator.
         /// </summary>
-        public static bool EndsInDirectorySeparator(string path)
+        public static bool DoesEndInDirectorySeparator(string path)
               => path != null && path.Length > 0 && PathInternal.IsDirectorySeparator(path[path.Length - 1]);
         
         internal const char DirectorySeparatorChar = '\\';

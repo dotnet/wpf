@@ -85,7 +85,7 @@ namespace MS.Internal
                 pathLength--;
 
             // If we have effectively the same path, return "."
-            if (relativeToLength == pathLength && commonLength >= relativeToLength) return ".";
+            if (relativeToLength == pathLength && commonLength >= relativeToLength) return CurrentDir.ToString();
 
             // We have the same root, we need to calculate the difference now using the
             // common Length and Segment count past the length.
@@ -102,14 +102,14 @@ namespace MS.Internal
             // Add parent segments for segments past the common on the "from" path
             if (commonLength < relativeToLength)
             {
-                sb.Append("..");
+                sb.Append(ParentDir);
 
                 for (int i = commonLength + 1; i < relativeToLength; i++)
                 {
                     if (PathInternal.IsDirectorySeparator(relativeTo[i]))
                     {
-                        sb.Append(DirectorySeparatorChar);
-                        sb.Append("..");
+                        sb.Append(Path.DirectorySeparatorChar);
+                        sb.Append(ParentDir);
                     }
                 }
             }
@@ -129,7 +129,7 @@ namespace MS.Internal
             {
                 if (sb.Length > 0)
                 {
-                    sb.Append(DirectorySeparatorChar);
+                    sb.Append(Path.DirectorySeparatorChar);
                 }
 
                 sb.Append(path, commonLength, differenceLength);
@@ -144,7 +144,7 @@ namespace MS.Internal
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool IsDirectorySeparator(char c)
         {
-            return c == DirectorySeparatorChar || c == AltDirectorySeparatorChar;
+            return c == Path.DirectorySeparatorChar || c == Path.AltDirectorySeparatorChar;
         }
 
         /// <summary>
@@ -366,8 +366,6 @@ namespace MS.Internal
         public static bool DoesEndInDirectorySeparator(string path)
               => path != null && path.Length > 0 && PathInternal.IsDirectorySeparator(path[path.Length - 1]);
         
-        internal const char DirectorySeparatorChar = '\\';
-        internal const char AltDirectorySeparatorChar = '/';
         internal const char VolumeSeparatorChar = ':';
           // \\?\UNC\, \\.\UNC\
         internal const int UncExtendedPrefixLength = 8;
@@ -375,6 +373,10 @@ namespace MS.Internal
         internal const int DevicePrefixLength = 4;
         // \\
         internal const int UncPrefixLength = 2;
+        // ".."
+        internal const string ParentDir = "..";
+        // '.'
+        internal const char CurrentDir = '.';
     }
 }
 

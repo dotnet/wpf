@@ -41,8 +41,12 @@
           "description": "Target net5.0"
         }
       ],
-      "replaces": "net5.0",
+      "replaces": "FrameworkParameter",
       "defaultValue": "net5.0"
+    },
+    "UseWindowsDesktopSdk": {
+      "type": "computed",
+      "value": "(Framework == \"netcoreapp3.1\" || Framework == \"netcoreapp3.0\")"
     },
     "langVersion": {
       "type": "parameter",
@@ -67,6 +71,27 @@
     {
       "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
       "path": "Class1.vb"
+    }
+  ],
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(UseWindowsDesktopSdk)",
+          "exclude": [
+            "Company.ClassLibrary1.vbproj"
+          ],
+          "rename": {
+            "Company.ClassLibrary3x1.vbproj": "Company.ClassLibrary1.vbproj"
+          }
+        },
+        {
+          "condition": "(!UseWindowsDesktopSdk)",
+          "exclude": [
+            "Company.ClassLibrary3x1.vbproj"
+          ]
+        }
+      ]
     }
   ],
   "defaultName": "WpfLibrary1",

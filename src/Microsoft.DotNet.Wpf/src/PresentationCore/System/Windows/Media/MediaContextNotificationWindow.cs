@@ -34,7 +34,7 @@ using DllImport=MS.Internal.PresentationCore.DllImport;
 namespace System.Windows.Media
 {
     /// <summary>
-    /// The MediaContextNotificationWindow class provides its owner 
+    /// The MediaContextNotificationWindow class provides its owner
     /// MediaContext with the ability to receive and forward window
     /// messages broadcasted to top-level windows.
     /// </summary>
@@ -48,7 +48,7 @@ namespace System.Windows.Media
             s_channelNotifyMessage = UnsafeNativeMethods.RegisterWindowMessage("MilChannelNotify");
             s_dwmRedirectionEnvironmentChanged = UnsafeNativeMethods.RegisterWindowMessage("DwmRedirectionEnvironmentChangedHint");
         }
-                
+
         //+---------------------------------------------------------------------
         //
         //  Internal Methods
@@ -65,7 +65,7 @@ namespace System.Windows.Media
             // Remember the pointer to the owner MediaContext that we'll forward the broadcasts to.
             _ownerMediaContext = ownerMediaContext;
 
-            // Create a top-level, invisible window so we can get the WM_DWMCOMPOSITIONCHANGED 
+            // Create a top-level, invisible window so we can get the WM_DWMCOMPOSITIONCHANGED
             // and other DWM notifications that are broadcasted to top-level windows only.
             HwndWrapper hwndNotification;
             hwndNotification = new HwndWrapper(0, NativeMethods.WS_POPUP, 0, 0, 0, 0, 0, "MediaContextNotificationWindow", IntPtr.Zero, null);
@@ -92,8 +92,6 @@ namespace System.Windows.Media
 
             ChangeWindowMessageFilter(s_dwmRedirectionEnvironmentChanged, 1 /* MSGFLT_ADD */);
             MS.Internal.HRESULT.Check(MilContent_AttachToHwnd(_hwndNotification.Value.Handle));
-
-            WpfDllVerifier.VerifyWpfDllSet();
         }
 
         public void Dispose()
@@ -113,13 +111,13 @@ namespace System.Windows.Media
                 _ownerMediaContext = null;
 
                 _isDisposed = true;
-                
+
                 GC.SuppressFinalize(this);
             }
         }
 
         #endregion Internal Methods
-        
+
 
         //+---------------------------------------------------------------------
         //
@@ -141,7 +139,7 @@ namespace System.Windows.Media
             {
                 throw new ObjectDisposedException("MediaContextNotificationWindow");
             }
-            
+
             _ownerMediaContext.Channel.SetNotificationWindow(_hwndNotification.Value.Handle, s_channelNotifyMessage);
         }
 
@@ -154,11 +152,11 @@ namespace System.Windows.Media
             {
                 throw new ObjectDisposedException("MediaContextNotificationWindow");
             }
-            
+
             WindowMessage message = (WindowMessage)msg;
             Debug.Assert(_ownerMediaContext != null);
 
-            if (message == WindowMessage.WM_DWMCOMPOSITIONCHANGED) 
+            if (message == WindowMessage.WM_DWMCOMPOSITIONCHANGED)
             {
                 //
                 // We need to register as MIL content to receive the Vista Magnifier messages
@@ -253,7 +251,7 @@ namespace System.Windows.Media
         // We receive this when the Vista Magnifier goes on/off
         private static WindowMessage s_dwmRedirectionEnvironmentChanged;
 
-        #endregion Private Fields       
+        #endregion Private Fields
     }
 }
 

@@ -44,7 +44,7 @@ namespace System.Windows.Media
         /// </summary>
         public HostVisual()
         {
-}
+        }
 
         #endregion Constructors
 

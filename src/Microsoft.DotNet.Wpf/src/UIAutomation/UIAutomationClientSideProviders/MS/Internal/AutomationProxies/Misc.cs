@@ -995,7 +995,9 @@ namespace MS.Internal.AutomationProxies
             }
             else
             {
+                #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
                 RuntimeHelpers.PrepareConstrainedRegions();
+                #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
                 bool fRelease = false;
                 try
                 {

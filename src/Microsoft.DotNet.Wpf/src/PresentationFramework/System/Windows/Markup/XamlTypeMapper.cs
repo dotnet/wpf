@@ -229,7 +229,9 @@ namespace System.Windows.Markup
             // so they can be loaded again.   The is the Dev build/load/build/load
             // Designer scenario.  (Don't mess with GACed assemblies)
             Assembly assem = ReflectionHelper.GetAlreadyLoadedAssembly(asmName);
+            #pragma warning disable SYSLIB0005 // 'Assembly.GlobalAssemblyCache' is obsolete. 
             if (assem != null && !assem.GlobalAssemblyCache)
+            #pragma warning restore SYSLIB0005 // 'Assembly.GlobalAssemblyCache' is obsolete. 
             {
                 ReflectionHelper.ResetCacheForAssembly(asmName);
                 // No way to reset SchemaContext at assembly granularity, so just reset the whole context
@@ -401,7 +403,7 @@ namespace System.Windows.Markup
 #if  PBTCOMPILER
 
         private void PreLoadDefaultAssemblies(string asmName, string asmPath)
-        {          
+        {
             if (AssemblyWB == null && string.Compare(asmName, _assemblyNames[0], StringComparison.OrdinalIgnoreCase) == 0)
             {
                 AssemblyWB = ReflectionHelper.LoadAssembly(asmName, asmPath);
@@ -1399,7 +1401,7 @@ namespace System.Windows.Markup
 
                                 // If we've found a property info, then the owner had better
                                 // be the same type as or a subclass of the objectType, or
-                                // they are in different inheritance hierarchies.  
+                                // they are in different inheritance hierarchies.
                                 if (memberInfo != null)
                                 {
                                     if (owner != null &&
@@ -2748,7 +2750,7 @@ namespace System.Windows.Markup
 
             return ithType;
         }
-        
+
         private static InternalTypeHelper GetInternalTypeHelperFromAssembly(ParserContext pc)
         {
             InternalTypeHelper ith = null;
@@ -4463,7 +4465,3 @@ namespace System.Windows.Markup
     }
 #endregion XmlParserDefaults Class
 }
-
-
-
-

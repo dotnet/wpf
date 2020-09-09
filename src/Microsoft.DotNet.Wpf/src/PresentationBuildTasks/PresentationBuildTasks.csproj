@@ -4,19 +4,19 @@
     <EnableDefaultItems>false</EnableDefaultItems>
     <EnablePInvokeAnalyzer>true</EnablePInvokeAnalyzer>
 
-    <!-- 
+    <!--
       Clear AssemblyVersion => it will ensure that the AssemblyVersion is > 4.0.0.0.
-      In turn, this will ensure that the net4x PresentationBuildTasks.dll 
+      In turn, this will ensure that the net4x PresentationBuildTasks.dll
       is always loaded directly instead of being matched against the GAC copy of the
-      PresentationBuildTasks 4.0.0.0 that comes form the .NET Framework. 
+      PresentationBuildTasks 4.0.0.0 that comes form the .NET Framework.
       -->
     <AssemblyVersion />
 
     <!--
-            Suppressed Compiler Warnings: 
+            Suppressed Compiler Warnings:
 
-                CS1058: A previous catch clause already catches all exceptions. All exceptions 
-                thrown will be wrapped in a System.Runtime.CompilerServices.RuntimeWrappedException 
+                CS1058: A previous catch clause already catches all exceptions. All exceptions
+                thrown will be wrapped in a System.Runtime.CompilerServices.RuntimeWrappedException
     -->
     <NoWarn>$(NoWarn);1058</NoWarn>
 
@@ -40,12 +40,11 @@
   </PropertyGroup>
 
 
-  <!-- 
-    Incorporate Microsoft.WinFX.targets in nuget packages under 
-    content\targets\ 
+  <!--
+    Incorporate Microsoft.WinFX.targets in nuget packages under
+    content\targets\
   -->
   <ItemGroup>
-    <PackagingContent Include="$(MSBuildThisFileDirectory)Microsoft.WinFX.props" SubFolder="root\targets" />
     <PackagingContent Include="$(MSBuildThisFileDirectory)Microsoft.WinFX.targets" SubFolder="root\targets" />
   </ItemGroup>
 
@@ -77,8 +76,8 @@
     <Compile Include="System\AppContextDefaultValues.cs" />
     <Compile Include="MS\Internal\BuildTasksAppContextSwitches.cs" />
   </ItemGroup>
- 
-  
+
+
   <ItemGroup>
     <Compile Include="SR.cs" />
     <Compile Include="$(WpfCommonDir)src\System\SR.cs" >
@@ -315,7 +314,7 @@
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="$(MicrosoftBuildUtilitiesCorePackageVersion)" />
     <PackageReference Include="System.Reflection.MetadataLoadContext" Version="$(SystemReflectionMetadataLoadContextVersion)" />
 
-    <!-- 
+    <!--
       Provide specific/old versions for PresentationBuildTasks which needs to run inside MSBuild
     -->
     <PackageReference Include="System.CodeDom" Version="$(SystemCodeDomPackageVersionForPresentationBuildTasks)" />

@@ -11,15 +11,17 @@ Copyright (c) .NET Foundation. All rights reserved.
 -->
 <Project>
 
-  <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.props" />
-
-  <!-- The MicrosoftWindowsDesktopSdkPath is a hook so that you can redirect to a local version of the WPF SDK targets
-       (ie in order to test changes locally) without modifying the .NET Core SDK itself.  This should work
-       as long as there are no changes to Sdk.props and Sdk.targets themselves. -->
-  <PropertyGroup Condition="'$(MicrosoftWindowsDesktopSdkPath)' == ''">
-    <MicrosoftWindowsDesktopSdkPath>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)\..\targets))</MicrosoftWindowsDesktopSdkPath>
+  <PropertyGroup>
+    <_MicrosoftWindowsDesktopSdkImported>true</_MicrosoftWindowsDesktopSdkImported>
   </PropertyGroup>
 
-  <Import Project="$(MicrosoftWindowsDesktopSdkPath)\Microsoft.NET.Sdk.WindowsDesktop.props "/>
+  <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.props" />
+
+  <!-- Set ImportWindowsDesktopTargets to force import WindowsDesktop Targets to enable pre 5.0 behavior.
+      Post 5.0, Microsoft.NET.Sdk.WindowsDesktop.props will always be imported by SDK
+  -->
+  <PropertyGroup>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+  </PropertyGroup>
 
 </Project>

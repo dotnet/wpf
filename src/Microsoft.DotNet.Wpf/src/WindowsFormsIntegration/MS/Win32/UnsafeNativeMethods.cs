@@ -20,7 +20,7 @@ namespace MS.Win32
         [ResourceExposure(ResourceScope.None)]
         public static extern IntPtr GetFocus();
 
-        [DllImport("User32", ExactSpelling = true, CharSet = CharSet.Auto)]
+        [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
         [ResourceExposure(ResourceScope.None)]
         internal static extern IntPtr SetParent(IntPtr hWnd, IntPtr hWndParent);
 
@@ -52,7 +52,9 @@ namespace MS.Win32
         }
 
         [DllImport(ExternDll.Gdi32, ExactSpelling = true, CharSet = CharSet.Auto)]
+        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
+        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
         [ResourceExposure(ResourceScope.None)]
         public static extern bool DeleteDC(IntPtr hDC);
     }

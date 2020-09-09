@@ -46,6 +46,3 @@ extern "C" ULONG_PTR WINAPI RegisterDllForSxSCOM()
     // Return the context cookie : caller is responsible for deactivating the context.
     return activationContextCookie; 
 }
-
-
-

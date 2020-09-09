@@ -48,7 +48,9 @@ namespace MS.Internal
                 if (!a.ReflectionOnly)
                 {
                     // check if it is in the Gac , this ensures that we eliminate any non GAC assembly which are of no risk
+                    #pragma warning disable SYSLIB0005 // 'Assembly.GlobalAssemblyCache' is obsolete.
                     if (a.GlobalAssemblyCache)
+                    #pragma warning restore SYSLIB0005 // 'Assembly.GlobalAssemblyCache' is obsolete.
                     {
                         string assemblyName = AssemblyNameWithFileVersion(a);
                         // If we are on the disallowed list kill the application domain

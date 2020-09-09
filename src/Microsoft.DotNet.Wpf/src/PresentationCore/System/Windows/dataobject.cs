@@ -1768,7 +1768,9 @@ namespace System.Windows
 
                     formatter = new BinaryFormatter();
 
+                    #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
                     formatter.Serialize(stream, data);
+                    #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete
                     return SaveStreamToHandle(handle, stream, doNotReallocate);
                 }
             }
@@ -3122,7 +3124,9 @@ namespace System.Windows
                     }
                     try
                     {
+                        #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
                         value = formatter.Deserialize(stream);
+                        #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
                     }
                     catch (RestrictedTypeDeserializationException)
                     {
@@ -3348,7 +3352,7 @@ namespace System.Windows
             /// </summary>
             private class RestrictedTypeDeserializationException : Exception
             {
-}
+            }
         }
 
         #endregion OleConverter Class

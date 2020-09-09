@@ -40,8 +40,6 @@ namespace System.Windows.Threading
             _exceptionWrapper = new ExceptionWrapper();
             _exceptionWrapper.Catch += new ExceptionWrapper.CatchHandler(CatchExceptionStatic);
             _exceptionWrapper.Filter += new ExceptionWrapper.FilterHandler(ExceptionFilterStatic);
-
-            WpfDllVerifier.VerifyWpfDllSet();
         }
 
         /// <summary>
@@ -1722,7 +1720,7 @@ namespace System.Windows.Threading
         internal object PtsCache
         {
             // This gets multiplexed with the log for "request processing" failures.
-            // See OnRequestProcessingFailure. 
+            // See OnRequestProcessingFailure.
             [FriendAccessAllowed] // Built into Base, used by Core or Framework.
             get
             {
@@ -1843,7 +1841,7 @@ namespace System.Windows.Threading
                 // Tell Win32 to exit the message loop for this thread.
                 //
                 // This call to PostQuitMessage is commented out because PostQuitMessage
-                // not only shuts down the message pump associated with the Dispatcher, but also 
+                // not only shuts down the message pump associated with the Dispatcher, but also
                 // shuts down any process that might be hosting WPF content (like IE).
                 // UnsafeNativeMethods.PostQuitMessage(0);
                 if(_frameDepth > 0)

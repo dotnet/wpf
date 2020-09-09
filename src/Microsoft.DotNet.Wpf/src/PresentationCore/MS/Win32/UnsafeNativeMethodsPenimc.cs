@@ -19,10 +19,10 @@ namespace MS.Win32.Penimc
 {
     internal static class UnsafeNativeMethods
     {
-        
+
         // The flags in this region are all in support of COM hardening to add resilience
         // to (OSGVSO:10779198).
-        // They are special arguments to COM calls that allow us to re-purpose them for 
+        // They are special arguments to COM calls that allow us to re-purpose them for
         // functions relating to this hardening.
         #region PenIMC Operations Flags
 
@@ -75,10 +75,16 @@ namespace MS.Win32.Penimc
         [ThreadStatic]
         private static IPimcManager3 _pimcManagerThreadStatic;
 
+        /// <summary>
+        /// The cookie for the PenIMC activation context.
+        /// </summary>
+        [ThreadStatic]
+        private static IntPtr _pimcActCtxCookie = IntPtr.Zero;
+
         #endregion
 
         #region PenIMC
-        
+
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         internal static extern IntPtr RegisterDllForSxSCOM();
 
@@ -86,26 +92,42 @@ namespace MS.Win32.Penimc
 
         /// <summary>
         /// Make sure we load penimc.dll from WPF's installed location to avoid two instances of it.
+        ///
+        /// Add an activation context to the thread's stack to ensure the registration-free COM objects
+        /// are available.
         /// </summary>
-        static UnsafeNativeMethods()
+        /// <remarks>
+        /// PenIMC COM objects are only directly used (functions called on their interfaces) from inside the
+        /// PenThread.  As such, the PenThreads need to create the activation context.  The various Dispatcher
+        /// threads need not do so as they merely pass the RCWs around in manged objects and will only use
+        /// them via operations queued on their associated PenThread.
+        /// </remarks>
+        internal static void EnsurePenImcClassesActivated()
         {
-            // Register PenIMC for SxS COM for the lifetime of the process. No need to store the 
-            // cookie; PenIMC's ActivationContext will never be removed from the ActivationContext 
-            // stack.
-            //
-            // RegisterDllForSxSCOM returns a non-zero ActivationContextCookie if SxS registration
-            // succeeds, or IntPtr.Zero if SxS registration fails.
-            if (IntPtr.Zero == RegisterDllForSxSCOM())
+            if (_pimcActCtxCookie == IntPtr.Zero)
             {
-                throw new InvalidOperationException(SR.Get(SRID.PenImcSxSRegistrationFailed, ExternDll.Penimc));
+                // Register PenIMC for SxS COM for the lifetime of the thread.
+                //
+                // RegisterDllForSxSCOM returns a non-zero ActivationContextCookie if SxS registration
+                // succeeds, or IntPtr.Zero if SxS registration fails.
+                if ((_pimcActCtxCookie = RegisterDllForSxSCOM()) == IntPtr.Zero)
+                {
+                    throw new InvalidOperationException(SR.Get(SRID.PenImcSxSRegistrationFailed, ExternDll.Penimc));
+                }
             }
+        }
 
-            // Ensure PenIMC loaded from the correct location.
-            var uncheckedDlls = WpfDllVerifier.VerifyWpfDllSet(ExternDll.Penimc);
-
-            if (uncheckedDlls.Contains(ExternDll.Penimc))
+        /// <summary>
+        /// Deactivates the activation context for PenIMC objects.
+        /// </summary>
+        internal static void DeactivatePenImcClasses()
+        {
+            if (_pimcActCtxCookie != IntPtr.Zero)
             {
-                throw new DllNotFoundException(SR.Get(SRID.PenImcDllVerificationFailed, ExternDll.Penimc));
+                if(DeactivateActCtx(0, _pimcActCtxCookie))
+                {
+                    _pimcActCtxCookie = IntPtr.Zero;
+                }
             }
         }
 
@@ -360,9 +382,9 @@ namespace MS.Win32.Penimc
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         internal static extern int IsfCompressPropertyData(
                 [In] byte [] pbInput,
-                uint cbInput, 
-                ref byte pnAlgoByte, 
-                ref uint pcbOutput, 
+                uint cbInput,
+                ref byte pnAlgoByte,
+                ref uint pcbOutput,
                 [In, Out] byte [] pbOutput
             );
 
@@ -380,11 +402,11 @@ namespace MS.Win32.Penimc
         /// <returns>Status</returns>
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         internal static extern int IsfDecompressPropertyData(
-                [In] byte [] pbCompressed,   
-                uint cbCompressed,   
-                ref uint pcbOutput,  
-                [In, Out] byte [] pbOutput, 
-                ref byte pnAlgoByte 
+                [In] byte [] pbCompressed,
+                uint cbCompressed,
+                ref uint pcbOutput,
+                [In, Out] byte [] pbOutput,
+                ref byte pnAlgoByte
             );
 
         /// <summary>
@@ -586,7 +608,8 @@ namespace MS.Win32.Penimc
         /// <param name="context">Context in which the newly created object will run</param>
         /// <param name="iid">Identifier of the Interface</param>
         /// <returns>Returns the COM object created by CoCreateInstance</returns>
-        [return: MarshalAs(UnmanagedType.Interface)][DllImport(ExternDll.Ole32, ExactSpelling=true, PreserveSig=false)]
+        [return: MarshalAs(UnmanagedType.Interface)]
+        [DllImport(ExternDll.Ole32, ExactSpelling = true, PreserveSig = false)]
         private static extern object CoCreateInstance(
             [In]
             ref Guid clsid,
@@ -595,17 +618,31 @@ namespace MS.Win32.Penimc
             int context,
             [In]
             ref Guid iid);
+
+        /// <summary>
+        /// Deactivates the specified Activation Context.
+        /// </summary>
+        /// <remarks>
+        /// See: https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-deactivateactctx
+        /// </remarks>
+        /// <param name="flags">Flags that indicate how the deactivation is to occur.</param>
+        /// <param name="activationCtxCookie">The ULONG_PTR that was passed into the call to ActivateActCtx.
+        /// This value is used as a cookie to identify a specific activated activation context.</param>
+        /// <returns>True on success, false otherwise.</returns>
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport(ExternDll.Kernel32, ExactSpelling = true, PreserveSig = false)]
+        private static extern bool DeactivateActCtx(int flags, IntPtr activationCtxCookie);
     }
 
 #if OLD_ISF
     internal class CompressorSafeHandle: SafeHandle
     {
-        private CompressorSafeHandle() 
+        private CompressorSafeHandle()
             : this(true)
         {
         }
 
-        private CompressorSafeHandle(bool ownHandle) 
+        private CompressorSafeHandle(bool ownHandle)
             : base(IntPtr.Zero, ownHandle)
         {
         }
@@ -625,15 +662,15 @@ namespace MS.Win32.Penimc
         override protected bool ReleaseHandle()
         {
             //
-            // return code from this is void. 
-            // internally it just calls delete on 
+            // return code from this is void.
+            // internally it just calls delete on
             // the compressor pointer
             //
             UnsafeNativeMethods.IsfReleaseCompressor(handle);
             handle = IntPtr.Zero;
             return true;
         }
-    
+
         public static CompressorSafeHandle Null
         {
             get

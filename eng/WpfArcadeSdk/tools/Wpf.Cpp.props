@@ -7,7 +7,7 @@
     <PlatformToolset>v142</PlatformToolset>
 
     <!-- 17134 is Windows 10 v1903 (19H1) SDK -->
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
     
     <ConfigurationType Condition="'$(ConfigurationType)'==''">DynamicLibrary</ConfigurationType>
     

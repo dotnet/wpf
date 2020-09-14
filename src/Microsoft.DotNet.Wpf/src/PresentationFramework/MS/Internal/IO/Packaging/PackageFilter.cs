@@ -189,14 +189,14 @@ namespace MS.Internal.IO.Packaging
                     // In general, we don't really care: when an external filter gets in trouble
                     // we simply move to the next filter.
                 }
-                catch (IOException exc)
+                catch (IOException)
                 {
                     // Internal filters do not throw expected exceptions; so something bad
                     // must have happened. Let the client code get the exception and possibly
                     // choose to ignore it.
                     if (_isInternalFilter)
                     {
-                        throw exc;
+                        throw;
                     }
                 }
 

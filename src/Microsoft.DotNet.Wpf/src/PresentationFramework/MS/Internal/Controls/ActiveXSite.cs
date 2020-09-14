@@ -223,7 +223,7 @@ namespace MS.Internal.Controls
             catch (Exception t)
             {
                 Debug.Fail(t.ToString());
-                throw t;
+                throw;
             }
         }
 
@@ -366,7 +366,7 @@ namespace MS.Internal.Controls
             catch (Exception t)
             {
                 Debug.Fail(t.ToString());
-                throw t;
+                throw;
             }
             finally
             {

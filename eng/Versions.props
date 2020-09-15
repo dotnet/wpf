@@ -18,7 +18,7 @@
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>4.8.1-servicing.20459.3</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>4.8.1-servicing.20465.3</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/coreclr -->
   <PropertyGroup>
@@ -29,7 +29,7 @@
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
     <MicrosoftNETCoreAppRuntimewinx64PackageVersion>3.1.3</MicrosoftNETCoreAppRuntimewinx64PackageVersion>
-    <MicrosoftNETCoreAppInternalPackageVersion>3.1.3-servicing.20120.1</MicrosoftNETCoreAppInternalPackageVersion>
+    <MicrosoftNETCoreAppInternalPackageVersion>3.1.9-servicing.20459.3</MicrosoftNETCoreAppInternalPackageVersion>
     <MicrosoftNETCoreAppRefPackageVersion>3.1.0</MicrosoftNETCoreAppRefPackageVersion>
     <MicrosoftNETCorePlatformsVersion>3.1.0</MicrosoftNETCorePlatformsVersion>
     <SystemDrawingCommonVersion>4.7.0</SystemDrawingCommonVersion>

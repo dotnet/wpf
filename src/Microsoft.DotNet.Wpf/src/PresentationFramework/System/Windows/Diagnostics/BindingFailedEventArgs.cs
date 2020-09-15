@@ -33,6 +33,8 @@ namespace System.Windows.Diagnostics
 
         /// <summary>
         /// Can be null for some failure codes that don't have a BindingExpressionBase context.
+        /// This reference should be used while handling the BindingFailed event and not cached for future use, it
+        /// could be holding onto a lot of objects that could be garbage collected.
         /// </summary>
         public BindingExpressionBase Binding { get; }
 

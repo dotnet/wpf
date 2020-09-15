@@ -7,7 +7,6 @@
 //  Binding diagnostics API
 //
 
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace System.Windows.Diagnostics
@@ -21,7 +20,7 @@ namespace System.Windows.Diagnostics
     /// </remarks>
     public static class BindingDiagnostics
     {
-        internal static bool IsEnabled { get; }
+        internal static bool IsEnabled { get; private set; }
 
         private static event EventHandler<BindingFailedEventArgs> bindingFailed;
         private static List<BindingFailedEventArgs> pendingEvents;
@@ -43,6 +42,9 @@ namespace System.Windows.Diagnostics
             }
         }
 
+        /// <summary>
+        /// Handlers of this event should return control to WPF quickly, and not cache BindingFailedEventArgs for future use.
+        /// </summary>
         public static event EventHandler<BindingFailedEventArgs> BindingFailed
         {
             add

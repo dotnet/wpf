@@ -13,9 +13,11 @@
   <!-- Only enable Ref API Compat for the lib projects using hand-crafted reference assemblies -->
   <PropertyGroup Condition="'$(RunRefApiCompat)'==''">
     <RunRefApiCompat>false</RunRefApiCompat>
+    <!-- Temporaryily turn off API compat for reference assemblies
     <RunRefApiCompat Condition="'$(RefApiCompatNeededProjects)'!=''
                                  and $(RefApiCompatNeededProjects.Contains('$(MSBuildProjectName);'))
                                  and !($(MSBuildProjectName.Contains('_wpftmp')))">true</RunRefApiCompat>
+    -->
   </PropertyGroup>
 
   <PropertyGroup>

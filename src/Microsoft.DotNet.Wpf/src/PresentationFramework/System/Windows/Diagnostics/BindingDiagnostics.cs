@@ -22,23 +22,23 @@ namespace System.Windows.Diagnostics
     {
         internal static bool IsEnabled { get; private set; }
 
-        private static event EventHandler<BindingFailedEventArgs> bindingFailed;
-        private static List<BindingFailedEventArgs> pendingEvents;
-        private static object pendingEventsLock;
-        private const int maxPendingEvents = 2000;
+        private static event EventHandler<BindingFailedEventArgs> s_bindingFailed;
+        private static List<BindingFailedEventArgs> s_pendingEvents;
+        private static readonly object s_pendingEventsLock;
+        private const int MaxPendingEvents = 2000;
 
         static BindingDiagnostics()
         {
-            BindingDiagnostics.IsEnabled = VisualDiagnostics.IsEnabled && VisualDiagnostics.IsEnvironmentVariableSet(null, XamlSourceInfoHelper.XamlSourceInfoEnvironmentVariable);
+            IsEnabled = VisualDiagnostics.IsEnabled && VisualDiagnostics.IsEnvironmentVariableSet(null, XamlSourceInfoHelper.XamlSourceInfoEnvironmentVariable);
 
-            if (BindingDiagnostics.IsEnabled)
+            if (IsEnabled)
             {
                 // Listeners may miss the initial set of binding failures, so cache events until the first listener attaches.
                 // Normally there will only be one listener added soon after the process starts,
                 // and it will want to know about any binding failures that already happened.
 
-                BindingDiagnostics.pendingEvents = new List<BindingFailedEventArgs>();
-                BindingDiagnostics.pendingEventsLock = new object();
+                s_pendingEvents = new List<BindingFailedEventArgs>();
+                s_pendingEventsLock = new object();
             }
         }
 
@@ -49,16 +49,16 @@ namespace System.Windows.Diagnostics
         {
             add
             {
-                if (BindingDiagnostics.IsEnabled)
+                if (IsEnabled)
                 {
-                    BindingDiagnostics.bindingFailed += value;
-                    BindingDiagnostics.FlushPendingBindingFailedEvents();
+                    s_bindingFailed += value;
+                    FlushPendingBindingFailedEvents();
                 }
             }
 
             remove
             {
-                BindingDiagnostics.bindingFailed -= value;
+                s_bindingFailed -= value;
             }
         }
 
@@ -67,23 +67,23 @@ namespace System.Windows.Diagnostics
         /// </summary>
         private static void FlushPendingBindingFailedEvents()
         {
-            if (BindingDiagnostics.pendingEvents != null)
+            if (s_pendingEvents != null)
             {
-                BindingFailedEventArgs[] pendingEventsCopy = null;
+                List<BindingFailedEventArgs> pendingEvents = null;
 
-                lock (BindingDiagnostics.pendingEventsLock)
+                lock (s_pendingEventsLock)
                 {
-                    pendingEventsCopy = BindingDiagnostics.pendingEvents?.ToArray();
+                    pendingEvents = s_pendingEvents;
 
                     // Don't allow any more event caching
-                    BindingDiagnostics.pendingEvents = null;
+                    s_pendingEvents = null;
                 }
 
-                if (pendingEventsCopy != null)
+                if (pendingEvents != null)
                 {
-                    foreach (BindingFailedEventArgs args in pendingEventsCopy)
+                    foreach (BindingFailedEventArgs args in pendingEvents)
                     {
-                        BindingDiagnostics.bindingFailed?.Invoke(null, args);
+                        s_bindingFailed?.Invoke(null, args);
                     }
                 }
             }
@@ -94,21 +94,21 @@ namespace System.Windows.Diagnostics
         /// </summary>
         internal static void NotifyBindingFailed(BindingFailedEventArgs args)
         {
-            if (!BindingDiagnostics.IsEnabled)
+            if (!IsEnabled)
             {
                 return;
             }
 
-            if (BindingDiagnostics.pendingEvents != null)
+            if (s_pendingEvents != null)
             {
-                lock (BindingDiagnostics.pendingEventsLock)
+                lock (s_pendingEventsLock)
                 {
-                    if (BindingDiagnostics.pendingEvents != null)
+                    if (s_pendingEvents != null)
                     {
                         // Limit the pending event count so that memory doesn't grow unbounded if no event handler is ever added
-                        if (BindingDiagnostics.pendingEvents.Count < BindingDiagnostics.maxPendingEvents)
+                        if (s_pendingEvents.Count < MaxPendingEvents)
                         {
-                            BindingDiagnostics.pendingEvents.Add(args);
+                            s_pendingEvents.Add(args);
                         }
 
                         return;
@@ -116,7 +116,7 @@ namespace System.Windows.Diagnostics
                 }
             }
 
-            BindingDiagnostics.bindingFailed?.Invoke(null, args);
+            s_bindingFailed?.Invoke(null, args);
         }
     }
 }

@@ -27,6 +27,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <Platforms>AnyCPU;x64</Platforms>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemDefinitionGroup Condition="'$(CopyTransitiveReferences)'=='true'">
@@ -278,6 +279,7 @@
     <Compile Include="MS\Internal\MarkupCompiler\CompilationUnit.cs" />
     <Compile Include="MS\Internal\MarkupCompiler\FileUnit.cs" />
     <Compile Include="MS\Internal\MarkupCompiler\MarkupCompiler.cs" />
+    <Compile Include="MS\Internal\MarkupCompiler\PathInternal.cs" />
     <Compile Include="MS\Internal\MarkupCompiler\ParserExtension.cs" />
     <Compile Include="MS\Internal\MarkupCompiler\VersionHelper.cs" />
     <Compile Include="MS\Internal\Shared\SourceFileInfo.cs" />
@@ -298,6 +300,8 @@
     <Compile Include="Microsoft\Build\Tasks\Windows\UpdateManifestForBrowserApplication.cs" />
     <Compile Include="Microsoft\Build\Tasks\Windows\ResourcesGenerator.cs" />
     <Compile Include="Microsoft\Build\Tasks\Windows\GenerateTemporaryTargetAssembly.cs" />
+    <Compile Include="Microsoft\Build\Tasks\Windows\GenerateTemporaryTargetAssembly2.cs" />
+    <Compile Include="Microsoft\Build\Tasks\Windows\CreateTemporaryTargetAssemblyProject.cs" />
   </ItemGroup>
 
   <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">

@@ -133,6 +133,7 @@
     <_UnsupportedNETCoreAppTargetFramework Include=".NETCoreApp,Version=v2.0" />
     <_UnsupportedNETCoreAppTargetFramework Include=".NETCoreApp,Version=v2.1" />
     <_UnsupportedNETCoreAppTargetFramework Include=".NETCoreApp,Version=v2.2" />
+    <_UnsupportedNETCoreAppTargetFramework Include=".NETCoreApp,Version=v3.0" />
 
     <!--
         Windows Forms and WPF are not supported an any .NET Standard targets

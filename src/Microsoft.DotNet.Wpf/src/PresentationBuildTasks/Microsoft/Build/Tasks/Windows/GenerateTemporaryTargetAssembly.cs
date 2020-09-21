@@ -94,78 +94,28 @@ namespace Microsoft.Build.Tasks.Windows
             // Verification
             try
             {
-                XmlDocument xmlProjectDoc = null;
-
-                xmlProjectDoc = new XmlDocument( );
-                xmlProjectDoc.Load(CurrentProject);
-
-                //
-                // remove all the WinFX specific item lists
-                // ApplicationDefinition, Page, MarkupResource and Resource
-                //
-
-                RemoveItemsByName(xmlProjectDoc, APPDEFNAME);
-                RemoveItemsByName(xmlProjectDoc, PAGENAME);
-                RemoveItemsByName(xmlProjectDoc, MARKUPRESOURCENAME);
-                RemoveItemsByName(xmlProjectDoc, RESOURCENAME);
-
-                // Replace the Reference Item list with ReferencePath
-
-                RemoveItemsByName(xmlProjectDoc, REFERENCETYPENAME);
-                AddNewItems(xmlProjectDoc, ReferencePathTypeName, ReferencePath);
-
-                // Add GeneratedCodeFiles to Compile item list.
-                AddNewItems(xmlProjectDoc, CompileTypeName, GeneratedCodeFiles);
-
-                string currentProjectName = Path.GetFileNameWithoutExtension(CurrentProject);
-                string currentProjectExtension = Path.GetExtension(CurrentProject);
-
-                // Create a random file name
-                // This can fix the problem of project cache in VS.NET environment.
-                //
-                // GetRandomFileName( ) could return any possible file name and extension
-                // Since this temporary file will be used to represent an MSBUILD project file, 
-                // we will use the same extension as that of the current project file
-                //
-                string randomFileName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
-
-                // Don't call Path.ChangeExtension to append currentProjectExtension. It will do 
-                // odd things with project names that already contains a period (like System.Windows.
-                // Contols.Ribbon.csproj). Instead, just append the extension - after all, we already know
-                // for a fact that this name (i.e., tempProj) lacks a file extension.
-                string tempProjPrefix = string.Join("_", currentProjectName, randomFileName, WPFTMP);
-                string tempProj = tempProjPrefix  + currentProjectExtension;
-
-
-                // Save the xmlDocument content into the temporary project file.
-                xmlProjectDoc.Save(tempProj);
-
-                //
-                // Invoke MSBUILD engine to build this temporary project file.
-                //
-
-                Hashtable globalProperties = new Hashtable(3);
-
                 // Add AssemblyName, IntermediateOutputPath and _TargetAssemblyProjectName to the global property list
                 // Note that _TargetAssemblyProjectName is not defined as a property with Output attribute - that doesn't do us much 
                 // good here. We need _TargetAssemblyProjectName to be a well-known property in the new (temporary) project
                 // file, and having it be available in the current MSBUILD process is not useful.
-                globalProperties[intermediateOutputPathPropertyName] = IntermediateOutputPath;
+                Hashtable globalProperties = new Hashtable(3);
 
-                globalProperties[assemblyNamePropertyName] = AssemblyName;
-                globalProperties[targetAssemblyProjectNamePropertyName] = currentProjectName;
+                globalProperties[nameof(IntermediateOutputPath)] = IntermediateOutputPath;
+                globalProperties[nameof(AssemblyName)] = AssemblyName;
+                globalProperties[targetAssemblyProjectNamePropertyName] = Path.GetFileNameWithoutExtension(CurrentProject);
 
-                retValue = BuildEngine.BuildProjectFile(tempProj, new string[] { CompileTargetName }, globalProperties, null);
+                // Compile the project
+                retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, globalProperties, null);
 
                 // Delete the temporary project file and generated files unless diagnostic mode has been requested
                 if (!GenerateTemporaryTargetAssemblyDebuggingInformation)
                 {
                     try
                     {
-                        File.Delete(tempProj);
+                        File.Delete(TemporaryTargetAssemblyProjectName);
 
                         DirectoryInfo intermediateOutputPath = new DirectoryInfo(IntermediateOutputPath);
-                        foreach (FileInfo temporaryProjectFile in intermediateOutputPath.EnumerateFiles(string.Concat(tempProjPrefix, "*")))
+                        foreach (FileInfo temporaryProjectFile in intermediateOutputPath.EnumerateFiles(string.Concat(Path.GetFileNameWithoutExtension(TemporaryTargetAssemblyProjectName), "*")))
                         {
                             temporaryProjectFile.Delete();
                         }
@@ -195,6 +145,14 @@ namespace Microsoft.Build.Tasks.Windows
         //------------------------------------------------------
 
         #region Public Properties
+
+        /// <summary>
+        /// TemporaryTargetAssemblyProjectName 
+        ///    The name of the randomly generated project name for the temporary assembly 
+        /// </summary>
+        [Required]
+        public string TemporaryTargetAssemblyProjectName 
+        { get; set; }
 
         /// <summary>
         /// CurrentProject 
@@ -337,178 +295,6 @@ namespace Microsoft.Build.Tasks.Windows
   
         //------------------------------------------------------
         //
-        //  Private Methods
-        //
-        //------------------------------------------------------
-
-        #region Private Methods
-
-        //
-        // Remove specific items from project file. Every item should be under an ItemGroup.
-        //
-        private void RemoveItemsByName(XmlDocument xmlProjectDoc, string sItemName)
-        {
-            if (xmlProjectDoc == null || String.IsNullOrEmpty(sItemName))
-            {
-                // When the parameters are not valid, simply return it, instead of throwing exceptions.
-                return;
-            }
-
-            //
-            // The project file format is always like below:
-            //
-            //  <Project  xmlns="...">
-            //     <ProjectGroup>
-            //         ......
-            //     </ProjectGroup>
-            //
-            //     ...
-            //     <ItemGroup>
-            //         <ItemNameHere ..../>
-            //         ....
-            //     </ItemGroup>
-            //
-            //     ....
-            //     <Import ... />
-            //     ...
-            //     <Target Name="xxx" ..../>
-            //     
-            //      ...
-            //
-            //  </Project>
-            //
-            //
-            // The order of children nodes under Project Root element is random
-            //
-
-            XmlNode root = xmlProjectDoc.DocumentElement;
-
-            if (root.HasChildNodes == false)
-            {
-                // If there is no child element in this project file, just return immediatelly.
-                return;
-            }
-
-            for (int i = 0; i < root.ChildNodes.Count; i++)
-            {
-                XmlElement nodeGroup = root.ChildNodes[i] as XmlElement;
-
-                if (nodeGroup != null && String.Compare(nodeGroup.Name, ITEMGROUP_NAME, StringComparison.OrdinalIgnoreCase) == 0)
-                {
-                    //
-                    // This is ItemGroup element.
-                    //
-                    if (nodeGroup.HasChildNodes)
-                    {
-                        ArrayList itemToRemove = new ArrayList();
-
-                        for (int j = 0; j < nodeGroup.ChildNodes.Count; j++)
-                        {
-                            XmlElement nodeItem = nodeGroup.ChildNodes[j] as XmlElement;
-
-                            if (nodeItem != null && String.Compare(nodeItem.Name, sItemName, StringComparison.OrdinalIgnoreCase) == 0)
-                            {
-                                // This is the item that need to remove.
-                                // Add it into the temporary array list.
-                                // Don't delete it here, since it would affect the ChildNodes of parent element.
-                                //
-                                itemToRemove.Add(nodeItem);
-                            }
-                        }
-
-                        //
-                        // Now it is the right time to delete the elements.
-                        //
-                        if (itemToRemove.Count > 0)
-                        {
-                            foreach (object node in itemToRemove)
-                            {
-                                XmlElement item = node as XmlElement;
-
-                                //
-                                // Remove this item from its parent node.
-                                // the parent node should be nodeGroup.
-                                //
-                                if (item != null)
-                                {
-                                    nodeGroup.RemoveChild(item);
-                                }
-                            }
-                        }
-                    }
-
-                    //
-                    // Removed all the items with given name from this item group.
-                    //
-                    // Continue the loop for the next ItemGroup.
-                }
-
-            }   // end of "for i" statement.
-
-        }
-
-        //
-        // Add a list of files into an Item in the project file, the ItemName is specified by sItemName.
-        //
-        private void AddNewItems(XmlDocument xmlProjectDoc, string sItemName, ITaskItem[] pItemList)
-        {
-            if (xmlProjectDoc == null || String.IsNullOrEmpty(sItemName) || pItemList == null)
-            {
-                // When the parameters are not valid, simply return it, instead of throwing exceptions.
-                return;
-            }
-
-            XmlNode root = xmlProjectDoc.DocumentElement;
-
-            // Create a new ItemGroup element
-            XmlNode nodeItemGroup = xmlProjectDoc.CreateElement(ITEMGROUP_NAME, root.NamespaceURI);
-
-            // Append this new ItemGroup item into the list of children of the document root.
-            root.AppendChild(nodeItemGroup);
-
-            XmlElement embedItem = null;
-
-            for (int i = 0; i < pItemList.Length; i++)
-            {
-                // Create an element for the given sItemName
-                XmlElement nodeItem = xmlProjectDoc.CreateElement(sItemName, root.NamespaceURI);
-
-                // Create an Attribute "Include"
-                XmlAttribute attrInclude = xmlProjectDoc.CreateAttribute(INCLUDE_ATTR_NAME);
-
-                ITaskItem pItem = pItemList[i];
-
-                // Set the value for Include attribute.
-                attrInclude.Value = pItem.ItemSpec;
-
-                // Add the attribute to current item node.
-                nodeItem.SetAttributeNode(attrInclude);
-
-                if (TRUE == pItem.GetMetadata(EMBEDINTEROPTYPES))
-                {
-                    embedItem = xmlProjectDoc.CreateElement(EMBEDINTEROPTYPES, root.NamespaceURI);
-                    embedItem.InnerText = TRUE;
-                    nodeItem.AppendChild(embedItem);
-                }
-
-                string aliases = pItem.GetMetadata(ALIASES);
-                if (!String.IsNullOrEmpty(aliases))
-                {
-                    embedItem = xmlProjectDoc.CreateElement(ALIASES, root.NamespaceURI);
-                    embedItem.InnerText = aliases;
-                    nodeItem.AppendChild(embedItem);
-                }
-
-                // Add current item node into the children list of ItemGroup
-                nodeItemGroup.AppendChild(nodeItem);
-            }
-        }
-
-        #endregion Private Methods
-
-
-        //------------------------------------------------------
-        //
         //  Private Fields
         //
         //------------------------------------------------------
@@ -532,7 +318,6 @@ namespace Microsoft.Build.Tasks.Windows
 
         private const string intermediateOutputPathPropertyName = "IntermediateOutputPath";
         private const string assemblyNamePropertyName = "AssemblyName";
-        private const string targetAssemblyProjectNamePropertyName = "_TargetAssemblyProjectName";
 
         private const string ALIASES = "Aliases";
         private const string REFERENCETYPENAME = "Reference";
@@ -548,9 +333,11 @@ namespace Microsoft.Build.Tasks.Windows
         private const string TRUE = "True";
         private const string WPFTMP = "wpftmp";
 
+        private const string targetAssemblyProjectNamePropertyName = "_TargetAssemblyProjectName";
+
         #endregion Private Fields
 
     }
     
-    #endregion GenerateProjectForLocalTypeReference Task class
+    #endregion GenerateTemporaryTargetAssembly Task class
 }

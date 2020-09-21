@@ -23,6 +23,7 @@
     <TargetFramework>netcoreapp5.0</TargetFramework>
     <TargetFrameworkIdentifier>.NETCoreApp</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <RestoreProjectStyle>Unknown</RestoreProjectStyle>
   </PropertyGroup>
 
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -254,5 +255,12 @@
   <!-- Provide a stub Pack target for C++/CLI -->
   <Target Name="Pack" DependsOnTargets="$(PackDependsOn)">
     <IsPackableFalseWarningTask Condition="'$(IsPackable)' == 'false' AND '$(WarnOnPackingNonPackableProject)' == 'true'"/>
+  </Target>
+  
+  <Target Name="InitializeSourceControlInformationFromSourceControlManager">
+    <PropertyGroup>
+      <SourceRevisionId>$(BUILD_SOURCEVERSION)</SourceRevisionId>
+      <SourceRevisionId Condition="'$(SourceRevisionId)' == ''">unknownrev</SourceRevisionId>
+    </PropertyGroup>
   </Target>
 </Project>

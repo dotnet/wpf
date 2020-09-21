@@ -256,4 +256,10 @@
   <Target Name="Pack" DependsOnTargets="$(PackDependsOn)">
     <IsPackableFalseWarningTask Condition="'$(IsPackable)' == 'false' AND '$(WarnOnPackingNonPackableProject)' == 'true'"/>
   </Target>
+  
+  <Target Name="InitializeSourceControlInformationFromSourceControlManager">
+    <PropertyGroup>
+      <SourceRevisionId>$(BUILD_SOURCEVERSION)</SourceRevisionId>
+    </PropertyGroup>
+  </Target>
 </Project>

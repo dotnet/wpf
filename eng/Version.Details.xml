@@ -65,7 +65,7 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>c30d4bb26a7cd49890aa81e32e0dc8a87ae96696</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="5.0.0-rc.2.20468.4">
+    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="5.0.0-rc.2.20470.1">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</Uri>
       <Sha>1045306aa2ccc7a08f14b71cbcaa49f40427913f</Sha>
     </Dependency>

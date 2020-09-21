@@ -124,6 +124,7 @@
   <Target Name="InitializeSourceControlInformationFromSourceControlManager">
     <PropertyGroup>
       <SourceRevisionId>$(BUILD_SOURCEVERSION)</SourceRevisionId>
+      <SourceRevisionId Condition="'$(SourceRevisionId)' == ''">unknownrev</SourceRevisionId>
     </PropertyGroup>
   </Target>
 

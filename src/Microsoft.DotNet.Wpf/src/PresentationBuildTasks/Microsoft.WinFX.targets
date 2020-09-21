@@ -12,6 +12,7 @@
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.FileClassifier" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MarkupCompilePass2" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.CreateTemporaryTargetAssemblyProject" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MergeLocalizationDirectives" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
 
   <PropertyGroup>
@@ -377,6 +378,7 @@
   <PropertyGroup>
 
        <MarkupCompilePass2ForMainAssemblyDependsOn>
+                     CreateTemporaryTargetAssemblyProject;
                      GenerateTemporaryTargetAssembly;
                      MarkupCompilePass2;
                      AfterMarkupCompilePass2;
@@ -394,6 +396,54 @@
   <Target Name="MarkupCompilePass2ForMainAssembly"
                Condition="'$(_RequireMCPass2ForMainAssembly)' == 'true' "
                DependsOnTargets="$(MarkupCompilePass2ForMainAssemblyDependsOn)" >
+
+  </Target>
+
+  <!--
+                ==========================================
+                  CreateTemporaryTargetAssemblyProject
+                ==========================================
+                Name : CreateTemporaryTargetAssemblyProject
+  -->
+
+   <Target Name="CreateTemporaryTargetAssemblyProject"
+               Condition="'$(_RequireMCPass2ForMainAssembly)' == 'true' " >
+
+       <CreateTemporaryTargetAssemblyProject 
+                CurrentProject="$(MSBuildProjectFullPath)"
+                GeneratedCodeFiles="@(_GeneratedCodeFiles)"
+                CompileTypeName="Compile"
+                ReferencePath="@(ReferencePath)"
+                ReferencePathTypeName="ReferencePath" >
+           <Output TaskParameter="TemporaryTargetAssemblyProjectName" PropertyName="_TemporaryTargetAssemblyProjectName"/>
+       </CreateTemporaryTargetAssemblyProject>
+
+      <Message Text="GenerateTemporaryTargetAssembyProject project is $(_TemporaryTargetAssemblyProjectName)" />
+
+      <!-- Path to generated NuGet props and targets files -->
+      <Message Text="MSBuildProjectExtensionsPath: $(MSBuildProjectExtensionsPath)" />
+
+      <!-- Collect the generated NuGet files from the parent project required support PackageReferences -->
+      <ItemGroup>
+        <GeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)\*.props"/>
+        <GeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)\*.targets"/>
+        <GeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)\*.dgspec.json"/>
+      </ItemGroup>
+
+      <!-- Get the name of the outer WPF parent project -->
+      <PropertyGroup>
+          <CurrentProjectName>$([System.IO.Path]::GetFileName('$(MSBuildProjectFullPath)'))</CurrentProjectName>
+      </PropertyGroup>
+
+      <Message Text="Re-using generated NuGet props and targets from the parent project...)" />
+      <Message Text="GeneratedNuGetPropsAndTargets source files: @(GeneratedNuGetPropsAndTargets)" />
+      <Message Text="GeneratedNuGetPropsAndTargets destination files: @(GeneratedNuGetPropsAndTargets->'%(RelativeDir)%(Filename)%(Extension)'->Replace($(CurrentProjectName), $(_TemporaryTargetAssemblyProjectName)))"/>
+
+      <!-- Copy the renamed outer project NuGet props/targets files to the MSBuildProjectExtensionsPath used by NuGet -->
+      <Copy
+            SourceFiles="@(GeneratedNuGetPropsAndTargets)"
+            DestinationFiles="@(GeneratedNuGetPropsAndTargets->'%(RelativeDir)%(Filename)%(Extension)'->Replace($(CurrentProjectName), $(_TemporaryTargetAssemblyProjectName)))" 
+       />
 
   </Target>
 
@@ -422,6 +472,7 @@
                 ReferencePath="@(ReferencePath)"
                 IntermediateOutputPath="$(IntermediateOutputPath)"
                 AssemblyName="$(AssemblyName)"
+                TemporaryTargetAssemblyProjectName="$(_TemporaryTargetAssemblyProjectName)"
                 CompileTargetName="$(_CompileTargetNameForLocalType)"
                 GenerateTemporaryTargetAssemblyDebuggingInformation="$(GenerateTemporaryTargetAssemblyDebuggingInformation)"
                  >

@@ -546,40 +546,51 @@ namespace System.Windows.Controls
                     }
                     finally
                     {
-                        if (isOpen)
+                        // Raising an event calls out to app code, which
+                        // could cause a re-entrant call to this method that
+                        // sets _currentToopTip to null.  If that happens,
+                        // there's no need to do the work again.
+                        if (_currentToolTip != null)
                         {
-                            _currentToolTip.IsOpen = false;
-
-                            // Setting IsOpen makes call outs to app code. So it is possible that 
-                            // the _currentToolTip is deleted as a result of an action there. If that 
-                            // were the case we do not need to set off the timer to close the tooltip.
-                            if (_currentToolTip != null)
+                            if (isOpen)
                             {
-                                // Keep references and owner set for the fade out or slide animation
-                                // Owner is released when animation completes
-                                _forceCloseTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                                _forceCloseTimer.Interval = Popup.AnimationDelayTime;
-                                _forceCloseTimer.Tick += new EventHandler(OnForceClose);
-                                _forceCloseTimer.Tag = _currentToolTip;
-                                _forceCloseTimer.Start();
+                                _currentToolTip.IsOpen = false;
+
+                                // Setting IsOpen makes call outs to app code. So it is possible that
+                                // the _currentToolTip is nuked as a result of an action there. If that
+                                // were the case we do not need to set off the timer to close the tooltip.
+                                if (_currentToolTip != null)
+                                {
+                                    // Keep references and owner set for the fade out or slide animation
+                                    // Owner is released when animation completes
+                                    _forceCloseTimer = new DispatcherTimer(DispatcherPriority.Normal);
+                                    _forceCloseTimer.Interval = Popup.AnimationDelayTime;
+                                    _forceCloseTimer.Tick += new EventHandler(OnForceClose);
+                                    _forceCloseTimer.Tag = _currentToolTip;
+                                    _forceCloseTimer.Start();
+                                }
+
+                                _quickShow = true;
+                                ToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal);
+                                ToolTipTimer.Interval = TimeSpan.FromMilliseconds(ToolTipService.GetBetweenShowDelay(o));
+                                ToolTipTimer.Tick += new EventHandler(OnBetweenShowDelay);
+                                ToolTipTimer.Start();
+                            }
+                            else
+                            {
+                                // Release owner now
+                                _currentToolTip.ClearValue(OwnerProperty);
+
+                                if (_ownToolTip)
+                                    BindingOperations.ClearBinding(_currentToolTip, ToolTip.ContentProperty);
                             }
 
-                            _quickShow = true;
-                            ToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                            ToolTipTimer.Interval = TimeSpan.FromMilliseconds(ToolTipService.GetBetweenShowDelay(o));
-                            ToolTipTimer.Tick += new EventHandler(OnBetweenShowDelay);
-                            ToolTipTimer.Start();
+                            if (_currentToolTip != null)
+                            {
+                                _currentToolTip.FromKeyboard = false;
+                                _currentToolTip = null;
+                            }
                         }
-                        else
-                        {
-                            // Release owner now
-                            _currentToolTip.ClearValue(OwnerProperty);
-
-                            if (_ownToolTip)
-                                BindingOperations.ClearBinding(_currentToolTip, ToolTip.ContentProperty);
-                        }
-                        _currentToolTip.FromKeyboard = false;
-                        _currentToolTip = null;
                     }
                 }
             }

@@ -5687,13 +5687,10 @@ namespace System.Windows.Controls
         /// </summary>
         private void IncrementScrollGeneration()
         {
-            if (!FrameworkAppContextSwitches.OptOutOfEffectiveOffsetHangFix)
-            {
-                // This will break if the counter ever rolls over the maximum.
-                // If you do 1000 scroll operations per second, that will
-                // happen in about 280 million years.
-                ++_scrollData._scrollGeneration;
-            }
+            // This will break if the counter ever rolls over the maximum.
+            // If you do 1000 scroll operations per second, that will
+            // happen in about 280 million years.
+            ++_scrollData._scrollGeneration;
         }
 
 

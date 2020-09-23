@@ -125,9 +125,16 @@ namespace System.Windows.Media
 
             using (CompositionEngineLock.Acquire())
             {
-                DisconnectHostedVisual(
-                    channel,
-                    /* removeChannelFromCollection */ true);
+                // if there's a pending disconnect, do it now preemptively;
+                // otherwise do the disconnect the normal way.
+                // This ensures we do the disconnect before calling base,
+                // as required.
+                if (!DoPendingDisconnect(channel))
+                {
+                    DisconnectHostedVisual(
+                        channel,
+                        /* removeChannelFromCollection */ true);
+                }
             }
 
             base.FreeContent(channel);
@@ -252,7 +259,7 @@ namespace System.Windows.Media
             //
             if (!(channel.IsSynchronous)
                 && _target != null
-                && !_connectedChannels.Contains(channel))
+                && !_connectedChannels.ContainsKey(channel))
             {
                 Debug.Assert(IsOnChannel(channel));
 
@@ -323,7 +330,15 @@ namespace System.Windows.Media
                                 channel);
                         }
 
-                        _connectedChannels.Add(channel);
+                        // remember what channel we connected to, and which thread
+                        // did the connection, so that we can disconnect on the
+                        // same thread.  Earlier comments imply this is the HostVisual's
+                        // dispatcher thread, which we assert here.  Even if it's not,
+                        // the code downstream should work, or at least not crash
+                        // (even if channelDispatcher is set to null).
+                        Dispatcher channelDispatcher = Dispatcher.FromThread(Thread.CurrentThread);
+                        Debug.Assert(channelDispatcher == this.Dispatcher, "HostVisual connecting on a second thread");
+                        _connectedChannels.Add(channel, channelDispatcher);
 
                         //
                         // Indicate that that content composition root has been
@@ -364,10 +379,11 @@ namespace System.Windows.Media
         /// </summary>
         private void DisconnectHostedVisualOnAllChannels()
         {
-            foreach (DUCE.Channel channel in _connectedChannels)
+            IDictionaryEnumerator ide = _connectedChannels.GetEnumerator() as IDictionaryEnumerator;
+            while (ide.MoveNext())
             {
                 DisconnectHostedVisual(
-                    channel,
+                    (DUCE.Channel)ide.Key,
                     /* removeChannelFromCollection */ false);
             }
 
@@ -382,31 +398,154 @@ namespace System.Windows.Media
             DUCE.Channel channel,
             bool removeChannelFromCollection)
         {
-            if (_target != null && _connectedChannels.Contains(channel))
+            Dispatcher channelDispatcher;
+            if (_target != null && _connectedChannels.TryGetValue(channel, out channelDispatcher))
             {
-                DUCE.CompositionNode.RemoveChild(
-                    _proxy.GetHandle(channel),
-                    _target._contentRoot.GetHandle(channel),
-                    channel
-                    );
+                // Adding commands to a channel is not thread-safe,
+                // we must do the actual work on the same dispatcher thread
+                // where the connection happened.
+                if (CoreAppContextSwitches.HostVisualDisconnectsOnWrongThread ||
+                    (channelDispatcher != null && channelDispatcher.CheckAccess()))
+                {
+                    Disconnect(channel,
+                               channelDispatcher,
+                               _proxy.GetHandle(channel),
+                               _target._contentRoot.GetHandle(channel),
+                               _target._contentRoot);
+                }
+                else
+                {
+                    // marshal to the right thread
+                    if (channelDispatcher != null)
+                    {
+                        DispatcherOperation op = channelDispatcher.BeginInvoke(
+                            DispatcherPriority.Normal,
+                            new DispatcherOperationCallback(DoDisconnectHostedVisual),
+                            channel);
 
-                //
-                // Release the targets handle. If we had duplicated the handle,
-                // then this removes the duplicated handle, otherwise just decrease
-                // the ref count for VisualTarget.
-                //
-
-                _target._contentRoot.ReleaseOnChannel(channel);
-
-                SetFlags(channel, false, VisualProxyFlags.IsContentNodeConnected);
+                        _disconnectData = new DisconnectData(
+                                                     op: op,
+                                                     channel: channel,
+                                                     dispatcher: channelDispatcher,
+                                                     hostVisual: this,
+                                                     hostHandle: _proxy.GetHandle(channel),
+                                                     targetHandle: _target._contentRoot.GetHandle(channel),
+                                                     contentRoot: _target._contentRoot,
+                                                     next: _disconnectData);
+                    }
+                }
 
                 if (removeChannelFromCollection)
                 {
                     _connectedChannels.Remove(channel);
                 }
             }
+
+            if (removeChannelFromCollection)
+                {
+                    _connectedChannels.Remove(channel);
+                }
+            }
         }
 
+        /// <summary>
+        /// Callback to disconnect on the right thread
+        /// </summary>
+        private object DoDisconnectHostedVisual(object arg)
+        {
+            using (CompositionEngineLock.Acquire())
+            {
+                DoPendingDisconnect((DUCE.Channel)arg);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Perform a pending disconnect for the given channel.
+        /// This method should be called under the CompositionEngineLock,
+        /// on the thread that owns the channel.  It can be called either
+        /// from the dispatcher callback DoDisconnectHostedVisual or
+        /// from FreeContent, whichever happens to occur first.
+        /// </summary>
+        /// <returns>
+        /// True if a matching request was found and processed.  False if not.
+        /// </returns>
+        private bool DoPendingDisconnect(DUCE.Channel channel)
+        {
+            DisconnectData disconnectData = _disconnectData;
+            DisconnectData previous = null;
+
+            // search the list for an entry matching the given channel
+            while (disconnectData != null && (disconnectData.HostVisual != this || disconnectData.Channel != channel))
+            {
+                previous = disconnectData;
+                disconnectData = disconnectData.Next;
+            }
+
+            // if no match found, do nothing
+            if (disconnectData == null)
+            {
+                return false;
+            }
+
+            // remove the matching entry from the list
+            if (previous == null)
+            {
+                _disconnectData = disconnectData.Next;
+            }
+            else
+            {
+                previous.Next = disconnectData.Next;
+            }
+
+            // cancel the dispatcher callback, (if we're already in it,
+            // this call is a no-op)
+            disconnectData.DispatcherOperation.Abort();
+
+            // do the actual disconnect
+            Disconnect(disconnectData.Channel,
+                       disconnectData.ChannelDispatcher,
+                       disconnectData.HostHandle,
+                       disconnectData.TargetHandle,
+                       disconnectData.ContentRoot);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Do the actual work to disconnect the VisualTarget.
+        /// This is called (on the channel's thread) either from
+        /// DisconnectHostedVisual or from DoPendingDisconnect,
+        /// depending on which thread the request arrived on.
+        /// </summary>
+        private void Disconnect(DUCE.Channel channel,
+                                Dispatcher channelDispatcher,
+                                DUCE.ResourceHandle hostHandle,
+                                DUCE.ResourceHandle targetHandle,
+                                DUCE.MultiChannelResource contentRoot)
+        {
+            if (!CoreAppContextSwitches.HostVisualDisconnectsOnWrongThread)
+            {
+                channelDispatcher.VerifyAccess();
+            }
+
+            DUCE.CompositionNode.RemoveChild(
+                hostHandle,
+                targetHandle,
+                channel
+                );
+
+            //
+            // Release the targets handle. If we had duplicated the handle,
+            // then this removes the duplicated handle, otherwise just decrease
+            // the ref count for VisualTarget.
+            //
+
+            contentRoot.ReleaseOnChannel(channel);
+
+            SetFlags(channel, false, VisualProxyFlags.IsContentNodeConnected);
+        }
 
         /// <summary>
         /// Invalidate this visual.
@@ -437,15 +576,57 @@ namespace System.Windows.Media
         /// </remarks>
         private VisualTarget _target;
 
-        /// <summary>
-        /// The channels we have marshalled the visual target composition root.
-        /// </summary>
-        /// <remarks>
-        /// This field is free-threaded and should be accessed from under a lock.
-        /// </remarks>
-        private List<DUCE.Channel> _connectedChannels = new List<DUCE.Channel>();
+    /// <summary>
+    /// The channels we have marshalled the visual target composition root.
+    /// </summary>
+    /// <remarks>
+    /// This field is free-threaded and should be accessed from under a lock.
+    /// </remarks>
+    private Dictionary<DUCE.Channel, Dispatcher> _connectedChannels = new Dictionary<DUCE.Channel, Dispatcher>();
 
-        #endregion Private Fields
+    /// <summary>
+    /// Data needed to disconnect the visual target.
+    /// </summary>
+    /// <remarks>
+    /// This field is free-threaded and should be accessed from under a lock.
+    /// It's the head of a singly-linked list of pending disconnect requests,
+    /// each identified by the channel.  In practice, the list is either empty
+    /// or has only one entry.
+    /// </remarks>
+    private static DisconnectData _disconnectData;
+
+    private class DisconnectData
+    {
+        public DispatcherOperation DispatcherOperation { get; private set; }
+        public DUCE.Channel Channel { get; private set; }
+        public Dispatcher ChannelDispatcher { get; private set; }
+        public HostVisual HostVisual { get; private set; }
+        public DUCE.ResourceHandle HostHandle { get; private set; }
+        public DUCE.ResourceHandle TargetHandle { get; private set; }
+        public DUCE.MultiChannelResource ContentRoot { get; private set; }
+        public DisconnectData Next { get; set; }
+
+        public DisconnectData(DispatcherOperation op,
+                              DUCE.Channel channel,
+                              Dispatcher dispatcher,
+                              HostVisual hostVisual,
+                              DUCE.ResourceHandle hostHandle,
+                              DUCE.ResourceHandle targetHandle,
+                              DUCE.MultiChannelResource contentRoot,
+                              DisconnectData next)
+        {
+            DispatcherOperation = op;
+            Channel = channel;
+            ChannelDispatcher = dispatcher;
+            HostVisual = hostVisual;
+            HostHandle = hostHandle;
+            TargetHandle = targetHandle;
+            ContentRoot = contentRoot;
+            Next = next;
+        }
     }
+
+    #endregion Private Fields
+}
 }
 

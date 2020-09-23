@@ -440,12 +440,6 @@ namespace System.Windows.Media
                     _connectedChannels.Remove(channel);
                 }
             }
-
-            if (removeChannelFromCollection)
-                {
-                    _connectedChannels.Remove(channel);
-                }
-            }
         }
 
         /// <summary>
@@ -576,57 +570,57 @@ namespace System.Windows.Media
         /// </remarks>
         private VisualTarget _target;
 
-    /// <summary>
-    /// The channels we have marshalled the visual target composition root.
-    /// </summary>
-    /// <remarks>
-    /// This field is free-threaded and should be accessed from under a lock.
-    /// </remarks>
-    private Dictionary<DUCE.Channel, Dispatcher> _connectedChannels = new Dictionary<DUCE.Channel, Dispatcher>();
+        /// <summary>
+        /// The channels we have marshalled the visual target composition root.
+        /// </summary>
+        /// <remarks>
+        /// This field is free-threaded and should be accessed from under a lock.
+        /// </remarks>
+        private Dictionary<DUCE.Channel, Dispatcher> _connectedChannels = new Dictionary<DUCE.Channel, Dispatcher>();
 
-    /// <summary>
-    /// Data needed to disconnect the visual target.
-    /// </summary>
-    /// <remarks>
-    /// This field is free-threaded and should be accessed from under a lock.
-    /// It's the head of a singly-linked list of pending disconnect requests,
-    /// each identified by the channel.  In practice, the list is either empty
-    /// or has only one entry.
-    /// </remarks>
-    private static DisconnectData _disconnectData;
+        /// <summary>
+        /// Data needed to disconnect the visual target.
+        /// </summary>
+        /// <remarks>
+        /// This field is free-threaded and should be accessed from under a lock.
+        /// It's the head of a singly-linked list of pending disconnect requests,
+        /// each identified by the channel and HostVisual.  In practice, the list
+        /// is either empty or has only one entry.
+        /// </remarks>
+        private static DisconnectData _disconnectData;
 
-    private class DisconnectData
-    {
-        public DispatcherOperation DispatcherOperation { get; private set; }
-        public DUCE.Channel Channel { get; private set; }
-        public Dispatcher ChannelDispatcher { get; private set; }
-        public HostVisual HostVisual { get; private set; }
-        public DUCE.ResourceHandle HostHandle { get; private set; }
-        public DUCE.ResourceHandle TargetHandle { get; private set; }
-        public DUCE.MultiChannelResource ContentRoot { get; private set; }
-        public DisconnectData Next { get; set; }
-
-        public DisconnectData(DispatcherOperation op,
-                              DUCE.Channel channel,
-                              Dispatcher dispatcher,
-                              HostVisual hostVisual,
-                              DUCE.ResourceHandle hostHandle,
-                              DUCE.ResourceHandle targetHandle,
-                              DUCE.MultiChannelResource contentRoot,
-                              DisconnectData next)
+        private class DisconnectData
         {
-            DispatcherOperation = op;
-            Channel = channel;
-            ChannelDispatcher = dispatcher;
-            HostVisual = hostVisual;
-            HostHandle = hostHandle;
-            TargetHandle = targetHandle;
-            ContentRoot = contentRoot;
-            Next = next;
-        }
-    }
+            public DispatcherOperation DispatcherOperation { get; private set; }
+            public DUCE.Channel Channel { get; private set; }
+            public Dispatcher ChannelDispatcher { get; private set; }
+            public HostVisual HostVisual { get; private set; }
+            public DUCE.ResourceHandle HostHandle { get; private set; }
+            public DUCE.ResourceHandle TargetHandle { get; private set; }
+            public DUCE.MultiChannelResource ContentRoot { get; private set; }
+            public DisconnectData Next { get; set; }
 
-    #endregion Private Fields
-}
+            public DisconnectData(DispatcherOperation op,
+                                  DUCE.Channel channel,
+                                  Dispatcher dispatcher,
+                                  HostVisual hostVisual,
+                                  DUCE.ResourceHandle hostHandle,
+                                  DUCE.ResourceHandle targetHandle,
+                                  DUCE.MultiChannelResource contentRoot,
+                                  DisconnectData next)
+            {
+                DispatcherOperation = op;
+                Channel = channel;
+                ChannelDispatcher = dispatcher;
+                HostVisual = hostVisual;
+                HostHandle = hostHandle;
+                TargetHandle = targetHandle;
+                ContentRoot = contentRoot;
+                Next = next;
+            }
+        }
+
+        #endregion Private Fields
+    }
 }
 

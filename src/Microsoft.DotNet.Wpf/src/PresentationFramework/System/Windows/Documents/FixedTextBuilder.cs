@@ -1033,7 +1033,7 @@ namespace System.Windows.Documents
                                 newPathPrefix,         // otherwise use this path prefix
                                 constructLines,
                                 fixedNodes,
-                                transform * localTransform.Value
+                                localTransform.Value * transform
                                 );
                     }//endofElementIsCanvas
                 }

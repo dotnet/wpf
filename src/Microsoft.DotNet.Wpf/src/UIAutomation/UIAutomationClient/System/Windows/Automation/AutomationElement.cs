@@ -582,7 +582,7 @@ namespace System.Windows.Automation
             {
                 if (Misc.IsCriticalException(e))
                 {
-                    throw e;
+                    throw;
                 }
                 return false;
             }

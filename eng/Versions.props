@@ -2,8 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <VersionPrefix>5.0.0</VersionPrefix>
-    <PreReleaseVersionLabel>rc</PreReleaseVersionLabel>
-    <PreReleaseVersionIteration>2</PreReleaseVersionIteration>
+    <PreReleaseVersionLabel>rtm</PreReleaseVersionLabel>
     <SystemIOPackagingVersion>5.0.0-rc.2.20474.8</SystemIOPackagingVersion>
     <SystemResourcesExtensionsVersion>5.0.0-rc.2.20474.8</SystemResourcesExtensionsVersion>
   </PropertyGroup>

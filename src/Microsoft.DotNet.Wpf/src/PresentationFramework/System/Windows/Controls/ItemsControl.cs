@@ -1397,7 +1397,8 @@ namespace System.Windows.Controls
                 // The ItemTemplate isn't used, which may confuse the user (bug 991101).
                 if (ItemTemplate != null || ItemTemplateSelector != null)
                 {
-                    TraceData.Trace(TraceEventType.Error, TraceData.ItemTemplateForDirectItem, AvTrace.TypeName(item));
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.ItemTemplateForDirectItem, null,
+                        traceParameters: new object[] { AvTrace.TypeName(item) });
                 }
             }
 

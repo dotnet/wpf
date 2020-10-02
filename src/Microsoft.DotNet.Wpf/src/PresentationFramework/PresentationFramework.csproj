@@ -844,6 +844,8 @@
     <Compile Include="System\Windows\DependencyPropertyHelper.cs" />
     <Compile Include="System\Windows\DescendentsWalker.cs" />
     <Compile Include="System\Windows\DescendentsWalkerBase.cs" />
+    <Compile Include="System\Windows\Diagnostics\BindingDiagnostics.cs" />
+    <Compile Include="System\Windows\Diagnostics\BindingFailedEventArgs.cs" />
     <Compile Include="System\Windows\Diagnostics\ResourceDictionaryDiagnostics.cs" />
     <Compile Include="System\Windows\Diagnostics\ResourceDictionaryEventArgs.cs" />
     <Compile Include="System\Windows\Diagnostics\ResourceDictionaryInfo.cs" />

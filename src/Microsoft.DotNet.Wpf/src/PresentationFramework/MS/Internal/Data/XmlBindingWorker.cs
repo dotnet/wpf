@@ -155,10 +155,11 @@ namespace MS.Internal.Data
         {
             if (TraceData.IsEnabled)
             {
-                TraceData.Trace(traceType,
+                TraceData.TraceAndNotifyWithNoParameters(traceType,
                                     TraceData.BadXPath(
                                         XPath,
-                                        IdentifyNode(ContextNode)));
+                                        IdentifyNode(ContextNode)),
+                                    ParentBindingExpression);
             }
         }
 
@@ -187,10 +188,11 @@ namespace MS.Internal.Data
             {
                 if (_contextNode != value && TraceData.IsExtendedTraceEnabled(ParentBindingExpression, TraceDataLevel.ReplaceItem))
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                         TraceData.XmlContextNode(
                                             TraceData.Identify(ParentBindingExpression),
-                                            IdentifyNode(value)));
+                                            IdentifyNode(value)),
+                                        ParentBindingExpression);
                 }
 
                 _contextNode = value;
@@ -312,8 +314,8 @@ namespace MS.Internal.Data
 
                 if (ContextNode != CollectionView.CurrentItem && TraceData.IsEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Error, TraceData.XmlBindingToNonXmlCollection, XPath,
-                            ParentBindingExpression, DataItem);
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.XmlBindingToNonXmlCollection, ParentBindingExpression,
+                        traceParameters: new object[] { XPath, ParentBindingExpression, DataItem });
                 }
             }
             else
@@ -322,8 +324,8 @@ namespace MS.Internal.Data
 
                 if (ContextNode != DataItem && TraceData.IsEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Error, TraceData.XmlBindingToNonXml, XPath,
-                            ParentBindingExpression, DataItem);
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.XmlBindingToNonXml, ParentBindingExpression,
+                        traceParameters: new object[] { XPath, ParentBindingExpression, DataItem });
                 }
             }
 
@@ -391,10 +393,11 @@ namespace MS.Internal.Data
         {
             if (TraceData.IsExtendedTraceEnabled(ParentBindingExpression, TraceDataLevel.GetValue))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.XmlNewCollection(
                                         TraceData.Identify(ParentBindingExpression),
-                                        IdentifyNodeList(nodes)));
+                                        IdentifyNodeList(nodes)),
+                                    ParentBindingExpression);
             }
 
             QueriedCollection = new XmlDataCollection(XmlDataProvider);
@@ -412,11 +415,12 @@ namespace MS.Internal.Data
         {
             if (TraceData.IsExtendedTraceEnabled(ParentBindingExpression, TraceDataLevel.Events))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.GotEvent(
                                         TraceData.Identify(ParentBindingExpression),
                                         "XmlNodeChanged",
-                                        TraceData.Identify(sender)));
+                                        TraceData.Identify(sender)),
+                                    ParentBindingExpression);
             }
 
             ProcessXmlNodeChanged(e);
@@ -472,10 +476,11 @@ namespace MS.Internal.Data
                 {
                     if (TraceData.IsExtendedTraceEnabled(ParentBindingExpression, TraceDataLevel.GetValue))
                     {
-                        TraceData.Trace(TraceEventType.Warning,
+                        TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                             TraceData.XmlSynchronizeCollection(
                                                 TraceData.Identify(ParentBindingExpression),
-                                                IdentifyNodeList(nodes)));
+                                                IdentifyNodeList(nodes)),
+                                            ParentBindingExpression);
                     }
 
                     // Any xml change action, doesn't matter if it's an insert,
@@ -521,20 +526,21 @@ namespace MS.Internal.Data
                 Status = BindingStatusInternal.PathError;
                 if (TraceData.IsEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Error, TraceData.CannotGetXmlNodeCollection,
-                            (ContextNode != null) ? ContextNode.Name : null, XPath,
-                            ParentBindingExpression, xe);
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.CannotGetXmlNodeCollection, ParentBindingExpression,
+                        traceParameters: new object[] { (ContextNode != null) ? ContextNode.Name : null, XPath, ParentBindingExpression, xe },
+                        eventParameters: new object[] { xe });
                 }
             }
 
             if (TraceData.IsExtendedTraceEnabled(ParentBindingExpression, TraceDataLevel.GetValue))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.SelectNodes(
                                         TraceData.Identify(ParentBindingExpression),
                                         IdentifyNode(ContextNode),
                                         TraceData.Identify(XPath),
-                                        IdentifyNodeList(nodes)));
+                                        IdentifyNodeList(nodes)),
+                                    ParentBindingExpression);
             }
 
             return nodes;

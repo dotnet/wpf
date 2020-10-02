@@ -488,7 +488,7 @@ namespace MS.Internal.Data
                 SourceValueInfo svi = PW.GetSourceValueInfo(k);
                 Type type = PW.GetType(k);
                 string parentName = (k > 0) ? PW.GetSourceValueInfo(k - 1).name : String.Empty;
-                TraceData.Trace(ParentBindingExpression.TraceLevel,
+                TraceData.TraceAndNotify(ParentBindingExpression.TraceLevel,
                         TraceData.CannotGetClrRawValue(
                             svi.propertyName, type.Name,
                             parentName, AvTrace.TypeName(item)),
@@ -502,7 +502,7 @@ namespace MS.Internal.Data
             {
                 SourceValueInfo svi = PW.GetSourceValueInfo(k);
                 Type type = PW.GetType(k);
-                TraceData.Trace(TraceEventType.Error,
+                TraceData.TraceAndNotify(TraceEventType.Error,
                         TraceData.CannotSetClrRawValue(
                             svi.propertyName, type.Name,
                             AvTrace.TypeName(item),
@@ -521,7 +521,7 @@ namespace MS.Internal.Data
                     // There is probably no data item; e.g. we've moved currency off of a list.
                     // the type of the missing item is supposed to be _arySVS[k].info.DeclaringType
                     // the property we're looking for is named _arySVS[k].name
-                    TraceData.Trace(TraceEventType.Information, TraceData.MissingDataItem, ParentBindingExpression);
+                    TraceData.TraceAndNotify(TraceEventType.Information, TraceData.MissingDataItem, ParentBindingExpression);
                 }
 
                 if (info == null)
@@ -531,7 +531,7 @@ namespace MS.Internal.Data
                     // this can happen when parent is Nullable with no value
                     // check _arySVS[k-1].info.ComponentType
                     //if (!IsNullableType(_arySVS[k-1].info.ComponentType))
-                    TraceData.Trace(TraceEventType.Information, TraceData.MissingInfo, ParentBindingExpression);
+                    TraceData.TraceAndNotify(TraceEventType.Information, TraceData.MissingInfo, ParentBindingExpression);
                 }
 
                 if (item == BindingExpression.NullDataItem)
@@ -539,7 +539,7 @@ namespace MS.Internal.Data
                     // this is OK, not an error.
                     // this can happen when detaching bindings.
                     // this can happen when binding has a Nullable data item with no value
-                    TraceData.Trace(TraceEventType.Information, TraceData.NullDataItem, ParentBindingExpression);
+                    TraceData.TraceAndNotify(TraceEventType.Information, TraceData.NullDataItem, ParentBindingExpression);
                 }
             }
         }

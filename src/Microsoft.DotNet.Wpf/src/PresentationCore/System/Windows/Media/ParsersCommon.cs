@@ -435,7 +435,7 @@ namespace MS.Internal.Markup
             }
             else
             {
-                ReadOnlySpan<char> slice = _pathString.AsSpan().Slice(start, _curIndex - start);
+                ReadOnlySpan<char> slice = _pathString.AsSpan(start, _curIndex - start);
 
                 try
                 {

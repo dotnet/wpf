@@ -26,8 +26,7 @@
     <RestoreProjectStyle>Unknown</RestoreProjectStyle>
   </PropertyGroup>
   
-    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
 
   <PropertyGroup>
     <Keyword>NetCoreCProj</Keyword>
@@ -35,8 +34,6 @@
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
-
-
 
   <Import Project="$(WpfCppProps)" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -122,6 +119,13 @@
   <!-- Provide a stub Pack target for C++/CLI -->
   <Target Name="Pack" DependsOnTargets="$(PackDependsOn)">
     <IsPackableFalseWarningTask Condition="'$(IsPackable)' == 'false' AND '$(WarnOnPackingNonPackableProject)' == 'true'"/>
+  </Target>
+  
+  <Target Name="InitializeSourceControlInformationFromSourceControlManager">
+    <PropertyGroup>
+      <SourceRevisionId>$(BUILD_SOURCEVERSION)</SourceRevisionId>
+      <SourceRevisionId Condition="'$(SourceRevisionId)' == ''">unknownrev</SourceRevisionId>
+    </PropertyGroup>
   </Target>
 
 </Project>

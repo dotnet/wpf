@@ -9517,6 +9517,18 @@ namespace System.Windows.Data
 }
 namespace System.Windows.Diagnostics
 {
+    public static partial class BindingDiagnostics
+    {
+        public static event System.EventHandler<BindingFailedEventArgs> BindingFailed { add { } remove { } }
+    }
+    public partial class BindingFailedEventArgs
+    {
+        public System.Diagnostics.TraceEventType EventType { get { throw null; } }
+        public int Code { get { throw null; } }
+        public string Message { get { throw null; } }
+        public System.Windows.Data.BindingExpressionBase Binding { get { throw null; } }
+        public object[] Parameters { get { throw null; } }
+    }
     public static partial class ResourceDictionaryDiagnostics
     {
         public static System.Collections.Generic.IEnumerable<System.Windows.Diagnostics.ResourceDictionaryInfo> GenericResourceDictionaries { get { throw null; } }

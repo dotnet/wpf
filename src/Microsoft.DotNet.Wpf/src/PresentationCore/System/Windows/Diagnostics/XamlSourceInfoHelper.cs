@@ -31,6 +31,8 @@ namespace System.Windows.Diagnostics
 {
     internal static class XamlSourceInfoHelper
     {
+        public const string XamlSourceInfoEnvironmentVariable = "ENABLE_XAML_DIAGNOSTICS_SOURCE_INFO";
+
         // Weak reference storage to map objects to their markup location. It is fast enough, e.g. it takes
         // about 50ms to add 100K entries (small test app, Debug build, under debugger, dev laptop).
         private static ConditionalWeakTable<object, XamlSourceInfo> s_sourceInfoTable; // no storage by default
@@ -56,7 +58,7 @@ namespace System.Windows.Diagnostics
         private static void InitializeEnableXamlSourceInfo(string value)
         {
             if (VisualDiagnostics.IsEnabled &&
-                VisualDiagnostics.IsEnvironmentVariableSet(value, "ENABLE_XAML_DIAGNOSTICS_SOURCE_INFO") &&
+                VisualDiagnostics.IsEnvironmentVariableSet(value, XamlSourceInfoHelper.XamlSourceInfoEnvironmentVariable) &&
                 InitializeXamlObjectEventArgs())
             {
                 s_sourceInfoTable = new ConditionalWeakTable<object, XamlSourceInfo>();

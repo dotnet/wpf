@@ -7249,7 +7249,7 @@ namespace System.Windows.Controls
                 }
                 catch (InvalidOperationException invalidOperationException)
                 {
-                    TraceData.Trace(TraceEventType.Error,
+                    TraceData.TraceAndNotify(TraceEventType.Error,
                                     TraceData.CannotSort(sortPropertyName),
                                     invalidOperationException);
                     Items.SortDescriptions.Clear();

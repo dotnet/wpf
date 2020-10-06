@@ -39,7 +39,7 @@ namespace System.Windows.Diagnostics
         static ResourceDictionaryDiagnostics()
         {
             IsEnabled = VisualDiagnostics.IsEnabled &&
-                VisualDiagnostics.IsEnvironmentVariableSet(null, "ENABLE_XAML_DIAGNOSTICS_SOURCE_INFO");
+                VisualDiagnostics.IsEnvironmentVariableSet(null, XamlSourceInfoHelper.XamlSourceInfoEnvironmentVariable);
 
             // internal property, not visible to user
             IgnorableProperties.Add(typeof(ResourceDictionary).GetProperty("DeferrableContent"));

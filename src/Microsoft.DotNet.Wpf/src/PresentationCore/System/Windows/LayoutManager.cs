@@ -1014,11 +1014,11 @@ namespace System.Windows
                     {
                         r = new Request();
                     }
-                    catch(System.OutOfMemoryException ex)
+                    catch(System.OutOfMemoryException)
                     {
                         if(lm != null)
                             lm.setForceLayout(e);
-                        throw ex;
+                        throw;
                     }
                 }
 

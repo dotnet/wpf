@@ -557,7 +557,7 @@ namespace System.Windows.Controls
                                 _currentToolTip.IsOpen = false;
 
                                 // Setting IsOpen makes call outs to app code. So it is possible that
-                                // the _currentToolTip is nuked as a result of an action there. If that
+                                // the _currentToolTip is destroyed as a result of an action there. If that
                                 // were the case we do not need to set off the timer to close the tooltip.
                                 if (_currentToolTip != null)
                                 {

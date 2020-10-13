@@ -1575,11 +1575,19 @@ namespace MS.Internal
         {
             get
             {
-#if NETFX 
-                return PathInternal.GetRelativePath(TargetPath, SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase);
-#else
-                return Path.GetRelativePath(TargetPath, SourceFileInfo.SourcePath);
-#endif
+                string parentFolderPrefix = string.Empty;
+                if (TargetPath.StartsWith(SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase))
+                {
+                    string relPath = TargetPath.Substring(SourceFileInfo.SourcePath.Length);
+                    relPath += SourceFileInfo.RelativeSourceFilePath;
+                    string[] dirs = relPath.Split(new Char[] { Path.DirectorySeparatorChar });
+                    for (int i = 1; i < dirs.Length; i++)
+                    {
+                        parentFolderPrefix += PARENTFOLDER;
+                    }
+                }
+
+                return parentFolderPrefix;
             }
         }
 

@@ -43,15 +43,13 @@ namespace System.Windows.Media.Media3D
             result = new Point();
             
             // project the point
-            if (_projectionTransform != null)
-            {                Point3D projectedPoint = _projectionTransform.Transform(inPoint);
+            Point3D projectedPoint = _projectionTransform.Transform(inPoint);
 
-                if (_transformBetween2D != null)
-                {
-                    result = _transformBetween2D.Transform(new Point(projectedPoint.X, projectedPoint.Y));
-                    success = true;
-                }
-            }            
+            if (_transformBetween2D != null)
+            {
+                result = _transformBetween2D.Transform(new Point(projectedPoint.X, projectedPoint.Y));
+                success = true;
+            }
 
             return success;
         }

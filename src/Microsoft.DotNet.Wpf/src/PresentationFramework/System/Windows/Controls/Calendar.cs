@@ -1380,23 +1380,20 @@ namespace System.Windows.Controls
             {
                 case CalendarMode.Month:
                 {
-                    if (this.DisplayDate != null)
+                    DateTime? selectedDate = new DateTime(this.DisplayDateInternal.Year, this.DisplayDateInternal.Month, 1);
+
+                    if (DateTimeHelper.CompareYearMonth(DateTime.MaxValue, selectedDate.Value) > 0)
                     {
-                        DateTime? selectedDate = new DateTime(this.DisplayDateInternal.Year, this.DisplayDateInternal.Month, 1);
-
-                        if (DateTimeHelper.CompareYearMonth(DateTime.MaxValue, selectedDate.Value) > 0)
-                        {
-                            // since DisplayDate is not equal to DateTime.MaxValue we are sure selectedDate is not null
-                            selectedDate = DateTimeHelper.AddMonths(selectedDate.Value, 1).Value;
-                            selectedDate = DateTimeHelper.AddDays(selectedDate.Value, -1).Value;
-                        }
-                        else
-                        {
-                            selectedDate = DateTime.MaxValue;
-                        }
-
-                        ProcessSelection(shift, selectedDate);
+                        // since DisplayDate is not equal to DateTime.MaxValue we are sure selectedDate is not null
+                        selectedDate = DateTimeHelper.AddMonths(selectedDate.Value, 1).Value;
+                        selectedDate = DateTimeHelper.AddDays(selectedDate.Value, -1).Value;
                     }
+                    else
+                    {
+                        selectedDate = DateTime.MaxValue;
+                    }
+
+                    ProcessSelection(shift, selectedDate);
 
                     break;
                 }

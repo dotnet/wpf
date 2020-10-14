@@ -190,9 +190,6 @@ namespace System.Windows.Media
         {
             Rect boundingRect;
 
-            Debug.Assert(worldMatrix != null);
-            Debug.Assert(geometryMatrix != null);
-
             if (rect.IsEmpty)
             {
                 boundingRect = Rect.Empty;

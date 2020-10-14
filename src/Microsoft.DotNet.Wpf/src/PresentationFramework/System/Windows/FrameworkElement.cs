@@ -4589,7 +4589,8 @@ namespace System.Windows
                 // First, get clipped, transformed, unrounded size.
                 if (useLayoutRounding)
                 {
-                    if (ltd != null && ltd.TransformedUnroundedDS != null)
+                    // 'transformUnroundedDS' is a non-nullable value type and can never be null.
+                    if (ltd != null)
                     {
                         transformedUnroundedDS = ltd.TransformedUnroundedDS;
                         transformedUnroundedDS.Width = Math.Max(0, transformedUnroundedDS.Width - marginWidth);

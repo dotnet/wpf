@@ -238,7 +238,7 @@ namespace System.Windows
             // In the case where the developer has specified AutoClose=True and then calls
             // Close(non_zero_timespan) before the auto close operation is dispatched we begin
             // the fadeout immidiately and ignore the later call to close.
-            if (_dt != null || _hwnd == null)
+            if (_dt != null || _hwnd == IntPtr.Zero)
             {
                 return BooleanBoxes.TrueBox;
             }

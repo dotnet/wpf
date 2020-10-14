@@ -553,7 +553,8 @@ namespace MS.Win32
 
             //AvDebug.Assert(_gcHandle.IsAllocated, "External GC handle has not been allocated.");
 
-            if(null != _gcHandle)
+            // GCHandle is a non-nullable type.  Check GCHandle.IsAllocated before calling Free().
+            if(_gcHandle.IsAllocated)
                 _gcHandle.Free();
 
             return true;

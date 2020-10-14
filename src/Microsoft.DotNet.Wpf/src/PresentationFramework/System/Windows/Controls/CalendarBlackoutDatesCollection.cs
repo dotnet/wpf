@@ -349,7 +349,6 @@ namespace System.Windows.Controls
         /// <returns></returns>
         private CalendarDateRange GetContainingDateRange(DateTime date)
         {
-            // DateTime is a non-nullable value type (a structure) and cannot be null.
             for (int i = 0; i < Count; i++)
             {
                 if (DateTimeHelper.InRange(date, this[i]))

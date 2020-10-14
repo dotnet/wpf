@@ -1380,7 +1380,6 @@ namespace System.Windows.Controls
             {
                 case CalendarMode.Month:
                 {
-                    // 'this.DisplayDate' is a non-nullable value type (a struct) and can never be null.
                     DateTime? selectedDate = new DateTime(this.DisplayDateInternal.Year, this.DisplayDateInternal.Month, 1);
 
                     if (DateTimeHelper.CompareYearMonth(DateTime.MaxValue, selectedDate.Value) > 0)

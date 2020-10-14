@@ -8,7 +8,7 @@
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>5.0.0-rtm.20513.5</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>5.0.0-rtm.20513.8</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/coreclr -->
   <PropertyGroup>
@@ -18,7 +18,7 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
-    <MicrosoftNETCoreAppInternalVersion>5.0.0-rtm.20512.4</MicrosoftNETCoreAppInternalVersion>
+    <MicrosoftNETCoreAppInternalVersion>5.0.0-rtm.20513.8</MicrosoftNETCoreAppInternalVersion>
     <MicrosoftNETCoreAppRefVersion>5.0.0</MicrosoftNETCoreAppRefVersion>
     <MicrosoftNETCoreAppRuntimewinx64Version>5.0.0</MicrosoftNETCoreAppRuntimewinx64Version>
     <MicrosoftNETCorePlatformsVersion>5.0.0</MicrosoftNETCorePlatformsVersion>

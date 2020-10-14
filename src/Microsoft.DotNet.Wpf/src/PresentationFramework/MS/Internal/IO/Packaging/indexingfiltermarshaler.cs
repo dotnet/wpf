@@ -215,8 +215,6 @@ namespace MS.Internal.IO.Packaging
 
                 // allocate an unmanaged PROPVARIANT to return
                 pNative = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(PROPVARIANT)));
-                // Per MSDN, AllocCoTaskMem never returns null. One can't be too careful, though.
-                Invariant.Assert(pNative != null);
 
                 // marshal the managed PROPVARIANT into the unmanaged block and return it
                 Marshal.StructureToPtr(v, pNative, false);

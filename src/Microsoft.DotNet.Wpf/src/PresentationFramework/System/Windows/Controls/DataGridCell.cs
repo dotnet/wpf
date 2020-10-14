@@ -278,7 +278,9 @@ namespace System.Windows.Controls
                     {
                         column.RefreshCellContent(this, propertyName);
                     }
-                    else if (e != null && e.Property != null)
+                    // DependencyPropertyChangedEventArgs is a non-nullable value type (a struct)
+                    // and can never be null.
+                    else if (e.Property != null)
                     {
                         column.RefreshCellContent(this, e.Property.Name);
                     }

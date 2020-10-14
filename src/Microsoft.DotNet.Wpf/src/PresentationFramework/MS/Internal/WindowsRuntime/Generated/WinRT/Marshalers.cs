@@ -127,7 +127,7 @@ namespace WinRT
                         marshaler?.Dispose();
                     }
                 }
-                if (_array != null)
+                if (_array != IntPtr.Zero)
                 {
                     Marshal.FreeCoTaskMem(_array);
                 }
@@ -445,7 +445,7 @@ namespace WinRT
                         Marshaler<T>.DisposeMarshaler(marshaler);
                     }
                 }
-                if (_array != null)
+                if (_array != IntPtr.Zero)
                 {
                     Marshal.FreeCoTaskMem(_array);
                 }
@@ -627,7 +627,7 @@ namespace WinRT
                         DisposeMarshaler(marshaler);
                     }
                 }
-                if (_array != null)
+                if (_array != IntPtr.Zero)
                 {
                     Marshal.FreeCoTaskMem(_array);
                 }

@@ -220,8 +220,9 @@ namespace System.Windows.Data
         {
             if (d == null)
                 throw new ArgumentNullException("d");
-            if (args == null)
-                throw new ArgumentNullException("args");
+
+            // DependencyPropertyChangedEventArgs is a struct and never equal to null. 
+            // There is no need for a null check here. 
 
             DependencyProperty dp = args.Property;
             if (dp == null)

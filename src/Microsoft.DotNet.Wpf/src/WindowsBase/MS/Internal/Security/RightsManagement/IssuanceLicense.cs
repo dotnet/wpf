@@ -181,7 +181,8 @@ namespace MS.Internal.Security.RightsManagement
             }
 
             // set metafata as required 
-            if (contentId != null)
+            // Guid is a non-nullable value type and gets a value on creation. Check Guid.Empty instead.
+            if (contentId != Guid.Empty)
             {
                 hr = SafeNativeMethods.DRMSetMetaData(
                     _issuanceLicenseHandle,

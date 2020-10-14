@@ -6147,8 +6147,9 @@ namespace System.Windows
         {
             Transform renderTransformValue = (Transform)value;
 
+            // 'renderTransformValue.Value' is of type 'Matrix' and can never be null.
             if ((value == null) ||
-                (renderTransformValue != null && renderTransformValue.Value != null && renderTransformValue.Value.IsIdentity == true))
+                (renderTransformValue != null && renderTransformValue.Value.IsIdentity == true))
             {
                 // setting this value is allowed.
             }

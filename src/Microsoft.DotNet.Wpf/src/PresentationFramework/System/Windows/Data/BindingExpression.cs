@@ -221,9 +221,6 @@ namespace System.Windows.Data
             if (d == null)
                 throw new ArgumentNullException("d");
 
-            // DependencyPropertyChangedEventArgs is a struct and never equal to null. 
-            // There is no need for a null check here. 
-
             DependencyProperty dp = args.Property;
             if (dp == null)
                 throw new InvalidOperationException(SR.Get(SRID.ArgumentPropertyMustNotBeNull, "Property", "args"));

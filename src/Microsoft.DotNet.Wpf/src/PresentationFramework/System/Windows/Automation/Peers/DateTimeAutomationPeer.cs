@@ -30,7 +30,6 @@ namespace System.Windows.Automation.Peers
         internal DateTimeAutomationPeer(DateTime date, Calendar owningCalendar, CalendarMode buttonMode)
             : base()
         {
-            // DateTime is a non-nullable value (a struct) type and cannot be null
             if (owningCalendar == null)
             {
                 throw new ArgumentNullException("owningCalendar");

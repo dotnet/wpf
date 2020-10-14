@@ -365,6 +365,15 @@ namespace System.Windows.Media.Composition
         /// channel.
         /// </summary>
         internal sealed partial class Channel
+        #if ENFORCE_CHANNEL_THREAD_ACCESS
+            : System.Windows.Threading.DispatcherObject
+            // "Producer" operations - adding commands et al. - should only be done
+            // on the thread that created the channel.  These operations are on the
+            // hot path, so we don't add the cost of enforcement.  To detect
+            // violations (which can lead to render-thread failures that
+            // are very difficult to diagnose), build
+            // PresentationCore with ENFORCE_CHANNEL_THREAD_ACCESS defined.
+        #endif
         {
             /// <summary>
             /// Primary channel.
@@ -768,6 +777,10 @@ namespace System.Windows.Media.Composition
                 int cSize,
                 bool sendInSeparateBatch)
             {
+                #if ENFORCE_CHANNEL_THREAD_ACCESS
+                VerifyAccess();
+                #endif
+
                 checked
                 {
                     Invariant.Assert(pCommandData != (byte*)0 && cSize > 0);
@@ -808,6 +821,10 @@ namespace System.Windows.Media.Composition
                 int cbSize,
                 int cbExtra)
             {
+                #if ENFORCE_CHANNEL_THREAD_ACCESS
+                VerifyAccess();
+                #endif
+
                 checked
                 {
                     Invariant.Assert(cbSize > 0);

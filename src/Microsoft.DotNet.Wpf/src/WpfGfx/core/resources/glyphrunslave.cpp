@@ -1029,14 +1029,6 @@ CGlyphRunResource::GetDWriteRenderingMode(__in IDWriteFontFace *pIDWriteFontFace
                             *pDWriteRenderingMode = DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL;
                         }
                     }
-                    else
-                    {
-                        // This assert is here for an equivalence check with .NET Framework 
-                        // when allowing DWrite to choose our rendering mode directly.
-                        Assert((textRenderingMode == MilTextRenderingMode::Auto)
-                            || ((textRenderingMode == MilTextRenderingMode::Aliased)
-                                && !IsDisplayMeasured()));
-                    }
                 }
             }
         }

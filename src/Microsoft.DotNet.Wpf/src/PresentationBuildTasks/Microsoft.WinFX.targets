@@ -524,7 +524,7 @@
        </CreateItem>
 
        <Message Text="Deleting generated NuGet props and targets files from the temporary project: @_DestinationGeneratedNuGetPropsAndTargets"/>
-       <Delete Files="@_DestinationGeneratedNuGetPropsAndTargets"/>
+       <Delete Files="@(_DestinationGeneratedNuGetPropsAndTargets)"/>
 
   </Target>
 

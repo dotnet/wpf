@@ -408,7 +408,7 @@ namespace System.Windows
             
             if (transition != null)
             {
-                if (transition.GeneratedDuration != null)
+                if (transition.GeneratedDuration != DurationZero)
                 {
                     dynamic.Duration = transition.GeneratedDuration;
                 }

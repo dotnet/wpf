@@ -400,7 +400,9 @@ namespace MS.Internal.Printing.Configuration
                             CultureInfo.InvariantCulture,
                             DeviceNamespaceFormat,
                             BuildInfo.WCP_VERSION_SUFFIX,
+                            #pragma warning disable SYSLIB0013
                             Uri.EscapeUriString(this._driverName),
+                            #pragma warning restore SYSLIB0013
                             this._driverVersion);
                     }
 

@@ -72,7 +72,9 @@ static class WpfWebRequestHelper
             uri = new Uri(uri.GetLeftPart(UriPartial.Path));
         }
 
+        #pragma warning disable SYSLIB0014 
         WebRequest request = WebRequest.Create(uri);
+        #pragma warning restore SYSLIB0014 
 
         // It is not clear whether WebRequest.Create() can ever return null, but v1 code make this check in
         // a couple of places, so it is still done here, just in case.

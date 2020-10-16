@@ -6,6 +6,7 @@ namespace System.IO.Packaging
         public static System.IO.Packaging.Package GetPackage(System.Uri uri) { throw null; }
         public static void RemovePackage(System.Uri uri) { }
     }
+    #pragma warning disable SYSLIB0014 
     public sealed partial class PackWebRequest : System.Net.WebRequest
     {
         internal PackWebRequest() { }
@@ -25,6 +26,7 @@ namespace System.IO.Packaging
         public override System.IO.Stream GetRequestStream() { throw null; }
         public override System.Net.WebResponse GetResponse() { throw null; }
     }
+    #pragma warning restore SYSLIB0014 
     public sealed partial class PackWebRequestFactory : System.Net.IWebRequestCreate
     {
         public PackWebRequestFactory() { }

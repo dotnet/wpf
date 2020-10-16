@@ -46,6 +46,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="packageUri">uri of the package</param>
         /// <param name="partUri">uri of the part - may be null</param>
         /// <param name="cacheEntry">cache entry to base this response on</param>
+        #pragma warning disable SYSLIB0014 
         internal PseudoWebRequest(Uri uri, Uri packageUri, Uri partUri, Package cacheEntry)
         {
             Debug.Assert(uri != null, "PackWebRequest uri cannot be null");
@@ -61,6 +62,7 @@ namespace MS.Internal.IO.Packaging
             // set defaults
             SetDefaults();
         }
+        #pragma warning restore SYSLIB0014 
 
         //------------------------------------------------------
         //

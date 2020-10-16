@@ -85,15 +85,6 @@ namespace System.Windows.Media.Imaging
             // Sanitize inputs
             //
 
-            if (pixelFormat == null)
-            {
-                // Backwards Compat:
-                //
-                // The original code would null-ref, but we choose to raise a
-                // better exception.
-                throw new ArgumentNullException("pixelFormat");
-            }
-
             if (pixelFormat.Palettized && palette == null)
             {
                 throw new InvalidOperationException(SR.Get(SRID.Image_IndexedPixelFormatRequiresPalette));

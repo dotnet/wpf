@@ -700,7 +700,8 @@ namespace System.Windows
             SiteOfOriginContainer sooContainer = (SiteOfOriginContainer)GetResourcePackage(packageUri);
 
             // the SiteOfOriginContainer is shared across threads;  synchronize access to it
-            lock (_packageLock)
+            // using the same lock object as other uses (PackWebResponse+CachedResponse.GetResponseStream)
+            lock (sooContainer)
             {
                 sooPart = sooContainer.GetPart(partUri) as SiteOfOriginPart;
             }
@@ -2017,8 +2018,9 @@ namespace System.Windows
             ResourceContainer resContainer = (ResourceContainer)GetResourcePackage(packageUri);
 
             // the ResourceContainer is shared across threads;  synchronize access to it
+            // using the same lock object as other uses (PackWebResponse+CachedResponse.GetResponseStream)
             PackagePart part = null;
-            lock (_packageLock)
+            lock (resContainer)
             {
                 part = resContainer.GetPart(partUri);
             }
@@ -2417,7 +2419,6 @@ namespace System.Windows
         static private bool                             _appCreatedInThisAppDomain;
         static private Application                      _appInstance;
         static private Assembly                         _resourceAssembly;
-        static private object                           _packageLock = new Object();
 
         // Keep LoadBamlSyncInfo stack so that the Outer LoadBaml and Inner LoadBaml( ) for the same
         // Uri share the related information.

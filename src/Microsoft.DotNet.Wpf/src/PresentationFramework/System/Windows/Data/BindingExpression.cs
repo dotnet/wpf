@@ -220,8 +220,6 @@ namespace System.Windows.Data
         {
             if (d == null)
                 throw new ArgumentNullException("d");
-            if (args == null)
-                throw new ArgumentNullException("args");
 
             DependencyProperty dp = args.Property;
             if (dp == null)

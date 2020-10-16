@@ -30,10 +30,6 @@ namespace System.Windows.Automation.Peers
         internal DateTimeAutomationPeer(DateTime date, Calendar owningCalendar, CalendarMode buttonMode)
             : base()
         {
-            if (date == null)
-            {
-                throw new ArgumentNullException("date");
-            }
             if (owningCalendar == null)
             {
                 throw new ArgumentNullException("owningCalendar");

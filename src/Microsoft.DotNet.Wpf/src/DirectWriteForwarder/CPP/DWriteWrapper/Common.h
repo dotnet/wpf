@@ -84,8 +84,8 @@ private:
 
     /// <summary>
     /// Exceptions known to have security sensitive data are sanitized in this method,
-    /// by creating copy of original exception without sensitive data and re-thrown.
-    /// Or, to put another way - this funciton acts only on a known whitelist of HRESULT/IErrorInfo combinations, throwing for matches.
+    /// by throwing a copy of the original exception without security sensitive data. 
+    /// Or, to put another way - this function acts only on a list of security sensitive HRESULT/IErrorInfo combinations, throwing for matches.
     /// The IErrorInfo is taken into account in a call to GetExceptionForHR(HRESULT), see MSDN for more details.
     /// </summary>
 

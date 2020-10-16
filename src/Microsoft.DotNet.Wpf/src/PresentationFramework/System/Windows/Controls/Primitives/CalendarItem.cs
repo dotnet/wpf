@@ -681,7 +681,6 @@ namespace System.Windows.Controls.Primitives
                 CalendarKeyboardHelper.GetMetaKeyState(out ctrl, out shift);
 
                 DateTime selectedDate = (DateTime)b.DataContext;
-                Debug.Assert(selectedDate != null);
 
                 switch (this.Owner.SelectionMode)
                 {
@@ -1303,7 +1302,6 @@ namespace System.Windows.Controls.Primitives
 
                 if (this.Owner != null)
                 {
-                    Debug.Assert(this.Owner.DisplayDateInternal != null);
                     childButton.HasSelectedDays = (DateTimeHelper.CompareYearMonth(day, this.Owner.DisplayDateInternal) == 0);
 
                     if (DateTimeHelper.CompareYearMonth(day, this.Owner.DisplayDateStartInternal) < 0 || DateTimeHelper.CompareYearMonth(day, this.Owner.DisplayDateEndInternal) > 0)

@@ -628,7 +628,7 @@ namespace MS.Internal.Printing
                 }
                 catch (Exception)
                 {
-                    if (unmanagedBuffer != null)
+                    if (unmanagedBuffer != IntPtr.Zero)
                     {
                         FreeUnmanagedPrintDlgExStruct(unmanagedBuffer);
                         unmanagedBuffer = IntPtr.Zero;

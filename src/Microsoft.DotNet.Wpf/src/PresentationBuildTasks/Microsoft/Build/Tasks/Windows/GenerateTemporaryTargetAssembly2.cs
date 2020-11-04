@@ -94,18 +94,7 @@ namespace Microsoft.Build.Tasks.Windows
             // Verification
             try
             {
-                // Add AssemblyName, IntermediateOutputPath and _TargetAssemblyProjectName to the global property list
-                // Note that _TargetAssemblyProjectName is not defined as a property with Output attribute - that doesn't do us much 
-                // good here. We need _TargetAssemblyProjectName to be a well-known property in the new (temporary) project
-                // file, and having it be available in the current MSBUILD process is not useful.
-                Hashtable globalProperties = new Hashtable(3);
-
-                globalProperties[nameof(IntermediateOutputPath)] = IntermediateOutputPath;
-                globalProperties[nameof(AssemblyName)] = AssemblyName;
-                globalProperties[targetAssemblyProjectNamePropertyName] = Path.GetFileNameWithoutExtension(CurrentProject);
-
-                // Compile the project
-                retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, globalProperties, null);
+                retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, null, null);
 
                 // Delete the temporary project file and generated files unless diagnostic mode has been requested
                 if (!GenerateTemporaryTargetAssemblyDebuggingInformation)

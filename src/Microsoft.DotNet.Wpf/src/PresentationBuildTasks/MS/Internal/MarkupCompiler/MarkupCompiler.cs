@@ -1576,9 +1576,9 @@ namespace MS.Internal
             get
             {
 #if NETFX 
-                return PathInternal.GetRelativePath(TargetPath, SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase);
+                return PathInternal.GetRelativePath(TargetPath, SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase) + Path.DirectorySeparatorChar;
 #else
-                return Path.GetRelativePath(TargetPath, SourceFileInfo.SourcePath);
+                return Path.GetRelativePath(TargetPath, SourceFileInfo.SourcePath) + Path.DirectorySeparatorChar;
 #endif
             }
         }

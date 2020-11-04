@@ -5,6 +5,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 
 using System.Globalization;
 using System.Diagnostics;
@@ -84,6 +85,19 @@ namespace Microsoft.Build.Tasks.Windows
                 RemoveItemsByName(xmlProjectDoc, MARKUPRESOURCENAME);
                 RemoveItemsByName(xmlProjectDoc, RESOURCENAME);
 
+                // Add properties required for temporary assembly compilation
+                var properties = new List<(string PropertyName, string PropertyValue)> 
+                {
+                    ( nameof(AssemblyName), AssemblyName ),
+                    ( nameof(IntermediateOutputPath), IntermediateOutputPath ),
+                    ( "AppendTargetFrameworkToOutputPath", "false"),
+                    ( "_TargetAssemblyProjectName", Path.GetFileNameWithoutExtension(CurrentProject)),
+                    ( nameof(MSBuildProjectExtensionsPath), MSBuildProjectExtensionsPath),
+                    ( nameof(Analyzers), Analyzers)
+                };
+
+                AddNewProperties(xmlProjectDoc, properties);
+
                 // Replace the Reference Item list with ReferencePath
                 RemoveItemsByName(xmlProjectDoc, REFERENCETYPENAME);
                 AddNewItems(xmlProjectDoc, ReferencePathTypeName, ReferencePath);
@@ -151,6 +165,49 @@ namespace Microsoft.Build.Tasks.Windows
         public string ReferencePathTypeName
         { get; set; }
 
+        /// <summary>
+        /// IntermediateOutputPath
+        /// 
+        /// The value which is set to IntermediateOutputPath property in current project file.
+        /// 
+        /// Passing this value explicitly is to make sure to generate temporary target assembly 
+        /// in expected directory.  
+        /// </summary>
+        [Required]
+        public string IntermediateOutputPath
+        { get; set; }
+
+        /// <summary>
+        /// AssemblyName
+        /// 
+        /// The value which is set to AssemblyName property in current project file.
+        /// Passing this value explicitly is to make sure to generate the expected 
+        /// temporary target assembly.
+        /// 
+        /// </summary>
+        [Required]
+        public string AssemblyName
+        { get; set; }
+
+        /// <summary>
+        /// MSBuildProjectExtensionsPath 
+        /// 
+        /// Required for NuGet PackageReferences (*.nuget.g.props/targets, project.assets, etc.)
+        /// 
+        /// </summary>
+        [Required]
+        public string MSBuildProjectExtensionsPath
+        { get; set; }
+
+        /// <summary>
+        /// Analyzers 
+        /// 
+        /// Required for Source Generator support. May be null.
+        /// 
+        /// </summary>
+        public string Analyzers 
+        { get; set; }
+
         [Output]
         public string TemporaryTargetAssemblyProjectName 
         { get; set; }
@@ -212,7 +269,7 @@ namespace Microsoft.Build.Tasks.Windows
                     //
                     if (nodeGroup.HasChildNodes)
                     {
-                        ArrayList itemToRemove = new ArrayList();
+                        List<XmlElement> itemToRemove = new List<XmlElement>();
 
                         for (int j = 0; j < nodeGroup.ChildNodes.Count; j++)
                         {
@@ -233,18 +290,11 @@ namespace Microsoft.Build.Tasks.Windows
                         //
                         if (itemToRemove.Count > 0)
                         {
-                            foreach (object node in itemToRemove)
+                            foreach (XmlElement item in itemToRemove)
                             {
-                                XmlElement item = node as XmlElement;
-
-                                //
                                 // Remove this item from its parent node.
                                 // the parent node should be nodeGroup.
-                                //
-                                if (item != null)
-                                {
-                                    nodeGroup.RemoveChild(item);
-                                }
+                                nodeGroup.RemoveChild(item);
                             }
                         }
                     }
@@ -314,6 +364,37 @@ namespace Microsoft.Build.Tasks.Windows
                 // Add current item node into the children list of ItemGroup
                 nodeItemGroup.AppendChild(nodeItem);
             }
+        }
+
+        private void AddNewProperties(XmlDocument xmlProjectDoc, List<(string PropertyName, string PropertyValue)> properties )
+        {
+            if (xmlProjectDoc == null || properties == null )
+            {
+                // When the parameters are not valid, simply return it, instead of throwing exceptions.
+                return;
+            }
+
+            XmlNode root = xmlProjectDoc.DocumentElement;
+
+            // Create a new ItemGroup element
+            XmlNode nodeItemGroup = xmlProjectDoc.CreateElement("PropertyGroup", root.NamespaceURI);
+            root.InsertAfter(nodeItemGroup, root.FirstChild);
+
+            // Append this new ItemGroup item into the list of children of the document root.
+            foreach(var property in properties)
+            {
+                // Skip empty properties
+                if (!string.IsNullOrEmpty(property.PropertyValue))
+                {
+                    // Create an element for the given propertyName
+                    XmlElement nodeItem = xmlProjectDoc.CreateElement(property.PropertyName, root.NamespaceURI);
+                    nodeItem.InnerText = property.PropertyValue;
+
+                    // Add current item node into the PropertyGroup 
+                    nodeItemGroup.AppendChild(nodeItem);
+                }
+            }
+
         }
 
         private const string ALIASES = "Aliases";

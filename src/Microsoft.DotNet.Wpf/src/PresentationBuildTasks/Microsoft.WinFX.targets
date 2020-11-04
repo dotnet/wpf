@@ -12,9 +12,12 @@
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.FileClassifier" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MarkupCompilePass2" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly2" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.CreateTemporaryTargetAssemblyProject" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MergeLocalizationDirectives" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
 
   <PropertyGroup>
+    <ShouldWPFSupportPackageReferences Condition="'$(ShouldWPFSupportPackageReferences)' == ''">true</ShouldWPFSupportPackageReferences>
     <AlwaysCompileMarkupFilesInSeparateDomain Condition="'$(BuildingInsideVisualStudio)' == 'true' and '$(AlwaysCompileMarkupFilesInSeparateDomain)' == ''">true</AlwaysCompileMarkupFilesInSeparateDomain>
     <AlwaysCompileMarkupFilesInSeparateDomain Condition="'$(AlwaysCompileMarkupFilesInSeparateDomain)' == '' ">true</AlwaysCompileMarkupFilesInSeparateDomain>
     <LocalizationDirectivesToLocFile Condition="'$(LocalizationDirectivesToLocFile)' == ''">None</LocalizationDirectivesToLocFile>
@@ -377,23 +380,79 @@
   <PropertyGroup>
 
        <MarkupCompilePass2ForMainAssemblyDependsOn>
+                     CreateTemporaryTargetAssemblyProject;
                      GenerateTemporaryTargetAssembly;
+                     GenerateTemporaryTargetAssembly2;
                      MarkupCompilePass2;
                      AfterMarkupCompilePass2;
                      CleanupTemporaryTargetAssembly
        </MarkupCompilePass2ForMainAssemblyDependsOn>
 
-       <_CompileTargetNameForLocalType Condition="'$(_CompileTargetNameForLocalType)' == ''">_CompileTemporaryAssembly</_CompileTargetNameForLocalType>
+        <_CompileTargetNameForLocalType Condition="'$(_CompileTargetNameForLocalType)' == ''">_CompileTemporaryAssembly</_CompileTargetNameForLocalType>
 
+        <_ResolveProjectReferencesTargetName Condition="'$(ShouldWPFSupportPackageReferences)' == 'true'">ResolveProjectReferences</_ResolveProjectReferencesTargetName>
+        <_CompileTemporaryAssemblyDependsOn>BuildOnlySettings;ResolveKeySource;$(_ResolveProjectReferencesTargetName);CoreCompile</_CompileTemporaryAssemblyDependsOn>
 
   </PropertyGroup>
 
-  <Target Name="_CompileTemporaryAssembly"  DependsOnTargets="BuildOnlySettings;ResolveKeySource;CoreCompile" />
+  <Target Name="_CompileTemporaryAssembly"  DependsOnTargets="$(_CompileTemporaryAssemblyDependsOn)" />
 
 
   <Target Name="MarkupCompilePass2ForMainAssembly"
                Condition="'$(_RequireMCPass2ForMainAssembly)' == 'true' "
                DependsOnTargets="$(MarkupCompilePass2ForMainAssemblyDependsOn)" >
+
+  </Target>
+
+  <!--
+                ==========================================
+                  CreateTemporaryTargetAssemblyProject
+                ==========================================
+                Name : CreateTemporaryTargetAssemblyProject
+  -->
+
+   <Target Name="CreateTemporaryTargetAssemblyProject"
+               Condition="'$(ShouldWPFSupportPackageReferences)' == 'true' and '$(_RequireMCPass2ForMainAssembly)' == 'true'" >
+
+       <CreateTemporaryTargetAssemblyProject 
+                CurrentProject="$(MSBuildProjectFullPath)"
+                GeneratedCodeFiles="@(_GeneratedCodeFiles)"
+                CompileTypeName="Compile"
+                ReferencePath="@(ReferencePath)"
+                ReferencePathTypeName="ReferencePath" 
+                IntermediateOutputPath="$(IntermediateOutputPath)"
+                AssemblyName="$(AssemblyName)" 
+                MSBuildProjectExtensionsPath="$(MSBuildProjectExtensionsPath)" >
+           <Output TaskParameter="TemporaryTargetAssemblyProjectName" PropertyName="_TemporaryTargetAssemblyProjectName"/>
+       </CreateTemporaryTargetAssemblyProject>
+
+      <Message Text="GenerateTemporaryTargetAssembyProject project is $(_TemporaryTargetAssemblyProjectName)" />
+
+      <!-- Path to generated NuGet props and targets files -->
+      <Message Text="MSBuildProjectExtensionsPath: $(MSBuildProjectExtensionsPath)" />
+
+      <!-- Get the name of the outer WPF parent project -->
+      <PropertyGroup>
+          <CurrentProjectName>$([System.IO.Path]::GetFileName('$(MSBuildProjectFullPath)'))</CurrentProjectName>
+      </PropertyGroup>
+
+      <!-- Collect the generated NuGet files from the parent project required support PackageReferences -->
+      <ItemGroup>
+        <SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)\*.props"/>
+        <SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)\*.targets"/>
+        <SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)\*.dgspec.json"/>
+        <_DestinationGeneratedNuGetPropsAndTargets Include="@(SourceGeneratedNuGetPropsAndTargets->'%(RelativeDir)%(Filename)%(Extension)'->Replace('$(CurrentProjectName)', '$(_TemporaryTargetAssemblyProjectName)'))"/>
+      </ItemGroup>
+
+      <Message Text="Re-using generated NuGet props and targets from the parent project...)" />
+      <Message Text="SourceGeneratedNuGetPropsAndTargets source files: @(SourceGeneratedNuGetPropsAndTargets)" />
+      <Message Text="DestinationPropsAndTargets destination files: @(_DestinationGeneratedNuGetPropsAndTargets)" />
+
+      <!-- Copy the renamed outer project NuGet props/targets files to the MSBuildProjectExtensionsPath used by NuGet -->
+      <Copy
+            SourceFiles="@(SourceNuGetPropsAndTargets)"
+            DestinationFiles="@(_DestinationGeneratedNuGetPropsAndTargets)" 
+       />
 
   </Target>
 
@@ -409,7 +468,7 @@
   -->
 
    <Target Name="GenerateTemporaryTargetAssembly"
-               Condition="'$(_RequireMCPass2ForMainAssembly)' == 'true' " >
+               Condition="'$(ShouldWPFSupportPackageReferences)' == 'false' And '$(_RequireMCPass2ForMainAssembly)' == 'true'" >
 
       <Message Text="MSBuildProjectFile is $(MSBuildProjectFile)" Condition="'$(MSBuildTargetsVerbose)' == 'true'" />
 
@@ -431,6 +490,46 @@
        <CreateItem Include="$(IntermediateOutputPath)$(TargetFileName)" >
                <Output TaskParameter="Include" ItemName="AssemblyForLocalTypeReference" />
        </CreateItem>
+
+  </Target>
+
+    <!--
+
+                ==========================================
+                       GenerateTemporaryTargetAssembly2
+                ==========================================
+
+                Name : GenerateTemporaryTargetAssembly2
+
+  -->
+
+   <Target Name="GenerateTemporaryTargetAssembly2"
+               Condition="'$(ShouldWPFSupportPackageReferences)' == 'true' and '$(_RequireMCPass2ForMainAssembly)' == 'true'" >
+
+      <Message Text="MSBuildProjectFile is $(MSBuildProjectFile)" Condition="'$(MSBuildTargetsVerbose)' == 'true'" />
+
+       <GenerateTemporaryTargetAssembly2
+                CurrentProject="$(MSBuildProjectFullPath)"
+                MSBuildBinPath="$(MSBuildBinPath)"
+                ReferencePathTypeName="ReferencePath"
+                CompileTypeName="Compile"
+                GeneratedCodeFiles="@(_GeneratedCodeFiles)"
+                ReferencePath="@(ReferencePath)"
+                IntermediateOutputPath="$(IntermediateOutputPath)"
+                AssemblyName="$(AssemblyName)"
+                TemporaryTargetAssemblyProjectName="$(_TemporaryTargetAssemblyProjectName)"
+                CompileTargetName="$(_CompileTargetNameForLocalType)"
+                GenerateTemporaryTargetAssemblyDebuggingInformation="$(GenerateTemporaryTargetAssemblyDebuggingInformation)"
+                 >
+
+       </GenerateTemporaryTargetAssembly2>
+
+       <CreateItem Include="$(IntermediateOutputPath)$(TargetFileName)" >
+               <Output TaskParameter="Include" ItemName="AssemblyForLocalTypeReference" />
+       </CreateItem>
+
+       <Message Text="Deleting generated NuGet props and targets files from the temporary project: @(_DestinationGeneratedNuGetPropsAndTargets)"/>
+       <Delete Files="@(_DestinationGeneratedNuGetPropsAndTargets)"/>
 
   </Target>
 
@@ -951,3 +1050,4 @@
 
 
 </Project>
+

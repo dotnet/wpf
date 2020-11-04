@@ -278,7 +278,7 @@ namespace System.Windows.Controls
                     {
                         column.RefreshCellContent(this, propertyName);
                     }
-                    else if (e != null && e.Property != null)
+                    else if (e.Property != null)
                     {
                         column.RefreshCellContent(this, e.Property.Name);
                     }

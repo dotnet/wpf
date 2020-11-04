@@ -98,7 +98,7 @@ namespace System.Windows.Controls
 
                         if (TraceData.IsEnabled)
                         {
-                            TraceData.Trace(TraceEventType.Error,
+                            TraceData.TraceAndNotify(TraceEventType.Error,
                                             TraceData.DataErrorInfoFailed(
                                                 name,
                                                 idei.GetType().FullName,

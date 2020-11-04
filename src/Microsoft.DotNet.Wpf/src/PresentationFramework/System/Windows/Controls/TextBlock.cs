@@ -1504,7 +1504,7 @@ Debug.Assert(lineCount == LineCount);
                             {
                                 // Check if paragraph ellipsis are added to this line
                                 bool ellipsis = ParagraphEllipsisShownOnLine(i, lineOffset.Y - contentOffset.Y);
-                                line.Format(dcp, wrappingWidth, GetLineProperties(dcp == 0, lineProperties), lineMetrics.TextLineBreak, _textBlockCache._textRunCache, ellipsis);
+                                Format(line, lineMetrics.Length, dcp, wrappingWidth, GetLineProperties(dcp == 0, lineProperties), lineMetrics.TextLineBreak, _textBlockCache._textRunCache, ellipsis);
 
                                 // Check that lineMetrics length and line length are in sync
                                 // Workaround for (Crash when mouse over a Button with TextBlock). Re-enable this assert when MIL Text issue is fixed.
@@ -1638,7 +1638,7 @@ Debug.Assert(lineCount == LineCount);
                     {
                         using (line)
                         {
-                            line.Format(dcp, wrappingWidth, GetLineProperties(dcp == 0, showParagraphEllipsis, lineProperties), lineMetrics.TextLineBreak, _textBlockCache._textRunCache, showParagraphEllipsis);
+                            Format(line, lineMetrics.Length, dcp, wrappingWidth, GetLineProperties(dcp == 0, showParagraphEllipsis, lineProperties), lineMetrics.TextLineBreak, _textBlockCache._textRunCache, showParagraphEllipsis);
 
                             // Workaround for (Crash when mouse over a Button with TextBlock). Re-enable this assert when MIL Text issue is fixed.
                             //if (!showParagraphEllipsis)
@@ -1778,7 +1778,7 @@ Debug.Assert(lineCount == LineCount);
                     {
                         // Check if paragraph ellipsis are rendered
                         bool ellipsis = ParagraphEllipsisShownOnLine(i, lineOffset);
-                        line.Format(dcp, wrappingWidth, GetLineProperties(dcp == 0, lineProperties), lineMetrics.TextLineBreak, textRunCache, ellipsis);
+                        Format(line, lineMetrics.Length, dcp, wrappingWidth, GetLineProperties(dcp == 0, lineProperties), lineMetrics.TextLineBreak, textRunCache, ellipsis);
 
                         // Verify consistency of line formatting
                         // Check that lineMetrics.Length is in sync with line.Length
@@ -1902,7 +1902,7 @@ Debug.Assert(lineCount == LineCount);
                 {
                     // Check if paragraph ellipsis are rendered
                     bool ellipsis = ParagraphEllipsisShownOnLine(lineIndex, lineOffset);
-                    line.Format(lineStart, wrappingWidth, GetLineProperties(lineIndex == 0, lineProperties), lineMetrics.TextLineBreak, textRunCache, ellipsis);
+                    Format(line, lineMetrics.Length, lineStart, wrappingWidth, GetLineProperties(lineIndex == 0, lineProperties), lineMetrics.TextLineBreak, textRunCache, ellipsis);
 
                     // Verify consistency of line formatting
                     // Workaround for (Crash when mouse over a Button with TextBlock). Re-enable this assert when MIL Text issue is fixed.
@@ -2171,16 +2171,17 @@ Debug.Assert(lineCount == LineCount);
             double wrappingWidth = CalcWrappingWidth(RenderSize.Width);
 
             TextRunCache textRunCache = new TextRunCache();
+            LineMetrics lineMetrics = GetLine(index);
 
             // Retrieve details from the line.
-            using(Line line = CreateLine(lineProperties))
+            using (Line line = CreateLine(lineProperties))
             {
                 // Format line. Set showParagraphEllipsis flag to false
                 TextLineBreak textLineBreak = GetLine(index).TextLineBreak;
                 bool ellipsis = ParagraphEllipsisShownOnLine(index, lineVOffset);
-                line.Format(dcp, wrappingWidth, GetLineProperties(dcp == 0, lineProperties), textLineBreak, textRunCache, ellipsis);
+                Format(line, lineMetrics.Length, dcp, wrappingWidth, GetLineProperties(dcp == 0, lineProperties), textLineBreak, textRunCache, ellipsis);
 
-                MS.Internal.Invariant.Assert(GetLine(index).Length == line.Length, "Line length is out of sync");
+                MS.Internal.Invariant.Assert(lineMetrics.Length == line.Length, "Line length is out of sync");
 
                 cchContent = line.ContentLength;
                 cchEllipses = line.GetEllipsesLength();
@@ -2219,15 +2220,16 @@ Debug.Assert(lineCount == LineCount);
             lineVOffset -= contentOffset.Y;
 
             TextRunCache textRunCache = new TextRunCache();
+            LineMetrics lineMetrics = GetLine(index);
             ITextPointer pos;
             using(Line line = CreateLine(lineProperties))
             {
                 MS.Internal.Invariant.Assert(index >= 0 && index < LineCount);
                 TextLineBreak textLineBreak = GetLine(index).TextLineBreak;
                 bool ellipsis = ParagraphEllipsisShownOnLine(index, lineVOffset);
-                line.Format(dcp, wrappingWidth, GetLineProperties(dcp == 0, lineProperties), textLineBreak, textRunCache, ellipsis);
+                Format(line, lineMetrics.Length, dcp, wrappingWidth, GetLineProperties(dcp == 0, lineProperties), textLineBreak, textRunCache, ellipsis);
 
-                MS.Internal.Invariant.Assert(GetLine(index).Length == line.Length, "Line length is out of sync");
+                MS.Internal.Invariant.Assert(lineMetrics.Length == line.Length, "Line length is out of sync");
 
                 CharacterHit charIndex = line.GetTextPositionFromDistance(distance);
                 LogicalDirection logicalDirection;
@@ -2297,7 +2299,7 @@ Debug.Assert(lineCount == LineCount);
                     using(Line line = CreateLine(lineProperties))
                     {
                         bool ellipsis = ParagraphEllipsisShownOnLine(i, lineOffset);
-                        line.Format(dcp, wrappingWidth, GetLineProperties(dcp == 0, lineProperties), lineMetrics.TextLineBreak, textRunCache, ellipsis);
+                        Format(line, lineMetrics.Length, dcp, wrappingWidth, GetLineProperties(dcp == 0, lineProperties), lineMetrics.TextLineBreak, textRunCache, ellipsis);
 
                         // Check consistency of line length
                         MS.Internal.Invariant.Assert(lineMetrics.Length == line.Length, "Line length is out of sync");
@@ -2399,7 +2401,7 @@ Debug.Assert(lineCount == LineCount);
                     using (line)
                     {
                         bool ellipsis = ParagraphEllipsisShownOnLine(i, lineOffset);
-                        line.Format(dcpLineStart, wrappingWidth, GetLineProperties(dcpLineStart == 0, lineProperties), lineMetrics.TextLineBreak, textRunCache, ellipsis);
+                        Format(line, lineMetrics.Length, dcpLineStart, wrappingWidth, GetLineProperties(dcpLineStart == 0, lineProperties), lineMetrics.TextLineBreak, textRunCache, ellipsis);
 
                         if (Invariant.Strict)
                         {
@@ -2503,7 +2505,7 @@ Debug.Assert(lineCount == LineCount);
             {
                 // Format line. Set showParagraphEllipsis flag to false since we are not using information about
                 // ellipsis to change line offsets in this case.
-                line.Format(dcp, wrappingWidth, GetLineProperties(lineIndex == 0, lineProperties), lineMetrics.TextLineBreak, textRunCache, false);
+                Format(line, lineMetrics.Length, dcp, wrappingWidth, GetLineProperties(lineIndex == 0, lineProperties), lineMetrics.TextLineBreak, textRunCache, false);
 
                 // Check consistency of line formatting
                 MS.Internal.Invariant.Assert(lineMetrics.Length == line.Length, "Line length is out of sync");
@@ -2591,7 +2593,7 @@ Debug.Assert(lineCount == LineCount);
             {
                 // Format line. Set showParagraphEllipsis flag to false since we are not using information about
                 // ellipsis to change line offsets in this case.
-                line.Format(dcp, wrappingWidth, GetLineProperties(lineIndex == 0, lineProperties), lineMetrics.TextLineBreak, textRunCache, false);
+                Format(line, lineMetrics.Length, dcp, wrappingWidth, GetLineProperties(lineIndex == 0, lineProperties), lineMetrics.TextLineBreak, textRunCache, false);
 
                 // Check consistency of line formatting
                 MS.Internal.Invariant.Assert(lineMetrics.Length == line.Length, "Line length is out of sync");
@@ -2700,7 +2702,7 @@ Debug.Assert(lineCount == LineCount);
             {
                 // Format line. Set showParagraphEllipsis flag to false since we are not using information about
                 // ellipsis to change line offsets in this case.
-                line.Format(dcp, wrappingWidth, GetLineProperties(lineIndex == 0, lineProperties), lineMetrics.TextLineBreak, textRunCache, false);
+                Format(line, lineMetrics.Length, dcp, wrappingWidth, GetLineProperties(lineIndex == 0, lineProperties), lineMetrics.TextLineBreak, textRunCache, false);
 
                 // Check consistency of line formatting
                 MS.Internal.Invariant.Assert(lineMetrics.Length == line.Length, "Line length is out of sync");
@@ -3327,6 +3329,108 @@ Debug.Assert(lineCount == LineCount);
         }
 
         // ------------------------------------------------------------------
+        // Wrapper for line.Format that tries to make the same line-break decisions as Measure
+        // ------------------------------------------------------------------
+        private void Format(Line line, int length, int dcp, double wrappingWidth, TextParagraphProperties paragraphProperties, TextLineBreak textLineBreak, TextRunCache textRunCache, bool ellipsis)
+        {
+            line.Format(dcp, wrappingWidth, paragraphProperties, textLineBreak, textRunCache, ellipsis);
+
+            // line.Format can reflow (make a different line-break
+            // decision than it did during measure), contrary to the comment
+            // in CalcWrappingWidth "Reflowing will not happen when Width is
+            // between _previousDesiredSize.Width and ReferenceWidth", if the
+            // line contains text that gets shaped in a way that reduces the
+            // total width.  Here is an example.
+            //  Text="ABCDE IAATA Corp."  TextWrapping=Wrap  ReferenceWidth=115
+            //  1. Measure calls FormatLine(115), which determines that the full
+            //      text is wider than 115 and breaks it after the second word.
+            //      The resulting desired width is 83.3167 - the length of
+            //      the first line "ABCDE IAATA"
+            //  2. Render, HitTest, et al. call FormatLine(83.3167), which determines
+            //      that the first two words are already wider than 83.3167 and
+            //      breaks after the first word.
+            //  3. FormatLine uses unshaped glyph widths to determine how much text
+            //      to consider in line-breaking decisions.  But it reports the
+            //      width of the lines it produces using shaped glyph widths.
+            //      In the example, the sequence "ATA" gets kerned closer together,
+            //      making the shaped width of the first two words (83.3167)
+            //      about 2.6 pixels less than the unshaped width (85.96).
+            //      This is enough to produce the "reflowing".
+            // The consequences of reflowing are bad.  In the example, the second
+            // word is not rendered, and programmatic editing crashes with FailFast.
+            //
+            // In light of this, we need to work harder to ensure that reflowing
+            // doesn't happen.  The obvious idea to accomplish this is to change
+            // FormatLine to use shaped widths throughout, but that would mean
+            // changing the callbacks from LineServices and DWrite, and asserting
+            // that the changes have no unforseen consequences - out of scope.
+            // Instead, we'll call FormatLine with a target width large enough
+            // to produce the right line-break.
+            //
+            // This has consequences, especially when TextAlignment=Justify -
+            // the line is justified to the larger width rather than to wrappingWidth,
+            // which makes the text extend past the arrange-rect.  To mitigate this,
+            // use the smallest width between wrappingWidth and ReferenceWidth that produces the
+            // right line-break.
+            //
+            // This fixes the cases of missing text and FailFast, at the cost of
+            //      1. more calls to FormatLine (perf hit)
+            //      2. justified text sticks out of the arrange-rect
+            // It's pay-for-play - we only do it on lines that reflow.
+
+            if (line.Length < length)   // reflow happened
+            {
+                double goodWidth = _referenceSize.Width;    // no reflow at this width
+                double badWidth = wrappingWidth;            // reflow at this width
+                // Make sure that TextFormatter limitations are not exceeded.
+                TextDpi.EnsureValidLineWidth(ref goodWidth); // wrappingWidth is already valid, per CalcWrappingWidth
+
+                // The smallest good width can't be calcluated in advance, as it's
+                // dependent on the shaped and unshaped glyph-widths and the available
+                // width in a complicated way.  Instead, binary search.
+                const double tolerance = 0.01;  // allow a small overshoot, to limit the number of iterations
+
+                // In practice, the smallest good width is quite close to wrappingWidth,
+                // so start with "bottom-up binary search".
+                for (double delta = tolerance; /* goodWidth not found */; delta *= 2.0)
+                {
+                    double width = badWidth + delta;
+                    if (width > goodWidth)
+                        break;      // don't increase goodWidth
+
+                    line.Format(dcp, width, paragraphProperties, textLineBreak, textRunCache, ellipsis);
+                    if (line.Length < length)
+                    {
+                        badWidth = width;
+                    }
+                    else
+                    {
+                        goodWidth = width;
+                        break;
+                    }
+                }
+
+                // now do a regular binary search on the remaining interval
+                for (double delta = (goodWidth - badWidth) / 2.0; delta > tolerance; delta /= 2.0)
+                {
+                    double width = badWidth + delta;
+                    line.Format(dcp, width, paragraphProperties, textLineBreak, textRunCache, ellipsis);
+                    if (line.Length < length)
+                    {
+                        badWidth = width;
+                    }
+                    else
+                    {
+                        goodWidth = width;
+                    }
+                }
+
+                // now format at goodwidth, with no reflow
+                line.Format(dcp, goodWidth, paragraphProperties, textLineBreak, textRunCache, ellipsis);
+            }
+        }
+
+        // ------------------------------------------------------------------
         // Aborts calculation by throwing exception if world has changed
         // while in measure / arrange / render process.
         // ------------------------------------------------------------------
@@ -3415,7 +3519,7 @@ Debug.Assert(lineCount == LineCount);
                 using (line)
                 {
                     bool ellipsis = ParagraphEllipsisShownOnLine(i, lineOffset);
-                    line.Format(dcp, wrappingWidth, GetLineProperties(dcp == 0, lineProperties), lineMetrics.TextLineBreak, textRunCache, ellipsis);
+                    Format(line, lineMetrics.Length, dcp, wrappingWidth, GetLineProperties(dcp == 0, lineProperties), lineMetrics.TextLineBreak, textRunCache, ellipsis);
                     double lineHeight = CalcLineAdvance(line.Height, lineProperties);
 
                     // Check consistency of line formatting

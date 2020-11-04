@@ -717,13 +717,15 @@ namespace System.Windows.Documents
                 //These two overlap vertically. Let's check whether there is a vertical separator in between
                 double left = (fixedBlockRect.Right < textRunRect.Right) ? fixedBlockRect.Right: textRunRect.Right;
                 double right =(fixedBlockRect.Left > textRunRect.Left) ? fixedBlockRect.Left: textRunRect.Left;
-                if (left > right)
+                if (left < right)
                 {
-                    double temp = left;
-                    left = right;
-                    right = temp;
+                    return (!_lines.IsVerticallySeparated(left, textRunRect.Top, right, textRunRect.Bottom));
                 }
-                return (!_lines.IsVerticallySeparated(left, textRunRect.Top, right, textRunRect.Bottom));
+                else
+                {
+                    // they also overlap horizontally, so they should be combined
+                    return true;
+                }
             }
         }
 

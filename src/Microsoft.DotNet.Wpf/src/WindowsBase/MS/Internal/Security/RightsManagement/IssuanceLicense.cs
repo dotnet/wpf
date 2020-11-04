@@ -180,8 +180,8 @@ namespace MS.Internal.Security.RightsManagement
                 }
             }
 
-            // set metafata as required 
-            if (contentId != null)
+            // set metadata as required 
+            if (contentId != Guid.Empty)
             {
                 hr = SafeNativeMethods.DRMSetMetaData(
                     _issuanceLicenseHandle,

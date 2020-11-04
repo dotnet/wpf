@@ -576,7 +576,7 @@ namespace MS.Internal.IO.Packaging
                     _erroredOut = true;
                     _erroredOutException = e;
 
-                    throw e;
+                    throw;
                 }
                 catch   // catch (and re-throw) all kinds of exceptions so we can inform the other thread
                 {

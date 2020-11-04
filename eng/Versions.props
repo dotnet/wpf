@@ -4,46 +4,48 @@
     <VersionPrefix>6.0.0</VersionPrefix>
     <PreReleaseVersionLabel>alpha</PreReleaseVersionLabel>
     <PreReleaseVersionIteration>1</PreReleaseVersionIteration>
-    <SystemIOPackagingVersion>6.0.0-alpha.1.20428.2</SystemIOPackagingVersion>
-    <SystemResourcesExtensionsVersion>6.0.0-alpha.1.20428.2</SystemResourcesExtensionsVersion>
+    <SystemIOPackagingVersion>6.0.0-alpha.1.20553.9</SystemIOPackagingVersion>
+    <SystemResourcesExtensionsVersion>6.0.0-alpha.1.20553.9</SystemResourcesExtensionsVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>6.0.0-alpha.1.20466.4</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>6.0.0-alpha.1.20554.1</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/coreclr -->
   <PropertyGroup>
     <MicrosoftNETCoreRuntimeCoreCLRVersion>5.0.0-alpha1.19562.1</MicrosoftNETCoreRuntimeCoreCLRVersion>
-    <MicrosoftNETCoreILDAsmVersion>6.0.0-alpha.1.20428.2</MicrosoftNETCoreILDAsmVersion>
-    <MicrosoftNETCoreILAsmVersion>6.0.0-alpha.1.20428.2</MicrosoftNETCoreILAsmVersion>
+    <MicrosoftNETCoreILDAsmVersion>6.0.0-alpha.1.20553.9</MicrosoftNETCoreILDAsmVersion>
+    <MicrosoftNETCoreILAsmVersion>6.0.0-alpha.1.20553.9</MicrosoftNETCoreILAsmVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
-    <MicrosoftNETCoreAppInternalVersion>6.0.0-alpha.1.20428.2</MicrosoftNETCoreAppInternalVersion>
-    <MicrosoftNETCorePlatformsVersion>6.0.0-alpha.1.20428.2</MicrosoftNETCorePlatformsVersion>
-    <SystemDrawingCommonVersion>6.0.0-alpha.1.20428.2</SystemDrawingCommonVersion>
-    <SystemDirectoryServicesVersion>6.0.0-alpha.1.20428.2</SystemDirectoryServicesVersion>
-    <SystemReflectionMetadataLoadContextVersion>6.0.0-alpha.1.20428.2</SystemReflectionMetadataLoadContextVersion>
+    <MicrosoftNETCoreAppInternalVersion>6.0.0-alpha.1.20553.9</MicrosoftNETCoreAppInternalVersion>
+    <MicrosoftNETCoreAppRefVersion>6.0.0-alpha.1.20553.9</MicrosoftNETCoreAppRefVersion>
+    <MicrosoftNETCoreAppRuntimewinx64Version>6.0.0-alpha.1.20553.9</MicrosoftNETCoreAppRuntimewinx64Version>
+    <MicrosoftNETCorePlatformsVersion>6.0.0-alpha.1.20553.9</MicrosoftNETCorePlatformsVersion>
+    <SystemDrawingCommonVersion>6.0.0-alpha.1.20553.9</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>6.0.0-alpha.1.20553.9</SystemDirectoryServicesVersion>
+    <SystemReflectionMetadataLoadContextVersion>6.0.0-alpha.1.20553.9</SystemReflectionMetadataLoadContextVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefx via core-setup coherency parent dependency -->
   <PropertyGroup>
-    <MicrosoftWin32RegistryPackageVersion>6.0.0-alpha.1.20428.2</MicrosoftWin32RegistryPackageVersion>
-    <SystemCodeDomPackageVersion>6.0.0-alpha.1.20428.2</SystemCodeDomPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>6.0.0-alpha.1.20428.2</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>6.0.0-alpha.1.20428.2</SystemDiagnosticsEventLogPackageVersion>
+    <MicrosoftWin32RegistryPackageVersion>6.0.0-alpha.1.20553.9</MicrosoftWin32RegistryPackageVersion>
+    <SystemCodeDomPackageVersion>6.0.0-alpha.1.20553.9</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>6.0.0-alpha.1.20553.9</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>6.0.0-alpha.1.20553.9</SystemDiagnosticsEventLogPackageVersion>
     <SystemReflectionEmitPackageVersion>5.0.0-alpha.1.19563.6</SystemReflectionEmitPackageVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemSecurityAccessControlPackageVersion>6.0.0-alpha.1.20428.2</SystemSecurityAccessControlPackageVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>6.0.0-alpha.1.20428.2</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>6.0.0-alpha.1.20428.2</SystemSecurityPermissionsPackageVersion>
-    <SystemSecurityPrincipalWindowsPackageVersion>6.0.0-alpha.1.20428.2</SystemSecurityPrincipalWindowsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>6.0.0-alpha.1.20428.2</SystemWindowsExtensionsPackageVersion>
+    <SystemSecurityAccessControlPackageVersion>6.0.0-alpha.1.20553.9</SystemSecurityAccessControlPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>6.0.0-alpha.1.20553.9</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>6.0.0-alpha.1.20553.9</SystemSecurityPermissionsPackageVersion>
+    <SystemSecurityPrincipalWindowsPackageVersion>6.0.0-alpha.1.20553.9</SystemSecurityPrincipalWindowsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>6.0.0-alpha.1.20553.9</SystemWindowsExtensionsPackageVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
-    <MicrosoftDotNetApiCompatVersion>5.0.0-beta.20464.13</MicrosoftDotNetApiCompatVersion>
-    <MicrosoftDotNetCodeAnalysisPackageVersion>5.0.0-beta.20464.13</MicrosoftDotNetCodeAnalysisPackageVersion>
-    <MicrosoftDotNetGenAPIVersion>5.0.0-beta.20464.13</MicrosoftDotNetGenAPIVersion>
+    <MicrosoftDotNetApiCompatVersion>6.0.0-beta.20552.5</MicrosoftDotNetApiCompatVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>6.0.0-beta.20552.5</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetGenAPIVersion>6.0.0-beta.20552.5</MicrosoftDotNetGenAPIVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefxlab -->
   <PropertyGroup>
@@ -76,15 +78,6 @@
     <NetFramework48RefAssembliesVersion>0.0.0.1</NetFramework48RefAssembliesVersion>
     <NetFramework472IlToolsVersion>0.0.0.1</NetFramework472IlToolsVersion>
   </PropertyGroup>
-  <PropertyGroup>
-    <RestoreSources>
-      $(RestoreSources);
-      https://dotnet.myget.org/F/dotnet-corefxlab/api/v3/index.json;
-      https://dotnetfeed.blob.core.windows.net/dotnet-windowsdesktop/index.json;
-      https://dotnetfeed.blob.core.windows.net/dotnet-coreclr/index.json;
-      https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json;
-    </RestoreSources>
-  </PropertyGroup>
   <!--Package names-->
   <PropertyGroup>
     <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
@@ -96,6 +89,6 @@
     <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
   </PropertyGroup>
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>6.0.0-alpha.1.20466.3</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>6.0.0-alpha.1.20554.3</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

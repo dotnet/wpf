@@ -438,7 +438,7 @@ namespace System.Xaml.MS.Impl
 
                 Dictionary<string, object> visited = new Dictionary<string, object>();
 
-                // for every XmlnsCompatAtribute
+                // for every XmlnsCompatAttribute
                 foreach (string newNs in nsInfo.OldToNewNs.Values)
                 {
                     visited.Clear();

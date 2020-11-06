@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Common", "WPF"],
-  "name": "WPF Class library",
+  "name": "WPF Class Library",
   "generatorVersions": "[1.0.0.0-*)",
   "description": "A project for creating a class library that targets a .NET Core WPF Application",
   "groupIdentity": "Microsoft.Common.WPF.Library",

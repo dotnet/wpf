@@ -29,10 +29,10 @@ jobs:
         # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
           name: NetCorePublic-Pool
-          queue: BuildPool.Windows.10.Amd64.VS2019.Pre.Open
+          queue: BuildPool.Windows.10.Amd64.VS2019.Open
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
           name: NetCoreInternal-Pool
-          queue: buildpool.windows.10.amd64.vs2019.pre
+          queue: buildpool.windows.10.amd64.vs2019
       variables:
         # needed for signing
         - name: _TeamName

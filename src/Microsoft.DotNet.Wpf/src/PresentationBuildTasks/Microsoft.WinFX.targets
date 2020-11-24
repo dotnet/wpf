@@ -17,7 +17,7 @@
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MergeLocalizationDirectives" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
 
   <PropertyGroup>
-    <ShouldWPFSupportPackageReferences Condition="'$(ShouldWPFSupportPackageReferences)' == ''">true</ShouldWPFSupportPackageReferences>
+    <IncludePackageReferencesDuringMarkupCompilation Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' == ''">true</IncludePackageReferencesDuringMarkupCompilation>
     <AlwaysCompileMarkupFilesInSeparateDomain Condition="'$(BuildingInsideVisualStudio)' == 'true' and '$(AlwaysCompileMarkupFilesInSeparateDomain)' == ''">true</AlwaysCompileMarkupFilesInSeparateDomain>
     <AlwaysCompileMarkupFilesInSeparateDomain Condition="'$(AlwaysCompileMarkupFilesInSeparateDomain)' == '' ">true</AlwaysCompileMarkupFilesInSeparateDomain>
     <LocalizationDirectivesToLocFile Condition="'$(LocalizationDirectivesToLocFile)' == ''">None</LocalizationDirectivesToLocFile>
@@ -390,7 +390,7 @@
 
         <_CompileTargetNameForLocalType Condition="'$(_CompileTargetNameForLocalType)' == ''">_CompileTemporaryAssembly</_CompileTargetNameForLocalType>
 
-        <_ResolveProjectReferencesTargetName Condition="'$(ShouldWPFSupportPackageReferences)' == 'true'">ResolveProjectReferences</_ResolveProjectReferencesTargetName>
+        <_ResolveProjectReferencesTargetName Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' == 'true'">ResolveProjectReferences</_ResolveProjectReferencesTargetName>
         <_CompileTemporaryAssemblyDependsOn>BuildOnlySettings;ResolveKeySource;$(_ResolveProjectReferencesTargetName);CoreCompile</_CompileTemporaryAssemblyDependsOn>
 
   </PropertyGroup>
@@ -412,7 +412,7 @@
   -->
 
    <Target Name="CreateTemporaryTargetAssemblyProject"
-               Condition="'$(ShouldWPFSupportPackageReferences)' == 'true' and '$(_RequireMCPass2ForMainAssembly)' == 'true'" >
+               Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' == 'true' and '$(_RequireMCPass2ForMainAssembly)' == 'true'" >
 
        <CreateTemporaryTargetAssemblyProject 
                 CurrentProject="$(MSBuildProjectFullPath)"
@@ -469,7 +469,7 @@
   -->
 
    <Target Name="GenerateTemporaryTargetAssembly"
-               Condition="'$(ShouldWPFSupportPackageReferences)' == 'false' And '$(_RequireMCPass2ForMainAssembly)' == 'true'" >
+               Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' == 'false' And '$(_RequireMCPass2ForMainAssembly)' == 'true'" >
 
       <Message Text="MSBuildProjectFile is $(MSBuildProjectFile)" Condition="'$(MSBuildTargetsVerbose)' == 'true'" />
 
@@ -505,7 +505,7 @@
   -->
 
    <Target Name="GenerateTemporaryTargetAssembly2"
-               Condition="'$(ShouldWPFSupportPackageReferences)' == 'true' and '$(_RequireMCPass2ForMainAssembly)' == 'true'" >
+               Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' == 'true' and '$(_RequireMCPass2ForMainAssembly)' == 'true'" >
 
       <Message Text="MSBuildProjectFile is $(MSBuildProjectFile)" Condition="'$(MSBuildTargetsVerbose)' == 'true'" />
 

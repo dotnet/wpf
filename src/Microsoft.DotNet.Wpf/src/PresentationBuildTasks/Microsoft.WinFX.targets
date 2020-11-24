@@ -439,8 +439,8 @@
 
       <!-- Collect the generated NuGet files from the parent project required support PackageReferences -->
       <ItemGroup>
-        <SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)\*.props"/>
-        <SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)\*.targets"/>
+        <SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)\*.nuget.g.props"/>
+        <SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)\*.nuget.g.targets"/>
         <SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)\*.dgspec.json"/>
         <_DestinationGeneratedNuGetPropsAndTargets Include="@(SourceGeneratedNuGetPropsAndTargets->'%(RelativeDir)%(Filename)%(Extension)'->Replace('$(CurrentProjectName)', '$(_TemporaryTargetAssemblyProjectName)'))"/>
       </ItemGroup>

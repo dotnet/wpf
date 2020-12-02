@@ -2648,7 +2648,7 @@ To automatically copy the files, set the environment variable
                             SnapsToDevicePixels="true">
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          RecognizesAccessKey="True"
+                                          RecognizesAccessKey="{TemplateBinding RecognizesAccessKey}"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                     </Border>
                     <ControlTemplate.Triggers>

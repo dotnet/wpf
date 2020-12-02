@@ -81,6 +81,29 @@ namespace System.Windows.Controls
         #region Public Properties
 
         /// <summary>
+        /// DependencyProperty for RecognizesAccessKey
+        /// </summary>
+        public static readonly DependencyProperty RecognizesAccessKeyProperty =
+            DependencyProperty.Register(
+                "RecognizesAccessKey",
+                typeof(bool),
+                typeof(Label),
+                new FrameworkPropertyMetadata(true));
+
+        /// <summary>
+        /// Property that allows for disabling the RecognizesAccesKey behaviour of the label.
+        /// For Backwards compatibility its default value is false.
+        /// </summary>
+        public bool RecognizesAccessKey
+        {
+            get { return (bool)GetValue(RecognizesAccessKeyProperty); }
+            set { SetValue(RecognizesAccessKeyProperty, value); }
+        }
+
+        
+
+
+        /// <summary>
         /// DependencyProperty for Target property.
         /// </summary>
         public static readonly DependencyProperty TargetProperty =

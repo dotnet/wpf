@@ -12,12 +12,11 @@
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.FileClassifier" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MarkupCompilePass2" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
-  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly2" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.CompileTemporaryTargetAssembly" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.CreateTemporaryTargetAssemblyProject" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MergeLocalizationDirectives" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
 
   <PropertyGroup>
-    <IncludePackageReferencesDuringMarkupCompilation Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' == ''">true</IncludePackageReferencesDuringMarkupCompilation>
     <AlwaysCompileMarkupFilesInSeparateDomain Condition="'$(BuildingInsideVisualStudio)' == 'true' and '$(AlwaysCompileMarkupFilesInSeparateDomain)' == ''">true</AlwaysCompileMarkupFilesInSeparateDomain>
     <AlwaysCompileMarkupFilesInSeparateDomain Condition="'$(AlwaysCompileMarkupFilesInSeparateDomain)' == '' ">true</AlwaysCompileMarkupFilesInSeparateDomain>
     <LocalizationDirectivesToLocFile Condition="'$(LocalizationDirectivesToLocFile)' == ''">None</LocalizationDirectivesToLocFile>
@@ -382,7 +381,7 @@
        <MarkupCompilePass2ForMainAssemblyDependsOn>
                      _CreateTemporaryTargetAssemblyProject;
                      GenerateTemporaryTargetAssembly;
-                     _GenerateTemporaryTargetAssembly2;
+                     _CompileTemporaryTargetAssembly;
                      MarkupCompilePass2;
                      AfterMarkupCompilePass2;
                      CleanupTemporaryTargetAssembly
@@ -390,7 +389,7 @@
 
         <_CompileTargetNameForLocalType Condition="'$(_CompileTargetNameForLocalType)' == ''">_CompileTemporaryAssembly</_CompileTargetNameForLocalType>
 
-        <_ResolveProjectReferencesTargetName Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' == 'true'">ResolveProjectReferences</_ResolveProjectReferencesTargetName>
+        <_ResolveProjectReferencesTargetName Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'">ResolveProjectReferences</_ResolveProjectReferencesTargetName>
         <_CompileTemporaryAssemblyDependsOn>BuildOnlySettings;ResolveKeySource;$(_ResolveProjectReferencesTargetName);CoreCompile</_CompileTemporaryAssemblyDependsOn>
 
   </PropertyGroup>
@@ -406,13 +405,13 @@
 
   <!--
                 ==========================================
-                  CreateTemporaryTargetAssemblyProject
+                  _CreateTemporaryTargetAssemblyProject
                 ==========================================
-                Name : CreateTemporaryTargetAssemblyProject
+                Name : _CreateTemporaryTargetAssemblyProject
   -->
 
-   <Target Name="CreateTemporaryTargetAssemblyProject"
-               Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' == 'true' and '$(_RequireMCPass2ForMainAssembly)' == 'true'" >
+   <Target Name="_CreateTemporaryTargetAssemblyProject"
+               Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false' and '$(_RequireMCPass2ForMainAssembly)' == 'true'" >
 
        <CreateTemporaryTargetAssemblyProject 
                 CurrentProject="$(MSBuildProjectFullPath)"
@@ -497,19 +496,19 @@
     <!--
 
                 ==========================================
-                       GenerateTemporaryTargetAssembly2
+                       _CompileTemporaryTargetAssembly
                 ==========================================
 
-                Name : GenerateTemporaryTargetAssembly2
+                Name : _CompileTemporaryTargetAssembly
 
   -->
 
-   <Target Name="GenerateTemporaryTargetAssembly2"
-               Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' == 'true' and '$(_RequireMCPass2ForMainAssembly)' == 'true'" >
+   <Target Name="_CompileTemporaryTargetAssembly"
+               Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false' and '$(_RequireMCPass2ForMainAssembly)' == 'true'" >
 
       <Message Text="MSBuildProjectFile is $(MSBuildProjectFile)" Condition="'$(MSBuildTargetsVerbose)' == 'true'" />
 
-       <GenerateTemporaryTargetAssembly2
+       <CompileTemporaryTargetAssembly
                 CurrentProject="$(MSBuildProjectFullPath)"
                 MSBuildBinPath="$(MSBuildBinPath)"
                 ReferencePathTypeName="ReferencePath"
@@ -523,7 +522,7 @@
                 GenerateTemporaryTargetAssemblyDebuggingInformation="$(GenerateTemporaryTargetAssemblyDebuggingInformation)"
                  >
 
-       </GenerateTemporaryTargetAssembly2>
+       </CompileTemporaryTargetAssembly>
 
        <CreateItem Include="$(IntermediateOutputPath)$(TargetFileName)" >
                <Output TaskParameter="Include" ItemName="AssemblyForLocalTypeReference" />

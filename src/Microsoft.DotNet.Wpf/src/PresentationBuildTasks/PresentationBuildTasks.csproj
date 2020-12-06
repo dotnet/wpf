@@ -300,7 +300,7 @@
     <Compile Include="Microsoft\Build\Tasks\Windows\UpdateManifestForBrowserApplication.cs" />
     <Compile Include="Microsoft\Build\Tasks\Windows\ResourcesGenerator.cs" />
     <Compile Include="Microsoft\Build\Tasks\Windows\GenerateTemporaryTargetAssembly.cs" />
-    <Compile Include="Microsoft\Build\Tasks\Windows\GenerateTemporaryTargetAssembly2.cs" />
+    <Compile Include="Microsoft\Build\Tasks\Windows\CompileTemporaryTargetAssembly.cs" />
     <Compile Include="Microsoft\Build\Tasks\Windows\CreateTemporaryTargetAssemblyProject.cs" />
   </ItemGroup>
 

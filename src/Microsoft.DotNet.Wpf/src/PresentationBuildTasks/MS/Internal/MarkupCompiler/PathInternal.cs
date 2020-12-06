@@ -11,6 +11,14 @@
 //   the difference. The method uses the default file path comparison for the 
 //   current platform (StringComparison.OrdinalIgnoreCase for Windows.)
 //
+//   Ported to .NET Framework from the GetRelativePath implementation in:
+//
+//   https://github.com/dotnet/corefx/blob/b123ba4b9107c73cbc02010dc1ee78eb8ffccb93/src/Common/src/CoreLib/System/IO/Path.cs
+//
+//   This ported method ('GetRelativePath') is only called by the .NET Framework 
+//   version of PresentationBuildTasks.dll that ships with the Microsoft.NET.Sdk.WindowsDesktop 
+//   SDK as part of .NET 5.0.
+//
 //---------------------------------------------------------------------------
 
 #pragma warning disable 1634, 1691

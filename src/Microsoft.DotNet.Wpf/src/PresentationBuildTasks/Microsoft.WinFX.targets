@@ -427,7 +427,7 @@
            <Output TaskParameter="TemporaryTargetAssemblyProjectName" PropertyName="_TemporaryTargetAssemblyProjectName"/>
        </CreateTemporaryTargetAssemblyProject>
 
-      <Message Text="GenerateTemporaryTargetAssembyProject project is $(_TemporaryTargetAssemblyProjectName)" />
+      <Message Text="GenerateTemporaryTargetAssemblyProject project is $(_TemporaryTargetAssemblyProjectName)" />
 
       <!-- Path to generated NuGet props and targets files -->
       <Message Text="MSBuildProjectExtensionsPath: $(MSBuildProjectExtensionsPath)" />

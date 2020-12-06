@@ -376,7 +376,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             XmlNode root = xmlProjectDoc.DocumentElement;
 
-            // Create a new ItemGroup element
+            // Create a new PropertyGroup element
             XmlNode nodeItemGroup = xmlProjectDoc.CreateElement("PropertyGroup", root.NamespaceURI);
             root.InsertAfter(nodeItemGroup, root.FirstChild);
 

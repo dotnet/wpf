@@ -380,9 +380,9 @@
   <PropertyGroup>
 
        <MarkupCompilePass2ForMainAssemblyDependsOn>
-                     CreateTemporaryTargetAssemblyProject;
+                     _CreateTemporaryTargetAssemblyProject;
                      GenerateTemporaryTargetAssembly;
-                     GenerateTemporaryTargetAssembly2;
+                     _GenerateTemporaryTargetAssembly2;
                      MarkupCompilePass2;
                      AfterMarkupCompilePass2;
                      CleanupTemporaryTargetAssembly
@@ -530,7 +530,7 @@
        </CreateItem>
 
        <Message Text="Deleting generated NuGet props and targets files from the temporary project: @(_DestinationGeneratedNuGetPropsAndTargets)"/>
-       <Delete Files="@(_DestinationGeneratedNuGetPropsAndTargets)"/>
+       <Delete Files="@(_DestinationGeneratedNuGetPropsAndTargets)" Condition=" '$(GenerateTemporaryTargetAssemblyDebuggingInformation)' != 'true' " />
 
   </Target>
 

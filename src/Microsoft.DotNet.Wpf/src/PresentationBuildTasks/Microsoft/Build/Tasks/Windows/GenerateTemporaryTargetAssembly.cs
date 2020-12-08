@@ -19,6 +19,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 
 using System.Globalization;
 using System.Diagnostics;
@@ -88,6 +89,24 @@ namespace Microsoft.Build.Tasks.Windows
         /// <remarks>Catching all exceptions in this method is appropriate - it will allow the build process to resume if possible after logging errors</remarks>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public override bool Execute()
+        {
+            if (string.Compare(IncludePackageReferencesDuringMarkupCompilation, "false", StringComparison.OrdinalIgnoreCase) != 0)
+            {
+                return ExecuteGenerateTemporaryTargetAssemblyWithPackageReferenceSupport();
+            }
+            else
+            {
+                return ExecuteLegacyGenerateTemporaryTargetAssembly();
+            }
+        }
+
+        /// <summary>
+        /// ITask Execute method
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>Catching all exceptions in this method is appropriate - it will allow the build process to resume if possible after logging errors</remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        private bool ExecuteLegacyGenerateTemporaryTargetAssembly()
         {
             bool retValue = true;
 
@@ -176,6 +195,104 @@ namespace Microsoft.Build.Tasks.Windows
                         Log.LogWarningFromException(e);
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                Log.LogErrorFromException(e);
+                retValue = false;
+            }
+
+            return retValue;
+        }
+
+        /// <summary>
+        /// ITask Execute method
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>Catching all exceptions in this method is appropriate - it will allow the build process to resume if possible after logging errors</remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        private bool ExecuteGenerateTemporaryTargetAssemblyWithPackageReferenceSupport()
+        {
+            bool retValue = true;
+
+            //
+            // Create the temporary target assembly project
+            // 
+            try
+            {
+                XmlDocument xmlProjectDoc = null;
+
+                xmlProjectDoc = new XmlDocument( );
+                xmlProjectDoc.Load(CurrentProject);
+
+                // remove all the WinFX specific item lists
+                // ApplicationDefinition, Page, MarkupResource and Resource
+                RemoveItemsByName(xmlProjectDoc, APPDEFNAME);
+                RemoveItemsByName(xmlProjectDoc, PAGENAME);
+                RemoveItemsByName(xmlProjectDoc, MARKUPRESOURCENAME);
+                RemoveItemsByName(xmlProjectDoc, RESOURCENAME);
+
+                // Add properties required for temporary assembly compilation
+                var properties = new List<(string PropertyName, string PropertyValue)> 
+                {
+                    ( nameof(AssemblyName), AssemblyName ),
+                    ( nameof(IntermediateOutputPath), IntermediateOutputPath ),
+                    ( "AppendTargetFrameworkToOutputPath", "false"),
+                    ( "_TargetAssemblyProjectName", Path.GetFileNameWithoutExtension(CurrentProject)),
+                    ( nameof(MSBuildProjectExtensionsPath), MSBuildProjectExtensionsPath),
+                    ( nameof(Analyzers), Analyzers)
+                };
+
+                AddNewProperties(xmlProjectDoc, properties);
+
+                // Replace the Reference Item list with ReferencePath
+                RemoveItemsByName(xmlProjectDoc, REFERENCETYPENAME);
+                AddNewItems(xmlProjectDoc, ReferencePathTypeName, ReferencePath);
+
+                // Add GeneratedCodeFiles to Compile item list.
+                AddNewItems(xmlProjectDoc, CompileTypeName, GeneratedCodeFiles);
+
+                // Save the xmlDocument content into the temporary project file.
+                xmlProjectDoc.Save(TemporaryTargetAssemblyProjectName);
+
+                //
+                //  Compile the temporary target assembly project
+                //
+                retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, null, null);
+
+                // Delete the temporary project file and generated files unless diagnostic mode has been requested
+                if (!GenerateTemporaryTargetAssemblyDebuggingInformation)
+                {
+                    try
+                    {
+                        File.Delete(TemporaryTargetAssemblyProjectName);
+
+                        DirectoryInfo intermediateOutputPath = new DirectoryInfo(IntermediateOutputPath);
+                        foreach (FileInfo temporaryProjectFile in intermediateOutputPath.EnumerateFiles(string.Concat(Path.GetFileNameWithoutExtension(TemporaryTargetAssemblyProjectName), "*")))
+                        {
+                            temporaryProjectFile.Delete();
+                        }
+
+                        // Cleanup temporary project's generated NuGet files
+                        string[] generatedNuGetFiles =
+                        { 
+                            $"{TemporaryTargetAssemblyProjectName}.nuget.dgspec.json",
+                            $"{TemporaryTargetAssemblyProjectName}.nuget.g.targets",
+                            $"{TemporaryTargetAssemblyProjectName}.nuget.g.props"
+                        };
+
+                        foreach (string generatedNuGetFile in generatedNuGetFiles)
+                        { 
+                            File.Delete(generatedNuGetFile);
+                        }
+                    }
+                    catch (IOException e)
+                    {
+                        // Failure to delete the file is a non fatal error
+                        Log.LogWarningFromException(e);
+                    }
+                }
+
             }
             catch (Exception e)
             {
@@ -332,6 +449,53 @@ namespace Microsoft.Build.Tasks.Windows
             get { return _generateTemporaryTargetAssemblyDebuggingInformation; }
             set { _generateTemporaryTargetAssemblyDebuggingInformation = value; } 
         }
+
+        /// <summary>
+        /// Analyzers 
+        /// 
+        /// Required for Source Generator support. May be null.
+        /// 
+        /// </summary>
+        public string Analyzers 
+        { get; set; }
+
+        /// <summary>
+        /// IncludePackageReferencesDuringMarkupCompilation 
+        /// 
+        /// Required for Source Generator support. May be null.
+        ///
+        /// Set this property to 'false' to use the .NET Core 3.0 behavior for this task. 
+        ///
+        /// </summary>
+        public string IncludePackageReferencesDuringMarkupCompilation 
+        { get; set; }
+
+        /// <summary>
+        /// MSBuildProjectExtensionsPath 
+        /// 
+        /// Required for PackageReference support.
+        ///
+        /// This property may be null if 'IncludePackageReferencesDuringMarkupCompilation' is 'false'.
+        ///
+        /// Determines the location of the parent project's generated NuGet props/targets files.
+        /// 
+        /// </summary>
+        public string MSBuildProjectExtensionsPath 
+        { get; set; }
+
+        /// <summary>
+        /// TemporaryTargetAssemblyProjectName 
+        ///
+        /// Required for PackageReference support.
+        ///
+        /// This property may be null if 'IncludePackageReferencesDuringMarkupCompilation' is 'false'.
+        ///
+        /// The file name with extension of the randomly generated project name for the temporary assembly
+        ///
+        /// </summary>
+        public string TemporaryTargetAssemblyProjectName 
+        { get; set; }
+
 
         #endregion Public Properties
   
@@ -501,6 +665,36 @@ namespace Microsoft.Build.Tasks.Windows
 
                 // Add current item node into the children list of ItemGroup
                 nodeItemGroup.AppendChild(nodeItem);
+            }
+        }
+
+        private void AddNewProperties(XmlDocument xmlProjectDoc, List<(string PropertyName, string PropertyValue)> properties )
+        {
+            if (xmlProjectDoc == null || properties == null )
+            {
+                // When the parameters are not valid, simply return it, instead of throwing exceptions.
+                return;
+            }
+
+            XmlNode root = xmlProjectDoc.DocumentElement;
+
+            // Create a new PropertyGroup element
+            XmlNode nodeItemGroup = xmlProjectDoc.CreateElement("PropertyGroup", root.NamespaceURI);
+            root.InsertAfter(nodeItemGroup, root.FirstChild);
+
+            // Append this new ItemGroup item into the list of children of the document root.
+            foreach(var property in properties)
+            {
+                // Skip empty properties
+                if (!string.IsNullOrEmpty(property.PropertyValue))
+                {
+                    // Create an element for the given propertyName
+                    XmlElement nodeItem = xmlProjectDoc.CreateElement(property.PropertyName, root.NamespaceURI);
+                    nodeItem.InnerText = property.PropertyValue;
+
+                    // Add current item node into the PropertyGroup 
+                    nodeItemGroup.AppendChild(nodeItem);
+                }
             }
         }
 

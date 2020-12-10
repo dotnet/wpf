@@ -385,9 +385,8 @@
 
         <_CompileTargetNameForLocalType Condition="'$(_CompileTargetNameForLocalType)' == ''">_CompileTemporaryAssembly</_CompileTargetNameForLocalType>
 
-        <!-- TODO: Change this to false after test -->
-        <!-- The updated .NET 5.0.2 GenerateTemporaryTargetAssembly behavior that supports source generators is off by default --> 
-        <IncludePackageReferencesDuringMarkupCompilation Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != ''">true</IncludePackageReferencesDuringMarkupCompilation>
+        <!-- The updated .NET 5.0.2 GenerateTemporaryTargetAssembly behavior that supports source generators is off by default. --> 
+        <IncludePackageReferencesDuringMarkupCompilation Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != ''">false</IncludePackageReferencesDuringMarkupCompilation>
         <_ResolveProjectReferencesTargetName Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'">ResolveProjectReferences</_ResolveProjectReferencesTargetName>
         <_CompileTemporaryAssemblyDependsOn>BuildOnlySettings;ResolveKeySource;$(_ResolveProjectReferencesTargetName);CoreCompile</_CompileTemporaryAssemblyDependsOn>
 
@@ -425,32 +424,46 @@
 
       <!-- Collect the generated NuGet files from the parent project required to support PackageReferences. -->
       <ItemGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'">
-        <SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.g.props"/>
-        <SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.g.targets"/>
-        <SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.dgspec.json"/>
+        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.g.props"/>
+        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.g.targets"/>
+        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.dgspec.json"/>
 
-        <DestGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_TemporaryTargetAssemblyProjectName).nuget.g.props"/>
-        <DestGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_TemporaryTargetAssemblyProjectName).nuget.g.targets"/>
-        <DestGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_TemporaryTargetAssemblyProjectName).nuget.dgspec.json"/>
+        <_DestGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_TemporaryTargetAssemblyProjectName).nuget.g.props"/>
+        <_DestGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_TemporaryTargetAssemblyProjectName).nuget.g.targets"/>
+        <_DestGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_TemporaryTargetAssemblyProjectName).nuget.dgspec.json"/>
 
       </ItemGroup>
 
       <!-- Copy the renamed outer project NuGet props/targets files to the MSBuildProjectExtensionsPath used by NuGet. -->
       <Copy Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'"
-            SourceFiles="@(SourceGeneratedNuGetPropsAndTargets)"
-            DestinationFiles="@(DestGeneratedNuGetPropsAndTargets)" 
+            SourceFiles="@(_SourceGeneratedNuGetPropsAndTargets)"
+            DestinationFiles="@(_DestGeneratedNuGetPropsAndTargets)" 
        />
 
        <!--
-         Undo TargetFramework append set in Microsoft.NET.RuntimeIdentifierInference.targets to prevent
-          a duplicate target framework in the IntermediateOutputPath when the new BuildEngine instance runs. 
+        Undo TargetFramework and RID append set in Microsoft.NET.RuntimeIdentifierInference.targets to prevent
+        a duplicate target framework and runtime identifier in the IntermediateOutputPath when the new BuildEngine 
+        instance runs. 
 
-        'Append $(TargetFramework) directory to output and intermediate paths to prevent bin clashes between
-        targets.'
+        'Append $(RuntimeIdentifier) to directory to output and intermediate paths to prevent bin clashes between
+        targets. But do not append the implicit default runtime identifier for .NET Framework apps as that would 
+        append a RID the user never mentioned in the path and do so even in the AnyCPU case.'
        -->
 
-      <PropertyGroup Condition="'$(AppendTargetFrameworkToOutputPath)' == 'true' and '$(TargetFramework)' != '' and '$(_UnsupportedTargetFrameworkError)' != 'true'">
-          <IntermediateOutputPathNoTargetFramework>$([System.Text.RegularExpressions.Regex]::Replace($(IntermediateOutputPath), "$(TargetFramework)\\$",, System.Text.RegularExpressions.RegexOptions.IgnoreCase))</IntermediateOutputPathNoTargetFramework>
+      <PropertyGroup>
+          <_IntermediateOutputPathNoTargetFrameworkOrRID>$(IntermediateOutputPath)</_IntermediateOutputPathNoTargetFrameworkOrRID>
+      </PropertyGroup>
+
+      <PropertyGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false' and
+          '$(AppendRuntimeIdentifierToOutputPath)' == 'true' and '$(RuntimeIdentifier)' != '' and 
+          '$(_UsingDefaultRuntimeIdentifier)' != 'true'">
+        <_IntermediateOutputPathNoTargetFrameworkOrRID>$([System.Text.RegularExpressions.Regex]::Replace($(_IntermediateOutputPathNoTargetFrameworkOrRID), "$(RuntimeIdentifier)\\$",, System.Text.RegularExpressions.RegexOptions.IgnoreCase))</_IntermediateOutputPathNoTargetFrameworkOrRID>
+      </PropertyGroup>
+      
+      <PropertyGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false' and 
+          '$(AppendTargetFrameworkToOutputPath)' == 'true' and '$(TargetFramework)' != '' and 
+          '$(_UnsupportedTargetFrameworkError)' != 'true'">
+          <_IntermediateOutputPathNoTargetFrameworkOrRID>$([System.Text.RegularExpressions.Regex]::Replace($(_IntermediateOutputPathNoTargetFrameworkOrRID), "$(TargetFramework)\\$",, System.Text.RegularExpressions.RegexOptions.IgnoreCase))</_IntermediateOutputPathNoTargetFrameworkOrRID>
       </PropertyGroup>
 
        <!--  Use the legacy .NET Framework/.NET Core 3.0 GenerateTemporaryTargetAssembly path if 'IncludePackageReferencesDuringMarkupCompilation' is 'false',. --> 
@@ -462,7 +475,7 @@
                 GeneratedCodeFiles="@(_GeneratedCodeFiles)"
                 ReferencePath="@(ReferencePath)"
                 BaseIntermediateOutputPath="$(BaseIntermediateOutputPath)"
-                IntermediateOutputPath="$(IntermediateOutputPathNoTargetFramework)"
+                IntermediateOutputPath="$(_IntermediateOutputPathNoTargetFrameworkOrRID)"
                 AssemblyName="$(AssemblyName)"
                 CompileTargetName="$(_CompileTargetNameForLocalType)"
                 GenerateTemporaryTargetAssemblyDebuggingInformation="$(GenerateTemporaryTargetAssemblyDebuggingInformation)"
@@ -481,7 +494,7 @@
        <Delete
            Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false' 
             and '$(GenerateTemporaryTargetAssemblyDebuggingInformation)' != 'true'"
-            Files="@(DestGeneratedNuGetPropsAndTargets)" />
+            Files="@(_DestGeneratedNuGetPropsAndTargets)" />
         
    </Target>
 

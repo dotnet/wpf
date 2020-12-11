@@ -383,12 +383,16 @@
                      CleanupTemporaryTargetAssembly
        </MarkupCompilePass2ForMainAssemblyDependsOn>
 
-       <_CompileTargetNameForLocalType Condition="'$(_CompileTargetNameForLocalType)' == ''">_CompileTemporaryAssembly</_CompileTargetNameForLocalType>
+        <_CompileTargetNameForLocalType Condition="'$(_CompileTargetNameForLocalType)' == ''">_CompileTemporaryAssembly</_CompileTargetNameForLocalType>
 
+        <!-- The updated .NET 5.0.2 GenerateTemporaryTargetAssembly behavior that supports source generators is off by default. --> 
+        <IncludePackageReferencesDuringMarkupCompilation Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' == ''">false</IncludePackageReferencesDuringMarkupCompilation>
+        <_ResolveProjectReferencesTargetName Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'">ResolveProjectReferences</_ResolveProjectReferencesTargetName>
+        <_CompileTemporaryAssemblyDependsOn>BuildOnlySettings;ResolveKeySource;$(_ResolveProjectReferencesTargetName);CoreCompile</_CompileTemporaryAssemblyDependsOn>
 
   </PropertyGroup>
 
-  <Target Name="_CompileTemporaryAssembly"  DependsOnTargets="BuildOnlySettings;ResolveKeySource;CoreCompile" />
+  <Target Name="_CompileTemporaryAssembly"  DependsOnTargets="$(_CompileTemporaryAssemblyDependsOn)" />
 
 
   <Target Name="MarkupCompilePass2ForMainAssembly"
@@ -396,7 +400,6 @@
                DependsOnTargets="$(MarkupCompilePass2ForMainAssemblyDependsOn)" >
 
   </Target>
-
 
   <!--
 
@@ -407,12 +410,63 @@
                 Name : GenerateTemporaryTargetAssembly
 
   -->
+  <Target Name="GenerateTemporaryTargetAssembly" Condition="'$(_RequireMCPass2ForMainAssembly)' == 'true'"> 
 
-   <Target Name="GenerateTemporaryTargetAssembly"
-               Condition="'$(_RequireMCPass2ForMainAssembly)' == 'true' " >
+     <Message Text="MSBuildProjectFile is $(MSBuildProjectFile)" Condition="'$(MSBuildTargetsVerbose)' == 'true'" />
+         
+       <!-- Create a temporary target assembly project name with a random component. -->
+       <PropertyGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'">
+            <_ParentProjectName>$([System.IO.Path]::GetFileNameWithoutExtension('$(MSBuildProjectFullPath)'))</_ParentProjectName>
+            <_ParentProjectExtension>$([System.IO.Path]::GetExtension($(MSBuildProjectFullPath)))</_ParentProjectExtension>
+            <_TemporaryTargetAssemblyProjectNameNoExtension>$([System.String]::Join("_", "$(_ParentProjectName)", "$([System.IO.Path]::GetFileNameWithoutExtension($([System.IO.Path]::GetRandomFileName())))", "wpftmp"))</_TemporaryTargetAssemblyProjectNameNoExtension>
+            <_TemporaryTargetAssemblyProjectName>$(_TemporaryTargetAssemblyProjectNameNoExtension)$(_ParentProjectExtension)</_TemporaryTargetAssemblyProjectName>
+       </PropertyGroup>
 
-      <Message Text="MSBuildProjectFile is $(MSBuildProjectFile)" Condition="'$(MSBuildTargetsVerbose)' == 'true'" />
+      <!-- Collect the generated NuGet files from the parent project required to support PackageReferences. -->
+      <ItemGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'">
+        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.g.props"/>
+        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.g.targets"/>
+        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.dgspec.json"/>
 
+        <_DestGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_TemporaryTargetAssemblyProjectName).nuget.g.props"/>
+        <_DestGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_TemporaryTargetAssemblyProjectName).nuget.g.targets"/>
+        <_DestGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_TemporaryTargetAssemblyProjectName).nuget.dgspec.json"/>
+
+      </ItemGroup>
+
+      <!-- Copy the renamed outer project NuGet props/targets files to the MSBuildProjectExtensionsPath used by NuGet. -->
+      <Copy Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'"
+            SourceFiles="@(_SourceGeneratedNuGetPropsAndTargets)"
+            DestinationFiles="@(_DestGeneratedNuGetPropsAndTargets)" 
+       />
+
+       <!--
+        Undo TargetFramework and RID append set in Microsoft.NET.RuntimeIdentifierInference.targets to prevent
+        a duplicate target framework and runtime identifier in the IntermediateOutputPath when the new BuildEngine 
+        instance runs. 
+
+        'Append $(RuntimeIdentifier) to directory to output and intermediate paths to prevent bin clashes between
+        targets. But do not append the implicit default runtime identifier for .NET Framework apps as that would 
+        append a RID the user never mentioned in the path and do so even in the AnyCPU case.'
+       -->
+
+      <PropertyGroup>
+          <_IntermediateOutputPathNoTargetFrameworkOrRID>$(IntermediateOutputPath)</_IntermediateOutputPathNoTargetFrameworkOrRID>
+      </PropertyGroup>
+
+      <PropertyGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false' and
+          '$(AppendRuntimeIdentifierToOutputPath)' == 'true' and '$(RuntimeIdentifier)' != '' and 
+          '$(_UsingDefaultRuntimeIdentifier)' != 'true'">
+        <_IntermediateOutputPathNoTargetFrameworkOrRID>$([System.Text.RegularExpressions.Regex]::Replace($(_IntermediateOutputPathNoTargetFrameworkOrRID), "$(RuntimeIdentifier)\\$",, System.Text.RegularExpressions.RegexOptions.IgnoreCase))</_IntermediateOutputPathNoTargetFrameworkOrRID>
+      </PropertyGroup>
+      
+      <PropertyGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false' and 
+          '$(AppendTargetFrameworkToOutputPath)' == 'true' and '$(TargetFramework)' != '' and 
+          '$(_UnsupportedTargetFrameworkError)' != 'true'">
+          <_IntermediateOutputPathNoTargetFrameworkOrRID>$([System.Text.RegularExpressions.Regex]::Replace($(_IntermediateOutputPathNoTargetFrameworkOrRID), "$(TargetFramework)\\$",, System.Text.RegularExpressions.RegexOptions.IgnoreCase))</_IntermediateOutputPathNoTargetFrameworkOrRID>
+      </PropertyGroup>
+
+       <!--  Use the legacy .NET Framework/.NET Core 3.0 GenerateTemporaryTargetAssembly path if 'IncludePackageReferencesDuringMarkupCompilation' is 'false',. --> 
        <GenerateTemporaryTargetAssembly
                 CurrentProject="$(MSBuildProjectFullPath)"
                 MSBuildBinPath="$(MSBuildBinPath)"
@@ -420,10 +474,14 @@
                 CompileTypeName="Compile"
                 GeneratedCodeFiles="@(_GeneratedCodeFiles)"
                 ReferencePath="@(ReferencePath)"
-                IntermediateOutputPath="$(IntermediateOutputPath)"
+                BaseIntermediateOutputPath="$(BaseIntermediateOutputPath)"
+                IntermediateOutputPath="$(_IntermediateOutputPathNoTargetFrameworkOrRID)"
                 AssemblyName="$(AssemblyName)"
                 CompileTargetName="$(_CompileTargetNameForLocalType)"
                 GenerateTemporaryTargetAssemblyDebuggingInformation="$(GenerateTemporaryTargetAssemblyDebuggingInformation)"
+                IncludePackageReferencesDuringMarkupCompilation="$(IncludePackageReferencesDuringMarkupCompilation)"
+                Analyzers="$(Analyzers)" 
+                TemporaryTargetAssemblyProjectName="$(_TemporaryTargetAssemblyProjectName)"
                  >
 
        </GenerateTemporaryTargetAssembly>
@@ -432,8 +490,13 @@
                <Output TaskParameter="Include" ItemName="AssemblyForLocalTypeReference" />
        </CreateItem>
 
-  </Target>
-
+       <!-- Remove generated NuGet props/targets files. -->
+       <Delete
+           Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false' 
+            and '$(GenerateTemporaryTargetAssemblyDebuggingInformation)' != 'true'"
+            Files="@(_DestGeneratedNuGetPropsAndTargets)" />
+        
+   </Target>
 
   <!--
 

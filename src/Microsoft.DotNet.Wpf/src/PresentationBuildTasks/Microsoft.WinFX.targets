@@ -385,6 +385,8 @@
 
         <_CompileTargetNameForLocalType Condition="'$(_CompileTargetNameForLocalType)' == ''">_CompileTemporaryAssembly</_CompileTargetNameForLocalType>
 
+        <!-- The updated .NET 5.0.2 GenerateTemporaryTargetAssembly behavior that supports source generators is off by default. --> 
+        <IncludePackageReferencesDuringMarkupCompilation Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' == ''">false</IncludePackageReferencesDuringMarkupCompilation>
         <_ResolveProjectReferencesTargetName Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'">ResolveProjectReferences</_ResolveProjectReferencesTargetName>
         <_CompileTemporaryAssemblyDependsOn>BuildOnlySettings;ResolveKeySource;$(_ResolveProjectReferencesTargetName);CoreCompile</_CompileTemporaryAssemblyDependsOn>
 
@@ -418,32 +420,51 @@
             <_ParentProjectExtension>$([System.IO.Path]::GetExtension($(MSBuildProjectFullPath)))</_ParentProjectExtension>
             <_TemporaryTargetAssemblyProjectNameNoExtension>$([System.String]::Join("_", "$(_ParentProjectName)", "$([System.IO.Path]::GetFileNameWithoutExtension($([System.IO.Path]::GetRandomFileName())))", "wpftmp"))</_TemporaryTargetAssemblyProjectNameNoExtension>
             <_TemporaryTargetAssemblyProjectName>$(_TemporaryTargetAssemblyProjectNameNoExtension)$(_ParentProjectExtension)</_TemporaryTargetAssemblyProjectName>
-            <_TempProjectNuGetExtensionsPath>$([System.Text.RegularExpressions.Regex]::Replace($(MSBuildProjectExtensionsPath), "$(_ParentProjectName)\\$", "$(_TemporaryTargetAssemblyProjectNameNoExtension)\", System.Text.RegularExpressions.RegexOptions.IgnoreCase))</_TempProjectNuGetExtensionsPath>
        </PropertyGroup>
-
-      <Error Condition="Exists('$(_TempProjectNuGetExtensionsPath)')"
-          Text="$(_TempProjectNuGetExtensionsPath) should not exist.  This is directory name is randomly generated for each temp project compilation." />
 
       <!-- Collect the generated NuGet files from the parent project required to support PackageReferences. -->
       <ItemGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'">
-        <SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.g.props"/>
-        <SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.g.targets"/>
-        <SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.dgspec.json"/>
-        <SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)project.assets.json"/>
-        <SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)project.nuget.cache"/>
+        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.g.props"/>
+        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.g.targets"/>
+        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.dgspec.json"/>
 
-        <DestGeneratedNuGetPropsAndTargets Include="$(_TempProjectNuGetExtensionsPath)$(_TemporaryTargetAssemblyProjectName).nuget.g.props"/>
-        <DestGeneratedNuGetPropsAndTargets Include="$(_TempProjectNuGetExtensionsPath)$(_TemporaryTargetAssemblyProjectName).nuget.g.targets"/>
-        <DestGeneratedNuGetPropsAndTargets Include="$(_TempProjectNuGetExtensionsPath)$(_TemporaryTargetAssemblyProjectName).nuget.dgspec.json"/>
-        <DestGeneratedNuGetPropsAndTargets Include="$(_TempProjectNuGetExtensionsPath)project.assets.json"/>
-        <DestGeneratedNuGetPropsAndTargets Include="$(_TempProjectNuGetExtensionsPath)project.nuget.cache"/>
+        <_DestGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_TemporaryTargetAssemblyProjectName).nuget.g.props"/>
+        <_DestGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_TemporaryTargetAssemblyProjectName).nuget.g.targets"/>
+        <_DestGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_TemporaryTargetAssemblyProjectName).nuget.dgspec.json"/>
+
       </ItemGroup>
 
       <!-- Copy the renamed outer project NuGet props/targets files to the MSBuildProjectExtensionsPath used by NuGet. -->
       <Copy Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'"
-            SourceFiles="@(SourceGeneratedNuGetPropsAndTargets)"
-            DestinationFiles="@(DestGeneratedNuGetPropsAndTargets)" 
+            SourceFiles="@(_SourceGeneratedNuGetPropsAndTargets)"
+            DestinationFiles="@(_DestGeneratedNuGetPropsAndTargets)" 
        />
+
+       <!--
+        Undo TargetFramework and RID append set in Microsoft.NET.RuntimeIdentifierInference.targets to prevent
+        a duplicate target framework and runtime identifier in the IntermediateOutputPath when the new BuildEngine 
+        instance runs. 
+
+        'Append $(RuntimeIdentifier) to directory to output and intermediate paths to prevent bin clashes between
+        targets. But do not append the implicit default runtime identifier for .NET Framework apps as that would 
+        append a RID the user never mentioned in the path and do so even in the AnyCPU case.'
+       -->
+
+      <PropertyGroup>
+          <_IntermediateOutputPathNoTargetFrameworkOrRID>$(IntermediateOutputPath)</_IntermediateOutputPathNoTargetFrameworkOrRID>
+      </PropertyGroup>
+
+      <PropertyGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false' and
+          '$(AppendRuntimeIdentifierToOutputPath)' == 'true' and '$(RuntimeIdentifier)' != '' and 
+          '$(_UsingDefaultRuntimeIdentifier)' != 'true'">
+        <_IntermediateOutputPathNoTargetFrameworkOrRID>$([System.Text.RegularExpressions.Regex]::Replace($(_IntermediateOutputPathNoTargetFrameworkOrRID), "$(RuntimeIdentifier)\\$",, System.Text.RegularExpressions.RegexOptions.IgnoreCase))</_IntermediateOutputPathNoTargetFrameworkOrRID>
+      </PropertyGroup>
+      
+      <PropertyGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false' and 
+          '$(AppendTargetFrameworkToOutputPath)' == 'true' and '$(TargetFramework)' != '' and 
+          '$(_UnsupportedTargetFrameworkError)' != 'true'">
+          <_IntermediateOutputPathNoTargetFrameworkOrRID>$([System.Text.RegularExpressions.Regex]::Replace($(_IntermediateOutputPathNoTargetFrameworkOrRID), "$(TargetFramework)\\$",, System.Text.RegularExpressions.RegexOptions.IgnoreCase))</_IntermediateOutputPathNoTargetFrameworkOrRID>
+      </PropertyGroup>
 
        <!--  Use the legacy .NET Framework/.NET Core 3.0 GenerateTemporaryTargetAssembly path if 'IncludePackageReferencesDuringMarkupCompilation' is 'false',. --> 
        <GenerateTemporaryTargetAssembly
@@ -453,7 +474,8 @@
                 CompileTypeName="Compile"
                 GeneratedCodeFiles="@(_GeneratedCodeFiles)"
                 ReferencePath="@(ReferencePath)"
-                IntermediateOutputPath="$(IntermediateOutputPath)"
+                BaseIntermediateOutputPath="$(BaseIntermediateOutputPath)"
+                IntermediateOutputPath="$(_IntermediateOutputPathNoTargetFrameworkOrRID)"
                 AssemblyName="$(AssemblyName)"
                 CompileTargetName="$(_CompileTargetNameForLocalType)"
                 GenerateTemporaryTargetAssemblyDebuggingInformation="$(GenerateTemporaryTargetAssemblyDebuggingInformation)"
@@ -468,18 +490,13 @@
                <Output TaskParameter="Include" ItemName="AssemblyForLocalTypeReference" />
        </CreateItem>
 
-       <!-- Remove generated NuGet props/targets files and temp project directory. -->
-       <Error 
-           Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false' 
-            and '!$(_TempProjectNuGetExtensionsPath.Contains(&quot;_wpftmp&quot;))'"
-           Text="$(_TempProjectNuGetExtensionsPath) is not valid. This directory name is randomly generated for each temp project compilation and must contain a random component and '_wpftmp'."/>
-
-       <RemoveDir 
+       <!-- Remove generated NuGet props/targets files. -->
+       <Delete
            Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false' 
             and '$(GenerateTemporaryTargetAssemblyDebuggingInformation)' != 'true'"
-            Directories="$(_TempProjectNuGetExtensionsPath)" />
-
-  </Target>
+            Files="@(_DestGeneratedNuGetPropsAndTargets)" />
+        
+   </Target>
 
   <!--
 

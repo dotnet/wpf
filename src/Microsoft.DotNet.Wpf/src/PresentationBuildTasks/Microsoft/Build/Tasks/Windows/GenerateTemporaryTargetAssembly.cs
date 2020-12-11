@@ -244,18 +244,6 @@ namespace Microsoft.Build.Tasks.Windows
                 RemoveItemsByName(xmlProjectDoc, MARKUPRESOURCENAME);
                 RemoveItemsByName(xmlProjectDoc, RESOURCENAME);
 
-                // Add properties required for temporary assembly compilation
-                var properties = new List<(string PropertyName, string PropertyValue)> 
-                {
-                    ( nameof(AssemblyName), AssemblyName ),
-                    ( nameof(IntermediateOutputPath), IntermediateOutputPath ),
-                    ( "AppendTargetFrameworkToOutputPath", "false"),
-                    ( "_TargetAssemblyProjectName", Path.GetFileNameWithoutExtension(CurrentProject)),
-                    ( nameof(Analyzers), Analyzers)
-                };
-
-                AddNewProperties(xmlProjectDoc, properties);
-
                 // Replace the Reference Item list with ReferencePath
                 RemoveItemsByName(xmlProjectDoc, REFERENCETYPENAME);
                 AddNewItems(xmlProjectDoc, ReferencePathTypeName, ReferencePath);
@@ -263,13 +251,32 @@ namespace Microsoft.Build.Tasks.Windows
                 // Add GeneratedCodeFiles to Compile item list.
                 AddNewItems(xmlProjectDoc, CompileTypeName, GeneratedCodeFiles);
 
+                // Replace implicit SDK imports with explicit SDK imports
+                ReplaceImplicitImports(xmlProjectDoc); 
+
+                // Add properties required for temporary assembly compilation
+                var properties = new List<(string PropertyName, string PropertyValue)> 
+                {
+                    ( nameof(AssemblyName), AssemblyName ),
+                    ( nameof(IntermediateOutputPath), IntermediateOutputPath ),
+                    ( nameof(BaseIntermediateOutputPath), BaseIntermediateOutputPath ),
+                    ( "_TargetAssemblyProjectName", Path.GetFileNameWithoutExtension(CurrentProject)),
+                    ( nameof(Analyzers), Analyzers )
+                };
+
+                AddNewProperties(xmlProjectDoc, properties);
+
                 // Save the xmlDocument content into the temporary project file.
                 xmlProjectDoc.Save(TemporaryTargetAssemblyProjectName);
+
+                // Disable conflicting Arcade SDK workaround that imports NuGet props/targets
+                Hashtable globalProperties = new Hashtable(1);
+                globalProperties["_WpfTempProjectNuGetFilePathNoExt"] = "";
 
                 //
                 //  Compile the temporary target assembly project
                 //
-                retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, null, null);
+                retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, globalProperties, null);
 
                 // Delete the temporary project file and generated files unless diagnostic mode has been requested
                 if (!GenerateTemporaryTargetAssemblyDebuggingInformation)
@@ -456,6 +463,17 @@ namespace Microsoft.Build.Tasks.Windows
         /// </summary>
         public string Analyzers 
         { get; set; }
+
+        /// <summary>
+        /// BaseIntermediateOutputPath
+        /// 
+        /// Required for Source Generator support. May be null.
+        /// 
+        /// </summary>
+        public string BaseIntermediateOutputPath
+        {
+            get; set;
+        }
 
         /// <summary>
         /// IncludePackageReferencesDuringMarkupCompilation 
@@ -665,7 +683,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             // Create a new PropertyGroup element
             XmlNode nodeItemGroup = xmlProjectDoc.CreateElement("PropertyGroup", root.NamespaceURI);
-            root.InsertAfter(nodeItemGroup, root.FirstChild);
+            root.PrependChild(nodeItemGroup);
 
             // Append this new ItemGroup item into the list of children of the document root.
             foreach(var property in properties)
@@ -679,6 +697,64 @@ namespace Microsoft.Build.Tasks.Windows
 
                     // Add current item node into the PropertyGroup 
                     nodeItemGroup.AppendChild(nodeItem);
+                }
+            }
+        }
+
+        //
+        // Replace implicit SDK imports with explicit imports 
+        //
+        static private void ReplaceImplicitImports(XmlDocument xmlProjectDoc)
+        {
+            if (xmlProjectDoc == null)
+            {
+                // When the parameters are not valid, simply return it, instead of throwing exceptions.
+                return;
+            }
+
+            XmlNode root = xmlProjectDoc.DocumentElement;
+          
+            for (int i = 0; i < root.Attributes.Count; i++)
+            {
+                XmlAttribute xmlAttribute = root.Attributes[i] as XmlAttribute;
+
+                if (xmlAttribute.Name.Equals("Sdk", StringComparison.OrdinalIgnoreCase))
+                {
+                    // <Project Sdk="Microsoft.NET.Sdk">
+
+                    // Remove Sdk attribute
+                    var sdkValue = xmlAttribute.Value;
+                    root.Attributes.Remove(xmlAttribute);
+
+                    //
+                    // Add explicit top import
+                    //
+                    //  <Import Project = "Sdk.props" Sdk="Microsoft.NET.Sdk" />
+                    //
+                    XmlNode nodeImportProps = xmlProjectDoc.CreateElement("Import", root.NamespaceURI);
+                    XmlAttribute projectAttribute = xmlProjectDoc.CreateAttribute("Project", root.NamespaceURI);
+                    projectAttribute.Value = "Sdk.props";
+                    nodeImportProps.Attributes.Append(projectAttribute);
+                    nodeImportProps.Attributes.Append(xmlAttribute);
+
+                    // Prepend this Import to the root of the XML document
+                    root.PrependChild(nodeImportProps);
+
+                    //
+                    // Add explicit bottom import
+                    //
+                    //  <Import Project = "Sdk.targets" Sdk="Microsoft.NET.Sdk" 
+                    //                
+                    XmlNode nodeImportTargets = xmlProjectDoc.CreateElement("Import", root.NamespaceURI);
+                    XmlAttribute projectAttribute2 = xmlProjectDoc.CreateAttribute("Project", root.NamespaceURI);
+                    projectAttribute2.Value = "Sdk.targets";
+                    XmlAttribute projectAttribute3 = xmlProjectDoc.CreateAttribute("Sdk", root.NamespaceURI);
+                    projectAttribute3.Value = sdkValue;
+                    nodeImportTargets.Attributes.Append(projectAttribute2);
+                    nodeImportTargets.Attributes.Append(projectAttribute3);
+
+                    // Append this Import to the end of the XML document
+                    root.AppendChild(nodeImportTargets);
                 }
             }
         }
@@ -733,3 +809,4 @@ namespace Microsoft.Build.Tasks.Windows
     
     #endregion GenerateProjectForLocalTypeReference Task class
 }
+

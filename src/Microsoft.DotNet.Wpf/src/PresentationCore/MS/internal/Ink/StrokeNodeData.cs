@@ -17,11 +17,11 @@ namespace MS.Internal.Ink
     /// <summary>
     /// This structure represents a node on a stroke spine. 
     /// </summary>
-    internal struct StrokeNodeData
+    internal readonly struct StrokeNodeData
     {
         #region Statics
 
-        private static StrokeNodeData s_empty = new StrokeNodeData();
+        private static readonly StrokeNodeData s_empty = new StrokeNodeData();
 
         #endregion
 
@@ -76,8 +76,8 @@ namespace MS.Internal.Ink
 
         #region Privates
 
-        private Point   _position;
-        private float _pressure;
+        private readonly Point   _position;
+        private readonly float _pressure;
 
         #endregion
     }

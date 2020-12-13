@@ -35,8 +35,8 @@ namespace MS.Internal.Ink
         internal StrokeNode(
             StrokeNodeOperations operations,
             int index,
-            StrokeNodeData nodeData,
-            StrokeNodeData lastNodeData,
+            in StrokeNodeData nodeData,
+            in StrokeNodeData lastNodeData,
             bool isLastNode)
         {
             System.Diagnostics.Debug.Assert(operations != null);

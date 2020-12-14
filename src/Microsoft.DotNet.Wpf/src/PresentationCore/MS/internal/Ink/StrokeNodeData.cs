@@ -28,7 +28,7 @@ namespace MS.Internal.Ink
         #region API (internal)
 
         /// <summary> Returns static object representing an unitialized node </summary>
-        internal static StrokeNodeData Empty { get { return s_empty; } }
+        internal static ref readonly StrokeNodeData Empty { get { return ref s_empty; } }
 
         /// <summary>
         /// Constructor for nodes of a pressure insensitive stroke

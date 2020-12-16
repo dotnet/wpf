@@ -65,9 +65,9 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>f56a56f90ff9124c85e4d889faeeca0824d2d437</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="6.0.0-alpha.1.20615.2">
+    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="6.0.0-alpha.1.20616.3">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</Uri>
-      <Sha>2e2b0dd12b608ee99055f0d6783e8543a49a2bed</Sha>
+      <Sha>a01851d99fde6063218eb576b6febaa795fbb731</Sha>
     </Dependency>
     <Dependency Name="System.IO.Packaging" Version="6.0.0-alpha.1.20561.11" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>

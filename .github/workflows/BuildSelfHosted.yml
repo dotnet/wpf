@@ -1,0 +1,15 @@
+name: Build WPF Self Hosted
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: [self-hosted]
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Build
+      run: .\build.cmd -pack -ci -configuration Release -prepareMachine /p:Platform=x86
+

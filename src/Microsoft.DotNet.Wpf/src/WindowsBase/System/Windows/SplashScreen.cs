@@ -148,8 +148,9 @@ namespace System.Windows
             _wndClass = MS.Win32.UnsafeNativeMethods.IntRegisterClassEx(wndClass);
             if (_wndClass == 0)
             {
-                if (Marshal.GetLastWin32Error() != 0x582) /* class already registered */
-                    throw new Win32Exception();
+                var lastWin32Error = Marshal.GetLastWin32Error();
+                if (lastWin32Error != 0x582) /* class already registered */
+                    throw new Win32Exception(lastWin32Error);
             }
 
             int screenWidth = MS.Win32.UnsafeNativeMethods.GetSystemMetrics(SM.CXSCREEN);

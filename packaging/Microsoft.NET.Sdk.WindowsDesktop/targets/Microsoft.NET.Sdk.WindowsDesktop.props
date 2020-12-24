@@ -115,7 +115,7 @@
   -->
 
   <!-- 
-    When WindowsDesktop SDK is used without setting UseWPF or UseWinForms, it shows a (suppressible) warning and functions much
+    When WindowsDesktop SDK is used without setting UseWPF or UseWindowsForms, it shows a (suppressible) warning and functions much
     like Microsoft.NET.Sdk
     
     Likewise, when WindowsDesktop SDK is used with a netcore TFM that is less than 3.0, it will simply act as if it were an

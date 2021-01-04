@@ -28,6 +28,9 @@ namespace MS.Internal
     {
         static AppDomainShutdownMonitor()
         {
+            _listeners =
+                new HashSet<WeakReference<IAppDomainShutdownListener>>();
+
             AppDomain.CurrentDomain.DomainUnload += OnShutdown;
             AppDomain.CurrentDomain.ProcessExit += OnShutdown;
         }
@@ -36,36 +39,36 @@ namespace MS.Internal
         {
             Debug.Assert(listener.TryGetTarget(out _));
 
-            lock (_hashSet)
+            lock (_listeners)
             {
                 if (!_shuttingDown)
                 {
-                    _hashSet.Add(listener);
+                    _listeners.Add(listener);
                 }
             }
         }
 
         public static void Remove(WeakReference<IAppDomainShutdownListener> listener)
         {
-            lock (_hashSet)
+            lock (_listeners)
             {
                 if (!_shuttingDown)
                 {
-                    _hashSet.Remove(listener);
+                    _listeners.Remove(listener);
                 }
             }
         }
 
         private static void OnShutdown(object sender, EventArgs e)
         {
-            lock (_hashSet)
+            lock (_listeners)
             {
                 // Setting this to true prevents Add and Remove from modifying the list. This
                 // way we call out without holding a lock (which would be bad)
                 _shuttingDown = true;
             }
 
-            foreach (var weakReference in _hashSet)
+            foreach (WeakReference<IAppDomainShutdownListener> weakReference in _listeners)
             {
                 if (weakReference.TryGetTarget(out var listener))
                 {
@@ -74,8 +77,7 @@ namespace MS.Internal
             }
         }
 
-        private static readonly HashSet<WeakReference<IAppDomainShutdownListener>> _hashSet =
-            new HashSet<WeakReference<IAppDomainShutdownListener>>();
+        private static readonly HashSet<WeakReference<IAppDomainShutdownListener>> _listeners;
 
         private static bool _shuttingDown;
     }

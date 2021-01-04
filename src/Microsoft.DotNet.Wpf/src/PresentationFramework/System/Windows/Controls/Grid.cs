@@ -2084,7 +2084,7 @@ namespace System.Windows.Controls
         /// </summary>
         /// <param name="definitions">Array of definitions to process.</param>
         /// <param name="finalSize">Final size to lay out to.</param>
-        /// <param name="rows">True if sizing row definitions, false for columns</param>
+        /// <param name="columns">True if sizing row definitions, false for columns</param>
         private void SetFinalSize(
             DefinitionBase[] definitions,
             double finalSize,

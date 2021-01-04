@@ -404,7 +404,7 @@
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderNotInitialized">
         <source>HTTP byte range downloader is not initialized.</source>
-        <target state="translated">Utilità di download intervallo di byte HTTP non inizializzata.</target>
+        <target state="translated">Il downloader dell'intervallo di byte HTTP non è inizializzato.</target>
         <note />
       </trans-unit>
       <trans-unit id="CalendarAutomationPeer_BlackoutDayHelpText">
@@ -644,7 +644,7 @@
       </trans-unit>
       <trans-unit id="CannotRecyleHeterogeneousTypes">
         <source>ItemsHost panel cannot use VirtualizationMode == Recycling because the IGeneratorHost.GetContainerForItemOverride method returns containers that have different types.</source>
-        <target state="translated">Impossibile utilizzare VirtualizationMode == Recycling per il pannello ItemsHost perché il metodo IGeneratorHost.GetContainerForItemOverride restituisce contenitori di tipi diversi.</target>
+        <target state="translated">Il pannello ItemsHost non può usare VirtualizationMode == Recycling perché il metodo IGeneratorHost.GetContainerForItemOverride restituisce contenitori di tipi diversi.</target>
         <note />
       </trans-unit>
       <trans-unit id="CannotRemoveUnrealizedItems">
@@ -1194,7 +1194,7 @@
       </trans-unit>
       <trans-unit id="DeployText">
         <source>The application cannot be deployed. Contact the application publisher for assistance.</source>
-        <target state="translated">Impossibile distribuire l'applicazione. Richiedere assistenza all'autore dell'applicazione.</target>
+        <target state="translated">Non è possibile distribuire l'applicazione. Richiedere assistenza all'editore dell'applicazione.</target>
         <note />
       </trans-unit>
       <trans-unit id="DeployTitle">
@@ -1439,7 +1439,7 @@
       </trans-unit>
       <trans-unit id="DownloadText">
         <source>The application cannot be downloaded. Check for network connectivity issues or contact the application publisher for assistance.</source>
-        <target state="translated">Impossibile scaricare l'applicazione. Controllare che non siano presenti problemi di connettività di rete oppure richiedere assistenza all'autore dell'applicazione.</target>
+        <target state="translated">Non è possibile scaricare l'applicazione. Controllare che non siano presenti problemi di connettività di rete oppure richiedere assistenza all'editore dell'applicazione.</target>
         <note />
       </trans-unit>
       <trans-unit id="DownloadTitle">
@@ -1623,7 +1623,7 @@ Crearlo?</target>
         <source>'{0}' does not exist.
 Verify that the file name is correct.</source>
         <target state="translated">'{0}' non esiste.
-Verificare che il nome file sia corretto.</target>
+Verificare che il nome di file sia corretto.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogInvalidFileName">
@@ -2250,7 +2250,7 @@ Sostituirlo?</target>
       </trans-unit>
       <trans-unit id="InvalidCompositionTarget">
         <source>Cannot set Visibility or call Show, ShowDialog, or Hide while the composition target is not valid.</source>
-        <target state="translated">Impossibile impostare Visibility oppure chiamare Show, ShowDialog o Hide quando la destinazione di composizione non è valida.</target>
+        <target state="translated">Non è possibile impostare Visibility oppure chiamare Show, ShowDialog o Hide quando la destinazione di composizione non è valida.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidControlTemplateTargetType">
@@ -2305,7 +2305,7 @@ Sostituirlo?</target>
       </trans-unit>
       <trans-unit id="InvalidDeployText">
         <source>There is a problem with how the application was built or published. Contact the application publisher for assistance.</source>
-        <target state="translated">Problema relativo alla modalità di compilazione o pubblicazione dell'applicazione. Richiedere assistenza all'autore dell'applicazione.</target>
+        <target state="translated">Problema relativo alla modalità di compilazione o pubblicazione dell'applicazione. Richiedere assistenza all'editore dell'applicazione.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidDeployTitle">
@@ -2385,7 +2385,7 @@ Sostituirlo?</target>
       </trans-unit>
       <trans-unit id="InvalidOperationDuringClosing">
         <source>Cannot set Visibility to Visible or call Show, ShowDialog, Close, or WindowInteropHelper.EnsureHandle while a Window is closing.</source>
-        <target state="translated">Impossibile impostare Visibility su Visible oppure chiamare Show, ShowDialog, Close o WindowInteropHelper.EnsureHandle mentre è in corso la chiusura dell'oggetto Window.</target>
+        <target state="translated">Non è possibile impostare Visibility su Visible oppure chiamare Show, ShowDialog, Close o WindowInteropHelper.EnsureHandle durante la chiusura di un oggetto Window.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidOperation_AddBackEntryNoContent">
@@ -4045,7 +4045,7 @@ Sostituirlo?</target>
       </trans-unit>
       <trans-unit id="ParserMarkupExtensionDelimiterBeforeFirstAttribute">
         <source>Arguments '{0}' are not valid. Markup extensions require only spaces between the markup extension name and the first parameter. A comma or equal sign is not allowed before the first parameter.</source>
-        <target state="translated">Argomenti '{0}' non validi. Per le estensioni di markup sono consentiti solo spazi tra il nome dell'estensione di markup e il primo parametro. Impossibile aggiungere una virgola o un segno di uguale prima del primo parametro.</target>
+        <target state="translated">Gli argomenti '{0}' non sono validi. Per le estensioni di markup sono consentiti solo spazi tra il nome dell'estensione di markup e il primo parametro. Non è consentito aggiungere una virgola o un segno di uguale prima del primo parametro.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserMarkupExtensionInvalidClosingBracketCharacers">
@@ -4405,7 +4405,7 @@ Sostituirlo?</target>
       </trans-unit>
       <trans-unit id="ParserXmlIslandMissing">
         <source>Parent element or property '{0}' requires an XML data island. To distinguish an XML island from surrounding XAML, wrap the XML data island in &lt;x:XData&gt; ... &lt;/x:XData&gt;.</source>
-        <target state="translated">Per l'elemento o la proprietà padre '{0}' è richiesta un'isola di dati XML. Per distinguere un'isola di dati XML dal codice XAML circostante, includere l'isola di dati XML tra tag &lt;x:XData&gt; ... &lt;/x:XData&gt;.</target>
+        <target state="translated">Per l'elemento o la proprietà padre '{0}' è richiesta un'isola di dati XML. Per distinguere un'isola di dati XML dal codice XAML circostante, racchiudere l'isola di dati XML tra tag &lt;x:XData&gt; ... &lt;/x:XData&gt;.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserXmlIslandUnexpected">
@@ -4460,7 +4460,7 @@ Sostituirlo?</target>
       </trans-unit>
       <trans-unit id="PositionalArgumentsWrongLength">
         <source>Cannot create MarkupExtension Arguments is the wrong length vector.</source>
-        <target state="translated">Impossibile creare MarkupExtension - Argomenti è il vettore di lunghezza errata.</target>
+        <target state="translated">Non è possibile creare MarkupExtension. Arguments è il vettore di lunghezza errata.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrevoiusPartialPageContentOutstanding">
@@ -4705,7 +4705,7 @@ Sostituirlo?</target>
       </trans-unit>
       <trans-unit id="ReshowNotAllowed">
         <source>Cannot set Visibility or call Show, ShowDialog, or WindowInteropHelper.EnsureHandle after a Window has closed.</source>
-        <target state="translated">Impossibile impostare Visibility o chiamare Show, ShowDialog o WindowInteropHelper.EnsureHandle dopo la chiusura dell'oggetto Window.</target>
+        <target state="translated">Non è possibile impostare Visibility o chiamare Show, ShowDialog o WindowInteropHelper.EnsureHandle dopo la chiusura di un oggetto Window.</target>
         <note />
       </trans-unit>
       <trans-unit id="ResourceDictionaryDeferredContentFailure">
@@ -5060,7 +5060,7 @@ Sostituirlo?</target>
       </trans-unit>
       <trans-unit id="Storyboard_ComplexPathNotSupported">
         <source>Cannot automatically create animation clone for frozen property values on '{0}' objects. Only FrameworkElement and FrameworkContentElement (or derived) types are supported.</source>
-        <target state="translated">Impossibile creare automaticamente il clone di animazione per i valori di proprietà bloccati per gli oggetti '{0}'. Sono supportati solo i tipi FrameworkElement e FrameworkContentElement, o derivati.</target>
+        <target state="translated">Non è possibile creare automaticamente il clone di animazione per i valori di proprietà bloccati per gli oggetti '{0}'. Sono supportati solo i tipi FrameworkElement e FrameworkContentElement o derivati.</target>
         <note />
       </trans-unit>
       <trans-unit id="Storyboard_ImmutableTargetNotSupported">
@@ -6220,7 +6220,7 @@ Sostituirlo?</target>
       </trans-unit>
       <trans-unit id="UnknownErrorText">
         <source>The application cannot be deployed because of an unknown error. Contact the application publisher for more information.</source>
-        <target state="translated">Impossibile distribuire l'applicazione a causa di un errore sconosciuto. Per ulteriori informazioni, contattare l'autore dell'applicazione.</target>
+        <target state="translated">Non è possibile distribuire l'applicazione a causa di un errore sconosciuto. Per altre informazioni, contattare l'editore dell'applicazione.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnknownErrorTitle">

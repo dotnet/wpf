@@ -1079,7 +1079,7 @@
       </trans-unit>
       <trans-unit id="PositionalParamsWrongLength">
         <source>GetPositionalParameters returned the wrong length vector.</source>
-        <target state="translated">GetPositionalParameters から、誤った長さのベクターが返されました。</target>
+        <target state="translated">GetPositionalParameters から、誤った長さのベクトルが返されました。</target>
         <note />
       </trans-unit>
       <trans-unit id="PrefixNotFound">

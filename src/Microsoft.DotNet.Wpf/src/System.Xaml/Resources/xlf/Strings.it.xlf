@@ -64,7 +64,7 @@
       </trans-unit>
       <trans-unit id="ArgumentRequired">
         <source>One of the following arguments must be non-null: '{0}'.</source>
-        <target state="translated">Uno dei seguenti argomenti deve essere non null: '{0}'.</target>
+        <target state="translated">Uno degli argomenti seguenti deve essere non Null: '{0}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="ArrayAddNotImplemented">
@@ -829,17 +829,17 @@
       </trans-unit>
       <trans-unit id="NoConstructor">
         <source>No matching constructor found on type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</source>
-        <target state="translated">Nessun costruttore corrispondente trovato sul tipo '{0}'. È possibile utilizzare le direttive Arguments o FactoryMethod per la costruzione del tipo.</target>
+        <target state="translated">Non è stato trovato alcun costruttore corrispondente per il tipo '{0}'. È possibile usare le direttive Arguments o FactoryMethod per la costruzione del tipo.</target>
         <note />
       </trans-unit>
       <trans-unit id="NoConstructorWithNArugments">
         <source>A Constructor for '{0}' with '{1}' arguments was not found.</source>
-        <target state="translated">Impossibile trovare un costruttore per '{0}' con '{1}' argomenti.</target>
+        <target state="translated">Non è stato trovato alcun costruttore per '{0}' con gli argomenti '{1}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="NoDefaultConstructor">
         <source>No default constructor found for type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</source>
-        <target state="translated">Nessun costruttore predefinito trovato per il tipo '{0}'. È possibile utilizzare le direttive Arguments o FactoryMethod per la costruzione del tipo.</target>
+        <target state="translated">Non è stato trovato alcun costruttore predefinito per il tipo '{0}'. È possibile usare le direttive Arguments o FactoryMethod per la costruzione del tipo.</target>
         <note />
       </trans-unit>
       <trans-unit id="NoElementUsage">
@@ -984,12 +984,12 @@
       </trans-unit>
       <trans-unit id="ObjectReaderNoMatchingConstructor">
         <source>Unable to find a suitable constructor for the specified constructor arguments on type '{0}'.</source>
-        <target state="translated">Impossibile trovare un costruttore adeguato per gli argomenti del costruttore specificati sul tipo '{0}'.</target>
+        <target state="translated">Non è possibile trovare un costruttore adatto per gli argomenti del costruttore specificati per il tipo '{0}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeCannotRoundtrip">
         <source>Unable to read objects of the type �{0}� because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
-        <target state="translated">Impossibile leggere oggetti del tipo �{0}� perché non sono disponibili costruttori accessibili. Per consentire l'utilizzo di questo tipo in XAML, aggiungere un costruttore predefinito, utilizzare ConstructorArgumentAttribute o fornire un descrittore d'istanza.</target>
+        <target state="translated">Non è possibile leggere oggetti del tipo {0} perché non sono disponibili costruttori accessibili. Per consentire l'uso di questo tipo in XAML, aggiungere un costruttore predefinito, usare ConstructorArgumentAttribute o specificare un elemento InstanceDescriptor.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeIsNested">
@@ -1009,7 +1009,7 @@
       </trans-unit>
       <trans-unit id="ObjectReaderXamlNameScopeResultsInClonedObject">
         <source>The object graph contains multiple references to an instance of type '{0}' and the serializer cannot find a commonly visible location to write the instance. You should examine your use of name scopes.</source>
-        <target state="translated">L'oggetto grafico contiene riferimenti multipli a un'istanza di tipo '{0}' e il serializzatore non è in grado di trovare un percorso visibile più comune per scrivere l'istanza. Verificare l'utilizzo degli ambiti dei nomi.</target>
+        <target state="translated">Il grafico di oggetti contiene riferimenti multipli a un'istanza di tipo '{0}' e il serializzatore non può trovare un percorso visibile più comune per scrivere l'istanza. Verificare l'uso degli ambiti dei nomi.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderXamlNamedElementAlreadyRegistered">
@@ -1439,7 +1439,7 @@
       </trans-unit>
       <trans-unit id="WriterIsClosed">
         <source>An attempt was made to write to a XamlWriter that has had its Closed method called.</source>
-        <target state="translated">Tentativo di scrittura in XamlWriter che ha chiamato il relativo metodo Closed.</target>
+        <target state="translated">È stato effettuato un tentativo di scrittura in XamlWriter per cui è stato chiamato il relativo metodo Closed.</target>
         <note />
       </trans-unit>
       <trans-unit id="XCRChoiceAfterFallback">

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
-  <file datatype="xml" source-language="en" target-language="zh-Hant" original="../Strings.resx">
+  <file datatype="xml" source-language="en" target-language="zh-HANT" original="../Strings.resx">
     <body>
       <trans-unit id="CertSelectionDialogMessage">
         <source>Select a certificate</source>
@@ -244,7 +244,7 @@
       </trans-unit>
       <trans-unit id="DocumentPropertiesDialogDocumentCreatedLabel">
         <source>Published:</source>
-        <target state="translated">發行日期:</target>
+        <target state="translated">發佈日期:</target>
         <note />
       </trans-unit>
       <trans-unit id="DocumentPropertiesDialogDocumentDetailBoxLabel">
@@ -1189,7 +1189,7 @@
       </trans-unit>
       <trans-unit id="WPF_UILanguage">
         <source>en</source>
-        <target state="translated">en</target>
+        <target state="translated">zh-Hant</target>
         <note />
       </trans-unit>
       <trans-unit id="XpsViewerGenericException">

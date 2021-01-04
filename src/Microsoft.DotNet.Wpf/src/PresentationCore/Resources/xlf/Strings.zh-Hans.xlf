@@ -234,7 +234,7 @@
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderDisposed">
         <source>Cannot access a disposed HTTP byte range downloader.</source>
-        <target state="translated">无法访问释放的 HTTP 字节范围下载程序。</target>
+        <target state="translated">无法访问释放的 HTTP 字节范围下载器。</target>
         <note />
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderErroredOut">
@@ -1809,7 +1809,7 @@
       </trans-unit>
       <trans-unit id="InvalidScheme">
         <source>HTTP byte range downloader can support only HTTP or HTTPS schemes.</source>
-        <target state="translated">HTTP 字节范围下载程序仅支持 HTTP 或 HTTPS 方案。</target>
+        <target state="translated">HTTP 字节范围下载器仅支持 HTTP 或 HTTPS 方案。</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidSiteOfOriginUri">
@@ -1929,7 +1929,7 @@
       </trans-unit>
       <trans-unit id="KeyGesture_Invalid">
         <source>'{0}+{1}' key and modifier combination is not supported for KeyGesture.</source>
-        <target state="translated">KeyGesture 尚不支持“{0}+{1}”键和修改者组合。</target>
+        <target state="translated">KeyGesture 尚不支持“{0}+{1}”键和修饰符组合。</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyboardSinkAlreadyOwned">

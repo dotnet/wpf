@@ -2305,7 +2305,7 @@ Deseja substituí-lo?</target>
       </trans-unit>
       <trans-unit id="InvalidDeployText">
         <source>There is a problem with how the application was built or published. Contact the application publisher for assistance.</source>
-        <target state="translated">Há um problema com o modo como o aplicativo foi construído ou editado. Entre em contato com o editor do aplicativo para obter ajuda.</target>
+        <target state="translated">Há um problema com o modo como o aplicativo foi construído ou publicado. Entre em contato com o editor do aplicativo para obter ajuda.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidDeployTitle">
@@ -6115,12 +6115,12 @@ Deseja substituí-lo?</target>
       </trans-unit>
       <trans-unit id="UndoNoOpenParentUnit">
         <source>Cannot add nonparent undo unit when there is no open IParentUndoUnit.</source>
-        <target state="translated">Não é possível adicionar uma unidade para desfazer diferente de pai quando não há IParentUndoUnit aberto.</target>
+        <target state="translated">Não é possível adicionar uma unidade de desfazer diferente de pai quando não há IParentUndoUnit aberto.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoNoOpenUnit">
         <source>Cannot close undo unit because no opened unit exists.</source>
-        <target state="translated">Não é possível fechar uma unidade para desfazer porque não existe unidade aberta.</target>
+        <target state="translated">Não é possível fechar uma unidade de desfazer porque não existe unidade aberta.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoNotInNormalState">
@@ -6135,17 +6135,17 @@ Deseja substituí-lo?</target>
       </trans-unit>
       <trans-unit id="UndoUnitAlreadyOpen">
         <source>Cannot Reopen undo unit while another unit is already open.</source>
-        <target state="translated">Não é possível reabrir a unidade para desfazer enquanto outra unidade já está aberta.</target>
+        <target state="translated">Não é possível reabrir a unidade de desfazer enquanto outra unidade já está aberta.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitCantBeAddedTwice">
         <source>Cannot add undo unit to itself or one of its own children.</source>
-        <target state="translated">Não é possível adicionar a unidade para desfazer a ela mesma ou a um de seus próprios filhos.</target>
+        <target state="translated">Não é possível adicionar a unidade de desfazer a ela mesma ou a um de seus próprios filhos.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitCantBeOpenedTwice">
         <source>Cannot open undo unit that is already open.</source>
-        <target state="translated">Não é possível abrir a unidade para desfazer que já esteja aberta.</target>
+        <target state="translated">Não é possível abrir a unidade de desfazer que já esteja aberta.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitLocked">
@@ -6160,12 +6160,12 @@ Deseja substituí-lo?</target>
       </trans-unit>
       <trans-unit id="UndoUnitNotOnTopOfStack">
         <source>Cannot Reopen undo unit that is not on top of stack.</source>
-        <target state="translated">Não é possível reabrir a unidade para desfazer que não esteja no início da pilha.</target>
+        <target state="translated">Não é possível reabrir a unidade de desfazer que não esteja no início da pilha.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitOpen">
         <source>Cannot Undo or Redo while undo unit is open.</source>
-        <target state="translated">Não é possível desfazer ou refazer enquanto a unidade para desfazer está aberta.</target>
+        <target state="translated">Não é possível desfazer ou refazer enquanto a unidade de desfazer está aberta.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnexpectedAttribute">

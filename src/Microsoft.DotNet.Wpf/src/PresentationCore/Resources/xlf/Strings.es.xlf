@@ -1069,7 +1069,7 @@
       </trans-unit>
       <trans-unit id="Freezable_CloneInvalidType">
         <source>Clone of an instance of type '{0}' is null or not an instance of '{0}'.</source>
-        <target state="translated">La clonación de una instancia de tipo '{0}' es nula o no es una instancia de '{0}'.</target>
+        <target state="translated">El clon de una instancia de tipo "{0}" es nulo o no es una instancia de "{0}".</target>
         <note />
       </trans-unit>
       <trans-unit id="Freezable_Reentrant">

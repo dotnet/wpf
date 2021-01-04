@@ -309,7 +309,7 @@
       </trans-unit>
       <trans-unit id="CombinationOfAccessibilitySwitchesNotSupported">
         <source>Desktop applications are required to opt in to all earlier accessibility improvements to get the later improvements. To do this, ensure that if the AppContext switch 'Switch.UseLegacyAccessibilityFeatures.N' is set to 'false', then 'Switch.UseLegacyAccessibilityFeatures' and all 'Switch.UseLegacyAccessibilityFeatures.M' switches, when M &lt; N, evaluate to false as well. Note that, if a switch for a particular set of accessibility improvements is not present, its value is determined by the target framework version. You can remedy this by adding these switches and setting their value to false.</source>
-        <target state="translated">데스크톱 응용 프로그램은 이전의 모든 접근성 개선 사항을 옵트인하여 이후의 개선 사항을 받아야 합니다. 이렇게 하려면 AppContext 스위치 'Switch.UseLegacyAccessibilityFeatures.N'이 'false'로 설정되어 있는지 확인한 다음 M &lt; N일 때 'Switch.UseLegacyAccessibilityFeatures' 및 모든 'Switch.UseLegacyAccessibilityFeatures.M' 스위치도 false로 계산되는지 확인합니다. 특정 접근성 개선 사항 집합에 대한 스위치가 없는 경우 해당 값은 대상 프레임워크 버전에 따라 결정됩니다. 이러한 스위치를 추가하고 값을 false로 설정하여 이 문제를 해결할 수 있습니다.</target>
+        <target state="translated">데스크톱 애플리케이션은 이전의 모든 접근성 개선 사항을 옵트인하여 이후의 개선 사항을 받아야 합니다. 이렇게 하려면 AppContext 스위치 'Switch.UseLegacyAccessibilityFeatures.N'이 'false'로 설정되어 있는지 확인한 다음 M &lt; N일 때 'Switch.UseLegacyAccessibilityFeatures' 및 모든 'Switch.UseLegacyAccessibilityFeatures.M' 스위치도 false로 계산되는지 확인합니다. 특정 접근성 개선 사항 집합에 대한 스위치가 없는 경우 해당 값은 대상 프레임워크 버전에 따라 결정됩니다. 이러한 스위치를 추가하고 값을 false로 설정하여 이 문제를 해결할 수 있습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="CompatibilityPreferencesSealed">
@@ -534,7 +534,7 @@
       </trans-unit>
       <trans-unit id="DispatcherRequestProcessingFailed">
         <source>The Dispatcher is unable to request processing.  This is often because the application has starved the Dispatcher's message pump.</source>
-        <target state="translated">Dispatcher에서 처리를 요청할 수 없습니다. 주로 응용 프로그램에 Dispatcher의 메시지 펌프가 없으므로 이러한 문제가 발생합니다.</target>
+        <target state="translated">Dispatcher에서 처리를 요청할 수 없습니다. 주로 애플리케이션에 Dispatcher의 메시지 펌프가 없으므로 이러한 문제가 발생합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="DispatcherYieldNoAvailableDispatcher">
@@ -2099,7 +2099,7 @@
       </trans-unit>
       <trans-unit id="SignatureOriginNotFound">
         <source>Relationship was found to the signature origin but the part is missing. Package signature structures are corrupted.</source>
-        <target state="translated">시그니처 원본에 대한 관계는 있지만 파트가 없습니다. 패키지 시그니처 구조가 손상되었습니다.</target>
+        <target state="translated">시그니처 원본에 대한 관계는 있지만 파트가 없습니다. 패키지 서명 구조가 손상되었습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="SignaturePackageObjectTagMustBeUnique">

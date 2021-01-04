@@ -249,7 +249,7 @@
       </trans-unit>
       <trans-unit id="CannotChangePublishLicense">
         <source>Cannot change publish license after the rights management transform settings are fixed.</source>
-        <target state="translated">版權管理移轉設定固定之後，即無法變更發行授權。</target>
+        <target state="translated">版權管理移轉設定固定之後，即無法變更發佈授權。</target>
         <note />
       </trans-unit>
       <trans-unit id="CannotConvertStringToType">
@@ -869,7 +869,7 @@
       </trans-unit>
       <trans-unit id="InvalidPublishLicense">
         <source>Signed Publish License is not valid.</source>
-        <target state="translated">已簽署的發行授權無效。</target>
+        <target state="translated">已簽署的發佈授權無效。</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidRelationshipType">
@@ -1144,7 +1144,7 @@
       </trans-unit>
       <trans-unit id="NoPublishLicenseStream">
         <source>File does not contain a stream to hold the publish license.</source>
-        <target state="translated">檔案未包含可保留發行授權的資料流。</target>
+        <target state="translated">檔案未包含可保留發佈授權的資料流。</target>
         <note />
       </trans-unit>
       <trans-unit id="NoStructuredContentInsideProperties">
@@ -1404,17 +1404,17 @@
       </trans-unit>
       <trans-unit id="PublishLicenseNotFound">
         <source>Document does not contain a publish license.</source>
-        <target state="translated">文件未包含發行授權。</target>
+        <target state="translated">文件未包含發佈授權。</target>
         <note />
       </trans-unit>
       <trans-unit id="PublishLicenseStreamCorrupt">
         <source>Document's publish license stream is corrupted.</source>
-        <target state="translated">文件的發行授權資料流損毀。</target>
+        <target state="translated">文件的發佈授權資料流損毀。</target>
         <note />
       </trans-unit>
       <trans-unit id="PublishLicenseStreamHeaderTooLong">
         <source>Variable-length header in publish license stream is {0} bytes, which exceeds the maximum length of {1} bytes.</source>
-        <target state="translated">發行授權資料流中的變數長度標頭為 {0} 個位元組，超過了長度上限 {1} 個位元組。</target>
+        <target state="translated">發佈授權資料流中的變數長度標頭為 {0} 個位元組，超過了長度上限 {1} 個位元組。</target>
         <note />
       </trans-unit>
       <trans-unit id="QualifiedNameHasWrongFormat">
@@ -1729,7 +1729,7 @@
       </trans-unit>
       <trans-unit id="RmExceptionExpiredOfficialIssuanceLicenseTemplate">
         <source>Expired official Publish License template.</source>
-        <target state="translated">正式發行授權範本已過期。</target>
+        <target state="translated">正式發佈授權範本已過期。</target>
         <note />
       </trans-unit>
       <trans-unit id="RmExceptionGenericMessage">

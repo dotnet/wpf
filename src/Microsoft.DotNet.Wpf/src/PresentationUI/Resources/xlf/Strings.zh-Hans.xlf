@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
-  <file datatype="xml" source-language="en" target-language="zh-Hans" original="../Strings.resx">
+  <file datatype="xml" source-language="en" target-language="zh-HANS" original="../Strings.resx">
     <body>
       <trans-unit id="CertSelectionDialogMessage">
         <source>Select a certificate</source>
@@ -909,7 +909,7 @@
       </trans-unit>
       <trans-unit id="RequestSignatureDialogIntentLabel">
         <source>Reason for signing this document (choose one or create your own):</source>
-        <target state="translated">对此文档签名的理由(选择其中一个理由或创建自己的理由):</target>
+        <target state="translated">签名此文档的理由(请选择其中一个理由或自行编写理由):</target>
         <note />
       </trans-unit>
       <trans-unit id="RequestSignatureDialogLocationLabel">
@@ -1144,7 +1144,7 @@
       </trans-unit>
       <trans-unit id="SigningDialogReasonLabel">
         <source>Reason for signing this document (choose one or create your own): </source>
-        <target state="translated">对此文档签名的原因(选择一个原因或创建您自己的原因): </target>
+        <target state="translated">签名此文档的理由(请选择其中一个理由或自行编写理由): </target>
         <note />
       </trans-unit>
       <trans-unit id="SigningDialogSignButton">
@@ -1189,7 +1189,7 @@
       </trans-unit>
       <trans-unit id="WPF_UILanguage">
         <source>en</source>
-        <target state="translated">zh</target>
+        <target state="translated">zh-Hans</target>
         <note />
       </trans-unit>
       <trans-unit id="XpsViewerGenericException">

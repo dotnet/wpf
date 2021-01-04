@@ -1009,7 +1009,7 @@
       </trans-unit>
       <trans-unit id="ObjectReaderXamlNameScopeResultsInClonedObject">
         <source>The object graph contains multiple references to an instance of type '{0}' and the serializer cannot find a commonly visible location to write the instance. You should examine your use of name scopes.</source>
-        <target state="translated">Граф объекта содержит несколько ссылок на экземпляр типа "{0}", а сериализатору не удается найти расположение с общей видимостью для записи экземпляра. Следует проверить, как используются области имен.</target>
+        <target state="translated">Граф объектов содержит несколько ссылок на экземпляр типа "{0}", а сериализатору не удается найти расположение с общей видимостью для записи экземпляра. Следует проверить, как используются области имен.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderXamlNamedElementAlreadyRegistered">

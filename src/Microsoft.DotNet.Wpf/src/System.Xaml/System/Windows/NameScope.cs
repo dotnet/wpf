@@ -294,7 +294,7 @@ namespace System.Xaml
                     return null;
                 }
 
-                var list = new List<string>();
+                var list = new List<string>(_nameMap.Keys.Count);
                 foreach (string key in _nameMap.Keys)
                 {
                     list.Add(key);
@@ -312,7 +312,7 @@ namespace System.Xaml
                     return null;
                 }
 
-                var list = new List<object>();
+                var list = new List<object>(_nameMap.Values.Count);
                 foreach (object value in _nameMap.Values)
                 {
                     list.Add(value);

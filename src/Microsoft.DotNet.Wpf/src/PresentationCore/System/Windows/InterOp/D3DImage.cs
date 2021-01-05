@@ -85,7 +85,7 @@ namespace System.Windows.Interop
             _dpiX = dpiX;
             _dpiY = dpiY;
 
-            _listener = new WeakReference(this);
+            _listener = new WeakReference<IAppDomainShutdownListener>(this);
             AppDomainShutdownMonitor.Add(_listener);
         }
 
@@ -944,7 +944,7 @@ namespace System.Windows.Interop
         private EventHandler _sendPresentDelegate;
 
         // WeakReference to this used to listen to AddDomain shutdown
-        private WeakReference _listener;
+        private WeakReference<IAppDomainShutdownListener> _listener;
 
         // Keeps track of how many times the user has nested Lock
         private uint _lockCount;

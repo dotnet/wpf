@@ -26,3 +26,9 @@
   <!-- Repository extensibility point -->
   <Import Project="$(RepositoryEngineeringDir)InternalTools.props" Condition="Exists('$(RepositoryEngineeringDir)InternalTools.props')" />
 </Project>
+2
+-
+ -
+--
+*
+-...

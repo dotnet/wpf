@@ -341,7 +341,7 @@ using System.Runtime.Versioning;
     <Delete Condition="Exists('$(GeneratedExtendedAssemblyInfoFile)')" Files="$(GeneratedExtendedAssemblyInfoFile)" />
     <WriteLinesToFile Lines="@(ExtendedAssemblyInfoFileContent->'%(Text)')"
                       File="$(GeneratedExtendedAssemblyInfoFile)"
-                      Overwrite="true" />
+                      Overwrite="true" WriteOnlyWhenDifferent="true" />
 
     <ItemGroup>
       <Compile Include="$(GeneratedExtendedAssemblyInfoFile)" />

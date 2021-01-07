@@ -1656,7 +1656,7 @@ namespace MS.Internal
             {
                 if ( _ResourceNotFound == null )
                 {
-                    _ResourceNotFound = new AvTraceDetails(9, new string[] { "Resource not found" } );
+                    _ResourceNotFound = new AvTraceDetails(9, new string[] { "Resource not found", "ResourceKey" } );
                 }
 
                 return _ResourceNotFound;

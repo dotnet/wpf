@@ -13,14 +13,15 @@ See the [WPF Roadmap](roadmap.md) to learn about project priorities, status and 
 
 ## Getting started
 
-* [.NET Core 3.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.0)
+* [.NET SDK Preview (6.0 alpha, 5.0 servicing, 3.1 servicing] (https://github.com/dotnet/installer)
+* [.NET 5.0 SDK](https://dotnet.microsoft.com/download/dotnet/5.0)
 * [Getting started instructions](Documentation/getting-started.md)
 * [Contributing guide](Documentation/contributing.md)
 * [Migrating .NET Framework WPF Apps to .NET Core](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework)
 
 ## Status
 
-- We are currently in planning for .NET 5. 
+- We are currently in planning for .NET 6. 
 - We have completed publishing WPF sources. You can learn more about this at https://github.com/dotnet/wpf/issues/2554. 
 - We have completed porting WPF to .NET Core as part of .NET Core 3.0, you can learn more about what was done [here](https://github.com/dotnet/wpf/issues/1936).
 

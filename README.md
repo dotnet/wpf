@@ -9,12 +9,14 @@ WPF applications are based on a vector graphics architecture. This enables appli
 
 See the [WPF Roadmap](roadmap.md) to learn about project priorities, status and ship dates.
 
-[WinForms](https://github.com/dotnet/winforms) is another UI framework for building Windows desktop applications that is supported on .NET Core. WPF and WinForms applications only run on Windows. They are part of the `Microsoft.NET.Sdk.WindowsDesktop` SDK. You are recommended to use [Visual Studio 2019](https://visualstudio.microsoft.com/vs/) to use WPF and WinForms with .NET Core.
+[WinForms](https://github.com/dotnet/winforms) is another UI framework for building Windows desktop applications that is supported on .NET Core. WPF and WinForms applications only run on Windows. They are part of the `Microsoft.NET.Sdk.WindowsDesktop` SDK. You are recommended to use the most recent version of [Visual Studio](https://visualstudio.microsoft.com/downloads/) to develop WPF and WinForms applications for .NET.
+
+To build the WPF repo and contribute features and fixes for .NET 6.0, the most recent [Visual Studio Preview](https://visualstudio.microsoft.com/vs/preview/) is required.  
 
 ## Getting started
 
-* [.NET SDK Preview (6.0 alpha, 5.0 servicing, 3.1 servicing)] (https://github.com/dotnet/installer)
 * [.NET 5.0 SDK](https://dotnet.microsoft.com/download/dotnet/5.0)
+* [.NET Preview SDKs (6.0 alpha, 5.0 servicing, and 3.1 servicing)](https://github.com/dotnet/installer)
 * [Getting started instructions](Documentation/getting-started.md)
 * [Contributing guide](Documentation/contributing.md)
 * [Migrating .NET Framework WPF Apps to .NET Core](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework)
@@ -73,3 +75,4 @@ Also see info about related [Microsoft .NET Core and ASP.NET Core Bug Bounty Pro
 .NET Core WPF is a [.NET Foundation](https://www.dotnetfoundation.org/projects) project.
 
 See the [.NET home repo](https://github.com/Microsoft/dotnet) to find other .NET-related projects.
+

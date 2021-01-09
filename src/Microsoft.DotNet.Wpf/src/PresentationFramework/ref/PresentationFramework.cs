@@ -76,6 +76,25 @@ namespace Microsoft.Win32
         public System.IO.Stream[] OpenFiles() { throw null; }
         public override void Reset() { }
     }
+    public sealed partial class OpenFolderDialog
+    {
+        public OpenFolderDialog() { }
+        public string Title { get { throw null; } set { } }
+        public string FileName { get { throw null; } private set { } }
+        public string[] FileNames { get { throw null; } private set { } }
+        public bool Multiselect { get { throw null; } set { } }
+        public bool EnsureFileExists { get { throw null; } set { } }
+        public bool EnsurePathExists { get { throw null; } set { } }
+        public bool EnsureValidNames { get { throw null; } set { } }
+        public bool EnsureReadOnly { get { throw null; } set { } }
+        public bool RestoreDirectory { get { throw null; } set { } }
+        public bool ShowPlacesList { get { throw null; } set { } }
+        public bool AddToMruList { get { throw null; } set { } }
+        public bool ShowHiddenItems { get { throw null; } set { } }
+        public bool NavigateToShortcut { get { throw null; } set { } }
+        public bool AllowNonFileSystem { get { throw null; } set { } }
+        public string InitialDirectory { get { throw null; } set { } }
+    }
     public sealed partial class SaveFileDialog : Microsoft.Win32.FileDialog
     {
         public SaveFileDialog() { }

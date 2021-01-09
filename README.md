@@ -13,7 +13,7 @@ See the [WPF Roadmap](roadmap.md) to learn about project priorities, status and 
 
 ## Getting started
 
-* [.NET SDK Preview (6.0 alpha, 5.0 servicing, 3.1 servicing] (https://github.com/dotnet/installer)
+* [.NET SDK Preview (6.0 alpha, 5.0 servicing, 3.1 servicing)] (https://github.com/dotnet/installer)
 * [.NET 5.0 SDK](https://dotnet.microsoft.com/download/dotnet/5.0)
 * [Getting started instructions](Documentation/getting-started.md)
 * [Contributing guide](Documentation/contributing.md)

@@ -5,7 +5,7 @@
 //
 // 
 // Description:
-//              OpenFolderDialog is a sealed class derived from CommonDialog that
+//              OpenFolderDialog is a sealed class that
 //              implements Folder Open dialog-specific functions. 
 //
 

@@ -191,6 +191,22 @@ namespace Microsoft.Win32
         }
 
         /// <summary>
+        /// The file is not created before the dialog box is closed. This flag should be specified if the application saves the file on a create-nonmodify network share. When an application specifies this flag, the library does not check for write protection, a full disk, an open drive door, or network protection. Applications using this flag must perform file operations carefully, because a file cannot be reopened once it is closed. 
+        /// </summary>
+        public bool NoTestFileCreate
+        {
+            get
+            {
+                return GetOption(NativeMethods.OFN_NOTESTFILECREATE);
+            }
+            set
+            {
+
+                SetOption(NativeMethods.OFN_NOTESTFILECREATE, value);
+            }
+        }
+
+        /// <summary>
         /// The AddExtension property attempts to determine the appropriate extension
         /// by using the selected filter.  The DefaultExt property serves as a fallback - 
         ///  if the extension cannot be determined from the filter, DefaultExt will

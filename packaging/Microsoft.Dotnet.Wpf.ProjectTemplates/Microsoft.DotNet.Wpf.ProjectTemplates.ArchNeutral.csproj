@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{BFF6C118-3369-43B5-ACA6-D65ED00EEBE0}</ProjectGuid>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
@@ -17,7 +17,7 @@
   <PropertyGroup>
     <PackageName>$(MSBuildProjectName.Replace('.ArchNeutral',''))$(TransportPackageNameSuffix)</PackageName>
     <AssemblyName>$(PackageName)</AssemblyName>
-    <PackageDescription>Project templates for .NET Core WPF Projects</PackageDescription>
+    <PackageDescription>Project templates for .NET WPF Projects</PackageDescription>
   </PropertyGroup>
 
   <ItemGroup>

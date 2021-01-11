@@ -17,7 +17,7 @@
   <PropertyGroup>
     <PackageName>$(MSBuildProjectName.Replace('.ArchNeutral',''))$(TransportPackageNameSuffix)</PackageName>
     <AssemblyName>$(PackageName)</AssemblyName>
-    <PackageDescription>Project templates for .NET Core WPF Projects</PackageDescription>
+    <PackageDescription>Project templates for .NET WPF Projects</PackageDescription>
   </PropertyGroup>
 
   <ItemGroup>

@@ -86,7 +86,7 @@ namespace MS.Internal.Ink
         /// <param name="beginNode">a node to connect</param>
         /// <param name="endNode">another node, next to beginNode</param>
         /// <returns>connecting quadrangle</returns>
-        internal override Quad GetConnectingQuad(StrokeNodeData beginNode, StrokeNodeData endNode)
+        internal override Quad GetConnectingQuad(in StrokeNodeData beginNode,in StrokeNodeData endNode)
         {
             if (beginNode.IsEmpty || endNode.IsEmpty || DoubleUtil.AreClose(beginNode.Position, endNode.Position))
             {
@@ -213,7 +213,7 @@ namespace MS.Internal.Ink
         /// <param name="hitEndPoint">an end point of the hitting linear segment</param>
         /// <returns>true if the hitting segment intersect the contour comprised of the two stroke nodes</returns>
         internal override bool HitTest(
-            StrokeNodeData beginNode, StrokeNodeData endNode, Quad quad, Point hitBeginPoint, Point hitEndPoint)
+           in StrokeNodeData beginNode, in StrokeNodeData endNode, Quad quad, Point hitBeginPoint, Point hitEndPoint)
         {
             StrokeNodeData bigNode, smallNode;
             if (beginNode.IsEmpty || (quad.IsEmpty && (endNode.PressureFactor > beginNode.PressureFactor)))
@@ -278,7 +278,7 @@ namespace MS.Internal.Ink
         /// <param name="hitContour">a collection of basic segments outlining the hitting contour</param>
         /// <returns>true if the contours intersect or overlap</returns>
         internal override bool HitTest(
-            StrokeNodeData beginNode, StrokeNodeData endNode, Quad quad, IEnumerable<ContourSegment> hitContour)
+            in StrokeNodeData beginNode, in StrokeNodeData endNode, Quad quad, IEnumerable<ContourSegment> hitContour)
         {
             StrokeNodeData bigNode, smallNode;
             double bigRadiusSquared, smallRadiusSquared = 0;
@@ -384,7 +384,7 @@ namespace MS.Internal.Ink
         /// <param name="hitEndPoint">End point of the hitting segment</param>
         /// <returns>Exact location to cut at represented by StrokeFIndices</returns>
         internal override StrokeFIndices CutTest(
-            StrokeNodeData beginNode, StrokeNodeData endNode, Quad quad, Point hitBeginPoint, Point hitEndPoint)
+            in StrokeNodeData beginNode, in StrokeNodeData endNode, Quad quad, Point hitBeginPoint, Point hitEndPoint)
         {
             // Compute the positions of the involved points relative to the endNode.
             Vector spineVector = beginNode.IsEmpty ? new Vector(0, 0) : (beginNode.Position - endNode.Position);
@@ -462,7 +462,7 @@ namespace MS.Internal.Ink
         /// <param name="hitContour">The hitting ContourSegments</param>
         /// <returns>StrokeFIndices representing the location for cutting</returns>
         internal override StrokeFIndices CutTest(
-            StrokeNodeData beginNode, StrokeNodeData endNode, Quad quad, IEnumerable<ContourSegment> hitContour)
+            in StrokeNodeData beginNode, in StrokeNodeData endNode, Quad quad, IEnumerable<ContourSegment> hitContour)
         {
             // Compute the positions of the beginNode relative to the endNode.
             Vector spineVector = beginNode.IsEmpty ? new Vector(0, 0) : (beginNode.Position - endNode.Position);

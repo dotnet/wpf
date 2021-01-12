@@ -64,7 +64,7 @@ namespace MS.Internal.Ink
         /// </summary>
         /// <param name="node">node to compute bounds of</param>
         /// <returns>bounds of the node</returns>
-        internal Rect GetNodeBounds(StrokeNodeData node)
+        internal Rect GetNodeBounds(in StrokeNodeData node)
         {
             if (_shapeBounds.IsEmpty)
             {
@@ -97,7 +97,7 @@ namespace MS.Internal.Ink
             return boundingBox;
         }
 
-        internal void GetNodeContourPoints(StrokeNodeData node, List<Point> pointBuffer)
+        internal void GetNodeContourPoints(in StrokeNodeData node, List<Point> pointBuffer)
         {
             double pressureFactor = node.PressureFactor;
             if (DoubleUtil.AreClose(pressureFactor, 1d))
@@ -182,7 +182,7 @@ namespace MS.Internal.Ink
         /// <param name="beginNode">a node to connect</param>
         /// <param name="endNode">another node, next to beginNode</param>
         /// <returns>connecting quadrangle, that can be empty if one node is inside the other</returns>
-        internal virtual Quad GetConnectingQuad(StrokeNodeData beginNode, StrokeNodeData endNode)
+        internal virtual Quad GetConnectingQuad(in StrokeNodeData beginNode, in StrokeNodeData endNode)
         {            
             // Return an empty quad if either of the nodes is empty (not a node) 
             // or if both nodes are at the same position.
@@ -296,7 +296,7 @@ namespace MS.Internal.Ink
         /// <param name="hitEndPoint">End point of the hitting segment</param>
         /// <returns>true if there's intersection, false otherwise</returns>
         internal virtual bool HitTest(
-            StrokeNodeData beginNode, StrokeNodeData endNode, Quad quad, Point hitBeginPoint, Point hitEndPoint)
+           in StrokeNodeData beginNode, in StrokeNodeData endNode, Quad quad, Point hitBeginPoint, Point hitEndPoint)
         {
             // Check for special cases when the endNode is the very first one (beginNode.IsEmpty) 
             // or one node is completely inside the other. In either case the connecting quad 
@@ -441,7 +441,7 @@ namespace MS.Internal.Ink
         /// <param name="hitContour">a collection of basic segments outlining the hitting contour</param>
         /// <returns>true if the contours intersect or overlap</returns>
         internal virtual bool HitTest(
-            StrokeNodeData beginNode, StrokeNodeData endNode, Quad quad, IEnumerable<ContourSegment> hitContour)
+           in StrokeNodeData beginNode, in StrokeNodeData endNode, Quad quad, IEnumerable<ContourSegment> hitContour)
         {           
             // Check for special cases when the endNode is the very first one (beginNode.IsEmpty) 
             // or one node is completely inside the other. In either case the connecting quad 
@@ -469,7 +469,7 @@ namespace MS.Internal.Ink
         /// <param name="hitEndPoint">End point of the hitting segment</param>
         /// <returns>Exact location to cut at represented by StrokeFIndices</returns>
         internal virtual StrokeFIndices CutTest(
-            StrokeNodeData beginNode, StrokeNodeData endNode, Quad quad, Point hitBeginPoint, Point hitEndPoint)
+            in StrokeNodeData beginNode, in StrokeNodeData endNode, Quad quad, Point hitBeginPoint, Point hitEndPoint)
         {
             StrokeFIndices result = StrokeFIndices.Empty;
 
@@ -561,7 +561,7 @@ namespace MS.Internal.Ink
         /// <param name="hitContour">a collection of basic segments outlining the hitting contour</param>
         /// <returns></returns>
         internal virtual StrokeFIndices CutTest(
-            StrokeNodeData beginNode, StrokeNodeData endNode, Quad quad, IEnumerable<ContourSegment> hitContour)
+            in StrokeNodeData beginNode, in StrokeNodeData endNode, Quad quad, IEnumerable<ContourSegment> hitContour)
         {
             if (beginNode.IsEmpty)
             {
@@ -930,7 +930,7 @@ namespace MS.Internal.Ink
         /// <param name="endNode">End node of the stroke segment</param>
         /// <returns>true if hit; false otherwise</returns>
         private bool HitTestPolygonContourSegments(
-            IEnumerable<ContourSegment> hitContour, StrokeNodeData beginNode, StrokeNodeData endNode)
+            IEnumerable<ContourSegment> hitContour, in StrokeNodeData beginNode, in StrokeNodeData endNode)
         {
             bool isHit = false;
 
@@ -1019,7 +1019,7 @@ namespace MS.Internal.Ink
         /// <param name="endNode">End node of the stroke segment</param>
         /// <returns>true if hit; false otherwise</returns>
         private bool HitTestInkContour(
-            IEnumerable<ContourSegment> hitContour, Quad quad, StrokeNodeData beginNode, StrokeNodeData endNode)
+            IEnumerable<ContourSegment> hitContour, Quad quad, in StrokeNodeData beginNode, in StrokeNodeData endNode)
         {
             System.Diagnostics.Debug.Assert(!quad.IsEmpty);
             bool isHit = false;
@@ -1183,7 +1183,7 @@ namespace MS.Internal.Ink
         /// <param name="result"></param>
         /// <returns></returns>
         private bool HitTestStrokeNodes(
-            ContourSegment hitSegment, StrokeNodeData beginNode, StrokeNodeData endNode, ref StrokeFIndices result)
+            in ContourSegment hitSegment, in StrokeNodeData beginNode, in StrokeNodeData endNode, ref StrokeFIndices result)
         {
             // First, find out if hitSegment intersects with either of the ink nodes
             bool isHit = false;
@@ -1271,7 +1271,7 @@ namespace MS.Internal.Ink
         /// <param name="pressureDelta"></param>
         /// <returns>the clip location. not-clip if return StrokeFIndices.BeforeFirst</returns>
         private double CalculateClipLocation(
-            ContourSegment hitSegment, StrokeNodeData beginNode, Vector spineVector, double pressureDelta)
+           in ContourSegment hitSegment, in StrokeNodeData beginNode, Vector spineVector, double pressureDelta)
         {
             double findex = StrokeFIndices.BeforeFirst;
             bool clipIt = hitSegment.IsArc ? true

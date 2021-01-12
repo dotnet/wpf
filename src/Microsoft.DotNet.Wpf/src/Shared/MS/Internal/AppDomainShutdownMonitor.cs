@@ -28,59 +28,57 @@ namespace MS.Internal
     {
         static AppDomainShutdownMonitor()
         {
+            _listeners =
+                new HashSet<WeakReference<IAppDomainShutdownListener>>();
+
             AppDomain.CurrentDomain.DomainUnload += OnShutdown;
             AppDomain.CurrentDomain.ProcessExit += OnShutdown;
-
-            _dictionary = new Dictionary<WeakReference, WeakReference>();
         }
-        
-        public static void Add(WeakReference listener)
-        {
-            Debug.Assert(listener.Target != null);
-            Debug.Assert(listener.Target is IAppDomainShutdownListener);
 
-            lock (_dictionary)
+        public static void Add(WeakReference<IAppDomainShutdownListener> listener)
+        {
+            Debug.Assert(listener.TryGetTarget(out _));
+
+            lock (_listeners)
             {
                 if (!_shuttingDown)
                 {
-                    _dictionary.Add(listener, listener);
+                    _listeners.Add(listener);
                 }
             }
         }
 
-        public static void Remove(WeakReference listener)
+        public static void Remove(WeakReference<IAppDomainShutdownListener> listener)
         {
-            Debug.Assert(listener.Target == null || listener.Target is IAppDomainShutdownListener);
-
-            lock (_dictionary)
+            lock (_listeners)
             {
                 if (!_shuttingDown)
                 {
-                    _dictionary.Remove(listener);
+                    _listeners.Remove(listener);
                 }
             }
         }
 
         private static void OnShutdown(object sender, EventArgs e)
         {
-            lock (_dictionary)
-            {     
+            lock (_listeners)
+            {
                 // Setting this to true prevents Add and Remove from modifying the list. This
                 // way we call out without holding a lock (which would be bad)
                 _shuttingDown = true;
             }
-            
-            foreach (WeakReference value in _dictionary.Values)
+
+            foreach (WeakReference<IAppDomainShutdownListener> weakReference in _listeners)
             {
-                IAppDomainShutdownListener listener = value.Target as IAppDomainShutdownListener;
-                if (listener != null)
+                if (weakReference.TryGetTarget(out var listener))
                 {
                     listener.NotifyShutdown();
                 }
             }
         }
-        
-        private static Dictionary<WeakReference, WeakReference> _dictionary;
+
+        private static readonly HashSet<WeakReference<IAppDomainShutdownListener>> _listeners;
+
         private static bool _shuttingDown;
     }
 }

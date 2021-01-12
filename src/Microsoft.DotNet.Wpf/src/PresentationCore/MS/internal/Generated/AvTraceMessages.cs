@@ -82,7 +82,7 @@ namespace MS.Internal
         /// <summary> These help delay allocation of object array </summary>
         static public void Trace( TraceEventType type, AvTraceDetails traceDetails )
         {
-            _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[0] );
+            _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, Array.Empty<object>() );
         }
         static public void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1 )
         {
@@ -106,7 +106,7 @@ namespace MS.Internal
         /// <summary> These help delay allocation of object array </summary>
         static public void TraceActivityItem( AvTraceDetails traceDetails )
         {
-            _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[0] );
+            _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, Array.Empty<object>() );
         }
         static public void TraceActivityItem( AvTraceDetails traceDetails, object p1 )
         {
@@ -266,7 +266,7 @@ namespace MS.Internal
         /// <summary> These help delay allocation of object array </summary>
         static public void Trace( TraceEventType type, AvTraceDetails traceDetails )
         {
-            _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[0] );
+            _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, Array.Empty<object>() );
         }
         static public void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1 )
         {
@@ -290,7 +290,7 @@ namespace MS.Internal
         /// <summary> These help delay allocation of object array </summary>
         static public void TraceActivityItem( AvTraceDetails traceDetails )
         {
-            _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[0] );
+            _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, Array.Empty<object>() );
         }
         static public void TraceActivityItem( AvTraceDetails traceDetails, object p1 )
         {

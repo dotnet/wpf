@@ -6,6 +6,7 @@
 #define __COMMON_H
 
 #include "precomp.hxx"
+#include <vcclr.h>
 
 using namespace System::Security;
 
@@ -64,7 +65,7 @@ public:
 
     __declspec(noinline) const cli::interior_ptr<const System::Char> static GetPtrToStringChars(System::String^ s)
     {
-        return CriticalPtrToStringChars(s);
+        return PtrToStringChars(s);
     }
 
 

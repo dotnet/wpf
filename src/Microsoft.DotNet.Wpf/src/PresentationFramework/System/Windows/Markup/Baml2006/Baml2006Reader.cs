@@ -1441,7 +1441,7 @@ namespace System.Windows.Baml2006
             int capacity = reader.ReadInt32();
             if (capacity < 0)
             {
-                throw new ArgumentException(SR.Get(SRID.IntegerCollectionLengthLessThanZero, new object[0]));
+                throw new ArgumentException(SR.Get(SRID.IntegerCollectionLengthLessThanZero, Array.Empty<object>()));
             }
             System.Windows.Media.Int32Collection ints = new System.Windows.Media.Int32Collection(capacity);
             switch (type)

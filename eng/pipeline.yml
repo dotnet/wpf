@@ -70,6 +70,11 @@ jobs:
         - name: _InternalRuntimeDownloadArgs
           value: ''
 
+        - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+          - group: DotNet-MSRC-Storage
+          - name: _InternalRuntimeDownloadArgs
+            value: /p:DotNetRuntimeSourceFeed=https://dotnetclimsrc.blob.core.windows.net/dotnet
+              /p:DotNetRuntimeSourceFeedKey=$(dotnetclimsrc-read-sas-token-base64)
 
         # Override some values if we're building internally
         - ${{ if eq(parameters.runAsPublic, 'false') }}:
@@ -111,10 +116,6 @@ jobs:
             value: '' #if _HelixToken is set, Creator must be empty
           - name: _TestHelixAgentPool
             value: 'Windows.10.Amd64.ClientRS5' # Preferred: 'Windows.10.Amd64%3bWindows.7.Amd64%3bWindows.10.Amd64.ClientRS5'
-          - group: DotNet-MSRC-Storage
-          - name: _InternalRuntimeDownloadArgs
-            value: /p:DotNetRuntimeSourceFeed=https://dotnetclimsrc.blob.core.windows.net/dotnet
-              /p:DotNetRuntimeSourceFeedKey=$(dotnetclimsrc-read-sas-token-base64)
 
       strategy:
         matrix:
@@ -134,6 +135,7 @@ jobs:
           Build_Release_x64:
             _BuildConfig: Release
             _Platform: x64
+
       steps:
       - checkout: self
         clean: true

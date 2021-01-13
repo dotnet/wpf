@@ -655,7 +655,7 @@ namespace System.Xaml
             if (type.TypeArguments != null)
             {
                 bool added = false;
-                builder.Append("(");
+                builder.Append('(');
                 foreach (XamlType arg in type.TypeArguments)
                 {
                     if (added)
@@ -665,7 +665,7 @@ namespace System.Xaml
                     ConvertXamlTypeToStringHelper(arg, builder);
                     added = true;
                 }
-                builder.Append(")");
+                builder.Append(')');
             }
 
             // re-attach the subscript

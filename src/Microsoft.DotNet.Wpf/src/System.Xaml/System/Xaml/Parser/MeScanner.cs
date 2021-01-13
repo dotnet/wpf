@@ -243,7 +243,7 @@ namespace MS.Internal.Xaml.Parser
                 value = value.Substring(2);
             } 
             
-            if (!value.Contains("\\"))
+            if (!value.Contains(Backslash))
             {
                 return value;
             }
@@ -352,7 +352,7 @@ namespace MS.Internal.Xaml.Parser
                 // handle escaping and quoting first.
                 if(escaped)
                 {
-                    sb.Append('\\');
+                    sb.Append(Backslash);
                     sb.Append(ch);
                     escaped = false;
                 }

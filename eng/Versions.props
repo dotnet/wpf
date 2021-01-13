@@ -18,7 +18,7 @@
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>4.8.1-servicing.20513.3</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>4.8.1-servicing.20561.1</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/coreclr -->
   <PropertyGroup>

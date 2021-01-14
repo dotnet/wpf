@@ -262,7 +262,8 @@
                ExtraBuildControlFiles="@(ExtraBuildControlFiles)"
                XamlDebuggingInformation="$(XamlDebuggingInformation)"
                IsRunningInVisualStudio="$(BuildingInsideVisualStudio)"
-               OutputPath="$(IntermediateOutputPath)">
+               OutputPath="$(IntermediateOutputPath)"
+               SupportCustomOutputPaths="$(IncludePackageReferencesDuringMarkupCompilation)">
 
 
               <Output ItemName="GeneratedBaml" TaskParameter="GeneratedBamlFiles"/>
@@ -325,7 +326,8 @@
                XamlDebuggingInformation="$(XamlDebuggingInformation)"
                GeneratedBaml=""
                OutputPath="$(IntermediateOutputPath)"
-               ContinueOnError="false" >
+               ContinueOnError="false" 
+               SupportCustomOutputPaths="$(IncludePackageReferencesDuringMarkupCompilation)">
 
           <!--
                Output Items for MarkupCompilePass2

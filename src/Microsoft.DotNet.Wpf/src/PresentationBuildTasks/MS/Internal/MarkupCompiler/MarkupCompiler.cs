@@ -154,6 +154,11 @@ namespace MS.Internal
             set { _taskLogger = value; }
         }
 
+        /// <summary>
+        /// Support custom IntermediateOutputPath and BaseIntermediateOutputPath outside the project path
+        /// </summary>
+        internal bool SupportCustomOutputPaths { get; set; } = false;
+
         // If the xaml has local references, then it could have internal element & properties
         // but there is no way to determine this until MCPass2. Yet, GeneratedInternalTypeHelper,
         // which is the class that allows access to legitimate internals, needs to be generated
@@ -1575,19 +1580,30 @@ namespace MS.Internal
         {
             get
             {
-                string parentFolderPrefix = string.Empty;
-                if (TargetPath.StartsWith(SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase))
+                if (SupportCustomOutputPaths)
                 {
-                    string relPath = TargetPath.Substring(SourceFileInfo.SourcePath.Length);
-                    relPath += SourceFileInfo.RelativeSourceFilePath;
-                    string[] dirs = relPath.Split(new Char[] { Path.DirectorySeparatorChar });
-                    for (int i = 1; i < dirs.Length; i++)
-                    {
-                        parentFolderPrefix += PARENTFOLDER;
-                    }
+                    #if NETFX 
+                    return PathInternal.GetRelativePath(TargetPath, SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase) + Path.DirectorySeparatorChar;
+#else
+                    return Path.GetRelativePath(TargetPath, SourceFileInfo.SourcePath) + Path.DirectorySeparatorChar;
+#endif
                 }
+                else
+                {
+                    string parentFolderPrefix = string.Empty;
+                    if (TargetPath.StartsWith(SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase))
+                    {
+                        string relPath = TargetPath.Substring(SourceFileInfo.SourcePath.Length);
+                        relPath += SourceFileInfo.RelativeSourceFilePath;
+                        string[] dirs = relPath.Split(new Char[] { Path.DirectorySeparatorChar });
+                        for (int i = 1; i < dirs.Length; i++)
+                        {
+                            parentFolderPrefix += PARENTFOLDER;
+                        }
+                    }
 
-                return parentFolderPrefix;
+                    return parentFolderPrefix;
+                } 
             }
         }
 

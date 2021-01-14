@@ -344,7 +344,7 @@ namespace System.Windows
         }
 
         /// <summary>
-        ///     Tries to find a Reosurce for the given resourceKey in the current
+        ///     Tries to find a Resource for the given resourceKey in the current
         ///     style's ResourceDictionary or the basedOn style's ResourceDictionary
         ///     in that order.
         /// </summary>

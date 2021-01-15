@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="5.0.2-servicing.20613.1">
+    <Dependency Name="Microsoft.Private.Winforms" Version="5.0.3-servicing.21064.17">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-winforms</Uri>
-      <Sha>1a7d925a270d4eaca6e801de8b88b34b535091de</Sha>
+      <Sha>e8cf123c8666ac737a8fa7c625789ed8d220f7c3</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="5.0.2-servicing.20613.1">
+    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="5.0.3-servicing.21064.17">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-winforms</Uri>
-      <Sha>1a7d925a270d4eaca6e801de8b88b34b535091de</Sha>
+      <Sha>e8cf123c8666ac737a8fa7c625789ed8d220f7c3</Sha>
     </Dependency>
     <Dependency Name="Microsoft.Win32.Registry" Version="5.0.0" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
@@ -21,9 +21,9 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>cf258a14b70ad9069470a108f13765e0e5988f51</Sha>
     </Dependency>
-    <Dependency Name="System.Diagnostics.EventLog" Version="5.0.0" CoherentParentDependency="Microsoft.Private.Winforms">
-      <Uri>https://github.com/dotnet/runtime</Uri>
-      <Sha>cf258a14b70ad9069470a108f13765e0e5988f51</Sha>
+    <Dependency Name="System.Diagnostics.EventLog" Version="5.0.1" CoherentParentDependency="Microsoft.Private.Winforms">
+      <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
+      <Sha>75b9165595c9d88edbd452d06bbdc05f950a563b</Sha>
     </Dependency>
     <Dependency Name="System.DirectoryServices" Version="5.0.0" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
@@ -61,9 +61,9 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>cf258a14b70ad9069470a108f13765e0e5988f51</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.Platforms" Version="5.0.0" CoherentParentDependency="Microsoft.Private.Winforms">
-      <Uri>https://github.com/dotnet/runtime</Uri>
-      <Sha>cf258a14b70ad9069470a108f13765e0e5988f51</Sha>
+    <Dependency Name="Microsoft.NETCore.Platforms" Version="5.0.1" CoherentParentDependency="Microsoft.Private.Winforms">
+      <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
+      <Sha>75b9165595c9d88edbd452d06bbdc05f950a563b</Sha>
     </Dependency>
     <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="5.0.2-servicing.21065.2">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</Uri>
@@ -77,51 +77,51 @@
       <Uri>https://github.com/dotnet/coreclr</Uri>
       <Sha>d5bb8bf2437d447750cf0203dd55bb5160ff36b8</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.ILDAsm" Version="5.0.2-servicing.20611.20" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="Microsoft.NETCore.ILDAsm" Version="5.0.3-servicing.21064.20" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>cb5f173b9696d9d00a544b953d95190ab3b56df2</Sha>
+      <Sha>75b9165595c9d88edbd452d06bbdc05f950a563b</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.ILAsm" Version="5.0.2-servicing.20611.20" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="Microsoft.NETCore.ILAsm" Version="5.0.3-servicing.21064.20" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>cb5f173b9696d9d00a544b953d95190ab3b56df2</Sha>
+      <Sha>75b9165595c9d88edbd452d06bbdc05f950a563b</Sha>
     </Dependency>
     <Dependency Name="System.Resources.Extensions" Version="5.0.0" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>cf258a14b70ad9069470a108f13765e0e5988f51</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.App.Internal" Version="5.0.2-servicing.20611.20" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="Microsoft.NETCore.App.Internal" Version="5.0.3-servicing.21064.20" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>cb5f173b9696d9d00a544b953d95190ab3b56df2</Sha>
+      <Sha>75b9165595c9d88edbd452d06bbdc05f950a563b</Sha>
     </Dependency>
     <Dependency Name="Microsoft.NETCore.App.Ref" Version="5.0.0" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>cf258a14b70ad9069470a108f13765e0e5988f51</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.App.Runtime.win-x64" Version="5.0.2" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="Microsoft.NETCore.App.Runtime.win-x64" Version="5.0.3" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>cb5f173b9696d9d00a544b953d95190ab3b56df2</Sha>
+      <Sha>75b9165595c9d88edbd452d06bbdc05f950a563b</Sha>
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>
-    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="5.0.0-beta.20621.10">
+    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="5.0.0-beta.21063.3">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>f1c7a4b1bcd028e17f2714b7e6f30ec1abd1a03f</Sha>
+      <Sha>f73f462f75b5fa21805f0b3c477b11277c5da556</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="5.0.0-beta.20621.10">
+    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="5.0.0-beta.21063.3">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>f1c7a4b1bcd028e17f2714b7e6f30ec1abd1a03f</Sha>
+      <Sha>f73f462f75b5fa21805f0b3c477b11277c5da556</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="5.0.0-beta.20621.10">
+    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="5.0.0-beta.21063.3">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>f1c7a4b1bcd028e17f2714b7e6f30ec1abd1a03f</Sha>
+      <Sha>f73f462f75b5fa21805f0b3c477b11277c5da556</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20621.10">
+    <Dependency Name="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.21063.3">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>f1c7a4b1bcd028e17f2714b7e6f30ec1abd1a03f</Sha>
+      <Sha>f73f462f75b5fa21805f0b3c477b11277c5da556</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.20621.10">
+    <Dependency Name="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.21063.3">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>f1c7a4b1bcd028e17f2714b7e6f30ec1abd1a03f</Sha>
+      <Sha>f73f462f75b5fa21805f0b3c477b11277c5da556</Sha>
     </Dependency>
   </ToolsetDependencies>
 </Dependencies>

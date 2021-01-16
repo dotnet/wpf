@@ -322,6 +322,11 @@ namespace Microsoft.Build.Tasks.Windows
             set { _xamlDebuggingInformation = value; }
         }
 
+        ///<summary>
+        /// Support custom IntermediateOutputPath and BaseIntermediateOutputPath outside the project path
+        ///</summary>
+        public bool SupportCustomOutputPaths { get; set; } = false;
+
         /// <summary>
         /// Known reference paths hold referenced assemblies which are never changed during the build procedure.
         /// such as references in GAC, in framework directory or framework SDK directory etc.
@@ -634,7 +639,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             try
             {
-                compilerWrapper = TaskHelper.CreateCompilerWrapper(AlwaysCompileMarkupFilesInSeparateDomain, ref appDomain);
+                compilerWrapper = TaskHelper.CreateCompilerWrapper();
 
                 if (compilerWrapper != null)
                 {
@@ -644,6 +649,8 @@ namespace Microsoft.Build.Tasks.Windows
                     compilerWrapper.TaskLogger = Log;
                     compilerWrapper.UnknownErrorID = UnknownErrorID;
                     compilerWrapper.XamlDebuggingInformation = XamlDebuggingInformation;
+
+                    compilerWrapper.SupportCustomOutputPaths = SupportCustomOutputPaths;
 
                     compilerWrapper.TaskFileService = _taskFileService;
 

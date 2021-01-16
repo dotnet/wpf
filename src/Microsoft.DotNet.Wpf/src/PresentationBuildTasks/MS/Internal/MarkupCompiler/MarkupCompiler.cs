@@ -1582,11 +1582,45 @@ namespace MS.Internal
             {
                 if (SupportCustomOutputPaths)
                 {
+                    //  During code generation, ParentFolderPrefix returns the relative path from a .g.cs file to its markup file.
+                    //
+                    //      One example is generated #pragmas: #pragma checksum "..\..\..\..\Views\ExportNotificationView.xaml"  
+                    //
+                    //  The path information for a markup file is represented in SourceFileInfo: 
+                    //
+                    //      SourceFileInfo.OriginalFilePath: "c:\\greenshot\\src\\Greenshot.Addons\\Views\\ExportNotificationView.xaml"
+                    //      SourceFileInfo.TargetPath: "c:\\greenshot\\src\\Greenshot.Addons\\obj\\Debug\\net6.0-windows\\"
+                    //      SourceFileInfo.RelativeFilePath: "Views\\ExportNotificationView"
+                    //      SourceFileInfo.SourcePath = "c:\\greenshot\\src\\Greenshot.Addons\\"
+                    //
+                    //  The path of the generated code file associated with this markup file is:
+                    //
+                    //      "c:\greenshot\src\Greenshot.Addons\obj\Debug\net6.0-windows\Views\ExportNotificationView.g.cs"
+                    //
+                    //  The markup file path is in SourceFileInfo.OriginalFilePath:
+                    //
+                    //      "c:\\greenshot\\src\\Greenshot.Addons\\Views\\ExportNotificationView.xaml"
+                    //
+                    //  The relative path calculation must take in to account both the TargetPath and the RelativeFilePath:
+                    //
+                    //      "c:\\greenshot\\src\\Greenshot.Addons\\obj\\Debug\\net6.0-windows\\" [SourceFileInfo.TargetPath]      
+                    //      "Views\\ExportNotificationView" [SourceFileInfo.RelativeTargetPath]
+                    //
+                    //   TargetPath concatenated with the directory portion of the RelativeTargetPath is the location to the .g.cs file:
+                    //
+                    //      "c:\\greenshot\\src\\Greenshot.Addons\\obj\\Debug\\net6.0-windows\\Views"
+                    //      
+                    string pathOfRelativeSourceFilePath = System.IO.Path.GetDirectoryName(SourceFileInfo.RelativeSourceFilePath);
+
+                    // Return the parent folder of the target file with a trailing DirectorySeparatorChar.  
+                    // Return a relative path if possible.  Else, return an absolute path.
                     #if NETFX 
-                    return PathInternal.GetRelativePath(TargetPath, SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase) + Path.DirectorySeparatorChar;
+                    string path = PathInternal.GetRelativePath(TargetPath + pathOfRelativeSourceFilePath, SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase);
 #else
-                    return Path.GetRelativePath(TargetPath, SourceFileInfo.SourcePath) + Path.DirectorySeparatorChar;
+                    string path = Path.GetRelativePath(TargetPath + pathOfRelativeSourceFilePath, SourceFileInfo.SourcePath);
 #endif
+                    // Always return a path with a trailing DirectorySeparatorChar.  
+                    return path.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
                 }
                 else
                 {

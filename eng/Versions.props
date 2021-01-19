@@ -55,6 +55,7 @@
     <MicrosoftDotNetApiCompatVersion>1.0.0-beta.20113.5</MicrosoftDotNetApiCompatVersion>
     <MicrosoftDotNetCodeAnalysisPackageVersion>1.0.0-beta.20113.5</MicrosoftDotNetCodeAnalysisPackageVersion>
     <MicrosoftDotNetGenAPIVersion>1.0.0-beta.20113.5</MicrosoftDotNetGenAPIVersion>
+    <MicrosoftDotNetSignCheckVersion>1.0.0-beta.20569.8</MicrosoftDotNetSignCheckVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefxlab -->
   <PropertyGroup>

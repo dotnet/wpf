@@ -401,7 +401,7 @@ using namespace System::Runtime::Versioning;
     </ItemGroup>
     <MSBuild Projects="@(ProjectToBuild)"
              Targets="Restore;ResolveReferences;IdentifyNugetReferences"
-             Properties="TargetFramework=$(TargetFramework);Platform=$(Architecture);RuntimeIdentifier=win10-$(Architecture)">
+             Properties="TargetFramework=$(TargetFramework);Platform=$(Architecture);RuntimeIdentifier=win-$(Architecture)">
       <Output  TaskParameter="TargetOutputs" ItemName="NugetReferencesForCppCli" />
     </MSBuild>
 

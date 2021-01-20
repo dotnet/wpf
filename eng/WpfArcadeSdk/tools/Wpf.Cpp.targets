@@ -553,7 +553,7 @@ using namespace System::Runtime::Versioning;
     </ItemGroup>
     <PropertyGroup>
       <TfmForBuild>$(TargetFramework)</TfmForBuild>
-      <TfmForBuild Condition="'$(TfmForBuild)'==''">netcoreapp5.0</TfmForBuild>
+      <TfmForBuild Condition="'$(TfmForBuild)'==''">net5.0</TfmForBuild>
     </PropertyGroup>
     <!-- Restore, then IdentifyNuGetReferences -->
     <MSBuild Projects="@(ProjectToBuild)" UnloadProjectsOnCompletion="true"

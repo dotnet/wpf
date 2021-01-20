@@ -92,7 +92,7 @@ The following assemblies are being produced today:
     |       
     \---zh-Hant
             PresentationBuildTasks.resources.dll
-\---netcoreapp5.0
+\---net5.0
     |   DirectWriteForwarder.dll
     |   DirectWriteForwarder.pdb
     |   PresentationCore.dll

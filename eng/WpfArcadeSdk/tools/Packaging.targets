@@ -5,9 +5,9 @@
   <PropertyGroup>
     <!-- Projects can override the name of the 'lib' folder to something else - for e.g., 'tools'-->
     <LibFolder Condition="'$(LibFolder)'==''">lib</LibFolder>
-    
-    <!-- 
-      Architecture-specific assemblies go under runtimes\<rid>\native\ 
+
+    <!--
+      Architecture-specific assemblies go under runtimes\<rid>\native\
       https://docs.microsoft.com/en-us/nuget/create-packages/supporting-multiple-target-frameworks
     -->
   </PropertyGroup>
@@ -19,45 +19,45 @@
     <DevelopmentDependency Condition="'$(MsBuildSdkPackage)'=='true'">true</DevelopmentDependency>
     <PackageType Condition="'$(MsBuildSdkPackage)'=='true'">MSBuildSdk</PackageType>
   </PropertyGroup>
-  
-  <!-- 
-   Target: PreparePackageAssets                                                                   
-    Copies packages assets for a project to artifacts\packaging\$(Configuration)\$(PackageName)\  
-    and prepares it for packaging then Target=Pack is executed                                    
-                                                                                                  
-   Important properties and items:                                                                
-   $(PackageName):  Name of the package                                                           
-                    This target will only run for projects that specify $(PackageName)            
-                                                                                                  
-   @(PackagingContent): Additional content specified by projects                                  
-                        Place under content\ in the package by default                            
-                        Placement in package can be altered by specifying a SubFolder attribute   
-                        <PackagingContent Include="foo.xml" SubFolder="xmls" />  would result in  
-                          foo.xml being packaged under content\xmls                               
-                          
+
+  <!--
+   Target: PreparePackageAssets
+    Copies packages assets for a project to artifacts\packaging\$(Configuration)\$(PackageName)\
+    and prepares it for packaging then Target=Pack is executed
+
+   Important properties and items:
+   $(PackageName):  Name of the package
+                    This target will only run for projects that specify $(PackageName)
+
+   @(PackagingContent): Additional content specified by projects
+                        Place under content\ in the package by default
+                        Placement in package can be altered by specifying a SubFolder attribute
+                        <PackagingContent Include="foo.xml" SubFolder="xmls" />  would result in
+                          foo.xml being packaged under content\xmls
+
                           'root' is a special prefix-value for the attribute SubFolder, and it will result
                           in the placement of the file in the root of the package.
-  -                       <PackagingContent Include="THIRD-PARTY-NOTICES.TXT"  SubFolder="root"/>   
-                          will result in "THIRD-PARTY-NOTICES.TXT" to be placed at the root       
+  -                       <PackagingContent Include="THIRD-PARTY-NOTICES.TXT"  SubFolder="root"/>
+                          will result in "THIRD-PARTY-NOTICES.TXT" to be placed at the root
                           of the package.
                           <PackagingContent Include"sdk\*.props" Subfolder="root\sdk" /> will result in
                           relevant *.props files to be placed under the 'sdk' sub-folder in the package.
-                          
-   @(PackagingAssemblyContent) - 
-                        A way to specify which files under $(OutDir) should be packaged. 
+
+   @(PackagingAssemblyContent) -
+                        A way to specify which files under $(OutDir) should be packaged.
                         If this list is set, then we will only carry assemblies specified in this set
                         an no others.
-   $(ExcludeRefAssemblies) - true/false to include/exclude ref assemblies from packaging. 
+   $(ExcludeRefAssemblies) - true/false to include/exclude ref assemblies from packaging.
                              default is true.
    $(ExcludePdbs)  - true/false to include/exclude PDB's from packaging
                      default is true
-$(PreparePackageAssetsDependsOn):                                                              
-                      List of targets that PreparePackageAssets would depend on                   
-                      This is an extensibility point                                              
-                                                                                                  
-   Packaging projects ($(IsPackagingProject) == true) also have $(PackageName) - do not attempt   
-   to prepare DLL, EXE, PDB etc. assets for those projects. Only prepare content (PackageAsset)   
-   assets for packaging projects                                                                  
+$(PreparePackageAssetsDependsOn):
+                      List of targets that PreparePackageAssets would depend on
+                      This is an extensibility point
+
+   Packaging projects ($(IsPackagingProject) == true) also have $(PackageName) - do not attempt
+   to prepare DLL, EXE, PDB etc. assets for those projects. Only prepare content (PackageAsset)
+   assets for packaging projects
    -->
   <Target Name="PreparePackageAssets"
           AfterTargets="Build"
@@ -71,7 +71,7 @@ $(PreparePackageAssetsDependsOn):
     <MakeDir Condition="!Exists('%(PackageAsset.RelativePath')" Directories="@(PackageAsset->'%(RelativePath)')" />
     <Copy Condition="(@(PackageAsset->Count()) &gt; 0)"
           SourceFiles="@(PackageAsset)"
-          DestinationFolder="%(PackageAsset.RelativePath)" 
+          DestinationFolder="%(PackageAsset.RelativePath)"
           SkipUnchangedFiles="true"/>
   </Target>
 
@@ -86,6 +86,7 @@ $(PreparePackageAssetsDependsOn):
     <PropertyGroup Condition="'$(MSBuildProjectExtension)'=='.vcxproj' and '$(DestinationSubFolder)'==''">
       <DestinationSubFolder Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='x86' or '$(Platform)'=='Win32'">runtimes\win-x86\native\</DestinationSubFolder>
       <DestinationSubFolder Condition="'$(Platform)'=='x64'">runtimes\win-x64\native\</DestinationSubFolder>
+      <DestinationSubFolder Condition="'$(Platform)'=='arm64'">runtimes\win-arm64\native\</DestinationSubFolder>
     </PropertyGroup>
 
     <!--
@@ -97,15 +98,15 @@ $(PreparePackageAssetsDependsOn):
         Include all content files under content\
 
     @(PackageAsset) evaluation should be done after $(PreparePackageAssetsDependsOn) targets have completed running. To ensure
-    delayed evaluation, use CreateItem tasks. 
-    
-    The CreateItem tasks below is equivalent to this: 
-    
+    delayed evaluation, use CreateItem tasks.
+
+    The CreateItem tasks below is equivalent to this:
+
     <ItemGroup Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true'">
       <PackageAsset Include="$(OutDir)*.dll" RelativePath="$(ArtifactsPackagingDir)$(PackageName)\$(DestinationSubFolder)"/>
       <PackageAsset Include="$(OutDir)*.exe" RelativePath="$(ArtifactsPackagingDir)$(PackageName)\$(DestinationSubFolder)"/>
       <PackageAsset Include="$(OutDir)*.pdb" RelativePath="$(ArtifactsPackagingDir)$(PackageName)\$(DestinationSubFolder)"/>
-      
+
       <PackageAsset Include="$(ReferenceAssemblyDir)*.dll" RelativePath="$(ArtifactsPackagingDir)\$(DestinationSubFolder)"/>
       <PackageAsset Include="$(ReferenceAssemblyDir)*.xml" RelativePath="$(ArtifactsPackagingDir)\$(DestinationSubFolder)"/>
     </ItemGroup>
@@ -118,7 +119,7 @@ $(PreparePackageAssetsDependsOn):
     </CreateItem>
 
     <!--
-      Normally, .lib files are not included in packaging - projects have to opt in by setting   
+      Normally, .lib files are not included in packaging - projects have to opt in by setting
         <PropertyGroup>
           <IncludeLibFilesInPackaging>true<IncludeLibFilesInPackaging>
         </PropertyGroup>
@@ -129,7 +130,7 @@ $(PreparePackageAssetsDependsOn):
             Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'=='' and '$(IncludeLibFilesInPackaging)' == 'true'">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
-    
+
     <CreateItem Include="$(OutDir)*.exe"
                 Exclude="@(FileNamesExcludedFromPackaging -> '$(OutDir)%(Filename)%(Extension)' )"
                 AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
@@ -143,26 +144,26 @@ $(PreparePackageAssetsDependsOn):
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
 
-    <!-- 
-      Static C++ libraries do not copy their PDB's to $(OutDir) -get it directly from $(IntermediateOutputPath) 
-      Also, normally projects generating .lib files are not included in packaging. Such projects must opt in like this: 
+    <!--
+      Static C++ libraries do not copy their PDB's to $(OutDir) -get it directly from $(IntermediateOutputPath)
+      Also, normally projects generating .lib files are not included in packaging. Such projects must opt in like this:
         <PropertyGroup>
           <IncludeLibFilesInPackaging>true<IncludeLibFilesInPackaging>
         </PropertyGroup>
     -->
     <CreateItem Include="$(IntermediateOutputPath)*.pdb"
                 AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
-                Condition="'$(ConfigurationType)'=='StaticLibrary' and '$(Language)'=='C++' and 
+                Condition="'$(ConfigurationType)'=='StaticLibrary' and '$(Language)'=='C++' and
                           '$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludePdbs)'!='true' and '@(PackagingAssemblyContent)'=='' and '$(IncludeLibFilesInPackaging)' == 'true'">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
-    
+
     <CreateItem Include="$(ReferenceAssemblyDir)*.dll"
                 AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\ref\$(TargetFramework)"
                 Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '$(ExcludeRefAssemblies)'!='true'">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
-    
+
     <!-- Intellisense XML's bundled alongwith ref-pack content -->
     <CreateItem Include="$(ReferenceAssemblyDir)*.xml"
             AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\ref\$(TargetFramework)"
@@ -174,13 +175,13 @@ $(PreparePackageAssetsDependsOn):
             AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
             Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'!=''">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
-    </CreateItem>   
-    <!-- 
+    </CreateItem>
+    <!--
         $(XlfLanguages) is defined by XliffTasks.
-        The conversion of .resx files to .xlf files, and the building of resource assemblies (.resources.dll) and 
-        culture-specific satellite assemblies (<culture>\*.resources.dll) are done immediately after Build, as part of 
-        CreateSatelliteAssemblies. 
-        
+        The conversion of .resx files to .xlf files, and the building of resource assemblies (.resources.dll) and
+        culture-specific satellite assemblies (<culture>\*.resources.dll) are done immediately after Build, as part of
+        CreateSatelliteAssemblies.
+
         Include satellite assemblies into the package if $(XlfLanguages) is defined. They are included under a relative path
         that is the same as their respective culture identifier (for e.g., 'fr', 'zh-Hans' etc.)
     -->
@@ -203,26 +204,26 @@ $(PreparePackageAssetsDependsOn):
                     Include="%(PackagingContent.Identity)"
                     RelativePath="$(ArtifactsPackagingDir)$(NormalizedPackageName)\content"/>
 
-      <!-- 
-          %(PackagingContent.SubFolder) StartsWith 'root' 
+      <!--
+          %(PackagingContent.SubFolder) StartsWith 'root'
             Package content under sub-folder %(PackagingContent.SubFolder).TrimLeft('root')
-            
+
             Keep track of such sub-folders that exist immediately under root in a special ItemGroup - PackagingRootFolderSubFolders
             PackagingRootFolderSubFolders will be used later in CreateContentFolder
-            
+
             Implementation Note:
               SubFolder string looks like this: "root\subfolder1\subfolder2"
                 %(SubFolder).SubString(4) ~= "\subfolder1\subfolder2"
                 %(SubFolder).SubString(5) ~= "subfolder1\subfolder2"
-              
-              When concatenating next to $(ArtifactsPackagingDir)$(PackageName), 
+
+              When concatenating next to $(ArtifactsPackagingDir)$(PackageName),
                 - use %(SubFolder).SubString(4)
                 - do not insert a directory separator character (\) between them
                 - this has the benefit of working seamlessly when %(SubFolder) == "root"
-              
-              When SubFolder name must be extracted, 
+
+              When SubFolder name must be extracted,
                 - use %(SubFolder).SubString(5)
-                - In GenerateNuspec target, we have special-case logic to deal with files directly under the root folder, 
+                - In GenerateNuspec target, we have special-case logic to deal with files directly under the root folder,
                     so we only need to keep track of sub-folder names.
       -->
       <PackageAsset Condition="$([System.String]::Copy(&quot;%(PackagingContent.SubFolder)&quot;).StartsWith(&quot;root&quot;))"
@@ -239,37 +240,37 @@ $(PreparePackageAssetsDependsOn):
   <!-- Target:  CreateContentFolder -->
   <!--            Dynamically populates  @(Content) for packaging  -->
    <!--
-    This target is only run for projects which specify $(IsPackable) = true               
-      By convention, NO WPF projects will specify $(IsPackable) = true                    
-      WPF projects will opt into PreparePackageAssets target by specifying $(PackageName) 
-      Special packaging-only projects will be used to orchestrate the actual packaging    
-                                                                                          
-      Also, if an "ArchNeutral" package sets $(IncludeAssembliesInArchNeutralPackage)=true, 
-      then it will include 'lib\**\*' files in it anyway. 
+    This target is only run for projects which specify $(IsPackable) = true
+      By convention, NO WPF projects will specify $(IsPackable) = true
+      WPF projects will opt into PreparePackageAssets target by specifying $(PackageName)
+      Special packaging-only projects will be used to orchestrate the actual packaging
+
+      Also, if an "ArchNeutral" package sets $(IncludeAssembliesInArchNeutralPackage)=true,
+      then it will include 'lib\**\*' files in it anyway.
       This can be combined with $(PlatformIndependentPackage)=true (which controls the generation
-      of runtime.json file) to generate an AnyCPU Sdk package containing ref + lib assemblies alongwith 
+      of runtime.json file) to generate an AnyCPU Sdk package containing ref + lib assemblies alongwith
       all the props and targets.
-                                                                                          
-   The following properties are of interest to this target                                                                    
-   $(PackageName):  The name of the package                                                                                   
-   $(PackageVersion): The package version                                                                                     
-   $(Authors): Authors                                                                                                        
-   $(PackageDescription): Description                                                                                         
-   $(TargetCulture): culture/language of the build. If not specified (or '*'), then $(NeutralLanguage) will be used instead   
-   $(RepositoryUrl): Repo Url                                                                                                 
-   $(PackageRequireLicenseAcceptance): true/false indicating whether license file acceptance is required                       
+
+   The following properties are of interest to this target
+   $(PackageName):  The name of the package
+   $(PackageVersion): The package version
+   $(Authors): Authors
+   $(PackageDescription): Description
+   $(TargetCulture): culture/language of the build. If not specified (or '*'), then $(NeutralLanguage) will be used instead
+   $(RepositoryUrl): Repo Url
+   $(PackageRequireLicenseAcceptance): true/false indicating whether license file acceptance is required
    $(MsBuildSdkPackage): true/false indicating whether the nupkg is an MSBuild SDK package. When set to true, the nuspec produces
                          additional content indicating that the package is an Sdk.
-                                                                                                                              
-   We expect to find $(DefaultPackageLicenseFile) (typically defined as 'LICENSE.TXT' in nupkg\Directory.Build.props) at the  
-   root of the packaging content folder . If a $(DefaultPackageLicenseFile) file is not found, we will fallback to            
-   $(PackageLicenseExpression) license (typically defined as 'MIT')                     
-                                                                                                                              
-   When building a nupkg for a bait-and-switch package ($(CreateArchNeutralPackage)==true), the following changes are     
-    made:                                                                                                                     
-      Package name : A RID is not prefixed onto the package name                                                              
+
+   We expect to find $(DefaultPackageLicenseFile) (typically defined as 'LICENSE.TXT' in nupkg\Directory.Build.props) at the
+   root of the packaging content folder . If a $(DefaultPackageLicenseFile) file is not found, we will fallback to
+   $(PackageLicenseExpression) license (typically defined as 'MIT')
+
+   When building a nupkg for a bait-and-switch package ($(CreateArchNeutralPackage)==true), the following changes are
+    made:
+      Package name : A RID is not prefixed onto the package name
       Files      - : Only ref\ and root-level content files are included
-      
+
   Microsoft.DotNet.Arcade.Sdk\tools\WorkArounds.targets - InitializeStandardNuspecProperties populates $(_CommonMetadataElements)
   with the following metadata information:
     id
@@ -283,7 +284,7 @@ $(PreparePackageAssetsDependsOn):
     developmentDependency
     serviceable
     repository type= url= commit=
-  In effect, it provides us with all the relevant package metadata we need. We can simply reuse that 
+  In effect, it provides us with all the relevant package metadata we need. We can simply reuse that
   information here within <metadata>
   -->
   <Target Condition="'$(PackageName)'!='' and '$(IsPackable)'=='true'"
@@ -301,13 +302,19 @@ $(PreparePackageAssetsDependsOn):
       <RootFolderContents Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\*.*"/>
     </ItemGroup>
 
+    <PropertyGroup>
+      <DestinationRuntimeSubFolder Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='x86' or '$(Platform)'=='Win32'">runtimes\win-x86\native\</DestinationRuntimeSubFolder>
+      <DestinationRuntimeSubFolder Condition="'$(Platform)'=='x64'">runtimes\win-x64\native\</DestinationRuntimeSubFolder>
+      <DestinationRuntimeSubFolder Condition="'$(Platform)'=='arm64'">runtimes\win-arm64\native\</DestinationRuntimeSubFolder>
+    </PropertyGroup>
+
     <ItemGroup>
       <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\**\*.dll"
                Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\')" >
         <Pack>true</Pack>
         <PackagePath>$(LibFolder)</PackagePath>
       </Content>
-      
+
       <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\**\*.exe"
          Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(LibFolder)\')" >
         <Pack>true</Pack>
@@ -320,28 +327,28 @@ $(PreparePackageAssetsDependsOn):
         <PackagePath>$(LibFolder)</PackagePath>
       </Content>
 
-      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtimes\**\*.dll"
-         Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtimes\')" >
+      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationRuntimeSubFolder)\*.dll"
+         Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationRuntimeSubFolder)\')" >
         <Pack>true</Pack>
-        <PackagePath>runtimes</PackagePath>
+        <PackagePath>$(DestinationRuntimeSubFolder)</PackagePath>
       </Content>
 
-      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtimes\**\*.lib"
-         Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtimes\')" >
+      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationRuntimeSubFolder)\*.lib"
+         Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationRuntimeSubFolder)\')" >
         <Pack>true</Pack>
-        <PackagePath>runtimes</PackagePath>
+        <PackagePath>$(DestinationRuntimeSubFolder)</PackagePath>
       </Content>
 
-      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtimes\**\*.exe"
-         Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtimes\')" >
+      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationRuntimeSubFolder)\*.exe"
+         Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationRuntimeSubFolder)\')" >
         <Pack>true</Pack>
-        <PackagePath>runtimes</PackagePath>
+        <PackagePath>$(DestinationRuntimeSubFolder)</PackagePath>
       </Content>
 
-      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtimes\**\*.pdb"
-         Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\runtimes\')" >
+      <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationRuntimeSubFolder)\*.pdb"
+         Condition="('$(CreateArchNeutralPackage)'!='true' Or '$(IncludeAssembliesInArchNeutralPackage)'== 'true') and Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationRuntimeSubFolder)\')" >
         <Pack>true</Pack>
-        <PackagePath>runtimes</PackagePath>
+        <PackagePath>$(DestinationRuntimeSubFolder)</PackagePath>
       </Content>
 
       <Content Include="$(ArtifactsPackagingDir)$(NormalizedPackageName)\ref\**\*.dll"
@@ -381,12 +388,12 @@ $(PreparePackageAssetsDependsOn):
         <PackagePath>%(PackagingRootFolderSubFolders.Identity)</PackagePath>
       </Content>
     </ItemGroup>
-    
+
   </Target>
-  
-    <!-- 
+
+    <!--
     We can't reliably insert CreatecontentFolder
-    at the head of GenerateNuspecDependsOn during 
+    at the head of GenerateNuspecDependsOn during
     static imports of props/targets, so we do it
     dynamically from within a target
   -->
@@ -400,15 +407,15 @@ $(PreparePackageAssetsDependsOn):
   </Target>
 
   <!-- Create version.txt containing latest commit ID -->
-  <Target Name="GenerateVersionFileWithRepositoryCommit"  
-          Condition="'$(IsPackable)'=='true' and '$(CreateArchNeutralPackage)'=='true' and !Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\version.txt')" 
-          BeforeTargets="CreateContentFolder" 
+  <Target Name="GenerateVersionFileWithRepositoryCommit"
+          Condition="'$(IsPackable)'=='true' and '$(CreateArchNeutralPackage)'=='true' and !Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\version.txt')"
+          BeforeTargets="CreateContentFolder"
           Outputs="$(ArtifactsPackagingDir)$(NormalizedPackageName)\version.txt">
-    <!-- 
-      Workaround 
-        Ensure that SourceRevisionId is obtained if it has not already been read in 
+    <!--
+      Workaround
+        Ensure that SourceRevisionId is obtained if it has not already been read in
         Reuse tasks from Microsoft.Build.Tasks.Git.targets
-    --> 
+    -->
     <Microsoft.Build.Tasks.Git.LocateRepository Path="$(MSBuildProjectDirectory)" Condition="'$(SourceRevisionId)' == ''" >
       <Output TaskParameter="RevisionId" PropertyName="SourceRevisionId" />
     </Microsoft.Build.Tasks.Git.LocateRepository>
@@ -447,6 +454,11 @@ $(PreparePackageAssetsDependsOn):
       "$(NormalizedPackageName)": {
         "runtime.win-x86.$(PackageName)": "$(PackageVersion)"
       }
+    },
+    "win-arm64": {
+      "$(NormalizedPackageName)": {
+        "runtime.win-arm64.$(PackageName)": "$(PackageVersion)"
+      }
     }
   }
 }
@@ -468,5 +480,5 @@ $(PreparePackageAssetsDependsOn):
     <Delete Condition="Exists('$(RuntimeJsonFile)')" Files="$(RuntimeJsonFile)" />
     <WriteLinesToFile Lines="@(RuntimeJson)" File="$(RuntimeJsonFile)"/>
   </Target>
-          
+
 </Project>

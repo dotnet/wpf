@@ -22,7 +22,12 @@
         <ILDAsmPath>$(Pkgruntime_win-x64_Microsoft_NETCore_ILDAsm)\runtimes\$(WpfRuntimeIdentifier)\native\</ILDAsmPath>
         <ILAsmPath>$(Pkgruntime_win-x64_Microsoft_NETCore_ILAsm)\runtimes\$(WpfRuntimeIdentifier)\native\</ILAsmPath>
         <CoreCLRPath>$(Pkgruntime_win-x64_Microsoft_NETCore_Runtime_CoreCLR)\runtimes\$(WpfRuntimeIdentifier)\native\</CoreCLRPath>
+      </PropertyGroup>
 
+      <PropertyGroup Condition="'$(WpfRuntimeIdentifier)'=='win-arm64'">
+        <ILDAsmPath>$(Pkgruntime_win-arm64_Microsoft_NETCore_ILDAsm)\runtimes\$(WpfRuntimeIdentifier)\native\</ILDAsmPath>
+        <ILAsmPath>$(Pkgruntime_win-arm64_Microsoft_NETCore_ILAsm)\runtimes\$(WpfRuntimeIdentifier)\native\</ILAsmPath>
+        <CoreCLRPath>$(Pkgruntime_win-arm64_Microsoft_NETCore_Runtime_CoreCLR)\runtimes\$(WpfRuntimeIdentifier)\native\</CoreCLRPath>
       </PropertyGroup>
 
       <PropertyGroup>

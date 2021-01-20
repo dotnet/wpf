@@ -9,7 +9,7 @@
     <GenerateResourcesSRNamespace>MS.Internal.Automation</GenerateResourcesSRNamespace>
     <GenerateResourcesResourcesClassName>SRID</GenerateResourcesResourcesClassName>
     <Platforms>AnyCPU;x64</Platforms>
-    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

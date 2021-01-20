@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp5.0</TargetFramework>  
+    <TargetFramework>net5.0</TargetFramework>  
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
   

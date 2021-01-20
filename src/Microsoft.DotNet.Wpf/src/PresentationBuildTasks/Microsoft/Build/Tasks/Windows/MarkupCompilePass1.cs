@@ -588,6 +588,11 @@ namespace Microsoft.Build.Tasks.Windows
         }
 
         ///<summary>
+        /// Support custom IntermediateOutputPath and BaseIntermediateOutputPath outside the project path
+        ///</summary>
+        public bool SupportCustomOutputPaths { get; set; } = false;
+
+        ///<summary>
         /// Generated source code files for the given programing language.
         ///</summary>
         [Output]
@@ -1215,7 +1220,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             try
             {
-                compilerWrapper = TaskHelper.CreateCompilerWrapper(AlwaysCompileMarkupFilesInSeparateDomain, ref appDomain);
+                compilerWrapper = TaskHelper.CreateCompilerWrapper();
 
                 if (compilerWrapper != null)
                 {
@@ -1238,6 +1243,8 @@ namespace Microsoft.Build.Tasks.Windows
                     }
 
                     compilerWrapper.ContentFiles = CompilerAnalyzer.ContentFiles;
+
+                    compilerWrapper.SupportCustomOutputPaths = SupportCustomOutputPaths;
 
                     // Process Reference list here.
                     ArrayList referenceList = ProcessReferenceList();

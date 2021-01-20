@@ -201,6 +201,11 @@ namespace MS.Internal
             get { return _nErrors; }
         }
 
+        internal bool SupportCustomOutputPaths 
+        {
+            set { _mc.SupportCustomOutputPaths = value; }
+        }
+
         // <summary>
         // Start the compilation.
         // </summary>

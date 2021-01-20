@@ -244,7 +244,8 @@
                ExtraBuildControlFiles="@(ExtraBuildControlFiles)"
                XamlDebuggingInformation="$(XamlDebuggingInformation)"
                IsRunningInVisualStudio="$(BuildingInsideVisualStudio)"
-               OutputPath="$(IntermediateOutputPath)">
+               OutputPath="$(IntermediateOutputPath)"
+               SupportCustomOutputPaths="$(IncludePackageReferencesDuringMarkupCompilation)">
 
               <Output ItemName="GeneratedBaml" TaskParameter="GeneratedBamlFiles"/>
               <Output ItemName="GeneratedLocalizationFiles" TaskParameter="GeneratedLocalizationFiles" />
@@ -304,7 +305,8 @@
                XamlDebuggingInformation="$(XamlDebuggingInformation)"
                GeneratedBaml=""
                OutputPath="$(IntermediateOutputPath)"
-               ContinueOnError="false" >
+               ContinueOnError="false" 
+               SupportCustomOutputPaths="$(IncludePackageReferencesDuringMarkupCompilation)">
 
           <!--
                Output Items for MarkupCompilePass2
@@ -398,16 +400,31 @@
        </PropertyGroup>
 
       <!-- Collect the generated NuGet files from the parent project required to support PackageReferences. -->
+      <!--  
+          Note that MSBuildProjectExtensionsPath defaults to BaseIntermediateOutputPath (Microsoft.Common.props) 
+          unless it it set prior to importing the .NET SDK. In the WPF temp project, MSBuildProjectExtensionsPath 
+          cannot be defined before the .NET SDK is imported, and always defaults to BaseIntermediateOutputPath.
+      -->
+
       <ItemGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'">
         <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.g.props"/>
         <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.g.targets"/>
         <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.dgspec.json"/>
 
-        <_DestGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_TemporaryTargetAssemblyProjectName).nuget.g.props"/>
-        <_DestGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_TemporaryTargetAssemblyProjectName).nuget.g.targets"/>
-        <_DestGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_TemporaryTargetAssemblyProjectName).nuget.dgspec.json"/>
+        <_DestGeneratedNuGetPropsAndTargets Include="$(BaseIntermediateOutputPath)$(_TemporaryTargetAssemblyProjectName).nuget.g.props"/>
+        <_DestGeneratedNuGetPropsAndTargets Include="$(BaseIntermediateOutputPath)$(_TemporaryTargetAssemblyProjectName).nuget.g.targets"/>
+        <_DestGeneratedNuGetPropsAndTargets Include="$(BaseIntermediateOutputPath)$(_TemporaryTargetAssemblyProjectName).nuget.dgspec.json"/>
       </ItemGroup>
 
+      <!-- Project assets and nuget.cache files must also be copied if a custom BaseIntermediateOutputPath is set. -->
+      <ItemGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false' and '$(_InitialBaseIntermediateOutputPath)' != '$(BaseIntermediateOutputPath)'">
+        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)project.assets.json"/>
+        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)project.nuget.cache"/>
+
+        <_DestGeneratedNuGetPropsAndTargets Include="$(BaseIntermediateOutputPath)project.assets.json"/>
+        <_DestGeneratedNuGetPropsAndTargets Include="$(BaseIntermediateOutputPath)project.nuget.cache"/>
+      </ItemGroup>
+         
       <!-- Copy the renamed outer project NuGet props/targets files to the MSBuildProjectExtensionsPath used by NuGet. -->
       <Copy Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'"
             SourceFiles="@(_SourceGeneratedNuGetPropsAndTargets)"

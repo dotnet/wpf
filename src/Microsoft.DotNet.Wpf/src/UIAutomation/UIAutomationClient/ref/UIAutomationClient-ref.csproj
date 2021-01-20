@@ -7,7 +7,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>$(DefineConstants);UIAUTOMATIONCLIENT</DefineConstants>
     <NoWarn>$(NoWarn);0618;CA1821</NoWarn>
-    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
 

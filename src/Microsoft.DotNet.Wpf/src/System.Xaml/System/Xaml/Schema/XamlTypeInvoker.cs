@@ -312,11 +312,15 @@ namespace System.Xaml.Schema
                 {
                     return true;
                 }
-                Type underlyingType = type._xamlType.UnderlyingType.UnderlyingSystemType;
-                if (XamlObjectCreationFactory.TryGetCreator(underlyingType, out Func<object> creator))
+                Type underlyingType = null;
+                if (XamlObjectCreationFactory.HasBeenRegister)
                 {
-                    type._instanceCreatorDelegate = creator;
-                    return true;
+                    underlyingType = type._xamlType.UnderlyingType.UnderlyingSystemType;
+                    if (XamlObjectCreationFactory.TryGetCreator(underlyingType, out Func<object> creator))
+                    {
+                        type._instanceCreatorDelegate = creator;
+                        return true;
+                    }
                 }
 
                 if (!type.IsPublic)
@@ -332,7 +336,9 @@ namespace System.Xaml.Schema
                 {
                     return false;
                 }
-            
+
+                underlyingType ??= type._xamlType.UnderlyingType.UnderlyingSystemType;
+
                 // Look up public ctors only, for equivalence with Activator.CreateInstance
                 ConstructorInfo tConstInfo = underlyingType.GetConstructor(Type.EmptyTypes);
                 if (tConstInfo == null)

@@ -18,7 +18,11 @@ namespace System.Xaml.Schema
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
             s_xamlObjectCreatorDictionary[type] = creator ?? throw new ArgumentNullException(nameof(creator));
+
+            HasBeenRegister = true;
         }
+
+        internal static bool HasBeenRegister { get; private set; }
 
         internal static bool TryGetCreator(Type type, out Func<object> creator)
             => s_xamlObjectCreatorDictionary.TryGetValue(type, out creator);

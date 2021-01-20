@@ -22,8 +22,9 @@
     Properly calculates the RuntimeIdentifier based on the Platform type. We don't want to affect the build by actually setting RuntimeIdentifier.
     Those that are interested in setting the RuntimeIdentifier or having a property that mirrors it can use this one here.
     -->
-    <WpfRuntimeIdentifier Condition="('$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32') Or $(Platform.EndsWith('64'))">win-$(Platform)</WpfRuntimeIdentifier>
+    <WpfRuntimeIdentifier Condition="('$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32') Or $(Platform.EndsWith('x64'))">win-$(Platform)</WpfRuntimeIdentifier>
     <WpfRuntimeIdentifier Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32' or '$(Platform)'=='x86'">win-x86</WpfRuntimeIdentifier>
+    <WpfRuntimeIdentifier Condition="'$(Platform)'=='ARM64'">win-arm64</WpfRuntimeIdentifier>
   </PropertyGroup>
 
   <Import Project="$(WpfArcadeSdkToolsDir)RuntimeFrameworkReference.props"/>

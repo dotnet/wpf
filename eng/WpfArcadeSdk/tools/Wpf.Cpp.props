@@ -20,7 +20,10 @@
     <Architecture Condition="'$(Platform)'=='Win32'">x86</Architecture>
     <Architecture Condition="'$(Architecture)'==''">x64</Architecture>
 
-    <TraceWpp>$(Windows10SdkPath)bin\$(WindowsTargetPlatformVersion)\$(Architecture)\tracewpp.exe</TraceWpp>
+    <!-- This should always use either x86 or x64 --> 
+    <TraceWppArchitecture Condition="'$(Architecture)'=='ARM64'">x64</TraceWppArchitecture>
+    <TraceWppArchitecture Condition="'$(Architecture)'!='ARM64'">$(Architecture)</TraceWppArchitecture>
+    <TraceWpp>$(Windows10SdkPath)bin\$(WindowsTargetPlatformVersion)\$(TraceWppArchitecture)\tracewpp.exe</TraceWpp>
 
     <GenerateAssemblyInfo>$(ManagedCxx)</GenerateAssemblyInfo>
     <BuildProjectReferences>true</BuildProjectReferences>

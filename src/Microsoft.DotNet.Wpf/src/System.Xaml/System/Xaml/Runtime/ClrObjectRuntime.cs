@@ -76,7 +76,6 @@ namespace MS.Internal.Xaml.Runtime
             {
                 throw CreateException((SR.Get(SRID.CannotResolveTypeForFactoryMethod, xamlType, methodName)));
             }
-            string qMethodName = type.ToString() + "." + methodName;
             object instance = null;
             try
             {
@@ -88,10 +87,14 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
+                string qMethodName = type.ToString() + "." + methodName;
                 throw CreateException(SR.Get(SRID.MethodInvocation, qMethodName), UnwrapTargetInvocationException(e));
             }
+
             if (instance == null)
             {
+                string qMethodName = type.ToString() + "." + methodName;
                 throw CreateException(SR.Get(SRID.FactoryReturnedNull, qMethodName));
             }
             return instance;

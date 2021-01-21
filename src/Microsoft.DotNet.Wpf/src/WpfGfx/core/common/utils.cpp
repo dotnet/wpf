@@ -129,18 +129,25 @@ UINT GetPaddedByteCount(UINT cbSize)
     // We want precisely one of _X86_, 
     // _AMD64_ or _ARM_ to be defined. 
     // f(A,B,C) =  A'BC' + AB'C' + A'B'C
+/*
 #if !((!defined(_X86_) && defined(_AMD64_) && !defined(_ARM_)) || \
       (defined(_X86_) && !defined(_AMD64_) && !defined(_ARM_)) || \
-      (!defined(_X86_) && !defined(_AMD64_) && defined(_ARM_)))
+      (!defined(_X86_) && !defined(_AMD64_) && defined(_ARM_));
 #error Exactly one of _X86_, _AMD64_, _ARM_ should be defined
 #endif 
+*/
 
 #if defined(_X86_) 
     return cbSize;
 #elif defined(_AMD64_)
     return cbSize;
-#elif defined(_ARM_)
+// TODO: ARM64PORT: FIX THIS
+#elif defined(_ARM_) 
     const UINT alignment = 4;
+    UINT padding = alignment - (cbSize % alignment);
+    return (padding < alignment) ? (cbSize + padding) : cbSize;
+#elif defined(_ARM64_)
+    const UINT alignment = 8;
     UINT padding = alignment - (cbSize % alignment);
     return (padding < alignment) ? (cbSize + padding) : cbSize;
 #endif

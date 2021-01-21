@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyName>XamlTestClasses.FriendWithoutKey</AssemblyName>
     <RootNamespace>XamlTestClasses.FriendWithoutKey</RootNamespace>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <OutputType>Library</OutputType>
   </PropertyGroup>
 </Project>

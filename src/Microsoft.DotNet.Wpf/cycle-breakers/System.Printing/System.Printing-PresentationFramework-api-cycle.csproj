@@ -6,7 +6,7 @@
     <DefineConstants>$(DefineConstants);REACHFRAMEWORK;</DefineConstants>
     <!-- don't sign nor binplace this non-shipping assembly -->
     <ShouldWriteSigningRequired>false</ShouldWriteSigningRequired>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>

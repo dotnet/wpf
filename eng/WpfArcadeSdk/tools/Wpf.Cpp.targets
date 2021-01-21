@@ -558,11 +558,11 @@ using namespace System::Runtime::Versioning;
     <!-- Restore, then IdentifyNuGetReferences -->
     <MSBuild Projects="@(ProjectToBuild)" UnloadProjectsOnCompletion="true"
              Targets="Restore"
-             Properties="TargetFramework=$(TfmForBuild);Platform=$(Architecture);RuntimeIdentifier=win10-$(Architecture);IsRestoring=true" />
+             Properties="TargetFramework=$(TfmForBuild);Platform=$(Architecture);RuntimeIdentifier=win-$(Architecture);IsRestoring=true" />
 
     <MSBuild Projects="@(ProjectToBuild)"
          Targets="IdentifyNuGetReferences"
-         Properties="TargetFramework=$(TfmForBuild);Platform=$(Architecture);RuntimeIdentifier=win10-$(Architecture)">
+         Properties="TargetFramework=$(TfmForBuild);Platform=$(Architecture);RuntimeIdentifier=win-$(Architecture)">
       <Output  TaskParameter="TargetOutputs" ItemName="NuGetReferencesForCpp" />
     </MSBuild>
 

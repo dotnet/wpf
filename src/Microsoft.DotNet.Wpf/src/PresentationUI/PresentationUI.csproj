@@ -3,15 +3,15 @@
   <PropertyGroup>
 
     <TargetFramework>net5.0</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
 
     <EnableDefaultItems>false</EnableDefaultItems>
-    
+
     <DefineConstants>$(DefineConstants);PRESENTATIONUI</DefineConstants>
     <NoWarn>$(NoWarn);0618</NoWarn>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
 
-    <!-- Enable Markup compilation using our own internally build PresentationBuildTasks.dll --> 
+    <!-- Enable Markup compilation using our own internally build PresentationBuildTasks.dll -->
     <InternalMarkupCompilation>true</InternalMarkupCompilation>
     <NoInternalTypeHelper>true</NoInternalTypeHelper>
     <GenerateDependencyFile>false</GenerateDependencyFile>
@@ -49,13 +49,13 @@
       <GenerateTheme>true</GenerateTheme>
     </Page>
   </ItemGroup>
-  
+
   <ItemGroup>
-    <!-- 
+    <!--
       When InternalMarkupCompilation=true, always use @(EmbeddedResource) instead of
-      @(Resource) - @(Resource) gets stripped out by PresentationBuildTasks during 
-      _CompileTemporaryAssembly, and leads to build failures. 
-    --> 
+      @(Resource) - @(Resource) gets stripped out by PresentationBuildTasks during
+      _CompileTemporaryAssembly, and leads to build failures.
+    -->
     <EmbeddedResource Include="Resources\Documents.resx">
       <XlfInput>false</XlfInput>
       <GenerateSource>false</GenerateSource>
@@ -68,7 +68,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Strings.resx" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
       <Link>Common\System\SR.cs</Link>
@@ -225,7 +225,7 @@
     <PackageReference Include="System.Resources.Extensions" Version="$(SystemResourcesExtensionsVersion)" />
   </ItemGroup>
 
-  <!-- 
+  <!--
     Minimal set of references needed to build PresentationUI
   -->
   <ItemGroup>
@@ -259,7 +259,7 @@
   </ItemGroup>
 
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
-  
+
   <Target Name="AfterBuild" Inputs="@(Page)" Outputs="$(OutputPath)sdk\PUI.%(Page.Filename)%(Page.Extension)">
     <Exec Command="$(PerlCommand) ThemeGenerator.pl %(Page.Identity) @(Page -> '$(IntermediateOutputPath)PUI.%(Filename)%(Extension)')" Condition="'%(Page.GenerateTheme)' == 'true'" StandardOutputImportance="normal" />
     <ItemGroup>
@@ -268,7 +268,7 @@
       </DataFile>
     </ItemGroup>
   </Target>
-  
+
   <PropertyGroup>
     <!-- We don't use the designer for creating the strongly-typed resource class so we must ensure that ResGen runs before MarkupCompile -->
     <PrepareResourcesDependsOn>

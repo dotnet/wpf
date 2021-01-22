@@ -8,7 +8,7 @@
     <NoWarn>$(NoWarn);0618</NoWarn>
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <GenerateDependencyFile>false</GenerateDependencyFile>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
@@ -16,7 +16,7 @@
   <ItemGroup>
     <Compile Include="$(WpfSharedDir)ref\AttributesForReferenceAssemblies.cs" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <NetCoreReference Include="Microsoft.Win32.Primitives" />
     <NetCoreReference Include="netstandard" />

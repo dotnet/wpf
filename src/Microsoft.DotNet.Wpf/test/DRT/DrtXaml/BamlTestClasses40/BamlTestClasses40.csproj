@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyName>BamlTestClasses40</AssemblyName>
     <RootNamespace>BamlTestClasses40</RootNamespace>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>

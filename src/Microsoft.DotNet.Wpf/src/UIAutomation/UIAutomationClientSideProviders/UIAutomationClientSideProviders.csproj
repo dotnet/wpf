@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{D242FDF9-F132-4154-BB9F-3F85C39F6F4C}</ProjectGuid>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <DefineConstants>$(DefineConstants);UIAUTOMATIONCLIENTSIDEPROVIDERS</DefineConstants>
     <NoWarn>$(NoWarn);0618</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -91,12 +91,12 @@
     <Compile Include="MS\Internal\AutomationProxies\WindowsUpDown.cs" />
     <Compile Include="MS\Internal\AutomationProxies\WinEventTracker.cs" />
     <Compile Include="MS\Internal\AutomationProxies\WinFormsSpinner.cs" />
-    <!-- currently not in use 
+    <!-- currently not in use
     <Compile Include="MS\Internal\AutomationProxies\WordBreaker.cs" />
     <Compile Include="MS\Internal\UnsupportedAutomationProxies\SuperGridProvider.cs" />
     <Compile Include="MS\Internal\UnsupportedAutomationProxies\WindowsCalendar.cs" />
     <Compile Include="MS\Internal\UnsupportedAutomationProxies\WindowsDateTimePicker.cs" />
-    <Compile Include="MS\Internal\UnsupportedAutomationProxies\windowspager.cs" /> 
+    <Compile Include="MS\Internal\UnsupportedAutomationProxies\windowspager.cs" />
     -->
     <Compile Include="MS\Win32\externdll.cs" />
     <Compile Include="MS\Win32\NativeMethods.cs" />

@@ -61,7 +61,7 @@
       <!-- Work backwards to find the output for a hand-crafted ref assembly. -->
       <ResolvedImplementationAssembly Remove="@(ResolvedImplementationAssembly)" />
       <ResolvedImplementationAssembly Include="$(BaseOutputPath)..\$(AssemblyName)-ref\$(Platform)\$(Configuration)\**\$(AssemblyName).dll"
-                                     Condition="'$(WpfRuntimeIdentifier)'=='win-x64'"/>
+                                     Condition="'$(WpfRuntimeIdentifier)'=='win-x64' or '$(WpfRuntimeIdentifier)'=='win-arm64'"/>
       <ResolvedImplementationAssembly Include="$(BaseOutputPath)..\$(AssemblyName)-ref\$(Configuration)\**\$(AssemblyName).dll"
                                       Condition="'$(WpfRuntimeIdentifier)'=='win-x86'"/>
       <!-- If building a single project, Platform is used in win-x86.  Below handles this case. -->

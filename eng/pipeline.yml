@@ -135,7 +135,15 @@ jobs:
           Build_Release_x64:
             _BuildConfig: Release
             _Platform: x64
-
+          ${{ if eq(parameters.runAsPublic, 'true') }}:
+            Build_Debug_arm64:
+              _BuildConfig: Debug
+              # override some variables for debug
+              # _SignType has to be real for package publishing to succeed - do not override to test.
+              _Platform: arm64
+          Build_Release_arm64:
+            _BuildConfig: Release
+            _Platform: arm64
       steps:
       - checkout: self
         clean: true

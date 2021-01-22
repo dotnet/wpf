@@ -37,10 +37,10 @@ Write-Host "Target architecture - configuration: " $arch $Config
 function CopyBinariesToLocation($location)
 {
     $locallyBuiltBinaryLocationBase = Join-Path $RepoRoot "artifacts\packaging"
-    
+
     Write-Host "Copy native binaries..."
-    CopyNativeBinariesToLocation $location $locallyBuiltBinaryLocationBase 
-    
+    CopyNativeBinariesToLocation $location $locallyBuiltBinaryLocationBase
+
     Write-Host "Copy managed binaries..."
     CopyManagedBinariesToLocation $location  $locallyBuiltBinaryLocationBase
 }
@@ -58,7 +58,7 @@ function CopyNativeBinariesToLocation($location, $localBinLocation)
 }
 function CopyManagedBinariesToLocation($location, $localBinLocation)
 {
-    # Layout of where the managed binaries looks something like this: 
+    # Layout of where the managed binaries looks something like this:
     # x86 - artifacts\packaging\Debug\Microsoft.DotNet.Wpf.GitHub\lib\net5.0
     # x64 - artifacts\packaging\Debug\x64\Microsoft.DotNet.Wpf.GitHub\lib\net5.0
 
@@ -121,11 +121,11 @@ elseif($testhost)
     }
     else
     {
-        $location = Resolve-Path (Join-Path $destination "shared\Microsoft.WindowsDesktop.App\$version")        
+        $location = Resolve-Path (Join-Path $destination "shared\Microsoft.WindowsDesktop.App\$version")
     }
 
     Write-Host "Copying binaries to dotnet installation at $location"
-    
+
     if(![System.IO.Directory]::Exists($location))
     {
         Write-Host "Location unavailable: " $location -ForegroundColor Red
@@ -146,7 +146,7 @@ elseif($testhost)
         Write-Host "** Setting $dotnetVariableToSet to $destination **"
         Set-Item -Path $dotnetVariableToSet -Value $destination
 
-        Write-Host "** Setting env:DOTNET_MULTILEVEL_LOOKUP to 0 **"    
+        Write-Host "** Setting env:DOTNET_MULTILEVEL_LOOKUP to 0 **"
         $env:DOTNET_MULTILEVEL_LOOKUP=0
     }
 }
@@ -159,9 +159,8 @@ else
         Write-Host "App publishing directory unavailable: " $location -ForegroundColor Red
         return
     }
-    
+
     Write-Host "App publishing directory: " $location
     Write-Host "Copying binaries to app publishing directory..."
-    CopyBinariesToLocation $location  
+    CopyBinariesToLocation $location
 }
-

@@ -2,11 +2,11 @@
   <PropertyGroup>
     <AssemblyName>PresentationFramework</AssemblyName>
     <PackageId>PresentationFramework-PresentationUI-api-cycle</PackageId>
-    <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>    
+    <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
     <ShouldWriteSigningRequired>false</ShouldWriteSigningRequired>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>

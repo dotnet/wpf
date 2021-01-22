@@ -7,7 +7,7 @@
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
     <NoWarn>$(NoWarn);0618;1058</NoWarn>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
 
@@ -45,7 +45,7 @@
     <Compile Include="$(WpfCommonDir)\src\System\LocalAppContext.cs" />
     <Compile Include="$(WpfCommonDir)\src\System\AppContextDefaultValues.cs" />
     <Compile Include="System\AppContextDefaultValues.cs" />
-    
+
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
         <Link>Common\System\SR.cs</Link>
     </Compile>
@@ -1366,11 +1366,11 @@
     <Compile Include="System\Windows\Window.cs" />
     <Compile Include="System\Windows\WindowCollection.cs" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <MicrosoftPrivateWinFormsReference Include="Accessibility" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <NetCoreReference Include="netstandard" />
     <NetCoreReference Include="Microsoft.Win32.Primitives" />
@@ -1426,7 +1426,7 @@
     <NetCoreReference Include="System.Xml.Document" />
     <NetCoreReference Include="System.Xml.ReaderWriter" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="$(WpfCycleBreakersDir)PresentationUI\PresentationUI-PresentationFramework-impl-cycle.csproj" />
     <ProjectReference Include="$(WpfSourceDir)ReachFramework\ReachFramework.csproj" />
@@ -1437,9 +1437,9 @@
     <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
     <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
-    </ProjectReference>    
-    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />    
-    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />    
+    </ProjectReference>
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
     <ProjectReference Include="$(WpfSourceDir)PresentationFramework\ref\PresentationFramework-ref.csproj">
@@ -1451,16 +1451,16 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="$(MicrosoftWin32RegistryPackageVersion)" />
     <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" />
-    <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" /> 
+    <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
   </ItemGroup>
 
     <!-- Including the Microsoft.TextTemplating.targets requires us to manually import Sdk.Targets because
        it needs to be imported after Sdk.targets. This causes the BuildDependsOn variable,
-       which is modified by the T4 targets, to be overwritten, so the TransformAll target 
+       which is modified by the T4 targets, to be overwritten, so the TransformAll target
        doesn’t run before the Build target.-->
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
 
-  <!-- This has to come after the import of Sdk.targets, otherwise the CompileDependsOn property will be overwritten. 
+  <!-- This has to come after the import of Sdk.targets, otherwise the CompileDependsOn property will be overwritten.
        Once we move these templates to .tt this can be removed. -->
   <PropertyGroup>
     <CompileDependsOn>
@@ -1475,7 +1475,7 @@
       <Compile Include="$(IntermediateOutputPath)%(CollectionTemplate.Identity)" />
     </ItemGroup>
   </Target>
-  
+
   <Target Name="GenerateTemplatesCore" Inputs="%(CollectionTemplate.Template).ti;%(CollectionTemplate.Pattern).tb;%(CollectionTemplate.Pattern).th" Outputs="$(IntermediateOutputPath)\%(CollectionTemplate.Identity)">
     <MakeDir Condition="!Exists('$(IntermediateOutputPath)')" Directories="$(IntermediateOutputPath)" />
     <Error Text="CollectionTemplate must have Pattern (header and body) and Template (instances) child elements set." Condition="'%(CollectionTemplate.Pattern)' == '' OR '%(CollectionTemplate.Template)' == ''" />

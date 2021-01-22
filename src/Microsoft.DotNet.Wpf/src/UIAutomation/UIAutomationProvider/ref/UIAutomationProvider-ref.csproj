@@ -8,7 +8,7 @@
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
     <GenerateResourcesSRNamespace>MS.Internal.Automation</GenerateResourcesSRNamespace>
     <GenerateResourcesResourcesClassName>SRID</GenerateResourcesResourcesClassName>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 

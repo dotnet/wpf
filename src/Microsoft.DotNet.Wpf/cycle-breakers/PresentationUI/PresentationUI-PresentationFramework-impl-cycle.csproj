@@ -3,9 +3,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblyName>PresentationUI</AssemblyName>
     <PackageId>PresentationUI-PresentationFramework-impl-cycle</PackageId>
-    <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>    
+    <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
     <ShouldWriteSigningRequired>false</ShouldWriteSigningRequired>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <!--The field '{0}' is never used -->
     <NoWarn>$(NoWarn);0169</NoWarn>
@@ -19,7 +19,7 @@
   <ItemGroup>
     <Compile Include="PresentationUI.cs" />
     <Compile Include="PresentationUI.internals.cs" />
-    <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" /> 
+    <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
   </ItemGroup>
 
   <ItemGroup>

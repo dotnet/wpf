@@ -126,22 +126,18 @@ bool DoesUseMipMapping(MilBitmapInterpolationMode::Enum interpolationMode)
 
 UINT GetPaddedByteCount(UINT cbSize)
 {
-    // We want precisely one of _X86_, 
-    // _AMD64_ or _ARM_ to be defined. 
-    // f(A,B,C) =  A'BC' + AB'C' + A'B'C
-/*
-#if !((!defined(_X86_) && defined(_AMD64_) && !defined(_ARM_)) || \
-      (defined(_X86_) && !defined(_AMD64_) && !defined(_ARM_)) || \
-      (!defined(_X86_) && !defined(_AMD64_) && defined(_ARM_));
-#error Exactly one of _X86_, _AMD64_, _ARM_ should be defined
+    // We want precisely one of _X86_, _AMD64_, _ARM_, or _ARM64+ to be defined. 
+#if !((!defined(_X86_) && defined(_AMD64_) && !defined(_ARM_) && !defined(_ARM64_)) || \
+      (defined(_X86_) && !defined(_AMD64_) && !defined(_ARM_) && !defined(_ARM64_)) || \
+      (!defined(_X86_) && !defined(_AMD64_) && defined(_ARM_) && !defined(_ARM64_)) || \
+      (!defined(_X86_) && !defined(_AMD64_) && !defined(_ARM_) && defined(_ARM64_)))
+#error Exactly one of _X86_, _AMD64_, _ARM_, _ARM64_ should be defined
 #endif 
-*/
 
 #if defined(_X86_) 
     return cbSize;
 #elif defined(_AMD64_)
     return cbSize;
-// TODO: ARM64PORT: FIX THIS
 #elif defined(_ARM_) 
     const UINT alignment = 4;
     UINT padding = alignment - (cbSize % alignment);

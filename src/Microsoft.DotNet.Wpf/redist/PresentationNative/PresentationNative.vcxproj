@@ -30,6 +30,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CLRSupport>false</CLRSupport>
   </PropertyGroup>
+
   <!-- 
     These properties must be set before Microsoft.Cpp.Default.props, which in will in turn
     inclucde WpfArcadeSdk\...\Packaging.props
@@ -38,6 +39,7 @@
     <!-- PresentationNative is usually categorized as RepoLocation=Internal. Ovedrride the default value -->
     <RepoLocation>External</RepoLocation>
   </PropertyGroup>
+
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(WpfCppProps)" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -47,24 +49,35 @@
     <ProjectGuid>{af9084c3-bf37-4a56-a851-89f3bae731b3}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
+
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <Target Name="DiscoverPresentationNativeSourcePath" DependsOnTargets="CppHelper" BeforeTargets="CopyRedistFile">
+
+  <Target Name="DiscoverPresentationNativeSourcePath" 
+          DependsOnTargets="CppHelper" 
+          BeforeTargets="CopyRedistFile">
     <!-- @(NuGetReferencesForCpp) will have the full paths for PresentationNative.dll and PresentationNative.pdb -->
+
     <ItemGroup>
       <_PresentationNative Include="$(TargetName)" />
     </ItemGroup>
-    <FilterItem1ByItem2 Item1="@(NuGetReferencesForCpp->'%(FileName)')" Item2="@(_PresentationNative)" Metadata2="Identity" PreserveItem1Metadata="true">
+    <FilterItem1ByItem2 Item1="@(NuGetReferencesForCpp->'%(FileName)')"
+                        Item2="@(_PresentationNative)" 
+                        Metadata2="Identity" 
+                        PreserveItem1Metadata="true">
       <Output ItemName="_PresentationNativeFiles" TaskParameter="Result" />
     </FilterItem1ByItem2>
+
     <ItemGroup>
       <_PresentationNativeFilePaths Include="@(_PresentationNativeFiles->'%(FilePath)')" />
       <_PresentationNativeDll Include="@(_PresentationNativeFilePaths)" Condition="'%(_PresentationNativeFilePaths.Extension)'=='.dll'" />
       <_PresentationNativePdb Include="@(_PresentationNativeFilePaths)" Condition="'%(_PresentationNativeFilePaths.Extension)'=='.pdb'" />
     </ItemGroup>
+
     <PropertyGroup>
       <!-- Semi-colon separated list of DLL, PDB files associated with PresentationNative.dll -->
       <RedistSourcePath>@(_PresentationNativeDll)</RedistSourcePath>
     </PropertyGroup>
+
     <ItemGroup>
       <!-- Request that the PDB also be copied to the same directory as $(TargetPath) -->
       <AdditionalRedistFile Include="@(_PresentationNativePdb)">

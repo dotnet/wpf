@@ -95,7 +95,7 @@
     <FileNamesExcludedFromPackaging Include="ijwhost.dll" />
   </ItemGroup>
   <Target Name="AddWindowsBaseDefine" AfterTargets="ResolveProjectReferences">
-    <Error Text="Unexpected result from _WindowsBaseReference" Condition="'@(_WindowsBaseReference-&gt;Count())' != '1'" />
+    <Error Text="Unexpected result from _WindowsBaseReference" Condition="'@(_WindowsBaseReference->Count())' != '1'" />
     <PropertyGroup>
       <_windowsBasePath>%(_WindowsBaseReference.FullPath)</_windowsBasePath>
     </PropertyGroup>

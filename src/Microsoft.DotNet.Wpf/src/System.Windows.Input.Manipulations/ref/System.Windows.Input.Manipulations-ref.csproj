@@ -4,9 +4,9 @@
     <PackageId>System.Windows.Input.Manipulations-ref</PackageId>
     <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
     <TargetFramework>net5.0</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <Compile Include="$(WpfSharedDir)ref\AttributesForReferenceAssemblies.cs" />
   </ItemGroup>

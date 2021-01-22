@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
@@ -18,26 +26,21 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <TargetFrameworkIdentifier>.NETCoreApp</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
     <RestoreProjectStyle>Unknown</RestoreProjectStyle>
   </PropertyGroup>
-  
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-
   <PropertyGroup>
     <Keyword>NetCoreCProj</Keyword>
     <CLRSupport>pure</CLRSupport>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
-
   <Import Project="$(WpfCppProps)" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-
   <PropertyGroup Label="Globals">
     <ProjectGuid>{50A5318F-3B9A-48B9-9615-D5FA9D6D9C3E}</ProjectGuid>
     <UseClrCrt>true</UseClrCrt>
@@ -46,7 +49,6 @@
     <LinkSubSystem>CONSOLE</LinkSubSystem>
     <CDefines>$(CDefines);PRESENTATION_CORE=1;INTEL</CDefines>
   </PropertyGroup>
-  
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalOptions>%(AdditionalOptions) /clr:initLocals</AdditionalOptions>
@@ -60,14 +62,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj">
-        <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-        <OutputItemType>_WindowsBaseReference</OutputItemType>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>_WindowsBaseReference</OutputItemType>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Link Include="Shlwapi.lib" />
   </ItemGroup>
-  
   <ItemGroup>
     <ClInclude Include="CPP\precomp.hxx" />
   </ItemGroup>
@@ -81,24 +82,21 @@
     <CLCompile Include="main.cpp" />
     <CLCompile Include="OtherAssemblyAttrs.cpp" />
   </ItemGroup>
-
-  <!-- 
+  <!--
     PackageReferences to pass to CppCliHelper target
   -->
   <ItemGroup>
     <AdditionalPackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
   </ItemGroup>
-
-  <!-- 
+  <!--
     Ignore ijwhost.dll during packaging
   -->
   <ItemGroup>
     <FileNamesExcludedFromPackaging Include="ijwhost.dll" />
   </ItemGroup>
-
   <Target Name="AddWindowsBaseDefine" AfterTargets="ResolveProjectReferences">
-      <Error Text="Unexpected result from _WindowsBaseReference" Condition="'@(_WindowsBaseReference->Count())' != '1'" />
-      <PropertyGroup>
+    <Error Text="Unexpected result from _WindowsBaseReference" Condition="'@(_WindowsBaseReference->Count())' != '1'" />
+    <PropertyGroup>
       <_windowsBasePath>%(_WindowsBaseReference.FullPath)</_windowsBasePath>
     </PropertyGroup>
     <ItemGroup>
@@ -113,19 +111,15 @@
       </CLCompile>
     </ItemGroup>
   </Target>
-  
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-
   <!-- Provide a stub Pack target for C++/CLI -->
   <Target Name="Pack" DependsOnTargets="$(PackDependsOn)">
-    <IsPackableFalseWarningTask Condition="'$(IsPackable)' == 'false' AND '$(WarnOnPackingNonPackableProject)' == 'true'"/>
+    <IsPackableFalseWarningTask Condition="'$(IsPackable)' == 'false' AND '$(WarnOnPackingNonPackableProject)' == 'true'" />
   </Target>
-  
   <Target Name="InitializeSourceControlInformationFromSourceControlManager">
     <PropertyGroup>
       <SourceRevisionId>$(BUILD_SOURCEVERSION)</SourceRevisionId>
       <SourceRevisionId Condition="'$(SourceRevisionId)' == ''">unknownrev</SourceRevisionId>
     </PropertyGroup>
   </Target>
-
 </Project>

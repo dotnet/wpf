@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <EnableDefaultItems>false</EnableDefaultItems>
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
@@ -19,7 +19,7 @@
     <NetCoreReference Include="System.Diagnostics.Tools" />
     <NetCoreReference Include="System.Runtime" />
     <NetCoreReference Include="System.Runtime.InteropServices" />
-    <NetCoreReference Include="System.Resources.ResourceManager" /> 
+    <NetCoreReference Include="System.Resources.ResourceManager" />
     <NetCoreReference Include="System.Threading" />
     <NetCoreReference Include="System.Xml.XDocument" />
   </ItemGroup>

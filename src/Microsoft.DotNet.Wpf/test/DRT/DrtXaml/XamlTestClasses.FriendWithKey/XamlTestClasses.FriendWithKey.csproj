@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyName>XamlTestClasses.FriendWithKey</AssemblyName>
     <RootNamespace>XamlTestClasses.FriendWithKey</RootNamespace>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <OutputType>Library</OutputType>
   </PropertyGroup>
 </Project>

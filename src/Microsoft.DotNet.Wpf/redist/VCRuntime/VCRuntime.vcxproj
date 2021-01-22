@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
@@ -18,26 +26,20 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-
   <PropertyGroup>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CLRSupport>false</CLRSupport>
   </PropertyGroup>
-  
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(WpfCppProps)" />
-
-  
   <PropertyGroup>
     <VCRedistCrtFolderName Condition="'$(Configuration)'=='Release'">Microsoft.VC142.CRT</VCRedistCrtFolderName>
     <VCRedistCrtFolderName Condition="'$(Configuration)'=='Debug'">Microsoft.VC142.DebugCRT</VCRedistCrtFolderName>
-
     <!--
     Remove these fallbacks after the build servers are guaranteed to have VC142 
-    --> 
+    -->
     <VCRedistFallbackCrtFolderName Condition="'$(Configuration)'=='Release'">Microsoft.VC141.CRT</VCRedistFallbackCrtFolderName>
     <VCRedistFallbackCrtFolderName Condition="'$(Configuration)'=='Debug'">Microsoft.VC141.DebugCRT</VCRedistFallbackCrtFolderName>
-
     <!-- 
       In Release builds,  the Target assembly will be a privatized copy of VC runtime with a name like vcruntime140_cor3.dll
       In Debug builds, the Target assembly will be a privatize copy of the VC runtime with no name changes - like vcruntime140d.dll
@@ -45,32 +47,24 @@
     <TargetName Condition="'$(Configuration)'=='Release'">$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix)$(WpfVersionSuffix)</TargetName>
     <TargetName Condition="'$(Configuration)'=='Debug'">$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix)</TargetName>
   </PropertyGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-
   <PropertyGroup>
     <VCRedistRoot Condition="'$(Configuration)'=='Release'">$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\</VCRedistRoot>
     <VCRedistRoot Condition="'$(Configuration)'=='Debug'">$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\debug_nonredist\</VCRedistRoot>
-
     <RedistSourcePath Condition="Exists('$(VCRedistRoot)$(Architecture)\$(VCRedistCrtFolderName)\$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix).dll')">$(VCRedistRoot)$(Architecture)\$(VCRedistCrtFolderName)\$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix).dll</RedistSourcePath>
     <RedistSourcePath Condition="!Exists('$(VCRedistRoot)$(Architecture)\$(VCRedistCrtFolderName)\$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix).dll')">$(VCRedistRoot)$(Architecture)\$(VCRedistFallbackCrtFolderName)\$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix).dll</RedistSourcePath>
   </PropertyGroup>
-
-  <ItemGroup Condition="'$(Configuration)'=='Debug'" >
+  <ItemGroup Condition="'$(Configuration)'=='Debug'">
     <!-- 
       Include a privatized copy of msvcp140d.dll in Debug builds 
     -->
-    <AdditionalRedistFile Condition="Exists('$(VCRedistRoot)$(Architecture)\$(VCRedistCrtFolderName)\$(MSVCPDllBaseName)$(MSVCPVersion)$(LibSuffix).dll')" 
-                          Include="$(VCRedistRoot)$(Architecture)\$(VCRedistCrtFolderName)\$(MSVCPDllBaseName)$(MSVCPVersion)$(LibSuffix).dll">
+    <AdditionalRedistFile Condition="Exists('$(VCRedistRoot)$(Architecture)\$(VCRedistCrtFolderName)\$(MSVCPDllBaseName)$(MSVCPVersion)$(LibSuffix).dll')" Include="$(VCRedistRoot)$(Architecture)\$(VCRedistCrtFolderName)\$(MSVCPDllBaseName)$(MSVCPVersion)$(LibSuffix).dll">
       <Destination>$(OutDir)$(MSVCPDllBaseName)$(MSVCPVersion)$(LibSuffix).dll</Destination>
     </AdditionalRedistFile>
-
-    <AdditionalRedistFile Condition="!Exists('$(VCRedistRoot)$(Architecture)\$(VCRedistCrtFolderName)\$(MSVCPDllBaseName)$(MSVCPVersion)$(LibSuffix).dll')"
-                          Include="$(VCRedistRoot)$(Architecture)\$(VCRedistFallbackCrtFolderName)\$(MSVCPDllBaseName)$(MSVCPVersion)$(LibSuffix).dll">
+    <AdditionalRedistFile Condition="!Exists('$(VCRedistRoot)$(Architecture)\$(VCRedistCrtFolderName)\$(MSVCPDllBaseName)$(MSVCPVersion)$(LibSuffix).dll')" Include="$(VCRedistRoot)$(Architecture)\$(VCRedistFallbackCrtFolderName)\$(MSVCPDllBaseName)$(MSVCPVersion)$(LibSuffix).dll">
       <Destination>$(OutDir)$(MSVCPDllBaseName)$(MSVCPVersion)$(LibSuffix).dll</Destination>
     </AdditionalRedistFile>
   </ItemGroup>
-  
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{B7399B2E-CE92-42D5-B36A-EBD4C9C4FBDA}</ProjectGuid>

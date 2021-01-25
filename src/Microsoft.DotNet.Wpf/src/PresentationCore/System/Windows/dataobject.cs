@@ -910,7 +910,7 @@ namespace System.Windows
         /// <param name="handler">
         /// An event handler for a DataObject.Pasting event.
         /// It is called when ah editor already made a decision
-        /// what format (from available on the Cliipboard)
+        /// what format (from available on the Clipboard)
         /// to apply to selection. With this handler an application
         /// has a chance to inspect a content of DataObject extracted
         /// from the Clipboard and decide what format to use instead.

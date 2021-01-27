@@ -39,6 +39,7 @@ trigger:
     - master
     - release/3.*
     - release/5.*
+    - release/6.*
     - internal/release/5.*
     - experimental/*
   paths:
@@ -53,6 +54,7 @@ pr:
     - release/3.* 
     - internal/release/3.*
     - release/5.*
+    - release/6.*
     - experimental/*
   paths:
     exclude:

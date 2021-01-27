@@ -999,7 +999,7 @@ namespace System.Windows.Input.Manipulations
         /// <param name="expansion">the new expansion</param>
         /// <param name="orientation">the new orientation</param>
         /// <param name="timestamp">the time of the new values</param>
-        private void OverwriteManipulationState(PointF position, float scale, float expansion, float orientation, Int64 timestamp)
+        private void OverwriteManipulationState(in PointF position, float scale, float expansion, float orientation, Int64 timestamp)
         {
             this.currentManipulationState = new ManipulationState(position, scale, expansion, orientation, timestamp);
 #if DEBUG
@@ -1033,7 +1033,7 @@ namespace System.Windows.Input.Manipulations
         /// </summary>
         /// <param name="referenceOrigin">the common point of reference</param>
         /// <param name="settings">manipulation settings</param>
-        private void SetVectorsFromPoint(PointF referenceOrigin, ISettings settings)
+        private void SetVectorsFromPoint(in PointF referenceOrigin, ISettings settings)
         {
             Debug.Assert(this.manipulatorStates != null && this.manipulatorStates.Count > 0);
 
@@ -1549,7 +1549,7 @@ namespace System.Windows.Input.Manipulations
             public readonly float Orientation;
             public Int64 Timestamp;
 
-            public ManipulationState(PointF position, float scale, float expansion, float orientation, Int64 timestamp)
+            public ManipulationState(in PointF position, float scale, float expansion, float orientation, Int64 timestamp)
             {
                 Debug.Assert(!float.IsNaN(position.X) && !float.IsNaN(position.Y));
                 Debug.Assert(!float.IsInfinity(position.Y) && !float.IsInfinity(position.Y));

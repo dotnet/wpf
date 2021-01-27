@@ -89,11 +89,42 @@ namespace MS.Internal.Tasks
             }
         }
 
+        public static void LogMarkupCompilePass1State(string fileNamePrefix, MarkupCompilePass1 mcPass1)
+        {
+          using (StreamWriter w = File.AppendText($"{fileNamePrefix}_{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}.txt"))
+          {
+              w.WriteLine($"AssemblyName: {mcPass1.AssemblyName}");                  
+              w.WriteLine($"AssemblyVersion: {mcPass1.AssemblyVersion}");
+              w.WriteLine($"AssemblyPublicKeyToken: {mcPass1.AssemblyPublicKeyToken}");
+              w.WriteLine($"OutputType: {mcPass1.OutputType}");
+              w.WriteLine($"Language: {mcPass1.Language}");
+              w.WriteLine($"LanguageSourceExtension: {mcPass1.LanguageSourceExtension}");
+              w.WriteLine($"OutputPath: {mcPass1.OutputPath}");
+              w.WriteLine($"RootNamespace: {mcPass1.RootNamespace}");
+              w.WriteLine($"LocalizationDirectivesToLocFile: {mcPass1.LocalizationDirectivesToLocFile}");
+              w.WriteLine($"HostInBrowser: {mcPass1.HostInBrowser}");
+              w.WriteLine($"DefineConstants: {mcPass1.DefineConstants}");
+              w.WriteLine($"ApplicationFile: {mcPass1.ApplicationFile}");
+              w.WriteLine($"PageMarkupCache: {mcPass1.PageMarkupCache}");
+              w.WriteLine($"ContentFilesCache: {mcPass1.ContentFilesCache}");
+              w.WriteLine($"SourceCodeFilesCache: {mcPass1.SourceCodeFilesCache}");
+              w.WriteLine($"ReferencesCache: {mcPass1.ReferencesCache}");
+              w.WriteLine($"PageMarkup: {GenerateStringFromFileNames(mcPass1.PageMarkup)}");
+              w.WriteLine($"SplashImageName: {mcPass1.SplashImageName}");
+              w.WriteLine($"RequirePass2ForMainAssembly: {mcPass1.RequirePass2ForMainAssembly}"); 
+              w.WriteLine($"RequirePass2ForSatelliteAssembly: {mcPass1.RequirePass2ForSatelliteAssembly}");
+              w.WriteLine($"Pass2Required: {(mcPass1.RequirePass2ForMainAssembly || mcPass1.RequirePass2ForSatelliteAssembly)}");
+          }
+
+        }
+
         internal bool SaveStateInformation(MarkupCompilePass1 mcPass1)
         {
             Debug.Assert(String.IsNullOrEmpty(_stateFilePath) != true, "StateFilePath must not be empty.");
             Debug.Assert(mcPass1 != null, "A valid instance of MarkupCompilePass1 must be passed to method SaveCacheInformation.");
             Debug.Assert(_cacheInfoList.Length == (int)CompilerStateType.MaxCount, "The Cache string array should be already allocated.");
+
+            LogMarkupCompilePass1State("SaveStateInformation", mcPass1);
 
             // Transfer the cache related information from mcPass1 to this instance.
 
@@ -209,6 +240,17 @@ namespace MS.Internal.Tasks
 
             if (fileItemList != null && fileItemList.Length > 0)
             {
+                StringBuilder sb = new StringBuilder();
+
+                int iCount = fileItemList.Length;
+                for (int i = 0; i < iCount; i++)
+                {
+                    sb.Append(fileItemList[i]);
+                }
+
+                cacheString = sb.ToString();
+
+                /*
                 int iHashCode = 0;
 
                 int iCount = fileItemList.Length;
@@ -224,6 +266,7 @@ namespace MS.Internal.Tasks
                 sb.Append(iHashCode);
 
                 cacheString = sb.ToString();
+                */
             }
 
 

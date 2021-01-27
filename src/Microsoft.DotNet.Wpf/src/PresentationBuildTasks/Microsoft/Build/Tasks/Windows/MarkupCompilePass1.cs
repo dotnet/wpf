@@ -39,6 +39,7 @@ using MS.Internal.Markup;
 namespace Microsoft.Build.Tasks.Windows
 {
 
+
     #region MarkupCompilePass1 Task class
 
     /// <summary>
@@ -46,6 +47,14 @@ namespace Microsoft.Build.Tasks.Windows
     /// </summary>
     public sealed class MarkupCompilePass1 : Task
     {
+        public static void LogMCP1(string message)
+        {
+          using (StreamWriter w = File.AppendText($"MarkupCompilePass1_{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}.txt"))
+          {
+             w.WriteLine(message);
+          }
+        }
+
         //  Security Concerns:
         //
         //  1) OutputPath property exposes the current dir and is publicly available.
@@ -101,6 +110,11 @@ namespace Microsoft.Build.Tasks.Windows
         /// <returns></returns>
         public override bool Execute()
         {
+            if (DebugPresentationBuildTasks)
+            {
+                System.Diagnostics.Debugger.Launch();
+            }
+
             TaskHelper.DisplayLogo(Log, nameof(MarkupCompilePass1));
 
             bool bSuccess = true;
@@ -155,9 +169,11 @@ namespace Microsoft.Build.Tasks.Windows
                     AnalyzeInputsAndSetting();
 
                     Log.LogMessageFromResources(MessageImportance.Low, SRID.AnalysisResult, CompilerAnalyzer.AnalyzeResult);
+                    LogMCP1($"SkipMarkupCompilation: {SkipMarkupCompilation}");
 
                     if (!SkipMarkupCompilation)
                     {
+                        LogMCP1("Skipping markup compilation...");
 
                         if (CompilerAnalyzer.RecompileMarkupPages != null)
                         {
@@ -173,6 +189,7 @@ namespace Microsoft.Build.Tasks.Windows
                         // Cleanup baml files and code files generated in previous build.
                         if (TaskFileService.IsRealBuild)
                         {
+                            LogMCP1("CleanupGeneratedFiles...");
                             CleanupGeneratedFiles();
                         }
 
@@ -585,6 +602,14 @@ namespace Microsoft.Build.Tasks.Windows
         {
             get { return _isRunningInVisualStudio;   }
             set { _isRunningInVisualStudio = value;  }
+        }
+
+        /// <summary>
+        /// Set to true when called from Visual Studio.
+        /// <summary>
+        public bool DebugPresentationBuildTasks 
+        {
+            get; set;
         }
 
         ///<summary>
@@ -1561,6 +1586,11 @@ namespace Microsoft.Build.Tasks.Windows
             {
                 _requirePass2ForMainAssembly = true;
             }
+
+            LogMCP1("RequirePass2ForMainAssembly: {_requirePass2ForMainAssembly}");
+            LogMCP1("RequirePass2ForSatelliteAssembly: {_requirePass2ForSatelliteAssembly}");
+
+            MS.Internal.Tasks.CompilerState.LogMarkupCompilePass1State("PostAnalyze_MarkupCompilePass1State", this);
 
             return localFile;
         }

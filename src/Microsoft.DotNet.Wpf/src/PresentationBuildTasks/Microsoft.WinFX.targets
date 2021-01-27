@@ -236,6 +236,7 @@
         <PropertyGroup>
             <_IntellisenseOnlyCompile>false</_IntellisenseOnlyCompile>
             <_IntellisenseOnlyCompile Condition="'$(BuildingProject)' != 'true'">true</_IntellisenseOnlyCompile>
+            <DebugPresentationBuildTasks Condition="'$(DebugPresentationBuildTasks)' == ''">false</DebugPresentationBuildTasks>
         </PropertyGroup>
         <MarkupCompilePass1
                Language="$(Language)"
@@ -263,7 +264,8 @@
                XamlDebuggingInformation="$(XamlDebuggingInformation)"
                IsRunningInVisualStudio="$(BuildingInsideVisualStudio)"
                OutputPath="$(IntermediateOutputPath)"
-               SupportCustomOutputPaths="$(IncludePackageReferencesDuringMarkupCompilation)">
+               SupportCustomOutputPaths="$(IncludePackageReferencesDuringMarkupCompilation)"
+               DebugPresentationBuildTasks="$(DebugPresentationBuildTasks)">
 
 
               <Output ItemName="GeneratedBaml" TaskParameter="GeneratedBamlFiles"/>

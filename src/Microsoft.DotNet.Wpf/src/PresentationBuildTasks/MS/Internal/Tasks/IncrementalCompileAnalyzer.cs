@@ -55,6 +55,42 @@ namespace MS.Internal.Tasks
 
         #region internal methods
 
+        public static void LogCompilerState(string filePrefix, CompilerState compilerState)
+        {
+          using (StreamWriter w = File.AppendText($"{filePrefix}_{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}.txt"))
+          {
+              w.WriteLine($"AssemblyName: {compilerState.AssemblyName}");                  
+              w.WriteLine($"AssemblyVersion: {compilerState.AssemblyVersion}");
+              w.WriteLine($"AssemblyPublicKeyToken: {compilerState.AssemblyPublicKeyToken}");
+              w.WriteLine($"OutputType: {compilerState.OutputType}");
+              w.WriteLine($"Language: {compilerState.Language}");
+              w.WriteLine($"LanguageSourceExtension: {compilerState.LanguageSourceExtension}");
+              w.WriteLine($"OutputPath: {compilerState.OutputPath}");
+              w.WriteLine($"RootNamespace: {compilerState.RootNamespace}");
+              w.WriteLine($"LocalizationDirectivesToLocFile: {compilerState.LocalizationDirectivesToLocFile}");
+              w.WriteLine($"HostInBrowser: {compilerState.HostInBrowser}");
+              w.WriteLine($"DefineConstants: {compilerState.DefineConstants}");
+              w.WriteLine($"ApplicationFile: {compilerState.ApplicationFile}");
+              w.WriteLine($"PageMarkupCache: ");
+              w.WriteLine($"ContentFilesCache: ");
+              w.WriteLine($"SourceCodeFilesCache: ");
+              w.WriteLine($"References: {compilerState.References}");
+              w.WriteLine($"PageMarkup: ");
+              w.WriteLine($"SplashImageName: ");
+              w.WriteLine($"RequirePass2ForMainAssembly: "); 
+              w.WriteLine($"RequirePass2ForSatelliteAssembly: ");
+              w.WriteLine($"Pass2Required: ");
+          }
+
+        }
+
+        public static void Log(string logString)
+        {
+          using (StreamWriter w = File.AppendText($"RecompileCategory_{DateTime.Now.ToString("yyyy-MM-dd-HH-mm")}.txt"))
+          {
+            w.WriteLine(logString);
+          }
+        }
 
         // 
         // Analyze the input files based on the compiler cache files.
@@ -66,6 +102,7 @@ namespace MS.Internal.Tasks
         //
         internal void AnalyzeInputFiles()
         {
+            MS.Internal.Tasks.CompilerState.LogMarkupCompilePass1State("MarkupCompilePass1State",_mcPass1);
 
             //
             // First: Detect if the entire project requires re-compile.
@@ -76,12 +113,14 @@ namespace MS.Internal.Tasks
             //
             if (!CompilerState.StateFileExists())
             {
+                Log("StateFile does not exist.  Recompiling all...");
                 _analyzeResult = RecompileCategory.All;
             }
             else
             {
                 // Load the compiler state file.
                 CompilerState.LoadStateInformation();
+                LogCompilerState("PreviousCompilerState", CompilerState);
 
                 // if PresenationBuildTasks.dll is changed last build, rebuild the entire project for sure.
 
@@ -95,18 +134,59 @@ namespace MS.Internal.Tasks
                     //
                     // Any one single change in below list would request completely re-compile.
                     //
-                    if (IsSettingModified(CompilerState.References, _mcPass1.ReferencesCache) ||
-                        IsSettingModified(CompilerState.ApplicationFile, _mcPass1.ApplicationFile) ||
-                        IsSettingModified(CompilerState.RootNamespace, _mcPass1.RootNamespace) ||
-                        IsSettingModified(CompilerState.AssemblyName, _mcPass1.AssemblyName) ||
-                        IsSettingModified(CompilerState.AssemblyVersion, _mcPass1.AssemblyVersion) ||
-                        IsSettingModified(CompilerState.AssemblyPublicKeyToken, _mcPass1.AssemblyPublicKeyToken) ||
-                        IsSettingModified(CompilerState.OutputType, _mcPass1.OutputType) ||
-                        IsSettingModified(CompilerState.Language, _mcPass1.Language) ||
-                        IsSettingModified(CompilerState.LanguageSourceExtension, _mcPass1.LanguageSourceExtension) ||
-                        IsSettingModified(CompilerState.OutputPath, _mcPass1.OutputPath) ||
-                        IsSettingModified(CompilerState.LocalizationDirectivesToLocFile, _mcPass1.LocalizationDirectivesToLocFile))
+                    if (IsSettingModified(CompilerState.References, _mcPass1.ReferencesCache))
+                    { 
+                        Log("References list has changed.  Recompiling all...");
+                        _analyzeResult = RecompileCategory.All; 
+                    }
+                    else if(IsSettingModified(CompilerState.ApplicationFile, _mcPass1.ApplicationFile))
+                    { 
+                        Log("ApplicationFile has changed.  Recompiling all...");
+                        _analyzeResult = RecompileCategory.All; 
+                    }
+                    else if(IsSettingModified(CompilerState.RootNamespace, _mcPass1.RootNamespace))
+                    { 
+                        Log("RootNamespace has changed.  Recompiling all...");
+                        _analyzeResult = RecompileCategory.All; 
+                    }
+                    else if(IsSettingModified(CompilerState.AssemblyName, _mcPass1.AssemblyName))
+                    { 
+                        Log("AssemblyName has changed.  Recompiling all...");
+                        _analyzeResult = RecompileCategory.All; 
+                    }
+                    else if(IsSettingModified(CompilerState.AssemblyVersion, _mcPass1.AssemblyVersion))
+                    { 
+                        Log("AssemblyVersion has changed.  Recompiling all...");
+                        _analyzeResult = RecompileCategory.All; 
+                    }
+                    else if(IsSettingModified(CompilerState.AssemblyPublicKeyToken, _mcPass1.AssemblyPublicKeyToken))
+                    { 
+                        Log("AssemblyPublicKeyToken has changed.  Recompiling all...");
+                        _analyzeResult = RecompileCategory.All; 
+                    }
+                    else if(IsSettingModified(CompilerState.OutputType, _mcPass1.OutputType))
+                    { 
+                        Log("OutputType has changed.  Recompiling all...");
+                        _analyzeResult = RecompileCategory.All; 
+                    }
+                    else if(IsSettingModified(CompilerState.Language, _mcPass1.Language))
+                    { 
+                        Log("Language has changed.  Recompiling all...");
+                        _analyzeResult = RecompileCategory.All; 
+                    }
+                    else if(IsSettingModified(CompilerState.LanguageSourceExtension, _mcPass1.LanguageSourceExtension))
+                    { 
+                        Log("LanguageSourceExtension has changed.  Recompiling all...");
+                        _analyzeResult = RecompileCategory.All; 
+                    }
+                    else if(IsSettingModified(CompilerState.OutputPath, _mcPass1.OutputPath))
+                    { 
+                        Log("OutputPath has changed.  Recompiling all...");
+                        _analyzeResult = RecompileCategory.All; 
+                    }
+                    else if(IsSettingModified(CompilerState.LocalizationDirectivesToLocFile, _mcPass1.LocalizationDirectivesToLocFile))
                     {
+                        Log("LocalizationDirectivesToLocFile has changed.  Recompiling all...");
                         _analyzeResult = RecompileCategory.All;
                     }
                     else
@@ -120,6 +200,7 @@ namespace MS.Internal.Tasks
                             //
                             if (TaskFileService.Exists(_mcPass1.ApplicationFile) && IsFileChanged(_mcPass1.ApplicationFile))
                             {
+                                Log("ApplicationFile has changed.  Recompiling all...");
                                 _analyzeResult = RecompileCategory.All;
                             }
                         }
@@ -130,6 +211,7 @@ namespace MS.Internal.Tasks
 
                         if (IsFileListChanged(_mcPass1.References))
                         {
+                            Log("One of the Reference files has changed.  Recompiling all...");
                             _analyzeResult = RecompileCategory.All;
                         }
                     }
@@ -151,17 +233,20 @@ namespace MS.Internal.Tasks
             {
                 if (IsSettingModified(CompilerState.ContentFiles, _mcPass1.ContentFilesCache))
                 {
+                    Log("One of the Content files has changed.  Recompiling ContentFiles...");
                     _analyzeResult |= RecompileCategory.ContentFiles;
                 }
 
                 // if HostInBrowser setting is changed, it would affect the application file compilation only.
                 if (IsSettingModified(CompilerState.HostInBrowser, _mcPass1.HostInBrowser))
                 {
+                    Log("HostInBrowser setting has changed.  Recompiling ApplicationFile...");
                     _analyzeResult |= RecompileCategory.ApplicationFile;
                 }
 
                 if (IsSettingModified(CompilerState.SplashImage, _mcPass1.SplashImageName))
                 {
+                    Log("SplashImage setting has changed.  Recompiling ApplicationFile...");
                     _analyzeResult |= RecompileCategory.ApplicationFile;
                 }
             }
@@ -178,6 +263,7 @@ namespace MS.Internal.Tasks
                     IsSettingModified(CompilerState.SourceCodeFiles, _mcPass1.SourceCodeFilesCache) || 
                     IsFileListChanged(_mcPass1.SourceCodeFiles) )
                 {
+                    Log("DefineConstants OR SourceCodeFiles have been modified or file has changed.  Recompiling PagesWithLocalType...");
                     _analyzeResult |= RecompileCategory.PagesWithLocalType;
                 }
             }
@@ -201,6 +287,7 @@ namespace MS.Internal.Tasks
                 {
                     if (CompilerLocalReference.CacheFileExists())
                     {
+                        Log("PageMarkup file has changed.  Recompiling PagesWithLocalType...");
                         _analyzeResult |= RecompileCategory.PagesWithLocalType;
                     }
                 }
@@ -217,6 +304,7 @@ namespace MS.Internal.Tasks
                     if (IsFileChanged(filepath))
                     {
                         // add this file to the modified file list.
+                        Log($"{filepath} detected as modified.  Adding to modififed file list...");
                         modifiedXamlFiles.Add(new FileUnit(filepath, linkAlias, logicalName));
                     }
                     else
@@ -230,6 +318,7 @@ namespace MS.Internal.Tasks
                         
                         if (!CompilerState.PageMarkupFileNames.Contains(fileName))
                         {
+                            Log($"{filepath} detected as new.  Adding to modififed file list...");
                             modifiedXamlFiles.Add(new FileUnit(filepath, linkAlias, logicalName));
                         }
                     }
@@ -237,10 +326,12 @@ namespace MS.Internal.Tasks
 
                 if (modifiedXamlFiles.Count > 0)
                 {
+                    Log($"Modified XAML files counts is greater than 0. Recomping ModifiedPages...");
                     _analyzeResult |= RecompileCategory.ModifiedPages;
 
                     if (CompilerLocalReference.CacheFileExists())
                     {
+                        Log($"CacheFile exists. Recompiling PagesWithLocalType...");
                         _analyzeResult |= RecompileCategory.PagesWithLocalType;
                     }
                 }      
@@ -251,6 +342,7 @@ namespace MS.Internal.Tasks
             // If that happened, let's recompile the local-type pages, which will force Pass2 to run.
             if (CompilerState.Pass2Required && CompilerLocalReference.CacheFileExists())
             {
+                Log($"!!! Compiler Pass2Required and CacheFileExists. Recompiling PagesWithLocalType...");
                 _analyzeResult |= RecompileCategory.PagesWithLocalType;
             }
 
@@ -573,6 +665,15 @@ namespace MS.Internal.Tasks
 
         }
 
+        public static void LogFileChanged(string filePrefix, string fileName, DateTime previousChange, DateTime thisChange)
+        {
+          StackFrame CallStack = new StackFrame(1, true);
+          using (StreamWriter w = File.AppendText($"{filePrefix}_{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}.txt"))
+          {
+             w.WriteLine($"{fileName} changed.  PreviousCompile: {previousChange} LastChanged: {thisChange}\n");
+          }
+        }
+
         //
         // Detect if the input file was changed since last build.
         //
@@ -588,6 +689,7 @@ namespace MS.Internal.Tasks
             if (dtFile > LastCompileTime)
             {
                 isChanged = true;
+                LogFileChanged("FileChangeDetected", inputFile, LastCompileTime, dtFile);
             }
 
             return isChanged;

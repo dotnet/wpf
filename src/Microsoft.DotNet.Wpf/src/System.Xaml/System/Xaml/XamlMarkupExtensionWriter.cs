@@ -260,12 +260,12 @@ namespace System.Xaml
 
                     if (s[i] == '\\' || s[i] == '"')
                     {
-                        sb.Append("\\");
+                        sb.Append('\\');
                     }
                     sb.Append(s[i]);
                 }
 
-                sb.Append("\"");
+                sb.Append('\"');
                 return sb.ToString();
             }
 
@@ -274,7 +274,7 @@ namespace System.Xaml
                 if (!string.IsNullOrEmpty(prefix))
                 {
                     writer.sb.Append(prefix);
-                    writer.sb.Append(":");
+                    writer.sb.Append(':');
                 }
             }
 
@@ -308,7 +308,7 @@ namespace System.Xaml
 
                 string prefix = writer.LookupPrefix(type);
 
-                writer.sb.Append("{");
+                writer.sb.Append('{');
                 WritePrefix(writer, prefix);
                 writer.sb.Append(XamlXmlWriter.GetTypeName(type));
 
@@ -342,7 +342,7 @@ namespace System.Xaml
                     throw new InvalidOperationException(SR.Get(SRID.XamlMarkupExtensionWriterInputInvalid));
                 }
 
-                writer.sb.Append("}");
+                writer.sb.Append('}');
 
                 if (writer.nodes.Count == 0)
                 {
@@ -419,7 +419,7 @@ namespace System.Xaml
                     writer.sb.Append(property.Name);
                 }
 
-                writer.sb.Append("=");
+                writer.sb.Append('=');
 
                 writer.currentState = InMember.State;
             }
@@ -576,7 +576,7 @@ namespace System.Xaml
                 }
                 string prefix = writer.LookupPrefix(type);
 
-                writer.sb.Append("{");
+                writer.sb.Append('{');
                 WritePrefix(writer, prefix);
                 writer.sb.Append(XamlXmlWriter.GetTypeName(type));
 

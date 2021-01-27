@@ -78,6 +78,14 @@ namespace System.Xaml.MS.Impl
             return src.IndexOf(chars, StringComparison.Ordinal);
         }
 
+        /// <summary>
+        /// Standard String Index search operation.
+        /// </summary>
+        public static int IndexOf(string src, char ch)
+        {
+            return src.IndexOf(ch, StringComparison.Ordinal);
+        }
+
         public static bool EndsWith(string src, string target)
         {
             return src.EndsWith(target, StringComparison.Ordinal);

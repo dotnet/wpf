@@ -363,7 +363,7 @@ namespace MS.Internal
                 //
                 // For Xaml Source file, we need to remove the .xaml extension part.
                 //
-                int fileExtIndex = newRelativeFilePath.LastIndexOf(MarkupCompiler.DOT, StringComparison.Ordinal);
+                int fileExtIndex = newRelativeFilePath.LastIndexOf(MarkupCompiler.DOTCHAR);
                 newRelativeFilePath = newRelativeFilePath.Substring(0, fileExtIndex);
             }
 
@@ -413,7 +413,7 @@ namespace MS.Internal
                 // and put the deepest directory that file is in as the new
                 // SourceDir.
                 //
-                int pathEndIndex = fullFilePath.LastIndexOf(string.Empty + Path.DirectorySeparatorChar, StringComparison.Ordinal);
+                int pathEndIndex = fullFilePath.LastIndexOf(Path.DirectorySeparatorChar);
 
                 newSourceDir = fullFilePath.Substring(0, pathEndIndex + 1);
                 newRelativeFilePath = fullFilePath.Substring(pathEndIndex + 1);

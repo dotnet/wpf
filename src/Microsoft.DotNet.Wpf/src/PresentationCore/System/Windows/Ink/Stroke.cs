@@ -1056,7 +1056,12 @@ namespace System.Windows.Ink
         }
 
 #endif
-
+        /// <summary>
+        /// Method called whenever the Stroke's drawing attributes are changed.
+        /// This method will trigger an event for any listeners interested in
+        /// drawing attributes.
+        /// </summary>
+        /// <param name="e">More data about the change that occurred</param>
         void IDrawingAttributeChangeSensitive.OnDrawingAttributesChanged(PropertyDataChangedEventArgs e)
         {
             // set Geometry flag to be dirty if the DA change will cause change in geometry

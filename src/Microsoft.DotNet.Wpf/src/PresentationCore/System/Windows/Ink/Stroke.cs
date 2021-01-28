@@ -32,7 +32,7 @@ namespace System.Windows.Ink
     /// <summary>
     /// A Stroke object is the fundamental unit of ink data storage.
     /// </summary>
-    public partial class Stroke : INotifyPropertyChanged
+    public partial class Stroke : INotifyPropertyChanged, IDrawingAttributeChangeSensitive
     {
         /// <summary>Create a stroke from a StylusPointCollection</summary>
         /// <remarks>
@@ -86,7 +86,7 @@ namespace System.Windows.Ink
         /// </summary>
         private void Initialize()
         {
-            _drawingAttributes.AttributeChanged += new PropertyDataChangedEventHandler(DrawingAttributes_Changed);
+            _drawingAttributes.AddDrawingAttributeChangeSensitive(this);
             _stylusPoints.Changed += new EventHandler(StylusPoints_Changed);
             _stylusPoints.CountGoingToZero += new CancelEventHandler(StylusPoints_CountGoingToZero);
         }
@@ -488,7 +488,7 @@ namespace System.Windows.Ink
                     throw new ArgumentNullException("value");
                 }
 
-                _drawingAttributes.AttributeChanged -= new PropertyDataChangedEventHandler(DrawingAttributes_Changed);
+                _drawingAttributes.RemoveDrawingAttributeChangeSensitive(this);
 
                 DrawingAttributesReplacedEventArgs e =
                     new DrawingAttributesReplacedEventArgs(value, _drawingAttributes);
@@ -507,7 +507,7 @@ namespace System.Windows.Ink
                     _cachedBounds = Rect.Empty;
                 }
 
-                _drawingAttributes.AttributeChanged += new PropertyDataChangedEventHandler(DrawingAttributes_Changed);
+                _drawingAttributes.AddDrawingAttributeChangeSensitive(this);
                 OnDrawingAttributesReplaced(e);
                 OnInvalidated(EventArgs.Empty);
                 OnPropertyChanged(DrawingAttributesName);
@@ -1057,15 +1057,7 @@ namespace System.Windows.Ink
 
 #endif
 
-
-        /// <summary>
-        /// Method called whenever the Stroke's drawing attributes are changed.
-        /// This method will trigger an event for any listeners interested in
-        /// drawing attributes.
-        /// </summary>
-        /// <param name="sender">The Drawing Attributes object that was changed</param>
-        /// <param name="e">More data about the change that occurred</param>
-        private void DrawingAttributes_Changed(object sender, PropertyDataChangedEventArgs e)
+        void IDrawingAttributeChangeSensitive.OnDrawingAttributesChanged(PropertyDataChangedEventArgs e)
         {
             // set Geometry flag to be dirty if the DA change will cause change in geometry
             if (DrawingAttributes.IsGeometricalDaGuid(e.PropertyGuid) == true)

@@ -208,8 +208,8 @@ namespace System.Windows.Input.StylusWisp
                     else
                     {
                         // GetRawPacketData creates copies, so only call them once
-                        int[] oldData = coalescedMove.GetRawPacketData();
-                        int[] newData = inputReport.GetRawPacketData();
+                        int[] oldData = coalescedMove.Data;
+                        int[] newData = inputReport.Data;
                         int[] mergedData = new int[oldData.Length + newData.Length];
 
                         oldData.CopyTo(mergedData, 0);

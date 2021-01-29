@@ -495,8 +495,6 @@ namespace MS.Internal.Xaml.Parser
             // stack, but were not pushed onto the parser stack, so the
             // ME is still the CurrentType for us.
 
-            XamlType xamlType = _context.CurrentType;
-
             _context.CurrentArgCount = 0;
             _context.CurrentMember = null;
             return new XamlNode(XamlNodeType.EndMember);

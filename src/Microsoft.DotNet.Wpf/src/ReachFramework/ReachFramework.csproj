@@ -2,15 +2,15 @@
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);REACHFRAMEWORK;</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <NoWarn>$(NoWarn);0618</NoWarn>   
+    <NoWarn>$(NoWarn);0618</NoWarn>
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp5.0</TargetFramework>  
+    <TargetFramework>net5.0</TargetFramework>
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 
@@ -21,31 +21,31 @@
       <LogicalName>System.Printing.resources</LogicalName>
       <ManifestResourceName>System.Printing.resources</ManifestResourceName>
     </EmbeddedResource>
-    
-    <!-- 
+
+    <!--
         Workaround for https://github.com/dotnet/wpf/issues/1385
-        ReadyToRun images of WPF applications crash 
-        
-        When producing ReadyToRun images, the ILLinker is configured to skip 
-        C++/CLI images. See https://github.com/mono/linker/issues/651 and 
-        https://github.com/mono/linker/pull/658. 
-        
+        ReadyToRun images of WPF applications crash
+
+        When producing ReadyToRun images, the ILLinker is configured to skip
+        C++/CLI images. See https://github.com/mono/linker/issues/651 and
+        https://github.com/mono/linker/pull/658.
+
         In turn, this results in the failure of the dependencies of such assemblies from being
-        identified and included in the ReadyToRun images. 
-        
+        identified and included in the ReadyToRun images.
+
         This linker hint exists to ensure that such dependencies are included. We need
         to place these hints in an assembly that has a reference to the corresponding
-        C++/CLI assembly. 
-        
+        C++/CLI assembly.
+
              PresentationCore -> DirectWriteFowarder
              ReachFramework -> System.Printing
-    -->    
+    -->
     <EmbeddedResource Condition="Exists('ILLinkTrim.xml')" Include="ILLinkTrim.xml">
       <XlfInput>false</XlfInput>
       <LogicalName>$(AssemblyName).xml</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
-  
+
   <ItemGroup>
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
         <Link>Common\System\SR.cs</Link>
@@ -343,14 +343,14 @@
     <NetCoreReference Include="System.Collections.NonGeneric" />
     <NetCoreReference Include="System.Collections.Specialized" />
     <NetCoreReference Include="System.ComponentModel" />
-    <NetCoreReference Include="System.ComponentModel.EventBasedAsync" />    
+    <NetCoreReference Include="System.ComponentModel.EventBasedAsync" />
     <NetCoreReference Include="System.ComponentModel.Primitives" />
     <NetCoreReference Include="System.ComponentModel.TypeConverter" />
     <NetCoreReference Include="System.Console" />
     <NetCoreReference Include="System.Diagnostics.Debug" />
     <NetCoreReference Include="System.Diagnostics.Tools" />
     <NetCoreReference Include="System.IO.FileSystem" />
-    <NetCoreReference Include="System.Net.Primitives" />    
+    <NetCoreReference Include="System.Net.Primitives" />
     <NetCoreReference Include="System.Net.Requests" />
     <NetCoreReference Include="System.Net.WebHeaderCollection" />
     <NetCoreReference Include="System.ObjectModel" />

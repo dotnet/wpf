@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp5.0</TargetFramework>  
+    <TargetFramework>net5.0</TargetFramework>
     <EnableDefaultItems>false</EnableDefaultItems>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.resx"/>
     <Compile Include="System\Windows\Input\Manipulations\DoubleUtil.cs" />
@@ -34,11 +34,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <NetCoreReference Include="System.Collections" />    
+    <NetCoreReference Include="System.Collections" />
     <NetCoreReference Include="System.Diagnostics.Debug" />
     <NetCoreReference Include="System.Diagnostics.Tools" />
     <NetCoreReference Include="System.Runtime" />
-    <NetCoreReference Include="System.Runtime.Extensions" />    
+    <NetCoreReference Include="System.Runtime.Extensions" />
     <NetCoreReference Include="System.Resources.ResourceManager" />
     <NetCoreReference Include="System.Runtime.InteropServices" />
   </ItemGroup>
@@ -48,5 +48,5 @@
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
-  
+
 </Project>

@@ -2,18 +2,18 @@
   <PropertyGroup>
     <AssemblyName>PresentationFramework</AssemblyName>
     <PackageId>PresentationFramework-ReachFramework</PackageId>
-    <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>    
+    <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
     <!-- don't sign nor binplace this non-shipping assembly -->
     <ShouldWriteSigningRequired>false</ShouldWriteSigningRequired>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <!--The field '{0}' is never used -->
     <NoWarn>$(NoWarn);0169</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp5.0</TargetFramework>  
+    <TargetFramework>net5.0</TargetFramework>  
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 
@@ -26,12 +26,12 @@
     <NetCoreReference Include="System.Collections.NonGeneric" />
     <NetCoreReference Include="System.Collections.Specialized" />
     <NetCoreReference Include="System.ComponentModel" />
-    <NetCoreReference Include="System.ComponentModel.EventBasedAsync" />    
+    <NetCoreReference Include="System.ComponentModel.EventBasedAsync" />
     <NetCoreReference Include="System.ComponentModel.Primitives" />
     <NetCoreReference Include="System.ComponentModel.TypeConverter" />
-    <NetCoreReference Include="System.Dynamic.Runtime" />    
-    <NetCoreReference Include="System.Linq.Expressions" />    
-    <NetCoreReference Include="System.Net.Primitives" />    
+    <NetCoreReference Include="System.Dynamic.Runtime" />
+    <NetCoreReference Include="System.Linq.Expressions" />
+    <NetCoreReference Include="System.Net.Primitives" />
     <NetCoreReference Include="System.Net.Requests" />
     <NetCoreReference Include="System.Net.WebHeaderCollection" />
     <NetCoreReference Include="System.ObjectModel" />
@@ -54,6 +54,6 @@
 
   <ItemGroup>
     <ProjectReference Include="$(WpfCycleBreakersDir)ReachFramework\ReachFramework-PresentationFramework-api-cycle.csproj" />
-    <ProjectReference Include="$(WpfCycleBreakersDir)System.Printing\System.Printing-PresentationFramework-api-cycle.csproj" />  
+    <ProjectReference Include="$(WpfCycleBreakersDir)System.Printing\System.Printing-PresentationFramework-api-cycle.csproj" />
   </ItemGroup>
 </Project>

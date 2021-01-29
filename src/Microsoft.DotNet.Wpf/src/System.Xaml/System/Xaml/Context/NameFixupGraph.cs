@@ -166,9 +166,8 @@ namespace MS.Internal.Xaml.Context
             NameFixupToken token = null;
             if (instance != null)
             {
-                if (_dependenciesByChildObject.TryGetValue(instance, out token))
+                if (_dependenciesByChildObject.Remove(instance, out token))
                 {
-                    _dependenciesByChildObject.Remove(instance);
                     RemoveTokenByParent(token);
                     _resolvedTokensPendingProcessing.Enqueue(token);
                 }

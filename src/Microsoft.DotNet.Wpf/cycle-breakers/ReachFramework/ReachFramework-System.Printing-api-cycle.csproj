@@ -6,11 +6,11 @@
     <DefineConstants>$(DefineConstants);REACHFRAMEWORK;</DefineConstants>
     <!-- don't sign nor binplace this non-shipping assembly -->
     <ShouldWriteSigningRequired>false</ShouldWriteSigningRequired>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp5.0</TargetFramework>  
+    <TargetFramework>net5.0</TargetFramework>  
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 
@@ -19,10 +19,10 @@
     <Compile Include="System.Printing.PrintTicketScope.cs" />
     <Compile Include="System.Printing.PrintCapabilities.cs" />
     <Compile Include="System.Printing.ValidationResult.cs" />
-    <Compile Include="System.Windows.Xps.Packaging.PackagingProgressEventArgs.cs" />    
+    <Compile Include="System.Windows.Xps.Packaging.PackagingProgressEventArgs.cs" />
     <Compile Include="System.Windows.Xps.Serialization.RCW.IXpsOMPackageWriter.cs" />
     <Compile Include="System.Windows.Xps.Packaging.XpsDocument.cs" />
-    <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />    
+    <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
   </ItemGroup>
   <ItemGroup>
     <NetCoreReference Include="System.Runtime" />

@@ -1,21 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{B73BB4AB-68DE-4B91-BBB0-AB4F2D504AC3}</ProjectGuid>
-    <TargetFramework>netcoreapp5.0</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
+    <TargetFramework>net5.0</TargetFramework>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <!-- We ignore this warning because we want to pack powershell scripts that won't be executed as part of installing this package. -->
     <NoWarn>$(NoWarn);NU5111</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup>
-    <!-- 
+    <!--
       PlatformIndependentPackage = true means that this package does
       not require the automatic generation of a runtime.json file using
       the Bait & Switch technique to reference RID specific packages
     -->
     <PlatformIndependentPackage>true</PlatformIndependentPackage>
   </PropertyGroup>
-  
+
   <PropertyGroup>
     <PackageName>$(MSBuildProjectName.Replace('.ArchNeutral',''))$(TransportPackageNameSuffix)</PackageName>
     <AssemblyName>$(PackageName)</AssemblyName>
@@ -32,13 +32,13 @@
     <PackagingContent Include="$(RepoRoot)eng\WpfArcadeSdk\tools\CodeAnalysis\*" SubFolder="root\tools\CodeAnalysis" />
   </ItemGroup>
 
-  <!-- 
+  <!--
     Pack $(WpfSharedDir) and $(WpfCommonDir) sources for use by dotnet-wpf-int
   -->
   <ItemGroup>
     <PackagingContent Include="$(WpfSharedDir)**\*" SubFolder="root\Src\Shared\%(RecursiveDir)" />
     <PackagingContent Include="$(WpfCommonDir)**\*" SubFolder="root\Src\Common\%(RecursiveDir)" />
-    
+
     <PackagingContent Include="$(WpfGraphicsDir)core\**\*.h*" SubFolder="root\Src\WpfGfx\core\%(RecursiveDir)" />
     <PackagingContent Include="$(WpfGraphicsDir)core\**\*.inl" SubFolder="root\Src\WpfGfx\core\%(RecursiveDir)" />
     <PackagingContent Include="$(WpfGraphicsDir)common\**\*.h*" SubFolder="root\Src\WpfGfx\common\%(RecursiveDir)" />

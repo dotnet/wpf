@@ -92,8 +92,6 @@ namespace System.Windows.Markup
             throw GetConvertFromException(value);
         }
 
-        static List<Type> Empty = new List<Type>();
-
         /// <summary>
         /// Returns an enumeration of the types referenced by the value serializer. If the value serializer asks for
         /// a value serializer for System.Type, any types it asks to convert should be supplied in the returned
@@ -110,7 +108,7 @@ namespace System.Windows.Markup
         /// <returns>An enumeration of the types converted by this serializer</returns>
         public virtual IEnumerable<Type> TypeReferences(object value, IValueSerializerContext context)
         {
-            return Empty;
+            return Array.Empty<Type>();
         }
 
         /// <summary>

@@ -4,7 +4,7 @@
   "classifications": ["Common", "WPF"],
   "name": "WPF Custom Control Library",
   "generatorVersions": "[1.0.0.0-*)",
-  "description": "A project for creating a custom control library for .NET Core WPF Applications",
+  "description": "A project for creating a custom control library for .NET WPF Applications",
   "groupIdentity": "Microsoft.Common.WPF.CustomControl",
   "precedence": "3000",
   "identity": "Microsoft.Common.WPF.CustomControl.VisualBasic.5.0",
@@ -39,10 +39,14 @@
         {
           "choice": "net5.0",
           "description": "Target net5.0"
+        },
+        {
+          "choice": "net6.0",
+          "description": "Target net6.0"
         }
       ],
       "replaces": "FrameworkParameter",
-      "defaultValue": "net5.0"
+      "defaultValue": "net6.0"
     },
     "UseWindowsDesktopSdk": {
       "type": "computed",

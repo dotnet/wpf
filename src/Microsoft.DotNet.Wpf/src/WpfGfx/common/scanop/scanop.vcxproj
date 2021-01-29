@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
@@ -18,23 +26,19 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  
   <PropertyGroup>
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CLRSupport>false</CLRSupport>
   </PropertyGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(WpfCppProps)" />
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />  
-
-<PropertyGroup Label="Globals">
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{9afd2bd4-5662-4004-b29c-5d0085b34506}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <TargetName>scanop</TargetName>
   </PropertyGroup>
-
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -42,14 +46,12 @@
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MsBuildThisFileDirectory)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
-  
   <ItemGroup>
     <ClCompile Include="precomp.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>precomp.hpp</PrecompiledHeaderFile>
     </ClCompile>
   </ItemGroup>
-
   <ItemGroup>
     <ClCompile Include="bitmap.cpp" />
     <ClCompile Include="halftone.cpp" />
@@ -68,5 +70,5 @@
     <ClCompile Include="writeprotectedbitmap.cpp" />
     <ClCompile Include="bitmapwrappers.cpp" />
   </ItemGroup>
-  
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />  </Project>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

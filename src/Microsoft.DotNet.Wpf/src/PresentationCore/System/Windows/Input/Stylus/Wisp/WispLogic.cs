@@ -3711,7 +3711,7 @@ namespace System.Windows.Input.StylusWisp
         /// Lock the access to coalesced moves as it's possible it can be accessed simultaneously from two
         /// PenThreads if the initial PenThread fills up with PenContexts.
         /// </summary>
-        object _coalesceLock = new object();
+        private readonly object _coalesceLock = new object();
 
 #if !MULTICAPTURE
         IInputElement _stylusCapture;

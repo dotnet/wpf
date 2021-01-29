@@ -988,7 +988,7 @@
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeCannotRoundtrip">
-        <source>Unable to read objects of the type �{0}� because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
+        <source>Unable to read objects of the type '{0}' because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
         <target state="translated">无法读取类型“{0}”的对象，因为没有可以访问的构造函数。若要允许在 XAML 中使用此类型，请添加默认构造函数，使用 ConstructorArgumentAttribute 或提供 InstanceDescriptor。</target>
         <note />
       </trans-unit>

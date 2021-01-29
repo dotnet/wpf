@@ -3,11 +3,11 @@
     <AssemblyName>UIAutomationClientSideProviders</AssemblyName>
     <PackageId>UIAutomationClientSideProviders-ref</PackageId>
     <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <DefineConstants>$(DefineConstants);UIAUTOMATIONCLIENTSIDEPROVIDERS</DefineConstants>
     <NoWarn>$(NoWarn);0618</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
 

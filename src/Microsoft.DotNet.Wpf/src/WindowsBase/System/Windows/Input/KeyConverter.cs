@@ -132,7 +132,7 @@ namespace System.Windows.Input
                 }
 
                 String strKey = MatchKey(key, culture);
-                if (strKey != null && (strKey.Length != 0 || strKey == String.Empty))
+                if (strKey != null)
                 {
                     return strKey;
                 }
@@ -142,7 +142,7 @@ namespace System.Windows.Input
 
         private object GetKey(string keyToken, CultureInfo culture)
         {
-            if (keyToken == String.Empty)
+            if (keyToken.Length == 0)
             {
                 return Key.None;
             }

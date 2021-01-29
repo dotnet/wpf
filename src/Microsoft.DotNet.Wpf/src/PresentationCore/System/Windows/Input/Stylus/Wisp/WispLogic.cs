@@ -207,7 +207,7 @@ namespace System.Windows.Input.StylusWisp
                     // Add new move to coalesced
                     else
                     {
-                        // GetRawPacketData creates copies, so only call them once
+                        // We haven't modified the contents of the array, so we can use RawStylusInputReport.Data to return the original array
                         int[] oldData = coalescedMove.Data;
                         int[] newData = inputReport.Data;
                         int[] mergedData = new int[oldData.Length + newData.Length];

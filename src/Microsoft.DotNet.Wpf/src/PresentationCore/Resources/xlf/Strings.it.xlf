@@ -234,7 +234,7 @@
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderDisposed">
         <source>Cannot access a disposed HTTP byte range downloader.</source>
-        <target state="translated">Impossibile accedere a un'utilità di download di intervallo di byte HTTP eliminata.</target>
+        <target state="translated">Non è possibile accedere a un downloader dell'intervallo di byte HTTP eliminato.</target>
         <note />
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderErroredOut">
@@ -324,7 +324,7 @@
       </trans-unit>
       <trans-unit id="CloneBreakRecordFailure">
         <source>Text formatting engine cannot clone break record due to error: '{0}'.</source>
-        <target state="translated">Motore di formattazione del testo: impossibile clonare il record di interruzione a causa dell'errore: '{0}'.</target>
+        <target state="translated">Il motore di formattazione del testo non può clonare il record di interruzione a causa dell'errore '{0}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="CloseText">
@@ -944,7 +944,7 @@
       </trans-unit>
       <trans-unit id="EventArgIsNull">
         <source>Event arguments must be non-null.</source>
-        <target state="translated">Gli argomenti degli eventi non devono essere null.</target>
+        <target state="translated">Gli argomenti di evento non devono essere Null.</target>
         <note />
       </trans-unit>
       <trans-unit id="ExtendSelectionDownKeyDisplayString">
@@ -1069,7 +1069,7 @@
       </trans-unit>
       <trans-unit id="Freezable_CloneInvalidType">
         <source>Clone of an instance of type '{0}' is null or not an instance of '{0}'.</source>
-        <target state="translated">Il clone di un'istanza di tipo '{0}' è null o non corrisponde a un'istanza di '{0}'.</target>
+        <target state="translated">Il clone di un'istanza di tipo '{0}' è Null o non è un'istanza di '{0}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="Freezable_Reentrant">
@@ -1809,7 +1809,7 @@
       </trans-unit>
       <trans-unit id="InvalidScheme">
         <source>HTTP byte range downloader can support only HTTP or HTTPS schemes.</source>
-        <target state="translated">L'utilità di download intervallo di byte HTTP supporta solo schemi HTTP o HTTPS.</target>
+        <target state="translated">Il downloader dell'intervallo di byte HTTP supporta solo schemi HTTP o HTTPS.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidSiteOfOriginUri">
@@ -2199,7 +2199,7 @@
       </trans-unit>
       <trans-unit id="Media_PlaylistFormatNotSupported">
         <source>Unrecognized playlist file format.</source>
-        <target state="translated">Formato del file dell'elenco di riproduzione non riconosciuto.</target>
+        <target state="translated">Formato del file di playlist non riconosciuto.</target>
         <note />
       </trans-unit>
       <trans-unit id="Media_StreamClosed">
@@ -2499,7 +2499,7 @@
       </trans-unit>
       <trans-unit id="OptimalParagraphMustWrap">
         <source>Paragraph must be allowed to wrap in total-fit formatting.</source>
-        <target state="translated">È necessario consentire il ritorno a capo del paragrato nella formattazione ad adattamento totale.</target>
+        <target state="translated">È necessario consentire il ritorno a capo del paragrafo nella formattazione ad adattamento totale.</target>
         <note />
       </trans-unit>
       <trans-unit id="PackWebRequestCachePolicyIllegal">

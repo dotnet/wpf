@@ -404,7 +404,7 @@
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderNotInitialized">
         <source>HTTP byte range downloader is not initialized.</source>
-        <target state="translated">HTTP 字节范围下载程序未初始化。</target>
+        <target state="translated">HTTP 字节范围下载器未初始化。</target>
         <note />
       </trans-unit>
       <trans-unit id="CalendarAutomationPeer_BlackoutDayHelpText">
@@ -1616,7 +1616,7 @@
         <source>'{0}' does not exist.
 Do you want to create it?</source>
         <target state="translated">“{0}”不存在。
-是否创建?</target>
+是否创建它?</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogFileNotFound">
@@ -2250,7 +2250,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="InvalidCompositionTarget">
         <source>Cannot set Visibility or call Show, ShowDialog, or Hide while the composition target is not valid.</source>
-        <target state="translated">在组合目标无效时，无法设置 Visibility 或调用 Show、ShowDialog 或 Hide。</target>
+        <target state="translated">在组合目标无效时，无法设置可见性或调用 Show、ShowDialog 或 Hide。</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidControlTemplateTargetType">
@@ -2385,7 +2385,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="InvalidOperationDuringClosing">
         <source>Cannot set Visibility to Visible or call Show, ShowDialog, Close, or WindowInteropHelper.EnsureHandle while a Window is closing.</source>
-        <target state="translated">在 Window 关闭时，无法将 Visibility 设置为 Visible，也无法调用 Show、ShowDialog、Close 或 WindowInteropHelper.EnsureHandle。</target>
+        <target state="translated">在窗口关闭期间，无法将可见性设置为可见，也无法调用 Show、ShowDialog、Close 或 WindowInteropHelper.EnsureHandle。</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidOperation_AddBackEntryNoContent">
@@ -4705,7 +4705,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="ReshowNotAllowed">
         <source>Cannot set Visibility or call Show, ShowDialog, or WindowInteropHelper.EnsureHandle after a Window has closed.</source>
-        <target state="translated">关闭 Window 之后，无法设置 Visibility，也无法调用 Show、ShowDialogor 或 WindowInteropHelper.EnsureHandle。</target>
+        <target state="translated">关闭窗口后，无法设置可见性，也无法调用 Show、ShowDialogor 或 WindowInteropHelper.EnsureHandle。</target>
         <note />
       </trans-unit>
       <trans-unit id="ResourceDictionaryDeferredContentFailure">

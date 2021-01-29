@@ -234,7 +234,7 @@
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderDisposed">
         <source>Cannot access a disposed HTTP byte range downloader.</source>
-        <target state="translated">Není přístup k nástroji pro stahování použitého rozsahu bajtů HTTP.</target>
+        <target state="translated">Není přístup k nástroji načítání použitého rozsahu bajtů HTTP.</target>
         <note />
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderErroredOut">
@@ -2199,7 +2199,7 @@
       </trans-unit>
       <trans-unit id="Media_PlaylistFormatNotSupported">
         <source>Unrecognized playlist file format.</source>
-        <target state="translated">Neznámý formát souboru playlist.</target>
+        <target state="translated">Neznámý formát souboru seznamu stop.</target>
         <note />
       </trans-unit>
       <trans-unit id="Media_StreamClosed">

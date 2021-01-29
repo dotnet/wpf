@@ -1616,14 +1616,14 @@
         <source>'{0}' does not exist.
 Do you want to create it?</source>
         <target state="translated">'{0}' 不存在。
-要建立嗎?</target>
+您想要建立它嗎?</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogFileNotFound">
         <source>'{0}' does not exist.
 Verify that the file name is correct.</source>
         <target state="translated">'{0}' 不存在。
-請確認檔案名稱正確。</target>
+請確認檔案名稱是正確的。</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogInvalidFileName">
@@ -1645,7 +1645,7 @@ Verify that the file name is correct.</source>
         <source>'{0}' already exists.
 Do you want to replace it?</source>
         <target state="translated">'{0}' 已存在。
-要取代掉嗎?</target>
+您想要取代它嗎?</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogSubClassFailure">

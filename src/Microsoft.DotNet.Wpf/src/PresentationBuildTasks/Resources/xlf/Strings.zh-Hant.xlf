@@ -154,7 +154,7 @@
       </trans-unit>
       <trans-unit id="InvalidAssemblyVersion">
         <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
-        <target state="translated">MC1005：偵測到無效的 AssemblyVersion: {0}。</target>
+        <target state="translated">MC1005:偵測到無效的 AssemblyVersion: {0}。</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidBaseClassName">

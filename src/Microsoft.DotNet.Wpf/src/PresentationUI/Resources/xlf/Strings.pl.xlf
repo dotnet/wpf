@@ -799,7 +799,7 @@
       </trans-unit>
       <trans-unit id="RMPublishingPeoplePickerButton">
         <source>People Picker</source>
-        <target state="translated">Wybór osób</target>
+        <target state="translated">Selektor osób</target>
         <note />
       </trans-unit>
       <trans-unit id="RMPublishingPeoplePickerButtonToolTip">

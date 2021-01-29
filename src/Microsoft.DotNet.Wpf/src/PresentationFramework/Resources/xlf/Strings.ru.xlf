@@ -1134,7 +1134,7 @@
       </trans-unit>
       <trans-unit id="DatePickerAutomationPeer_LocalizedControlType">
         <source>date picker</source>
-        <target state="translated">Выбор даты</target>
+        <target state="translated">управляющий элемент выбора даты</target>
         <note />
       </trans-unit>
       <trans-unit id="DatePickerTextBox_DefaultWatermarkText">
@@ -1616,7 +1616,7 @@
         <source>'{0}' does not exist.
 Do you want to create it?</source>
         <target state="translated">"{0}" не существует.
-Вы хотите создать его?</target>
+Создать его?</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogFileNotFound">
@@ -1645,7 +1645,7 @@ Verify that the file name is correct.</source>
         <source>'{0}' already exists.
 Do you want to replace it?</source>
         <target state="translated">"{0}" уже существует.
-Вы хотите заменить его?</target>
+Заменить его?</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogSubClassFailure">
@@ -6115,12 +6115,12 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="UndoNoOpenParentUnit">
         <source>Cannot add nonparent undo unit when there is no open IParentUndoUnit.</source>
-        <target state="translated">Невозможно добавить модуль отмены, не являющийся родительским, при отсутствии открытых IParentUndoUnit.</target>
+        <target state="translated">Невозможно добавить единицу отмены, не являющуюся родительской, при отсутствии открытых IParentUndoUnit.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoNoOpenUnit">
         <source>Cannot close undo unit because no opened unit exists.</source>
-        <target state="translated">Невозможно закрыть модуль отмены, так как нет открытых модулей.</target>
+        <target state="translated">Невозможно закрыть единицу отмены, так как нет открытых модулей.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoNotInNormalState">
@@ -6135,17 +6135,17 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="UndoUnitAlreadyOpen">
         <source>Cannot Reopen undo unit while another unit is already open.</source>
-        <target state="translated">Не удается повторно открыть модуль отмены, пока другой модуль уже открыт.</target>
+        <target state="translated">Не удается повторно открыть единицу отмены, пока другая единица уже открыта.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitCantBeAddedTwice">
         <source>Cannot add undo unit to itself or one of its own children.</source>
-        <target state="translated">Не удается добавить модуль отмены сам в себя или в один из дочерних модулей.</target>
+        <target state="translated">Не удается добавить единицу отмены саму в себя или в один из дочерних модулей.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitCantBeOpenedTwice">
         <source>Cannot open undo unit that is already open.</source>
-        <target state="translated">Не удается открыть уже открытый модуль отмены.</target>
+        <target state="translated">Не удается открыть уже открытую единицу отмены.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitLocked">
@@ -6160,12 +6160,12 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="UndoUnitNotOnTopOfStack">
         <source>Cannot Reopen undo unit that is not on top of stack.</source>
-        <target state="translated">Не удается повторно открыть модуль отмены, не находящийся вверху стека.</target>
+        <target state="translated">Не удается повторно открыть единицу отмены, не находящуюся вверху стека.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitOpen">
         <source>Cannot Undo or Redo while undo unit is open.</source>
-        <target state="translated">Не удается выполнить команду отмены или повторения, пока открыт модуль отмены.</target>
+        <target state="translated">Не удается выполнить команду отмены или повторения, пока открыта единица отмены.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnexpectedAttribute">

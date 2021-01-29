@@ -1134,7 +1134,7 @@
       </trans-unit>
       <trans-unit id="DatePickerAutomationPeer_LocalizedControlType">
         <source>date picker</source>
-        <target state="translated">日付選択カレンダー</target>
+        <target state="translated">日付ピッカー カレンダー</target>
         <note />
       </trans-unit>
       <trans-unit id="DatePickerTextBox_DefaultWatermarkText">
@@ -1414,7 +1414,7 @@
       </trans-unit>
       <trans-unit id="DocumentViewerStyleMustIncludeContentHost">
         <source>DocumentViewer's Visual Tree Style must include a ScrollViewer with Name PART_ContentHost.</source>
-        <target state="translated">DocumentViewer の Visual Tree Style には、Name PART_ContentHost の ScrollViewer が含まれている必要があります。</target>
+        <target state="translated">DocumentViewer のビジュアル ツリー スタイルには、Name PART_ContentHost の ScrollViewer が含まれている必要があります。</target>
         <note />
       </trans-unit>
       <trans-unit id="DocumentViewerViewFitToHeightCommandText">
@@ -1615,7 +1615,7 @@
       <trans-unit id="FileDialogCreatePrompt">
         <source>'{0}' does not exist.
 Do you want to create it?</source>
-        <target state="translated">'{0}' が存在しません。
+        <target state="translated">'{0}' は存在しません。
 作成しますか?</target>
         <note />
       </trans-unit>
@@ -1623,7 +1623,7 @@ Do you want to create it?</source>
         <source>'{0}' does not exist.
 Verify that the file name is correct.</source>
         <target state="translated">'{0}' は存在しません。
-ファイル名が正しいことをご確認ください。</target>
+ファイル名が正しいことを確認してください。</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogInvalidFileName">
@@ -2250,7 +2250,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="InvalidCompositionTarget">
         <source>Cannot set Visibility or call Show, ShowDialog, or Hide while the composition target is not valid.</source>
-        <target state="translated">構成ターゲットが無効な場合、Visibility の設定や、Show、ShowDialog、および Hide の呼び出しを行うことはできません。</target>
+        <target state="translated">構成ターゲットが無効な場合、表示の設定や、Show、ShowDialog、および Hide の呼び出しを行うことはできません。</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidControlTemplateTargetType">
@@ -2385,7 +2385,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="InvalidOperationDuringClosing">
         <source>Cannot set Visibility to Visible or call Show, ShowDialog, Close, or WindowInteropHelper.EnsureHandle while a Window is closing.</source>
-        <target state="translated">Window が閉じている場合、Visibility を Visible に設定したり、Show、ShowDialog、Close、および WindowInteropHelper.EnsureHandle を呼び出したりすることはできません。</target>
+        <target state="translated">Window が閉じている場合、表示を Visible に設定したり、Show、ShowDialog、Close、および WindowInteropHelper.EnsureHandle を呼び出したりすることはできません。</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidOperation_AddBackEntryNoContent">
@@ -4460,7 +4460,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="PositionalArgumentsWrongLength">
         <source>Cannot create MarkupExtension Arguments is the wrong length vector.</source>
-        <target state="translated">MarkupExtension を作成できません。Arguments は不適切な長さのベクターです。</target>
+        <target state="translated">MarkupExtension を作成できません。引数は不適切な長さのベクトルです。</target>
         <note />
       </trans-unit>
       <trans-unit id="PrevoiusPartialPageContentOutstanding">
@@ -4705,7 +4705,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="ReshowNotAllowed">
         <source>Cannot set Visibility or call Show, ShowDialog, or WindowInteropHelper.EnsureHandle after a Window has closed.</source>
-        <target state="translated">Window が閉じた後で、Visibility の設定や、Show、ShowDialog、および WindowInteropHelper.EnsureHandle の呼び出しを行うことはできません。</target>
+        <target state="translated">Window が閉じた後で、表示の設定や、Show、ShowDialog、および WindowInteropHelper.EnsureHandle の呼び出しを行うことはできません。</target>
         <note />
       </trans-unit>
       <trans-unit id="ResourceDictionaryDeferredContentFailure">

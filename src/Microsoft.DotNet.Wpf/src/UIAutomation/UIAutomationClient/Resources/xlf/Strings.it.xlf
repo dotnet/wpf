@@ -84,7 +84,7 @@
       </trans-unit>
       <trans-unit id="IgnoreCaseRequiresString">
         <source>IgnoreCase flag can only be used with string arguments.</source>
-        <target state="translated">Il contrassegno IgnoreCase può essere utilizzato solo con argomenti stringa.</target>
+        <target state="translated">Il contrassegno IgnoreCase può essere usato solo con argomenti di stringa.</target>
         <note />
       </trans-unit>
       <trans-unit id="LogicalElementNoClickablePoint">

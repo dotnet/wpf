@@ -404,7 +404,7 @@
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderNotInitialized">
         <source>HTTP byte range downloader is not initialized.</source>
-        <target state="translated">Narzędzie do pobierania zakresu bajtów HTTP nie zostało zainicjowane.</target>
+        <target state="translated">Narzędzie pobierania kodu HTTP w zakresach bajtów nie zostało zainicjowane.</target>
         <note />
       </trans-unit>
       <trans-unit id="CalendarAutomationPeer_BlackoutDayHelpText">
@@ -1134,7 +1134,7 @@
       </trans-unit>
       <trans-unit id="DatePickerAutomationPeer_LocalizedControlType">
         <source>date picker</source>
-        <target state="translated">wybór daty</target>
+        <target state="translated">selektor daty</target>
         <note />
       </trans-unit>
       <trans-unit id="DatePickerTextBox_DefaultWatermarkText">
@@ -1615,14 +1615,14 @@
       <trans-unit id="FileDialogCreatePrompt">
         <source>'{0}' does not exist.
 Do you want to create it?</source>
-        <target state="translated">Element „{0}” nie istnieje.
+        <target state="translated">„{0}” nie istnieje.
 Czy chcesz go utworzyć?</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogFileNotFound">
         <source>'{0}' does not exist.
 Verify that the file name is correct.</source>
-        <target state="translated">Element „{0}” nie istnieje.
+        <target state="translated">„{0}” nie istnieje.
 Sprawdź, czy nazwa pliku jest prawidłowa.</target>
         <note />
       </trans-unit>
@@ -1644,7 +1644,7 @@ Sprawdź, czy nazwa pliku jest prawidłowa.</target>
       <trans-unit id="FileDialogOverwritePrompt">
         <source>'{0}' already exists.
 Do you want to replace it?</source>
-        <target state="translated">Element „{0}” już istnieje.
+        <target state="translated">„{0}” już istnieje.
 Czy chcesz go zastąpić?</target>
         <note />
       </trans-unit>
@@ -4405,7 +4405,7 @@ Czy chcesz go zastąpić?</target>
       </trans-unit>
       <trans-unit id="ParserXmlIslandMissing">
         <source>Parent element or property '{0}' requires an XML data island. To distinguish an XML island from surrounding XAML, wrap the XML data island in &lt;x:XData&gt; ... &lt;/x:XData&gt;.</source>
-        <target state="translated">Element nadrzędny lub właściwość „{0}” wymaga wyspy danych XML. Aby odróżnić wyspę danych XML od otaczającego XAML, wyspę danych XML należy ująć w znaczniki &lt;x:XData&gt; ... &lt;/x:XData&gt;.</target>
+        <target state="translated">Element nadrzędny lub właściwość „{0}” wymaga wyspy danych XML. Aby odróżnić wyspę danych XML od otaczającego XAML, wyspę danych XML należy opakować w znaczniki &lt;x:XData&gt; ... &lt;/x:XData&gt;.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserXmlIslandUnexpected">
@@ -5060,7 +5060,7 @@ Czy chcesz go zastąpić?</target>
       </trans-unit>
       <trans-unit id="Storyboard_ComplexPathNotSupported">
         <source>Cannot automatically create animation clone for frozen property values on '{0}' objects. Only FrameworkElement and FrameworkContentElement (or derived) types are supported.</source>
-        <target state="translated">Nie można automatycznie utworzyć klonu animacji dla zamrożonych wartości właściwości w obiektach „{0}”. Obsługiwane są tylko typy FrameworkElement i FrameworkContentElement (lub pochodne).</target>
+        <target state="translated">Nie można automatycznie utworzyć klona animacji dla zamrożonych wartości właściwości w obiektach „{0}”. Obsługiwane są tylko typy FrameworkElement i FrameworkContentElement (lub pochodne).</target>
         <note />
       </trans-unit>
       <trans-unit id="Storyboard_ImmutableTargetNotSupported">
@@ -6115,12 +6115,12 @@ Czy chcesz go zastąpić?</target>
       </trans-unit>
       <trans-unit id="UndoNoOpenParentUnit">
         <source>Cannot add nonparent undo unit when there is no open IParentUndoUnit.</source>
-        <target state="translated">Nie można dodawać modułu cofania innego niż nadrzędny, gdy nie ma otwartego modułu IParentUndoUnit.</target>
+        <target state="translated">Nie można dodawać jednostki cofania innego niż nadrzędny, gdy nie ma otwartego modułu IParentUndoUnit.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoNoOpenUnit">
         <source>Cannot close undo unit because no opened unit exists.</source>
-        <target state="translated">Nie można zamknąć modułu cofania, ponieważ nie ma żadnego otwartego.</target>
+        <target state="translated">Nie można zamknąć jednostki cofania, ponieważ nie ma żadnej otwartej.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoNotInNormalState">
@@ -6135,17 +6135,17 @@ Czy chcesz go zastąpić?</target>
       </trans-unit>
       <trans-unit id="UndoUnitAlreadyOpen">
         <source>Cannot Reopen undo unit while another unit is already open.</source>
-        <target state="translated">Nie można przeprowadzić operacji Reopen modułu cofnięcia, jeśli inny moduł jest już otwarty.</target>
+        <target state="translated">Nie można ponownie otworzyć jednostki cofania, jeśli inna jednostka jest już otwarta.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitCantBeAddedTwice">
         <source>Cannot add undo unit to itself or one of its own children.</source>
-        <target state="translated">Nie można dodać modułu cofnięcia do samego siebie ani do jego elementów podrzędnych.</target>
+        <target state="translated">Nie można dodać jednostki cofania do samej siebie ani do jej elementów podrzędnych.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitCantBeOpenedTwice">
         <source>Cannot open undo unit that is already open.</source>
-        <target state="translated">Nie można otworzyć modułu cofnięcia, który jest już otwarty.</target>
+        <target state="translated">Nie można otworzyć jednostki cofania, która jest już otwarta.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitLocked">
@@ -6160,12 +6160,12 @@ Czy chcesz go zastąpić?</target>
       </trans-unit>
       <trans-unit id="UndoUnitNotOnTopOfStack">
         <source>Cannot Reopen undo unit that is not on top of stack.</source>
-        <target state="translated">Nie można ponownie otworzyć modułu cofnięcia, który nie znajduje się na wierzchu stosu.</target>
+        <target state="translated">Nie można ponownie otworzyć jednostki cofania, która nie znajduje się na wierzchu stosu.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitOpen">
         <source>Cannot Undo or Redo while undo unit is open.</source>
-        <target state="translated">Nie można cofnąć ani ponowić otwartego modułu cofnięcia.</target>
+        <target state="translated">Nie można cofnąć ani ponowić, gdy jednostka cofania jest otwarta.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnexpectedAttribute">

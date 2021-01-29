@@ -234,7 +234,7 @@
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderDisposed">
         <source>Cannot access a disposed HTTP byte range downloader.</source>
-        <target state="translated">Nie można uzyskać dostępu do usuniętego narzędzia pobierającego kod HTTP w zakresach bajtów.</target>
+        <target state="translated">Nie można uzyskać dostępu do usuniętego narzędzia pobierania kodu HTTP w zakresach bajtów.</target>
         <note />
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderErroredOut">
@@ -1809,7 +1809,7 @@
       </trans-unit>
       <trans-unit id="InvalidScheme">
         <source>HTTP byte range downloader can support only HTTP or HTTPS schemes.</source>
-        <target state="translated">Narzędzie pobierania kodu HTTP obsługujące zakresy bajtów może obsłużyć tylko schematy HTTP i HTTPS.</target>
+        <target state="translated">Narzędzie pobierania kodu HTTP w zakresach bajtów może obsłużyć tylko schematy HTTP i HTTPS.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidSiteOfOriginUri">

@@ -234,7 +234,7 @@
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderDisposed">
         <source>Cannot access a disposed HTTP byte range downloader.</source>
-        <target state="translated">無法存取已處置的 HTTP 位元組範圍下載器。</target>
+        <target state="translated">無法存取已處置的 HTTP 位元組範圍下載程式。</target>
         <note />
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderErroredOut">
@@ -1069,7 +1069,7 @@
       </trans-unit>
       <trans-unit id="Freezable_CloneInvalidType">
         <source>Clone of an instance of type '{0}' is null or not an instance of '{0}'.</source>
-        <target state="translated">型別 '{0}' 的執行個體複本是空值，或不是 '{0}' 的執行個體。</target>
+        <target state="translated">型別 '{0}' 的執行個體複製品是空值，或不是 '{0}' 的執行個體。</target>
         <note />
       </trans-unit>
       <trans-unit id="Freezable_Reentrant">

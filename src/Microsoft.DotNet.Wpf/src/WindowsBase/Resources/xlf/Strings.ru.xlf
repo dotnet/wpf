@@ -1289,7 +1289,7 @@
       </trans-unit>
       <trans-unit id="PackageSpecificReferenceTagMustBeUnique">
         <source>Specified reference object conflicts with predefined Package specific reference.</source>
-        <target state="translated">Указанный контрольный объект противоречит предопределенному значению для заданного пакета Package.</target>
+        <target state="translated">Указанный эталонный объект конфликтует с предопределенной ссылкой для заданного пакета.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParameterCannotBeNegative">
@@ -2509,7 +2509,7 @@
       </trans-unit>
       <trans-unit id="Unsupported_Modifier">
         <source>Unrecognized ModifierKeys '{0}'.</source>
-        <target state="translated">Нераспознанные ключи ModifierKeys "{0}".</target>
+        <target state="translated">Нераспознанные клавиши ModifierKeys "{0}".</target>
         <note />
       </trans-unit>
       <trans-unit id="UpdaterVersionError">

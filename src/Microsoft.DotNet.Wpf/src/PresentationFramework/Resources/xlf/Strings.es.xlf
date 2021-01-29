@@ -1615,14 +1615,14 @@
       <trans-unit id="FileDialogCreatePrompt">
         <source>'{0}' does not exist.
 Do you want to create it?</source>
-        <target state="translated">"{0}" no existe.
+        <target state="translated">'{0}' no existe.
 ¿Desea crearlo?</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogFileNotFound">
         <source>'{0}' does not exist.
 Verify that the file name is correct.</source>
-        <target state="translated">"{0}" no existe.
+        <target state="translated">'{0}' no existe.
 Compruebe que el nombre de archivo sea correcto.</target>
         <note />
       </trans-unit>
@@ -1644,7 +1644,7 @@ Compruebe que el nombre de archivo sea correcto.</target>
       <trans-unit id="FileDialogOverwritePrompt">
         <source>'{0}' already exists.
 Do you want to replace it?</source>
-        <target state="translated">{0} ya existe.
+        <target state="translated">'{0}' ya existe.
 ¿Desea reemplazarlo?</target>
         <note />
       </trans-unit>
@@ -1880,7 +1880,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="Generator_MoreErrors">
         <source>(... {0} more instances ...)</source>
-        <target state="translated">(... {0} más instancias ...)</target>
+        <target state="translated">(... {0} instancias más ...)</target>
         <note />
       </trans-unit>
       <trans-unit id="Generator_Readme0">
@@ -3680,7 +3680,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="ParserBadConstructorParams">
         <source>Cannot find public constructor for '{0}' that takes '{1}' arguments.</source>
-        <target state="translated">No se puede encontrar el constructor público para "{0}" que acepta parámetros "{1}".</target>
+        <target state="translated">No se encuentra el constructor público para "{0}" que acepta argumentos "{1}".</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserBadEncoding">
@@ -6165,7 +6165,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="UndoUnitOpen">
         <source>Cannot Undo or Redo while undo unit is open.</source>
-        <target state="translated">No se puede deshacer ni rehacer cuando la unidad está abierta.</target>
+        <target state="translated">No se puede deshacer ni rehacer cuando la unidad de deshacer está abierta.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnexpectedAttribute">

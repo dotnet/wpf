@@ -64,7 +64,7 @@
       </trans-unit>
       <trans-unit id="ArgumentRequired">
         <source>One of the following arguments must be non-null: '{0}'.</source>
-        <target state="translated">Jeden z następujących parametrów nie może być równy null: „{0}”.</target>
+        <target state="translated">Jeden z następujących argumentów nie może być równy null: „{0}”.</target>
         <note />
       </trans-unit>
       <trans-unit id="ArrayAddNotImplemented">
@@ -394,7 +394,7 @@
       </trans-unit>
       <trans-unit id="DuplicateXmlnsCompatAcrossAssemblies">
         <source>There are conflicting XmlnsCompatibleWithAttributes in assemblies '{0}' and '{1}' for OldNamespace '{2}'. Change the attributes to have the same NewNamespace, or pass a non-conflicting set of Reference Assemblies in the XamlSchemaContext constructor.</source>
-        <target state="translated">W zestawach „{0}” i „{1}” dla właściwości OldNamespace „{2}” występują kolidujące atrybuty XmlnsCompatibleWithAttributes. Ustaw dla tych atrybutów tę samą wartość właściwości NewNamespace lub przekaż zbiór niekolidujących ze sobą zestawów odwołań w konstruktorze XamlSchemaContext.</target>
+        <target state="translated">W zestawach „{0}” i „{1}” dla właściwości OldNamespace „{2}” występują będące w konflikcie atrybuty XmlnsCompatibleWithAttributes. Ustaw dla tych atrybutów tę samą wartość właściwości NewNamespace lub przekaż zbiór niebędących ze sobą w konflikcie zestawów odwołań w konstruktorze XamlSchemaContext.</target>
         <note />
       </trans-unit>
       <trans-unit id="Enum_Invalid">
@@ -1459,7 +1459,7 @@
       </trans-unit>
       <trans-unit id="XCRCompatCycle">
         <source>There is a cycle of XML compatibility definitions, such that namespace '{0}' overrides itself. This could be due to inconsistent XmlnsCompatibilityAttributes in different assemblies. Please change the definitions to eliminate this cycle, or pass a non-conflicting set of Reference Assemblies in the XamlSchemaContext constructor.</source>
-        <target state="translated">Występuje cykl definicji zgodności z językiem XML powodujący, że przestrzeń nazw {0} przesłania siebie. Przyczyną mogą być niezgodne atrybuty XmlnsCompatibilityAttributes w różnych zestawach. Zmień definicję w celu wyeliminowania tego cyklu lub przekaż zbiór niekolidujących ze sobą zestawów odwołań w konstruktorze XamlSchemaContext.</target>
+        <target state="translated">Występuje cykl definicji zgodności z językiem XML powodujący, że przestrzeń nazw {0} przesłania siebie. Przyczyną mogą być niezgodne atrybuty XmlnsCompatibilityAttributes w różnych zestawach. Zmień definicję w celu wyeliminowania tego cyklu lub przekaż zbiór niebędących ze sobą w konflikcie zestawów odwołań w konstruktorze XamlSchemaContext.</target>
         <note />
       </trans-unit>
       <trans-unit id="XCRDuplicatePreserve">

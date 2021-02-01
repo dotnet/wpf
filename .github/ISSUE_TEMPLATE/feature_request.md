@@ -2,8 +2,8 @@
 name: Feature / API request
 about: Suggest an idea for this project
 title: ''
-labels: ''
-assignees: ''
+labels: Untriaged
+assignees: SamBent
 
 ---
 

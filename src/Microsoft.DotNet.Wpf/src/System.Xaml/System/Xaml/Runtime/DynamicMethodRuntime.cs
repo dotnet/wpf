@@ -6,13 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Reflection;
 using System.Reflection.Emit;
+using System.Reflection;
+using System.Runtime.Versioning;
 using System.Security;
-using System.Xaml;
 using System.Xaml.MS.Impl;
 using System.Xaml.Permissions;
 using System.Xaml.Schema;
+using System.Xaml;
 
 namespace MS.Internal.Xaml.Runtime
 {
@@ -122,6 +123,7 @@ namespace MS.Internal.Xaml.Runtime
             }
         }
 
+        [SupportedOSPlatform("windows")]
         internal DynamicMethodRuntime(XamlRuntimeSettings settings, XamlSchemaContext schemaContext,
             XamlAccessLevel accessLevel)
             : base(settings, true /*isWriter*/)

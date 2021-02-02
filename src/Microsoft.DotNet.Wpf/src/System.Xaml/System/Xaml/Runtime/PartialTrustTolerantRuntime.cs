@@ -3,14 +3,15 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Collections;
 using System.ComponentModel;
+using System.Runtime.Versioning;
 using System.Security;
 using System.Windows.Markup;
-using System.Xaml;
 using System.Xaml.Permissions;
 using System.Xaml.Schema;
+using System.Xaml;
 
 namespace MS.Internal.Xaml.Runtime
 {
@@ -74,6 +75,7 @@ namespace MS.Internal.Xaml.Runtime
             return _transparentRuntime.CallProvideValue(me, serviceProvider);
         }
 
+        [SupportedOSPlatform("windows")]
         public override object CreateFromValue(ServiceProviderContext serviceContext, XamlValueConverter<TypeConverter> ts, object value, XamlMember property)
         {
             if (!MemberAccessPermissionDenied || ts.IsPublic || !IsDefaultConverter(ts))
@@ -132,6 +134,7 @@ namespace MS.Internal.Xaml.Runtime
             return _transparentRuntime.ConvertToValue<T>(context, converter, instance);
         }
 
+        [SupportedOSPlatform("windows")]
         public override object CreateInstance(XamlType xamlType, object[] args)
         {
             if (!MemberAccessPermissionDenied || xamlType.IsPublic || !HasDefaultInvoker(xamlType))
@@ -161,6 +164,7 @@ namespace MS.Internal.Xaml.Runtime
             return _elevatedRuntime.CreateInstance(xamlType, args);
         }
 
+        [SupportedOSPlatform("windows")]
         public override object CreateWithFactoryMethod(XamlType xamlType, string methodName, object[] args)
         {
             if (!MemberAccessPermissionDenied || xamlType.IsPublic)
@@ -190,6 +194,7 @@ namespace MS.Internal.Xaml.Runtime
             return _elevatedRuntime.CreateWithFactoryMethod(xamlType, methodName, args);
         }
 
+        [SupportedOSPlatform("windows")]
         public override object DeferredLoad(ServiceProviderContext serviceContext, XamlValueConverter<XamlDeferringLoader> deferringLoader, XamlReader deferredContent)
         {
             if (!MemberAccessPermissionDenied || deferringLoader.IsPublic || !IsDefaultConverter(deferringLoader))
@@ -219,6 +224,7 @@ namespace MS.Internal.Xaml.Runtime
             return _elevatedRuntime.DeferredLoad(serviceContext, deferringLoader, deferredContent);
         }
 
+        [SupportedOSPlatform("windows")]
         public override XamlReader DeferredSave(IServiceProvider context,
                                                 XamlValueConverter<XamlDeferringLoader> deferringLoader,
                                                 object value)
@@ -254,6 +260,7 @@ namespace MS.Internal.Xaml.Runtime
             return _elevatedRuntime.DeferredSave(context, deferringLoader, value);
         }
 
+        [SupportedOSPlatform("windows")]
         public override TConverterBase GetConverterInstance<TConverterBase>(XamlValueConverter<TConverterBase> converter)
         {
             if (!MemberAccessPermissionDenied ||  converter.IsPublic || !IsDefaultConverter(converter))
@@ -280,6 +287,7 @@ namespace MS.Internal.Xaml.Runtime
             return _elevatedRuntime.GetConverterInstance(converter);
         }
 
+        [SupportedOSPlatform("windows")]
         public override object GetValue(object obj, XamlMember property, bool failIfWriteOnly)
         {
             if (!MemberAccessPermissionDenied || property.IsReadPublic || !HasDefaultInvoker(property))
@@ -325,6 +333,7 @@ namespace MS.Internal.Xaml.Runtime
             _transparentRuntime.SetUriBase(xamlType, obj, baseUri);
         }
 
+        [SupportedOSPlatform("windows")]
         public override void SetValue(object obj, XamlMember property, object value)
         {
             if (!MemberAccessPermissionDenied || property.IsWritePublic || !HasDefaultInvoker(property))
@@ -353,6 +362,7 @@ namespace MS.Internal.Xaml.Runtime
             _elevatedRuntime.SetValue(obj, property, value);
         }
 
+        [SupportedOSPlatform("windows")]
         public override void SetXmlInstance(object inst, XamlMember property, XData xData)
         {
             if (!MemberAccessPermissionDenied || property.IsReadPublic)
@@ -398,6 +408,7 @@ namespace MS.Internal.Xaml.Runtime
             return _transparentRuntime.GetDictionaryItems(dictionary, dictionaryType);
         }
 
+        [SupportedOSPlatform("windows")]
         private bool MemberAccessPermissionDenied
         {
             get { return _memberAccessPermissionDenied; }
@@ -411,6 +422,7 @@ namespace MS.Internal.Xaml.Runtime
             }
         }
 
+        [SupportedOSPlatform("windows")]
         private void EnsureElevatedRuntime()
         {
             if (_elevatedRuntime == null)

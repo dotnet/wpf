@@ -6,7 +6,7 @@
                       GeneratePathProperty="True"
                       Condition="'$(MSBuildProjectExtension)'!='.vcxproj' 
                              And '$(TargetFrameworkIdentifier)' == '.NETCoreApp' 
-                             And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v5.0')
+                             And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v6.0')
                              And '$(NoAutoMicrosoftDotNetWpfGitHubPackageReference)'!='true'
                              And '$(MicrosoftDotNetWpfGitHubPackage)'!=''"/>
 

@@ -16,7 +16,7 @@
                       Condition="'$(MicrosoftNETCoreAppRefVersion)'!='' 
                              And '$(NoTargets)'!='true' 
                              And '$(TargetFrameworkIdentifier)' == '.NETCoreApp' 
-                             And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v5.0') 
+                             And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v6.0') 
                              And '$(MSBuildProjectExtension)'!='.vcxproj'">
       <TargetingPackVersion>$(MicrosoftNETCoreAppRefVersion)</TargetingPackVersion>
     </FrameworkReference>
@@ -30,6 +30,6 @@
 
   <PropertyGroup>
     <!-- If TargetFramework is not one of the supported .NET Core versions, then reset RuntimeFrameworkVersion -->
-    <RuntimeFrameworkVersion Condition="('$(TargetFrameworkIdentifier)' != '.NETCoreApp') Or ('$(TargetFrameworkVersion)' != 'v3.0' And '$(TargetFrameworkVersion)' != 'v3.1' And '$(TargetFrameworkVersion)' == 'v5.0')" />
+    <RuntimeFrameworkVersion Condition="('$(TargetFrameworkIdentifier)' != '.NETCoreApp') Or ('$(TargetFrameworkVersion)' != 'v3.0' And '$(TargetFrameworkVersion)' != 'v3.1' And '$(TargetFrameworkVersion)' == 'v6.0')" />
   </PropertyGroup>
 </Project>

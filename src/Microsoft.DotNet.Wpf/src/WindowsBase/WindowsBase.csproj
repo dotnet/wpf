@@ -7,7 +7,7 @@
     <NoWarn>$(NoWarn);0618</NoWarn>
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
     <ProjectGuid>{FA69991B-9696-42D0-A5C7-F5E73F0DEE9E}</ProjectGuid>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Platforms>AnyCPU;x64;arm64</Platforms>
   </PropertyGroup>
 

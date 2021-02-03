@@ -54,19 +54,19 @@
     <WpfProjectPath Include="UIAutomationClientSideProviders" ProjectPath="$(WpfSourceDir)UIAutomation\UIAutomationClientSideProviders\UIAutomationClientSideProviders.csproj" />
 
 
-    <WpfProjectPath Include="PresentationNative_cor3" ProjectPath="$(WpfSourceDir)PresentationNative\dll\PresentationNative.vcxproj">
+    <WpfProjectPath Include="PresentationNative_net6" ProjectPath="$(WpfSourceDir)PresentationNative\dll\PresentationNative.vcxproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <OutputItemType>Content</OutputItemType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
     </WpfProjectPath>
-    <WpfProjectPath Include="WpfGfx_cor3" ProjectPath="$(WpfSourceDir)WpfGfx\core\dll\WpfGfx.vcxproj">
+    <WpfProjectPath Include="WpfGfx_net6" ProjectPath="$(WpfSourceDir)WpfGfx\core\dll\WpfGfx.vcxproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <OutputItemType>Content</OutputItemType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>    
     </WpfProjectPath>
-    <WpfProjectPath Include="PenImc_cor3" ProjectPath="$(WpfSourceDir)PenImc\dll\PenImc.vcxproj">
+    <WpfProjectPath Include="PenImc_net6" ProjectPath="$(WpfSourceDir)PenImc\dll\PenImc.vcxproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <OutputItemType>Content</OutputItemType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

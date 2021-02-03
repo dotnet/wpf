@@ -1,5 +1,5 @@
 <Project>
   <PropertyGroup>
-    <WpfVersionSuffix>_cor3</WpfVersionSuffix>
+    <WpfVersionSuffix>_net6</WpfVersionSuffix>
   </PropertyGroup>
 </Project>

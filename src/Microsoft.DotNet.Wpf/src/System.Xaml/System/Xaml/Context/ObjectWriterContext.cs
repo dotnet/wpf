@@ -2,14 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal.Xaml.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
-using System.Runtime.Versioning;
-using System.Xaml.Schema;
 using System.Xaml;
-using System;
+using System.Xaml.Schema;
+using MS.Internal.Xaml.Runtime;
 using XAML3 = System.Windows.Markup;
 
 namespace MS.Internal.Xaml.Context
@@ -114,7 +113,6 @@ namespace MS.Internal.Xaml.Context
             _savedDepth = 0;
         }
 
-        [SupportedOSPlatform("windows")]
         public override Assembly LocalAssembly
         {
             get

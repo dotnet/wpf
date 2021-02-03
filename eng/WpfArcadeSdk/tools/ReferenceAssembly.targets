@@ -49,7 +49,7 @@
       <DotNetApiDocsNet50>0.0.0.3</DotNetApiDocsNet50>
 
       <!-- 
-        This blob lives in Azure storage at https://netcorenativeassets.blob.core.windows.net/resource-packages/external/windows/dotnet-api-docs_net5.0/
+        This blob lives in Azure storage at https://netcorenativeassets.blob.core.windows.net/resource-packages/external/windows/dotnet-api-docs_net6.0/
         Instructions for updating these artifacts are at https://github.com/dotnet/wpf/blob/master/docs/intellisense.md
       -->
       <IntellisenseXmlDir>$(CommonLibrary_NativeInstallDir)\bin\dotnet-api-docs_net5.0\$(DotNetApiDocsNet50)\_intellisense\net-5.0\</IntellisenseXmlDir>

@@ -87,6 +87,19 @@
       ** Note**: AdditionalNoWarn should not be used in projects/props/targets.
     -->
     <NoWarn Condition="'$(AdditionalNoWarn)' != '' And '$(NoWarn)' != ''">$(AdditionalNoWarn);$(NoWarn)</NoWarn>
+
+    <!-- Suppress CA1416: Validate platform compatibility:  WPF only builds for Windows -->
+    <!-- 
+        Violations are reported if a platform-specific API is used in the context of a different platform 
+        or if the platform isn't verified (platform-neutral). Violations are also reported if an API that's 
+        not supported for the target platform of the project is used.
+
+        This rule is enabled by default only for projects targeting .NET 5.0 or later. However, you can enable 
+        it for projects that target other frameworks.
+
+        https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca1416
+    -->
+    <NoWarn>$(NoWarn);CA1416</NoWarn>
   </PropertyGroup>
 
   <!-- When an Sdk-style project sets NoTargets=true, it will produce no assemblies -->

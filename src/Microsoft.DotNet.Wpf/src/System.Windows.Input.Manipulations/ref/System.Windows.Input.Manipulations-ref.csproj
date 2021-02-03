@@ -3,7 +3,7 @@
     <AssemblyName>System.Windows.Input.Manipulations</AssemblyName>
     <PackageId>System.Windows.Input.Manipulations-ref</PackageId>
     <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Platforms>AnyCPU;x64;arm64</Platforms>
   </PropertyGroup>
 

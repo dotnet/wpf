@@ -3,7 +3,7 @@ Param(
     [string] $CoreRootDirectory,
     [string] $BaselineCoreRootDirectory,
     [string] $Architecture="x64",
-    [string] $Framework="net6.0",
+    [string] $Framework="net5.0",
     [string] $CompilationMode="Tiered",
     [string] $Repository=$env:BUILD_REPOSITORY_NAME,
     [string] $Branch=$env:BUILD_SOURCEBRANCH,
@@ -36,7 +36,7 @@ $HelixSourcePrefix = "pr"
 $Queue = "Windows.10.Amd64.ClientRS4.DevEx.15.8.Open"
 
 # TODO: Implement a better logic to determine if Framework is .NET Core or >= .NET 5.
-if ($Framework.StartsWith("netcoreapp") -or ($Framework -eq "net6.0")) {
+if ($Framework.StartsWith("netcoreapp") -or ($Framework -eq "net5.0")) {
     $Queue = "Windows.10.Amd64.ClientRS5.Open"
 }
 

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
     
- <file name="PenImc_cor3.dll" hashalg="SHA1">
+ <file name="PenImc_net6.dll" hashalg="SHA1">
     <comClass 
         clsid="{F269D7C4-EF22-48A1-A503-4E0A620FC746}" 
         tlbid="{33363EEE-828A-4DFC-BB3C-AB9628E6DD62}" 

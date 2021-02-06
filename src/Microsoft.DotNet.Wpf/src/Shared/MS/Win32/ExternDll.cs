@@ -30,11 +30,11 @@ namespace MS.Win32
         public const string Oleacc = "oleacc.dll";
         public const string Oleaut32 = "oleaut32.dll";
         public const string Olepro32 = "olepro32.dll";
-        public const string Penimc ="PenIMC_cor3.dll";
+        public const string Penimc ="PenIMC_net6.dll";
         public const string PresentationCore = "PresentationCore.dll";
         public const string PresentationFramework = "PresentationFramework.dll";
-        public const string PresentationHostDll = "PresentationHost_cor3.dll";
-        public const string PresentationNativeDll = "PresentationNative_cor3.dll";
+        public const string PresentationHostDll = "PresentationHost_net6.dll";
+        public const string PresentationNativeDll = "PresentationNative_net6.dll";
         public const string Psapi = "psapi.dll";
         public const string Shcore = "shcore.dll";
         public const string Shell32 = "shell32.dll";
@@ -49,7 +49,7 @@ namespace MS.Win32
         public const string Winmm = "winmm.dll";
         public const string Winspool = "winspool.drv";
         public const string Wldp = "wldp.dll";
-        public const string WpfGfx = "WpfGfx_cor3.dll";
+        public const string WpfGfx = "WpfGfx_net6.dll";
         public const string WtsApi32 = "wtsapi32.dll";
     }
 }

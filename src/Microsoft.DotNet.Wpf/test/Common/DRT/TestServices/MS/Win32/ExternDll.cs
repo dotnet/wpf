@@ -11,7 +11,7 @@ namespace MS.Win32
 #if NET4X 
             "_v0400";
 #else
-            "_cor3";
+            "_net6";
 #endif
 
         const string PENIMC_SUFFIX =

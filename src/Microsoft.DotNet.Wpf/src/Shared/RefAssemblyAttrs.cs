@@ -26,7 +26,7 @@ namespace Microsoft.Internal
     internal static class BuildInfo
     {
         internal const string WCP_VERSION = "4.0.0.0";
-        internal const string WCP_VERSION_SUFFIX = "_cor3";
+        internal const string WCP_VERSION_SUFFIX = "_net6";
         internal const string MIL_VERSION_SUFFIX = "";
 
         // MicrosoftShared PublicKeyToken

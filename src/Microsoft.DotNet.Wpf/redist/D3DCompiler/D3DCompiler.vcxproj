@@ -35,7 +35,7 @@
   <PropertyGroup Condition="'$(Architecture)'!='arm64'">
     <!-- 
       Target assembly will be a privatized copy of D3DCompiler, like  
-      d3dcompiler_47_cor3.dll
+      d3dcompiler_47_net6.dll
     -->
     <TargetName>$(D3DCompilerDllBaseName)$(D3DCompilerVersion)$(WpfVersionSuffix)</TargetName>
   </PropertyGroup>

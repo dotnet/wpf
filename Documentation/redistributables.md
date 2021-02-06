@@ -15,7 +15,7 @@ WPF has two C++/CLI `/clr:pure` assemblies - `DirectWriteForwarder.dll` and `Sys
 
 This requires that end-users deploying WPF applications to install VC runtime redistributables. **We would like to avoid this.**
 
-`wpfgfx_cor3.dll` - WPF's renderer - depends on `d3dcompiler_47.dll` - which is not available on all platforms (Operating Systems) universally. Some platforms have shipped `d3dcompiler_47.dll` via WU or Download Center and requires customers/consumers to download and install it manually. 
+`wpfgfx_net6.dll` - WPF's renderer - depends on `d3dcompiler_47.dll` - which is not available on all platforms (Operating Systems) universally. Some platforms have shipped `d3dcompiler_47.dll` via WU or Download Center and requires customers/consumers to download and install it manually. 
 
 We would like to assure that `d3dcompiler_47.dll` to be available at runtime along with WPF on .NET Core.
 
@@ -26,8 +26,8 @@ Since applications are free to redistribute these assemblies as well, and someti
 In other words, 
 
 ```
- - vcruntime140.dll -> renamed to vcruntime140_cor3.dll 
- - d3dcompiler_47.dll -> renamed to d3dcompiler_47_cor3.dll 
+ - vcruntime140.dll -> renamed to vcruntime140_net6.dll 
+ - d3dcompiler_47.dll -> renamed to d3dcompiler_47_net6.dll 
 ```
 
 

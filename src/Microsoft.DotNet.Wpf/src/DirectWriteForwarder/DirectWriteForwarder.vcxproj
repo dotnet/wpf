@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -22,16 +20,19 @@
   </ItemGroup>
 
   <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworkIdentifier>.NETCoreApp</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v3.1</TargetFrameworkVersion>
+    <RestoreProjectStyle>Unknown</RestoreProjectStyle>
+  </PropertyGroup>
+  
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+
+  <PropertyGroup>
     <CLRSupport>pure</CLRSupport>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <TargetFrameworkIdentifier>.NETCoreApp</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v3.1</TargetFrameworkVersion>
-  </PropertyGroup>
-  
   <Import Project="$(WpfCppProps)" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
 
@@ -39,7 +40,7 @@
     <ProjectGuid>{50A5318F-3B9A-48B9-9615-D5FA9D6D9C3E}</ProjectGuid>
     <UseClrCrt>true</UseClrCrt>
     <OutputName>DirectWriteForwarder</OutputName>
-    <TargetType>DYNLINK</TargetType>
+    <TargetType>dynlink</TargetType>
     <LinkSubSystem>CONSOLE</LinkSubSystem>
     <CDefines>$(CDefines);PRESENTATION_CORE=1;INTEL</CDefines>
   </PropertyGroup>
@@ -66,7 +67,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ClInclude Include="precomp.hxx" />
+    <ClInclude Include="CPP\precomp.hxx" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPP\DirectWriteForwarder.cpp" />
@@ -106,4 +107,12 @@
   
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 
+  <Target Name="InitializeSourceControlInformationFromSourceControlManager">
+    <PropertyGroup>
+      <SourceRevisionId>$(BUILD_SOURCEVERSION)</SourceRevisionId>
+      <SourceRevisionId Condition="'$(SourceRevisionId)' == ''">unknownrev</SourceRevisionId>
+    </PropertyGroup>
+  </Target>
+
 </Project>
+

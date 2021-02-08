@@ -2,8 +2,8 @@
 
 - `$(RepoRoot)eng\WpfArcadeSdk\tools\` contains `Wpf.Cpp.Props`,`Wpf.Cpp.targets`, `Wpf.Cpp.PrivateTools.props` and `Wpf.Cpp.PrivateTools.targets`, which contain all the important C++ related properties 
 - We need to undefine the `TargetFramework` property when `ProjectReference`-ing a C++/CLI project from a C# project
-  - When a C++/CLI project is built directly from the solution, `TargetFramework=netcoreapp3.0` etc. property is NOT passed to it. 
-  - When the same project is built via a C# project, it receives a global property `TargetFramework=netcoreapp3.0`. 
+  - When a C++/CLI project is built directly from the solution, `TargetFramework=net6.0-windows` etc. property is NOT passed to it. 
+  - When the same project is built via a C# project, it receives a global property `TargetFramework=net6.0-windows`. 
   - This results in msbuild treating those two instances as _sufficiently different_ and builds them independently. 
     - In turn, the same project is built twice (often simultaneously), and results in simultaneous writes to the PDB etc. 
 	- This leads to build failures. 

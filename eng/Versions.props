@@ -4,42 +4,42 @@
     <VersionPrefix>6.0.0</VersionPrefix>
     <PreReleaseVersionLabel>preview</PreReleaseVersionLabel>
     <PreReleaseVersionIteration>2</PreReleaseVersionIteration>
-    <SystemIOPackagingVersion>6.0.0-preview.2.21106.9</SystemIOPackagingVersion>
-    <SystemResourcesExtensionsVersion>6.0.0-preview.2.21106.9</SystemResourcesExtensionsVersion>
+    <SystemIOPackagingVersion>6.0.0-preview.2.21108.2</SystemIOPackagingVersion>
+    <SystemResourcesExtensionsVersion>6.0.0-preview.2.21108.2</SystemResourcesExtensionsVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>6.0.0-preview.2.21107.1</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>6.0.0-preview.2.21108.1</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/coreclr -->
   <PropertyGroup>
     <MicrosoftNETCoreRuntimeCoreCLRVersion>5.0.0-alpha1.19562.1</MicrosoftNETCoreRuntimeCoreCLRVersion>
-    <MicrosoftNETCoreILDAsmVersion>6.0.0-preview.2.21106.9</MicrosoftNETCoreILDAsmVersion>
-    <MicrosoftNETCoreILAsmVersion>6.0.0-preview.2.21106.9</MicrosoftNETCoreILAsmVersion>
+    <MicrosoftNETCoreILDAsmVersion>6.0.0-preview.2.21108.2</MicrosoftNETCoreILDAsmVersion>
+    <MicrosoftNETCoreILAsmVersion>6.0.0-preview.2.21108.2</MicrosoftNETCoreILAsmVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
-    <VSRedistCommonNetCoreSharedFrameworkx6460PackageVersion>6.0.0-preview.2.21106.9</VSRedistCommonNetCoreSharedFrameworkx6460PackageVersion>
-    <MicrosoftNETCoreAppRefVersion>6.0.0-preview.2.21106.9</MicrosoftNETCoreAppRefVersion>
-    <MicrosoftNETCoreAppRuntimewinx64Version>6.0.0-preview.2.21106.9</MicrosoftNETCoreAppRuntimewinx64Version>
-    <MicrosoftNETCorePlatformsVersion>6.0.0-preview.2.21106.9</MicrosoftNETCorePlatformsVersion>
-    <SystemDrawingCommonVersion>6.0.0-preview.2.21106.9</SystemDrawingCommonVersion>
-    <SystemDirectoryServicesVersion>6.0.0-preview.2.21106.9</SystemDirectoryServicesVersion>
-    <SystemReflectionMetadataLoadContextVersion>6.0.0-preview.2.21106.9</SystemReflectionMetadataLoadContextVersion>
+    <VSRedistCommonNetCoreSharedFrameworkx6460PackageVersion>6.0.0-preview.2.21108.2</VSRedistCommonNetCoreSharedFrameworkx6460PackageVersion>
+    <MicrosoftNETCoreAppRefVersion>6.0.0-preview.2.21108.2</MicrosoftNETCoreAppRefVersion>
+    <MicrosoftNETCoreAppRuntimewinx64Version>6.0.0-preview.2.21108.2</MicrosoftNETCoreAppRuntimewinx64Version>
+    <MicrosoftNETCorePlatformsVersion>6.0.0-preview.2.21108.2</MicrosoftNETCorePlatformsVersion>
+    <SystemDrawingCommonVersion>6.0.0-preview.2.21108.2</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>6.0.0-preview.2.21108.2</SystemDirectoryServicesVersion>
+    <SystemReflectionMetadataLoadContextVersion>6.0.0-preview.2.21108.2</SystemReflectionMetadataLoadContextVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefx via core-setup coherency parent dependency -->
   <PropertyGroup>
-    <MicrosoftWin32RegistryPackageVersion>6.0.0-preview.2.21106.9</MicrosoftWin32RegistryPackageVersion>
-    <SystemCodeDomPackageVersion>6.0.0-preview.2.21106.9</SystemCodeDomPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>6.0.0-preview.2.21106.9</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>6.0.0-preview.2.21106.9</SystemDiagnosticsEventLogPackageVersion>
+    <MicrosoftWin32RegistryPackageVersion>6.0.0-preview.2.21108.2</MicrosoftWin32RegistryPackageVersion>
+    <SystemCodeDomPackageVersion>6.0.0-preview.2.21108.2</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>6.0.0-preview.2.21108.2</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>6.0.0-preview.2.21108.2</SystemDiagnosticsEventLogPackageVersion>
     <SystemReflectionEmitPackageVersion>5.0.0-alpha.1.19563.6</SystemReflectionEmitPackageVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemSecurityAccessControlPackageVersion>6.0.0-preview.2.21106.9</SystemSecurityAccessControlPackageVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>6.0.0-preview.2.21106.9</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>6.0.0-preview.2.21106.9</SystemSecurityPermissionsPackageVersion>
-    <SystemSecurityPrincipalWindowsPackageVersion>6.0.0-preview.2.21106.9</SystemSecurityPrincipalWindowsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>6.0.0-preview.2.21106.9</SystemWindowsExtensionsPackageVersion>
+    <SystemSecurityAccessControlPackageVersion>6.0.0-preview.2.21108.2</SystemSecurityAccessControlPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>6.0.0-preview.2.21108.2</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>6.0.0-preview.2.21108.2</SystemSecurityPermissionsPackageVersion>
+    <SystemSecurityPrincipalWindowsPackageVersion>6.0.0-preview.2.21108.2</SystemSecurityPrincipalWindowsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>6.0.0-preview.2.21108.2</SystemWindowsExtensionsPackageVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>

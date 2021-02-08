@@ -113,7 +113,7 @@ namespace System.Windows.Input
 
                 if (text != String.Empty)
                 {
-                    if (text.LastIndexOf(".", StringComparison.Ordinal) == -1)
+                    if (text.LastIndexOf('.') == -1)
                     {
                         CursorType ct = (CursorType)Enum.Parse(typeof(CursorType), text);
 

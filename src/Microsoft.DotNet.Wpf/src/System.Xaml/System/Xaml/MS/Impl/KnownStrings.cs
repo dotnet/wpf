@@ -65,6 +65,14 @@ namespace System.Xaml.MS.Impl
         /// <summary>
         /// Standard String Index search operation.
         /// </summary>
+        public static int IndexOf(string src, char value)
+        {
+            return src.IndexOf(value);
+        }
+
+        /// <summary>
+        /// Standard String Index search operation.
+        /// </summary>
         public static int IndexOf(string src, string chars)
         {
             return src.IndexOf(chars, StringComparison.Ordinal);

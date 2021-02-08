@@ -1170,7 +1170,7 @@ namespace System.Windows.Markup
                              string       typeFullName,
                          out short        typeId)
         {
-            int dotIndex = typeFullName.LastIndexOf(".", StringComparison.Ordinal);
+            int dotIndex = typeFullName.LastIndexOf('.');
             string typeShortName;
             string typeClrNamespace;
             if (dotIndex >= 0)

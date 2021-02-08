@@ -2231,7 +2231,7 @@ namespace System.Windows.Documents
         {
             RtfImageFormat imageFormat = RtfImageFormat.Unknown;
 
-            int extensionIndex = imageName.LastIndexOf(".", StringComparison.OrdinalIgnoreCase);
+            int extensionIndex = imageName.LastIndexOf('.');
 
             if (extensionIndex >= 0)
             {

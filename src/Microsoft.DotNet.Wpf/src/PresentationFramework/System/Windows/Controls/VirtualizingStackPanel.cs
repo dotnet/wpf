@@ -12498,7 +12498,7 @@ namespace System.Windows.Controls
                     }
                     if (filename != "none" && s_seqno > 1)
                     {
-                        int dotIndex = filename.LastIndexOf(".", StringComparison.Ordinal);
+                        int dotIndex = filename.LastIndexOf('.');
                         if (dotIndex < 0) dotIndex = filename.Length;
                         filename = filename.Substring(0, dotIndex) +
                             s_seqno.ToString() +

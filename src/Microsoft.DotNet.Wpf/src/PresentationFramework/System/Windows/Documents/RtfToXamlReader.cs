@@ -8238,7 +8238,7 @@ namespace System.Windows.Documents
                     // is very low. Now we replace image with the included picture uri to get
                     // the image directly from the specified Uri.
                     int uriSourceIndex = dnImage.Xaml.IndexOf("UriSource=", StringComparison.Ordinal);
-                    int uriSourceEndIndex = dnImage.Xaml.IndexOf("\"", uriSourceIndex + 11,  StringComparison.Ordinal);
+                    int uriSourceEndIndex = dnImage.Xaml.IndexOf('\"', uriSourceIndex + 11);
 
                     string imageXaml = dnImage.Xaml.Substring(0, uriSourceIndex);
                     imageXaml += "UriSource=\"" + pictureUri + "\"";
@@ -8410,7 +8410,7 @@ namespace System.Windows.Documents
             {
                 pictureUri = instructionName.Substring(uriIndex, instructionName.Length - uriIndex - 1);
 
-                int pictureUriEndIndex = pictureUri.IndexOf("\"", StringComparison.OrdinalIgnoreCase);
+                int pictureUriEndIndex = pictureUri.IndexOf('\"');
                 if (pictureUriEndIndex != -1)
                 {
                     pictureUri = pictureUri.Substring(0, pictureUriEndIndex);

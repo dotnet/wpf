@@ -263,7 +263,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     {
         System::String^ uriString = uri->AbsoluteUri;
         IDWriteFontCollection* dwriteFontCollection = NULL;
-        pin_ptr<const WCHAR> uriPathWChar           = CriticalPtrToStringChars(uriString);
+        pin_ptr<const WCHAR> uriPathWChar           = PtrToStringChars(uriString);
 
         IntPtr pIDWriteFontCollectionLoaderMirror = Marshal::GetComInterfaceForObject(
                                                 _wpfFontCollectionLoader,
@@ -301,7 +301,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         if (isLocal)
         {
             //Protect the pointer to the filepath from being moved around by the garbage collector.
-            pin_ptr<const WCHAR> uriPathWChar = CriticalPtrToStringChars(filePathUri->LocalPath);
+            pin_ptr<const WCHAR> uriPathWChar = PtrToStringChars(filePathUri->LocalPath);
 
             // DWrite currently has a slow lookup for the last write time, which
             // introduced a noticable perf regression when we switched over.
@@ -387,7 +387,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         {
             System::String^ filePath = filePathUri->AbsoluteUri;
             //Protect the pointer to the filepath from being moved around by the garbage collector.
-            pin_ptr<const WCHAR> uriPathWChar = CriticalPtrToStringChars(filePath);
+            pin_ptr<const WCHAR> uriPathWChar = PtrToStringChars(filePath);
 
             IntPtr pIDWriteFontFileLoaderMirror = Marshal::GetComInterfaceForObject(
                                                     fontFileLoader,

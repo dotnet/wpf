@@ -1,5 +1,11 @@
 <Project>
 
+  <!-- 'EmbedUntrackedSources' is now true by default in Arcade: https://github.com/dotnet/arcade/pull/4063. -->
+  <!-- WPF's C++/CLI projects require that 'EmbedUntrackedSources' default to false. -->
+  <PropertyGroup>
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
+  </PropertyGroup>
+
   <Import Project="$(WpfArcadeSdkTargets)"
           Condition="Exists('$(WpfArcadeSdkProps)') And Exists('$(WpfArcadeSdkTargets)')"/>
 

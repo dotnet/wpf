@@ -1361,19 +1361,19 @@ namespace System.Xaml
             }
             if (!string.IsNullOrEmpty(ns))
             {
-                sb.Append("{");
+                sb.Append('{');
                 sb.Append(PreferredXamlNamespace);
-                sb.Append("}");
+                sb.Append('}');
             }
             else if (UnderlyingTypeInternal.Value != null)
             {
                 sb.Append(UnderlyingTypeInternal.Value.Namespace);
-                sb.Append(".");
+                sb.Append('.');
             }
             sb.Append(Name);
             if (IsGeneric)
             {
-                sb.Append("(");
+                sb.Append('(');
                 for (int i = 0; i < TypeArguments.Count; i++)
                 {
                     TypeArguments[i].AppendTypeName(sb, forceNsInitialization);
@@ -1382,7 +1382,7 @@ namespace System.Xaml
                         sb.Append(", ");
                     }
                 }
-                sb.Append(")");
+                sb.Append(')');
             }
         }
 

@@ -1,6 +1,9 @@
 <Project>
   <PropertyGroup>
     <RepositoryName>wpf</RepositoryName>
+    <!--
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
+     -->
   </PropertyGroup>
   <!-- Normalize $(TestWpfArcadeSdkPath) by appending a '\' to it if one is missing -->
   <PropertyGroup Condition="'$(TestWpfArcadeSdkPath)'!=''">

@@ -2558,9 +2558,9 @@ namespace Standard
         public static extern void DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        [DllImport("dwmapi.dll", EntryPoint = "DwmIsCompositionEnabled", PreserveSig = false)]
+        [DllImport("dwmapi.dll", EntryPoint = "DwmIsCompositionEnabled", PreserveSig = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool _DwmIsCompositionEnabled();
+        private static extern HRESULT _DwmIsCompositionEnabled([Out, MarshalAs(UnmanagedType.Bool)] out bool enabled);
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("dwmapi.dll", EntryPoint = "DwmGetColorizationColor", PreserveSig = true)]
@@ -2590,12 +2590,14 @@ namespace Standard
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static bool DwmIsCompositionEnabled()
         {
+            bool enabled;
+
             // Make this call safe to make on downlevel OSes...
-            if (!Utility.IsOSVistaOrNewer)
+            if (!Utility.IsOSVistaOrNewer || _DwmIsCompositionEnabled(out enabled).Failed)
             {
                 return false;
             }
-            return _DwmIsCompositionEnabled();
+            return enabled;
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]

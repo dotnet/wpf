@@ -9,7 +9,7 @@
       Version prefix used by a few projects like Project Templates
       Revision portion of Major.Minor.Revision usually updated every release
     -->
-    <TraditionalVersionPrefix>3.1.12</TraditionalVersionPrefix>
+    <TraditionalVersionPrefix>3.1.13</TraditionalVersionPrefix>
     <PreReleaseVersionLabel>servicing</PreReleaseVersionLabel>
     <DotNetUseShippingVersions>true</DotNetUseShippingVersions>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
@@ -18,7 +18,7 @@
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>4.8.1-servicing.20561.1</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>4.8.1-servicing.21064.4</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/coreclr -->
   <PropertyGroup>

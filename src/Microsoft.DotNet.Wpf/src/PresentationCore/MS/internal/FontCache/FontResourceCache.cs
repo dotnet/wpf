@@ -28,10 +28,10 @@ namespace MS.Internal.FontCache
         private static void ConstructFontResourceCache(Assembly entryAssembly, Dictionary<string, List<string>> folderResourceMap)
         {
             // For entryAssembly build a set of mapping from paths to entries that describe each resource.
-            Dictionary<string, string> contentFiles = ContentFileHelper.GetContentFiles(entryAssembly);
+            HashSet<string> contentFiles = ContentFileHelper.GetContentFiles(entryAssembly);
             if (contentFiles != null)
             {
-                foreach (string contentFile in contentFiles.Keys)
+                foreach (string contentFile in contentFiles)
                 {
                     AddResourceToFolderMap(folderResourceMap, contentFile);
                 }

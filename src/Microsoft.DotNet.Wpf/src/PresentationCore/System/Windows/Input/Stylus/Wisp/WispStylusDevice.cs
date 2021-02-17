@@ -676,7 +676,7 @@ namespace System.Windows.Input.StylusWisp
                         // See if we need to update over for subtree mode.
                         if (CapturedMode == CaptureMode.SubTree && _inputSource != null && _inputSource.Value != null)
                         {
-                            Point pt = _stylusLogic.DeviceUnitsFromMeasureUnits(GetPosition(null));
+                            Point pt = _stylusLogic.DeviceUnitsFromMeasureUnits(_inputSource.Value, GetPosition(null));
                             inputElementHit = FindTarget(_inputSource.Value, pt);
                         }
 
@@ -688,7 +688,7 @@ namespace System.Windows.Input.StylusWisp
                         if (_inputSource != null && _inputSource.Value != null)
                         {
                             Point pt = GetPosition(null); // relative to window (root element)
-                            pt = _stylusLogic.DeviceUnitsFromMeasureUnits(pt); // change back to device coords.
+                            pt = _stylusLogic.DeviceUnitsFromMeasureUnits(_inputSource.Value, pt); // change back to device coords.
                             IInputElement currentOver = Input.StylusDevice.GlobalHitTest(_inputSource.Value, pt);
                             ChangeStylusOver(currentOver);
                         }
@@ -1310,10 +1310,10 @@ namespace System.Windows.Input.StylusWisp
         ///     Returns the transform for converting from tablet to element
         ///     relative coordinates.
         /// </summary>
-        private GeneralTransform GetTabletToElementTransform(IInputElement relativeTo)
+        private GeneralTransform GetTabletToElementTransform(PresentationSource source, IInputElement relativeTo)
         {
             GeneralTransformGroup group = new GeneralTransformGroup();
-            group.Children.Add(new MatrixTransform(_stylusLogic.GetTabletToViewTransform(_tabletDevice.TabletDevice)));
+            group.Children.Add(new MatrixTransform(_stylusLogic.GetTabletToViewTransform(source, _tabletDevice.TabletDevice)));
             group.Children.Add(StylusDevice.GetElementTransform(relativeTo));
             return group;
         }
@@ -1376,7 +1376,7 @@ namespace System.Windows.Input.StylusWisp
                 _eventStylusPoints =
                     new StylusPointCollection(report.StylusPointDescription,
                                               report.GetRawPacketData(),
-                                              GetTabletToElementTransform(null),
+                                              GetTabletToElementTransform(report.InputSource, null),
                                               Matrix.Identity);
             }
         }
@@ -1429,7 +1429,7 @@ namespace System.Windows.Input.StylusWisp
             _eventStylusPoints =
                 new StylusPointCollection(report.StylusPointDescription,
                                             report.GetRawPacketData(),
-                                            GetTabletToElementTransform(null),
+                                            GetTabletToElementTransform(report.InputSource, null),
                                             Matrix.Identity);
 
             PresentationSource inputSource = DetermineValidSource(report.InputSource, _eventStylusPoints, report.PenContext.Contexts);
@@ -1438,8 +1438,8 @@ namespace System.Windows.Input.StylusWisp
             if (inputSource != null && inputSource != report.InputSource)
             {
                 Point newWindowLocation = PointUtil.ClientToScreen(new Point(0, 0), inputSource);
-                newWindowLocation = _stylusLogic.MeasureUnitsFromDeviceUnits(newWindowLocation);
-                Point oldWindowLocation = _stylusLogic.MeasureUnitsFromDeviceUnits(report.PenContext.Contexts.DestroyedLocation);
+                newWindowLocation = _stylusLogic.MeasureUnitsFromDeviceUnits(inputSource, newWindowLocation);
+                Point oldWindowLocation = _stylusLogic.MeasureUnitsFromDeviceUnits(report.InputSource, report.PenContext.Contexts.DestroyedLocation);
 
                 // Create translate matrix transform to shift coords to map points to new window location.
                 MatrixTransform additionalTransform = new MatrixTransform(new Matrix(1, 0, 0, 1,
@@ -1455,7 +1455,7 @@ namespace System.Windows.Input.StylusWisp
             if (inputSource != null)
             {
                 // Update our screen position from this move.
-                Point pt = _stylusLogic.DeviceUnitsFromMeasureUnits((Point)_rawPosition);
+                Point pt = _stylusLogic.DeviceUnitsFromMeasureUnits(inputSource, (Point)_rawPosition);
                 _lastScreenLocation = PointUtil.ClientToScreen(pt, inputSource);
             }
 
@@ -1493,7 +1493,7 @@ namespace System.Windows.Input.StylusWisp
                     // We use the first point of the packet data for Drag detection to try and
                     // filter out cases where the stylus skips when going down.
                     Point dragPosition = (Point)_eventStylusPoints[0];
-                    dragPosition = _stylusLogic.DeviceUnitsFromMeasureUnits(dragPosition);
+                    dragPosition = _stylusLogic.DeviceUnitsFromMeasureUnits(inputSource, dragPosition);
                     dragPosition = PointUtil.ClientToScreen(dragPosition, inputSource);
 
                     // See if we need to detect a Drag gesture.  If so do the calculation.
@@ -1552,11 +1552,12 @@ namespace System.Windows.Input.StylusWisp
                 {
                     Point ptScreen;
 
-                    // If we have the last penContext then we can remap the coordinates properly.
+                    // If we have the last penContext and a valid CompositionTarget, then we can remap the coordinates properly.
                     // Otherwise we just use the last stylus mouse location to figure out a PresenationSource.
-                    if (penContextsOfPoints != null)
+                    if (penContextsOfPoints?.InputSource?.CompositionTarget != null)
                     {
-                        ptScreen = _stylusLogic.DeviceUnitsFromMeasureUnits((Point)stylusPoints[0]);
+                        ptScreen = _stylusLogic.DeviceUnitsFromMeasureUnits(penContextsOfPoints.InputSource, (Point)stylusPoints[0]);
+
                         // map from window to screen (ie - add the window location).
                         ptScreen.Offset(penContextsOfPoints.DestroyedLocation.X, penContextsOfPoints.DestroyedLocation.Y);
                     }
@@ -1646,7 +1647,7 @@ namespace System.Windows.Input.StylusWisp
                         // Update the current point with this data.
                         _eventStylusPoints = new StylusPointCollection(stylusPoint.Description,
                                                                        stylusPoint.GetPacketData(),
-                                                                       GetTabletToElementTransform(null),
+                                                                       GetTabletToElementTransform(report.InputSource, null),
                                                                        Matrix.Identity);
 
                         PresentationSource inputSource = DetermineValidSource(report.InputSource, _eventStylusPoints, report.PenContext.Contexts);
@@ -1657,8 +1658,8 @@ namespace System.Windows.Input.StylusWisp
                             if (inputSource != report.InputSource)
                             {
                                 Point newWindowLocation = PointUtil.ClientToScreen(new Point(0, 0), inputSource);
-                                newWindowLocation = _stylusLogic.MeasureUnitsFromDeviceUnits(newWindowLocation);
-                                Point oldWindowLocation = _stylusLogic.MeasureUnitsFromDeviceUnits(report.PenContext.Contexts.DestroyedLocation);
+                                newWindowLocation = _stylusLogic.MeasureUnitsFromDeviceUnits(inputSource, newWindowLocation);
+                                Point oldWindowLocation = _stylusLogic.MeasureUnitsFromDeviceUnits(report.InputSource, report.PenContext.Contexts.DestroyedLocation);
 
                                 // Create translate matrix transform to shift coords to map points to new window location.
                                 MatrixTransform additionalTransform = new MatrixTransform(new Matrix(1, 0, 0, 1,
@@ -1669,7 +1670,7 @@ namespace System.Windows.Input.StylusWisp
 
                             _rawPosition = _eventStylusPoints[_eventStylusPoints.Count - 1];
                             _inputSource = new SecurityCriticalDataClass<PresentationSource>(inputSource);
-                            Point pt = _stylusLogic.DeviceUnitsFromMeasureUnits((Point)_rawPosition);
+                            Point pt = _stylusLogic.DeviceUnitsFromMeasureUnits(inputSource, (Point)_rawPosition);
                             _lastScreenLocation = PointUtil.ClientToScreen(pt, inputSource);
                         }
                     }

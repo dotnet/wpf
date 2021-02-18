@@ -436,7 +436,7 @@ namespace System.Xaml.MS.Impl
                 // Calculate the subsume count upfront, since this also serves as our cycle detection
                 _subsumeCount = new Dictionary<string,int>(nsInfo.OldToNewNs.Count);
 
-                Dictionary<string, object> visited = new Dictionary<string, object>();
+                HashSet<string> visited = new HashSet<string>();
 
                 // for every XmlnsCompatAttribute
                 foreach (string newNs in nsInfo.OldToNewNs.Values)
@@ -447,11 +447,10 @@ namespace System.Xaml.MS.Impl
                     string ns = newNs;
                     do
                     {
-                        if (visited.ContainsKey(ns))
+                        if (!visited.Add(ns))
                         {
                             throw new XamlSchemaException(SR.Get(SRID.XmlnsCompatCycle, assembly.FullName, ns));
                         }
-                        visited.Add(ns, null);
                         IncrementSubsumeCount(ns);
                         ns = GetNewNs(ns);
                     }

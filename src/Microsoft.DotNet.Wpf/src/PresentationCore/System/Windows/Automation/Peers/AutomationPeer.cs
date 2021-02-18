@@ -1761,7 +1761,7 @@ namespace System.Windows.Automation.Peers
         {
             List<AutomationPeer> oldChildren = _children;
             List<AutomationPeer> addedChildren = null;
-            Hashtable ht = null;
+            HashSet<AutomationPeer> hs = null;
 
             _childrenValid = false;
             EnsureChildren();
@@ -1770,14 +1770,13 @@ namespace System.Windows.Automation.Peers
             if (!EventMap.HasRegisteredEvent(AutomationEvents.StructureChanged))
                 return;
 
-            //store old children in a hashtable
+            //store old children in a hashset
             if(oldChildren != null)
             {
-                ht =  new Hashtable();
+                hs = new HashSet<AutomationPeer>();
                 for(int count = oldChildren.Count, i = 0; i < count; i++)
                 {
-                    if(!ht.Contains(oldChildren[i]))
-                        ht.Add(oldChildren[i], null);
+                    hs.Add(oldChildren[i]);
                 }
             }
 
@@ -1790,9 +1789,9 @@ namespace System.Windows.Automation.Peers
                 for(int count = _children.Count, i = 0; i < count; i++)
                 {
                     AutomationPeer child = _children[i];
-                    if(ht != null && ht.ContainsKey(child))
+                    if(hs != null && hs.Contains(child))
                     {
-                        ht.Remove(child); //same child, nothing to notify
+                        hs.Remove(child); //same child, nothing to notify
                     }
                     else
                     {
@@ -1808,9 +1807,9 @@ namespace System.Windows.Automation.Peers
                 }
             }
 
-            //now the ht only has "removed" children. If the count does not yet
+            //now the hs only has "removed" children. If the count does not yet
             //calls for "bulk" notification, use per-child notification, otherwise use "bulk"
-            int removedCount = (ht == null ? 0 : ht.Count);
+            int removedCount = (hs == null ? 0 : hs.Count);
 
             if(removedCount + addedCount > invalidateLimit) //bilk invalidation
             {
@@ -1842,11 +1841,9 @@ namespace System.Windows.Automation.Peers
                     IRawElementProviderSimple provider = ProviderFromPeerNoDelegation(this);
                     if (provider != null)
                     {
-                        //ht contains removed children by now
-                        foreach (object key in ht.Keys)
+                        //hs contains removed children by now
+                        foreach (AutomationPeer removedChild in hs)
                         {
-                            AutomationPeer removedChild = (AutomationPeer)key;
-
                             int[] rid = removedChild.GetRuntimeId();
 
                             AutomationInteropProvider.RaiseStructureChangedEvent(
@@ -1857,7 +1854,7 @@ namespace System.Windows.Automation.Peers
                 }
                 if (addedCount > 0)
                 {
-                    //ht contains removed children by now
+                    //hs contains removed children by now
                     foreach (AutomationPeer addedChild in addedChildren)
                     {
                         //for children added, provider is the child itself

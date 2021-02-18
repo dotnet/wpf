@@ -356,6 +356,7 @@
     <Compile Include="System\Windows\IContentHost.cs" />
     <Compile Include="System\Windows\IDataObject.cs" />
     <Compile Include="System\Windows\IInputElement.cs" />
+    <Compile Include="System\Windows\Ink\IDrawingAttributeChangeSensitive.cs" />
     <Compile Include="System\Windows\LayoutManager.cs" />
     <Compile Include="System\Windows\LocalizabilityAttribute.cs" />
     <Compile Include="System\Windows\LocalizationCategory.cs" />

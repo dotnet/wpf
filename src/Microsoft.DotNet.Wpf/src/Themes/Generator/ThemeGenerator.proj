@@ -1,20 +1,16 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="dogfood">
+<Project DefaultTargets="GenerateThemes" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <Import Project="$(_NTDRIVE)$(_NTROOT)\wpf\src\Microsoft.WPF.Product.Settings.targets" />
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props'))" />
 
-  <PropertyGroup> 
-    <TargetType>COPY</TargetType>    
-  </PropertyGroup>
-    
   <ItemGroup>
-    <ThemeXaml Include="..\Aero\Themes\Aero.NormalColor.xaml" />
-    <ThemeXaml Include="..\Aero2\Themes\Aero2.NormalColor.xaml" />
-    <ThemeXaml Include="..\AeroLite\Themes\AeroLite.NormalColor.xaml" />
-    <ThemeXaml Include="..\Classic\Themes\Classic.xaml" />
-    <ThemeXaml Include="..\Luna\Themes\Luna.Homestead.xaml" />
-    <ThemeXaml Include="..\Luna\Themes\Luna.NormalColor.xaml" />
-    <ThemeXaml Include="..\Luna\Themes\Luna.Metallic.xaml" />
-    <ThemeXaml Include="..\Royale\Themes\Royale.NormalColor.xaml" />
+    <ThemeXaml Include="..\PresentationFramework.Aero\Themes\Aero.NormalColor.xaml" />
+    <ThemeXaml Include="..\PresentationFramework.Aero2\Themes\Aero2.NormalColor.xaml" />
+    <ThemeXaml Include="..\PresentationFramework.AeroLite\Themes\AeroLite.NormalColor.xaml" />
+    <ThemeXaml Include="..\PresentationFramework.Classic\Themes\Classic.xaml" />
+    <ThemeXaml Include="..\PresentationFramework.Luna\Themes\Luna.Homestead.xaml" />
+    <ThemeXaml Include="..\PresentationFramework.Luna\Themes\Luna.NormalColor.xaml" />
+    <ThemeXaml Include="..\PresentationFramework.Luna\Themes\Luna.Metallic.xaml" />
+    <ThemeXaml Include="..\PresentationFramework.Royale\Themes\Royale.NormalColor.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -68,30 +64,14 @@
     <StyleXaml Include="..\XAML\Window.xaml" />
   </ItemGroup>
 
-  <Import Project="$(_NTDRIVE)$(_NTROOT)\tools\Microsoft.DevDiv.Native.targets" />
-
-  <PropertyGroup>
-    <BuildGeneratedDependsOn>
-      GenerateThemes;
-      $(BuildGeneratedDependsOn)
-    </BuildGeneratedDependsOn>
-  </PropertyGroup>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets'))" />
 
   <Target Name="GenerateThemes" 
        Inputs="@(StyleXaml);@(ThemeXaml)"
-       Outputs="$(OutputPath)sdk\%(ThemeXaml.FileName)%(ThemeXaml.Extension).sdk" >
-
-     <MakeDir Condition="!Exists('$(IntermediateOutputDirectory)')" Directories="$(IntermediateOutputDirectory)" />
-
-     <Exec Command="$(PerlCommand) ThemeGenerator.pl $(IntermediateOutputDirectory)\%(ThemeXaml.FileName)%(ThemeXaml.Extension).sdk $(IntermediateOutputDirectory)\%(ThemeXaml.FileName)%(ThemeXaml.Extension) %(ThemeXaml.Identity) @(StyleXaml, ' ')" 
-        Outputs="$(IntermediateOutputDirectory)\%(ThemeXaml.FileName)%(ThemeXaml.Extension).sdk;$(IntermediateOutputDirectory)\%(ThemeXaml.FileName)%(ThemeXaml.Extension)" 
+       Outputs="@(ThemeXaml)">
+     <Exec Command="$(PerlCommand) ThemeGenerator.pl %(ThemeXaml.RelativeDir)%(ThemeXaml.FileName)%(ThemeXaml.Extension).sdk %(ThemeXaml.Identity) %(ThemeXaml.Identity) @(StyleXaml, ' ')"
+        Outputs="$(IntermediateOutputDirectory)\%(ThemeXaml.FileName)%(ThemeXaml.Extension).sdk;%(ThemeXaml.Identity)" 
         StandardOutputImportance="normal" />
-
-     <ItemGroup>
-       <DataFile Include="$(IntermediateOutputDirectory)\%(ThemeXaml.FileName)%(ThemeXaml.Extension).sdk">
-         <SubFolder>sdk</SubFolder>
-       </DataFile>
-     </ItemGroup>
   </Target>
 
 </Project>

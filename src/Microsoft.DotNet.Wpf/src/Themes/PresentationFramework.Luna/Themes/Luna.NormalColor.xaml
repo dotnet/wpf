@@ -1,7 +1,8 @@
+
 <!--=================================================================
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
 
 This file was generated from individual xaml files found
    in WPF\src\Themes\XAML\, please do not edit it directly.
@@ -22,134 +23,134 @@ To automatically copy the files, set the environment variable
                     xmlns:framework="clr-namespace:MS.Internal;assembly=PresentationFramework"
                     xmlns:base="clr-namespace:System.Windows;assembly=WindowsBase">
 
-    <Style x:Key="&#209;">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Rectangle Margin="3"
-                               StrokeThickness="1"
-                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
-                               StrokeDashArray="1 2"
-                               SnapsToDevicePixels="true"/>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+<Style x:Key="&#209;">
+    <Setter Property="Control.Template">
+        <Setter.Value>
+            <ControlTemplate>
+                <Rectangle Margin="3"
+                           StrokeThickness="1"
+                           Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                           StrokeDashArray="1 2"
+                           SnapsToDevicePixels="true"/>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
 
 
 
-    <!--=================================================================
+<!--=================================================================
         Button
     ==================================================================-->
-    <LinearGradientBrush x:Key="&#210;"
-                        EndPoint="0.5,1"
-                        StartPoint="0.5,0">
-        <LinearGradientBrush.GradientStops>
-            <GradientStop Color="#FFFFFFFF"
-                          Offset="0"/>
-            <GradientStop Color="#FFF0F0EA"
-                          Offset="0.9"/>
-        </LinearGradientBrush.GradientStops>
-    </LinearGradientBrush>
+<LinearGradientBrush x:Key="&#210;"
+                    EndPoint="0.5,1"
+                    StartPoint="0.5,0">
+    <LinearGradientBrush.GradientStops>
+        <GradientStop Color="#FFFFFFFF"
+                      Offset="0"/>
+        <GradientStop Color="#FFF0F0EA"
+                      Offset="0.9"/>
+    </LinearGradientBrush.GradientStops>
+</LinearGradientBrush>
 
-    <SolidColorBrush x:Key="&#211;"
-                 Color="#FF003C74"/>
-    <Style x:Key="&#212;"
-           TargetType="{x:Type ButtonBase}">
-        <Setter Property="FocusVisualStyle"
-                Value="{StaticResource &#209;}"/>
-        <Setter Property="Background"
-                Value="{StaticResource &#210;}"/>
-        <Setter Property="BorderBrush"
-                Value="{StaticResource &#211;}"/>
-        <Setter Property="Foreground"
-                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-        <Setter Property="HorizontalContentAlignment"
-                Value="Center"/>
-        <Setter Property="VerticalContentAlignment"
-                Value="Center"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ButtonBase}">
-                    <theme:ButtonChrome x:Name="Chrome"
-                                        ThemeColor="NormalColor"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        Fill="{TemplateBinding Background}"
-                                        RenderDefaulted="{TemplateBinding Button.IsDefaulted}"
-                                        RenderMouseOver="{TemplateBinding IsMouseOver}"
-                                        RenderPressed="{TemplateBinding IsPressed}"
-                                        SnapsToDevicePixels="true">
-                        <ContentPresenter Margin="{TemplateBinding Padding}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          RecognizesAccessKey="True"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                    </theme:ButtonChrome>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsKeyboardFocused"
-                                 Value="true">
-                            <Setter TargetName="Chrome"
-                                    Property="RenderDefaulted"
-                                    Value="true"/>
-                        </Trigger>
-                        <Trigger Property="ToggleButton.IsChecked"
-                                 Value="true">
-                            <Setter TargetName="Chrome"
-                                    Property="RenderPressed"
-                                    Value="true"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="false">
-                            <Setter Property="Foreground"
-                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+<SolidColorBrush x:Key="&#211;"
+             Color="#FF003C74"/>
+<Style x:Key="&#212;"
+       TargetType="{x:Type ButtonBase}">
+    <Setter Property="FocusVisualStyle"
+            Value="{StaticResource &#209;}"/>
+    <Setter Property="Background"
+            Value="{StaticResource &#210;}"/>
+    <Setter Property="BorderBrush"
+            Value="{StaticResource &#211;}"/>
+    <Setter Property="Foreground"
+            Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+    <Setter Property="HorizontalContentAlignment"
+            Value="Center"/>
+    <Setter Property="VerticalContentAlignment"
+            Value="Center"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ButtonBase}">
+                <theme:ButtonChrome x:Name="Chrome"
+                                    ThemeColor="NormalColor"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    Fill="{TemplateBinding Background}"
+                                    RenderDefaulted="{TemplateBinding Button.IsDefaulted}"
+                                    RenderMouseOver="{TemplateBinding IsMouseOver}"
+                                    RenderPressed="{TemplateBinding IsPressed}"
+                                    SnapsToDevicePixels="true">
+                    <ContentPresenter Margin="{TemplateBinding Padding}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      RecognizesAccessKey="True"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                </theme:ButtonChrome>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsKeyboardFocused"
+                             Value="true">
+                        <Setter TargetName="Chrome"
+                                Property="RenderDefaulted"
+                                Value="true"/>
+                    </Trigger>
+                    <Trigger Property="ToggleButton.IsChecked"
+                             Value="true">
+                        <Setter TargetName="Chrome"
+                                Property="RenderPressed"
+                                Value="true"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled"
+                             Value="false">
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
 
 
-    <Style x:Key="{x:Type ToggleButton}"
-           BasedOn="{StaticResource &#212;}"
-           TargetType="{x:Type ToggleButton}">
-        <Style.Triggers>
-            <MultiDataTrigger>
-                <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
-                    <Condition Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}" Value="true"/>
-                    <Condition Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource Self}}" Value="false"/>
-                </MultiDataTrigger.Conditions>
-                <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-            </MultiDataTrigger>
-            <MultiDataTrigger>
-                <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
-                    <Condition Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}" Value="true"/>
-                    <Condition Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource Self}}" Value="true"/>
-                </MultiDataTrigger.Conditions>
-                <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
-            </MultiDataTrigger>
-        </Style.Triggers>
-    </Style>
+<Style x:Key="{x:Type ToggleButton}"
+       BasedOn="{StaticResource &#212;}"
+       TargetType="{x:Type ToggleButton}">
+    <Style.Triggers>
+        <MultiDataTrigger>
+            <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                <Condition Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}" Value="true"/>
+                <Condition Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource Self}}" Value="false"/>
+            </MultiDataTrigger.Conditions>
+            <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+        </MultiDataTrigger>
+        <MultiDataTrigger>
+            <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                <Condition Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}" Value="true"/>
+                <Condition Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource Self}}" Value="true"/>
+            </MultiDataTrigger.Conditions>
+            <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+        </MultiDataTrigger>
+    </Style.Triggers>
+</Style>
 
-    <Style x:Key="{x:Type RepeatButton}"
-           BasedOn="{StaticResource &#212;}"
-           TargetType="{x:Type RepeatButton}">
-        <Setter Property="Stylus.IsPressAndHoldEnabled"
-                Value="false"/>
-    </Style>
+<Style x:Key="{x:Type RepeatButton}"
+       BasedOn="{StaticResource &#212;}"
+       TargetType="{x:Type RepeatButton}">
+    <Setter Property="Stylus.IsPressAndHoldEnabled"
+            Value="false"/>
+</Style>
 
-    <Style x:Key="{x:Type Button}"
-           BasedOn="{StaticResource &#212;}"
-           TargetType="{x:Type Button}"/>
+<Style x:Key="{x:Type Button}"
+       BasedOn="{StaticResource &#212;}"
+       TargetType="{x:Type Button}"/>
 
     <!--=================================================================
             Calendar
         ==================================================================-->
 
     <Style TargetType="Calendar">
-        <Setter Property="Foreground" Value="#FF333333" />
+        <Setter Property="Foreground" Value="#FF333333" />        
         <Setter Property="Background">
             <Setter.Value>
                 <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
@@ -175,19 +176,19 @@ To automatically copy the files, set the environment variable
             <Setter.Value>
                 <ControlTemplate TargetType="Calendar">
                     <StackPanel Name="PART_Root" HorizontalAlignment="Center">
-                        <CalendarItem
-                            Name="PART_CalendarItem"
+                        <CalendarItem 
+                            Name="PART_CalendarItem" 
                             Style="{TemplateBinding CalendarItemStyle}"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}"                            
                             />
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-
+    
     <!--CalendarItem-->
     <Style TargetType="CalendarItem">
         <Setter Property="Margin" Value="0,3,0,3" />
@@ -198,10 +199,10 @@ To automatically copy the files, set the environment variable
                         <!-- Start: Data template for header button -->
                         <DataTemplate x:Key="{x:Static CalendarItem.DayTitleTemplateResourceKey}">
                             <TextBlock
-                                FontWeight="Bold"
-                                FontFamily="Verdana"
-                                FontSize="9.5"
-                                Foreground="#FF333333"
+                                FontWeight="Bold" 
+                                FontFamily="Verdana" 
+                                FontSize="9.5" 
+                                Foreground="#FF333333" 
                                 HorizontalAlignment="Center"
                                 Text="{Binding}"
                                 Margin="0,6,0,6"
@@ -223,10 +224,10 @@ To automatically copy the files, set the environment variable
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Border
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}"
+                        <Border 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" 
                             CornerRadius="1">
                             <Border CornerRadius="1" BorderBrush="#FFFFFFFF" BorderThickness="2">
                                 <Grid>
@@ -242,7 +243,7 @@ To automatically copy the files, set the environment variable
 
                                     <Grid.Resources>
                                         <!-- Start: Previous button template -->
-                                        <ControlTemplate x:Key="&#214;" TargetType="Button">
+                                        <ControlTemplate x:Key="&#214;" TargetType="Button">                                            
                                             <Grid Cursor="Hand">
                                                 <VisualStateManager.VisualStateGroups>
                                                     <VisualStateGroup Name="CommonStates">
@@ -328,7 +329,7 @@ To automatically copy the files, set the environment variable
                                                   Margin="1,4,1,9"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                                                    <TextElement.Foreground>
+                                                     <TextElement.Foreground>
                                                         <SolidColorBrush Color="#FF333333"/>
                                                     </TextElement.Foreground>
                                                 </ContentPresenter>
@@ -339,31 +340,31 @@ To automatically copy the files, set the environment variable
                                     </Grid.Resources>
 
                                     <!-- Start: Previous button content -->
-                                    <Button x:Name="PART_PreviousButton"
+                                    <Button x:Name="PART_PreviousButton" 
                                             Grid.Row="0" Grid.Column="0"
-                                            Template="{StaticResource &#214;}"
-                                            Height="20" Width="28"
-                                            HorizontalAlignment="Left"
+                                            Template="{StaticResource &#214;}" 
+                                            Height="20" Width="28" 
+                                            HorizontalAlignment="Left" 
                                             Focusable="False"
                                             />
                                     <!-- End: Previous button content -->
 
                                     <!-- Start: Header button content -->
-                                    <Button x:Name="PART_HeaderButton"
-                                            Grid.Row="0" Grid.Column="1"
-                                            Template="{StaticResource &#216;}"
-                                            HorizontalAlignment="Center" VerticalAlignment="Center"
-                                            FontWeight="Bold" FontSize="10.5"
+                                    <Button x:Name="PART_HeaderButton"                                             
+                                            Grid.Row="0" Grid.Column="1" 
+                                            Template="{StaticResource &#216;}" 
+                                            HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                            FontWeight="Bold" FontSize="10.5" 
                                             Focusable="False"
                                             />
                                     <!-- End: Header button content -->
 
                                     <!-- Start: Next button content -->
-                                    <Button x:Name="PART_NextButton"
-                                            Grid.Row="0" Grid.Column="2"
-                                            Height="20" Width="28"
-                                            HorizontalAlignment="Right"
-                                            Template="{StaticResource &#215;}"
+                                    <Button x:Name="PART_NextButton" 
+                                            Grid.Row="0" Grid.Column="2" 
+                                            Height="20" Width="28" 
+                                            HorizontalAlignment="Right" 
+                                            Template="{StaticResource &#215;}" 
                                             Focusable="False"
                                             />
                                     <!-- End: Next button content -->
@@ -440,9 +441,9 @@ To automatically copy the files, set the environment variable
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
-        </Setter>
+        </Setter>        
     </Style>
-
+    
     <!--CalendarDayButton-->
     <Style TargetType="CalendarDayButton">
         <Setter Property="MinWidth" Value="5"/>
@@ -812,17 +813,17 @@ To automatically copy the files, set the environment variable
 
 
     <Style x:Key="&#228;">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Rectangle Margin="0,1,0,1"
-                               StrokeThickness="1"
-                               Stroke="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"
-                               StrokeDashArray="1 2"
-                               SnapsToDevicePixels="true"/>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <Rectangle Margin="0,1,0,1"
+                       StrokeThickness="1"
+                       Stroke="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"
+                       StrokeDashArray="1 2"
+                       SnapsToDevicePixels="true"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
     </Style>
 
     <!--=================================================================
@@ -866,11 +867,11 @@ To automatically copy the files, set the environment variable
                                     Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                         </Trigger>
                         <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="false"/>
-                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="FocusVisualStyle" Value="{StaticResource &#228;}"/>
+                          <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="false"/>
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                          </MultiDataTrigger.Conditions>
+                          <Setter Property="FocusVisualStyle" Value="{StaticResource &#228;}"/>
                         </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -878,7 +879,7 @@ To automatically copy the files, set the environment variable
         </Setter>
     </Style>
 
-
+ 
     <!--=================================================================
         ContentControl
     ==================================================================-->
@@ -897,7 +898,7 @@ To automatically copy the files, set the environment variable
 
 
 
-    <!--=================================================================
+ <!--=================================================================
         ContextMenu
     ==================================================================-->
     <Style x:Key="{x:Type ContextMenu}"
@@ -941,18 +942,18 @@ To automatically copy the files, set the environment variable
                                 BorderThickness="{TemplateBinding BorderThickness}">
                             <ScrollViewer Name="ContextMenuScrollViewer"
                                           Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
-                                <Grid RenderOptions.ClearTypeHint="Enabled">
-                                    <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                        <Rectangle
-                                            Name="OpaqueRect"
-                                            Height="{Binding ElementName=ContextMenuBorder,Path=ActualHeight}"
-                                            Width="{Binding ElementName=ContextMenuBorder,Path=ActualWidth}"
-                                            Fill="{Binding ElementName=ContextMenuBorder,Path=Background}" />
-                                    </Canvas>
-                                    <ItemsPresenter Name="ItemsPresenter" Margin="{TemplateBinding Padding}"
-                                                    KeyboardNavigation.DirectionalNavigation="Cycle"
-                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                                </Grid>
+                              <Grid RenderOptions.ClearTypeHint="Enabled">
+                                <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Rectangle
+                                        Name="OpaqueRect"
+                                        Height="{Binding ElementName=ContextMenuBorder,Path=ActualHeight}"
+                                        Width="{Binding ElementName=ContextMenuBorder,Path=ActualWidth}"
+                                        Fill="{Binding ElementName=ContextMenuBorder,Path=Background}" />
+                                </Canvas>
+                                <ItemsPresenter Name="ItemsPresenter" Margin="{TemplateBinding Padding}"
+                                                KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                              </Grid>
                             </ScrollViewer>
                         </Border>
                     </theme:SystemDropShadowChrome>
@@ -983,7 +984,7 @@ To automatically copy the files, set the environment variable
     </Style>
 
 
-
+  
     <!--=================================================================
         FlowDocument
     ==================================================================-->
@@ -1056,7 +1057,7 @@ To automatically copy the files, set the environment variable
         <Setter Property="HorizontalAlignment"
                 Value="Right"/>
     </Style>
-
+    
     <!--=================================================================
         FlowDocument - Handled by FlowDocumentReader
     ==================================================================-->
@@ -1114,96 +1115,127 @@ To automatically copy the files, set the environment variable
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DocumentViewer}">
-                    <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Focusable="False">
-                        <Grid Background="{TemplateBinding Background}"
-                              KeyboardNavigation.TabNavigation="Local">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <!-- One column for both the toolbar and the content -->
-                            <!-- Top row, auto height for the Toolbar -->
-                            <!-- Middle row, full height for the Content area -->
-                            <!-- Bottom row, auto height for the find Toolbar -->
-                            <!-- DocumentViewer's ToolBar, docked to the Top -->
-                            <ContentControl Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources},                                 ResourceId=PUIDocumentViewerToolBarStyleKey}}"
-                                            Grid.Row="0"
-                                            Grid.Column="0"
-                                            Focusable="{TemplateBinding Focusable}"
-                                            TabIndex="0"/>
-                            <!-- Define the Content area and its paging/scrolling controls inside the Grid -->
-                            <ScrollViewer Grid.Row="1"
-                                          Grid.Column="0"
-                                          CanContentScroll="true"
-                                          HorizontalScrollBarVisibility="Auto"
-                                          x:Name="PART_ContentHost"
-                                          Focusable="{TemplateBinding Focusable}"
-                                          IsTabStop="true"
-                                          TabIndex="1"/>
-                            <!-- Toolbar shadow -->
-                            <DockPanel Grid.Row="1">
-                                <!-- saves space for the scrollbar -->
-                                <FrameworkElement DockPanel.Dock="Right"
-                                                  Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
-                                <Rectangle
-                                           Visibility="Visible"
-                                           VerticalAlignment="top"
-                                           Height="10">
-                                    <Rectangle.Fill>
-                                        <LinearGradientBrush StartPoint="0,0"
-                                                             EndPoint="0,1">
-                                            <GradientBrush.GradientStops>
-                                                <GradientStopCollection>
-                                                    <GradientStop Color="#66000000"
-                                                                  Offset="0"/>
-                                                    <GradientStop Color="Transparent"
-                                                                  Offset="1"/>
-                                                </GradientStopCollection>
-                                            </GradientBrush.GradientStops>
-                                        </LinearGradientBrush>
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                            </DockPanel>
-                            <!-- Find ToolBar, docked to the bottom -->
-                            <ContentControl Grid.Row="2"
-                                            Grid.Column="0"
-                                            TabIndex="2"
-                                            Focusable="{TemplateBinding Focusable}"
-                                            x:Name="PART_FindToolBarHost"/>
-                        </Grid>
-                    </Border>
+                  <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Focusable="False">
+                    <Grid Background="{TemplateBinding Background}"
+                          KeyboardNavigation.TabNavigation="Local">
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                      </Grid.ColumnDefinitions>
+                      <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                      </Grid.RowDefinitions>
+                      <!-- One column for both the toolbar and the content -->
+                      <!-- Top row, auto height for the Toolbar -->
+                      <!-- Middle row, full height for the Content area -->
+                      <!-- Bottom row, auto height for the find Toolbar -->
+                      <!-- DocumentViewer's ToolBar, docked to the Top -->
+                      <ContentControl Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources},                                 ResourceId=PUIDocumentViewerToolBarStyleKey}}"
+                                      Grid.Row="0"
+                                      Grid.Column="0"
+                                      Focusable="{TemplateBinding Focusable}"
+                                      TabIndex="0"/>
+                      <!-- Define the Content area and its paging/scrolling controls inside the Grid -->
+                      <ScrollViewer Grid.Row="1"
+                                    Grid.Column="0"
+                                    CanContentScroll="true"
+                                    HorizontalScrollBarVisibility="Auto"
+                                    x:Name="PART_ContentHost"
+                                    Focusable="{TemplateBinding Focusable}"
+                                    IsTabStop="true"
+                                    TabIndex="1"/>
+                      <!-- Toolbar shadow -->
+                      <DockPanel Grid.Row="1">
+                        <!-- saves space for the scrollbar -->
+                        <FrameworkElement DockPanel.Dock="Right"
+                                          Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+                        <Rectangle
+                                   Visibility="Visible"
+                                   VerticalAlignment="top"
+                                   Height="10">
+                          <Rectangle.Fill>
+                            <LinearGradientBrush StartPoint="0,0"
+                                                 EndPoint="0,1">
+                              <GradientBrush.GradientStops>
+                                <GradientStopCollection>
+                                  <GradientStop Color="#66000000"
+                                                Offset="0"/>
+                                  <GradientStop Color="Transparent"
+                                                Offset="1"/>
+                                </GradientStopCollection>
+                              </GradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                          </Rectangle.Fill>
+                        </Rectangle>
+                      </DockPanel>
+                      <!-- Find ToolBar, docked to the bottom -->
+                      <ContentControl Grid.Row="2"
+                                      Grid.Column="0"
+                                      TabIndex="2"
+                                      Focusable="{TemplateBinding Focusable}"
+                                      x:Name="PART_FindToolBarHost"/>
+                    </Grid>
+                  </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
 
+    <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=DocumentGridPageContainerWithBorder}"
+           TargetType="ContentControl" BasedOn="{x:Null}">
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="5" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="5" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border Background="White" BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" Grid.ColumnSpan="2">
+                            <ContentPresenter />
+                        </Border>
+
+                        <Rectangle Fill="Black" Opacity="0.35" Grid.Column="2" Grid.Row="1" />
+                        <Rectangle Fill="Black" Opacity="0.35" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--=================================================================
             DataGrid
         ==================================================================-->
 
     <Style x:Key="&#230;">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Grid>
-                        <Rectangle Margin="1,1,1,1"
-                                   StrokeThickness="1"
-                                   Stroke="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"
-                                   SnapsToDevicePixels="true"/>
-                        <Rectangle Margin="1,1,1,1"
-                                   StrokeThickness="1"
-                                   Stroke="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"
-                                   StrokeDashArray="2 2"
-                                   SnapsToDevicePixels="true"/>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <Grid>
+              <Rectangle Margin="1,1,1,1"
+                         StrokeThickness="1"
+                         Stroke="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"
+                         SnapsToDevicePixels="true"/>
+              <Rectangle Margin="1,1,1,1"
+                         StrokeThickness="1"
+                         Stroke="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"
+                         StrokeDashArray="2 2"
+                         SnapsToDevicePixels="true"/>
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
     </Style>
 
     <BooleanToVisibilityConverter x:Key="&#231;" />
@@ -1328,10 +1360,10 @@ To automatically copy the files, set the environment variable
         </Setter>
         <Style.Triggers>
             <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsGrouping" Value="true" />
-                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
-                </MultiTrigger.Conditions>
+            <MultiTrigger.Conditions>
+                <Condition Property="IsGrouping" Value="true" />
+                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
+            </MultiTrigger.Conditions>
                 <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
             </MultiTrigger>
         </Style.Triggers>
@@ -1422,7 +1454,7 @@ To automatically copy the files, set the environment variable
             <Setter.Value>
                 <ControlTemplate>
                     <TextBlock Margin="2,0,0,0" VerticalAlignment="Center" Foreground="Red" Text="!" />
-                </ControlTemplate>
+            </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Setter Property="Template">
@@ -1488,7 +1520,7 @@ To automatically copy the files, set the environment variable
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridCell}">
-                    <Border Name="Bd"
+                    <Border Name="Bd" 
                       Background="{TemplateBinding Background}"
                       BorderBrush="{TemplateBinding BorderBrush}"
                       BorderThickness="{TemplateBinding BorderThickness}"
@@ -1531,11 +1563,11 @@ To automatically copy the files, set the environment variable
                 <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
             </Trigger>
             <MultiDataTrigger>
-                <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="false"/>
-                    <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
-                </MultiDataTrigger.Conditions>
-                <Setter Property="FocusVisualStyle" Value="{StaticResource &#230;}"/>
+              <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="false"/>
+                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+              </MultiDataTrigger.Conditions>
+              <Setter Property="FocusVisualStyle" Value="{StaticResource &#230;}"/>
             </MultiDataTrigger>
         </Style.Triggers>
     </Style>
@@ -1658,9 +1690,9 @@ To automatically copy the files, set the environment variable
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DatePicker}">
-                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" 
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}"
+                            Background="{TemplateBinding Background}" 
                             Padding="{TemplateBinding Padding}">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup Name="CommonStates">
@@ -1674,7 +1706,7 @@ To automatically copy the files, set the environment variable
                         </VisualStateManager.VisualStateGroups>
                         <Border.Child>
                             <Grid x:Name="PART_Root"
-                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                                 <Grid.Resources>
                                     <!-- Main DatePicker Brushes -->
@@ -1785,20 +1817,20 @@ To automatically copy the files, set the environment variable
                                 </Grid.ColumnDefinitions>
                                 <Button x:Name="PART_Button" Grid.Row="0" Grid.Column="1"
                                         Template="{StaticResource &#236;}"
-                                        Foreground="{TemplateBinding Foreground}"
+                                        Foreground="{TemplateBinding Foreground}" 
                                         Width="20"
-                                        Margin="3,0,3,0"
-                                        Focusable="False"
+                                        Margin="3,0,3,0" 
+                                        Focusable="False" 
                                         VerticalAlignment="Top"
                                         HorizontalAlignment="Left" />
-                                <DatePickerTextBox x:Name="PART_TextBox"
-                                    Grid.Row="0" Grid.Column="0"
+                                <DatePickerTextBox x:Name="PART_TextBox" 
+                                    Grid.Row="0" Grid.Column="0" 
                                     HorizontalContentAlignment="Stretch"
                                     VerticalContentAlignment="Stretch"
                                     Focusable="{TemplateBinding Focusable}" />
-                                <Grid x:Name="PART_DisabledVisual"
-                                      Opacity="0"
-                                      IsHitTestVisible="False"
+                                <Grid x:Name="PART_DisabledVisual" 
+                                      Opacity="0" 
+                                      IsHitTestVisible="False" 
                                       Grid.Row="0" Grid.Column="0"
                                       Grid.ColumnSpan="2">
                                     <Grid.ColumnDefinitions>
@@ -1807,9 +1839,9 @@ To automatically copy the files, set the environment variable
                                     </Grid.ColumnDefinitions>
                                     <Rectangle Grid.Row="0" Grid.Column="0" RadiusX="1" RadiusY="1" Fill="#A5FFFFFF"/>
                                     <Rectangle Grid.Row="0" Grid.Column="1" RadiusX="1" RadiusY="1" Fill="#A5FFFFFF" Height="18" Width="19" Margin="3,0,3,0" />
-                                    <Popup x:Name="PART_Popup"
+                                    <Popup x:Name="PART_Popup" 
                                            PlacementTarget="{Binding ElementName=PART_TextBox}"
-                                           Placement="Bottom"
+                                           Placement="Bottom" 
                                            StaysOpen="False"
                                            AllowsTransparency="True" />
                                 </Grid>
@@ -1828,22 +1860,22 @@ To automatically copy the files, set the environment variable
 
     <!-- DatePickerTextBox -->
     <Style TargetType="{x:Type DatePickerTextBox}">
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures)}" Value="false">
-                <Setter Property="AutomationProperties.Name"
-                      Value="{Binding Path=(AutomationProperties.Name),
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures)}" Value="false">
+          <Setter Property="AutomationProperties.Name"
+                Value="{Binding Path=(AutomationProperties.Name),
                                   Mode=OneWay, 
                                   RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DatePicker}}}"/>
-                <Setter Property="AutomationProperties.LabeledBy"
-                        Value="{Binding Path=(AutomationProperties.LabeledBy),
+          <Setter Property="AutomationProperties.LabeledBy"
+                  Value="{Binding Path=(AutomationProperties.LabeledBy),
                                   Mode=OneWay, 
                                   RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DatePicker}}}"/>
-                <Setter Property="AutomationProperties.HelpText"
-                        Value="{Binding Path=(AutomationProperties.HelpText),
+          <Setter Property="AutomationProperties.HelpText"
+                  Value="{Binding Path=(AutomationProperties.HelpText),
                                   Mode=OneWay, 
                                   RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DatePicker}}}"/>
-            </DataTrigger>
-        </Style.Triggers>
+        </DataTrigger>
+      </Style.Triggers>
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" />
         <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
         <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
@@ -1896,12 +1928,12 @@ To automatically copy the files, set the environment variable
 
 
                         <!--Start UI-->
-                        <Border x:Name="Border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
+                        <Border x:Name="Border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Padding="{TemplateBinding Padding}"
-                                CornerRadius="1"
+                                CornerRadius="1" 
                                 Opacity="1">
                             <Grid x:Name="WatermarkContent"
                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -1921,7 +1953,7 @@ To automatically copy the files, set the environment variable
                                                         IsHitTestVisible="False"
                                                         Padding="2"/>
                                 </Border>
-                                <ScrollViewer x:Name="PART_ContentHost"
+                                <ScrollViewer x:Name="PART_ContentHost" 
                                               Margin="0"
                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
@@ -1935,8 +1967,8 @@ To automatically copy the files, set the environment variable
     </Style>
 
 
-
-    <!--=================================================================
+  
+     <!--=================================================================
         Expander
     ==================================================================-->
     <Style x:Key="&#238;">
@@ -2355,7 +2387,7 @@ To automatically copy the files, set the environment variable
         </Setter>
     </Style>
 
-
+ 
     <!--=================================================================
         FocusVisual
     ==================================================================-->
@@ -2373,43 +2405,43 @@ To automatically copy the files, set the environment variable
     </Style>
 
     <Style x:Key="&#244;">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Grid>
-                        <Rectangle Margin="13,0,1,1"
-                                   StrokeThickness="1"
-                                   Stroke="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"
-                                   SnapsToDevicePixels="true"/>
-                        <Rectangle Margin="13,0,1,1"
-                                   StrokeThickness="1"
-                                   Stroke="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"
-                                   StrokeDashArray="2 2"
-                                   SnapsToDevicePixels="true"/>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <Grid>
+              <Rectangle Margin="13,0,1,1"
+                         StrokeThickness="1"
+                         Stroke="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"
+                         SnapsToDevicePixels="true"/>
+              <Rectangle Margin="13,0,1,1"
+                         StrokeThickness="1"
+                         Stroke="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"
+                         StrokeDashArray="2 2"
+                         SnapsToDevicePixels="true"/>
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
     </Style>
 
     <Style x:Key="&#245;">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Grid>
-                        <Rectangle Margin="1,0,1,1"
-                                   StrokeThickness="1"
-                                   Stroke="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"
-                                   SnapsToDevicePixels="true"/>
-                        <Rectangle Margin="1,0,1,1"
-                                   StrokeThickness="1"
-                                   Stroke="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"
-                                   StrokeDashArray="2 2"
-                                   SnapsToDevicePixels="true"/>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <Grid>
+              <Rectangle Margin="1,0,1,1"
+                         StrokeThickness="1"
+                         Stroke="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"
+                         SnapsToDevicePixels="true"/>
+              <Rectangle Margin="1,0,1,1"
+                         StrokeThickness="1"
+                         Stroke="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"
+                         StrokeDashArray="2 2"
+                         SnapsToDevicePixels="true"/>
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
     </Style>
 
 
@@ -2442,13 +2474,13 @@ To automatically copy the files, set the environment variable
         </Setter>
     </Style>
 
-    <SolidColorBrush x:Key="&#255;"
+    <SolidColorBrush x:Key="&#255;" 
                      Color="#D0D0BF"/>
 
-    <SolidColorBrush x:Key="&#256;"
+    <SolidColorBrush x:Key="&#256;" 
                      Color="#0046D5"/>
 
-
+ 
     <!--=================================================================
         GroupBox
     ==================================================================-->
@@ -2505,15 +2537,15 @@ To automatically copy the files, set the environment variable
                                 </MultiBinding>
                             </Border.OpacityMask>
                         </Border>
-
+                        
                         <!-- ContentPresenter for the header -->
                         <Border x:Name="Header"
                                 Padding="3,0,3,0"
                                 Grid.Row="0"
                                 Grid.RowSpan="2"
                                 Grid.Column="1">
-                            <ContentPresenter ContentSource="Header"
-                                              RecognizesAccessKey="True"
+                            <ContentPresenter ContentSource="Header" 
+                                              RecognizesAccessKey="True" 
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                               TextElement.Foreground="{StaticResource &#256;}"/>
                         </Border>
@@ -2575,33 +2607,34 @@ To automatically copy the files, set the environment variable
         <Setter Property="TextDecorations"
                 Value="Underline"/>
         <Style.Triggers>
-            <MultiDataTrigger>
-                <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="false"/>
-                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
-                </MultiDataTrigger.Conditions>
-                <Setter Property="Foreground" Value="Red"/>
-            </MultiDataTrigger>
-            <MultiDataTrigger>
-                <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="true"/>
-                    <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
-                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
-                </MultiDataTrigger.Conditions>
-                <Setter Property="Foreground" Value="Red"/>
-            </MultiDataTrigger>
-            <Trigger Property="IsEnabled"
-                     Value="false">
-                <Setter Property="Foreground"
-                        Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-            </Trigger>
-            <Trigger Property="IsEnabled"
-                     Value="true">
-                <Setter Property="Cursor"
-                        Value="Hand"/>
-            </Trigger>
+          <MultiDataTrigger>
+            <MultiDataTrigger.Conditions>
+              <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="false"/>
+              <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+            </MultiDataTrigger.Conditions>
+            <Setter Property="Foreground" Value="Red"/>
+          </MultiDataTrigger>
+          <MultiDataTrigger>
+            <MultiDataTrigger.Conditions>
+              <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="true"/>
+              <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+              <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+            </MultiDataTrigger.Conditions>
+            <Setter Property="Foreground" Value="Red"/>
+          </MultiDataTrigger>
+          <Trigger Property="IsEnabled"
+                   Value="false">
+            <Setter Property="Foreground"
+                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+          </Trigger>
+          <Trigger Property="IsEnabled"
+                   Value="true">
+            <Setter Property="Cursor"
+                    Value="Hand"/>
+          </Trigger>
         </Style.Triggers>
     </Style>
+ 
     <!--=================================================================
         ItemsControl
     ==================================================================-->
@@ -2715,10 +2748,10 @@ To automatically copy the files, set the environment variable
                                     Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
                         </Trigger>
                         <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsGrouping" Value="true" />
-                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
-                            </MultiTrigger.Conditions>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsGrouping" Value="true" />
+                            <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
+                        </MultiTrigger.Conditions>
                             <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
@@ -2731,17 +2764,17 @@ To automatically copy the files, set the environment variable
 
 
     <Style x:Key="&#258;">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Rectangle Margin="0,1,0,1"
-                               StrokeThickness="1"
-                               Stroke="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"
-                               StrokeDashArray="1 2"
-                               SnapsToDevicePixels="true"/>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <Rectangle Margin="0,1,0,1"
+                       StrokeThickness="1"
+                       Stroke="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"
+                       StrokeDashArray="1 2"
+                       SnapsToDevicePixels="true"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
     </Style>
 
     <!--=================================================================
@@ -2798,11 +2831,11 @@ To automatically copy the files, set the environment variable
                                     Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                         </Trigger>
                         <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="false"/>
-                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="FocusVisualStyle" Value="{StaticResource &#258;}"/>
+                          <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="false"/>
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                          </MultiDataTrigger.Conditions>
+                          <Setter Property="FocusVisualStyle" Value="{StaticResource &#258;}"/>
                         </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -2810,7 +2843,7 @@ To automatically copy the files, set the environment variable
         </Setter>
     </Style>
 
-
+     
     <!--=================================================================
         ListViewItem
     ==================================================================-->
@@ -2868,7 +2901,7 @@ To automatically copy the files, set the environment variable
     </Style>
 
 
-    <!--=================================================================
+<!--=================================================================
         Menu
     ==================================================================-->
     <Style x:Key="{x:Type Menu}"
@@ -2912,7 +2945,7 @@ To automatically copy the files, set the environment variable
 
 
 
-    <PathGeometry x:Key="&#273;">
+   <PathGeometry x:Key="&#273;">
         <PathGeometry.Figures>
             <PathFigureCollection>
                 <PathFigure StartPoint="0 2"
@@ -3213,20 +3246,20 @@ To automatically copy the files, set the environment variable
                                 BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}">
                             <ScrollViewer Name="SubMenuScrollViewer"
                                           Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
-                                <Grid RenderOptions.ClearTypeHint="Enabled">
-                                    <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                        <Rectangle
-                                            Name="OpaqueRect"
-                                            Height="{Binding ElementName=SubMenuBorder,Path=ActualHeight}"
-                                            Width="{Binding ElementName=SubMenuBorder,Path=ActualWidth}"
-                                            Fill="{Binding ElementName=SubMenuBorder,Path=Background}" />
-                                    </Canvas>
-                                    <ItemsPresenter Name="ItemsPresenter" Margin="2"
-                                                    KeyboardNavigation.TabNavigation="Cycle"
-                                                    KeyboardNavigation.DirectionalNavigation="Cycle"
-                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                    Grid.IsSharedSizeScope="true"/>
-                                </Grid>
+                              <Grid RenderOptions.ClearTypeHint="Enabled">
+                                <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Rectangle
+                                        Name="OpaqueRect"
+                                        Height="{Binding ElementName=SubMenuBorder,Path=ActualHeight}"
+                                        Width="{Binding ElementName=SubMenuBorder,Path=ActualWidth}"
+                                        Fill="{Binding ElementName=SubMenuBorder,Path=Background}" />
+                                </Canvas>
+                                <ItemsPresenter Name="ItemsPresenter" Margin="2"
+                                                KeyboardNavigation.TabNavigation="Cycle"
+                                                KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                Grid.IsSharedSizeScope="true"/>
+                              </Grid>
                             </ScrollViewer>
                         </Border>
                     </theme:SystemDropShadowChrome>
@@ -3422,20 +3455,20 @@ To automatically copy the files, set the environment variable
                             <ScrollViewer Name="SubMenuScrollViewer"
                                           Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
                                 <!-- TODO: Metric for Margin? -->
-                                <Grid RenderOptions.ClearTypeHint="Enabled">
-                                    <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                        <Rectangle
-                                            Name="OpaqueRect"
-                                            Height="{Binding ElementName=SubMenuBorder,Path=ActualHeight}"
-                                            Width="{Binding ElementName=SubMenuBorder,Path=ActualWidth}"
-                                            Fill="{Binding ElementName=SubMenuBorder,Path=Background}" />
-                                    </Canvas>
-                                    <ItemsPresenter Name="ItemsPresenter" Margin="2"
-                                                    KeyboardNavigation.TabNavigation="Cycle"
-                                                    KeyboardNavigation.DirectionalNavigation="Cycle"
-                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                    Grid.IsSharedSizeScope="true"/>
-                                </Grid>
+                              <Grid RenderOptions.ClearTypeHint="Enabled">
+                                <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Rectangle
+                                        Name="OpaqueRect"
+                                        Height="{Binding ElementName=SubMenuBorder,Path=ActualHeight}"
+                                        Width="{Binding ElementName=SubMenuBorder,Path=ActualWidth}"
+                                        Fill="{Binding ElementName=SubMenuBorder,Path=Background}" />
+                                </Canvas>
+                                <ItemsPresenter Name="ItemsPresenter" Margin="2"
+                                                KeyboardNavigation.TabNavigation="Cycle"
+                                                KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                Grid.IsSharedSizeScope="true"/>
+                              </Grid>
                             </ScrollViewer>
                         </Border>
                     </theme:SystemDropShadowChrome>
@@ -3626,7 +3659,7 @@ To automatically copy the files, set the environment variable
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="&#279;"
-                         StartPoint="0,0"
+                         StartPoint="0,0" 
                          EndPoint="0,1">
         <GradientBrush.GradientStops>
             <GradientStopCollection>
@@ -3639,7 +3672,7 @@ To automatically copy the files, set the environment variable
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="&#280;"
-                         StartPoint="0,0"
+                         StartPoint="0,0" 
                          EndPoint="0,1">
         <LinearGradientBrush.GradientStops>
             <GradientStop Color="#8AB1FB" Offset="0"/>
@@ -3648,7 +3681,7 @@ To automatically copy the files, set the environment variable
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="&#281;"
-                         StartPoint="0,0"
+                         StartPoint="0,0" 
                          EndPoint="0,1">
         <LinearGradientBrush.GradientStops>
             <GradientStopCollection>
@@ -3660,7 +3693,7 @@ To automatically copy the files, set the environment variable
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="&#282;"
-                         StartPoint="0,0"
+                         StartPoint="0,0" 
                          EndPoint="0,1">
         <LinearGradientBrush.GradientStops>
             <GradientStopCollection>
@@ -3681,14 +3714,14 @@ To automatically copy the files, set the environment variable
         </GradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <SolidColorBrush x:Key="&#283;"
+    <SolidColorBrush x:Key="&#283;" 
                      Color="{StaticResource {x:Static SystemColors.HighlightColorKey}}"
                      Opacity="0.25"/>
 
     <!-- Navigation Window back/fwd button Drop Down style-->
     <Style x:Key="&#250;"
            TargetType="{x:Type MenuItem}">
-        <Setter Property="OverridesDefaultStyle"
+        <Setter Property="OverridesDefaultStyle" 
                 Value="true"/>
         <Setter Property="Header"
                 Value="{Binding Path=(JournalEntry.Name)}"/>
@@ -3780,9 +3813,9 @@ To automatically copy the files, set the environment variable
         </Setter>
     </Style>
 
-    <Style x:Key="&#249;"
+    <Style x:Key="&#249;" 
            TargetType="{x:Type MenuItem}">
-        <Setter Property="OverridesDefaultStyle"
+        <Setter Property="OverridesDefaultStyle" 
                 Value="true"/>
         <Setter Property="ScrollViewer.PanningMode"
                 Value="Both"/>
@@ -3808,33 +3841,33 @@ To automatically copy the files, set the environment variable
 
                                     <ScrollViewer Name="SubMenuScrollViewer"
                                                   Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
-                                        <Grid RenderOptions.ClearTypeHint="Enabled">
-                                            <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                                <Rectangle
-                                                    Name="OpaqueRect"
-                                                    Height="{Binding ElementName=SubMenuBorder,Path=ActualHeight}"
-                                                    Width="{Binding ElementName=SubMenuBorder,Path=ActualWidth}"
-                                                    Fill="{Binding ElementName=SubMenuBorder,Path=Background}" />
-                                            </Canvas>
-                                            <ItemsPresenter Name="ItemsPresenter" Margin="2"
-                                                            KeyboardNavigation.TabNavigation="Cycle"
-                                                            KeyboardNavigation.DirectionalNavigation="Cycle"/>
-                                        </Grid>
+                                      <Grid RenderOptions.ClearTypeHint="Enabled">
+                                        <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                            <Rectangle
+                                                Name="OpaqueRect"
+                                                Height="{Binding ElementName=SubMenuBorder,Path=ActualHeight}" 
+                                                Width="{Binding ElementName=SubMenuBorder,Path=ActualWidth}" 
+                                                Fill="{Binding ElementName=SubMenuBorder,Path=Background}" />
+                                        </Canvas>
+                                        <ItemsPresenter Name="ItemsPresenter" Margin="2"
+                                                        KeyboardNavigation.TabNavigation="Cycle"
+                                                        KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                                      </Grid>
                                     </ScrollViewer>
                                 </Border>
                             </theme:SystemDropShadowChrome>
                         </Popup>
-
-                        <Grid x:Name="Panel"
-                              Width="26"
+                        
+                        <Grid x:Name="Panel" 
+                              Width="26" 
                               Background="Transparent"
                               HorizontalAlignment="Right" >
-
-                            <Border SnapsToDevicePixels="True"
-                                    Visibility="Hidden"
-                                    Name="HighlightBorder"
-                                    BorderThickness="1,1,1,1"
-                                    BorderBrush="#B0B5BACE"
+   
+                            <Border SnapsToDevicePixels="True" 
+                                    Visibility="Hidden" 
+                                    Name="HighlightBorder" 
+                                    BorderThickness="1,1,1,1" 
+                                    BorderBrush="#B0B5BACE" 
                                     CornerRadius="2" >
                                 <Border.Background>
                                     <LinearGradientBrush StartPoint="0,0"
@@ -3862,13 +3895,13 @@ To automatically copy the files, set the environment variable
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsHighlighted" Value="true">
-                            <Setter TargetName="HighlightBorder"
-                                    Property="Visibility"
+                            <Setter TargetName="HighlightBorder" 
+                                    Property="Visibility" 
                                     Value="Visible"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter TargetName="Arrow"
-                                    Property="Fill"
+                            <Setter TargetName="Arrow" 
+                                    Property="Fill" 
                                     Value="#A5AABE"/>
                         </Trigger>
                         <Trigger SourceName="PART_Popup"
@@ -3887,11 +3920,11 @@ To automatically copy the files, set the environment variable
                         <Trigger SourceName="SubMenuScrollViewer"
                                  Property="ScrollViewer.CanContentScroll"
                                  Value="false" >
-                            <Setter TargetName="OpaqueRect"
-                                    Property="Canvas.Top"
+                            <Setter TargetName="OpaqueRect" 
+                                    Property="Canvas.Top" 
                                     Value="{Binding ElementName=SubMenuScrollViewer, Path=VerticalOffset}" />
-                            <Setter TargetName="OpaqueRect"
-                                    Property="Canvas.Left"
+                            <Setter TargetName="OpaqueRect" 
+                                    Property="Canvas.Left" 
                                     Value="{Binding ElementName=SubMenuScrollViewer, Path=HorizontalOffset}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -3909,11 +3942,11 @@ To automatically copy the files, set the environment variable
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="OverridesDefaultStyle"
+        <Setter Property="OverridesDefaultStyle" 
                 Value="true"/>
         <Setter Property="KeyboardNavigation.TabNavigation"
                 Value="None"/>
-        <Setter Property="IsMainMenu"
+        <Setter Property="IsMainMenu" 
                 Value="false"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -3929,16 +3962,16 @@ To automatically copy the files, set the environment variable
            TargetType="{x:Type Button}">
         <!-- We will need to find out the size of button and menu height from system resources -->
         <!-- Opened work item #22122 to track this-->
-        <Setter Property="OverridesDefaultStyle"
+        <Setter Property="OverridesDefaultStyle" 
                 Value="true"/>
-        <Setter Property="Command"
+        <Setter Property="Command" 
                 Value="NavigationCommands.BrowseBack"/>
-        <Setter Property="Focusable"
+        <Setter Property="Focusable" 
                 Value="false"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid Width="24"
+                    <Grid Width="24" 
                           Height="24"
                           Background="Transparent">
                         <!-- Circle -->
@@ -3948,9 +3981,9 @@ To automatically copy the files, set the environment variable
                                  Stroke="{StaticResource &#279;}" />
 
                         <!-- Arrow -->
-                        <Path Name="Arrow"
-                              VerticalAlignment="Center"
-                              HorizontalAlignment="Center"
+                        <Path Name="Arrow" 
+                              VerticalAlignment="Center" 
+                              HorizontalAlignment="Center" 
                               StrokeThickness="0.75"
                               Data="M0.37,7.69 L5.74,14.20 A1.5,1.5,0,1,0,10.26,12.27 L8.42,10.42 14.90,10.39 A1.5,1.5,0,1,0,14.92,5.87 L8.44,5.90 10.31,4.03 A1.5,1.5,0,1,0,5.79,1.77 z"
                               Stroke="{StaticResource &#280;}"
@@ -3972,13 +4005,13 @@ To automatically copy the files, set the environment variable
                                     Value="#D0FFFFFF"
                                     TargetName="Arrow"/>
                         </Trigger>
-                        <Trigger Property="IsMouseOver"
+                        <Trigger Property="IsMouseOver" 
                                  Value="true">
-                            <Setter Property="Fill"
+                            <Setter Property="Fill" 
                                     Value="{StaticResource &#276;}"
                                     TargetName="Circle"/>
                         </Trigger>
-                        <Trigger Property="IsPressed"
+                        <Trigger Property="IsPressed" 
                                  Value="true">
                             <Setter Property="Fill"
                                     Value="{StaticResource &#277;}"
@@ -3997,30 +4030,30 @@ To automatically copy the files, set the environment variable
            TargetType="{x:Type Button}">
         <!-- We will need to find out the size of button and menu height from system resources -->
         <!-- Opened work item #22122 to track this-->
-        <Setter Property="OverridesDefaultStyle"
+        <Setter Property="OverridesDefaultStyle" 
                 Value="true"/>
-        <Setter Property="Command"
+        <Setter Property="Command" 
                 Value="NavigationCommands.BrowseForward"/>
-        <Setter Property="Focusable"
+        <Setter Property="Focusable" 
                 Value="false"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid Width="24"
+                    <Grid Width="24" 
                           Height="24"
                           Background="Transparent">
                         <!-- Circle -->
                         <Ellipse Name="Circle"
-                                 Grid.Column="0"
+                                 Grid.Column="0"      
                                  StrokeThickness="1"
                                  Fill="{StaticResource &#275;}"
                                  Stroke="{StaticResource &#279;}" />
 
                         <!-- Arrow -->
-                        <Path Name="Arrow"
-                              Grid.Column="0"
-                              VerticalAlignment="Center"
-                              HorizontalAlignment="Center"
+                        <Path Name="Arrow" 
+                              Grid.Column="0"      
+                              VerticalAlignment="Center" 
+                              HorizontalAlignment="Center" 
                               StrokeThickness="0.75"
                               Data="M0.37,7.69 L5.74,14.20 A1.5,1.5,0,1,0,10.26,12.27 L8.42,10.42 14.90,10.39 A1.5,1.5,0,1,0,14.92,5.87 L8.44,5.90 10.31,4.03 A1.5,1.5,0,1,0,5.79,1.77 z"
                               Stroke="{StaticResource &#280;}"
@@ -4033,7 +4066,7 @@ To automatically copy the files, set the environment variable
 
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled"
+                        <Trigger Property="IsEnabled" 
                                  Value="false">
                             <Setter Property="Fill"
                                     Value="{StaticResource &#278;}"
@@ -4048,13 +4081,13 @@ To automatically copy the files, set the environment variable
                                     Value="#D0FFFFFF"
                                     TargetName="Arrow"/>
                         </Trigger>
-                        <Trigger Property="IsMouseOver"
+                        <Trigger Property="IsMouseOver" 
                                  Value="true">
-                            <Setter Property="Fill"
+                            <Setter Property="Fill" 
                                     Value="{StaticResource &#276;}"
                                     TargetName="Circle"/>
                         </Trigger>
-                        <Trigger Property="IsPressed"
+                        <Trigger Property="IsPressed" 
                                  Value="true">
                             <Setter Property="Fill"
                                     Value="{StaticResource &#277;}"
@@ -4090,7 +4123,7 @@ To automatically copy the files, set the environment variable
                           Grid.ColumnSpan="3"
                           Height="23"
                           Margin="1,0,0,1"
-                          VerticalAlignment="Center"
+                          VerticalAlignment="Center" 
                           Style="{StaticResource &#248;}">
 
                         <MenuItem Padding="0,2,5,0"
@@ -4100,9 +4133,9 @@ To automatically copy the files, set the environment variable
                             <MenuItem.ItemsSource>
                                 <MultiBinding Converter="{StaticResource &#251;}">
                                     <MultiBinding.Bindings>
-                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}" 
                                                  Path="(NavigationWindow.BackStack)" />
-                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}" 
                                                  Path="(NavigationWindow.ForwardStack)" />
                                     </MultiBinding.Bindings>
                                 </MultiBinding>
@@ -4110,14 +4143,14 @@ To automatically copy the files, set the environment variable
                         </MenuItem>
                     </Menu>
 
-                    <Path Grid.Column="0"
+                    <Path Grid.Column="0" 
                           SnapsToDevicePixels="false"
                           IsHitTestVisible="false"
                           Margin="2,0,0,0"
                           Grid.ColumnSpan="3"
-                          StrokeThickness="1"
-                          HorizontalAlignment="Left"
-                          VerticalAlignment="Center"
+                          StrokeThickness="1" 
+                          HorizontalAlignment="Left" 
+                          VerticalAlignment="Center" 
                           Data="M22.5767,21.035 Q27,19.37 31.424,21.035 A12.5,12.5,0,0,0,53.5,13 A12.5,12.5,0,0,0,37.765,0.926 Q27,4.93 16.235,0.926 A12.5,12.5,0,0,0,0.5,13 A12.5,12.5,0,0,0,22.5767,21.035 z">
                         <Path.Fill>
                             <LinearGradientBrush StartPoint="0,0"
@@ -4145,19 +4178,19 @@ To automatically copy the files, set the environment variable
                     </Path>
 
                     <Button Style="{StaticResource &#252;}"
-                            Margin="3,0,2,0"
+                            Margin="3,0,2,0" 
                             Grid.Column="0"/>
-
+                    
 
                     <Button Style="{StaticResource &#253;}"
-                            Margin="2,0,0,0"
+                            Margin="2,0,0,0" 
                             Grid.Column="1"/>
                 </Grid>
                 <Grid>
-                    <AdornerDecorator>
-                        <ContentPresenter Name="PART_NavWinCP"
+                    <AdornerDecorator>                    
+                        <ContentPresenter Name="PART_NavWinCP" 
                                           ClipToBounds="true"/>
-
+                                          
                     </AdornerDecorator>
 
 
@@ -4216,8 +4249,8 @@ To automatically copy the files, set the environment variable
 
 
 
-
-
+ 
+   
     <!--=================================================================
         Page
     ==================================================================-->
@@ -4235,8 +4268,8 @@ To automatically copy the files, set the environment variable
     </Style>
 
 
-
-
+  
+    
     <!--=================================================================
         ProgressBar
     ==================================================================-->
@@ -4320,7 +4353,7 @@ To automatically copy the files, set the environment variable
     </Style>
 
 
-    <!--=================================================================
+<!--=================================================================
         RadioButton
     ==================================================================-->
     <Style x:Key="{x:Type RadioButton}"
@@ -4385,16 +4418,16 @@ To automatically copy the files, set the environment variable
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ResizeGrip}">
-                    <Grid SnapsToDevicePixels="True"
+                    <Grid SnapsToDevicePixels="True" 
                           Background="{TemplateBinding Background}">
-                        <Path HorizontalAlignment="Right"
-                              VerticalAlignment="Bottom"
+                        <Path HorizontalAlignment="Right" 
+                              VerticalAlignment="Bottom" 
                               Fill="White"
                               Margin="0,0,2,2"
                               Data="M 8,0 L 10,0 L 10,2 L 8,2 Z M 4,4 L 6,4 L 6,6 L 4,6 Z M 8,4 L 10,4 L 10,6 L 8,6 Z M 0,8 L 2,8 L 2,10 L 0,10 Z M 4,8 L 6,8 L 6,10 L 4,10 Z M 8,8 L 10,8 L 10,10 L 8,10 Z" />
 
-                        <Path HorizontalAlignment="Right"
-                              VerticalAlignment="Bottom"
+                        <Path HorizontalAlignment="Right" 
+                              VerticalAlignment="Bottom" 
                               Fill="{StaticResource &#286;}"
                               Margin="0,0,3,3"
                               Data="M 8,0 L 10,0 L 10,2 L 8,2 Z M 4,4 L 6,4 L 6,6 L 4,6 Z M 8,4 L 10,4 L 10,6 L 8,6 Z M 0,8 L 2,8 L 2,10 L 0,10 Z M 4,8 L 6,8 L 6,10 L 4,10 Z M 8,8 L 10,8 L 10,10 L 8,10 Z" />
@@ -4747,21 +4780,21 @@ To automatically copy the files, set the environment variable
     </Style>
     <!-- End ScrollBar Styles -->
 
-
+ 
     <!--=================================================================
         ScrollViewer
     ==================================================================-->
-    <Style x:Key="{x:Type ScrollViewer}"
+    <Style x:Key="{x:Type ScrollViewer}" 
            TargetType="{x:Type ScrollViewer}">
         <Style.Triggers>
-            <Trigger Property="IsEnabled"
+            <Trigger Property="IsEnabled" 
                      Value="false">
-                <Setter Property="Foreground"
+                <Setter Property="Foreground" 
                         Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
-
+ 
     <!--=================================================================
         Separator
     ==================================================================-->
@@ -4791,9 +4824,9 @@ To automatically copy the files, set the environment variable
     <SolidColorBrush x:Key="&#299;" Color="#F3F3EF"/>
 
 
-    <LinearGradientBrush x:Key="&#300;"
-                        StartPoint="0,0"
-                        EndPoint="1,0">
+     <LinearGradientBrush x:Key="&#300;"
+                         StartPoint="0,0"
+                         EndPoint="1,0">
         <LinearGradientBrush.GradientStops>
             <GradientStop Color="#40FFFFFF"
                           Offset="0"/>
@@ -4835,34 +4868,28 @@ To automatically copy the files, set the environment variable
 
 
 
-    <!--=================================================================
+<!--=================================================================
         VerticalSlider and HorizontalSlider
     ==================================================================-->
     <!-- Pointed Thumb-->
-    <Geometry x:Key="&#303;">
-        M 5,-8 A 1.5 1.5 0 0 0 3.5,-9.5 L -3.5,-9.5 A 1.5 1.5 0 0 0 -5,-8 L -5,5.5 L 0,10.5 L 5,5.5 Z
-
+    <Geometry x:Key="&#303;">M 5,-8 A 1.5 1.5 0 0 0 3.5,-9.5 L -3.5,-9.5 A 1.5 1.5 0 0 0 -5,-8 L -5,5.5 L 0,10.5 L 5,5.5 Z
+    
     </Geometry>
-    <Geometry x:Key="&#304;">
-        M 4.5,-6 L 4.5,-9 L -4.5,-9 L -4.5,-6 Z
-
+    <Geometry x:Key="&#304;">M 4.5,-6 L 4.5,-9 L -4.5,-9 L -4.5,-6 Z
+    
     </Geometry>
-    <Geometry x:Key="&#305;">
-        M 4.5,4 L 0,8.5 L -4.5,4 L -4.5,5 L 0,10 L 4.5,5 Z
-
+    <Geometry x:Key="&#305;">M 4.5,4 L 0,8.5 L -4.5,4 L -4.5,5 L 0,10 L 4.5,5 Z
+    
     </Geometry>
     <!-- Rectangular Thumb -->
-    <Geometry x:Key="&#306;">
-        M 5,-9 A 1.5 1.5 0 0 0 3.5,-10.5 L -3.5,-10.5 A 1.5 1.5 0 0 0 -5,-9 L -5,9 A 1.5 1.5 0 0 0 -3.5,10.5 L 3.5,10.5 A 1.5 1.5 0 0 0 5,9 Z
-
+    <Geometry x:Key="&#306;">M 5,-9 A 1.5 1.5 0 0 0 3.5,-10.5 L -3.5,-10.5 A 1.5 1.5 0 0 0 -5,-9 L -5,9 A 1.5 1.5 0 0 0 -3.5,10.5 L 3.5,10.5 A 1.5 1.5 0 0 0 5,9 Z
+    
     </Geometry>
-    <Geometry x:Key="&#307;">
-        M 4.5,-8 L 4.5,-10 L -4.5,-10 L -4.5,-8 Z
-
+    <Geometry x:Key="&#307;">M 4.5,-8 L 4.5,-10 L -4.5,-10 L -4.5,-8 Z
+    
     </Geometry>
-    <Geometry x:Key="&#308;">
-        M 4.5,8 L 4.5,10 L -4.5,10 L -4.5,8 Z
-
+    <Geometry x:Key="&#308;">M 4.5,8 L 4.5,10 L -4.5,10 L -4.5,8 Z
+    
     </Geometry>
     <!--=================================================================
             HorizontalSlider Resources
@@ -5787,7 +5814,7 @@ To automatically copy the files, set the environment variable
                                                Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
                                 </Canvas>
                             </Border>
-
+                                
                             <!-- MainPartsPanel -->
                             <Track Grid.Row="1"
                                    Name="PART_Track">
@@ -5899,7 +5926,7 @@ To automatically copy the files, set the environment variable
                                                        Visibility="Hidden"
                                                        StrokeThickness="1.0"
                                                        Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
-                                        </Canvas>
+                                    </Canvas>
 
                                     </Border>
                                     <!-- MainPartsPanel -->
@@ -6265,26 +6292,26 @@ To automatically copy the files, set the environment variable
 
 
 
-
+ 
     <Style x:Key="&#352;">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Rectangle Margin="3,3,3,1"
-                                StrokeThickness="1"
-                                Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
-                                StrokeDashArray="1 2"
-                                SnapsToDevicePixels="true"/>
+                   <Rectangle Margin="3,3,3,1"
+                               StrokeThickness="1"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeDashArray="1 2"
+                               SnapsToDevicePixels="true"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
+    
+   
 
-
-
-
-
+  
+  
     <!--=================================================================
         TabItem
     ==================================================================-->
@@ -6674,7 +6701,7 @@ To automatically copy the files, set the environment variable
     </Style>
 
 
-    <!--=================================================================
+<!--=================================================================
         Thumb
     ==================================================================-->
     <!--
@@ -6715,7 +6742,7 @@ TODO:
     </Style>
 
 
-    <!--=================================================================
+     <!--=================================================================
         ToolTip
     ==================================================================-->
     <Style x:Key="{x:Type ToolTip}"
@@ -6819,34 +6846,34 @@ TODO:
                             <ItemsPresenter/>
                         </ScrollViewer>
                     </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="VirtualizingPanel.IsVirtualizing"
-                                 Value="true">
-                            <Setter TargetName="_tv_scrollviewer_"
-                                    Property="CanContentScroll"
-                                    Value="true"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
+                  <ControlTemplate.Triggers>
+                    <Trigger Property="VirtualizingPanel.IsVirtualizing"
+                             Value="true">
+                      <Setter TargetName="_tv_scrollviewer_"
+                              Property="CanContentScroll"
+                              Value="true"/>
+                    </Trigger>
+                  </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <Trigger Property="VirtualizingPanel.IsVirtualizing"
-                     Value="true">
-                <Setter Property="ItemsPanel">
-                    <Setter.Value>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel/>
-                        </ItemsPanelTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-        </Style.Triggers>
+      <Style.Triggers>
+        <Trigger Property="VirtualizingPanel.IsVirtualizing"
+                 Value="true">
+          <Setter Property="ItemsPanel">
+            <Setter.Value>
+              <ItemsPanelTemplate>
+                <VirtualizingStackPanel/>
+              </ItemsPanelTemplate>
+            </Setter.Value>
+          </Setter>
+        </Trigger>
+      </Style.Triggers>
     </Style>
 
 
 
-    <!--=================================================================
+       <!--=================================================================
         TreeViewItem
     ==================================================================-->
     <Style x:Key="&#385;"
@@ -7007,21 +7034,21 @@ TODO:
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <Trigger Property="VirtualizingPanel.IsVirtualizing"
-                     Value="true">
-                <Setter Property="ItemsPanel">
-                    <Setter.Value>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel/>
-                        </ItemsPanelTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-        </Style.Triggers>
+      <Style.Triggers>
+        <Trigger Property="VirtualizingPanel.IsVirtualizing"
+                 Value="true">
+          <Setter Property="ItemsPanel">
+            <Setter.Value>
+              <ItemsPanelTemplate>
+                <VirtualizingStackPanel/>
+              </ItemsPanelTemplate>
+            </Setter.Value>
+          </Setter>
+        </Trigger>
+      </Style.Triggers>
     </Style>
 
-
+ 
     <!--=================================================================
         UserControl
     ==================================================================-->
@@ -7045,7 +7072,7 @@ TODO:
     </Style>
 
 
-
+   
     <!--=================================================================
         Window
     ==================================================================-->
@@ -7163,18 +7190,18 @@ TODO:
                                         BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}">
                                     <ScrollViewer Name="SubMenuScrollViewer"
                                                   Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
-                                        <Grid RenderOptions.ClearTypeHint="Enabled">
-                                            <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                                <Rectangle
-                                                    Name="OpaqueRect"
-                                                    Height="{Binding ElementName=SubMenuBorder,Path=ActualHeight}"
-                                                    Width="{Binding ElementName=SubMenuBorder,Path=ActualWidth}"
-                                                    Fill="{Binding ElementName=SubMenuBorder,Path=Background}" />
-                                            </Canvas>
-                                            <ItemsPresenter Name="ItemsPresenter" Margin="2"
-                                                            KeyboardNavigation.TabNavigation="Cycle"
-                                                            KeyboardNavigation.DirectionalNavigation="Cycle"/>
-                                        </Grid>
+                                      <Grid RenderOptions.ClearTypeHint="Enabled">
+                                        <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                            <Rectangle
+                                                Name="OpaqueRect"
+                                                Height="{Binding ElementName=SubMenuBorder,Path=ActualHeight}" 
+                                                Width="{Binding ElementName=SubMenuBorder,Path=ActualWidth}" 
+                                                Fill="{Binding ElementName=SubMenuBorder,Path=Background}" />
+                                        </Canvas>
+                                        <ItemsPresenter Name="ItemsPresenter" Margin="2"
+                                                        KeyboardNavigation.TabNavigation="Cycle"
+                                                        KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                                      </Grid>
                                     </ScrollViewer>
                                 </Border>
                             </theme:SystemDropShadowChrome>
@@ -7195,7 +7222,7 @@ TODO:
                                     Property="PopupAnimation"
                                     Value="None"/>
                         </Trigger>
-
+                       
                         <Trigger Property="IsHighlighted"
                                  Value="true">
                             <Setter TargetName="Arrow"
@@ -7228,11 +7255,11 @@ TODO:
                         <Trigger SourceName="SubMenuScrollViewer"
                                  Property="ScrollViewer.CanContentScroll"
                                  Value="false" >
-                            <Setter TargetName="OpaqueRect"
-                                    Property="Canvas.Top"
+                            <Setter TargetName="OpaqueRect" 
+                                    Property="Canvas.Top" 
                                     Value="{Binding ElementName=SubMenuScrollViewer, Path=VerticalOffset}" />
-                            <Setter TargetName="OpaqueRect"
-                                    Property="Canvas.Left"
+                            <Setter TargetName="OpaqueRect" 
+                                    Property="Canvas.Left" 
                                     Value="{Binding ElementName=SubMenuScrollViewer, Path=HorizontalOffset}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -7263,9 +7290,9 @@ TODO:
         </Setter>
     </Style>
 
+  
 
-
-
+  
     <!--=================================================================
         BrowserWindow
     ==================================================================-->
@@ -7919,28 +7946,28 @@ TODO:
     <Style x:Key="&#224;"
            TargetType="{x:Type TextBox}">
         <Style.Triggers>
-            <DataTrigger Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="false">
-                <Setter Property="AutomationProperties.Name"
-                      Value="{Binding Path=(AutomationProperties.Name),
+          <DataTrigger Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="false">
+            <Setter Property="AutomationProperties.Name"
+                  Value="{Binding Path=(AutomationProperties.Name),
                                   Mode=OneWay, 
                                   RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBox}}}"/>
-                <Setter Property="AutomationProperties.LabeledBy"
-                        Value="{Binding Path=(AutomationProperties.LabeledBy),
+            <Setter Property="AutomationProperties.LabeledBy"
+                    Value="{Binding Path=(AutomationProperties.LabeledBy),
                                   Mode=OneWay, 
                                   RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBox}}}"/>
-                <Setter Property="AutomationProperties.HelpText"
-                        Value="{Binding Path=(AutomationProperties.HelpText),
+            <Setter Property="AutomationProperties.HelpText"
+                    Value="{Binding Path=(AutomationProperties.HelpText),
                                   Mode=OneWay, 
                                   RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBox}}}"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=(framework:FrameworkAppContextSwitches.UseAdornerForTextboxSelectionRendering)}" Value="false">
-                <!-- DDVSO:572332
+          </DataTrigger>
+          <DataTrigger Binding="{Binding Path=(framework:FrameworkAppContextSwitches.UseAdornerForTextboxSelectionRendering)}" Value="false">
+              <!-- DDVSO:572332
                     Ensure that the proper text selection colors are used per theme if non-ardorner selection is enabled.
                     ComboBoxes override the styles of the base TextBox when they are editable, so we have to add the trigger back to
                     ensure the selection brushes are updated. -->
-                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
-                <Setter Property="SelectionTextBrush" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
-            </DataTrigger>
+              <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+              <Setter Property="SelectionTextBrush" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+          </DataTrigger>
         </Style.Triggers>
         <Setter Property="OverridesDefaultStyle"
                 Value="true"/>
@@ -8060,17 +8087,17 @@ TODO:
                             BorderThickness="1"
                             BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}">
                         <ScrollViewer Name="DropDownScrollViewer">
-                            <Grid RenderOptions.ClearTypeHint="Enabled">
-                                <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                    <Rectangle
-                                        Name="OpaqueRect"
-                                        Height="{Binding ElementName=DropDownBorder,Path=ActualHeight}"
-                                        Width="{Binding ElementName=DropDownBorder,Path=ActualWidth}"
-                                        Fill="{Binding ElementName=DropDownBorder,Path=Background}" />
-                                </Canvas>
-                                <ItemsPresenter Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained"
-                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                            </Grid>
+                          <Grid RenderOptions.ClearTypeHint="Enabled">
+                            <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <Rectangle
+                                    Name="OpaqueRect"
+                                    Height="{Binding ElementName=DropDownBorder,Path=ActualHeight}"
+                                    Width="{Binding ElementName=DropDownBorder,Path=ActualWidth}"
+                                    Fill="{Binding ElementName=DropDownBorder,Path=Background}" />
+                            </Canvas>
+                            <ItemsPresenter Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                          </Grid>
                         </ScrollViewer>
                     </Border>
                 </theme:SystemDropShadowChrome>
@@ -8093,10 +8120,10 @@ TODO:
                         Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
             </Trigger>
             <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsGrouping" Value="true" />
-                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
-                </MultiTrigger.Conditions>
+            <MultiTrigger.Conditions>
+                <Condition Property="IsGrouping" Value="true" />
+                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
+            </MultiTrigger.Conditions>
                 <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
             </MultiTrigger>
             <Trigger SourceName="PART_Popup"
@@ -8196,17 +8223,17 @@ TODO:
                                         BorderThickness="1"
                                         BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}">
                                     <ScrollViewer Name="DropDownScrollViewer">
-                                        <Grid RenderOptions.ClearTypeHint="Enabled">
-                                            <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                                <Rectangle
-                                                    Name="OpaqueRect"
-                                                    Height="{Binding ElementName=DropDownBorder,Path=ActualHeight}"
-                                                    Width="{Binding ElementName=DropDownBorder,Path=ActualWidth}"
-                                                    Fill="{Binding ElementName=DropDownBorder,Path=Background}" />
-                                            </Canvas>
-                                            <ItemsPresenter Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained"
-                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                                        </Grid>
+                                      <Grid RenderOptions.ClearTypeHint="Enabled">
+                                        <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                            <Rectangle
+                                                Name="OpaqueRect"
+                                                Height="{Binding ElementName=DropDownBorder,Path=ActualHeight}"
+                                                Width="{Binding ElementName=DropDownBorder,Path=ActualWidth}"
+                                                Fill="{Binding ElementName=DropDownBorder,Path=Background}" />
+                                        </Canvas>
+                                        <ItemsPresenter Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained"
+                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                      </Grid>
                                     </ScrollViewer>
                                 </Border>
                             </theme:SystemDropShadowChrome>
@@ -8255,10 +8282,10 @@ TODO:
                                     Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
                         </Trigger>
                         <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsGrouping" Value="true" />
-                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
-                            </MultiTrigger.Conditions>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsGrouping" Value="true" />
+                            <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
+                        </MultiTrigger.Conditions>
                             <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
                         </MultiTrigger>
                         <Trigger SourceName="DropDownScrollViewer"
@@ -8315,7 +8342,7 @@ TODO:
                           Grid.ColumnSpan="3"
                           Height="16"
                           Margin="1,0,0,0"
-                          VerticalAlignment="Center"
+                          VerticalAlignment="Center" 
                           Style="{StaticResource &#248;}">
 
                         <MenuItem Padding="0,2,4,0"
@@ -8325,9 +8352,9 @@ TODO:
                             <MenuItem.ItemsSource>
                                 <MultiBinding Converter="{StaticResource &#251;}">
                                     <MultiBinding.Bindings>
-                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}" 
                                                  Path="BackStack" />
-                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}" 
                                                  Path="ForwardStack" />
                                     </MultiBinding.Bindings>
                                 </MultiBinding>
@@ -8335,14 +8362,14 @@ TODO:
                         </MenuItem>
                     </Menu>
 
-                    <Path Grid.Column="0"
+                    <Path Grid.Column="0" 
                           SnapsToDevicePixels="false"
                           IsHitTestVisible="false"
                           Margin="2,0,0,0"
                           Grid.ColumnSpan="3"
-                          StrokeThickness="1"
-                          HorizontalAlignment="Left"
-                          VerticalAlignment="Center"
+                          StrokeThickness="1" 
+                          HorizontalAlignment="Left" 
+                          VerticalAlignment="Center" 
                           Data="M22.5767,21.035 Q27,19.37 31.424,21.035 A12.5,12.5,0,0,0,53.5,13 A12.5,12.5,0,0,0,37.765,0.926 Q27,4.93 16.235,0.926 A12.5,12.5,0,0,0,0.5,13 A12.5,12.5,0,0,0,22.5767,21.035 z">
                         <Path.Fill>
                             <LinearGradientBrush StartPoint="0,0"
@@ -8373,16 +8400,16 @@ TODO:
                     </Path>
 
                     <Button Style="{StaticResource &#252;}"
-                            Margin="3,0,1,0"
+                            Margin="3,0,1,0" 
                             Grid.Column="0">
                         <Button.LayoutTransform>
                             <ScaleTransform ScaleX="0.667" ScaleY="0.667"/>
                         </Button.LayoutTransform>
                     </Button>
-
+                    
 
                     <Button Style="{StaticResource &#253;}"
-                            Margin="1,0,0,0"
+                            Margin="1,0,0,0" 
                             Grid.Column="1">
                         <Button.LayoutTransform>
                             <ScaleTransform ScaleX="0.667" ScaleY="0.667"/>
@@ -8439,6 +8466,7 @@ TODO:
             </MultiTrigger>
         </Style.Triggers>
     </Style>
+
     <!--=================================================================
         ListView
     ==================================================================-->
@@ -8771,10 +8799,10 @@ TODO:
                                     Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
                         </Trigger>
                         <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsGrouping" Value="true" />
-                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
-                            </MultiTrigger.Conditions>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsGrouping" Value="true" />
+                            <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
+                        </MultiTrigger.Conditions>
                             <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
@@ -9170,19 +9198,19 @@ TODO:
                                     Property="Fill"
                                     Value="{StaticResource &#362;}"/>
                         </Trigger>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="false"/>
-                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
-                                <Condition Binding="{Binding Path=IsEnabled, RelativeSource={x:Static RelativeSource.Self}}" Value="true"/>
-                            </MultiDataTrigger.Conditions>
-                            <!-- DDVSO:437424
+                      <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                          <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="false"/>
+                          <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                          <Condition Binding="{Binding Path=IsEnabled, RelativeSource={x:Static RelativeSource.Self}}" Value="true"/>
+                        </MultiDataTrigger.Conditions>
+                        <!-- DDVSO:437424
                              In high contrast, set the arrow fill to the foreground of the templated parent in order to match the enabled colors.
                              This fixes an issue where the arrow would not be visible in certain high contrast scenarios.
                              Also ensure the outline is drawn to the appropriate control color. -->
-                            <Setter TargetName="ArrowDownPath" Property="Fill" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
-                            <Setter TargetName="Chrome" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
-                        </MultiDataTrigger>
+                        <Setter TargetName="ArrowDownPath" Property="Fill" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                        <Setter TargetName="Chrome" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                      </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -9276,16 +9304,16 @@ TODO:
                                         BorderThickness="1"
                                         BorderBrush="{StaticResource &#369;}">
                                     <ScrollViewer Name="DropDownScrollViewer">
-                                        <Grid RenderOptions.ClearTypeHint="Enabled">
-                                            <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                                <Rectangle
-                                                    Name="OpaqueRect"
-                                                    Height="{Binding ElementName=DropDownBorder,Path=ActualHeight}"
-                                                    Width="{Binding ElementName=DropDownBorder,Path=ActualWidth}"
-                                                    Fill="{Binding ElementName=DropDownBorder,Path=Background}" />
-                                            </Canvas>
-                                            <ItemsPresenter Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained"/>
-                                        </Grid>
+                                      <Grid RenderOptions.ClearTypeHint="Enabled">
+                                        <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                            <Rectangle
+                                                Name="OpaqueRect"
+                                                Height="{Binding ElementName=DropDownBorder,Path=ActualHeight}"
+                                                Width="{Binding ElementName=DropDownBorder,Path=ActualWidth}"
+                                                Fill="{Binding ElementName=DropDownBorder,Path=Background}" />
+                                        </Canvas>
+                                        <ItemsPresenter Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                      </Grid>
                                     </ScrollViewer>
                                 </Border>
                             </theme:SystemDropShadowChrome>
@@ -9377,10 +9405,10 @@ TODO:
                                     Value="95"/>
                         </Trigger>
                         <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsGrouping" Value="true" />
-                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
-                            </MultiTrigger.Conditions>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsGrouping" Value="true" />
+                            <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
+                        </MultiTrigger.Conditions>
                             <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
                         </MultiTrigger>
                         <MultiTrigger>
@@ -9713,28 +9741,28 @@ TODO:
                                                                        Width="{Binding ElementName=Header, Path=ActualWidth}" />
                                                             <ScrollViewer Name="SubMenuScrollViewer"
                                                                           Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
-                                                                <Grid RenderOptions.ClearTypeHint="Enabled" Grid.IsSharedSizeScope="true">
-                                                                    <Grid.ColumnDefinitions>
-                                                                        <ColumnDefinition MinWidth="24"
-                                                                                          Width="Auto"
-                                                                                          SharedSizeGroup="MenuItemIconColumnGroup"/>
-                                                                        <ColumnDefinition Width="*"/>
-                                                                    </Grid.ColumnDefinitions>
-                                                                    <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                                                        <Rectangle
-                                                                            Name="OpaqueRect"
-                                                                            Height="{Binding ElementName=SubMenuBorder,Path=ActualHeight}"
-                                                                            Width="{Binding ElementName=SubMenuBorder,Path=ActualWidth}"
-                                                                            Fill="{Binding ElementName=SubMenuBorder,Path=Background}" />
-                                                                    </Canvas>
-                                                                    <Rectangle Fill="{StaticResource &#375;}"
-                                                                               Margin="0,1"/>
-                                                                    <ItemsPresenter Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Cycle"
-                                                                                    Grid.ColumnSpan="2"
-                                                                                    KeyboardNavigation.TabNavigation="Cycle"
-                                                                                    Margin="0,0,0,1"
-                                                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                                                                </Grid>
+                                                              <Grid RenderOptions.ClearTypeHint="Enabled" Grid.IsSharedSizeScope="true">
+                                                                  <Grid.ColumnDefinitions>
+                                                                      <ColumnDefinition MinWidth="24"
+                                                                                        Width="Auto"
+                                                                                        SharedSizeGroup="MenuItemIconColumnGroup"/>
+                                                                      <ColumnDefinition Width="*"/>
+                                                                  </Grid.ColumnDefinitions>
+                                                                <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                                    <Rectangle
+                                                                        Name="OpaqueRect"
+                                                                        Height="{Binding ElementName=SubMenuBorder,Path=ActualHeight}"
+                                                                        Width="{Binding ElementName=SubMenuBorder,Path=ActualWidth}"
+                                                                        Fill="{Binding ElementName=SubMenuBorder,Path=Background}" />
+                                                                </Canvas>
+                                                                <Rectangle Fill="{StaticResource &#375;}"
+                                                                           Margin="0,1"/>
+                                                                <ItemsPresenter Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                                                Grid.ColumnSpan="2"
+                                                                                KeyboardNavigation.TabNavigation="Cycle"
+                                                                                Margin="0,0,0,1"
+                                                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                                              </Grid>
                                                             </ScrollViewer>
                                                         </Grid>
                                                     </Border>
@@ -9785,16 +9813,16 @@ TODO:
                                         <Trigger SourceName="PART_Popup"
                                                   Property="Popup.HasDropShadow"
                                                   Value="true">
-                                            <Setter TargetName="Shdw"
-                                                    Property="Margin"
-                                                    Value="0,0,5,5"/>
-                                            <Setter TargetName="Shdw"
-                                                    Property="SnapsToDevicePixels"
-                                                    Value="true"/>
-                                            <Setter TargetName="Shdw"
-                                                    Property="Color"
-                                                    Value="#71000000"/>
-                                        </Trigger>
+                                             <Setter TargetName="Shdw"
+                                                     Property="Margin"
+                                                     Value="0,0,5,5"/>
+                                             <Setter TargetName="Shdw"
+                                                     Property="SnapsToDevicePixels"
+                                                     Value="true"/>
+                                             <Setter TargetName="Shdw"
+                                                     Property="Color"
+                                                     Value="#71000000"/>
+                                         </Trigger>
                                         <Trigger Property="IsEnabled"
                                                  Value="false">
                                             <Setter Property="Foreground"
@@ -9960,28 +9988,28 @@ TODO:
                                                         Grid.IsSharedSizeScope="true">
                                                     <ScrollViewer Name="SubMenuScrollViewer"
                                                                   Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
-                                                        <Grid RenderOptions.ClearTypeHint="Enabled">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition MinWidth="24"
-                                                                                  Width="Auto"
-                                                                                  SharedSizeGroup="MenuItemIconColumnGroup"/>
-                                                                <ColumnDefinition Width="*"/>
-                                                            </Grid.ColumnDefinitions>
-                                                            <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                                                <Rectangle
-                                                                    Name="OpaqueRect"
-                                                                    Height="{Binding ElementName=SubMenuBorder,Path=ActualHeight}"
-                                                                    Width="{Binding ElementName=SubMenuBorder,Path=ActualWidth}"
-                                                                    Fill="{Binding ElementName=SubMenuBorder,Path=Background}" />
-                                                            </Canvas>
-                                                            <Rectangle Fill="{StaticResource &#375;}"
-                                                                       Margin="0,1"/>
-                                                            <ItemsPresenter Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Cycle"
-                                                                            Grid.ColumnSpan="2"
-                                                                            KeyboardNavigation.TabNavigation="Cycle"
-                                                                            Margin="0,0,0,1"
-                                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                                                        </Grid>
+                                                      <Grid RenderOptions.ClearTypeHint="Enabled">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition MinWidth="24"
+                                                                              Width="Auto"
+                                                                              SharedSizeGroup="MenuItemIconColumnGroup"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                            <Rectangle
+                                                                Name="OpaqueRect"
+                                                                Height="{Binding ElementName=SubMenuBorder,Path=ActualHeight}"
+                                                                Width="{Binding ElementName=SubMenuBorder,Path=ActualWidth}"
+                                                                Fill="{Binding ElementName=SubMenuBorder,Path=Background}" />
+                                                        </Canvas>
+                                                        <Rectangle Fill="{StaticResource &#375;}"
+                                                                   Margin="0,1"/>
+                                                        <ItemsPresenter Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                                        Grid.ColumnSpan="2"
+                                                                        KeyboardNavigation.TabNavigation="Cycle"
+                                                                        Margin="0,0,0,1"
+                                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                                      </Grid>
                                                     </ScrollViewer>
                                                 </Border>
                                             </theme:SystemDropShadowChrome>
@@ -10027,16 +10055,16 @@ TODO:
                                         <Trigger SourceName="PART_Popup"
                                                   Property="Popup.HasDropShadow"
                                                   Value="true">
-                                            <Setter TargetName="Shdw"
-                                                    Property="Margin"
-                                                    Value="0,0,5,5"/>
-                                            <Setter TargetName="Shdw"
-                                                    Property="SnapsToDevicePixels"
-                                                    Value="true"/>
-                                            <Setter TargetName="Shdw"
-                                                    Property="Color"
-                                                    Value="#71000000"/>
-                                        </Trigger>
+                                             <Setter TargetName="Shdw"
+                                                     Property="Margin"
+                                                     Value="0,0,5,5"/>
+                                             <Setter TargetName="Shdw"
+                                                     Property="SnapsToDevicePixels"
+                                                     Value="true"/>
+                                             <Setter TargetName="Shdw"
+                                                     Property="Color"
+                                                     Value="#71000000"/>
+                                         </Trigger>
                                         <Trigger Property="IsEnabled"
                                                  Value="false">
                                             <Setter Property="Foreground"
@@ -10107,15 +10135,15 @@ TODO:
     </Style>
     <Style x:Key="&#383;"
            TargetType="{x:Type ToggleButton}">
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
-                <!-- This trigger on a SystemParameter works because switching into high contrast mode requires a re-evaluation of theme -->
-                <Setter Property="Background"
-                            Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
-            </DataTrigger>
-        </Style.Triggers>
-        <Setter Property="Background"
-                    Value="{StaticResource &#377;}"/>
+    <Style.Triggers>
+        <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
+            <!-- This trigger on a SystemParameter works because switching into high contrast mode requires a re-evaluation of theme -->
+            <Setter Property="Background"
+                        Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+        </DataTrigger>
+    </Style.Triggers>
+    <Setter Property="Background"
+                Value="{StaticResource &#377;}"/>
         <Setter Property="MinHeight"
                 Value="0"/>
         <Setter Property="MinWidth"
@@ -10168,15 +10196,15 @@ TODO:
     </Style>
     <Style x:Key="&#384;"
            TargetType="{x:Type ToggleButton}">
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
-                <!-- This trigger on a SystemParameter works because switching into high contrast mode requires a re-evaluation of theme -->
-                <Setter Property="Background"
-                            Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
-            </DataTrigger>
-        </Style.Triggers>
-        <Setter Property="Background"
-                    Value="{StaticResource &#378;}"/>
+    <Style.Triggers>
+        <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
+            <!-- This trigger on a SystemParameter works because switching into high contrast mode requires a re-evaluation of theme -->
+            <Setter Property="Background"
+                        Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+        </DataTrigger>
+    </Style.Triggers>
+    <Setter Property="Background"
+                Value="{StaticResource &#378;}"/>
         <Setter Property="MinHeight"
                 Value="0"/>
         <Setter Property="MinWidth"
@@ -10230,180 +10258,180 @@ TODO:
 
     <Style x:Key="{x:Type ToolBar}"
            TargetType="{x:Type ToolBar}">
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
-                <!-- This trigger on a SystemParameter works because switching into high contrast mode requires a re-evaluation of theme -->
-                <Setter Property="Background"
-                            Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
-            </DataTrigger>
-        </Style.Triggers>
-        <Setter Property="Background" Value="{StaticResource &#374;}"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ToolBar}">
-                    <Grid Name="Grid"
-                          Margin="3,1,1,1"
-                          SnapsToDevicePixels="true">
-                        <Grid HorizontalAlignment="Right"
-                              x:Name="OverflowGrid">
-                            <ToggleButton x:Name="OverflowButton"
-                                          FocusVisualStyle="{x:Null}"
-                                          IsEnabled="{TemplateBinding HasOverflowItems}"
-                                          Style="{StaticResource &#383;}"
-                                          IsChecked="{Binding Path=IsOverflowOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
-                                          ClickMode="Press"/>
-                            <Popup x:Name="OverflowPopup"
-                                   AllowsTransparency="true"
-                                   Placement="Bottom"
-                                   IsOpen="{Binding Path=IsOverflowOpen,RelativeSource={RelativeSource TemplatedParent}}"
-                                   StaysOpen="false"
-                                   Focusable="false"
-                                   PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
-                                <theme:SystemDropShadowChrome Name="Shdw"
-                                                              Color="Transparent">
-                                    <Border Background="{StaticResource &#370;}"
-                                            BorderBrush="{StaticResource &#369;}"
-                                            BorderThickness="1"
-                                            RenderOptions.ClearTypeHint="Enabled"
-                                            x:Name="ToolBarSubMenuBorder">
-                                        <ToolBarOverflowPanel x:Name="PART_ToolBarOverflowPanel"
-                                                              Margin="2"
-                                                              WrapWidth="200"
-                                                              Focusable="true"
-                                                              FocusVisualStyle="{x:Null}"
-                                                              KeyboardNavigation.TabNavigation="Cycle"
-                                                              KeyboardNavigation.DirectionalNavigation="Cycle"
-                                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                                    </Border>
-                                </theme:SystemDropShadowChrome>
-                            </Popup>
-                        </Grid>
-                        <Border x:Name="MainPanelBorder"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                Padding="{TemplateBinding Padding}"
-                                Style="{StaticResource &#380;}">
-                            <DockPanel KeyboardNavigation.TabIndex="1"
-                                       KeyboardNavigation.TabNavigation="Local">
-                                <Thumb x:Name="ToolBarThumb"
-                                       Style="{StaticResource &#382;}"
-                                       Margin="-3,-1,0,0"
-                                       Width="10"
-                                       Padding="6,5,1,6"/>
-                                <ContentPresenter x:Name="ToolBarHeader"
-                                                  ContentSource="Header"
-                                                  HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"
-                                                  Margin="4,0,4,0"
-                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                                <ToolBarPanel x:Name="PART_ToolBarPanel"
-                                              IsItemsHost="true"
-                                              Margin="0,1,2,2"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                            </DockPanel>
-                        </Border>
+    <Style.Triggers>
+        <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
+            <!-- This trigger on a SystemParameter works because switching into high contrast mode requires a re-evaluation of theme -->
+            <Setter Property="Background"
+                        Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+        </DataTrigger>
+    </Style.Triggers>
+    <Setter Property="Background" Value="{StaticResource &#374;}"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ToolBar}">
+                <Grid Name="Grid"
+                      Margin="3,1,1,1"
+                      SnapsToDevicePixels="true">
+                    <Grid HorizontalAlignment="Right"
+                          x:Name="OverflowGrid">
+                        <ToggleButton x:Name="OverflowButton"
+                                      FocusVisualStyle="{x:Null}"
+                                      IsEnabled="{TemplateBinding HasOverflowItems}"
+                                      Style="{StaticResource &#383;}"
+                                      IsChecked="{Binding Path=IsOverflowOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                                      ClickMode="Press"/>
+                        <Popup x:Name="OverflowPopup"
+                               AllowsTransparency="true"
+                               Placement="Bottom"
+                               IsOpen="{Binding Path=IsOverflowOpen,RelativeSource={RelativeSource TemplatedParent}}"
+                               StaysOpen="false"
+                               Focusable="false"
+                               PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+                            <theme:SystemDropShadowChrome Name="Shdw"
+                                                          Color="Transparent">
+                                <Border Background="{StaticResource &#370;}"
+                                        BorderBrush="{StaticResource &#369;}"
+                                        BorderThickness="1"
+                                        RenderOptions.ClearTypeHint="Enabled"
+                                        x:Name="ToolBarSubMenuBorder">
+                                    <ToolBarOverflowPanel x:Name="PART_ToolBarOverflowPanel"
+                                                          Margin="2"
+                                                          WrapWidth="200"
+                                                          Focusable="true"
+                                                          FocusVisualStyle="{x:Null}"
+                                                          KeyboardNavigation.TabNavigation="Cycle"
+                                                          KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Border>
+                            </theme:SystemDropShadowChrome>
+                        </Popup>
                     </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsOverflowOpen"
-                                 Value="true">
-                            <Setter TargetName="ToolBarThumb"
-                                    Property="IsEnabled"
-                                    Value="false"/>
-                        </Trigger>
-                        <Trigger Property="Header"
-                                 Value="{x:Null}">
-                            <Setter TargetName="ToolBarHeader"
-                                    Property="Visibility"
-                                    Value="Collapsed"/>
-                        </Trigger>
-                        <Trigger Property="ToolBarTray.IsLocked"
-                                 Value="true">
-                            <Setter TargetName="ToolBarThumb"
-                                    Property="Visibility"
-                                    Value="Collapsed"/>
-                        </Trigger>
-                        <Trigger SourceName="OverflowPopup"
-                                 Property="Popup.HasDropShadow"
-                                 Value="true">
-                            <Setter TargetName="Shdw"
-                                    Property="Margin"
-                                    Value="0,0,5,5"/>
-                            <Setter TargetName="Shdw"
-                                    Property="SnapsToDevicePixels"
-                                    Value="true"/>
-                            <Setter TargetName="Shdw"
-                                    Property="Color"
-                                    Value="#71000000"/>
-                        </Trigger>
-                        <Trigger Property="Orientation"
-                                 Value="Vertical">
-                            <Setter TargetName="Grid"
-                                    Property="Margin"
-                                    Value="1,3,1,1"/>
-                            <Setter TargetName="OverflowButton"
-                                    Property="Style"
-                                    Value="{StaticResource &#384;}"/>
-                            <Setter TargetName="ToolBarThumb"
-                                    Property="Height"
-                                    Value="10"/>
-                            <Setter TargetName="ToolBarThumb"
-                                    Property="Width"
-                                    Value="Auto"/>
-                            <Setter TargetName="ToolBarThumb"
-                                    Property="Margin"
-                                    Value="-1,-3,0,0"/>
-                            <Setter TargetName="ToolBarThumb"
-                                    Property="Padding"
-                                    Value="5,6,6,1"/>
-                            <Setter TargetName="ToolBarHeader"
-                                    Property="Margin"
-                                    Value="0,0,0,4"/>
-                            <Setter TargetName="PART_ToolBarPanel"
-                                    Property="Margin"
-                                    Value="1,0,2,2"/>
-                            <Setter TargetName="ToolBarThumb"
-                                    Property="DockPanel.Dock"
-                                    Value="Top"/>
-                            <Setter TargetName="ToolBarHeader"
-                                    Property="DockPanel.Dock"
-                                    Value="Top"/>
-                            <Setter TargetName="OverflowGrid"
-                                    Property="HorizontalAlignment"
-                                    Value="Stretch"/>
-                            <Setter TargetName="OverflowGrid"
-                                    Property="VerticalAlignment"
-                                    Value="Bottom"/>
-                            <Setter TargetName="OverflowPopup"
-                                    Property="Placement"
-                                    Value="Right"/>
-                            <Setter TargetName="MainPanelBorder"
-                                    Property="Margin"
-                                    Value="0,0,0,11"/>
-                            <Setter Property="Background"
-                                    Value="{StaticResource &#375;}"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="false">
-                            <Setter Property="Foreground"
-                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+                    <Border x:Name="MainPanelBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            Style="{StaticResource &#380;}">
+                        <DockPanel KeyboardNavigation.TabIndex="1"
+                                   KeyboardNavigation.TabNavigation="Local">
+                            <Thumb x:Name="ToolBarThumb"
+                                   Style="{StaticResource &#382;}"
+                                   Margin="-3,-1,0,0"
+                                   Width="10"
+                                   Padding="6,5,1,6"/>
+                            <ContentPresenter x:Name="ToolBarHeader"
+                                              ContentSource="Header"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Margin="4,0,4,0"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            <ToolBarPanel x:Name="PART_ToolBarPanel"
+                                          IsItemsHost="true"
+                                          Margin="0,1,2,2"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </DockPanel>
+                    </Border>
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsOverflowOpen"
+                             Value="true">
+                        <Setter TargetName="ToolBarThumb"
+                                Property="IsEnabled"
+                                Value="false"/>
+                    </Trigger>
+                    <Trigger Property="Header"
+                             Value="{x:Null}">
+                        <Setter TargetName="ToolBarHeader"
+                                Property="Visibility"
+                                Value="Collapsed"/>
+                    </Trigger>
+                    <Trigger Property="ToolBarTray.IsLocked"
+                             Value="true">
+                        <Setter TargetName="ToolBarThumb"
+                                Property="Visibility"
+                                Value="Collapsed"/>
+                    </Trigger>
+                    <Trigger SourceName="OverflowPopup"
+                             Property="Popup.HasDropShadow"
+                             Value="true">
+                        <Setter TargetName="Shdw"
+                                Property="Margin"
+                                Value="0,0,5,5"/>
+                        <Setter TargetName="Shdw"
+                                Property="SnapsToDevicePixels"
+                                Value="true"/>
+                        <Setter TargetName="Shdw"
+                                Property="Color"
+                                Value="#71000000"/>
+                    </Trigger>
+                    <Trigger Property="Orientation"
+                             Value="Vertical">
+                        <Setter TargetName="Grid"
+                                Property="Margin"
+                                Value="1,3,1,1"/>
+                        <Setter TargetName="OverflowButton"
+                                Property="Style"
+                                Value="{StaticResource &#384;}"/>
+                        <Setter TargetName="ToolBarThumb"
+                                Property="Height"
+                                Value="10"/>
+                        <Setter TargetName="ToolBarThumb"
+                                Property="Width"
+                                Value="Auto"/>
+                        <Setter TargetName="ToolBarThumb"
+                                Property="Margin"
+                                Value="-1,-3,0,0"/>
+                        <Setter TargetName="ToolBarThumb"
+                                Property="Padding"
+                                Value="5,6,6,1"/>
+                        <Setter TargetName="ToolBarHeader"
+                                Property="Margin"
+                                Value="0,0,0,4"/>
+                        <Setter TargetName="PART_ToolBarPanel"
+                                Property="Margin"
+                                Value="1,0,2,2"/>
+                        <Setter TargetName="ToolBarThumb"
+                                Property="DockPanel.Dock"
+                                Value="Top"/>
+                        <Setter TargetName="ToolBarHeader"
+                                Property="DockPanel.Dock"
+                                Value="Top"/>
+                        <Setter TargetName="OverflowGrid"
+                                Property="HorizontalAlignment"
+                                Value="Stretch"/>
+                        <Setter TargetName="OverflowGrid"
+                                Property="VerticalAlignment"
+                                Value="Bottom"/>
+                        <Setter TargetName="OverflowPopup"
+                                Property="Placement"
+                                Value="Right"/>
+                        <Setter TargetName="MainPanelBorder"
+                                Property="Margin"
+                                Value="0,0,0,11"/>
+                        <Setter Property="Background"
+                                Value="{StaticResource &#375;}"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled"
+                             Value="false">
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
     </Style>
 
     <Style x:Key="{x:Type ToolBarTray}" TargetType="{x:Type ToolBarTray}">
         <Setter Property="Background"
                 Value="{StaticResource &#373;}"/>
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
-                <!-- This trigger on a SystemParameter works because switching into high contrast mode requires a re-evaluation of theme -->
-                <Setter Property="Background"
-                            Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
+    <Style.Triggers>
+        <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
+            <!-- This trigger on a SystemParameter works because switching into high contrast mode requires a re-evaluation of theme -->
+            <Setter Property="Background"
+                        Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+        </DataTrigger>
+    </Style.Triggers>
+</Style>
 
 </ResourceDictionary>

@@ -505,7 +505,7 @@ namespace System.Xaml
 
             for (int j = 0; j < list.Count; j++)
             {
-                friendAssemblyName = GetCustomAttributeData(list[j], typeof(InternalsVisibleToAttribute), out typeValue, false, false, false);
+                friendAssemblyName = GetCustomAttributeData(list[j], GetMscorlibType(typeof(InternalsVisibleToAttribute)), out typeValue, false, false, false);
                 if (friendAssemblyName != null && friendAssemblyName == LocalAssemblyName)
                 {
                     isFriend = true;

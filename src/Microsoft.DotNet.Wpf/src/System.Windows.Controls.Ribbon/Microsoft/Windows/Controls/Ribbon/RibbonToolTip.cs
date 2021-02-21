@@ -42,6 +42,13 @@ namespace Microsoft.Windows.Controls.Ribbon
             DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
             IsOpenProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsOpenChanged), new CoerceValueCallback(CoerceIsOpen)));
             PlacementTargetProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(OnPlacementTargetPropertyChanged));
+
+            // DDVSO 614397: Tooltips should show on Keyboard focus.
+            // Override from tooltip, we don't want RibbonToolTips to show on Keyboard
+            // focus to keep this consistent with other Microsoft products.
+            // If a user needs to bring up a RibbonToolTip this change also
+            // introduces Ctrl+Shift+F10 as a shortcut for tooltips.
+            ShouldShowOnKeyboardFocusProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false));
         }
 
         /// <summary>
@@ -127,16 +134,6 @@ namespace Microsoft.Windows.Controls.Ribbon
         #endregion VisualStates
 
         #region Public Properties
-
-        // DDVSO 614397: Tooltips should show on Keyboard focus.
-        // Override from tooltip, we don't want RibbonToolTips to show on Keyboard
-        // focus to keep this consistent with other Microsoft products.
-        // If a user needs to bring up a RibbonToolTip this change also
-        // introduces Ctrl+Shift+F10 as a shortcut for tooltips.
-        internal override bool ShouldShowOnKeyboardFocus
-        {
-            get { return false; }
-        }
 
         /// <summary>
         ///   Gets or sets the Title property.

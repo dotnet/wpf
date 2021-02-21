@@ -87,11 +87,30 @@ namespace System.Windows.Controls
             }
         }
 
-        internal virtual bool ShouldShowOnKeyboardFocus
+        /// <summary>
+        /// The DependencyProperty for the ShouldShowOnKeyboardFocus property.
+        /// Default: true
+        /// </summary>
+        public static readonly DependencyProperty ShouldShowOnKeyboardFocusProperty =
+            DependencyProperty.Register(
+                                nameof(ShouldShowOnKeyboardFocus),
+                                typeof(bool),
+                                typeof(ToolTip),
+                                new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Whether or not the tooltip should show on Keyboard focus.
+        /// </summary>
+        [Bindable(true), Category("Behavior")]
+        public bool ShouldShowOnKeyboardFocus
         {
             get
             {
-                return true;
+                return (bool)GetValue(ShouldShowOnKeyboardFocusProperty);
+            }
+            set
+            {
+                SetValue(ShouldShowOnKeyboardFocusProperty, BooleanBoxes.Box(value));
             }
         }
 

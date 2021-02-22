@@ -179,7 +179,13 @@ namespace Microsoft.Build.Tasks.Windows
                 globalProperties[assemblyNamePropertyName] = AssemblyName;
                 globalProperties[targetAssemblyProjectNamePropertyName] = currentProjectName;
 
-                retValue = BuildEngine.BuildProjectFile(tempProj, new string[] { CompileTargetName }, globalProperties, null);
+                Dictionary<string, ITaskItem[]> targetOutputs = new Dictionary<string, ITaskItem[]>();
+                retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, globalProperties, targetOutputs);
+
+                if (retValue)
+                {
+                    TemporaryAssemblyForLocalTypeReference = targetOutputs[CompileTargetName][0].ItemSpec;
+                }
 
                 // Delete the temporary project file and generated files unless diagnostic mode has been requested
                 if (!GenerateTemporaryTargetAssemblyDebuggingInformation)
@@ -260,6 +266,7 @@ namespace Microsoft.Build.Tasks.Windows
                     ( nameof(AssemblyName), AssemblyName ),
                     ( nameof(IntermediateOutputPath), IntermediateOutputPath ),
                     ( nameof(BaseIntermediateOutputPath), BaseIntermediateOutputPath ),
+                    ( nameof(MSBuildProjectExtensionsPath), MSBuildProjectExtensionsPath),
                     ( "_TargetAssemblyProjectName", Path.GetFileNameWithoutExtension(CurrentProject)),
                     ( nameof(Analyzers), Analyzers )
                 };
@@ -276,7 +283,13 @@ namespace Microsoft.Build.Tasks.Windows
                 //
                 //  Compile the temporary target assembly project
                 //
-                retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, globalProperties, null);
+                Dictionary<string, ITaskItem[]> targetOutputs = new Dictionary<string, ITaskItem[]>();
+                retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, globalProperties, targetOutputs);
+
+                if (retValue)
+                {
+                    TemporaryAssemblyForLocalTypeReference = targetOutputs[CompileTargetName][0].ItemSpec;
+                }
 
                 // Delete the temporary project file and generated files unless diagnostic mode has been requested
                 if (!GenerateTemporaryTargetAssemblyDebuggingInformation)
@@ -497,6 +510,31 @@ namespace Microsoft.Build.Tasks.Windows
         ///
         /// </summary>
         public string TemporaryTargetAssemblyProjectName 
+        { get; set; }
+
+        /// <summary>
+        ///
+        /// MSBuildProjectExtensionsPath
+        ///
+        /// Required for PackageReference support.
+        ///
+        /// MSBuildProjectExtensionsPath may be overridden and must be passed into the temporary project.
+        ///
+        /// This is required for some VS publishing scenarios.
+        ///
+        /// </summary>
+        public string MSBuildProjectExtensionsPath 
+        { get; set; }
+
+        /// <summary>
+        ///
+        /// TemporaryAssemblyForLocalTypeReference
+        ///
+        /// The path of the generated temporary local type assembly.  
+        ///
+        /// </summary>
+        [Output]
+        public string TemporaryAssemblyForLocalTypeReference 
         { get; set; }
 
         #endregion Public Properties
@@ -808,4 +846,5 @@ namespace Microsoft.Build.Tasks.Windows
     
     #endregion GenerateProjectForLocalTypeReference Task class
 }
+
 

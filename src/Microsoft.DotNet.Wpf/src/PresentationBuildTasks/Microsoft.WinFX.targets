@@ -369,7 +369,7 @@
 
   </PropertyGroup>
 
-  <Target Name="_CompileTemporaryAssembly"  DependsOnTargets="$(_CompileTemporaryAssemblyDependsOn)" />
+  <Target Name="_CompileTemporaryAssembly"  DependsOnTargets="$(_CompileTemporaryAssemblyDependsOn)" Returns="$(IntermediateOutputPath)$(TargetFileName)"/>
 
 
   <Target Name="MarkupCompilePass2ForMainAssembly"
@@ -473,11 +473,14 @@
                 IncludePackageReferencesDuringMarkupCompilation="$(IncludePackageReferencesDuringMarkupCompilation)"
                 Analyzers="$(Analyzers)"
                 TemporaryTargetAssemblyProjectName="$(_TemporaryTargetAssemblyProjectName)"
+                MSBuildProjectExtensionsPath="$(MSBuildProjectExtensionsPath)"
                  >
+
+          <Output TaskParameter="TemporaryAssemblyForLocalTypeReference" PropertyName="_AssemblyForLocalTypeReference" />
 
        </GenerateTemporaryTargetAssembly>
 
-       <CreateItem Include="$(IntermediateOutputPath)$(TargetFileName)" >
+       <CreateItem Include="$(_AssemblyForLocalTypeReference)">
                <Output TaskParameter="Include" ItemName="AssemblyForLocalTypeReference" />
        </CreateItem>
 
@@ -992,3 +995,4 @@
   <!-- End of the project file, Do not add any more propeties, items, targets etc. -->
 
 </Project>
+

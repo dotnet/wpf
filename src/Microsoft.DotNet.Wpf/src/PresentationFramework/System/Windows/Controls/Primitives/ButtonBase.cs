@@ -207,7 +207,9 @@ namespace System.Windows.Controls.Primitives
                         "CommandParameter",
                         typeof(object),
                         typeof(ButtonBase),
-                        new FrameworkPropertyMetadata((object) null));
+                        new FrameworkPropertyMetadata(
+                            (object)null,
+                            new PropertyChangedCallback(OnCommandParameterChanged)));
 
         /// <summary>
         ///     The DependencyProperty for Target property
@@ -359,6 +361,12 @@ namespace System.Windows.Controls.Primitives
             {
                 SetValue(CommandParameterProperty, value);
             }
+        }
+
+        private static void OnCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ButtonBase b = (ButtonBase)d;
+            b.UpdateCanExecute();
         }
 
         /// <summary>

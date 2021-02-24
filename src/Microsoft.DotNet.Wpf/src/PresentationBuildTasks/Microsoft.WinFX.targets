@@ -11,7 +11,6 @@
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.ResourcesGenerator" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.FileClassifier" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MarkupCompilePass2" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
-  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
   <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MergeLocalizationDirectives" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
 
   <PropertyGroup>
@@ -45,6 +44,7 @@
       <!-- Initialize some Local-Type_Ref related properties -->
       <_RequireMCPass2ForSatelliteAssemblyOnly>false</_RequireMCPass2ForSatelliteAssemblyOnly>
       <_RequireMCPass2ForMainAssembly>false</_RequireMCPass2ForMainAssembly>
+
   </PropertyGroup>
 
   <PropertyGroup>
@@ -360,12 +360,10 @@
                      CleanupTemporaryTargetAssembly
        </MarkupCompilePass2ForMainAssemblyDependsOn>
 
-        <_CompileTargetNameForLocalType Condition="'$(_CompileTargetNameForLocalType)' == ''">_CompileTemporaryAssembly</_CompileTargetNameForLocalType>
-
         <!-- The updated .NET 5.0.2 GenerateTemporaryTargetAssembly behavior that supports source generators is off by default. -->
         <IncludePackageReferencesDuringMarkupCompilation Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' == ''">true</IncludePackageReferencesDuringMarkupCompilation>
-        <_ResolveProjectReferencesTargetName Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'">ResolveProjectReferences</_ResolveProjectReferencesTargetName>
-        <_CompileTemporaryAssemblyDependsOn>BuildOnlySettings;ResolveKeySource;$(_ResolveProjectReferencesTargetName);CoreCompile</_CompileTemporaryAssemblyDependsOn>
+        <GenerateTemporaryTargetAssemblyDependsOn>BuildOnlySettings;ResolveKeySource;_BeforeVBCSCoreCompile</GenerateTemporaryTargetAssemblyDependsOn>
+        <GenerateTemporaryTargetAssemblyDependsOn Condition="'$(MSBuildProjectExtension)' == '.vbproj'">$(GenerateTemporaryTargetAssemblyDependsOn);_UseReferencedVBRuntime</GenerateTemporaryTargetAssemblyDependsOn>
 
   </PropertyGroup>
 
@@ -378,116 +376,6 @@
 
   </Target>
 
-  <!--
-
-                ==========================================
-                       GenerateTemporaryTargetAssembly
-                ==========================================
-
-                Name : GenerateTemporaryTargetAssembly
-
-  -->
-  <Target Name="GenerateTemporaryTargetAssembly" Condition="'$(_RequireMCPass2ForMainAssembly)' == 'true'">
-
-     <Message Text="MSBuildProjectFile is $(MSBuildProjectFile)" Condition="'$(MSBuildTargetsVerbose)' == 'true'" />
-
-       <!-- Create a temporary target assembly project name with a random component. -->
-       <PropertyGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'">
-            <_ParentProjectName>$([System.IO.Path]::GetFileNameWithoutExtension('$(MSBuildProjectFullPath)'))</_ParentProjectName>
-            <_ParentProjectExtension>$([System.IO.Path]::GetExtension($(MSBuildProjectFullPath)))</_ParentProjectExtension>
-            <_TemporaryTargetAssemblyProjectNameNoExtension>$([System.String]::Join("_", "$(_ParentProjectName)", "$([System.IO.Path]::GetFileNameWithoutExtension($([System.IO.Path]::GetRandomFileName())))", "wpftmp"))</_TemporaryTargetAssemblyProjectNameNoExtension>
-            <_TemporaryTargetAssemblyProjectName>$(_TemporaryTargetAssemblyProjectNameNoExtension)$(_ParentProjectExtension)</_TemporaryTargetAssemblyProjectName>
-       </PropertyGroup>
-
-      <!-- Collect the generated NuGet files from the parent project required to support PackageReferences. -->
-      <!--  
-          Note that MSBuildProjectExtensionsPath defaults to BaseIntermediateOutputPath (Microsoft.Common.props) 
-          unless it it set prior to importing the .NET SDK. In the WPF temp project, MSBuildProjectExtensionsPath 
-          cannot be defined before the .NET SDK is imported, and always defaults to BaseIntermediateOutputPath.
-      -->
-
-      <ItemGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'">
-        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.g.props"/>
-        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.g.targets"/>
-        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.dgspec.json"/>
-
-        <_DestGeneratedNuGetPropsAndTargets Include="$(BaseIntermediateOutputPath)$(_TemporaryTargetAssemblyProjectName).nuget.g.props"/>
-        <_DestGeneratedNuGetPropsAndTargets Include="$(BaseIntermediateOutputPath)$(_TemporaryTargetAssemblyProjectName).nuget.g.targets"/>
-        <_DestGeneratedNuGetPropsAndTargets Include="$(BaseIntermediateOutputPath)$(_TemporaryTargetAssemblyProjectName).nuget.dgspec.json"/>
-      </ItemGroup>
-
-      <!-- Project assets and nuget.cache files must also be copied if a custom BaseIntermediateOutputPath is set. -->
-      <ItemGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false' and '$(_InitialBaseIntermediateOutputPath)' != '$(BaseIntermediateOutputPath)'">
-        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)project.assets.json"/>
-        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)project.nuget.cache"/>
-
-        <_DestGeneratedNuGetPropsAndTargets Include="$(BaseIntermediateOutputPath)project.assets.json"/>
-        <_DestGeneratedNuGetPropsAndTargets Include="$(BaseIntermediateOutputPath)project.nuget.cache"/>
-      </ItemGroup>
-         
-      <!-- Copy the renamed outer project NuGet props/targets files to the MSBuildProjectExtensionsPath used by NuGet. -->
-      <Copy Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'"
-            SourceFiles="@(_SourceGeneratedNuGetPropsAndTargets)"
-            DestinationFiles="@(_DestGeneratedNuGetPropsAndTargets)"
-       />
-
-       <!--
-        Undo TargetFramework and RID append set in Microsoft.NET.RuntimeIdentifierInference.targets to prevent
-        a duplicate target framework and runtime identifier in the IntermediateOutputPath when the new BuildEngine
-        instance runs.
-
-        'Append $(RuntimeIdentifier) to directory to output and intermediate paths to prevent bin clashes between
-        targets. But do not append the implicit default runtime identifier for .NET Framework apps as that would
-        append a RID the user never mentioned in the path and do so even in the AnyCPU case.'
-       -->
-
-      <PropertyGroup>
-          <_IntermediateOutputPathNoTargetFrameworkOrRID>$(IntermediateOutputPath)</_IntermediateOutputPathNoTargetFrameworkOrRID>
-      </PropertyGroup>
-
-      <PropertyGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false' and
-          '$(AppendRuntimeIdentifierToOutputPath)' == 'true' and '$(RuntimeIdentifier)' != '' and
-          '$(_UsingDefaultRuntimeIdentifier)' != 'true'">
-        <_IntermediateOutputPathNoTargetFrameworkOrRID>$([System.Text.RegularExpressions.Regex]::Replace($(_IntermediateOutputPathNoTargetFrameworkOrRID), "$(RuntimeIdentifier)\\$",, System.Text.RegularExpressions.RegexOptions.IgnoreCase))</_IntermediateOutputPathNoTargetFrameworkOrRID>
-      </PropertyGroup>
-
-      <PropertyGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false' and
-          '$(AppendTargetFrameworkToOutputPath)' == 'true' and '$(TargetFramework)' != '' and
-          '$(_UnsupportedTargetFrameworkError)' != 'true'">
-          <_IntermediateOutputPathNoTargetFrameworkOrRID>$([System.Text.RegularExpressions.Regex]::Replace($(_IntermediateOutputPathNoTargetFrameworkOrRID), "$(TargetFramework)\\$",, System.Text.RegularExpressions.RegexOptions.IgnoreCase))</_IntermediateOutputPathNoTargetFrameworkOrRID>
-      </PropertyGroup>
-
-       <!--  Use the legacy .NET Framework/.NET Core 3.0 GenerateTemporaryTargetAssembly path if 'IncludePackageReferencesDuringMarkupCompilation' is 'false',. -->
-       <GenerateTemporaryTargetAssembly
-                CurrentProject="$(MSBuildProjectFullPath)"
-                MSBuildBinPath="$(MSBuildBinPath)"
-                ReferencePathTypeName="ReferencePath"
-                CompileTypeName="Compile"
-                GeneratedCodeFiles="@(_GeneratedCodeFiles)"
-                ReferencePath="@(ReferencePath)"
-                BaseIntermediateOutputPath="$(BaseIntermediateOutputPath)"
-                IntermediateOutputPath="$(_IntermediateOutputPathNoTargetFrameworkOrRID)"
-                AssemblyName="$(AssemblyName)"
-                CompileTargetName="$(_CompileTargetNameForLocalType)"
-                GenerateTemporaryTargetAssemblyDebuggingInformation="$(GenerateTemporaryTargetAssemblyDebuggingInformation)"
-                IncludePackageReferencesDuringMarkupCompilation="$(IncludePackageReferencesDuringMarkupCompilation)"
-                Analyzers="$(Analyzers)"
-                TemporaryTargetAssemblyProjectName="$(_TemporaryTargetAssemblyProjectName)"
-                 >
-
-       </GenerateTemporaryTargetAssembly>
-
-       <CreateItem Include="$(IntermediateOutputPath)$(TargetFileName)" >
-               <Output TaskParameter="Include" ItemName="AssemblyForLocalTypeReference" />
-       </CreateItem>
-
-       <!-- Remove generated NuGet props/targets files. -->
-       <Delete
-           Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'
-            and '$(GenerateTemporaryTargetAssemblyDebuggingInformation)' != 'true'"
-            Files="@(_DestGeneratedNuGetPropsAndTargets)" />
-
-   </Target>
 
   <!--
 
@@ -989,6 +877,182 @@
 
   </Target>
 
+            <!--
+
+                ==========================================
+                       GenerateTemporaryTargetAssembly
+                ==========================================
+
+                Name : GenerateTemporaryTargetAssembly
+
+  -->
+  <Target Name="GenerateTemporaryTargetAssembly" Condition="'$(_RequireMCPass2ForMainAssembly)' == 'true'" DependsOnTargets="$(GenerateTemporaryTargetAssemblyDependsOn);">
+
+     <Message Text="MSBuildProjectFile is $(MSBuildProjectFile)" Condition="'$(MSBuildTargetsVerbose)' == 'true'" />
+
+       <!-- Do not pass Resources to CSC for the temporary assembly -->
+       <Csc Condition="'$(MSBuildProjectExtension)' == '.csproj'"
+             AdditionalLibPaths="$(AdditionalLibPaths)"
+             AddModules="@(AddModules)"
+             AdditionalFiles="@(AdditionalFiles)"
+             AllowUnsafeBlocks="$(AllowUnsafeBlocks)"
+             AnalyzerConfigFiles="@(EditorConfigFiles)"
+             Analyzers="@(Analyzer)"
+             ApplicationConfiguration="$(AppConfigForCompiler)"
+             BaseAddress="$(BaseAddress)"
+             CheckForOverflowUnderflow="$(CheckForOverflowUnderflow)"
+             ChecksumAlgorithm="$(ChecksumAlgorithm)"
+             CodeAnalysisRuleSet="$(ResolvedCodeAnalysisRuleSet)"
+             CodePage="$(CodePage)"
+             DebugType="$(DebugType)"
+             DefineConstants="$(DefineConstants)"
+             DelaySign="$(DelaySign)"
+             DisabledWarnings="$(NoWarn)"
+             DisableSdkPath="$(DisableSdkPath)"
+             DocumentationFile="@(DocFileItem)"
+             EmbedAllSources="$(EmbedAllSources)"
+             EmbeddedFiles="@(EmbeddedFiles)"
+             EmitDebugInformation="$(DebugSymbols)"
+             EnvironmentVariables="$(CscEnvironment)"
+             ErrorEndLocation="$(ErrorEndLocation)"
+             ErrorLog="$(ErrorLog)"
+             ErrorReport="$(ErrorReport)"
+             Features="$(Features)"
+             FileAlignment="$(FileAlignment)"
+             GeneratedFilesOutputPath="$(CompilerGeneratedFilesOutputPath)"
+             GenerateFullPaths="$(GenerateFullPaths)"
+             HighEntropyVA="$(HighEntropyVA)"
+             Instrument="$(Instrument)"
+             KeyContainer="$(KeyContainerName)"
+             KeyFile="$(KeyOriginatorFile)"
+             LangVersion="$(LangVersion)"
+             LinkResources="@(LinkResource)"
+             MainEntryPoint="$(StartupObject)"
+             ModuleAssemblyName="$(ModuleAssemblyName)"
+             NoConfig="true"
+             NoLogo="$(NoLogo)"
+             NoStandardLib="$(NoCompilerStandardLib)"
+             NoWin32Manifest="$(NoWin32Manifest)"
+             Nullable="$(Nullable)"
+             Optimize="$(Optimize)"
+             Deterministic="$(Deterministic)"
+             PublicSign="$(PublicSign)"
+             OutputAssembly="@(IntermediateAssembly)"
+             OutputRefAssembly="@(IntermediateRefAssembly)"
+             PdbFile="$(PdbFile)"
+             Platform="$(PlatformTarget)"
+             Prefer32Bit="$(Prefer32Bit)"
+             PreferredUILang="$(PreferredUILang)"
+             ProvideCommandLineArgs="$(ProvideCommandLineArgs)"
+             References="@(ReferencePathWithRefAssemblies)"
+             RefOnly="$(ProduceOnlyReferenceAssembly)"
+             ReportAnalyzer="$(ReportAnalyzer)"
+             Resources=""  
+             ResponseFiles="$(CompilerResponseFile)"
+             RuntimeMetadataVersion="$(RuntimeMetadataVersion)"
+             SharedCompilationId="$(SharedCompilationId)"
+             SkipAnalyzers="$(_SkipAnalyzers)"
+             SkipCompilerExecution="$(SkipCompilerExecution)"
+             Sources="@(Compile)"
+             SubsystemVersion="$(SubsystemVersion)"
+             TargetType="$(OutputType)"
+             ToolExe="$(CscToolExe)"
+             ToolPath="$(CscToolPath)"
+             TreatWarningsAsErrors="$(TreatWarningsAsErrors)"
+             UseHostCompilerIfAvailable="$(UseHostCompilerIfAvailable)"
+             UseSharedCompilation="$(UseSharedCompilation)"
+             Utf8Output="$(Utf8Output)"
+             VsSessionGuid="$(VsSessionGuid)"
+             WarningLevel="$(WarningLevel)"
+             WarningsAsErrors="$(WarningsAsErrors)"
+             WarningsNotAsErrors="$(WarningsNotAsErrors)"
+             Win32Icon="$(ApplicationIcon)"
+             Win32Manifest="$(Win32Manifest)"
+             Win32Resource="$(Win32Resource)"
+             PathMap="$(PathMap)"
+             SourceLink="$(SourceLink)">
+          <Output TaskParameter="CommandLineArgs" ItemName="CscCommandLineArgs" />
+        </Csc>
+
+       <!-- Do not pass Resources to VBC for the temporary assembly -->
+       <!-- Resources="@(_CoreCompileResourceInputs);@(CompiledLicenseFile)" -->
+       <Vbc  Condition="'$(MSBuildProjectExtension)' == '.vbproj'"
+              AdditionalLibPaths="$(AdditionalLibPaths)"
+              AddModules="@(AddModules)"
+              AdditionalFiles="@(AdditionalFiles)"
+              BaseAddress="$(BaseAddress)"
+              CodeAnalysisRuleSet="$(ResolvedCodeAnalysisRuleSet)"
+              CodePage="$(CodePage)"
+              DebugType="$(DebugType)"
+              DefineConstants="$(FinalDefineConstants)"
+              DelaySign="$(DelaySign)"
+              DisabledWarnings="$(NoWarn)"
+              DocumentationFile="@(DocFileItem)"
+              EmitDebugInformation="$(DebugSymbols)"
+              EnvironmentVariables="$(VbcEnvironment)"
+              ErrorLog="$(ErrorLog)"
+              ErrorReport="$(ErrorReport)"
+              FileAlignment="$(FileAlignment)"
+              GenerateDocumentation="$(GenerateDocumentation)"
+              HighEntropyVA="$(HighEntropyVA)"
+              Imports="@(Import)"
+              KeyContainer="$(KeyContainerName)"
+              KeyFile="$(KeyOriginatorFile)"
+              LangVersion="$(LangVersion)"
+              LinkResources="@(LinkResource)"
+              MainEntryPoint="$(StartupObject)"
+              ModuleAssemblyName="$(ModuleAssemblyName)"
+              NoConfig="true"
+              NoStandardLib="$(NoCompilerStandardLib)"
+              NoVBRuntimeReference="$(NoVBRuntimeReference)"
+              NoWarnings="$(_NoWarnings)"
+              NoWin32Manifest="$(NoWin32Manifest)"
+              Optimize="$(Optimize)"
+              OptionCompare="$(OptionCompare)"
+              OptionExplicit="$(OptionExplicit)"
+              OptionInfer="$(OptionInfer)"
+              OptionStrict="$(OptionStrict)"
+              OptionStrictType="$(OptionStrictType)" 
+              OutputAssembly="@(XamlIntermediateAssembly)"
+              Platform="$(PlatformTarget)"
+              Prefer32Bit="$(Prefer32Bit)"
+              PreferredUILang="$(PreferredUILang)"
+              References="@(ReferencePath)"
+              RemoveIntegerChecks="$(RemoveIntegerChecks)"
+              ReportAnalyzer="$(ReportAnalyzer)"
+              Resources="@(_CoreCompileResourceInputs);@(CompiledLicenseFile)"
+              ResponseFiles="$(CompilerResponseFile)"
+              RootNamespace="$(RootNamespace)"
+              PdbFile="$(PdbFile)"
+              SdkPath="$(FrameworkPathOverride)"
+              Sources="@(Compile)"
+              SubsystemVersion="$(SubsystemVersion)"
+              TargetCompactFramework="$(TargetCompactFramework)"
+              TargetType="$(OutputType)"
+              ToolExe="$(VbcToolExe)"
+              ToolPath="$(VbcToolPath)"
+              TreatWarningsAsErrors="$(TreatWarningsAsErrors)"
+              UseHostCompilerIfAvailable="$(UseHostCompilerIfAvailable)"
+              UseSharedCompilation="$(UseSharedCompilation)"
+              Utf8Output="$(Utf8Output)"
+              VBRuntimePath="$(VBRuntimePath)"
+              Verbosity="$(VbcVerbosity)"
+              VsSessionGuid="$(VsSessionGuid)"
+              WarningsAsErrors="$(WarningsAsErrors)"
+              WarningsNotAsErrors="$(WarningsNotAsErrors)"
+              Win32Icon="$(ApplicationIcon)"
+              Win32Manifest="$(Win32Manifest)"
+              Win32Resource="$(Win32Resource)"
+              VBRuntime="$(VBRuntime)"
+              />
+
+       <CreateItem Include="$(IntermediateOutputPath)$(TargetFileName)" >
+               <Output TaskParameter="Include" ItemName="AssemblyForLocalTypeReference" />
+       </CreateItem>
+
+   </Target>
+
   <!-- End of the project file, Do not add any more propeties, items, targets etc. -->
 
 </Project>
+

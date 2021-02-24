@@ -1,3 +1,4 @@
 Compat issues with assembly PresentationBuildTasks:
+TypesMustExist : Type 'Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly' does not exist in the implementation but it does exist in the contract.
 TypesMustExist : Type 'Microsoft.Build.Tasks.Windows.GetWinFXPath' does not exist in the implementation but it does exist in the contract.
-Total Issues: 1
+Total Issues: 2

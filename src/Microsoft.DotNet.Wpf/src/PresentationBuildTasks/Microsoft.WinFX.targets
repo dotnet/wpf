@@ -362,12 +362,32 @@
 
         <!-- The updated .NET 5.0.2 GenerateTemporaryTargetAssembly behavior that supports source generators is off by default. -->
         <IncludePackageReferencesDuringMarkupCompilation Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' == ''">true</IncludePackageReferencesDuringMarkupCompilation>
+
+
+        <!-- _BeforeVBCSCoreCompile must be called before csc/vbc when creating WPF's local type assembly. -->
+
+        <!-- This causes ShimReferencePathsWhenCommonTargetsDoesNotUnderstandReferenceAssemblies to be run which adds required reference
+             assemblies.  The WPF build will fail with missing types if this target is not run prior to csc/vbc.  See CoreCompile in 
+             Microsoft.VisualBasic.Core.targets and Microsoft.CSharp.Core.targets. -->
+
+        <!-- From Microsoft.Managed.Core.targets: 
+
+                "Since XAML inner build runs CoreCompile directly (instead of Compile target),
+                 it also doesn't invoke FindReferenceAssembliesForReferences listed in CompileDependsOn.
+                 In that case we also populate ReferencePathWithRefAssemblies with implementation assemblies."
+        -->
         <GenerateTemporaryTargetAssemblyDependsOn>BuildOnlySettings;ResolveKeySource;_BeforeVBCSCoreCompile</GenerateTemporaryTargetAssemblyDependsOn>
-        <GenerateTemporaryTargetAssemblyDependsOn Condition="'$(MSBuildProjectExtension)' == '.vbproj'">$(GenerateTemporaryTargetAssemblyDependsOn);_UseReferencedVBRuntime</GenerateTemporaryTargetAssemblyDependsOn>
+
+        <!-- See Microsoft.NET.Sdk.VisualBasic.targets -->
+
+        <!-- _UseReferencedVBRuntime is declared with CoreCompile as a BeforeTarget with UseReferencedVBRuntime as the condition.  Because 
+              CoreCompile is no longer called during the local type assembly compilation, _UseReferencedVBRuntime will not be called. Add 
+             _UseReferencedVBRuntime as a DependsOnTarget to GenerateTemporaryTargetAssembly to set the VB runtime.  VB compilation will 
+             fail without it. 
+        -->
+        <GenerateTemporaryTargetAssemblyDependsOn Condition="'$(UseReferencedVBRuntime)' == 'true'">$(GenerateTemporaryTargetAssemblyDependsOn);_UseReferencedVBRuntime</GenerateTemporaryTargetAssemblyDependsOn>
 
   </PropertyGroup>
-
-  <Target Name="_CompileTemporaryAssembly"  DependsOnTargets="$(_CompileTemporaryAssemblyDependsOn)" />
 
 
   <Target Name="MarkupCompilePass2ForMainAssembly"

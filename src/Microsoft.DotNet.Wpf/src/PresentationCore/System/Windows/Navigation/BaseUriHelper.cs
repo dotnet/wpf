@@ -285,7 +285,7 @@ namespace System.Windows.Navigation
 
             if (fHasComponent)
             {
-                string[] assemblyInfo = firstSegment.Split(new char[] { COMPONENT_DELIMITER });
+                string[] assemblyInfo = firstSegment.Split(COMPONENT_DELIMITER);
 
                 int count = assemblyInfo.Length;
 
@@ -336,7 +336,7 @@ namespace System.Windows.Navigation
         {
             if (component.EndsWith(COMPONENT, StringComparison.OrdinalIgnoreCase))
             {
-                string[] assemblyInfo = component.Split(new Char[] { COMPONENT_DELIMITER });
+                string[] assemblyInfo = component.Split(COMPONENT_DELIMITER);
                 // Check whether the assembly name is the same as the EntryAssembly.
                 int count = assemblyInfo.Length;
                 if ((count >= 2) && (count <= 4))

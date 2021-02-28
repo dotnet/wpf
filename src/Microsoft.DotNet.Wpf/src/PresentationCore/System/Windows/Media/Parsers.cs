@@ -105,7 +105,7 @@ namespace MS.Internal
 
             string tokens = trimmedColor.Substring(s_ContextColor.Length);
             tokens = tokens.Trim();
-            string[] preSplit = tokens.Split(new Char[] { ' ' });
+            string[] preSplit = tokens.Split(' ');
             if (preSplit.GetLength(0)< 2)
             {
                 throw new FormatException(SR.Get(SRID.Parsers_IllegalToken));

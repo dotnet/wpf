@@ -222,20 +222,20 @@ namespace MS.Internal.Annotations.Anchoring
                     string value = "";
                     if (!double.IsNaN(fp.Segments[i].Start.X))
                     {
-                        value += fp.Segments[i].Start.X.ToString(NumberFormatInfo.InvariantInfo) + TextSelectionProcessor.Separator[0] + fp.Segments[i].Start.Y.ToString(NumberFormatInfo.InvariantInfo);
+                        value += fp.Segments[i].Start.X.ToString(NumberFormatInfo.InvariantInfo) + TextSelectionProcessor.Separator + fp.Segments[i].Start.Y.ToString(NumberFormatInfo.InvariantInfo);
                     }
                     else
                     {
-                        value += TextSelectionProcessor.Separator[0];
+                        value += TextSelectionProcessor.Separator;
                     }
-                    value += TextSelectionProcessor.Separator[0];
+                    value += TextSelectionProcessor.Separator;
                     if (!double.IsNaN(fp.Segments[i].End.X))
                     {
-                        value += fp.Segments[i].End.X.ToString(NumberFormatInfo.InvariantInfo) + TextSelectionProcessor.Separator[0] + fp.Segments[i].End.Y.ToString(NumberFormatInfo.InvariantInfo);
+                        value += fp.Segments[i].End.X.ToString(NumberFormatInfo.InvariantInfo) + TextSelectionProcessor.Separator + fp.Segments[i].End.Y.ToString(NumberFormatInfo.InvariantInfo);
                     }
                     else
                     {
-                        value += TextSelectionProcessor.Separator[0];
+                        value += TextSelectionProcessor.Separator;
                     }
 
                     part.NameValuePairs.Add(TextSelectionProcessor.SegmentAttribute + i.ToString(NumberFormatInfo.InvariantInfo), value);

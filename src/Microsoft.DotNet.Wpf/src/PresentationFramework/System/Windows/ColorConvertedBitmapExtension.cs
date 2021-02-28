@@ -47,7 +47,7 @@ namespace System.Windows
                 throw new ArgumentNullException("image");
             }
 
-            string[] tokens = ((string)image).Split(new char[] { ' ' });
+            string[] tokens = ((string)image).Split(' ');
 
             foreach (string str in tokens)
             {

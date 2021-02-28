@@ -45,7 +45,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// Used by ConvertBackSlashPathToStringArrayPath and 
         ///     ConvertStringArrayPathToBackSlashPath to separate path elements.
         static readonly internal char PathSeparator = Path.DirectorySeparatorChar;
-        static private readonly char[] _PathSeparatorArray = new char[] { PathSeparator };
         static readonly internal string PathSeparatorAsString = new string(ContainerUtilities.PathSeparator, 1);
 
         static private readonly CaseInsensitiveOrdinalStringComparer _stringCaseInsensitiveComparer = new CaseInsensitiveOrdinalStringComparer();
@@ -347,7 +346,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             // Build the array
             string[] splitArray =
-                backSlashPath.Split(_PathSeparatorArray);
+                backSlashPath.Split(PathSeparator);
 
             // Look for empty strings in the array
             foreach (string arrayElement in splitArray)

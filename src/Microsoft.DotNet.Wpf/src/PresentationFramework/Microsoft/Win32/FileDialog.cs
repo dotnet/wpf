@@ -1612,7 +1612,7 @@ namespace Microsoft.Win32
             if (filter != null)
             {
                 // Filter strings are '|' delimited, so we split on them
-                string[] tokens = filter.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] tokens = filter.Split('|', StringSplitOptions.RemoveEmptyEntries);
 
                 // Calculate the index of the token containing extension(s) selected
                 // by the FilterIndex property.  Remember FilterIndex is one based.

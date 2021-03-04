@@ -182,8 +182,13 @@ namespace Microsoft.Build.Tasks.Windows
                 Dictionary<string, ITaskItem[]> targetOutputs = new Dictionary<string, ITaskItem[]>();
                 retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, globalProperties, targetOutputs);
 
+                // If the inner build succeeds, retrieve the path to the local type assembly from the task's TargetOutputs.
                 if (retValue)
                 {
+                    // See Microsoft.WinFX.targets: TargetOutputs from '_CompileTemporaryAssembly' will always contain one item.
+                    // <Target Name="_CompileTemporaryAssembly"  DependsOnTargets="$(_CompileTemporaryAssemblyDependsOn)" Returns="$(IntermediateOutputPath)$(TargetFileName)"/>
+                    Debug.Assert(targetOutputs.ContainsKey(CompileTargetName));
+                    Debug.Assert(targetOutputs[CompileTargetName].Length == 1);
                     TemporaryAssemblyForLocalTypeReference = targetOutputs[CompileTargetName][0].ItemSpec;
                 }
 
@@ -286,8 +291,13 @@ namespace Microsoft.Build.Tasks.Windows
                 Dictionary<string, ITaskItem[]> targetOutputs = new Dictionary<string, ITaskItem[]>();
                 retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, globalProperties, targetOutputs);
 
+                // If the inner build succeeds, retrieve the path to the local type assembly from the task's TargetOutputs.
                 if (retValue)
                 {
+                    // See Microsoft.WinFX.targets: TargetOutputs from '_CompileTemporaryAssembly' will always contain one item.
+                    // <Target Name="_CompileTemporaryAssembly"  DependsOnTargets="$(_CompileTemporaryAssemblyDependsOn)" Returns="$(IntermediateOutputPath)$(TargetFileName)"/>
+                    Debug.Assert(targetOutputs.ContainsKey(CompileTargetName));
+                    Debug.Assert(targetOutputs[CompileTargetName].Length == 1);
                     TemporaryAssemblyForLocalTypeReference = targetOutputs[CompileTargetName][0].ItemSpec;
                 }
 

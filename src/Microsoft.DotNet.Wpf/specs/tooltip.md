@@ -70,18 +70,18 @@ When a parent element declares a tooltip, there are four ways to open (show) the
 Unless mentioned otherwise below, the tooltip is shown immediately and its size and position are governed by the placement properties described in [TO].
 
 ### Hover
-A hover occurs when the mouse enters the parent element and stays there for a certain time, without any other activity.
+A hover occurs when the mouse (or touch) enters the parent element and stays there for a certain time, without any other activity.
 The tooltip is opened after the hover time, whose value is a function of the `InitialShowDelay` and `BetweenShowDelay` properties, and whether another tooltip is already showing [TO].
 
 ### Keyboard focus
 When you use keyboard navigation to move focus to the parent element, the tooltip opens.
-(Using the mouse to move focus does not show the tooltip.)
+(Using the mouse or touch to move focus does not show the tooltip.)
 You can override this behavior using the `ShowsToolTipOnKeyboardFocus` properties.
 
 ### Keyboard shortcut
 When the parent has keyboard focus, typing Ctrl+Shift+F10 opens the tooltip.
 
-When the tooltip opens due to either of the keyboard actions, a [PlacementMode](https://docs.microsoft.com/en-us/dotnet/api/system.windows.controls.primitives.placementmode?view=net-5.0) value of `Mouse` or `MousePoint` is replaced by `Bottom`.
+When the tooltip opens due to either of the keyboard actions, the placement algorithm treats a [PlacementMode](https://docs.microsoft.com/en-us/dotnet/api/system.windows.controls.primitives.placementmode?view=net-5.0) value of `Mouse` or `MousePoint` as if it were `Bottom`.
 
 ### Programmatically
 [TODO: Check if this is possible.  If so, describe it]
@@ -148,19 +148,8 @@ Gets or sets whether the ToolTip is shown when its parent element acquires keybo
 ```
 
 ### Remarks
-Setting this property on ToolTip element helps control whether to open the tooltip when its parent element acquires focus by keyboard navigation.
-(Note: when the parent acquires focus by mouse-click or touch, the tooltip is not opened.)
-The tooltip is opened according to the following table, where the rows indicate the value of the `ToolTipService.ShowsToolTipOnKeyboardFocus` attached property on the parent element, and the columns indicate the value of the ToolTip element's `ShowsToolTipOnKeyboardFocus` property:
-
-|           | False | null  | True  |
-|-----------| ----- | ----  | ----  |
-| **False** | False | False | False |
-| **null**  | False | True  | True  |
-| **True**  | True  | True  | True  |
-
-If there is no ToolTip element, the 'null' column applies.
-
-In other words, honor an explicit value (True or False); if both the parent element and the ToolTip element have explicit values, the parent's value takes precedence;  if neither has an explicit value, open the tooltip.  The latter case is the default.
+Setting this property on a ToolTip element helps control whether to open the tooltip when its parent element acquires focus by keyboard navigation.
+See `ToolTipService.ShowsToolTipOnKeyboardFocus` (the previous section) for details.
 
 # Implementation
 This section describes details that are not part of the public documentation, but are nevertheless important.
@@ -272,6 +261,11 @@ Unfortunately this only helps in .NET 6.0, as servicing updates to older version
 [ET] discussed what that really means - whether to act on KeyDown or KeyUp, whether combinations should cause both the combination action and dismiss the tooltip (e.g. should Ctrl+C both copy text and dismiss the tooltip), etc.
 The interpretation given here is the consensus.
 
+### Design choices, history
+
+The structure of the new `ShowsToolTipOnKeyboardFocus` properties - an attached property defined by `ToolTipService` and a direct property defined by `ToolTip` - mirrors the structure of the existing placement properties.
+This handles the (frequent) case when there is no ToolTip object, and gives the app flexibility to override the default behavior on a per-class, per-ToolTip, or per-use basis.
+
 
 # Summary of behavior changes
 
@@ -288,6 +282,9 @@ Also, some changes were previously made in .NET 4.8 (and appear in .NET Core 3.0
 2. Ctrl-Shift-F10 opens or closes the tooltip.
 
 # API Details
+
+For convenience, here is a summary of the new public API surface.
+(Existing APIs can be found at [TO].)
 
 ```c#
 class ToolTipService

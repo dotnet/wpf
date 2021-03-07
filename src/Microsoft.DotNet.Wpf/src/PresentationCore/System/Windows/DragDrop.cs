@@ -1130,7 +1130,7 @@ namespace System.Windows
         #region Private Methods
 
         /// <summary>
-        /// Raise Drag(Enter/Over/Leave/Drop) events to the taret.
+        /// Raise Drag(Enter/Over/Leave/Drop) events to the target.
         /// </summary>
         private void RaiseDragEvent(RoutedEvent dragEvent, int dragDropKeyStates, ref int effects, DependencyObject target, Point targetPoint)
         {

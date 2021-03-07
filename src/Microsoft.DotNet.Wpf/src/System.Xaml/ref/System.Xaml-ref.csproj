@@ -3,7 +3,7 @@
     <AssemblyName>System.Xaml</AssemblyName>
     <PackageId>System.Xaml-ref</PackageId>
     <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Platforms>AnyCPU;x64;arm64</Platforms>
     <NoWarn>$(NoWarn);0618;NU5125;0618</NoWarn>
     <DefineConstants>$(DefineConstants);OLDRESOURCES;SYSTEM_XAML</DefineConstants>

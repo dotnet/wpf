@@ -39,16 +39,7 @@ The Tooltip Overview documents the existing behavior in WPF as of .NET 4.7.2.
 
 All the changes described here are required to appear in .NET 6.0.
 
-The behavior changes will also appear in servicing updates for earlier versions as follows:
-- .NET 4.6-4.7.2, .NET 4.8:  the next biannual accessibility update (expected summer 2021)
-- .NET Core 3.1, .NET 5.0:  same time frame as above, patch version TBD
-
-The API changes (and behavior that depends on them) are only in .NET 6.0;
-servicing updates cannot include changes to public API.
-
-In the servicing updates, the new behavior is opt-in by setting
-`Switch.UseLegacyAccessibilityFeatures.5` to false, as described [here](https://docs.microsoft.com/en-us/dotnet/framework/whats-new/whats-new-in-accessibility).
-
+They will not appear in any earlier versions, unless (and until) explicitly requested by customers providing the usual business justification for servicing.
 
 
 # Conceptual pages (How To)
@@ -91,7 +82,7 @@ A tooltip closes for one of the following reasons.
 
 - **Timeout**. When the tooltip's `ShowDuration` time expires, the tooltip closes.
 - **Hover ends**.  When the tooltip opened due to hover, moving the mouse outside a "safe region" closes the tooltip.
-The safe region is the union of the parent element, the tooltip, and the mouse buffer zone connecting the two (this is explained further in the next section).
+Moving the mouse in a straight line between the parent and the tooltip stays within the safe region.
 - **Keyboard Shortcut**.  When the parent has keyboard focus, typing Ctrl+Shift+F10 or simply Ctrl (without any other keys) closes the tooltip.
 - **Focus loss**.  When the tooltip opened due to keyboard activity, moving keyboard focus away from the parent element closes the tooltip.
 - **Editor activity**.  When the parent has a text editor, any editor activity closes the tooltip.  
@@ -100,19 +91,17 @@ Editor activity includes mouse clicks or keystrokes on the editing surface, and 
 - **Exclusion**.  Opening a tooltip or context menu (for any reason) closes the previously open tooltip, if any.
 - **Programmatically**.  [TODO: check if this is possible. If so, describe it.]
 
-## Mouse buffer zone
-When you open a tooltip by hovering the mouse over its parent element, you should be able to move the mouse onto the tooltip without closing the tooltip.
-To that end, WPF implicitly declares a *mouse buffer zone*: a rectangle that connects the parent element to the tooltip, in which you can move the mouse without closing the tooltip due to hover-end.
-(Note that the mouse still interacts in the usual way with elements in the buffer zone, and that interaction might close the tooltip.)
+## Safe region
+When you open a tooltip by hovering the mouse over its parent element, WPF implicitly computes a *safe region*: an area in which you can move the mouse without closing the tooltip due to hover-end.
+(Note that the mouse still interacts in the usual way with elements in the safe region, and that interaction might close the tooltip.)
 
-After using the usual placement rules to determine the size and position of the tooltip, WPF calculates the buffer zone to be a rectangle with the following properties:
-- it contains the shortest straight line between the parent and its tooltip
-- it is large enough to accommodate reasonable drift as you move the mouse along that line
-- it is no larger than needed to satisfy the first two properties
+After using the usual placement rules to determine the size and position of the tooltip, WPF tries to find a region with the following properties:
+- it contains the parent element and the tooltip
+- it contains any straight line connecting a point in the parent to a point in the tooltip
 
-In the common case where the tooltip overlaps its parent, the buffer zone may be empty.
 
-It may be impossible or impractical to find a suitable rectangle, in which case the buffer zone is empty and moving the mouse off the parent element will close the tooltip.
+It may be impossible or impractical to find a suitable region, in which case the safe region is the parent element (only); 
+moving the mouse off the parent element will close the tooltip.
 This only happens in extreme cases, for example when the tooltip and its parent are on different monitors. 
 
 
@@ -163,29 +152,16 @@ When this "infinite" value is specified, the implementation may choose to honor 
 **Typing Ctrl to dismiss the tooltip**.
 This response is triggered by the KeyUp event, and only if no other keys have been pressed since the KeyDown event.
 
-**Mouse buffer zone**.
-The public spec does not specify the exact size and position of the buffer zone;  this is intentional, so that users and apps don't take an inappropriate dependency.
-The implementation can meet the spec's vague requirements as follows
-(where D denotes a fixed number representing the allowable "drift" mentioned in the spec).
+**Safe region**.
+The implementation is expected to find a safe region with a third property:
 
-Consider the rectangles P and T corresponding respectively to the parent element and its tooltip as configured by the [standard placement logic](https://docs.microsoft.com/en-us/dotnet/desktop/wpf/controls/how-to-position-a-tooltip?view=netframeworkdesktop-4.8).
-We are to determine a rectangle B for the buffer zone.
-- If P and T intersect, no buffer is needed;  set B to empty.
-- If P and T are an extreme case, set B to empty.
-The implementation can define "extreme case" any way it likes, provided that the default values of the placement properties, or small variations lying within the guidelines set by WCAG and MAS, do not produce an "extreme case".
-- Extend the four sides of P.
-This divides the plane into 9 regions, like a tic-tac-toe board.
-There are four corner regions, four side regions, and one center region (P itself).
-T does not intersect the center region (that case was handled earlier), so it either lies entirely within one of the corner regions, or intersects exactly one of the side regions.
-- If T lies within a corner region, there is a unique shortest straight line connecting P and T, running from a vertex of P to a vertex of T.
-Form the bounding box of those two vertices, expand it by D pixels in all four directions, and set B to the result.
-- If T intersects a side region, there are many shortest straight lines connecting P and T, each running vertically (resp. horizontally) from a point on an edge of P to a point on an edge of T.
-Find the leftmost and rightmost (resp. topmost and bottommost) of these points, and form the bounding box of these four points (two from P, two from T).
-Expand this if necessary, to ensure that its width (resp. height) is at least 2D, and set B to the result.
+- it is no larger than needed to satisfy the first two properties
 
-The constant D is intentionally not specified.  The implementation can choose it, bearing in mind the tradeoff for an end-user intending either to move the mouse to the tooltip or to move the mouse away from the parent element.
-A larger value helps the former task, a smaller value helps the latter.
-Something on the order of 10 (device-independent) pixels seems about right.
+This is intentionally omitted in the public spec so that users and apps don't take an inappropriate dependency.
+
+Of course, the region described by the three properties is the convex hull of the union of the parent and its tooltip.
+When both are rectangles, it's the convex hull of the 8 corner points.
+The implementation can meet the spec's requirements using well-known algorithms for constructing and hit-testing the convex hull, optionally exploiting optimizations for the special case of two rectangles.
 
 # Discussion
 This section includes commentary on the spec.
@@ -215,8 +191,18 @@ This does not mean tooltips should appear in the tab-order or be focusable - the
 The clarification that it inhibits dismissal due to mouse-away comes from [ET];  this is clearly motivated by the "hoverable" requirement of [WCAG] and [MAS].
 
 [FD] does not specify the size and position of the buffer zone, beyond describing its width in a particular case.
-[ET] has several suggestions, including "the union of P and T" (meaning the minimum rectangle bounding both P and T), which was deemed too large.
-The definition used here, and the suggested implementation, are original in this spec.
+[ET] has several suggestions, including "the union of P and T" (meaning the minimum rectangle bounding both P and T), and an elaborate scheme for finding a rectangle that contains the *shortest* straight line connecting P to T.
+The former was deemed too large, and the latter failed a simple usability study where people naturally tried to move from P to T along any convenient straight line, not necessarily the shortest.
+The picture in [FD] fails the same study.
+
+The definition used here, and the suggested implementation, came about by abandoning the implication in [FD] that there was a *rectangular* "buffer zone" separate from P and T.
+Instead, the "any straight line" usability requirement leads naturally to the convex hull (it's equivalent to the definition), which is a non-rectangular area that includes P and T.
+The spec doesn't use [FD]'s term "mouse buffer zone" but instead uses "safe area", to emphasize this difference.
+
+[ET] raised the question of "drift", the deviation from a true straight line due to pixellation or to a human user's natural limits to aim the mouse precisely.
+This mattered for some of the proposals, but not for the convex hull proposal.
+The only time the convex hull will be too narrow to accomodate drift is when P and T are both too narrow themselves, and line up along the narrow direction.
+In other words, if you have trouble moving the mouse through the safe area, it's because you had the same trouble hitting P in the first place.
 
 [FD] does not specify the disposition of mouse events while moving through the buffer zone.
 [ET] discussed whether to deliver them to underlying elements or swallow them.
@@ -224,11 +210,15 @@ Delivering them means the underlying elements will react in their normal arbitra
 Swallowing them means breaking the fundamental design principle that "things behave the same whether a tooltip is showing or not".
 Ultimately, we do not know the user's intent - move to the tooltip vs. interact with an underlying control - so we choose to deliver the events. 
 This may defeat the user's intent to move to the tooltip, but only in rare cases;
-the buffer zone is often empty, and elements rarely react to mouse-move events in any impactful way.
+elements rarely react to mouse-move events in any impactful way.
+
+The spec's remark about "extreme cases" is motivated by the difficulty of computing a safe area that crosses monitor boundaries, especially if the monitors have different DPI.
+[ET] says we don't have to support that case, because an app that places a tooltip "far away" from its parent already fails to meet accessibility requirements.
+WPF already goes to some trouble to place a tooltip on the same monitor as its parent.
 
 [FD] does not say what happens to the buffer zone if the layout changes (e.g. scrolling).
-The spec says how to compute it when the tooltip opens, tacitly implying that it doesn't change if the parent or tooltip subsequently move.
-This could leave the buffer zone dangling, but it's an unlikely case and not worth the effort to handle.
+The spec says how to compute the safe area when the tooltip opens, tacitly implying that it doesn't change if the parent or tooltip subsequently move.
+This could leave the safe area dangling, but it's an unlikely case and not worth the effort to handle.
 
 [FD] says "Do not use a timeout to hide the tooltip."
 WPF will do this by default (or perhaps use a timeout of 25 days), but an app can request a timeout by setting `ShowDuration`.
@@ -272,7 +262,7 @@ This handles the (frequent) case when there is no ToolTip object, and gives the 
 For convenience, here are the behavior changes described in detail above.
 
 1. Change default value for `ToolTipService.ShowDuration` property from 5000 to `Int32.MaxValue`.
-2. Moving the mouse within the buffer zone does not close the tooltip.
+2. Moving the mouse within the safe area does not close the tooltip.
 3. (6.0 only) Properties `ToolTip.ShowsToolTipOnKeyboardFocus` and `TooltipService.ShowsToolTipOnKeyboardFocus` control whether acquiring keyboard focus shows the tooltip.
 4. Ctrl closes the tooltip.
 

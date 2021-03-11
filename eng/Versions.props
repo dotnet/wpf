@@ -8,21 +8,21 @@
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>5.0.2-servicing.20613.1</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>5.0.4-servicing.21117.2</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/coreclr -->
   <PropertyGroup>
     <MicrosoftNETCoreRuntimeCoreCLRVersion>5.0.0-alpha1.19562.1</MicrosoftNETCoreRuntimeCoreCLRVersion>
-    <MicrosoftNETCoreILDAsmVersion>5.0.2-servicing.20611.20</MicrosoftNETCoreILDAsmVersion>
-    <MicrosoftNETCoreILAsmVersion>5.0.2-servicing.20611.20</MicrosoftNETCoreILAsmVersion>
+    <MicrosoftNETCoreILDAsmVersion>5.0.4-servicing.21116.14</MicrosoftNETCoreILDAsmVersion>
+    <MicrosoftNETCoreILAsmVersion>5.0.4-servicing.21116.14</MicrosoftNETCoreILAsmVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
-    <MicrosoftNETCoreAppInternalVersion>5.0.2-servicing.20611.20</MicrosoftNETCoreAppInternalVersion>
+    <MicrosoftNETCoreAppInternalVersion>5.0.4-servicing.21116.14</MicrosoftNETCoreAppInternalVersion>
     <MicrosoftNETCoreAppRefVersion>5.0.0</MicrosoftNETCoreAppRefVersion>
-    <MicrosoftNETCoreAppRuntimewinx64Version>5.0.2</MicrosoftNETCoreAppRuntimewinx64Version>
-    <MicrosoftNETCorePlatformsVersion>5.0.0</MicrosoftNETCorePlatformsVersion>
-    <SystemDrawingCommonVersion>5.0.0</SystemDrawingCommonVersion>
+    <MicrosoftNETCoreAppRuntimewinx64Version>5.0.4</MicrosoftNETCoreAppRuntimewinx64Version>
+    <MicrosoftNETCorePlatformsVersion>5.0.1</MicrosoftNETCorePlatformsVersion>
+    <SystemDrawingCommonVersion>5.0.2</SystemDrawingCommonVersion>
     <SystemDirectoryServicesVersion>5.0.0</SystemDirectoryServicesVersion>
     <SystemReflectionMetadataLoadContextVersion>5.0.0</SystemReflectionMetadataLoadContextVersion>
   </PropertyGroup>
@@ -31,7 +31,7 @@
     <MicrosoftWin32RegistryPackageVersion>5.0.0</MicrosoftWin32RegistryPackageVersion>
     <SystemCodeDomPackageVersion>5.0.0</SystemCodeDomPackageVersion>
     <SystemConfigurationConfigurationManagerPackageVersion>5.0.0</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>5.0.0</SystemDiagnosticsEventLogPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>5.0.1</SystemDiagnosticsEventLogPackageVersion>
     <SystemReflectionEmitPackageVersion>5.0.0-alpha.1.19563.6</SystemReflectionEmitPackageVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
     <SystemSecurityAccessControlPackageVersion>5.0.0</SystemSecurityAccessControlPackageVersion>

@@ -88,6 +88,6 @@
     <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
   </PropertyGroup>
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>5.0.2-servicing.21117.2</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>5.0.2-servicing.21117.1</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

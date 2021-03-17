@@ -51,7 +51,6 @@ pr:
   branches:
     include:
     - master
-    - main 
     - release/3.* 
     - internal/release/3.*
     - release/5.*

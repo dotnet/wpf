@@ -18,7 +18,6 @@ using System.IO;
 using System.Printing;
 using System.Printing.Interop;
 using System.Security;
-using System.Drawing.Printing;
 
 namespace MS.Internal.Printing.Configuration
 {

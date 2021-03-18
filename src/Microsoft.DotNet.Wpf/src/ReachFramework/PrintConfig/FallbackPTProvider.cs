@@ -20,7 +20,6 @@ namespace MS.Internal.Printing.Configuration
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Drawing.Printing;
     using System.Globalization;
     using System.IO;
     using System.Printing;

@@ -780,7 +780,7 @@ namespace Microsoft.Build.Tasks.Windows
                     //  <Import Project = "Sdk.props" Sdk="Microsoft.NET.Sdk" />
                     //
                     XmlNode nodeImportProps = xmlProjectDoc.CreateElement("Import", root.NamespaceURI);
-                    XmlAttribute projectAttribute = xmlProjectDoc.CreateAttribute("Project", root.NamespaceURI);
+                    XmlAttribute projectAttribute = xmlProjectDoc.CreateAttribute("Project");
                     projectAttribute.Value = "Sdk.props";
                     nodeImportProps.Attributes.Append(projectAttribute);
                     nodeImportProps.Attributes.Append(xmlAttribute);
@@ -794,9 +794,9 @@ namespace Microsoft.Build.Tasks.Windows
                     //  <Import Project = "Sdk.targets" Sdk="Microsoft.NET.Sdk" 
                     //                
                     XmlNode nodeImportTargets = xmlProjectDoc.CreateElement("Import", root.NamespaceURI);
-                    XmlAttribute projectAttribute2 = xmlProjectDoc.CreateAttribute("Project", root.NamespaceURI);
+                    XmlAttribute projectAttribute2 = xmlProjectDoc.CreateAttribute("Project");
                     projectAttribute2.Value = "Sdk.targets";
-                    XmlAttribute projectAttribute3 = xmlProjectDoc.CreateAttribute("Sdk", root.NamespaceURI);
+                    XmlAttribute projectAttribute3 = xmlProjectDoc.CreateAttribute("Sdk");
                     projectAttribute3.Value = sdkValue;
                     nodeImportTargets.Attributes.Append(projectAttribute2);
                     nodeImportTargets.Attributes.Append(projectAttribute3);

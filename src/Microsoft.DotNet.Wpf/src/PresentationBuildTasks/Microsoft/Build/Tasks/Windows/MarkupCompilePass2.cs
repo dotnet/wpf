@@ -484,7 +484,7 @@ namespace Microsoft.Build.Tasks.Windows
         //
         // return value:
         //
-        //    If cache doesn't exist, or both LocalAppDef and LocallXaml Pages do not exist, return false
+        //    If cache doesn't exist, or both LocalAppDef and LocalXaml Pages do not exist, return false
         //    to indicate no further work required.
         //    otherwise, return true.
         //

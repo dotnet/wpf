@@ -698,10 +698,11 @@ namespace Microsoft.Build.Tasks.Windows
                 // Add the attribute to current item node.
                 nodeItem.SetAttributeNode(attrInclude);
 
-                if (TRUE == pItem.GetMetadata(EMBEDINTEROPTYPES))
+                string embedInteropTypesMetadata = pItem.GetMetadata(EMBEDINTEROPTYPES);
+                if (!String.IsNullOrEmpty(embedInteropTypesMetadata))
                 {
                     embedItem = xmlProjectDoc.CreateElement(EMBEDINTEROPTYPES, root.NamespaceURI);
-                    embedItem.InnerText = TRUE;
+                    embedItem.InnerText = embedInteropTypesMetadata; 
                     nodeItem.AppendChild(embedItem);
                 }
 
@@ -847,7 +848,6 @@ namespace Microsoft.Build.Tasks.Windows
         private const string ITEMGROUP_NAME = "ItemGroup";
         private const string INCLUDE_ATTR_NAME = "Include";
 
-        private const string TRUE = "True";
         private const string WPFTMP = "wpftmp";
 
         #endregion Private Fields

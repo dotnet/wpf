@@ -7,7 +7,6 @@
 namespace MS.Internal.Printing.Configuration
 {
     using System;
-    using System.Drawing.Printing;
     using System.Runtime.InteropServices;
     using System.Security;
 

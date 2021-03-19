@@ -20,7 +20,6 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Markup;
 using System.Printing;
-using System.Drawing.Printing;
 using MS.Utility;
 
 using Microsoft.Internal.AlphaFlattener;

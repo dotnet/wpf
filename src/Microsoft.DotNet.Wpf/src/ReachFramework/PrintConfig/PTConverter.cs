@@ -22,7 +22,6 @@ using System.Globalization;
 using System.Printing;
 using MS.Internal.Printing.Configuration;
 using System.Security;
-using System.Drawing.Printing;
 
 //[assembly:System.Runtime.InteropServices.ComVisibleAttribute(false)]
 

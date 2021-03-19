@@ -179,7 +179,18 @@ namespace Microsoft.Build.Tasks.Windows
                 globalProperties[assemblyNamePropertyName] = AssemblyName;
                 globalProperties[targetAssemblyProjectNamePropertyName] = currentProjectName;
 
-                retValue = BuildEngine.BuildProjectFile(tempProj, new string[] { CompileTargetName }, globalProperties, null);
+                Dictionary<string, ITaskItem[]> targetOutputs = new Dictionary<string, ITaskItem[]>();
+                retValue = BuildEngine.BuildProjectFile(tempProj, new string[] { CompileTargetName }, globalProperties, targetOutputs);
+
+                // If the inner build succeeds, retrieve the path to the local type assembly from the task's TargetOutputs.
+                if (retValue)
+                {
+                    // See Microsoft.WinFX.targets: TargetOutputs from '_CompileTemporaryAssembly' will always contain one item.
+                    // <Target Name="_CompileTemporaryAssembly"  DependsOnTargets="$(_CompileTemporaryAssemblyDependsOn)" Returns="$(IntermediateOutputPath)$(TargetFileName)"/>
+                    Debug.Assert(targetOutputs.ContainsKey(CompileTargetName));
+                    Debug.Assert(targetOutputs[CompileTargetName].Length == 1);
+                    TemporaryAssemblyForLocalTypeReference = targetOutputs[CompileTargetName][0].ItemSpec;
+                }
 
                 // Delete the temporary project file and generated files unless diagnostic mode has been requested
                 if (!GenerateTemporaryTargetAssemblyDebuggingInformation)
@@ -260,6 +271,7 @@ namespace Microsoft.Build.Tasks.Windows
                     ( nameof(AssemblyName), AssemblyName ),
                     ( nameof(IntermediateOutputPath), IntermediateOutputPath ),
                     ( nameof(BaseIntermediateOutputPath), BaseIntermediateOutputPath ),
+                    ( nameof(MSBuildProjectExtensionsPath), MSBuildProjectExtensionsPath),
                     ( "_TargetAssemblyProjectName", Path.GetFileNameWithoutExtension(CurrentProject)),
                     ( nameof(Analyzers), Analyzers )
                 };
@@ -276,7 +288,18 @@ namespace Microsoft.Build.Tasks.Windows
                 //
                 //  Compile the temporary target assembly project
                 //
-                retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, globalProperties, null);
+                Dictionary<string, ITaskItem[]> targetOutputs = new Dictionary<string, ITaskItem[]>();
+                retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, globalProperties, targetOutputs);
+
+                // If the inner build succeeds, retrieve the path to the local type assembly from the task's TargetOutputs.
+                if (retValue)
+                {
+                    // See Microsoft.WinFX.targets: TargetOutputs from '_CompileTemporaryAssembly' will always contain one item.
+                    // <Target Name="_CompileTemporaryAssembly"  DependsOnTargets="$(_CompileTemporaryAssemblyDependsOn)" Returns="$(IntermediateOutputPath)$(TargetFileName)"/>
+                    Debug.Assert(targetOutputs.ContainsKey(CompileTargetName));
+                    Debug.Assert(targetOutputs[CompileTargetName].Length == 1);
+                    TemporaryAssemblyForLocalTypeReference = targetOutputs[CompileTargetName][0].ItemSpec;
+                }
 
                 // Delete the temporary project file and generated files unless diagnostic mode has been requested
                 if (!GenerateTemporaryTargetAssemblyDebuggingInformation)
@@ -497,6 +520,31 @@ namespace Microsoft.Build.Tasks.Windows
         ///
         /// </summary>
         public string TemporaryTargetAssemblyProjectName 
+        { get; set; }
+
+        /// <summary>
+        ///
+        /// MSBuildProjectExtensionsPath
+        ///
+        /// Required for PackageReference support.
+        ///
+        /// MSBuildProjectExtensionsPath may be overridden and must be passed into the temporary project.
+        ///
+        /// This is required for some VS publishing scenarios.
+        ///
+        /// </summary>
+        public string MSBuildProjectExtensionsPath 
+        { get; set; }
+
+        /// <summary>
+        ///
+        /// TemporaryAssemblyForLocalTypeReference
+        ///
+        /// The path of the generated temporary local type assembly.  
+        ///
+        /// </summary>
+        [Output]
+        public string TemporaryAssemblyForLocalTypeReference 
         { get; set; }
 
         #endregion Public Properties
@@ -732,7 +780,7 @@ namespace Microsoft.Build.Tasks.Windows
                     //  <Import Project = "Sdk.props" Sdk="Microsoft.NET.Sdk" />
                     //
                     XmlNode nodeImportProps = xmlProjectDoc.CreateElement("Import", root.NamespaceURI);
-                    XmlAttribute projectAttribute = xmlProjectDoc.CreateAttribute("Project", root.NamespaceURI);
+                    XmlAttribute projectAttribute = xmlProjectDoc.CreateAttribute("Project");
                     projectAttribute.Value = "Sdk.props";
                     nodeImportProps.Attributes.Append(projectAttribute);
                     nodeImportProps.Attributes.Append(xmlAttribute);
@@ -746,9 +794,9 @@ namespace Microsoft.Build.Tasks.Windows
                     //  <Import Project = "Sdk.targets" Sdk="Microsoft.NET.Sdk" 
                     //                
                     XmlNode nodeImportTargets = xmlProjectDoc.CreateElement("Import", root.NamespaceURI);
-                    XmlAttribute projectAttribute2 = xmlProjectDoc.CreateAttribute("Project", root.NamespaceURI);
+                    XmlAttribute projectAttribute2 = xmlProjectDoc.CreateAttribute("Project");
                     projectAttribute2.Value = "Sdk.targets";
-                    XmlAttribute projectAttribute3 = xmlProjectDoc.CreateAttribute("Sdk", root.NamespaceURI);
+                    XmlAttribute projectAttribute3 = xmlProjectDoc.CreateAttribute("Sdk");
                     projectAttribute3.Value = sdkValue;
                     nodeImportTargets.Attributes.Append(projectAttribute2);
                     nodeImportTargets.Attributes.Append(projectAttribute3);
@@ -808,4 +856,5 @@ namespace Microsoft.Build.Tasks.Windows
     
     #endregion GenerateProjectForLocalTypeReference Task class
 }
+
 

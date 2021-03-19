@@ -180,7 +180,7 @@ namespace Microsoft.Build.Tasks.Windows
                 globalProperties[targetAssemblyProjectNamePropertyName] = currentProjectName;
 
                 Dictionary<string, ITaskItem[]> targetOutputs = new Dictionary<string, ITaskItem[]>();
-                retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, globalProperties, targetOutputs);
+                retValue = BuildEngine.BuildProjectFile(tempProj, new string[] { CompileTargetName }, globalProperties, targetOutputs);
 
                 // If the inner build succeeds, retrieve the path to the local type assembly from the task's TargetOutputs.
                 if (retValue)

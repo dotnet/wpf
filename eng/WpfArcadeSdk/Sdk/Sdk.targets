@@ -25,8 +25,10 @@
   <Import Project="$(WpfArcadeSdkToolsDir)TestProjects.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)CreateTestPayload.targets" Condition="'$(CreateTestPayload)'=='true'"/>
   <Import Project="$(WpfArcadeSdkToolsDir)GenAPI.targets"/>
+  <Import Project="$(WpfArcadeSdkToolsDir)Arcade.targets"/>
   
   <!-- PresentationBuildTasks related targets files -->
   <Import Project="$(WpfArcadeSdkToolsDir)Pbt.targets" Condition="'$(InternalMarkupCompilation)'=='true'"/>
   <Import Project="$(WpfArcadeSdkToolsDir)NoInternalTypeHelper.targets" />
+
 </Project>

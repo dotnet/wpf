@@ -1,0 +1,7 @@
+<Project>
+    <!-- Arcade.targets -->
+    <!-- WPF must call target _GenerateResxResource prior to building the local type reference assembly in target GenerateTemporaryTargetAssembly.  -->
+    <!-- This is required after removing the temporary project generation.  -->
+    <Target Name="WpfGenerateResxSource" BeforeTargets="GenerateTemporaryTargetAssembly" DependsOnTargets="_GenerateResxSource" />
+</Project>
+

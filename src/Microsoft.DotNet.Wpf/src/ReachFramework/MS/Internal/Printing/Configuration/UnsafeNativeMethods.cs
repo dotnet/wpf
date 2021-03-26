@@ -10,7 +10,6 @@ All rights reserved.
 namespace MS.Internal.Printing.Configuration
 {
     using System;
-    using System.Drawing.Printing;
     using System.Printing;
     using System.Runtime.ConstrainedExecution;
     using System.Runtime.InteropServices;

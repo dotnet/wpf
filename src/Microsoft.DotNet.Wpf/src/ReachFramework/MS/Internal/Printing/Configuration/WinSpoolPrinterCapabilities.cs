@@ -11,7 +11,6 @@ namespace MS.Internal.Printing.Configuration
 {
     using System;
     using System.Collections.Generic;
-    using System.Drawing.Printing;
     using System.Runtime.InteropServices;
     using System.Security;
     using MS.Internal.PrintWin32Thunk;

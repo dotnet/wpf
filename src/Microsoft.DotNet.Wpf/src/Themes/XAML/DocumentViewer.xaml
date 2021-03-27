@@ -1201,3 +1201,36 @@ See the LICENSE file in the project root for more information.
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!-- [[Aero.NormalColor, Aero2.NormalColor, AeroLite.NormalColor, Royale.NormalColor, Luna.NormalColor, Luna.Metallic, Luna.Homestead, Classic]] -->
+
+    <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=DocumentGridPageContainerWithBorder}"
+           TargetType="ContentControl" BasedOn="{x:Null}">
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="5" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="5" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border Background="White" BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" Grid.ColumnSpan="2">
+                            <ContentPresenter />
+                        </Border>
+
+                        <Rectangle Fill="Black" Opacity="0.35" Grid.Column="2" Grid.Row="1" />
+                        <Rectangle Fill="Black" Opacity="0.35" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>

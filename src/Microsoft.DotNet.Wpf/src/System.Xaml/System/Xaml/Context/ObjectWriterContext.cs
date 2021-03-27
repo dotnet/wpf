@@ -258,7 +258,7 @@ namespace MS.Internal.Xaml.Context
         public override IEnumerable<NamespaceDeclaration> GetNamespacePrefixes()
         {
             ObjectWriterFrame frame = _stack.CurrentFrame;
-            Dictionary<string, string> keys = new Dictionary<string, string>();
+            HashSet<string> keys = new HashSet<string>();
 
             while (frame.Depth > 0)
             {
@@ -266,9 +266,8 @@ namespace MS.Internal.Xaml.Context
                 {
                     foreach (NamespaceDeclaration namespaceDeclaration in frame.GetNamespacePrefixes())
                     {
-                        if (!keys.ContainsKey(namespaceDeclaration.Prefix))
+                        if (keys.Add(namespaceDeclaration.Prefix))
                         {
-                            keys.Add(namespaceDeclaration.Prefix, null);
                             yield return namespaceDeclaration;
                         }
                     }

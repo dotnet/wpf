@@ -28,7 +28,7 @@ namespace MS.Internal.Resources
 
             if (_contentFiles != null && _contentFiles.Count > 0)
             {                
-                if (_contentFiles.ContainsKey(partName))
+                if (_contentFiles.Contains(partName))
                 {
                     return true;
                 }
@@ -40,9 +40,9 @@ namespace MS.Internal.Resources
         //
         // Get a list of Content Files for a given Assembly.
         //
-        static internal Dictionary<string, string> GetContentFiles(Assembly asm)
+        static internal HashSet<string> GetContentFiles(Assembly asm)
         {
-            Dictionary<string, string> contentFiles = null;
+            HashSet<string> contentFiles = null;
 
             Attribute[] assemblyAttributes;
 
@@ -53,7 +53,7 @@ namespace MS.Internal.Resources
                 {
                     // If we have no entry assembly return an empty list because
                     // we can't have any content files.
-                    return new Dictionary<string, string>();
+                    return new HashSet<string>();
                 }
             }
 
@@ -63,20 +63,20 @@ namespace MS.Internal.Resources
 
             if (assemblyAttributes != null && assemblyAttributes.Length > 0)
             {
-                contentFiles = new Dictionary<string, string>(assemblyAttributes.Length, StringComparer.OrdinalIgnoreCase);
+                contentFiles = new HashSet<string>(assemblyAttributes.Length, StringComparer.OrdinalIgnoreCase);
 
                 for (int i=0; i<assemblyAttributes.Length; i++)
                 {
                     AssemblyAssociatedContentFileAttribute aacf;
 
                     aacf = (AssemblyAssociatedContentFileAttribute) assemblyAttributes[i];
-                    contentFiles.Add(aacf.RelativeContentFilePath, null);
+                    contentFiles.Add(aacf.RelativeContentFilePath);
                 }
             }
 
             return contentFiles;
         }
 
-        private static Dictionary<string, string> _contentFiles;
+        private static HashSet<string> _contentFiles;
     }
 }

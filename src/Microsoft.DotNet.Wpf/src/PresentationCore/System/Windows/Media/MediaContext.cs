@@ -223,7 +223,7 @@ namespace System.Windows.Media
             _contextGuid = Guid.NewGuid();
 
             // Create a dictionary in which we manage the CompositionTargets.
-            _registeredICompositionTargets = new Dictionary<ICompositionTarget, object>();
+            _registeredICompositionTargets = new HashSet<ICompositionTarget>();
 
             _renderModeMessage = new DispatcherOperationCallback(InvalidateRenderMode);
 
@@ -367,7 +367,7 @@ namespace System.Windows.Media
         {
             Debug.Assert(CheckAccess());
             
-            foreach (ICompositionTarget target in _registeredICompositionTargets.Keys)
+            foreach (ICompositionTarget target in _registeredICompositionTargets)
             {
                 HwndTarget hwndTarget = target as HwndTarget;
 
@@ -1441,7 +1441,7 @@ namespace System.Windows.Media
 
                 // First make a copy of the dictionarys contents, because ICompositionTarget.Dispose modifies this collection.
                 ICompositionTarget[] registeredVTs = new ICompositionTarget[_registeredICompositionTargets.Count];
-                _registeredICompositionTargets.Keys.CopyTo(registeredVTs, 0);
+                _registeredICompositionTargets.CopyTo(registeredVTs, 0);
 
                 // Iterate through the ICompositionTargets and dispose them. Be careful, ICompositionTarget.Dispose
                 // removes the ICompositionTargets from the Dictionary. This is why we don't iterate the Dictionary directly.
@@ -1519,7 +1519,7 @@ namespace System.Windows.Media
                 iv.AddRefOnChannel(channelSet.Channel, channelSet.OutOfBandChannel);
             }
 
-            _registeredICompositionTargets.Add(iv, null); // We use the dictionary just as a set.  
+            _registeredICompositionTargets.Add(iv);
         }
 
         /// <summary>
@@ -2067,7 +2067,7 @@ namespace System.Windows.Media
                 // ----------------------------------------------------------------
                 // 1) Render each registered ICompositionTarget to finish up the batch.
 
-                foreach (ICompositionTarget registeredTarget in _registeredICompositionTargets.Keys)
+                foreach (ICompositionTarget registeredTarget in _registeredICompositionTargets)
                 {
                     DUCE.ChannelSet channelSet;
                     channelSet.Channel = _channelManager.Channel;
@@ -2727,7 +2727,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Set of ICompositionTargets that are currently registered with the MediaSystem;
         /// </summary>
-        private Dictionary<ICompositionTarget, object> _registeredICompositionTargets;
+        private HashSet<ICompositionTarget> _registeredICompositionTargets;
 
         /// <summary>
         /// This are the the permissions the Context has to access Visual APIs.

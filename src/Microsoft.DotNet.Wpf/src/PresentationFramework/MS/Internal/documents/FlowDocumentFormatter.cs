@@ -194,7 +194,7 @@ namespace MS.Internal.Documents
         {
             double max, min;
             Size pageSize = new Size(_document.PageWidth, double.PositiveInfinity);
-            if (DoubleUtil.IsNaN(pageSize.Width))
+            if (double.IsNaN(pageSize.Width))
             {
                 pageSize.Width = constraint.Width;
                 max = _document.MaxPageWidth;
@@ -225,19 +225,19 @@ namespace MS.Internal.Documents
             Thickness pageMargin = _document.PagePadding;
 
             // If Padding value is 'Auto', treat it as 1*LineHeight.
-            if (DoubleUtil.IsNaN(pageMargin.Left))
+            if (double.IsNaN(pageMargin.Left))
             {
                 pageMargin.Left = lineHeight;
             }
-            if (DoubleUtil.IsNaN(pageMargin.Top))
+            if (double.IsNaN(pageMargin.Top))
             {
                 pageMargin.Top = lineHeight;
             }
-            if (DoubleUtil.IsNaN(pageMargin.Right))
+            if (double.IsNaN(pageMargin.Right))
             {
                 pageMargin.Right = lineHeight;
             }
-            if (DoubleUtil.IsNaN(pageMargin.Bottom))
+            if (double.IsNaN(pageMargin.Bottom))
             {
                 pageMargin.Bottom = lineHeight;
             }

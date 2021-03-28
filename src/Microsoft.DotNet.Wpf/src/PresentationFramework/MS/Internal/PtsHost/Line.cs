@@ -359,7 +359,7 @@ namespace MS.Internal.PtsHost
             Size desiredSize;
             if (_formattingContext.MeasureMode)
             {
-                Debug.Assert(!DoubleUtil.IsNaN(_trackWidth), "Track width must be set for measure pass.");
+                Debug.Assert(!double.IsNaN(_trackWidth), "Track width must be set for measure pass.");
 
                 // Always measure at infinity for bottomless, consistent constraint.
                 double pageHeight = _paraClient.Paragraph.StructuralCache.CurrentFormatContext.DocumentPageSize.Height;

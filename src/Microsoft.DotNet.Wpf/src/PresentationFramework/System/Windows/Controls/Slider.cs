@@ -1362,7 +1362,7 @@ namespace System.Windows.Controls
         {
             double d = (double)value;
 
-            return !(DoubleUtil.IsNaN(d) || double.IsInfinity(d));
+            return !(double.IsNaN(d) || double.IsInfinity(d));
         }
 
 

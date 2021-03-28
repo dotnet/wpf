@@ -85,7 +85,7 @@ namespace System.Windows.Controls
                     DataGridLengthUnitType type;
                     double doubleValue = Convert.ToDouble(value, culture);
 
-                    if (DoubleUtil.IsNaN(doubleValue))
+                    if (double.IsNaN(doubleValue))
                     {
                         // This allows for conversion from Width / Height = "Auto" 
                         doubleValue = 1.0;

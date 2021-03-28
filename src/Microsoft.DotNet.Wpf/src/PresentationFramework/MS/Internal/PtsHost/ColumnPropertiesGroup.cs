@@ -81,7 +81,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Column width is set?
         // ------------------------------------------------------------------
-        internal bool ColumnWidthAuto { get { return DoubleUtil.IsNaN(_columnWidth); } }
+        internal bool ColumnWidthAuto { get { return double.IsNaN(_columnWidth); } }
 
         // ------------------------------------------------------------------
         // Column gap is set?
@@ -90,7 +90,7 @@ namespace MS.Internal.PtsHost
         {
             get
             {
-                return DoubleUtil.IsNaN(_columnGap);
+                return double.IsNaN(_columnGap);
             }
         }
     }

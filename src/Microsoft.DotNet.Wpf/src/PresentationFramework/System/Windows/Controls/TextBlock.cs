@@ -4140,7 +4140,7 @@ Debug.Assert(lineCount == LineCount);
         {
             TextBlock tb = (TextBlock) d;
 
-            if(DoubleUtil.IsNaN((double) value))
+            if(double.IsNaN((double) value))
             {
                 return tb._baselineOffset;
             }
@@ -4156,7 +4156,7 @@ Debug.Assert(lineCount == LineCount);
         public bool ShouldSerializeBaselineOffset()
         {
             object localBaseline = ReadLocalValue(BaselineOffsetProperty);
-            return (localBaseline != DependencyProperty.UnsetValue) && !DoubleUtil.IsNaN((double) localBaseline);
+            return (localBaseline != DependencyProperty.UnsetValue) && !double.IsNaN((double) localBaseline);
         }
 
         //-------------------------------------------------------------------

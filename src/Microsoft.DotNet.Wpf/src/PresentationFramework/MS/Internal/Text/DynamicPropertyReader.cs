@@ -208,7 +208,7 @@ namespace MS.Internal.Text
         {
             double lineHeight = (double)d.GetValue(Block.LineHeightProperty);
             // If LineHeight value is 'Auto', treat it as LineSpacing * FontSize.
-            if (DoubleUtil.IsNaN(lineHeight))
+            if (double.IsNaN(lineHeight))
             {
                 FontFamily fontFamily = (FontFamily)d.GetValue(TextElement.FontFamilyProperty);
                 double fontSize = (double)d.GetValue(TextElement.FontSizeProperty);

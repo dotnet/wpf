@@ -730,14 +730,14 @@ namespace System.Windows.Documents
 
             double width = fp.Width;
 
-            if (DoubleUtil.IsNaN(width))
+            if (double.IsNaN(width))
             {
                 fp.Width = _pageWidth;
             }
 
             double height = fp.Height;
 
-            if (DoubleUtil.IsNaN(height))
+            if (double.IsNaN(height))
             {
                 fp.Height = _pageHeight;
             }

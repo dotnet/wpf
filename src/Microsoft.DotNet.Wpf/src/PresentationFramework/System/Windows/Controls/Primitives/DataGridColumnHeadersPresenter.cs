@@ -917,7 +917,7 @@ namespace System.Windows.Controls.Primitives
         private static double GetColumnEstimatedWidth(DataGridColumn column, double averageColumnWidth)
         {
             double columnEstimatedWidth = column.Width.DisplayValue;
-            if (DoubleUtil.IsNaN(columnEstimatedWidth))
+            if (double.IsNaN(columnEstimatedWidth))
             {
                 columnEstimatedWidth = Math.Max(averageColumnWidth, column.MinWidth);
                 columnEstimatedWidth = Math.Min(columnEstimatedWidth, column.MaxWidth);

@@ -886,7 +886,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            if (DoubleUtil.IsNaN(nonStarSpace))
+            if (double.IsNaN(nonStarSpace))
             {
                 return;
             }
@@ -900,7 +900,7 @@ namespace System.Windows.Controls
         private double ComputeStarColumnWidths(double availableStarSpace)
         {
             Debug.Assert(
-                !DoubleUtil.IsNaN(availableStarSpace) && !Double.IsNegativeInfinity(availableStarSpace),
+                !double.IsNaN(availableStarSpace) && !Double.IsNegativeInfinity(availableStarSpace),
                 "availableStarSpace is not valid");
 
             List<DataGridColumn> unResolvedColumns = new List<DataGridColumn>();
@@ -1089,7 +1089,7 @@ namespace System.Windows.Controls
             foreach (DataGridColumn column in this)
             {
                 DataGridLength width = column.Width;
-                if (column.IsVisible && !DoubleUtil.IsNaN(width.DisplayValue))
+                if (column.IsVisible && !double.IsNaN(width.DisplayValue))
                 {
                     eligibleDisplayValue += width.DisplayValue;
                     totalFactors++;
@@ -1192,7 +1192,7 @@ namespace System.Windows.Controls
                 if (!width.IsStar)
                 {
                     double minWidth = column.MinWidth;
-                    double displayValue = DataGridHelper.CoerceToMinMax(DoubleUtil.IsNaN(width.DesiredValue) ? minWidth : width.DesiredValue, minWidth, column.MaxWidth);
+                    double displayValue = DataGridHelper.CoerceToMinMax(double.IsNaN(width.DesiredValue) ? minWidth : width.DesiredValue, minWidth, column.MaxWidth);
                     if (!DoubleUtil.AreClose(width.DisplayValue, displayValue))
                     {
                         column.SetWidthInternal(new DataGridLength(width.Value, width.UnitType, width.DesiredValue, displayValue));

@@ -156,7 +156,7 @@ namespace System.Windows
 
             if(!allowNaN)
             {
-                if(DoubleUtil.IsNaN(Left) || DoubleUtil.IsNaN(Right) || DoubleUtil.IsNaN(Top) || DoubleUtil.IsNaN(Bottom))
+                if(double.IsNaN(Left) || double.IsNaN(Right) || double.IsNaN(Top) || double.IsNaN(Bottom))
                     return false;
             }
 
@@ -227,10 +227,10 @@ namespace System.Windows
         //  SEEALSO
         public static bool operator==(Thickness t1, Thickness t2)
         {
-            return (    (t1._Left   == t2._Left   || (DoubleUtil.IsNaN(t1._Left)   && DoubleUtil.IsNaN(t2._Left)))
-                    &&  (t1._Top    == t2._Top    || (DoubleUtil.IsNaN(t1._Top)    && DoubleUtil.IsNaN(t2._Top)))
-                    &&  (t1._Right  == t2._Right  || (DoubleUtil.IsNaN(t1._Right)  && DoubleUtil.IsNaN(t2._Right)))
-                    &&  (t1._Bottom == t2._Bottom || (DoubleUtil.IsNaN(t1._Bottom) && DoubleUtil.IsNaN(t2._Bottom)))
+            return (    (t1._Left   == t2._Left   || (double.IsNaN(t1._Left)   && double.IsNaN(t2._Left)))
+                    &&  (t1._Top    == t2._Top    || (double.IsNaN(t1._Top)    && double.IsNaN(t2._Top)))
+                    &&  (t1._Right  == t2._Right  || (double.IsNaN(t1._Right)  && double.IsNaN(t2._Right)))
+                    &&  (t1._Bottom == t2._Bottom || (double.IsNaN(t1._Bottom) && double.IsNaN(t2._Bottom)))
                     );
         }
 

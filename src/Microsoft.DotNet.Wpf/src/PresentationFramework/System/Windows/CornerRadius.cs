@@ -124,10 +124,10 @@ namespace System.Windows
         //  SEEALSO
         public static bool operator==(CornerRadius cr1, CornerRadius cr2)
         {
-            return (    (cr1._topLeft     == cr2._topLeft     || (DoubleUtil.IsNaN(cr1._topLeft)     && DoubleUtil.IsNaN(cr2._topLeft)))
-                    &&  (cr1._topRight    == cr2._topRight    || (DoubleUtil.IsNaN(cr1._topRight)    && DoubleUtil.IsNaN(cr2._topRight)))
-                    &&  (cr1._bottomRight == cr2._bottomRight || (DoubleUtil.IsNaN(cr1._bottomRight) && DoubleUtil.IsNaN(cr2._bottomRight)))
-                    &&  (cr1._bottomLeft  == cr2._bottomLeft  || (DoubleUtil.IsNaN(cr1._bottomLeft)  && DoubleUtil.IsNaN(cr2._bottomLeft)))
+            return (    (cr1._topLeft     == cr2._topLeft     || (double.IsNaN(cr1._topLeft)     && double.IsNaN(cr2._topLeft)))
+                    &&  (cr1._topRight    == cr2._topRight    || (double.IsNaN(cr1._topRight)    && double.IsNaN(cr2._topRight)))
+                    &&  (cr1._bottomRight == cr2._bottomRight || (double.IsNaN(cr1._bottomRight) && double.IsNaN(cr2._bottomRight)))
+                    &&  (cr1._bottomLeft  == cr2._bottomLeft  || (double.IsNaN(cr1._bottomLeft)  && double.IsNaN(cr2._bottomLeft)))
                     );
         }
 
@@ -204,7 +204,7 @@ namespace System.Windows
 
             if (!allowNaN)
             {
-                if (DoubleUtil.IsNaN(_topLeft) || DoubleUtil.IsNaN(_topRight) || DoubleUtil.IsNaN(_bottomLeft) || DoubleUtil.IsNaN(_bottomRight))
+                if (double.IsNaN(_topLeft) || double.IsNaN(_topRight) || double.IsNaN(_bottomLeft) || double.IsNaN(_bottomRight))
                 {
                     return (false);
                 }

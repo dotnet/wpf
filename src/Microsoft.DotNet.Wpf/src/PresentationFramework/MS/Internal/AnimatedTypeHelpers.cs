@@ -166,7 +166,7 @@ namespace MS.Internal.PresentationFramework
         private static bool IsInvalidDouble(double value)
         {
             return Double.IsInfinity(value)
-                || DoubleUtil.IsNaN(value);
+                || double.IsNaN(value);
         }
 
         #endregion

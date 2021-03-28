@@ -275,41 +275,14 @@ namespace MS.Internal
         /// <returns>returns whether the Rect has NaN</returns>        
         public static bool RectHasNaN(Rect r)
         {
-            if (    DoubleUtil.IsNaN(r.X)
-                 || DoubleUtil.IsNaN(r.Y) 
-                 || DoubleUtil.IsNaN(r.Height)
-                 || DoubleUtil.IsNaN(r.Width) )
+            if (    double.IsNaN(r.X)
+                 || double.IsNaN(r.Y) 
+                 || double.IsNaN(r.Height)
+                 || double.IsNaN(r.Width) )
             {
                 return true;
             }
             return false;                               
         }
-
-
-#if !PBTCOMPILER
-
-        [StructLayout(LayoutKind.Explicit)]
-        private struct NanUnion
-        {
-            [FieldOffset(0)] internal double DoubleValue;
-            [FieldOffset(0)] internal UInt64 UintValue;
-        }
-
-        // The standard CLR double.IsNaN() function is approximately 100 times slower than our own wrapper,
-        // so please make sure to use DoubleUtil.IsNaN() in performance sensitive code.
-        // PS item that tracks the CLR improvement is DevDiv Schedule : 26916.
-        // IEEE 754 : If the argument is any value in the range 0x7ff0000000000001L through 0x7fffffffffffffffL 
-        // or in the range 0xfff0000000000001L through 0xffffffffffffffffL, the result will be NaN.         
-        public static bool IsNaN(double value)
-        {
-            NanUnion t = new NanUnion();
-            t.DoubleValue = value;
-
-            UInt64 exp = t.UintValue & 0xfff0000000000000;
-            UInt64 man = t.UintValue & 0x000fffffffffffff;
-            
-            return (exp == 0x7ff0000000000000 || exp == 0xfff0000000000000) && (man != 0);
-        }
-#endif
     }
 }

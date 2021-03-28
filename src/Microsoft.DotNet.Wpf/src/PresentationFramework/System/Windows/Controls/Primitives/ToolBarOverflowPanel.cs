@@ -47,7 +47,7 @@ namespace System.Windows.Controls.Primitives
         private static bool IsWrapWidthValid(object value)
         {
             double v = (double)value;
-            return (DoubleUtil.IsNaN(v)) || (DoubleUtil.GreaterThanOrClose(v, 0d) && !Double.IsPositiveInfinity(v));
+            return (double.IsNaN(v)) || (DoubleUtil.GreaterThanOrClose(v, 0d) && !Double.IsPositiveInfinity(v));
         }
         #endregion Properties
 

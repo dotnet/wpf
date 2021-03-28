@@ -534,11 +534,11 @@ namespace MS.Internal.Documents
                 _dispatcherObject.VerifyAccess();
 
                 Size newPageSize = value;
-                if (DoubleUtil.IsNaN(newPageSize.Width))
+                if (double.IsNaN(newPageSize.Width))
                 {
                     newPageSize.Width = _defaultPageSize.Width;
                 }
-                if (DoubleUtil.IsNaN(newPageSize.Height))
+                if (double.IsNaN(newPageSize.Height))
                 {
                     newPageSize.Height = _defaultPageSize.Height;
                 }
@@ -853,7 +853,7 @@ namespace MS.Internal.Documents
         {
             double max, min;
             Size pageSize = new Size(_document.PageWidth, _document.PageHeight);
-            if (DoubleUtil.IsNaN(pageSize.Width))
+            if (double.IsNaN(pageSize.Width))
             {
                 pageSize.Width = _pageSize.Width;
                 max = _document.MaxPageWidth;
@@ -867,7 +867,7 @@ namespace MS.Internal.Documents
                     pageSize.Width = min;
                 }
             }
-            if (DoubleUtil.IsNaN(pageSize.Height))
+            if (double.IsNaN(pageSize.Height))
             {
                 pageSize.Height = _pageSize.Height;
                 max = _document.MaxPageHeight;

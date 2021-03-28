@@ -445,8 +445,8 @@ namespace System.Windows.Shapes
 
         internal bool SizeIsInvalidOrEmpty(Size size)
         {
-            return (DoubleUtil.IsNaN(size.Width) ||
-                    DoubleUtil.IsNaN(size.Height) ||
+            return (double.IsNaN(size.Width) ||
+                    double.IsNaN(size.Height) ||
                     size.IsEmpty);
         }
 
@@ -455,7 +455,7 @@ namespace System.Windows.Shapes
             get
             {
                 double strokeThickness = StrokeThickness;
-                return (Stroke == null) || DoubleUtil.IsNaN(strokeThickness) || DoubleUtil.IsZero(strokeThickness);
+                return (Stroke == null) || double.IsNaN(strokeThickness) || DoubleUtil.IsZero(strokeThickness);
             }
         }
 
@@ -524,12 +524,12 @@ namespace System.Windows.Shapes
         internal static bool IsDoubleFiniteNonNegative(object o)
         {
             double d = (double)o;
-            return !(Double.IsInfinity(d) || DoubleUtil.IsNaN(d) || d < 0.0);
+            return !(Double.IsInfinity(d) || double.IsNaN(d) || d < 0.0);
         }
         internal static bool IsDoubleFinite(object o)
         {
             double d = (double)o;
-            return !(Double.IsInfinity(d) || DoubleUtil.IsNaN(d));
+            return !(Double.IsInfinity(d) || double.IsNaN(d));
         }
         internal static bool IsDoubleFiniteOrNaN(object o)
         {

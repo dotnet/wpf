@@ -1181,7 +1181,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static bool IsHeightValid(object value)
         {
             double v = (double)value;
-            return (DoubleUtil.IsNaN(v)) || (v >= 0.0d && !Double.IsPositiveInfinity(v));
+            return (double.IsNaN(v)) || (v >= 0.0d && !Double.IsPositiveInfinity(v));
         }
 
         private static void OnHasGalleryChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

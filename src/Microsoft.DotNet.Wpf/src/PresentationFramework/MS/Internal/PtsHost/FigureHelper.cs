@@ -123,7 +123,7 @@ namespace MS.Internal.PtsHost
                 }
             }
     
-            Invariant.Assert(!DoubleUtil.IsNaN(value));
+            Invariant.Assert(!double.IsNaN(value));
     
             return value;
         }
@@ -174,7 +174,7 @@ namespace MS.Internal.PtsHost
                 value = FigureHelper.CalculateFigureCommon(figureLength);
             }
 
-            if(!DoubleUtil.IsNaN(value))
+            if(!double.IsNaN(value))
             {
                 FigureVerticalAnchor verticalAnchor = figure.VerticalAnchor;
 

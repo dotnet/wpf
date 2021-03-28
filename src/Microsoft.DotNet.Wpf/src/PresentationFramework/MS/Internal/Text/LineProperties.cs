@@ -164,7 +164,7 @@ namespace MS.Internal.Text
         /// </param>
         internal double CalcLineAdvanceForTextParagraph(TextParagraph textParagraph, int dcp, double lineAdvance)
         {
-            if (!DoubleUtil.IsNaN(_lineHeight))
+            if (!double.IsNaN(_lineHeight))
             {
                 switch (LineStackingStrategy)
                 {
@@ -206,7 +206,7 @@ namespace MS.Internal.Text
         internal double CalcLineAdvance(double lineAdvance)
         {
             // We support MaxHeight and BlockLineHeight stacking strategies
-            if (!DoubleUtil.IsNaN(_lineHeight))
+            if (!double.IsNaN(_lineHeight))
             {
                 switch (LineStackingStrategy)
                 {

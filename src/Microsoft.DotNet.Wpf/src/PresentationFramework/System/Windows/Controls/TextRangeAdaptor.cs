@@ -1368,7 +1368,7 @@ namespace MS.Internal.Automation
         /// </summary>
         private static double NativeObjectLengthToPoints(double length)
         {
-            return (DoubleUtil.IsNaN(length) ? 0d : (length * 72.0 / 96.0));
+            return (double.IsNaN(length) ? 0d : (length * 72.0 / 96.0));
         }
 
         /// <summary>

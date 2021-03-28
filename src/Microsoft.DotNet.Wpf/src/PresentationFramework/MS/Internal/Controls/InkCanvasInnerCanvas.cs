@@ -92,7 +92,7 @@ namespace MS.Internal.Controls
                 // For Right/Bottom, only the child.Width/Height will be used. Those properties will be used by the arrange 
                 // but not the measure.
                 double left = (double)InkCanvas.GetLeft(child);
-                if (!DoubleUtil.IsNaN(left))
+                if (!double.IsNaN(left))
                 {
                     newSize.Width = Math.Max(newSize.Width, left + child.DesiredSize.Width);
                 }
@@ -102,7 +102,7 @@ namespace MS.Internal.Controls
                 }
 
                 double top = (double)InkCanvas.GetTop(child);
-                if (!DoubleUtil.IsNaN(top))
+                if (!double.IsNaN(top))
                 {
                     newSize.Height = Math.Max(newSize.Height, top + child.DesiredSize.Height);
                 }
@@ -143,7 +143,7 @@ namespace MS.Internal.Controls
                 //If Left is not specified, then Right is used
                 //If both are not there, then 0
                 double left = (double)InkCanvas.GetLeft(child);
-                if (!DoubleUtil.IsNaN(left))
+                if (!double.IsNaN(left))
                 {
                     x = left;
                 }
@@ -151,14 +151,14 @@ namespace MS.Internal.Controls
                 {
                     double right = (double)InkCanvas.GetRight(child);
 
-                    if (!DoubleUtil.IsNaN(right))
+                    if (!double.IsNaN(right))
                     {
                         x = arrangeSize.Width - child.DesiredSize.Width - right;
                     }
                 }
 
                 double top = (double)InkCanvas.GetTop(child);
-                if (!DoubleUtil.IsNaN(top))
+                if (!double.IsNaN(top))
                 {
                     y = top;
                 }
@@ -166,7 +166,7 @@ namespace MS.Internal.Controls
                 {
                     double bottom = (double)InkCanvas.GetBottom(child);
 
-                    if (!DoubleUtil.IsNaN(bottom))
+                    if (!double.IsNaN(bottom))
                     {
                         y = arrangeSize.Height - child.DesiredSize.Height - bottom;
                     }

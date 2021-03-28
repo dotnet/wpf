@@ -1618,10 +1618,10 @@ namespace System.Windows.Controls
 
                             //  sanity check: totalRemainingSize and sizeToDistribute must be real positive numbers
                             Debug.Assert(   !double.IsInfinity(totalRemainingSize)
-                                        &&  !DoubleUtil.IsNaN(totalRemainingSize)
+                                        &&  !double.IsNaN(totalRemainingSize)
                                         &&  totalRemainingSize > 0
                                         &&  !double.IsInfinity(sizeToDistribute)
-                                        &&  !DoubleUtil.IsNaN(sizeToDistribute)
+                                        &&  !double.IsNaN(sizeToDistribute)
                                         &&  sizeToDistribute > 0    );
 
                             for (int i = 0; i < count; ++i)

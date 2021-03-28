@@ -43,7 +43,7 @@ namespace System.Windows.Controls
         {
             DataGridColumnFloatingHeader header = (DataGridColumnFloatingHeader)d;
             double width = (double)e.NewValue;
-            if (header._visualBrushCanvas != null && !DoubleUtil.IsNaN(width))
+            if (header._visualBrushCanvas != null && !double.IsNaN(width))
             {
                 VisualBrush brush = header._visualBrushCanvas.Background as VisualBrush;
                 if (brush != null)
@@ -58,7 +58,7 @@ namespace System.Windows.Controls
         {
             double width = (double)baseValue;
             DataGridColumnFloatingHeader header = (DataGridColumnFloatingHeader)d;
-            if (header._referenceHeader != null && DoubleUtil.IsNaN(width))
+            if (header._referenceHeader != null && double.IsNaN(width))
             {
                 return header._referenceHeader.ActualWidth + header.GetVisualCanvasMarginX();
             }
@@ -70,7 +70,7 @@ namespace System.Windows.Controls
         {
             DataGridColumnFloatingHeader header = (DataGridColumnFloatingHeader)d;
             double height = (double)e.NewValue;
-            if (header._visualBrushCanvas != null && !DoubleUtil.IsNaN(height))
+            if (header._visualBrushCanvas != null && !double.IsNaN(height))
             {
                 VisualBrush brush = header._visualBrushCanvas.Background as VisualBrush;
                 if (brush != null)
@@ -85,7 +85,7 @@ namespace System.Windows.Controls
         {
             double height = (double)baseValue;
             DataGridColumnFloatingHeader header = (DataGridColumnFloatingHeader)d;
-            if (header._referenceHeader != null && DoubleUtil.IsNaN(height))
+            if (header._referenceHeader != null && double.IsNaN(height))
             {
                 return header._referenceHeader.ActualHeight + header.GetVisualCanvasMarginY();
             }
@@ -126,7 +126,7 @@ namespace System.Windows.Controls
                 visualBrush.ViewboxUnits = BrushMappingMode.Absolute;
 
                 double width = Width;
-                if (DoubleUtil.IsNaN(width))
+                if (double.IsNaN(width))
                 {
                     width = _referenceHeader.ActualWidth;
                 }
@@ -136,7 +136,7 @@ namespace System.Windows.Controls
                 }
 
                 double height = Height;
-                if (DoubleUtil.IsNaN(height))
+                if (double.IsNaN(height))
                 {
                     height = _referenceHeader.ActualHeight;
                 }

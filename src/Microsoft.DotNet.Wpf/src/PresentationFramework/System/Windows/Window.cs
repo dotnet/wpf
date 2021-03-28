@@ -2597,7 +2597,7 @@ namespace System.Windows
             Point requestedLocationDeviceUnits = LogicalToDeviceUnits(new Point(requestedLeft, requestedTop));
 
             // if Width was specified and is not the same as the current width, then update it
-            if ((!DoubleUtil.IsNaN(requestedWidth)) && (!DoubleUtil.AreClose(sizeDeviceUnits.Width, requestedSizeDeviceUnits.X)))
+            if ((!double.IsNaN(requestedWidth)) && (!DoubleUtil.AreClose(sizeDeviceUnits.Width, requestedSizeDeviceUnits.X)))
             {
                 // at this stage, ActualWidth/Height is not set since
                 // layout has not happened (it happens when we set the
@@ -2614,7 +2614,7 @@ namespace System.Windows
             }
 
             // if Height was specified and is not the same as the current height, then update it
-            if (!DoubleUtil.IsNaN(requestedHeight) && (!DoubleUtil.AreClose(sizeDeviceUnits.Height, requestedSizeDeviceUnits.Y)))
+            if (!double.IsNaN(requestedHeight) && (!DoubleUtil.AreClose(sizeDeviceUnits.Height, requestedSizeDeviceUnits.Y)))
             {
                 // at this stage, ActualWidth/Height is not set since
                 // layout has not happened (it happens when we set the
@@ -2631,7 +2631,7 @@ namespace System.Windows
             }
 
             // if left was specified and is not the same as the current left, then update it
-            if (!DoubleUtil.IsNaN(requestedLeft) && (!DoubleUtil.AreClose(xDeviceUnits, requestedLocationDeviceUnits.X)))
+            if (!double.IsNaN(requestedLeft) && (!DoubleUtil.AreClose(xDeviceUnits, requestedLocationDeviceUnits.X)))
             {
                 updateHwndPlacement = true;
                 xDeviceUnits = requestedLocationDeviceUnits.X;
@@ -2644,7 +2644,7 @@ namespace System.Windows
             }
 
             // if top was specified and is not the same as the current top, then update it
-            if (!DoubleUtil.IsNaN(requestedTop) && (!DoubleUtil.AreClose(yDeviceUnits, requestedLocationDeviceUnits.Y)))
+            if (!double.IsNaN(requestedTop) && (!DoubleUtil.AreClose(yDeviceUnits, requestedLocationDeviceUnits.Y)))
             {
                 updateHwndPlacement = true;
                 yDeviceUnits = requestedLocationDeviceUnits.Y;
@@ -3777,16 +3777,16 @@ namespace System.Windows
                 // then we cannot CenterOwner
                 if (Owner.IsSourceWindowNull)
                 {
-                    if ((DoubleUtil.IsNaN(Owner.Width)) ||
-                        (DoubleUtil.IsNaN(Owner.Height)))
+                    if ((double.IsNaN(Owner.Width)) ||
+                        (double.IsNaN(Owner.Height)))
                     {
                         return false;
                     }
                 }
 
                 // if Owner's Top or Left is not specified, we cannot CenterOwner
-                if ((DoubleUtil.IsNaN(Owner.Left)) ||
-                    (DoubleUtil.IsNaN(Owner.Top)))
+                if ((double.IsNaN(Owner.Left)) ||
+                    (double.IsNaN(Owner.Top)))
                 {
                     return false;
                 }
@@ -5522,7 +5522,7 @@ namespace System.Windows
         {
             //basically, NaN and PositiveInfinity are ok, and then anything
             //that can be converted to Int32
-            if (!Double.IsPositiveInfinity(l) && !DoubleUtil.IsNaN(l) &&
+            if (!Double.IsPositiveInfinity(l) && !double.IsNaN(l) &&
                 ((l > Int32.MaxValue) || (l < Int32.MinValue)))
             {
                 throw new ArgumentException(SR.Get(SRID.ValueNotBetweenInt32MinMax, l));
@@ -5563,7 +5563,7 @@ namespace System.Windows
             ValidateLengthForHeightWidth(height);
 
             // Adding check for IsCompositionTargetInvalid
-            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false && !DoubleUtil.IsNaN(height))
+            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false && !double.IsNaN(height))
             {
                 UpdateHeight(height);
             }
@@ -5661,7 +5661,7 @@ namespace System.Windows
             ValidateLengthForHeightWidth(width);
 
             // Adding check for IsCompositionTargetInvalid
-            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false && !DoubleUtil.IsNaN(width))
+            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false && !double.IsNaN(width))
             {
                 UpdateWidth(width);
             }
@@ -5952,7 +5952,7 @@ namespace System.Windows
             {
                 // NaN is special and indicates using Win32 default,
                 // so we exclude that.
-                if (DoubleUtil.IsNaN(newTop) == false)
+                if (double.IsNaN(newTop) == false)
                 {
                     if (WindowState == WindowState.Normal)
                     {
@@ -6047,7 +6047,7 @@ namespace System.Windows
             {
                 // NaN is special and indicates using Win32 default,
                 // so we exclude that here.
-                if (DoubleUtil.IsNaN(newLeft) == false)
+                if (double.IsNaN(newLeft) == false)
                 {
                     if (WindowState == WindowState.Normal)
                     {

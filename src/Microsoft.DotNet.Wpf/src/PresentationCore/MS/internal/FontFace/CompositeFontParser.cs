@@ -34,7 +34,7 @@ namespace MS.Internal.FontFace
     {
         internal static void VerifyMultiplierOfEm(string propertyName, ref double value)
         {
-            if (DoubleUtil.IsNaN(value))
+            if (double.IsNaN(value))
             {
                 throw new ArgumentException(SR.Get(SRID.PropertyValueCannotBeNaN, propertyName));
             }
@@ -50,7 +50,7 @@ namespace MS.Internal.FontFace
 
         internal static void VerifyPositiveMultiplierOfEm(string propertyName, ref double value)
         {
-            if (DoubleUtil.IsNaN(value))
+            if (double.IsNaN(value))
             {
                 throw new ArgumentException(SR.Get(SRID.PropertyValueCannotBeNaN, propertyName));
             }
@@ -66,7 +66,7 @@ namespace MS.Internal.FontFace
 
         internal static void VerifyNonNegativeMultiplierOfEm(string propertyName, ref double value)
         {
-            if (DoubleUtil.IsNaN(value))
+            if (double.IsNaN(value))
             {
                 throw new ArgumentException(SR.Get(SRID.PropertyValueCannotBeNaN, propertyName));
             }

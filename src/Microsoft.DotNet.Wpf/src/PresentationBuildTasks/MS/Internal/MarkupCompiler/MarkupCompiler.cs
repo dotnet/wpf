@@ -3207,15 +3207,17 @@ namespace MS.Internal
 
                 if (cmmMain != null)
                 {
+                    //   MyApplication app = new MyApplication();
+                    //
+                    CodeVariableReferenceExpression cvreApp = GenerateAppInstance(cmmMain);
+
+                    //   SplashScreen splashScreen = new SplashScreen("SplashScreen.png");
+                    //
                     CodeVariableReferenceExpression cvreSplashScreen = null;
                     if (!string.IsNullOrEmpty(_splashImage) && !HostInBrowser)
                     {
                         cvreSplashScreen = GenerateSplashScreenInstance(cmmMain);
                     }
-
-                    //   MyApplication app = new MyApplication();
-                    //
-                    CodeVariableReferenceExpression cvreApp = GenerateAppInstance(cmmMain);
 
                     if (_ccRoot.InitializeComponentFn != null)
                     {

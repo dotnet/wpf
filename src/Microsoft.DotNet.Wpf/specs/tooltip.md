@@ -150,6 +150,12 @@ In previous versions it was 5000 (5 seconds).
 Henceforth it will be `Int32.MaxValue` (~25 days).
 When this "infinite" value is specified, the implementation may choose to honor it literally by closing the tool tip after 25 days, or to honor it in spirit by disabling the timer-dependent logic.
 
+**InitialShowDelay property**.
+This property's default value is not documented.
+In previous versions it was obtained from the OS via the [SPI_GETMOUSEHOVERTIME](https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-systemparametersinfoa) system parameter.
+On many OS this is 400 msec, which is considered too short.
+Henceforth it will be 1000 (1 second).
+
 **Typing Ctrl to dismiss the tooltip**.
 This response is triggered by the KeyUp event, and only if no other keys have been pressed since the KeyDown event.
 
@@ -244,13 +250,21 @@ Several legacy apps take advantage of this option, notably Office.
 
 A framework like WPF should leave this option up to the app,
 mirroring the app's choice of tooltip usage and content.
-WPF 4.8 mistakenly baked in the option:  the tab-navigation rule applies unless the tooltip derives from RibbonToolTip. 
+WPF 4.8 mistakenly baked in the option:  the tab-navigation rule applies unless the tooltip derives from RibbonToolTip (in 6.0, RibbonToolTip defaults to showing the tooltip on keyboard focus just like all other tooltips, to comply with MAS 4.1.3).
 The ``ShowsToolTipOnKeyboardFocus`` properties return the option to the app.
 Unfortunately this only helps in .NET 6.0, as servicing updates to older versions cannot include new public API.
 
 [FD] says (shows) that Ctrl closes the tooltip.
 [ET] discussed what that really means - whether to act on KeyDown or KeyUp, whether combinations should cause both the combination action and dismiss the tooltip (e.g. should Ctrl+C both copy text and dismiss the tooltip), etc.
 The interpretation given here is the consensus.
+
+[FD] and [MAS] allude to the delay before opening a tooltip, but don't specify how long that should be, or whether it should be different for keyboard vs. mouse.
+The consensus in [ET] was 
+* the keyboard delay should be no less than the mouse delay
+* making keyboard delay longer than mouse delay is a subject for future usability research
+* current implementations don't delay enough - 1 second was proposed
+* a direct request - Ctrl+Shift+F10 - should not delay at all
+
 
 ### Design choices, history
 
@@ -267,6 +281,8 @@ For convenience, here are the behavior changes described in detail above.
 3. (6.0 only) Properties `ToolTip.ShowsToolTipOnKeyboardFocus` and `TooltipService.ShowsToolTipOnKeyboardFocus` control whether acquiring keyboard focus shows the tooltip.
 4. Ctrl closes the tooltip.
 5. Ctrl+Shift+F10 opens the tooltip immediately, rather than after `InitialShowDelay`.
+6. RibbonToolTips default to showing on focus acquisition.
+7. Change default value for `ToolTipService.InitialShowDelay` property from `SystemParameters.MouseHoverTimeMilliseconds` to 1000.
 
 Also, some changes were previously made in .NET 4.8 (and appear in .NET Core 3.0, 3.1, and .NET 5.0), without documentation:
 

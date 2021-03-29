@@ -58,19 +58,20 @@ When a parent element declares a tooltip, there are four ways to open (show) the
 3. Type a keyboard shortcut.
 4. Open the tooltip programmatically.
 
-Unless mentioned otherwise below, the tooltip is shown immediately and its size and position are governed by the placement properties described in [TO].
+The tooltip is shown after a delay as described further below, and its size and position are governed by the placement properties described in [TO].
 
 ### Hover
 A hover occurs when the mouse (or touch) enters the parent element and stays there for a certain time, without any other activity.
 The tooltip is opened after the hover time, whose value is a function of the `InitialShowDelay` and `BetweenShowDelay` properties, and whether another tooltip is already showing [TO].
 
 ### Keyboard focus
-When you use keyboard navigation to move focus to the parent element, the tooltip opens.
-(Using the mouse or touch to move focus does not show the tooltip.)
+When you use keyboard navigation to move focus to the parent element, the tooltip opens after a delay given by the `InitialShowDelay` property (the `BetweenShowDelay` property is not used).
 You can override this behavior using the `ShowsToolTipOnKeyboardFocus` properties.
 
+Using the mouse or touch to move focus does not show the tooltip.
+
 ### Keyboard shortcut
-When the parent has keyboard focus, typing Ctrl+Shift+F10 opens the tooltip.
+When the parent has keyboard focus, typing Ctrl+Shift+F10 opens the tooltip immediately.
 
 When the tooltip opens due to either of the keyboard actions, the placement algorithm treats a [PlacementMode](https://docs.microsoft.com/en-us/dotnet/api/system.windows.controls.primitives.placementmode?view=net-5.0) value of `Mouse` or `MousePoint` as if it were `Bottom`.
 
@@ -265,6 +266,7 @@ For convenience, here are the behavior changes described in detail above.
 2. Moving the mouse within the safe area does not close the tooltip.
 3. (6.0 only) Properties `ToolTip.ShowsToolTipOnKeyboardFocus` and `TooltipService.ShowsToolTipOnKeyboardFocus` control whether acquiring keyboard focus shows the tooltip.
 4. Ctrl closes the tooltip.
+5. Ctrl+Shift+F10 opens the tooltip immediately, rather than after `InitialShowDelay`.
 
 Also, some changes were previously made in .NET 4.8 (and appear in .NET Core 3.0, 3.1, and .NET 5.0), without documentation:
 

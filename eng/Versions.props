@@ -8,19 +8,19 @@
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>5.0.5-servicing.21167.1</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>5.0.6-servicing.21213.9</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/coreclr -->
   <PropertyGroup>
     <MicrosoftNETCoreRuntimeCoreCLRVersion>5.0.0-alpha1.19562.1</MicrosoftNETCoreRuntimeCoreCLRVersion>
-    <MicrosoftNETCoreILDAsmVersion>5.0.5-servicing.21166.9</MicrosoftNETCoreILDAsmVersion>
-    <MicrosoftNETCoreILAsmVersion>5.0.5-servicing.21166.9</MicrosoftNETCoreILAsmVersion>
+    <MicrosoftNETCoreILDAsmVersion>5.0.6-servicing.21209.7</MicrosoftNETCoreILDAsmVersion>
+    <MicrosoftNETCoreILAsmVersion>5.0.6-servicing.21209.7</MicrosoftNETCoreILAsmVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
-    <MicrosoftNETCoreAppInternalVersion>5.0.5-servicing.21166.9</MicrosoftNETCoreAppInternalVersion>
+    <MicrosoftNETCoreAppInternalVersion>5.0.6-servicing.21209.7</MicrosoftNETCoreAppInternalVersion>
     <MicrosoftNETCoreAppRefVersion>5.0.0</MicrosoftNETCoreAppRefVersion>
-    <MicrosoftNETCoreAppRuntimewinx64Version>5.0.5</MicrosoftNETCoreAppRuntimewinx64Version>
+    <MicrosoftNETCoreAppRuntimewinx64Version>5.0.6</MicrosoftNETCoreAppRuntimewinx64Version>
     <MicrosoftNETCorePlatformsVersion>5.0.2</MicrosoftNETCorePlatformsVersion>
     <SystemDrawingCommonVersion>5.0.2</SystemDrawingCommonVersion>
     <SystemDirectoryServicesVersion>5.0.0</SystemDirectoryServicesVersion>

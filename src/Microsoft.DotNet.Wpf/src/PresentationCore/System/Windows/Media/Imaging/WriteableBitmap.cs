@@ -346,6 +346,25 @@ namespace System.Windows.Media.Imaging
             }
         }
 
+        private void UnlockWithoutSubscribeToCommittingBatch()
+        {
+            WritePreamble();
+
+            if (_lockCount == 0)
+            {
+                throw new InvalidOperationException(SR.Get(SRID.Image_MustBeLocked));
+            }
+            Invariant.Assert(_lockCount > 0, "Lock count should never be negative!");
+
+            _lockCount--;
+            if (_lockCount == 0)
+            {
+                // This makes the back buffer read-only.
+                _pBackBufferLock.Dispose();
+                _pBackBufferLock = null;
+            }
+        }
+
         /// <summary>
         ///   Updates the pixels in the specified region of the bitmap.
         /// </summary>
@@ -763,9 +782,11 @@ namespace System.Windows.Media.Imaging
 
             BeginInit();
 
-            _syncObject = source.SyncObject;
-            lock (_syncObject)
+            // We will change the _syncObject object in Lock()
+            var syncObject = _syncObject = source.SyncObject;
+            try
             {
+                Monitor.Enter(syncObject);
                 Guid formatGuid = source.Format.Guid;
 
                 SafeMILHandle internalPalette = new SafeMILHandle();
@@ -773,7 +794,7 @@ namespace System.Windows.Media.Imaging
                 {
                     internalPalette = source.Palette.InternalPalette;
                 }
-                
+
                 HRESULT.Check(MILSwDoubleBufferedBitmap.Create(
                     (uint)source.PixelWidth, // safe cast
                     (uint)source.PixelHeight, // safe cast
@@ -782,7 +803,7 @@ namespace System.Windows.Media.Imaging
                     ref formatGuid,
                     internalPalette,
                     out _pDoubleBufferedBitmap
-                    ));
+                ));
 
                 _pDoubleBufferedBitmap.UpdateEstimatedSize(
                     GetEstimatedSize(source.PixelWidth, source.PixelHeight, source.Format));
@@ -794,9 +815,27 @@ namespace System.Windows.Media.Imaging
                 source.CriticalCopyPixels(rcFull, _backBuffer, bufferSize, _backBufferStride.Value);
                 AddDirtyRect(rcFull);
 
-                Unlock();
-            }
+                UnlockWithoutSubscribeToCommittingBatch();
 
+                Monitor.Exit(syncObject);
+
+                if (_hasDirtyRects)
+                {
+                    SubscribeToCommittingBatch();
+
+                    //
+                    // Notify listeners that we have changed.
+                    //
+                    WritePostscript();
+                }
+            }
+            finally
+            {
+                if (Monitor.IsEntered(syncObject))
+                {
+                    Monitor.Exit(syncObject);
+                }
+            }
             EndInit();
         }
 

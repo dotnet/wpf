@@ -602,8 +602,8 @@ namespace Microsoft.Build.Tasks.Windows
             }
 
             //
-            // Generate the asmmebly reference list.
-            // The temporay target assembly should have been added into Reference list from target file.
+            // Generate the assembly reference list.
+            // The temporary target assembly should have been added into Reference list from target file.
             //
             if (References != null && References.Length > 0)
             {

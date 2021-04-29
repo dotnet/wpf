@@ -33,8 +33,7 @@
     <SystemCodeDomPackageVersion>6.0.0-preview.5.21224.4</SystemCodeDomPackageVersion>
     <SystemConfigurationConfigurationManagerPackageVersion>6.0.0-preview.5.21224.4</SystemConfigurationConfigurationManagerPackageVersion>
     <SystemDiagnosticsEventLogPackageVersion>6.0.0-preview.5.21224.4</SystemDiagnosticsEventLogPackageVersion>
-    <SystemReflectionEmitPackageVersion>5.0.0-alpha.1.19563.6</SystemReflectionEmitPackageVersion>
-    <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
+    <SystemReflectionEmitPackageVersion>4.7.0</SystemReflectionEmitPackageVersion>
     <SystemSecurityAccessControlPackageVersion>6.0.0-preview.5.21224.4</SystemSecurityAccessControlPackageVersion>
     <SystemSecurityCryptographyXmlPackageVersion>6.0.0-preview.5.21224.4</SystemSecurityCryptographyXmlPackageVersion>
     <SystemSecurityPermissionsPackageVersion>6.0.0-preview.5.21224.4</SystemSecurityPermissionsPackageVersion>
@@ -46,10 +45,6 @@
     <MicrosoftDotNetApiCompatVersion>6.0.0-beta.21212.6</MicrosoftDotNetApiCompatVersion>
     <MicrosoftDotNetCodeAnalysisPackageVersion>6.0.0-beta.21212.6</MicrosoftDotNetCodeAnalysisPackageVersion>
     <MicrosoftDotNetGenAPIVersion>6.0.0-beta.21212.6</MicrosoftDotNetGenAPIVersion>
-  </PropertyGroup>
-  <!-- Packages that come from https://github.com/dotnet/corefxlab -->
-  <PropertyGroup>
-    <SystemReflectionTypeLoaderPackageVersion>0.1.0-preview2-181205-2</SystemReflectionTypeLoaderPackageVersion>
   </PropertyGroup>
   <!-- Maintain System.CodeDom PackageVersion at 4.4.0. See https://github.com/Microsoft/msbuild/issues/3627 -->
   <!-- Pin specific versions of S.Memory so that it would supply AssemblyVersion=4.0.1.0. See https://github.com/dotnet/runtime/issues/31672 -->

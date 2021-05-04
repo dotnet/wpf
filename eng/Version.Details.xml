@@ -33,10 +33,6 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>bb2d2c45410b9407a9657df7f5ca113bced53a43</Sha>
     </Dependency>
-    <Dependency Name="System.Reflection.Emit" Version="5.0.0-alpha.1.19563.6">
-      <Uri>https://github.com/dotnet/corefx</Uri>
-      <Sha>5cee7c97d602f294e27c582d4dab81ec388f1d7b</Sha>
-    </Dependency>
     <Dependency Name="System.Reflection.MetadataLoadContext" Version="6.0.0-preview.5.21253.3" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>bb2d2c45410b9407a9657df7f5ca113bced53a43</Sha>
@@ -65,9 +61,9 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>bb2d2c45410b9407a9657df7f5ca113bced53a43</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="6.0.0-preview.5.21224.2">
+    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="6.0.0-preview.5.21254.2">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</Uri>
-      <Sha>c32c38e8fbeead712af9bf46b628994f1bd03e65</Sha>
+      <Sha>98527fa4d7ccc273b507358b6296ec9fdd2be02c</Sha>
     </Dependency>
     <Dependency Name="System.IO.Packaging" Version="6.0.0-preview.5.21253.3" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>

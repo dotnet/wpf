@@ -33,23 +33,18 @@
     <SystemCodeDomPackageVersion>6.0.0-preview.5.21253.3</SystemCodeDomPackageVersion>
     <SystemConfigurationConfigurationManagerPackageVersion>6.0.0-preview.5.21253.3</SystemConfigurationConfigurationManagerPackageVersion>
     <SystemDiagnosticsEventLogPackageVersion>6.0.0-preview.5.21253.3</SystemDiagnosticsEventLogPackageVersion>
-    <SystemReflectionEmitPackageVersion>5.0.0-alpha.1.19563.6</SystemReflectionEmitPackageVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
     <SystemSecurityAccessControlPackageVersion>6.0.0-preview.5.21253.3</SystemSecurityAccessControlPackageVersion>
     <SystemSecurityCryptographyXmlPackageVersion>6.0.0-preview.5.21253.3</SystemSecurityCryptographyXmlPackageVersion>
     <SystemSecurityPermissionsPackageVersion>6.0.0-preview.5.21253.3</SystemSecurityPermissionsPackageVersion>
     <SystemSecurityPrincipalWindowsPackageVersion>6.0.0-preview.5.21253.3</SystemSecurityPrincipalWindowsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>6.0.0-preview.5.21253.3</SystemWindowsExtensionsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>6.0.0-preview.5.21253.3</SystemWindowsExtensionsPackageVersion>  
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
     <MicrosoftDotNetApiCompatVersion>6.0.0-beta.21212.6</MicrosoftDotNetApiCompatVersion>
     <MicrosoftDotNetCodeAnalysisPackageVersion>6.0.0-beta.21212.6</MicrosoftDotNetCodeAnalysisPackageVersion>
     <MicrosoftDotNetGenAPIVersion>6.0.0-beta.21212.6</MicrosoftDotNetGenAPIVersion>
-  </PropertyGroup>
-  <!-- Packages that come from https://github.com/dotnet/corefxlab -->
-  <PropertyGroup>
-    <SystemReflectionTypeLoaderPackageVersion>0.1.0-preview2-181205-2</SystemReflectionTypeLoaderPackageVersion>
   </PropertyGroup>
   <!-- Maintain System.CodeDom PackageVersion at 4.4.0. See https://github.com/Microsoft/msbuild/issues/3627 -->
   <!-- Pin specific versions of S.Memory so that it would supply AssemblyVersion=4.0.1.0. See https://github.com/dotnet/runtime/issues/31672 -->
@@ -89,6 +84,6 @@
     <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
   </PropertyGroup>
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>6.0.0-preview.5.21224.2</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>6.0.0-preview.5.21254.2</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

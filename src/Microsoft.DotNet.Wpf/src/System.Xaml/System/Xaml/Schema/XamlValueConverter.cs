@@ -29,8 +29,9 @@ namespace System.Xaml.Schema
         {
             if (converterType == null && targetType == null && name == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ArgumentRequired, "converterType, targetType, name"));
+                throw new ArgumentException(SR.Get(SRID.ArgumentRequired, $"${nameof(converterType)}, ${nameof(targetType)}, ${nameof(name)}"));
             }
+
             ConverterType = converterType;
             TargetType = targetType;
             Name = name ?? GetDefaultName();
@@ -49,10 +50,7 @@ namespace System.Xaml.Schema
             }
         }
 
-        public override string ToString()
-        {
-            return Name;
-        }
+        public override string ToString() => Name;
 
         internal virtual bool IsPublic
         {
@@ -98,8 +96,6 @@ namespace System.Xaml.Schema
             return TargetType.Name;
         }
 
-        #region IEquatable<XamlValueConverter<TConverterBaseType>> Members
-
         public override bool Equals(object obj)
         {
             XamlValueConverter<TConverterBase> other = obj as XamlValueConverter<TConverterBase>;
@@ -107,6 +103,7 @@ namespace System.Xaml.Schema
             {
                 return false;
             }
+
             return this == other;
         }
 
@@ -124,10 +121,7 @@ namespace System.Xaml.Schema
             return result;
         }
 
-        public bool Equals(XamlValueConverter<TConverterBase> other)
-        {
-            return this == other;
-        }
+        public bool Equals(XamlValueConverter<TConverterBase> other) => this == other;
 
         public static bool operator ==(XamlValueConverter<TConverterBase> converter1, XamlValueConverter<TConverterBase> converter2)
         {
@@ -139,6 +133,7 @@ namespace System.Xaml.Schema
             {
                 return false;
             }
+
             return converter1.ConverterType == converter2.ConverterType &&
                 converter1.TargetType == converter2.TargetType &&
                 converter1.Name == converter2.Name;
@@ -148,7 +143,5 @@ namespace System.Xaml.Schema
         {
             return !(converter1 == converter2);
         }
-
-        #endregion
     }
 }

@@ -4,8 +4,8 @@
 
 using System.ComponentModel;
 using System.Globalization;
+using System.Windows.Markup;
 using System.Xaml.Schema;
-using XAML3 = System.Windows.Markup;
 
 namespace System.Xaml.Replacements
 {
@@ -22,15 +22,12 @@ namespace System.Xaml.Replacements
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             string typeName = value as string;
-
-            if (null != context && null != typeName)
+            if (context != null && typeName != null)
             {
-                var typeResolver = GetService<XAML3.IXamlTypeResolver>(context);
-
-                if (null != typeResolver)
+                IXamlTypeResolver typeResolver = GetService<IXamlTypeResolver>(context);
+                if (typeResolver != null)
                 {
-                    Type type = typeResolver.Resolve(typeName);
-                    return type;
+                    return typeResolver.Resolve(typeName);
                 }
             }
 
@@ -59,7 +56,7 @@ namespace System.Xaml.Replacements
 
         private static string ConvertTypeToString(ITypeDescriptorContext context, Type type)
         {
-            var schemaContextProvider = GetService<IXamlSchemaContextProvider>(context);
+            IXamlSchemaContextProvider schemaContextProvider = GetService<IXamlSchemaContextProvider>(context);
             if (schemaContextProvider == null)
             {
                 return null;

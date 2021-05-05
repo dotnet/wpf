@@ -7,7 +7,6 @@ using System.ComponentModel.Design.Serialization;
 using System.Globalization;
 using System.Windows.Markup;
 using System.Xaml.Replacements;
-using TypeListConverter = System.Xaml.Replacements.TypeListConverter;
 
 namespace System.Xaml.Schema
 {
@@ -22,15 +21,9 @@ namespace System.Xaml.Schema
             _factory = factory;
         }
 
-        internal override bool IsPublic
-        {
-            get { return true; }
-        }
+        internal override bool IsPublic => true;
 
-        protected override TConverterBase CreateInstance()
-        {
-            return _factory.Invoke();
-        }
+        protected override TConverterBase CreateInstance() => _factory.Invoke();
     }
 
     internal static class BuiltInValueConverter
@@ -239,7 +232,7 @@ namespace System.Xaml.Schema
             {
                 if (s_Type is null)
                 {
-                    s_Type = new BuiltInValueConverter<TypeConverter>(typeof(TypeTypeConverter), () => new TypeTypeConverter());
+                    s_Type = new BuiltInValueConverter<TypeConverter>(typeof(System.Xaml.Replacements.TypeTypeConverter), () => new System.Xaml.Replacements.TypeTypeConverter());
                 }
                 return s_Type;
             }
@@ -247,7 +240,7 @@ namespace System.Xaml.Schema
             {
                 if (s_TypeList is null)
                 {
-                    s_TypeList = new BuiltInValueConverter<TypeConverter>(typeof(TypeListConverter), () => new TypeListConverter());
+                    s_TypeList = new BuiltInValueConverter<TypeConverter>(typeof(System.Xaml.Replacements.TypeListConverter), () => new System.Xaml.Replacements.TypeListConverter());
                 }
                 return s_TypeList;
             }
@@ -255,7 +248,7 @@ namespace System.Xaml.Schema
             {
                 if (s_DateTime is null)
                 {
-                    s_DateTime = new BuiltInValueConverter<TypeConverter>(typeof(DateTimeConverter2), () => new DateTimeConverter2());
+                    s_DateTime = new BuiltInValueConverter<TypeConverter>(typeof(System.Xaml.Replacements.DateTimeConverter2), () => new System.Xaml.Replacements.DateTimeConverter2());
                 }
                 return s_DateTime;
             }
@@ -263,7 +256,7 @@ namespace System.Xaml.Schema
             {
                 if (s_DateTimeOffset is null)
                 {
-                    s_DateTimeOffset = new BuiltInValueConverter<TypeConverter>(typeof(DateTimeOffsetConverter2), () => new DateTimeOffsetConverter2());
+                    s_DateTimeOffset = new BuiltInValueConverter<TypeConverter>(typeof(System.Xaml.Replacements.DateTimeOffsetConverter2), () => new System.Xaml.Replacements.DateTimeOffsetConverter2());
                 }
                 return s_DateTimeOffset;
             }

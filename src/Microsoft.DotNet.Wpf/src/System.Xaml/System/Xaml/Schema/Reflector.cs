@@ -209,7 +209,7 @@ namespace System.Xaml.Schema
                 if (attributeType == typeof(TypeConverterAttribute))
                 {
                     string typeName = ((TypeConverterAttribute)attributes[0]).ConverterTypeName;
-                    return XamlNamespace.GetTypeFromFullTypeName(typeName);
+                    return Type.GetType(typeName);
                 }
                 if (attributeType == typeof(MarkupExtensionReturnTypeAttribute))
                 {
@@ -250,8 +250,8 @@ namespace System.Xaml.Schema
                 Debug.Assert(attributeType == typeof(XamlDeferLoadAttribute));
                 Debug.Assert(count == 2);
                 XamlDeferLoadAttribute tca = (XamlDeferLoadAttribute)attributes[0];
-                Type converterType = XamlNamespace.GetTypeFromFullTypeName(tca.LoaderTypeName);
-                Type contentType = XamlNamespace.GetTypeFromFullTypeName(tca.ContentTypeName);
+                Type converterType = Type.GetType(tca.LoaderTypeName);
+                Type contentType = Type.GetType(tca.ContentTypeName);
                 return new Type[] { converterType, contentType };
             }
             try
@@ -448,7 +448,7 @@ namespace System.Xaml.Schema
             else if (arg.ArgumentType == typeof(string))
             {
                 string typeName = (string)arg.Value;
-                return XamlNamespace.GetTypeFromFullTypeName(typeName);
+                return Type.GetType(typeName);
             }
             return null;
         }

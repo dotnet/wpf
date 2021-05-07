@@ -51,7 +51,7 @@ namespace MS.Internal.Telemetry
         }
 
         private static EventSource _logger;
-        private static object _lockObject = new object();
+        private static readonly object _lockObject = new object();
 
 #if WINDOWS_BASE
         /// <summary>

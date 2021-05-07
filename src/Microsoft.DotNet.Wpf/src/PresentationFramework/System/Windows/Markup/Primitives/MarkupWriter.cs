@@ -1561,7 +1561,7 @@ namespace System.Windows.Markup.Primitives
         {
             private static Dictionary<Assembly, Dictionary<string, string>> XmlnsDefinitions = new Dictionary<Assembly, Dictionary<string, string>>();
             private static Dictionary<string, string> DefaultPrefixes = new Dictionary<string, string>();
-            private static object SyncObject = new object();
+            private static readonly object SyncObject = new object();
 
             static Dictionary<string, string> GetMappingsFor(Assembly assembly)
             {

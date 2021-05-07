@@ -273,7 +273,7 @@ namespace System.Windows.Diagnostics
         }
 
         private static Dictionary<Uri, List<WeakReference<ResourceDictionary>>> _dictionariesFromUri;
-        private static object _dictionariesFromUriLock = new object();
+        private static readonly object _dictionariesFromUriLock = new object();
         private static IReadOnlyCollection<ResourceDictionary> EmptyResourceDictionaries
             => Array.Empty<ResourceDictionary>();
 

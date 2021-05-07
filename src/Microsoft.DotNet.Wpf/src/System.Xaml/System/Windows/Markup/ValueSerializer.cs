@@ -281,7 +281,7 @@ namespace System.Windows.Markup
             TypeDescriptor.Refreshed += TypeDescriptorRefreshed;
         }
 
-        private static object _valueSerializersLock = new object();
+        private static readonly object _valueSerializersLock = new object();
         private static Hashtable _valueSerializers = new Hashtable();
     }
 }

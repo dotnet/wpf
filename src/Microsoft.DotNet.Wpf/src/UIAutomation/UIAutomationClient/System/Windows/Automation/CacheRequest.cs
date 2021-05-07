@@ -512,7 +512,7 @@ namespace System.Windows.Automation
         int _refCount = 0;
 
         // Used to lock on this instance...
-        object _instanceLock = null;
+        readonly object _instanceLock = null;
 
         //--- Per-Thread state ---
 

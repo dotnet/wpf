@@ -393,7 +393,7 @@ namespace System.Windows
         /* property */ internal FrugalStructList<System.Windows.PropertyValue> PropertyValues = new FrugalStructList<System.Windows.PropertyValue>();
 
         // Global, cross-object synchronization
-        private static object Synchronized = new object();
+        private static readonly object Synchronized = new object();
 
         // Conditions
         TriggerCondition[] _triggerConditions;

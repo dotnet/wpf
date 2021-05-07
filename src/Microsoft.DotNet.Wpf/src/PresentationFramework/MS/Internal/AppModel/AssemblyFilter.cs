@@ -137,7 +137,7 @@ namespace MS.Internal
 
         static SecurityCriticalDataForSet<bool> _disallowedListExtracted;
 
-        static object _lock = new object();
+        static readonly object _lock = new object();
 
         private const string FILEVERSION_STRING = @", FileVersion=";
         // This is the location in the registry where all the keys are stored

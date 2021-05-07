@@ -1028,7 +1028,7 @@ namespace System.Windows.Input
         private static DispatcherOperation _synchronizedInputAsyncClearOperation;
 
         // Lock used to serialize access to synchronized input related static fields.
-        private static object _synchronizedInputLock = new object();
+        private static readonly object _synchronizedInputLock = new object();
 }
 }
 

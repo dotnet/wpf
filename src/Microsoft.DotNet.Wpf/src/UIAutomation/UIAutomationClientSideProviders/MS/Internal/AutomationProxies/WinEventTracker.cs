@@ -589,7 +589,7 @@ namespace MS.Internal.AutomationProxies
         // WinEventHooks must be processed in the same thread that created them.
         // Use a seperate thread to manage the hooks
         private static QueueProcessor _callbackQueue = null;
-        private static object _queueLock = new object();
+        private static readonly object _queueLock = new object();
 
         // static: Array of Hashtables, one per WinEvent Id. 
         // Each Hashtable contains EventHookParams classes the key is the process id.

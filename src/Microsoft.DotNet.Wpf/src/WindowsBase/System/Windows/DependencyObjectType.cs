@@ -231,7 +231,7 @@ namespace System.Windows
         // Synchronized: Covered by DispatcherLock
         private static int DTypeCount = 0;
 
-        private static object _lock = new object();
+        private static readonly object _lock = new object();
     }
 }
 

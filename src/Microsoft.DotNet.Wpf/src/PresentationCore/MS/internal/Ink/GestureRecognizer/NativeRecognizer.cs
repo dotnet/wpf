@@ -834,7 +834,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// <summary>
         /// Used to lock for instancing the native recognizer handle
         /// </summary>
-        private static object                           _syncRoot = new object();
+        private static readonly object                  _syncRoot = new object();
 
         /// <summary>
         /// All NativeRecognizer share a single handle to the recognizer

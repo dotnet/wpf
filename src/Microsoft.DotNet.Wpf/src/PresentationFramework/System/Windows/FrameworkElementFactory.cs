@@ -1320,7 +1320,7 @@ namespace System.Windows
         private FrameworkElementFactory _nextSibling;
 
         // Instance-based synchronization
-        private object _synchronized = new object();
+        private readonly object _synchronized = new object();
     }
 }
 

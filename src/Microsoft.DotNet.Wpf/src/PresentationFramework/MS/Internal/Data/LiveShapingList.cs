@@ -799,7 +799,7 @@ namespace MS.Internal.Data
 
         static List<DependencyProperty> s_dpList = new List<DependencyProperty>();
         // static list of DPs, shared by all instances of lists
-        static object s_Sync = new object();  // lock for s_dpList
+        static readonly object s_Sync = new object();  // lock for s_dpList
 
         #endregion
     }

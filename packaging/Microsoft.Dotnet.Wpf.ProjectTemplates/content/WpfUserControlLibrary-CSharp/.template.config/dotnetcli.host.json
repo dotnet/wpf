@@ -17,7 +17,7 @@
       "longName": "langVersion",
       "shortName": ""
     },
-    "NullableOverride": {
+    "Nullable": {
       "longName": "nullable",
       "shortName": ""
     }

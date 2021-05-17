@@ -15,7 +15,6 @@ namespace System.Xaml.Schema
     public class XamlTypeInvoker
     {
         private static XamlTypeInvoker s_Unknown;
-        private static object[] s_emptyObjectArray = Array.Empty<object>();
 
         private Dictionary<XamlType, MethodInfo> _addMethods;
         internal MethodInfo EnumeratorMethod { get; set; }
@@ -226,7 +225,7 @@ namespace System.Xaml.Schema
                 throw new NotSupportedException(SR.Get(SRID.OnlySupportedOnCollectionsAndDictionaries));
             }
             MethodInfo getEnumMethod = GetEnumeratorMethod();
-            return (IEnumerator)SafeReflectionInvoker.InvokeMethod(getEnumMethod, instance, s_emptyObjectArray);
+            return (IEnumerator)SafeReflectionInvoker.InvokeMethod(getEnumMethod, instance, Array.Empty<object>());
         }
 
         // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv

@@ -253,6 +253,7 @@
     <NetCoreReference Include="System.Threading" />
     <NetCoreReference Include="System.Threading.Thread" />
     <NetCoreReference Include="System.Threading.ThreadPool" />
+    <NetCoreReference Include="System.Runtime.Loader" />
 
     <MicrosoftPrivateWinFormsReference Include="System.Windows.Forms" />
     <MicrosoftPrivateWinFormsReference Include="System.Windows.Forms.Primitives" />

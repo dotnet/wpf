@@ -637,154 +637,26 @@ namespace System.Windows.Controls
 
         private IInputElement LastMouseDirectlyOver
         {
-            get
-            {
-                if (_lastMouseDirectlyOver != null)
-                {
-                    IInputElement e = (IInputElement)_lastMouseDirectlyOver.Target;
-                    if (e != null)
-                    {
-                        return e;
-                    }
-                    else
-                    {
-                        // Stale reference
-                        _lastMouseDirectlyOver = null;
-                    }
-                }
-
-                return null;
-            }
-
-            set
-            {
-                if (value == null)
-                {
-                    _lastMouseDirectlyOver = null;
-                }
-                else if (_lastMouseDirectlyOver == null)
-                {
-                    _lastMouseDirectlyOver = new WeakReference(value);
-                }
-                else
-                {
-                    _lastMouseDirectlyOver.Target = value;
-                }
-            }
+            get { return _lastMouseDirectlyOver.GetValue(); }
+            set { _lastMouseDirectlyOver.SetValue(value); }
         }
 
         private DependencyObject LastMouseOverWithToolTip
         {
-            get
-            {
-                if (_lastMouseOverWithToolTip != null)
-                {
-                    DependencyObject o = (DependencyObject)_lastMouseOverWithToolTip.Target;
-                    if (o != null)
-                    {
-                        return o;
-                    }
-                    else
-                    {
-                        // Stale reference
-                        _lastMouseOverWithToolTip = null;
-                    }
-                }
-
-                return null;
-            }
-
-            set
-            {
-                if (value == null)
-                {
-                    _lastMouseOverWithToolTip = null;
-                }
-                else if (_lastMouseOverWithToolTip == null)
-                {
-                    _lastMouseOverWithToolTip = new WeakReference(value);
-                }
-                else
-                {
-                    _lastMouseOverWithToolTip.Target = value;
-                }
-            }
+            get { return _lastMouseOverWithToolTip.GetValue(); }
+            set { _lastMouseOverWithToolTip.SetValue(value); }
         }
 
         private DependencyObject LastObjectWithToolTip
         {
-            get
-            {
-                if (_lastObjectWithToolTip != null)
-                {
-                    DependencyObject o = (DependencyObject)_lastObjectWithToolTip.Target;
-                    if (o != null)
-                    {
-                        return o;
-                    }
-                    else
-                    {
-                        // Stale reference
-                        _lastObjectWithToolTip = null;
-                    }
-                }
-
-                return null;
-            }
-
-            set
-            {
-                if (value == null)
-                {
-                    _lastObjectWithToolTip = null;
-                }
-                else if (_lastObjectWithToolTip == null)
-                {
-                    _lastObjectWithToolTip = new WeakReference(value);
-                }
-                else
-                {
-                    _lastObjectWithToolTip.Target = value;
-                }
-            }
+            get { return _lastObjectWithToolTip.GetValue(); }
+            set { _lastObjectWithToolTip.SetValue(value); }
         }
 
         private DependencyObject LastChecked
         {
-            get
-            {
-                if (_lastChecked != null)
-                {
-                    DependencyObject o = (DependencyObject)_lastChecked.Target;
-                    if (o != null)
-                    {
-                        return o;
-                    }
-                    else
-                    {
-                        // Stale reference
-                        _lastChecked = null;
-                    }
-                }
-
-                return null;
-            }
-
-            set
-            {
-                if (value == null)
-                {
-                    _lastChecked = null;
-                }
-                else if (_lastChecked == null)
-                {
-                    _lastChecked = new WeakReference(value);
-                }
-                else
-                {
-                    _lastChecked.Target = value;
-                }
-            }
+            get { return _lastChecked.GetValue(); }
+            set { _lastChecked.SetValue(value); }
         }
 
         #endregion
@@ -796,133 +668,133 @@ namespace System.Windows.Controls
         ///     Located here to avoid circular dependencies.
         /// </summary>
         internal static readonly RoutedEvent ContextMenuOpenedEvent =
-            EventManager.RegisterRoutedEvent("Opened", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(PopupControlService));
+                EventManager.RegisterRoutedEvent("Opened", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(PopupControlService));
 
-        /// <summary>
-        ///     Event that fires on ContextMenu when it closes.
-        ///     Located here to avoid circular dependencies.
-        /// </summary>
-        internal static readonly RoutedEvent ContextMenuClosedEvent =
-            EventManager.RegisterRoutedEvent("Closed", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(PopupControlService));
+            /// <summary>
+            ///     Event that fires on ContextMenu when it closes.
+            ///     Located here to avoid circular dependencies.
+            /// </summary>
+            internal static readonly RoutedEvent ContextMenuClosedEvent =
+                EventManager.RegisterRoutedEvent("Closed", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(PopupControlService));
 
-        /////////////////////////////////////////////////////////////////////
-        private void RaiseContextMenuOpeningEvent(KeyEventArgs e)
-        {
-            IInputElement source = e.OriginalSource as IInputElement;
-            if (source != null)
+            /////////////////////////////////////////////////////////////////////
+            private void RaiseContextMenuOpeningEvent(KeyEventArgs e)
             {
-                if (RaiseContextMenuOpeningEvent(source, -1.0, -1.0,e.UserInitiated))
+                IInputElement source = e.OriginalSource as IInputElement;
+                if (source != null)
                 {
-                    e.Handled = true;
+                    if (RaiseContextMenuOpeningEvent(source, -1.0, -1.0,e.UserInitiated))
+                    {
+                        e.Handled = true;
+                    }
                 }
             }
-        }
 
-        private bool RaiseContextMenuOpeningEvent(IInputElement source, double x, double y,bool userInitiated)
-        {
-            // Fire the event
-            ContextMenuEventArgs args = new ContextMenuEventArgs(source, true /* opening */, x, y);
-            DependencyObject sourceDO = source as DependencyObject;
-            if (userInitiated && sourceDO != null)
+            private bool RaiseContextMenuOpeningEvent(IInputElement source, double x, double y,bool userInitiated)
             {
-                if (InputElement.IsUIElement(sourceDO))
+                // Fire the event
+                ContextMenuEventArgs args = new ContextMenuEventArgs(source, true /* opening */, x, y);
+                DependencyObject sourceDO = source as DependencyObject;
+                if (userInitiated && sourceDO != null)
                 {
-                    ((UIElement)sourceDO).RaiseEvent(args, userInitiated);
-                }
-                else if (InputElement.IsContentElement(sourceDO))
-                {
-                    ((ContentElement)sourceDO).RaiseEvent(args, userInitiated);
-                }
-                else if (InputElement.IsUIElement3D(sourceDO))
-                {
-                    ((UIElement3D)sourceDO).RaiseEvent(args, userInitiated);
+                    if (InputElement.IsUIElement(sourceDO))
+                    {
+                        ((UIElement)sourceDO).RaiseEvent(args, userInitiated);
+                    }
+                    else if (InputElement.IsContentElement(sourceDO))
+                    {
+                        ((ContentElement)sourceDO).RaiseEvent(args, userInitiated);
+                    }
+                    else if (InputElement.IsUIElement3D(sourceDO))
+                    {
+                        ((UIElement3D)sourceDO).RaiseEvent(args, userInitiated);
+                    }
+                    else
+                    {
+                        source.RaiseEvent(args);
+                    }
                 }
                 else
                 {
                     source.RaiseEvent(args);
                 }
-            }
-            else
-            {
-                source.RaiseEvent(args);
-            }
 
 
-            if (!args.Handled)
-            {
-                // No one handled the event, auto show any available ContextMenus
-
-                // Saved from the bubble up the tree where we looked for a set ContextMenu property
-                DependencyObject o = args.TargetElement;
-                if ((o != null) && ContextMenuService.ContextMenuIsEnabled(o))
+                if (!args.Handled)
                 {
-                    // Retrieve the value
-                    object menu = ContextMenuService.GetContextMenu(o);
-                    ContextMenu cm = menu as ContextMenu;
-                    cm.SetValue(OwnerProperty, o);
-                    cm.Closed += new RoutedEventHandler(OnContextMenuClosed);
+                    // No one handled the event, auto show any available ContextMenus
 
-                    if ((x == -1.0) && (y == -1.0))
+                    // Saved from the bubble up the tree where we looked for a set ContextMenu property
+                    DependencyObject o = args.TargetElement;
+                    if ((o != null) && ContextMenuService.ContextMenuIsEnabled(o))
                     {
-                        // We infer this to mean that the ContextMenu was opened with the keyboard
-                        cm.Placement = PlacementMode.Center;
+                        // Retrieve the value
+                        object menu = ContextMenuService.GetContextMenu(o);
+                        ContextMenu cm = menu as ContextMenu;
+                        cm.SetValue(OwnerProperty, o);
+                        cm.Closed += new RoutedEventHandler(OnContextMenuClosed);
+
+                        if ((x == -1.0) && (y == -1.0))
+                        {
+                            // We infer this to mean that the ContextMenu was opened with the keyboard
+                            cm.Placement = PlacementMode.Center;
+                        }
+                        else
+                        {
+                            // If there is a CursorLeft and CursorTop, it was opened with the mouse.
+                            cm.Placement = PlacementMode.MousePoint;
+                        }
+
+                        // Clear any open tooltips
+                        RaiseToolTipClosingEvent(true /*reset */);
+
+                        cm.SetCurrentValueInternal(ContextMenu.IsOpenProperty, BooleanBoxes.TrueBox);
+
+                        return true; // A menu was opened
                     }
-                    else
-                    {
-                        // If there is a CursorLeft and CursorTop, it was opened with the mouse.
-                        cm.Placement = PlacementMode.MousePoint;
-                    }
 
-                    // Clear any open tooltips
-                    RaiseToolTipClosingEvent(true /*reset */);
-
-                    cm.SetCurrentValueInternal(ContextMenu.IsOpenProperty, BooleanBoxes.TrueBox);
-
-                    return true; // A menu was opened
+                    return false; // There was no menu to open
                 }
 
-                return false; // There was no menu to open
+                // Clear any open tooltips since someone else opened one
+                RaiseToolTipClosingEvent(true /*reset */);
+
+                return true; // The event was handled by someone else
             }
 
-            // Clear any open tooltips since someone else opened one
-            RaiseToolTipClosingEvent(true /*reset */);
 
-            return true; // The event was handled by someone else
-        }
-
-
-        private void OnContextMenuClosed(object source, RoutedEventArgs e)
-        {
-            ContextMenu cm = source as ContextMenu;
-            if (cm != null)
+            private void OnContextMenuClosed(object source, RoutedEventArgs e)
             {
-                cm.Closed -= OnContextMenuClosed;
-
-                DependencyObject o = (DependencyObject)cm.GetValue(OwnerProperty);
-                if (o != null)
+                ContextMenu cm = source as ContextMenu;
+                if (cm != null)
                 {
-                    cm.ClearValue(OwnerProperty);
+                    cm.Closed -= OnContextMenuClosed;
 
-                    UIElement uie = GetTarget(o);
-                    if (uie != null)
+                    DependencyObject o = (DependencyObject)cm.GetValue(OwnerProperty);
+                    if (o != null)
                     {
-                        if (!IsPresentationSourceNull(uie))
+                        cm.ClearValue(OwnerProperty);
+
+                        UIElement uie = GetTarget(o);
+                        if (uie != null)
                         {
-                            IInputElement inputElement = (o is ContentElement || o is UIElement3D) ? (IInputElement)o : (IInputElement)uie;
-                            ContextMenuEventArgs args = new ContextMenuEventArgs(inputElement, false /*opening */);
-                            inputElement.RaiseEvent(args);
+                            if (!IsPresentationSourceNull(uie))
+                            {
+                                IInputElement inputElement = (o is ContentElement || o is UIElement3D) ? (IInputElement)o : (IInputElement)uie;
+                                ContextMenuEventArgs args = new ContextMenuEventArgs(inputElement, false /*opening */);
+                                inputElement.RaiseEvent(args);
+                            }
                         }
                     }
                 }
             }
-        }
 
-        private static bool IsPresentationSourceNull(DependencyObject uie)
-        {
-            return PresentationSource.CriticalFromVisual(uie) == null;
-        }
+            private static bool IsPresentationSourceNull(DependencyObject uie)
+            {
+                return PresentationSource.CriticalFromVisual(uie) == null;
+            }
 
-        #endregion
+            #endregion
 
         #region Helpers
 
@@ -1173,14 +1045,57 @@ namespace System.Windows.Controls
 
         #endregion
 
+        #region Private Types
+
+        struct WeakRefWrapper<T> where T : class
+        {
+            private WeakReference<T> _storage;
+
+            public T GetValue()
+            {
+                T value;
+                if (_storage != null)
+                {
+                    if (!_storage.TryGetTarget(out value))
+                    {
+                        _storage = null;
+                    }
+                }
+                else
+                {
+                    value = null;
+                }
+
+                return value;
+            }
+
+            public void SetValue(T value)
+            {
+                if (value == null)
+                {
+                    _storage = null;
+                }
+                else if (_storage == null)
+                {
+                    _storage = new WeakReference<T>(value);
+                }
+                else
+                {
+                    _storage.SetTarget(value);
+                }
+            }
+        }
+
+        #endregion
+
         #region Data
 
         private DispatcherTimer _toolTipTimer;
         private bool _quickShow = false;
-        private WeakReference _lastMouseDirectlyOver;
-        private WeakReference _lastMouseOverWithToolTip;
-        private WeakReference _lastObjectWithToolTip;
-        private WeakReference _lastChecked;
+        private WeakRefWrapper<IInputElement> _lastMouseDirectlyOver;
+        private WeakRefWrapper<DependencyObject> _lastMouseOverWithToolTip;
+        private WeakRefWrapper<DependencyObject> _lastObjectWithToolTip;
+        private WeakRefWrapper<DependencyObject> _lastChecked;
         private bool _lastToolTipOpen;
         private ToolTip _currentToolTip;
         private DispatcherTimer _forceCloseTimer;

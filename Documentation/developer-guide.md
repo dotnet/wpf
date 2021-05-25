@@ -47,6 +47,24 @@ If there were any failures, you can cd into $(RepoRoot)\artifacts\test\$(Configu
 
 *NOTE: This requires being run from an admin window at the moment. Removing this restriction is tracked by https://github.com/dotnet/wpf/issues/816.*
 
+### Debugging locally build WPF assemblies with WPF Application
+This section is intended to simplify the steps needed to be able to debug the locally built WPF Assemblies, with any sample app. 
+Configure the project to build x86 or x64, as per the platform architecture you have selected while performing the build for WPF assemblies.
+Go to the csproj file and append this line at the bottom of it. `<Import Project="$(WpfRepoRoot)\eng\wpf-debug.targets" />`. The resultant csproj will look like this:
+```xml
+    <PropertyGroup>
+      <OutputType>WinExe</OutputType>
+      <TargetFramework>net6.0-windows</TargetFramework>
+      <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <WpfRepoRoot>C:\wpf</WpfRepoRoot>
+    </PropertyGroup>
+    <Import Project="$(WpfRepoRoot)\eng\wpf-debug.targets" />
+```
+
+
 ### Testing Locally built WPF assemblies (excluding PresentationBuildTasks)
 This section of guide is intended to discuss the different approaches for ad-hoc testing of WPF assemblies,
 and not automated testing. For automated testing, see the [Running DRTs locally](#Running-DRTs-locally) section above. There are a few different ways this can be done, and for the most part, it depends on what you are trying to accomplish. This section tries to lay out which scenarios require which workflow.

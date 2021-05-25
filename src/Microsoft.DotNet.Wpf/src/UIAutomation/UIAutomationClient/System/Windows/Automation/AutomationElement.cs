@@ -198,6 +198,10 @@ namespace System.Windows.Automation
         /// </summary>
         public static readonly AutomationProperty PositionInSetProperty = AutomationElementIdentifiers.PositionInSetProperty;
 
+        /// <summary>
+        /// </summary>
+        public static readonly AutomationProperty HeadingLevelProperty = AutomationElementIdentifiers.HeadingLevelProperty;
+
         #region IsNnnnPatternAvailable properties
         /// <summary>Property that indicates whether the DockPattern is available for this AutomationElement</summary>
         public static readonly AutomationProperty IsDockPatternAvailableProperty = AutomationElementIdentifiers.IsDockPatternAvailableProperty;

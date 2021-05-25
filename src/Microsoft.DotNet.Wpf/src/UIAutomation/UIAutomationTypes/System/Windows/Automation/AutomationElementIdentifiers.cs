@@ -116,6 +116,9 @@ namespace System.Windows.Automation
         /// <summary>Property ID: FrameworkId - Identifies the underlying UI framework's name for the element being accessed</summary>
         public static readonly AutomationProperty FrameworkIdProperty = AutomationProperty.Register(AutomationIdentifierConstants.Properties.FrameworkId, "AutomationElementIdentifiers.FrameworkIdProperty");
 
+        /// <summary>Property ID: HeadingLevel - </summary>
+        public static readonly AutomationProperty HeadingLevelProperty = AutomationProperty.Register(AutomationIdentifierConstants.Properties.HeadingLevel, "AutomationElementIdentifiers.HeadingLevelProperty");
+
         /// <summary>Property ID: IsRequiredForForm - Identifies weather an edit field is required to be filled out on a form</summary>
         public static readonly AutomationProperty IsRequiredForFormProperty = AutomationProperty.Register(AutomationIdentifierConstants.Properties.IsRequiredForForm, "AutomationElementIdentifiers.IsRequiredForFormProperty");
 

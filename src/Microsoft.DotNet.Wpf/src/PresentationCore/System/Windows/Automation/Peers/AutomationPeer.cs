@@ -25,6 +25,17 @@ using MS.Win32;
 using SR=MS.Internal.PresentationCore.SR;
 using SRID=MS.Internal.PresentationCore.SRID;
 
+namespace Microsoft.UI.Xaml.Automation.Peers
+{
+    // TODO:  Remove after testing
+    public enum AutomationHeadingLevel
+    {
+        None = 0,
+        Level1 = 1,
+        Level2 = 2
+    };
+}
+
 namespace System.Windows.Automation.Peers
 {
     ///
@@ -703,6 +714,12 @@ namespace System.Windows.Automation.Peers
             return AutomationProperties.AutomationPositionInSetDefault;
         }
 
+        /// <summary>
+        /// </summary>
+        virtual protected Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel GetHeadingLevelCore()
+        {
+            return Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel;
+        }
 
         //
         // INTERNAL STUFF - NOT OVERRIDABLE
@@ -1255,6 +1272,31 @@ namespace System.Windows.Automation.Peers
             {
                 _publicCallInProgress = true;
                 result = GetSizeOfSetCore();
+            }
+            finally
+            {
+                _publicCallInProgress = false;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <remarks>
+        /// </remarks>
+        /// <returns>
+        /// </returns>
+        public Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel GetHeadingLevel()
+        {
+            Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel result = Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel;
+
+            if (_publicCallInProgress)
+                throw new InvalidOperationException(SR.Get(SRID.Automation_RecursivePublicCall));
+
+            try
+            {
+                _publicCallInProgress = true;
+                result = GetHeadingLevelCore();
             }
             finally
             {
@@ -2312,6 +2354,7 @@ namespace System.Windows.Automation.Peers
             {
                 s_propertyInfo[AutomationElementIdentifiers.PositionInSetProperty.Id] = new GetProperty(GetPositionInSet);
             }
+            s_propertyInfo[AutomationElementIdentifiers.HeadingLevelProperty.Id] = new GetProperty(GetHeadingLevel);
         }
 
         private delegate object WrapObject(AutomationPeer peer, object iface);
@@ -2362,6 +2405,7 @@ namespace System.Windows.Automation.Peers
         private static object GetLiveSetting(AutomationPeer peer)           {   return peer.GetLiveSetting(); }
         private static object GetControllerFor(AutomationPeer peer)         {   return peer.GetControllerForProviderArray(); }
         private static object GetSizeOfSet(AutomationPeer peer)             {   return peer.GetSizeOfSet(); }
+        private static object GetHeadingLevel(AutomationPeer peer)          {   return peer.GetHeadingLevel(); }
         private static object GetPositionInSet(AutomationPeer peer)         {   return peer.GetPositionInSet(); }
 
         private static Hashtable s_patternInfo;

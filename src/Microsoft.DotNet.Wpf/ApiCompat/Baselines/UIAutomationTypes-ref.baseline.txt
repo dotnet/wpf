@@ -1,1 +1,3 @@
-Total Issues: 0
+Compat issues with assembly UIAutomationTypes:
+MembersMustExist : Member 'public System.Windows.Automation.AutomationProperty System.Windows.Automation.AutomationProperty System.Windows.Automation.AutomationElementIdentifiers.HeadingLevelProperty' does not exist in the implementation but it does exist in the contract.
+Total Issues: 1

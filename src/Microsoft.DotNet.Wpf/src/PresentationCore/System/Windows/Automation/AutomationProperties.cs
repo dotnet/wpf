@@ -594,6 +594,41 @@ namespace System.Windows.Automation
         }
         #endregion
 
+        #region HeadingLevel
+        public static readonly DependencyProperty HeadingLevelProperty =
+            DependencyProperty.RegisterAttached(
+                        "HeadingLevel",
+                        typeof(Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel),
+                        typeof(AutomationProperties),
+                        new UIPropertyMetadata(Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel.None));
+
+        /// <summary>
+        /// Helper for setting HeadingLevel property on a DependencyObject. 
+        /// </summary>
+        public static void SetHeadingLevel(DependencyObject element, Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel value)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+
+            element.SetValue(HeadingLevelProperty, value);
+        }
+
+        /// <summary>
+        /// Helper for reading HeadingLevel property from a DependencyObject.
+        /// </summary>
+        public static Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel GetHeadingLevel(DependencyObject element)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+
+            return ((Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel)element.GetValue(HeadingLevelProperty));
+        }
+        #endregion
+
         #region private implementation
         // Validation callback for string properties
         private static bool IsNotNull(object value)

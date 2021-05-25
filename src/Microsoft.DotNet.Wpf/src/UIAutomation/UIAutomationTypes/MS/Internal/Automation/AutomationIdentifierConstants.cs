@@ -270,7 +270,8 @@ namespace MS.Internal.Automation
             OutlineThickness,
             CenterPoint,
             Rotatation,
-            Size
+            Size,
+            HeadingLevel
         };
         
         internal enum Events

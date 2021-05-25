@@ -18,6 +18,17 @@ using System.Globalization;
 using System.Diagnostics;
 using MS.Internal.Automation;
 
+namespace Microsoft.UI.Xaml.Automation.Peers
+{
+    // TODO:  Remove after testing
+    public enum AutomationHeadingLevel
+    {
+        None = 0,
+        Level1 = 1,
+        Level2 = 2
+    };
+}
+
 namespace MS.Internal.Automation
 {
     // Disable warning for obsolete types.  These are scheduled to be removed in M8.2 so 
@@ -274,6 +285,7 @@ namespace MS.Internal.Automation
             new AutomationPropertyInfo( null,                            AutomationElement.ItemStatusProperty,                   typeof(string),                ""                             ),
             new AutomationPropertyInfo( null,                            AutomationElement.SizeOfSetProperty,                    typeof(int),                   -1                             ),
             new AutomationPropertyInfo( null,                            AutomationElement.PositionInSetProperty,                typeof(int),                   -1                             ),
+            new AutomationPropertyInfo( null,                            AutomationElement.HeadingLevelProperty,                 typeof(Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel), null),
 
             // Pattern Available properties            
             //                                                           PropertyID                                                  Type           Default value

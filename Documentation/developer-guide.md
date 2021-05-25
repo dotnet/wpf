@@ -47,7 +47,7 @@ If there were any failures, you can cd into $(RepoRoot)\artifacts\test\$(Configu
 
 *NOTE: This requires being run from an admin window at the moment. Removing this restriction is tracked by https://github.com/dotnet/wpf/issues/816.*
 
-### Debugging locally build WPF assemblies with WPF Application
+### Debugging locally built WPF assemblies with WPF Application
 This section is intended to simplify the steps needed to be able to debug the locally built WPF Assemblies, with any sample app. 
 Configure the project to build x86 or x64, as per the platform architecture you have selected while performing the build for WPF assemblies.
 Go to the csproj file and append this line at the bottom of it. `<Import Project="$(WpfRepoRoot)\eng\wpf-debug.targets" />`. The resultant csproj will look like this:

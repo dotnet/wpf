@@ -718,7 +718,7 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         virtual protected Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel GetHeadingLevelCore()
         {
-            return Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel;
+            return Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel.None;
         }
 
         //
@@ -1288,7 +1288,7 @@ namespace System.Windows.Automation.Peers
         /// </returns>
         public Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel GetHeadingLevel()
         {
-            Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel result = Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel;
+            Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel result = Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel.None;
 
             if (_publicCallInProgress)
                 throw new InvalidOperationException(SR.Get(SRID.Automation_RecursivePublicCall));

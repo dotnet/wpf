@@ -56,15 +56,14 @@ namespace System.Windows.Controls
                             if ((Mouse.LeftButton == MouseButtonState.Pressed) ||
                                 (Mouse.RightButton == MouseButtonState.Pressed))
                             {
-                                RaiseToolTipClosingEvent(true /* reset */);
+                                DismissToolTips();
                             }
                             else
                             {
                                 IInputElement directlyOver = Mouse.PrimaryDevice.RawDirectlyOver;
+
                                 if (directlyOver != null)
                                 {
-                                    Point pt = Mouse.PrimaryDevice.GetPosition(directlyOver);
-
                                     // If possible, check that the mouse position is within the render bounds
                                     // (avoids mouse capture confusion).
                                     if (Mouse.CapturedMode != CaptureMode.None)
@@ -75,14 +74,11 @@ namespace System.Windows.Controls
                                         if (rootAsUIElement != null)
                                         {
                                             // Get mouse position wrt to root
-                                            pt = Mouse.PrimaryDevice.GetPosition(rootAsUIElement);
+                                            Point pt = Mouse.PrimaryDevice.GetPosition(rootAsUIElement);
 
                                             // Hittest to find the element the mouse is over
                                             IInputElement enabledHit;
                                             rootAsUIElement.InputHitTest(pt, out enabledHit, out directlyOver);
-
-                                            // Find the position of the mouse relative the element that the mouse is over
-                                            pt = Mouse.PrimaryDevice.GetPosition(directlyOver);
                                         }
                                         else
                                         {
@@ -93,30 +89,23 @@ namespace System.Windows.Controls
                                     if (directlyOver != null)
                                     {
                                         // Process the mouse move
-                                        OnMouseMove(directlyOver, pt);
+                                        OnMouseMove(directlyOver, mouseReport);
                                     }
                                 }
                             }
                         }
                         else if ((mouseReport.Actions & RawMouseActions.Deactivate) == RawMouseActions.Deactivate)
                         {
-                            if (LastMouseDirectlyOver != null)
-                            {
-                                LastMouseDirectlyOver = null;
-                                if (LastMouseOverWithToolTip != null)
-                                {
-                                    RaiseToolTipClosingEvent(true /* reset */);
+                            DismissToolTips();
 
-                                    // When the user moves the cursor outside of the window,
-                                    // clear the LastMouseOverWithToolTip property so if the user returns
-                                    // the mouse to the same item, the tooltip will reappear.  If
-                                    // the deactivation is coming from a window grabbing capture
-                                    // (such as Drag and Drop) do not clear the property.
-                                    if (MS.Win32.SafeNativeMethods.GetCapture() == IntPtr.Zero)
-                                    {
-                                        LastMouseOverWithToolTip = null;
-                                    }
-                                }
+                            // When the user moves the cursor outside of the window,
+                            // clear the LastMouseToolTipOwner property so if the user returns
+                            // the mouse to the same item, the tooltip will reappear.  If
+                            // the deactivation is coming from a window grabbing capture
+                            // (such as Drag and Drop) do not clear the property.
+                            if (MS.Win32.SafeNativeMethods.GetCapture() == IntPtr.Zero)
+                            {
+                                LastMouseToolTipOwner = null;
                             }
                         }
                     }
@@ -136,35 +125,45 @@ namespace System.Windows.Controls
             }
             else if (e.StagingItem.Input.RoutedEvent == Mouse.MouseDownEvent)
             {
-                RaiseToolTipClosingEvent(true /* reset */);
+                DismissToolTips();
             }
         }
 
-        private void OnMouseMove(IInputElement directlyOver, Point pt)
+        private void OnMouseMove(IInputElement directlyOver, RawMouseInputReport mouseReport)
         {
+            if (MouseHasLeftSafeArea(mouseReport))
+            {
+                DismissCurrentToolTip();
+            }
+
             if (directlyOver != LastMouseDirectlyOver)
             {
                 LastMouseDirectlyOver = directlyOver;
-                if (directlyOver != LastMouseOverWithToolTip)
-                {
-                    InspectElementForToolTip(directlyOver as DependencyObject, ToolTip.ToolTipTrigger.Mouse);
-                }
+                DependencyObject owner = FindToolTipOwner(directlyOver, ToolTipService.TriggerAction.Mouse);
+
+                BeginShowToolTip(owner, ToolTipService.TriggerAction.Mouse);
             }
         }
 
         private void OnFocusChanged(object sender, KeyboardFocusChangedEventArgs e)
         {
-            IInputElement focusedElement = e.NewFocus;
-            if (focusedElement != null)
+            // any focus change dismisses tooltips triggered from the keyboard
+            DismissKeyboardToolTips();
+
+            // focus changes caused by keyboard navigation can show a tooltip
+            if (KeyboardNavigation.IsKeyboardMostRecentInputDevice())
             {
-                InspectElementForToolTip(focusedElement as DependencyObject, ToolTip.ToolTipTrigger.KeyboardFocus);
+                IInputElement focusedElement = e.NewFocus;
+                DependencyObject owner = FindToolTipOwner(focusedElement, ToolTipService.TriggerAction.KeyboardFocus);
+
+                BeginShowToolTip(owner, ToolTipService.TriggerAction.KeyboardFocus);
             }
         }
         
         /////////////////////////////////////////////////////////////////////
         private void ProcessMouseUp(object sender, MouseButtonEventArgs e)
         {
-            RaiseToolTipClosingEvent(false /* reset */);
+            DismissToolTips();
 
             if (!e.Handled)
             {
@@ -189,10 +188,7 @@ namespace System.Windows.Controls
         {
             if (!e.Handled)
             {
-                // We are introducing a new shortcut to show tooltips on demand.
-                // Ctrl + Shift + f10 will toggle the state of the tooltip.
-                if (!AccessibilitySwitches.UseLegacyToolTipDisplay &&
-                    (e.SystemKey == Key.F10) && ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift) && ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control))
+                if ((e.SystemKey == Key.F10) && ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift) && ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control))
                 {
                     e.Handled = OpenOrCloseToolTipViaShortcut();
                 }
@@ -201,30 +197,6 @@ namespace System.Windows.Controls
                     RaiseContextMenuOpeningEvent(e);
                 }
             }
-        }
-
-        public bool OpenOrCloseToolTipViaShortcut()
-        {
-            bool result = false;
-
-            if (_lastToolTipOpen)
-            {
-                // If a ToolTip is active, don't show it anymore
-                RaiseToolTipClosingEvent(true /* reset */);
-                LastObjectWithToolTip = null;
-                result = true;
-            }
-            else
-            {
-                IInputElement focusedElement = Keyboard.FocusedElement;
-                if (focusedElement != null)
-                {
-                    // Only handle this event if we acted upon a tooltip.
-                    result = InspectElementForToolTip(focusedElement as DependencyObject, ToolTip.ToolTipTrigger.KeyboardShortcut);
-                }
-            }
-
-            return result;
         }
 
         /////////////////////////////////////////////////////////////////////
@@ -244,147 +216,385 @@ namespace System.Windows.Controls
         #region ToolTip
 
         /// <summary>
-        /// Inspects the given element in search of an enabled tooltip, depending on the user 
-        /// action triggering this search this method will result in the tooltip showing for 
-        /// the first time, closing, or remaining open if the tooltip was already showing.
+        /// Initiate the process of showing a tooltip.
+        /// Make a pending request, updating the pending and history state accordingly.
+        /// Prepare to promote the pending tooltip to "current", which happens either
+        /// immediately or after a delay.
         /// </summary>
-        /// <param name="o">The element to be inspected.</param>
-        /// <param name="triggerAction">The user action that triggered this search.</param>
-        /// <returns>True if the method found a tooltip and acted upon it.</returns>
-        /// <remarks>
-        /// Mouse only shows the tooltip the first time it moves over an element, as long as the mouse keeps moving inside that element, the tooltip stays.
-        /// When the keyboard focus lands on an element with a tooltip the tooltip shows unless it was already being shown by the mouse.
-        /// If the user presses the keyboard shortcut while focusing an element with a tooltip, the tooltip state will toggle from open to closed or viceversa.
-        /// </remarks>
-        private bool InspectElementForToolTip(DependencyObject o, ToolTip.ToolTipTrigger triggerAction)
+        /// <param name="o">The tooltip owner</param>
+        /// <param name="triggerAction">The action that triggered showing the tooltip</param>
+        private void BeginShowToolTip(DependencyObject o, ToolTipService.TriggerAction triggerAction)
         {
-            DependencyObject origObj = o;
-            bool foundToolTip = false;
-            bool showToolTip = false;
-
-            bool fromKeyboard = triggerAction == ToolTip.ToolTipTrigger.KeyboardFocus ||
-                                triggerAction == ToolTip.ToolTipTrigger.KeyboardShortcut;
-
-            foundToolTip = LocateNearestToolTip(ref o, triggerAction, ref showToolTip);
-
-            if (showToolTip)
+            if (triggerAction == ToolTipService.TriggerAction.Mouse)
             {
-                // Show the ToolTip on "o" or keep the current ToolTip active
+                // ignore a mouse request if the mouse hasn't moved off the owner since the last mouse request
+                if (o == LastMouseToolTipOwner)
+                    return;
+                LastMouseToolTipOwner = o;
 
-                if (o != null)
+                // cancel a pending mouse request if the mouse has moved off its owner
+                if (PendingToolTip != null && !PendingToolTip.FromKeyboard && o != GetOwner(PendingToolTip))
                 {
-                    // A ToolTip value was found and is enabled, proceed to firing the event
-
-                    if (LastObjectWithToolTip != null)
-                    {
-                        // If a ToolTip is active, don't show it anymore
-                        RaiseToolTipClosingEvent(true /* reset */);
-                        LastMouseOverWithToolTip = null;
-                    }
-
-                    LastChecked = origObj;
-                    LastObjectWithToolTip = o;
-                    if (!fromKeyboard)
-                    {
-                        LastMouseOverWithToolTip = o;
-                    }
-
-                    // When showing tooltips from keyboard focus, do not allow quickshow.
-                    // A user tabbing through elements quickly doesn't need to see all the tooltips, only when it has settled on an element.
-                    bool quickShow = fromKeyboard ? false : _quickShow; // ResetToolTipTimer may reset _quickShow
-                    ResetToolTipTimer();
-
-                    if (quickShow)
-                    {
-                        _quickShow = false;
-                        RaiseToolTipOpeningEvent(fromKeyboard);
-                    }
-                    else
-                    {
-                        ToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                        ToolTipTimer.Interval = TimeSpan.FromMilliseconds(ToolTipService.GetInitialShowDelay(o));
-                        ToolTipTimer.Tag = BooleanBoxes.TrueBox; // should open
-                        ToolTipTimer.Tick += new EventHandler((s, e) => { RaiseToolTipOpeningEvent(fromKeyboard); });
-                        ToolTipTimer.Start();
-                    }
+                    DismissPendingToolTip();
                 }
             }
-            // If we are moving focus to an element that does not have a tooltip,
-            // and the mouse is still on a tooltip element, keep showing the tooltip under the mouse.
-            else if (LastMouseOverWithToolTip == null || triggerAction != ToolTip.ToolTipTrigger.KeyboardFocus)
+
+            // ignore a request if no owner, or already showing or pending its tooltip
+            if (o == null || o == GetOwner(PendingToolTip) || o == GetOwner(CurrentToolTip))
+                return;
+
+            // discard the previous pending request
+            DismissPendingToolTip();
+
+            // record a pending request
+            PendingToolTip = SentinelToolTip(o, triggerAction);
+
+            // decide when to promote to current
+            int showDelay;
+            switch (triggerAction)
             {
-                // If a ToolTip is active, don't show it anymore
-                RaiseToolTipClosingEvent(true /* reset */);
-
-                //Only cleanup the LasMouseOverWithToolTip property if it is the mouse that is moving away.
-                if (triggerAction == ToolTip.ToolTipTrigger.Mouse)
-                {
-                    // No longer over an item with a tooltip
-                    LastMouseOverWithToolTip = null;
-                }
-
-                LastObjectWithToolTip = null;
+                case ToolTipService.TriggerAction.Mouse:
+                case ToolTipService.TriggerAction.KeyboardFocus:
+                    showDelay = _quickShow ? 0 : ToolTipService.GetInitialShowDelay(o);
+                    break;
+                case ToolTipService.TriggerAction.KeyboardShortcut:
+                default:
+                    showDelay = 0;
+                    break;
             }
 
-            return foundToolTip;
+            // promote now, or schedule delayed promotion
+            if (showDelay == 0)
+            {
+                PromotePendingToolTipToCurrent(triggerAction);
+            }
+            else
+            {
+                PendingToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal);
+                PendingToolTipTimer.Interval = TimeSpan.FromMilliseconds(showDelay);
+                PendingToolTipTimer.Tick += new EventHandler((s, e) => { PromotePendingToolTipToCurrent(triggerAction); });
+                PendingToolTipTimer.Start();
+            }
+        }
+
+        private void PromotePendingToolTipToCurrent(ToolTipService.TriggerAction triggerAction)
+        {
+            DependencyObject o = GetOwner(PendingToolTip);
+
+            DismissToolTips();
+
+            if (o != null)
+            {
+                ShowToolTip(o, ToolTipService.IsFromKeyboard(triggerAction));
+            }
         }
 
         /// <summary>
-        ///     Finds the nearest element with an enabled tooltip.
+        ///     Initiates the process of opening the tooltip popup,
+        ///     and makes the tooltip "current".
         /// </summary>
-        /// <param name="o">
-        ///     The most "leaf" element to start looking at.
-        ///     This element will be replaced with the element that
-        ///     contains an active tooltip OR null if the element
-        ///     is already in play.
-        /// </param>
-        /// <param name="triggerAction">
-        ///     The user action that triggered this search.
-        /// </param>
-        /// <param name="showToolTip">
-        ///     Whether or not the tooltip found should be shown.
-        /// </param>
-        /// <returns>True if a tooltip was located.</returns>
-        private bool LocateNearestToolTip(ref DependencyObject o, ToolTip.ToolTipTrigger triggerAction, ref bool showToolTip)
+        /// <param name="o">The owner of the tooltip</param>
+        /// <param name="fromKeyboard">True if the tooltip is triggered by keyboard</param>
+        private void ShowToolTip(DependencyObject o, bool fromKeyboard)
         {
-            IInputElement element = o as IInputElement;
-            bool foundToolTip = false;
-            showToolTip = false;
+            Debug.Assert(_currentToolTip == null);
+            ResetCurrentToolTipTimer();
+            OnForceClose(null, EventArgs.Empty);
 
+            bool show = true;
+
+            IInputElement element = o as IInputElement;
             if (element != null)
             {
-                FindToolTipEventArgs args = new FindToolTipEventArgs(triggerAction);
+                ToolTipEventArgs args = new ToolTipEventArgs(opening:true);
+                // ** Public callout - re-entrancy is possible **//
                 element.RaiseEvent(args);
 
-                foundToolTip = args.Handled;
-
-                if (args.TargetElement != null)
-                {
-                    // Open this element's ToolTip
-                    o = args.TargetElement;
-                    showToolTip =  true;
-                }
-                else if (args.KeepCurrentActive)
-                {
-                    // Keep the current ToolTip active
-                    o = null;
-                    showToolTip =  true;
-                }
+                // [re-examine _currentToolTip, re-entrancy can change it]
+                show = !args.Handled && (_currentToolTip == null);
             }
 
-            // Close any existing ToolTips
-            return foundToolTip;
-        }
-        
-        internal bool StopLookingForToolTip(DependencyObject o)
-        {
-            if ((o == LastChecked) || (o == LastMouseOverWithToolTip) || (o == _currentToolTip) || WithinCurrentToolTip(o))
+            if (show)
             {
-                // In this case, don't show the ToolTip, but the current ToolTip is still OK to show.
-                return true;
+                object tooltip = ToolTipService.GetToolTip(o);
+                ToolTip tip = tooltip as ToolTip;
+                if (tip != null)
+                {
+                    _currentToolTip = tip;
+                }
+                else
+                {
+                    _currentToolTip = new ToolTip();
+                    _currentToolTip.SetValue(ServiceOwnedProperty, BooleanBoxes.TrueBox);
+
+                    // Bind the content of the tooltip to the ToolTip attached property
+                    Binding binding = new Binding();
+                    binding.Path = new PropertyPath(ToolTipService.ToolTipProperty);
+                    binding.Mode = BindingMode.OneWay;
+                    binding.Source = o;
+                    _currentToolTip.SetBinding(ToolTip.ContentProperty, binding);
+                }
+
+                if (!_currentToolTip.StaysOpen)
+                {
+                    // The popup takes capture in this case, which causes us to hit test to the wrong window.
+                    // We do not support this scenario. Cleanup and then throw and exception.
+                    throw new NotSupportedException(SR.Get(SRID.ToolTipStaysOpenFalseNotAllowed));
+                }
+
+                _currentToolTip.SetValue(OwnerProperty, o);
+                _currentToolTip.Opened += OnToolTipOpened;
+                _currentToolTip.Closed += OnToolTipClosed;
+                _currentToolTip.FromKeyboard = fromKeyboard;
+                _currentToolTip.IsOpen = true;
+
+                CurrentToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal);
+                CurrentToolTipTimer.Interval = TimeSpan.FromMilliseconds(ToolTipService.GetShowDuration(o));
+                CurrentToolTipTimer.Tick += new EventHandler(OnShowDurationTimerExpired);
+                CurrentToolTipTimer.Start();
+            }
+        }
+
+        private void SetSafeArea(ToolTip tooltip)
+        {
+            CurrentSafeArea = null;     // default
+
+            if (tooltip != null && !tooltip.FromKeyboard)
+            {
+                // get owner and tooltip rectangles, in owner window's client coords
+                UIElement owner = GetOwner(tooltip) as UIElement;
+                PresentationSource presentationSource = (owner == null) ? null : PresentationSource.CriticalFromVisual(owner);
+                if (presentationSource != null)
+                {
+                    Rect rectElement = new Rect(new Point(0, 0), owner.RenderSize);
+                    Rect rectRoot = PointUtil.ElementToRoot(rectElement, owner, presentationSource);
+                    Rect ownerRect = PointUtil.RootToClient(rectRoot, presentationSource);
+
+                    Rect screenRect = tooltip.GetScreenRect();
+                    Point clientPt = PointUtil.ScreenToClient(screenRect.Location, presentationSource);
+                    Rect tooltipRect = new Rect(clientPt, screenRect.Size);
+                }
+            }
+        }
+
+        private bool MouseHasLeftSafeArea(RawMouseInputReport mouseReport)
+        {
+            if (CurrentSafeArea == null)
+                return false;
+
+            // TODO:
+            return false;
+        }
+
+        private void OnShowDurationTimerExpired(object sender, EventArgs e)
+        {
+            DismissCurrentToolTip();
+        }
+
+        // called from ToolTip.OnContentChanged, when the owner of the current
+        // tooltip changes its ToolTip property from a non-ToolTip to a ToolTip.
+        internal void ReplaceCurrentToolTip()
+        {
+            ToolTip currentToolTip = _currentToolTip;
+            if (currentToolTip == null)
+                return;
+
+            // get information from the current tooltip, before it goes away
+            DependencyObject owner = GetOwner(currentToolTip);
+            bool fromKeyboard = currentToolTip.FromKeyboard;
+
+            // dismiss the current tooltip, then show a new one in its stead
+            DismissCurrentToolTip();
+            ShowToolTip(owner, fromKeyboard);
+        }
+
+        internal void DismissToolTipsForOwner(DependencyObject o)
+        {
+            if (o == GetOwner(PendingToolTip))
+            {
+                DismissPendingToolTip();
             }
 
-            return false;
+            if (o == GetOwner(CurrentToolTip))
+            {
+                DismissCurrentToolTip();
+            }
+        }
+
+        private void DismissToolTips()
+        {
+            DismissPendingToolTip();
+            DismissCurrentToolTip();
+        }
+
+        private void DismissKeyboardToolTips()
+        {
+            if (PendingToolTip?.FromKeyboard ?? false)
+            {
+                DismissPendingToolTip();
+            }
+
+            if (CurrentToolTip?.FromKeyboard ?? false)
+            {
+                DismissCurrentToolTip();
+            }
+        }
+
+        private void DismissPendingToolTip()
+        {
+            if (PendingToolTipTimer != null)
+            {
+                PendingToolTipTimer.Stop();
+                PendingToolTipTimer = null;
+            }
+
+            if (PendingToolTip != null)
+            {
+                PendingToolTip = null;
+                _sentinelToolTip.SetValue(OwnerProperty, null);
+            }
+        }
+
+        private void DismissCurrentToolTip()
+        {
+            ToolTip currentToolTip = _currentToolTip;
+            _currentToolTip = null;
+            CloseToolTip(currentToolTip);
+        }
+
+        private void CloseToolTip(ToolTip tooltip)
+        {
+            if (tooltip == null)
+                return;
+
+            SetSafeArea(null);
+            ResetCurrentToolTipTimer();
+
+            // cache the owner now, in case re-entrancy clears it
+            DependencyObject owner = GetOwner(tooltip);
+
+            try
+            {
+                // notify listeners that the tooltip is closing
+                if (tooltip.IsOpen)
+                {
+                    IInputElement element = owner as IInputElement;
+                    if (element != null)
+                    {
+                        // ** Public callout - re-entrancy is possible **//
+                        element.RaiseEvent(new ToolTipEventArgs(opening:false));
+                    }
+                }
+            }
+            finally
+            {
+                // close the tooltip popup
+                // [re-examine IsOpen - re-entrancy could change it]
+                if (tooltip.IsOpen)
+                {
+                    // ** Public callout - re-entrancy is possible **//
+                    tooltip.IsOpen = false;
+
+                    // allow time for the popup's fade-out or slide animation
+                    _forceCloseTimer = new DispatcherTimer(DispatcherPriority.Normal);
+                    _forceCloseTimer.Interval = Popup.AnimationDelayTime;
+                    _forceCloseTimer.Tick += new EventHandler(OnForceClose);
+                    _forceCloseTimer.Tag = tooltip;
+                    _forceCloseTimer.Start();
+
+                    // begin the BetweenShowDelay interval, during which another tooltip
+                    // can open without the usual delay
+                    _quickShow = true;
+                    CurrentToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal);
+                    CurrentToolTipTimer.Interval = TimeSpan.FromMilliseconds(ToolTipService.GetBetweenShowDelay(owner));
+                    CurrentToolTipTimer.Tick += new EventHandler(OnBetweenShowDelay);
+                    CurrentToolTipTimer.Start();
+                }
+                else
+                {
+                    ClearServiceProperties(tooltip);
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Clean up any service-only properties we may have set on the given tooltip
+        /// </summary>
+        /// <param name="tooltip"></param>
+        private void ClearServiceProperties(ToolTip tooltip)
+        {
+            if (tooltip != null)
+            {
+                tooltip.ClearValue(OwnerProperty);
+                tooltip.FromKeyboard = false;
+
+                if ((bool)tooltip.GetValue(ServiceOwnedProperty))
+                {
+                    BindingOperations.ClearBinding(tooltip, ToolTip.ContentProperty);
+                }
+            }
+        }
+
+        private bool OpenOrCloseToolTipViaShortcut()
+        {
+            DependencyObject owner = FindToolTipOwner(Keyboard.FocusedElement, ToolTipService.TriggerAction.KeyboardShortcut);
+            if (owner == null)
+                return false;
+
+
+            // if the owner's tooltip is open, dismiss it.  Otherwise, show it.
+            if (owner == GetOwner(CurrentToolTip))
+            {
+                DismissCurrentToolTip();
+            }
+            else
+            {
+                if (owner == GetOwner(PendingToolTip))
+                {
+                    // discard a previous pending request, so that the new one isn't ignored.
+                    // This ensures that the tooltip opens immediately.
+                    DismissPendingToolTip();
+                }
+
+                BeginShowToolTip(owner, ToolTipService.TriggerAction.KeyboardShortcut);
+            }
+
+            return true;
+        }
+
+        private DependencyObject FindToolTipOwner(IInputElement element, ToolTipService.TriggerAction triggerAction)
+        {
+            if (element == null)
+                return null;
+
+            DependencyObject owner = null;
+            switch (triggerAction)
+            {
+                case ToolTipService.TriggerAction.Mouse:
+                    // look up the tree for the nearest tooltip owner
+                    FindToolTipEventArgs args = new FindToolTipEventArgs(triggerAction);
+                    element.RaiseEvent(args);
+                    owner = args.TargetElement;
+                    break;
+
+                case ToolTipService.TriggerAction.KeyboardFocus:
+                case ToolTipService.TriggerAction.KeyboardShortcut:
+                    // use the element itself, if it is a tooltip owner
+                    owner = element as DependencyObject;
+                    if (owner != null && !ToolTipService.ToolTipIsEnabled(owner, triggerAction))
+                    {
+                        owner = null;
+                    }
+                    break;
+            }
+
+            // ignore nested tooltips
+            if (WithinCurrentToolTip(owner))
+            {
+                owner = null;
+            }
+
+            return owner;
         }
 
         private bool WithinCurrentToolTip(DependencyObject o)
@@ -414,249 +624,56 @@ namespace System.Windows.Controls
                     (v is Visual3D && ((Visual3D)v).IsDescendantOf(_currentToolTip)));
         }
 
-        private void ResetToolTipTimer()
+        private void ResetCurrentToolTipTimer()
         {
-            if (_toolTipTimer != null)
+            if (CurrentToolTipTimer != null)
             {
-                _toolTipTimer.Stop();
-                _toolTipTimer = null;
+                CurrentToolTipTimer.Stop();
+                CurrentToolTipTimer = null;
                 _quickShow = false;
             }
         }
 
-        internal void OnRaiseToolTipOpeningEvent(object sender, EventArgs e)
-        {
-            RaiseToolTipOpeningEvent();
-        }
-
         /// <summary>
-        ///     Initiates the process of opening the tooltip popup.
-        /// </summary>
-        /// <param name="fromKeyboard">
-        ///     Whether this particular event is caused by keyboard focus.
-        ///     This is passed down to the tooltip and the popup to determine its placement.
-        /// </param>
-        private void RaiseToolTipOpeningEvent(bool fromKeyboard = false)
-        {
-            ResetToolTipTimer();
-
-            if (_forceCloseTimer != null)
-            {
-                OnForceClose(null, EventArgs.Empty);
-            }
-
-            DependencyObject o = LastObjectWithToolTip;
-            if (o != null)
-            {
-                bool show = true;
-
-                IInputElement element = o as IInputElement;
-                if (element != null)
-                {
-                    ToolTipEventArgs args = new ToolTipEventArgs(true);
-                    element.RaiseEvent(args);
-
-                    show = !args.Handled;
-                }
-
-                if (show)
-                {
-                    object tooltip = ToolTipService.GetToolTip(o);
-                    ToolTip tip = tooltip as ToolTip;
-                    if (tip != null)
-                    {
-                        _currentToolTip = tip;
-                        _ownToolTip = false;
-                    }
-                    else if ((_currentToolTip == null) || !_ownToolTip)
-                    {
-                        _currentToolTip = new ToolTip();
-                        _ownToolTip = true;
-                        _currentToolTip.SetValue(ServiceOwnedProperty, BooleanBoxes.TrueBox);
-
-                        // Bind the content of the tooltip to the ToolTip attached property
-                        Binding binding = new Binding();
-                        binding.Path = new PropertyPath(ToolTipService.ToolTipProperty);
-                        binding.Mode = BindingMode.OneWay;
-                        binding.Source = o;
-                        _currentToolTip.SetBinding(ToolTip.ContentProperty, binding);
-                    }
-
-                    if (!_currentToolTip.StaysOpen)
-                    {
-                        // The popup takes capture in this case, which causes us to hit test to the wrong window.
-                        // We do not support this scenario. Cleanup and then throw and exception.
-                        throw new NotSupportedException(SR.Get(SRID.ToolTipStaysOpenFalseNotAllowed));
-                    }
-
-                    _currentToolTip.SetValue(OwnerProperty, o);
-                    _currentToolTip.Opened += OnToolTipOpened;
-                    _currentToolTip.Closed += OnToolTipClosed;
-                    _currentToolTip.FromKeyboard = fromKeyboard;
-                    _currentToolTip.IsOpen = true;
-
-                    ToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                    ToolTipTimer.Interval = TimeSpan.FromMilliseconds(ToolTipService.GetShowDuration(o));
-                    ToolTipTimer.Tick += new EventHandler(OnRaiseToolTipClosingEvent);
-                    ToolTipTimer.Start();
-                }
-            }
-        }
-
-        internal void OnRaiseToolTipClosingEvent(object sender, EventArgs e)
-        {
-            RaiseToolTipClosingEvent(false /* reset */);
-        }
-
-        /// <summary>
-        ///     Closes the current tooltip, firing a Closing event if necessary.
-        /// </summary>
-        /// <param name="reset">
-        ///     When false, will continue to treat input as if the tooltip were open so that
-        ///     the tooltip of the current element won't re-open. Example: Clicking on a button
-        ///     will hide the tooltip, but when the mouse is released, the tooltip should not
-        ///     appear unless the mouse is moved off and then back on the button.
-        /// </param>
-        private void RaiseToolTipClosingEvent(bool reset)
-        {
-            ResetToolTipTimer();
-
-            if (reset)
-            {
-                LastChecked = null;
-            }
-
-            DependencyObject o = LastObjectWithToolTip;
-            if (o != null)
-            {
-                if (_currentToolTip != null)
-                {
-                    bool isOpen = _currentToolTip.IsOpen;
-
-                    try
-                    {
-                        if (isOpen)
-                        {
-                            IInputElement element = o as IInputElement;
-                            if (element != null)
-                            {
-                                element.RaiseEvent(new ToolTipEventArgs(false));
-                            }
-                        }
-                    }
-                    finally
-                    {
-                        // Raising an event calls out to app code, which
-                        // could cause a re-entrant call to this method that
-                        // sets _currentToopTip to null.  If that happens,
-                        // there's no need to do the work again.
-                        if (_currentToolTip != null)
-                        {
-                            if (isOpen)
-                            {
-                                _currentToolTip.IsOpen = false;
-
-                                // Setting IsOpen makes call outs to app code. So it is possible that
-                                // the _currentToolTip is destroyed as a result of an action there. If that
-                                // were the case we do not need to set off the timer to close the tooltip.
-                                if (_currentToolTip != null)
-                                {
-                                    // Keep references and owner set for the fade out or slide animation
-                                    // Owner is released when animation completes
-                                    _forceCloseTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                                    _forceCloseTimer.Interval = Popup.AnimationDelayTime;
-                                    _forceCloseTimer.Tick += new EventHandler(OnForceClose);
-                                    _forceCloseTimer.Tag = _currentToolTip;
-                                    _forceCloseTimer.Start();
-                                }
-
-                                _quickShow = true;
-                                ToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                                ToolTipTimer.Interval = TimeSpan.FromMilliseconds(ToolTipService.GetBetweenShowDelay(o));
-                                ToolTipTimer.Tick += new EventHandler(OnBetweenShowDelay);
-                                ToolTipTimer.Start();
-                            }
-                            else
-                            {
-                                // Release owner now
-                                _currentToolTip.ClearValue(OwnerProperty);
-
-                                if (_ownToolTip)
-                                    BindingOperations.ClearBinding(_currentToolTip, ToolTip.ContentProperty);
-                            }
-
-                            if (_currentToolTip != null)
-                            {
-                                _currentToolTip.FromKeyboard = false;
-                                _currentToolTip = null;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Event handler for ToolTip.Opened, keep _lastToolTipOpen state for Keyboard shortcut
+        /// Event handler for ToolTip.Opened
         /// </summary>
         private void OnToolTipOpened(object sender, EventArgs e)
         {
             ToolTip toolTip = (ToolTip)sender;
             toolTip.Opened -= OnToolTipOpened;
-            _lastToolTipOpen = true;
+
+            SetSafeArea(toolTip);
         }
 
-        // Clear owner when tooltip has closed
+        // Clear service properties when tooltip has closed
         private void OnToolTipClosed(object sender, EventArgs e)
         {
             ToolTip toolTip = (ToolTip)sender;
             toolTip.Closed -= OnToolTipClosed;
-            toolTip.ClearValue(OwnerProperty);
-
-            _lastToolTipOpen = false;
-
-            if ((bool)toolTip.GetValue(ServiceOwnedProperty))
-            {
-                BindingOperations.ClearBinding(toolTip, ToolTip.ContentProperty);
-            }
+            ClearServiceProperties(toolTip);
         }
 
         // The previous tooltip hasn't closed and we are trying to open a new one
         private void OnForceClose(object sender, EventArgs e)
         {
-            _forceCloseTimer.Stop();
-            ToolTip toolTip = (ToolTip)_forceCloseTimer.Tag;
-            toolTip.ForceClose();
-            _forceCloseTimer = null;
+            if (_forceCloseTimer != null)
+            {
+                _forceCloseTimer.Stop();
+                ToolTip toolTip = (ToolTip)_forceCloseTimer.Tag;
+                toolTip.ForceClose();
+                _forceCloseTimer = null;
+            }
         }
 
         private void OnBetweenShowDelay(object source, EventArgs e)
         {
-            ResetToolTipTimer();
+            ResetCurrentToolTipTimer();
         }
 
         private IInputElement LastMouseDirectlyOver
         {
             get { return _lastMouseDirectlyOver.GetValue(); }
             set { _lastMouseDirectlyOver.SetValue(value); }
-        }
-
-        private DependencyObject LastMouseOverWithToolTip
-        {
-            get { return _lastMouseOverWithToolTip.GetValue(); }
-            set { _lastMouseOverWithToolTip.SetValue(value); }
-        }
-
-        private DependencyObject LastObjectWithToolTip
-        {
-            get { return _lastObjectWithToolTip.GetValue(); }
-            set { _lastObjectWithToolTip.SetValue(value); }
-        }
-
-        private DependencyObject LastChecked
-        {
-            get { return _lastChecked.GetValue(); }
-            set { _lastChecked.SetValue(value); }
         }
 
         #endregion
@@ -670,131 +687,131 @@ namespace System.Windows.Controls
         internal static readonly RoutedEvent ContextMenuOpenedEvent =
                 EventManager.RegisterRoutedEvent("Opened", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(PopupControlService));
 
-            /// <summary>
-            ///     Event that fires on ContextMenu when it closes.
-            ///     Located here to avoid circular dependencies.
-            /// </summary>
-            internal static readonly RoutedEvent ContextMenuClosedEvent =
-                EventManager.RegisterRoutedEvent("Closed", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(PopupControlService));
+        /// <summary>
+        ///     Event that fires on ContextMenu when it closes.
+        ///     Located here to avoid circular dependencies.
+        /// </summary>
+        internal static readonly RoutedEvent ContextMenuClosedEvent =
+            EventManager.RegisterRoutedEvent("Closed", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(PopupControlService));
 
-            /////////////////////////////////////////////////////////////////////
-            private void RaiseContextMenuOpeningEvent(KeyEventArgs e)
+        /////////////////////////////////////////////////////////////////////
+        private void RaiseContextMenuOpeningEvent(KeyEventArgs e)
+        {
+            IInputElement source = e.OriginalSource as IInputElement;
+            if (source != null)
             {
-                IInputElement source = e.OriginalSource as IInputElement;
-                if (source != null)
+                if (RaiseContextMenuOpeningEvent(source, -1.0, -1.0,e.UserInitiated))
                 {
-                    if (RaiseContextMenuOpeningEvent(source, -1.0, -1.0,e.UserInitiated))
-                    {
-                        e.Handled = true;
-                    }
+                    e.Handled = true;
                 }
             }
+        }
 
-            private bool RaiseContextMenuOpeningEvent(IInputElement source, double x, double y,bool userInitiated)
+        private bool RaiseContextMenuOpeningEvent(IInputElement source, double x, double y,bool userInitiated)
+        {
+            // Fire the event
+            ContextMenuEventArgs args = new ContextMenuEventArgs(source, true /* opening */, x, y);
+            DependencyObject sourceDO = source as DependencyObject;
+            if (userInitiated && sourceDO != null)
             {
-                // Fire the event
-                ContextMenuEventArgs args = new ContextMenuEventArgs(source, true /* opening */, x, y);
-                DependencyObject sourceDO = source as DependencyObject;
-                if (userInitiated && sourceDO != null)
+                if (InputElement.IsUIElement(sourceDO))
                 {
-                    if (InputElement.IsUIElement(sourceDO))
-                    {
-                        ((UIElement)sourceDO).RaiseEvent(args, userInitiated);
-                    }
-                    else if (InputElement.IsContentElement(sourceDO))
-                    {
-                        ((ContentElement)sourceDO).RaiseEvent(args, userInitiated);
-                    }
-                    else if (InputElement.IsUIElement3D(sourceDO))
-                    {
-                        ((UIElement3D)sourceDO).RaiseEvent(args, userInitiated);
-                    }
-                    else
-                    {
-                        source.RaiseEvent(args);
-                    }
+                    ((UIElement)sourceDO).RaiseEvent(args, userInitiated);
+                }
+                else if (InputElement.IsContentElement(sourceDO))
+                {
+                    ((ContentElement)sourceDO).RaiseEvent(args, userInitiated);
+                }
+                else if (InputElement.IsUIElement3D(sourceDO))
+                {
+                    ((UIElement3D)sourceDO).RaiseEvent(args, userInitiated);
                 }
                 else
                 {
                     source.RaiseEvent(args);
                 }
+            }
+            else
+            {
+                source.RaiseEvent(args);
+            }
 
 
-                if (!args.Handled)
+            if (!args.Handled)
+            {
+                // No one handled the event, auto show any available ContextMenus
+
+                // Saved from the bubble up the tree where we looked for a set ContextMenu property
+                DependencyObject o = args.TargetElement;
+                if ((o != null) && ContextMenuService.ContextMenuIsEnabled(o))
                 {
-                    // No one handled the event, auto show any available ContextMenus
+                    // Retrieve the value
+                    object menu = ContextMenuService.GetContextMenu(o);
+                    ContextMenu cm = menu as ContextMenu;
+                    cm.SetValue(OwnerProperty, o);
+                    cm.Closed += new RoutedEventHandler(OnContextMenuClosed);
 
-                    // Saved from the bubble up the tree where we looked for a set ContextMenu property
-                    DependencyObject o = args.TargetElement;
-                    if ((o != null) && ContextMenuService.ContextMenuIsEnabled(o))
+                    if ((x == -1.0) && (y == -1.0))
                     {
-                        // Retrieve the value
-                        object menu = ContextMenuService.GetContextMenu(o);
-                        ContextMenu cm = menu as ContextMenu;
-                        cm.SetValue(OwnerProperty, o);
-                        cm.Closed += new RoutedEventHandler(OnContextMenuClosed);
-
-                        if ((x == -1.0) && (y == -1.0))
-                        {
-                            // We infer this to mean that the ContextMenu was opened with the keyboard
-                            cm.Placement = PlacementMode.Center;
-                        }
-                        else
-                        {
-                            // If there is a CursorLeft and CursorTop, it was opened with the mouse.
-                            cm.Placement = PlacementMode.MousePoint;
-                        }
-
-                        // Clear any open tooltips
-                        RaiseToolTipClosingEvent(true /*reset */);
-
-                        cm.SetCurrentValueInternal(ContextMenu.IsOpenProperty, BooleanBoxes.TrueBox);
-
-                        return true; // A menu was opened
+                        // We infer this to mean that the ContextMenu was opened with the keyboard
+                        cm.Placement = PlacementMode.Center;
+                    }
+                    else
+                    {
+                        // If there is a CursorLeft and CursorTop, it was opened with the mouse.
+                        cm.Placement = PlacementMode.MousePoint;
                     }
 
-                    return false; // There was no menu to open
+                    // Clear any open tooltips
+                    DismissToolTips();
+
+                    cm.SetCurrentValueInternal(ContextMenu.IsOpenProperty, BooleanBoxes.TrueBox);
+
+                    return true; // A menu was opened
                 }
 
-                // Clear any open tooltips since someone else opened one
-                RaiseToolTipClosingEvent(true /*reset */);
-
-                return true; // The event was handled by someone else
+                return false; // There was no menu to open
             }
 
+            // Clear any open tooltips since someone else opened one
+            DismissToolTips();
 
-            private void OnContextMenuClosed(object source, RoutedEventArgs e)
+            return true; // The event was handled by someone else
+        }
+
+
+        private void OnContextMenuClosed(object source, RoutedEventArgs e)
+        {
+            ContextMenu cm = source as ContextMenu;
+            if (cm != null)
             {
-                ContextMenu cm = source as ContextMenu;
-                if (cm != null)
+                cm.Closed -= OnContextMenuClosed;
+
+                DependencyObject o = (DependencyObject)cm.GetValue(OwnerProperty);
+                if (o != null)
                 {
-                    cm.Closed -= OnContextMenuClosed;
+                    cm.ClearValue(OwnerProperty);
 
-                    DependencyObject o = (DependencyObject)cm.GetValue(OwnerProperty);
-                    if (o != null)
+                    UIElement uie = GetTarget(o);
+                    if (uie != null)
                     {
-                        cm.ClearValue(OwnerProperty);
-
-                        UIElement uie = GetTarget(o);
-                        if (uie != null)
+                        if (!IsPresentationSourceNull(uie))
                         {
-                            if (!IsPresentationSourceNull(uie))
-                            {
-                                IInputElement inputElement = (o is ContentElement || o is UIElement3D) ? (IInputElement)o : (IInputElement)uie;
-                                ContextMenuEventArgs args = new ContextMenuEventArgs(inputElement, false /*opening */);
-                                inputElement.RaiseEvent(args);
-                            }
+                            IInputElement inputElement = (o is ContentElement || o is UIElement3D) ? (IInputElement)o : (IInputElement)uie;
+                            ContextMenuEventArgs args = new ContextMenuEventArgs(inputElement, false /*opening */);
+                            inputElement.RaiseEvent(args);
                         }
                     }
                 }
             }
+        }
 
-            private static bool IsPresentationSourceNull(DependencyObject uie)
-            {
-                return PresentationSource.CriticalFromVisual(uie) == null;
-            }
+        private static bool IsPresentationSourceNull(DependencyObject uie)
+        {
+            return PresentationSource.CriticalFromVisual(uie) == null;
+        }
 
-            #endregion
+        #endregion
 
         #region Helpers
 
@@ -914,17 +931,51 @@ namespace System.Windows.Controls
             }
         }
 
-        private DispatcherTimer ToolTipTimer
+        private ToolTip PendingToolTip
         {
-            get
+            get { return _pendingToolTip; }
+            set { _pendingToolTip = value; }
+        }
+
+        private DispatcherTimer PendingToolTipTimer
+        {
+            get { return _pendingToolTipTimer; }
+            set { _pendingToolTipTimer = value; }
+        }
+
+        private DispatcherTimer CurrentToolTipTimer
+        {
+            get { return _currentToolTipTimer; }
+            set { _currentToolTipTimer = value; }
+        }
+
+        private DependencyObject LastMouseToolTipOwner
+        {
+            get { return _lastMouseToolTipOwner.GetValue(); }
+            set { _lastMouseToolTipOwner.SetValue(value); }
+        }
+
+        private SafeArea CurrentSafeArea { get; set; }
+
+        private DependencyObject GetOwner(ToolTip t)
+        {
+            return t?.GetValue(OwnerProperty) as DependencyObject;
+        }
+
+        // a pending request is represented by a sentinel ToolTip object that carries
+        // the owner and the trigger action (only).  There's never more than one
+        // pending request, so we reuse the same sentinel object.
+        private ToolTip SentinelToolTip(DependencyObject o, ToolTipService.TriggerAction triggerAction)
+        {
+            // lazy creation, because we cannot create it in the ctor (infinite loop with FrameworkServices..ctor)
+            if (_sentinelToolTip == null)
             {
-                return _toolTipTimer;
+                _sentinelToolTip = new ToolTip();
             }
-            set
-            {
-                ResetToolTipTimer();
-                _toolTipTimer = value;
-            }
+
+            _sentinelToolTip.SetValue(OwnerProperty, o);
+            _sentinelToolTip.FromKeyboard = ToolTipService.IsFromKeyboard(triggerAction);
+            return _sentinelToolTip;
         }
 
         /// <summary>
@@ -1086,21 +1137,29 @@ namespace System.Windows.Controls
             }
         }
 
+        class SafeArea
+        { }
+
         #endregion
 
         #region Data
 
-        private DispatcherTimer _toolTipTimer;
-        private bool _quickShow = false;
-        private WeakRefWrapper<IInputElement> _lastMouseDirectlyOver;
-        private WeakRefWrapper<DependencyObject> _lastMouseOverWithToolTip;
-        private WeakRefWrapper<DependencyObject> _lastObjectWithToolTip;
-        private WeakRefWrapper<DependencyObject> _lastChecked;
-        private bool _lastToolTipOpen;
-        private ToolTip _currentToolTip;
-        private DispatcherTimer _forceCloseTimer;
-        private bool _ownToolTip;
         private KeyboardFocusChangedEventHandler _focusChangedEventHandler;
+
+        // pending ToolTip
+        private ToolTip _pendingToolTip;
+        private DispatcherTimer _pendingToolTipTimer;
+        private ToolTip _sentinelToolTip;
+
+        // current ToolTip
+        private ToolTip _currentToolTip;
+        private DispatcherTimer _currentToolTipTimer;
+        private DispatcherTimer _forceCloseTimer;
+
+        // ToolTip history
+        private WeakRefWrapper<IInputElement> _lastMouseDirectlyOver;
+        private WeakRefWrapper<DependencyObject> _lastMouseToolTipOwner;
+        private bool _quickShow = false;        // true if a tool tip closed recently
 
         #endregion
     }

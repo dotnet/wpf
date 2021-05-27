@@ -491,8 +491,7 @@ namespace System.Windows.Controls
                 (bool)GetValue(PopupControlService.ServiceOwnedProperty) &&
                 newContent is ToolTip)
             {
-                popupControlService.OnRaiseToolTipClosingEvent(null, EventArgs.Empty);
-                popupControlService.OnRaiseToolTipOpeningEvent(null, EventArgs.Empty);
+                popupControlService.ReplaceCurrentToolTip();
             }
             else
             {
@@ -566,6 +565,20 @@ namespace System.Windows.Controls
             OnClosed(new RoutedEventArgs(ClosedEvent, this));
         }
 
+        // return the tooltip's bounding rectangle, in screen coords.
+        // used by PopupControlService while building the SafeArea
+        internal Rect GetScreenRect()
+        {
+            if (_parentPopup != null)
+            {
+                return _parentPopup.GetWindowRect();
+            }
+            else
+            {
+                return Rect.Empty;
+            }
+        }
+
         #endregion
 
         #region Data
@@ -586,12 +599,5 @@ namespace System.Windows.Controls
         private static DependencyObjectType _dType;
 
         #endregion DTypeThemeStyleKey
-
-        internal enum ToolTipTrigger
-        {
-            Mouse,
-            KeyboardFocus,
-            KeyboardShortcut
-        }
     }
 }

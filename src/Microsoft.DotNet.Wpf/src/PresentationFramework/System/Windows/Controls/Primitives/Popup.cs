@@ -2843,6 +2843,16 @@ namespace System.Windows.Controls.Primitives
             }
         }
 
+        internal Rect GetParentWindowRect()
+        {
+            return _secHelper.GetParentWindowRect();
+        }
+
+        internal Rect GetWindowRect()
+        {
+            return _secHelper.GetWindowRect();
+        }
+
 #pragma warning restore 6523
 
         #endregion Positioning
@@ -3086,6 +3096,19 @@ namespace System.Windows.Controls.Primitives
                 if (parent != IntPtr.Zero)
                 {
                     SafeNativeMethods.GetClientRect(new HandleRef(null, parent), ref rect);
+                }
+
+                return PointUtil.ToRect(rect);
+            }
+
+            internal Rect GetWindowRect()
+            {
+                NativeMethods.RECT rect = new NativeMethods.RECT(0, 0, 0, 0);
+
+                IntPtr hwnd = Handle;
+                if (hwnd != IntPtr.Zero)
+                {
+                    SafeNativeMethods.GetWindowRect(new HandleRef(null, hwnd), ref rect);
                 }
 
                 return PointUtil.ToRect(rect);

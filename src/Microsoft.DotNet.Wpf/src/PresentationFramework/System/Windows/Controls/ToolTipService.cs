@@ -466,7 +466,7 @@ namespace System.Windows.Controls
             DependencyProperty.RegisterAttached("InitialShowDelay",     // Name
                                                 typeof(int),            // Type
                                                 typeof(ToolTipService), // Owner
-                                                new FrameworkPropertyMetadata(SystemParameters.MouseHoverTimeMilliseconds), // Default Value
+                                                new FrameworkPropertyMetadata(1000), // Default Value
                                                 new ValidateValueCallback(PositiveValueValidation));    // Value validation
 
         /// <summary>

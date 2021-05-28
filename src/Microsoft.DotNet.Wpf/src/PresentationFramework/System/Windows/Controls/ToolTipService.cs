@@ -427,7 +427,7 @@ namespace System.Windows.Controls
             DependencyProperty.RegisterAttached("ShowDuration",         // Name
                                                 typeof(int),            // Type
                                                 typeof(ToolTipService), // Owner
-                                                new FrameworkPropertyMetadata(5000),    // Default Value
+                                                new FrameworkPropertyMetadata(Int32.MaxValue),          // Default Value
                                                 new ValidateValueCallback(PositiveValueValidation));    // Value validation
 
         /// <summary>

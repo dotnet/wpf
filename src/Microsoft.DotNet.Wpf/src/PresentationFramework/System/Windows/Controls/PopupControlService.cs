@@ -6,7 +6,9 @@
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Media;
+using MS.Win32;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
@@ -357,15 +359,16 @@ namespace System.Windows.Controls
 
         private void SetSafeArea(ToolTip tooltip)
         {
-            CurrentSafeArea = null;     // default
+           SafeArea = null;     // default is no safe area
 
+            // safe area is only needed for tooltips triggered by mouse
             if (tooltip != null && !tooltip.FromKeyboard)
             {
-                // get owner and tooltip rectangles, in owner window's client coords
                 UIElement owner = GetOwner(tooltip) as UIElement;
                 PresentationSource presentationSource = (owner == null) ? null : PresentationSource.CriticalFromVisual(owner);
                 if (presentationSource != null)
                 {
+                    // get owner and tooltip rectangles, in owner window's client coords
                     Rect rectElement = new Rect(new Point(0, 0), owner.RenderSize);
                     Rect rectRoot = PointUtil.ElementToRoot(rectElement, owner, presentationSource);
                     Rect ownerRect = PointUtil.RootToClient(rectRoot, presentationSource);
@@ -373,17 +376,29 @@ namespace System.Windows.Controls
                     Rect screenRect = tooltip.GetScreenRect();
                     Point clientPt = PointUtil.ScreenToClient(screenRect.Location, presentationSource);
                     Rect tooltipRect = new Rect(clientPt, screenRect.Size);
+
+                    if (!ownerRect.IsEmpty)
+                    {
+                        NativeMethods.RECT ownerrc = PointUtil.FromRect(ownerRect);
+
+                        if (!tooltipRect.IsEmpty)
+                        {
+                            NativeMethods.RECT tooltiprc = PointUtil.FromRect(tooltipRect);
+                            SafeArea = new ConvexHull(presentationSource, ownerrc, tooltiprc);
+                        }
+                        else
+                        {
+                            // if tooltip rect is empty, just use the owner rect
+                            SafeArea = new ConvexHull(presentationSource, ownerrc);
+                        }
+                    }
                 }
             }
         }
 
         private bool MouseHasLeftSafeArea(RawMouseInputReport mouseReport)
         {
-            if (CurrentSafeArea == null)
-                return false;
-
-            // TODO:
-            return false;
+            return !(SafeArea?.ContainsPoint(mouseReport.InputSource, mouseReport.X, mouseReport.Y) ?? true);
         }
 
         private void OnShowDurationTimerExpired(object sender, EventArgs e)
@@ -955,7 +970,7 @@ namespace System.Windows.Controls
             set { _lastMouseToolTipOwner.SetValue(value); }
         }
 
-        private SafeArea CurrentSafeArea { get; set; }
+        private ConvexHull SafeArea { get; set; }
 
         private DependencyObject GetOwner(ToolTip t)
         {
@@ -1137,8 +1152,316 @@ namespace System.Windows.Controls
             }
         }
 
-        class SafeArea
-        { }
+        class ConvexHull
+        {
+            internal ConvexHull(PresentationSource source, NativeMethods.RECT rect1, NativeMethods.RECT rect2)
+                : this(source)
+            {
+                PointList points = new PointList();
+                AddPoints(points, rect1);
+                AddPoints(points, rect2);
+                SortPoints(points);
+                BuildHullIncrementally(points);
+            }
+
+            internal ConvexHull(PresentationSource source, NativeMethods.RECT rect)
+                : this(source)
+            {
+                PointList points = new PointList();
+                AddPoints(points, rect, rectIsHull:true);
+                _points = points.ToArray();
+            }
+
+            private ConvexHull(PresentationSource source)
+            {
+                _source = source;
+            }
+
+            internal bool ContainsPoint(PresentationSource source, int x, int y)
+            {
+                // points from the wrong source are not included
+                if (source != _source)
+                    return false;
+
+                // a point is included if it's in the left half-plane of every
+                // edge.  We test this in two passes, to postpone (and perhaps
+                // avoid) multiplications, and to get the customary "exclusive"
+                // behavior for edges that came from the bottom or right edges
+                // of the original rectangles.
+
+                // Pass 1 - handle the axis-aligned edges
+                for (int i=0, N= _points.Length; i<N; ++i)
+                {
+                    switch (_points[i].Direction)
+                    {
+                        case Direction.Left:
+                            if (y < _points[i].Y) return false;
+                            break;
+                        case Direction.Right:
+                            if (y >= _points[i].Y) return false;
+                            break;
+                        case Direction.Up:
+                            if (x >= _points[i].X) return false;
+                            break;
+                        case Direction.Down:
+                            if (x < _points[i].X) return false;
+                            break;
+                    }
+                }
+
+                // Pass 2 - handle the skew edges
+                for (int i=0, N= _points.Length; i<N; ++i)
+                {
+                    switch (_points[i].Direction)
+                    {
+                        case Direction.Skew:
+                            int next = i + 1;
+                            if (next == N) next = 0;
+                            Point p = new Point(x, y);
+
+                            if (Cross(_points[i], _points[next], p) > 0)
+                                return false;
+                            break;
+                    }
+                }
+
+                // the point is on the correct side of all the edges
+                return true;
+            }
+
+            // sort by y (and by x among equal y's)
+            private void SortPoints(PointList points)
+            {
+                // insertion sort is good enough.  We're dealing with a small
+                // set of points that are nearly in the right order already.
+                for (int i=0, N=points.Count; i<N; ++i)
+                {
+                    Point p = points[i];
+                    int j;
+                    for (j=i-1; j>=0; --j)
+                    {
+                        int d = points[j].Y - p.Y;
+                        if (d > 0 || (d == 0 && (points[j].X > p.X)))
+                        {
+                            points[j + 1] = points[j];
+                        }
+                        else break;
+                    }
+                    points[j + 1] = p;
+                }
+            }
+
+            // build the convex hull
+            // Precondition:  the points are sorted, in the sense of SortPoints
+            private void BuildHullIncrementally(PointList points)
+            {
+                int N = points.Count;
+                int currentIndex = 0;
+                int hullCount = 0;
+                int prevLeftmostIndex = 0, prevRightmostIndex = 0;
+
+                // loop invariant:
+                //  * given a value Y = points[currentIndex].Y, partition
+                //      the original points into two sets:  a "small" set - points
+                //      whose y < Y, and a "large" set - points whose y >= Y
+                //  * the first hullCount points in points are the convex hull
+                //      (in counterclockwise order) of the small points
+                //  * the large points are in their original positions
+                //      in points[currentIndex ... N-1], and haven't been examined.
+
+                while (currentIndex < N)
+                {
+                    // Each iteration will deal with all the points whose y == Y,
+                    // incrementally extending the convex hull to include them.
+                    int Y = points[currentIndex].Y;
+
+                    // find the leftmost and rightmost points whose y == Y
+                    // (given that the points are sorted, these are simply the
+                    // first and last points whose y == Y)
+                    Point leftmost = points[currentIndex];
+                    int next = currentIndex + 1;
+                    while (next<N && points[next].Y == Y)
+                    {
+                        ++next;
+                    }
+                    Point rightmost = points[next - 1];
+
+                    // remember if these are the same point, and advance currentIndex
+                    // past the points whose y == Y
+                    int pointsToAdd = (next == currentIndex + 1) ? 1 : 2;
+                    currentIndex = next;
+
+                    // add these point(s) to the partial convex hull
+                    if (hullCount == 0)
+                    {
+                        // the first iteration is special: there are no points
+                        // to remove, and we have to add the new points in the
+                        // opposite order to get "counterclockwise" correct
+                        prevLeftmostIndex = hullCount;
+                        points[hullCount++] = rightmost;
+                        if (pointsToAdd == 2)
+                        {
+                            prevLeftmostIndex = hullCount;
+                            points[hullCount++] = leftmost;
+                        }
+                        prevRightmostIndex = hullCount;
+                    }
+                    else
+                    {
+                        // in the remaining iterations, the new point(s) replace
+                        // a (possibly empty) segment of the current hull.  To
+                        // identify that segment, locate the two points on the
+                        // current convex hull that have the minimum polar angle with
+                        // leftmost, and the maximum polar angle with rightmost.
+                        // (It's possible to use binary search for this, but that
+                        // adds overhead that wouldn't pay off in our small scenarios.)
+
+                        // First examine the points in clockwise order, starting with the
+                        // previous iteration's leftmost point.  The polar angle with
+                        // leftmost will decrease for a while, then increase. The first
+                        // increase (or termination) occurs at the desired minimum.
+                        int minIndex = prevLeftmostIndex;
+                        for (; minIndex > 0; --minIndex)
+                        {
+                            if (Cross(leftmost, points[minIndex], points[minIndex - 1]) > 0)
+                                break;
+                        }
+
+                        // Similarly, examine the points in counterclockwise order, starting
+                        // with the previous iteration's rightmost point.  The polar angle
+                        // with rightmost will increase for a while, and the first decrease
+                        // occurs at the desired maximum.
+                        int maxIndex = prevRightmostIndex;
+                        for (; maxIndex < hullCount; ++maxIndex)
+                        {
+                            int wrapIndex = maxIndex + 1;
+                            if (wrapIndex == hullCount) wrapIndex = 0;
+                            if (Cross(rightmost, points[maxIndex], points[wrapIndex]) < 0)
+                                break;
+                        }
+
+                        // replace the segment of the hull between these two points with
+                        // the leftmost and rightmost point(s)
+                        int pointsToRemove = maxIndex - minIndex - 1;
+                        int delta = pointsToAdd - pointsToRemove;
+
+                        // move retained points to their new position
+                        // (the hull is a subset of the original points, which
+                        // guarantees that the indices into points are
+                        // always in bounds).
+                        if (delta < 0)
+                        {
+                            for (int i=maxIndex; i<hullCount; ++i)
+                            {
+                                points[i + delta] = points[i];
+                            }
+                        }
+                        else if (delta > 0)
+                        {
+                            for (int i=hullCount-1; i>=maxIndex; --i)
+                            {
+                                points[i + delta] = points[i];
+                            }
+                        }
+
+                        // insert the new point(s), and update the hull size
+                        points[minIndex + 1] = leftmost;
+                        prevLeftmostIndex = prevRightmostIndex = minIndex + 1;
+                        if (pointsToAdd == 2)
+                        {
+                            points[minIndex + 2] = rightmost;
+                            prevRightmostIndex = minIndex + 2;
+                        }
+                        hullCount += delta;
+                    }
+                }
+
+                // when the loop terminates, the loop invariant plus the condition
+                // (currentIndex >= N) imply points[0 ... hullCount-1] describe the
+                // convex hull of the original points.  All that's left is to discard
+                // any extra points, and compute the directions.
+                points.RemoveRange(hullCount, N - hullCount);
+                _points = points.ToArray();
+                SetDirections();
+            }
+
+            // set the Direction field on each point.  This enables optimizations during
+            // ContainsPoint.
+            private void SetDirections()
+            {
+                for (int i=0, N=_points.Length; i<N; ++i)
+                {
+                    int next = i + 1;
+                    if (next == N) next = 0;
+
+                    if (_points[i].X == _points[next].X)
+                    {
+                        _points[i].Direction = (_points[i].Y >= _points[next].Y) ? Direction.Up : Direction.Down;
+                    }
+                    else if (_points[i].Y == _points[next].Y)
+                    {
+                        _points[i].Direction = (_points[i].X >= _points[next].X) ? Direction.Left : Direction.Right;
+                    }
+                    else
+                    {
+                        _points[i].Direction = Direction.Skew;
+                    }
+                }
+            }
+
+            private void AddPoints(PointList points, in NativeMethods.RECT rect, bool rectIsHull=false)
+            {
+                if (rectIsHull)
+                {
+                    // caller is asserting the convex hull is the rect itself,
+                    // add its corner points in counterclockwise order with directions set
+                    points.Add(new Point(rect.right, rect.top, Direction.Left));
+                    points.Add(new Point(rect.left, rect.top, Direction.Down));
+                    points.Add(new Point(rect.left, rect.bottom, Direction.Right));
+                    points.Add(new Point(rect.right, rect.bottom, Direction.Up));
+                }
+                else
+                {
+                    // otherwise add the corner points in an order favorable to SortPoints
+                    points.Add(new Point(rect.left, rect.top));
+                    points.Add(new Point(rect.right, rect.top));
+                    points.Add(new Point(rect.left, rect.bottom));
+                    points.Add(new Point(rect.right, rect.bottom));
+                }
+            }
+
+            // returns c's position relative to the line extending segment a -> b:
+            //  <0  if c is in the left half-plane
+            //   0  if c is on the line
+            //  >0  if c is in the right half-plane
+            private static int Cross(in Point a, in Point b, in Point c)
+            {
+                return (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
+            }
+
+            enum Direction { Skew, Left, Right, Up, Down }
+
+            [DebuggerDisplay("{X} {Y} {Direction}")]
+            struct Point
+            {
+                public int X { get; set; }
+                public int Y { get; set; }
+                public Direction Direction { get; set; }
+
+                public Point(int x, int y, Direction d=Direction.Skew)
+                {
+                    X = x;
+                    Y = y;
+                    Direction = d;
+                }
+            }
+
+            class PointList : List<Point>
+            { }
+
+            Point[] _points;
+            PresentationSource _source;
+        }
 
         #endregion
 

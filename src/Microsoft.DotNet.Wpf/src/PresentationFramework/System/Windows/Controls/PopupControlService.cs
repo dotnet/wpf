@@ -190,13 +190,24 @@ namespace System.Windows.Controls
         {
             if (!e.Handled)
             {
-                if ((e.SystemKey == Key.F10) && ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift) && ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control))
+                const ModifierKeys ModifierMask = ModifierKeys.Alt | ModifierKeys.Control | ModifierKeys.Shift | ModifierKeys.Windows;
+                ModifierKeys modifierKeys = Keyboard.Modifiers & ModifierMask;
+
+                if ((e.SystemKey == Key.F10) && (modifierKeys == (ModifierKeys.Control | ModifierKeys.Shift)))
                 {
                     e.Handled = OpenOrCloseToolTipViaShortcut();
                 }
-                else if ((e.SystemKey == Key.F10) && ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift))
+                else if ((e.SystemKey == Key.F10) && (modifierKeys == ModifierKeys.Shift))
                 {
                     RaiseContextMenuOpeningEvent(e);
+                }
+
+                // track the last key-down, to detect Ctrl-KeyUp trigger
+                _lastCtrlKeyDown = Key.None;
+                if ((CurrentToolTip?.FromKeyboard ?? false) && (modifierKeys == ModifierKeys.Control) &&
+                        (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl))
+                {
+                    _lastCtrlKeyDown = e.Key;
                 }
             }
         }
@@ -210,6 +221,14 @@ namespace System.Windows.Controls
                 {
                     RaiseContextMenuOpeningEvent(e);
                 }
+
+                // dismiss the keyboard ToolTip when user presses and releases Ctrl
+                if ((_lastCtrlKeyDown != Key.None) && (e.Key == _lastCtrlKeyDown) &&
+                        (Keyboard.Modifiers == ModifierKeys.None) && (CurrentToolTip?.FromKeyboard ?? false))
+                {
+                    DismissCurrentToolTip();
+                }
+                _lastCtrlKeyDown = Key.None;
             }
         }
 
@@ -1478,6 +1497,7 @@ namespace System.Windows.Controls
         private ToolTip _currentToolTip;
         private DispatcherTimer _currentToolTipTimer;
         private DispatcherTimer _forceCloseTimer;
+        private Key _lastCtrlKeyDown;
 
         // ToolTip history
         private WeakRefWrapper<IInputElement> _lastMouseDirectlyOver;

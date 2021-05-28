@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="6.0.0-preview.6.21277.2">
+    <Dependency Name="Microsoft.Private.Winforms" Version="6.0.0-preview.6.21277.3">
       <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>542c6129652d47aa4f1b726208c8fe068f264973</Sha>
+      <Sha>eee79933888b0925f6a0979d8ab5476e574117d2</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="6.0.0-preview.6.21277.2">
+    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="6.0.0-preview.6.21277.3">
       <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>542c6129652d47aa4f1b726208c8fe068f264973</Sha>
+      <Sha>eee79933888b0925f6a0979d8ab5476e574117d2</Sha>
     </Dependency>
     <Dependency Name="Microsoft.Win32.Registry" Version="6.0.0-preview.6.21276.13" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>

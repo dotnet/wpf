@@ -161,4 +161,7 @@
     <SupportedTargetFramework Remove="@(_UnsupportedNETCoreAppTargetFramework);@(_UnsupportedNETStandardTargetFramework);@(_UnsupportedNETFrameworkTargetFramework)" />
   </ItemGroup>
 
+  <!-- Import Windows Forms specific props -->
+  <Import Project="System.Windows.Forms.Analyzers.props" />
+
 </Project>

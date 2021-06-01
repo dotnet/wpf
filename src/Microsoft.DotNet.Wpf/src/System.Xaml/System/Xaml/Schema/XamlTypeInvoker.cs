@@ -180,7 +180,9 @@ namespace System.Xaml.Schema
                         _xamlType.UnderlyingType, type.UnderlyingType);
                     if (addMethod != null)
                     {
-                        addMethods.Add(type, addMethod);
+                        // Use TryAdd as AllowedContentTypes can contain
+                        // duplicate types.
+                        addMethods.TryAdd(type, addMethod);
                     }
                 }
                 _addMethods = addMethods;
@@ -206,6 +208,11 @@ namespace System.Xaml.Schema
 
         public virtual MethodInfo GetEnumeratorMethod()
         {
+            if (IsUnknown)
+            {
+                return null;
+            }
+
             return _xamlType.GetEnumeratorMethod;
         }
 

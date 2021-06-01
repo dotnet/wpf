@@ -87,14 +87,6 @@ namespace System.Windows.Controls
             }
         }
 
-        internal virtual bool ShouldShowOnKeyboardFocus
-        {
-            get
-            {
-                return true;
-            }
-        }
-
         /// <summary>
         /// The DependencyProperty for the HorizontalOffset property.
         /// Default: Length(0.0)
@@ -345,6 +337,24 @@ namespace System.Windows.Controls
         {
             get { return (bool) GetValue(StaysOpenProperty); }
             set { SetValue(StaysOpenProperty, value); }
+        }
+
+        /// <summary>
+        ///     The DependencyProperty for the ShowsToolTipOnKeyboardFocus property.
+        ///     Flags:              None
+        ///     Default Value:      null
+        /// </summary>
+        public static readonly DependencyProperty ShowsToolTipOnKeyboardFocusProperty =
+                    ToolTipService.ShowsToolTipOnKeyboardFocusProperty.AddOwner(typeof(ToolTip));
+
+        /// <summary>
+        ///     Get or set ShowsToolTipOnKeyboardFocus property of the ToolTip
+        /// </summary>
+        [Bindable(true), Category("Behavior")]
+        public bool? ShowsToolTipOnKeyboardFocus
+        {
+            get { return (bool?)GetValue(ShowsToolTipOnKeyboardFocusProperty); }
+            set { SetValue(ShowsToolTipOnKeyboardFocusProperty, NullableBooleanBoxes.Box(value)); }
         }
 
         #endregion

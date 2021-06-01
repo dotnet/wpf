@@ -537,10 +537,49 @@ namespace System.Windows.Controls
             element.SetValue(BetweenShowDelayProperty, value);
         }
 
+        /// <summary>
+        ///     The DependencyProperty for the ShowsToolTipOnKeyboardFocus property.
+        /// </summary>
+        public static readonly DependencyProperty ShowsToolTipOnKeyboardFocusProperty =
+            DependencyProperty.RegisterAttached("ShowsToolTipOnKeyboardFocus",     // Name
+                                                typeof(bool?),          // Type
+                                                typeof(ToolTipService), // Owner
+                                                new FrameworkPropertyMetadata(NullableBooleanBoxes.NullBox));   // Default Value
+
+        /// <summary>
+        ///     Gets the value of the ShowsToolTipOnKeyboardFocus property.
+        /// </summary>
+        /// <param name="element">The object on which to query the property.</param>
+        /// <returns>The value of the property.</returns>
+        // Setting this property breaks accessibility, so don't expose it through the designer.  
+        //[AttachedPropertyBrowsableForType(typeof(DependencyObject))]      
+        public static bool? GetShowsToolTipOnKeyboardFocus(DependencyObject element)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException("element");
+            }
+            return (bool?)element.GetValue(ShowsToolTipOnKeyboardFocusProperty);
+        }
+
+        /// <summary>
+        ///     Sets the value of the ShowsToolTipOnKeyboardFocus property.
+        /// </summary>
+        /// <param name="element">The object on which to set the value.</param>
+        /// <param name="value">The desired value of the property.</param>
+        public static void SetShowsToolTipOnKeyboardFocus(DependencyObject element, bool? value)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException("element");
+            }
+            element.SetValue(ShowsToolTipOnKeyboardFocusProperty, NullableBooleanBoxes.Box(value));
+        }
+
         #endregion
 
         #region Events
-        
+
         /// <summary>
         ///     The event raised when a ToolTip is going to be shown on an element.
         /// 
@@ -647,13 +686,28 @@ namespace System.Windows.Controls
 
             if ((tooltipObject != null) && GetIsEnabled(o))
             {
-                // Some tooltips may choose not to show on Keyboard focus, get the ToolTip and query the property, 
-                // if we are unable to cast to a ToolTip that means a default ToolTip will be used, the default behavior is to show on focus.
-                ToolTip tooltip = tooltipObject as ToolTip;
-                bool enableOnKeyboardFocus = tooltip != null ? tooltip.ShouldShowOnKeyboardFocus : true;
+                // determine whether tooltip-on-keyboard-focus is enabled
+                bool enableOnKeyboardFocus = true;
+                if (triggerAction == TriggerAction.KeyboardFocus)
+                {
+                    // attached property on owner has first priority
+                    bool? propertyValue = GetShowsToolTipOnKeyboardFocus(o);
 
-                if ((PopupControlService.IsElementEnabled(o) || GetShowOnDisabled(o))
-                    && (triggerAction != TriggerAction.KeyboardFocus || enableOnKeyboardFocus))
+                    // if that doesn't say, get the value from the ToolTip itself (if any)
+                    if (propertyValue == (bool?)null)
+                    {
+                        ToolTip tooltip = tooltipObject as ToolTip;
+                        if (tooltip != null)
+                        {
+                            propertyValue = tooltip.ShowsToolTipOnKeyboardFocus;
+                        }
+                    }
+
+                    // the behavior is enabled, unless explicitly told otherwise
+                    enableOnKeyboardFocus = (propertyValue != false);
+                }
+
+                if ((PopupControlService.IsElementEnabled(o) || GetShowOnDisabled(o)) && enableOnKeyboardFocus)
                 {
                     return true;
                 }

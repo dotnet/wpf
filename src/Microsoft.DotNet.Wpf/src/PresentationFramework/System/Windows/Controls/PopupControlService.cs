@@ -538,11 +538,15 @@ namespace System.Windows.Controls
 
                     // begin the BetweenShowDelay interval, during which another tooltip
                     // can open without the usual delay
-                    _quickShow = true;
-                    CurrentToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                    CurrentToolTipTimer.Interval = TimeSpan.FromMilliseconds(ToolTipService.GetBetweenShowDelay(owner));
-                    CurrentToolTipTimer.Tick += new EventHandler(OnBetweenShowDelay);
-                    CurrentToolTipTimer.Start();
+                    int betweenShowDelay = ToolTipService.GetBetweenShowDelay(owner);
+                    _quickShow = (betweenShowDelay > 0);
+                    if (_quickShow)
+                    {
+                        CurrentToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal);
+                        CurrentToolTipTimer.Interval = TimeSpan.FromMilliseconds(betweenShowDelay);
+                        CurrentToolTipTimer.Tick += new EventHandler(OnBetweenShowDelay);
+                        CurrentToolTipTimer.Start();
+                    }
                 }
                 else
                 {

@@ -91,37 +91,8 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private static void OnIsOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            // This is a workaround for the issue that BetweenShowDelay property does not 
-            // work as expected. Even though this property has been set to '0ms' on all of 
-            // the Ribbon controls with the expectation that ToolTips will always appear 
-            // after the InitialShowDelay, ToolTips show immediately without the 
-            // InitialShowDelay when moving between controls when ToolTips are already active. 
-            // Manually setting IsOpen to false upon detecting this scenario prevents the 
-            // quick show and always causes the system to wait for the InitialShowDelay to elapse.
-
-            RibbonToolTip ribbonToolTip = (RibbonToolTip)d;
-            UIElement placementTarget = ribbonToolTip.PlacementTarget;
-            if (ribbonToolTip.IsOpen)
-            {
-                RibbonToolTipService.Current.CurrentToolTip = ribbonToolTip;
-                if (placementTarget != null)
-                {
-                    placementTarget.MouseLeave += new MouseEventHandler(ribbonToolTip.OnPlacementTargetMouseLeave);
-                }
-            }
-            else
-            {
-                RibbonToolTipService.Current.CurrentToolTip = null;
-                if (placementTarget != null)
-                {
-                    placementTarget.MouseLeave -= new MouseEventHandler(ribbonToolTip.OnPlacementTargetMouseLeave);
-                }
-            }
-        }
-
-        private void OnPlacementTargetMouseLeave(object sender, MouseEventArgs e)
-        {
-            IsOpen = false;
+            // This method is needed only as a placeholder for the call to IsOpenProperty.OverrideMetadata
+            // in the cctor, so that it can override the CoerceValueCallback.
         }
 
         #endregion VisualStates

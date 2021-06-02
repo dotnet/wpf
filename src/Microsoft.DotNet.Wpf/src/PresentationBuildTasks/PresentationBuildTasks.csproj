@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net472;netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
     <EnableDefaultItems>false</EnableDefaultItems>
     <EnablePInvokeAnalyzer>true</EnablePInvokeAnalyzer>
 

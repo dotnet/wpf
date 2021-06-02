@@ -236,6 +236,33 @@ namespace System.Windows.Controls
 
         #region ToolTip
 
+        private bool OpenOrCloseToolTipViaShortcut()
+        {
+            DependencyObject owner = FindToolTipOwner(Keyboard.FocusedElement, ToolTipService.TriggerAction.KeyboardShortcut);
+            if (owner == null)
+                return false;
+
+
+            // if the owner's tooltip is open, dismiss it.  Otherwise, show it.
+            if (owner == GetOwner(CurrentToolTip))
+            {
+                DismissCurrentToolTip();
+            }
+            else
+            {
+                if (owner == GetOwner(PendingToolTip))
+                {
+                    // discard a previous pending request, so that the new one isn't ignored.
+                    // This ensures that the tooltip opens immediately.
+                    DismissPendingToolTip();
+                }
+
+                BeginShowToolTip(owner, ToolTipService.TriggerAction.KeyboardShortcut);
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Initiate the process of showing a tooltip.
         /// Make a pending request, updating the pending and history state accordingly.
@@ -376,50 +403,6 @@ namespace System.Windows.Controls
             }
         }
 
-        private void SetSafeArea(ToolTip tooltip)
-        {
-           SafeArea = null;     // default is no safe area
-
-            // safe area is only needed for tooltips triggered by mouse
-            if (tooltip != null && !tooltip.FromKeyboard)
-            {
-                UIElement owner = GetOwner(tooltip) as UIElement;
-                PresentationSource presentationSource = (owner == null) ? null : PresentationSource.CriticalFromVisual(owner);
-                if (presentationSource != null)
-                {
-                    // get owner and tooltip rectangles, in owner window's client coords
-                    Rect rectElement = new Rect(new Point(0, 0), owner.RenderSize);
-                    Rect rectRoot = PointUtil.ElementToRoot(rectElement, owner, presentationSource);
-                    Rect ownerRect = PointUtil.RootToClient(rectRoot, presentationSource);
-
-                    Rect screenRect = tooltip.GetScreenRect();
-                    Point clientPt = PointUtil.ScreenToClient(screenRect.Location, presentationSource);
-                    Rect tooltipRect = new Rect(clientPt, screenRect.Size);
-
-                    if (!ownerRect.IsEmpty)
-                    {
-                        NativeMethods.RECT ownerrc = PointUtil.FromRect(ownerRect);
-
-                        if (!tooltipRect.IsEmpty)
-                        {
-                            NativeMethods.RECT tooltiprc = PointUtil.FromRect(tooltipRect);
-                            SafeArea = new ConvexHull(presentationSource, ownerrc, tooltiprc);
-                        }
-                        else
-                        {
-                            // if tooltip rect is empty, just use the owner rect
-                            SafeArea = new ConvexHull(presentationSource, ownerrc);
-                        }
-                    }
-                }
-            }
-        }
-
-        private bool MouseHasLeftSafeArea(RawMouseInputReport mouseReport)
-        {
-            return !(SafeArea?.ContainsPoint(mouseReport.InputSource, mouseReport.X, mouseReport.Y) ?? true);
-        }
-
         private void OnShowDurationTimerExpired(object sender, EventArgs e)
         {
             DismissCurrentToolTip();
@@ -496,6 +479,7 @@ namespace System.Windows.Controls
             CloseToolTip(currentToolTip);
         }
 
+        // initiate the process of closing the tooltip's popup.
         private void CloseToolTip(ToolTip tooltip)
         {
             if (tooltip == null)
@@ -571,33 +555,6 @@ namespace System.Windows.Controls
                     BindingOperations.ClearBinding(tooltip, ToolTip.ContentProperty);
                 }
             }
-        }
-
-        private bool OpenOrCloseToolTipViaShortcut()
-        {
-            DependencyObject owner = FindToolTipOwner(Keyboard.FocusedElement, ToolTipService.TriggerAction.KeyboardShortcut);
-            if (owner == null)
-                return false;
-
-
-            // if the owner's tooltip is open, dismiss it.  Otherwise, show it.
-            if (owner == GetOwner(CurrentToolTip))
-            {
-                DismissCurrentToolTip();
-            }
-            else
-            {
-                if (owner == GetOwner(PendingToolTip))
-                {
-                    // discard a previous pending request, so that the new one isn't ignored.
-                    // This ensures that the tooltip opens immediately.
-                    DismissPendingToolTip();
-                }
-
-                BeginShowToolTip(owner, ToolTipService.TriggerAction.KeyboardShortcut);
-            }
-
-            return true;
         }
 
         private DependencyObject FindToolTipOwner(IInputElement element, ToolTipService.TriggerAction triggerAction)
@@ -708,11 +665,112 @@ namespace System.Windows.Controls
             ResetCurrentToolTipTimer();
         }
 
+        private ToolTip PendingToolTip
+        {
+            get { return _pendingToolTip; }
+            set { _pendingToolTip = value; }
+        }
+
+        private DispatcherTimer PendingToolTipTimer
+        {
+            get { return _pendingToolTipTimer; }
+            set { _pendingToolTipTimer = value; }
+        }
+
+        internal ToolTip CurrentToolTip
+        {
+            get { return _currentToolTip; }
+        }
+
+        private DispatcherTimer CurrentToolTipTimer
+        {
+            get { return _currentToolTipTimer; }
+            set { _currentToolTipTimer = value; }
+        }
+
         private IInputElement LastMouseDirectlyOver
         {
             get { return _lastMouseDirectlyOver.GetValue(); }
             set { _lastMouseDirectlyOver.SetValue(value); }
         }
+
+        private DependencyObject LastMouseToolTipOwner
+        {
+            get { return _lastMouseToolTipOwner.GetValue(); }
+            set { _lastMouseToolTipOwner.SetValue(value); }
+        }
+
+        private DependencyObject GetOwner(ToolTip t)
+        {
+            return t?.GetValue(OwnerProperty) as DependencyObject;
+        }
+
+        // a pending request is represented by a sentinel ToolTip object that carries
+        // the owner and the trigger action (only).  There's never more than one
+        // pending request, so we reuse the same sentinel object.
+        private ToolTip SentinelToolTip(DependencyObject o, ToolTipService.TriggerAction triggerAction)
+        {
+            // lazy creation, because we cannot create it in the ctor (infinite loop with FrameworkServices..ctor)
+            if (_sentinelToolTip == null)
+            {
+                _sentinelToolTip = new ToolTip();
+            }
+
+            _sentinelToolTip.SetValue(OwnerProperty, o);
+            _sentinelToolTip.FromKeyboard = ToolTipService.IsFromKeyboard(triggerAction);
+            return _sentinelToolTip;
+        }
+
+        #region Safe Area
+
+        private void SetSafeArea(ToolTip tooltip)
+        {
+            SafeArea = null;     // default is no safe area
+
+            // safe area is only needed for tooltips triggered by mouse
+            if (tooltip != null && !tooltip.FromKeyboard)
+            {
+                UIElement owner = GetOwner(tooltip) as UIElement;
+                PresentationSource presentationSource = (owner == null) ? null : PresentationSource.CriticalFromVisual(owner);
+                if (presentationSource != null)
+                {
+                    // get owner and tooltip rectangles, in owner window's client coords
+                    Rect rectElement = new Rect(new Point(0, 0), owner.RenderSize);
+                    Rect rectRoot = PointUtil.ElementToRoot(rectElement, owner, presentationSource);
+                    Rect ownerRect = PointUtil.RootToClient(rectRoot, presentationSource);
+
+                    Rect screenRect = tooltip.GetScreenRect();
+                    Point clientPt = PointUtil.ScreenToClient(screenRect.Location, presentationSource);
+                    Rect tooltipRect = new Rect(clientPt, screenRect.Size);
+
+                    // convert to native rects and find the convex hull
+                    if (!ownerRect.IsEmpty)
+                    {
+                        NativeMethods.RECT ownerrc = PointUtil.FromRect(ownerRect);
+
+                        if (!tooltipRect.IsEmpty)
+                        {
+                            NativeMethods.RECT tooltiprc = PointUtil.FromRect(tooltipRect);
+                            SafeArea = new ConvexHull(presentationSource, ownerrc, tooltiprc);
+                        }
+                        else
+                        {
+                            // if tooltip rect is empty, just use the owner rect
+                            SafeArea = new ConvexHull(presentationSource, ownerrc);
+                        }
+                    }
+                }
+            }
+        }
+
+        private bool MouseHasLeftSafeArea(RawMouseInputReport mouseReport)
+        {
+            return !(SafeArea?.ContainsPoint(mouseReport.InputSource, mouseReport.X, mouseReport.Y) ?? true);
+        }
+
+        private ConvexHull SafeArea { get; set; }
+
+        #endregion
 
         #endregion
 
@@ -961,61 +1019,6 @@ namespace System.Windows.Controls
             }
         }
 
-        internal ToolTip CurrentToolTip
-        {
-            get
-            {
-                return _currentToolTip;
-            }
-        }
-
-        private ToolTip PendingToolTip
-        {
-            get { return _pendingToolTip; }
-            set { _pendingToolTip = value; }
-        }
-
-        private DispatcherTimer PendingToolTipTimer
-        {
-            get { return _pendingToolTipTimer; }
-            set { _pendingToolTipTimer = value; }
-        }
-
-        private DispatcherTimer CurrentToolTipTimer
-        {
-            get { return _currentToolTipTimer; }
-            set { _currentToolTipTimer = value; }
-        }
-
-        private DependencyObject LastMouseToolTipOwner
-        {
-            get { return _lastMouseToolTipOwner.GetValue(); }
-            set { _lastMouseToolTipOwner.SetValue(value); }
-        }
-
-        private ConvexHull SafeArea { get; set; }
-
-        private DependencyObject GetOwner(ToolTip t)
-        {
-            return t?.GetValue(OwnerProperty) as DependencyObject;
-        }
-
-        // a pending request is represented by a sentinel ToolTip object that carries
-        // the owner and the trigger action (only).  There's never more than one
-        // pending request, so we reuse the same sentinel object.
-        private ToolTip SentinelToolTip(DependencyObject o, ToolTipService.TriggerAction triggerAction)
-        {
-            // lazy creation, because we cannot create it in the ctor (infinite loop with FrameworkServices..ctor)
-            if (_sentinelToolTip == null)
-            {
-                _sentinelToolTip = new ToolTip();
-            }
-
-            _sentinelToolTip.SetValue(OwnerProperty, o);
-            _sentinelToolTip.FromKeyboard = ToolTipService.IsFromKeyboard(triggerAction);
-            return _sentinelToolTip;
-        }
-
         /// <summary>
         ///     Returns the UIElement target
         /// </summary>
@@ -1175,6 +1178,22 @@ namespace System.Windows.Controls
             }
         }
 
+        // A region is convex if every line segment connecting two points of the region lies
+        // within the region.  The convex hull of a set of points is the smallest convex region
+        // that contains the points.  This is just what we need for the safe area of a tooltip
+        // and its owner:  the tooltip should remain open as long as the mouse lies on a line
+        // segment connecting some point in the owner to some point in the tooltip, i.e. as long
+        // as the mouse is in the convex hull of the corners of the owner and tooltip rectangles.
+        //
+        // There are several aspects of this use-case we can exploit.
+        //  * The points come from WM_MOUSEMOVE messages, in the coords of the hwnd's client area.
+        //      This means they are 16-bit integers.  We can compute cross-products using
+        //      integer multiplication without fear of overflow.
+        //  * The convex hull is built from only 8 points - the corners of the two rectangles.
+        //      We can use simple algorithms with low overhead, ignoring their less-than-optimal
+        //      asymptotic cost.
+        //  * The convex hull will have between 4 and 8 edges, at least 4 of which are axis-aligned.
+        //      We can test these edges by simple integer comparison, no multiplications needed.
         class ConvexHull
         {
             internal ConvexHull(PresentationSource source, NativeMethods.RECT rect1, NativeMethods.RECT rect2)
@@ -1198,58 +1217,6 @@ namespace System.Windows.Controls
             private ConvexHull(PresentationSource source)
             {
                 _source = source;
-            }
-
-            internal bool ContainsPoint(PresentationSource source, int x, int y)
-            {
-                // points from the wrong source are not included
-                if (source != _source)
-                    return false;
-
-                // a point is included if it's in the left half-plane of every
-                // edge.  We test this in two passes, to postpone (and perhaps
-                // avoid) multiplications, and to get the customary "exclusive"
-                // behavior for edges that came from the bottom or right edges
-                // of the original rectangles.
-
-                // Pass 1 - handle the axis-aligned edges
-                for (int i=0, N= _points.Length; i<N; ++i)
-                {
-                    switch (_points[i].Direction)
-                    {
-                        case Direction.Left:
-                            if (y < _points[i].Y) return false;
-                            break;
-                        case Direction.Right:
-                            if (y >= _points[i].Y) return false;
-                            break;
-                        case Direction.Up:
-                            if (x >= _points[i].X) return false;
-                            break;
-                        case Direction.Down:
-                            if (x < _points[i].X) return false;
-                            break;
-                    }
-                }
-
-                // Pass 2 - handle the skew edges
-                for (int i=0, N= _points.Length; i<N; ++i)
-                {
-                    switch (_points[i].Direction)
-                    {
-                        case Direction.Skew:
-                            int next = i + 1;
-                            if (next == N) next = 0;
-                            Point p = new Point(x, y);
-
-                            if (Cross(_points[i], _points[next], p) > 0)
-                                return false;
-                            break;
-                    }
-                }
-
-                // the point is on the correct side of all the edges
-                return true;
             }
 
             // sort by y (and by x among equal y's)
@@ -1287,10 +1254,10 @@ namespace System.Windows.Controls
                 //  * given a value Y = points[currentIndex].Y, partition
                 //      the original points into two sets:  a "small" set - points
                 //      whose y < Y, and a "large" set - points whose y >= Y
-                //  * the first hullCount points in points are the convex hull
-                //      (in counterclockwise order) of the small points
-                //  * the large points are in their original positions
-                //      in points[currentIndex ... N-1], and haven't been examined.
+                //  * the first hullCount points, points[0 ... hullCount-1], are the
+                //      convex hull (in counterclockwise order) of the small points
+                //  * the large points are in their original positions in
+                //      points[currentIndex ... N-1], and haven't been examined.
 
                 while (currentIndex < N)
                 {
@@ -1319,15 +1286,19 @@ namespace System.Windows.Controls
                     {
                         // the first iteration is special: there are no points
                         // to remove, and we have to add the new points in the
-                        // opposite order to get "counterclockwise" correct
-                        prevLeftmostIndex = hullCount;
-                        points[hullCount++] = rightmost;
+                        // opposite order to get "counterclockwise" correct.
                         if (pointsToAdd == 2)
                         {
-                            prevLeftmostIndex = hullCount;
-                            points[hullCount++] = leftmost;
+                            points[0] = rightmost;
+                            points[1] = leftmost;
+                            prevLeftmostIndex = 1;
                         }
-                        prevRightmostIndex = hullCount;
+                        else
+                        {
+                            points[0] = leftmost;
+                            prevLeftmostIndex = 0;
+                        }
+                        prevRightmostIndex = hullCount = pointsToAdd;
                     }
                     else
                     {
@@ -1451,6 +1422,59 @@ namespace System.Windows.Controls
                     points.Add(new Point(rect.left, rect.bottom));
                     points.Add(new Point(rect.right, rect.bottom));
                 }
+            }
+
+            // Test whether a given mouse point (x,y) lies within the convex hull
+            internal bool ContainsPoint(PresentationSource source, int x, int y)
+            {
+                // points from the wrong source are not included
+                if (source != _source)
+                    return false;
+
+                // a point is included if it's in the left half-plane of every
+                // edge.  We test this in two passes, to postpone (and perhaps
+                // avoid) multiplications, and to get the customary "exclusive"
+                // behavior for edges that came from the bottom or right edges
+                // of the original rectangles.
+
+                // Pass 1 - handle the axis-aligned edges
+                for (int i = 0, N = _points.Length; i < N; ++i)
+                {
+                    switch (_points[i].Direction)
+                    {
+                        case Direction.Left:
+                            if (y < _points[i].Y) return false;
+                            break;
+                        case Direction.Right:
+                            if (y >= _points[i].Y) return false;
+                            break;
+                        case Direction.Up:
+                            if (x >= _points[i].X) return false;
+                            break;
+                        case Direction.Down:
+                            if (x < _points[i].X) return false;
+                            break;
+                    }
+                }
+
+                // Pass 2 - handle the skew edges
+                for (int i = 0, N = _points.Length; i < N; ++i)
+                {
+                    switch (_points[i].Direction)
+                    {
+                        case Direction.Skew:
+                            int next = i + 1;
+                            if (next == N) next = 0;
+                            Point p = new Point(x, y);
+
+                            if (Cross(_points[i], _points[next], p) > 0)
+                                return false;
+                            break;
+                    }
+                }
+
+                // the point is on the correct side of all the edges
+                return true;
             }
 
             // returns c's position relative to the line extending segment a -> b:

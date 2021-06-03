@@ -43,7 +43,7 @@
         {
           "choice": "net6.0",
           "description": "Target net6.0"
-        }    
+        }
       ],
       "replaces": "FrameworkParameter",
       "defaultValue": "net6.0"
@@ -68,6 +68,12 @@
       "datatype": "bool",
       "description": "If specified, skips the automatic restore of the project on create.",
       "defaultValue": "false"
+    },
+    "Nullable": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "true",
+      "description": "Whether to enable nullable reference types for this project."
     }
   },
   "primaryOutputs": [
@@ -76,7 +82,7 @@
       "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
       "path": "MainWindow.xaml.cs"
     },
-    { 
+    {
       "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
       "path": "MainWindow.xaml"
     }

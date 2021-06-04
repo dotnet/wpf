@@ -161,14 +161,4 @@
     <SupportedTargetFramework Remove="@(_UnsupportedNETCoreAppTargetFramework);@(_UnsupportedNETStandardTargetFramework);@(_UnsupportedNETFrameworkTargetFramework)" />
   </ItemGroup>
 
-  <!--
-    Workaround: https://github.com/microsoft/msbuild/issues/4948
-    Disable .NET Framework's inbox WinFX targets when using the SDK, since, we really don't use it's build logic
-    and is superseded by 'WindowsDesktop' SDK that provides it's own WinFX for both NETFX and CoreCLR targets.
-    Make it opt-out, just in case, if something fails or we don't want to use 'WindowsDesktop' SDK's version.
-  -->
-  <PropertyGroup>
-    <ImportFrameworkWinFXTargets Condition="'$(ImportFrameworkWinFXTargets)' == ''">false</ImportFrameworkWinFXTargets>
-  </PropertyGroup>
-
 </Project>

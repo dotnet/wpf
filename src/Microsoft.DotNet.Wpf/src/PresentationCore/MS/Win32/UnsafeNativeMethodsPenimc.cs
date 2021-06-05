@@ -630,7 +630,7 @@ namespace MS.Win32.Penimc
         /// This value is used as a cookie to identify a specific activated activation context.</param>
         /// <returns>True on success, false otherwise.</returns>
         [return: MarshalAs(UnmanagedType.Bool)]
-        [DllImport(ExternDll.Kernel32, ExactSpelling = true, PreserveSig = false)]
+        [DllImport(ExternDll.Kernel32, ExactSpelling = true)]
         private static extern bool DeactivateActCtx(int flags, IntPtr activationCtxCookie);
     }
 

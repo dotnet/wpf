@@ -197,10 +197,14 @@ namespace System.Windows.Controls.Primitives
             List<Popup> registeredPopups = RegisteredPopupsField.GetValue(placementTarget);
             if (registeredPopups == null)
             {
-                registeredPopups = new List<Popup>();
+                registeredPopups = new List<Popup>()
+                {
+                    // We can add the popup directly, because the empty List does not contains any popup.
+                    popup
+                };
                 RegisteredPopupsField.SetValue(placementTarget, registeredPopups);
             }
-            if (!registeredPopups.Contains(popup))
+            else if (!registeredPopups.Contains(popup))
             {
                 registeredPopups.Add(popup);
             }

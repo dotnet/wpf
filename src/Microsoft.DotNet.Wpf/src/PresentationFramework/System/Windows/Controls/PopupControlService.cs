@@ -99,6 +99,7 @@ namespace System.Windows.Controls
                         else if ((mouseReport.Actions & RawMouseActions.Deactivate) == RawMouseActions.Deactivate)
                         {
                             DismissToolTips();
+                            LastMouseDirectlyOver = null;
 
                             // When the user moves the cursor outside of the window,
                             // clear the LastMouseToolTipOwner property so if the user returns

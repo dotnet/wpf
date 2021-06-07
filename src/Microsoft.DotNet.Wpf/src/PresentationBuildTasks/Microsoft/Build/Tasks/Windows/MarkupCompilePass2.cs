@@ -702,7 +702,10 @@ namespace Microsoft.Build.Tasks.Windows
 
                 if (appDomain != null)
                 {
+                    // AppDomains are not supported on .NET Core.  'AppDomain.Unload' will always throw `CannotUnloadAppDomainException`.  
+                    #pragma warning disable SYSLIB0024
                     AppDomain.Unload(appDomain);
+                    #pragma warning restore SYSLIB0024
                     compilerWrapper = null;
                 }
             }

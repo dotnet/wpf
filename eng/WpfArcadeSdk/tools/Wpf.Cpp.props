@@ -9,11 +9,6 @@
     <!-- 17134 is Windows 10 v1903 (19H1) SDK -->
     <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
 
-    <!-- This should be removed when .NET 6 Preview 4 becomes available. P4 contains the SDK fix. --> 
-    <!--    https://github.com/dotnet/core/issues/6066 -->
-    <!--    https://github.com/dotnet/sdk/issues/16725 -->
-    <ILLinkTasksAssembly>DummyPropertyValueForILLinkTasksAssembly</ILLinkTasksAssembly>
-    
     <ConfigurationType Condition="'$(ConfigurationType)'==''">DynamicLibrary</ConfigurationType>
     
     <!-- Windows 10 installation location is often not reliably set in msbuild -->

@@ -6,6 +6,7 @@
     <TargetFramework Condition="'$(TargetFrameworkOverride)' != ''">TargetFrameworkOverride-windows</TargetFramework>
     <RootNamespace Condition="'$(name)' != '$(name{-VALUE-FORMS-}safe_namespace)'">Company.WpfApplication1</RootNamespace>
     <LangVersion Condition="'$(langVersion)' != ''">$(ProjectLanguageVersion)</LangVersion>
+    <Nullable Condition="'$(Nullable)' == 'true'">enable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 

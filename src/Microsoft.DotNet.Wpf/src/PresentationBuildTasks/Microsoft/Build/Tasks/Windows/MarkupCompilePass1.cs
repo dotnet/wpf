@@ -1277,7 +1277,11 @@ namespace Microsoft.Build.Tasks.Windows
                     {
                         // Better GC behavior in 4.6 and later when wrapped in Task.Run().
                         // Inside of VisualStudio, when DesignTimeMarkupCompilation happens, it uses MarkupCompilePass1 only (not Pass2).
+
+                        // AppDomains are not supported on .NET Core.  'AppDomain.Unload' will always throw `CannotUnloadAppDomainException`.  
+                        #pragma warning disable SYSLIB0024
                         AppDomain.Unload(appDomain);
+                        #pragma warning restore SYSLIB0024
                     });
                 }
 

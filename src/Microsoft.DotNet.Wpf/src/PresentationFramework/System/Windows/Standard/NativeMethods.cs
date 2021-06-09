@@ -1389,9 +1389,9 @@ namespace Standard
 
         private SafeDC() : base(true) { }
 
-        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
+        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
-        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
+        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.
         protected override bool ReleaseHandle()
         {
             if (_created)
@@ -1514,9 +1514,9 @@ namespace Standard
     {
         private SafeHBITMAP() : base(true) { }
 
-        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
+        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
-        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
+        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.
         protected override bool ReleaseHandle()
         {
             return NativeMethods.DeleteObject(handle);
@@ -1527,9 +1527,9 @@ namespace Standard
     {
         private SafeGdiplusStartupToken() : base(true) { }
 
-        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
+        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
-        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
+        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.
         protected override bool ReleaseHandle()
         {
             Status s = NativeMethods.GdiplusShutdown(this.handle);
@@ -1598,9 +1598,9 @@ namespace Standard
         }
 
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
+        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
-        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
+        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.
         protected override bool ReleaseHandle()
         {
             try
@@ -2665,9 +2665,9 @@ namespace Standard
 
         [SuppressMessage("Mricrosoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("kernel32.dll")]
-        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
+        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
-        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
+        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool FindClose(IntPtr handle);
 
@@ -3329,7 +3329,7 @@ namespace Standard
         public static extern void SHGetItemFromDataObject(IDataObject pdtobj, DOGIF dwFlags, [In] ref Guid riid, [Out, MarshalAs(UnmanagedType.Interface)] out object ppv);
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        [DllImport("shell32.dll", PreserveSig = false)]
+        [DllImport("shell32.dll")]
         public static extern HRESULT SHCreateItemFromParsingName([MarshalAs(UnmanagedType.LPWStr)] string pszPath, IBindCtx pbc, [In] ref Guid riid, [Out, MarshalAs(UnmanagedType.Interface)] out object ppv);
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]

@@ -1,9 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
@@ -31,7 +39,7 @@
     <!-- PresentationNative is usually categorized as RepoLocation=Internal. Ovedrride the default value -->
     <RepoLocation>External</RepoLocation>
   </PropertyGroup>
-  
+
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(WpfCppProps)" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -41,32 +49,30 @@
     <ProjectGuid>{af9084c3-bf37-4a56-a851-89f3bae731b3}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
+
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <Target Name="DiscoverPresentationNativeSourcePath"
-          DependsOnTargets="CppHelper"
+
+  <Target Name="DiscoverPresentationNativeSourcePath" 
+          DependsOnTargets="CppHelper" 
           BeforeTargets="CopyRedistFile">
     <!-- @(NuGetReferencesForCpp) will have the full paths for PresentationNative.dll and PresentationNative.pdb -->
-    
+
     <ItemGroup>
       <_PresentationNative Include="$(TargetName)" />
     </ItemGroup>
     <FilterItem1ByItem2 Item1="@(NuGetReferencesForCpp->'%(FileName)')"
-                        Item2="@(_PresentationNative)"
-                        Metadata2="Identity"
+                        Item2="@(_PresentationNative)" 
+                        Metadata2="Identity" 
                         PreserveItem1Metadata="true">
       <Output ItemName="_PresentationNativeFiles" TaskParameter="Result" />
     </FilterItem1ByItem2>
 
     <ItemGroup>
       <_PresentationNativeFilePaths Include="@(_PresentationNativeFiles->'%(FilePath)')" />
-      
-      <_PresentationNativeDll Include="@(_PresentationNativeFilePaths)"
-                              Condition="'%(_PresentationNativeFilePaths.Extension)'=='.dll'"/>
-      
-      <_PresentationNativePdb Include="@(_PresentationNativeFilePaths)"
-                              Condition="'%(_PresentationNativeFilePaths.Extension)'=='.pdb'"/>
+      <_PresentationNativeDll Include="@(_PresentationNativeFilePaths)" Condition="'%(_PresentationNativeFilePaths.Extension)'=='.dll'" />
+      <_PresentationNativePdb Include="@(_PresentationNativeFilePaths)" Condition="'%(_PresentationNativeFilePaths.Extension)'=='.pdb'" />
     </ItemGroup>
-    
+
     <PropertyGroup>
       <!-- Semi-colon separated list of DLL, PDB files associated with PresentationNative.dll -->
       <RedistSourcePath>@(_PresentationNativeDll)</RedistSourcePath>

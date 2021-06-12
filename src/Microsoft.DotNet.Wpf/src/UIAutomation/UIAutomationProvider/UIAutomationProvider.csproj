@@ -5,7 +5,7 @@
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
     <GenerateResourcesSRNamespace>MS.Internal.Automation</GenerateResourcesSRNamespace>
     <GenerateResourcesResourcesClassName>SRID</GenerateResourcesResourcesClassName>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -51,7 +51,7 @@
     <Compile Include="System\Windows\Automation\Provider\IVirtualizedItemProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\IWindowProvider.cs" />
   </ItemGroup>
-    
+
   <ItemGroup>
     <NetCoreReference Include="netstandard" />
     <NetCoreReference Include="Microsoft.Win32.Primitives" />

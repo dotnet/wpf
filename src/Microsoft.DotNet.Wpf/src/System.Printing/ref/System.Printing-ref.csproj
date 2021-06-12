@@ -4,7 +4,7 @@
     <PackageId>System.Printing-ref</PackageId>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
@@ -13,7 +13,7 @@
     <TargetFramework>net5.0</TargetFramework>  
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <Compile Include="System.Printing.cs" />
     <Compile Include="System.Printing.internals.cs" />
@@ -24,10 +24,10 @@
     <NetCoreReference Include="System.Collections" />
     <NetCoreReference Include="System.Collections.Specialized" />
     <NetCoreReference Include="System.ComponentModel" />
-    <NetCoreReference Include="System.ComponentModel.EventBasedAsync" />    
+    <NetCoreReference Include="System.ComponentModel.EventBasedAsync" />
     <NetCoreReference Include="System.ComponentModel.Primitives" />
     <NetCoreReference Include="System.ComponentModel.TypeConverter" />
-    <NetCoreReference Include="System.Net.Primitives" />    
+    <NetCoreReference Include="System.Net.Primitives" />
     <NetCoreReference Include="System.Net.Requests" />
     <NetCoreReference Include="System.Net.WebHeaderCollection" />
     <NetCoreReference Include="System.ObjectModel" />

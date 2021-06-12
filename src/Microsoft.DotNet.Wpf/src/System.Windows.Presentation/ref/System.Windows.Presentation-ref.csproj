@@ -4,7 +4,7 @@
     <PackageId>System.Windows.Presentation-ref</PackageId>
     <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
     <TargetFramework>net5.0</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
   <ItemGroup>
@@ -19,7 +19,7 @@
     <NetCoreReference Include="System.Runtime" />
     <NetCoreReference Include="System.Runtime.InteropServices" />
     <NetCoreReference Include="System.Resources.ResourceManager" />
-    
+
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
   </ItemGroup>
 </Project>

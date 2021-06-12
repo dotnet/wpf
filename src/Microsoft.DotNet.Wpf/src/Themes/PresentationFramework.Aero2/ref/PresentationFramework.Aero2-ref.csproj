@@ -5,7 +5,7 @@
     <AssemblyName>PresentationFramework.Aero2</AssemblyName>
     <PackageId>PresentationFramework.Aero2-ref</PackageId>
     <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>  
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <Platforms>AnyCPU;x64;arm64</Platforms>
     <GenerateDependencyFile>false</GenerateDependencyFile>

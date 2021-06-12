@@ -562,7 +562,7 @@ using namespace System::Runtime::Versioning;
 
     <MSBuild Projects="@(ProjectToBuild)"
          Targets="IdentifyNuGetReferences"
-         Properties="TargetFramework=$(TfmForBuild);Platform=$(Architecture);RuntimeIdentifier=win-$(Architecture)">
+         Properties="TargetFramework=$(TfmForBuild);Platform=$(Architecture);RuntimeIdentifier=win10-$(Architecture)">
       <Output  TaskParameter="TargetOutputs" ItemName="NuGetReferencesForCpp" />
     </MSBuild>
 

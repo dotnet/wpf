@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{B73BB4AB-68DE-4B91-BBB0-AB4F2D504AC3}</ProjectGuid>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>`
     <Platforms>AnyCPU;x64;arm64</Platforms>
     <!-- We ignore this warning because we want to pack powershell scripts that won't be executed as part of installing this package. -->
     <NoWarn>$(NoWarn);NU5111</NoWarn>

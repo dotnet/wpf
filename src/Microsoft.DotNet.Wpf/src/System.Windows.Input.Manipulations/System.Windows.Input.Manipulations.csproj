@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>  
     <EnableDefaultItems>false</EnableDefaultItems>
     <Platforms>AnyCPU;x64;arm64</Platforms>
   </PropertyGroup>

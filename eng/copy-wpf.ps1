@@ -58,7 +58,7 @@ function CopyNativeBinariesToLocation($location, $localBinLocation)
 }
 function CopyManagedBinariesToLocation($location, $localBinLocation)
 {
-    # Layout of where the managed binaries looks something like this:
+    # Layout of where the managed binaries looks something like this: 
     # x86 - artifacts\packaging\Debug\Microsoft.DotNet.Wpf.GitHub\lib\net5.0
     # x64 - artifacts\packaging\Debug\x64\Microsoft.DotNet.Wpf.GitHub\lib\net5.0
 

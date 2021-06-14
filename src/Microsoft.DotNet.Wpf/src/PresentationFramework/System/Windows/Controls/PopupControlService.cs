@@ -35,7 +35,6 @@ namespace System.Windows.Controls
         internal PopupControlService()
         {
             InputManager.Current.PostProcessInput += new ProcessInputEventHandler(OnPostProcessInput);
-            _focusChangedEventHandler = new KeyboardFocusChangedEventHandler(OnFocusChanged);
         }
         
         #endregion
@@ -130,6 +129,14 @@ namespace System.Windows.Controls
             {
                 DismissToolTips();
             }
+            else if (e.StagingItem.Input.RoutedEvent == Keyboard.GotKeyboardFocusEvent)
+            {
+                ProcessGotKeyboardFocus(sender, (KeyboardFocusChangedEventArgs)e.StagingItem.Input);
+            }
+            else if (e.StagingItem.Input.RoutedEvent == Keyboard.LostKeyboardFocusEvent)
+            {
+                ProcessLostKeyboardFocus(sender, (KeyboardFocusChangedEventArgs)e.StagingItem.Input);
+            }
         }
 
         private void OnMouseMove(IInputElement directlyOver, RawMouseInputReport mouseReport)
@@ -148,7 +155,8 @@ namespace System.Windows.Controls
             }
         }
 
-        private void OnFocusChanged(object sender, KeyboardFocusChangedEventArgs e)
+        /////////////////////////////////////////////////////////////////////
+        private void ProcessGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             // any focus change dismisses tooltips triggered from the keyboard
             DismissKeyboardToolTips();
@@ -162,7 +170,14 @@ namespace System.Windows.Controls
                 BeginShowToolTip(owner, ToolTipService.TriggerAction.KeyboardFocus);
             }
         }
-        
+
+        /////////////////////////////////////////////////////////////////////
+        private void ProcessLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            // any focus change dismisses tooltips triggered from the keyboard
+            DismissKeyboardToolTips();
+        }
+
         /////////////////////////////////////////////////////////////////////
         private void ProcessMouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -731,35 +746,71 @@ namespace System.Windows.Controls
             // safe area is only needed for tooltips triggered by mouse
             if (tooltip != null && !tooltip.FromKeyboard)
             {
-                UIElement owner = GetOwner(tooltip) as UIElement;
-                PresentationSource presentationSource = (owner == null) ? null : PresentationSource.CriticalFromVisual(owner);
+                DependencyObject owner = GetOwner(tooltip);
+                PresentationSource presentationSource = (owner != null) ? PresentationSource.CriticalFromVisual(owner) : null;
+
                 if (presentationSource != null)
                 {
-                    // get owner and tooltip rectangles, in owner window's client coords
-                    Rect rectElement = new Rect(new Point(0, 0), owner.RenderSize);
-                    Rect rectRoot = PointUtil.ElementToRoot(rectElement, owner, presentationSource);
-                    Rect ownerRect = PointUtil.RootToClient(rectRoot, presentationSource);
+                    // build a list of (native) rects, in the presentationSource's client coords
+                    List<NativeMethods.RECT> rects = new List<NativeMethods.RECT>();
 
+                    // add the owner rect(s)
+                    UIElement ownerUIE;
+                    ContentElement ownerCE;
+                    if ((ownerUIE = owner as UIElement) != null)
+                    {
+                        // tooltip is owned by a UIElement.
+                        Rect rectElement = new Rect(new Point(0, 0), ownerUIE.RenderSize);
+                        Rect rectRoot = PointUtil.ElementToRoot(rectElement, ownerUIE, presentationSource);
+                        Rect ownerRect = PointUtil.RootToClient(rectRoot, presentationSource);
+
+                        if (!ownerRect.IsEmpty)
+                        {
+                            rects.Add(PointUtil.FromRect(ownerRect));
+                        }
+                    }
+                    else if ((ownerCE = owner as ContentElement) != null)
+                    {
+                        // tooltip is owned by a ContentElement (e.g. Hyperlink).
+                        IContentHost ichParent = null;
+                        UIElement uieParent = KeyboardNavigation.GetParentUIElementFromContentElement(ownerCE, ref ichParent);
+                        Visual visualParent = ichParent as Visual;
+
+                        if (visualParent != null && uieParent != null)
+                        {
+                            IReadOnlyCollection<Rect> ownerRects = ichParent.GetRectangles(ownerCE);
+
+                            // we're going to do the same transformations as in the UIElement case above.
+                            // But using the PointUtil convenience methods would recompute transforms that
+                            // are the same for each rect.  Instead, do the usual optimization of computing
+                            // common expressions before the loop, leaving only loop-dependent work inside.
+                            GeneralTransform transformToRoot = visualParent.TransformToAncestor(presentationSource.RootVisual);
+                            CompositionTarget target = presentationSource.CompositionTarget;
+                            Matrix matrixRootTransform = PointUtil.GetVisualTransform(target.RootVisual);
+                            Matrix matrixDPI = target.TransformToDevice;
+
+                            foreach (Rect rect in ownerRects)
+                            {
+                                Rect rectRoot = transformToRoot.TransformBounds(rect);
+                                Rect rectRootUntransformed = Rect.Transform(rectRoot, matrixRootTransform);
+                                Rect rectClient = Rect.Transform(rectRootUntransformed, matrixDPI);
+                                rects.Add(PointUtil.FromRect(rectClient));
+                            }
+                        }
+                    }
+
+                    // add the tooltip rect
                     Rect screenRect = tooltip.GetScreenRect();
                     Point clientPt = PointUtil.ScreenToClient(screenRect.Location, presentationSource);
                     Rect tooltipRect = new Rect(clientPt, screenRect.Size);
 
-                    // convert to native rects and find the convex hull
-                    if (!ownerRect.IsEmpty)
+                    if (!tooltipRect.IsEmpty)
                     {
-                        NativeMethods.RECT ownerrc = PointUtil.FromRect(ownerRect);
-
-                        if (!tooltipRect.IsEmpty)
-                        {
-                            NativeMethods.RECT tooltiprc = PointUtil.FromRect(tooltipRect);
-                            SafeArea = new ConvexHull(presentationSource, ownerrc, tooltiprc);
-                        }
-                        else
-                        {
-                            // if tooltip rect is empty, just use the owner rect
-                            SafeArea = new ConvexHull(presentationSource, ownerrc);
-                        }
+                        rects.Add(PointUtil.FromRect(tooltipRect));
                     }
+
+                    // find the convex hull
+                    SafeArea = new ConvexHull(presentationSource, rects);
                 }
             }
         }
@@ -1128,14 +1179,6 @@ namespace System.Windows.Controls
             return value;
         }
 
-        internal KeyboardFocusChangedEventHandler FocusChangedEventHandler
-        {
-            get
-            {
-                return _focusChangedEventHandler;
-            }
-        }
-
         #endregion
 
         #region Private Types
@@ -1195,29 +1238,36 @@ namespace System.Windows.Controls
         //      asymptotic cost.
         //  * The convex hull will have between 4 and 8 edges, at least 4 of which are axis-aligned.
         //      We can test these edges by simple integer comparison, no multiplications needed.
+        //
+        // These remarks apply to the case when the tooltip owner is a UIElement, and thus has a
+        // single bounding rectangle.  When the owner is a ContentElement, it's bounding area can
+        // be the union of many rectangles.  Nevertheless, the remarks still apply qualitatively:
+        // the top-down scan is still efficient in practice (the rectangles usually arrive in
+        // top-down order already), and the majority of edges in the resulting convex hull are
+        // axis-aligned.
         class ConvexHull
         {
-            internal ConvexHull(PresentationSource source, NativeMethods.RECT rect1, NativeMethods.RECT rect2)
-                : this(source)
-            {
-                PointList points = new PointList();
-                AddPoints(points, rect1);
-                AddPoints(points, rect2);
-                SortPoints(points);
-                BuildHullIncrementally(points);
-            }
-
-            internal ConvexHull(PresentationSource source, NativeMethods.RECT rect)
-                : this(source)
-            {
-                PointList points = new PointList();
-                AddPoints(points, rect, rectIsHull:true);
-                _points = points.ToArray();
-            }
-
-            private ConvexHull(PresentationSource source)
+            internal ConvexHull(PresentationSource source, List<NativeMethods.RECT> rects)
             {
                 _source = source;
+                PointList points = new PointList();
+
+                if (rects.Count == 1)
+                {
+                    // special-case optimization:  the hull of a single rectangle is the rectangle itself
+                    AddPoints(points, rects[0], rectIsHull: true);
+                    _points = points.ToArray();
+                }
+                else
+                {
+                    foreach (NativeMethods.RECT rect in rects)
+                    {
+                        AddPoints(points, rect);
+                    }
+
+                    SortPoints(points);
+                    BuildHullIncrementally(points);
+                }
             }
 
             // sort by y (and by x among equal y's)
@@ -1514,8 +1564,6 @@ namespace System.Windows.Controls
         #endregion
 
         #region Data
-
-        private KeyboardFocusChangedEventHandler _focusChangedEventHandler;
 
         // pending ToolTip
         private ToolTip _pendingToolTip;

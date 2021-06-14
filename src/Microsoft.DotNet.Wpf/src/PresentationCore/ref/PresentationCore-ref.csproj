@@ -10,8 +10,8 @@
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
     <GenerateResourcesSRNamespace>MS.Internal.PresentationCore</GenerateResourcesSRNamespace>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-    <Platforms>AnyCPU;x64</Platforms>
-    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,7 +19,7 @@
     <Compile Include="$(WpfSharedDir)ref\AttributesForReferenceAssemblies.cs" />
     <Compile Include="$(WpfSourceDir)PresentationCore\OtherAssemblyAttrs.cs" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <NetCoreReference Include="Microsoft.Win32.Primitives" />
     <NetCoreReference Include="netstandard" />

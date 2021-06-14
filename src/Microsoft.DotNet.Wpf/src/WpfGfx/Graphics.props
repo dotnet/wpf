@@ -76,7 +76,7 @@
     <!-- d3dcompiler.lib is needed for D3DCompile API               -->
     <Link Condition="'$(ConfigurationType)'!='StaticLibrary'">
       <AdditionalDependencies>%(AdditionalDependencies);d3d9.lib;$(D3DCompilerDllBaseName).lib</AdditionalDependencies>
-      <AdditionalOptions>%(AdditionalOptions) /dllrename:$(D3DCompilerDllBaseName)$(D3DCompilerVersion)=$(D3DCompilerDllBaseName)$(D3DCompilerVersion)$(WpfVersionSuffix)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Architecture)'!='arm64'">%(AdditionalOptions) /dllrename:$(D3DCompilerDllBaseName)$(D3DCompilerVersion)=$(D3DCompilerDllBaseName)$(D3DCompilerVersion)$(WpfVersionSuffix)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
 

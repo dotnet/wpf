@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp5.0</TargetFrameworks>
+    <TargetFrameworks>net5.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -18,17 +18,17 @@
     <DefineConstants Condition="$(TargetFramework.Equals('net47'))">$(DefineConstants);NET47</DefineConstants>
     <DefineConstants Condition="$(TargetFramework.Equals('net471'))">$(DefineConstants);NET471</DefineConstants>
     <DefineConstants Condition="$(TargetFramework.Equals('net472'))">$(DefineConstants);NET472</DefineConstants>
-    
+
     <DefineConstants Condition="$(TargetFramework.Equals('netcoreapp3.0'))">$(DefineConstants);NETCOREAPP3_0</DefineConstants>
     <DefineConstants Condition="$(TargetFramework.Equals('netcoreapp3.1'))">$(DefineConstants);NETCOREAPP3_1</DefineConstants>
-    <DefineConstants Condition="$(TargetFramework.Equals('netcoreapp5.0'))">$(DefineConstants);NETCOREAPP5_0</DefineConstants>
+    <DefineConstants Condition="$(TargetFramework.Equals('net5.0'))">$(DefineConstants);NETCOREAPP5_0</DefineConstants>
 
   </PropertyGroup>
-  
+
   <ItemGroup Condition="'$(TargetFramework)'!='net35'">
     <PackageReference Include="System.Reflection.Emit" Version="$(SystemReflectionEmitPackageVersion)" />
   </ItemGroup>
-  
+
   <!--
        When IsUnitTestProject is set by Arcade, these ProjectReferences are implicitly included. Many of our
        tests don't require xUnit. So a non-unit test that does require xUnit has to set the IsXUnitProject property
@@ -46,7 +46,7 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">   
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
     <Reference Include="System.Xaml" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -56,7 +56,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="Accessibility" />
   </ItemGroup>
-  
+
   <ItemGroup Condition="'$(TargetFramework)'=='net35'">
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />

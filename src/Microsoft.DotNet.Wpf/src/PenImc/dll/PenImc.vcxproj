@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
@@ -18,16 +26,13 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  
   <PropertyGroup>
     <CLRSupport>false</CLRSupport>
     <Configurationtype>DynamicLibrary</Configurationtype>
   </PropertyGroup>
-   
   <ItemGroup>
     <ResourceCompile Include="PenImc.rc" />
   </ItemGroup>
-  
   <ItemGroup>
     <ClCompile Include="dlldatax.c">
       <CompileAs>CompileAsC</CompileAs>
@@ -35,10 +40,10 @@
     </ClCompile>
     <ClCompile Include="ComApartmentVerifier.cpp" />
     <ClCompile Include="ComLockableWrapper.cpp" />
-    <ClCompile Include="PenImc.cpp"/>
+    <ClCompile Include="PenImc.cpp" />
     <ClCompile Include="PimcContext.cpp" />
     <ClCompile Include="PimcTablet.cpp" />
-    <ClCompile Include="PimcManager.cpp"/>
+    <ClCompile Include="PimcManager.cpp" />
     <ClCompile Include="PimcSurrogate.cpp" />
     <ClCompile Include="SxSCOMRegistration.cpp" />
     <ClCompile Include="WispComLockExports.cpp" />
@@ -47,15 +52,13 @@
     </ClCompile>
     <Midl Include="PenImc.idl">
       <HeaderFileName>PenImc.h</HeaderFileName>
-       <GenerateStublessProxies>true</GenerateStublessProxies>
+      <GenerateStublessProxies>true</GenerateStublessProxies>
       <OutputDirectory>$(IntermediateOutputPath)</OutputDirectory>
     </Midl>
   </ItemGroup>
-  
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(WpfCppProps)" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{8383C663-E8D0-4D2D-B65A-FE4A253E3319}</ProjectGuid>
@@ -64,36 +67,32 @@
     <TargetName>PenImc$(WpfVersionSuffix)</TargetName>
     <PreProcessorDefinitions>$(PreProcessorDefinitions);_MERGE_PROXYSTUB;_USRDLL</PreProcessorDefinitions>
     <GenerateManifest>false</GenerateManifest>
-  </PropertyGroup>  
-   
+  </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-        <PrecompiledHeader>Use</PrecompiledHeader>
-        <UseOfATL>true</UseOfATL>
-        <PreprocessorDefinitions>_MERGE_PROXYSTUB;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions> 
-        <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(WpfSourceDir)PenImc\inc\;$(IntermediateOutputPath)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <UseOfATL>true</UseOfATL>
+      <PreprocessorDefinitions>_MERGE_PROXYSTUB;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(WpfSourceDir)PenImc\inc\;$(IntermediateOutputPath)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>$(IntermediateOutputPath)PenImc.i</ModuleDefinitionFile>
       <AdditionalDependencies>%(AdditionalDependencies);kernel32.lib;advapi32.lib;uuid.lib;ole32.lib;oleaut32.lib;user32.lib;shlwapi.lib;rpcrt4.lib;rpcns4.lib;shell32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  
   <ItemGroup>
     <ProjectReference Include="$(WpfSourceDir)PenImc\TabLib\TabLib.vcxproj">
-        <Project>{8f91eb3a-c530-4cea-90bf-afc8165b6456}</Project>
+      <Project>{8f91eb3a-c530-4cea-90bf-afc8165b6456}</Project>
     </ProjectReference>
     <ProjectReference Include="$(WpfSourceDir)Shared\OSVersionHelper\OSVersionHelper.vcxproj">
-        <Project>{3801B5AE-6871-4A72-B400-1F6ABCBF9045}</Project>
+      <Project>{3801B5AE-6871-4A72-B400-1F6ABCBF9045}</Project>
     </ProjectReference>
   </ItemGroup>
-  
   <!-- Define definitions input and output for use with GenerateModuleDefinitionFile.targets -->
   <PropertyGroup>
     <ModuleDefinitionInputFile>$(MSBuildThisFileDirectory)PenImc.def</ModuleDefinitionInputFile>
     <ModuleDefinitionOutputFile>PenImc.i</ModuleDefinitionOutputFile>
   </PropertyGroup>
-
   <Import Project="$(GenerateModuleDefinitionFileTargets)" />
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />  
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

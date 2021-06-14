@@ -1,6 +1,7 @@
 <Project>
   <PropertyGroup>
     <RepositoryName>wpf</RepositoryName>
+    <WindowsDesktopARM64Support>true</WindowsDesktopARM64Support>
   </PropertyGroup>
   <!-- Normalize $(TestWpfArcadeSdkPath) by appending a '\' to it if one is missing -->
   <PropertyGroup Condition="'$(TestWpfArcadeSdkPath)'!=''">

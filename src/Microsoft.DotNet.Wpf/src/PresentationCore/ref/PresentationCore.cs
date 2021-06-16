@@ -1,3 +1,12 @@
+namespace Microsoft.UI.Xaml.Automation.Peers
+{
+    public enum AutomationHeadingLevel
+    {
+        None = 0,
+        Level1 = 1,
+        Level2 = 2,
+    }
+}
 namespace System.IO.Packaging
 {
     public static partial class PackageStore
@@ -2131,6 +2140,7 @@ namespace System.Windows.Automation
         public static readonly System.Windows.DependencyProperty AcceleratorKeyProperty;
         public static readonly System.Windows.DependencyProperty AccessKeyProperty;
         public static readonly System.Windows.DependencyProperty AutomationIdProperty;
+        public static readonly System.Windows.DependencyProperty HeadingLevelProperty;
         public static readonly System.Windows.DependencyProperty HelpTextProperty;
         public static readonly System.Windows.DependencyProperty IsColumnHeaderProperty;
         public static readonly System.Windows.DependencyProperty IsOffscreenBehaviorProperty;
@@ -2146,6 +2156,7 @@ namespace System.Windows.Automation
         public static string GetAcceleratorKey(System.Windows.DependencyObject element) { throw null; }
         public static string GetAccessKey(System.Windows.DependencyObject element) { throw null; }
         public static string GetAutomationId(System.Windows.DependencyObject element) { throw null; }
+        public static Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel GetHeadingLevel(System.Windows.DependencyObject element) { throw null; }
         public static string GetHelpText(System.Windows.DependencyObject element) { throw null; }
         public static bool GetIsColumnHeader(System.Windows.DependencyObject element) { throw null; }
         public static System.Windows.Automation.IsOffscreenBehavior GetIsOffscreenBehavior(System.Windows.DependencyObject element) { throw null; }
@@ -2161,6 +2172,7 @@ namespace System.Windows.Automation
         public static void SetAcceleratorKey(System.Windows.DependencyObject element, string value) { }
         public static void SetAccessKey(System.Windows.DependencyObject element, string value) { }
         public static void SetAutomationId(System.Windows.DependencyObject element, string value) { }
+        public static void SetHeadingLevel(System.Windows.DependencyObject element, Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel value) { }
         public static void SetHelpText(System.Windows.DependencyObject element, string value) { }
         public static void SetIsColumnHeader(System.Windows.DependencyObject element, bool value) { }
         public static void SetIsOffscreenBehavior(System.Windows.DependencyObject element, System.Windows.Automation.IsOffscreenBehavior value) { }
@@ -2277,6 +2289,8 @@ namespace System.Windows.Automation.Peers
         protected abstract System.Windows.Point GetClickablePointCore();
         public System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetControlledPeers() { throw null; }
         protected virtual System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetControlledPeersCore() { throw null; }
+        public Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel GetHeadingLevel() { throw null; }
+        protected virtual Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel GetHeadingLevelCore() { throw null; }
         public string GetHelpText() { throw null; }
         protected abstract string GetHelpTextCore();
         protected virtual System.Windows.Automation.Peers.HostedWindowWrapper GetHostRawElementProviderCore() { throw null; }

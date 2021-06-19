@@ -3001,41 +3001,6 @@ namespace System.Xaml
             }
         }
 
-        // need to implement our own Set class to alleviate ties to System.Core.dll
-        // HashSet<T> lives in System.Core.dll
-        class HashSet<T>
-        {
-            Dictionary<T, bool> dictionary;
-
-            public HashSet()
-            {
-                dictionary = new Dictionary<T, bool>();
-            }
-
-            public HashSet(IEqualityComparer<T> comparer)
-            {
-                dictionary = new Dictionary<T, bool>(comparer);
-            }
-
-            public bool Contains(T member)
-            {
-                return dictionary.ContainsKey(member);
-            }
-
-            public bool Add(T member)
-            {
-                if (Contains(member))
-                {
-                    return false;
-                }
-                else
-                {
-                    dictionary.Add(member, true);
-                    return true;
-                }
-            }
-        }
-
         private class PartiallyOrderedList<TKey, TValue> : IEnumerable<TValue>
     where TValue : class
         {

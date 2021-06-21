@@ -154,7 +154,6 @@
     PackageReferences to pass to CppCliHelper target
   -->
   <ItemGroup>
-    <AdditionalPackageReference Include="Microsoft.Win32.Registry" Version="$(MicrosoftWin32RegistryPackageVersion)" />
     <AdditionalPackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
   </ItemGroup>
   <!--

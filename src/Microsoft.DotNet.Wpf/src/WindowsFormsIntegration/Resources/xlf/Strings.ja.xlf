@@ -4,37 +4,37 @@
     <body>
       <trans-unit id="Host_CannotRotateWindowsFormsHost">
         <source>A WindowsFormsHost cannot be rotated. To suppress this error, handle the LayoutError event and set ThrowException to false.</source>
-        <target state="translated">WindowsFormsHost を回転させることはできません。このエラーが表示されないようにするには、LayoutError イベントを処理し、ThrowException を false に設定してください。</target>
+        <target state="new">A WindowsFormsHost cannot be rotated. To suppress this error, handle the LayoutError event and set ThrowException to false.</target>
         <note />
       </trans-unit>
       <trans-unit id="Host_ChildCantBeTopLevelForm">
         <source>The child control cannot be a top-level form.</source>
-        <target state="translated">子コントロールをトップレベルのフォームにすることはできません。</target>
+        <target state="new">The child control cannot be a top-level form.</target>
         <note />
       </trans-unit>
       <trans-unit id="WFI_ArgumentNullOrEmpty">
         <source>'{0}' cannot be null or empty.</source>
-        <target state="translated">'{0}' を NULL または空にすることはできません。</target>
+        <target state="new">'{0}' cannot be null or empty.</target>
         <note />
       </trans-unit>
       <trans-unit id="WFI_NullArgument">
         <source>'{0}' cannot be null.</source>
-        <target state="translated">'{0}' を NULL にすることはできません。</target>
+        <target state="new">'{0}' cannot be null.</target>
         <note />
       </trans-unit>
       <trans-unit id="WFI_PropertyDoesntExist">
         <source>'{0}' property does not exist on type '{1}'.</source>
-        <target state="translated">'{0}' プロパティは型 '{1}' に存在しません。</target>
+        <target state="new">'{0}' property does not exist on type '{1}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="WFI_PropertyMapError">
         <source>An error occurred when applying a property map. For details, see the inner exception.</source>
-        <target state="translated">プロパティ マップの適用中にエラーが発生しました。詳細については、内部例外を確認してください。</target>
+        <target state="new">An error occurred when applying a property map. For details, see the inner exception.</target>
         <note />
       </trans-unit>
       <trans-unit id="WFI_PropertyMappingExists">
         <source>'{0}' property is already mapped. Remove the existing mapping before adding a new one.</source>
-        <target state="translated">'{0}' プロパティは既にマッピングされています。既存のマッピングを削除してから、新しいマッピングを追加してください。</target>
+        <target state="new">'{0}' property is already mapped. Remove the existing mapping before adding a new one.</target>
         <note />
       </trans-unit>
     </body>

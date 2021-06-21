@@ -4,132 +4,132 @@
     <body>
       <trans-unit id="ElementNotKeyTipScope">
         <source>Element is not a valid KeyTip scope.</source>
-        <target state="translated">Element ist kein gültiger KeyTip-Bereich.</target>
+        <target state="new">Element is not a valid KeyTip scope.</target>
         <note />
       </trans-unit>
       <trans-unit id="InRibbonGallery_ScrollDownButtonAutomationName">
         <source>Row Down</source>
-        <target state="translated">Zeile nach unten</target>
+        <target state="new">Row Down</target>
         <note />
       </trans-unit>
       <trans-unit id="InRibbonGallery_ScrollUpButtonAutomationName">
         <source>Row Up</source>
-        <target state="translated">Zeile nach oben</target>
+        <target state="new">Row Up</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidApplicationMenuOrItemContainer">
         <source>'{0}' can only host a RibbonApplicationMenuItem, RibbonApplicationSplitMenuItem, RibbonGallery or RibbonSeparator. '{1}' is an invalid container.</source>
-        <target state="translated">'{0}' kann nur ein RibbonApplicationMenuItem, RibbonApplicationSplitMenuItem, eine RibbonGallery oder ein RibbonSeparator hosten. '{1}' ist ein ungültiger Container.</target>
+        <target state="new">'{0}' can only host a RibbonApplicationMenuItem, RibbonApplicationSplitMenuItem, RibbonGallery or RibbonSeparator. '{1}' is an invalid container.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidCtorParameterNoInfinityForStarSize">
         <source>'{0}' parameter cannot be Infinity for RibbonControlLengthUnitType.Star.</source>
-        <target state="translated">Der '{0}'-Parameter kann für RibbonControlLengthUnitType.Star nicht unendlich sein.</target>
+        <target state="new">'{0}' parameter cannot be Infinity for RibbonControlLengthUnitType.Star.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidCtorParameterNoNaN">
         <source>'{0}' parameter cannot be NaN.</source>
-        <target state="translated">"NaN" ist für den Parameter "{0}" nicht zulässig.</target>
+        <target state="new">'{0}' parameter cannot be NaN.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidCtorParameterUnknownRibbonControlLengthUnitType">
         <source>'{0}' parameter is not valid. Valid values are RibbonControlLengthUnitType.Auto, RibbonControlLengthUnitType.Pixel, RibbonControlLengthUnitType.Item, or RibbonControlLengthUnitType.Star.</source>
-        <target state="translated">Der '{0}'-Parameter ist nicht gültig. Gültige Werte sind RibbonControlLengthUnitType.Auto, RibbonControlLengthUnitType.Pixel, RibbonControlLengthUnitType.Item oder RibbonControlLengthUnitType.Star.</target>
+        <target state="new">'{0}' parameter is not valid. Valid values are RibbonControlLengthUnitType.Auto, RibbonControlLengthUnitType.Pixel, RibbonControlLengthUnitType.Item, or RibbonControlLengthUnitType.Star.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidKeyTipOffset">
         <source>Offset cannot be infinity or NaN.</source>
-        <target state="translated">Offset kann nicht unendlich oder NaN sein.</target>
+        <target state="new">Offset cannot be infinity or NaN.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidMenuButtonOrItemContainer">
         <source>'{0}' can only host a RibbonMenuItem, RibbonSplitMenuItem, RibbonGallery or RibbonSeparator. '{1}' is an invalid container.</source>
-        <target state="translated">'{0}' kann nur ein RibbonMenuItem, RibbonSplitMenuItem, eine RibbonGallery oder ein RibbonSeparator hosten. '{1}' ist ein ungültiger Container.</target>
+        <target state="new">'{0}' can only host a RibbonMenuItem, RibbonSplitMenuItem, RibbonGallery or RibbonSeparator. '{1}' is an invalid container.</target>
         <note />
       </trans-unit>
       <trans-unit id="QATKeyTipCharacters">
         <source>ABCDEFGHIJKLMNOPQRSTUVWXYZ</source>
-        <target state="translated">ABCDEFGHIJKLMNOPQRSTUVWXYZ</target>
+        <target state="new">ABCDEFGHIJKLMNOPQRSTUVWXYZ</target>
         <note />
       </trans-unit>
       <trans-unit id="ResizeParametersNotValid">
         <source>Resize parameters out of bounds.</source>
-        <target state="translated">Parameter für die Größenänderung außerhalb des gültigen Bereichs.</target>
+        <target state="new">Resize parameters out of bounds.</target>
         <note />
       </trans-unit>
       <trans-unit id="RibbonContextMenu_AddGalleryToQAT">
         <source>_Add gallery to Quick Access Toolbar</source>
-        <target state="translated">G_alerie zu Symbolleiste für den Schnellzugriff hinzufügen</target>
+        <target state="new">_Add gallery to Quick Access Toolbar</target>
         <note />
       </trans-unit>
       <trans-unit id="RibbonContextMenu_AddToQAT">
         <source>_Add to Quick Access Toolbar</source>
-        <target state="translated">_Zu Symbolleiste für den Schnellzugriff hinzufügen</target>
+        <target state="new">_Add to Quick Access Toolbar</target>
         <note />
       </trans-unit>
       <trans-unit id="RibbonContextMenu_MaximizeTheRibbon">
         <source>Ma_ximize the Ribbon</source>
-        <target state="translated">Menüband ma_ximimieren</target>
+        <target state="new">Ma_ximize the Ribbon</target>
         <note />
       </trans-unit>
       <trans-unit id="RibbonContextMenu_MinimizeTheRibbon">
         <source>Mi_nimize the Ribbon</source>
-        <target state="translated">Menüband mi_nimieren</target>
+        <target state="new">Mi_nimize the Ribbon</target>
         <note />
       </trans-unit>
       <trans-unit id="RibbonContextMenu_RemoveFromQAT">
         <source>_Remove from Quick Access Toolbar</source>
-        <target state="translated">Aus Symbolleiste für den Schnellzugriff entfe_rnen</target>
+        <target state="new">_Remove from Quick Access Toolbar</target>
         <note />
       </trans-unit>
       <trans-unit id="RibbonContextMenu_ShowQATAbove">
         <source>_Show Quick Access Toolbar above the Ribbon</source>
-        <target state="translated">_Symbolleiste für den Schnellzugriff über dem Menüband anzeigen</target>
+        <target state="new">_Show Quick Access Toolbar above the Ribbon</target>
         <note />
       </trans-unit>
       <trans-unit id="RibbonContextMenu_ShowQATBelow">
         <source>_Show Quick Access Toolbar below the Ribbon</source>
-        <target state="translated">_Symbolleiste für den Schnellzugriff unter dem Menüband anzeigen</target>
+        <target state="new">_Show Quick Access Toolbar below the Ribbon</target>
         <note />
       </trans-unit>
       <trans-unit id="RibbonGallery_AllFilter">
         <source>All</source>
-        <target state="translated">Alle</target>
+        <target state="new">All</target>
         <note />
       </trans-unit>
       <trans-unit id="RibbonGroupsPanel_InvalidRegistrationParameter">
         <source>RibbonGroupsPanel RegisterStarLayoutProvider and UnregisterStarLayoutProvider accepts only IProvideStarLayoutInfo instances.</source>
-        <target state="translated">RibbonGroupsPanel RegisterStarLayoutProvider und UnregisterStarLayoutProvider akzeptieren nur IProvideStarLayoutInfo-Instanzen.</target>
+        <target state="new">RibbonGroupsPanel RegisterStarLayoutProvider and UnregisterStarLayoutProvider accepts only IProvideStarLayoutInfo instances.</target>
         <note />
       </trans-unit>
       <trans-unit id="RibbonQuickAccessToolBar_OverflowButtonToolTip">
         <source>More controls</source>
-        <target state="translated">Weitere Steuerelemente</target>
+        <target state="new">More controls</target>
         <note />
       </trans-unit>
       <trans-unit id="RibbonWindow_ExtendUnShownGlass">
         <source>Window must be shown before extending glass</source>
-        <target state="translated">Fenster muss vor der Erweiterung von "glass" angezeigt werden</target>
+        <target state="new">Window must be shown before extending glass</target>
         <note />
       </trans-unit>
       <trans-unit id="Ribbon_ContextualTabHeadersSourceInvalid">
         <source>Cannot set both ContextualTabGroupHeadersSource and ContextualTabGroupHeaders.</source>
-        <target state="translated">ContextualTabGroupHeadersSource und ContextualTabGroupHeaders können nicht beide festgelegt werden.</target>
+        <target state="new">Cannot set both ContextualTabGroupHeadersSource and ContextualTabGroupHeaders.</target>
         <note />
       </trans-unit>
       <trans-unit id="SetFocusFailed">
         <source>The target element cannot receive focus.</source>
-        <target state="translated">Das Zielelement kann keinen Fokus erhalten.</target>
+        <target state="new">The target element cannot receive focus.</target>
         <note />
       </trans-unit>
       <trans-unit id="UIA_OperationCannotBePerformed">
         <source>Cannot perform operation.</source>
-        <target state="translated">Der Vorgang kann nicht ausgeführt werden.</target>
+        <target state="new">Cannot perform operation.</target>
         <note />
       </trans-unit>
       <trans-unit id="VirtualizedElement">
         <source>Element does not exist or it is virtualized.</source>
-        <target state="translated">Element existiert nicht oder ist virtualisiert.</target>
+        <target state="new">Element does not exist or it is virtualized.</target>
         <note />
       </trans-unit>
     </body>

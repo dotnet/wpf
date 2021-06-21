@@ -4,367 +4,367 @@
     <body>
       <trans-unit id="DoesNotSupportMultipleSelection">
         <source>Selection container does not support multiple selection.</source>
-        <target state="translated">選択コンテナーでは、複数選択をサポートしていません。</target>
+        <target state="new">Selection container does not support multiple selection.</target>
         <note />
       </trans-unit>
       <trans-unit id="EditControlsHaveNoChildren">
         <source>Win32 edit control cannot have a child element.</source>
-        <target state="translated">Win32 Edit コントロールは子要素を持つことができません。</target>
+        <target state="new">Win32 edit control cannot have a child element.</target>
         <note />
       </trans-unit>
       <trans-unit id="GridColumnOutOfRange">
         <source>Grid column must be set between 0 and column maximum.</source>
-        <target state="translated">グリッドの列は、0 と列最大値の間に設定する必要があります。</target>
+        <target state="new">Grid column must be set between 0 and column maximum.</target>
         <note />
       </trans-unit>
       <trans-unit id="GridRowOutOfRange">
         <source>Grid row must be set between 0 and row maximum.</source>
-        <target state="translated">Grid の行は、0 と行最大値の間に設定する必要があります。</target>
+        <target state="new">Grid row must be set between 0 and row maximum.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidParameter">
         <source>Parameter not valid.</source>
-        <target state="translated">パラメーターが無効です。</target>
+        <target state="new">Parameter not valid.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidRangeEndpoint">
         <source>Start or end specified is past the end of the text range.</source>
-        <target state="translated">指定された開始または終了が、テキスト範囲の終わりを越えています。</target>
+        <target state="new">Start or end specified is past the end of the text range.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidTextRangeOffset">
         <source>Character offset not valid in TextRange.</source>
-        <target state="translated">TextRange での文字オフセットが無効です。</target>
+        <target state="new">Character offset not valid in TextRange.</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyAlt">
         <source>Alt</source>
-        <target state="translated">Alt</target>
+        <target state="new">Alt</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyControl">
         <source>Control</source>
-        <target state="translated">Control</target>
+        <target state="new">Control</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyCtrl">
         <source>Ctrl</source>
-        <target state="translated">Ctrl</target>
+        <target state="new">Ctrl</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyDel">
         <source>Del</source>
-        <target state="translated">Del</target>
+        <target state="new">Del</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyDelete">
         <source>Delete</source>
-        <target state="translated">削除</target>
+        <target state="new">Delete</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyEnd">
         <source>End</source>
-        <target state="translated">終了</target>
+        <target state="new">End</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyEsc">
         <source>Esc</source>
-        <target state="translated">Esc</target>
+        <target state="new">Esc</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyHelp">
         <source>Help</source>
-        <target state="translated">ヘルプ</target>
+        <target state="new">Help</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyHome">
         <source>Home</source>
-        <target state="translated">ホーム</target>
+        <target state="new">Home</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyIns">
         <source>Ins</source>
-        <target state="translated">Ins</target>
+        <target state="new">Ins</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyInsert">
         <source>Insert</source>
-        <target state="translated">Insert</target>
+        <target state="new">Insert</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyPageDown">
         <source>Page Down</source>
-        <target state="translated">次のページ</target>
+        <target state="new">Page Down</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyPageUp">
         <source>Page Up</source>
-        <target state="translated">前のページ</target>
+        <target state="new">Page Up</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyPause">
         <source>Pause</source>
-        <target state="translated">一時停止</target>
+        <target state="new">Pause</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyPrtScn">
         <source>PrtScn</source>
-        <target state="translated">PrtScn</target>
+        <target state="new">PrtScn</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyScrLk">
         <source>ScrLk</source>
-        <target state="translated">ScrLk</target>
+        <target state="new">ScrLk</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyShift">
         <source>Shift</source>
-        <target state="translated">Shift</target>
+        <target state="new">Shift</target>
         <note />
       </trans-unit>
       <trans-unit id="KeySpace">
         <source>Space</source>
-        <target state="translated">スペース</target>
+        <target state="new">Space</target>
         <note />
       </trans-unit>
       <trans-unit id="KeySysRq">
         <source>SysRq</source>
-        <target state="translated">SysRq</target>
+        <target state="new">SysRq</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyTab">
         <source>Tab</source>
-        <target state="translated">Tab</target>
+        <target state="new">Tab</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyWinKey">
         <source>WinKey</source>
-        <target state="translated">WinKey</target>
+        <target state="new">WinKey</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeContainer">
         <source>Container</source>
-        <target state="translated">コンテナー</target>
+        <target state="new">Container</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeDialog">
         <source>Dialog</source>
-        <target state="translated">ダイアログ</target>
+        <target state="new">Dialog</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeGrip">
         <source>Grip</source>
-        <target state="translated">グリップ</target>
+        <target state="new">Grip</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeIPAddress">
         <source>ip address</source>
-        <target state="translated">IP アドレス</target>
+        <target state="new">ip address</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeOctet">
         <source>Octet</source>
-        <target state="translated">オクテット</target>
+        <target state="new">Octet</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeRebar">
         <source>Rebar</source>
-        <target state="translated">Rebar</target>
+        <target state="new">Rebar</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeRebarBand">
         <source>Rebar Band</source>
-        <target state="translated">Rebar Band</target>
+        <target state="new">Rebar Band</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsComboButton">
         <source>Drop Down Button</source>
-        <target state="translated">ドロップ ダウン ボタン</target>
+        <target state="new">Drop Down Button</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsHorizontalScrollBar">
         <source>Horizontal Scroll Bar</source>
-        <target state="translated">水平スクロール バー</target>
+        <target state="new">Horizontal Scroll Bar</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsMenu">
         <source>Menu</source>
-        <target state="translated">メニュー</target>
+        <target state="new">Menu</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsMenuBar">
         <source>Application</source>
-        <target state="translated">アプリケーション</target>
+        <target state="new">Application</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsMenuSeparator">
         <source>separator</source>
-        <target state="translated">区切り記号</target>
+        <target state="new">separator</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsReBarBandItem">
         <source>Rebar Band</source>
-        <target state="translated">Rebar Band</target>
+        <target state="new">Rebar Band</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsScrollBarBitsBackByLargeAmount">
         <source>Back by large amount</source>
-        <target state="translated">たくさん戻る</target>
+        <target state="new">Back by large amount</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsScrollBarBitsBackBySmallAmount">
         <source>Back by small amount</source>
-        <target state="translated">少し戻る</target>
+        <target state="new">Back by small amount</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsScrollBarBitsForwardByLargeAmount">
         <source>Forward by large amount</source>
-        <target state="translated">たくさん進む</target>
+        <target state="new">Forward by large amount</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsScrollBarBitsForwardBySmallAmount">
         <source>Forward by small amount</source>
-        <target state="translated">少し進む</target>
+        <target state="new">Forward by small amount</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsScrollBarBitsThumb">
         <source>Thumb</source>
-        <target state="translated">縮小表示</target>
+        <target state="new">Thumb</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsSliderItemBackByLargeAmount">
         <source>Back by large amount</source>
-        <target state="translated">たくさん戻る</target>
+        <target state="new">Back by large amount</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsSliderItemForwardByLargeAmount">
         <source>Forward by large amount</source>
-        <target state="translated">たくさん進む</target>
+        <target state="new">Forward by large amount</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsSliderItemThumb">
         <source>Thumb</source>
-        <target state="translated">縮小表示</target>
+        <target state="new">Thumb</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsSpinButtonItemBackward">
         <source>Backward</source>
-        <target state="translated">Backward</target>
+        <target state="new">Backward</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsSpinButtonItemForward">
         <source>Forward</source>
-        <target state="translated">進みます</target>
+        <target state="new">Forward</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsSysHeader">
         <source>Header</source>
-        <target state="translated">ヘッダー</target>
+        <target state="new">Header</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsSystemMenuBar">
         <source>System Menu Bar</source>
-        <target state="translated">システム メニュー バー</target>
+        <target state="new">System Menu Bar</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsSystemMenuItem">
         <source>System</source>
-        <target state="translated">System</target>
+        <target state="new">System</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsTitleBarButtonClose">
         <source>Close</source>
-        <target state="translated">閉じる</target>
+        <target state="new">Close</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsTitleBarButtonContextHelp">
         <source>Context help</source>
-        <target state="translated">コンテキスト ヘルプ</target>
+        <target state="new">Context help</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsTitleBarButtonMaximize">
         <source>Maximize</source>
-        <target state="translated">最大化</target>
+        <target state="new">Maximize</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsTitleBarButtonMinimize">
         <source>Minimize</source>
-        <target state="translated">最小化</target>
+        <target state="new">Minimize</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsTitleBarButtonRestore">
         <source>Restore</source>
-        <target state="translated">復元</target>
+        <target state="new">Restore</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsTitleBarButtonUnknown">
         <source>Unknown title bar button</source>
-        <target state="translated">不明タイトル バー ボタン</target>
+        <target state="new">Unknown title bar button</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsUpDown">
         <source>Spin</source>
-        <target state="translated">スピン</target>
+        <target state="new">Spin</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedNameWindowsVerticalScrollBar">
         <source>Vertical Scroll Bar</source>
-        <target state="translated">垂直スクロール バー</target>
+        <target state="new">Vertical Scroll Bar</target>
         <note />
       </trans-unit>
       <trans-unit id="NoITextDocumentFromRichEdit">
         <source>Cannot obtain ITextDocument from RichEdit control.</source>
-        <target state="translated">RichEdit コントロールから ITextDocument を取得できません。</target>
+        <target state="new">Cannot obtain ITextDocument from RichEdit control.</target>
         <note />
       </trans-unit>
       <trans-unit id="NotAValidValue">
         <source>'{0}' is not a valid value for this control.</source>
-        <target state="translated">'{0}' は、このコントロールに有効な値ではありません。</target>
+        <target state="new">'{0}' is not a valid value for this control.</target>
         <note />
       </trans-unit>
       <trans-unit id="OperationCannotBePerformed">
         <source>Operation cannot be performed.</source>
-        <target state="translated">操作を実行できません。</target>
+        <target state="new">Operation cannot be performed.</target>
         <note />
       </trans-unit>
       <trans-unit id="RangeValueMax">
         <source>Value is greater than Maximum.</source>
-        <target state="translated">値が最大値を超えています。</target>
+        <target state="new">Value is greater than Maximum.</target>
         <note />
       </trans-unit>
       <trans-unit id="RangeValueMin">
         <source>Value is less than Minimum.</source>
-        <target state="translated">最小値よりも小さい値です。</target>
+        <target state="new">Value is less than Minimum.</target>
         <note />
       </trans-unit>
       <trans-unit id="RichEditTextPatternHasNoChildren">
         <source>RangeFromChild method is not supported in this implementation.</source>
-        <target state="translated">RangeFromChild メソッドは、この実装ではサポートされていません。</target>
+        <target state="new">RangeFromChild method is not supported in this implementation.</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollBarOutOfRange">
         <source>ScrollBar percent must be between 0 and 100.</source>
-        <target state="translated">ScrollBar のパーセントは、0 と 100 の間にする必要があります。</target>
+        <target state="new">ScrollBar percent must be between 0 and 100.</target>
         <note />
       </trans-unit>
       <trans-unit id="SelectionRequired">
         <source>Selection container requires one selection.</source>
-        <target state="translated">選択コンテナーでは、1 つ選択することが必要です。</target>
+        <target state="new">Selection container requires one selection.</target>
         <note />
       </trans-unit>
       <trans-unit id="SetFocusFailed">
         <source>Target element cannot receive focus.</source>
-        <target state="translated">ターゲット要素は、フォーカスを受け取ることができません。</target>
+        <target state="new">Target element cannot receive focus.</target>
         <note />
       </trans-unit>
       <trans-unit id="ShouldBeZero">
         <source>Must be zero.</source>
-        <target state="translated">ゼロを指定してください。</target>
+        <target state="new">Must be zero.</target>
         <note />
       </trans-unit>
       <trans-unit id="ValueReadonly">
         <source>Value is read-only.</source>
-        <target state="translated">値は読み取り専用です。</target>
+        <target state="new">Value is read-only.</target>
         <note />
       </trans-unit>
     </body>

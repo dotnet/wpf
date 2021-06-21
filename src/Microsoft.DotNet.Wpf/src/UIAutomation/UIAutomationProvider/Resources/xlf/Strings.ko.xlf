@@ -4,12 +4,12 @@
     <body>
       <trans-unit id="GenericInvalidArgument">
         <source>The argument '{0}' was of an invalid type or had an invalid value.</source>
-        <target state="translated">'{0}' 인수가 잘못된 형식이거나 잘못된 값입니다.</target>
+        <target state="new">The argument '{0}' was of an invalid type or had an invalid value.</target>
         <note />
       </trans-unit>
       <trans-unit id="HwndMustBeNonNULL">
         <source>hwnd must not be IntPtr.Zero (0) or null.</source>
-        <target state="translated">hwnd는 IntPtr.Zero(0) 또는 null이 아니어야 합니다.</target>
+        <target state="new">hwnd must not be IntPtr.Zero (0) or null.</target>
         <note />
       </trans-unit>
     </body>

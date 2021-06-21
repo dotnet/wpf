@@ -4,427 +4,427 @@
     <body>
       <trans-unit id="ArgumentException.InvalidHandle">
         <source>Handle value is not valid.</source>
-        <target state="translated">Недопустимое значение дескриптора.</target>
+        <target state="new">Handle value is not valid.</target>
         <note />
       </trans-unit>
       <trans-unit id="ArgumentException.InvalidValue">
         <source>Value is not valid.</source>
-        <target state="translated">Значение недействительно.</target>
+        <target state="new">Value is not valid.</target>
         <note />
       </trans-unit>
       <trans-unit id="ArgumentException.NonNegativeValue">
         <source>Value must be non-negative.</source>
-        <target state="translated">Значение должно быть неотрицательным.</target>
+        <target state="new">Value must be non-negative.</target>
         <note />
       </trans-unit>
       <trans-unit id="ArgumentException.PositiveValue">
         <source>Value must be positive.</source>
-        <target state="translated">Значение должно быть положительным.</target>
+        <target state="new">Value must be positive.</target>
         <note />
       </trans-unit>
       <trans-unit id="FormatException.AddXmlnsFailAtRootElement">
         <source>Cannot add standard namespace declaration at root element.</source>
-        <target state="translated">Не удается добавить стандартное объявление пространства имен в корневой элемент.</target>
+        <target state="new">Cannot add standard namespace declaration at root element.</target>
         <note />
       </trans-unit>
       <trans-unit id="FormatException.InvalidRootElement">
         <source>Root element is not valid: NamespaceURI='{0}', LocalName='{1}'.</source>
-        <target state="translated">Недопустимый корневой элемент: NamespaceURI="{0}", LocalName="{1}".</target>
+        <target state="new">Root element is not valid: NamespaceURI='{0}', LocalName='{1}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="FormatException.InvalidXMLIntValue">
         <source>'{0}' integer value at line number '{1}' line position '{2}' is not valid.</source>
-        <target state="translated">Недопустимое целое значение "{0}" в строке номер "{1}", позиция "{2}".</target>
+        <target state="new">'{0}' integer value at line number '{1}' line position '{2}' is not valid.</target>
         <note />
       </trans-unit>
       <trans-unit id="FormatException.MissingRequiredChildElement">
         <source>Must have '{0}' child element at line number '{1}' line position '{2}'.</source>
-        <target state="translated">Требуется дочерний элемент "{0}" в строке номер "{1}", позиция "{2}".</target>
+        <target state="new">Must have '{0}' child element at line number '{1}' line position '{2}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="FormatException.ParameterDefMissOrInvalid">
         <source>Referenced {0} {1} is either missing or not valid.</source>
-        <target state="translated">Отсутствующий или недопустимый объект {0} {1} в ссылке.</target>
+        <target state="new">Referenced {0} {1} is either missing or not valid.</target>
         <note />
       </trans-unit>
       <trans-unit id="FormatException.PrivateXMLTextValue">
         <source>Private text value '{0}' found at line number '{1}' line position '{2}'.</source>
-        <target state="translated">Обнаружено частное текстовое значение "{0}" в строке номер "{1}", позиция "{2}".</target>
+        <target state="new">Private text value '{0}' found at line number '{1}' line position '{2}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="FormatException.RootChildMissingAttribute">
         <source>'{0}' child element of root element is missing the required '{1}' attribute.</source>
-        <target state="translated">В дочернем элементе "{0}" корневого элемента отсутствует требуемый атрибут "{1}".</target>
+        <target state="new">'{0}' child element of root element is missing the required '{1}' attribute.</target>
         <note />
       </trans-unit>
       <trans-unit id="FormatException.RootInvalidAttribute">
         <source>'{1}' value not valid for root element attribute '{0}'.</source>
-        <target state="translated">Недопустимое значение "{1}" для атрибута корневого элемента "{0}".</target>
+        <target state="new">'{1}' value not valid for root element attribute '{0}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="FormatException.RootInvalidChildElement">
         <source>'{0}' is not a valid child element of root element.</source>
-        <target state="translated">"{0}" не является допустимым дочерним элементом для корневого элемента.</target>
+        <target state="new">'{0}' is not a valid child element of root element.</target>
         <note />
       </trans-unit>
       <trans-unit id="FormatException.RootMissingAttribute">
         <source>Root element is missing required attribute '{0}'.</source>
-        <target state="translated">В корневом элементе отсутствует требуемый атрибут "{0}".</target>
+        <target state="new">Root element is missing required attribute '{0}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="FormatException.VersionNotSupported">
         <source>'{0}' version number is not supported.</source>
-        <target state="translated">Номер версии "{0}" не поддерживается.</target>
+        <target state="new">'{0}' version number is not supported.</target>
         <note />
       </trans-unit>
       <trans-unit id="FormatException.XMLNotWellFormed">
         <source>XML is not well-formed.</source>
-        <target state="translated">Текст XML сформирован некорректно.</target>
+        <target state="new">XML is not well-formed.</target>
         <note />
       </trans-unit>
       <trans-unit id="IndexOutOfRangeException.InvalidSize">
         <source>'{0}' array should be the same size as array '{1}'.</source>
-        <target state="translated">Массив "{0}" должен иметь тот же размер, что и массив "{1}".</target>
+        <target state="new">'{0}' array should be the same size as array '{1}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintConfig.Provider.BindFail">
         <source>PrintTicket provider failed to bind to printer. Win32 error: {0}</source>
-        <target state="translated">Поставщику PrintTicket не удалось выполнить привязку к принтеру. Ошибка Win32 : {0}.</target>
+        <target state="new">PrintTicket provider failed to bind to printer. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintConfig.Provider.DevMode2PTFail">
         <source>PrintTicket provider failed to convert DEVMODE to PrintTicket. Win32 error: {0}</source>
-        <target state="translated">Поставщику PrintTicket не удалось преобразовать DEVMODE в PrintTicket. Ошибка Win32: {0}</target>
+        <target state="new">PrintTicket provider failed to convert DEVMODE to PrintTicket. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintConfig.Provider.GetPrintCapFail">
         <source>PrintTicket provider failed to retrieve PrintCapabilities. Win32 error: {0}</source>
-        <target state="translated">Поставщику PrintTicket не удалось извлечь PrintCapabilities. Ошибка Win32: {0}</target>
+        <target state="new">PrintTicket provider failed to retrieve PrintCapabilities. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintConfig.Provider.MergeValidateFail">
         <source>PrintTicket provider failed to merge and validate PrintTicket. Win32 error: {0}</source>
-        <target state="translated">Поставщику PrintTicket не удалось объединить и проверить PrintTicket. Ошибка Win32: {0}</target>
+        <target state="new">PrintTicket provider failed to merge and validate PrintTicket. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintConfig.Provider.PT2DevModeFail">
         <source>PrintTicket provider failed to convert PrintTicket to DEVMODE. Win32 error: {0}</source>
-        <target state="translated">Поставщику PrintTicket не удалось преобразовать PrintTicket в DEVMODE. Ошибка Win32: {0}</target>
+        <target state="new">PrintTicket provider failed to convert PrintTicket to DEVMODE. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintConfig.Provider.PTStreamContentFail">
         <source>{0} stream content reading failed.</source>
-        <target state="translated">Сбой при чтении содержимого потока {0}.</target>
+        <target state="new">{0} stream content reading failed.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.CommitPrintSystemAttributesException">
         <source>An exception occurred while committing the properties.</source>
-        <target state="translated">Исключение при занесении свойств.</target>
+        <target state="new">An exception occurred while committing the properties.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.Generic">
         <source>Print System exception.</source>
-        <target state="translated">Исключение Print System.</target>
+        <target state="new">Print System exception.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintJob.PopulateJobProperties">
         <source>An exception occurred while populating the object. Win32 error: {0}</source>
-        <target state="translated">Исключение при заполнении объекта. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while populating the object. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintQueue.AddPrinter">
         <source>An exception occurred while installing a print queue. Win32 error: {0}</source>
-        <target state="translated">Исключение при установке очереди печати. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while installing a print queue. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintQueue.Commit">
         <source>An exception occurred while committing the properties for the PrintQueue object. Win32 error: {0}</source>
-        <target state="translated">Исключение при занесении свойств объекта PrintQueue. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while committing the properties for the PrintQueue object. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintQueue.Generic">
         <source>An exception occurred while creating the PrintQueue object. Win32 error: {0}</source>
-        <target state="translated">Исключение при создании объекта PrintQueue. Ошибка Win32 : {0}</target>
+        <target state="new">An exception occurred while creating the PrintQueue object. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintQueue.GetUninitializedProperty">
         <source>An exception occurred while initializing an attribute of the PrintQueue object. Win32 error: {0}</source>
-        <target state="translated">Исключение при инициализации атрибута объекта PrintQueue. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while initializing an attribute of the PrintQueue object. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintQueue.Pause">
         <source>An exception occurred while the queue was paused. Win32 error: {0}</source>
-        <target state="translated">Исключение во время приостановки очереди. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while the queue was paused. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintQueue.Populate">
         <source>An exception occurred while populating the properties for the PrintQueue object. Win32 error: {0}</source>
-        <target state="translated">Исключение при заполнении свойств объекта PrintQueue. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while populating the properties for the PrintQueue object. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintQueue.Purge">
         <source>An exception occurred while the queue was purged. Win32 error: {0}</source>
-        <target state="translated">Исключение во время очистки очереди. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while the queue was purged. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintQueue.Refresh">
         <source>An exception occurred while refreshing the properties for the PrintQueue object. Win32 error: {0}</source>
-        <target state="translated">Исключение при обновлении свойств объекта PrintQueue. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while refreshing the properties for the PrintQueue object. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintQueue.Resume">
         <source>An exception occurred while the queue was resumed. Win32 error: {0}</source>
-        <target state="translated">Исключение во время возобновления очереди. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while the queue was resumed. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintQueue.XpsDeviceQuery">
         <source>An exception occurred while querying the identity of the device.</source>
-        <target state="translated">Произошло исключение во время запроса удостоверения данного устройства.</target>
+        <target state="new">An exception occurred while querying the identity of the device.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintQueueStream.Flush">
         <source>An exception occurred while trying to flush the print queue stream. Win32 error: {0}</source>
-        <target state="translated">Исключение при попытке очистки потока очереди печати. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while trying to flush the print queue stream. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintQueueStream.Write">
         <source>An exception occurred while trying to write to the print queue stream. Win32 error: {0}</source>
-        <target state="translated">Исключение при попытке записи в поток очереди печати. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while trying to write to the print queue stream. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintQueues.Enumerate">
         <source>An exception occurred while enumerating PrintQueue objects. Win32 error: {0}</source>
-        <target state="translated">Исключение при перечислении объектов PrintQueue. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while enumerating PrintQueue objects. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintServer.AddConnection">
         <source>An exception occurred while creating the printer connection. Win32 error: {0}</source>
-        <target state="translated">Исключение при создании подключения к принтеру. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while creating the printer connection. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintServer.AddPrinter">
         <source>An exception occurred while installing the print queue. Win32 error: {0}</source>
-        <target state="translated">Исключение при установке очереди печати. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while installing the print queue. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintServer.Commit">
         <source>An exception occurred while committing the properties for the PrintServer object. Win32 error: {0}</source>
-        <target state="translated">Исключение при занесении свойств объекта PrintServer. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while committing the properties for the PrintServer object. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintServer.DeletePrintQueue">
         <source>An exception occurred while deleting a print queue. Win32 error: {0}</source>
-        <target state="translated">Исключение во время удаления очереди печати. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while deleting a print queue. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintServer.Generic">
         <source>An exception occurred while creating the PrintServer object. Win32 error: {0}</source>
-        <target state="translated">Исключение при создании объекта PrintServer. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while creating the PrintServer object. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintServer.GetDefaultPrinter">
         <source>An exception occurred while getting the default printer. Win32 error: {0}</source>
-        <target state="translated">Исключение во время получения принтера по умолчанию. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while getting the default printer. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintServer.GetUninitializedProperty">
         <source>An exception occurred while initializing an attribute of the PrintQueue object. Win32 error: {0}</source>
-        <target state="translated">Исключение при инициализации атрибута объекта PrintQueue. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while initializing an attribute of the PrintQueue object. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintServer.InstallPrintQueue">
         <source>An exception occurred while installing a print queue. Win32 error: {0}</source>
-        <target state="translated">Исключение при установке очереди печати. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while installing a print queue. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintServer.MajorVersionCannotChange">
         <source>The major version of a PrintServer object cannot be changed. </source>
-        <target state="translated">Невозможно изменить основную версию объекта PrintServer. </target>
+        <target state="new">The major version of a PrintServer object cannot be changed. </target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintServer.MinorVersionCannotChange">
         <source>The minor version of a PrintServer object cannot be changed.</source>
-        <target state="translated">Невозможно изменить дополнительную версию объекта PrintServer.</target>
+        <target state="new">The minor version of a PrintServer object cannot be changed.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintServer.NameCannotChange">
         <source>The name of a PrintServer object cannot be changed. </source>
-        <target state="translated">Невозможно изменить имя объекта PrintServer. </target>
+        <target state="new">The name of a PrintServer object cannot be changed. </target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintServer.Refresh">
         <source>An exception occurred while refreshing the properties for the PrintServer object. Win32 error: {0}</source>
-        <target state="translated">Исключение при обновлении свойств объекта PrintServer. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while refreshing the properties for the PrintServer object. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintServer.SetDefaultPrinter">
         <source>An exception occurred while setting the default printer. Win32 error: {0}</source>
-        <target state="translated">Исключение при задании принтера по умолчанию. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while setting the default printer. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintServer.SubSystemVersionCannotChange">
         <source>The OS version of a PrintServer object cannot be changed.</source>
-        <target state="translated">Невозможно изменить версию операционной системы объекта PrintServer.</target>
+        <target state="new">The OS version of a PrintServer object cannot be changed.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintSystemAttributeValueDictionary.IsReadOnly">
         <source>The collection is read-only.</source>
-        <target state="translated">Семейство доступно только для чтения.</target>
+        <target state="new">The collection is read-only.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintSystemJobInfo.AddJob">
         <source>An exception occurred while adding a job. Win32 error: {0}</source>
-        <target state="translated">Исключение при добавлении задания. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while adding a job. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintSystemJobInfo.Create">
         <source>An exception occurred while creating print job information. Check inner exception for details.</source>
-        <target state="translated">Исключение при создании сведений о задании печати. Дополнительные сведения имеются во вложенном исключении.</target>
+        <target state="new">An exception occurred while creating print job information. Check inner exception for details.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintSystemJobInfo.Deleted">
         <source>The print job was deleted.</source>
-        <target state="translated">Задание печати было удалено.</target>
+        <target state="new">The print job was deleted.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintSystemJobInfo.Generic">
         <source>An exception occurred while setting the print job. Win32 error: {0}</source>
-        <target state="translated">Исключение при постановке задания печати. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while setting the print job. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintSystemJobInfo.Refresh">
         <source>An exception occurred while refreshing print job information. Win32 error: {0}</source>
-        <target state="translated">Исключение при обновлении сведений о задании печати. Ошибка Win32: {0}</target>
+        <target state="new">An exception occurred while refreshing print job information. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintSystemJobInfo.XpsDocumentEvent">
         <source>An exception occurred while calling XpsDocumentEvent.</source>
-        <target state="translated">Произошло исключение во время вызова XpsDocumentEvent.</target>
+        <target state="new">An exception occurred while calling XpsDocumentEvent.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintingCancelled.Generic">
         <source>Printing was canceled. Win32 error: {0}</source>
-        <target state="translated">Печать была отменена. Ошибка Win32: {0}</target>
+        <target state="new">Printing was canceled. Win32 error: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PropertyIsReadOnly">
         <source>Property is read-only.</source>
-        <target state="translated">Свойство доступно только для чтения.</target>
+        <target state="new">Property is read-only.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.UnknownWin32Error">
         <source>Unknown Win32 error</source>
-        <target state="translated">Неизвестная ошибка Win32</target>
+        <target state="new">Unknown Win32 error</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemJobInfo_disableXPSOMPrinting_RegValue">
         <source>DisableXPSOMPrinting</source>
-        <target state="translated">DisableXPSOMPrinting</target>
+        <target state="new">DisableXPSOMPrinting</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemSecurity.AccessLevel">
         <source>SecurityElement does not have a valid "AccessLevel" attribute.</source>
-        <target state="translated">В SecurityElement отсутствует допустимый атрибут "AccessLevel".</target>
+        <target state="new">SecurityElement does not have a valid "AccessLevel" attribute.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemSecurity.Class">
         <source>SecurityElement does not have a valid "class" attribute.</source>
-        <target state="translated">В SecurityElement отсутствует допустимый атрибут "class".</target>
+        <target state="new">SecurityElement does not have a valid "class" attribute.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemSecurity.State">
         <source>PermissionState value is not valid.</source>
-        <target state="translated">Недопустимое значение PermissionState.</target>
+        <target state="new">PermissionState value is not valid.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemSecurity.Type">
         <source>IPermission type is not valid.</source>
-        <target state="translated">Недопустимый тип IPermission.</target>
+        <target state="new">IPermission type is not valid.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemUNCPathResolver.Attribute">
         <source>Attribute type is not valid.</source>
-        <target state="translated">Недопустимый тип атрибута.</target>
+        <target state="new">Attribute type is not valid.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemUNCPathResolver.Entries">
         <source>IDictionaryEnumerator does not have valid entries.</source>
-        <target state="translated">В IDictionaryEnumerator нет допустимых записей.</target>
+        <target state="new">IDictionaryEnumerator does not have valid entries.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemUNCPathResolver.Printer">
         <source>UNC printer name is not valid.</source>
-        <target state="translated">Недопустимое имя принтера UNC.</target>
+        <target state="new">UNC printer name is not valid.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemUNCPathResolver.Server">
         <source>UNC server name is not valid.</source>
-        <target state="translated">Недопустимое имя сервера UNC.</target>
+        <target state="new">UNC server name is not valid.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemUNCPathResolver.UNC">
         <source>UNC name is not valid.</source>
-        <target state="translated">Недопустимое имя UNC.</target>
+        <target state="new">UNC name is not valid.</target>
         <note />
       </trans-unit>
       <trans-unit id="RegKeyBasePath">
         <source>HKEY_CURRENT_USER\Software\Microsoft\.NETFramework\Windows Presentation Foundation\Printing</source>
-        <target state="translated">HKEY_CURRENT_USER\Software\Microsoft\.NETFramework\Windows Presentation Foundation\Printing</target>
+        <target state="new">HKEY_CURRENT_USER\Software\Microsoft\.NETFramework\Windows Presentation Foundation\Printing</target>
         <note />
       </trans-unit>
       <trans-unit id="XPSWriter.BatchAsync">
         <source>Batch Writer is using asynchronous writes and cannot process synchronous writes.</source>
-        <target state="translated">Модуль пакетной записи использует асинхронный режим записи и не может обрабатывать синхронные записи.</target>
+        <target state="new">Batch Writer is using asynchronous writes and cannot process synchronous writes.</target>
         <note />
       </trans-unit>
       <trans-unit id="XPSWriter.BatchDoneWriting">
         <source>Batch Writer is done writing and cannot process any more batch write requests.</source>
-        <target state="translated">Модуль пакетной записи закончил запись и не может обрабатывать дополнительные пакетные запросы на запись.</target>
+        <target state="new">Batch Writer is done writing and cannot process any more batch write requests.</target>
         <note />
       </trans-unit>
       <trans-unit id="XPSWriter.BatchMode">
         <source>Document Writer is in batch mode and cannot process non-batch write requests.</source>
-        <target state="translated">Модуль записи документов находится в пакетном режиме и не может обрабатывать запросы на запись вне пакетов.</target>
+        <target state="new">Document Writer is in batch mode and cannot process non-batch write requests.</target>
         <note />
       </trans-unit>
       <trans-unit id="XPSWriter.BatchSync">
         <source>Batch Writer is using synchronous writes and cannot process asynchronous writes.</source>
-        <target state="translated">Модуль пакетной записи использует синхронный режим записи и не может обрабатывать асинхронные записи.</target>
+        <target state="new">Batch Writer is using synchronous writes and cannot process asynchronous writes.</target>
         <note />
       </trans-unit>
       <trans-unit id="XPSWriter.Cancelled">
         <source>Write has already been canceled.</source>
-        <target state="translated">Запись уже была отменена.</target>
+        <target state="new">Write has already been canceled.</target>
         <note />
       </trans-unit>
       <trans-unit id="XPSWriter.DoneWriting">
         <source>Document Writer is done writing and cannot process any more write requests.</source>
-        <target state="translated">Модуль записи документов закончил запись и не может обрабатывать дополнительные запросы на запись.</target>
+        <target state="new">Document Writer is done writing and cannot process any more write requests.</target>
         <note />
       </trans-unit>
       <trans-unit id="XPSWriter.InvalidState">
         <source>Writer state not valid.</source>
-        <target state="translated">Недопустимое состояние модуля записи.</target>
+        <target state="new">Writer state not valid.</target>
         <note />
       </trans-unit>
       <trans-unit id="XPSWriter.WriteNotCalled">
         <source>Must call Write before calling cancel.</source>
-        <target state="translated">Необходимо вызвать Write до вызова cancel.</target>
+        <target state="new">Must call Write before calling cancel.</target>
         <note />
       </trans-unit>
       <trans-unit id="XpsPrintJobStream.CommitTimeout_RegValue">
         <source>CommitXpsPrintJobStreamTimeout</source>
-        <target state="translated">CommitXpsPrintJobStreamTimeout</target>
+        <target state="new">CommitXpsPrintJobStreamTimeout</target>
         <note />
       </trans-unit>
       <trans-unit id="XpsWriter.InvalidXps">
         <source>The XpsDocument has no FixedDocumentSequence.</source>
-        <target state="translated">XpsDocument не имеет FixedDocumentSequence.</target>
+        <target state="new">The XpsDocument has no FixedDocumentSequence.</target>
         <note />
       </trans-unit>
       <trans-unit id="XpsWriter.WriteNotCalledEndBatchWrite">
         <source>Must call Write before calling EndBatchWrite.</source>
-        <target state="translated">Прежде чем вызывать EndBatchWrite, необходимо вызвать Write.</target>
+        <target state="new">Must call Write before calling EndBatchWrite.</target>
         <note />
       </trans-unit>
     </body>

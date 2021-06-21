@@ -4,177 +4,177 @@
     <body>
       <trans-unit id="Assembly0NotFound">
         <source>'{0}' assembly not found.</source>
-        <target state="translated">Assembly '{0}' não encontrado.</target>
+        <target state="new">'{0}' assembly not found.</target>
         <note />
       </trans-unit>
       <trans-unit id="AtLeastOnePropertyMustBeSpecified">
         <source>Must specify at least one property for AddAutomationPropertyChangedHandler.</source>
-        <target state="translated">Deve especificar pelo menos uma propriedade para AddAutomationPropertyChangedHandler.</target>
+        <target state="new">Must specify at least one property for AddAutomationPropertyChangedHandler.</target>
         <note />
       </trans-unit>
       <trans-unit id="CacheReqestCanOnlyPopTop">
         <source>CacheRequest.Pop was called on a CacheRequest that was not the current top-of-stack request.</source>
-        <target state="translated">CacheRequest.Pop foi chamado em uma CacheRequest que não era a primeira solicitação da pilha no momento.</target>
+        <target state="new">CacheRequest.Pop was called on a CacheRequest that was not the current top-of-stack request.</target>
         <note />
       </trans-unit>
       <trans-unit id="CacheReqestCantModifyWhileActive">
         <source>Cannot modify a CacheRequest while it is active on any thread.</source>
-        <target state="translated">Não é possível modificar uma CacheRequest enquanto ela está ativa em qualquer thread.</target>
+        <target state="new">Cannot modify a CacheRequest while it is active on any thread.</target>
         <note />
       </trans-unit>
       <trans-unit id="CacheRequestNeedCache">
         <source>Cannot access cached properties on a pattern returned from GetCurrentPattern.</source>
-        <target state="translated">Não é possível acessar propriedades armazenadas em cache em um padrão retornado por GetCurrentPattern.</target>
+        <target state="new">Cannot access cached properties on a pattern returned from GetCurrentPattern.</target>
         <note />
       </trans-unit>
       <trans-unit id="CacheRequestNeedElementReference">
         <source>Cannot perform this operation on an AutomationElement that contains only cached data. The requested operation requires a Full or Lightweight reference.</source>
-        <target state="translated">Não é possível executar esta operação em um AutomationElement que contém somente dados armazenados em cache. A operação solicitada requer uma referência Full ou Lightweight.</target>
+        <target state="new">Cannot perform this operation on an AutomationElement that contains only cached data. The requested operation requires a Full or Lightweight reference.</target>
         <note />
       </trans-unit>
       <trans-unit id="CacheRequestNeedLiveForProperties">
         <source>Cannot access current properties on a pattern that contains only cached data.</source>
-        <target state="translated">Não é possível acessar as propriedades atuais em um padrão que contém somente dados armazenados em cache.</target>
+        <target state="new">Cannot access current properties on a pattern that contains only cached data.</target>
         <note />
       </trans-unit>
       <trans-unit id="CachedPropertyNotRequested">
         <source>Cannot request a property or pattern that is not cached.</source>
-        <target state="translated">Não é possível solicitar uma propriedade ou um padrão que não esteja armazenado em cache.</target>
+        <target state="new">Cannot request a property or pattern that is not cached.</target>
         <note />
       </trans-unit>
       <trans-unit id="CantPrefetchTextPattern">
         <source>Text pattern cannot be cached.</source>
-        <target state="translated">O padrão de texto não pode ser armazenado em cache.</target>
+        <target state="new">Text pattern cannot be cached.</target>
         <note />
       </trans-unit>
       <trans-unit id="CouldNotFindRegisterMethodOnType0InAssembly1">
         <source>Cannot find Register method on type '{0}' in assembly '{1}'.</source>
-        <target state="translated">Não é possível localizar o método Register no tipo '{0}' do assembly '{1}'.</target>
+        <target state="new">Cannot find Register method on type '{0}' in assembly '{1}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="CouldNotFindType0InAssembly1">
         <source>Cannot find type '{0}' in assembly '{1}'.</source>
-        <target state="translated">Não é possível localizar o tipo '{0}' no assembly '{1}'.</target>
+        <target state="new">Cannot find type '{0}' in assembly '{1}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="EventIdMustNotBeAutomationFocusChanged">
         <source>eventId not valid. Use AddAutomationFocusChangedEventHandler to listen for focus changes.</source>
-        <target state="translated">eventId inválida. Use AddAutomationFocusChangedEventHandler para fazer a escuta das alterações de foco.</target>
+        <target state="new">eventId not valid. Use AddAutomationFocusChangedEventHandler to listen for focus changes.</target>
         <note />
       </trans-unit>
       <trans-unit id="EventIdMustNotBeAutomationPropertyChanged">
         <source>eventId not valid. Use AddAutomationPropertyChangedEventHandler to listen for property changes.</source>
-        <target state="translated">eventId inválida. Use AddAutomationPropertyChangedEventHandler para fazer a escuta das alterações de propriedade.</target>
+        <target state="new">eventId not valid. Use AddAutomationPropertyChangedEventHandler to listen for property changes.</target>
         <note />
       </trans-unit>
       <trans-unit id="EventIdMustNotBeStructureChanged">
         <source>eventId not valid. Use AddStructureChangedEventHandler to listen for tree structure changes.</source>
-        <target state="translated">eventId inválida. Use AddStructureChangedEventHandler para fazer a escuta das alterações de estrutura de árvore.</target>
+        <target state="new">eventId not valid. Use AddStructureChangedEventHandler to listen for tree structure changes.</target>
         <note />
       </trans-unit>
       <trans-unit id="GenericInvalidArgument">
         <source>'{0}' is not a valid type or is not a valid value.</source>
-        <target state="translated">'{0}' não é um tipo ou valor válido.</target>
+        <target state="new">'{0}' is not a valid type or is not a valid value.</target>
         <note />
       </trans-unit>
       <trans-unit id="HwndMustBeNonNULL">
         <source>hwnd cannot be IntPtr.Zero or null.</source>
-        <target state="translated">hwnd não pode ser IntPtr.Zero ou nulo.</target>
+        <target state="new">hwnd cannot be IntPtr.Zero or null.</target>
         <note />
       </trans-unit>
       <trans-unit id="IgnoreCaseRequiresString">
         <source>IgnoreCase flag can only be used with string arguments.</source>
-        <target state="translated">O sinalizador IgnoreCase só pode ser usado com argumentos de cadeia de caracteres.</target>
+        <target state="new">IgnoreCase flag can only be used with string arguments.</target>
         <note />
       </trans-unit>
       <trans-unit id="LogicalElementNoClickablePoint">
         <source>The AutomationElement has no clickable point.</source>
-        <target state="translated">O AutomationElement não tem ponto clicável.</target>
+        <target state="new">The AutomationElement has no clickable point.</target>
         <note />
       </trans-unit>
       <trans-unit id="MustBeAtLeastTwoConditions">
         <source>Must specify at least two conditions.</source>
-        <target state="translated">Especifique pelo menos duas condições.</target>
+        <target state="new">Must specify at least two conditions.</target>
         <note />
       </trans-unit>
       <trans-unit id="NonclientClassnameCannotBeUsedWithFlagsOrImagename">
         <source>#nonclient classname cannot be used with flags or image name.</source>
-        <target state="translated">O nome de classe #nonclient não pode ser usado com sinalizadores ou nome de imagem.</target>
+        <target state="new">#nonclient classname cannot be used with flags or image name.</target>
         <note />
       </trans-unit>
       <trans-unit id="OperationCannotBePerformed">
         <source>Operation cannot be performed.</source>
-        <target state="translated">A operação não pode ser executada.</target>
+        <target state="new">Operation cannot be performed.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParamsNotApplicableToWindowClosedEvent">
         <source>WindowClosed event is only applicable to RootElement and TreeScope.Subtree or an element that implements WindowPattern.</source>
-        <target state="translated">O evento WindowClosed é aplicável somente a RootElement e TreeScope.Subtree ou a um elemento que implementa WindowPattern.</target>
+        <target state="new">WindowClosed event is only applicable to RootElement and TreeScope.Subtree or an element that implements WindowPattern.</target>
         <note />
       </trans-unit>
       <trans-unit id="PropertyConditionIncorrectType">
         <source>PropertyCondition value for property '{0}' must be '{1}'.</source>
-        <target state="translated">O valor PropertyCondition da propriedade '{0}' precisa ser '{1}'.</target>
+        <target state="new">PropertyCondition value for property '{0}' must be '{1}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="ScreenCoordinatesOutsideBoundingRect">
         <source>Screen coordinate is outside the bounding rectangle.</source>
-        <target state="translated">A coordenada da tela está fora do retângulo delimitador.</target>
+        <target state="new">Screen coordinate is outside the bounding rectangle.</target>
         <note />
       </trans-unit>
       <trans-unit id="SetFocusFailed">
         <source>Target element cannot receive focus.</source>
-        <target state="translated">O elemento de destino não pode receber o foco.</target>
+        <target state="new">Target element cannot receive focus.</target>
         <note />
       </trans-unit>
       <trans-unit id="TextAttributeValueWrongType">
         <source>'{0}' text attribute value is type '{1}', but expected type '{2}'.</source>
-        <target state="translated">O valor do atributo de texto '{0}' é do tipo '{1}', mas era esperado o tipo '{2}'.</target>
+        <target state="new">'{0}' text attribute value is type '{1}', but expected type '{2}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="TextMustNotBeNullOrEmpty">
         <source>Text argument cannot be a null or empty string.</source>
-        <target state="translated">O argumento de texto não pode ser uma cadeia de caracteres nula ou vazia.</target>
+        <target state="new">Text argument cannot be a null or empty string.</target>
         <note />
       </trans-unit>
       <trans-unit id="TreeScopeElementChildrenDescendantsOnly">
         <source>Only TreeScope.Element, TreeScope.Children, and TreeScope.Descendants are valid for this call.</source>
-        <target state="translated">Somente TreeScope.Element, TreeScope.Children e TreeScope.Descendants são válidos para esta chamada.</target>
+        <target state="new">Only TreeScope.Element, TreeScope.Children, and TreeScope.Descendants are valid for this call.</target>
         <note />
       </trans-unit>
       <trans-unit id="TreeScopeNeedAtLeastOne">
         <source>Must specify at least one of TreeScope.Element, TreeScope.Children, or TreeScope.Descendants.</source>
-        <target state="translated">Especifique pelo menos TreeScope.Element, TreeScope.Children ou TreeScope.Descendants.</target>
+        <target state="new">Must specify at least one of TreeScope.Element, TreeScope.Children, or TreeScope.Descendants.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnexpectedWindowState">
         <source>Unrecognized WindowVisualState value.</source>
-        <target state="translated">Valor WindowVisualState não reconhecido.</target>
+        <target state="new">Unrecognized WindowVisualState value.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnknownCoreAPIError">
         <source>Unrecognized error.</source>
-        <target state="translated">Erro não reconhecido.</target>
+        <target state="new">Unrecognized error.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnsupportedAttribute">
         <source>Unsupported TextAttribute.</source>
-        <target state="translated">TextAttribute sem-suporte.</target>
+        <target state="new">Unsupported TextAttribute.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnsupportedPattern">
         <source>Unsupported Pattern.</source>
-        <target state="translated">Padrão sem-suporte.</target>
+        <target state="new">Unsupported Pattern.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnsupportedProperty">
         <source>Unsupported Property.</source>
-        <target state="translated">Propriedade sem-suporte.</target>
+        <target state="new">Unsupported Property.</target>
         <note />
       </trans-unit>
       <trans-unit id="ValueReadonly">
         <source>Value is read-only.</source>
-        <target state="translated">O valor é somente leitura.</target>
+        <target state="new">Value is read-only.</target>
         <note />
       </trans-unit>
     </body>

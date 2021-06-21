@@ -4,12 +4,12 @@
     <body>
       <trans-unit id="GenericInvalidArgument">
         <source>The argument '{0}' was of an invalid type or had an invalid value.</source>
-        <target state="translated">El argumento '{0}' era de un tipo no válido o tenía un valor no válido.</target>
+        <target state="new">The argument '{0}' was of an invalid type or had an invalid value.</target>
         <note />
       </trans-unit>
       <trans-unit id="HwndMustBeNonNULL">
         <source>hwnd must not be IntPtr.Zero (0) or null.</source>
-        <target state="translated">hwnd no debe ser IntPtr.Zero (0) ni NULL.</target>
+        <target state="new">hwnd must not be IntPtr.Zero (0) or null.</target>
         <note />
       </trans-unit>
     </body>

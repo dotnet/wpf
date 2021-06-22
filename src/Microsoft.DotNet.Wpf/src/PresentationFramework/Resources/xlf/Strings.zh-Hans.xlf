@@ -4775,7 +4775,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_Bottom">
         <source>Bottom</source>
-        <target state="translated">底</target>
+        <target state="translated">底部</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_LeftEdge">
@@ -4785,7 +4785,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_PageDown">
         <source>Page Down</source>
-        <target state="translated">Page Down</target>
+        <target state="translated">向下翻页</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_PageLeft">
@@ -4800,7 +4800,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_PageUp">
         <source>Page Up</source>
-        <target state="translated">Page Up</target>
+        <target state="translated">向上翻页</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_RightEdge">
@@ -4835,7 +4835,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_Top">
         <source>Top</source>
-        <target state="translated">Top</target>
+        <target state="translated">顶部</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollViewer_CannotBeNaN">

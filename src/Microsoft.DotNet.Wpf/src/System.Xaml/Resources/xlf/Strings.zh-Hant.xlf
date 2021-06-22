@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
-  <file datatype="xml" source-language="en" target-language="zh-HANT" original="../Strings.resx">
+  <file datatype="xml" source-language="en" target-language="zh-Hant" original="../Strings.resx">
     <body>
       <trans-unit id="APSException">
         <source>Enumerating attached properties on object '{0}' threw an exception.</source>
@@ -989,7 +989,7 @@
       </trans-unit>
       <trans-unit id="ObjectReaderTypeCannotRoundtrip">
         <source>Unable to read objects of the type '{0}' because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
-        <target state="translated">無法讀取型別 {0} 的物件，因為沒有可存取的建構函式。若要讓這種型別能使用在 XAML 中，請加入預設建構函式、使用 ConstructorArgumentAttribute，或提供 InstanceDescriptor。</target>
+        <target state="translated">因為沒有可存取的建構函式，所以無法讀取 '{0}' 類型的物件。若要讓這種類型可在 XAML 中使用，請新增預設建構函式、使用 ConstructorArgumentAttribute，或提供 InstanceDescriptor。</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeIsNested">

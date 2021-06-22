@@ -9,10 +9,6 @@
       <Uri>https://github.com/dotnet/winforms</Uri>
       <Sha>2e42461f881f3e821a7290d6dafa0d5e32a93728</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.Win32.Registry" Version="6.0.0-preview.6.21314.2" CoherentParentDependency="Microsoft.Private.Winforms">
-      <Uri>https://github.com/dotnet/runtime</Uri>
-      <Sha>bc16a7bd2dcca7f1f8ce70e75dc86a3fac3ffcd2</Sha>
-    </Dependency>
     <Dependency Name="System.CodeDom" Version="6.0.0-preview.6.21317.4" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>01188c75f06412dc86508e7b653deaeace9623ba</Sha>
@@ -37,10 +33,6 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>01188c75f06412dc86508e7b653deaeace9623ba</Sha>
     </Dependency>
-    <Dependency Name="System.Security.AccessControl" Version="6.0.0-preview.6.21314.2" CoherentParentDependency="Microsoft.Private.Winforms">
-      <Uri>https://github.com/dotnet/runtime</Uri>
-      <Sha>bc16a7bd2dcca7f1f8ce70e75dc86a3fac3ffcd2</Sha>
-    </Dependency>
     <Dependency Name="System.Security.Cryptography.Xml" Version="6.0.0-preview.6.21317.4" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>01188c75f06412dc86508e7b653deaeace9623ba</Sha>
@@ -48,10 +40,6 @@
     <Dependency Name="System.Security.Permissions" Version="6.0.0-preview.6.21317.4" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>01188c75f06412dc86508e7b653deaeace9623ba</Sha>
-    </Dependency>
-    <Dependency Name="System.Security.Principal.Windows" Version="6.0.0-preview.6.21314.2" CoherentParentDependency="Microsoft.Private.Winforms">
-      <Uri>https://github.com/dotnet/runtime</Uri>
-      <Sha>bc16a7bd2dcca7f1f8ce70e75dc86a3fac3ffcd2</Sha>
     </Dependency>
     <Dependency Name="System.Windows.Extensions" Version="6.0.0-preview.6.21317.4" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>

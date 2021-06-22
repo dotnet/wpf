@@ -10,10 +10,10 @@ parameters:
   repoName: dotnet/wpf
 
 jobs:
-- ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
+- ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
   - template: /eng/common/templates/job/onelocbuild.yml
     parameters:
-      CreatePr: false
+      MirrorRepo: wpf
       LclSource: lclFilesfromPackage
       LclPackageId: 'LCL-JUNO-PROD-WPF'
 - template: /eng/common/templates/jobs/jobs.yml

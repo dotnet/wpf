@@ -7,15 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-namespace Microsoft.UI.Xaml.Automation.Peers
-{
-    public enum AutomationHeadingLevel
-    {
-        None = 0,
-        Level1 = 1,
-        Level2 = 2,
-    }
-}
+
 namespace System.Windows.Automation
 {
     public partial class AndCondition : System.Windows.Automation.Condition

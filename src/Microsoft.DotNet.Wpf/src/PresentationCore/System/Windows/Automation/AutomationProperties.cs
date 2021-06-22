@@ -598,14 +598,14 @@ namespace System.Windows.Automation
         public static readonly DependencyProperty HeadingLevelProperty =
             DependencyProperty.RegisterAttached(
                         "HeadingLevel",
-                        typeof(Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel),
+                        typeof(AutomationHeadingLevel),
                         typeof(AutomationProperties),
-                        new UIPropertyMetadata(Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel.None));
+                        new UIPropertyMetadata(AutomationHeadingLevel.None));
 
         /// <summary>
         /// Helper for setting HeadingLevel property on a DependencyObject. 
         /// </summary>
-        public static void SetHeadingLevel(DependencyObject element, Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel value)
+        public static void SetHeadingLevel(DependencyObject element, AutomationHeadingLevel value)
         {
             if (element == null)
             {
@@ -618,14 +618,14 @@ namespace System.Windows.Automation
         /// <summary>
         /// Helper for reading HeadingLevel property from a DependencyObject.
         /// </summary>
-        public static Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel GetHeadingLevel(DependencyObject element)
+        public static AutomationHeadingLevel GetHeadingLevel(DependencyObject element)
         {
             if (element == null)
             {
                 throw new ArgumentNullException(nameof(element));
             }
 
-            return ((Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel)element.GetValue(HeadingLevelProperty));
+            return ((AutomationHeadingLevel)element.GetValue(HeadingLevelProperty));
         }
         #endregion
 

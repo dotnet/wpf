@@ -25,17 +25,6 @@ using MS.Win32;
 using SR=MS.Internal.PresentationCore.SR;
 using SRID=MS.Internal.PresentationCore.SRID;
 
-namespace Microsoft.UI.Xaml.Automation.Peers
-{
-    // TODO:  Remove after testing
-    public enum AutomationHeadingLevel
-    {
-        None = 0,
-        Level1 = 1,
-        Level2 = 2
-    };
-}
-
 namespace System.Windows.Automation.Peers
 {
     ///
@@ -716,9 +705,9 @@ namespace System.Windows.Automation.Peers
 
         /// <summary>
         /// </summary>
-        virtual protected Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel GetHeadingLevelCore()
+        virtual protected AutomationHeadingLevel GetHeadingLevelCore()
         {
-            return Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel.None;
+            return AutomationHeadingLevel.None;
         }
 
         //
@@ -1286,9 +1275,9 @@ namespace System.Windows.Automation.Peers
         /// </remarks>
         /// <returns>
         /// </returns>
-        public Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel GetHeadingLevel()
+        public AutomationHeadingLevel GetHeadingLevel()
         {
-            Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel result = Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel.None;
+            AutomationHeadingLevel result = AutomationHeadingLevel.None;
 
             if (_publicCallInProgress)
                 throw new InvalidOperationException(SR.Get(SRID.Automation_RecursivePublicCall));
@@ -1798,7 +1787,7 @@ namespace System.Windows.Automation.Peers
 #endif
         }
 
-        // InvalidateLimit – lower bound for  raising ChildrenInvalidated StructureChange event
+        // InvalidateLimit ï¿½ lower bound for  raising ChildrenInvalidated StructureChange event
         internal void UpdateChildrenInternal(int invalidateLimit)
         {
             List<AutomationPeer> oldChildren = _children;
@@ -2031,7 +2020,7 @@ namespace System.Windows.Automation.Peers
 
         /// <summary>
         /// propagate the new value for AncestorsInvalid through the parent chain,
-        /// use EventSource (wrapper) peers whenever available as it’s the one connected to the tree.
+        /// use EventSource (wrapper) peers whenever available as itï¿½s the one connected to the tree.
         /// </summary>
         internal void InvalidateAncestorsRecursive()
         {

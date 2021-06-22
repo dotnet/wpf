@@ -1,4 +1,3 @@
 Compat issues with assembly UIAutomationClient:
-TypesMustExist : Type 'Microsoft.UI.Xaml.Automation.Peers.AutomationHeadingLevel' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public System.Windows.Automation.AutomationProperty System.Windows.Automation.AutomationProperty System.Windows.Automation.AutomationElement.HeadingLevelProperty' does not exist in the implementation but it does exist in the contract.
-Total Issues: 2
+TypesMustExist : Type 'System.Windows.Automation.AutomationHeadingLevel' does not exist in the implementation but it does exist in the contract.
+Total Issues: 1

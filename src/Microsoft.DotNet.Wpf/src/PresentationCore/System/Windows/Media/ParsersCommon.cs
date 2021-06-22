@@ -435,11 +435,11 @@ namespace MS.Internal.Markup
             }
             else
             {
-                string subString = _pathString.Substring(start, _curIndex - start);
+                ReadOnlySpan<char> slice = _pathString.AsSpan(start, _curIndex - start);
 
                 try
                 {
-                    return System.Convert.ToDouble(subString, _formatProvider);
+                    return double.Parse(slice, provider: _formatProvider);
                 }
                 catch (FormatException except)
                 {

@@ -218,7 +218,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Private.Winforms" Version="$(MicrosoftPrivateWinformsVersion)" />
     <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" />
-    <PackageReference Include="Microsoft.Win32.Registry" Version="$(MicrosoftWin32RegistryPackageVersion)" />
     <PackageReference Include="System.Drawing.Common" Version="$(SystemDrawingCommonVersion)" />
     <PackageReference Include="$(SystemDirectoryServicesPackage)" Version="$(SystemDirectoryServicesVersion)" />
     <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
@@ -230,6 +229,7 @@
   -->
   <ItemGroup>
     <NetCoreReference Include="netstandard" />
+    <NetCoreReference Include="Microsoft.Win32.Registry" />
     <NetCoreReference Include="System.Collections" />
     <NetCoreReference Include="System.Collections.Generic" />
     <NetCoreReference Include="System.Collections.NonGeneric" />
@@ -249,6 +249,7 @@
     <NetCoreReference Include="System.Runtime.Extensions" />
     <NetCoreReference Include="System.Runtime.InteropServices" />
     <NetCoreReference Include="System.Runtime.Loader" />
+    <NetCoreReference Include="System.Security.AccessControl" />
     <NetCoreReference Include="System.Security.Cryptography.Algorithms" />
     <NetCoreReference Include="System.Security.Cryptography.Primitives" />
     <NetCoreReference Include="System.Security.Cryptography.X509Certificates" />

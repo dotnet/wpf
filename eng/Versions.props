@@ -29,15 +29,12 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefx via core-setup coherency parent dependency -->
   <PropertyGroup>
-    <MicrosoftWin32RegistryPackageVersion>6.0.0-preview.6.21314.2</MicrosoftWin32RegistryPackageVersion>
     <SystemCodeDomPackageVersion>6.0.0-preview.7.21317.1</SystemCodeDomPackageVersion>
     <SystemConfigurationConfigurationManagerPackageVersion>6.0.0-preview.7.21317.1</SystemConfigurationConfigurationManagerPackageVersion>
     <SystemDiagnosticsEventLogPackageVersion>6.0.0-preview.7.21317.1</SystemDiagnosticsEventLogPackageVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemSecurityAccessControlPackageVersion>6.0.0-preview.6.21314.2</SystemSecurityAccessControlPackageVersion>
     <SystemSecurityCryptographyXmlPackageVersion>6.0.0-preview.7.21317.1</SystemSecurityCryptographyXmlPackageVersion>
     <SystemSecurityPermissionsPackageVersion>6.0.0-preview.7.21317.1</SystemSecurityPermissionsPackageVersion>
-    <SystemSecurityPrincipalWindowsPackageVersion>6.0.0-preview.6.21314.2</SystemSecurityPrincipalWindowsPackageVersion>
     <SystemWindowsExtensionsPackageVersion>6.0.0-preview.7.21317.1</SystemWindowsExtensionsPackageVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->

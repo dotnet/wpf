@@ -319,6 +319,11 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         public void Unlock()
         {
+            UnlockInner();
+        }
+
+        private void UnlockInner(bool shouldSubscribeToCommittingBatch = true)
+        {
             WritePreamble();
 
             if (_lockCount == 0)
@@ -334,15 +339,23 @@ namespace System.Windows.Media.Imaging
                 _pBackBufferLock.Dispose();
                 _pBackBufferLock = null;
 
-                if (_hasDirtyRects)
+                if(shouldSubscribeToCommittingBatch)
                 {
-                    SubscribeToCommittingBatch();
-
-                    //
-                    // Notify listeners that we have changed.
-                    //
-                    WritePostscript();
+                    SubscribeToCommittingBatchAndWritePostscript();
                 }
+            }
+        }
+
+        private void SubscribeToCommittingBatchAndWritePostscript()
+        {
+            if (_hasDirtyRects)
+            {
+                SubscribeToCommittingBatch();
+
+                //
+                // Notify listeners that we have changed.
+                //
+                WritePostscript();
             }
         }
 
@@ -763,8 +776,9 @@ namespace System.Windows.Media.Imaging
 
             BeginInit();
 
-            _syncObject = source.SyncObject;
-            lock (_syncObject)
+            // We will change the _syncObject object in Lock()
+            var syncObject = _syncObject = source.SyncObject;
+            lock (syncObject)
             {
                 Guid formatGuid = source.Format.Guid;
 
@@ -773,7 +787,7 @@ namespace System.Windows.Media.Imaging
                 {
                     internalPalette = source.Palette.InternalPalette;
                 }
-                
+
                 HRESULT.Check(MILSwDoubleBufferedBitmap.Create(
                     (uint)source.PixelWidth, // safe cast
                     (uint)source.PixelHeight, // safe cast
@@ -782,7 +796,7 @@ namespace System.Windows.Media.Imaging
                     ref formatGuid,
                     internalPalette,
                     out _pDoubleBufferedBitmap
-                    ));
+                ));
 
                 _pDoubleBufferedBitmap.UpdateEstimatedSize(
                     GetEstimatedSize(source.PixelWidth, source.PixelHeight, source.Format));
@@ -794,8 +808,10 @@ namespace System.Windows.Media.Imaging
                 source.CriticalCopyPixels(rcFull, _backBuffer, bufferSize, _backBufferStride.Value);
                 AddDirtyRect(rcFull);
 
-                Unlock();
+                UnlockInner(shouldSubscribeToCommittingBatch: false);
             }
+
+            SubscribeToCommittingBatchAndWritePostscript();
 
             EndInit();
         }

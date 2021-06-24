@@ -509,7 +509,7 @@
       </trans-unit>
       <trans-unit id="PeoplePickerInvalidParentWindow">
         <source>The parent HWND passed to the Find Users, Contacts, and Groups dialog box is not valid.</source>
-        <target state="translated">Das an das Dialogfeld "Benutzer, Kontakte und Gruppen suchen"  übergebene übergeordnete HWND ist ungültig.</target>
+        <target state="translated">Das an das Dialogfeld "Benutzer, Kontakte und Gruppen suchen" übergebene übergeordnete HWND ist ungültig.</target>
         <note />
       </trans-unit>
       <trans-unit id="ProgressBarKiloBytesStringFormat">

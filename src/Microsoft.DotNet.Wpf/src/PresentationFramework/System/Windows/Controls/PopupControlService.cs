@@ -1275,7 +1275,7 @@ namespace System.Windows.Controls
             {
                 // insertion sort is good enough.  We're dealing with a small
                 // set of points that are nearly in the right order already.
-                for (int i=0, N=points.Count; i<N; ++i)
+                for (int i=1, N=points.Count; i<N; ++i)
                 {
                     Point p = points[i];
                     int j;

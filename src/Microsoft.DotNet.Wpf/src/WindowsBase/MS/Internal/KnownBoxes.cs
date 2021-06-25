@@ -25,4 +25,31 @@ namespace MS.Internal.KnownBoxes
             }
         }
     }
+
+    [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
+    internal static class NullableBooleanBoxes
+    {
+        internal static object TrueBox = (bool?)true;
+        internal static object FalseBox = (bool?)false;
+        internal static object NullBox = (bool?)null;
+
+        internal static object Box(bool? value)
+        {
+            if (value.HasValue)
+            {
+                if (value == true)
+                {
+                    return TrueBox;
+                }
+                else
+                {
+                    return FalseBox;
+                }
+            }
+            else
+            {
+                return NullBox;
+            }
+        }
+    }
 }

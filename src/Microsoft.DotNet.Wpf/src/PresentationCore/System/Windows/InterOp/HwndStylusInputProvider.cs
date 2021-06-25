@@ -100,7 +100,7 @@ namespace System.Windows.Interop
                     NativeMethods.POINT pt1 = new NativeMethods.POINT(
                                             NativeMethods.SignedLOWORD(lParam),
                                             NativeMethods.SignedHIWORD(lParam));
-                    SafeNativeMethods.ScreenToClient(new HandleRef(this, hwnd), pt1);
+                    SafeNativeMethods.ScreenToClient(new HandleRef(this, hwnd), ref pt1);
                     Point ptClient1 = new Point(pt1.x, pt1.y);
 
                     IInputElement inputElement = StylusDevice.LocalHitTest(_source.Value, ptClient1);

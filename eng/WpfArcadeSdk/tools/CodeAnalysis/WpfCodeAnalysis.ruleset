@@ -21,7 +21,6 @@
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.FxCopAnalyzers" RuleNamespace="Microsoft.CodeAnalysis.FxCopAnalyzers">
     <Rule Id="CA1062" Action="None" />
-    <Rule Id="CA2000" Action="None" />
     <Rule Id="CA2002" Action="None" />
   </Rules>
 </RuleSet>

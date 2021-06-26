@@ -8,6 +8,7 @@ using System.Xml;
 
 namespace System.Xaml
 {
+    [Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "The IDisposable types in this class don't require dispose.")]
     public static class XamlServices
     {
         // The main function is Load(XamlReader)

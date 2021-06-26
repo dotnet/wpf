@@ -994,7 +994,7 @@ namespace System.Xaml
         class ObjectMarkupInfo : ObjectOrValueMarkupInfo
         {
             List<MarkupInfo> properties = new List<MarkupInfo>();
-            bool? isAttributableMarkupExtension = null;
+            bool? isAttributableMarkupExtension;
 
             public List<MarkupInfo> Properties { get { return properties; } }
             public string Name { get; set; }

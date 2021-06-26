@@ -16,7 +16,7 @@ namespace System.Xaml
     public class XamlNodeList
     {
         List<XamlNode> _nodeList;
-        bool _readMode = false;
+        bool _readMode;
         XamlWriter _writer;
         bool _hasLineInfo;
 

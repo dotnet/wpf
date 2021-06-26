@@ -29,8 +29,8 @@ namespace System.Xaml
         XamlWriter _writer;
 
         bool _wrappedReaderHasLineInfo;
-        int _lineNumber=0;
-        int _linePosition=0;
+        int _lineNumber;
+        int _linePosition;
         
         Thread _thread;
         Exception _caughtException;

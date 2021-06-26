@@ -54,6 +54,6 @@ namespace System.Windows.Markup
         }
 
         // The name of the property that is designated to accept the x:Uid value
-        private string _name = null;
+        private string _name;
     }    
 }

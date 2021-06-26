@@ -38,7 +38,7 @@ namespace System.Xaml.MS.Impl
         }
 
         // Note this, is the only dictionary that we synchronize, because XamlSchemaContext adds to it
-        private ConcurrentDictionary<string, IList<string>> _clrToXmlNs = null;
+        private ConcurrentDictionary<string, IList<string>> _clrToXmlNs;
         internal ConcurrentDictionary<string, IList<string>> ClrToXmlNs
         {
             get
@@ -64,7 +64,7 @@ namespace System.Xaml.MS.Impl
             }
         }
 
-        private Dictionary<string, string> _oldToNewNs = null;
+        private Dictionary<string, string> _oldToNewNs;
         internal Dictionary<string, string> OldToNewNs
         {
             get
@@ -77,7 +77,7 @@ namespace System.Xaml.MS.Impl
             }
         }
 
-        private Dictionary<string, string> _prefixes = null;
+        private Dictionary<string, string> _prefixes;
         internal Dictionary<string, string> Prefixes
         {
             get
@@ -90,7 +90,7 @@ namespace System.Xaml.MS.Impl
             }
         }
 
-        private string _rootNamespace = null;
+        private string _rootNamespace;
         internal string RootNamespace
         {
             get

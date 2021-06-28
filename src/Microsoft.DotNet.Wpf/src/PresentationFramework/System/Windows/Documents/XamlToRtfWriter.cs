@@ -2737,14 +2737,11 @@ namespace System.Windows.Documents
                     xamlToRtfError = XamlToRtfError.InvalidFormat;
                     if (name.Length >= 5)
                     {
-                        string num = name.Substring(3, name.Length - 4);
                         int i = 0;
-                        bool ret = Converters.HexStringToInt(num, ref i);
+                        bool ret = Converters.HexStringToInt(name.AsSpan(3, name.Length - 4), ref i);
                         if (i >= 0 && i <= 0xFFFF)
                         {
-                            char[] ac = new char[1];
-                            ac[0] = (char)i;
-                            string s = new string(ac);
+                            string s = new string(stackalloc char[1] { (char)i });
                             return ((IXamlContentHandler)this).Characters(s);
                         }
                     }
@@ -2753,14 +2750,12 @@ namespace System.Windows.Documents
                 {
                     if (name.Length >= 4)
                     {
-                        string num = name.Substring(2, name.Length - 3);
+                        ReadOnlySpan<char> num = name.Substring(2, name.Length - 3);
                         int i = 0;
                         bool ret = Converters.StringToInt(num, ref i);
                         if (i >= 0 && i <= 0xFFFF)
                         {
-                            char[] ac = new char[1];
-                            ac[0] = (char)i;
-                            string s = new string(ac);
+                            string s = new string(stackalloc char[1] { (char)i });
                             return ((IXamlContentHandler)this).Characters(s);
                         }
                     }
@@ -3547,7 +3542,7 @@ namespace System.Windows.Documents
                 return true;
             }
 
-            internal static bool ConvertToFontSize(ConverterState converterState, string s, ref double d)
+            internal static bool ConvertToFontSize(ConverterState converterState, ReadOnlySpan<char> s, ref double d)
             {
                 if (s.Length == 0)
                 {
@@ -3561,11 +3556,11 @@ namespace System.Windows.Documents
                     n--;
                 }
 
-                string units = null;
+                ReadOnlySpan<char> units = default;
                 if (n < s.Length - 1)
                 {
-                    units = s.Substring(n + 1);
-                    s = s.Substring(0, n + 1);
+                    units = s.Slice(n + 1);
+                    s = s.Slice(0, n + 1);
                 }
 
                 // Now convert number part
@@ -3574,7 +3569,7 @@ namespace System.Windows.Documents
                 if (ret)
                 {
                     // No units mean pixels
-                    if (units == null || units.Length == 0)
+                    if (units.IsEmpty)
                     {
                         d = Converters.PxToPt(d);
                     }
@@ -3813,7 +3808,7 @@ namespace System.Windows.Documents
                 return ret;
             }
 
-            internal static bool ConvertToThickness(ConverterState converterState, string thickness, ref XamlThickness xthickness)
+            internal static bool ConvertToThickness(ConverterState converterState, ReadOnlySpan<char> thickness, ref XamlThickness xthickness)
             {
                 int numints = 0;
                 int s = 0;
@@ -3827,7 +3822,7 @@ namespace System.Windows.Documents
                         e++;
                     }
 
-                    string onenum = thickness.Substring(s, e - s);
+                    ReadOnlySpan<char> onenum = thickness.Slice(s, e - s);
                     if (onenum.Length > 0)
                     {
                         double d = 0.0f;

@@ -195,7 +195,7 @@ namespace System.Windows
                                     keyTime.Percent * 100.0,
                                     destinationType);
 
-                            return returnValue + _percentCharacter[0].ToString();
+                            return string.Concat(returnValue, (ReadOnlySpan<char>)_percentCharacter);
 
                         case KeyTimeType.TimeSpan:
 

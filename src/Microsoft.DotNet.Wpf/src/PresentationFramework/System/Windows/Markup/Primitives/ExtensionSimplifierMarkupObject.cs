@@ -355,16 +355,16 @@ namespace System.Windows.Markup.Primitives
                     Debug.Assert(!propertyWritten, "An argument was returned after a property was set. All arguments must be returned first and in order");
                 }
                 
-                string value = property.StringValue;
+                ReadOnlySpan<char> value = property.StringValue;
                 
-                if (value != null && value.Length > 0)
+                if (value.Length > 0)
                 {
                     if (value[0] == '{')
                     {
                         if (value.Length > 1 && value[1] == '}')
                         {
                             // It is a literal quote, remove the literals and write the text with escapes.
-                            value = value.Substring(2);
+                            value = value.Slice(2);
                         }
                         else
                         {

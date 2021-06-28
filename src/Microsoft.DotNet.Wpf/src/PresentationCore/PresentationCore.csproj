@@ -1383,6 +1383,7 @@
     <NetCoreReference Include="System.Diagnostics.TraceSource" />
     <NetCoreReference Include="System.Diagnostics.Tracing" />
     <NetCoreReference Include="System.IO.FileSystem" />
+    <NetCoreReference Include="System.Memory" />
     <NetCoreReference Include="System.Net.Primitives" />
     <NetCoreReference Include="System.Net.Requests" />
     <NetCoreReference Include="System.Net.WebHeaderCollection" />

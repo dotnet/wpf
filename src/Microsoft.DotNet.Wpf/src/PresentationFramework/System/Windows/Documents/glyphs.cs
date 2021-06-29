@@ -407,10 +407,10 @@ namespace System.Windows.Documents
         /// <returns>true if glyph index is present, false if glyph index is not present.</returns>
         private bool ReadGlyphIndex(
             ReadOnlySpan<char> valueSpec,
-            ref bool    inCluster,
-            ref int     glyphClusterSize,
-            ref int     characterClusterSize,
-            ref ushort  glyphIndex)
+            ref bool           inCluster,
+            ref int            glyphClusterSize,
+            ref int            characterClusterSize,
+            ref ushort         glyphIndex)
         {
             // the format is ... [(CharacterClusterSize[:GlyphClusterSize])] GlyphIndex ...
             ReadOnlySpan<char> glyphIndexString = valueSpec;

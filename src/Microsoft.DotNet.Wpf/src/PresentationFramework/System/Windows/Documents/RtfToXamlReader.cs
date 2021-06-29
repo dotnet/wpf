@@ -8828,7 +8828,7 @@ namespace System.Windows.Documents
                 case EncodeType.Unicode:
                     if (nChar < 0xFFFF)
                     {
-                        dn.AppendXamlEncoded(new string(stackalloc char[1] { (char)nChar }));
+                        dn.AppendXamlEncoded(char.ToString((char)nChar));
                     }
                     break;
 
@@ -11403,7 +11403,7 @@ namespace System.Windows.Documents
                     formatState.RtfDestination = RtfDestination.DestUPR;
                     break;
                 case RtfControlWord.Ctrl_U:
-                    ProcessText(new string(stackalloc char[1] { (char)token.Parameter }));
+                    ProcessText(char.ToString((char)token.Parameter));
                     break;
                 case RtfControlWord.Ctrl_UD:
                     {

@@ -357,7 +357,7 @@ namespace System.Windows.Markup.Primitives
                 
                 ReadOnlySpan<char> value = property.StringValue;
                 
-                if (value.Length > 0)
+                if (!value.IsEmpty)
                 {
                     if (value[0] == '{')
                     {

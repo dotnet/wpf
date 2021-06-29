@@ -2741,7 +2741,7 @@ namespace System.Windows.Documents
                         bool ret = Converters.HexStringToInt(name.AsSpan(3, name.Length - 4), ref i);
                         if (i >= 0 && i <= 0xFFFF)
                         {
-                            string s = new string(stackalloc char[1] { (char)i });
+                            string s = char.ToString((char)i);
                             return ((IXamlContentHandler)this).Characters(s);
                         }
                     }
@@ -2750,12 +2750,12 @@ namespace System.Windows.Documents
                 {
                     if (name.Length >= 4)
                     {
-                        ReadOnlySpan<char> num = name.Substring(2, name.Length - 3);
+                        ReadOnlySpan<char> num = name.AsSpan(2, name.Length - 3);
                         int i = 0;
                         bool ret = Converters.StringToInt(num, ref i);
                         if (i >= 0 && i <= 0xFFFF)
                         {
-                            string s = new string(stackalloc char[1] { (char)i });
+                            string s = char.ToString((char)i);
                             return ((IXamlContentHandler)this).Characters(s);
                         }
                     }

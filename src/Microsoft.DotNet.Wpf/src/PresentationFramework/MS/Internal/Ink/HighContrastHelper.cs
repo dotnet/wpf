@@ -215,7 +215,7 @@ namespace MS.Internal.Ink
 
         #region Private Fields
 
-        private static object                   __lock = new object();
+        private static readonly object          __lock = new object();
         private static List<WeakReference>      __highContrastCallbackList;
         private static int                      __increaseCount;
         private const int                       CleanTolerance = 100;

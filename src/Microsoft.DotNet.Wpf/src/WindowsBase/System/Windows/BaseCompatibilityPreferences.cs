@@ -385,6 +385,6 @@ namespace System.Windows
         }
 
         private static bool _isSealed;
-        private static object _lockObject = new object();
+        private static readonly object _lockObject = new object();
     }
 }

@@ -68,7 +68,7 @@ namespace MS.Internal.FontCache
         }
    
         private static Hashtable _hashTable = new Hashtable(MaxCacheCapacity);
-        private static object _lock         = new object();        
+        private static readonly object _lock         = new object();        
         private const int MaxCacheCapacity  = 64;   // Maximum cache capacity
     }        
 }

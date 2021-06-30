@@ -470,7 +470,7 @@ namespace System.Windows
         private static ArrayList _formatList;
 
         // This object is for locking the _formatList to access safe in the multi-thread.
-        private static Object _formatListlock = new Object();
+        private static readonly Object _formatListlock = new Object();
 
         #endregion Private Fields
     }

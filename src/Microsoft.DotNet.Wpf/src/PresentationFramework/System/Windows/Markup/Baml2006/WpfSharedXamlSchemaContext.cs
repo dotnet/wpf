@@ -64,7 +64,7 @@ namespace System.Windows.Baml2006
         }
 
         private Dictionary<Type, XamlType> _masterTypeTable = new Dictionary<Type, XamlType>();
-        private object _syncObject = new Object();
+        private readonly object _syncObject = new Object();
         private bool _useV3Rules;
     }
 }

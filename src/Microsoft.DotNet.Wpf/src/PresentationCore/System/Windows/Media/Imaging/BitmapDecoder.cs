@@ -1689,7 +1689,7 @@ namespace System.Windows.Media.Imaging
         internal UniqueEventHelper<ExceptionEventArgs> _failedEvent = new UniqueEventHelper<ExceptionEventArgs>();
 
         /// SyncObject
-        private object _syncObject = new Object();
+        private readonly object _syncObject = new Object();
 
         // For UnmanagedMemoryStream we want to make sure that buffer
         // its pointing to is not getting release until decoder is alive

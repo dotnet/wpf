@@ -3673,11 +3673,11 @@ namespace System.Windows.Input.StylusWisp
         bool _inputEnabled = false;
         bool _updatingScreenMeasurements = false;
         DispatcherOperationCallback _processDisplayChanged;
-        object __penContextsLock = new object();
+        readonly object __penContextsLock = new object();
 
         Dictionary<object, PenContexts> __penContextsMap = new Dictionary<object, PenContexts>(2);
 
-        object __stylusDeviceLock = new object();
+        readonly object __stylusDeviceLock = new object();
         Dictionary<int, StylusDevice> __stylusDeviceMap = new Dictionary<int, StylusDevice>(2);
 
         bool _inDragDrop;

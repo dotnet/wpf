@@ -1234,7 +1234,7 @@ namespace System.Windows.Input.StylusPlugIns
         // For OnRenderComplete support (for UI Thread)
         EventHandler  _onRenderComplete;
         bool          _waitingForRenderComplete;
-        object        __siLock = new object();
+        readonly object        __siLock = new object();
         private StrokeInfo  _renderCompleteStrokeInfo;
 
         // On internal real time ink rendering thread.

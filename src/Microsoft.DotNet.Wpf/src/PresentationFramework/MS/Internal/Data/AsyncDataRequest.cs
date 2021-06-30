@@ -219,7 +219,7 @@ namespace MS.Internal.Data
         AsyncRequestCallback _workCallback;
         AsyncRequestCallback _completedCallback;
 
-        object SyncRoot = new object();     // for synchronization
+        readonly object SyncRoot = new object();     // for synchronization
     }
 
 

@@ -38,7 +38,7 @@ namespace System.Windows.Diagnostics
         private static ConditionalWeakTable<object, XamlSourceInfo> s_sourceInfoTable; // no storage by default
 
         // While ConditionalWeakTable is thread safe we need to make multiple calls in a thread safe manner.
-        private static object s_lock = new object();
+        private static readonly object s_lock = new object();
 
         private static PropertyInfo s_sourceBamlUriProperty;
         private static PropertyInfo s_elementLineNumberProperty;

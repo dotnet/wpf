@@ -185,7 +185,7 @@ namespace MS.Internal.AppModel
         private SecurityCriticalDataForSet<ResourceManagerWrapper> _rmWrapper;
         private bool _ensureResourceIsCalled = false;
         private string _name;
-        private Object _globalLock = new Object();
+        private readonly Object _globalLock = new Object();
 
         #endregion Private Members
     }

@@ -35,7 +35,7 @@ namespace System.Windows.Media.TextFormatting
     /// </summary>
     public abstract class TextFormatter : IDisposable
     {
-        private static object _staticLock = new object();
+        private static readonly object _staticLock = new object();
 
         /// <summary>
         /// Client to create a new instance of TextFormatter

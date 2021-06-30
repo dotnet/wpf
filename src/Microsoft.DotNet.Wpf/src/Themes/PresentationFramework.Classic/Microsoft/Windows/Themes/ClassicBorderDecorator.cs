@@ -505,7 +505,7 @@ namespace Microsoft.Windows.Themes
         /// If BorderBrush is not set to ClassicBorderBrush, a flat style is drawn
         /// </summary>
         private static Brush _classicBorderBrush;
-        private static object _brushLock = new object();
+        private static readonly object _brushLock = new object();
 
         public static Brush ClassicBorderBrush
         {

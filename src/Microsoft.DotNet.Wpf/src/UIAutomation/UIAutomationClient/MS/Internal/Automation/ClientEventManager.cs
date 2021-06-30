@@ -731,7 +731,7 @@ namespace MS.Internal.Automation
         private static QueueProcessor _callbackQueue;      // callbacks are queued on this class to avoid deadlocks
         private static bool _isBkgrdThreadRunning = false; // is there a background thread for queueing and recieving WinEvents?
         private static ArrayList _listeners;               // data representing events the client is listening for
-        private static object _classLock = new object();   // use lock object vs typeof(class) for perf reasons
+        private static readonly object _classLock = new object();   // use lock object vs typeof(class) for perf reasons
 
         #endregion Private Fields
     }

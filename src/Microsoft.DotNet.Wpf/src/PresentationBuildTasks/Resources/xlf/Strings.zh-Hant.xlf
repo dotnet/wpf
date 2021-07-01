@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
-  <file datatype="xml" source-language="en" target-language="zh-HANT" original="../Strings.resx">
+  <file datatype="xml" source-language="en" target-language="zh-Hant" original="../Strings.resx">
     <body>
       <trans-unit id="AnalysisResult">
         <source>Analysis Result : '{0}'.</source>
@@ -154,7 +154,7 @@
       </trans-unit>
       <trans-unit id="InvalidAssemblyVersion">
         <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
-        <target state="translated">MC1005:偵測到無效的 AssemblyVersion: {0}。</target>
+        <target state="translated">MC1005: 偵測到無效的 AssemblyVersion: {0}。</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidBaseClassName">
@@ -769,7 +769,7 @@
       </trans-unit>
       <trans-unit id="ParserUnknownTag">
         <source>MC3074: The tag '{0}' does not exist in XML namespace '{1}'.</source>
-        <target state="translated">MC3074: 標記 '{0}' 不存在於 XML 命名空間  '{1}' 中。</target>
+        <target state="translated">MC3074: 標記 '{0}' 不存在於 XML 命名空間 '{1}' 中。</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserUnknownXmlType">

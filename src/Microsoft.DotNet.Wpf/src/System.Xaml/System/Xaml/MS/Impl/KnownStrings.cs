@@ -62,6 +62,11 @@ namespace System.Xaml.MS.Impl
             return string.Equals(a, b, StringComparison.Ordinal);
         }
 
+        public static bool Eq(ReadOnlySpan<char> a, ReadOnlySpan<char> b)
+        {
+            return a.Equals(b, StringComparison.Ordinal);
+        }
+
         /// <summary>
         /// Standard String Index search operation.
         /// </summary>

@@ -160,15 +160,15 @@ namespace MS.Internal.PtsHost
 
             Invariant.Assert(number >= 0);
 
-            char[] result;
             int b = numericSymbols.Length;
             if (number < b)
             {
                 // Optimize common case of single-digit numbers.
-                // Optimize common case of single-digit numbers.
-                result = new char[2]; // digit + suffix
-                result[0] = numericSymbols[number];
-                result[1] = NumberSuffix;
+                return new string(stackalloc char[2] // digit + suffix
+                {
+                    numericSymbols[number],
+                    NumberSuffix
+                });
             }
             else
             {
@@ -190,17 +190,16 @@ namespace MS.Internal.PtsHost
                 }
 
                 // Build string in reverse order starting with suffix.
-                // Build string in reverse order starting with suffix.
-                result = new char[digits + 1]; // digits + suffix
-                result[digits] = NumberSuffix;
-                for (int i = digits - 1; i >= 0; --i)
+                return string.Create(digits + 1, (numericSymbols, number, b, disjoint), (result, state) => // digits + suffix
                 {
-                    result[i] = numericSymbols[number % b];
-                    number = (number / b) - disjoint;
-                }
+                    result[result.Length - 1] = NumberSuffix;
+                    for (int i = result.Length - 2; i >= 0; --i)
+                    {
+                        state.number = Math.DivRem(state.number, state.b, out int remainder) - state.disjoint;
+                        result[i] = state.numericSymbols[remainder];
+                    }
+                });
             }
-
-            return new string(result);
         }
 
         /// <summary>

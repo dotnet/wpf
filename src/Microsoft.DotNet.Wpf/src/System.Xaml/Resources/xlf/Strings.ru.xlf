@@ -469,7 +469,7 @@
       </trans-unit>
       <trans-unit id="ForwardRefDirectives">
         <source>Attempt to reference named object(s) '{0}' which have not yet been defined. Forward references, or references to objects that contain forward references, are not supported on directives other than Key.</source>
-        <target state="translated">Произошла попытка сослаться на один или несколько именованных объектов "{0}",  которые еще не были определены. Ссылки вперед или ссылки на объекты, содержащие ссылки вперед, не поддерживаются для директив, отличных от Key.</target>
+        <target state="translated">Произошла попытка сослаться на один или несколько именованных объектов "{0}", которые еще не были определены. Ссылки вперед или ссылки на объекты, содержащие ссылки вперед, не поддерживаются для директив, отличных от Key.</target>
         <note />
       </trans-unit>
       <trans-unit id="Freezable_CantBeFrozen">
@@ -989,7 +989,7 @@
       </trans-unit>
       <trans-unit id="ObjectReaderTypeCannotRoundtrip">
         <source>Unable to read objects of the type '{0}' because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
-        <target state="translated">Не удалось выполнить чтение объектов типа "{0}", поскольку доступные конструкторы отсутствуют. Чтобы этот тип можно было применять в XAML, добавьте конструктор по умолчанию, используйте атрибут ConstructorArgumentAttribute или укажите InstanceDescriptor.</target>
+        <target state="translated">Не удалось выполнить чтение объектов типа "{0}", так как доступные конструкторы отсутствуют. Чтобы этот тип можно было применять в XAML, добавьте конструктор по умолчанию, используйте атрибут ConstructorArgumentAttribute или укажите InstanceDescriptor.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeIsNested">

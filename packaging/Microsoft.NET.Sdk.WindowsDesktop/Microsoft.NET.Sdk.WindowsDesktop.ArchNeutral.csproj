@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <ProjectGuid>{440d06b8-e3de-4c0d-ad25-cd4f43d836e1}</ProjectGuid>
     <TargetFramework>net6.0</TargetFramework>
@@ -25,4 +26,8 @@
     <PackagingContent Include="targets\*" SubFolder="root\targets" />
     <PackagingContent Include="useSharedDesignerContext.txt" SubFolder="root" />
   </ItemGroup>
+
+  <!-- Windows Forms specific -->
+  <Import Project="$(RepositoryEngineeringDir)WindowsFormsImports.targets" />
+
 </Project>

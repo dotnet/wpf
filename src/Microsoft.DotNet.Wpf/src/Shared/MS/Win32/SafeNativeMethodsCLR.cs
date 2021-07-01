@@ -77,7 +77,7 @@ namespace MS.Win32
         }
 
 
-        public static  IntPtr MonitorFromPoint(NativeMethods.POINTSTRUCT pt, int flags)
+        public static  IntPtr MonitorFromPoint(NativeMethods.POINT pt, int flags)
         {
             return SafeNativeMethodsPrivate.MonitorFromPoint(pt,flags);
         }
@@ -259,9 +259,9 @@ namespace MS.Win32
 
         // not used by compiler - don't include.
 
-        public static void ScreenToClient(HandleRef hWnd, [In, Out] NativeMethods.POINT pt)
+        public static void ScreenToClient(HandleRef hWnd, ref NativeMethods.POINT pt)
         {
-            if(SafeNativeMethodsPrivate.IntScreenToClient(hWnd, pt) == 0)
+            if(SafeNativeMethodsPrivate.IntScreenToClient(hWnd, ref pt) == 0)
             {
                 throw new Win32Exception();
             }
@@ -653,7 +653,7 @@ namespace MS.Win32
             public static extern IntPtr MonitorFromRect(ref NativeMethods.RECT rect, int flags);
 
             [DllImport(ExternDll.User32, ExactSpelling = true)]
-            public static extern IntPtr MonitorFromPoint(NativeMethods.POINTSTRUCT pt, int flags);
+            public static extern IntPtr MonitorFromPoint(NativeMethods.POINT pt, int flags);
 
             [DllImport(ExternDll.User32, ExactSpelling=true, CharSet=CharSet.Auto)]
             public static extern IntPtr ActivateKeyboardLayout(HandleRef hkl, int uFlags);
@@ -719,7 +719,7 @@ namespace MS.Win32
 #endif
 
             [DllImport(ExternDll.User32, EntryPoint="ScreenToClient", SetLastError=true, ExactSpelling=true, CharSet=CharSet.Auto)]
-            public static extern int IntScreenToClient(HandleRef hWnd, [In, Out] NativeMethods.POINT pt);
+            public static extern int IntScreenToClient(HandleRef hWnd, ref NativeMethods.POINT pt);
 
 #if BASE_NATIVEMETHODS
             [DllImport(ExternDll.User32)]
@@ -825,7 +825,7 @@ namespace MS.Win32
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool PhysicalToLogicalPointForPerMonitorDPI(
                 [In] HandleRef hWnd,
-                [In] [Out] ref NativeMethods.POINT lpPoint);
+                ref NativeMethods.POINT lpPoint);
 
             /// <summary>
             /// Converts a point in a window from logical coordinates into physical coordinates, regardless of
@@ -846,7 +846,7 @@ namespace MS.Win32
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool LogicalToPhysicalPointForPerMonitorDPI(
                 [In] HandleRef hWnd,
-                [In] [Out] ref NativeMethods.POINT lpPoint);
+                ref NativeMethods.POINT lpPoint);
 
 #if !DRT && !UIAUTOMATIONTYPES
 

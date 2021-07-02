@@ -141,7 +141,7 @@ Gets or sets whether the ToolTip is shown when its parent element acquires keybo
 Setting this property on a ToolTip element helps control whether to open the tooltip when its parent element acquires focus by keyboard navigation.
 See `ToolTipService.ShowsToolTipOnKeyboardFocus` (the previous section) for details.
 
-# Implementation
+# Spec Notes
 This section describes details that are not part of the public documentation, but are nevertheless important.
 
 **ShowDuration property**.
@@ -258,6 +258,8 @@ Unfortunately this only helps in .NET 6.0, as servicing updates to older version
 [ET] discussed what that really means - whether to act on KeyDown or KeyUp, whether combinations should cause both the combination action and dismiss the tooltip (e.g. should Ctrl+C both copy text and dismiss the tooltip), etc.
 The interpretation given here is the consensus.
 
+[FD] doesn't say whether Ctrl closes any tooltip, or just the one whose parent has focus.  The consensus in [ET] was that Ctrl closes the tooltip whose parent has focus, provided it was opened from the keyboard.
+
 [FD] and [MAS] allude to the delay before opening a tooltip, but don't specify how long that should be, or whether it should be different for keyboard vs. mouse.
 The consensus in [ET] was 
 * the keyboard delay should be no less than the mouse delay
@@ -278,15 +280,15 @@ For convenience, here are the behavior changes described in detail above.
 
 1. Change default value for `ToolTipService.ShowDuration` property from 5000 to `Int32.MaxValue`.
 2. Moving the mouse within the safe area does not close the tooltip.
-3. (6.0 only) Properties `ToolTip.ShowsToolTipOnKeyboardFocus` and `TooltipService.ShowsToolTipOnKeyboardFocus` control whether acquiring keyboard focus shows the tooltip.
+3. (6.0 only) Properties `ToolTip.ShowsToolTipOnKeyboardFocus` and `TooltipService.ShowsToolTipOnKeyboardFocus` control whether keyboard navigation shows the tooltip.
 4. Ctrl closes the tooltip.
 5. Ctrl+Shift+F10 opens the tooltip immediately, rather than after `InitialShowDelay`.
-6. RibbonToolTips default to showing on focus acquisition.
+6. RibbonToolTips default to showing on keyboard navigation.
 7. Change default value for `ToolTipService.InitialShowDelay` property from `SystemParameters.MouseHoverTimeMilliseconds` to 1000.
 
 Also, some changes were previously made in .NET 4.8 (and appear in .NET Core 3.0, 3.1, and .NET 5.0), without documentation:
 
-1. Keyboard focus opens the tooltip.  (Except for RibbonToolTip.)
+1. Keyboard navigation opens the tooltip.  (Except for RibbonToolTip.)
 2. Ctrl-Shift-F10 opens or closes the tooltip.
 
 # API Details
@@ -297,7 +299,7 @@ For convenience, here is a summary of the new public API surface.
 ```c#
 class ToolTipService
 {
-    public static DependencyProperty ShowsToolTipOnKeyboardFocus;
+    public static DependencyProperty ShowsToolTipOnKeyboardFocusProperty;
     public static bool? GetShowsToolTipOnKeyboardFocus(DependencyObject d);
     public static void SetShowsToolTipOnKeyboardFocus(DependencyObject d, bool? value);
 }

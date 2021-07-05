@@ -199,11 +199,12 @@ namespace System.Windows.Automation
         public static readonly AutomationProperty PositionInSetProperty = AutomationElementIdentifiers.PositionInSetProperty;
 
         /// <summary>
+        /// Property ID: HeadingLevel - Describes if the heading level of an element.
         /// </summary>
         public static readonly AutomationProperty HeadingLevelProperty = AutomationElementIdentifiers.HeadingLevelProperty;
 
         /// <summary>
-        /// Property ID: IsDialog - Describes if the automation element is a dialog.
+        /// Property ID: IsDialog - Identifies if the automation element is a dialog.
         /// </summary>
         public static readonly AutomationProperty IsDialogProperty = AutomationElementIdentifiers.IsDialogProperty;
 

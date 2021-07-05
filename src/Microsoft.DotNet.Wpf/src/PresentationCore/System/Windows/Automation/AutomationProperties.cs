@@ -640,7 +640,6 @@ namespace System.Windows.Automation
         /// <summary>
         /// Helper for setting IsDialog property on a DependencyObject. 
         /// </summary>
-        #region private implementation
         public static void SetIsDialog(DependencyObject element, bool value)
         {
             if(element == null)
@@ -663,6 +662,7 @@ namespace System.Windows.Automation
         }
         #endregion
 
+        #region private implementation
         // Validation callback for string properties
         private static bool IsNotNull(object value)
         {

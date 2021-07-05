@@ -713,7 +713,8 @@ namespace System.Windows.Automation.Peers
         /// <summary>
         /// Override this method to provide UIAutomation with a bool value describing if this element is a dialog.
         /// </summary>
-        virtual protected bool GetIsDialogCore(){
+        virtual protected bool IsDialogCore()
+        {
             return false;
         }
 
@@ -1311,21 +1312,21 @@ namespace System.Windows.Automation.Peers
         /// <returns>
         /// The value for the IsDialog property.
         /// </returns>
-        public bool GetIsDialog(){
+        public bool IsDialog(){
             bool result = false;
             if(_publicCallInProgress)
                 throw new InvalidOperationException(SR.Get(SRID.Automation_RecursivePublicCall));
 
-                try
-                {
-                    _publicCallInProgress = true;
-                    result = GetIsDialogCore();
-                }
-                finally
-                {
-                    _publicCallInProgress = false;
-                }
-                return result;
+            try
+            {
+                _publicCallInProgress = true;
+                result = IsDialogCore();
+            }
+            finally
+            {
+                _publicCallInProgress = false;
+            }
+            return result;
         }
 
         /// <summary>
@@ -2383,6 +2384,10 @@ namespace System.Windows.Automation.Peers
             { 
                 s_propertyInfo[AutomationElementIdentifiers.HeadingLevelProperty.Id] = new GetProperty(GetHeadingLevel);
             }
+            if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.IsDialogProperty != null)
+            {
+                s_propertyInfo[AutomationElementIdentifiers.IsDialogProperty.Id] = new GetProperty(IsDialog);
+            }
         }
 
         private delegate object WrapObject(AutomationPeer peer, object iface);
@@ -2434,7 +2439,7 @@ namespace System.Windows.Automation.Peers
         private static object GetControllerFor(AutomationPeer peer)         {   return peer.GetControllerForProviderArray(); }
         private static object GetSizeOfSet(AutomationPeer peer)             {   return peer.GetSizeOfSet(); }
         private static object GetHeadingLevel(AutomationPeer peer)          {   return peer.GetHeadingLevel(); }
-        private static object GetIsDialog(AutomationPeer peer)              {   return peer.GetIsDialog(); }
+        private static object IsDialog(AutomationPeer peer)                 {   return peer.IsDialog(); }
         private static object GetPositionInSet(AutomationPeer peer)         {   return peer.GetPositionInSet(); }
 
         private static Hashtable s_patternInfo;

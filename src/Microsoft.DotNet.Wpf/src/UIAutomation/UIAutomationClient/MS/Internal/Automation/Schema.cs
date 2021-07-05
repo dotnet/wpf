@@ -275,6 +275,7 @@ namespace MS.Internal.Automation
             new AutomationPropertyInfo( null,                            AutomationElement.SizeOfSetProperty,                    typeof(int),                   -1                             ),
             new AutomationPropertyInfo( null,                            AutomationElement.PositionInSetProperty,                typeof(int),                   -1                             ),
             new AutomationPropertyInfo( null,                            AutomationElement.HeadingLevelProperty,                 typeof(AutomationHeadingLevel),AutomationHeadingLevel.None    ),
+            new AutomationPropertyInfo( convertToBool,                   AutomationElement.IsDialogProperty,                     typeof(bool),                  false                          ),
 
             // Pattern Available properties            
             //                                                           PropertyID                                                  Type           Default value

@@ -629,7 +629,40 @@ namespace System.Windows.Automation
         }
         #endregion
 
+        #region isDialog
+        public static readonly DependencyProperty IsDialogProperty = 
+            DependencyProperty.RegisterAttached(
+                "IsDialog",
+                typeof(bool),
+                typeof(AutomationProperties),
+                new UIPropertyMetadata(false));
+
+        /// <summary>
+        /// Helper for setting IsDialog property on a DependencyObject. 
+        /// </summary>
         #region private implementation
+        public static void SetIsDialog(DependencyObject element, bool value)
+        {
+            if(element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+            element.SetValue(IsDialogProperty, value);
+        }
+
+        /// <summary>
+        /// Helper for reading IsDialog property from a DependencyObject.
+        public static bool GetIsDialog(DependencyObject element)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+
+            return (bool)element.GetValue(IsDialogProperty);
+        }
+        #endregion
+
         // Validation callback for string properties
         private static bool IsNotNull(object value)
         {

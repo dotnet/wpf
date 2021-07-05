@@ -2165,6 +2165,7 @@ namespace System.Windows.Automation
         public static System.Windows.Automation.AutomationHeadingLevel GetHeadingLevel(System.Windows.DependencyObject element) { throw null; }
         public static string GetHelpText(System.Windows.DependencyObject element) { throw null; }
         public static bool GetIsColumnHeader(System.Windows.DependencyObject element) { throw null; }
+        public static bool GetIsDialog(System.Windows.DependencyObject element) { throw null; }
         public static System.Windows.Automation.IsOffscreenBehavior GetIsOffscreenBehavior(System.Windows.DependencyObject element) { throw null; }
         public static bool GetIsRequiredForForm(System.Windows.DependencyObject element) { throw null; }
         public static bool GetIsRowHeader(System.Windows.DependencyObject element) { throw null; }
@@ -2181,6 +2182,7 @@ namespace System.Windows.Automation
         public static void SetHeadingLevel(System.Windows.DependencyObject element, System.Windows.Automation.AutomationHeadingLevel value) { }
         public static void SetHelpText(System.Windows.DependencyObject element, string value) { }
         public static void SetIsColumnHeader(System.Windows.DependencyObject element, bool value) { }
+        public static void SetIsDialog(System.Windows.DependencyObject element, bool value) { }
         public static void SetIsOffscreenBehavior(System.Windows.DependencyObject element, System.Windows.Automation.IsOffscreenBehavior value) { }
         public static void SetIsRequiredForForm(System.Windows.DependencyObject element, bool value) { }
         public static void SetIsRowHeader(System.Windows.DependencyObject element, bool value) { }
@@ -2300,6 +2302,9 @@ namespace System.Windows.Automation.Peers
         public string GetHelpText() { throw null; }
         protected abstract string GetHelpTextCore();
         protected virtual System.Windows.Automation.Peers.HostedWindowWrapper GetHostRawElementProviderCore() { throw null; }
+
+        public bool GetIsDialog() { throw null; }
+        protected virtual bool GetIsDialogCore() { throw null; }
         public string GetItemStatus() { throw null; }
         protected abstract string GetItemStatusCore();
         public string GetItemType() { throw null; }

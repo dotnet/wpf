@@ -279,7 +279,8 @@ namespace MS.Internal.Automation
             CenterPoint,
             Rotatation,
             Size,
-            HeadingLevel
+            HeadingLevel,
+            IsDialog
         };
         
         internal enum Events

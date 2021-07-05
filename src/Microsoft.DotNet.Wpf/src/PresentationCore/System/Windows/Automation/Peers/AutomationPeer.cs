@@ -710,6 +710,13 @@ namespace System.Windows.Automation.Peers
             return AutomationHeadingLevel.None;
         }
 
+        /// <summary>
+        /// Override this method to provide UIAutomation with a bool value describing if this element is a dialog.
+        /// </summary>
+        virtual protected bool GetIsDialogCore(){
+            return false;
+        }
+
         //
         // INTERNAL STUFF - NOT OVERRIDABLE
         //
@@ -1292,6 +1299,33 @@ namespace System.Windows.Automation.Peers
                 _publicCallInProgress = false;
             }
             return result;
+        }
+
+
+        /// <summary>
+        /// Attempt to get the value for the IsDialog property.
+        /// </summary>
+        /// <remarks>
+        /// This public call cannot be attempted if another public call is in progress.
+        /// </remarks>
+        /// <returns>
+        /// The value for the IsDialog property.
+        /// </returns>
+        public bool GetIsDialog(){
+            bool result = false;
+            if(_publicCallInProgress)
+                throw new InvalidOperationException(SR.Get(SRID.Automation_RecursivePublicCall));
+
+                try
+                {
+                    _publicCallInProgress = true;
+                    result = GetIsDialogCore();
+                }
+                finally
+                {
+                    _publicCallInProgress = false;
+                }
+                return result;
         }
 
         /// <summary>
@@ -2400,6 +2434,7 @@ namespace System.Windows.Automation.Peers
         private static object GetControllerFor(AutomationPeer peer)         {   return peer.GetControllerForProviderArray(); }
         private static object GetSizeOfSet(AutomationPeer peer)             {   return peer.GetSizeOfSet(); }
         private static object GetHeadingLevel(AutomationPeer peer)          {   return peer.GetHeadingLevel(); }
+        private static object GetIsDialog(AutomationPeer peer)              {   return peer.GetIsDialog(); }
         private static object GetPositionInSet(AutomationPeer peer)         {   return peer.GetPositionInSet(); }
 
         private static Hashtable s_patternInfo;

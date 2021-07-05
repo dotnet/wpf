@@ -119,6 +119,9 @@ namespace System.Windows.Automation
         /// <summary>Property ID: HeadingLevel - </summary>
         public static readonly AutomationProperty HeadingLevelProperty = AutomationProperty.Register(AutomationIdentifierConstants.Properties.HeadingLevel, "AutomationElementIdentifiers.HeadingLevelProperty");
 
+        /// <summary>Property ID: IsDialog - </summary>
+        public static readonly AutomationProperty IsDialogProperty = AutomationProperty.Register(AutomationIdentifierConstants.Properties.IsDialog, "AutomationElementIdentifiers.IsDialogProperty");
+
         /// <summary>Property ID: IsRequiredForForm - Identifies weather an edit field is required to be filled out on a form</summary>
         public static readonly AutomationProperty IsRequiredForFormProperty = AutomationProperty.Register(AutomationIdentifierConstants.Properties.IsRequiredForForm, "AutomationElementIdentifiers.IsRequiredForFormProperty");
 

@@ -1035,7 +1035,6 @@ namespace System.Windows.Media.Imaging
             SafeMILHandle decoderHandle;
             IntPtr decoder = IntPtr.Zero;
             System.IO.Stream bitmapStream = null;
-            string mimeType = String.Empty;
             unmanagedMemoryStream = null;
             safeFilehandle = null;
             isOriginalWritable = false;
@@ -1057,7 +1056,6 @@ namespace System.Windows.Media.Imaging
                     if (String.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) == 0)
                     {
                         WebResponse response = WpfWebRequestHelper.CreateRequestAndGetResponse(uri);
-                        mimeType = response.ContentType;
                         bitmapStream = response.GetResponseStream();
                         uriStream = bitmapStream;
                     }

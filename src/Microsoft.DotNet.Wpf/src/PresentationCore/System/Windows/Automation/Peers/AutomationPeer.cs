@@ -1822,7 +1822,7 @@ namespace System.Windows.Automation.Peers
 #endif
         }
 
-        // InvalidateLimit � lower bound for  raising ChildrenInvalidated StructureChange event
+        // InvalidateLimit is the lower bound for raising ChildrenInvalidated StructureChange event
         internal void UpdateChildrenInternal(int invalidateLimit)
         {
             List<AutomationPeer> oldChildren = _children;

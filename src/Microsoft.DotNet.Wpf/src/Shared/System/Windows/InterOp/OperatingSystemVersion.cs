@@ -50,5 +50,3 @@ namespace Microsoft.Internal.Interop
         Windows10RS5,
     }
 }
-
-

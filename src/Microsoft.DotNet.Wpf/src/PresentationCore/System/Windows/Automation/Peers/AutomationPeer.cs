@@ -707,6 +707,7 @@ namespace System.Windows.Automation.Peers
         }
 
         /// <summary>
+        /// Override this method to provide UIAutomation with the heading level of this element.
         /// </summary>
         virtual protected AutomationHeadingLevel GetHeadingLevelCore()
         {

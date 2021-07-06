@@ -2438,9 +2438,9 @@ namespace System.Windows.Automation.Peers
         private static object GetLiveSetting(AutomationPeer peer)           {   return peer.GetLiveSetting(); }
         private static object GetControllerFor(AutomationPeer peer)         {   return peer.GetControllerForProviderArray(); }
         private static object GetSizeOfSet(AutomationPeer peer)             {   return peer.GetSizeOfSet(); }
+        private static object GetPositionInSet(AutomationPeer peer)         {   return peer.GetPositionInSet(); }
         private static object GetHeadingLevel(AutomationPeer peer)          {   return peer.GetHeadingLevel(); }
         private static object IsDialog(AutomationPeer peer)                 {   return peer.IsDialog(); }
-        private static object GetPositionInSet(AutomationPeer peer)         {   return peer.GetPositionInSet(); }
 
         private static Hashtable s_patternInfo;
         private static Hashtable s_propertyInfo;

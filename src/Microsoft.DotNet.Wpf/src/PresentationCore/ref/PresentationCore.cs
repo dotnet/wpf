@@ -2149,6 +2149,7 @@ namespace System.Windows.Automation
         public static readonly System.Windows.DependencyProperty HeadingLevelProperty;
         public static readonly System.Windows.DependencyProperty HelpTextProperty;
         public static readonly System.Windows.DependencyProperty IsColumnHeaderProperty;
+        public static readonly System.Windows.DependencyProperty IsDialogProperty;
         public static readonly System.Windows.DependencyProperty IsOffscreenBehaviorProperty;
         public static readonly System.Windows.DependencyProperty IsRequiredForFormProperty;
         public static readonly System.Windows.DependencyProperty IsRowHeaderProperty;
@@ -2303,8 +2304,6 @@ namespace System.Windows.Automation.Peers
         protected abstract string GetHelpTextCore();
         protected virtual System.Windows.Automation.Peers.HostedWindowWrapper GetHostRawElementProviderCore() { throw null; }
 
-        public bool GetIsDialog() { throw null; }
-        protected virtual bool GetIsDialogCore() { throw null; }
         public string GetItemStatus() { throw null; }
         protected abstract string GetItemStatusCore();
         public string GetItemType() { throw null; }
@@ -2334,6 +2333,8 @@ namespace System.Windows.Automation.Peers
         protected abstract bool IsContentElementCore();
         public bool IsControlElement() { throw null; }
         protected abstract bool IsControlElementCore();
+        public bool IsDialog() { throw null; }
+        protected abstract bool IsDialogCore();
         public bool IsEnabled() { throw null; }
         protected abstract bool IsEnabledCore();
         public bool IsKeyboardFocusable() { throw null; }
@@ -2381,6 +2382,7 @@ namespace System.Windows.Automation.Peers
         protected override bool HasKeyboardFocusCore() { throw null; }
         protected override bool IsContentElementCore() { throw null; }
         protected override bool IsControlElementCore() { throw null; }
+        protected override bool IsDialogCore() { throw null; }
         protected override bool IsEnabledCore() { throw null; }
         protected override bool IsKeyboardFocusableCore() { throw null; }
         protected override bool IsOffscreenCore() { throw null; }
@@ -2451,6 +2453,7 @@ namespace System.Windows.Automation.Peers
         protected override bool HasKeyboardFocusCore() { throw null; }
         protected override bool IsContentElementCore() { throw null; }
         protected override bool IsControlElementCore() { throw null; }
+        protected override bool IsDialogCore() { throw null; }
         protected override bool IsEnabledCore() { throw null; }
         protected override bool IsKeyboardFocusableCore() { throw null; }
         protected override bool IsOffscreenCore() { throw null; }
@@ -2485,6 +2488,7 @@ namespace System.Windows.Automation.Peers
         protected override bool HasKeyboardFocusCore() { throw null; }
         protected override bool IsContentElementCore() { throw null; }
         protected override bool IsControlElementCore() { throw null; }
+        protected override bool IsDialogCore() { throw null; }
         protected override bool IsEnabledCore() { throw null; }
         protected override bool IsKeyboardFocusableCore() { throw null; }
         protected override bool IsOffscreenCore() { throw null; }

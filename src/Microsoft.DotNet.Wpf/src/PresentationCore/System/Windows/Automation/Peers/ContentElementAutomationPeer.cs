@@ -214,6 +214,14 @@ namespace System.Windows.Automation.Peers
         }
 
         /// <summary>
+        /// <see cref="AutomationPeer.IsDialogCore"/>
+        /// </summary>
+        override protected bool IsDialogCore()
+        {
+            return false;
+        }
+
+        /// <summary>
         /// <see cref="AutomationPeer.IsPasswordCore"/>
         /// </summary>
         override protected bool IsPasswordCore()

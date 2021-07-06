@@ -76,6 +76,5 @@ namespace System.Windows.Automation.Peers
 
             return false;
         }
-
     }
 }

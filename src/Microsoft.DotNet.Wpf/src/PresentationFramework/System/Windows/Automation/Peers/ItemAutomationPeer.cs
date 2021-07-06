@@ -437,6 +437,18 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
+        protected override bool IsDialogCore()
+        {
+            AutomationPeer wrapperPeer = GetWrapperPeer();
+            if (wrapperPeer != null)
+                return wrapperPeer.IsDialog();
+            else
+                ThrowElementNotAvailableException();
+
+            return false;
+        }
+
+        ///
         protected override bool IsPasswordCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();

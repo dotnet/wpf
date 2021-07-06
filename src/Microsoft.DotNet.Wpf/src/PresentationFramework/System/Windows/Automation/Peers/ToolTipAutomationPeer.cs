@@ -29,10 +29,6 @@ namespace System.Windows.Automation.Peers
         {
             return AutomationControlType.ToolTip;
         }
-
-        protected override bool IsDialogCore(){
-            return true;
-        }
     }
 }
 

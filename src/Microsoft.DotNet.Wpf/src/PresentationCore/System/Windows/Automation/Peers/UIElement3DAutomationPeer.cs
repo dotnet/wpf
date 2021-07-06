@@ -318,6 +318,12 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
+        override protected bool IsDialogCore()
+        {
+            return false;
+        }
+
+        ///
         override protected bool IsPasswordCore()
         {
             return false;

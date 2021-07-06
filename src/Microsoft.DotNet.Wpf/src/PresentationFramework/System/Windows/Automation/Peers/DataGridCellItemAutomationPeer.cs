@@ -406,6 +406,18 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
+        protected override bool IsDialogCore()
+        {
+            AutomationPeer wrapperPeer = OwningCellPeer;
+            if (wrapperPeer != null)
+                return wrapperPeer.IsDialog();
+            else
+                ThrowElementNotAvailableException();
+
+            return false;
+        }
+
+        ///
         protected override bool IsEnabledCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;

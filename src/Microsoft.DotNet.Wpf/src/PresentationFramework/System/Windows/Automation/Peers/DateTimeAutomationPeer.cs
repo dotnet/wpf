@@ -510,6 +510,21 @@ namespace System.Windows.Automation.Peers
             return true;
         }
 
+        protected override bool IsDialogCore()
+        {
+            AutomationPeer wrapperPeer = WrapperPeer;
+            if (wrapperPeer != null)
+            {
+                return wrapperPeer.IsDialog();
+            }
+            else
+            {
+                ThrowElementNotAvailableException();
+            }
+
+            return false;
+        }
+
         protected override bool IsEnabledCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;

@@ -653,6 +653,9 @@ namespace System.Windows.Automation.Peers
         abstract protected bool IsControlElementCore();
 
         ///
+        abstract protected bool IsDialogCore();
+
+        ///
         abstract protected AutomationPeer GetLabeledByCore();
 
         ///
@@ -708,14 +711,6 @@ namespace System.Windows.Automation.Peers
         virtual protected AutomationHeadingLevel GetHeadingLevelCore()
         {
             return AutomationHeadingLevel.None;
-        }
-
-        /// <summary>
-        /// Override this method to provide UIAutomation with a bool value describing if this element is a dialog.
-        /// </summary>
-        virtual protected bool IsDialogCore()
-        {
-            return false;
         }
 
         //

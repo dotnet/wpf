@@ -116,7 +116,7 @@ namespace System.Windows.Automation
         /// <summary>Property ID: FrameworkId - Identifies the underlying UI framework's name for the element being accessed</summary>
         public static readonly AutomationProperty FrameworkIdProperty = AutomationProperty.Register(AutomationIdentifierConstants.Properties.FrameworkId, "AutomationElementIdentifiers.FrameworkIdProperty");
 
-        /// <summary>Property ID: HeadingLevel - </summary>
+        /// <summary>Property ID: HeadingLevel -  Describes the heading level of an element.</summary>
         public static readonly AutomationProperty HeadingLevelProperty = AutomationProperty.Register(AutomationIdentifierConstants.Properties.HeadingLevel, "AutomationElementIdentifiers.HeadingLevelProperty");
 
         /// <summary>Property ID: IsDialog - </summary>

@@ -2055,7 +2055,7 @@ namespace System.Windows.Automation.Peers
 
         /// <summary>
         /// propagate the new value for AncestorsInvalid through the parent chain,
-        /// use EventSource (wrapper) peers whenever available as it�s the one connected to the tree.
+        /// use EventSource (wrapper) peers whenever available as it's the one connected to the tree.
         /// </summary>
         internal void InvalidateAncestorsRecursive()
         {

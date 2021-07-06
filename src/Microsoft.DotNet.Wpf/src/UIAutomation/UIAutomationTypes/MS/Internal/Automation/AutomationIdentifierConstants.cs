@@ -31,7 +31,15 @@ namespace MS.Internal.Automation
 
         static AutomationIdentifierConstants()
         {
-            if (OSVersionHelper.IsOsWindows10RS4OrGreater)
+            if (OSVersionHelper.IsOsWindows10RS5OrGreater)
+            {
+                LastSupportedProperty = Properties.IsDialog;
+                LastSupportedEvent = Events.Changes;
+                LastSupportedPattern = Patterns.CustomNavigation;
+                LastSupportedTextAttribute = TextAttributes.SayAsInterpretAs;
+                LastSupportedControlType = ControlTypes.AppBar;
+            }
+            else if (OSVersionHelper.IsOsWindows10RS4OrGreater)
             {
                 LastSupportedProperty = Properties.HeadingLevel;
                 LastSupportedEvent = Events.Changes;
@@ -279,8 +287,8 @@ namespace MS.Internal.Automation
             CenterPoint,
             Rotatation,
             Size,
-            IsDialog,
-            HeadingLevel
+            HeadingLevel,
+            IsDialog
         };
         
         internal enum Events

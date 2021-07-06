@@ -2378,8 +2378,6 @@ namespace System.Windows.Automation.Peers
             {
                 s_propertyInfo[AutomationElementIdentifiers.PositionInSetProperty.Id] = new GetProperty(GetPositionInSet);
             }
-
-            // HeadingLevel is an RS4+ UIAutomation property.  This will be NULL on other operating system versions.
             if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.HeadingLevelProperty != null)
             { 
                 s_propertyInfo[AutomationElementIdentifiers.HeadingLevelProperty.Id] = new GetProperty(GetHeadingLevel);

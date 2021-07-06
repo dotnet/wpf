@@ -1273,10 +1273,13 @@ namespace System.Windows.Automation.Peers
         }
 
         /// <summary>
+        /// Attempt to get the value for the HeadingLevel property.
         /// </summary>
         /// <remarks>
+        /// This public call cannot be attempted if another public call is in progress.
         /// </remarks>
         /// <returns>
+        /// The value for the HeadingLevel property.
         /// </returns>
         public AutomationHeadingLevel GetHeadingLevel()
         {

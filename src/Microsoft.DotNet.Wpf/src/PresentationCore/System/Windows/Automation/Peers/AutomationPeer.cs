@@ -1307,7 +1307,8 @@ namespace System.Windows.Automation.Peers
         /// <returns>
         /// The value for the IsDialog property.
         /// </returns>
-        public bool IsDialog(){
+        public bool IsDialog()
+        {
             bool result = false;
             if(_publicCallInProgress)
                 throw new InvalidOperationException(SR.Get(SRID.Automation_RecursivePublicCall));

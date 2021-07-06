@@ -199,7 +199,7 @@ namespace System.Windows.Automation
         public static readonly AutomationProperty PositionInSetProperty = AutomationElementIdentifiers.PositionInSetProperty;
 
         /// <summary>
-        /// Property ID: HeadingLevel - Describes if the heading level of an element.
+        /// Property ID: HeadingLevel - Describes the heading level of an element.
         /// </summary>
         public static readonly AutomationProperty HeadingLevelProperty = AutomationElementIdentifiers.HeadingLevelProperty;
 

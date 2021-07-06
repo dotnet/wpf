@@ -651,6 +651,7 @@ namespace System.Windows.Automation
 
         /// <summary>
         /// Helper for reading IsDialog property from a DependencyObject.
+        /// </summary>
         public static bool GetIsDialog(DependencyObject element)
         {
             if (element == null)
@@ -676,4 +677,3 @@ namespace System.Windows.Automation
         #endregion
     }
 }
-

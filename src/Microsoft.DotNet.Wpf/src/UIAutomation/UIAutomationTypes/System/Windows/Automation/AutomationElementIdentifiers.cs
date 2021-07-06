@@ -119,7 +119,7 @@ namespace System.Windows.Automation
         /// <summary>Property ID: HeadingLevel -  Describes the heading level of an element.</summary>
         public static readonly AutomationProperty HeadingLevelProperty = AutomationProperty.Register(AutomationIdentifierConstants.Properties.HeadingLevel, "AutomationElementIdentifiers.HeadingLevelProperty");
 
-        /// <summary>Property ID: IsDialog - </summary>
+        /// <summary>Property ID: IsDialog - Identifies if the automation element is a dialog.</summary>
         public static readonly AutomationProperty IsDialogProperty = AutomationProperty.Register(AutomationIdentifierConstants.Properties.IsDialog, "AutomationElementIdentifiers.IsDialogProperty");
 
         /// <summary>Property ID: IsRequiredForForm - Identifies weather an edit field is required to be filled out on a form</summary>

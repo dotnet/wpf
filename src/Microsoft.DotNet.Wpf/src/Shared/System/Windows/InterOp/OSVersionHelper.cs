@@ -270,7 +270,7 @@ namespace Microsoft.Internal.Interop
             {
                 return OperatingSystemVersion.Windows10RS5;
             }
-            if (IsOsWindows10RS4OrGreater)
+            else if (IsOsWindows10RS4OrGreater)
             {
                 return OperatingSystemVersion.Windows10RS4;
             }

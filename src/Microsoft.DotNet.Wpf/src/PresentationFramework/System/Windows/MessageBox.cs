@@ -237,6 +237,76 @@ namespace System.Windows
         }
         #endregion
 #endif
+        
+        #region IntPtr Methods
+        /// <devdoc>
+        ///    <para>
+        ///       Displays a message box with specified text, caption, and style.
+        ///    </para>
+        /// </devdoc>
+        /// <ExternalAPI/> 
+        public static MessageBoxResult Show(IntPtr owner, string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon, 
+            MessageBoxResult defaultResult, MessageBoxOptions options) 
+        {
+            return ShowCore(owner, messageBoxText, caption, button, icon, defaultResult, options);
+        }
+
+        /// <devdoc>
+        ///    <para>
+        ///       Displays a message box with specified text, caption, and style.
+        ///    </para>
+        /// </devdoc>
+        /// <ExternalAPI/> 
+        public static MessageBoxResult Show(IntPtr owner, string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon, 
+            MessageBoxResult defaultResult) 
+        {
+            return ShowCore(owner, messageBoxText, caption, button, icon, defaultResult, 0);
+        }
+
+        /// <devdoc>
+        ///    <para>
+        ///       Displays a message box with specified text, caption, and style.
+        ///    </para>
+        /// </devdoc>
+        /// <ExternalAPI/> 
+        public static MessageBoxResult Show(IntPtr owner, string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon) 
+        {
+            return ShowCore(owner, messageBoxText, caption, button, icon, 0, 0);
+        }
+
+        /// <devdoc>
+        ///    <para>
+        ///       Displays a message box with specified text, caption, and style.
+        ///    </para>
+        /// </devdoc>
+        /// <ExternalAPI/> 
+        public static MessageBoxResult Show(IntPtr owner, string messageBoxText, string caption, MessageBoxButton button) 
+        {
+            return ShowCore(owner, messageBoxText, caption, button, MessageBoxImage.None, 0, 0);
+        }
+
+        /// <devdoc>
+        ///    <para>
+        ///       Displays a message box with specified text and caption.
+        ///    </para>
+        /// </devdoc>
+        /// <ExternalAPI/> 
+        public static MessageBoxResult Show(IntPtr owner, string messageBoxText, string caption) 
+        {
+            return ShowCore(owner, messageBoxText, caption, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
+        }
+
+        /// <devdoc>
+        ///    <para>
+        ///       Displays a message box with specified text.
+        ///    </para>
+        /// </devdoc>
+        /// <ExternalAPI/> 
+        public static MessageBoxResult Show(IntPtr owner, string messageBoxText) 
+        {
+            return ShowCore(owner, messageBoxText, String.Empty, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
+        }
+        #endregion
         #region Window Methods
         /// <devdoc>
         ///    <para>

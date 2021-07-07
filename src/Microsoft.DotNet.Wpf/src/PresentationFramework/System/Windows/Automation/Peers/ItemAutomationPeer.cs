@@ -232,6 +232,24 @@ namespace System.Windows.Automation.Peers
             return AutomationOrientation.None;
         }
 
+        ///
+        override protected AutomationHeadingLevel GetHeadingLevelCore()
+        {
+            AutomationPeer wrapperPeer = GetWrapperPeer();
+            AutomationHeadingLevel headingLevel = AutomationHeadingLevel.None;
+
+            if(wrapperPeer != null)
+            {
+                headingLevel = wrapperPeer.GetHeadingLevel();
+            }
+            else
+            {
+                ThrowElementNotAvailableException();
+            }
+
+            return headingLevel;
+        }
+
         /// <summary>
         /// Gets the position of an item within a set.
         /// </summary>

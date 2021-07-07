@@ -392,6 +392,15 @@ namespace System.Windows.Automation.Peers
             return AutomationProperties.GetSizeOfSet(_owner);
         }
 
+        /// <summary>
+        /// Provides a value for UIAutomation's HeadingLevel property
+        /// Reads <see cref="AutomationProperties.HeadingLevelProperty"/> and returns the value
+        /// </summary>
+        override protected AutomationHeadingLevel GetHeadingLevelCore()
+        {
+            return AutomationProperties.GetHeadingLevel(_owner);
+        }
+
         //
         // M E T H O D S
         //

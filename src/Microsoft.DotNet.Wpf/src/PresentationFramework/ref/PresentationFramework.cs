@@ -2403,6 +2403,7 @@ namespace System.Windows.Automation.Peers
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override System.Windows.Point GetClickablePointCore() { throw null; }
+        protected override AutomationHeadingLevel GetHeadingLevelCore() { throw null; }
         protected override string GetHelpTextCore() { throw null; }
         protected override string GetItemStatusCore() { throw null; }
         protected override string GetItemTypeCore() { throw null; }
@@ -2541,6 +2542,7 @@ namespace System.Windows.Automation.Peers
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override System.Windows.Point GetClickablePointCore() { throw null; }
+        protected override AutomationHeadingLevel GetHeadingLevelCore() { throw null; }
         protected override string GetHelpTextCore() { throw null; }
         protected override string GetItemStatusCore() { throw null; }
         protected override string GetItemTypeCore() { throw null; }
@@ -2797,6 +2799,7 @@ namespace System.Windows.Automation.Peers
         protected override System.Windows.Rect GetBoundingRectangleCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override System.Windows.Point GetClickablePointCore() { throw null; }
+        protected override AutomationHeadingLevel GetHeadingLevelCore() { throw null; }
         protected override string GetHelpTextCore() { throw null; }
         protected override string GetItemStatusCore() { throw null; }
         protected override string GetItemTypeCore() { throw null; }

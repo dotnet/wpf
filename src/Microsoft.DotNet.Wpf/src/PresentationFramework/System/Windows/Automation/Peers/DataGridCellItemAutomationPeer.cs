@@ -363,6 +363,24 @@ namespace System.Windows.Automation.Peers
             return size;
         }
 
+        ///
+        override protected AutomationHeadingLevel GetHeadingLevelCore()
+        {
+            AutomationPeer wrapperPeer = OwningCellPeer;
+            AutomationHeadingLevel headingLevel = AutomationHeadingLevel.None;
+
+            if(wrapperPeer != null)
+            {
+                headingLevel = wrapperPeer.GetHeadingLevel();
+            }
+            else
+            {
+                ThrowElementNotAvailableException();
+            }
+
+            return headingLevel;
+        }
+
         override internal Rect GetVisibleBoundingRectCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;

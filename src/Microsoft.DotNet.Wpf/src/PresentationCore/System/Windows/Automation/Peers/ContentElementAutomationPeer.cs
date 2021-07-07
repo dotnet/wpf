@@ -296,6 +296,15 @@ namespace System.Windows.Automation.Peers
         }
 
         /// <summary>
+        /// Provides a value for UIAutomation's HeadingLevel property
+        /// Reads <see cref="AutomationProperties.HeadingLevelProperty"/> and returns the value
+        /// </summary>
+        override protected AutomationHeadingLevel GetHeadingLevelCore()
+        {
+            return AutomationProperties.GetHeadingLevel(_owner);
+        }
+
+        /// <summary>
         /// <see cref="AutomationPeer.GetClickablePointCore"/>
         /// </summary>
         override protected Point GetClickablePointCore()

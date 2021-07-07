@@ -218,7 +218,7 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         override protected bool IsDialogCore()
         {
-            return false;
+            return AutomationProperties.GetIsDialog(_owner);
         }
 
         /// <summary>

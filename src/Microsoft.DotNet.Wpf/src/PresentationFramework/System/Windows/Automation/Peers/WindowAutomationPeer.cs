@@ -88,6 +88,12 @@ namespace System.Windows.Automation.Peers
 
             return bounds;
         }
+
+        protected override bool IsDialogCore()
+        {
+            Window window = (Window)Owner;
+            return window.IsShowingAsDialog;
+        }
     }
 }
 

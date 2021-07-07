@@ -1280,6 +1280,17 @@ namespace System.Windows
         }
 
         /// <summary>
+        /// Gets Showing as dialog
+        /// </summary>
+        internal bool IsShowingAsDialog
+        {
+            get
+            {
+                return _showingAsDialog;
+            }
+        }
+
+        /// <summary>
         /// Sets/gets DialogResult
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), TypeConverter(typeof(DialogResultConverter))]

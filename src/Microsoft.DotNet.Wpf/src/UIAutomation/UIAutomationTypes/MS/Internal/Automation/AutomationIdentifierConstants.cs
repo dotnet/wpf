@@ -287,7 +287,12 @@ namespace MS.Internal.Automation
             CenterPoint,
             Rotatation,
             Size,
-            HeadingLevel = 30173,
+            IsSelectionPattern2Available,
+            Selection2FirstSelectedItem,
+            Selection2LastSelectedItem,
+            Selection2CurrentSelectedItem,
+            Selection2ItemCount,
+            HeadingLevel,
             IsDialog
         };
         

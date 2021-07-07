@@ -287,7 +287,7 @@ namespace MS.Internal.Automation
             CenterPoint,
             Rotatation,
             Size,
-            HeadingLevel,
+            HeadingLevel = 30173,
             IsDialog
         };
         

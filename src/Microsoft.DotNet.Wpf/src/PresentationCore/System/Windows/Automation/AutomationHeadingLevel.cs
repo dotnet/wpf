@@ -18,52 +18,52 @@ namespace System.Windows.Automation
         /// <summary>
         /// The element does not have a heading level
         /// </summary>
-        None = 0,
+        None = 80050,
 
         /// <summary>
         /// The element has a heading level of 1
         /// </summary>
-        Level1 = 1,
+        Level1,
 
         /// <summary>
         /// The element has a heading level of 2
         /// </summary>
-        Level2 = 2,
+        Level2,
 
         /// <summary>
         /// The element has a heading level of 3
         /// </summary>
-        Level3 = 3,
+        Level3,
 
         /// <summary>
         /// The element has a heading level of 4
         /// </summary>
-        Level4 = 4,
+        Level4,
 
         /// <summary>
         /// The element has a heading level of 5
         /// </summary>
-        Level5 = 5,
+        Level5,
 
         /// <summary>
         /// The element has a heading level of 6
         /// </summary>
-        Level6 = 6,
+        Level6,
 
         /// <summary>
         /// The element has a heading level of 7
         /// </summary>
-        Level7 = 7,
+        Level7,
  
         /// <summary>
         /// The element has a heading level of 8
         /// </summary>
-        Level8 = 8,
+        Level8,
  
         /// <summary>
         /// The element has a heading level of 9
         /// </summary>
-        Level9 = 9,
+        Level9,
     }
 
 }

@@ -92,9 +92,15 @@ namespace System.Windows.Automation.Peers
         protected override bool IsDialogCore()
         {
             Window window = (Window)Owner;
-            return window.IsShowingAsDialog;
+if (MS.Internal.Helper.IsDefaultValue(AutomationProperties.IsDialogProperty, window)
+{
+  return window.IsShowingAsDialog;
+}
+else
+{
+   return AutomationProperties.GetIsDialog(window);
+}
         }
     }
 }
-
 

@@ -2334,7 +2334,7 @@ namespace System.Windows.Automation.Peers
         public bool IsControlElement() { throw null; }
         protected abstract bool IsControlElementCore();
         public bool IsDialog() { throw null; }
-        protected abstract bool IsDialogCore();
+        protected virtual bool IsDialogCore() { throw null; }
         public bool IsEnabled() { throw null; }
         protected abstract bool IsEnabledCore();
         public bool IsKeyboardFocusable() { throw null; }

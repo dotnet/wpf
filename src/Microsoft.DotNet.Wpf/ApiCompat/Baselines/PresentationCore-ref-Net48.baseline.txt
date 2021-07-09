@@ -1,6 +1,5 @@
 Compat issues with assembly PresentationCore:
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.LocalizabilityAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
-CannotAddAbstractMembers : Member 'protected System.Boolean System.Windows.Automation.Peers.AutomationPeer.IsDialogCore()' is abstract in the implementation but is missing in the contract.
 MembersMustExist : Member 'internal System.Windows.Media.Composition.DUCE.ResourceHandle System.Windows.Media.Brush.AddRefOnChannelCore(System.Windows.Media.Composition.DUCE.Channel)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'internal System.Windows.Media.Composition.DUCE.Channel System.Windows.Media.Brush.GetChannelCore(System.Int32)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'internal System.Int32 System.Windows.Media.Brush.GetChannelCountCore()' does not exist in the implementation but it does exist in the contract.
@@ -20,4 +19,4 @@ MembersMustExist : Member 'internal void System.Windows.Media.Imaging.BitmapDeco
 MembersMustExist : Member 'internal void System.Windows.Media.Imaging.BitmapEncoder.SealObject()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'internal System.Windows.Media.TextFormatting.TextParagraphCache System.Windows.Media.TextFormatting.TextFormatter.CreateParagraphCache(System.Windows.Media.TextFormatting.TextSource, System.Int32, System.Double, System.Windows.Media.TextFormatting.TextParagraphProperties, System.Windows.Media.TextFormatting.TextLineBreak, System.Windows.Media.TextFormatting.TextRunCache)' does not exist in the implementation but it does exist in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Resources.AssemblyAssociatedContentFileAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
-Total Issues: 21
+Total Issues: 20

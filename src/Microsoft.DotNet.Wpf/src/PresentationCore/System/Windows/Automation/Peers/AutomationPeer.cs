@@ -653,7 +653,9 @@ namespace System.Windows.Automation.Peers
         abstract protected bool IsControlElementCore();
 
         ///
-        abstract protected bool IsDialogCore();
+        virtual protected bool IsDialogCore(){
+            return false;
+        }
 
         ///
         abstract protected AutomationPeer GetLabeledByCore();

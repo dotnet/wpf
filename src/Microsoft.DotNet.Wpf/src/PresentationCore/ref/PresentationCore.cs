@@ -2129,7 +2129,7 @@ namespace System.Windows.Automation
 
     public enum AutomationHeadingLevel 
     {
-        None = 80050,
+        None = 0,
         Level1,
         Level2,
         Level3,

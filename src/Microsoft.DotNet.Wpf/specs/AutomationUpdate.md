@@ -217,6 +217,121 @@ public static readonly System.Windows.Automation.AutomationProperty HeadingLevel
 This identifier is for use by UI Automation providers. UI Automation client applications should use the equivalent field from [AutomationElement]().
 
 
+## AutomationPeer.GetHeadingLevel Method
+Gets the heading level of the element that is associated with this automation peer.
+
+```c#
+public AutomationHeadingLevel GetHeadingLevel();
+```
+
+### **Returns**
+[AutomationHeadingLevel]()
+
+The heading level.
+
+### **Exceptions**
+[InvalidOperationException]()
+
+A public call to this method is currently in progress.
+
+
+## AutomationPeer.GetHeadingLevelCore Method
+When overridden in a derived class, is called by [GetHeadingLevel]().
+
+```c#
+protected virtual AutomationHeadingLevel GetHeadingLevelCore();
+```
+
+### **Returns**
+[AutomationHeadingLevel]()
+
+The heading level.
+
+
+## ContentElementAutomationPeer.GetHeadingLevelCore Method
+Gets the heading level of the [ContentElement]() that is associated with this [ContentElementAutomationPeer]().
+Called by [GetHeadingLevel()]().
+
+```c#
+protected override AutomationHeadingLevel GetHeadingLevelCore();
+```
+
+### **Returns**
+[AutomationHeadingLevel]()
+
+The heading level.
+
+
+## UIElementAutomationPeer.GetHeadingLevelCore Method
+Gets the heading level of the [UIElement]() that is associated with this [UIElementAutomationPeer]().
+Called by [GetHeadingLevel()]().
+
+```c#
+protected override AutomationHeadingLevel GetHeadingLevelCore();
+```
+
+### **Returns**
+[AutomationHeadingLevel]()
+
+The heading level.
+
+
+## UIElement3DAutomationPeer.GetHeadingLevelCore Method
+Gets the heading level of the [UIElement3D]() that is associated with this [UIElement3DAutomationPeer]().
+Called by [GetHeadingLevel()]().
+
+```c#
+protected override AutomationHeadingLevel GetHeadingLevelCore();
+```
+
+### **Returns**
+[AutomationHeadingLevel]()
+
+The heading level.
+
+
+## DataGridCellItemAutomationPeer.GetHeadingLevelCore Method
+Gets the heading level of the element that is associated with this automation peer.
+Called by [GetHeadingLevel()]().
+
+```c#
+protected override AutomationHeadingLevel GetHeadingLevelCore();
+```
+
+### **Returns**
+[AutomationHeadingLevel]()
+
+The heading level.
+
+
+## DateTimeAutomationPeer.GetHeadingLevelCore Method
+Gets the heading level of the element that is associated with this automation peer.
+Called by [GetHeadingLevel()]().
+
+```c#
+protected override AutomationHeadingLevel GetHeadingLevelCore();
+```
+
+### **Returns**
+[AutomationHeadingLevel]()
+
+The heading level.
+
+
+## ItemAutomationPeer.GetHeadingLevelCore Method
+Gets the heading level of the element that is associated with this automation peer.
+Called by [GetHeadingLevel()]().
+
+```c#
+protected override AutomationHeadingLevel GetHeadingLevelCore();
+```
+
+### **Returns**
+[AutomationHeadingLevel]()
+
+The heading level.
+
+
 ## AutomationProperties.IsDialogProperty Field
 Identifies the [IsDialog]() attached property.
 
@@ -244,7 +359,7 @@ When AutomationProperties.IsDialog is true, a client application should treat th
 Gets the [IsDialog]() attached property for the specified [DependencyObject]().
 
 ```c#
-public static bool GetHeadingLevel(System.Windows.DependencyObject element);
+public static bool GetIsDialog(System.Windows.DependencyObject element);
 ```
 
 ### **Parameters**
@@ -296,6 +411,51 @@ public static readonly System.Windows.Automation.AutomationProperty IsDialogProp
 
 ### **Remarks**
 This identifier is for use by UI Automation providers. UI Automation client applications should use the equivalent field from [AutomationElement]().
+
+
+## AutomationPeer.IsDialog Method
+Gets a value that indicates whether the element associated with this automation peer is a dialog window.
+
+```c#
+public bool IsDialog();
+```
+
+### **Returns**
+[Boolean]()
+
+**true** if the element is a dialog; otherwise, **false**.
+
+### **Exceptions**
+[InvalidOperationException]()
+
+A public call to this method is currently in progress.
+
+
+## AutomationPeer.IsDialogCore Method
+When overridden in a derived class, is called by [IsDialog]().
+
+```c#
+protected virtual bool IsDialogCore();
+```
+
+### **Returns**
+[Boolean]()
+
+**true** if the element is a dialog; otherwise, **false**.
+
+
+## WindowAutomationPeer.IsDialogCore Method
+Gets a value that indicates whether the element associated with this automation peer is a dialog window.
+Called by [IsDialog]().
+
+```c#
+protected override bool IsDialogCore();
+```
+
+### **Returns**
+[Boolean]()
+
+**true** if the element is a dialog; otherwise, **false**.
 
 
 ## ContentTextAutomationPeer.RaiseActiveTextPositionChangedEvent(TextPointer, TextPointer) Method
@@ -448,37 +608,31 @@ namespace System.Windows.Automation.Peers
     public class ContentElementAutomationPeer
     {
         protected override AutomationHeadingLevel GetHeadingLevelCore();
-        protected override bool IsDialogCore();
     }
 
     public class UIElementAutomationPeer
     {
         protected override AutomationHeadingLevel GetHeadingLevelCore();
-        protected override bool IsDialogCore();
     }
 
     public class UIElement3DAutomationPeer
     {
         protected override AutomationHeadingLevel GetHeadingLevelCore();
-        protected override bool IsDialogCore();
-    }
+     }
 
     public class DataGridCellItemAutomationPeer
     {
         protected override AutomationHeadingLevel GetHeadingLevelCore();
-        protected override bool IsDialogCore();
     }
 
     public class DateTimeAutomationPeer
     {
         protected override AutomationHeadingLevel GetHeadingLevelCore();
-        protected override bool IsDialogCore();
     }
 
     public class ItemAutomationPeer
     {
         protected override AutomationHeadingLevel GetHeadingLevelCore();
-        protected override bool IsDialogCore();
     }
 
     public class WindowAutomationPeer

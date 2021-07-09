@@ -18,7 +18,7 @@ namespace System.Windows.Automation
         /// <summary>
         /// The element does not have a heading level
         /// </summary>
-        None = 1,
+        None = 80050,
 
         /// <summary>
         /// The element has a heading level of 1

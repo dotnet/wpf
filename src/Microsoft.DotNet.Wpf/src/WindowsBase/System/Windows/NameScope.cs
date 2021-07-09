@@ -118,7 +118,7 @@ namespace System.Windows
         /// <returns>corresponding Context if found, else null</returns>
         public object FindName(string name)
         {
-            if (_nameMap == null || String.IsNullOrEmpty(name))
+            if (_nameMap == null || string.IsNullOrEmpty(name))
                 return null;
 
             return _nameMap[name];

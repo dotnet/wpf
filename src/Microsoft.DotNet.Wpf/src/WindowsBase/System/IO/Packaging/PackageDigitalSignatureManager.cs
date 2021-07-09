@@ -470,7 +470,7 @@ namespace System.IO.Packaging
             VerifySignArguments(parts, certificate, relationshipSelectors, signatureId, signatureObjects, objectReferences);
 
             // substitute default id if none given
-            if (String.IsNullOrEmpty(signatureId))
+            if (string.IsNullOrEmpty(signatureId))
             {
                 signatureId = "packageSignature";   // default
             }
@@ -1006,7 +1006,7 @@ namespace System.IO.Packaging
             }
 
             // ensure id is legal Xml id
-            if (!String.IsNullOrEmpty(signatureId))
+            if (!string.IsNullOrEmpty(signatureId))
             {
                 try
                 {
@@ -1405,4 +1405,3 @@ namespace System.IO.Packaging
         #endregion Private Members
     }
 }
-

@@ -2521,7 +2521,7 @@ namespace MS.Internal.Documents
                         {
                             // Get position at suggested X. If suggested X is not provided, 
                             // use the first position in the line.
-                            if (!DoubleUtil.IsNaN(suggestedX))
+                            if (!double.IsNaN(suggestedX))
                             {
                                 positionOut = lines[lineIndex].GetTextPositionFromDistance(suggestedX);
                             }
@@ -2541,7 +2541,7 @@ namespace MS.Internal.Documents
                             else if (count < 0)
                             {
                                 // Just in case there are no lines above, set position to the first line.
-                                if (!DoubleUtil.IsNaN(suggestedX))
+                                if (!double.IsNaN(suggestedX))
                                 {
                                     positionOut = lines[0].GetTextPositionFromDistance(suggestedX);
                                 }
@@ -2553,7 +2553,7 @@ namespace MS.Internal.Documents
                             else
                             {
                                 // Just in case there are no lines below, set position to the last line.
-                                if (!DoubleUtil.IsNaN(suggestedX))
+                                if (!double.IsNaN(suggestedX))
                                 {
                                     positionOut = lines[lines.Count - 1].GetTextPositionFromDistance(suggestedX);
                                 }
@@ -3003,7 +3003,7 @@ namespace MS.Internal.Documents
                 {
                     // Get position at suggested X. If suggested X is not provided, 
                     // use the first position in the line.
-                    if (!DoubleUtil.IsNaN(suggestedX))
+                    if (!double.IsNaN(suggestedX))
                     {
                         positionOut = lines[lineIndex].GetTextPositionFromDistance(suggestedX);
                     }
@@ -3018,7 +3018,7 @@ namespace MS.Internal.Documents
                     if (count < 0)
                     {
                         // Just in case there are no lines above, set position to the first line.
-                        if (!DoubleUtil.IsNaN(suggestedX))
+                        if (!double.IsNaN(suggestedX))
                         {
                             positionOut = lines[0].GetTextPositionFromDistance(suggestedX);
                         }
@@ -3030,7 +3030,7 @@ namespace MS.Internal.Documents
                     else
                     {
                         // Just in case there are no lines below, set position to the last line.
-                        if (!DoubleUtil.IsNaN(suggestedX))
+                        if (!double.IsNaN(suggestedX))
                         {
                             positionOut = lines[lines.Count - 1].GetTextPositionFromDistance(suggestedX);
                         }

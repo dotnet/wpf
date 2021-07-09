@@ -300,7 +300,7 @@ namespace System.Windows.Media
             if (emSize > MaxFontEmSize)
                 throw new ArgumentOutOfRangeException("emSize", SR.Get(SRID.ParameterCannotBeGreaterThan, MaxFontEmSize));
 
-            if (DoubleUtil.IsNaN(emSize))
+            if (double.IsNaN(emSize))
                 throw new ArgumentOutOfRangeException("emSize", SR.Get(SRID.ParameterValueCannotBeNaN));
         }
 
@@ -1359,7 +1359,7 @@ namespace System.Windows.Media
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("value", SR.Get(SRID.PropertyMustBeGreaterThanZero, "MaxTextHeight"));
 
-                if (DoubleUtil.IsNaN(value))
+                if (double.IsNaN(value))
                     throw new ArgumentOutOfRangeException("value", SR.Get(SRID.PropertyValueCannotBeNaN, "MaxTextHeight"));
 
                 _maxTextHeight = value;

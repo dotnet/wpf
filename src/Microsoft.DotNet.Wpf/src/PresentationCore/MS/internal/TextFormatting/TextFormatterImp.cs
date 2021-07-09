@@ -481,7 +481,7 @@ namespace MS.Internal.TextFormatting
             if (paragraphProperties.DefaultTextRunProperties.Typeface == null)
                 throw new ArgumentNullException("paragraphProperties.DefaultTextRunProperties.Typeface");
 
-            if (DoubleUtil.IsNaN(paragraphWidth))
+            if (double.IsNaN(paragraphWidth))
                 throw new ArgumentOutOfRangeException("paragraphWidth", SR.Get(SRID.ParameterValueCannotBeNaN));
 
             if (double.IsInfinity(paragraphWidth))

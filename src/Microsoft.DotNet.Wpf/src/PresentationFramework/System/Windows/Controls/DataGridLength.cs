@@ -76,7 +76,7 @@ namespace System.Windows.Controls
         /// </exception>
         public DataGridLength(double value, DataGridLengthUnitType type, double desiredValue, double displayValue)
         {
-            if (DoubleUtil.IsNaN(value) || Double.IsInfinity(value))
+            if (double.IsNaN(value) || Double.IsInfinity(value))
             {
                 throw new ArgumentException(
                     SR.Get(SRID.DataGridLength_Infinity),
@@ -130,8 +130,8 @@ namespace System.Windows.Controls
         {
             return gl1.UnitType == gl2.UnitType 
                    && gl1.Value == gl2.Value 
-                   && ((gl1.DesiredValue == gl2.DesiredValue) || (DoubleUtil.IsNaN(gl1.DesiredValue) && DoubleUtil.IsNaN(gl2.DesiredValue)))
-                   && ((gl1.DisplayValue == gl2.DisplayValue) || (DoubleUtil.IsNaN(gl1.DisplayValue) && DoubleUtil.IsNaN(gl2.DisplayValue)));
+                   && ((gl1.DesiredValue == gl2.DesiredValue) || (double.IsNaN(gl1.DesiredValue) && double.IsNaN(gl2.DesiredValue)))
+                   && ((gl1.DisplayValue == gl2.DisplayValue) || (double.IsNaN(gl1.DisplayValue) && double.IsNaN(gl2.DisplayValue)));
         }
 
         /// <summary>
@@ -145,8 +145,8 @@ namespace System.Windows.Controls
         {
             return gl1.UnitType != gl2.UnitType 
                    || gl1.Value != gl2.Value
-                   || ((gl1.DesiredValue != gl2.DesiredValue) && !(DoubleUtil.IsNaN(gl1.DesiredValue) && DoubleUtil.IsNaN(gl2.DesiredValue)))
-                   || ((gl1.DisplayValue != gl2.DisplayValue) && !(DoubleUtil.IsNaN(gl1.DisplayValue) && DoubleUtil.IsNaN(gl2.DisplayValue)));
+                   || ((gl1.DesiredValue != gl2.DesiredValue) && !(double.IsNaN(gl1.DesiredValue) && double.IsNaN(gl2.DesiredValue)))
+                   || ((gl1.DisplayValue != gl2.DisplayValue) && !(double.IsNaN(gl1.DisplayValue) && double.IsNaN(gl2.DisplayValue)));
         }
 
         /// <summary>

@@ -126,7 +126,7 @@ namespace System.Windows
 
                     value = Convert.ToDouble(source, cultureInfo);
 
-                    if (DoubleUtil.IsNaN(value))
+                    if (double.IsNaN(value))
                     {
                         //  this allows for conversion from Width / Height = "Auto" 
                         value = 1.0;

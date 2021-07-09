@@ -844,7 +844,7 @@ namespace MS.Internal.PresentationCore
         private static Boolean IsInvalidDouble(Double value)
         {
             return Double.IsInfinity(value)
-                || DoubleUtil.IsNaN(value);
+                || double.IsNaN(value);
         }
 
         #endregion

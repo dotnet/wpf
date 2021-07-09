@@ -272,7 +272,7 @@ namespace System.Windows.Controls
                         desiredWidth = oldWidth.DesiredValue;
                     }
 
-                    if (DoubleUtil.IsNaN(width.DesiredValue) ||
+                    if (double.IsNaN(width.DesiredValue) ||
                         DoubleUtil.LessThan(width.DesiredValue, desiredWidth))
                     {
                         column.SetWidthInternal(new DataGridLength(width.Value, width.UnitType, desiredWidth, width.DisplayValue));

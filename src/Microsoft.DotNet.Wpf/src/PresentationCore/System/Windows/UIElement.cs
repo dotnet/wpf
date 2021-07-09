@@ -585,7 +585,7 @@ namespace System.Windows
                 using (Dispatcher.DisableProcessing())
                 {
                     //enforce that Measure can not receive NaN size .
-                    if (DoubleUtil.IsNaN(availableSize.Width) || DoubleUtil.IsNaN(availableSize.Height))
+                    if (double.IsNaN(availableSize.Width) || double.IsNaN(availableSize.Height))
                         throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_NaNMeasure));
 
                     bool neverMeasured = NeverMeasured;
@@ -682,7 +682,7 @@ namespace System.Windows
                         throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_PositiveInfinityReturned, this.GetType().FullName));
 
                     //enforce that MeasureCore can not return NaN size .
-                    if (DoubleUtil.IsNaN(desiredSize.Width) || DoubleUtil.IsNaN(desiredSize.Height))
+                    if (double.IsNaN(desiredSize.Width) || double.IsNaN(desiredSize.Height))
                         throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_NaNReturned, this.GetType().FullName));
 
                     //reset measure dirtiness
@@ -801,8 +801,8 @@ namespace System.Windows
                     //enforce that Arrange can not come with Infinity size or NaN
                     if (double.IsPositiveInfinity(finalRect.Width)
                         || double.IsPositiveInfinity(finalRect.Height)
-                        || DoubleUtil.IsNaN(finalRect.Width)
-                        || DoubleUtil.IsNaN(finalRect.Height)
+                        || double.IsNaN(finalRect.Width)
+                        || double.IsNaN(finalRect.Height)
                       )
                     {
                         DependencyObject parent = GetUIParent() as UIElement;
@@ -1095,7 +1095,7 @@ namespace System.Windows
             {
                 newValue = Math.Round(value * dpiScale) / dpiScale;
                 // If rounding produces a value unacceptable to layout (NaN, Infinity or MaxValue), use the original value.
-                if (DoubleUtil.IsNaN(newValue) ||
+                if (double.IsNaN(newValue) ||
                     Double.IsInfinity(newValue) ||
                     DoubleUtil.AreClose(newValue, Double.MaxValue))
                 {
@@ -1403,8 +1403,8 @@ namespace System.Windows
         private static bool IsRenderTransformOriginValid(object value)
         {
             Point v = (Point)value;
-            return (    (!DoubleUtil.IsNaN(v.X) && !Double.IsPositiveInfinity(v.X) && !Double.IsNegativeInfinity(v.X))
-                     && (!DoubleUtil.IsNaN(v.Y) && !Double.IsPositiveInfinity(v.Y) && !Double.IsNegativeInfinity(v.Y)));
+            return (    (!double.IsNaN(v.X) && !Double.IsPositiveInfinity(v.X) && !Double.IsNegativeInfinity(v.X))
+                     && (!double.IsNaN(v.Y) && !Double.IsPositiveInfinity(v.Y) && !Double.IsNegativeInfinity(v.Y)));
         }
 
 

@@ -690,7 +690,7 @@ namespace System.Windows.Controls
 
         static internal double ValidateInputOffset(double offset, string parameterName)
         {
-            if (DoubleUtil.IsNaN(offset))
+            if (double.IsNaN(offset))
             {
                 throw new ArgumentOutOfRangeException(parameterName, SR.Get(SRID.ScrollViewer_CannotBeNaN, parameterName));
             }

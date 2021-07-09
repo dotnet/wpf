@@ -48,7 +48,7 @@ namespace System.Windows.Media.Animation
         public RepeatBehavior(double count)
         {
             if (   Double.IsInfinity(count)
-                || DoubleUtil.IsNaN(count)
+                || double.IsNaN(count)
                 || count < 0.0)
             {
                 throw new ArgumentOutOfRangeException("count", SR.Get(SRID.Timing_RepeatBehaviorInvalidIterationCount, count));

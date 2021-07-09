@@ -783,7 +783,7 @@ namespace System.Windows.Controls
             {
                 nextLinePosition = position.GetFrozenPointer(position.LogicalDirection);
             }
-            else if (DoubleUtil.IsNaN(suggestedX))
+            else if (double.IsNaN(suggestedX))
             {
                 nextLinePosition = _host.TextContainer.CreatePointerAtOffset(_lineMetrics[lineIndex + linesMoved].Offset, LogicalDirection.Forward);
             }

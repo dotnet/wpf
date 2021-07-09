@@ -61,6 +61,7 @@
     <Compile Include="System\Windows\Automation\AutomationElement.cs" />
     <Compile Include="System\Windows\Automation\AutomationElementCollection.cs" />
     <Compile Include="System\Windows\Automation\AutomationFocusChangedEventArgs.cs" />
+    <Compile Include="System\Windows\Automation\AutomationHeadingLevel.cs" />
     <Compile Include="System\Windows\Automation\BasePattern.cs" />
     <Compile Include="System\Windows\Automation\CacheRequest.cs" />
     <Compile Include="System\Windows\Automation\ClientSettings.cs" />

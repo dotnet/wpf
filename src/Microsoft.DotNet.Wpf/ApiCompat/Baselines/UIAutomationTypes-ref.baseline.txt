@@ -1,1 +1,3 @@
-Total Issues: 0
+Compat issues with assembly UIAutomationTypes:
+TypesMustExist : Type 'System.Windows.Automation.AutomationHeadingLevel' does not exist in the implementation but it does exist in the contract.
+Total Issues: 1

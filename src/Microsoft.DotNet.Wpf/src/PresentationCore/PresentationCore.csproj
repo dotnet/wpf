@@ -392,7 +392,6 @@
     <Compile Include="System\Windows\UIElement3D.cs" />
     <Compile Include="System\Windows\UIPropertyMetadata.cs" />
     <Compile Include="System\Windows\Automation\AutomationLiveSetting.cs" />
-    <Compile Include="System\Windows\Automation\AutomationHeadingLevel.cs" />
     <Compile Include="System\Windows\Automation\AutomationProperties.cs" />
     <Compile Include="System\Windows\Automation\IsOffscreenBehavior.cs" />
     <Compile Include="System\Windows\Automation\Peers\AutomationPeer.cs" />

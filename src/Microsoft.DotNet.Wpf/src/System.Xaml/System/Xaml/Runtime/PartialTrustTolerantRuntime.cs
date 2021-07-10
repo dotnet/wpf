@@ -68,7 +68,7 @@ namespace MS.Internal.Xaml.Runtime
             _transparentRuntime.AddToDictionary(collection, dictionaryType, value, valueXamlType, key);
         }
 
-        public override object CallProvideValue(MarkupExtension me, IServiceProvider serviceProvider)
+        public override object CallProvideValue(IMarkupExtension me, IServiceProvider serviceProvider)
         {
             // Once the ME is instantiated, invocation is always a public method call
             return _transparentRuntime.CallProvideValue(me, serviceProvider);

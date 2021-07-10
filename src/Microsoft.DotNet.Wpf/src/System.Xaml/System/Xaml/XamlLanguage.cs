@@ -90,7 +90,7 @@ namespace System.Xaml
             new Lazy<XamlType>(() => GetXamlType(typeof(List<Attribute>)));
         // These aren't language built-ins, but we use them in schema
         private static Lazy<XamlType> s_markupExtension =
-            new Lazy<XamlType>(() => GetXamlType(typeof(MarkupExtension)));
+            new Lazy<XamlType>(() => GetXamlType(typeof(IMarkupExtension)));
         private static Lazy<XamlType> s_iNameScope =
             new Lazy<XamlType>(() => GetXamlType(typeof(INameScope)));
         private static Lazy<XamlType> s_iXmlSerializable =

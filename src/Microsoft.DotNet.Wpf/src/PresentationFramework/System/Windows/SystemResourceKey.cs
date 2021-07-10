@@ -364,10 +364,6 @@ namespace System.Windows
             short memberId = 0;
             string srkField = null;
             bool isKey = false;
-            bool found = true;
-
-            // Initialization needed to keep compiler happy!
-            SystemResourceKeyID srkId = SystemResourceKeyID.InternalSystemColorsStart;
 
             if (memberName.EndsWith("Key", false, TypeConverterHelper.InvariantEnglishUS))
             {
@@ -387,16 +383,9 @@ namespace System.Windows
                 srkField = memberName;
             }
 
-            try
-            {
-                srkId = (SystemResourceKeyID)Enum.Parse(typeof(SystemResourceKeyID), srkField);
-            }
-            catch (ArgumentException)
-            {
-                found = false;
-            }
-
-            if (found)
+            if (targetType.Assembly == XamlTypeMapper.AssemblyPF &&
+                targetType.FullName == "System.Windows.SystemParameters" &&
+                Enum.TryParse(srkField, out SystemResourceKeyID srkId))
             {
                 bool isExtended = ((short)srkId > SystemResourceKeyIDExtendedStart &&
                                    (short)srkId < SystemResourceKeyIDExtendedEnd);

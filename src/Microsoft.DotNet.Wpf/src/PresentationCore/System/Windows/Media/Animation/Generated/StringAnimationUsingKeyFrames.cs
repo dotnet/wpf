@@ -653,7 +653,7 @@ namespace System.Windows.Media.Animation
             }
 
             int maxKeyFrameIndex = keyFrameCount - 1;
-            ArrayList unspecifiedBlocks = new ArrayList();
+            List<KeyTimeBlock> unspecifiedBlocks = new List<KeyTimeBlock>();
             bool hasPacedKeyTimes = false;
 
             //
@@ -765,7 +765,7 @@ namespace System.Windows.Media.Animation
 
             for (int j = 0; j < unspecifiedBlocks.Count; j++)
             {
-                KeyTimeBlock block = (KeyTimeBlock)unspecifiedBlocks[j];
+                KeyTimeBlock block = unspecifiedBlocks[j];
 
                 TimeSpan blockBeginTime = TimeSpan.Zero;
 

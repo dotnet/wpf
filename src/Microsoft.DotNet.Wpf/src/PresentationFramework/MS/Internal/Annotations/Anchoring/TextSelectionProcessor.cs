@@ -169,7 +169,7 @@ namespace MS.Internal.Annotations.Anchoring
             {
                 GetTextSegmentValues(textSegments[i], elementStart, elementEnd, out startOffset, out endOffset);
 
-                part.NameValuePairs.Add(SegmentAttribute + i.ToString(NumberFormatInfo.InvariantInfo), startOffset.ToString(NumberFormatInfo.InvariantInfo) + TextSelectionProcessor.Separator[0] + endOffset.ToString(NumberFormatInfo.InvariantInfo));
+                part.NameValuePairs.Add(SegmentAttribute + i.ToString(NumberFormatInfo.InvariantInfo), startOffset.ToString(NumberFormatInfo.InvariantInfo) + TextSelectionProcessor.Separator + endOffset.ToString(NumberFormatInfo.InvariantInfo));
             }
 
             part.NameValuePairs.Add(CountAttribute, textSegments.Count.ToString(NumberFormatInfo.InvariantInfo));
@@ -424,7 +424,7 @@ namespace MS.Internal.Annotations.Anchoring
         internal const String IncludeOverlaps = "IncludeOverlaps";
 
         // Potential separators for values in segment name/value pairs
-        internal static readonly Char[] Separator = new Char[] { ',' };
+        internal const Char Separator = ',';
 
         // Name of locator part element
         internal static readonly XmlQualifiedName CharacterRangeElementName = new XmlQualifiedName("CharacterRange", AnnotationXmlConstants.Namespaces.BaseSchemaNamespace);

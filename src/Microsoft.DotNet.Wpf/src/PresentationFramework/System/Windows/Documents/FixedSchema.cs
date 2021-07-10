@@ -446,7 +446,7 @@ namespace System.Windows.Documents
                 {
                     attrValue = attrValue.Substring(_contextColor.Length);
                     attrValue = attrValue.Trim();
-                    string[] tokens = attrValue.Split(new char[] { ' ' });
+                    string[] tokens = attrValue.Split(' ');
                     if (tokens.GetLength(0) >= 1)
                     {
                         return new string[] { tokens[0] };

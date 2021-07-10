@@ -2528,7 +2528,7 @@ namespace System.Windows.Markup
             if (ValueType != null && ValueType.IsEnum)
             {
                 uint uintValue = 0;
-                string [] enumValues = Value.Split(new Char[] { ',' });
+                string [] enumValues = Value.Split(',');
 
                 // if the Enum is a flag, then resolve each flag value in the enum value string.
                 foreach (string enumValue in enumValues)

@@ -1477,7 +1477,7 @@ namespace MS.Internal
             StringBuilder sb = new StringBuilder(typeName, 20);
             sb.Append(GENERIC_DELIMITER);
 
-            _typeArgsList = typeArgs.Split(new Char[] { COMMA });
+            _typeArgsList = typeArgs.Split(COMMA);
 
             sb.Append(_typeArgsList.Length);
 
@@ -1537,7 +1537,7 @@ namespace MS.Internal
         {
             if (ns.Length > 0)
             {
-                string[] nsParts = ns.Split(new char[] { DOTCHAR });
+                string[] nsParts = ns.Split(DOTCHAR);
 
                 foreach (string nsPart in nsParts)
                 {
@@ -1629,7 +1629,7 @@ namespace MS.Internal
                     {
                         string relPath = TargetPath.Substring(SourceFileInfo.SourcePath.Length);
                         relPath += SourceFileInfo.RelativeSourceFilePath;
-                        string[] dirs = relPath.Split(new Char[] { Path.DirectorySeparatorChar });
+                        string[] dirs = relPath.Split(Path.DirectorySeparatorChar);
                         for (int i = 1; i < dirs.Length; i++)
                         {
                             parentFolderPrefix += PARENTFOLDER;

@@ -21,7 +21,7 @@ namespace System.Windows
     {
         #region Data
 
-        private static char[] _percentCharacter = new char[] { '%' };
+        private const char _percentCharacter = '%';
 
         #endregion
 
@@ -88,7 +88,7 @@ namespace System.Windows
                 {
                     return KeyTime.Paced;
                 }
-                else if (stringValue[stringValue.Length - 1] == _percentCharacter[0])
+                else if (stringValue[stringValue.Length - 1] == _percentCharacter)
                 {
                     stringValue = stringValue.TrimEnd(_percentCharacter);
 
@@ -195,7 +195,7 @@ namespace System.Windows
                                     keyTime.Percent * 100.0,
                                     destinationType);
 
-                            return returnValue + _percentCharacter[0].ToString();
+                            return returnValue + _percentCharacter.ToString();
 
                         case KeyTimeType.TimeSpan:
 

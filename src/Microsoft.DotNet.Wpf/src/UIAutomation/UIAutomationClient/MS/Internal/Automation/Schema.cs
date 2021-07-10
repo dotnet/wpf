@@ -209,6 +209,35 @@ namespace MS.Internal.Automation
             return els;
         }
 
+        private static object ConvertToHeadingLevel(object value){
+            switch(value)
+            {
+                case AutomationHeadingLevel.None:
+                    return HeadingLevel.None;
+                case AutomationHeadingLevel.Level1:
+                    return HeadingLevel.Level1;
+                case AutomationHeadingLevel.Level2:
+                    return HeadingLevel.Level2;
+                case AutomationHeadingLevel.Level3:
+                    return HeadingLevel.Level3;
+                case AutomationHeadingLevel.Level4:
+                    return HeadingLevel.Level4;
+                case AutomationHeadingLevel.Level5:
+                    return HeadingLevel.Level5;
+                case AutomationHeadingLevel.Level6:
+                    return HeadingLevel.Level6;
+                case AutomationHeadingLevel.Level7:
+                    return HeadingLevel.Level7;
+                case AutomationHeadingLevel.Level8:
+                    return HeadingLevel.Level8;
+                case AutomationHeadingLevel.Level9:
+                    return HeadingLevel.Level9;
+                default:
+                    return HeadingLevel.None;
+            }
+            return HeadingLevel.None;
+        }
+
         // Delegate versions of the above...
         private static AutomationPropertyConverter convertToBool = new AutomationPropertyConverter(ConvertToBool);
         private static AutomationPropertyConverter convertToRowOrColumnMajor        = new AutomationPropertyConverter(ConvertToRowOrColumnMajor);
@@ -224,6 +253,7 @@ namespace MS.Internal.Automation
         private static AutomationPropertyConverter convertToElementArray            = new AutomationPropertyConverter(ConvertToElementArray);
         private static AutomationPropertyConverter convertToControlType             = new AutomationPropertyConverter(ConvertToControlType);
         private static AutomationPropertyConverter convertToCultureInfo             = new AutomationPropertyConverter(ConvertToCultureInfo);
+        private static AutomationPropertyConverter convertToHeadingLevel            = new AutomationPropertyConverter(ConvertToHeadingLevel);
 
         #endregion Private Methods
 
@@ -274,7 +304,7 @@ namespace MS.Internal.Automation
             new AutomationPropertyInfo( null,                            AutomationElement.ItemStatusProperty,                   typeof(string),                ""                             ),
             new AutomationPropertyInfo( null,                            AutomationElement.SizeOfSetProperty,                    typeof(int),                   -1                             ),
             new AutomationPropertyInfo( null,                            AutomationElement.PositionInSetProperty,                typeof(int),                   -1                             ),
-            new AutomationPropertyInfo( null,                            AutomationElement.HeadingLevelProperty,                 typeof(AutomationHeadingLevel),AutomationHeadingLevel.None    ),
+            new AutomationPropertyInfo( convertToHeadingLevel,           AutomationElement.HeadingLevelProperty,                 typeof(HeadingLevel),          HeadingLevel.None              ),
             new AutomationPropertyInfo( convertToBool,                   AutomationElement.IsDialogProperty,                     typeof(bool),                  false                          ),
 
             // Pattern Available properties            

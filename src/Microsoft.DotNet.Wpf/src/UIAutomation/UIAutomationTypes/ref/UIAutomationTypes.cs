@@ -267,6 +267,19 @@ namespace System.Windows.Automation
         Horizontal = 1,
         Vertical = 2,
     }
+    public enum HeadingLevel
+    {
+        None = 80050,
+        Level1,
+        Level2,
+        Level3,
+        Level4,
+        Level5,
+        Level6,
+        Level7,
+        Level8,
+        Level9,
+    }
     public partial class ProxyAssemblyNotLoadedException : System.Exception
     {
         public ProxyAssemblyNotLoadedException() { }

@@ -33,7 +33,7 @@ namespace MS.Internal.Drt
 
     internal static class NativeMethodsSetLastError
     {
-        private const string PresentationNativeDll = "PresentationNative_cor3.dll";
+        private const string PresentationNativeDll = "PresentationNative_net6.dll";
 
 #if WINDOWSFORMSINTEGRATION     // WinFormsIntegration
 

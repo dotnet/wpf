@@ -41,7 +41,7 @@
     <VCRedistFallbackCrtFolderName Condition="'$(Configuration)'=='Release'">Microsoft.VC141.CRT</VCRedistFallbackCrtFolderName>
     <VCRedistFallbackCrtFolderName Condition="'$(Configuration)'=='Debug'">Microsoft.VC141.DebugCRT</VCRedistFallbackCrtFolderName>
     <!-- 
-      In Release builds,  the Target assembly will be a privatized copy of VC runtime with a name like vcruntime140_cor3.dll
+      In Release builds,  the Target assembly will be a privatized copy of VC runtime with a name like vcruntime140_net6.dll
       In Debug builds, the Target assembly will be a privatize copy of the VC runtime with no name changes - like vcruntime140d.dll
     -->
     <TargetName Condition="'$(Configuration)'=='Release'">$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix)$(WpfVersionSuffix)</TargetName>

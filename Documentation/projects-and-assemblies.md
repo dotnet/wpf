@@ -357,24 +357,24 @@ The following assemblies are being produced today:
             WindowsFormsIntegration.resources.dll
 \---win-x86
     \---native
-            D3DCompiler_47_cor3.dll
-            PenImc_cor3.dll
-            PenImc_cor3.pdb
-            PresentationNative_cor3.dll
-            PresentationNative_cor3.pdb
+            D3DCompiler_47_net6.dll
+            PenImc_net6.dll
+            PenImc_net6.pdb
+            PresentationNative_net6.dll
+            PresentationNative_net6.pdb
             vcruntime140d.dll
-            wpfgfx_cor3.dll
-            wpfgfx_cor3.pdb
+            wpfgfx_net6.dll
+            wpfgfx_net6.pdb
 \---win-x64
     \---native
-            D3DCompiler_47_cor3.dll
-            PenImc_cor3.dll
-            PenImc_cor3.pdb
-            PresentationNative_cor3.dll
-            PresentationNative_cor3.pdb
+            D3DCompiler_47_net6.dll
+            PenImc_net6.dll
+            PenImc_net6.pdb
+            PresentationNative_net6.dll
+            PresentationNative_net6.pdb
             vcruntime140d.dll
-            wpfgfx_cor3.dll
-            wpfgfx_cor3.pdb			
+            wpfgfx_net6.dll
+            wpfgfx_net6.pdb			
 ```        
 
 The following projects exist in the repo. Those corresponding to the assemblies listed above are currently building. 

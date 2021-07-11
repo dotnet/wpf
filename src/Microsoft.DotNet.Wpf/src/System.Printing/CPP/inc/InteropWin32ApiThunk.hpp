@@ -366,7 +366,7 @@ namespace Win32ApiThunk
                 xpsPackageTarget);
         }
     private:
-        [DllImportAttribute("PresentationNative_cor3.dll" ,EntryPoint="IsStartXpsPrintJobSupported",
+        [DllImportAttribute("PresentationNative_net6.dll" ,EntryPoint="IsStartXpsPrintJobSupported",
                              CharSet=CharSet::Unicode,
                              SetLastError=true, 
                              CallingConvention = CallingConvention::Winapi)]
@@ -374,7 +374,7 @@ namespace Win32ApiThunk
         BOOL
         IsStartXpsPrintJobSupportedImpl(VOID);
         
-        [DllImportAttribute("PresentationNative_cor3.dll" ,EntryPoint="LateBoundStartXpsPrintJob",
+        [DllImportAttribute("PresentationNative_net6.dll" ,EntryPoint="LateBoundStartXpsPrintJob",
                              CharSet=CharSet::Unicode,
                              SetLastError=true, 
                              CallingConvention = CallingConvention::Winapi)]
@@ -393,7 +393,7 @@ namespace Win32ApiThunk
             VOID **printTicketStream
         );
         
-        [DllImportAttribute("PresentationNative_cor3.dll", EntryPoint = "IsPrintPackageTargetSupported",
+        [DllImportAttribute("PresentationNative_net6.dll", EntryPoint = "IsPrintPackageTargetSupported",
             CharSet = CharSet::Unicode,
             SetLastError = true,
             CallingConvention = CallingConvention::Winapi)]
@@ -401,7 +401,7 @@ namespace Win32ApiThunk
         BOOL
         IsPrintPackageTargetSupportedImpl(VOID);
 
-        [DllImportAttribute("PresentationNative_cor3.dll", EntryPoint = "PrintToPackageTarget",
+        [DllImportAttribute("PresentationNative_net6.dll", EntryPoint = "PrintToPackageTarget",
             CharSet = CharSet::Unicode,
             SetLastError = true,
             CallingConvention = CallingConvention::Winapi)]

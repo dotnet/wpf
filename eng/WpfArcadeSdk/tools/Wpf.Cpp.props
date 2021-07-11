@@ -153,10 +153,10 @@
     <DisallowLibClause Condition="'$(DynamicStandardCppLibrary)'!=''">$(DisallowLibClause) /disallowlib:libcpmt$(LibSuffix).lib</DisallowLibClause>
 
     <!-- 
-      When linking to vcruntime140.dll, rename and link to vcruntime140_cor3.dll 
+      When linking to vcruntime140.dll, rename and link to vcruntime140_net6.dll 
         Caveats:
           - Supported only on Release builds 
-          - WPF will carry a privatized copy of vcruntime with it - renamed with suffix _cor3
+          - WPF will carry a privatized copy of vcruntime with it - renamed with suffix _net6
           - Debug builds normally link to Static VCRT by default, and linking to a privatized vcruntime is not required
           - Managed C++ assemblies that utilize /clr:pure always link to vcruntime implicitly, and should employ this 
             DLL renaming at link time and reference the privatized copy of vcruntime.

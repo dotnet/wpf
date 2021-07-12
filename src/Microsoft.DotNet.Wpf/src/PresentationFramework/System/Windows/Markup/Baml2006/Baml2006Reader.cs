@@ -2061,50 +2061,58 @@ namespace System.Windows.Baml2006
             }
 
             throw new InvalidOperationException("Could not find prefix for type: " + type.Name);
-        } 
+        }
 
         private string Logic_GetFullXmlns(string uriInput)
         {
-            int colonIdx = uriInput.IndexOf(':');
-            if (colonIdx != -1)
-            {
-                string uriTypePrefix = uriInput.Substring(0, colonIdx);
-                if (String.Equals(uriTypePrefix, "clr-namespace"))
-                {
-                    //We have a clr-namespace so do special processing
-                    int clrNsStartIdx = colonIdx + 1;
-                    int semicolonIdx = uriInput.IndexOf(';');
-                    if (-1 == semicolonIdx)
-                    {
-                        // We need to append local assembly
+            const string clrNamespace = "clr-namespace:";
+            const string assembly = "assembly";
 
-                        return uriInput + ((_settings.LocalAssembly != null)
-                                                ? ";assembly=" + GetAssemblyNameForNamespace(_settings.LocalAssembly)
-                                                : String.Empty);
-                    }
-                    else
+            if (uriInput.StartsWith(clrNamespace, StringComparison.Ordinal))
+            {
+                //We have a clr-namespace so do special processing
+                int semicolonIdx = uriInput.IndexOf(';', clrNamespace.Length);
+                if (semicolonIdx < 0)
+                {
+                    // We need to append local assembly
+                    return (_settings.LocalAssembly != null)
+                                            ? uriInput + ";assembly=" + GetAssemblyNameForNamespace(_settings.LocalAssembly)
+                                            : uriInput;
+                }
+                else
+                {
+                    int assemblyKeywordStartIdx = semicolonIdx + 1;
+                    int equalIdx = uriInput.IndexOf('=', semicolonIdx);
+                    if (equalIdx < 0)
                     {
-                        int assemblyKeywordStartIdx = semicolonIdx + 1;
-                        int equalIdx = uriInput.IndexOf('=');
-                        if (-1 == equalIdx)
-                        {
-                            throw new ArgumentException(SR.Get(SRID.MissingTagInNamespace, "=", uriInput));
-                        }
-                        string keyword = uriInput.Substring(assemblyKeywordStartIdx, equalIdx - assemblyKeywordStartIdx);
-                        if (!String.Equals(keyword, "assembly"))
-                        {
-                            throw new ArgumentException(SR.Get(SRID.AssemblyTagMissing, "assembly", uriInput));
-                        }
-                        string assemblyName = uriInput.Substring(equalIdx + 1);
-                        if (String.IsNullOrEmpty(assemblyName))
-                        {
-                            return uriInput + GetAssemblyNameForNamespace(_settings.LocalAssembly);
-                        }
+                        ThrowMissingTagInNamespace(uriInput);
+                    }
+
+                    int assemblyTagLength = equalIdx - assemblyKeywordStartIdx;
+                    if (assemblyTagLength != assembly.Length ||
+                        string.CompareOrdinal(uriInput, assemblyKeywordStartIdx, assembly, 0, assembly.Length) != 0)
+                    {
+                        ThrowAssemblyTagMissing(uriInput);
+                    }
+
+                    if (uriInput.Length == equalIdx + 1)
+                    {
+                        return uriInput + GetAssemblyNameForNamespace(_settings.LocalAssembly);
                     }
                 }
             }
 
             return uriInput;
+
+            static void ThrowAssemblyTagMissing(string uriInput)
+            {
+                throw new ArgumentException(SR.Get(SRID.AssemblyTagMissing, "assembly", uriInput));
+            }
+
+            static void ThrowMissingTagInNamespace(string uriInput)
+            {
+                throw new ArgumentException(SR.Get(SRID.MissingTagInNamespace, "=", uriInput));
+            }
         }
 
         //  Providing the assembly short name may lead to ambiguity between two versions of the same assembly, but we need to

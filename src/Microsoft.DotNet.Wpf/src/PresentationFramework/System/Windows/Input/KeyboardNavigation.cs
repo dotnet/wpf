@@ -903,7 +903,7 @@ namespace System.Windows.Input
                     // then we load the default FocusVisualStyle from ResourceDictionary.
                     if (fvs == FrameworkElement.DefaultFocusVisualStyle)
                     {
-                        fvs = SystemResources.FindResourceInternal(SystemParameters.FocusVisualStyleKey) as Style;
+                        fvs = FrameworkElement.FindResourceInternal(fe, null /* fce */, SystemParameters.FocusVisualStyleKey) as Style;
                     }
 
                     if (fvs != null)
@@ -930,7 +930,7 @@ namespace System.Windows.Input
                                 // then we load the default FocusVisualStyle from ResourceDictionary.
                                 if (fvs == FrameworkElement.DefaultFocusVisualStyle)
                                 {
-                                    fvs = SystemResources.FindResourceInternal(SystemParameters.FocusVisualStyleKey) as Style;
+                                    fvs = FrameworkElement.FindResourceInternal(null /* fe */, fce, SystemParameters.FocusVisualStyleKey) as Style;
                                 }
 
                                 if (fvs != null)

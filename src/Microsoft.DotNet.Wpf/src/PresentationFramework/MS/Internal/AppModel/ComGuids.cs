@@ -33,6 +33,8 @@ namespace MS.Internal.AppModel
         public const string ShellFolder = "000214E6-0000-0000-C000-000000000046";
         /// <summary>IID_IShellLink</summary>
         public const string ShellLink = "000214F9-0000-0000-C000-000000000046";
+        /// <summary>IID_IShellLinkDataList</summary>
+        public const string ShellLinkDataList = "45E2B4AE-B1C3-11D0-B92F-00A0C90312E1";
         /// <summary>IID_IShellItem</summary>
         public const string ShellItem = "43826d1e-e718-42ee-bc55-a1e261c37bfe";
         /// <summary>IID_IShellItem2</summary>

@@ -381,6 +381,30 @@ namespace MS.Internal.AppModel
 
     [
         ComImport,
+        InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown),
+        Guid(IID.ShellLinkDataList),
+    ]
+    internal interface IShellLinkDataList
+    {
+        [PreserveSig]
+        Int32 AddDataBlock(IntPtr pDataBlock);
+
+        [PreserveSig]
+        Int32 CopyDataBlock(uint dwSig, out IntPtr ppDataBlock);
+
+        [PreserveSig]
+        Int32 RemoveDataBlock(uint dwSig);
+
+        void GetFlags(out uint pdwFlags);
+        void SetFlags(uint dwFlags);
+    }
+
+    /// <SecurityNote>
+    /// Critical: Suppresses unmanaged code security.
+    /// </SecurityNote>
+    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
+    [
+        ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
         Guid(IID.FileDialogEvents),
     ]

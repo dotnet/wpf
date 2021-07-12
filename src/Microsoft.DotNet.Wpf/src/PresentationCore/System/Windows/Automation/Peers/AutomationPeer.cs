@@ -1303,6 +1303,34 @@ namespace System.Windows.Automation.Peers
             return result;
         }
 
+        private static HeadingLevel ConvertHeadingLevelToId(AutomationHeadingLevel value){
+            switch(value)
+            {
+                case AutomationHeadingLevel.None:
+                    return HeadingLevel.None;
+                case AutomationHeadingLevel.Level1:
+                    return HeadingLevel.Level1;
+                case AutomationHeadingLevel.Level2:
+                    return HeadingLevel.Level2;
+                case AutomationHeadingLevel.Level3:
+                    return HeadingLevel.Level3;
+                case AutomationHeadingLevel.Level4:
+                    return HeadingLevel.Level4;
+                case AutomationHeadingLevel.Level5:
+                    return HeadingLevel.Level5;
+                case AutomationHeadingLevel.Level6:
+                    return HeadingLevel.Level6;
+                case AutomationHeadingLevel.Level7:
+                    return HeadingLevel.Level7;
+                case AutomationHeadingLevel.Level8:
+                    return HeadingLevel.Level8;
+                case AutomationHeadingLevel.Level9:
+                    return HeadingLevel.Level9;
+                default:
+                    return HeadingLevel.None;
+            }
+        }
+
 
         /// <summary>
         /// Attempt to get the value for the IsDialog property.
@@ -2129,6 +2157,10 @@ namespace System.Windows.Automation.Peers
             if (getProperty != null)
             {
                 result = getProperty(this);
+                if(AutomationElementIdentifiers.HeadingLevelProperty != null && propertyId == AutomationElementIdentifiers.HeadingLevelProperty.Id)
+                {
+                    result = ConvertHeadingLevelToId((AutomationHeadingLevel)result);
+                }
             }
 
             return result;

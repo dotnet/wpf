@@ -2828,7 +2828,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             "CommandParameter",
                             typeof(object),
                             typeof(RibbonGallery),
-                            new FrameworkPropertyMetadata(null));
+                            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnCommandParameterChanged)));
 
         /// <summary>
         ///   Gets or sets a user defined data value that can be passed to the command when it is previewed.
@@ -2926,6 +2926,12 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 CanExecute = true;
             }
+        }
+
+        private static void OnCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            RibbonGallery gallery = (RibbonGallery)d;
+            gallery.UpdateCanExecute();
         }
 
         /// <summary>

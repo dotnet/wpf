@@ -21,7 +21,7 @@ namespace System.Xaml.Schema
         internal MethodInfo EnumeratorMethod { get; set; }
         private XamlType _xamlType;
 
-        private Action<object> _constructorDelegate;
+        private Func<object> _instanceCreatorDelegate;
 
         private ThreeValuedBool _isPublic;
 
@@ -290,20 +290,13 @@ namespace System.Xaml.Schema
                 {
                     return null;
                 }
-                object inst = CallCtorDelegate(type);
+                object inst = type._instanceCreatorDelegate();
                 return inst;
             }
 
 #if TARGETTING35SP1
 #else
 #endif
-            private static object CallCtorDelegate(XamlTypeInvoker type)
-            {
-                object inst = FormatterServices.GetUninitializedObject(type._xamlType.UnderlyingType);
-                InvokeDelegate(type._constructorDelegate, inst);
-                return inst;
-            }
-
             private static void InvokeDelegate(Action<object> action, object argument)
             {
                 action.Invoke(argument);
@@ -315,10 +308,21 @@ namespace System.Xaml.Schema
             // returns true if a delegate is available, false if not
             private static bool EnsureConstructorDelegate(XamlTypeInvoker type)
             {
-                if (type._constructorDelegate != null)
+                if (type._instanceCreatorDelegate != null)
                 {
                     return true;
                 }
+                Type underlyingType = null;
+                if (XamlObjectCreationFactory.HasBeenRegister)
+                {
+                    underlyingType = type._xamlType.UnderlyingType.UnderlyingSystemType;
+                    if (XamlObjectCreationFactory.TryGetCreator(underlyingType, out Func<object> creator))
+                    {
+                        type._instanceCreatorDelegate = creator;
+                        return true;
+                    }
+                }
+
                 if (!type.IsPublic)
                 {
                     return false;
@@ -333,7 +337,8 @@ namespace System.Xaml.Schema
                     return false;
                 }
 
-                Type underlyingType = type._xamlType.UnderlyingType.UnderlyingSystemType;
+                underlyingType ??= type._xamlType.UnderlyingType.UnderlyingSystemType;
+
                 // Look up public ctors only, for equivalence with Activator.CreateInstance
                 ConstructorInfo tConstInfo = underlyingType.GetConstructor(Type.EmptyTypes);
                 if (tConstInfo == null)
@@ -352,9 +357,14 @@ namespace System.Xaml.Schema
                 }
                 IntPtr constPtr = tConstInfo.MethodHandle.GetFunctionPointer();
                 // This requires Reflection Permission
-                Action<object> ctorDelegate = ctorDelegate =
+                Action<object> ctorDelegate = 
                     (Action<object>)s_actionCtor.Invoke(new object[] { null, constPtr });
-                type._constructorDelegate = ctorDelegate;
+                type._instanceCreatorDelegate = () =>
+                {
+                    object inst = FormatterServices.GetUninitializedObject(type._xamlType.UnderlyingType);
+                    InvokeDelegate(ctorDelegate, inst);
+                    return inst;
+                };
                 return true;
             }
         }

@@ -205,22 +205,6 @@ namespace MS.Internal.Xaml.Context
             return valueList;
         }
 
-        private static void CheckAmbient(XamlMember xamlMember)
-        {
-            if (!xamlMember.IsAmbient)
-            {
-                throw new ArgumentException(SR.Get(SRID.NotAmbientProperty, xamlMember.DeclaringType.Name, xamlMember.Name), nameof(xamlMember));
-            }
-        }
-
-        private static void CheckAmbient(XamlType xamlType)
-        {
-            if (!xamlType.IsAmbient)
-            {
-                throw new ArgumentException(SR.Get(SRID.NotAmbientType, xamlType.Name), nameof(xamlType));
-            }
-        }
-
         internal XamlObjectWriterSettings ServiceProvider_GetSettings()
         {
             if (_settings == null)
@@ -326,8 +310,15 @@ namespace MS.Internal.Xaml.Context
                                                              XamlMember[] properties,
                                                              bool stopAfterFirst)
         {
-            ArrayHelper.ForAll<XamlMember>(properties, CheckAmbient);
-            List<XamlType> ceilingTypes = ArrayHelper.ToList<XamlType>(ceilingTypesEnumerable);
+            foreach (XamlMember xamlMember in properties)
+            {
+                if (!xamlMember.IsAmbient)
+                {
+                    throw new ArgumentException(SR.Get(SRID.NotAmbientProperty, xamlMember.DeclaringType.Name, xamlMember.Name), nameof(properties));
+                }
+            }
+
+            List<XamlType> ceilingTypes = ceilingTypesEnumerable != null ? new List<XamlType>(ceilingTypesEnumerable) : null;
 
             List<AmbientPropertyValue> retList = new List<AmbientPropertyValue>();
 
@@ -436,13 +427,18 @@ namespace MS.Internal.Xaml.Context
 
         private List<object> FindAmbientValues(XamlType[] types, bool stopAfterFirst)
         {
-            ArrayHelper.ForAll<XamlType>(types, CheckAmbient);
+            foreach (XamlType xamlType in types)
+            {
+                if (!xamlType.IsAmbient)
+                {
+                    throw new ArgumentException(SR.Get(SRID.NotAmbientType, xamlType.Name), nameof(types));
+                }
+            }
 
             List<object> retList = new List<object>();
 
             // Start the search for ambient properties with the parent frame.
             ObjectWriterFrame frame = _stack.PreviousFrame;
-            ObjectWriterFrame lowerFrame = _stack.CurrentFrame;
 
             while (frame.Depth >= 1)
             {
@@ -463,7 +459,6 @@ namespace MS.Internal.Xaml.Context
                     }
                 }
 
-                lowerFrame = frame;
                 frame = (ObjectWriterFrame)frame.Previous;
                 Debug.Assert(frame != null);
             }

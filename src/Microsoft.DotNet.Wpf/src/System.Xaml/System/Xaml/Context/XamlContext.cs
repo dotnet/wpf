@@ -268,8 +268,12 @@ namespace MS.Internal.Xaml
                 XamlType[] typeArgs = null;
                 if (typeName.HasTypeArgs)
                 {
-                    typeArgs = ArrayHelper.ConvertArrayType<XamlTypeName, XamlType>(
-                        typeName.TypeArguments, GetXamlTypeOrUnknown);
+                    List<XamlTypeName> typeNames = typeName.TypeArgumentsList;
+                    typeArgs = new XamlType[typeNames.Count];
+                    for (int i = 0; i < typeArgs.Length; i++)
+                    {
+                        typeArgs[i] = GetXamlTypeOrUnknown(typeNames[i]);
+                    }
                 }
                 xamlType = new XamlType(typeName.Namespace, typeName.Name, typeArgs, SchemaContext);
             }

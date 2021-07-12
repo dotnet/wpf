@@ -66,6 +66,8 @@ namespace System.Xaml.Schema
             }
         }
 
+        internal List<XamlTypeName> TypeArgumentsList => _typeArguments;
+
         public override string ToString()
         {
             return ToString(null);

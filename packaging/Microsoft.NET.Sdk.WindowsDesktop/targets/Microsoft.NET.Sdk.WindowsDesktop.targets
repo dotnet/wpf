@@ -155,4 +155,7 @@
   <!-- Import WPF Build logic only when we don't import NETFX's WinFX targets -->
   <Import Project="Microsoft.WinFX.targets" Condition="'$(ImportFrameworkWinFXTargets)' != 'true'"/>
 
+  <!-- Import Windows Forms specific targets -->
+  <Import Project="System.Windows.Forms.Analyzers.targets" />
+
 </Project>

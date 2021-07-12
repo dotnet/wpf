@@ -235,7 +235,6 @@ namespace MS.Internal.Automation
                 default:
                     return HeadingLevel.None;
             }
-            return HeadingLevel.None;
         }
 
         // Delegate versions of the above...

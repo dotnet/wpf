@@ -11,13 +11,9 @@ using System.Runtime.InteropServices;
 namespace System.Windows.Automation 
 {
     /// <summary>
-    /// Used to represent heading level property enumerated types.
+    /// Used to represent heading level property enumerated ids.
     /// </summary>
-#if (INTERNAL_COMPILE)
-    internal enum HeadingLevel
-#else
     public enum HeadingLevel
-#endif
     {
         /// <summary>No heading level.</summary>
         None = 80050,

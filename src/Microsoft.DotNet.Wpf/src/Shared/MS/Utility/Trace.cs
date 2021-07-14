@@ -50,7 +50,7 @@ namespace MS.Utility
 
         // EasyTraceEvent
         // Checks the keyword and level before emiting the event
-        static internal void EasyTraceEvent(Keyword keywords, Event eventID, object param1)
+        static internal void EasyTraceEvent<T1>(Keyword keywords, Event eventID, T1 param1)
         {
             if (IsEnabled(keywords, Level.Info))
             {
@@ -60,7 +60,7 @@ namespace MS.Utility
 
         // EasyTraceEvent
         // Checks the keyword and level before emiting the event
-        static internal void EasyTraceEvent(Keyword keywords, Level level, Event eventID, object param1)
+        static internal void EasyTraceEvent<T1>(Keyword keywords, Level level, Event eventID, T1 param1)
         {
             if (IsEnabled(keywords, level))
             {
@@ -70,7 +70,7 @@ namespace MS.Utility
 
         // EasyTraceEvent
         // Checks the keyword and level before emiting the event
-        static internal void EasyTraceEvent(Keyword keywords, Event eventID, object param1, object param2)
+        static internal void EasyTraceEvent<T1, T2>(Keyword keywords, Event eventID, T1 param1, T2 param2)
         {
             if (IsEnabled(keywords, Level.Info))
             {
@@ -78,7 +78,7 @@ namespace MS.Utility
             }
         }
 
-        static internal void EasyTraceEvent(Keyword keywords, Level level, Event eventID, object param1, object param2)
+        static internal void EasyTraceEvent<T1, T2>(Keyword keywords, Level level, Event eventID, T1 param1, T2 param2)
         {
             if (IsEnabled(keywords, Level.Info))
             {
@@ -88,7 +88,7 @@ namespace MS.Utility
 
         // EasyTraceEvent
         // Checks the keyword and level before emiting the event
-        static internal void EasyTraceEvent(Keyword keywords, Event eventID, object param1, object param2, object param3)
+        static internal void EasyTraceEvent<T1, T2, T3>(Keyword keywords, Event eventID, T1 param1, T2 param2, T3 param3)
         {
             if (IsEnabled(keywords, Level.Info))
             {

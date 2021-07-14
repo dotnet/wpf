@@ -245,7 +245,7 @@ namespace System.Windows.Interop
                 Delegate[] handlers = parameters.HwndSourceHook.GetInvocationList();
                 for (int i = handlers.Length -1; i >= 0; --i)
                 {
-                    _hooks += (HwndSourceHook)handlers[i];
+                    EventHelper.AddHandler(ref _hooks, (HwndSourceHook)handlers[i]);
                 }
                 wrapperHooks[3] = _publicHook;
             }
@@ -376,7 +376,7 @@ namespace System.Windows.Interop
             {
                 _hwndWrapper.AddHook(_publicHook);
             }
-            _hooks += hook;
+            EventHelper.AddHandler(ref _hooks, hook);
         }
 
         /// <summary>
@@ -393,7 +393,7 @@ namespace System.Windows.Interop
 
             //this.VerifyAccess();
 
-            _hooks -= hook;
+            EventHelper.RemoveHandler(ref _hooks, hook);
             if(_hooks == null)
             {
                 _hwndWrapper.RemoveHook(_publicHook);
@@ -1635,7 +1635,7 @@ namespace System.Windows.Interop
             // would never see the WM_DESTROY etc. message.
             if (_hooks != null)
             {
-                Delegate[] handlers = _hooks.GetInvocationList();
+                Delegate[] handlers = _hooks.Item2;
                 for (int i = handlers.Length -1; i >= 0; --i)
                 {
                     var hook = (HwndSourceHook)handlers[i];
@@ -2820,7 +2820,7 @@ namespace System.Windows.Interop
 
         private SecurityCriticalDataForSet<Visual>                      _rootVisual;
 
-        private event HwndSourceHook _hooks;
+        private Tuple<HwndSourceHook, Delegate[]> _hooks;
 
         private SecurityCriticalDataClass<HwndMouseInputProvider>      _mouse;
 

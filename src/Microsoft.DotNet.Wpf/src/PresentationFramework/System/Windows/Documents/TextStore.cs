@@ -793,7 +793,7 @@ namespace System.Windows.Documents
             compositionTarget = source.CompositionTarget;
 
             // Convert to client coordinates.
-            SafeNativeMethods.ScreenToClient(new HandleRef(null,win32Window.Handle), point);
+            SafeNativeMethods.ScreenToClient(new HandleRef(null, win32Window.Handle), ref point);
 
             // Convert to mil measure units.
             milPoint = new Point(point.x, point.y);
@@ -2347,8 +2347,8 @@ namespace System.Windows.Documents
             hwnd = win32Window.Handle;
 
             // Transform to screen coords.
-            clientPoint = new NativeMethods.POINT();
-            UnsafeNativeMethods.ClientToScreen(new HandleRef(null, hwnd), /* ref by interop */ clientPoint);
+            clientPoint = default;
+            UnsafeNativeMethods.ClientToScreen(new HandleRef(null, hwnd), ref clientPoint);
 
             rect.left = (int)(clientPoint.x + milPointTopLeft.X);
             rect.right = (int)(clientPoint.x + milPointBottomRight.X);

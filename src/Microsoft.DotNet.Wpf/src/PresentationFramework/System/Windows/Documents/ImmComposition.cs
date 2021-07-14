@@ -606,7 +606,7 @@ namespace System.Windows.Documents
                         candform.rcArea.right = 0;
                         candform.rcArea.top = 0;
                         candform.rcArea.bottom = 0;
-                        candform.ptCurrentPos = new NativeMethods.POINT(0, 0);
+                        candform.ptCurrentPos = default;
                     }
                     else
                     {

@@ -1636,10 +1636,10 @@ namespace System.Windows.Interop
 
             // Convert the client rect to screen coordinates, adjusting for RTL
             NativeMethods.POINT ptClientTopLeft = new NativeMethods.POINT(rcClient.left, rcClient.top);
-            UnsafeNativeMethods.ClientToScreen(hWnd, ptClientTopLeft);
+            UnsafeNativeMethods.ClientToScreen(hWnd, ref ptClientTopLeft);
 
             NativeMethods.POINT ptClientBottomRight = new NativeMethods.POINT(rcClient.right, rcClient.bottom);
-            UnsafeNativeMethods.ClientToScreen(hWnd, ptClientBottomRight);
+            UnsafeNativeMethods.ClientToScreen(hWnd, ref ptClientBottomRight);
 
             if(ptClientBottomRight.x >= ptClientTopLeft.x)
             {
@@ -2201,7 +2201,10 @@ namespace System.Windows.Interop
                 NativeMethods.BLENDFUNCTION blend = new NativeMethods.BLENDFUNCTION();
                 blend.BlendOp = NativeMethods.AC_SRC_OVER;
                 blend.SourceConstantAlpha = 0; // transparent
-                UnsafeNativeMethods.UpdateLayeredWindow(_hWnd.h, IntPtr.Zero, null, null, IntPtr.Zero, null, 0, ref blend, NativeMethods.ULW_ALPHA);
+                unsafe
+                {
+                    UnsafeNativeMethods.UpdateLayeredWindow(_hWnd.h, IntPtr.Zero, null, null, IntPtr.Zero, null, 0, ref blend, NativeMethods.ULW_ALPHA);
+                }
             }
             isLayered = (flags != MILTransparencyFlags.Opaque);
 

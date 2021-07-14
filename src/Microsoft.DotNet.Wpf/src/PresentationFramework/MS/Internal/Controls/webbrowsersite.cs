@@ -65,7 +65,7 @@ namespace MS.Internal.Controls
 
         #region IDocHostUIHandler Implementation
 
-        int UnsafeNativeMethods.IDocHostUIHandler.ShowContextMenu(int dwID, NativeMethods.POINT pt, object pcmdtReserved, object pdispReserved)
+        int UnsafeNativeMethods.IDocHostUIHandler.ShowContextMenu(int dwID, ref NativeMethods.POINT pt, object pcmdtReserved, object pdispReserved)
         {
             //
             // Returning S_FALSE will allow the native control to do default processing,

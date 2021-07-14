@@ -2493,14 +2493,10 @@ namespace DRT
 
 
         [StructLayout(LayoutKind.Sequential)]
-        public class POINT
+        public struct POINT
         {
             public int x = 0;
             public int y = 0;
-
-            public POINT()
-            {
-            }
 
             public POINT(int x, int y)
             {

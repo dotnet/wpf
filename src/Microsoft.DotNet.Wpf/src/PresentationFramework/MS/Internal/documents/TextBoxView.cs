@@ -1139,7 +1139,7 @@ namespace System.Windows.Controls
                 // all background layout.  This leaves the TextBox responsive
                 // to user input.
                 _throttleBackgroundTimer = new DispatcherTimer(DispatcherPriority.Background);
-                _throttleBackgroundTimer.Interval = new TimeSpan(0, 0, _throttleBackgroundSeconds);
+                _throttleBackgroundTimer.Interval = _throttleBackgroundTimeSpan;
                 _throttleBackgroundTimer.Tick += new EventHandler(OnThrottleBackgroundTimeout);
             }
             else
@@ -2242,7 +2242,7 @@ namespace System.Windows.Controls
             // Calculate a stop time.
             // We limit work to just a few milliseconds per iteration
             // to avoid blocking the thread.
-            DateTime stopTime;
+            TimeSpan stopTimeout;
 
             if ((ScrollBarVisibility)((Control)_host).GetValue(ScrollViewer.VerticalScrollBarVisibilityProperty) == ScrollBarVisibility.Auto)
             {
@@ -2251,15 +2251,15 @@ namespace System.Windows.Controls
                 // our interaction with ScrollViewer.  Disable background layout to
                 // mitigate the problem until we can take a real fix in v.next.
 
-                stopTime = DateTime.MaxValue;
+                stopTimeout = TimeSpan.MaxValue;
             }
             else
             {
-                stopTime = DateTime.Now.AddMilliseconds(_maxMeasureTimeMs);
+                stopTimeout = _maxMeasureTime;
             }
 
             // Format lines until we hit the end of document or run out of time.
-
+            var measureStopwatch = System.Diagnostics.Stopwatch.StartNew();
             do
             {
                 using (line)
@@ -2281,7 +2281,7 @@ namespace System.Windows.Controls
                     endOfParagraph = line.EndOfParagraph;
                 }
             }
-            while (!endOfParagraph && DateTime.Now < stopTime);
+            while (!endOfParagraph && measureStopwatch.Elapsed < stopTimeout);
 
             if (!endOfParagraph)
             {
@@ -3263,11 +3263,11 @@ namespace System.Windows.Controls
         private EventHandler UpdatedEvent;
 
         // Max time slice to run FullMeasureTick.
-        private const uint _maxMeasureTimeMs = 200;
+        private static readonly TimeSpan _maxMeasureTime = TimeSpan.FromMilliseconds(200);
 
         // Number of seconds to disable background layout after receiving
         // user input.
-        private const int _throttleBackgroundSeconds = 2;
+        private static readonly TimeSpan _throttleBackgroundTimeSpan = TimeSpan.FromSeconds(2);
 
         #endregion Private Fields
     }

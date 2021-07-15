@@ -10,7 +10,7 @@
        https://github.com/dotnet/wpf/issues/4848 -->
   <Target Name="_RemoveAnalyzersFromReference" AfterTargets="ResolveTargetingPackAssets">
     <ItemGroup>
-      <Reference Remove="@(Reference)" Condition="'%(Reference.FrameworkReferenceName)' != '' and $([System.String]::Copy('%(Directory)').Contains('analyzers', StringComparison.OrdinalIgnoreCase))" />
+      <Reference Remove="@(Reference)" Condition="'%(Reference.FrameworkReferenceName)' != '' and $([System.String]::Copy('%(Directory)').IndexOf('analyzers', StringComparison.OrdinalIgnoreCase)) > 0" />
     </ItemGroup>
   </Target>
 </Project>

@@ -2268,6 +2268,8 @@ namespace System.Windows.Automation.Peers
         InputReachedOtherElement = 16,
         InputDiscarded = 17,
         LiveRegionChanged = 18,
+        Notification = 19,
+        ActiveTextPositionChanged = 20,
     }
     public enum AutomationOrientation
     {
@@ -2350,6 +2352,7 @@ namespace System.Windows.Automation.Peers
         protected internal System.Windows.Automation.Provider.IRawElementProviderSimple ProviderFromPeer(System.Windows.Automation.Peers.AutomationPeer peer) { throw null; }
         public void RaiseAsyncContentLoadedEvent(System.Windows.Automation.AsyncContentLoadedEventArgs args) { }
         public void RaiseAutomationEvent(System.Windows.Automation.Peers.AutomationEvents eventId) { }
+        public void RaiseNotificationEvent(System.Windows.Automation.AutomationNotificationKind notificationKind, System.Windows.Automation.AutomationNotificationProcessing notificationProcessing, string displayString, string activityId) { }
         public void RaisePropertyChangedEvent(System.Windows.Automation.AutomationProperty property, object oldValue, object newValue) { }
         public void ResetChildrenCache() { }
         public void SetFocus() { }

@@ -29,6 +29,7 @@ namespace System.Windows.Automation
         internal AutomationElement() { }
         public static readonly System.Windows.Automation.AutomationProperty AcceleratorKeyProperty;
         public static readonly System.Windows.Automation.AutomationProperty AccessKeyProperty;
+        public static readonly System.Windows.Automation.AutomationEvent ActiveTextPositionChangedEvent;
         public static readonly System.Windows.Automation.AutomationEvent AsyncContentLoadedEvent;
         public static readonly System.Windows.Automation.AutomationEvent AutomationFocusChangedEvent;
         public static readonly System.Windows.Automation.AutomationProperty AutomationIdProperty;
@@ -80,6 +81,7 @@ namespace System.Windows.Automation
         public static readonly System.Windows.Automation.AutomationEvent MenuOpenedEvent;
         public static readonly System.Windows.Automation.AutomationProperty NameProperty;
         public static readonly System.Windows.Automation.AutomationProperty NativeWindowHandleProperty;
+        public static readonly System.Windows.Automation.AutomationEvent NotificationEvent;
         public static readonly object NotSupported;
         public static readonly System.Windows.Automation.AutomationProperty OrientationProperty;
         public static readonly System.Windows.Automation.AutomationProperty PositionInSetProperty;

@@ -2351,6 +2351,7 @@ namespace System.Windows.Automation.Peers
     public abstract partial class ContentTextAutomationPeer : System.Windows.Automation.Peers.FrameworkContentElementAutomationPeer
     {
         protected ContentTextAutomationPeer(System.Windows.FrameworkContentElement owner) : base (default(System.Windows.FrameworkContentElement)) { }
+        public virtual void RaiseActiveTextPositionChangedEvent(System.Windows.Documents.TextPointer rangeStart, System.Windows.Documents.TextPointer rangeEnd) { }
     }
     public partial class ContextMenuAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
@@ -3098,6 +3099,7 @@ namespace System.Windows.Automation.Peers
     {
         protected TextAutomationPeer(System.Windows.FrameworkElement owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override string GetNameCore() { throw null; }
+        public virtual void RaiseActiveTextPositionChangedEvent(System.Windows.Documents.TextPointer rangeStart, System.Windows.Documents.TextPointer rangeEnd) { }
     }
     public partial class TextBlockAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {

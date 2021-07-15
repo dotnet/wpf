@@ -209,6 +209,10 @@ namespace System.Windows.Automation.Peers
         InputDiscarded,
         ///
         LiveRegionChanged,
+        ///
+        Notification,
+        ///
+        ActiveTextPositionChanged,
     }
 
 
@@ -367,6 +371,29 @@ namespace System.Windows.Automation.Peers
                         AutomationElementIdentifiers.AsyncContentLoadedEvent,
                         provider,
                         args);
+                }
+            }
+        }
+
+        /// <summary>
+        /// This method is called by implementation of the peer to raise the automation "notification" event
+        /// </summary>
+        // Never inline, as we don't want to unnecessarily link the automation DLL.
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+        public void RaiseNotificationEvent(AutomationNotificationKind notificationKind,
+                                              AutomationNotificationProcessing notificationProcessing,
+                                              string displayString,
+                                              string activityId)
+        {
+            if (EventMap.HasRegisteredEvent(AutomationEvents.Notification))
+            {
+                IRawElementProviderSimple provider = ProviderFromPeer(this);
+                if (provider != null)
+                {
+                    AutomationInteropProvider.RaiseAutomationEvent(
+                        AutomationElementIdentifiers.NotificationEvent,
+                        provider,
+                        new NotificationEventArgs(notificationKind, notificationProcessing, displayString, activityId));
                 }
             }
         }

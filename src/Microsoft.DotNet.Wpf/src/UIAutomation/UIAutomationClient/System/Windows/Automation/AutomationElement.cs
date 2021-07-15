@@ -282,8 +282,14 @@ namespace System.Windows.Automation
         /// <summary>Event ID: LayoutInvalidated - Indicates that many element locations/extents/offscreenedness have changed.</summary>
         public static readonly AutomationEvent LayoutInvalidatedEvent = AutomationElementIdentifiers.LayoutInvalidatedEvent;
 
+        /// <summary>Event ID: Notification - used mainly by servers to raise a generic notification.</summary>
+        public static readonly AutomationEvent NotificationEvent = AutomationElementIdentifiers.NotificationEvent;
+
+        /// <summary>Event ID: ActiveTextPositionChanged - Indicates that the active position within a text element has changed.</summary>
+        public static readonly AutomationEvent ActiveTextPositionChangedEvent = AutomationElementIdentifiers.ActiveTextPositionChangedEvent;
+
         #endregion Events
-        
+
         #endregion Public Constants and Readonly Fields
 
 
@@ -292,7 +298,7 @@ namespace System.Windows.Automation
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
         #region Equality

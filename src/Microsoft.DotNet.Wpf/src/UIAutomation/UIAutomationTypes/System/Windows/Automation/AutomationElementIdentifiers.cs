@@ -223,10 +223,15 @@ namespace System.Windows.Automation
         /// <summary>Event ID: Raised when the content of a live region has changed. Supported starting with Windows 8.</summary>
         public static readonly AutomationEvent LiveRegionChangedEvent = AutomationEvent.Register(AutomationIdentifierConstants.Events.LiveRegionChanged, "AutomationElementIdentifiers.LiveRegionChangedEvent");
 
+        /// <summary>Event ID: Notification - used mainly by servers to raise a generic notification.</summary>
+        public static readonly AutomationEvent NotificationEvent = AutomationEvent.Register(AutomationIdentifierConstants.Events.Notification, "AutomationElementIdentifiers.NotificationEvent");
+
+        /// <summary>Event ID: ActiveTextPositionChanged - Indicates that the active position within a text element has changed.</summary>
+        public static readonly AutomationEvent ActiveTextPositionChangedEvent = AutomationEvent.Register(AutomationIdentifierConstants.Events.ActiveTextPositionChanged, "AutomationElementIdentifiers.ActiveTextPositionChangedEvent");
 
         #endregion Events
 
-        
+
         #endregion Public Constants and Readonly Fields
     }
 }

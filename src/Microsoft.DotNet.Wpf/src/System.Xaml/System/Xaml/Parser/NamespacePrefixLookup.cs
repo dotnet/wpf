@@ -20,7 +20,7 @@ namespace MS.Internal.Xaml.Parser
 
         #region INamespacePrefixLookup Members
 
-        private int n = 0;
+        private int n;
         public string LookupPrefix(string ns)
         {
             // we really shouldn't generate extraneous new namespaces

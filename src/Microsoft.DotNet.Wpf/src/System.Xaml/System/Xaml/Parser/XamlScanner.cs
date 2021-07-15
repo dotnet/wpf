@@ -29,14 +29,14 @@ namespace MS.Internal.Xaml.Parser
         XamlScannerStack _scannerStack;
         XamlParserContext _parserContext;
 
-        XamlText _accumulatedText = null;
+        XamlText _accumulatedText;
         List<XamlAttribute> _attributes;
         int _nextAttribute;
         XamlScannerNode _currentNode;
         Queue<XamlScannerNode> _readNodesQueue;
         XamlXmlReaderSettings _settings;
         XamlAttribute _typeArgumentAttribute;
-        bool _hasKeyAttribute = false;
+        bool _hasKeyAttribute;
 
         internal XamlScanner(XamlParserContext context, XmlReader xmlReader, XamlXmlReaderSettings settings)
         {

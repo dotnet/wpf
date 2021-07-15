@@ -48,7 +48,7 @@ namespace System.Windows.Markup
             }
         }
 
-        private string _name = null;
+        private string _name;
     }
 #endif
 

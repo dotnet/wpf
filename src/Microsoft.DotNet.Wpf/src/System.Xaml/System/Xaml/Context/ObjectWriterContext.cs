@@ -17,7 +17,7 @@ namespace MS.Internal.Xaml.Context
     {
         private XamlContextStack<ObjectWriterFrame> _stack;
 
-        private object _rootInstance = null;
+        private object _rootInstance;
 
         ServiceProviderContext _serviceProviderContext;
         XamlRuntime _runtime;

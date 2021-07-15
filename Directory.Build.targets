@@ -3,4 +3,12 @@
   <Import Project="Sdk.targets" Sdk="Microsoft.DotNet.Arcade.Sdk" />
   <Import Project="$(MSBuildThisFileDirectory)Packaging.targets" />
   <Import Project="$(MSBuildThisFileDirectory)Publishing.targets" />
+
+  <!-- Temporarily remove analyzers from references until we can update to a Preview7 SDK which handles them correctly 
+       https://github.com/dotnet/wpf/issues/4848 -->
+  <Target Name="_RemoveAnalyzersFromReference" AfterTargets="ResolveTargetingPackAssets">
+    <ItemGroup>
+      <Reference Remove="@(Reference)" Condition="'%(Reference.FrameworkReferenceName)' != '' and $([System.String]::Copy('%(Directory)').Contains('analyzers', StringComparison.OrdinalIgnoreCase))" />
+    </ItemGroup>
+  </Target>
 </Project>

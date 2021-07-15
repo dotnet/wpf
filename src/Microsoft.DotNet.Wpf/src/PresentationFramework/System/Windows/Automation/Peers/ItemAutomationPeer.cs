@@ -232,6 +232,24 @@ namespace System.Windows.Automation.Peers
             return AutomationOrientation.None;
         }
 
+        ///
+        override protected AutomationHeadingLevel GetHeadingLevelCore()
+        {
+            AutomationPeer wrapperPeer = GetWrapperPeer();
+            AutomationHeadingLevel headingLevel = AutomationHeadingLevel.None;
+
+            if(wrapperPeer != null)
+            {
+                headingLevel = wrapperPeer.GetHeadingLevel();
+            }
+            else
+            {
+                ThrowElementNotAvailableException();
+            }
+
+            return headingLevel;
+        }
+
         /// <summary>
         /// Gets the position of an item within a set.
         /// </summary>
@@ -430,6 +448,18 @@ namespace System.Windows.Automation.Peers
             AutomationPeer wrapperPeer = GetWrapperPeer();
             if (wrapperPeer != null)
                 return wrapperPeer.IsEnabled();
+            else
+                ThrowElementNotAvailableException();
+
+            return false;
+        }
+
+        ///
+        protected override bool IsDialogCore()
+        {
+            AutomationPeer wrapperPeer = GetWrapperPeer();
+            if (wrapperPeer != null)
+                return wrapperPeer.IsDialog();
             else
                 ThrowElementNotAvailableException();
 

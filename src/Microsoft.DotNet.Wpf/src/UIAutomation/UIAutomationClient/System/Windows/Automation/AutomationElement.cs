@@ -198,6 +198,16 @@ namespace System.Windows.Automation
         /// </summary>
         public static readonly AutomationProperty PositionInSetProperty = AutomationElementIdentifiers.PositionInSetProperty;
 
+        /// <summary>
+        /// Property ID: HeadingLevel - Describes the heading level of an element.
+        /// </summary>
+        public static readonly AutomationProperty HeadingLevelProperty = AutomationElementIdentifiers.HeadingLevelProperty;
+
+        /// <summary>
+        /// Property ID: IsDialog - Identifies if the automation element is a dialog.
+        /// </summary>
+        public static readonly AutomationProperty IsDialogProperty = AutomationElementIdentifiers.IsDialogProperty;
+
         #region IsNnnnPatternAvailable properties
         /// <summary>Property that indicates whether the DockPattern is available for this AutomationElement</summary>
         public static readonly AutomationProperty IsDockPatternAvailableProperty = AutomationElementIdentifiers.IsDockPatternAvailableProperty;

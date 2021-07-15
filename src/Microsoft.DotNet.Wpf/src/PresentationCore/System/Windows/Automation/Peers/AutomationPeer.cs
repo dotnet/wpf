@@ -653,6 +653,11 @@ namespace System.Windows.Automation.Peers
         abstract protected bool IsControlElementCore();
 
         ///
+        virtual protected bool IsDialogCore(){
+            return false;
+        }
+
+        ///
         abstract protected AutomationPeer GetLabeledByCore();
 
         ///
@@ -703,6 +708,13 @@ namespace System.Windows.Automation.Peers
             return AutomationProperties.AutomationPositionInSetDefault;
         }
 
+        /// <summary>
+        /// Override this method to provide UIAutomation with the heading level of this element.
+        /// </summary>
+        virtual protected AutomationHeadingLevel GetHeadingLevelCore()
+        {
+            return AutomationHeadingLevel.None;
+        }
 
         //
         // INTERNAL STUFF - NOT OVERRIDABLE
@@ -1264,6 +1276,104 @@ namespace System.Windows.Automation.Peers
         }
 
         /// <summary>
+        /// Attempt to get the value for the HeadingLevel property.
+        /// </summary>
+        /// <remarks>
+        /// This public call cannot be attempted if another public call is in progress.
+        /// </remarks>
+        /// <returns>
+        /// The value for the HeadingLevel property.
+        /// </returns>
+        public AutomationHeadingLevel GetHeadingLevel()
+        {
+            AutomationHeadingLevel result = AutomationHeadingLevel.None;
+
+            if (_publicCallInProgress)
+                throw new InvalidOperationException(SR.Get(SRID.Automation_RecursivePublicCall));
+
+            try
+            {
+                _publicCallInProgress = true;
+                result = GetHeadingLevelCore();
+            }
+            finally
+            {
+                _publicCallInProgress = false;
+            }
+            return result;
+        }
+
+
+        private enum HeadingLevel
+        {
+            None = 80050,
+            Level1,
+            Level2,
+            Level3,
+            Level4,
+            Level5,
+            Level6,
+            Level7,
+            Level8,
+            Level9,
+        }
+        private static HeadingLevel ConvertHeadingLevelToId(AutomationHeadingLevel value){
+            switch(value)
+            {
+                case AutomationHeadingLevel.None:
+                    return HeadingLevel.None;
+                case AutomationHeadingLevel.Level1:
+                    return HeadingLevel.Level1;
+                case AutomationHeadingLevel.Level2:
+                    return HeadingLevel.Level2;
+                case AutomationHeadingLevel.Level3:
+                    return HeadingLevel.Level3;
+                case AutomationHeadingLevel.Level4:
+                    return HeadingLevel.Level4;
+                case AutomationHeadingLevel.Level5:
+                    return HeadingLevel.Level5;
+                case AutomationHeadingLevel.Level6:
+                    return HeadingLevel.Level6;
+                case AutomationHeadingLevel.Level7:
+                    return HeadingLevel.Level7;
+                case AutomationHeadingLevel.Level8:
+                    return HeadingLevel.Level8;
+                case AutomationHeadingLevel.Level9:
+                    return HeadingLevel.Level9;
+                default:
+                    return HeadingLevel.None;
+            }
+        }
+
+
+        /// <summary>
+        /// Attempt to get the value for the IsDialog property.
+        /// </summary>
+        /// <remarks>
+        /// This public call cannot be attempted if another public call is in progress.
+        /// </remarks>
+        /// <returns>
+        /// The value for the IsDialog property.
+        /// </returns>
+        public bool IsDialog()
+        {
+            bool result = false;
+            if(_publicCallInProgress)
+                throw new InvalidOperationException(SR.Get(SRID.Automation_RecursivePublicCall));
+
+            try
+            {
+                _publicCallInProgress = true;
+                result = IsDialogCore();
+            }
+            finally
+            {
+                _publicCallInProgress = false;
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Attempt to get the value for the PositionInSet property.
         /// </summary>
         /// <remarks>
@@ -1756,7 +1866,7 @@ namespace System.Windows.Automation.Peers
 #endif
         }
 
-        // InvalidateLimit – lower bound for  raising ChildrenInvalidated StructureChange event
+        // InvalidateLimit is the lower bound for raising ChildrenInvalidated StructureChange event
         internal void UpdateChildrenInternal(int invalidateLimit)
         {
             List<AutomationPeer> oldChildren = _children;
@@ -1989,7 +2099,7 @@ namespace System.Windows.Automation.Peers
 
         /// <summary>
         /// propagate the new value for AncestorsInvalid through the parent chain,
-        /// use EventSource (wrapper) peers whenever available as it’s the one connected to the tree.
+        /// use EventSource (wrapper) peers whenever available as it's the one connected to the tree.
         /// </summary>
         internal void InvalidateAncestorsRecursive()
         {
@@ -2061,6 +2171,10 @@ namespace System.Windows.Automation.Peers
             if (getProperty != null)
             {
                 result = getProperty(this);
+                if(AutomationElementIdentifiers.HeadingLevelProperty != null && propertyId == AutomationElementIdentifiers.HeadingLevelProperty.Id)
+                {
+                    result = ConvertHeadingLevelToId((AutomationHeadingLevel)result);
+                }
             }
 
             return result;
@@ -2312,6 +2426,14 @@ namespace System.Windows.Automation.Peers
             {
                 s_propertyInfo[AutomationElementIdentifiers.PositionInSetProperty.Id] = new GetProperty(GetPositionInSet);
             }
+            if (AutomationElementIdentifiers.HeadingLevelProperty != null)
+            { 
+                s_propertyInfo[AutomationElementIdentifiers.HeadingLevelProperty.Id] = new GetProperty(GetHeadingLevel);
+            }
+            if (AutomationElementIdentifiers.IsDialogProperty != null)
+            {
+                s_propertyInfo[AutomationElementIdentifiers.IsDialogProperty.Id] = new GetProperty(IsDialog);
+            }
         }
 
         private delegate object WrapObject(AutomationPeer peer, object iface);
@@ -2363,6 +2485,8 @@ namespace System.Windows.Automation.Peers
         private static object GetControllerFor(AutomationPeer peer)         {   return peer.GetControllerForProviderArray(); }
         private static object GetSizeOfSet(AutomationPeer peer)             {   return peer.GetSizeOfSet(); }
         private static object GetPositionInSet(AutomationPeer peer)         {   return peer.GetPositionInSet(); }
+        private static object GetHeadingLevel(AutomationPeer peer)          {   return peer.GetHeadingLevel(); }
+        private static object IsDialog(AutomationPeer peer)                 {   return peer.IsDialog(); }
 
         private static Hashtable s_patternInfo;
         private static Hashtable s_propertyInfo;

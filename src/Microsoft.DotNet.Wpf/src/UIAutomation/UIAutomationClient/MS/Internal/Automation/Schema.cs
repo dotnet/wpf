@@ -209,6 +209,20 @@ namespace MS.Internal.Automation
             return els;
         }
 
+        private enum HeadingLevel
+        {
+            None = 80050,
+            Level1,
+            Level2,
+            Level3,
+            Level4,
+            Level5,
+            Level6,
+            Level7,
+            Level8,
+            Level9,
+        }
+
         // Delegate versions of the above...
         private static AutomationPropertyConverter convertToBool = new AutomationPropertyConverter(ConvertToBool);
         private static AutomationPropertyConverter convertToRowOrColumnMajor        = new AutomationPropertyConverter(ConvertToRowOrColumnMajor);
@@ -274,6 +288,8 @@ namespace MS.Internal.Automation
             new AutomationPropertyInfo( null,                            AutomationElement.ItemStatusProperty,                   typeof(string),                ""                             ),
             new AutomationPropertyInfo( null,                            AutomationElement.SizeOfSetProperty,                    typeof(int),                   -1                             ),
             new AutomationPropertyInfo( null,                            AutomationElement.PositionInSetProperty,                typeof(int),                   -1                             ),
+            new AutomationPropertyInfo( null,                            AutomationElement.HeadingLevelProperty,                 typeof(HeadingLevel),          HeadingLevel.None              ),
+            new AutomationPropertyInfo( convertToBool,                   AutomationElement.IsDialogProperty,                     typeof(bool),                  false                          ),
 
             // Pattern Available properties            
             //                                                           PropertyID                                                  Type           Default value

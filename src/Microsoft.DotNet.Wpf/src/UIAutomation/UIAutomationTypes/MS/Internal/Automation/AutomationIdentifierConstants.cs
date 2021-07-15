@@ -31,7 +31,23 @@ namespace MS.Internal.Automation
 
         static AutomationIdentifierConstants()
         {
-            if (OSVersionHelper.IsOsWindows10RS2OrGreater)
+            if (OSVersionHelper.IsOsWindows10RS5OrGreater)
+            {
+                LastSupportedProperty = Properties.IsDialog;
+                LastSupportedEvent = Events.Changes;
+                LastSupportedPattern = Patterns.CustomNavigation;
+                LastSupportedTextAttribute = TextAttributes.SayAsInterpretAs;
+                LastSupportedControlType = ControlTypes.AppBar;
+            }
+            else if (OSVersionHelper.IsOsWindows10RS4OrGreater)
+            {
+                LastSupportedProperty = Properties.HeadingLevel;
+                LastSupportedEvent = Events.Changes;
+                LastSupportedPattern = Patterns.CustomNavigation;
+                LastSupportedTextAttribute = TextAttributes.SayAsInterpretAs;
+                LastSupportedControlType = ControlTypes.AppBar;
+            }
+            else if (OSVersionHelper.IsOsWindows10RS2OrGreater)
             {
                 LastSupportedProperty = Properties.Size;
                 LastSupportedEvent = Events.Changes;
@@ -270,7 +286,14 @@ namespace MS.Internal.Automation
             OutlineThickness,
             CenterPoint,
             Rotatation,
-            Size
+            Size,
+            IsSelectionPattern2Available,
+            Selection2FirstSelectedItem,
+            Selection2LastSelectedItem,
+            Selection2CurrentSelectedItem,
+            Selection2ItemCount,
+            HeadingLevel,
+            IsDialog
         };
         
         internal enum Events

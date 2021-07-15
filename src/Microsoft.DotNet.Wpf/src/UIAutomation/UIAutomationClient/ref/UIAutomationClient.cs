@@ -40,9 +40,11 @@ namespace System.Windows.Automation
         public static readonly System.Windows.Automation.AutomationProperty CultureProperty;
         public static readonly System.Windows.Automation.AutomationProperty FrameworkIdProperty;
         public static readonly System.Windows.Automation.AutomationProperty HasKeyboardFocusProperty;
+        public static readonly System.Windows.Automation.AutomationProperty HeadingLevelProperty;
         public static readonly System.Windows.Automation.AutomationProperty HelpTextProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsContentElementProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsControlElementProperty;
+        public static readonly System.Windows.Automation.AutomationProperty IsDialogProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsDockPatternAvailableProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsEnabledProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsExpandCollapsePatternAvailableProperty;

@@ -26,6 +26,18 @@ It's not important to decide on that here, we can always adjust it when copying 
 
 # API Pages
 
+
+## AutomationEvents Enum
+*(This is an existing enum to which two new values are added.  See spec notes.)*
+
+### **Fields**
+
+|||| 
+|-|-|-|
+| ActiveTextPositionChanged | 20 | [ActiveTextPositionChangedEvent](). Available starting with .NET 6.0. |
+| Notification | 19 | [NotificationEvent](). Available starting with .NET 6.0. |
+
+
 ## AutomationNotificationKind Enum
 Indicates the type of notification when calling [RaiseNotificationEvent]()
 
@@ -102,6 +114,123 @@ A display string describing the event.
 [String]()
 A unique non-localized string to identify an action or group of actions. Use this to pass additional information to the event handler.
 
+
+## AutomationElement.NotificationEvent Field
+Identifies an event raised to notify an element.
+
+```c#
+public static readonly AutomationEvent NotificationEvent;
+```
+
+### **Field Value**
+[AutomationEvent]()
+
+### **Remarks**
+This identifier is used by UI Automation client applications. 
+UI Automation providers should use the equivalent identifier in [AutomationElementIdentifiers]().
+
+
+## AutomationElementIdentifiers.NotificationEvent Field
+Identifies an event raised to notify an element.
+
+```c#
+public static readonly AutomationEvent NotificationEvent;
+```
+
+### **Field Value**
+[AutomationEvent]()
+
+### **Remarks**
+This identifier is for use by UI Automation providers. UI Automation client applications should use the equivalent field from [AutomationElement]().
+
+
+## NotificationEventArgs Class
+Provides data for a [NotificationEvent]().
+
+```c#
+public sealed class NotificationEventArgs : AutomationEventArgs
+```
+
+## NotificationEventArgs() Constructor
+Initializes a new instance of the [NotificationEventArgs]() class.
+
+```c#
+public NotificationEventArgs(
+                AutomationNotificationKind notificationKind,
+                AutomationNotificationProcessing notificationProcessing,
+                string displayString,
+                string activityId);
+```
+
+### **Parameters**
+
+`notificationKind`
+[AutomationNotificationKind]()
+The type of the notification.
+
+`notificationProcessing`
+[AutomationNotificationProcessing]()
+The order in which to process the notification.
+
+`displayString`
+[String]()
+A display string describing the event.
+
+`activityId`
+[String]()
+A unique non-localized string to identify an action or group of actions. Use this to pass additional information to the event handler.
+
+
+## NotificationEventArgs.NotificationKind Property
+Gets the type of the notification.
+
+```c#
+public AutomationNotificationKind NotificationKind { get; }
+```
+
+### **Property Value**
+[AutomationNotificationKind]()
+
+One of the [AutomationNotificationKind]() values.
+
+
+## NotificationEventArgs.NotificationProcessing Property
+Gets the order in which to process the notification.
+
+```c#
+public AutomationNotificationProcessing NotificationProcessing { get; }
+```
+
+### **Property Value**
+[NotificationProcessing]()
+
+One of the [NotificationProcessing]() values.
+
+
+## NotificationEventArgs.DisplayString Property
+Gets the display string of the notification.
+
+```c#
+public string DisplayString { get; }
+```
+
+### **Property Value**
+[string]()
+
+A display string describing the event.
+
+
+## NotificationEventArgs.ActivityId Property
+Gets the activity ID string of the notification.
+
+```c#
+public string ActivityId { get; }
+```
+
+### **Property Value**
+[string]()
+
+A unique non-localized string to identify an action or group of actions.
 
 ## AutomationHeadingLevel Enum
 Defines the heading levels for automation elements.
@@ -444,6 +573,91 @@ protected virtual bool IsDialogCore();
 **true** if the element is a dialog; otherwise, **false**.
 
 
+## ContentElementAutomationPeer.IsDialogCore Method
+Gets a value that indicates whether the element associated with this automation peer is a dialog window.
+Called by [IsDialog]().
+
+```c#
+protected override bool IsDialogCore();
+```
+
+### **Returns**
+[Boolean]()
+
+**true** if the element is a dialog; otherwise, **false**.
+
+
+## UIElementAutomationPeer.IsDialogCore Method
+Gets a value that indicates whether the element associated with this automation peer is a dialog window.
+Called by [IsDialog]().
+
+```c#
+protected override bool IsDialogCore();
+```
+
+### **Returns**
+[Boolean]()
+
+**true** if the element is a dialog; otherwise, **false**.
+
+
+## UIElement3DAutomationPeer.IsDialogCore Method
+Gets a value that indicates whether the element associated with this automation peer is a dialog window.
+Called by [IsDialog]().
+
+```c#
+protected override bool IsDialogCore();
+```
+
+### **Returns**
+[Boolean]()
+
+**true** if the element is a dialog; otherwise, **false**.
+
+
+## DataGridCellItemAutomationPeer.IsDialogCore Method
+Gets a value that indicates whether the element associated with this automation peer is a dialog window.
+Called by [IsDialog]().
+
+```c#
+protected override bool IsDialogCore();
+```
+
+### **Returns**
+[Boolean]()
+
+**true** if the element is a dialog; otherwise, **false**.
+
+
+## DateTimeAutomationPeer.IsDialogCore Method
+Gets a value that indicates whether the element associated with this automation peer is a dialog window.
+Called by [IsDialog]().
+
+```c#
+protected override bool IsDialogCore();
+```
+
+### **Returns**
+[Boolean]()
+
+**true** if the element is a dialog; otherwise, **false**.
+
+
+## ItemAutomationPeer.IsDialogCore Method
+Gets a value that indicates whether the element associated with this automation peer is a dialog window.
+Called by [IsDialog]().
+
+```c#
+protected override bool IsDialogCore();
+```
+
+### **Returns**
+[Boolean]()
+
+**true** if the element is a dialog; otherwise, **false**.
+
+
+
 ## WindowAutomationPeer.IsDialogCore Method
 Gets a value that indicates whether the element associated with this automation peer is a dialog window.
 Called by [IsDialog]().
@@ -494,6 +708,88 @@ The end of the range that changed.
 The value must be a valid [TextPointer]() for the peer's owner, or `null` to denote the end of the owner's text content.
 
 
+## AutomationElement.ActiveTextPositionChangedEvent Field
+Identifies an event raised when the position changes within a text element.
+
+```c#
+public static readonly AutomationEvent ActiveTextPositionChangedEvent;
+```
+
+### **Field Value**
+[AutomationEvent]()
+
+### **Remarks**
+This identifier is used by UI Automation client applications. 
+UI Automation providers should use the equivalent identifier in [AutomationElementIdentifiers]().
+
+
+## AutomationElementIdentifiers.ActiveTextPositionChangedEvent Field
+Identifies an event raised to notify an element.
+
+```c#
+public static readonly AutomationEvent ActiveTextPositionChangedEvent;
+```
+
+### **Field Value**
+[AutomationEvent]()
+
+### **Remarks**
+This identifier is for use by UI Automation providers.
+UI Automation client applications should use the equivalent field from [AutomationElement]().
+
+
+## ActiveTextPositionChangedEventArgs Class
+Provides data for an [ActiveTextPositionChangedEvent]().
+
+```c#
+public sealed class ActiveTextPositionChangedEventArgs : AutomationEventArgs
+```
+
+## ActiveTextPositionChangedEventArgs(ITextRangeProvider) Constructor
+Initializes a new instance of the [ActiveTextPositionChangedEventArgs]() class.
+
+```c#
+public ActiveTextPositionChangedEventArgs(ITextRangeProvider textRange);
+```
+
+### **Parameters**
+
+`textRange`
+[ITextRangeProvider]()
+The text range where the change occurred, if applicable.
+
+
+## ActiveTextPositionChangedEventArgs.TextRange Property
+Gets the text range where the change occurred, if applicable.
+
+```c#
+public ITextRangeProvider TextRange { get; }
+```
+
+### **Property Value**
+[ITextRangeProvider]()
+
+The text range where the change occurred, or `null` to indicate the entire content of the text provider.
+
+
+## IRawElementProviderSimple Interface
+Assembly: UIAutomationTypes.dll (type-forwarded from UIAutomationProvider.dll).
+
+*(no other changes)*
+
+
+## ITextRangeProvider Interface
+Assembly: UIAutomationTypes.dll (type-forwarded from UIAutomationProvider.dll).
+
+*(no other changes)*
+
+
+## ProviderOptions Enum
+Assembly: UIAutomationTypes.dll (type-forwarded from UIAutomationProvider.dll).
+
+*(no other changes)*
+
+
 # Spec notes
 <!--
 This is an optional section.  It's often clearer to put non-public
@@ -505,6 +801,9 @@ All these APIs follow the patterns and naming conventions of previous UIA wrappe
 All the properties and events are "passive", in the sense that they are provided for
 the use and convenience of applications, but WPF does not itself use them.
 With one exception:  WPF will automatically expose `true` as the value of `IsDialog` on a window that has been opened via `ShowDialog()`.
+
+The work adds two new fields to the `AutomationEvents` enum.
+There is precedent for this - .NET 4.7.1 added a field for the LiveRegionChangedEvent.
 
 # Discussion
 <!--
@@ -579,17 +878,48 @@ namespace System.Windows.Automation
    {
        public static readonly AutomationProperty HeadingLevelProperty;
        public static readonly AutomationProperty IsDialogProperty;
+       public static readonly AutomationEvent NotificationEvent;
+       public static readonly AutomationEvent ActiveTextPositionChangedEvent;
    }
 
    public class AutomationElementIdentifiers
    {
        public static readonly AutomationProperty HeadingLevelProperty;
        public static readonly AutomationProperty IsDialogProperty;
+       public static readonly AutomationEvent NotificationEvent;
+       public static readonly AutomationEvent ActiveTextPositionChangedEvent;
+   }
+
+   public sealed class NotificationEventArgs : AutomationEventArgs
+   {
+       public NotificationEventArgs(
+                AutomationNotificationKind notificationKind,
+                AutomationNotificationProcessing notificationProcessing,
+                string displayString,
+                string activityId);
+        public AutomationNotificationKind NotificationKind { get; }
+        public AutomationNotificationProcessing NotificationProcessing { get; }
+        public string DisplayString { get; }
+        public string ActivityId { get; }
+   }
+
+   public sealed class ActiveTextPositionChangedEventArgs : AutomationEventArgs
+   {
+        public ActiveTextPositionChangedEventArgs(
+                ITextRangeProvider textRange);
+        public ITextRangeProvider TextRange { get; }
    }
 }
 
 namespace System.Windows.Automation.Peers
 {
+    public enum AutomationEvents
+    {
+        (... previously defined values...),
+        Notification = 19,
+        ActiveTextPositionChanged = 20,
+    }
+
     public class AutomationPeer
     {
         public AutomationHeadingLevel GetHeadingLevel();
@@ -608,31 +938,37 @@ namespace System.Windows.Automation.Peers
     public class ContentElementAutomationPeer
     {
         protected override AutomationHeadingLevel GetHeadingLevelCore();
+        protected override bool IsDialogCore();
     }
 
     public class UIElementAutomationPeer
     {
         protected override AutomationHeadingLevel GetHeadingLevelCore();
+        protected override bool IsDialogCore();
     }
 
     public class UIElement3DAutomationPeer
     {
         protected override AutomationHeadingLevel GetHeadingLevelCore();
+        protected override bool IsDialogCore();
      }
 
     public class DataGridCellItemAutomationPeer
     {
         protected override AutomationHeadingLevel GetHeadingLevelCore();
+        protected override bool IsDialogCore();
     }
 
     public class DateTimeAutomationPeer
     {
         protected override AutomationHeadingLevel GetHeadingLevelCore();
+        protected override bool IsDialogCore();
     }
 
     public class ItemAutomationPeer
     {
         protected override AutomationHeadingLevel GetHeadingLevelCore();
+        protected override bool IsDialogCore();
     }
 
     public class WindowAutomationPeer
@@ -653,5 +989,15 @@ namespace System.Windows.Automation.Peers
                     TextPointer rangeStart,
                     TextPointer rangeEnd);
     }
+}
+
+namespace System.Windows.Automation.Provider
+{
+    // These three types have been type-forwarded (with no
+    // other changes) from UIAutomationProvider.dll to
+    // UIAutomationTypes.dll
+    public interface IRawElementProviderSimple;
+    public interface ITextRangeProvider;
+    enum ProviderOptions;
 }
 ```

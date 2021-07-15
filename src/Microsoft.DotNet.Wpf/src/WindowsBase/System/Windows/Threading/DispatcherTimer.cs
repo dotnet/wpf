@@ -267,8 +267,8 @@ namespace System.Windows.Threading
                 // BeginInvoke a new operation.
                 _operation = _dispatcher.BeginInvoke(
                     DispatcherPriority.Inactive,
-                    new DispatcherOperationCallback(FireTick),
-                    null);
+                    (DispatcherOperationCallback)(state => ((DispatcherTimer)state).FireTick()),
+                    this);
 
                 
                 _dueTimeInTicks = Environment.TickCount + (int) _interval.TotalMilliseconds;
@@ -297,7 +297,7 @@ namespace System.Windows.Threading
             }
         }
 
-        private object FireTick(object unused)
+        private object FireTick()
         {
             // The operation has been invoked, so forget about it.
             _operation = null;

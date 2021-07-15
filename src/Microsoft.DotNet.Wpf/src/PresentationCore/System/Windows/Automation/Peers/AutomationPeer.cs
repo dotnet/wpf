@@ -2426,11 +2426,11 @@ namespace System.Windows.Automation.Peers
             {
                 s_propertyInfo[AutomationElementIdentifiers.PositionInSetProperty.Id] = new GetProperty(GetPositionInSet);
             }
-            if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.HeadingLevelProperty != null)
+            if (AutomationElementIdentifiers.HeadingLevelProperty != null)
             { 
                 s_propertyInfo[AutomationElementIdentifiers.HeadingLevelProperty.Id] = new GetProperty(GetHeadingLevel);
             }
-            if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.IsDialogProperty != null)
+            if (AutomationElementIdentifiers.IsDialogProperty != null)
             {
                 s_propertyInfo[AutomationElementIdentifiers.IsDialogProperty.Id] = new GetProperty(IsDialog);
             }

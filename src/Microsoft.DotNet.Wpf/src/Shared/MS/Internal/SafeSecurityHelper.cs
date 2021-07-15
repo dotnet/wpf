@@ -3,15 +3,12 @@
 // See the LICENSE file in the project root for more information.
 
 // Purpose:  Helper functions that require elevation but are safe to use.
-// History:
-//   10/15/04:    Microsoft        Created
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -52,15 +49,6 @@ namespace System.Xaml
         /// Given a rectangle with coords in local screen coordinates.
         /// Return the rectangle in global screen coordinates.
         ///</summary>
-        ///<SecurityNote>
-        /// Critical - calls a critical function.
-        /// TreatAsSafe - handing out a transformed rect is considered safe.
-        ///
-        ///                      Although we are calling a function that passes an array, and no. of elements.
-        ///                      We limit this call to only call this function with a 2 as the count of elements.
-        ///                      Thereby containing any potential for the call to Win32 to cause a buffer overrun.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         internal static void TransformLocalRectToScreen(HandleRef hwnd, ref NativeMethods.RECT rcWindowCoords)
         {
             int retval = MS.Internal.WindowsBase.NativeMethodsSetLastError.MapWindowPoints(hwnd , new HandleRef(null, IntPtr.Zero), ref rcWindowCoords, 2);
@@ -78,18 +66,11 @@ namespace System.Xaml
         /// <summary>
         ///     Given an assembly, returns the partial name of the assembly.
         /// </summary>
-        /// <SecurityNote>
-        ///     This code used to perform an elevation but no longer needs to.
-        ///     The method is being kept in this class to ease auditing and
-        ///     should have a security review if changed.
-        ///     The string returned does not contain path information.
-        ///     This code is duplicated in SafeSecurityHelperPBT.cs.
-        /// </SecurityNote>
         internal static string GetAssemblyPartialName(Assembly assembly)
         {
             AssemblyName name = new AssemblyName(assembly.FullName);
             string partialName = name.Name;
-            return (partialName != null) ? partialName : String.Empty;
+            return (partialName != null) ? partialName : string.Empty;
         }
 #endif
 
@@ -101,12 +82,6 @@ namespace System.Xaml
         ///     Get the full assembly name by combining the partial name passed in
         ///     with everything else from proto assembly.
         /// </summary>
-        /// <SecurityNote>
-        ///     This code used to perform an elevation but no longer needs to.
-        ///     The method is being kept in this class to ease auditing and
-        ///     should have a security review if changed.
-        ///     The string returned does not contain path information.
-        /// </SecurityNote>
         internal static string GetFullAssemblyNameFromPartialName(
                                     Assembly protoAssembly,
                                     string partialName)
@@ -116,13 +91,6 @@ namespace System.Xaml
             return name.FullName;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses PresentationSource which is critical but does not
-        ///     expose it.
-        ///     TreatAsSafe: PresentationSource is not exposed and Client to Screen co-ordinates is
-        ///     safe to expose
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static Point ClientToScreen(UIElement relativeTo, Point point)
         {
             GeneralTransform transform;
@@ -162,18 +130,6 @@ namespace System.Xaml
         ///     This function iterates through the assemblies loaded in the current
         ///     AppDomain and finds one that has the same assembly name passed in.
         /// </summary>
-        /// <SecurityNote>
-        ///     The method is being kept in this class to ease auditing and
-        ///     should have a security review if changed.
-        ///
-        ///     WARNING! Don't use this method for retrievals of assemblies that
-        ///              should rely on a strong match with the given assembly name
-        ///              since this method allows assemblies with the same short name
-        ///              to be returned even when other name parts are different.
-        ///
-        ///        E.g.  AssemblyShortName
-        ///     matches  AssemblyShortName, Version=2.0.0.0, Culture=en-us, PublicKeyToken=b03f5f7f11d50a3a
-        /// </SecurityNote>
         internal static Assembly GetLoadedAssembly(AssemblyName assemblyName)
         {
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
@@ -336,11 +292,6 @@ namespace System.Xaml
              ScriptInteropDisable = 0x10 ,
         }
 
-        /// <SecurityNote>
-        ///   Critical: This code elevates to access registry
-        ///   TreatAsSafe: The information it exposes is safe to give out and all it does is read a specific key
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static bool IsFeatureDisabled(KeyToRead key)
         {
             string regValue = null;
@@ -372,17 +323,29 @@ namespace System.Xaml
             }
 
             RegistryKey featureKey;
-            //Assert for read access to HKLM\Software\Microsoft\Windows\Avalon
-            RegistryPermission regPerm = new RegistryPermission(RegistryPermissionAccess.Read,"HKEY_LOCAL_MACHINE\\"+RegistryKeys.WPF_Features);//BlessedAssert
-            regPerm.Assert();//BlessedAssert
-            try
+            object obj = null;
+            bool keyValue = false;
+            // open the key and read the value
+            featureKey = Registry.LocalMachine.OpenSubKey(RegistryKeys.WPF_Features);
+            if (featureKey != null)
             {
-                object obj = null;
-                bool keyValue = false;
-                // open the key and read the value
-                featureKey = Registry.LocalMachine.OpenSubKey(RegistryKeys.WPF_Features);
-                if (featureKey != null)
+                // If key exists and value is 1 return true else false
+                obj = featureKey.GetValue(regValue);
+                keyValue = obj is int && ((int)obj == 1);
+                if (keyValue)
                 {
+                    fResult = true;
+                }
+
+                // special case for audio and video since they can be orred
+                // this is in the condition that audio is enabled since that is
+                // the path that MediaAudioVideoDisable defaults to
+                // This is purely to optimize perf on the number of calls to assert
+                // in the media or audio scenario.
+
+                if ((fResult == false) && (key == KeyToRead.MediaAudioOrVideoDisable))
+                {
+                    regValue = RegistryKeys.value_MediaVideoDisallow;
                     // If key exists and value is 1 return true else false
                     obj = featureKey.GetValue(regValue);
                     keyValue = obj is int && ((int)obj == 1);
@@ -390,29 +353,7 @@ namespace System.Xaml
                     {
                         fResult = true;
                     }
-
-                    // special case for audio and video since they can be orred
-                    // this is in the condition that audio is enabled since that is
-                    // the path that MediaAudioVideoDisable defaults to
-                    // This is purely to optimize perf on the number of calls to assert
-                    // in the media or audio scenario.
-
-                    if ((fResult == false) && (key == KeyToRead.MediaAudioOrVideoDisable))
-                    {
-                        regValue = RegistryKeys.value_MediaVideoDisallow;
-                        // If key exists and value is 1 return true else false
-                        obj = featureKey.GetValue(regValue);
-                        keyValue = obj is int && ((int)obj == 1);
-                        if (keyValue)
-                        {
-                            fResult = true;
-                        }
-                    }
                 }
-            }
-            finally
-            {
-                RegistryPermission.RevertAssert();
             }
             return fResult;
         }
@@ -425,26 +366,9 @@ namespace System.Xaml
         ///     The wrapper works around a bug in that routine, which causes it to throw
         ///     a SecurityException in Partial Trust.
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical: This code elevates to access registry
-        ///   TreatAsSafe: The information it exposes is safe to give out and all it does is read a specific key
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static internal CultureInfo GetCultureInfoByIetfLanguageTag(string languageTag)
         {
-            CultureInfo culture = null;
-
-            RegistryPermission regPerm = new RegistryPermission(RegistryPermissionAccess.Read, RegistryKeys.HKLM_IetfLanguage);//BlessedAssert
-            regPerm.Assert();//BlessedAssert
-            try
-            {
-                culture = CultureInfo.GetCultureInfoByIetfLanguageTag(languageTag);
-            }
-            finally
-            {
-                 RegistryPermission.RevertAssert();
-            }
-            return culture;
+            return CultureInfo.GetCultureInfoByIetfLanguageTag(languageTag);
         }
 #endif //PRESENTATIONCORE
 
@@ -498,7 +422,7 @@ namespace System.Xaml
             return !(left == right);
         }
 
-        int _hashCode;  // cache target's hashcode, lest it get GC'd out from under us
+        readonly int _hashCode;  // cache target's hashcode, lest it get GC'd out from under us
     }
 
     // This cleanup token will be immediately thrown away and as a result it will
@@ -521,6 +445,7 @@ namespace System.Xaml
             ThreadPool.QueueUserWorkItem(callback, state);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", Justification = "See comment above")]
         internal static void RegisterCallback(WaitCallback callback, object state)
         {
             new GCNotificationToken(callback, state);

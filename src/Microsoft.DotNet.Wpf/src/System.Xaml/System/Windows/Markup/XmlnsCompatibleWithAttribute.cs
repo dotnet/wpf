@@ -8,8 +8,6 @@
 //
 //  Contents: Namespace compatiblity support 
 
-using System;
-using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup
@@ -39,49 +37,19 @@ namespace System.Windows.Markup
         /// <param name="newNamespace">new xml namespace</param>
         public XmlnsCompatibleWithAttribute(string oldNamespace, string newNamespace)
         {
-            // Validate Input Arguments
-            if (oldNamespace == null)
-            {
-                throw new ArgumentNullException("oldNamespace");
-            }
-
-            if (newNamespace == null)
-            {
-                throw new ArgumentNullException("newNamespace");
-            }
-
-            _oldNamespace = oldNamespace;
-            _newNamespace = newNamespace;
+            OldNamespace = oldNamespace ?? throw new ArgumentNullException(nameof(oldNamespace));
+            NewNamespace = newNamespace ?? throw new ArgumentNullException(nameof(newNamespace));
         }
-
-        #region public properties
 
         /// <summary>
         /// Old Xml Namespace
         /// </summary>
-        public string OldNamespace 
-        {
-            get { return _oldNamespace; }
-        }
+        public string OldNamespace { get; }
 
         /// <summary>
         /// New Xml Namespace
         /// </summary>
-        public string NewNamespace 
-        {
-            get { return _newNamespace; }
-        }
-
-        #endregion public properties
-
-  
-        #region Private Fields
-
-        private string _oldNamespace;
-        private string _newNamespace;
-
-        #endregion Private Fields
-
+        public string NewNamespace { get; }
    }
 }
 

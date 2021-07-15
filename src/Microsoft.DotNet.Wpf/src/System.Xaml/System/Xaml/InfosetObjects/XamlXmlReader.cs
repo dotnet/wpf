@@ -2,18 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Xaml.MS.Impl;
+using System.Xaml.Schema;
 using System.Xml;
 using MS.Internal.Xaml;
 using MS.Internal.Xaml.Context;
 using MS.Internal.Xaml.Parser;
-using System.Xaml.MS.Impl;
-using System.Windows.Markup;
-using System.Xaml;
-using System.Xaml.Schema;
-using System.Diagnostics;
-using System.IO;
 
 namespace System.Xaml
 {
@@ -32,7 +29,7 @@ namespace System.Xaml
         {
             if (xmlReader == null)
             {
-                throw new ArgumentNullException("xmlReader");
+                throw new ArgumentNullException(nameof(xmlReader));
             }
 
             Initialize(xmlReader, null, null);
@@ -42,7 +39,7 @@ namespace System.Xaml
         {
             if (xmlReader == null)
             {
-                throw new ArgumentNullException("xmlReader");
+                throw new ArgumentNullException(nameof(xmlReader));
             }
 
             Initialize(xmlReader, null, settings);
@@ -52,11 +49,11 @@ namespace System.Xaml
         {
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             if (xmlReader == null)
             {
-                throw new ArgumentNullException("xmlReader");
+                throw new ArgumentNullException(nameof(xmlReader));
             }
 
             Initialize(xmlReader, schemaContext, null);
@@ -66,11 +63,11 @@ namespace System.Xaml
         {
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             if (xmlReader == null)
             {
-                throw new ArgumentNullException("xmlReader");
+                throw new ArgumentNullException(nameof(xmlReader));
             }
 
             Initialize(xmlReader, schemaContext, settings);
@@ -80,7 +77,7 @@ namespace System.Xaml
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
             Initialize(CreateXmlReader(fileName, null), null, null);
         }
@@ -89,7 +86,7 @@ namespace System.Xaml
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             Initialize(CreateXmlReader(fileName, settings), null, settings);
@@ -99,11 +96,11 @@ namespace System.Xaml
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
 
             Initialize(CreateXmlReader(fileName, null), schemaContext, null);
@@ -113,11 +110,11 @@ namespace System.Xaml
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
 
             Initialize(CreateXmlReader(fileName, settings), schemaContext, settings);
@@ -133,7 +130,7 @@ namespace System.Xaml
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
             Initialize(CreateXmlReader(stream, null), null, null);
         }
@@ -142,7 +139,7 @@ namespace System.Xaml
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
             Initialize(CreateXmlReader(stream, settings), null, settings);
         }
@@ -151,11 +148,11 @@ namespace System.Xaml
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
 
             Initialize(CreateXmlReader(stream, null), schemaContext, null);
@@ -165,11 +162,11 @@ namespace System.Xaml
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
 
             Initialize(CreateXmlReader(stream, settings), schemaContext, settings);
@@ -185,7 +182,7 @@ namespace System.Xaml
         {
             if (textReader == null)
             {
-                throw new ArgumentNullException("textReader");
+                throw new ArgumentNullException(nameof(textReader));
             }
             Initialize(CreateXmlReader(textReader, null), null, null);
         }
@@ -194,7 +191,7 @@ namespace System.Xaml
         {
             if (textReader == null)
             {
-                throw new ArgumentNullException("textReader");
+                throw new ArgumentNullException(nameof(textReader));
             }
             Initialize(CreateXmlReader(textReader, settings), null, settings);
         }
@@ -203,11 +200,11 @@ namespace System.Xaml
         {
             if (textReader == null)
             {
-                throw new ArgumentNullException("textReader");
+                throw new ArgumentNullException(nameof(textReader));
             }
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
 
             Initialize(CreateXmlReader(textReader, null), schemaContext, null);
@@ -217,11 +214,11 @@ namespace System.Xaml
         {
             if (textReader == null)
             {
-                throw new ArgumentNullException("textReader");
+                throw new ArgumentNullException(nameof(textReader));
             }
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
 
             Initialize(CreateXmlReader(textReader, settings), schemaContext, settings);

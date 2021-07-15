@@ -1,0 +1,321 @@
+<Project>
+  <PropertyGroup>
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <CharacterSet>Unicode</CharacterSet>
+
+    <!-- v142 = Visual Studio 2019 -->
+    <PlatformToolset>v142</PlatformToolset>
+
+    <!-- 17134 is Windows 10 v1903 (19H1) SDK -->
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+
+    <ConfigurationType Condition="'$(ConfigurationType)'==''">DynamicLibrary</ConfigurationType>
+    
+    <!-- Windows 10 installation location is often not reliably set in msbuild -->
+    <Windows10SdkPath Condition="Exists('$(WindowsSdkDir_10)')">$(WindowsSdkDir_10)</Windows10SdkPath>
+    <Windows10SdkPath Condition="'$(Windows10SdkPath'=='' and Exists('$(WindowsSdkDir)')">$(WindowsSdkDir)</Windows10SdkPath>
+    <Windows10SdkPath Condition="'$(Windows10SdkPath)'==''">$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Kits\Installed Roots@KitsRoot10)</Windows10SdkPath>
+
+    <Architecture Condition="'$(Platform)'=='x64' or '$(Platform)'=='x86' or '$(Platform)'=='arm' or '$(Platform)'=='arm64'">$(Platform)</Architecture>
+    <Architecture Condition="'$(Platform)'=='Win32'">x86</Architecture>
+    <Architecture Condition="'$(Architecture)'==''">x64</Architecture>
+
+    <!-- This should always use either x86 or x64 --> 
+    <TraceWppArchitecture Condition="'$(Architecture)'=='ARM64'">x64</TraceWppArchitecture>
+    <TraceWppArchitecture Condition="'$(Architecture)'!='ARM64'">$(Architecture)</TraceWppArchitecture>
+    <TraceWpp>$(Windows10SdkPath)bin\$(WindowsTargetPlatformVersion)\$(TraceWppArchitecture)\tracewpp.exe</TraceWpp>
+
+    <GenerateAssemblyInfo>$(ManagedCxx)</GenerateAssemblyInfo>
+    <BuildProjectReferences>true</BuildProjectReferences>
+
+    <WinNt Condition="'$(WinNt)' == ''">1</WinNt>
+    <!-- Win32Ie = _WIN32_IE_IE70 (0x0700) -->
+    <Win32Ie Condition="'$(Win32Ie)' == ''">0x0700</Win32Ie>
+    <!-- Win32WinNt = _WIN32_WINNT_WIN10 (0x0A00) -->
+    <Win32WinNt Condition="'$(Win32WinNt)' == ''">0x0A00</Win32WinNt>
+    <!-- NtddiVersion = NTDDI_WIN10_RS4 (0x0A000005)-->
+    <NtddiVersion Condition="'$(NtddiVersion)'==''">0x0A000005</NtddiVersion>
+    <!-- WinVer = WINVER -->
+    <WinVer Condition="'$(WinVer)'==''">$(Win32WinNt)</WinVer>
+
+    <!-- Enables Spectre Mitigations -->
+    <!-- Optional - for future use -->
+    <!-- <SpectreMitigation>Spectre</SpectreMitigation> -->
+
+    <WppConfigDir>$(MsBuildThisFileDirectory)WppConfig\</WppConfigDir>
+
+    <CopyBuildOutputToOutputDirectory Condition="'$(Configuration)'=='StaticLibrary'">false</CopyBuildOutputToOutputDirectory>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ManagedCxx Condition="'$(CLRSupport)'!='true'">false</ManagedCxx>
+    <ManagedCxx Condition="'$(CLRSupport)'=='true'">true</ManagedCxx>
+    <ManagedCxx Condition="'$(CLRSupport)'=='pure'">true</ManagedCxx>
+  </PropertyGroup>
+  
+  <!-- 
+    Enable IDE support for C++/CLI .NET Core builds
+    -->
+  <PropertyGroup>
+    <CLRSupport Condition="'$(CLRSupport)' == 'pure'">NetCore</CLRSupport>
+  </PropertyGroup>
+  
+  <!-- 
+    When building C++/CLI..
+      ... Disable C# CoreGenerateSatelliteAssemblies target
+  -->
+  <PropertyGroup Condition="'$(ManagedCxx)' == 'true'">
+    <GenerateSatelliteAssembliesForCore>false</GenerateSatelliteAssembliesForCore>
+  </PropertyGroup>
+
+
+  <PropertyGroup Condition="'$(ManagedCxx)' == 'true'">
+      <!-- This is usually set by the Microsoft.NETFramework.CurrentVersion.props file, 
+      but, since we don't include that for C++\CLI builds, we need to do it here. -->
+      <TargetFrameworkSDKToolsDirectory Condition="'$(TargetFrameworkSDKToolsDirectory)' == ''">$(SDK40ToolsPath)</TargetFrameworkSDKToolsDirectory>
+      <TargetFrameworkSDKToolsDirectory Condition="'$(Platform)' == 'x64'">$(TargetFrameworkSDKToolsDirectory)$(Platform)\</TargetFrameworkSDKToolsDirectory>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <LinkIncremental>true</LinkIncremental>
+    <LinkIncremental Condition="'$(ManagedCxx)'=='true'">false</LinkIncremental>
+    <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <LinkIncremental>false</LinkIncremental>
+    <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(ManagedCxx)'=='true'">
+    <!-- Works around a bug in the C++ compiler where we get the error
+         'System::ReadOnlySpan::default': could not import member. -->
+    <ManagedCxxSuppressions>$(ManagedCxxSuppressions);4679</ManagedCxxSuppressions>
+    <!-- Type referenced was expected in unreferenced assembly 'NETCore-Assembly',
+         type defined in current translation unit used instead. -->
+    <ManagedCxxSuppressions>$(ManagedCxxSuppressions);4691</ManagedCxxSuppressions>
+    <!-- It applies to PrivateImplementationDetails, which is not something WPF generates
+         but is conflicting in ReachFramework and PresentationCoreCSharp. This is safe to
+         suppress as we don't directly use this type. -->
+    <ManagedCxxSuppressions>$(ManagedCxxSuppressions);4945</ManagedCxxSuppressions>
+    <!-- Type marked as obsolete. -->
+    <ManagedCxxSuppressions>$(ManagedCxxSuppressions);4947</ManagedCxxSuppressions>
+    <!-- Type marked as #pragma deprecated. -->
+    <ManagedCxxSuppressions>$(ManagedCxxSuppressions);4995</ManagedCxxSuppressions>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <UsePrivateCppTools Condition="'$(UsePrivateCppTools)' == ''">false</UsePrivateCppTools>
+  </PropertyGroup>
+  <Import Project="Wpf.Cpp.PrivateTools.props" Condition="Exists('Wpf.Cpp.PrivateTools.props') And '$(UsePrivateCppTools)'=='true'"/>
+  
+  <!-- Set up standard libraries for Native C++ projects -->
+  <PropertyGroup>
+    <!-- Explicitly set up CRT and VC runtime libraries -->
+    <!-- set /p:ExplicitCrts=false to disable this behavior -->
+    <ExplicitCrts Condition="'$(ExplicitCrts)'==''">true</ExplicitCrts>
+
+    <!-- Use Static UCRT in Debug builds only -->
+    <UseStaticUCRT Condition="('$(UseStaticUCRT)'=='') and ('$(Configuration)'=='Debug')">true</UseStaticUCRT>
+    <UseStaticUCRT Condition="('$(UseStaticUCRT)'=='') and ('$(Configuration)'=='Release')">false</UseStaticUCRT>
+
+    <!-- Always use Static VC Runtime -->
+    <UseStaticVCRT Condition="'$(UseStaticVCRT)'==''">true</UseStaticVCRT>
+
+    <LibSuffix Condition="'$(Configuration)'=='Debug'">d</LibSuffix>
+
+    <!-- Always link to oldnames.lib and legacy_stdio_wide_specifiers.lib   -->
+    <OldNamesLib>oldnames.lib</OldNamesLib>
+    <LegacyStdioWideSpecifiersLib>legacy_stdio_wide_specifiers.lib</LegacyStdioWideSpecifiersLib>
+
+    <!-- For use with /MT[d] -->
+    <StaticUCRTLibrary Condition="'$(UseStaticUCRT)'=='true'">libucrt$(LibSuffix).lib</StaticUCRTLibrary>
+    <StaticVCRTLibrary Condition="'$(UseStaticVCRT)'=='true'">libvcruntime$(LibSuffix).lib</StaticVCRTLibrary>
+    <StaticCRTStartupLibrary Condition="'$(UseStaticVCRT)'=='true'">libcmt$(LibSuffix).lib</StaticCRTStartupLibrary>
+    <StaticStandardCppLibrary Condition="'$(UseStaticVCRT)'=='true'">libcpmt$(LibSuffix).lib</StaticStandardCppLibrary>
+
+    <!-- For use with /MD[d] -->
+    <DynamicUCRTLibrary Condition="'$(UseStaticUCRT)'!='true'">ucrt$(LibSuffix).lib</DynamicUCRTLibrary>
+    <DynamicVCRTLibrary Condition="'$(UseStaticVCRT)'!='true'">vcruntime$(LibSuffix).lib</DynamicVCRTLibrary>
+    <DynamicCRTStartupLibrary Condition="'$(UseStaticVCRT)'!='true'">msvcrt$(LibSuffix).lib</DynamicCRTStartupLibrary>
+    <DynamicStandardCppLibrary Condition="'$(UseStaticVCRT)'!='true'">msvcprt$(LibSuffix).lib</DynamicStandardCppLibrary>
+
+    <DisallowLibClause Condition="'$(StaticUCRTLibrary)'!=''">$(DisallowLibClause) /disallowlib:ucrt$(LibSuffix).lib</DisallowLibClause>
+    <DisallowLibClause Condition="'$(StaticVCRTLibrary)'!=''">$(DisallowLibClause) /disallowlib:vcruntime$(LibSuffix).lib</DisallowLibClause>
+    <DisallowLibClause Condition="'$(StaticCRTStartupLibrary)'!=''">$(DisallowLibClause) /disallowlib:msvcrt$(LibSuffix).lib</DisallowLibClause>
+    <DisallowLibClause Condition="'$(StaticStandardCppLibrary)'!=''">$(DisallowLibClause) /disallowlib:msvcprt$(LibSuffix).lib</DisallowLibClause>
+    <DisallowLibClause Condition="'$(DynamicUCRTLibrary)'!=''">$(DisallowLibClause) /disallowlib:libucrt$(LibSuffix).lib</DisallowLibClause>
+    <DisallowLibClause Condition="'$(DynamicVCRTLibrary)'!=''">$(DisallowLibClause) /disallowlib:libvcruntime$(LibSuffix).lib</DisallowLibClause>
+    <DisallowLibClause Condition="'$(DynamicCRTStartupLibrary)'!=''">$(DisallowLibClause) /disallowlib:libcmt$(LibSuffix).lib</DisallowLibClause>
+    <DisallowLibClause Condition="'$(DynamicStandardCppLibrary)'!=''">$(DisallowLibClause) /disallowlib:libcpmt$(LibSuffix).lib</DisallowLibClause>
+
+    <!-- 
+      When linking to vcruntime140.dll, rename and link to vcruntime140_cor3.dll 
+        Caveats:
+          - Supported only on Release builds 
+          - WPF will carry a privatized copy of vcruntime with it - renamed with suffix _cor3
+          - Debug builds normally link to Static VCRT by default, and linking to a privatized vcruntime is not required
+          - Managed C++ assemblies that utilize /clr:pure always link to vcruntime implicitly, and should employ this 
+            DLL renaming at link time and reference the privatized copy of vcruntime.
+          - It is in fact possible to create private builds of WPF that links to debug builds of redistributable vcruntime. We do not support
+            linking to a privatized copy of vcruntime140d.dll here. Such build should simply copy over the debug version of vcruntime DLL's 
+            to the appropriate location for testing purposes.
+    -->
+    <DllRenameClause Condition="('$(UseStaticVCRT)'!='true' or '$(CLRSupport)'=='pure' or '$(CLRSupport)' == 'NetCore') And '$(Configuration)'=='Release'">/dllrename:$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix)=$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix)$(WpfVersionSuffix)</DllRenameClause>
+
+
+    <StandardLibrariesForNativeCpp Condition="'$(ManagedCxx)'=='false'">$(StaticUCRTLibrary);$(StaticVCRTLibrary);$(StaticCRTStartupLibrary);$(StaticStandardCppLibrary);$(DynamicUCRTLibrary);$(DynamicVCRTLibrary);$(DynamicCRTStartupLibrary);$(DynamicStandardCppLibrary)</StandardLibrariesForNativeCpp>
+    <StandardLibrariesForNativeCpp Condition="'$(ManagedCxx)'=='false'">$(StandardLibrariesForNativeCpp);$(OldNamesLib);$(LegacyStdioWideSpecifiersLib)</StandardLibrariesForNativeCpp>
+
+    <!-- These runtime libs should not have their default lib requests included during link. Instead, just use the explicitly intended libraries from this section -->
+    <NoDefaultLibClauseForRuntimeLibs>$(NoDefaultLibClauseForRuntimeLibs) /nodefaultlib:ucrt$(LibSuffix).lib /nodefaultlib:libucrt$(LibSuffix).lib /nodefaultlib:msvcrt$(LibSuffix).lib /nodefaultlib:libcmt$(LibSuffix).lib</NoDefaultLibClauseForRuntimeLibs>
+
+    <!-- Disable managed incremental builds to disable MetaGen task, which currently fails -->
+    <EnableManagedIncrementalBuild Condition="'$(ManagedCxx)'=='true'">false</EnableManagedIncrementalBuild>
+
+    <!-- Do not enable this - see GenerateTargetFrameworkMonikerAttribute2 target in Wpf.Cpp.targets for additional information -->
+    <GenerateTargetFrameworkAttribute Condition="'$(ManagedCxx)'=='true'">false</GenerateTargetFrameworkAttribute>
+
+    <!-- When CLRSupport == True, we want the outputs to be redirected to 
+         $(BaseOutputPath)$(Configuration)\$(TargetFramework)\ -->
+    <OutDir Condition="'$(ManagedCxx)' == 'true' and !$(Architecture.EndsWith('64'))">$(BaseOutputPath)$(Configuration)\$(TargetFramework)\</OutDir>
+    <OutDir Condition="'$(ManagedCxx)' == 'true' and $(Architecture.EndsWith('64'))">$(BaseOutputPath)$(Architecture)\$(Configuration)\$(TargetFramework)\</OutDir>
+
+    <IntermediateOutputPath Condition="'$(ManagedCxx)'=='true' and !$(Architecture.EndsWith('64'))">$(BaseIntermediateOutputPath)$(Configuration)\$(TargetFramework)\</IntermediateOutputPath>
+    <IntermediateOutputPath Condition="'$(ManagedCxx)'=='true' and $(Architecture.EndsWith('64'))">$(BaseIntermediateOutputPath)$(Architecture)\$(Configuration)\$(TargetFramework)\</IntermediateOutputPath>
+
+    <ProduceReferenceAssembly Condition="'$(ManagedCxx)'=='true'">false</ProduceReferenceAssembly>
+    <ProduceReferenceAssembly Condition="'$(ManagedCxx)'=='true'">false</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <!-- Common suppressions -->
+      <DisableSpecificWarnings>%(DisableSpecificWarnings);$(ManagedCxxSuppressions);4960;4961;4603;4627;4838;4456;4457;4458;4459;4091</DisableSpecificWarnings>
+
+      <!-- STRICT gets us stricter type declarations from Windows headers. -->
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_UNICODE;UNICODE;_WINDOWS;STRICT;_WIN32_WINNT=$(Win32WinNt);_WIN32_IE=$(Win32Ie);WINNT=$(WinNt);WINVER=$(WinVer)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(ConfigurationType)'=='StaticLibrary'">%(PreprocessorDefinitions);_LIB;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);SAL_NO_ATTRIBUTE_DECLARATIONS</PreprocessorDefinitions>
+      
+      <!-- There is a bug in VS2019 that prevents us from using ArgIterator, and therefore simple functions like printf -->
+      <!-- The fix is coming soon - remove this as soon as the fix makes it into the builds --> 
+      <!-- Also remove all references to ARGITERATOR_SUPPORTED macro from the codebase --> 
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);ARGITERATOR_SUPPORTED=0</PreprocessorDefinitions>
+
+      <!-- $(Architecture) - x86 | x64 | arm | arm64 -->
+      <PreprocessorDefinitions Condition="'$(Architecture)'=='x64'">%(PreprocessorDefinitions);_AMD64_;</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Architecture)'=='x86'">%(PreprocessorDefinitions);_X86_;</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Architecture)'=='arm'">%(PreprocessorDefinitions);_ARM_;</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Architecture)'=='arm64'">%(PreprocessorDefinitions);_ARM64_;</PreprocessorDefinitions>
+
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      
+      <!-- 
+        Disambiguate the PDB produced by the compiler with a -compile suffix, so that the PDB
+        produced by the linker is not accidentally clobbered by this one.
+      -->
+      <ProgramDatabaseFileName>$(IntermediateOutputPath)$(TargetName)-compile.pdb</ProgramDatabaseFileName>
+
+      <MinimalRebuild>false</MinimalRebuild>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <InlineFunctionExpansion Condition="'$(Configuration)'!='Debug'">OnlyExplicitInline</InlineFunctionExpansion>
+      <IntrinsicFunctions Condition="'$(Configuration)'!='Debug'">true</IntrinsicFunctions>
+
+      <TreatWChar_tAsBuiltInType Condition="'$(ManagedCxx)'=='false'">false</TreatWChar_tAsBuiltInType>
+
+      <ConformanceMode Condition="'$(ManagedCxx)'=='true'">true</ConformanceMode>
+      <ConformanceMode Condition="'$(ManagedCxx)'=='true'">false</ConformanceMode>
+
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+
+      <ControlFlowGuard Condition="('$(ManagedCxx)'=='false') and ('$(Configuration)'!='Debug')">Guard</ControlFlowGuard>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+
+      <!-- WPF builds have historically used StdCall by default for all x86 native C++ builds -->
+      <CallingConvention Condition="('$(ManagedCxx)'=='false') And ('$(Architecture)'=='x86')">StdCall</CallingConvention>
+
+      <!-- See https://developercommunity.visualstudio.com/content/problem/297504/all-cppwinrt-code-fails-to-build-from-abi-and-to-a.html -->
+      <!--<AdditionalOptions>/Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>-->
+      <!--<ConformanceMode>false</ConformanceMode>-->
+
+      <AdditionalOptions Condition="'$(ManagedCxx)'=='true'">%(AdditionalOptions) /clr:netcore</AdditionalOptions>
+      <ShowIncludes Condition="'$(ShowIncludes)'=='true'">true</ShowIncludes>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+
+      <GenerateDebugInformation Condition="'$(ManagedCxx)'=='false'">true</GenerateDebugInformation>
+      <GenerateDebugInformation Condition="'$(ManagedCxx)'=='true'">DebugFull</GenerateDebugInformation>
+
+      <AdditionalOptions Condition="('$(ManagedCxx)'=='false') and ('$(Configuration)'=='Release')">%(AdditionalOptions) /DEBUGTYPE:CV,PDATA,FIXUP</AdditionalOptions>
+
+      <!-- Suppress LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library -->
+      <!-- Some C++ files only define symbols conditionally based on certain macro values, which are in turn dependent on architecture of debug vs. release build status. -->
+      <!-- This can lead to LNK4221 being generated under some configurations. -->
+      <AdditionalOptions Condition="'$(ManagedCxx)'=='false'">/ignore:4221 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(ManagedCxx)'=='false'">%(AdditionalOptions) /MACHINE:$(Architecture)</AdditionalOptions>
+      <TargetMachine>Machine$(Architecture)</TargetMachine>
+
+      <AdditionalDependencies Condition="('$(ManagedCxx)'=='false') and ('$(ExplicitCrts)'=='true')">%(AdditionalDependencies);$(StandardLibrariesForNativeCpp)</AdditionalDependencies>
+      <AdditionalOptions Condition="('$(ManagedCxx)'=='false') and ('$(ExplicitCrts)'=='true')">%(AdditionalOptions) $(NoDefaultLibClauseForRuntimeLibs) $(DisallowLibClause)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(DllRenameClause)'!=''">%(AdditionalOptions) $(DllRenameClause)</AdditionalOptions>
+      <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
+      <AdditionalOptions Condition="'$(ManagedCxx)'=='true'">%(AdditionalOptions) /keyfile:$(AssemblyOriginatorKeyFile) /delaysign</AdditionalOptions>
+      
+      <ProgramDatabaseFileName>$(IntermediateOutputPath)$(TargetName).pdb</ProgramDatabaseFileName>
+    </Link>
+    <Lib>
+      <!-- Suppress LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library -->
+      <!-- Some C++ files only define symbols conditionally based on certain macro values, which are in turn dependent on architecture of debug vs. release build status. -->
+      <!-- This can lead to LNK4221 being generated under some configurations. -->
+      <AdditionalOptions Condition="'$(ManagedCxx)'=='false'">/ignore:4221 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(ManagedCxx)'=='false'">%(AdditionalOptions) /MACHINE:$(Architecture)</AdditionalOptions>
+    </Lib>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(IntermediateOutputPath)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      
+      <PreprocessorDefinitions Condition="'$(ManagedCxx)'=='false'">%(PreprocessorDefinitions);DBG=1</PreprocessorDefinitions>
+      <RuntimeLibrary Condition="('$(ManagedCxx)'=='false') and ('$(UseStaticVCRT)'=='true')">MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary Condition="('$(ManagedCxx)'=='false') and ('$(UseStaticVCRT)'=='false')">MultiThreadedDebugDLL</RuntimeLibrary>
+      
+    </ClCompile>
+  </ItemDefinitionGroup>
+  
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+      <RuntimeLibrary Condition="('$(ManagedCxx)'=='false') and ('$(UseStaticVCRT)'=='true')">MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary Condition="('$(ManagedCxx)'=='false') and ('$(UseStaticVCRT)'=='false')">MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(LinkRepro)'=='true'">
+    <Link>
+      <AdditionalOptions>%(AdditionalOptions) /linkrepro:$(IntermediateOutputPath)LinkRepro</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>

@@ -2,11 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Diagnostics;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
-using System.Xaml;
 using MS.Internal.Xaml.Parser;
 
 namespace System.Xaml.Schema
@@ -43,10 +41,10 @@ namespace System.Xaml.Schema
         {
             if (xamlType == null)
             {
-                throw new ArgumentNullException("xamlType");
+                throw new ArgumentNullException(nameof(xamlType));
             }
-            this.Name = xamlType.Name;
-            this.Namespace = xamlType.GetXamlNamespaces()[0];
+            Name = xamlType.Name;
+            Namespace = xamlType.GetXamlNamespaces()[0];
             if (xamlType.TypeArguments != null)
             {
                 foreach (XamlType argumentType in xamlType.TypeArguments)
@@ -89,11 +87,11 @@ namespace System.Xaml.Schema
         {
             if (typeNameList == null)
             {
-                throw new ArgumentNullException("typeNameList");
+                throw new ArgumentNullException(nameof(typeNameList));
             }
             if (prefixLookup == null)
             {
-                throw new ArgumentNullException("prefixLookup");
+                throw new ArgumentNullException(nameof(prefixLookup));
             }
             return ConvertListToStringInternal(typeNameList, prefixLookup.LookupPrefix);
         }
@@ -102,11 +100,11 @@ namespace System.Xaml.Schema
         {
             if (typeName == null)
             {
-                throw new ArgumentNullException("typeName");
+                throw new ArgumentNullException(nameof(typeName));
             }
             if (namespaceResolver == null)
             {
-                throw new ArgumentNullException("namespaceResolver");
+                throw new ArgumentNullException(nameof(namespaceResolver));
             }
 
             string error;
@@ -122,11 +120,11 @@ namespace System.Xaml.Schema
         {
             if (typeNameList == null)
             {
-                throw new ArgumentNullException("typeNameList");
+                throw new ArgumentNullException(nameof(typeNameList));
             }
             if (namespaceResolver == null)
             {
-                throw new ArgumentNullException("namespaceResolver");
+                throw new ArgumentNullException(nameof(namespaceResolver));
             }
 
             string error;
@@ -143,15 +141,14 @@ namespace System.Xaml.Schema
         {
             if (typeName == null)
             {
-                throw new ArgumentNullException("typeName");
+                throw new ArgumentNullException(nameof(typeName));
             }
             if (namespaceResolver == null)
             {
-                throw new ArgumentNullException("namespaceResolver");
+                throw new ArgumentNullException(nameof(namespaceResolver));
             }
 
-            string error;
-            result = ParseInternal(typeName, namespaceResolver.GetNamespace, out error);
+            result = ParseInternal(typeName, namespaceResolver.GetNamespace, out _);
             return (result != null);
         }
 
@@ -160,15 +157,14 @@ namespace System.Xaml.Schema
         {
             if (typeNameList == null)
             {
-                throw new ArgumentNullException("typeNameList");
+                throw new ArgumentNullException(nameof(typeNameList));
             }
             if (namespaceResolver == null)
             {
-                throw new ArgumentNullException("namespaceResolver");
+                throw new ArgumentNullException(nameof(namespaceResolver));
             }
 
-            string error;
-            result = ParseListInternal(typeNameList, namespaceResolver.GetNamespace, out error);
+            result = ParseListInternal(typeNameList, namespaceResolver.GetNamespace, out _);
             return (result != null);
         }
 
@@ -246,9 +242,9 @@ namespace System.Xaml.Schema
             }
             if (prefixGenerator == null)
             {
-                result.Append("{");
+                result.Append('{');
                 result.Append(Namespace);
-                result.Append("}");
+                result.Append('}');
             }
             else
             {
@@ -257,10 +253,10 @@ namespace System.Xaml.Schema
                 {
                     throw new InvalidOperationException(SR.Get(SRID.XamlTypeNameCannotGetPrefix, Namespace));
                 }
-                if (prefix != string.Empty)
+                if (prefix.Length != 0)
                 {
                     result.Append(prefix);
-                    result.Append(":");
+                    result.Append(':');
                 }
             }
             if (HasTypeArgs)
@@ -270,9 +266,9 @@ namespace System.Xaml.Schema
                 string name = GenericTypeNameScanner.StripSubscript(Name, out subscript);
                 result.Append(name);
 
-                result.Append("(");
+                result.Append('(');
                 ConvertListToStringInternal(result, TypeArguments, prefixGenerator);
-                result.Append(")");
+                result.Append(')');
 
                 result.Append(subscript);
             }

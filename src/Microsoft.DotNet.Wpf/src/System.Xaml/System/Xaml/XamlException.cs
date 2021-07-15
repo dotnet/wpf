@@ -2,15 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.Serialization;
 using System.Security;
-using System.Security.Permissions;
-using System.Xml;
-using MS.Internal.Xaml.Context;
-using System.Xaml.MS.Impl;
 using MS.Internal.Xaml.Parser;
 
 namespace System.Xaml
@@ -73,26 +66,20 @@ namespace System.Xaml
         {
             if (info == null)
             {
-                throw new ArgumentNullException("info");
+                throw new ArgumentNullException(nameof(info));
             }
             LineNumber = info.GetInt32("Line");
             LinePosition = info.GetInt32("Offset");
         }
 
-        /// <SecurityNote>
-        /// Critical: calls Critical method Exception.GetObjectData
-        /// </SecurityNote>
 #if TARGETTING35SP1
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
-        [SecurityTreatAsSafe, SecurityCritical]
 #else
-        [SecurityCritical]
 #endif
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             if (info == null)
             {
-                throw new ArgumentNullException("info");
+                throw new ArgumentNullException(nameof(info));
             }
 
             info.AddValue("Line", LineNumber);
@@ -175,26 +162,20 @@ namespace System.Xaml
         {
             if (info == null)
             {
-                throw new ArgumentNullException("info");
+                throw new ArgumentNullException(nameof(info));
             }
             DuplicateMember = (XamlMember)info.GetValue("DuplicateMember", typeof(XamlMember));
             ParentType = (XamlType)info.GetValue("ParentType", typeof(XamlType));
         }
 
-        /// <SecurityNote>
-        /// Critical: calls Critical method Exception.GetObjectData
-        /// </SecurityNote>
 #if TARGETTING35SP1
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
-        [SecurityTreatAsSafe, SecurityCritical]
 #else
-        [SecurityCritical]
 #endif
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             if (info == null)
             {
-                throw new ArgumentNullException("info");
+                throw new ArgumentNullException(nameof(info));
             }
             info.AddValue("DuplicateMember", DuplicateMember);
             info.AddValue("ParentType", ParentType);

@@ -1,0 +1,24 @@
+<Project>
+  <!-- 
+    Publishing.props from WPF's build props will be imported here directly during publishing
+    
+    Use the published SDK from NuGet if available, or local files otherwise. 
+    -->
+  <Import Sdk="Microsoft.DotNet.Arcade.Wpf.Sdk" 
+          Project="..\tools\Publishing.props"
+          Condition="'$(MicrosoftDotNetArcadeWpfSdkVersion)' != ''"/>
+  <Import Sdk="Microsoft.DotNet.Arcade.Wpf.Sdk" 
+          Project="..\tools\Publishing.targets"
+          Condition="'$(MicrosoftDotNetArcadeWpfSdkVersion)' != ''"/>
+
+  <Import Project="WpfArcadeSdk\tools\Publishing.props"
+          Condition="'$(MicrosoftDotNetArcadeWpfSdkVersion)' == '' And 
+                      Exists('WpfArcadeSdk\Sdk\Sdk.props') And Exists('WpfArcadeSdk\Sdk\Sdk.targets')"/>
+  <Import Project="WpfArcadeSdk\tools\Publishing.targets"
+        Condition="'$(MicrosoftDotNetArcadeWpfSdkVersion)' == '' And 
+                      Exists('WpfArcadeSdk\Sdk\Sdk.props') And Exists('WpfArcadeSdk\Sdk\Sdk.targets')"/>
+
+  <PropertyGroup>
+    <PublishingVersion>3</PublishingVersion>
+  </PropertyGroup>
+</Project>

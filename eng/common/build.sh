@@ -1,5 +1,46 @@
 #!/usr/bin/env bash
 
+# Stop script if unbound variable found (use ${var:-} if intentional)
+set -u
+
+# Stop script if command returns non-zero exit code.
+# Prevents hidden errors caused by missing error code propagation.
+set -e
+
+usage()
+{
+  echo "Common settings:"
+  echo "  --configuration <value>    Build configuration: 'Debug' or 'Release' (short: -c)"
+  echo "  --verbosity <value>        Msbuild verbosity: q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic] (short: -v)"
+  echo "  --binaryLog                Create MSBuild binary log (short: -bl)"
+  echo "  --help                     Print help and exit (short: -h)"
+  echo ""
+
+  echo "Actions:"
+  echo "  --restore                  Restore dependencies (short: -r)"
+  echo "  --build                    Build solution (short: -b)"
+  echo "  --rebuild                  Rebuild solution"
+  echo "  --test                     Run all unit tests in the solution (short: -t)"
+  echo "  --integrationTest          Run all integration tests in the solution"
+  echo "  --performanceTest          Run all performance tests in the solution"
+  echo "  --pack                     Package build outputs into NuGet packages and Willow components"
+  echo "  --sign                     Sign build outputs"
+  echo "  --publish                  Publish artifacts (e.g. symbols)"
+  echo "  --clean                    Clean the solution"
+  echo ""
+
+  echo "Advanced settings:"
+  echo "  --projects <value>       Project or solution file(s) to build"
+  echo "  --ci                     Set when running on CI server"
+  echo "  --excludeCIBinarylog     Don't output binary log (short: -nobl)"
+  echo "  --prepareMachine         Prepare machine for CI run, clean up processes after build"
+  echo "  --nodeReuse <value>      Sets nodereuse msbuild parameter ('true' or 'false')"
+  echo "  --warnAsError <value>    Sets warnaserror msbuild parameter ('true' or 'false')"
+  echo ""
+  echo "Command line arguments not listed above are passed thru to msbuild."
+  echo "Arguments can also be passed in with a single hyphen."
+}
+
 source="${BASH_SOURCE[0]}"
 
 # resolve $source until the file is no longer a symlink
@@ -12,160 +53,180 @@ while [[ -h "$source" ]]; do
 done
 scriptroot="$( cd -P "$( dirname "$source" )" && pwd )"
 
-help=false
 restore=false
 build=false
 rebuild=false
 test=false
-pack=false
-publish=false
 integration_test=false
 performance_test=false
+pack=false
+publish=false
 sign=false
 public=false
 ci=false
+clean=false
 
-warnaserror=true
-nodereuse=true
+warn_as_error=true
+node_reuse=true
+binary_log=false
+exclude_ci_binary_log=false
+pipelines_log=false
 
 projects=''
 configuration='Debug'
 prepare_machine=false
 verbosity='minimal'
-properties=''
+runtime_source_feed=''
+runtime_source_feed_key=''
 
-while (($# > 0)); do
-  lowerI="$(echo $1 | awk '{print tolower($0)}')"
-  case $lowerI in
-    --build)
-      build=true
-      shift 1
-      ;;
-    --ci)
-      ci=true
-      shift 1
-      ;;
-    --configuration)
-      configuration=$2
-      shift 2
-      ;;
-    --help)
-      echo "Common settings:"
-      echo "  --configuration <value>  Build configuration Debug, Release"
-      echo "  --verbosity <value>      Msbuild verbosity (q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic])"
-      echo "  --help                   Print help and exit"
-      echo ""
-      echo "Actions:"
-      echo "  --restore                Restore dependencies"
-      echo "  --build                  Build solution"
-      echo "  --rebuild                Rebuild solution"
-      echo "  --test                   Run all unit tests in the solution"
-      echo "  --sign                   Sign build outputs"
-      echo "  --publish                Publish artifacts (e.g. symbols)"
-      echo "  --pack                   Package build outputs into NuGet packages and Willow components"
-      echo ""
-      echo "Advanced settings:"
-      echo "  --solution <value>       Path to solution to build"
-      echo "  --ci                     Set when running on CI server"
-      echo "  --prepareMachine         Prepare machine for CI run"
-      echo ""
-      echo "Command line arguments not listed above are passed through to MSBuild."
+properties=''
+while [[ $# > 0 ]]; do
+  opt="$(echo "${1/#--/-}" | tr "[:upper:]" "[:lower:]")"
+  case "$opt" in
+    -help|-h)
+      usage
       exit 0
       ;;
-    --pack)
-      pack=true
-      shift 1
+    -clean)
+      clean=true
       ;;
-    --preparemachine)
-      prepare_machine=true
-      shift 1
+    -configuration|-c)
+      configuration=$2
+      shift
       ;;
-    --rebuild)
-      rebuild=true
-      shift 1
-      ;;
-    --restore)
-      restore=true
-      shift 1
-      ;;
-    --sign)
-      sign=true
-      shift 1
-      ;;
-    --solution)
-      solution=$2
-      shift 2
-      ;;
-    --projects)
-      projects=$2
-      shift 2
-      ;;
-    --test)
-      test=true
-      shift 1
-      ;;
-    --integrationtest)
-      integration_test=true
-      shift 1
-      ;;
-    --performancetest)
-      performance_test=true
-      shift 1
-      ;;
-    --publish)
-      publish=true
-      shift 1
-      ;;
-    --verbosity)
+    -verbosity|-v)
       verbosity=$2
-      shift 2
+      shift
       ;;
-    --warnaserror)
-      warnaserror=$2
-      shift 2
+    -binarylog|-bl)
+      binary_log=true
       ;;
-    --nodereuse)
-      nodereuse=$2
-      shift 2
+    -excludeCIBinarylog|-nobl)
+      exclude_ci_binary_log=true
       ;;
-      *)
+    -pipelineslog|-pl)
+      pipelines_log=true
+      ;;
+    -restore|-r)
+      restore=true
+      ;;
+    -build|-b)
+      build=true
+      ;;
+    -rebuild)
+      rebuild=true
+      ;;
+    -pack)
+      pack=true
+      ;;
+    -test|-t)
+      test=true
+      ;;
+    -integrationtest)
+      integration_test=true
+      ;;
+    -performancetest)
+      performance_test=true
+      ;;
+    -sign)
+      sign=true
+      ;;
+    -publish)
+      publish=true
+      ;;
+    -preparemachine)
+      prepare_machine=true
+      ;;
+    -projects)
+      projects=$2
+      shift
+      ;;
+    -ci)
+      ci=true
+      ;;
+    -warnaserror)
+      warn_as_error=$2
+      shift
+      ;;
+    -nodereuse)
+      node_reuse=$2
+      shift
+      ;;
+    -runtimesourcefeed)
+      runtime_source_feed=$2
+      shift
+      ;;
+     -runtimesourcefeedkey)
+      runtime_source_feed_key=$2
+      shift
+      ;;
+    *)
       properties="$properties $1"
-      shift 1
       ;;
   esac
+
+  shift
 done
+
+if [[ "$ci" == true ]]; then
+  pipelines_log=true
+  node_reuse=false
+  if [[ "$exclude_ci_binary_log" == false ]]; then
+    binary_log=true
+  fi
+fi
 
 . "$scriptroot/tools.sh"
 
-if [[ -z $projects ]]; then
-  projects="$repo_root/*.sln"
+function InitializeCustomToolset {
+  local script="$eng_root/restore-toolset.sh"
+
+  if [[ -a "$script" ]]; then
+    . "$script"
+  fi
+}
+
+function Build {
+  InitializeToolset
+  InitializeCustomToolset
+
+  if [[ ! -z "$projects" ]]; then
+    properties="$properties /p:Projects=$projects"
+  fi
+
+  local bl=""
+  if [[ "$binary_log" == true ]]; then
+    bl="/bl:\"$log_dir/Build.binlog\""
+  fi
+
+  MSBuild $_InitializeToolset \
+    $bl \
+    /p:Configuration=$configuration \
+    /p:RepoRoot="$repo_root" \
+    /p:Restore=$restore \
+    /p:Build=$build \
+    /p:Rebuild=$rebuild \
+    /p:Test=$test \
+    /p:Pack=$pack \
+    /p:IntegrationTest=$integration_test \
+    /p:PerformanceTest=$performance_test \
+    /p:Sign=$sign \
+    /p:Publish=$publish \
+    $properties
+
+  ExitWithExitCode 0
+}
+
+if [[ "$clean" == true ]]; then
+  if [ -d "$artifacts_dir" ]; then
+    rm -rf $artifacts_dir
+    echo "Artifacts directory deleted."
+  fi
+  exit 0
 fi
 
-InitializeTools
-
-build_log="$log_dir/Build.binlog"
-
-MSBuild "$toolset_build_proj" \
-  /bl:"$build_log" \
-  /p:Configuration=$configuration \
-  /p:Projects="$projects" \
-  /p:RepoRoot="$repo_root" \
-  /p:Restore=$restore \
-  /p:Build=$build \
-  /p:Rebuild=$rebuild \
-  /p:Test=$test \
-  /p:Pack=$pack \
-  /p:IntegrationTest=$integration_test \
-  /p:PerformanceTest=$performance_test \
-  /p:Sign=$sign \
-  /p:Publish=$publish \
-  /p:ContinuousIntegrationBuild=$ci \
-  $properties
-
-lastexitcode=$?
-
-if [[ $lastexitcode != 0 ]]; then
-  echo "Build failed (exit code '$lastexitcode'). See log: $build_log"
+if [[ "$restore" == true ]]; then
+  InitializeNativeTools
 fi
 
-ExitWithExitCode $lastexitcode
+Build

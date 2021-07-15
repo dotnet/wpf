@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="ko" original="../Strings.resx">
+    <body>
+      <trans-unit id="GenericInvalidArgument">
+        <source>The argument '{0}' was of an invalid type or had an invalid value.</source>
+        <target state="translated">'{0}' 인수가 잘못된 형식이거나 잘못된 값입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndMustBeNonNULL">
+        <source>hwnd must not be IntPtr.Zero (0) or null.</source>
+        <target state="translated">hwnd는 IntPtr.Zero(0) 또는 null이 아니어야 합니다.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -2,19 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Collections;
-using System.Collections.ObjectModel;
-using System.Reflection;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Security;
+using System.Reflection;
 using System.Threading;
-using System.Xaml;
-using XAML3 = System.Windows.Markup;
 using System.Xaml.MS.Impl;
+using XAML3 = System.Windows.Markup;
 
 namespace System.Xaml.Schema
 {
@@ -1105,7 +1100,7 @@ namespace System.Xaml.Schema
                 get { return _isComplete; }
                 set
                 {
-                    Debug.Assert(value == true);
+                    Debug.Assert(value);
                     // This instance is always held in a private field, safe to lock on
                     lock (this)
                     {

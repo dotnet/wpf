@@ -1,0 +1,263 @@
+﻿    <!-- [[Generic]] -->
+
+    <!--=================================================================
+            RibbonFilterMenuButton
+            ==================================================================-->
+
+    <Style x:Key="{x:Type ribbon:RibbonFilterMenuButton}" TargetType="{x:Type ribbon:RibbonFilterMenuButton}" >
+        <Style.Resources>
+            <SolidColorBrush x:Key="FilterBackgroundBrush" Color="#959595"/>
+            <SolidColorBrush x:Key="FilterMouseOverBrush" Color="#FFD232"/>    
+        </Style.Resources>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="{StaticResource FilterBackgroundBrush}"/>
+        <Setter Property="MouseOverBorderBrush" Value="{x:Null}"/>
+        <Setter Property="MouseOverBackground" Value="{x:Null}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Padding" Value="6,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ribbon:RibbonFilterMenuButton}">
+                    <ControlTemplate.Resources>
+                        <ControlTemplate x:Key="filterToggleButtonTemplate" TargetType="{x:Type ribbon:RibbonToggleButton}">
+                            <Grid SnapsToDevicePixels="True">
+                                <Border x:Name="OuterBorder"
+                                    CornerRadius="2,2,0,0"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                    <Grid Margin="{TemplateBinding Padding}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <ribbon:RibbonMenuItem x:Name="PART_CurrentFilterItem"
+                                                               IsHitTestVisible="False"
+                                                               Focusable="False">
+                                            <ribbon:RibbonMenuItem.Template>
+                                                <ControlTemplate TargetType="{x:Type ribbon:RibbonMenuItem}">
+                                                    <Border Background="{TemplateBinding Background}"
+                                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="{TemplateBinding BorderThickness}">
+                                                        <ContentPresenter ContentSource="Header" />
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </ribbon:RibbonMenuItem.Template>
+                                        </ribbon:RibbonMenuItem>
+                                        <ribbon:RibbonTwoLineText x:Name="TwoLineText"
+                                                                  Grid.Column="1"
+                                                                  VerticalAlignment="Top"
+                                                                  HorizontalAlignment="Left"
+                                                                  LineHeight="13px"
+                                                                  LineStackingStrategy="BlockLineHeight"
+                                                                  PathData="{TemplateBinding ribbon:RibbonTwoLineText.PathData}"
+                                                                  PathFill="{TemplateBinding Foreground}"
+                                                                  PathStroke="{TemplateBinding Foreground}"
+                                                                  Margin="1" />
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </ControlTemplate>
+                    </ControlTemplate.Resources>
+                    <Grid SnapsToDevicePixels="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <!-- Please note that the setter for the Style property is only so that this ToggleButton doesn't accidentally pick up some styles defined at the app level. -->
+                        <ribbon:RibbonToggleButton x:Name="PART_ToggleButton"
+                                                   Style="{x:Null}"
+                                                   ribbon:RibbonTwoLineText.PathData="{StaticResource DownArrowGeometryKey}"
+                                                   Label="{TemplateBinding Label}"
+                                                   LargeImageSource="{TemplateBinding LargeImageSource}"
+                                                   SmallImageSource="{TemplateBinding SmallImageSource}"
+                                                   Foreground="{TemplateBinding Foreground}"
+                                                   BorderBrush="{TemplateBinding BorderBrush}"
+                                                   BorderThickness="1"
+                                                   Background="{TemplateBinding Background}"
+                                                   MouseOverBorderBrush="{TemplateBinding MouseOverBorderBrush}"
+                                                   MouseOverBackground="{TemplateBinding MouseOverBackground}"
+                                                   CheckedBorderBrush="{TemplateBinding PressedBorderBrush}"
+                                                   CheckedBackground="{TemplateBinding PressedBackground}"
+                                                   FocusedBorderBrush="{TemplateBinding FocusedBorderBrush}"
+                                                   FocusedBackground="{TemplateBinding FocusedBackground}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   ClickMode="Press"
+                                                   IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsDropDownOpen, Mode=TwoWay}"
+                                                   Template="{StaticResource filterToggleButtonTemplate}"/>
+
+                        <!-- We only want the style-level setting of Foreground=White to apply to the RibbonToggleButton part;
+                             the filter menu items should not be affected by this setting.  So, we ancestor-bind the Foreground they
+                             will inherit to be the ancestor RibbonGallery's Foreground.  This only works if the RibbonFilterMenuButton
+                             is used within a RibbonGallery.  If it's used outside of a RibbonGallery, all the filter menu items will
+                             have White Foreground by default. -->
+                        <Popup x:Name="PART_Popup"
+                               TextElement.Foreground="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ribbon:RibbonGallery}}, Path=Foreground}"
+                               HorizontalOffset="1"
+                               VerticalOffset="-1"
+                               AllowsTransparency="True"
+                               Placement="Bottom"
+                               IsOpen="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsDropDownOpen}"
+                               Focusable="False"
+                               PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
+                            <classic:SystemDropShadowChrome Name="Shadow" Color="Transparent" controls:KeyTipService.IsKeyTipScope="True"
+#ifdef Net40                                            
+                               RenderOptions.ClearTypeHint="Enabled"
+#endif                                                
+                            >
+                                <Border Name="MenuBorder"
+                                        BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Ribbon.BorderBrush}"
+                                        Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Ribbon.Background}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="2">
+                                    <Border x:Name="SubMenuInnerBorder"
+                                            Background="{StaticResource RibbonDropDownBackgroundBrushKey}"
+                                            BorderThickness="0"
+                                            CornerRadius="2">
+                                        <ScrollViewer x:Name="PART_SubMenuScrollViewer"
+                                                        Margin="1"
+                                                        Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
+#ifdef Net40                                            
+                                            <Grid RenderOptions.ClearTypeHint="Enabled">
+                                                <Canvas x:Name="BackgroundCanvas"
+                                                        Height="0"
+                                                        Width="0"
+                                                        HorizontalAlignment="Left"
+                                                        VerticalAlignment="Top">
+                                                    <Rectangle x:Name="OpaqueRect"
+                                                               Height="{Binding ElementName=MenuBorder,Path=ActualHeight}"
+                                                               Width="{Binding ElementName=MenuBorder,Path=ActualWidth}"
+                                                               Fill="{Binding ElementName=MenuBorder,Path=Background}"
+                                                               RadiusX="2"
+                                                               RadiusY="2" />
+                                                    <Rectangle x:Name="OverlayRect"
+                                                               Height="{Binding ElementName=SubMenuInnerBorder,Path=ActualHeight}"
+                                                               Width="{Binding ElementName=SubMenuInnerBorder,Path=ActualWidth}"
+                                                               Fill="{Binding ElementName=SubMenuInnerBorder,Path=Background}"
+                                                               RadiusX="2"
+                                                               RadiusY="2" />
+                                                </Canvas>
+#endif                                            
+                                                <ItemsPresenter x:Name="ItemsPresenter"
+                                                        KeyboardNavigation.TabNavigation="Cycle"
+                                                        KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                        Grid.IsSharedSizeScope="True" />
+#ifdef Net40                                            
+                                            </Grid>
+#endif                                            
+                                        </ScrollViewer>
+                                    </Border>
+                                </Border>
+                            </classic:SystemDropShadowChrome>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+#ifdef Net40                                            
+                        <Trigger SourceName="PART_SubMenuScrollViewer"
+                                 Property="ScrollViewer.CanContentScroll"
+                                 Value="false">
+                            <Setter TargetName="OpaqueRect" 
+                                    Property="Canvas.Top" 
+                                    Value="{Binding ElementName=PART_SubMenuScrollViewer, Path=VerticalOffset}" />
+                            <Setter TargetName="OpaqueRect" 
+                                    Property="Canvas.Left" 
+                                    Value="{Binding ElementName=PART_SubMenuScrollViewer, Path=HorizontalOffset}" />
+                            <Setter TargetName="OverlayRect" 
+                                    Property="Canvas.Top" 
+                                    Value="{Binding ElementName=PART_SubMenuScrollViewer, Path=VerticalOffset}" />
+                            <Setter TargetName="OverlayRect" 
+                                    Property="Canvas.Left" 
+                                    Value="{Binding ElementName=PART_SubMenuScrollViewer, Path=HorizontalOffset}" />
+                        </Trigger>
+#endif                        
+                        <Trigger SourceName="PART_Popup" Property="Popup.HasDropShadow" Value="True">
+                            <Setter TargetName="Shadow" Property="Margin" Value="0,0,5,5"/>
+                            <Setter TargetName="Shadow" Property="Color" Value="{StaticResource RibbonShadowColorKey}"/>
+                        </Trigger>
+                        <Trigger SourceName="PART_Popup" Property="Popup.IsOpen" Value="False">
+                            <Setter TargetName="PART_Popup" Property="PopupAnimation" Value="None" />
+                        </Trigger>
+                        <!-- HighContrast -->
+#ifdef Net45
+                        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                        <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+#ifdef Net40                                            
+                            <Setter TargetName="BackgroundCanvas" Property="Visibility" Value="Collapsed" />
+#endif                            
+                            <Setter TargetName="Shadow" Property="Color"  Value="Transparent" />
+                            <Setter TargetName="PART_SubMenuScrollViewer" Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                            <Setter TargetName="PART_Popup" Property="PopupAnimation"  Value="None" />
+                            <Setter TargetName="MenuBorder" Property="BorderBrush"  Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                            <Setter TargetName="MenuBorder" Property="Background"  Value="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" />
+                            <Setter TargetName="SubMenuInnerBorder" Property="Background"  Value="Transparent" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+#ifdef Net45
+            <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+            <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+            </DataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+#ifdef Net45
+                    <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False"/>
+#else
+                    <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="False"/>
+#endif
+                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True"/>
+                    <Condition Binding="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource Self}}" Value="False"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Foreground" Value="{StaticResource FilterMouseOverBrush}"/>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+#ifdef Net45
+                    <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                    <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True"/>
+                    <Condition Binding="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource Self}}" Value="False"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+#ifdef Net45
+                    <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False"/>
+#else
+                    <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="False"/>
+#endif
+                    <Condition Binding="{Binding Path=IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}}" Value="True"/>
+                    <Condition Binding="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource Self}}" Value="False"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Foreground" Value="{StaticResource FilterMouseOverBrush}"/>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+#ifdef Net45
+                    <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                    <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                    <Condition Binding="{Binding Path=IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}}" Value="True"/>
+                    <Condition Binding="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource Self}}" Value="False"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+            </MultiDataTrigger>
+    </Style.Triggers>
+    </Style>

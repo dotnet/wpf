@@ -1,0 +1,161 @@
+<Project>
+  <PropertyGroup>
+    <TaskFactoryToUse Condition="'$(MSBuildProjectExtension)'!='.vcxproj'">RoslynCodeTaskFactory</TaskFactoryToUse>
+    <TaskFactoryToUse Condition="'$(MSBuildProjectExtension)'=='.vcxproj'">CodeTaskFactory</TaskFactoryToUse>
+
+    <TaskFactoryAssemblyToUse Condition="'$(MSBuildProjectExtension)'!='.vcxproj'">$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll</TaskFactoryAssemblyToUse>
+    <TaskFactoryAssemblyToUse Condition="'$(MSBuildProjectExtension)'=='.vcxproj'">$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll</TaskFactoryAssemblyToUse>
+  </PropertyGroup>
+  
+  <!-- 
+    Summary:
+      Selects @(Item2) items that are present in @(Item1). In effect, calculates 
+      set subtraction:
+      
+              Result = Item2 - Item1
+
+    Parameters:
+      @(Item1)                ITaskItem[]   Required
+      PreserveItem1Metadata   Bool          Optional    Preserves item-metadata from @(Item1) in @(Result)
+      
+      @(Item2)                ITaskItem[]   Required
+      Metadata2               String        Required
+      PreserveItem2Metadata   Bool          Optional    Preserves item-metadata from @(Item2) in @(Result)
+      
+      TreatItemsAsPaths       Bool          Optional
+      
+    Outputs:
+      @(Result)               ITaskItem[]
+      @(UnmatchedReferences)  ITaskItem[]
+  --> 
+  <UsingTask TaskName="FilterItem1ByItem2"
+               TaskFactory="$(TaskFactoryToUse)"
+               AssemblyFile="$(TaskFactoryAssemblyToUse)">
+    <ParameterGroup>
+      <Item1 ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+      <Item2 ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+      <Metadata2 ParameterType="System.String" Required="true" />
+      <PreserveItem1Metadata ParameterType="System.Boolean" />
+      <PreserveItem2Metadata ParameterType="System.Boolean" />
+      <TreatItemsAsPaths ParameterType="System.Boolean" />
+      <Result ParameterType="Microsoft.Build.Framework.ITaskItem[]" Output="true" />
+      <UnmatchedReferences ParameterType="Microsoft.Build.Framework.ITaskItem[]" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+            var result = new List<TaskItem>();
+            var unmatched = new List<TaskItem>();
+
+            foreach (var item1 in Item1)
+            {
+                bool matched = false;
+                foreach (var item2 in Item2)
+                {
+                    if (item2.MetadataNames.Cast<string>().Contains(Metadata2))
+                    {
+                        string str1 = item1.ItemSpec;
+                        string str2 = item2.GetMetadata(Metadata2);
+
+                        bool cmp =
+                            !TreatItemsAsPaths ?
+                            str1.Equals(str2, StringComparison.OrdinalIgnoreCase)
+                            : Path.Equals(str1, str2);
+
+                        if (cmp)
+                        {
+                            var resultItem = new TaskItem(item2.GetMetadata(Metadata2));
+                            if (PreserveItem1Metadata)
+                            {
+                                var metadata = item1.CloneCustomMetadata();
+                                foreach (object m in metadata.Keys)
+                                {
+                                    resultItem.SetMetadata((string)m, (string)metadata[m]);
+                                }
+                            }
+
+                            if (PreserveItem2Metadata)
+                            {
+                                var metadata = item2.CloneCustomMetadata();
+                                foreach (object m in metadata.Keys)
+                                {
+                                    resultItem.SetMetadata((string)m, (string)metadata[m]);
+                                }
+                            }
+
+                            result.Add(resultItem);
+                            matched = true;
+                        }
+                    }
+                }
+
+                if (!matched)
+                {
+                    unmatched.Add(new TaskItem(item1));
+                }
+            }
+
+            Result = result.ToArray();
+            UnmatchedReferences = unmatched.ToArray();
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <!-- Installs WPF pre-commit git hook to protect generated files -->
+  <Target Name="InstallWPFPreCommitGitHook"> 
+      <Message Text="InstallWPFPreCommitGitHook: WPF repo root: $(RepoRoot)" />
+      <Message Text="InstallWPFPreCommitGitHook: WPF Arcade SDK tools root: $(WpfArcadeSdkToolsDir)" />
+      <InstallWPFPreCommitGitHook RepoRoot="$(RepoRoot)" WpfArcadeSdkToolsDir="$(WpfArcadeSdkToolsDir)" /> 
+  </Target>
+
+  <UsingTask TaskName="InstallWPFPreCommitGitHook"
+               TaskFactory="$(TaskFactoryToUse)"
+               AssemblyFile="$(TaskFactoryAssemblyToUse)">
+    <ParameterGroup>
+      <RepoRoot ParameterType="System.String" Required="true" />
+      <WpfArcadeSdkToolsDir ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+            string WPFPreCommitGitHookSource = Path.Combine(WpfArcadeSdkToolsDir, @"pre-commit.githook");
+            string WPFPreCommitGitHookDest = Path.Combine(RepoRoot, @".git\hooks\pre-commit");
+            Log.LogMessage($"InstallWPFPreCommitGitHook: WPFPreCommitGitHookSource: {WPFPreCommitGitHookSource}");
+            Log.LogMessage($"InstallWPFPreCommitGitHook: WPFPreCommitGitHookDest: {WPFPreCommitGitHookDest}");
+
+            try
+            {
+                Log.LogMessage("InstallWPFPreCommitGitHook: Detecting pre-comit git hook...");
+
+                // Verify the payload file exists
+                if (!File.Exists(WPFPreCommitGitHookSource))
+                {
+                    throw new Exception($"InstallWPFPreCommitGitHook: {WPFPreCommitGitHookSource} file does not exit.");
+                }
+
+                // Install pre-commit hook if it has not been installed
+                if (!File.Exists(WPFPreCommitGitHookDest))
+                {
+                    Log.LogMessage("InstallWPFPreCommitGitHook: Installing pre-comit git hook...");
+                    File.Copy(WPFPreCommitGitHookSource, WPFPreCommitGitHookDest);
+                }
+                else
+                {
+                    Log.LogMessage("InstallWPFPreCommitGitHook: pre-comit git hook already installed.");
+                } 
+            }
+            catch (Exception e)
+            {
+                Log.LogErrorFromException(e);
+                throw e;
+            }
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+</Project>

@@ -27,6 +27,7 @@ namespace System.Xaml
         AllValid                            = 0xFFFF << 16
     }
 
+    [Flags]
     internal enum BoolMemberBits
     {
         ReadOnly     = 0x0001,
@@ -60,13 +61,13 @@ namespace System.Xaml
 
         public bool IsNotPresent
         {
-            get { return object.ReferenceEquals(_value, s_NotPresentSentinel); }
+            get { return ReferenceEquals(_value, s_NotPresentSentinel); }
             set { _value = value ? s_NotPresentSentinel : null; }
         }
 
         public bool IsSet
         {
-            get { return !object.ReferenceEquals(_value, null); }
+            get { return !(_value is null); }
         }
 
         public bool IsSetVolatile
@@ -74,7 +75,7 @@ namespace System.Xaml
             get
             {
                 object value = Thread.VolatileRead(ref _value);
-                return !object.ReferenceEquals(value, null);
+                return !(value is null);
             }
         }
 
@@ -83,20 +84,20 @@ namespace System.Xaml
             get
             {
                 object value = _value;
-                return object.ReferenceEquals(value, s_NullSentinel) ? null : (T)value;
+                return ReferenceEquals(value, s_NullSentinel) ? null : (T)value;
             }
-            set { _value = object.ReferenceEquals(value, null) ? s_NullSentinel : value; }
+            set { _value = value is null ? s_NullSentinel : value; }
         }
 
         public void SetIfNull(T value)
         {
-            object newValue = object.ReferenceEquals(value, null) ? s_NullSentinel : value;
+            object newValue = value is null ? s_NullSentinel : value;
             Interlocked.CompareExchange(ref _value, newValue, null);
         }
 
         public void SetVolatile(T value)
         {
-            object newValue = object.ReferenceEquals(value, null) ? s_NullSentinel : value;
+            object newValue = value is null ? s_NullSentinel : value;
             Thread.VolatileWrite(ref _value, newValue);
         }
     }

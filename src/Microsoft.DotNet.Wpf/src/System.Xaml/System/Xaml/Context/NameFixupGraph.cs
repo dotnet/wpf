@@ -4,12 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
-using System.Windows.Markup;
 using System.Xaml;
 using System.Xaml.MS.Impl;
+using System.Xaml.Schema;
 
 namespace MS.Internal.Xaml.Context
 {
@@ -42,7 +41,7 @@ namespace MS.Internal.Xaml.Context
 
         public NameFixupGraph()
         {
-            var referenceComparer = System.Xaml.Schema.ReferenceEqualityComparer<object>.Singleton;
+            var referenceComparer = ReferenceEqualityComparer.Instance;
             _dependenciesByChildObject = new Dictionary<object, NameFixupToken>(referenceComparer);
             _dependenciesByName = new Dictionary<string, FrugalObjectList<NameFixupToken>>(StringComparer.Ordinal);
             _dependenciesByParentObject = new Dictionary<object, FrugalObjectList<NameFixupToken>>(referenceComparer);
@@ -167,9 +166,8 @@ namespace MS.Internal.Xaml.Context
             NameFixupToken token = null;
             if (instance != null)
             {
-                if (_dependenciesByChildObject.TryGetValue(instance, out token))
+                if (_dependenciesByChildObject.Remove(instance, out token))
                 {
-                    _dependenciesByChildObject.Remove(instance);
                     RemoveTokenByParent(token);
                     _resolvedTokensPendingProcessing.Enqueue(token);
                 }

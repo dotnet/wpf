@@ -21,7 +21,6 @@
 //
 // 
 
-using System;
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup
@@ -40,21 +39,12 @@ namespace System.Windows.Markup
         /// </summary>
         public XmlLangPropertyAttribute(string name)
         {
-            _name = name;
+            Name = name;
         }
 
         /// <summary>
         ///     The name of the property that is designated to accept the xml:lang value
         /// </summary>
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-        }
-
-        // The name of the property that is designated to accept the xml:lang value
-        private string _name = null;
+        public string Name { get; }
     }    
 }

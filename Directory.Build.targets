@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Project>
-  <Import Project="Sdk.targets" Sdk="Microsoft.DotNet.Arcade.Sdk" />
-  <Import Project="$(MSBuildThisFileDirectory)Packaging.targets" />
-  <Import Project="$(MSBuildThisFileDirectory)Publishing.targets" />
+  <Import Project="$(WpfArcadeSdkTargets)"
+          Condition="Exists('$(WpfArcadeSdkProps)') And Exists('$(WpfArcadeSdkTargets)')"/>
+
+  <Import Sdk="Microsoft.DotNet.Arcade.Wpf.Sdk"
+          Project="Sdk.targets"
+          Condition="!Exists('$(WpfArcadeSdkProps)') Or !Exists('$(WpfArcadeSdkTargets)')"/>
 
   <!-- Temporarily remove analyzers from references until we can update to a Preview7 SDK which handles them correctly 
        https://github.com/dotnet/wpf/issues/4848 -->

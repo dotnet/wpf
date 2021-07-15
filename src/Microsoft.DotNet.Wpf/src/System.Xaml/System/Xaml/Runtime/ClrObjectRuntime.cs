@@ -3,19 +3,15 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Diagnostics;
-using System.Reflection;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Security;
+using System.Reflection;
 using System.Xaml;
+using System.Xaml.Schema;
 using System.Xml;
 using System.Xml.Serialization;
-using System.IO;
 using XAML3 = System.Windows.Markup;
-using System.Xaml.Schema;
-using System.Text;
 
 namespace MS.Internal.Xaml.Runtime
 {
@@ -132,9 +128,8 @@ namespace MS.Internal.Xaml.Runtime
 
         protected MethodBase BindToMethod(BindingFlags bindingFlags, MethodBase[] candidates, object[] args)
         {
-            object state;
             return Type.DefaultBinder.BindToMethod(
-                bindingFlags, candidates, ref args, null, null, null, out state);
+                bindingFlags, candidates, ref args, null, null, null, out _);
         }
 
         //CreateFromValue is expected to convert the provided value via any applicable converter (on property or type) or provide the original value if there is no converter
@@ -232,14 +227,14 @@ namespace MS.Internal.Xaml.Runtime
             }
         }
 
-        public override object GetValue(Object obj, XamlMember property, bool failIfWriteOnly)
+        public override object GetValue(object obj, XamlMember property, bool failIfWriteOnly)
         {
             object value;
             try
             {
                 if(property.IsDirective)
                 {
-                    value = this.CreateInstance(property.Type, null);
+                    value = CreateInstance(property.Type, null);
                 }
                 else if(!failIfWriteOnly)
                 {
@@ -273,7 +268,7 @@ namespace MS.Internal.Xaml.Runtime
             return member.Invoker.GetValue(obj);
         }
 
-        public override void SetValue(Object inst, XamlMember property, object value)
+        public override void SetValue(object inst, XamlMember property, object value)
         {
             try
             {
@@ -440,7 +435,7 @@ namespace MS.Internal.Xaml.Runtime
         {
             try
             {
-                System.Windows.Markup.IComponentConnector connector = root as System.Windows.Markup.IComponentConnector;
+                XAML3.IComponentConnector connector = root as XAML3.IComponentConnector;
                 if(connector != null)
                 {
                     connector.Connect(connectionId, instance);

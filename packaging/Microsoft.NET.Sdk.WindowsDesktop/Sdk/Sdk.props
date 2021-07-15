@@ -1,0 +1,38 @@
+<!--
+***********************************************************************************************
+Sdk.props
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) .NET Foundation. All rights reserved.
+***********************************************************************************************
+-->
+<Project>
+
+  <PropertyGroup>
+    <_MicrosoftWindowsDesktopSdkImported>true</_MicrosoftWindowsDesktopSdkImported>
+  </PropertyGroup>
+
+  <!--
+    Workaround: https://github.com/microsoft/msbuild/issues/4948
+    Disable .NET Framework's inbox WinFX targets when using the SDK, since, we really don't use it's build logic
+    and is superseded by 'WindowsDesktop' SDK that provides it's own WinFX for both NETFX and CoreCLR targets.
+    Make it opt-out, just in case, if something fails or we don't want to use 'WindowsDesktop' SDK's version.
+  -->
+  <PropertyGroup>
+    <ImportFrameworkWinFXTargets Condition="'$(ImportFrameworkWinFXTargets)' == ''">false</ImportFrameworkWinFXTargets>
+  </PropertyGroup>
+
+  <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.props" />
+
+  <!--
+    Set 'ImportWindowsDesktopTargets' to force import Windows Desktop targets to enable pre 5.0 behavior.
+    Post 5.0, 'Microsoft.NET.Sdk.WindowsDesktop.props' will always be imported by SDK
+  -->
+  <PropertyGroup>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+  </PropertyGroup>
+
+</Project>

@@ -1,13 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <VersionPrefix>4.8.0</VersionPrefix>
-    <PreReleaseVersionLabel>prerelease</PreReleaseVersionLabel>
-    <AssemblyVersion>4.0.0.0</AssemblyVersion>
-    <SystemSecurityVersion>4.5.0</SystemSecurityVersion>
-    <SystemReflectionEmitVersion>4.3.0</SystemReflectionEmitVersion>
+    <VersionPrefix>6.0.0</VersionPrefix>
+    <PreReleaseVersionLabel>preview</PreReleaseVersionLabel>
+    <PreReleaseVersionIteration>7</PreReleaseVersionIteration>
+    <SystemIOPackagingVersion>6.0.0-preview.7.21365.2</SystemIOPackagingVersion>
+    <SystemResourcesExtensionsVersion>6.0.0-preview.7.21365.2</SystemResourcesExtensionsVersion>
+  </PropertyGroup>
+  <!-- NuGet Package Versions -->
+  <PropertyGroup>
+    <MicrosoftPrivateWinformsVersion>6.0.0-preview.7.21365.3</MicrosoftPrivateWinformsVersion>
+  </PropertyGroup>
+  <!-- Packages that come from https://github.com/dotnet/coreclr -->
+  <PropertyGroup>
+    <MicrosoftNETCoreRuntimeCoreCLRVersion>5.0.0-alpha1.19562.1</MicrosoftNETCoreRuntimeCoreCLRVersion>
+    <MicrosoftNETCoreILDAsmVersion>6.0.0-preview.7.21365.2</MicrosoftNETCoreILDAsmVersion>
+    <MicrosoftNETCoreILAsmVersion>6.0.0-preview.7.21365.2</MicrosoftNETCoreILAsmVersion>
+  </PropertyGroup>
+  <!-- Packages that come from https://github.com/dotnet/core-setup -->
+  <PropertyGroup>
+    <VSRedistCommonNetCoreSharedFrameworkx6460PackageVersion>6.0.0-preview.7.21365.2</VSRedistCommonNetCoreSharedFrameworkx6460PackageVersion>
+    <MicrosoftNETCoreAppRefVersion>6.0.0-preview.7.21365.2</MicrosoftNETCoreAppRefVersion>
+    <MicrosoftNETCoreAppRuntimewinx64Version>6.0.0-preview.7.21365.2</MicrosoftNETCoreAppRuntimewinx64Version>
+    <MicrosoftNETCorePlatformsVersion>6.0.0-preview.7.21365.2</MicrosoftNETCorePlatformsVersion>
+    <SystemDrawingCommonVersion>6.0.0-preview.7.21365.2</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>6.0.0-preview.7.21365.2</SystemDirectoryServicesVersion>
+    <SystemReflectionMetadataLoadContextVersion>6.0.0-preview.7.21365.2</SystemReflectionMetadataLoadContextVersion>
+  </PropertyGroup>
+  <!-- Packages that come from https://github.com/dotnet/corefx via core-setup coherency parent dependency -->
+  <PropertyGroup>
+    <SystemCodeDomPackageVersion>6.0.0-preview.7.21365.2</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>6.0.0-preview.7.21365.2</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>6.0.0-preview.7.21365.2</SystemDiagnosticsEventLogPackageVersion>
+    <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>6.0.0-preview.7.21365.2</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>6.0.0-preview.7.21365.2</SystemSecurityPermissionsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>6.0.0-preview.7.21365.2</SystemWindowsExtensionsPackageVersion>
+  </PropertyGroup>
+  <!-- Packages that come from https://github.com/dotnet/arcade -->
+  <PropertyGroup>
+    <MicrosoftDotNetApiCompatVersion>6.0.0-beta.21364.3</MicrosoftDotNetApiCompatVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>6.0.0-beta.21364.3</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetGenAPIVersion>6.0.0-beta.21364.3</MicrosoftDotNetGenAPIVersion>
+  </PropertyGroup>
+  <!-- Maintain System.CodeDom PackageVersion at 4.4.0. See https://github.com/Microsoft/msbuild/issues/3627 -->
+  <!-- Pin specific versions of S.Memory so that it would supply AssemblyVersion=4.0.1.0. See https://github.com/dotnet/runtime/issues/31672 -->
+  <PropertyGroup>
+    <SystemCodeDomPackageVersionForPresentationBuildTasks>4.4.0</SystemCodeDomPackageVersionForPresentationBuildTasks>
+  </PropertyGroup>
+  <!-- Other Packages that require manual updating-->
+  <PropertyGroup>
+    <MicrosoftBuildFrameworkPackageVersion>15.9.20</MicrosoftBuildFrameworkPackageVersion>
+    <MicrosoftBuildUtilitiesCorePackageVersion>15.9.20</MicrosoftBuildUtilitiesCorePackageVersion>
     <XUnitVersion>2.4.0</XUnitVersion>
-    <XUnitRunnerConsoleVersion>2.4.0</XUnitRunnerConsoleVersion>
-    <XUnitRunnerVisualStudioVersion>2.4.0</XUnitRunnerVisualStudioVersion>
+    <XUnitRunnerConsoleVersion>$(XUnitVersion)</XUnitRunnerConsoleVersion>
+    <XUnitRunnerVisualStudioVersion>$(XUnitVersion)</XUnitRunnerVisualStudioVersion>
+    <!-- 
+        Also in global.json 
+        Used in Wpf.Cpp.PrivateTools.props/targets 
+    <MsvcurtC1xxVersion>0.0.1.2</MsvcurtC1xxVersion>
+    -->
+    <!--
+    This is the version of the test infrastructure package is compiled against. This should be
+    removed as part of https://github.com/dotnet/wpf/issues/816 
+    -->
+    <MicrosoftDotNetWpfTestPackageVersion>1.0.0-beta.19263.1</MicrosoftDotNetWpfTestPackageVersion>
+    <!-- These versions are specified in global.json -->
+    <StrawberryPerlVersion>5.28.1.1-1</StrawberryPerlVersion>
+    <NetFramework48RefAssembliesVersion>0.0.0.1</NetFramework48RefAssembliesVersion>
+    <NetFramework472IlToolsVersion>0.0.0.1</NetFramework472IlToolsVersion>
+  </PropertyGroup>
+  <!--Package names-->
+  <PropertyGroup>
+    <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
+    <MicrosoftPrivateWinformsPackage>Microsoft.Private.Winforms</MicrosoftPrivateWinformsPackage>
+    <SystemDrawingCommonPackage>System.Drawing.Common</SystemDrawingCommonPackage>
+    <SystemDirectoryServicesPackage>System.DirectoryServices</SystemDirectoryServicesPackage>
+    <MicrosoftDotNetWpfDncEngPackage>Microsoft.DotNet.Wpf.DncEng</MicrosoftDotNetWpfDncEngPackage>
+    <SystemIOPackagingPackage>System.IO.Packaging</SystemIOPackagingPackage>
+    <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MicrosoftDotNetWpfDncEngVersion>6.0.0-preview.7.21365.3</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

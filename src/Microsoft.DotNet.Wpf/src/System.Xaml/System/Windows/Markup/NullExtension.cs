@@ -9,8 +9,7 @@
 *
 *
 \***************************************************************************/
-using System;
-using System.Windows;
+
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup

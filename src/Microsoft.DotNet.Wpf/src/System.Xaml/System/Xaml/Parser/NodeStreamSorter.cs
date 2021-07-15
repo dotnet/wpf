@@ -3,10 +3,11 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Xaml.MS.Impl;
 using System.Diagnostics;
 using System.Xaml;
+using System.Xaml.MS.Impl;
 using MS.Internal.Xaml.Context;
 using MS.Internal.Xaml.Parser;
 
@@ -83,7 +84,7 @@ namespace MS.Internal.Xaml
 #if DEBUG
             public override string ToString()
             {
-                return String.Format(TypeConverterHelper.InvariantEnglishUS, "Depth[{0}] {2}", this.Depth, this.XamlNodeType);
+                return String.Format(TypeConverterHelper.InvariantEnglishUS, "Depth[{0}] {1}", Depth, XamlNodeType);
             }
 #endif
         }
@@ -109,7 +110,7 @@ namespace MS.Internal.Xaml
             get { return _current; }
         }
 
-        object System.Collections.IEnumerator.Current
+        object IEnumerator.Current
         {
             get { return _current; }
         }
@@ -222,7 +223,7 @@ namespace MS.Internal.Xaml
         {
             string xmlNs = _context.FindNamespaceByPrefix(KnownStrings.XmlPrefix);
             XamlSchemaContext schemaContext = _context.SchemaContext;
-            if (_settings.XmlSpacePreserve == true)
+            if (_settings.XmlSpacePreserve)
             {
                 EnqueueOneXmlDirectiveProperty(XamlLanguage.Space, KnownStrings.Preserve);
             }

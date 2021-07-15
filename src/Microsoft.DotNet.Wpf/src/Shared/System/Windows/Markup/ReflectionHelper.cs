@@ -2,7 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+//
+//
+//
 //  Description: Specifies that the whitespace surrounding an element should be trimmed.
+//
 
 using System;
 using System.IO;
@@ -22,12 +26,12 @@ namespace MS.Internal.Markup
 #elif WINDOWS_BASE
 using MS.Utility;
 using MS.Internal.WindowsBase;
+
 namespace System.Windows.Markup
 #else
 namespace System.Xaml
 #endif
 {
-
     /// <summary>
     /// Class that provides helper functions for the parser to reflect on types, properties,
     /// custom attributes and load assemblies.
@@ -35,38 +39,41 @@ namespace System.Xaml
     internal static class ReflectionHelper
     {
         // System assembly name used by GetSystemType() to provide reflection
-        // types at markup compile time through System.Reflection.TypeLoader
+        // types at markup compile time through System.Reflection.MetadataLoadContext
         private const string SystemReflectionAssemblyName = "System";
 
-        // TypeLoader core assembly name, also used by GetMscorlibType() to provide
+        // MetadataLoadContext core assembly name, also used by GetMscorlibType() to provide
         // reflection types at markup compile time
-        private const string MscorlibReflectionAssemblyName = "mscorlib";
+        internal const string MscorlibReflectionAssemblyName = "mscorlib";
 
 #if PBTCOMPILER
-        // System.Reflection.TypeLoader instance
-        private static TypeLoader _typeLoader = null;
+        // System.Reflection.MetadataLoadContext instance
+        private static MetadataLoadContext _metadataLoadContext = null;
 
-        // TypeLoader Assembly cache 
-        private static Dictionary<string, Assembly> _cachedTypeLoaderAssemblies = null; 
+        // MetadataLoadContext Assembly cache 
+        private static Dictionary<string, Assembly> _cachedMetadataLoadContextAssemblies = null; 
+        private static Dictionary<string, Assembly> _cachedMetadataLoadContextAssembliesByNameNoExtension = null; 
 
-        // TypeLoader reference paths 
-        private static HashSet<string> _cachedTypeLoaderReferencePaths = null;
+        // The local assembly that contains the baml.
+        private static string _localAssemblyName = string.Empty;
 
-        static ReflectionHelper()
+        internal static void Initialize(IEnumerable<string> assemblyPaths)
+        { 
+            // System.Reflection.MetadataLoadContext Assembly cache 
+            _cachedMetadataLoadContextAssemblies = new Dictionary<string, Assembly>(StringComparer.OrdinalIgnoreCase);
+            _cachedMetadataLoadContextAssembliesByNameNoExtension = new Dictionary<string, Assembly>(StringComparer.OrdinalIgnoreCase);
+            _metadataLoadContext = new MetadataLoadContext(new PathAssemblyResolver(assemblyPaths), MscorlibReflectionAssemblyName);
+            _localAssemblyName = string.Empty;
+        }
+
+        internal static void Dispose()
         {
-            // System.Reflection.TypeLoader Assembly cache 
-            _cachedTypeLoaderAssemblies = new Dictionary<string, Assembly>();
+            _cachedMetadataLoadContextAssemblies = null;
+            _cachedMetadataLoadContextAssembliesByNameNoExtension = null;
+            _localAssemblyName = string.Empty;
 
-            // System.Reflection.TypeLoader assembly reference paths
-            _cachedTypeLoaderReferencePaths = new HashSet<string>();
-
-            // Initializes the System.Reflection.TypeLoader instance
-            _typeLoader = new TypeLoader(MscorlibReflectionAssemblyName);
-
-            // Attaches event handler that implements a probing strategy for
-            // locating assemblies or dependent assemblies requested by the
-            // TypeLoader in response to a reflection operation.
-            _typeLoader.Resolving += TypeLoaderResolvingHandler;
+            _metadataLoadContext?.Dispose();
+            _metadataLoadContext = null;
         }
 #endif
 
@@ -119,10 +126,6 @@ namespace System.Xaml
                         // If we can't get the type, just return null (fall-through).
                     }
                     catch (ArgumentException)
-                    {
-                        a = null;
-                    }
-                    catch (System.Security.SecurityException)
                     {
                         a = null;
                     }
@@ -346,7 +349,11 @@ namespace System.Xaml
                 {
                     CustomAttributeTypedArgument tca = constructorArguments[0];
                     attrValue = tca.Value as String;
+#if PBTCOMPILER
+                    if (attrValue == null && allowTypeAlso && tca.ArgumentType == GetMscorlibType(typeof(Type)))
+#else
                     if (attrValue == null && allowTypeAlso && tca.ArgumentType == typeof(Type))
+#endif
                     {
                         typeValue = tca.Value as Type;
                         attrValue = typeValue.AssemblyQualifiedName;
@@ -382,30 +389,17 @@ namespace System.Xaml
 #endregion Attributes
 
 #region Assembly Loading
+
+#if !PBTCOMPILER
         //
-        // Clean up the cache entry for the given assembly, so that it can be reloaded for the next build cycle.
-        // Usually it is called by MarkupCompiler task.
-        //
+        // Clean up the cache entry for the given assembly, so that it can be reloaded.
+         //
         internal static void ResetCacheForAssembly(string assemblyName)
         {
             string assemblyNameLookup = assemblyName.ToUpper(CultureInfo.InvariantCulture);
-#if PBTCOMPILER
-            // TODO: PresentationBuildTasks porting : Reset TypeLoader between compile passes.
-            // Do not do this here, which will recreate the entire TypeLoader. There doesn't
-            // appear to be way to release a specific assembly in TypeLoader.
-            //
-            // Explicitly dispose and re-create the TypeLoader to release all assemblies. 
-            // The intermediate assembly created by MarkupCompilePass1 is used as a reference 
-            // and needs to be writable in compile pass 2. 
-            _typeLoader.Dispose();
-            _cachedTypeLoaderAssemblies.Clear();
-            _cachedTypeLoaderReferencePaths.Clear();
-            _typeLoader = new TypeLoader();
-            _reflectionOnlyLoadedAssembliesHash[assemblyNameLookup] = null;
-#else
             _loadedAssembliesHash[assemblyNameLookup] = null;
-#endif
         }
+#endif
 
         internal static Assembly LoadAssembly(string assemblyName, string assemblyPath)
         {
@@ -461,10 +455,9 @@ namespace System.Xaml
                 {
                     if (!String.IsNullOrEmpty(assemblyPath))
                     {
-
                         // assemblyPath is set, Load the assembly from this specified place.
                         // the path must be full file path which contains directory, file name and extension.
-                        Debug.Assert(!assemblyPath.EndsWith("\\", StringComparison.Ordinal), "the assembly path should be a full file path containing file extension");
+                        Debug.Assert(!assemblyPath.EndsWith(string.Empty + Path.DirectorySeparatorChar, StringComparison.Ordinal), "the assembly path should be a full file path containing file extension");
 
                         // LoadFile will only override your request only if it is in the GAC
                         retassem = Assembly.LoadFile(assemblyPath);
@@ -512,7 +505,7 @@ namespace System.Xaml
 
             for (int j = 0; j < list.Count; j++)
             {
-                friendAssemblyName = GetCustomAttributeData(list[j], typeof(InternalsVisibleToAttribute), out typeValue, false, false, false);
+                friendAssemblyName = GetCustomAttributeData(list[j], GetMscorlibType(typeof(InternalsVisibleToAttribute)), out typeValue, false, false, false);
                 if (friendAssemblyName != null && friendAssemblyName == LocalAssemblyName)
                 {
                     isFriend = true;
@@ -535,30 +528,17 @@ namespace System.Xaml
             set { _localAssemblyName = value; }
         }
 
-        private static string _localAssemblyName = string.Empty;
-
         internal static bool HasAlreadyReflectionOnlyLoaded(string assemblyNameLookup)
         {
-             //
-             // If the cache contains an entry for the given assemblyname, and its value is not
-             // null, it marks the assembly has been loaded.
-             //
-             // Since ResetCacheForAssembly( ) just sets "null" in the hashtable for a given assembly
-             // without really removing it, it is possible that an assembly is not reloaded before this
-             // method is called.
-             // Such as for the local-type-ref xaml file compilation,  the cache entry for the temporary
-             // assembly is reset to null, but it is not reloaded for MCPass1.
-             //
-             // We don't want to change the behavior of ResetCacheForAssembly( ) at this moment. (Resetting
-             // the value to null without really removing the entry is helpful for the perf)
-             //
-
-             return (_reflectionOnlyLoadedAssembliesHash.Contains(assemblyNameLookup) && _reflectionOnlyLoadedAssembliesHash[assemblyNameLookup] != null);
+            return GetAlreadyReflectionOnlyLoadedAssembly(assemblyNameLookup) != null;
         }
 
         internal static Assembly GetAlreadyReflectionOnlyLoadedAssembly(string assemblyNameLookup)
         {
-             return (Assembly)_reflectionOnlyLoadedAssembliesHash[assemblyNameLookup];
+            Assembly assembly = null;
+            _cachedMetadataLoadContextAssembliesByNameNoExtension.TryGetValue(assemblyNameLookup, out assembly);
+
+            return assembly;
         }
 
         //
@@ -571,145 +551,36 @@ namespace System.Xaml
             Assembly assembly = null; 
 
             // If the assembly path is empty, try to load assembly by name. LoadFromAssemblyName 
-            // will result in a TypeLoader.Resolve event that will contain more information about the 
+            // will result in a MetadataLoadContext.Resolve event that will contain more information about the 
             // requested assembly.
             if (String.IsNullOrEmpty(fullPathToAssembly))
             {
-                return _typeLoader.LoadFromAssemblyName(assemblyName);
+                return _metadataLoadContext.LoadFromAssemblyName(assemblyName);
             }
-            else if (_cachedTypeLoaderAssemblies.TryGetValue(fullPathToAssembly, out assembly))
+            else if (_cachedMetadataLoadContextAssemblies.TryGetValue(fullPathToAssembly, out assembly))
             {
                 return assembly;
             }
-            else if (!String.IsNullOrEmpty(assemblyName) && _cachedTypeLoaderAssemblies.TryGetValue(assemblyName, out assembly))
+            else if (!String.IsNullOrEmpty(assemblyName) && _cachedMetadataLoadContextAssemblies.TryGetValue(assemblyName, out assembly))
             {
                 return assembly;
             }
             else
             {
-                assembly = _typeLoader.LoadFromAssemblyPath(fullPathToAssembly);
+                assembly = _metadataLoadContext.LoadFromAssemblyPath(fullPathToAssembly);
             }
 
             // Add the assembly to the cache. ReflectionHelper.ReflectionOnlyLoadAssembly
             // receives frequent calls requesting the same assembly.
             if (assembly != null && fullPathToAssembly != null)
             {
-                _cachedTypeLoaderAssemblies.Add(fullPathToAssembly, assembly);
-                _cachedTypeLoaderReferencePaths.Add(Path.GetDirectoryName(fullPathToAssembly));
+                _cachedMetadataLoadContextAssemblies.Add(fullPathToAssembly, assembly);
+                _cachedMetadataLoadContextAssembliesByNameNoExtension.Add(Path.GetFileNameWithoutExtension(fullPathToAssembly), assembly);
             }
 
             return assembly;
         }
 
-        // Handler for TypeLoader.Resolving event responsible for assembly probing and loading.  
-        // TypeLoader will fire the Resolving event when an assembly or a dependent assembly is 
-        // required in response to a reflection request.  Probing strategy that will
-        // find all dependent DLLs, even those in other NuGet packages, must be implemented
-        // here.  The probing responsibility up to the consumer of System.Reflection.TypeLoader.
-        private static System.Reflection.Assembly TypeLoaderResolvingHandler(
-                System.Reflection.TypeLoader typeLoader, System.Reflection.AssemblyName assemblyName)
-        {
-            // Resolve is called at most once per assembly.
-            foreach (var path in _cachedTypeLoaderReferencePaths)
-            {
-                string fullFilePath = path + "\\" + assemblyName.Name + ".dll";
-
-                if (System.IO.File.Exists(fullFilePath))
-                {
-                    // TODO: PBT Porting: Temporarily relax this restriction for testing. 
-                    // Do not require a specific version, culture, or public key token 
-                    // of the assembly. Update this block when testing is complete.
-                    return _typeLoader.LoadFromStream(File.OpenRead(fullFilePath));
-                }
-            }
-
-            return null;
-        }
-
-        private static Hashtable _reflectionOnlyLoadedAssembliesHash = new Hashtable(8);
-
-        //
-        // Copy assembly file from disk to memory, and return the memory buffer.
-        //
-        internal static byte[] GetAssemblyContent(string filepath)
-        {
-            byte[] asmContents = null;
-
-            using (FileStream fileStream = File.Open(filepath, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                // FileStream.Read does not support offsets or lengths
-                // larger than int.MaxValue.
-                if (fileStream.Length > int.MaxValue)
-                {
-                    return null;
-                }
-
-                int size = (int)fileStream.Length;
-                asmContents = new byte[size];
-                if (size > 0)
-                {
-                    ReliableRead(fileStream, asmContents, 0, size);
-                }
-
-                // With using statement, fileStream can always be disposed,
-                // there is no need to put code here to explicitly dispose the
-                // file stream object.
-            }
-
-            return asmContents;
-        }
-
-        //
-        // set flag for the assembly to indicate that this assembly should be loaded from memory buffer
-        // instead of file in disk.
-        //
-        // Usually it is called by MarkupCompiler task.
-        //
-        internal static void SetContentLoadForAssembly(string assemblyName)
-        {
-            string assemblyNameLookup = assemblyName.ToUpper(CultureInfo.InvariantCulture);
-            _contentLoadAssembliesHash[assemblyNameLookup] = true;
-        }
-
-        /// <summary>
-        /// Read utility that is guaranteed to return the number of bytes requested
-        /// if they are available.
-        /// </summary>
-        /// <param name="stream">stream to read from</param>
-        /// <param name="buffer">buffer to read into</param>
-        /// <param name="offset">offset in buffer to write to</param>
-        /// <param name="count">bytes to read</param>
-        /// <returns>bytes read</returns>
-        /// <remarks>Normal Stream.Read does not guarantee how many bytes it will
-        /// return.  This one does.</remarks>
-        private static int ReliableRead(Stream stream, byte[] buffer, int offset, int count)
-        {
-            /* Invariant.Assert is not available in PBT
-            Invariant.Assert(stream != null);
-            Invariant.Assert(buffer != null);
-            Invariant.Assert(buffer.Length > 0);
-            Invariant.Assert(offset >= 0);
-            Invariant.Assert(count >= 0);
-            Invariant.Assert(checked(offset + count<= buffer.Length));
-            */
-
-            // let's read the whole block into our buffer
-            int totalBytesRead = 0;
-            while (totalBytesRead < count)
-            {
-                int bytesRead = stream.Read(buffer,
-                                offset + totalBytesRead,
-                                count - totalBytesRead);
-                if (bytesRead == 0)
-                {
-                    break;
-                }
-                totalBytesRead += bytesRead;
-            }
-            return totalBytesRead;
-        }
-
-        private static Hashtable _contentLoadAssembliesHash = new Hashtable(1);
 #endif
 
         #endregion Assembly Loading

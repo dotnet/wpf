@@ -460,7 +460,7 @@ namespace System.Windows.Markup
             }
             else if (i < 0 || i >= AttributeCount)
             {
-                throw new ArgumentOutOfRangeException("i");
+                throw new ArgumentOutOfRangeException(nameof(i));
             }
             else
             {
@@ -644,12 +644,12 @@ namespace System.Windows.Markup
             get
             {
                 // Look for xmlns
-                if (String.Equals(XmlnsDeclaration, Reader.LocalName, StringComparison.Ordinal))
+                if (string.Equals(XmlnsDeclaration, Reader.LocalName, StringComparison.Ordinal))
                 {
-                    return LookupNamespace(String.Empty);
+                    return LookupNamespace(string.Empty);
                 }
                 // Look for xmlns: ...
-                else if (String.Equals(XmlnsDeclaration, Reader.Prefix, StringComparison.Ordinal))
+                else if (string.Equals(XmlnsDeclaration, Reader.Prefix, StringComparison.Ordinal))
                 {
                     return LookupNamespace(Reader.LocalName);
                 }
@@ -1965,8 +1965,7 @@ namespace System.Windows.Markup
                     _names[elementName] = null; // we don't care about value, just key
                 }
             }
-
-        }
+}
 
         class PreserveItemSet
         {

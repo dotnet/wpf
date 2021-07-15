@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Xaml;
 
 namespace MS.Internal.Xaml.Parser

@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-
 namespace System.Xaml
 {
     public abstract class XamlWriter : IDisposable
@@ -23,7 +21,7 @@ namespace System.Xaml
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             switch (reader.NodeType)

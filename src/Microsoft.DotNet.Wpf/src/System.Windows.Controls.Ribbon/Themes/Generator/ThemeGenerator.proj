@@ -1,0 +1,75 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.props))\dir.props" />
+
+  <ItemGroup>
+    <ThemeXaml Include="Aero.NormalColor.xaml" />
+    <ThemeXaml Include="Aero2.NormalColor.xaml" />
+    <ThemeXaml Include="AeroLite.NormalColor.xaml" />
+    <ThemeXaml Include="Generic.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <StyleXaml Include="..\XAML\KeyTipControl.xaml" />
+    <StyleXaml Include="..\XAML\InRibbonGallery.xaml" />
+    <StyleXaml Include="..\XAML\Ribbon.xaml" />
+    <StyleXaml Include="..\XAML\RibbonApplicationMenu.xaml" />
+    <StyleXaml Include="..\XAML\RibbonApplicationMenuItem.xaml" />
+    <StyleXaml Include="..\XAML\RibbonApplicationSplitMenuItem.xaml" />
+    <StyleXaml Include="..\XAML\RibbonButton.xaml" />
+    <StyleXaml Include="..\XAML\RibbonComboBox.xaml" />
+    <StyleXaml Include="..\XAML\RibbonContextMenu.xaml" />
+    <StyleXaml Include="..\XAML\RibbonControl.xaml" />
+    <StyleXaml Include="..\XAML\RibbonControlGroup.xaml" />
+    <StyleXaml Include="..\XAML\RibbonCheckBox.xaml" />
+    <StyleXaml Include="..\XAML\RibbonContextualTabGroup.xaml" />
+    <StyleXaml Include="..\XAML\RibbonFilterMenuButton.xaml" />
+    <StyleXaml Include="..\XAML\RibbonGallery.xaml" />
+    <StyleXaml Include="..\XAML\RibbonGalleryCategory.xaml" />
+    <StyleXaml Include="..\XAML\RibbonGalleryItem.xaml" />
+    <StyleXaml Include="..\XAML\RibbonGroup.xaml" />
+    <StyleXaml Include="..\XAML\RibbonMenuButton.xaml" />
+    <StyleXaml Include="..\XAML\RibbonMenuItem.xaml" />
+    <StyleXaml Include="..\XAML\RibbonRadioButton.xaml" />
+    <StyleXaml Include="..\XAML\RibbonSeparator.xaml" />
+    <StyleXaml Include="..\XAML\RibbonSharedResources.xaml" />
+    <StyleXaml Include="..\XAML\RibbonSplitButton.xaml" />
+    <StyleXaml Include="..\XAML\RibbonSplitMenuItem.xaml" />
+    <StyleXaml Include="..\XAML\RibbonTab.xaml" />
+    <StyleXaml Include="..\XAML\RibbonTabHeader.xaml" />
+    <StyleXaml Include="..\XAML\RibbonTabHeaderItemsControl.xaml" />
+    <StyleXaml Include="..\XAML\RibbonTabScrollViewer.xaml" />
+    <StyleXaml Include="..\XAML\RibbonToggleButton.xaml" />
+    <StyleXaml Include="..\XAML\RibbonTextBox.xaml" />
+    <StyleXaml Include="..\XAML\RibbonToolTip.xaml" />
+    <StyleXaml Include="..\XAML\RibbonTwoLineText.xaml" />
+    <StyleXaml Include="..\XAML\RibbonQuickAccessToolBar.xaml" />
+    <StyleXaml Include="..\XAML\RibbonWindow.xaml" />
+  </ItemGroup>
+
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.targets))\dir.targets" />
+
+  <Target Name="Build"
+          DependsOnTargets="GenerateThemes" />
+  
+  <Target Name="GenerateThemes"
+       Inputs="@(StyleXaml);@(ThemeXaml)"
+       Outputs="..\%(ThemeXaml.FileName)%(ThemeXaml.Extension);..\%(ThemeXaml.FileName)%(ThemeXaml.Extension).sdk">
+
+     <MakeDir Condition="!Exists('$(IntermediateOutputPath)')" Directories="$(IntermediateOutputPath)" />
+
+     <Exec Command="$(PerlCommand) ThemeGenerator.pl $(IntermediateOutputPath)\%(ThemeXaml.FileName).i%(ThemeXaml.Extension).sdk $(IntermediateOutputPath)\%(ThemeXaml.FileName).i%(ThemeXaml.Extension) %(ThemeXaml.FileName) @(StyleXaml, ' ')"
+        Outputs="$(IntermediateOutputPath)\%(ThemeXaml.FileName).i%(ThemeXaml.Extension).sdk;$(IntermediateOutputPath)\%(ThemeXaml.FileName).i%(ThemeXaml.Extension)"
+        StandardOutputImportance="normal" />
+
+     <ItemGroup>
+       <DataFile Include="$(IntermediateOutputPath)\%(ThemeXaml.FileName).i%(ThemeXaml.Extension).sdk">
+         <SubFolder>sdk</SubFolder>
+       </DataFile>
+     </ItemGroup>
+
+     <Exec Command="$(PerlCommand) PreprocessXAML.pl $(IntermediateOutputPath)\%(ThemeXaml.FileName).i%(ThemeXaml.Extension) ..\%(ThemeXaml.FileName)%(ThemeXaml.Extension) Net40 Net45" />
+     <Exec Command="$(PerlCommand) PreprocessXAML.pl $(IntermediateOutputPath)\%(ThemeXaml.FileName).i%(ThemeXaml.Extension).sdk ..\%(ThemeXaml.FileName)%(ThemeXaml.Extension).sdk Net40 Net45" />
+  </Target>
+
+</Project>

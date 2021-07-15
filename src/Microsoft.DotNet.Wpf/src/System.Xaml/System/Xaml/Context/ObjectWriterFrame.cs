@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
-using XAML3 = System.Windows.Markup;
 using System.Xaml;
 using System.Xaml.MS.Impl;
-using System.Windows.Markup;
+using XAML3 = System.Windows.Markup;
 
 namespace MS.Internal.Xaml.Context
 {
@@ -19,7 +17,7 @@ namespace MS.Internal.Xaml.Context
         private ObjectWriterFrameFlags _flags;
         private Dictionary<XamlMember, object> _preconstructionPropertyValues;
         private HashSet<XamlMember> _assignedProperties;
-        private Object _key;
+        private object _key;
 
         public ObjectWriterFrame()
             : base()
@@ -72,17 +70,17 @@ namespace MS.Internal.Xaml.Context
 
         public override string ToString()
         {
-            string type = (this.XamlType == null) ? String.Empty : this.XamlType.Name;
-            string prop = (this.Member == null) ? "-" : this.Member.Name;
-            string inst = (Instance == null) ? "-" : ((Instance is String) ? Instance.ToString() : "*");
+            string type = (XamlType == null) ? string.Empty : XamlType.Name;
+            string prop = (Member == null) ? "-" : Member.Name;
+            string inst = (Instance == null) ? "-" : ((Instance is string) ? Instance.ToString() : "*");
             string coll = (Collection == null) ? "-" : "*";
             string res = KS.Fmt("{0}.{1} inst={2} coll={3}",
                                  type, prop, inst, coll);
             return res;
         }
 
-        public Object Instance { get; set; }
-        public Object Collection { get; set; }
+        public object Instance { get; set; }
+        public object Collection { get; set; }
         
         public bool WasAssignedAtCreation
         {
@@ -134,7 +132,7 @@ namespace MS.Internal.Xaml.Context
             set { SetFlag(ObjectWriterFrameFlags.ShouldNotConvertChildKeys, value); }
         }
 
-        public INameScopeDictionary NameScopeDictionary { get; set; }
+        public XAML3.INameScopeDictionary NameScopeDictionary { get; set; }
         public object[] PositionalCtorArgs { get; set; }
         public object Key
         {

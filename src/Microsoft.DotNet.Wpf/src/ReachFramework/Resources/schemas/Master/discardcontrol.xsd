@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+            targetNamespace="http://schemas.microsoft.com/xps/2005/06/discard-control" 
+            xmlns="http://schemas.microsoft.com/xps/2005/06/discard-control" 
+            xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+            xmlns:xml="http://www.w3.org/XML/1998/namespace"
+            elementFormDefault="qualified" blockDefault="#all">
+                
+	<xs:complexType name="CT_DiscardControl">
+		<xs:annotation>
+			<xs:appinfo>CT_DiscardControl</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="Discard" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="CT_Discard">
+		<xs:annotation>
+			<xs:appinfo>CT_Discard</xs:appinfo>
+		</xs:annotation>
+        <xs:attribute name="SentinelPage" type="xs:anyURI" use="required">
+            <xs:annotation>
+                <xs:appinfo>SentinelPage</xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Target" type="xs:anyURI" use="required">
+            <xs:annotation>
+                <xs:appinfo>Target</xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+	</xs:complexType>
+
+    <xs:element name="DiscardControl" type="CT_DiscardControl">
+        <xs:annotation>
+            <xs:appinfo>DiscardControl</xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+	
+    <xs:element name="Discard" type="CT_Discard">
+        <xs:annotation>
+            <xs:appinfo>Discard</xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+    
+</xs:schema>

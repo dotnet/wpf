@@ -8,8 +8,8 @@
 \***************************************************************************/
 
 using System.Globalization;
-using System.Text;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Xaml;
 
 namespace System.Windows.Markup
@@ -124,7 +124,7 @@ namespace System.Windows.Markup
             // Build up the format string to be used in DateTime.ToString()
             StringBuilder formatString = new StringBuilder("yyyy-MM-dd");
             
-            if (dateTime.TimeOfDay.TotalSeconds == 0)
+            if (dateTime.TimeOfDay == TimeSpan.Zero)
             {
                 // The time portion of this DateTime is exactly at midnight.  
                 // We don't include the time component if the Kind is unspecified.
@@ -159,7 +159,7 @@ namespace System.Windows.Markup
             // included in the output formulation -- UTC gets written out with a "Z",
             // and Local gets written out with e.g. "-08:00" for Pacific Standard Time.
             
-            formatString.Append("K");
+            formatString.Append('K');
 
             // We've finally got our format string built, we can create the string.
 

@@ -1,0 +1,1809 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="WPF_UILanguage" xml:space="preserve">
+    <value>en</value>
+  </data>
+  <data name="Rect_CannotModifyEmptyRect" xml:space="preserve">
+    <value>Cannot modify this property on the Empty Rect.</value>
+  </data>
+  <data name="Rect_CannotCallMethod" xml:space="preserve">
+    <value>Cannot call this method on the Empty Rect.</value>
+  </data>
+  <data name="Size_WidthAndHeightCannotBeNegative" xml:space="preserve">
+    <value>Width and Height must be non-negative.</value>
+  </data>
+  <data name="Size_WidthCannotBeNegative" xml:space="preserve">
+    <value>Width must be non-negative.</value>
+  </data>
+  <data name="Size_HeightCannotBeNegative" xml:space="preserve">
+    <value>Height must be non-negative.</value>
+  </data>
+  <data name="Size_CannotModifyEmptySize" xml:space="preserve">
+    <value>Cannot modify this property on the Empty Size.</value>
+  </data>
+  <data name="Transform_NotInvertible" xml:space="preserve">
+    <value>Transform is not invertible.</value>
+  </data>
+  <data name="General_Expected_Type" xml:space="preserve">
+    <value>Expected object of type '{0}'.</value>
+  </data>
+  <data name="ReferenceIsNull" xml:space="preserve">
+    <value>Value cannot be null. Object reference: '{0}'.</value>
+  </data>
+  <data name="ParameterMustBeBetween" xml:space="preserve">
+    <value>The parameter value must be between '{0}' and '{1}'.</value>
+  </data>
+  <data name="Freezable_UnregisteredHandler" xml:space="preserve">
+    <value>Handler has not been registered with this event.</value>
+  </data>
+  <data name="Freezable_AttemptToUseInnerValueWithDifferentThread" xml:space="preserve">
+    <value>Cannot use a DependencyObject that belongs to a different thread than its parent Freezable.</value>
+  </data>
+  <data name="Freezable_CantFreeze" xml:space="preserve">
+    <value>This Freezable cannot be frozen.</value>
+  </data>
+  <data name="Freezable_NotAContext" xml:space="preserve">
+    <value>The provided DependencyObject is not a context for this Freezable.</value>
+  </data>
+  <data name="FrugalList_TargetMapCannotHoldAllData" xml:space="preserve">
+    <value>Cannot promote from '{0}' to '{1}' because the target map is too small.</value>
+  </data>
+  <data name="FrugalList_CannotPromoteBeyondArray" xml:space="preserve">
+    <value>Cannot promote from Array.</value>
+  </data>
+  <data name="FrugalMap_TargetMapCannotHoldAllData" xml:space="preserve">
+    <value>Cannot promote from '{0}' to '{1}' because the target map is too small.</value>
+  </data>
+  <data name="FrugalMap_CannotPromoteBeyondHashtable" xml:space="preserve">
+    <value>Cannot promote from Hashtable.</value>
+  </data>
+  <data name="Unsupported_Key" xml:space="preserve">
+    <value>Unrecognized Key '{0}'.</value>
+  </data>
+  <data name="InvalidPriority" xml:space="preserve">
+    <value>Specified priority is not valid.</value>
+  </data>
+  <data name="InvalidPriorityRangeOrder" xml:space="preserve">
+    <value>The minimum priority must be less than or equal to the maximum priority.</value>
+  </data>
+  <data name="DispatcherHasShutdown" xml:space="preserve">
+    <value>Cannot perform requested operation because the Dispatcher shut down.</value>
+  </data>
+  <data name="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread" xml:space="preserve">
+    <value>A thread cannot wait on operations already running on the same thread.</value>
+  </data>
+  <data name="VerifyAccess" xml:space="preserve">
+    <value>The calling thread cannot access this object because a different thread owns it.</value>
+  </data>
+  <data name="MismatchedDispatchers" xml:space="preserve">
+    <value>Objects must be created by the same thread.</value>
+  </data>
+  <data name="DispatcherProcessingDisabledButStillPumping" xml:space="preserve">
+    <value>Dispatcher processing has been suspended, but messages are still being processed.</value>
+  </data>
+  <data name="DispatcherProcessingDisabled" xml:space="preserve">
+    <value>Cannot perform this operation while dispatcher processing is suspended.</value>
+  </data>
+  <data name="DispatcherPriorityAwaiterInvalid" xml:space="preserve">
+    <value>The DispatcherPriorityAwaiter was not configured with a valid Dispatcher.  The only supported usage is from Dispatcher.Yield.</value>
+  </data>
+  <data name="DispatcherYieldNoAvailableDispatcher" xml:space="preserve">
+    <value>The thread calling Dispatcher.Yield does not have a current Dispatcher.</value>
+  </data>
+  <data name="DispatcherRequestProcessingFailed" xml:space="preserve">
+    <value>The Dispatcher is unable to request processing.  This is often because the application has starved the Dispatcher's message pump.</value>
+  </data>
+  <data name="ExceptionFilterCodeNotPresent" xml:space="preserve">
+    <value>Exception Filter Code is not built and installed properly.</value>
+  </data>
+  <data name="Unsupported_Modifier" xml:space="preserve">
+    <value>Unrecognized ModifierKeys '{0}'.</value>
+  </data>
+  <data name="TimeSpanPeriodOutOfRange_TooSmall" xml:space="preserve">
+    <value>TimeSpan period must be greater than or equal to zero.</value>
+  </data>
+  <data name="TimeSpanPeriodOutOfRange_TooLarge" xml:space="preserve">
+    <value>TimeSpan period must be less than or equal to Int32.MaxValue.</value>
+  </data>
+  <data name="ClearOnReadOnlyObjectNotAllowed" xml:space="preserve">
+    <value>Cannot clear properties on object '{0}' because it is in a read-only state.</value>
+  </data>
+  <data name="DefaultValueAutoAssignFailed" xml:space="preserve">
+    <value>Cannot automatically generate a valid default value for property '{0}'. Specify a default value explicitly when owner type '{1}' is registering this DependencyProperty.</value>
+  </data>
+  <data name="DefaultValueMayNotBeExpression" xml:space="preserve">
+    <value>An Expression object is not a valid default value for a DependencyProperty.</value>
+  </data>
+  <data name="DefaultValueMayNotBeUnset" xml:space="preserve">
+    <value>Default value cannot be 'Unset'.</value>
+  </data>
+  <data name="DefaultValueMustBeFreeThreaded" xml:space="preserve">
+    <value>Default value for the '{0}' property cannot be bound to a specific thread.</value>
+  </data>
+  <data name="DefaultValuePropertyTypeMismatch" xml:space="preserve">
+    <value>Default value type does not match type of property '{0}'.</value>
+  </data>
+  <data name="DefaultValueInvalid" xml:space="preserve">
+    <value>Default value for '{0}' property is not valid because ValidateValueCallback failed.</value>
+  </data>
+  <data name="DTypeNotSupportForSystemType" xml:space="preserve">
+    <value>'{0}' type does not have a matching DependencyObjectType.</value>
+  </data>
+  <data name="InvalidPropertyValue" xml:space="preserve">
+    <value>'{0}' is not a valid value for property '{1}'.</value>
+  </data>
+  <data name="LocalValueEnumerationOutOfBounds" xml:space="preserve">
+    <value>Local value enumeration position is out of range.</value>
+  </data>
+  <data name="LocalValueEnumerationReset" xml:space="preserve">
+    <value>Local value enumeration position is before the start, need to call MoveNext first.</value>
+  </data>
+  <data name="LocalValueEnumerationInvalidated" xml:space="preserve">
+    <value>Current local value enumeration is outdated because one or more local values have been set since its creation.</value>
+  </data>
+  <data name="MissingCreateDefaultValue" xml:space="preserve">
+    <value>Default value factory user must override PropertyMetadata.CreateDefaultValue.</value>
+  </data>
+  <data name="OverridingMetadataDoesNotMatchBaseMetadataType" xml:space="preserve">
+    <value>Metadata override and base metadata must be of the same type or derived type.</value>
+  </data>
+  <data name="PropertyAlreadyRegistered" xml:space="preserve">
+    <value>'{0}' property was already registered by '{1}'.</value>
+  </data>
+  <data name="PropertyNotReadOnly" xml:space="preserve">
+    <value>This method overrides metadata only on read-only properties. This property is not read-only.</value>
+  </data>
+  <data name="ReadOnlyChangeNotAllowed" xml:space="preserve">
+    <value>'{0}' property was registered as read-only and cannot be modified without an authorization key.</value>
+  </data>
+  <data name="ReadOnlyKeyNotAuthorized" xml:space="preserve">
+    <value>Property key is not authorized to modify property '{0}'.</value>
+  </data>
+  <data name="ReadOnlyOverrideNotAllowed" xml:space="preserve">
+    <value>'{0}' property was registered as read-only and its metadata cannot be overridden without an authorization key.</value>
+  </data>
+  <data name="ReadOnlyOverrideKeyNotAuthorized" xml:space="preserve">
+    <value>Property key is not authorized to override metadata of property '{0}'.</value>
+  </data>
+  <data name="ReadOnlyDesignerCoersionNotAllowed" xml:space="preserve">
+    <value>'{0}' is registered as read-only, so its value cannot be coerced by using the DesignerCoerceValueCallback.</value>
+  </data>
+  <data name="SetOnReadOnlyObjectNotAllowed" xml:space="preserve">
+    <value>Cannot set a property on object '{0}' because it is in a read-only state.</value>
+  </data>
+  <data name="ShareableExpressionsCannotChangeSources" xml:space="preserve">
+    <value>Shareable Expression cannot use ChangeSources method.</value>
+  </data>
+  <data name="SharingNonSharableExpression" xml:space="preserve">
+    <value>Cannot set Expression. It is marked as 'NonShareable' and has already been used.</value>
+  </data>
+  <data name="SpecialMethodMustBePublic" xml:space="preserve">
+    <value>ShouldSerializeProperty and ResetProperty methods must be public ('{0}').</value>
+  </data>
+  <data name="SourcesMustBeInSameThread" xml:space="preserve">
+    <value>Must create DependencySource on same Thread as the DependencyObject.</value>
+  </data>
+  <data name="SourceChangeExpressionMismatch" xml:space="preserve">
+    <value>Expression is not in use on DependencyObject. Cannot change DependencySource array.</value>
+  </data>
+  <data name="TooManyDependencyProperties" xml:space="preserve">
+    <value>DependencyProperty limit has been exceeded upon registration of '{0}'. Dependency properties are normally static class members registered with static field initializers or static constructors. In this case, there may be dependency properties accidentally getting initialized in instance constructors and thus causing the maximum limit to be exceeded.</value>
+  </data>
+  <data name="TypeMetadataAlreadyInUse" xml:space="preserve">
+    <value>Metadata is already associated with a type and property. A new one must be created.</value>
+  </data>
+  <data name="TypeMetadataAlreadyRegistered" xml:space="preserve">
+    <value>PropertyMetadata is already registered for type '{0}'.</value>
+  </data>
+  <data name="TypeMustBeDependencyObjectDerived" xml:space="preserve">
+    <value>'{0}' type must derive from DependencyObject.</value>
+  </data>
+  <data name="UnknownExpressionMode" xml:space="preserve">
+    <value>Unrecognized Expression 'Mode' value.</value>
+  </data>
+  <data name="BufferTooSmall" xml:space="preserve">
+    <value>Buffer is too small to accommodate the specified parameters.</value>
+  </data>
+  <data name="BufferOffsetNegative" xml:space="preserve">
+    <value>Buffer offset cannot be negative.</value>
+  </data>
+  <data name="CompoundFilePathNullEmpty" xml:space="preserve">
+    <value>CompoundFile path must be non-empty.</value>
+  </data>
+  <data name="CanNotCreateContainerOnReadOnlyStream" xml:space="preserve">
+    <value>Cannot create new package on a read-only stream.</value>
+  </data>
+  <data name="CanNotCreateAsReadOnly" xml:space="preserve">
+    <value>Cannot create a read-only stream.</value>
+  </data>
+  <data name="CanNotCreateInReadOnly" xml:space="preserve">
+    <value>Cannot create a stream in a read-only package.</value>
+  </data>
+  <data name="CanNotCreateStorageRootOnNonReadableStream" xml:space="preserve">
+    <value>Cannot create StorageRoot on a nonreadable stream.</value>
+  </data>
+  <data name="CanNotDelete" xml:space="preserve">
+    <value>Cannot delete element.</value>
+  </data>
+  <data name="CanNotDeleteAccessDenied" xml:space="preserve">
+    <value>Cannot delete element because access is denied.</value>
+  </data>
+  <data name="CanNotCreateAccessDenied" xml:space="preserve">
+    <value>Cannot create data storage because access is denied.</value>
+  </data>
+  <data name="CanNotDeleteInReadOnly" xml:space="preserve">
+    <value>Cannot delete read-only packages.</value>
+  </data>
+  <data name="CanNotDeleteNonEmptyStorage" xml:space="preserve">
+    <value>Cannot delete because the storage is not empty. Try a recursive delete with Delete(true).</value>
+  </data>
+  <data name="CanNotDeleteRoot" xml:space="preserve">
+    <value>Cannot delete the root StorageInfo.</value>
+  </data>
+  <data name="CanNotOnNonExistStorage" xml:space="preserve">
+    <value>Cannot perform this function on a storage that does not exist.</value>
+  </data>
+  <data name="CanNotOpenStorage" xml:space="preserve">
+    <value>Cannot open data storage.</value>
+  </data>
+  <data name="ContainerNotFound" xml:space="preserve">
+    <value>Cannot find specified package file.</value>
+  </data>
+  <data name="ContainerCanNotOpen" xml:space="preserve">
+    <value>Cannot open specified package file.</value>
+  </data>
+  <data name="CreateModeMustBeCreateOrOpen" xml:space="preserve">
+    <value>Create mode parameter must be either FileMode.Create or FileMode.Open.</value>
+  </data>
+  <data name="CFAPIFailure" xml:space="preserve">
+    <value>Compound File API failure.</value>
+  </data>
+  <data name="DataSpaceLabelInUse" xml:space="preserve">
+    <value>The given data space label name is already in use.</value>
+  </data>
+  <data name="DataSpaceLabelInvalidEmpty" xml:space="preserve">
+    <value>Empty string is not a valid data space label.</value>
+  </data>
+  <data name="DataSpaceLabelUndefined" xml:space="preserve">
+    <value>Specified data space label has not been defined.</value>
+  </data>
+  <data name="DataSpaceManagerDisposed" xml:space="preserve">
+    <value>DataSpaceManager object was disposed.</value>
+  </data>
+  <data name="DataSpaceMapEntryInvalid" xml:space="preserve">
+    <value>DataSpace map entry is not valid.</value>
+  </data>
+  <data name="FileAccessInvalid" xml:space="preserve">
+    <value>FileAccess value is not valid.</value>
+  </data>
+  <data name="FileAlreadyExists" xml:space="preserve">
+    <value>File already exists.</value>
+  </data>
+  <data name="FileModeUnsupported" xml:space="preserve">
+    <value>FileMode value is not supported.</value>
+  </data>
+  <data name="FileModeInvalid" xml:space="preserve">
+    <value>FileMode value is not valid.</value>
+  </data>
+  <data name="FileShareUnsupported" xml:space="preserve">
+    <value>FileShare value is not supported.</value>
+  </data>
+  <data name="FileShareInvalid" xml:space="preserve">
+    <value>FileShare value is not valid.</value>
+  </data>
+  <data name="ILockBytesStreamMustSeek" xml:space="preserve">
+    <value>Streams for exposure as ILockBytes must be seekable.</value>
+  </data>
+  <data name="InvalidArgumentValue" xml:space="preserve">
+    <value>'{1}' is not a valid value for '{0}'.</value>
+  </data>
+  <data name="InvalidCondition01" xml:space="preserve">
+    <value>Cannot locate information for stream that should exist. This is an internally inconsistent condition.</value>
+  </data>
+  <data name="InvalidStringFormat" xml:space="preserve">
+    <value>String format is not valid.</value>
+  </data>
+  <data name="InvalidTableType" xml:space="preserve">
+    <value>Internal table type value is not valid. This is an internally inconsistent condition.</value>
+  </data>
+  <data name="MoveToDestNotExist" xml:space="preserve">
+    <value>MoveTo Destination storage does not exist.</value>
+  </data>
+  <data name="MoveToNYI" xml:space="preserve">
+    <value>IStorage/IStream::MoveTo not supported.</value>
+  </data>
+  <data name="NameAlreadyInUse" xml:space="preserve">
+    <value>'{0}' name is already in use.</value>
+  </data>
+  <data name="NameCanNotHaveDelimiter" xml:space="preserve">
+    <value>'{0}' cannot contain the path delimiter: '{1}'.</value>
+  </data>
+  <data name="NamedAPIFailure" xml:space="preserve">
+    <value>Failed call to '{0}'.</value>
+  </data>
+  <data name="NameTableCorruptStg" xml:space="preserve">
+    <value>Name table data is corrupt in data storage.</value>
+  </data>
+  <data name="NameTableCorruptMem" xml:space="preserve">
+    <value>Name table data is corrupt in memory.</value>
+  </data>
+  <data name="NameTableVersionMismatchRead" xml:space="preserve">
+    <value>Name table cannot be read by this version of the program.</value>
+  </data>
+  <data name="NameTableVersionMismatchWrite" xml:space="preserve">
+    <value>Name table cannot be updated by this version of the program.</value>
+  </data>
+  <data name="NYIDefault" xml:space="preserve">
+    <value>This feature is not supported.</value>
+  </data>
+  <data name="PathHasEmptyElement" xml:space="preserve">
+    <value>Path string cannot include an empty element.</value>
+  </data>
+  <data name="ReadCountNegative" xml:space="preserve">
+    <value>Count of bytes to read cannot be negative.</value>
+  </data>
+  <data name="SeekFailed" xml:space="preserve">
+    <value>Cannot seek to given position.</value>
+  </data>
+  <data name="SeekNegative" xml:space="preserve">
+    <value>Cannot set seek pointer to a negative position.</value>
+  </data>
+  <data name="SeekOriginInvalid" xml:space="preserve">
+    <value>SeekOrigin value is not valid.</value>
+  </data>
+  <data name="StorageFlagsUnsupported" xml:space="preserve">
+    <value>This combination of flags is not supported.</value>
+  </data>
+  <data name="StorageAlreadyExist" xml:space="preserve">
+    <value>Storage already exists.</value>
+  </data>
+  <data name="StreamAlreadyExist" xml:space="preserve">
+    <value>Stream already exists.</value>
+  </data>
+  <data name="StorageInfoDisposed" xml:space="preserve">
+    <value>StorageInfo object was disposed.</value>
+  </data>
+  <data name="StorageNotExist" xml:space="preserve">
+    <value>Storage does not exist.</value>
+  </data>
+  <data name="StorageRootDisposed" xml:space="preserve">
+    <value>StorageRoot object was disposed.</value>
+  </data>
+  <data name="StreamInfoDisposed" xml:space="preserve">
+    <value>StreamInfo object was disposed.</value>
+  </data>
+  <data name="StreamLengthNegative" xml:space="preserve">
+    <value>Stream length cannot be negative.</value>
+  </data>
+  <data name="StreamNotExist" xml:space="preserve">
+    <value>Cannot perform this function on a stream that does not exist.</value>
+  </data>
+  <data name="StreamNameNotValid" xml:space="preserve">
+    <value>Stream name cannot be '{0}'.</value>
+  </data>
+  <data name="StreamTimeStampNotImplemented" xml:space="preserve">
+    <value>Stream time stamp not implemented in OLE32 implementation of Compound Files.</value>
+  </data>
+  <data name="StringCanNotBeReservedName" xml:space="preserve">
+    <value>'{0}' cannot start with the reserved character range 0x01-0x1F.</value>
+  </data>
+  <data name="TimeStampNotAvailable" xml:space="preserve">
+    <value>Requested time stamp is not available.</value>
+  </data>
+  <data name="TransformLabelInUse" xml:space="preserve">
+    <value>Transform label name is already in use.</value>
+  </data>
+  <data name="TransformLabelUndefined" xml:space="preserve">
+    <value>Data space transform stack includes undefined transform labels.</value>
+  </data>
+  <data name="TransformObjectConstructorParam" xml:space="preserve">
+    <value>Transform object type is required to have a constructor which takes a TransformEnvironment object.</value>
+  </data>
+  <data name="TransformObjectImplementIDataTransform" xml:space="preserve">
+    <value>Transform object type is required to implement IDataTransform interface.</value>
+  </data>
+  <data name="TransformObjectInitFailed" xml:space="preserve">
+    <value>Stream transformation failed due to uninitialized data transform objects.</value>
+  </data>
+  <data name="TransformTypeUnsupported" xml:space="preserve">
+    <value>Transform identifier type is not supported.</value>
+  </data>
+  <data name="TransformStackValid" xml:space="preserve">
+    <value>Transform stack must have at least one transform.</value>
+  </data>
+  <data name="UnableToCreateOnStream" xml:space="preserve">
+    <value>Cannot create package on stream.</value>
+  </data>
+  <data name="UnableToCreateStorage" xml:space="preserve">
+    <value>Cannot create data storage.</value>
+  </data>
+  <data name="UnableToCreateStream" xml:space="preserve">
+    <value>Cannot create data stream.</value>
+  </data>
+  <data name="UnableToOpenStream" xml:space="preserve">
+    <value>Cannot open data stream.</value>
+  </data>
+  <data name="UnsupportedTypeEncounteredWhenBuildingStgEnum" xml:space="preserve">
+    <value>Encountered unsupported type of storage element when building storage enumerator.</value>
+  </data>
+  <data name="WriteFailure" xml:space="preserve">
+    <value>Cannot write all data as specified.</value>
+  </data>
+  <data name="WriteOnlyUnsupported" xml:space="preserve">
+    <value>Write-only mode is not supported.</value>
+  </data>
+  <data name="WriteSizeNegative" xml:space="preserve">
+    <value>Cannot write a negative number of bytes.</value>
+  </data>
+  <data name="CFM_CorruptMetadataStream" xml:space="preserve">
+    <value>Object metadata stream in the package is corrupt and the content is not valid.</value>
+  </data>
+  <data name="CFM_CorruptMetadataStream_Root" xml:space="preserve">
+    <value>Object metadata stream in the package is corrupt and the root tag is not valid.</value>
+  </data>
+  <data name="CFM_CorruptMetadataStream_DuplicateKey" xml:space="preserve">
+    <value>Object metadata stream in the package is corrupt with duplicated key tags.</value>
+  </data>
+  <data name="CFM_ObjectMustBeCompoundFileMetadataKey" xml:space="preserve">
+    <value>Object used as metadata key must be an instance of the CompoundFileMetadataKey class.</value>
+  </data>
+  <data name="CFM_ReadOnlyContainer" xml:space="preserve">
+    <value>Cannot perform this operation when the package is in read-only mode.</value>
+  </data>
+  <data name="CFM_TypeTableFormat" xml:space="preserve">
+    <value>Failed to read a stream type table - the data appears to be a different format.</value>
+  </data>
+  <data name="CFM_UnicodeCharInvalid" xml:space="preserve">
+    <value>Unicode character is not valid.</value>
+  </data>
+  <data name="CFM_ValueMustBeString" xml:space="preserve">
+    <value>Only strings can be used as value.</value>
+  </data>
+  <data name="CFM_XMLCharInvalid" xml:space="preserve">
+    <value>XML character is not valid.</value>
+  </data>
+  <data name="CanNotCompareDiffTypes" xml:space="preserve">
+    <value>Cannot compare different types.</value>
+  </data>
+  <data name="CFRCorrupt" xml:space="preserve">
+    <value>CompoundFileReference: Corrupted CompoundFileReference.</value>
+  </data>
+  <data name="CFRCorruptMultiStream" xml:space="preserve">
+    <value>CompoundFileReference: Corrupted CompoundFileReference - multiple stream components found.</value>
+  </data>
+  <data name="CFRCorruptStgFollowStm" xml:space="preserve">
+    <value>CompoundFileReference: Corrupted CompoundFileReference - storage component cannot follow stream component.</value>
+  </data>
+  <data name="DelimiterLeading" xml:space="preserve">
+    <value>Cannot have leading path delimiter.</value>
+  </data>
+  <data name="DelimiterTrailing" xml:space="preserve">
+    <value>Cannot have trailing path delimiter.</value>
+  </data>
+  <data name="OffsetNegative" xml:space="preserve">
+    <value>Offset must be greater than or equal to zero.</value>
+  </data>
+  <data name="UnknownReferenceComponentType" xml:space="preserve">
+    <value>Unrecognized reference component type.</value>
+  </data>
+  <data name="UnknownReferenceSerialize" xml:space="preserve">
+    <value>Cannot serialize unknown CompoundFileReference subclass.</value>
+  </data>
+  <data name="MalformedCompoundFilePath" xml:space="preserve">
+    <value>CompoundFileReference: malformed path encountered.</value>
+  </data>
+  <data name="CannotMakeStreamLengthNegative" xml:space="preserve">
+    <value>Stream length cannot be negative.</value>
+  </data>
+  <data name="CorruptStream" xml:space="preserve">
+    <value>Stream operation failed because stream is corrupted.</value>
+  </data>
+  <data name="LengthNotSupported" xml:space="preserve">
+    <value>Stream does not support Length property.</value>
+  </data>
+  <data name="ReadBufferTooSmall" xml:space="preserve">
+    <value>Buffer too small to hold results of Read.</value>
+  </data>
+  <data name="ReadNotSupported" xml:space="preserve">
+    <value>Stream does not support reading.</value>
+  </data>
+  <data name="SeekNotSupported" xml:space="preserve">
+    <value>Stream does not support Seek.</value>
+  </data>
+  <data name="SetLengthNotSupported" xml:space="preserve">
+    <value>Stream does not support SetLength.</value>
+  </data>
+  <data name="SetPositionNotSupported" xml:space="preserve">
+    <value>Stream does not support setting the Position property.</value>
+  </data>
+  <data name="StreamPositionNegative" xml:space="preserve">
+    <value>Negative stream position not supported.</value>
+  </data>
+  <data name="TransformParametersFixed" xml:space="preserve">
+    <value>Cannot change Transform parameters after the transform is initialized.</value>
+  </data>
+  <data name="WriteBufferTooSmall" xml:space="preserve">
+    <value>Buffer of bytes to be written is too small.</value>
+  </data>
+  <data name="WriteCountNegative" xml:space="preserve">
+    <value>Count of bytes to write cannot be negative.</value>
+  </data>
+  <data name="WriteNotSupported" xml:space="preserve">
+    <value>Stream does not support writing.</value>
+  </data>
+  <data name="ZLibVersionError" xml:space="preserve">
+    <value>Compression requires ZLib library version {0}.</value>
+  </data>
+  <data name="ExpectedVersionPairObject" xml:space="preserve">
+    <value>Expected a VersionPair object.</value>
+  </data>
+  <data name="VersionNumberComponentNegative" xml:space="preserve">
+    <value>Major and minor version number components cannot be negative.</value>
+  </data>
+  <data name="ZeroLengthFeatureID" xml:space="preserve">
+    <value>Feature ID string cannot have zero length.</value>
+  </data>
+  <data name="VersionStreamMissing" xml:space="preserve">
+    <value>Cannot find version stream.</value>
+  </data>
+  <data name="VersionUpdateFailure" xml:space="preserve">
+    <value>Cannot update version because of a version field size mismatch.</value>
+  </data>
+  <data name="CannotRemoveSignatureFromReadOnlyFile" xml:space="preserve">
+    <value>Cannot remove signature from read-only file.</value>
+  </data>
+  <data name="CannotSignReadOnlyFile" xml:space="preserve">
+    <value>Cannot sign read-only file.</value>
+  </data>
+  <data name="DigSigCannotLocateCertificate" xml:space="preserve">
+    <value>Cannot locate the selected digital certificate.</value>
+  </data>
+  <data name="DigSigDuplicateCertificate" xml:space="preserve">
+    <value>Certificate error. Multiple certificates found with the same thumbprint.</value>
+  </data>
+  <data name="CertSelectionDialogTitle" xml:space="preserve">
+    <value>Digital Signature</value>
+  </data>
+  <data name="CertSelectionDialogMessage" xml:space="preserve">
+    <value>Select a certificate</value>
+  </data>
+  <data name="DuplicateSignature" xml:space="preserve">
+    <value>Duplicates not allowed - signature part already exists.</value>
+  </data>
+  <data name="XmlSignatureParseError" xml:space="preserve">
+    <value>Error parsing XML Signature.</value>
+  </data>
+  <data name="RequiredXmlAttributeMissing" xml:space="preserve">
+    <value>Required attribute '{0}' not found.</value>
+  </data>
+  <data name="UnexpectedXmlTag" xml:space="preserve">
+    <value>Unexpected tag '{0}'.</value>
+  </data>
+  <data name="RequiredTagNotFound" xml:space="preserve">
+    <value>Required tag '{0}' not found.</value>
+  </data>
+  <data name="PackageSignatureObjectTagRequired" xml:space="preserve">
+    <value>Required Package-specific Object tag is missing.</value>
+  </data>
+  <data name="PackageSignatureReferenceTagRequired" xml:space="preserve">
+    <value>Required Package-specific Reference tag is missing.</value>
+  </data>
+  <data name="MoreThanOnePackageSpecificReference" xml:space="preserve">
+    <value>Expected exactly one Package-specific Reference tag.</value>
+  </data>
+  <data name="InvalidUriAttribute" xml:space="preserve">
+    <value>Uri attribute in Reference tag must refer using fragment identifiers.</value>
+  </data>
+  <data name="NoCounterSignUnsignedContainer" xml:space="preserve">
+    <value>Cannot countersign an unsigned package.</value>
+  </data>
+  <data name="BadSignatureTimeFormatString" xml:space="preserve">
+    <value>Time format string is not valid.</value>
+  </data>
+  <data name="PackageSignatureCorruption" xml:space="preserve">
+    <value>Signature structures are corrupted in this package.</value>
+  </data>
+  <data name="UnsupportedHashAlgorithm" xml:space="preserve">
+    <value>Unsupported hash algorithm specified.</value>
+  </data>
+  <data name="RelationshipTransformNotFollowedByCanonicalizationTransform" xml:space="preserve">
+    <value>Relationship transform must be followed by an XML canonicalization transform.</value>
+  </data>
+  <data name="MultipleRelationshipTransformsFound" xml:space="preserve">
+    <value>There must be at most one relationship transform specified for a given relationship part.</value>
+  </data>
+  <data name="UnsupportedTransformAlgorithm" xml:space="preserve">
+    <value>Unsupported transform algorithm specified.</value>
+  </data>
+  <data name="UnsupportedCanonicalizationMethod" xml:space="preserve">
+    <value>Unsupported canonicalization method specified.</value>
+  </data>
+  <data name="HashAlgorithmMustBeReusable" xml:space="preserve">
+    <value>Reusable hash algorithm must be specified.</value>
+  </data>
+  <data name="PartReferenceUriMalformed" xml:space="preserve">
+    <value>Malformed Part URI in Reference tag.</value>
+  </data>
+  <data name="SignatureOriginNotFound" xml:space="preserve">
+    <value>Relationship was found to the signature origin but the part is missing. Package signature structures are corrupted.</value>
+  </data>
+  <data name="MultipleSignatureOrigins" xml:space="preserve">
+    <value>Multiple signature origin relationships found.</value>
+  </data>
+  <data name="NothingToSign" xml:space="preserve">
+    <value>Must specify an item to sign.</value>
+  </data>
+  <data name="EmptySignatureId" xml:space="preserve">
+    <value>Signature Identifier cannot be empty.</value>
+  </data>
+  <data name="SignatureDeleted" xml:space="preserve">
+    <value>Signature was deleted.</value>
+  </data>
+  <data name="SignaturePackageObjectTagMustBeUnique" xml:space="preserve">
+    <value>Specified object ID conflicts with predefined Package Object ID.</value>
+  </data>
+  <data name="PackageSpecificReferenceTagMustBeUnique" xml:space="preserve">
+    <value>Specified reference object conflicts with predefined Package specific reference.</value>
+  </data>
+  <data name="SignatureObjectIdMustBeUnique" xml:space="preserve">
+    <value>Object identifiers must be unique within the same signature.</value>
+  </data>
+  <data name="CanOnlyCounterSignSignatureParts" xml:space="preserve">
+    <value>Can only countersign parts with Digital Signature ContentType.</value>
+  </data>
+  <data name="CertificatePartContentTypeMismatch" xml:space="preserve">
+    <value>Certificate part is not of the correct type.</value>
+  </data>
+  <data name="CertificateKeyTypeNotSupported" xml:space="preserve">
+    <value>Signing certificate must be of type DSA or RSA.</value>
+  </data>
+  <data name="PartToSignMissing" xml:space="preserve">
+    <value>Specified part to sign does not exist.</value>
+  </data>
+  <data name="DuplicateObjectId" xml:space="preserve">
+    <value>Duplicate object ID found. IDs must be unique within the signature XML.</value>
+  </data>
+  <data name="CallbackParameterInvalid" xml:space="preserve">
+    <value>Caller-supplied parameter to callback function is not of expected type.</value>
+  </data>
+  <data name="CannotChangePublishLicense" xml:space="preserve">
+    <value>Cannot change publish license after the rights management transform settings are fixed.</value>
+  </data>
+  <data name="CannotChangeCryptoProvider" xml:space="preserve">
+    <value>Cannot change CryptoProvider after the rights management transform settings are fixed.</value>
+  </data>
+  <data name="ExcessiveLengthPrefix" xml:space="preserve">
+    <value>Length prefix specifies {0} characters, which exceeds the maximum of {1} characters.</value>
+  </data>
+  <data name="GetOlePropertyFailed" xml:space="preserve">
+    <value>OLE property ID {0} cannot be read (error {1}).</value>
+  </data>
+  <data name="InvalidAuthenticationTypeString" xml:space="preserve">
+    <value>Authentication type string (the part before the colon) is not valid in user ID '{0}'.</value>
+  </data>
+  <data name="InvalidDocumentPropertyType" xml:space="preserve">
+    <value>'{0}' document property type is not valid.</value>
+  </data>
+  <data name="InvalidDocumentPropertyVariantType" xml:space="preserve">
+    <value>'{0}' document property variant type is not valid.</value>
+  </data>
+  <data name="InvalidTypePrefixedUserName" xml:space="preserve">
+    <value>User ID in use license stream is not of the form "authenticationType:userName".</value>
+  </data>
+  <data name="InvalidTransformFeatureName" xml:space="preserve">
+    <value>Feature name in the transform's primary stream is '{0}', but expected '{1}'.</value>
+  </data>
+  <data name="PackageNotFound" xml:space="preserve">
+    <value>Document does not contain a package.</value>
+  </data>
+  <data name="NoPublishLicenseStream" xml:space="preserve">
+    <value>File does not contain a stream to hold the publish license.</value>
+  </data>
+  <data name="NoUseLicenseStorage" xml:space="preserve">
+    <value>File does not contain a storage to hold use licenses.</value>
+  </data>
+  <data name="ReaderVersionError" xml:space="preserve">
+    <value>File contains data in format version {0}, but the software can only read that data in format version {1} or lower.</value>
+  </data>
+  <data name="PublishLicenseStreamCorrupt" xml:space="preserve">
+    <value>Document's publish license stream is corrupted.</value>
+  </data>
+  <data name="PublishLicenseNotFound" xml:space="preserve">
+    <value>Document does not contain a publish license.</value>
+  </data>
+  <data name="RightsManagementEncryptionTransformNotFound" xml:space="preserve">
+    <value>Document does not contain any rights management-protected streams.</value>
+  </data>
+  <data name="MultipleRightsManagementEncryptionTransformFound" xml:space="preserve">
+    <value>Document contains multiple Rights Management Encryption Transforms.</value>
+  </data>
+  <data name="StreamNeedsReadWriteAccess" xml:space="preserve">
+    <value>The stream on which the encrypted package is created must have read/write access.</value>
+  </data>
+  <data name="CryptoProviderCanNotDecrypt" xml:space="preserve">
+    <value>Cannot perform stream operation because CryptoProvider is not set to allow decryption.</value>
+  </data>
+  <data name="CryptoProviderCanNotMergeBlocks" xml:space="preserve">
+    <value>Only cryptographic providers based on a block cipher are supported.</value>
+  </data>
+  <data name="EncryptedPackageEnvelopeDisposed" xml:space="preserve">
+    <value>EncryptedPackageEnvelope object was disposed.</value>
+  </data>
+  <data name="CryptoProviderDisposed" xml:space="preserve">
+    <value>CryptoProvider object was disposed.</value>
+  </data>
+  <data name="UpdaterVersionError" xml:space="preserve">
+    <value>File contains data in format version {0}, but the software can only update that data in format version {1} or lower.</value>
+  </data>
+  <data name="DictionaryIsReadOnly" xml:space="preserve">
+    <value>The dictionary is read-only.</value>
+  </data>
+  <data name="CryptoProviderIsNotReady" xml:space="preserve">
+    <value>The CryptoProvider cannot encrypt or decrypt.</value>
+  </data>
+  <data name="UseLicenseStreamCorrupt" xml:space="preserve">
+    <value>One of the document's use licenses is corrupted.</value>
+  </data>
+  <data name="EncryptedDataStreamCorrupt" xml:space="preserve">
+    <value>Encrypted data stream is corrupted.</value>
+  </data>
+  <data name="UnknownDocumentProperty" xml:space="preserve">
+    <value>Unrecognized document property: FMTID = '{0}', property ID = '{1}'.</value>
+  </data>
+  <data name="WrongDocumentPropertyVariantType" xml:space="preserve">
+    <value>'{0}' document property in property set '{1}' is of incorrect variant type '{2}'. Expected type '{3}'.</value>
+  </data>
+  <data name="UserIsNotActivated" xml:space="preserve">
+    <value>User is not activated.</value>
+  </data>
+  <data name="UserHasNoClientLicensorCert" xml:space="preserve">
+    <value>User does not have a client licensor certificate.</value>
+  </data>
+  <data name="EncryptionRightIsNotGranted" xml:space="preserve">
+    <value>Encryption right is not granted.</value>
+  </data>
+  <data name="DecryptionRightIsNotGranted" xml:space="preserve">
+    <value>Decryption right is not granted.</value>
+  </data>
+  <data name="NoPrivilegesForPublishLicenseDecryption" xml:space="preserve">
+    <value>CryptoProvider does not have privileges required for decryption of the PublishLicense.</value>
+  </data>
+  <data name="InvalidPublishLicense" xml:space="preserve">
+    <value>Signed Publish License is not valid.</value>
+  </data>
+  <data name="PublishLicenseStreamHeaderTooLong" xml:space="preserve">
+    <value>Variable-length header in publish license stream is {0} bytes, which exceeds the maximum length of {1} bytes.</value>
+  </data>
+  <data name="OnlyPassportOrWindowsAuthenticatedUsersAreAllowed" xml:space="preserve">
+    <value>User must be either Windows or Passport authenticated. Other authentication types are not allowed in this context.</value>
+  </data>
+  <data name="RmExceptionGenericMessage" xml:space="preserve">
+    <value>Rights management operation failed.</value>
+  </data>
+  <data name="RmExceptionInvalidLicense" xml:space="preserve">
+    <value>License is not valid.</value>
+  </data>
+  <data name="RmExceptionInfoNotInLicense" xml:space="preserve">
+    <value>Information not found.</value>
+  </data>
+  <data name="RmExceptionInvalidLicenseSignature" xml:space="preserve">
+    <value>License signature is not valid.</value>
+  </data>
+  <data name="RmExceptionEncryptionNotPermitted" xml:space="preserve">
+    <value>Encryption not permitted.</value>
+  </data>
+  <data name="RmExceptionRightNotGranted" xml:space="preserve">
+    <value>Right not granted.</value>
+  </data>
+  <data name="RmExceptionInvalidVersion" xml:space="preserve">
+    <value>Version is not valid.</value>
+  </data>
+  <data name="RmExceptionInvalidEncodingType" xml:space="preserve">
+    <value>Encoding type is not valid.</value>
+  </data>
+  <data name="RmExceptionInvalidNumericalValue" xml:space="preserve">
+    <value>Numerical value is not valid.</value>
+  </data>
+  <data name="RmExceptionInvalidAlgorithmType" xml:space="preserve">
+    <value>Algorithm type is not valid.</value>
+  </data>
+  <data name="RmExceptionEnvironmentNotLoaded" xml:space="preserve">
+    <value>Environment not loaded.</value>
+  </data>
+  <data name="RmExceptionEnvironmentCannotLoad" xml:space="preserve">
+    <value>Cannot load environment.</value>
+  </data>
+  <data name="RmExceptionTooManyLoadedEnvironments" xml:space="preserve">
+    <value>Cannot load more than one environment.</value>
+  </data>
+  <data name="RmExceptionIncompatibleObjects" xml:space="preserve">
+    <value>Incompatible objects.</value>
+  </data>
+  <data name="RmExceptionLibraryFail" xml:space="preserve">
+    <value>Library fail.</value>
+  </data>
+  <data name="RmExceptionEnablingPrincipalFailure" xml:space="preserve">
+    <value>Enabling principal failure.</value>
+  </data>
+  <data name="RmExceptionInfoNotPresent" xml:space="preserve">
+    <value>Information not found.</value>
+  </data>
+  <data name="RmExceptionBadGetInfoQuery" xml:space="preserve">
+    <value>Get information query is not valid.</value>
+  </data>
+  <data name="RmExceptionKeyTypeUnsupported" xml:space="preserve">
+    <value>Key type not supported.</value>
+  </data>
+  <data name="RmExceptionCryptoOperationUnsupported" xml:space="preserve">
+    <value>Crypto operation not supported.</value>
+  </data>
+  <data name="RmExceptionClockRollbackDetected" xml:space="preserve">
+    <value>Clock rollback detected.</value>
+  </data>
+  <data name="RmExceptionQueryReportsNoResults" xml:space="preserve">
+    <value>Query reports no results.</value>
+  </data>
+  <data name="RmExceptionUnexpectedException" xml:space="preserve">
+    <value>Unexpected exception.</value>
+  </data>
+  <data name="RmExceptionBindValidityTimeViolated" xml:space="preserve">
+    <value>Binding validity time violated.</value>
+  </data>
+  <data name="RmExceptionBrokenCertChain" xml:space="preserve">
+    <value>Broken certificate chain.</value>
+  </data>
+  <data name="RmExceptionBindPolicyViolation" xml:space="preserve">
+    <value>Binding policy violation.</value>
+  </data>
+  <data name="RmExceptionManifestPolicyViolation" xml:space="preserve">
+    <value>Manifest policy violation.</value>
+  </data>
+  <data name="RmExceptionBindRevokedLicense" xml:space="preserve">
+    <value>License has been revoked.</value>
+  </data>
+  <data name="RmExceptionBindRevokedIssuer" xml:space="preserve">
+    <value>Issuer has been revoked.</value>
+  </data>
+  <data name="RmExceptionBindRevokedPrincipal" xml:space="preserve">
+    <value>Principal has been revoked.</value>
+  </data>
+  <data name="RmExceptionBindRevokedResource" xml:space="preserve">
+    <value>Resource has been revoked.</value>
+  </data>
+  <data name="RmExceptionBindRevokedModule" xml:space="preserve">
+    <value>Module has been revoked.</value>
+  </data>
+  <data name="RmExceptionBindContentNotInEndUseLicense" xml:space="preserve">
+    <value>Binding content not in the End Use License.</value>
+  </data>
+  <data name="RmExceptionBindAccessPrincipalNotEnabling" xml:space="preserve">
+    <value>Binding access principal is not enabling.</value>
+  </data>
+  <data name="RmExceptionBindAccessUnsatisfied" xml:space="preserve">
+    <value>Binding access unsatisfied.</value>
+  </data>
+  <data name="RmExceptionBindIndicatedPrincipalMissing" xml:space="preserve">
+    <value>Principal provided for binding is missing.</value>
+  </data>
+  <data name="RmExceptionBindMachineNotFoundInGroupIdentity" xml:space="preserve">
+    <value>Machine is not found in group identity certificate.</value>
+  </data>
+  <data name="RmExceptionLibraryUnsupportedPlugIn" xml:space="preserve">
+    <value>Unsupported library plug-in.</value>
+  </data>
+  <data name="RmExceptionBindRevocationListStale" xml:space="preserve">
+    <value>Binding revocation list is stale.</value>
+  </data>
+  <data name="RmExceptionBindNoApplicableRevocationList" xml:space="preserve">
+    <value>Binding missing application revocation list.</value>
+  </data>
+  <data name="RmExceptionInvalidHandle" xml:space="preserve">
+    <value>Handle is not valid.</value>
+  </data>
+  <data name="RmExceptionBindIntervalTimeViolated" xml:space="preserve">
+    <value>Binding time interval is violated.</value>
+  </data>
+  <data name="RmExceptionBindNoSatisfiedRightsGroup" xml:space="preserve">
+    <value>Binding cannot find a satisfied rights group.</value>
+  </data>
+  <data name="RmExceptionBindSpecifiedWorkMissing" xml:space="preserve">
+    <value>Cannot find content specified for binding.</value>
+  </data>
+  <data name="RmExceptionNoMoreData" xml:space="preserve">
+    <value>No more data.</value>
+  </data>
+  <data name="RmExceptionLicenseAcquisitionFailed" xml:space="preserve">
+    <value>License acquisition failed.</value>
+  </data>
+  <data name="RmExceptionIdMismatch" xml:space="preserve">
+    <value>ID mismatch.</value>
+  </data>
+  <data name="RmExceptionTooManyCertificates" xml:space="preserve">
+    <value>Cannot have more than one certificate.</value>
+  </data>
+  <data name="RmExceptionNoDistributionPointUrlFound" xml:space="preserve">
+    <value>Distribution Point URL was not set.</value>
+  </data>
+  <data name="RmExceptionAlreadyInProgress" xml:space="preserve">
+    <value>Rights management server transaction already in progress.</value>
+  </data>
+  <data name="RmExceptionGroupIdentityNotSet" xml:space="preserve">
+    <value>Group identity not set.</value>
+  </data>
+  <data name="RmExceptionRecordNotFound" xml:space="preserve">
+    <value>Record not found.</value>
+  </data>
+  <data name="RmExceptionNoConnect" xml:space="preserve">
+    <value>Connection failed.</value>
+  </data>
+  <data name="RmExceptionNoLicense" xml:space="preserve">
+    <value>License not found.</value>
+  </data>
+  <data name="RmExceptionNeedsMachineActivation" xml:space="preserve">
+    <value>Machine must be activated.</value>
+  </data>
+  <data name="RmExceptionNeedsGroupIdentityActivation" xml:space="preserve">
+    <value>User identity must be activated.</value>
+  </data>
+  <data name="RmExceptionActivationFailed" xml:space="preserve">
+    <value>Activation failed.</value>
+  </data>
+  <data name="RmExceptionAborted" xml:space="preserve">
+    <value>Command interrupted.</value>
+  </data>
+  <data name="RmExceptionOutOfQuota" xml:space="preserve">
+    <value>Transaction quota exceeded.</value>
+  </data>
+  <data name="RmExceptionAuthenticationFailed" xml:space="preserve">
+    <value>Authentication failed.</value>
+  </data>
+  <data name="RmExceptionServerError" xml:space="preserve">
+    <value>Server side error.</value>
+  </data>
+  <data name="RmExceptionInstallationFailed" xml:space="preserve">
+    <value>Installation failed.</value>
+  </data>
+  <data name="RmExceptionHidCorrupted" xml:space="preserve">
+    <value>Hardware ID corrupted.</value>
+  </data>
+  <data name="RmExceptionInvalidServerResponse" xml:space="preserve">
+    <value>Server response is not valid.</value>
+  </data>
+  <data name="RmExceptionServiceNotFound" xml:space="preserve">
+    <value>Service not found.</value>
+  </data>
+  <data name="RmExceptionUseDefault" xml:space="preserve">
+    <value>Use default.</value>
+  </data>
+  <data name="RmExceptionServerNotFound" xml:space="preserve">
+    <value>Server not found.</value>
+  </data>
+  <data name="RmExceptionInvalidEmail" xml:space="preserve">
+    <value>E-mail address is not valid.</value>
+  </data>
+  <data name="RmExceptionValidityTimeViolation" xml:space="preserve">
+    <value>License validity time violation.</value>
+  </data>
+  <data name="RmExceptionOutdatedModule" xml:space="preserve">
+    <value>Outdated module.</value>
+  </data>
+  <data name="RmExceptionServiceMoved" xml:space="preserve">
+    <value>Service moved.</value>
+  </data>
+  <data name="RmExceptionServiceGone" xml:space="preserve">
+    <value>Service gone.</value>
+  </data>
+  <data name="RmExceptionAdEntryNotFound" xml:space="preserve">
+    <value>Ad entry not found.</value>
+  </data>
+  <data name="RmExceptionNotAChain" xml:space="preserve">
+    <value>Not a certificate chain.</value>
+  </data>
+  <data name="RmExceptionRequestDenied" xml:space="preserve">
+    <value>Rights management server denied request.</value>
+  </data>
+  <data name="RmExceptionNotSet" xml:space="preserve">
+    <value>Not set.</value>
+  </data>
+  <data name="RmExceptionMetadataNotSet" xml:space="preserve">
+    <value>Metadata not set.</value>
+  </data>
+  <data name="RmExceptionRevocationInfoNotSet" xml:space="preserve">
+    <value>Revocation information not set.</value>
+  </data>
+  <data name="RmExceptionInvalidTimeInfo" xml:space="preserve">
+    <value>Time information is not valid.</value>
+  </data>
+  <data name="RmExceptionRightNotSet" xml:space="preserve">
+    <value>Right not set.</value>
+  </data>
+  <data name="RmExceptionLicenseBindingToWindowsIdentityFailed" xml:space="preserve">
+    <value>License binding to Windows Identity failed (NTLM bind failure).</value>
+  </data>
+  <data name="RmExceptionInvalidIssuanceLicenseTemplate" xml:space="preserve">
+    <value>Issuance license template is not valid because of incorrectly formatted string.</value>
+  </data>
+  <data name="RmExceptionInvalidKeyLength" xml:space="preserve">
+    <value>Key size length is not valid.</value>
+  </data>
+  <data name="RmExceptionExpiredOfficialIssuanceLicenseTemplate" xml:space="preserve">
+    <value>Expired official Publish License template.</value>
+  </data>
+  <data name="RmExceptionInvalidClientLicensorCertificate" xml:space="preserve">
+    <value>Client Licensor Certificate is not valid.</value>
+  </data>
+  <data name="RmExceptionHidInvalid" xml:space="preserve">
+    <value>Hardware ID is not valid.</value>
+  </data>
+  <data name="RmExceptionEmailNotVerified" xml:space="preserve">
+    <value>E-mail not verified.</value>
+  </data>
+  <data name="RmExceptionDebuggerDetected" xml:space="preserve">
+    <value>Debugger detected.</value>
+  </data>
+  <data name="RmExceptionInvalidLockboxType" xml:space="preserve">
+    <value>Lockbox type is not valid.</value>
+  </data>
+  <data name="RmExceptionInvalidLockboxPath" xml:space="preserve">
+    <value>Lockbox path is not valid.</value>
+  </data>
+  <data name="RmExceptionInvalidRegistryPath" xml:space="preserve">
+    <value>Registry path is not valid.</value>
+  </data>
+  <data name="RmExceptionNoAesCryptoProvider" xml:space="preserve">
+    <value>No AES Crypto provider found.</value>
+  </data>
+  <data name="RmExceptionGlobalOptionAlreadySet" xml:space="preserve">
+    <value>Global option is already set.</value>
+  </data>
+  <data name="RmExceptionOwnerLicenseNotFound" xml:space="preserve">
+    <value>Owner's license not found.</value>
+  </data>
+  <data name="ZipZeroSizeFileIsNotValidArchive" xml:space="preserve">
+    <value>Archive file cannot be size 0.</value>
+  </data>
+  <data name="CanNotWriteInReadOnlyMode" xml:space="preserve">
+    <value>Cannot perform a write operation in read-only mode.</value>
+  </data>
+  <data name="CanNotReadInWriteOnlyMode" xml:space="preserve">
+    <value>Cannot perform a read operation in write-only mode.</value>
+  </data>
+  <data name="CanNotReadWriteInReadOnlyWriteOnlyMode" xml:space="preserve">
+    <value>Cannot perform a read/write operation in write-only or read-only modes.</value>
+  </data>
+  <data name="AttemptedToCreateDuplicateFileName" xml:space="preserve">
+    <value>Cannot create file because the specified file name is already in use.</value>
+  </data>
+  <data name="FileDoesNotExists" xml:space="preserve">
+    <value>Cannot find specified file.</value>
+  </data>
+  <data name="TruncateAppendModesNotSupported" xml:space="preserve">
+    <value>Truncate and Append FileModes are not supported.</value>
+  </data>
+  <data name="OnlyFileShareReadAndFileShareNoneSupported" xml:space="preserve">
+    <value>Only FileShare.Read and FileShare.None are supported.</value>
+  </data>
+  <data name="CanNotReadDataFromStreamWhichDoesNotSupportReading" xml:space="preserve">
+    <value>Cannot read data from stream that does not support reading.</value>
+  </data>
+  <data name="CanNotWriteDataToStreamWhichDoesNotSupportWriting" xml:space="preserve">
+    <value>Cannot write data to stream that does not support writing.</value>
+  </data>
+  <data name="CanNotOperateOnStreamWhichDoesNotSupportSeeking" xml:space="preserve">
+    <value>Cannot operate on stream that does not support seeking.</value>
+  </data>
+  <data name="UnsupportedCombinationOfModeAccessShareStreaming" xml:space="preserve">
+    <value>Cannot get stream with FileMode.Create, FileMode.CreateNew, FileMode.Truncate, FileMode.Append when access is FileAccess.Read.</value>
+  </data>
+  <data name="CorruptedData" xml:space="preserve">
+    <value>File contains corrupted data.</value>
+  </data>
+  <data name="NotSupportedMultiDisk" xml:space="preserve">
+    <value>Multidisk ZIP format is not supported.</value>
+  </data>
+  <data name="ZipArchiveDisposed" xml:space="preserve">
+    <value>ZIP archive was closed and disposed.</value>
+  </data>
+  <data name="ZipFileItemDisposed" xml:space="preserve">
+    <value>ZIP file was closed, disposed, or deleted.</value>
+  </data>
+  <data name="NotSupportedVersionNeededToExtract" xml:space="preserve">
+    <value>ZIP archive contains unsupported data structures.</value>
+  </data>
+  <data name="Zip64StructuresTooLarge" xml:space="preserve">
+    <value>ZIP archive contains data structures too large to fit in memory.</value>
+  </data>
+  <data name="ZipNotSupportedEncryptedArchive" xml:space="preserve">
+    <value>ZIP archive contains unsupported encrypted data.</value>
+  </data>
+  <data name="ZipNotSupportedSignedArchive" xml:space="preserve">
+    <value>ZIP archive contains unsupported signature data.</value>
+  </data>
+  <data name="ZipNotSupportedCompressionMethod" xml:space="preserve">
+    <value>ZIP archive contains data compressed using an unsupported algorithm.</value>
+  </data>
+  <data name="CompressLengthMismatch" xml:space="preserve">
+    <value>Compressed part has inconsistent data length.</value>
+  </data>
+  <data name="CreateNewOnNonEmptyStream" xml:space="preserve">
+    <value>CreateNew is not a valid FileMode for a nonempty stream.</value>
+  </data>
+  <data name="PartDoesNotExist" xml:space="preserve">
+    <value>Specified part does not exist in the package.</value>
+  </data>
+  <data name="PartAlreadyExists" xml:space="preserve">
+    <value>Cannot add part for the specified URI because it is already in the package.</value>
+  </data>
+  <data name="PartNamePrefixExists" xml:space="preserve">
+    <value>Cannot add part to the package. Part names cannot be derived from another part name by appending segments to it.</value>
+  </data>
+  <data name="IncompatibleModeOrAccess" xml:space="preserve">
+    <value>Cannot open package because FileMode or FileAccess value is not valid for the stream.</value>
+  </data>
+  <data name="URIShouldNotBeAbsolute" xml:space="preserve">
+    <value>Cannot be an absolute URI.</value>
+  </data>
+  <data name="UriShouldBeAbsolute" xml:space="preserve">
+    <value>Must have absolute URI.</value>
+  </data>
+  <data name="ContainerAndPartModeIncompatible" xml:space="preserve">
+    <value>FileMode/FileAccess for Part.GetStream is not compatible with FileMode/FileAccess used to open the Package.</value>
+  </data>
+  <data name="UnsupportedCombinationOfModeAccess" xml:space="preserve">
+    <value>Cannot get stream with FileMode.Create, FileMode.CreateNew, FileMode.Truncate, FileMode.Append when access is FileAccess.Read.</value>
+  </data>
+  <data name="NullStreamReturned" xml:space="preserve">
+    <value>Returned stream for the part is null.</value>
+  </data>
+  <data name="ObjectDisposed" xml:space="preserve">
+    <value>Package object was closed and disposed, so cannot carry out operations on this object or any stream opened on a part of this package.</value>
+  </data>
+  <data name="ReadOnlyStream" xml:space="preserve">
+    <value>Cannot write to read-only stream.</value>
+  </data>
+  <data name="WriteOnlyStream" xml:space="preserve">
+    <value>Cannot read from write-only stream.</value>
+  </data>
+  <data name="ParentContainerClosed" xml:space="preserve">
+    <value>Cannot access part because parent package was closed.</value>
+  </data>
+  <data name="PackagePartDeleted" xml:space="preserve">
+    <value>Part was deleted.</value>
+  </data>
+  <data name="RelationshipToRelationshipIllegal" xml:space="preserve">
+    <value>PackageRelationship cannot target another PackageRelationship.</value>
+  </data>
+  <data name="RelationshipPartsCannotHaveRelationships" xml:space="preserve">
+    <value>PackageRelationship parts cannot have relationships to other parts.</value>
+  </data>
+  <data name="RelationshipPartIncorrectContentType" xml:space="preserve">
+    <value>Incorrect content type for PackageRelationship part.</value>
+  </data>
+  <data name="PackageRelationshipDoesNotExist" xml:space="preserve">
+    <value>PackageRelationship with specified ID does not exist at the Package level.</value>
+  </data>
+  <data name="PackagePartRelationshipDoesNotExist" xml:space="preserve">
+    <value>PackageRelationship with specified ID does not exist for the source part.</value>
+  </data>
+  <data name="RelationshipTargetMustBeRelative" xml:space="preserve">
+    <value>PackageRelationship target must be relative URI if TargetMode is Internal.</value>
+  </data>
+  <data name="RequiredRelationshipAttributeMissing" xml:space="preserve">
+    <value>Relationship tag requires attribute '{0}'.</value>
+  </data>
+  <data name="RelationshipTagDoesntMatchSchema" xml:space="preserve">
+    <value>Relationship tag contains incorrect attribute.</value>
+  </data>
+  <data name="RelationshipsTagHasExtraAttributes" xml:space="preserve">
+    <value>Relationships tag has extra attributes.</value>
+  </data>
+  <data name="UnknownTagEncountered" xml:space="preserve">
+    <value>Unrecognized tag found in Relationships XML.</value>
+  </data>
+  <data name="ExpectedRelationshipsElementTag" xml:space="preserve">
+    <value>Relationships tag expected at root level.</value>
+  </data>
+  <data name="InvalidXmlBaseAttributePresent" xml:space="preserve">
+    <value>Relationships XML elements cannot specify attribute '{0}'.</value>
+  </data>
+  <data name="NotAUniqueRelationshipId" xml:space="preserve">
+    <value>'{0}' ID conflicts with the ID of an existing relationship for the specified source.</value>
+  </data>
+  <data name="NotAValidXmlIdString" xml:space="preserve">
+    <value>'{0}' ID is not a valid XSD ID.</value>
+  </data>
+  <data name="InvalidValueForTheAttribute" xml:space="preserve">
+    <value>'{0}' attribute value is not valid.</value>
+  </data>
+  <data name="InvalidRelationshipType" xml:space="preserve">
+    <value>Relationship Type cannot contain only spaces or be empty.</value>
+  </data>
+  <data name="PartUriShouldStartWithForwardSlash" xml:space="preserve">
+    <value>Part URI must start with a forward slash.</value>
+  </data>
+  <data name="PartUriShouldNotEndWithForwardSlash" xml:space="preserve">
+    <value>Part URI cannot end with a forward slash.</value>
+  </data>
+  <data name="UriShouldBePackScheme" xml:space="preserve">
+    <value>URI must contain pack:// scheme.</value>
+  </data>
+  <data name="PartUriIsEmpty" xml:space="preserve">
+    <value>Part URI is empty.</value>
+  </data>
+  <data name="InvalidPartUri" xml:space="preserve">
+    <value>Part URI is not valid per rules defined in the Open Packaging Conventions specification.</value>
+  </data>
+  <data name="RelationshipPartUriNotExpected" xml:space="preserve">
+    <value>PackageRelationship part URI is not expected.</value>
+  </data>
+  <data name="RelationshipPartUriExpected" xml:space="preserve">
+    <value>PackageRelationship part URI is expected.</value>
+  </data>
+  <data name="NotAValidRelationshipPartUri" xml:space="preserve">
+    <value>PackageRelationship part URI syntax is not valid.</value>
+  </data>
+  <data name="FragmentMustStartWithHash" xml:space="preserve">
+    <value>The 'fragment' parameter must start with a number sign.</value>
+  </data>
+  <data name="PartUriCannotHaveAFragment" xml:space="preserve">
+    <value>Part URI cannot contain a Fragment component.</value>
+  </data>
+  <data name="PartUriShouldNotStartWithTwoForwardSlashes" xml:space="preserve">
+    <value>Part URI cannot start with two forward slashes.</value>
+  </data>
+  <data name="InnerPackageUriHasFragment" xml:space="preserve">
+    <value>Package URI obtained from the pack URI cannot contain a Fragment.</value>
+  </data>
+  <data name="StreamObjectDisposed" xml:space="preserve">
+    <value>Cannot access Stream object because it was closed or disposed.</value>
+  </data>
+  <data name="NullContentTypeProvided" xml:space="preserve">
+    <value>GetContentTypeCore method cannot return null for the content type stream.</value>
+  </data>
+  <data name="GetContentTypeCoreNotImplemented" xml:space="preserve">
+    <value>PackagePart subclass must implement GetContentTypeCore method if passing a null value for the content type when PackagePart object is constructed.</value>
+  </data>
+  <data name="RequiredAttributeMissing" xml:space="preserve">
+    <value>'{0}' tag requires attribute '{1}'.</value>
+  </data>
+  <data name="RequiredAttributeEmpty" xml:space="preserve">
+    <value>'{0}' tag requires a nonempty '{1}' attribute.</value>
+  </data>
+  <data name="TypesTagHasExtraAttributes" xml:space="preserve">
+    <value>Types tag has attributes not valid per the schema.</value>
+  </data>
+  <data name="TypesElementExpected" xml:space="preserve">
+    <value>Required Types tag not found.</value>
+  </data>
+  <data name="TypesXmlDoesNotMatchSchema" xml:space="preserve">
+    <value>Content Types XML does not match schema.</value>
+  </data>
+  <data name="DefaultTagDoesNotMatchSchema" xml:space="preserve">
+    <value>Default tag is not valid per the schema. Verify that attributes are correct.</value>
+  </data>
+  <data name="OverrideTagDoesNotMatchSchema" xml:space="preserve">
+    <value>Override tag is not valid per the schema. Verify that attributes are correct.</value>
+  </data>
+  <data name="ElementIsNotEmptyElement" xml:space="preserve">
+    <value>'{0}' element must be empty.</value>
+  </data>
+  <data name="BadPackageFormat" xml:space="preserve">
+    <value>Format error in package.</value>
+  </data>
+  <data name="StreamingModeNotSupportedForConsumption" xml:space="preserve">
+    <value>Streaming mode is supported only for creating packages.</value>
+  </data>
+  <data name="StreamingPackageProductionImpliesWriteOnlyAccess" xml:space="preserve">
+    <value>Must have write-only access to produce a package in streaming mode.</value>
+  </data>
+  <data name="StreamingPackageProductionRequiresSingleWriter" xml:space="preserve">
+    <value>Cannot have concurrent write accesses on package being produced in streaming mode.</value>
+  </data>
+  <data name="MethodAvailableOnlyInStreamingCreation" xml:space="preserve">
+    <value>'{0}' method can only be called on a package opened in streaming mode.</value>
+  </data>
+  <data name="OperationIsNotSupportedInStreamingProduction" xml:space="preserve">
+    <value>Package.{0} is not supported in streaming production.</value>
+  </data>
+  <data name="OnlyWriteOperationsAreSupportedInStreamingCreation" xml:space="preserve">
+    <value>Only write operations are supported in streaming production.</value>
+  </data>
+  <data name="OperationViolatesWriteOnceSemantics" xml:space="preserve">
+    <value>Write-once semantics in streaming production precludes the use of '{0}'.</value>
+  </data>
+  <data name="OnlyStreamingProductionIsSupported" xml:space="preserve">
+    <value>Streaming consumption of packages not supported.</value>
+  </data>
+  <data name="IOBufferOverflow" xml:space="preserve">
+    <value>Read or write operation references location outside the bounds of the buffer provided.</value>
+  </data>
+  <data name="StreamDoesNotSupportWrite" xml:space="preserve">
+    <value>Cannot change content of a read-only stream.</value>
+  </data>
+  <data name="MoreThanOneMetadataRelationships" xml:space="preserve">
+    <value>Package has more than one Core Properties relationship.</value>
+  </data>
+  <data name="NoExternalTargetForMetadataRelationship" xml:space="preserve">
+    <value>TargetMode for a Core Properties relationship must be 'Internal'.</value>
+  </data>
+  <data name="CorePropertiesElementExpected" xml:space="preserve">
+    <value>Unrecognized root element in Core Properties part.</value>
+  </data>
+  <data name="NoStructuredContentInsideProperties" xml:space="preserve">
+    <value>Core Properties part: core property elements can contain only text data.</value>
+  </data>
+  <data name="UnknownNamespaceInCorePropertiesPart" xml:space="preserve">
+    <value>Unrecognized namespace in Core Properties part.</value>
+  </data>
+  <data name="InvalidPropertyNameInCorePropertiesPart" xml:space="preserve">
+    <value>'{0}' property name is not valid in Core Properties part.</value>
+  </data>
+  <data name="PropertyStartTagExpected" xml:space="preserve">
+    <value>Core Properties part: A property start-tag was expected.</value>
+  </data>
+  <data name="XsdDateTimeExpected" xml:space="preserve">
+    <value>Core Properties part: Text data of XSD type 'DateTime' was expected.</value>
+  </data>
+  <data name="DanglingMetadataRelationship" xml:space="preserve">
+    <value>The target of the Core Properties relationship does not reference an existing part.</value>
+  </data>
+  <data name="WrongContentTypeForPropertyPart" xml:space="preserve">
+    <value>The Core Properties relationship references a part that has an incorrect content type.</value>
+  </data>
+  <data name="PropertyWrongNumbOfAttribsDefinedOn" xml:space="preserve">
+    <value>Unexpected number of attributes is found on '{0}'.</value>
+  </data>
+  <data name="UnknownDCDateTimeXsiType" xml:space="preserve">
+    <value>Unknown xsi:type for DateTime on '{0}'.</value>
+  </data>
+  <data name="DuplicateCorePropertyName" xml:space="preserve">
+    <value>More than one '{0}' property found.</value>
+  </data>
+  <data name="StorageBasedPackagePropertiesDiposed" xml:space="preserve">
+    <value>PackageProperties object was disposed.</value>
+  </data>
+  <data name="EncodingNotSupported" xml:space="preserve">
+    <value>Encoding format is not supported. Only UTF-8 and UTF-16 are supported.</value>
+  </data>
+  <data name="DuplicatePiecesFound" xml:space="preserve">
+    <value>Duplicate pieces found in the package.</value>
+  </data>
+  <data name="PieceDoesNotExist" xml:space="preserve">
+    <value>Cannot find piece with the specified piece number.</value>
+  </data>
+  <data name="ServiceTypeAlreadyAdded" xml:space="preserve">
+    <value>This serviceType is already registered to another service.</value>
+  </data>
+  <data name="QualifiedNameHasWrongFormat" xml:space="preserve">
+    <value>'{0}' type name does not have the expected format 'className, assembly'.</value>
+  </data>
+  <data name="ParserAttributeArgsHigh" xml:space="preserve">
+    <value>Too many attributes are specified for '{0}'.</value>
+  </data>
+  <data name="ParserAttributeArgsLow" xml:space="preserve">
+    <value>'{0}' requires more attributes.</value>
+  </data>
+  <data name="ParserAssemblyLoadVersionMismatch" xml:space="preserve">
+    <value>Cannot load assembly '{0}' because a different version of that same assembly is loaded '{1}'.</value>
+  </data>
+  <data name="ToStringNull" xml:space="preserve">
+    <value>(null)</value>
+  </data>
+  <data name="ConvertToException" xml:space="preserve">
+    <value>'{0}' ValueSerializer cannot convert '{1}' to '{2}'.</value>
+  </data>
+  <data name="ConvertFromException" xml:space="preserve">
+    <value>'{0}' ValueSerializer cannot convert from '{1}'.</value>
+  </data>
+  <data name="SortDescriptionPropertyNameCannotBeEmpty" xml:space="preserve">
+    <value>SortDescription must have a nonempty property name.</value>
+  </data>
+  <data name="CannotChangeAfterSealed" xml:space="preserve">
+    <value>Cannot modify a '{0}' after it is sealed.</value>
+  </data>
+  <data name="BadPropertyForGroup" xml:space="preserve">
+    <value>Cannot group by property '{0}' because it cannot be found on type '{1}'.</value>
+  </data>
+  <data name="CurrentChangingCannotBeCanceled" xml:space="preserve">
+    <value>The CollectionView that originates this CurrentChanging event is in a state that does not allow the event to be canceled. Check CurrentChangingEventArgs.IsCancelable before assigning to this CurrentChangingEventArgs.Cancel property.</value>
+  </data>
+  <data name="NotSupported_ReadOnlyCollection" xml:space="preserve">
+    <value>Collection is read-only.</value>
+  </data>
+  <data name="Arg_RankMultiDimNotSupported" xml:space="preserve">
+    <value>Only single dimensional arrays are supported for the requested action.</value>
+  </data>
+  <data name="Arg_NonZeroLowerBound" xml:space="preserve">
+    <value>The lower bound of target array must be zero.</value>
+  </data>
+  <data name="ArgumentOutOfRange_NeedNonNegNum" xml:space="preserve">
+    <value>Non-negative number required.</value>
+  </data>
+  <data name="Arg_ArrayPlusOffTooSmall" xml:space="preserve">
+    <value>Destination array is not long enough to copy all the items in the collection. Check array index and length.</value>
+  </data>
+  <data name="Argument_InvalidArrayType" xml:space="preserve">
+    <value>Target array type is not compatible with the type of items in the collection.</value>
+  </data>
+  <data name="ReachOutOfRange" xml:space="preserve">
+    <value>'{0}' index is beyond maximum '{1}'.</value>
+  </data>
+  <data name="InvalidPermissionState" xml:space="preserve">
+    <value>Permission state is not valid.</value>
+  </data>
+  <data name="TargetNotWebBrowserPermissionLevel" xml:space="preserve">
+    <value>Target is not a WebBrowserPermission.</value>
+  </data>
+  <data name="TargetNotMediaPermissionLevel" xml:space="preserve">
+    <value>Target is not a MediaPermission.</value>
+  </data>
+  <data name="BadXml" xml:space="preserve">
+    <value>'{0}' attribute is not valid XML.</value>
+  </data>
+  <data name="InvalidPermissionLevel" xml:space="preserve">
+    <value>Permission level is not valid.</value>
+  </data>
+  <data name="XCRChoiceOnlyInAC" xml:space="preserve">
+    <value>Choice is valid only in AlternateContent.</value>
+  </data>
+  <data name="XCRChoiceAfterFallback" xml:space="preserve">
+    <value>Choice cannot follow a Fallback.</value>
+  </data>
+  <data name="XCRRequiresAttribNotFound" xml:space="preserve">
+    <value>Choice must contain Requires attribute.</value>
+  </data>
+  <data name="XCRInvalidRequiresAttribute" xml:space="preserve">
+    <value>Requires attribute must contain a valid namespace prefix.</value>
+  </data>
+  <data name="XCRFallbackOnlyInAC" xml:space="preserve">
+    <value>Fallback is valid only in AlternateContent.</value>
+  </data>
+  <data name="XCRChoiceNotFound" xml:space="preserve">
+    <value>AlternateContent must contain one or more Choice elements.</value>
+  </data>
+  <data name="XCRMultipleFallbackFound" xml:space="preserve">
+    <value>AlternateContent must contain only one Fallback element.</value>
+  </data>
+  <data name="XCRInvalidAttribInElement" xml:space="preserve">
+    <value>'{0}' attribute is not valid for '{1}' element.</value>
+  </data>
+  <data name="XCRUnknownCompatElement" xml:space="preserve">
+    <value>Unrecognized Compatibility element '{0}'.</value>
+  </data>
+  <data name="XCRInvalidACChild" xml:space="preserve">
+    <value>'{0}' element is not a valid child of AlternateContent. Only Choice and Fallback elements are valid children of an AlternateContent element.</value>
+  </data>
+  <data name="XCRInvalidFormat" xml:space="preserve">
+    <value>'{0}' format is not valid.</value>
+  </data>
+  <data name="XCRUndefinedPrefix" xml:space="preserve">
+    <value>'{0}' prefix is not defined.</value>
+  </data>
+  <data name="XCRUnknownCompatAttrib" xml:space="preserve">
+    <value>Unrecognized compatibility attribute '{0}'.</value>
+  </data>
+  <data name="XCRNSProcessContentNotIgnorable" xml:space="preserve">
+    <value>'{0}' namespace cannot process content; it must be declared Ignorable first.</value>
+  </data>
+  <data name="XCRDuplicateProcessContent" xml:space="preserve">
+    <value>Duplicate ProcessContent declaration for element '{1}' in namespace '{0}'.</value>
+  </data>
+  <data name="XCRInvalidProcessContent" xml:space="preserve">
+    <value>Cannot have both a specific and a wildcard ProcessContent declaration for namespace '{0}'.</value>
+  </data>
+  <data name="XCRDuplicateWildcardProcessContent" xml:space="preserve">
+    <value>Duplicate wildcard ProcessContent declaration for namespace '{0}'.</value>
+  </data>
+  <data name="XCRMustUnderstandFailed" xml:space="preserve">
+    <value>MustUnderstand condition failed on namespace '{0}'</value>
+  </data>
+  <data name="XCRNSPreserveNotIgnorable" xml:space="preserve">
+    <value>'{0}' namespace cannot preserve items; it must be declared Ignorable first.</value>
+  </data>
+  <data name="XCRDuplicatePreserve" xml:space="preserve">
+    <value>Duplicate Preserve declaration for element {1} in namespace '{0}'.</value>
+  </data>
+  <data name="XCRInvalidPreserve" xml:space="preserve">
+    <value>Cannot have both a specific and a wildcard Preserve declaration for namespace '{0}'.</value>
+  </data>
+  <data name="XCRDuplicateWildcardPreserve" xml:space="preserve">
+    <value>Duplicate wildcard Preserve declaration for namespace '{0}'.</value>
+  </data>
+  <data name="XCRInvalidXMLName" xml:space="preserve">
+    <value>'{0}' attribute value is not a valid XML name.</value>
+  </data>
+  <data name="XCRCompatCycle" xml:space="preserve">
+    <value>There is a cycle of XML compatibility definitions, such that namespace '{0}' overrides itself. This could be due to inconsistent XmlnsCompatibilityAttributes in different assemblies. Please change the definitions to eliminate this cycle.</value>
+  </data>
+  <data name="EventNotFound" xml:space="preserve">
+    <value>'{1}' event not found on type '{0}'.</value>
+  </data>
+  <data name="ListenerDidNotHandleEvent" xml:space="preserve">
+    <value>Listener did not handle requested event.</value>
+  </data>
+  <data name="ListenerDidNotHandleEventDetail" xml:space="preserve">
+    <value>Listener of type '{0}' registered with event manager of type '{1}', but then did not handle the event. The listener is coded incorrectly.</value>
+  </data>
+  <data name="NoMulticastHandlers" xml:space="preserve">
+    <value>WeakEventManager supports only delegates with one target.</value>
+  </data>
+  <data name="InvariantFailure" xml:space="preserve">
+    <value>Unrecoverable system error.</value>
+  </data>
+  <data name="ContentTypeCannotHaveLeadingTrailingLWS" xml:space="preserve">
+    <value>ContentType string cannot have leading/trailing Linear White Spaces [LWS - RFC 2616].</value>
+  </data>
+  <data name="InvalidTypeSubType" xml:space="preserve">
+    <value>ContentType string is not valid. Expected format is type/subtype.</value>
+  </data>
+  <data name="ExpectingParameterValuePairs" xml:space="preserve">
+    <value>';' must be followed by parameter=value pair.</value>
+  </data>
+  <data name="InvalidParameterValuePair" xml:space="preserve">
+    <value>Parameter and value pair is not valid. Expected form is parameter=value.</value>
+  </data>
+  <data name="InvalidToken" xml:space="preserve">
+    <value>A token is not valid. Refer to RFC 2616 for correct grammar of content types.</value>
+  </data>
+  <data name="InvalidParameterValue" xml:space="preserve">
+    <value>Parameter value must be a valid token or a quoted string as per RFC 2616.</value>
+  </data>
+  <data name="InvalidLinearWhiteSpaceCharacter" xml:space="preserve">
+    <value>A Linear White Space character is not valid.</value>
+  </data>
+  <data name="ExpectingSemicolon" xml:space="preserve">
+    <value>Semicolon separator is required between two valid parameter=value pairs.</value>
+  </data>
+  <data name="HwndSubclassMultipleAttach" xml:space="preserve">
+    <value>HwndSubclass.Attach has already been called;  it cannot be called again.</value>
+  </data>
+  <data name="UnableToLocateResource" xml:space="preserve">
+    <value>Cannot locate resource '{0}'.</value>
+  </data>
+  <data name="SplashScreenIsLoading" xml:space="preserve">
+    <value>Please wait while the application opens</value>
+  </data>
+  <data name="NameScopeNameNotEmptyString" xml:space="preserve">
+    <value>Name cannot be an empty string.</value>
+  </data>
+  <data name="NameScopeNameNotFound" xml:space="preserve">
+    <value>'{0}' Name is not found.</value>
+  </data>
+  <data name="NameScopeDuplicateNamesNotAllowed" xml:space="preserve">
+    <value>Cannot register duplicate Name '{0}' in this scope.</value>
+  </data>
+  <data name="NameScopeNotFound" xml:space="preserve">
+    <value>No NameScope found to {1} the Name '{0}'.</value>
+  </data>
+  <data name="NameScopeInvalidIdentifierName" xml:space="preserve">
+    <value>'{0}' name is not valid for identifier.</value>
+  </data>
+  <data name="NoDependencyProperty" xml:space="preserve">
+    <value>No dependency property {0} on {1}.</value>
+  </data>
+  <data name="MarkupExtensionArrayType" xml:space="preserve">
+    <value>Must set ArrayType before calling ProvideValue on ArrayExtension.</value>
+  </data>
+  <data name="MarkupExtensionArrayBadType" xml:space="preserve">
+    <value>Items in the array must be type '{0}'. One or more items cannot be cast to this type.</value>
+  </data>
+  <data name="MarkupExtensionNoContext" xml:space="preserve">
+    <value>Markup extension '{0}' requires '{1}' be implemented in the IServiceProvider for ProvideValue.</value>
+  </data>
+  <data name="MarkupExtensionBadStatic" xml:space="preserve">
+    <value>'{0}' StaticExtension value cannot be resolved to an enumeration, static field, or static property.</value>
+  </data>
+  <data name="MarkupExtensionStaticMember" xml:space="preserve">
+    <value>StaticExtension must have Member property set before ProvideValue can be called.</value>
+  </data>
+  <data name="MarkupExtensionTypeName" xml:space="preserve">
+    <value>TypeExtension must have TypeName property set before ProvideValue can be called.</value>
+  </data>
+  <data name="MarkupExtensionTypeNameBad" xml:space="preserve">
+    <value>'{0}' string is not valid for type.</value>
+  </data>
+  <data name="MustBeOfType" xml:space="preserve">
+    <value>'{0}' must be of type '{1}'.</value>
+  </data>
+  <data name="Verify_ApartmentState" xml:space="preserve">
+    <value>This operation requires the thread's apartment state to be '{0}'.</value>
+  </data>
+  <data name="Verify_NeitherNullNorEmpty" xml:space="preserve">
+    <value>The argument can neither be null nor empty.</value>
+  </data>
+  <data name="Verify_AreNotEqual" xml:space="preserve">
+    <value>The argument can not be equal to '{0}'.</value>
+  </data>
+  <data name="Verify_FileExists" xml:space="preserve">
+    <value>No file exists at '{0}'.</value>
+  </data>
+  <data name="InvalidEvent" xml:space="preserve">
+    <value>Event argument is invalid.</value>
+  </data>
+  <data name="CompatibilityPreferencesSealed" xml:space="preserve">
+    <value>The property '{0}' cannot be changed. The '{1}' class has been sealed.</value>
+  </data>
+  <data name="CombinationOfAccessibilitySwitchesNotSupported" xml:space="preserve">
+    <value>Desktop applications are required to opt in to all earlier accessibility improvements to get the later improvements. To do this, ensure that if the AppContext switch 'Switch.UseLegacyAccessibilityFeatures.N' is set to 'false', then 'Switch.UseLegacyAccessibilityFeatures' and all 'Switch.UseLegacyAccessibilityFeatures.M' switches, when M &lt; N, evaluate to false as well. Note that, if a switch for a particular set of accessibility improvements is not present, its value is determined by the target framework version. You can remedy this by adding these switches and setting their value to false.</value>
+  </data>
+  <data name="AccessibilitySwitchDependencyNotSatisfied" xml:space="preserve">
+    <value>Desktop applications setting AppContext switch '{0}' to false are required to opt in to all earlier accessibility improvements. To do this, ensure that the AppContext switch '{1}' is set to 'false', then 'Switch.UseLegacyAccessibilityFeatures' and all 'Switch.UseLegacyAccessibilityFeatures.M' switches, when M &lt; {2}, evaluate to false as well. Note that, if a switch for a particular set of accessibility improvements is not present, its value is determined by the target framework version. You can remedy this by adding these switches and setting their value to false.</value>
+  </data>
+  <data name="TokenizerHelperExtraDataEncountered" xml:space="preserve">
+    <value>Extra data encountered at position {0} while parsing '{1}'.</value>
+  </data>
+  <data name="TokenizerHelperPrematureStringTermination" xml:space="preserve">
+    <value>Premature string termination encountered while parsing '{0}'.</value>
+  </data>
+  <data name="TokenizerHelperMissingEndQuote" xml:space="preserve">
+    <value>Missing end quote encountered while parsing '{0}'.</value>
+  </data>
+  <data name="TokenizerHelperEmptyToken" xml:space="preserve">
+    <value>Empty token encountered at position {0} while parsing '{1}'.</value>
+  </data>
+  <data name="Enumerator_VerifyContext" xml:space="preserve">
+    <value>No current object to return.</value>
+  </data>
+  <data name="InvalidPermissionStateValue" xml:space="preserve">
+    <value>PermissionState value '{0}' is not valid for this Permission.</value>
+  </data>
+  <data name="InvalidPermissionType" xml:space="preserve">
+    <value>Permission type is not valid. Expected '{0}'.</value>
+  </data>
+  <data name="StringEmpty" xml:space="preserve">
+    <value>Parameter cannot be a zero-length string.</value>
+  </data>
+  <data name="ParameterCannotBeNegative" xml:space="preserve">
+    <value>Parameter must be greater than or equal to zero.</value>
+  </data>
+  <data name="Freezable_CantBeFrozen" xml:space="preserve">
+    <value>Specified value of type '{0}' must have IsFrozen set to false to modify.</value>
+  </data>
+  <data name="TypeMetadataCannotChangeAfterUse" xml:space="preserve">
+    <value>Cannot change property metadata after it has been associated with a property.</value>
+  </data>
+  <data name="Enum_Invalid" xml:space="preserve">
+    <value>'{0}' enumeration value is not valid.</value>
+  </data>
+  <data name="CannotConvertStringToType" xml:space="preserve">
+    <value>Cannot convert string value '{0}' to type '{1}'.</value>
+  </data>
+  <data name="CannotModifyReadOnlyContainer" xml:space="preserve">
+    <value>Cannot modify a read-only container.</value>
+  </data>
+  <data name="CannotRetrievePartsOfWriteOnlyContainer" xml:space="preserve">
+    <value>Cannot get part or part information from a write-only container.</value>
+  </data>
+  <data name="FileFormatExceptionWithFileName" xml:space="preserve">
+    <value>'{0}' file does not conform to the expected file format specification.</value>
+  </data>
+  <data name="FileFormatException" xml:space="preserve">
+    <value>Input file or data stream does not conform to the expected file format specification.</value>
+  </data>
+  <data name="Cryptography_InvalidHandle" xml:space="preserve">
+    <value>{0} is an invalid handle.</value>
+  </data>
+  <data name="WpfDllConsistencyErrorData" xml:space="preserve">
+    <value>DLL Name: {0} DLL Location: {1}</value>
+  </data>
+  <data name="WpfDllConsistencyErrorHeader" xml:space="preserve">
+    <value>Failed WPF DLL consistency checks. Expected location: {0}.</value>
+  </data>
+</root>

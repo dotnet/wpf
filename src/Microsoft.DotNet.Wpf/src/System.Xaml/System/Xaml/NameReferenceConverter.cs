@@ -2,12 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Xaml;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
 using System.Globalization;
+using System.Xaml;
 
 namespace System.Windows.Markup
 {
@@ -27,7 +24,7 @@ namespace System.Windows.Markup
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
             
             var nameResolver = (IXamlNameResolver)context.GetService(typeof(IXamlNameResolver));
@@ -70,7 +67,7 @@ namespace System.Windows.Markup
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             var nameProvider = (IXamlNameProvider)context.GetService(typeof(IXamlNameProvider));

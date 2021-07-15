@@ -2,21 +2,18 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Xaml.MS.Impl;
-using System.Xaml.Schema;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Reflection;
+using System.Xaml.Schema;
 
 namespace System.Xaml
 {
     public class XamlDirective : XamlMember
     {
         private AllowedMemberLocations _allowedLocation;
-        private IList<string> _xamlNamespaces;
+        private readonly IList<string> _xamlNamespaces;
 
         internal XamlDirective(IEnumerable<string> xamlNamespaces, string name, AllowedMemberLocations allowedLocation, MemberReflector reflector)
             : base(name, reflector) 
@@ -31,7 +28,7 @@ namespace System.Xaml
         {
             if (xamlType == null)
             {
-                throw new ArgumentNullException("xamlType");
+                throw new ArgumentNullException(nameof(xamlType));
             }
 
             _xamlNamespaces = GetReadOnly(xamlNamespaces);
@@ -188,7 +185,7 @@ namespace System.Xaml
         {
             if (xamlNamespace == null)
             {
-                throw new ArgumentNullException("xamlNamespace");
+                throw new ArgumentNullException(nameof(xamlNamespace));
             }
             return new ReadOnlyCollection<string>(new string[] { xamlNamespace });
         }
@@ -197,7 +194,7 @@ namespace System.Xaml
         {
             if (xamlNamespaces == null)
             {
-                throw new ArgumentNullException("xamlNamespaces");
+                throw new ArgumentNullException(nameof(xamlNamespaces));
             }
             List<string> nsList = new List<string>(xamlNamespaces);
             foreach (string ns in nsList)

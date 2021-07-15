@@ -2,15 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
+
 namespace System.Xaml
 {
-    using System.Collections.Generic;
-    using System.Reflection;
-    using System.Threading;
-    using System.Windows;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Runtime.CompilerServices;
-
     public static class AttachablePropertyServices
     {
         static DefaultAttachedPropertyStore attachedProperties = new DefaultAttachedPropertyStore();
@@ -74,7 +71,7 @@ namespace System.Xaml
 
             if (name == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
             }
 
             IAttachedPropertyStore ap = instance as IAttachedPropertyStore;

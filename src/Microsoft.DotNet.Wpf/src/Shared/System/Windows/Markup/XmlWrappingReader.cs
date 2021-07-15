@@ -7,7 +7,6 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Diagnostics;
 using System.Collections.Generic;
-using System.Security.Policy;
 
 #if PBTCOMPILER
 namespace MS.Internal.Markup
@@ -17,7 +16,6 @@ namespace System.Xaml
 namespace System.Windows.Markup 
 #endif
 {
-
     internal class XmlWrappingReader : XmlReader, IXmlLineInfo, IXmlNamespaceResolver {
 //
 // Fields

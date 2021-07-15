@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -1240,9 +1244,7 @@ Add(Test.Elements.DoubleCollection,23.666)";
         }
 
          [TestMethod]
-#if NETCOREAPP3_X
          [TestKnownFailure(Reason = ".NET Core does not support Assembly.ReflectionOnlyLoad. Contact wpfdev for additional details")]
-#endif
         public void ReflectionOnlyTypes()
         {
             XamlSchemaContext oldXsc = _schemaContext;

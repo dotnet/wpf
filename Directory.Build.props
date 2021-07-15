@@ -1,21 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Project>
   <PropertyGroup>
-    <ImportNetSdkFromRepoToolset>false</ImportNetSdkFromRepoToolset>
-    
-    <!-- This repo builds a transport package - we don't ship from here -->
-    <IsShipping Condition="'$(IsShipping)'==''">false</IsShipping>
-    
-    <!-- Disable localization - re-enable this later when localization is needed --> 
-    <EnableXlfLocalization>false</EnableXlfLocalization>
-    
-    <PublishWindowsPdb>true</PublishWindowsPdb>
+    <RepositoryName>wpf</RepositoryName>
+    <WindowsDesktopARM64Support>true</WindowsDesktopARM64Support>
+  </PropertyGroup>
+  <!-- Normalize $(TestWpfArcadeSdkPath) by appending a '\' to it if one is missing -->
+  <PropertyGroup Condition="'$(TestWpfArcadeSdkPath)'!=''">
+    <WpfArcadeSdkPath>$(TestWpfArcadeSdkPath)</WpfArcadeSdkPath>
+    <WpfArcadeSdkPath Condition="!$(WpfArcadeSdkPath.EndsWith('\'))">$(TestWpfArcadeSdkPath)\</WpfArcadeSdkPath>
   </PropertyGroup>
 
-  <Import Project="$(MsBuildThisFileDirectory)SystemResources.props"/>
-  <Import Project="Sdk.props" Sdk="Microsoft.DotNet.Arcade.Sdk" />
-  
-  <PropertyGroup>
-    <DebugType>full</DebugType>
+  <PropertyGroup Condition="'$(TestWpfArcadeSdkPath)'=='' And Exists('$(MSBuildThisFileDirectory)eng\WpfArcadeSdk\')">
+    <WpfArcadeSdkPath>$(MSBuildThisFileDirectory)eng\WpfArcadeSdk\</WpfArcadeSdkPath>
   </PropertyGroup>
+  <!-- Select Sdk.props from test location or eng\WpfArcadeSdk\. If neither exists, then fall back to the use of one 
+      obtained using MSBuild's Sdk resolver -->
+  <PropertyGroup Condition="Exists('$(WpfArcadeSdkPath)')">
+    <WpfArcadeSdkProps>$(WpfArcadeSdkPath)Sdk\Sdk.props</WpfArcadeSdkProps>
+    <WpfArcadeSdkTargets>$(WpfArcadeSdkPath)Sdk\Sdk.targets</WpfArcadeSdkTargets>
+  </PropertyGroup>
+  
+  
+  <Import Project="$(WpfArcadeSdkProps)"
+          Condition="Exists('$(WpfArcadeSdkProps)') And Exists('$(WpfArcadeSdkTargets)')"/>
+
+  <Import Sdk="Microsoft.DotNet.Arcade.Wpf.Sdk"
+          Project="Sdk.props"
+          Condition="!Exists('$(WpfArcadeSdkProps)') Or !Exists('$(WpfArcadeSdkTargets)')"/>
 </Project>

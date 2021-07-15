@@ -17,40 +17,49 @@ namespace MS.Internal.PresentationFramework
 namespace MS.Internal.ReachFramework
 #elif UIAUTOMATIONTYPES
 namespace MS.Internal.UIAutomationTypes
+#elif DIRECTWRITE_FORWARDER
+namespace MS.Internal.DirectWriteForwarder
 #else
 namespace Microsoft.Internal
 #endif
 {
     internal static class BuildInfo
     {
-        internal const string WCP_PUBLIC_KEY_TOKEN = "31bf3856ad364e35";
         internal const string WCP_VERSION = "4.0.0.0";
-        internal const string WCP_PUBLIC_KEY_STRING = "0024000004800000940000000602000000240000525341310004000001000100b5fc90e7027f67871e773a8fde8938c81dd402ba65b9201d60593e96c492651e889cc13f1415ebb53fac1131ae0bd333c5ee6021672d9718ea31a8aebd0da0072f25d87dba6fc90ffd598ed4da35e44c398c454307e8e33b8426143daec9f596836f97c8f74750e5975c64e2189f45def46b2a2b1247adc3652bf5c308055da9";
         internal const string WCP_VERSION_SUFFIX = "_cor3";
         internal const string MIL_VERSION_SUFFIX = "";
+
+        // MicrosoftShared PublicKeyToken
+        internal const string WCP_PUBLIC_KEY_TOKEN = "31bf3856ad364e35";
+        // MicrosoftSharedPublicKey
+        internal const string WCP_PUBLIC_KEY_STRING = "0024000004800000940000000602000000240000525341310004000001000100b5fc90e7027f67871e773a8fde8938c81dd402ba65b9201d60593e96c492651e889cc13f1415ebb53fac1131ae0bd333c5ee6021672d9718ea31a8aebd0da0072f25d87dba6fc90ffd598ed4da35e44c398c454307e8e33b8426143daec9f596836f97c8f74750e5975c64e2189f45def46b2a2b1247adc3652bf5c308055da9";
+
+        // ECMAPublicKey
         internal const string DEVDIV_PUBLIC_KEY_STRING = "00000000000000000400000000000000";
+        // ECMA PublicKeyToken
         internal const string DEVDIV_PUBLIC_KEY_TOKEN = "b77a5c561934e089";
 
         // Constants to prevent hardcoding in InternalsVisibleTo attribute
-        internal const string PresentationCore = "PresentationCore, PublicKey="+ WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationCFFRasterizer = "PresentationCFFRasterizer, PublicKey="+ WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationFramework = "PresentationFramework, PublicKey="+ WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationUI = "PresentationUI, PublicKey="+ WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkLuna = "PresentationFramework.Luna, PublicKey="+ WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkRoyale = "PresentationFramework.Royale, PublicKey="+ WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkAero = "PresentationFramework.Aero, PublicKey="+ WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkAero2 = "PresentationFramework.Aero2, PublicKey="+ WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkAeroLite = "PresentationFramework.AeroLite, PublicKey="+ WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkClassic = "PresentationFramework.Classic, PublicKey="+ WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkSystemCore = "PresentationFramework-SystemCore, PublicKey="+ DEVDIV_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkSystemData = "PresentationFramework-SystemData, PublicKey="+ DEVDIV_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkSystemDrawing = "PresentationFramework-SystemDrawing, PublicKey="+ DEVDIV_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkSystemXml = "PresentationFramework-SystemXml, PublicKey="+ DEVDIV_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkSystemXmlLinq = "PresentationFramework-SystemXmlLinq, PublicKey="+ DEVDIV_PUBLIC_KEY_STRING;
-        internal const string ReachFramework = "ReachFramework, PublicKey="+ WCP_PUBLIC_KEY_STRING;
-        internal const string SystemPrinting = "System.Printing, PublicKey="+ WCP_PUBLIC_KEY_STRING;
+        internal const string DirectWriteForwarder = "DirectWriteForwarder, PublicKey=" + WCP_PUBLIC_KEY_STRING;
+        internal const string PresentationCore = "PresentationCore, PublicKey=" + WCP_PUBLIC_KEY_STRING;
+        internal const string PresentationCFFRasterizer = "PresentationCFFRasterizer, PublicKey=" + WCP_PUBLIC_KEY_STRING;
+        internal const string PresentationFramework = "PresentationFramework, PublicKey=" + WCP_PUBLIC_KEY_STRING;
+        internal const string PresentationUI = "PresentationUI, PublicKey=" + WCP_PUBLIC_KEY_STRING;
+        internal const string PresentationFrameworkLuna = "PresentationFramework.Luna, PublicKey=" + WCP_PUBLIC_KEY_STRING;
+        internal const string PresentationFrameworkRoyale = "PresentationFramework.Royale, PublicKey=" + WCP_PUBLIC_KEY_STRING;
+        internal const string PresentationFrameworkAero = "PresentationFramework.Aero, PublicKey=" + WCP_PUBLIC_KEY_STRING;
+        internal const string PresentationFrameworkAero2 = "PresentationFramework.Aero2, PublicKey=" + WCP_PUBLIC_KEY_STRING;
+        internal const string PresentationFrameworkAeroLite = "PresentationFramework.AeroLite, PublicKey=" + WCP_PUBLIC_KEY_STRING;
+        internal const string PresentationFrameworkClassic = "PresentationFramework.Classic, PublicKey=" + WCP_PUBLIC_KEY_STRING;
+        internal const string PresentationFrameworkSystemCore = "PresentationFramework-SystemCore, PublicKey=" + DEVDIV_PUBLIC_KEY_STRING;
+        internal const string PresentationFrameworkSystemData = "PresentationFramework-SystemData, PublicKey=" + DEVDIV_PUBLIC_KEY_STRING;
+        internal const string PresentationFrameworkSystemDrawing = "PresentationFramework-SystemDrawing, PublicKey=" + DEVDIV_PUBLIC_KEY_STRING;
+        internal const string PresentationFrameworkSystemXml = "PresentationFramework-SystemXml, PublicKey=" + DEVDIV_PUBLIC_KEY_STRING;
+        internal const string PresentationFrameworkSystemXmlLinq = "PresentationFramework-SystemXmlLinq, PublicKey=" + DEVDIV_PUBLIC_KEY_STRING;
+        internal const string ReachFramework = "ReachFramework, PublicKey=" + WCP_PUBLIC_KEY_STRING;
+        internal const string SystemPrinting = "System.Printing, PublicKey=" + WCP_PUBLIC_KEY_STRING;
         internal const string SystemXaml = "System.Xaml, PublicKey=" + DEVDIV_PUBLIC_KEY_STRING;
-        internal const string WindowsFormsIntegration = "WindowsFormsIntegration, PublicKey="+ WCP_PUBLIC_KEY_STRING;
+        internal const string WindowsFormsIntegration = "WindowsFormsIntegration, PublicKey=" + WCP_PUBLIC_KEY_STRING;
 
         // Make internal visible to the 3.5 dll, System.Windows.Presentation.dll.
         // we hard code the key here because the 3.5 dll is built in the devdiv depot using the CLR key.
@@ -74,6 +83,8 @@ namespace Microsoft.Internal
         internal const string Ole32 = "ole32.dll";
         internal const string User32 = "user32.dll";
         internal const string NInput = "ninput.dll";
+        internal const string ApiSetWinRT = "api-ms-win-core-winrt-l1-1-0.dll";
+        internal const string ApiSetWinRTString = "api-ms-win-core-winrt-string-l1-1-0.dll";
     }
 }
 

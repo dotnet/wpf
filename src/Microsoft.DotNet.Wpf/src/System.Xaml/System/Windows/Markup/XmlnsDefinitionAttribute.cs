@@ -9,8 +9,6 @@
 //  Contents: Attribute that keep mapping between Xml namespace and  
 //            the known types in assembly.   
 
-using System;
-using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup
@@ -57,22 +55,9 @@ namespace System.Windows.Markup
         /// </param>
         public XmlnsDefinitionAttribute(string xmlNamespace, string clrNamespace)
         {
-            // Validate Input Arguments
-            if (xmlNamespace == null)
-            {
-                throw new ArgumentNullException("xmlNamespace");
-            }
-
-            if (clrNamespace == null)
-            {
-                throw new ArgumentNullException("clrNamespace");
-            }
-
-            _xmlNamespace = xmlNamespace;
-            _clrNamespace = clrNamespace;
+            XmlNamespace = xmlNamespace ?? throw new ArgumentNullException(nameof(xmlNamespace));
+            ClrNamespace = clrNamespace ?? throw new ArgumentNullException(nameof(clrNamespace));
         }
-
-        #region public properties
 
         /// <summary>
         /// XmlNamespace which can be used in Markup file.
@@ -83,43 +68,21 @@ namespace System.Windows.Markup
         /// xmlns:myns="http://schemas.fabrikam.com/mynamespace" 
         /// 
         /// </summary>
-        public string XmlNamespace 
-        {
-            get { return _xmlNamespace; }
-        }
+        public string XmlNamespace { get; }
 
         /// <summary>
         /// ClrNamespace which map to XmlNamespace.
         /// This ClrNamespace should contain some types which are used 
         /// by Xaml markup file.
         /// </summary>
-        public string ClrNamespace 
-        {
-            get { return _clrNamespace; }
-        }
+        public string ClrNamespace { get; }
 
         /// <summary>
         /// The name of Assembly that contains some types inside CLRNamespace.
         /// If the assemblyName is not set, the code should take the assembly 
         /// for which the instance of this attribute is created. 
         /// </summary>
-        public string AssemblyName
-        {
-            get {  return _assemblyName; }
-            set { _assemblyName = value; }
-        }
-
-        #endregion public properties
-
-  
-        #region Private Fields
-
-        private string _xmlNamespace;
-        private string _clrNamespace;
-        private string _assemblyName;
-
-        #endregion Private Fields
-
+        public string AssemblyName { get; set; }
    }
 }
 

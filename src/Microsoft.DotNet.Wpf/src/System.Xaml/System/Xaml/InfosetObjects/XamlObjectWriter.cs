@@ -2,22 +2,18 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
-using XAML3 = System.Windows.Markup;
 using System.ComponentModel;
-using System.IO;
-using System.Security;
+using System.Diagnostics;
 using System.Text;
-using MS.Internal.Xaml.Context;
-using MS.Internal.Xaml.Runtime;
-using System.Xaml.Schema;
 using System.Xaml.MS.Impl;
+using System.Xaml.Schema;
+using MS.Internal.Xaml.Context;
 using MS.Internal.Xaml.Parser;
-using System.Windows.Markup;
-using System.Globalization;
+using MS.Internal.Xaml.Runtime;
+using XAML3 = System.Windows.Markup;
 
 
 namespace System.Xaml
@@ -39,7 +35,7 @@ namespace System.Xaml
         private bool _skipDuplicatePropertyCheck;
         NameFixupGraph _nameFixupGraph;
         private Dictionary<object, List<PendingCollectionAdd>> _pendingCollectionAdds;
-        INameScope _rootNamescope;
+        XAML3.INameScope _rootNamescope;
         bool _skipProvideValueOnRoot;
         bool _nextNodeMustBeEndMember;
         bool _preferUnconvertedDictionaryKeys;
@@ -53,7 +49,7 @@ namespace System.Xaml
         {
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             Initialize(schemaContext, (XamlSavedContext)null, (XamlObjectWriterSettings)null);
         }
@@ -62,7 +58,7 @@ namespace System.Xaml
         {
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             Initialize(schemaContext, (XamlSavedContext)null, settings);
         }
@@ -71,11 +67,11 @@ namespace System.Xaml
         {
             if (savedContext == null)
             {
-                throw new ArgumentNullException("savedContext");
+                throw new ArgumentNullException(nameof(savedContext));
             }
             if (savedContext.SchemaContext == null)
             {
-                throw new ArgumentException(SR.Get(SRID.SavedContextSchemaContextNull), "savedContext");
+                throw new ArgumentException(SR.Get(SRID.SavedContextSchemaContextNull), nameof(savedContext));
             }
             Initialize(savedContext.SchemaContext, savedContext, settings);
         }
@@ -87,11 +83,11 @@ namespace System.Xaml
             //will create one if a null SchemaContext was passed in.
             if (schemaContext == null)
             {
-                throw new ArgumentNullException("schemaContext");
+                throw new ArgumentNullException(nameof(schemaContext));
             }
             if (savedContext != null && schemaContext != savedContext.SchemaContext)
             {
-                throw new ArgumentException(SR.Get(SRID.SavedContextSchemaContextMismatch), "schemaContext");
+                throw new ArgumentException(SR.Get(SRID.SavedContextSchemaContextMismatch), nameof(schemaContext));
             }
 
             if (settings != null)
@@ -109,7 +105,7 @@ namespace System.Xaml
                 _preferUnconvertedDictionaryKeys = settings.PreferUnconvertedDictionaryKeys;
             }
 
-            INameScope rootNameScope = (settings != null) ? settings.ExternalNameScope : null;
+            XAML3.INameScope rootNameScope = (settings != null) ? settings.ExternalNameScope : null;
 
             XamlRuntime runtime = CreateRuntime(settings, schemaContext);
 
@@ -154,7 +150,7 @@ namespace System.Xaml
             return result;
         }
 
-        protected virtual void OnAfterBeginInit(Object value)
+        protected virtual void OnAfterBeginInit(object value)
         {
             if (_afterBeginInitHandler != null)
             {
@@ -168,7 +164,7 @@ namespace System.Xaml
             }
         }
 
-        protected virtual void OnBeforeProperties(Object value)
+        protected virtual void OnBeforeProperties(object value)
         {
             if (_beforePropertiesHandler != null)
             {
@@ -176,7 +172,7 @@ namespace System.Xaml
             }
         }
 
-        protected virtual void OnAfterProperties(Object value)
+        protected virtual void OnAfterProperties(object value)
         {
             if (_afterPropertiesHandler != null)
             {
@@ -184,7 +180,7 @@ namespace System.Xaml
             }
         }
 
-        protected virtual void OnAfterEndInit(Object value)
+        protected virtual void OnAfterEndInit(object value)
         {
             if (_afterEndInitHandler != null)
             {
@@ -197,7 +193,7 @@ namespace System.Xaml
         {
             if (_xamlSetValueHandler != null)
             {
-                var e = new XamlSetValueEventArgs(member, value);
+                var e = new XAML3.XamlSetValueEventArgs(member, value);
                 _xamlSetValueHandler(eventSender, e);
                 return e.Handled;
             }
@@ -316,11 +312,7 @@ namespace System.Xaml
             _context.CurrentType = parentProperty.Type;
 
             object inst = Runtime.GetValue(parentInstance, parentProperty);
-            if (inst == null)
-            {
-                throw _context.WithLineInfo(new XamlObjectWriterException(SR.Get(SRID.GetObjectNull, parentInstance.GetType(), parentProperty.Name)));
-            }
-            _context.CurrentInstance = inst;
+            _context.CurrentInstance = inst ?? throw _context.WithLineInfo(new XamlObjectWriterException(SR.Get(SRID.GetObjectNull, parentInstance.GetType(), parentProperty.Name)));
             if (parentProperty.Type.IsCollection || parentProperty.Type.IsDictionary)
             {
                 _context.CurrentCollection = inst;
@@ -332,7 +324,7 @@ namespace System.Xaml
             ThrowIfDisposed();
             if (xamlType == null)
             {
-                throw new ArgumentNullException("xamlType");
+                throw new ArgumentNullException(nameof(xamlType));
             }
 
             // Deferring Checking
@@ -586,7 +578,7 @@ namespace System.Xaml
             ThrowIfDisposed();
             if (property == null)
             {
-                throw new ArgumentNullException("property");
+                throw new ArgumentNullException(nameof(property));
             }
 
             // Deferring Checking
@@ -783,7 +775,7 @@ namespace System.Xaml
                 bool shouldSetValue = true;
                 if (value != null)
                 {
-                    MarkupExtension me = value as MarkupExtension;
+                    XAML3.MarkupExtension me = value as XAML3.MarkupExtension;
                     if (me != null)
                     {
                         _context.CurrentInstance = me;
@@ -904,7 +896,7 @@ namespace System.Xaml
             ThrowIfDisposed();
             if (namespaceDeclaration == null)
             {
-                throw new ArgumentNullException("namespaceDeclaration");
+                throw new ArgumentNullException(nameof(namespaceDeclaration));
             }
             if(namespaceDeclaration.Prefix == null)
             {
@@ -1006,7 +998,7 @@ namespace System.Xaml
             }
         }
 
-        public INameScope RootNameScope
+        public XAML3.INameScope RootNameScope
         {
             get
             {
@@ -1160,7 +1152,7 @@ namespace System.Xaml
                 object[] args = ctx.CurrentCtorArgs;
                 for (int i = 0; i < args.Length; i++)
                 {
-                    MarkupExtension me = args[i] as MarkupExtension;
+                    XAML3.MarkupExtension me = args[i] as XAML3.MarkupExtension;
                     if (me != null)
                     {
                         args[i] = Logic_PushAndPopAProvideValueStackFrame(ctx, XamlLanguage.PositionalParameters, me, false);
@@ -1220,7 +1212,7 @@ namespace System.Xaml
             // If UsableDuringInit, Assign to parent
             // We don't want to assign MEs to the parent since we need to call ProvideValue on them
             //   which is handled in WriteEndObject
-            if (ctx.LiveDepth > 1 && !(inst is MarkupExtension))
+            if (ctx.LiveDepth > 1 && !(inst is XAML3.MarkupExtension))
             {
                 if (ctx.LiveDepth > 1)
                 {
@@ -1390,14 +1382,14 @@ namespace System.Xaml
                     {
                         if (declaringType.SetTypeConverterHandler != null)
                         {
-                            var eventArgs = new XamlSetTypeConverterEventArgs(property, typeConverter, value, ctx.ServiceProviderContext,
+                            var eventArgs = new XAML3.XamlSetTypeConverterEventArgs(property, typeConverter, value, ctx.ServiceProviderContext,
                                     TypeConverterHelper.InvariantEnglishUS,
                                     ctx.ParentInstance);
 
                             eventArgs.CurrentType = declaringType;
 
                             declaringType.SetTypeConverterHandler(ctx.ParentInstance, eventArgs);
-                            if (eventArgs.Handled == true)
+                            if (eventArgs.Handled)
                             {
                                 return false;
                             }
@@ -1447,7 +1439,7 @@ namespace System.Xaml
             }
             XamlType dictionaryType = ctx.GrandParentType;
             if (dictionaryType != null && dictionaryType.IsDictionary &&
-                typeof(System.Collections.IDictionary).IsAssignableFrom(dictionaryType.UnderlyingType) &&
+                typeof(IDictionary).IsAssignableFrom(dictionaryType.UnderlyingType) &&
                 !IsBuiltInGenericDictionary(dictionaryType.UnderlyingType))
             {
                 return false;
@@ -1569,7 +1561,7 @@ namespace System.Xaml
                     // so don't call ProvideValue() now on directives here.
                     // (x:Key and x:Name need their own "saved spot" outside of PreconstructionPropertyValues)
 
-                    MarkupExtension me = value as MarkupExtension;
+                    XAML3.MarkupExtension me = value as XAML3.MarkupExtension;
                     if (me != null && !prop.IsDirective)
                     {
                         Logic_PushAndPopAProvideValueStackFrame(ctx, prop, me, true);
@@ -1582,7 +1574,7 @@ namespace System.Xaml
             }
         }
 
-        private object Logic_PushAndPopAProvideValueStackFrame(ObjectWriterContext ctx, XamlMember prop, MarkupExtension me, bool useIRME)
+        private object Logic_PushAndPopAProvideValueStackFrame(ObjectWriterContext ctx, XamlMember prop, XAML3.MarkupExtension me, bool useIRME)
         {
             XamlMember savedProp = ctx.CurrentProperty;
             ctx.CurrentProperty = prop;
@@ -1610,9 +1602,9 @@ namespace System.Xaml
                                                 object value, bool onParent)
         {
             object inst = onParent ? ctx.ParentInstance : ctx.CurrentInstance;
-            if (value is XData)
+            if (value is XAML3.XData)
             {
-                XData xData = value as XData;
+                XAML3.XData xData = value as XAML3.XData;
                 if (prop.Type.IsXData)
                 {
                     Runtime.SetXmlInstance(inst, prop, xData);
@@ -1693,7 +1685,7 @@ namespace System.Xaml
         private bool Logic_ProvideValue(ObjectWriterContext ctx)
         {
             object inst = ctx.CurrentInstance;
-            MarkupExtension me = (MarkupExtension)inst;
+            XAML3.MarkupExtension me = (XAML3.MarkupExtension)inst;
             object parentInstance = ctx.ParentInstance;
             XamlMember parentProperty = ctx.ParentProperty;
 
@@ -1715,10 +1707,10 @@ namespace System.Xaml
                 {
                     if (declaringType.SetMarkupExtensionHandler != null)
                     {
-                        var eventArgs = new XamlSetMarkupExtensionEventArgs(parentProperty, me, ctx.ServiceProviderContext, parentInstance);
+                        var eventArgs = new XAML3.XamlSetMarkupExtensionEventArgs(parentProperty, me, ctx.ServiceProviderContext, parentInstance);
                         eventArgs.CurrentType = declaringType;
                         declaringType.SetMarkupExtensionHandler(parentInstance, eventArgs);
-                        if (eventArgs.Handled == true)
+                        if (eventArgs.Handled)
                         {
                             return true;
                         }
@@ -1810,7 +1802,7 @@ namespace System.Xaml
                 {
                     // If Value is a Markup Extention then check the collection item type
                     // if it can hold the ME then don't call ProvideValue().
-                    MarkupExtension me = value as MarkupExtension;
+                    XAML3.MarkupExtension me = value as XAML3.MarkupExtension;
                     if(me != null && !Logic_WillParentCollectionAdd(ctx, value.GetType(), true))
                     {
                         // We don't need to call Logic_ProvideValue() with the extra handler
@@ -2004,7 +1996,7 @@ namespace System.Xaml
                 if (value is NameFixupToken && parentProperty != XamlLanguage.Items)
                 {
                     NameFixupToken token = value as NameFixupToken;
-                    string names = String.Join(",", token.NeededNames.ToArray());
+                    string names = String.Join(',', token.NeededNames.ToArray());
                     string msg = SR.Get(SRID.ForwardRefDirectives, names);
                     throw ctx.WithLineInfo(new XamlObjectWriterException(msg));
                 }
@@ -2041,7 +2033,7 @@ namespace System.Xaml
                             // Only the key directive may be assigned a reference.
                             if (parentProperty != XamlLanguage.Key)
                             {
-                                string names = String.Join(",", token.NeededNames.ToArray());
+                                string names = String.Join(',', token.NeededNames.ToArray());
                                 string msg = SR.Get(SRID.ForwardRefDirectives, names);
                                 throw ctx.WithLineInfo(new XamlObjectWriterException(msg));
                             }
@@ -2094,7 +2086,7 @@ namespace System.Xaml
                                 if (parentProperty != XamlLanguage.Key)
                                 {
                                     NameFixupToken token = (NameFixupToken)value;
-                                    string names = String.Join(",", token.NeededNames.ToArray());
+                                    string names = String.Join(',', token.NeededNames.ToArray());
                                     string msg = SR.Get(SRID.ForwardRefDirectives, names);
                                     throw ctx.WithLineInfo(new XamlObjectWriterException(msg));
                                 }
@@ -2156,9 +2148,9 @@ namespace System.Xaml
 
         private void RegisterName(ObjectWriterContext ctx, string name,
                                 object inst, XamlType xamlType,
-                                INameScope nameScope, INameScope parentNameScope, bool isRoot)
+                                XAML3.INameScope nameScope, XAML3.INameScope parentNameScope, bool isRoot)
         {
-            INameScope underlyingNameScope = nameScope;
+            XAML3.INameScope underlyingNameScope = nameScope;
             NameScopeDictionary nameScopeDict = nameScope as NameScopeDictionary;
             if (nameScopeDict != null)
             {
@@ -2166,7 +2158,7 @@ namespace System.Xaml
             }
 
             // Don't register a named object on itself.  Unless this is the root.
-            if (Object.ReferenceEquals(underlyingNameScope, inst) && !isRoot)
+            if (ReferenceEquals(underlyingNameScope, inst) && !isRoot)
             {
                 // If nameScope was the instance AND it wasn't the root...
                 // Then use the parent name scope
@@ -2197,7 +2189,7 @@ namespace System.Xaml
             Runtime.SetConnectionId(rootInstance, connectionId, instance);
         }
 
-        private void SetValue(Object inst, XamlMember property, object value)
+        private void SetValue(object inst, XamlMember property, object value)
         {
 #if !TARGETTING35SP1
             if (!property.IsDirective)
@@ -2520,7 +2512,7 @@ namespace System.Xaml
                     break;
                 case FixupType.MarkupExtensionRerun:
                     // Logic_ProvideValue already ran the first time, no need to rerun it
-                    value = Runtime.CallProvideValue((MarkupExtension)owc.CurrentInstance, owc.ServiceProviderContext);
+                    value = Runtime.CallProvideValue((XAML3.MarkupExtension)owc.CurrentInstance, owc.ServiceProviderContext);
                     owc.CurrentInstance = value;
                     break;
                 case FixupType.PropertyValue:

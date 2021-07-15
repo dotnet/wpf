@@ -14,6 +14,7 @@ using SRCS = System.Runtime.CompilerServices;
 namespace MS.Internal.Markup
 #elif WINDOWS_BASE
 using MS.Internal.WindowsBase;     // FriendAccessAllowed
+
 namespace System.Windows.Markup
 #else
 namespace System.Windows.Markup

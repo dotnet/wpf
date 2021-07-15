@@ -11,13 +11,10 @@
 //  Created:   04/28/2005 Microsoft
 //
 
-using System;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
-using System.Collections.Generic;
-using System.Text;
+using System.Globalization;
 using System.Security;
-using System.Xaml;
 
 namespace System.Windows.Markup
 {
@@ -32,12 +29,7 @@ namespace System.Windows.Markup
             return base.CanConvertTo(context, destinationType);
         }
 
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     TreatAsSafe: can only make an InstanceDescriptor for StaticExtension, not an arbitrary class
-        ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
-        public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             if (destinationType == typeof(InstanceDescriptor))
             {

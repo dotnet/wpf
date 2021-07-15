@@ -1,0 +1,24 @@
+﻿<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor, Aero2.NormalColor, AeroLite.NormalColor, Classic, Luna.HomeStead, Luna.NormalColor, Luna.Metallic, Royale.NormalColor]] -->
+
+    <!--=================================================================
+        HeaderedContentControl
+    ==================================================================-->
+    <Style x:Key="{x:Type HeaderedContentControl}"
+           TargetType="{x:Type HeaderedContentControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type HeaderedContentControl}">
+                    <StackPanel>
+                        <ContentPresenter ContentSource="Header"/>
+                        <ContentPresenter/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>

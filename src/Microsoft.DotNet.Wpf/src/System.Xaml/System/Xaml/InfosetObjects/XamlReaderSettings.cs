@@ -1,23 +1,12 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
 using System.Reflection;
 
 namespace System.Xaml
 {
-    /// <SecurityNote>
-    /// The LocalAssembly and AllowProtectedMembersOnRoot properties are not SecurityCritical.
-    /// XamlXmlReader uses these properties to surface non-public members in the nodestream, but it
-    /// does not actually enable invocation of those members.
-    /// XamlObjectReader invokes the non-public members, but does so transparently.
-    /// Any component which allows invocation of non-public members in partial trust should demand
-    /// an appropriate permission (such as ReflectionPerission or XamlLoadPermisison).
-    /// </SecurityNote>
     public class XamlReaderSettings
     {
         public bool AllowProtectedMembersOnRoot { get; set; }

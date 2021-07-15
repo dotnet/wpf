@@ -1,0 +1,3622 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="ru" original="../Strings.resx">
+    <body>
+      <trans-unit id="AccessKeyManager_NotAUnicodeCharacter">
+        <source>'{0}' is not a single Unicode character.</source>
+        <target state="translated">"{0}" не является одним символом Юникода.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AcquireBreakRecordFailure">
+        <source>Text formatting engine cannot acquire break record due to error: '{0}'.</source>
+        <target state="translated">Процессор форматирования текста не может получить запись разбиения из-за ошибки: "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AcquirePenaltyModuleFailure">
+        <source>Text formatting engine cannot acquire text penalty module due to error: '{0}'.</source>
+        <target state="translated">Процессор форматирования текста не может получить модуль тестовых штрафов из-за ошибки "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AddText_Invalid">
+        <source>Cannot add text to '{0}'.</source>
+        <target state="translated">Не удается добавить текст в "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AllGesturesMustExistAlone">
+        <source>If AllGestures is specified, it must be the only ApplicationGesture in the ApplicationGesture array.</source>
+        <target state="translated">Если указано значение AllGestures, оно должно быть единственным ApplicationGesture в массиве ApplicationGesture.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AnimEffect_AlreadyAttached">
+        <source>This AnimationEffect is already attached to a UIElement.</source>
+        <target state="translated">Данный эффект AnimationEffect уже присоединен к элементу UIElement.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AnimEffect_CollectionInUse">
+        <source>This AnimationEffectCollection is already being used by another UIElement.</source>
+        <target state="translated">Данное семейство AnimationEffectCollection уже используется другим элементом UIElement.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AnimEffect_NoVisual">
+        <source>This AnimationEffect is not attached to a Visual.</source>
+        <target state="translated">Данный AnimationEffect не присоединен к Visual.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_AnimationTimelineTypeMismatch">
+        <source>AnimationTimeline of type '{0}' cannot be used to animate the '{1}' property of type '{2}'.</source>
+        <target state="translated">Параметр AnimationTimeline типа "{0}" невозможно использовать для анимации свойства "{1}" типа "{2}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_CalculatedValueIsInvalidForProperty">
+        <source>The animation(s) applied to the '{0}' property calculate a current value of '{1}', which is not a valid value for the property.</source>
+        <target state="translated">Значение "{1}", вычисленное при анимации свойства "{0}", не является допустимым.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_ChildMustBeKeyFrame">
+        <source>A child of KeyFrameAnimation in XAML must be a KeyFrame of a compatible type.</source>
+        <target state="translated">Дочерний объект KeyFrameAnimation в XAML должен иметь тип KeyFrame или совместимый.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_ChildTypeMismatch">
+        <source>One of the animations in the timeline is a '{0}' and cannot be used to animate a property of type '{1}'.</source>
+        <target state="translated">Анимацию "{0}" временной шкалы невозможно использовать для свойства типа "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_DependencyPropertyIsNotAnimatable">
+        <source>'{0}' property is not animatable on '{1}' class because the IsAnimationProhibited flag has been set on the UIPropertyMetadata used to associate the property with the class.</source>
+        <target state="translated">Свойство "{0}" не подлежит анимации в классе "{1}", так как установлен флаг IsAnimationProhibited в метаданных UIPropertyMetadata, связывающих свойство с классом.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_Exception">
+        <source>Cannot animate the '{0}' property on a '{1}' using a '{2}'. For details see the inner exception.</source>
+        <target state="translated">Не удается анимировать свойство "{0}" для "{1}" с помощью "{2}". Дополнительные сведения см. в описании внутреннего исключения.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidBaseValue">
+        <source>'{0}' is not a valid '{1}' value for class '{2}'. This value might have been supplied by the base value of the property being animated or the output value of another animation applied to the same property.</source>
+        <target state="translated">"{0}" не является допустимым значением "{1}" для класса "{2}". Это значение могло быть предоставлено как базовое значение анимируемого свойства или как выходное значение другой анимации, примененной к данному свойству.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_InvalidResolvedKeyTimes">
+        <source>Resolved KeyTime for key frame at index {1} cannot be greater than resolved KeyTime for key frame at index {4}. KeyFrames[{1}] has specified KeyTime '{2}', which resolves to time {3}Animation_InvalidAnimationUsingKeyFramesDuration</source>
+        <target state="translated">Разрешенное значение KeyTime для опорного кадра, соответствующего индексу {1}, не может быть больше разрешенного значения KeyTime для опорного кадра, соответствующего индексу {4}. KeyFrames [{1}] имеет указанное значение KeyTime "{2}", которое разрешается во время {3}Animation_InvalidAnimationUsingKeyFramesDuration</target>
+        <note>'{0}' must have either a TimeSpan for its Duration or a TimeSpan for the KeyTime of its last KeyFrame. This '{0}' has a Duration of '{1}' and a KeyTime of '{2}' for its last KeyFrame, so the KeyTimes cannot be resolved.</note>
+      </trans-unit>
+      <trans-unit id="Animation_InvalidTimeKeyTime">
+        <source>'{2}' KeyTime value is not valid for key frame at index {1} of this '{0}' because it is greater than animation's Duration value '{3}'.</source>
+        <target state="translated">Значение KeyTime "{2}" не является допустимым для опорного кадра, соответствующего индексу {1} для этого "{0}", так как оно больше, чем значение Duration "{3}" для анимации.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_Invalid_DefaultValue">
+        <source>'{0}' cannot use default {1} value of '{2}'.</source>
+        <target state="translated">"{0}" не может использовать значение по умолчанию {1} для "{2}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_KeySpline_InvalidValue">
+        <source>Cannot set '{0}' to '{1}'. KeySpline values must be between 0.0 and 1.0.</source>
+        <target state="translated">Невозможно присвоить "{0}" значение "{1}". KeySpline может принимать значения от 0,0 до 1.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_KeyTime_InvalidPercentValue">
+        <source>'{0}' is not a valid Percent value for a KeyTime. The Percent value must be a number from 0.0 to 1.0.</source>
+        <target state="translated">"{0}" не является допустимым значением Percent для KeyTime. Значение Percent должно быть числом от 0,0 до 1,0.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_KeyTime_LessThanZero">
+        <source>Cannot create a KeyTime with the value '{0}' because it is less than zero.</source>
+        <target state="translated">Не удается создать KeyTime со значением "{0}", поскольку оно меньше 0.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_NoAnimationsSpecified">
+        <source>'{0}' value is not valid because it contains no animations.</source>
+        <target state="translated">Значение "{0}" не является допустимым, поскольку не содержит анимации.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_NoTextChildren">
+        <source>KeyFrameAnimation objects cannot have text objects as children.</source>
+        <target state="translated">Дочерними объектами для объектов KeyFrameAnimation не могут быть текстовые объекты.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_ReturnedUnsetValueInstance">
+        <source>A '{0}' on the '{1}' property of a '{2}' returned a current value of UnsetValue.Instance, which is not valid.</source>
+        <target state="translated">"{0}" свойства "{1}" для "{2}" возвращает текущее значение UnsetValue.Instance, которое не является допустимым.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Animation_UnrecognizedHandoffBehavior">
+        <source>The HandoffBehavior value is not valid.</source>
+        <target state="translated">Значение HandoffBehavior не является допустимым.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ApplicationGestureArrayLengthIsZero">
+        <source>The ApplicationGesture array must contain at least one member.</source>
+        <target state="translated">Массив ApplicationGesture должен содержать как минимум один элемент.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ApplicationGestureIsInvalid">
+        <source>The specified ApplicationGesture is not valid.</source>
+        <target state="translated">Заданный ApplicationGesture не является допустимым.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AutomationDispatcherShutdown">
+        <source>Automation client cannot access UI because application is shutting down.</source>
+        <target state="translated">Клиент интерфейса Automation не может получить доступ к пользовательскому интерфейсу, так как приложение отключено.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="AutomationTimeout">
+        <source>Timeout occurred while attempting to access UI. The application might be busy or unresponsive.</source>
+        <target state="translated">Истекло время ожидания при попытке обратиться к интерфейсу пользователя. Возможно, приложение занято или не реагирует.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Automation_InvalidConnectedPeer">
+        <source>'{0}' is not a valid System.Windows.Automation.AutomationPeer. It is expected to be associated with a Window known to Automation.</source>
+        <target state="translated">"{0}" не является допустимым объектом System.Windows.Automation.AutomationPeer. Ожидается, что он должен быть связан с окном, которое известно Automation.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Automation_InvalidEventId">
+        <source>'{0}' is not a valid System.Windows.Automation.AutomationEvent.</source>
+        <target state="translated">"{0}" не является допустимым объектом System.Windows.Automation.AutomationEvent.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Automation_InvalidSynchronizedInputType">
+        <source>'{0}' is not a valid System.Windows.Automation.SynchronizedInputType.</source>
+        <target state="translated">"{0}" не является допустимым типом System.Windows.Automation.SynchronizedInputType.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Automation_RecursivePublicCall">
+        <source>Recursive call to Automation Peer API is not valid.</source>
+        <target state="translated">Недопустимый рекурсивный вызов API-интерфейса Automation Peer.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Automation_UnsupportedUIAutomationEventAssociation">
+        <source>Unsupported UI Automation event association.</source>
+        <target state="translated">Неподдерживаемая связь с событием UI Automation.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BitmapCacheBrush_OpacityChanged">
+        <source>BitmapCacheBrush does not support Opacity.</source>
+        <target state="translated">BitmapCacheBrush не поддерживает свойство Opacity.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BitmapCacheBrush_RelativeTransformChanged">
+        <source>BitmapCacheBrush does not support RelativeTransform.</source>
+        <target state="translated">BitmapCacheBrush не поддерживает свойство RelativeTransform.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BitmapCacheBrush_TransformChanged">
+        <source>BitmapCacheBrush does not support Transform.</source>
+        <target state="translated">BitmapCacheBrush не поддерживает свойство Transform.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BrowseBackKeyDisplayString">
+        <source>Alt+Left;Backspace</source>
+        <target state="translated">Alt+Left;Backspace</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BrowseBackText">
+        <source>Back</source>
+        <target state="translated">Назад</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BrowseForwardKeyDisplayString">
+        <source>Alt+Right;Shift+Backspace</source>
+        <target state="translated">Alt+Right;Shift+Backspace</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BrowseForwardText">
+        <source>Forward</source>
+        <target state="translated">Прямая</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BrowseHomeKeyDisplayString">
+        <source>Alt+Home;BrowserHome</source>
+        <target state="translated">Alt+Home;BrowserHome</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BrowseHomeText">
+        <source>Home</source>
+        <target state="translated">Главная</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BrowseStopKeyDisplayString">
+        <source>Alt+Esc;BrowserStop</source>
+        <target state="translated">Alt+Esc;BrowserStop</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BrowseStopText">
+        <source>Stop</source>
+        <target state="translated">Остановить</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="BrushUnknownBamlType">
+        <source>Unrecognized brush type in BAML file.</source>
+        <target state="translated">Неопознанный тип кисти в файле BAML.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ByteRangeDownloaderDisposed">
+        <source>Cannot access a disposed HTTP byte range downloader.</source>
+        <target state="translated">Невозможно обратиться к ликвидированному загрузчику диапазона байтов HTTP.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ByteRangeDownloaderErroredOut">
+        <source>Byte range request failed.</source>
+        <target state="translated">Не удалось выполнить запрос диапазона байтов.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ByteRangeRequestIsNotSupported">
+        <source>Server does not support byte range request.</source>
+        <target state="translated">Сервер не поддерживает запрос диапазона байтов.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CancelPrintText">
+        <source>Cancel Print</source>
+        <target state="translated">Отмена печати</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotAttachVisualTwice">
+        <source>Cannot attach a Visual that is already attached.</source>
+        <target state="translated">Невозможно присоединить уже присоединенный Visual.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotBothBeNull">
+        <source>'{0}' and '{1}' cannot both be null.</source>
+        <target state="translated">"{0}" и "{1}" не могут одновременно быть равны NULL.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotConvertStringToType">
+        <source>Cannot convert string value '{0}' to type '{1}'.</source>
+        <target state="translated">Не удается преобразовать строковое значение "{0}" к типу "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotConvertType">
+        <source>Cannot convert type '{0}' to '{1}'.</source>
+        <target state="translated">Не удается преобразовать тип "{0}" в "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotModifyReadOnlyContainer">
+        <source>Cannot modify a read-only container.</source>
+        <target state="translated">Невозможно изменить контейнер, доступный только для чтения.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotModifyVisualChildrenDuringTreeWalk">
+        <source>Cannot modify the Visual children for this node because a tree walk is in progress.</source>
+        <target state="translated">Невозможно изменить дочерние элементы Visual данного узла, поскольку выполняется обход дерева.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotNavigateToApplicationResourcesInWebBrowser">
+        <source>Cannot navigate to application resource '{0}' by using a WebBrowser control. For URI navigation, the resource must be at the application's site of origin. Use the pack://siteoforigin:,,,/ prefix to avoid hard-coding the URI.</source>
+        <target state="translated">Не удается перейти к ресурсу приложения "{0}" с помощью элемента управления WebBrowser. Для навигации с помощью URI ресурс должен быть размещен на исходном веб-сайте приложения. Чтобы избежать размещения URI в коде, используйте префикс pack://siteoforigin:,,,/</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CannotRetrievePartsOfWriteOnlyContainer">
+        <source>Cannot get part or part information from a write-only container.</source>
+        <target state="translated">Невозможно получить часть или сведения о части из контейнера, доступного только на запись.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Channel_InvalidCommandBufferPointer">
+        <source>Cannot read from the specified command buffer pointer.</source>
+        <target state="translated">Не удается прочитать данные из заданного указателя на буфер команд.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CharacterMetrics_MissingRequiredField">
+        <source>The Metrics property of CharacterMetrics is missing a required field.</source>
+        <target state="translated">В свойстве Metrics объекта CharacterMetrics отсутствует обязательное поле.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CharacterMetrics_NegativeHorizontalAdvance">
+        <source>CharacterMetrics is not valid. The horizontal advance (defined as the sum of BlackBoxWidth, LeftSideBearing, and RightSideBearing) cannot be negative.</source>
+        <target state="translated">Недопустимый объект CharacterMetrics. Продвижение по горизонтали (определяемое как сумма BlackBoxWidth, LeftSideBearing и RightSideBearing) не может быть отрицательным.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CharacterMetrics_NegativeVerticalAdvance">
+        <source>CharacterMetrics is not valid. The vertical advance (defined as the sum of BlackBoxHeight, TopSideBearing, and BottomSideBearing) cannot be negative.</source>
+        <target state="translated">Недопустимый объект CharacterMetrics. Продвижение по вертикали (определяемое как сумма BlackBoxHeight, TopSideBearing и BottomSideBearing) не может быть отрицательным.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CharacterMetrics_TooManyFields">
+        <source>The Metrics property of CharacterMetrics has too many fields.</source>
+        <target state="translated">Свойство Metrics объекта CharacterMetrics имеет слишком много полей.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ClassTypeIllegal">
+        <source>Class handlers can be registered only for UIElement or ContentElement and their subtypes.</source>
+        <target state="translated">Обработчики класса можно зарегистрировать только для UIElement, ContentElement и их подтипов.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CloneBreakRecordFailure">
+        <source>Text formatting engine cannot clone break record due to error: '{0}'.</source>
+        <target state="translated">Процессор форматирования текста не может клонировать запись разбиения из-за ошибки: "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CloseText">
+        <source>Close</source>
+        <target state="translated">Закрыть</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ClusterMapEntriesShouldNotDecrease">
+        <source>A cluster map entry must be greater than or equal to a previous entry.</source>
+        <target state="translated">Запись в таблице кластера должна быть больше или равна предыдущей записи.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ClusterMapEntryShouldPointWithinGlyphIndices">
+        <source>A cluster map entry must point to a valid glyph indices element.</source>
+        <target state="translated">Запись в таблице кластера должна указывать на допустимый элемент индексов глифа.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ClusterMapFirstEntryMustBeZero">
+        <source>The first element in the cluster map must equal zero.</source>
+        <target state="translated">Первый элемент в таблице кластера должен быть равен нулю.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CodePointOutOfRange">
+        <source>'{0}' character is outside the Unicode code point range.</source>
+        <target state="translated">Знак "{0}" не входит в диапазон точек кодов Юникода.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionDuplicateKey">
+        <source>'{0}' key already exists in the collection.</source>
+        <target state="translated">Семейство уже содержит ключ "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionEnumerationError">
+        <source>Collection was modified during enumeration.</source>
+        <target state="translated">Семейство изменилось во время перечисления.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionIsFixedSize">
+        <source>This collection is fixed size.</source>
+        <target state="translated">Данное семейство имеет фиксированный размер.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionNumberOfElementsMustBeGreaterThanZero">
+        <source>The number of elements in this collection must be greater than zero.</source>
+        <target state="translated">Число элементов данного семейства должно быть больше нуля.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionNumberOfElementsMustBeLessOrEqualTo">
+        <source>The number of elements in this collection must be less than or equal to '{0}'.</source>
+        <target state="translated">Число элементов в данной коллекции должно быть меньше или равно "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionNumberOfElementsShouldBeEqualTo">
+        <source>The number of elements in this collection should equal '{0}'.</source>
+        <target state="translated">Число элементов данного семейства должно равняться "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionOnlyAcceptsCommandBindings">
+        <source>Collection accepts only objects of type CommandBinding.</source>
+        <target state="translated">Семейство может содержать только объекты типа CommandBinding.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionOnlyAcceptsInputBindings">
+        <source>Collection accepts only objects of type InputBinding.</source>
+        <target state="translated">Семейство может содержать только объекты типа InputBinding.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CollectionOnlyAcceptsInputGestures">
+        <source>Collection accepts only objects of type InputGesture.</source>
+        <target state="translated">Семейство может содержать только объекты типа InputGesture.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_BadDestArray">
+        <source>Destination array is not compatible with objects within '{0}'.</source>
+        <target state="translated">Конечный массив несовместим с объектами в "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_BadRank">
+        <source>Input array is not a valid rank.</source>
+        <target state="translated">Недопустимая размерность входного массива.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_BadType">
+        <source>Cannot add instance of type '{1}' to a collection of type '{0}'. Only items of type '{2}' are allowed.</source>
+        <target state="translated">Не удается добавить экземпляр типа "{1}" в коллекцию типа "{0}". Это можно сделать только для элементов типа "{2}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_ArrayCannotBeMultidimensional">
+        <source>Cannot pass multidimensional array to the CopyTo method on a collection.</source>
+        <target state="translated">Передача многомерного массива методу CopyTo для семейства невозможна.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength">
+        <source>'{0}' parameter value is equal to or greater than the length of the '{1}' parameter value.</source>
+        <target state="translated">Значение параметра "{0}" больше или равно длине значения параметра "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_CopyTo_NumberOfElementsExceedsArrayLength">
+        <source>The number of elements in this collection is greater than the available space from '{0}' to the end of destination '{1}'.</source>
+        <target state="translated">Число элементов в этой коллекции больше, чем доступный размер от "{0}" до конца назначения "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Collection_NoNull">
+        <source>Cannot add null to the collection.</source>
+        <target state="translated">Невозможно добавить в семейство неопределенное значение.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ColorContext_FileTooLarge">
+        <source>File is too large to be a valid ColorContext.</source>
+        <target state="translated">Слишком большой файл для допустимого ColorContext.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Color_ColorContextNotsRGB_or_scRGB">
+        <source>Color context must be sRGB or scRGB for this operation.</source>
+        <target state="translated">Для этой операции подходят контексты цвета sRGB или scRGB.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Color_ColorContextTypeMismatch">
+        <source>Color context types mismatch.</source>
+        <target state="translated">Несоответствие типов контекста цвета.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Color_DimensionMismatch">
+        <source>Color context dimensions mismatch.</source>
+        <target state="translated">Несоответствие размеров контекста цвета.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Color_NullColorContext">
+        <source>Color context is null.</source>
+        <target state="translated">Контекст цвета имеет неопределенное значение.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompatibilityPreferencesSealed">
+        <source>The property '{0}' cannot be changed. The '{1}' class has been sealed.</source>
+        <target state="translated">Невозможно изменить свойство "{0}". Класс "{1}" запечатан.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompileFeatureSet_InvalidTypographyProperties">
+        <source>Typography properties are not valid.</source>
+        <target state="translated">Недопустимые типографские свойства.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFontAttributeValue1">
+        <source>Invalid value for {0} attribute.</source>
+        <target state="translated">Недопустимое значение атрибута {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFontAttributeValue2">
+        <source>Invalid value for {0} attribute: {1}</source>
+        <target state="translated">Недопустимое значение атрибута {0}: {1}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFontInvalidUnicodeRange">
+        <source>Unicode range is not valid.</source>
+        <target state="translated">Недопустимый диапазон Юникода.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFontMissingAttribute">
+        <source>Missing required attribute '{0}'.</source>
+        <target state="translated">Отсутствует обязательный атрибут "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFontMissingElement">
+        <source>Missing required element '{0}'.</source>
+        <target state="translated">Отсутствует обязательный элемент "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFontSignificantWhitespace">
+        <source>The composite font contains significant whitespace where none is expected.</source>
+        <target state="translated">Составной шрифт содержит значительные пробелы там, где их не должно быть.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFontUnknownAttribute">
+        <source>'{0}' attribute in XML namespace '{1}' not recognized. Note that attribute names are case sensitive.</source>
+        <target state="translated">Атрибут "{0}" в пространстве имен XML "{1}" не распознан. Имена атрибутов вводятся с учетом регистра.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFontUnknownElement">
+        <source>'{0}' element in XML namespace '{1}' not recognized. Note that element names are case sensitive.</source>
+        <target state="translated">Элемент "{0}" в пространстве имен XML "{1}" не распознан. Имена элементов вводятся с учетом регистра.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFont_DuplicateTypeface">
+        <source>A FontFamily cannot have more than one FamilyTypeface with the same Style, Weight, and Stretch.</source>
+        <target state="translated">Семейство FontFamily не может содержать более одного FamilyTypeface с одинаковыми Style, Weight и Stretch.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositeFont_TooManyFamilyMaps">
+        <source>The FontFamily cannot hold any more FamilyMaps.</source>
+        <target state="translated">Семейство FontFamily не может содержать другие FamilyMaps.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CompositionTarget_RootVisual_HasParent">
+        <source>The root Visual of a VisualTarget cannot have a parent.</source>
+        <target state="translated">Корневой элемент Visual для VisualTarget не может иметь родительский элемент.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ConstructorRecursion">
+        <source>Possible constructor recursion detected.</source>
+        <target state="translated">Обнаружена возможная рекурсия конструктора.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuKeyDisplayString">
+        <source>Shift+F10;Apps</source>
+        <target state="translated">Shift+F10;Apps</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuText">
+        <source>Context Menu</source>
+        <target state="translated">Контекстное меню</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Converter_ConvertFromNotSupported">
+        <source>Cannot convert from type.</source>
+        <target state="translated">Не удается выполнить преобразование из данного типа.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Converter_ConvertToNotSupported">
+        <source>Cannot convert to type.</source>
+        <target state="translated">Не удается выполнить преобразование к данному типу.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CopyKeyDisplayString">
+        <source>Ctrl+C;Ctrl+Insert</source>
+        <target state="translated">Ctrl+C;Ctrl+Insert</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CopyText">
+        <source>Copy</source>
+        <target state="translated">Копировать</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CorrectionListText">
+        <source>Correction List</source>
+        <target state="translated">Список исправлений</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CountOfBitsGreatThanRemainingBits">
+        <source>Count must be less than or equal to remaining number of bits in stream.</source>
+        <target state="translated">Количество должно быть меньше или равно оставшемуся числу битов потока.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CountOfBitsOutOfRange">
+        <source>Count must be less than or equal to bits per byte and greater than zero.</source>
+        <target state="translated">Количество должно быть меньше или равно числу битов в байте и больше нуля.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CreateBreaksFailure">
+        <source>Text formatting engine cannot format breakpoints due to error: '{0}'.</source>
+        <target state="translated">Процессор форматирования текста не может отформатировать точки прерывания из-за ошибки: "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CreateContextFailure">
+        <source>Text formatting engine cannot create text formatting context due to error: '{0}'.</source>
+        <target state="translated">Процессор форматирования текста не может создать контекст форматирования текста из-за ошибки: "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CreateLineFailure">
+        <source>Text formatting engine cannot format a line of text due to error: '{0}'.</source>
+        <target state="translated">Процессор форматирования текста не может отформатировать строку текста из-за ошибки: "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CreateParaBreakingSessionFailure">
+        <source>Text formatting engine cannot format a paragraph cache due to error: '{0}'.</source>
+        <target state="translated">Процессор форматирования текста не может отформатировать кэш абзаца из-за ошибки: "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CurrentDispatcherNotFound">
+        <source>Current dispatcher cannot be found.</source>
+        <target state="translated">Не удается обнаружить текущий диспетчер.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Cursor_InvalidStream">
+        <source>Failed to load cursor from the stream.</source>
+        <target state="translated">Не удалось загрузить курсор из потока.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Cursor_LoadImageFailure">
+        <source>Failed to load cursor file '{0}'.</source>
+        <target state="translated">Не удалось загрузить файл курсора "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Cursor_UnsupportedFormat">
+        <source>'{0}' has unsupported extension for cursor.</source>
+        <target state="translated">"{0}" имеет неподдерживаемое расширение для курсора.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CutKeyDisplayString">
+        <source>Ctrl+X;Shift+Delete</source>
+        <target state="translated">Ctrl+X;Shift+Delete</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CutText">
+        <source>Cut</source>
+        <target state="translated">Вырезать</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="D3DImage_AARequires9Ex">
+        <source>An antialiased back buffer requires a IDirect3DDevice9Ex device.</source>
+        <target state="translated">Заднему буферу сглаживания необходимо устройство IDirect3DDevice9Ex.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="D3DImage_InvalidDevice">
+        <source>Back buffer's device is not valid.</source>
+        <target state="translated">Недопустимое устройство заднего буфера.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="D3DImage_InvalidPool">
+        <source>Back buffer's pool does not meet the requirements for the resource type.</source>
+        <target state="translated">Пул заднего буфера не соответствует требованиям к типу ресурса.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="D3DImage_InvalidUsage">
+        <source>Back buffer's usage does not meet the requirements for the resource type.</source>
+        <target state="translated">Использование заднего буфера не соответствует требованиям к типу ресурса.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="D3DImage_MustHaveBackBuffer">
+        <source>Cannot call this method without a back buffer.</source>
+        <target state="translated">Невозможно вызвать этот метод без заднего буфера.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="D3DImage_SurfaceTooBig">
+        <source>Back buffer's size is too large.</source>
+        <target state="translated">Слишком большой размер заднего буфера.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataObject_CannotSetDataOnAFozenOLEDataDbject">
+        <source>Cannot SetData on a frozen OLE data object.</source>
+        <target state="translated">Не удается выполнить операцию SetData для зафиксированного объекта данных OLE.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataObject_DataFormatNotPresentOnDataObject">
+        <source>'{0}' data format is not present on DataObject.</source>
+        <target state="translated">Формат данных "{0}" отсутствует в DataObject.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataObject_DataObjectMustHaveAtLeastOneFormat">
+        <source>Data object must have at least one format.</source>
+        <target state="translated">Объект данных должен иметь не менее одного формата.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataObject_EmptyFormatNotAllowed">
+        <source>Empty string is not a valid value for parameter 'format'.</source>
+        <target state="translated">Пустая строка не является допустимым значением параметра "format".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataObject_FileDropListHasInvalidFileDropPath">
+        <source>'{0}' file drop path is not valid.</source>
+        <target state="translated">Путь размещения файла "{0}" задан неправильно.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataObject_FileDropListIsEmpty">
+        <source>'{0}' must contain at least one file drop path.</source>
+        <target state="translated">"{0}" должен содержать не менее одного пути размещения.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataObject_NotImplementedEnumFormatEtc">
+        <source>'{0}' dwDirection parameter value is not supported.</source>
+        <target state="translated">Значение параметра "{0}" dwDirection не поддерживается.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DecompressPacketDataFailed">
+        <source>Decompression of packet data failed.</source>
+        <target state="translated">Не удалось выполнить распаковку данных пакета.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DecompressPropertyFailed">
+        <source>Decompression of property data failed.</source>
+        <target state="translated">Не удалось выполнить Decompression данных свойства.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DecreaseZoomText">
+        <source>Decrease Zoom</source>
+        <target state="translated">Уменьшить</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeleteKeyDisplayString">
+        <source>Del</source>
+        <target state="translated">Удалить</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DeleteText">
+        <source>Delete</source>
+        <target state="translated">Удалить</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DirectoryNotFoundExceptionWithFileName">
+        <source>Cannot find a part of the path '{0}'.</source>
+        <target state="translated">Не удается найти часть пути "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DragDrop_DragActionInvalid">
+        <source>'{0}' DragAction is not valid.</source>
+        <target state="translated">Недопустимое действие DragAction "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DragDrop_DragDropEffectsInvalid">
+        <source>'{0}' DragDropEffects is not valid.</source>
+        <target state="translated">Недопустимые эффекты DragDropEffects "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DrawingContext_TooManyPops">
+        <source>This Pop operation has no corresponding Push to remove from the stack because the stack depth of the DrawingContext is zero.</source>
+        <target state="translated">Операция извлечения из стека Pop не имеет соответствующей операции Push, поскольку глубина стека DrawingContext равна 0.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DrawingGroup_AlreadyOpen">
+        <source>This object has an outstanding DrawingContext. The DrawingContext must be Closed or Disposed before making Open or Append calls.</source>
+        <target state="translated">Для объекта остался незакрытый DrawingContext. DrawingContext необходимо закрыть или ликвидировать перед вызовами Open или Append.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DrawingGroup_CannotAppendToFrozenCollection">
+        <source>Cannot append to a frozen DrawingGroup.Children collection.</source>
+        <target state="translated">Не удается применить к зафиксированному семейству DrawingGroup.Children.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DrawingGroup_CannotAppendToNullCollection">
+        <source>Cannot append to a null DrawingGroup.Children collection.</source>
+        <target state="translated">Не удается дополнить неопределенное семейство DrawingGroup.Children.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateApplicationGestureFound">
+        <source>Duplicate ApplicationGesture values are not allowed.</source>
+        <target state="translated">Повторяющиеся значения ApplicationGesture не допускаются.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateEventName">
+        <source>RoutedEvent Name '{0}' for OwnerType '{1}' already used.</source>
+        <target state="translated">Имя Name события RoutedEvent "{0}" для OwnerType "{1}" уже используется.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DuplicateStrokeAdded">
+        <source>Duplicate Stroke in StrokeCollectionChangedEventArgs.Added.</source>
+        <target state="translated">Повторяющийся элемент Stroke в StrokeCollectionChangedEventArgs.Added.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EPExists">
+        <source>ExtendedProperty is already part of the ExtendedPropertyCollection.</source>
+        <target state="translated">Свойство ExtendedProperty уже входит в семейство ExtendedPropertyCollection.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EPGuidNotFound">
+        <source>The GUID is not part of the ExtendedPropertyCollection.</source>
+        <target state="translated">Идентификатор GUID не входит в семейство ExtendedPropertyCollection.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EPNotFound">
+        <source>Property not set.</source>
+        <target state="translated">Свойство не задано.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_20ShaderUsing30Registers">
+        <source>A pixel shader using Pixel Shader Model 2.0 cannot be set because registers only available in Pixel Shader Model 3.0 are being used.</source>
+        <target state="translated">Не удается задать построитель текстуры, использующий Pixel Shader Model 2.0, поскольку используются регистры, доступные только в Pixel Shader Model 3.0.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_CombinedLegacyAndNew">
+        <source>BitmapEffect and Effect cannot be combined on a Visual.</source>
+        <target state="translated">Эффекты BitmapEffect и Effect нельзя соединить в Visual.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_No_ContextInputSource">
+        <source>Cannot call BitmapEffect.GetOutput directly with a ContextInputSource. Provide a valid BitmapSource.</source>
+        <target state="translated">Не удается вызвать BitmapEffect.GetOutput непосредственно с помощью ContextInputSource. Укажите допустимый BitmapSource.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_No_InputSource">
+        <source>There is no input set.</source>
+        <target state="translated">Входные данные не заданы.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_PixelFormat">
+        <source>'{0}' PixelFormat is not supported for this operation.</source>
+        <target state="translated">PixelFormat "{0}" не поддерживается для данной операции.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_RenderThreadError">
+        <source>An error occurred on the render thread with a user-supplied shader.</source>
+        <target state="translated">В обрабатывающем потоке произошла ошибка с шейдером, предоставленным пользователем.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_Shader20ConstantRegisterLimit">
+        <source>Pixel Shader Model 2.0 requires floating point constants to be in registers [0-31].</source>
+        <target state="translated">Pixel Shader Model 2.0 требует наличия в регистрах [0-31] констант с плавающей запятой.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_Shader20SamplerRegisterLimit">
+        <source>Pixel Shader Model 2.0 requires sampler constants to be in registers [0-3].</source>
+        <target state="translated">Pixel Shader Model 2.0 требует наличия в регистрах [0-3] констант образцов.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_Shader30BoolConstantRegisterLimit">
+        <source>Pixel Shader Model 3.0 requires boolean constants to be in registers [0-15].</source>
+        <target state="translated">Pixel Shader Model 3.0 требует наличия в регистрах [0-15] логических констант.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_Shader30FloatConstantRegisterLimit">
+        <source>Pixel Shader Model 3.0 requires floating point constants to be in registers [0-223].</source>
+        <target state="translated">Pixel Shader Model 3.0 требует наличия в регистрах [0-223] констант с плавающей запятой.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_Shader30IntConstantRegisterLimit">
+        <source>Pixel Shader Model 3.0 requires integer constants to be in registers [0-15].</source>
+        <target state="translated">Pixel Shader Model 3.0 требует наличия в регистрах [0-15] целочисленных констант.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_Shader30SamplerRegisterLimit">
+        <source>Pixel Shader Model 3.0 requires sampler constants to be in registers [0-7].</source>
+        <target state="translated">Pixel Shader Model 3.0 требует наличия в регистрах [0-7] констант образцов.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_ShaderBytecodeSize">
+        <source>Shader bytecode must be an integral number of 4-byte words.</source>
+        <target state="translated">Байт-код шейдера должен являться целым числом четырехбайтных слов.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_ShaderBytecodeSource">
+        <source>No shader bytecode present.  Must either set UriSource or call SetStreamSource.</source>
+        <target state="translated">Байт-код шейдера отсутствует. Необходимо задать UriSource или вызвать SetStreamSource.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_ShaderConstantType">
+        <source>Shader constant of type '{0}' is not allowed.</source>
+        <target state="translated">Тип константы шейдера "{0}" запрещен.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_ShaderEffectPadding">
+        <source>Padding must be non-negative.</source>
+        <target state="translated">Заполнение не может быть отрицательным.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_ShaderPixelShaderSet">
+        <source>PixelShader must be set on ShaderEffect.</source>
+        <target state="translated">PixelShader должен быть установлен в ShaderEffect.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_ShaderSamplerType">
+        <source>Pixel shader sampler must be Effect.ImplicitInput, or an instance of BitmapCacheBrush, VisualBrush, or ImageBrush.</source>
+        <target state="translated">Образец построителя текстуры должен быть Effect.ImplicitInput либо экземпляром BitmapCacheBrush, VisualBrush или ImageBrush.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_ShaderSeekableStream">
+        <source>PixelShader only accepts seekable streams.</source>
+        <target state="translated">PixelShader принимает только потоки, которые можно найти.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Effect_SourceUriMustBeFileOrPack">
+        <source>Uri must be a file or pack Uri.</source>
+        <target state="translated">URI должен относиться к файлу или пакету.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EmptyArray">
+        <source>Empty arrays are not a valid argument value.</source>
+        <target state="translated">Пустой массив нельзя использовать в качестве значения аргумента.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EmptyArrayNotAllowedAsArgument">
+        <source>The array cannot be empty.</source>
+        <target state="translated">Массив не может быть пустым.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EmptyDataToLoad">
+        <source>No data to load.</source>
+        <target state="translated">Отсутствуют данные для загрузки.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EmptyScToReplace">
+        <source>Collection cannot be empty.</source>
+        <target state="translated">Семейство не может быть пустым.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EmptyScToReplaceWith">
+        <source>The replacement StrokeCollection cannot be empty.</source>
+        <target state="translated">Заменяющее семейство StrokeCollection не может быть пустым.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EndHitTestingCalled">
+        <source>EndHitTesting has already been called on the IncrementalHitTester.</source>
+        <target state="translated">EndHitTesting уже вызван в IncrementalHitTester.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EndOfStreamReached">
+        <source>End of stream reached.</source>
+        <target state="translated">Достигнут конец потока.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EnumLineFailure">
+        <source>Text formatting engine cannot enumerate contents in a line due to error: '{0}'.</source>
+        <target state="translated">Процессор форматирования текста не может перечислить содержимое строки из-за ошибки: "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enum_Invalid">
+        <source>'{0}' enumeration value is not valid.</source>
+        <target state="translated">Недопустимое значение перечисления "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enumerator_CollectionChanged">
+        <source>The enumerator is not valid because the collection changed.</source>
+        <target state="translated">Перечислитель не является допустимым, поскольку семейство изменилось.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enumerator_NotStarted">
+        <source>The enumerator has not been started.</source>
+        <target state="translated">Перечислитель не был запущен.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enumerator_ReachedEnd">
+        <source>The enumerator has reached the end of the collection.</source>
+        <target state="translated">Перечислитель достиг конца семейства.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Enumerator_VerifyContext">
+        <source>No current object to return.</source>
+        <target state="translated">Нет текущего объекта для возврата.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="EventArgIsNull">
+        <source>Event arguments must be non-null.</source>
+        <target state="translated">Аргументы события не могут иметь неопределенные значения.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExtendSelectionDownKeyDisplayString">
+        <source>Shift+Down</source>
+        <target state="translated">Shift+ВНИЗ</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExtendSelectionDownText">
+        <source>Extend Selection Down</source>
+        <target state="translated">Расширить выбор вниз</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExtendSelectionLeftKeyDisplayString">
+        <source>Shift+Left</source>
+        <target state="translated">Shift+ВЛЕВО</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExtendSelectionLeftText">
+        <source>Extend Selection Left</source>
+        <target state="translated">Расширить выбор влево</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExtendSelectionRightKeyDisplayString">
+        <source>Shift+Right</source>
+        <target state="translated">Shift+ВПРАВО</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExtendSelectionRightText">
+        <source>Extend Selection Right</source>
+        <target state="translated">Расширить выбор вправо</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExtendSelectionUpKeyDisplayString">
+        <source>Shift+Up</source>
+        <target state="translated">Shift+Up</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ExtendSelectionUpText">
+        <source>Extend Selection Up</source>
+        <target state="translated">Расширить выбор вверх</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FaceIndexMustBePositiveOrZero">
+        <source>Font face index must be greater than or equal to zero.</source>
+        <target state="translated">Индекс шрифта должен быть больше или равен нулю.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FaceIndexValidOnlyForTTC">
+        <source>Nonzero font face index values are valid only for TrueType collections (.ttc).</source>
+        <target state="translated">Ненулевые значения индексов шрифта являются допустимыми только для семейств TrueType (.ttc).</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FamilyCollection_CannotFindCompositeFontsLocation">
+        <source>Cannot load system composite fonts. Location not found.</source>
+        <target state="translated">Не удается загрузить системные составные шрифты. Путь не найден</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FamilyMap_TargetNotSet">
+        <source>Cannot add FamilyMap because Target property is not set.</source>
+        <target state="translated">Не удается добавить FamilyMap, поскольку свойство Target не задано.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FavoritesKeyDisplayString">
+        <source>Ctrl+I</source>
+        <target state="translated">Ctrl+I</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FavoritesText">
+        <source>Favorites</source>
+        <target state="translated">Избранное</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatException">
+        <source>Input file or data stream does not conform to the expected file format specification.</source>
+        <target state="translated">Входной файл или поток данных не соответствует спецификации ожидаемого формата файлов.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileFormatExceptionWithFileName">
+        <source>'{0}' file does not conform to the expected file format specification.</source>
+        <target state="translated">Файл "{0}" не соответствует спецификации ожидаемого формата файла.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileNotFoundExceptionWithFileName">
+        <source>Cannot find file '{0}'.</source>
+        <target state="translated">Не удается найти файл "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FindKeyDisplayString">
+        <source>Ctrl+F</source>
+        <target state="translated">Ctrl+F</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FindText">
+        <source>Find</source>
+        <target state="translated">Найти</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FirstPageText">
+        <source>First Page</source>
+        <target state="translated">Первая страница</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FloatUnknownBamlType">
+        <source>Unrecognized float type in BAML file.</source>
+        <target state="translated">Нераспознанный тип с плавающей точкой в файле BAML.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FlushNotSupported">
+        <source>Stream does not support Flush.</source>
+        <target state="translated">Поток не поддерживает метод Flush.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FontFamily_ReadOnly">
+        <source>A named FontFamily object cannot be modified.</source>
+        <target state="translated">Именованный объект FontFamily не может быть изменен.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_CantBeFrozen">
+        <source>Specified value of type '{0}' must have IsFrozen set to false to modify.</source>
+        <target state="translated">Для изменения указанного значения типа "{0}" его свойство IsFrozen должно иметь значение "false".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_CloneInvalidType">
+        <source>Clone of an instance of type '{0}' is null or not an instance of '{0}'.</source>
+        <target state="translated">Клон экземпляра типа "{0}" имеет неопределенное значение или не является экземпляром "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_Reentrant">
+        <source>Cannot change FreezableCollection during a CollectionChanged event.</source>
+        <target state="translated">Не удается изменить FreezableCollection во время события CollectionChanged.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Freezable_UnexpectedChange">
+        <source>Unknown/unexpected change event</source>
+        <target state="translated">Неизвестное или непредвиденное событие изменения</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GeneralTransform_TransformFailed">
+        <source>The transform is not defined for the point.</source>
+        <target state="translated">Преобразование для точки не определено.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="General_BadType">
+        <source>The object passed to '{0}' is not a valid type.</source>
+        <target state="translated">Объект, переданный "{0}", имеет недопустимый тип.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="General_Expected_Type">
+        <source>Expected object of type '{0}'.</source>
+        <target state="translated">Ожидался объект типа "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="General_ObjectIsReadOnly">
+        <source>The object is marked 'Read Only'.</source>
+        <target state="translated">Объект отмечен как "Read Only".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Geometry_BadNumber">
+        <source>Arithmetic error found while trying to perform this operation.</source>
+        <target state="translated">При попытке выполнить эту операцию возникла арифметическая ошибка.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GestureRecognizerNotAvailable">
+        <source>No gesture recognizer is available on the system.</source>
+        <target state="translated">Средство распознавания жестов недоступно в системе.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetPenaltyModuleHandleFailure">
+        <source>Text formatting engine cannot retrieve penalty module handle due to error: '{0}'.</source>
+        <target state="translated">Процессор форматирования текста не может извлечь обработчик модуля штрафов из-за ошибки "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GetResponseFailed">
+        <source>Cannot get response for web request to '{0}'.</source>
+        <target state="translated">Не удается получить ответ на веб-запрос к "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GlyphAreaTooBig">
+        <source>Values for advanceWidths and glyphOffsets constitute too large of a GlyphRun. The area of its bounding box, measured in renderingEmSize squares, is '{0}' but it cannot exceed '{1}'.</source>
+        <target state="translated">Слишком большие значения advanceWidths и glyphOffsets для GlyphRun. Площадь ограничивающего прямоугольника (измененная в квадратах renderingEmSize) равна "{0}" и не может превышать значение "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GlyphCoordinateTooBig">
+        <source> advanceWidths and glyphOffsets constitute coordinate too large for glyph at index '{0}'. For renderingEmSize '{1}' the values cannot exceed '{2}'.</source>
+        <target state="translated"> Слишком большие координаты advanceWidths и glyphOffsets для глифа с индексом "{0}". Значения renderingEmSize "{1}" не могут превышать "{2}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GlyphIndexOutOfRange">
+        <source>'{0}' glyph index is not valid for the specified font.</source>
+        <target state="translated">Индекс глифа "{0}" не является допустимым для заданного шрифта.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GlyphTypefaceNotRecorded">
+        <source>Glyph typeface URI does not point to a previously recorded glyph typeface.</source>
+        <target state="translated">Идентификатор URI гарнитуры глифа не указывает на ранее записанную гарнитуру глифа.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="GoToPageText">
+        <source>Go To Page</source>
+        <target state="translated">Перейти на страницу</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HandlerTypeIllegal">
+        <source>Handler type is mismatched.</source>
+        <target state="translated">Несоответствие типа обработчика.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HelpKeyDisplayString">
+        <source>F1</source>
+        <target state="translated">F1</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HelpText">
+        <source>Help</source>
+        <target state="translated">Справка</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HitTest_Invalid">
+        <source>'{0}' HitTestParameters are not supported on '{1}'.</source>
+        <target state="translated">Параметры HitTestParameters "{0}" не поддерживаются в "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HitTest_Singular">
+        <source>Hit testing with a singular MatrixCamera is not supported.</source>
+        <target state="translated">Проверка на наличие данных в кэше не поддерживается при использовании одной MatrixCamera.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndSourceDisposed">
+        <source>Cannot access a disposed HwndSource.</source>
+        <target state="translated">Не удается обратиться к ликвидированному HwndSource.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndTarget_HardwareNotSupportDueToProtocolMismatch">
+        <source>Due to protocol mismatch hardware support is not available.</source>
+        <target state="translated">Аппаратная поддержка недоступна из-за несоответствия протоколов.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndTarget_InvalidWindowHandle">
+        <source>The specified handle is not a valid window handle.</source>
+        <target state="translated">Указанный дескриптор не является допустимым дескриптором окна.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndTarget_InvalidWindowProcess">
+        <source>The specified window does not belong to the current process.</source>
+        <target state="translated">Указанное окно не принадлежит текущему процессу.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndTarget_InvalidWindowThread">
+        <source>The specified window does not belong to the current thread.</source>
+        <target state="translated">Указанное окно не принадлежит текущему потоку.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="HwndTarget_WindowAlreadyHasContent">
+        <source>Another HwndTarget is associated with this window.</source>
+        <target state="translated">С данным окном связан другой HwndTarget.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IAnimatable_CantAnimateSealedDO">
+        <source>Cannot animate the '{0}' property on '{1}' because the object is sealed or frozen.</source>
+        <target state="translated">Не удается анимировать свойство "{0}" для "{1}", так как этот объект запечатан или заморожен.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IOBufferOverflow">
+        <source>A read or write operation references a location outside the bounds of the buffer provided.</source>
+        <target state="translated">Операция чтения или записи ссылается на расположение за пределами указанного буфера.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IOExceptionWithFileName">
+        <source>I/O error when opening file '{0}'.</source>
+        <target state="translated">Ошибка ввода-вывода при открытии файла "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_AlphaThresholdOutOfRange">
+        <source>Alpha threshold must be from 0 through 100.</source>
+        <target state="translated">Порог Alpha должен находиться в диапазоне от 0 до 100.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_BadDimensions">
+        <source>The bitmap specified does not have the correct dimensions.</source>
+        <target state="translated">Указанный точечный рисунок имеет неправильные размеры.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_BadMetadataHeader">
+        <source>The image has corrupted metadata header.</source>
+        <target state="translated">Поврежденный заголовок метаданных изображения.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_BadPixelFormat">
+        <source>'{0}' not a valid pixel format.</source>
+        <target state="translated">"{0}" не является допустимым форматом пикселей.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_BadStreamData">
+        <source>The stream is corrupted.</source>
+        <target state="translated">Поток поврежден.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_BadVersion">
+        <source>DLL version not correct.</source>
+        <target state="translated">Неправильная версия DLL.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_CannotCreateTempFile">
+        <source>Unable to create temporary file for download.</source>
+        <target state="translated">Невозможно создать временный файл для скачивания.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_CantBeFrozen">
+        <source>The Image passed to the ImageVisualManager cannot be frozen.</source>
+        <target state="translated">Изображение Image, переданное ImageVisualManager, нельзя зафиксировать.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_CantDealWithStream">
+        <source>The codec cannot use the type of stream provided.</source>
+        <target state="translated">Кодек не может использовать указанный тип потока.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_CantDealWithUri">
+        <source>The codec cannot use the type of URI provided.</source>
+        <target state="translated">Кодек не может использовать указанный тип идентификатора URI.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_CodecPresent">
+        <source>Codec added more than once.</source>
+        <target state="translated">Кодек добавлен более одного раза.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_ColorContextInvalid">
+        <source>Color context is not valid.</source>
+        <target state="translated">Недопустимый контекст цвета.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_ColorTransformInvalid">
+        <source>Color transform is not valid.</source>
+        <target state="translated">Недопустимое преобразование цвета.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_ComponentNotFound">
+        <source>No imaging component suitable to complete this operation was found.</source>
+        <target state="translated">Не удалось обнаружить компонент обработки изображений, который подходит для завершения данной операции.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_ContentTypeDoesNotMatchDecoder">
+        <source>The mime type registered with the system does not match the mime type of the file.</source>
+        <target state="translated">Тип MIME, зарегистрированный в системе, не соответствует типу MIME файла.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_DecoderError">
+        <source>The image decoder cannot decode the image. The image might be corrupted.</source>
+        <target state="translated">Декодер изображений не может декодировать изображение. Возможно, изображение повреждено.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_DisplayStateInvalid">
+        <source>The system display state is not valid.</source>
+        <target state="translated">Недопустимое состояние системного дисплея.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_DuplicateMetadataPresent">
+        <source>Duplicate copies of metadata present.</source>
+        <target state="translated">Повторяющиеся копии метаданных.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_EncoderNoColorContext">
+        <source>The designated BitmapEncoder does not support ColorContexts.</source>
+        <target state="translated">Назначенный BitmapEncoder не поддерживает ColorContexts.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_EncoderNoGlobalMetadata">
+        <source>The designated BitmapEncoder does not support global metadata.</source>
+        <target state="translated">Назначенный BitmapEncoder не поддерживает глобальные метаданные.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_EncoderNoGlobalThumbnail">
+        <source>The designated BitmapEncoder does not support global thumbnails.</source>
+        <target state="translated">Назначенный BitmapEncoder не поддерживает глобальные эскизы.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_EncoderNoPreview">
+        <source>The designated BitmapEncoder does not support previews.</source>
+        <target state="translated">Назначенный BitmapEncoder не поддерживает предварительный просмотр.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_EndInitWithoutBeginInit">
+        <source>Cannot call EndInit without a matching BeginInit call.</source>
+        <target state="translated">EndInit нельзя вызвать без соответствующего вызова BeginInit.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_FrameMissing">
+        <source>The image is missing a frame.</source>
+        <target state="translated">В изображении отсутствует кадр.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_FreezableCloneNotAllowed">
+        <source>This class does not support cloning.</source>
+        <target state="translated">Данный класс не поддерживает клонирование.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_GuidEmpty">
+        <source>Empty GUID is not valid for '{0}'.</source>
+        <target state="translated">Недопустимый пустой GUID для "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_HeaderError">
+        <source>The image cannot be decoded. The image header might be corrupted.</source>
+        <target state="translated">Не удается декодировать изображение. Возможно, поврежден заголовок изображения.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InInitialize">
+        <source>Already in an initializing state.</source>
+        <target state="translated">Уже находится в состоянии инициализации.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_IndexedPixelFormatRequiresPalette">
+        <source>Must specify a palette when using an indexed pixel format.</source>
+        <target state="translated">При использовании индексированного формата пикселей необходимо указать палитру.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InitializationIncomplete">
+        <source>BitmapImage initialization is not complete. Call the EndInit method to complete the initialization.</source>
+        <target state="translated">Инициализация рисунка BitmapImage не завершена. Чтобы завершить инициализацию, вызовите метод EndInit.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InplaceMetadataNoCopy">
+        <source>InPlaceBitmapMetadataWriter cannot be copied.</source>
+        <target state="translated">Не удается скопировать InPlaceBitmapMetadataWriter.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InsufficientBuffer">
+        <source>Buffer size is not sufficient.</source>
+        <target state="translated">Недостаточный размер буфера.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InsufficientBufferSize">
+        <source>Buffer not large enough to copy memory.</source>
+        <target state="translated">Размера буфера недостаточно для копирования памяти.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InternalError">
+        <source>An error occurred.</source>
+        <target state="translated">Произошла ошибка.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InvalidArrayForPixel">
+        <source>Cannot match the type of this array to a pixel format.</source>
+        <target state="translated">Не удается сопоставить тип массива с форматом пикселей.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InvalidColorContext">
+        <source>Bitmap color context is not valid.</source>
+        <target state="translated">Неправильный контекст цвета точечного рисунка.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InvalidQueryCharacter">
+        <source>Character is not valid in metadata query request.</source>
+        <target state="translated">Недопустимый знак в запросе метаданных.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InvalidQueryRequest">
+        <source>Metadata query request is not valid.</source>
+        <target state="translated">Недопустимый запрос метаданных.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_LockCountLimit">
+        <source>The lock count cannot exceed UInt32.MaxValue.</source>
+        <target state="translated">Количество блокировок не может превышать UInt32.MaxValue.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_MetadataInitializationIncomplete">
+        <source>BitmapMetadata initialization incomplete.</source>
+        <target state="translated">Инициализация BitmapMetadata не завершена.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_MetadataNotCompatible">
+        <source>The bitmap metadata is not compatible with this container format.</source>
+        <target state="translated">Метаданные точечного рисунка несовместимы с данным форматом контейнера.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_MetadataNotSupported">
+        <source>BitmapMetadata is not available on BitmapImage.</source>
+        <target state="translated">BitmapMetadata не доступны в BitmapImage.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_MetadataReadOnly">
+        <source>Bitmap metadata cannot be changed.</source>
+        <target state="translated">Невозможно изменить метаданные точечного рисунка.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_MetadataSizeFixed">
+        <source>Cannot add any more top-level metadata blocks.</source>
+        <target state="translated">Невозможно добавить новые блоки метаданных верхнего уровня.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_MustBeLocked">
+        <source>Cannot call this method while the image is unlocked.</source>
+        <target state="translated">Невозможно вызвать этот метод, когда рисунок разблокирован.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NeitherArgument">
+        <source>Property '{0}' or property '{1}' must be set.</source>
+        <target state="translated">Необходимо задать свойство "{0}" или "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NoArgument">
+        <source>'{0}' property is not set.</source>
+        <target state="translated">Свойство "{0}" не задано.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NoCodecsFound">
+        <source>No codec found that can decode the specified file.</source>
+        <target state="translated">Не найден кодек, способный декодировать указанный файл.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NoDecodeFrames">
+        <source>Image does not contain any frames.</source>
+        <target state="translated">Изображение не содержит кадров.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NoFrames">
+        <source>Cannot save an image with no frames.</source>
+        <target state="translated">Невозможно сохранить изображение без кадров.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NoPalette">
+        <source>The specified image does not contain a palette.</source>
+        <target state="translated">Указанное изображение не содержит палитру.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NoPixelFormatFound">
+        <source>No information was found about this pixel format.</source>
+        <target state="translated">Сведения о формате пикселей не найдены.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NoThumbnail">
+        <source>Bitmap does not contain thumbnail.</source>
+        <target state="translated">Точечный рисунок не содержит эскиз.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NotInitialized">
+        <source>BitmapImage has not been initialized.  Call the BeginInit method, set the appropriate properties, and then call the EndInit method.</source>
+        <target state="translated">Рисунок BitmapImage не был инициализирован. Вызовите метод BeginInit, задайте соответствующие свойства, а затем вызовите метод EndInit.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_OnlyOneInit">
+        <source>Cannot set the initializing state more than once.</source>
+        <target state="translated">Состояние инициализации нельзя установить более одного раза.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_OnlyOneSave">
+        <source>Cannot call Save on an Encoder more than once.</source>
+        <target state="translated">Метод Save нельзя вызвать в Encoder более одного раза.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_OnlyOrthogonal">
+        <source>Transform must be a combination of scales, flips, and 90 degree rotations.</source>
+        <target state="translated">Преобразование должно быть сочетанием операций масштабирования, отражения и поворотов на 90 градусов.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_OriginalStreamReadOnly">
+        <source>In place editing of bitmap metadata is not allowed because the original source is not writable.</source>
+        <target state="translated">Редактирование метаданных точечного рисунка по месту запрещено, поскольку исходный источник недоступен для записи.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_Overflow">
+        <source>The image data generated an overflow during processing.</source>
+        <target state="translated">При обработке данных изображения произошло переполнение.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_PaletteColorsDoNotMatchFormat">
+        <source>The number of colors in the palette is larger than the maximum allowed by the supplied pixel format.</source>
+        <target state="translated">Число цветов в палитре превышает максимально допустимое для указанного формата пикселей.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_PaletteFixedType">
+        <source>Must use a fixed palette type. '{0}' not supported here.</source>
+        <target state="translated">Необходимо использовать фиксированный тип палитры. "{0}" здесь не поддерживается.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_PaletteZeroColors">
+        <source>Cannot create a palette with less than 1 color or more than 256 colors.</source>
+        <target state="translated">Невозможно создать палитру, содержащую менее 1 или более 256 цветов.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_PropertyNotFound">
+        <source>Property cannot be found.</source>
+        <target state="translated">Не удается найти свойство.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_PropertyNotSupported">
+        <source>This codec does not support the specified property.</source>
+        <target state="translated">Кодек не поддерживает указанное свойство.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_PropertySize">
+        <source>Property is corrupted.</source>
+        <target state="translated">Свойство повреждено.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_PropertyUnexpectedType">
+        <source>Unexpected property type or value.</source>
+        <target state="translated">Непредвиденный тип или значение свойства.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_RequestOnlyValidAtMetadataRoot">
+        <source>The metadata query is valid only at the root of the metadata hierarchy.</source>
+        <target state="translated">Запрос метаданных допустим только для корневого элемента иерархии метаданных.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_SetPropertyOutsideBeginEndInit">
+        <source>Cannot set this property outside a BeginInit/EndInit block.</source>
+        <target state="translated">Невозможно задать это свойство вне блока BeginInit/EndInit.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_SingularMatrix">
+        <source>Cannot invert singular matrix.</source>
+        <target state="translated">Невозможно обратить вырожденную матрицу.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_SizeOptionsAngle">
+        <source>Bad Rotation parameter. Only Rotate0, Rotate90, Rotate180, and Rotate270 are supported.</source>
+        <target state="translated">Недопустимое значение параметра Rotation. Поддерживаются только значения Rotate0, Rotate90, Rotate180 и Rotate270.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_SizeOutOfRange">
+        <source>The image dimensions are out of the range supported by this codec.</source>
+        <target state="translated">Изображение превышает размеры, поддерживаемые данным кодеком.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_StreamNotAvailable">
+        <source>Metadata stream is not available for this operation.</source>
+        <target state="translated">Поток метаданных недоступен для этой операции.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_StreamRead">
+        <source>Cannot read from the stream.</source>
+        <target state="translated">Не удается прочитать данные из потока.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_StreamWrite">
+        <source>Cannot write to the stream.</source>
+        <target state="translated">Не удается записать данные в поток.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_TooManyScanlines">
+        <source>The bitmap has too many scanlines for the specified encoder.</source>
+        <target state="translated">Точечный рисунок содержит слишком много строк развертки для указанного кодировщика.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_TooMuchMetadata">
+        <source>Commit unsuccessful because too much metadata changed.</source>
+        <target state="translated">Не удалось зафиксировать изменения, поскольку изменилось слишком много метаданных.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_UnexpectedMetadataType">
+        <source>Unexpected type of metadata.</source>
+        <target state="translated">Непредвиденный формат метаданных.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_UnknownFormat">
+        <source>The image format is unrecognized.</source>
+        <target state="translated">Формат изображения не распознан.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_UnsupportedOperation">
+        <source>Operation not supported.</source>
+        <target state="translated">Операция не поддерживается.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_UnsupportedPixelFormat">
+        <source>Pixel format not supported.</source>
+        <target state="translated">Формат пикселей не поддерживается.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_WrongState">
+        <source>Operation caused an invalid state.</source>
+        <target state="translated">Выполнение операции вызвало недопустимое состояние.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InInitialization">
+        <source>The object is already being initialized.</source>
+        <target state="translated">Инициализация объекта уже выполняется.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IncompatibleStylusPointDescriptions">
+        <source>The StylusPointDescriptions are incompatible. Use the StylusPointDescription.GetCommonDescription method to find a common StylusPointDescription and then call StylusPointCollection.Reformat to return a compatible StylusPointCollection.</source>
+        <target state="translated">Несовместимые описания StylusPointDescriptions. Найдите общий StylusPointDescription при помощи метода StylusPointDescription.GetCommonDescription, а затем вызовите метод StylusPointCollection.Reformat, чтобы вернуть совместимое семейство StylusPointCollection.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IncreaseZoomText">
+        <source>Increase Zoom</source>
+        <target state="translated">Увеличить</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InitializationIncomplete">
+        <source>The operation fails because the object is not fully initialized.</source>
+        <target state="translated">Не удалось выполнить операцию, поскольку объект не инициализирован полностью.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InitializingCompressorFailed">
+        <source>Cannot initialize compressor.</source>
+        <target state="translated">Невозможно инициализировать упаковщик.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InnerRequestNotAllowed">
+        <source>InnerRequest not available for preloaded packages.</source>
+        <target state="translated">InnerRequest недоступен для работы с предварительно загруженными пакетами.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InputBinding_ExpectedInputGesture">
+        <source>Gesture accepts only objects of type '{0}'.</source>
+        <target state="translated">В качестве жеста можно использовать только объекты типа "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InputLanguageManager_NotReadyToChangeCurrentLanguage">
+        <source>InputLanguageManager is not ready to change the current input languages.</source>
+        <target state="translated">Диспетчер InputLanguageManager не готов изменить текущий язык ввода.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InputMethod_InvalidConversionMode">
+        <source>'{0}' is not a valid ImeConversionMode.</source>
+        <target state="translated">"{0}" не является допустимым режимом ImeConversionMode.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InputMethod_InvalidSentenceMode">
+        <source>'{0}' is not a valid ImeSentenceMode.</source>
+        <target state="translated">"{0}" не является допустимым режимом ImeSentenceMode.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InputProviderSiteDisposed">
+        <source>The InputProviderSite has already been disposed.</source>
+        <target state="translated">InputProviderSite уже ликвидирован.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InputScope_InvalidInputScopeName">
+        <source>'{0}' is not a valid InputScopeName.</source>
+        <target state="translated">"{0}" не является допустимым именем InputScopeName.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IntegerCollectionLengthLessThanZero">
+        <source>Integer collection size cannot be negative.</source>
+        <target state="translated">Целочисленный размер коллекции не может быть отрицательным.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidAbsoluteUriInFontFamilyName">
+        <source>An absolute URI in a font family name must have file:// scheme.</source>
+        <target state="translated">Абсолютный идентификатор URI в имени семейства шрифтов должен иметь схему file://.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidAdditionalDataForStylusPoint">
+        <source>The additional data passed in does not match what is expected based on the StylusPointDescription.</source>
+        <target state="translated">Дополнительные переданные данные не соответствуют ожидаемым согласно StylusPointDescription.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidBufferLength">
+        <source>Maximum buffer length must be within actual buffer length.</source>
+        <target state="translated">Максимальная длина буфера должна быть в пределах реальной.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidByteRanges">
+        <source>Byte ranges are not valid in '{0}'.</source>
+        <target state="translated">Недопустимые диапазоны байтов в "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidCursorType">
+        <source>'{0}' cursor type is not valid.</source>
+        <target state="translated">Недопустимый тип курсора "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDataInISF">
+        <source>The specified data is invalid, see inner exception for details.</source>
+        <target state="translated">Указанные данные не являются допустимыми, подробности см. во внутреннем исключении.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDataTypeForExtendedProperty">
+        <source>Property data must be a non-reference variant compatible type.</source>
+        <target state="translated">Данные свойства должны представлять собой совместимые типы variant, не являющиеся ссылками.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDiameter">
+        <source>The value is out of range.</source>
+        <target state="translated">Значение выходит за пределы допустимого диапазона.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDrawingAttributesHeight">
+        <source>Height must be greater than or equal to DrawingAttributes.MinHeight and less than or equal to DrawingAttribute.MaxHeight.</source>
+        <target state="translated">Высота должна быть больше или равна DrawingAttributes.MinHeight и меньше или равна DrawingAttribute.MaxHeight.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidDrawingAttributesWidth">
+        <source>Width must be greater than or equal to DrawingAttributes.MinWidth and less than or equal to DrawingAttribute.MaxWidth.</source>
+        <target state="translated">Ширина должна быть больше или равна DrawingAttributes.MinWidth и меньше или равна DrawingAttribute.MaxWidth.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidEpInIsf">
+        <source>Extended property data type is not valid.</source>
+        <target state="translated">Недопустимый тип данных расширенного свойства.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidEventHandle">
+        <source>The event handle is not usable.</source>
+        <target state="translated">Дескриптор события не годен для использования.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidGuid">
+        <source>GUID cannot be empty.</source>
+        <target state="translated">GUID не может быть пустым.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidIsButtonForId">
+        <source>The specified GUID represents a button, so isButton must be true.</source>
+        <target state="translated">Указанный GUID представляет кнопку, поэтому isButton должно иметь значение "true".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidIsButtonForId2">
+        <source>The specified GUID does not represent a button, so isButton must be false.</source>
+        <target state="translated">Указанный GUID не представляет кнопку, поэтому isButton должно иметь значение "false".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidMatrixContainsInfinity">
+        <source>Infinity member value is not valid in Matrix.</source>
+        <target state="translated">Матрица Matrix не может содержать элементы с бесконечными значениями.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidMatrixContainsNaN">
+        <source>NaN is not a valid value for Matrix member.</source>
+        <target state="translated">NaN является недопустимым значением для элемента Matrix.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidMinMaxForButton">
+        <source>StylusPointPropertyInfos that are buttons must have a minimum of 0 and a maximum of 1.</source>
+        <target state="translated">StylusPointPropertyInfos, соответствующие кнопкам, должны иметь значение в интервале от минимума 0 до максимума 1.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPartName">
+        <source>The part name does not correspond to its content type.</source>
+        <target state="translated">Имя компонента не соответствует типу содержимого.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionStateValue">
+        <source>PermissionState value '{0}' is not valid for this Permission.</source>
+        <target state="translated">Значение PermissionState "{0}" недопустимо для данного разрешения.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionType">
+        <source>Permission type is not valid. Expected '{0}'.</source>
+        <target state="translated">Недопустимый тип разрешений. Требуется "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPressureValue">
+        <source>Pressure must be a value between 0 and 1.</source>
+        <target state="translated">Нажим может принимать значения от 0 до 1.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidRemovedStroke">
+        <source>The stroke being removed does not exist in the current collection.</source>
+        <target state="translated">Удаляемый росчерк отсутствует в текущем семействе.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidReplacedStroke">
+        <source>The stroke being replaced does not exist in the current collection.</source>
+        <target state="translated">Заменяемый росчерк отсутствует в текущем семействе.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidScheme">
+        <source>HTTP byte range downloader can support only HTTP or HTTPS schemes.</source>
+        <target state="translated">Загрузчик диапазона байтов HTTP поддерживает только схемы HTTP и HTTPS.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidSiteOfOriginUri">
+        <source>'{0}' must be a relative URI for site of origin.</source>
+        <target state="translated">"{0}" должен быть относительным идентификатором URI для узла источника.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidSizeSpecified">
+        <source>The specified size is less than the information decoded in the ISF stream.</source>
+        <target state="translated">Сведения, полученные путем декодирования потока ISF, превышают заданный размер.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStream">
+        <source>Stream is not valid.</source>
+        <target state="translated">Недопустимый поток.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidSttValue">
+        <source>Translation is not valid.</source>
+        <target state="translated">Недопустимое преобразование.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointCollectionZeroCount">
+        <source>StylusPointCollection cannot be empty when attached to a Stroke.</source>
+        <target state="translated">Семейство StylusPointCollection, присоединенное к Stroke, не может быть пустым.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointConstructionZeroLengthCollection">
+        <source>The specified collection cannot be empty.</source>
+        <target state="translated">Указанное семейство не может быть пустым.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointDescription">
+        <source>StylusPointDescription must contain at least X, Y and NormalPressure in that order.</source>
+        <target state="translated">Описание StylusPointDescription должно содержать, по крайней мере, параметры X, Y и NormalPressure (в указанном порядке).</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointDescriptionButtonsMustBeLast">
+        <source>When constructing a StylusPointDescription, any StylusPointPropertyInfos that represent buttons must be placed at the end of the collection.</source>
+        <target state="translated">При построении StylusPointDescription все StylusPointPropertyInfos, представляющие кнопки, необходимо поместить в конец семейства.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointDescriptionDuplicatesFound">
+        <source>StylusPointDescription cannot contain duplicate StylusPointPropertyInfos.</source>
+        <target state="translated">StylusPointDescription не может содержать повторяющиеся StylusPointPropertyInfos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointDescriptionSubset">
+        <source>The specified StylusPointDescription must be a subset.</source>
+        <target state="translated">Указанное StylusPointDescription должно быть подмножеством.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointDescriptionTooManyButtons">
+        <source>StylusPointDescription supports no more than 31 buttons.</source>
+        <target state="translated">StylusPointDescription поддерживает не более 31 кнопки.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointProperty">
+        <source>The StylusPoint does not support the specified StylusPointProperty.</source>
+        <target state="translated">StylusPoint не поддерживает указанное свойство StylusPointProperty.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointPropertyInfoResolution">
+        <source>Resolution must be at least 0.0f.</source>
+        <target state="translated">Минимальное разрешение составляет 0,0f.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidStylusPointXYNaN">
+        <source>Value cannot be Double.NaN.</source>
+        <target state="translated">Значением не может быть Double.NaN.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTempFileName">
+        <source>Cannot have empty name of a temporary file.</source>
+        <target state="translated">Имя временного файла не может быть пустым.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidTextDecorationCollectionString">
+        <source>The requested TextDecorationCollection string is not valid: '{0}'.</source>
+        <target state="translated">Запрошенная строка TextDecorationCollection не является допустимой: "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidValueOfType">
+        <source>Invalid value '{0}' for type '{1}'.</source>
+        <target state="translated">Недопустимое значение "{0}" для типа "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidValueType">
+        <source>Value must be of type '{0}'.</source>
+        <target state="translated">Значение должно иметь тип "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidValueType1">
+        <source>Value must be of type '{0}' or '{1}'.</source>
+        <target state="translated">Значение должно иметь тип "{0}" или "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Invalid_IInputElement">
+        <source>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</source>
+        <target state="translated">"{0}" не является допустимым типом для IInputElement. Ожидается UIElement или ContentElement.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Invalid_URI">
+        <source>The URI specified is invalid.</source>
+        <target state="translated">Указан недопустимый URI.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Invalid_isfData_Length">
+        <source>The length of the ISF data must be greater than zero.</source>
+        <target state="translated">Длина данных ISF должна быть больше нуля.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="IsfOperationFailed">
+        <source>InkSerializedFormat operation failed.</source>
+        <target state="translated">Не удалось выполнить операцию InkSerializedFormat.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyGesture_Invalid">
+        <source>'{0}+{1}' key and modifier combination is not supported for KeyGesture.</source>
+        <target state="translated">Сочетание клавиш "{0}+{1}" и модификатора не поддерживается для KeyGesture.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyboardSinkAlreadyOwned">
+        <source>The specified keyboard sink is already owned by a site.</source>
+        <target state="translated">Указанный приемник клавиатуры уже принадлежит узлу.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyboardSinkMustBeAnElement">
+        <source>The specified keyboard sink must be a UIElement.</source>
+        <target state="translated">Указанным приемником клавиатуры должен быть UIElement.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="KeyboardSinkNotAChild">
+        <source>The specified keyboard sink is not a child of this source.</source>
+        <target state="translated">Указанный приемник клавиатуры не является дочерним элементом данного источника.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LastPageText">
+        <source>Last Page</source>
+        <target state="translated">Последняя страница</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="LayoutManager_DeepRecursion">
+        <source>Layout recursion reached allowed limit to avoid stack overflow: '{0}'. Either the tree contains a loop or is too deep.</source>
+        <target state="translated">Рекурсия макета достигла допустимого предела, предотвращающего переполнение стека: "{0}". Дерево содержит цикл или имеет слишком глубокий уровень вложенности.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Manipulation_InvalidManipulationMode">
+        <source>An unrecognized ManipulationMode flag was encountered.</source>
+        <target state="translated">Обнаружен неизвестный флаг ManipulationMode.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Manipulation_ManipulationNotActive">
+        <source>Manipulation is not active on the specified element.</source>
+        <target state="translated">В выбранном элементе манипуляция не включена.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Manipulation_ManipulationNotEnabled">
+        <source>IsManipulationEnabled is not set to true on the specified element.</source>
+        <target state="translated">IsManipulationEnabled для указанного элемента не равно "true".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Matrix3D_NotInvertible">
+        <source>Cannot invert the matrix, because the matrix is not invertible.</source>
+        <target state="translated">Невозможно обратить матрицу, поскольку она является необратимой.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MatrixNotInvertible">
+        <source>The specified Matrix must be invertible.</source>
+        <target state="translated">Указанная матрица Matrix должна быть обратимой.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaBoostBassText">
+        <source>Boost Bass</source>
+        <target state="translated">Усилить басы</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaChannelDownText">
+        <source>Channel Down</source>
+        <target state="translated">Канал вниз</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaChannelUpText">
+        <source>Channel Up</source>
+        <target state="translated">Канал вверх</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaContext_APINotAllowed">
+        <source>Cannot call this API during the OnRender callback. During OnRender, only drawing operations that draw the content of the Visual can be performed.</source>
+        <target state="translated">Невозможно вызвать эту API-функцию во время ответного вызова OnRender. Во время OnRender можно выполнять только операции прорисовки содержимого элемента Visual.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaContext_InfiniteLayoutLoop">
+        <source>An infinite loop appears to have resulted from cross-dependent views.</source>
+        <target state="translated">В результате просмотров с перекрестными зависимостями образовался бесконечный цикл.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaContext_InfiniteTickLoop">
+        <source>An infinite loop appears to have resulted from repeatedly invalidating the TimeManager during the Layout/Render process.</source>
+        <target state="translated">Из-за неоднократной отмены TimeManager во время обработки Layout/Render образовался бесконечный цикл.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaContext_NoBadShaderHandler">
+        <source>Invalid user-specified pixel shader.  Register a PixelShader.InvalidPixelShaderEncountered event handler to avoid this exception being raised.</source>
+        <target state="translated">Указанный пользователем построитель текстуры недействителен. Зарегистрируйте обработчик событий PixelShader.InvalidPixelShaderEncountered, чтобы предотвратить появление этого исключения.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaContext_OutOfVideoMemory">
+        <source>Out of video memory.</source>
+        <target state="translated">Недостаточно видеопамяти.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaContext_RenderThreadError">
+        <source>An unspecified error occurred on the render thread.</source>
+        <target state="translated">Произошла неопознанная ошибка в обрабатывающем потоке.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaDecreaseBassText">
+        <source>Decrease Bass</source>
+        <target state="translated">Меньше басов</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaDecreaseMicrophoneVolumeText">
+        <source>Decrease Microphone Volume</source>
+        <target state="translated">Уменьшить уровень микрофона</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaDecreaseTrebleText">
+        <source>Decrease Treble</source>
+        <target state="translated">Меньше высоких частот</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaDecreaseVolumeText">
+        <source>Decrease Volume</source>
+        <target state="translated">Тише</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaFastForwardText">
+        <source>Fast Forward</source>
+        <target state="translated">Перемотка вперед</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaIncreaseBassText">
+        <source>Increase Bass</source>
+        <target state="translated">Больше басов</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaIncreaseMicrophoneVolumeText">
+        <source>Increase Microphone Volume</source>
+        <target state="translated">Увеличить уровень микрофона</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaIncreaseTrebleText">
+        <source>Increase Treble</source>
+        <target state="translated">Больше высоких частот</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaIncreaseVolumeText">
+        <source>Increase Volume</source>
+        <target state="translated">Громче</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaMuteMicrophoneVolumeText">
+        <source>Mute Microphone Volume</source>
+        <target state="translated">Отключить микрофон</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaMuteVolumeText">
+        <source>Mute Volume</source>
+        <target state="translated">Без звука</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaNextTrackText">
+        <source>Next Track</source>
+        <target state="translated">Следующая запись</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaPauseText">
+        <source>Pause</source>
+        <target state="translated">Приостановить</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaPlayText">
+        <source>Play</source>
+        <target state="translated">Воспроизвести</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaPreviousTrackText">
+        <source>Previous Track</source>
+        <target state="translated">Предыдущая запись</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaRecordText">
+        <source>Record</source>
+        <target state="translated">Запись</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaRewindText">
+        <source>Rewind</source>
+        <target state="translated">Перемотка назад</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaSelectText">
+        <source>Select</source>
+        <target state="translated">Выделить</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaStopText">
+        <source>Stop</source>
+        <target state="translated">Остановить</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaSystem_ApiInvalidContext">
+        <source>This API was accessed with arguments from the wrong context.</source>
+        <target state="translated">API-функция вызвана с аргументами из неправильного контекста.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaSystem_OutOfOrderConnectOrDisconnect">
+        <source>Received an out of order connect or disconnect message.</source>
+        <target state="translated">Нарушен порядок сообщений о подключении или отключении.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaToggleMicrophoneOnOffText">
+        <source>Toggle Microphone OnOff</source>
+        <target state="translated">Микрофон вкл/выкл</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MediaTogglePlayPauseText">
+        <source>Toggle Play Pause</source>
+        <target state="translated">Воспроизвести/пауза</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_DownloadFailed">
+        <source>Media file download failed.</source>
+        <target state="translated">Не удалось скачать файл мультимедиа.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_FileFormatNotSupported">
+        <source>Installed codecs do not support the media file format.</source>
+        <target state="translated">Установленные кодеки не поддерживают формат файл мультимедиа.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_FileNotFound">
+        <source>Cannot find the media file.</source>
+        <target state="translated">Не удается найти файл мультимедиа.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_HardwareVideoAccelerationNotAvailable">
+        <source>Display driver must support video acceleration for video or audio playback.</source>
+        <target state="translated">Видеодрайвер должен поддерживать ускорение для воспроизведения видео и звука.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_InsufficientVideoResources">
+        <source>There are insufficient video resources available for video or audio playback.</source>
+        <target state="translated">Недостаточно видео-ресурсов для воспроизведения видео и звука.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_InvalidArgument">
+        <source>Value does not fall within the expected range.</source>
+        <target state="translated">Значение не попадает в ожидаемый диапазон.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_InvalidWmpVersion">
+        <source>Windows Media Player version 10 or later is required.</source>
+        <target state="translated">Требуется проигрыватель Windows Media 10 или более поздней версии.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_LogonFailure">
+        <source>Access was denied on the media file.</source>
+        <target state="translated">Доступ к файлу мультимедиа запрещен.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_NotAllowedWhileTimingEngineInControl">
+        <source>Cannot perform this operation while a clock is assigned to the media player.</source>
+        <target state="translated">Невозможно выполнить данную операцию, когда проигрыватель мультимедиа управляется по часам.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_PackURIsAreNotSupported">
+        <source>Only site-of-origin pack URIs are supported for media.</source>
+        <target state="translated">Для носителя поддерживаются только пакеты URI исходного узла.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_PlayerIsClosed">
+        <source>No operations are valid on a closed media player except open and close.</source>
+        <target state="translated">Закрытый проигрыватель мультимедиа может выполнять только операции "Открыть" и "Закрыть".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_PlaylistFormatNotSupported">
+        <source>Unrecognized playlist file format.</source>
+        <target state="translated">Нераспознанный формат файла списка воспроизведения.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_StreamClosed">
+        <source>Cannot access the stream after it is closed.</source>
+        <target state="translated">Невозможно обратиться к потоку после его закрытия.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_UninitializedResource">
+        <source>Accessed an uninitialized media resource.</source>
+        <target state="translated">Доступ к ресурсу мультимедиа, не прошедшему инициализацию.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_UnknownChannelType">
+        <source>Channel type is not recognized.</source>
+        <target state="translated">Не распознается тип канала.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_UnknownMediaExecption">
+        <source>An unknown media error occurred.</source>
+        <target state="translated">Произошла неопознанная ошибка носителя.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_UriNotSpecified">
+        <source>Must specify URI.</source>
+        <target state="translated">Необходимо указать идентификатор URI.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MethodCallNotAllowed">
+        <source>The '{0}' method cannot be called at this time.</source>
+        <target state="translated">Сейчас невозможно вызвать метод "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MilErr_UnsupportedVersion">
+        <source>Mismatched versions of PresentationCore.dll, Milcore.dll, WindowsCodecs.dll, or D3d9.dll. Check that these DLLs come from the same source.</source>
+        <target state="translated">Не совпадают версии PresentationCore.dll, Milcore.dll, WindowsCodecs.dll или D3d9.dll. Убедитесь, что эти библиотеки получены из одного источника.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Mismatched_RoutedEvent">
+        <source>RoutedEvent in RoutedEventArgs and EventRoute are mismatched.</source>
+        <target state="translated">RoutedEvent в RoutedEventArgs и EventRoute не совпадают.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveDownKeyDisplayString">
+        <source>Down</source>
+        <target state="translated">ВНИЗ</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveDownText">
+        <source>Move Down</source>
+        <target state="translated">Переместить вниз</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusBackKeyDisplayString">
+        <source>Ctrl+Left</source>
+        <target state="translated">Ctrl+ВЛЕВО</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusBackText">
+        <source>Move Focus Back</source>
+        <target state="translated">Фокус назад</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusDownKeyDisplayString">
+        <source>Ctrl+Down</source>
+        <target state="translated">Ctrl+ВНИЗ</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusDownText">
+        <source>Move Focus Down</source>
+        <target state="translated">Фокус вниз</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusForwardKeyDisplayString">
+        <source>Ctrl+Right</source>
+        <target state="translated">Ctrl+ВПРАВО</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusForwardText">
+        <source>Move Focus Forward</source>
+        <target state="translated">Фокус вперед</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusPageDownKeyDisplayString">
+        <source>Ctrl+PageDown</source>
+        <target state="translated">Ctrl+PageDown</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusPageDownText">
+        <source>Move Focus Page Down</source>
+        <target state="translated">Фокус на страницу вниз</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusPageUpKeyDisplayString">
+        <source>Ctrl+PageUp</source>
+        <target state="translated">Ctrl+PageUp</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusPageUpText">
+        <source>Move Focus Page Up</source>
+        <target state="translated">Фокус на страницу вверх</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusUpKeyDisplayString">
+        <source>Ctrl+Up</source>
+        <target state="translated">Ctrl+Up</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveFocusUpText">
+        <source>Move Focus Up</source>
+        <target state="translated">Фокус вверх</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveLeftKeyDisplayString">
+        <source>Left</source>
+        <target state="translated">ВЛЕВО</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveLeftText">
+        <source>Move Left</source>
+        <target state="translated">Влево</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveRightKeyDisplayString">
+        <source>Right</source>
+        <target state="translated">ВПРАВО</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveRightText">
+        <source>Move Right</source>
+        <target state="translated">Вправо</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToEndKeyDisplayString">
+        <source>End</source>
+        <target state="translated">Завершить</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToEndText">
+        <source>Move To End</source>
+        <target state="translated">В конец</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToHomeKeyDisplayString">
+        <source>Home</source>
+        <target state="translated">Главная</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToHomeText">
+        <source>Move To Home</source>
+        <target state="translated">К началу</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToPageDownKeyDisplayString">
+        <source>PageDown</source>
+        <target state="translated">PageDown</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToPageDownText">
+        <source>Move To Page Down</source>
+        <target state="translated">Страница вниз</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToPageUpKeyDisplayString">
+        <source>PageUp</source>
+        <target state="translated">PageUp</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveToPageUpText">
+        <source>Move To Page Up</source>
+        <target state="translated">Страница вверх</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveUpKeyDisplayString">
+        <source>Up</source>
+        <target state="translated">Up</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MoveUpText">
+        <source>Move Up</source>
+        <target state="translated">Переместить вверх</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MultiSingleton">
+        <source>Cannot have more than one '{0}' instance in the same AppDomain.</source>
+        <target state="translated">Один и тот же AppDomain не может содержать более одного экземпляра "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NavigateJournalText">
+        <source>Navigate Journal</source>
+        <target state="translated">Переход по журналу</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NewKeyDisplayString">
+        <source>Ctrl+N</source>
+        <target state="translated">Ctrl+N</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NewText">
+        <source>New</source>
+        <target state="translated">Создать</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NextPageText">
+        <source>Next Page</source>
+        <target state="translated">Следующая страница</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NonCLSException">
+        <source>Text formatting engine encountered a non-CLS exception.</source>
+        <target state="translated">Процессор форматирования текста обнаружил исключение, которое не относится к CLS.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NonPackAppAbsoluteUriNotAllowed">
+        <source>Unsupported Uri syntax. Method expects a relative Uri or a pack://application:,,,/ form of absolute Uri.</source>
+        <target state="translated">Недопустимый синтаксис идентификатора URI. Методу требуется относительный идентификатор URI или форма "pack://application:,,,/" абсолютного идентификатора URI.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NonWhiteSpaceInAddText">
+        <source>Text content is not allowed on this element. Cannot add the text '{0}'.</source>
+        <target state="translated">Данный элемент не может содержать текст. Невозможно добавить текст "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotACommandText">
+        <source>Not a Command</source>
+        <target state="translated">Не команда</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAllowedPackageUri">
+        <source>The package URI is not allowed in the package store.</source>
+        <target state="translated">Универсальный идентификатор ресурса пакета недопустим в хранилище пакетов.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotAllowedToAccessStagingArea">
+        <source>Only PreProcessInput and PostProcessInput events can access InputManager staging area.</source>
+        <target state="translated">Только события PreProcessInput и PostProcessInput могут обращаться к области размещения InputManager.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NotInInitialization">
+        <source>The object is not being initialized.</source>
+        <target state="translated">Инициализация объекта не выполняется.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NullBaseUriParam">
+        <source>'{0}' parameter cannot be null unless '{1}' is an absolute URI.</source>
+        <target state="translated">Параметр "{0}" не может принимать значение NULL, если "{1}" не является абсолютным идентификатором URI.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="NullHwnd">
+        <source>Hwnd of zero is not valid.</source>
+        <target state="translated">Нулевой дескриптор Hwnd не является допустимым.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OffsetNegative">
+        <source>Offset must be non-negative.</source>
+        <target state="translated">Смещение должно быть неотрицательным.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OleRegisterDragDropFailure">
+        <source>OleRegisterDragDrop failed with return code '{0}' and window handle '{1}'.</source>
+        <target state="translated">Сбой выполнения OleRegisterDragDrop (код возврата "{0}", дескриптор окна "{1}").</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OleRevokeDragDropFailure">
+        <source>OleRevokeDragDrop failed with return code '{0}' and window handle '{1}'.</source>
+        <target state="translated">Сбой выполнения OleRevokeDragDrop (код возврата "{0}", дескриптор окна "{1}").</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OleServicesContext_ThreadMustBeSTA">
+        <source>Current thread must be set to single thread apartment (STA) mode before OLE calls can be made.</source>
+        <target state="translated">Текущий поток должен находиться в режиме контейнера с одним потоком (STA), чтобы вызовы OLE стали возможны.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OleServicesContext_oleInitializeFailure">
+        <source>OleInitialize failed for '{0}'.</source>
+        <target state="translated">Сбой выполнения OleInitialize для "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyAcceptsKeyMessages">
+        <source>Keyboard processing can only process keyboard messages.</source>
+        <target state="translated">Объект Keyboard может обрабатывать сообщения только от клавиатуры.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OnlyOneInitialization">
+        <source>The object is already initialized and cannot be initialized again.</source>
+        <target state="translated">Объект уже инициализирован, повторная инициализация запрещена.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OpenKeyDisplayString">
+        <source>Ctrl+O</source>
+        <target state="translated">Ctrl+O</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OpenText">
+        <source>Open</source>
+        <target state="translated">Открыть</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="OptimalParagraphMustWrap">
+        <source>Paragraph must be allowed to wrap in total-fit formatting.</source>
+        <target state="translated">Абзац должен разрешать перенос слов при форматировании по ширине.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackWebRequestCachePolicyIllegal">
+        <source>Cache policy is not valid.</source>
+        <target state="translated">Недопустимая политика кэширования.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageAlreadyExists">
+        <source>A package with the same URI is already in the package store.</source>
+        <target state="translated">Хранилище пакетов уже содержит пакет с данным идентификатором URI.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PaginatorMissingContentPosition">
+        <source>Specified ContentPosition is not valid for this element.</source>
+        <target state="translated">Указанное значение ContentPosition не подходит для данного элемента.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PaginatorNegativePageNumber">
+        <source>Page number cannot be negative.</source>
+        <target state="translated">Номер страницы не может быть отрицательным.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterCannotBeGreaterThan">
+        <source>The parameter value cannot be greater than '{0}'.</source>
+        <target state="translated">Значение параметра не может быть больше "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterCannotBeLessThan">
+        <source>The parameter value cannot be less than '{0}'.</source>
+        <target state="translated">Значение параметра не может быть меньше "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterCannotBeNegative">
+        <source>Parameter must be greater than or equal to zero.</source>
+        <target state="translated">Значение параметра должно быть больше или равно 0.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterMustBeBetween">
+        <source>The parameter value must be between '{0}' and '{1}'.</source>
+        <target state="translated">Параметр должен принимать значения от "{0}" до "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterMustBeGreaterThanZero">
+        <source>The parameter value must be greater than zero.</source>
+        <target state="translated">Значение параметра должно быть больше 0.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterValueCannotBeInfinity">
+        <source>The parameter value must be finite.</source>
+        <target state="translated">Значение параметра должно быть конечным.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterValueCannotBeNaN">
+        <source>The parameter value must be a number.</source>
+        <target state="translated">Значение параметра должно быть числом.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterValueCannotBeNegative">
+        <source>'{0}' parameter value cannot be negative.</source>
+        <target state="translated">Значение параметра "{0}" не может быть отрицательным.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ParameterValueMustBeGreaterThanZero">
+        <source>'{0}' parameter value must be greater than zero.</source>
+        <target state="translated">Значение параметра "{0}" должно быть больше 0.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Parser_BadForm">
+        <source>Incorrect form '{0}' found parsing '{1}' string.</source>
+        <target state="translated">При синтаксическом анализе строки "{1}" обнаружена неправильная форма "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Parser_Empty">
+        <source>Empty string not allowed.</source>
+        <target state="translated">Пустую строку использовать запрещено.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Parser_UnexpectedToken">
+        <source>Unexpected token '{0}' encountered at position '{1}'.</source>
+        <target state="translated">Недопустимый маркер "{0}" обнаружен в позиции "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Parsers_IllegalToken">
+        <source>Token is not valid.</source>
+        <target state="translated">Недопустимый маркер.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Parsers_IllegalToken_250_Chars">
+        <source>Token is not valid because it is more than 250 characters.</source>
+        <target state="translated">Маркер является недействительным, поскольку содержит более 250 знаков.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PasteKeyDisplayString">
+        <source>Ctrl+V;Shift+Insert</source>
+        <target state="translated">Ctrl+V;Shift+Insert</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PasteText">
+        <source>Paste</source>
+        <target state="translated">Вставить</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PathGeometry_InternalReadBackError">
+        <source>Internal error in newly produced path figures.</source>
+        <target state="translated">Внутренняя ошибка в только что созданных фигурах пути.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PathTooLongExceptionWithFileName">
+        <source>'{0}' file name is longer than the system-defined maximum length.</source>
+        <target state="translated">Имя файла "{0}" превышает максимально допустимую в системе длину.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PenImcDllVerificationFailed">
+        <source>{0} failed to load from static constructor.</source>
+        <target state="translated">{0} не удалось выполнить загрузку из статического конструктора.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PenImcSxSRegistrationFailed">
+        <source>SxS COM registration of {0} failed.</source>
+        <target state="translated">Сбой регистрации SxS COM для {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PenService_InvalidPacketData">
+        <source>Unexpected size of packet from pen service.</source>
+        <target state="translated">Получен пакет неожиданного размера от службы пера.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PenService_WindowAlreadyRegistered">
+        <source>The window is already registered for stylus input.</source>
+        <target state="translated">Окно уже зарегистрировано для ввода при помощи пера.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PenService_WindowNotRegistered">
+        <source>The window is not registered for stylus input.</source>
+        <target state="translated">Окно не зарегистрировано для ввода при помощи пера.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Penservice_Disposed">
+        <source>Cannot access a disposed pen service.</source>
+        <target state="translated">Невозможно обратиться к ликвидированной службе пера.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PreviousPageText">
+        <source>Previous Page</source>
+        <target state="translated">Предыдущая страница</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintKeyDisplayString">
+        <source>Ctrl+P</source>
+        <target state="translated">CTRL+P</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintPreviewKeyDisplayString">
+        <source>Ctrl+F2</source>
+        <target state="translated">Ctrl+F2</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintPreviewText">
+        <source>Print Preview</source>
+        <target state="translated">Предварительный просмотр</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PrintText">
+        <source>Print</source>
+        <target state="translated">Печать</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertiesKeyDisplayString">
+        <source>F4</source>
+        <target state="translated">F4</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertiesText">
+        <source>Properties</source>
+        <target state="translated">Свойства</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyCannotBeNegative">
+        <source>'{0}' property value must be greater than or equal to zero.</source>
+        <target state="translated">Значение свойства "{0}" должно быть больше или равно 0.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyMustBeGreaterThanZero">
+        <source>'{0}' property value must be greater than zero.</source>
+        <target state="translated">Значение свойства "{0}" должно быть больше 0.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyOfClassCannotBeGreaterThan">
+        <source>'{0}' property of the '{1}' class must be less than or equal to '{2}'.</source>
+        <target state="translated">Свойство "{0}" класса "{1}" должно быть меньше или равно "{2}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyOfClassCannotBeNull">
+        <source>'{0}' property of the '{1}' class cannot be null.</source>
+        <target state="translated">Свойство "{0}" класса "{1}" не может иметь значение NULL.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyOfClassMustBeGreaterThanZero">
+        <source>'{0}' property of the '{1}' class must be greater than zero.</source>
+        <target state="translated">Свойство "{0}" класса "{1}" должно быть больше 0.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PropertyValueCannotBeNaN">
+        <source>'{0}' property value cannot be NaN.</source>
+        <target state="translated">Значение свойства "{0}" не может быть равно NaN.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Quaternion_ZeroAxisSpecified">
+        <source>Zero axis of rotation specified.</source>
+        <target state="translated">Задана нулевая ось вращения.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="QueryLineFailure">
+        <source>Text formatting engine cannot query text information due to error: '{0}'.</source>
+        <target state="translated">Процессор форматирования текста не может запросить сведения о тексте из-за ошибки: "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadCountNegative">
+        <source>Count of bytes to read cannot be negative.</source>
+        <target state="translated">Число считываемых байт не может быть отрицательным.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReadOnlyInputGesturesCollection">
+        <source>Operation not supported on a read-only InputGestureCollection.</source>
+        <target state="translated">Операцию нельзя выполнить для семейства InputGestureCollection, доступного только для чтения.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Rect3D_CannotCallMethod">
+        <source>Cannot call the method.</source>
+        <target state="translated">Не удается вызвать метод.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Rect3D_CannotModifyEmptyRect">
+        <source>Cannot modify this property on the Empty Rect3D.</source>
+        <target state="translated">Невозможно изменить это свойство для Empty Rect3D.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Rect_Empty">
+        <source>Rectangle cannot be empty.</source>
+        <target state="translated">Прямоугольник не может быть пустым.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RedoKeyDisplayString">
+        <source>Ctrl+Y</source>
+        <target state="translated">Ctrl+Y</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RedoText">
+        <source>Redo</source>
+        <target state="translated">Повторить</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReentrantVisualTreeChangeError">
+        <source>The visual tree has been changed during a '{0}' event.</source>
+        <target state="translated">Визуальное дерево изменено во время события "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReentrantVisualTreeChangeWarning">
+        <source>WARNING. The visual tree has been changed during a '{0}' event.  This is not supported in a production application.  Be sure to correct this before shipping the application.</source>
+        <target state="translated">Внимание! Визуальное дерево изменено во время события "{0}", что не поддерживается в рабочем приложении. Исправьте это перед доставкой приложения.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RefreshKeyDisplayString">
+        <source>F5</source>
+        <target state="translated">F5</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RefreshText">
+        <source>Refresh</source>
+        <target state="translated">Обновление файлов.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RelievePenaltyResourceFailure">
+        <source>Text formatting engine cannot release penalty resource due to error: '{0}'.</source>
+        <target state="translated">Процессор форматирования текста не может освободить ресурс штрафа из-за ошибки: "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReplaceKeyDisplayString">
+        <source>Ctrl+H</source>
+        <target state="translated">Ctrl+H</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ReplaceText">
+        <source>Replace</source>
+        <target state="translated">Замена.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequestAlreadyStarted">
+        <source>The operation is not allowed after the first request is made.</source>
+        <target state="translated">Операцию запрещено выполнять после первого запроса.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequiresSTA">
+        <source>The calling thread must be STA, because many UI components require this.</source>
+        <target state="translated">Вызывающим потоком должен быть STA, поскольку этого требуют большинство компонентов UI.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ResourceNotFoundUnderCacheOnlyPolicy">
+        <source>Current CachePolicy is CacheOnly but the requested resource does not exist in the cache.</source>
+        <target state="translated">Текущая политика CachePolicy имеет тип CacheOnly, но запрошенный ресурс в кэше отсутствует.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RoutedEventArgsMustHaveRoutedEvent">
+        <source>Every RoutedEventArgs must have a non-null RoutedEvent associated with it.</source>
+        <target state="translated">С каждой группой RoutedEventArgs должно быть связано свойство RoutedEvent, не являющееся неопределенным.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RoutedEventCannotChangeWhileRouting">
+        <source>Cannot change the RoutedEvent property while the RoutedEvent is being routed.</source>
+        <target state="translated">Невозможно изменить свойство RoutedEvent во время маршрутизации RoutedEvent.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SCDataChanged">
+        <source>The Strokes have changed.</source>
+        <target state="translated">Объекты Strokes были изменены.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SCErasePath">
+        <source>Path of erasing stroke cannot be null.</source>
+        <target state="translated">Путь удаления росчерков не может иметь неопределенное значение.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SCEraseShape">
+        <source>Erasing Shape cannot be null.</source>
+        <target state="translated">Форма Shape ластика не может иметь неопределенное значение.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SaveAsText">
+        <source>Save As</source>
+        <target state="translated">Сохранить как</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SaveKeyDisplayString">
+        <source>Ctrl+S</source>
+        <target state="translated">Ctrl+S</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SaveText">
+        <source>Save</source>
+        <target state="translated">Сохранить</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SchemaInvalidForTransport">
+        <source>Cannot resolve current inner request URI schema. Bypass cache only for resolvable schema types such as http, ftp, or file.</source>
+        <target state="translated">Не удается разрешить текущую схему идентификаторов URI внутреннего запроса. Кэш не используется только для разрешимых типов схем, таких как http, ftp или file.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScopeMustBeUIElementOrContent">
+        <source>The scope must be a UIElement or ContentElement.</source>
+        <target state="translated">В качестве области необходимо использовать UIElement или ContentElement.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScrollByLineText">
+        <source>Scroll By Line</source>
+        <target state="translated">Прокрутка по строкам</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScrollPageDownKeyDisplayString">
+        <source>PageDown</source>
+        <target state="translated">PageDown</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScrollPageDownText">
+        <source>Scroll Page Down</source>
+        <target state="translated">Прокрутка страницы вниз</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScrollPageLeftText">
+        <source>Scroll Page Left</source>
+        <target state="translated">Прокрутка страницы влево</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScrollPageRightText">
+        <source>Scroll Page Right</source>
+        <target state="translated">Прокрутка страницы вправо</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScrollPageUpKeyDisplayString">
+        <source>PageUp</source>
+        <target state="translated">PageUp</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ScrollPageUpText">
+        <source>Scroll Page Up</source>
+        <target state="translated">Прокрутка страницы вверх</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SearchKey">
+        <source>F3</source>
+        <target state="translated">F3</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SearchKeyDisplayString">
+        <source>F3</source>
+        <target state="translated">F3</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SearchText">
+        <source>Search</source>
+        <target state="translated">Найти</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
+        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
+        <target state="translated">Не удается задать значение "true" для SandboxExternalContent при частично доверительных отношениях.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SeekNegative">
+        <source>Cannot set seek pointer to a negative position.</source>
+        <target state="translated">Невозможно установить указатель поиска в отрицательную позицию.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SeekOriginInvalid">
+        <source>SeekOrigin value is not valid.</source>
+        <target state="translated">Недопустимое значение SeekOrigin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectAllKeyDisplayString">
+        <source>Ctrl+A</source>
+        <target state="translated">Ctrl+A</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectAllText">
+        <source>Select All</source>
+        <target state="translated">Выбрать все</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectToEndKeyDisplayString">
+        <source>Shift+End</source>
+        <target state="translated">Shift+End</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectToEndText">
+        <source>Select To End</source>
+        <target state="translated">Выделить до конца</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectToHomeKeyDisplayString">
+        <source>Shift+Home</source>
+        <target state="translated">Shift+Home</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectToHomeText">
+        <source>Select To Home</source>
+        <target state="translated">Выделить до начала</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectToPageDownKeyDisplayString">
+        <source>Shift+PageDown</source>
+        <target state="translated">Shift+PageDown</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectToPageDownText">
+        <source>Select To PageDown</source>
+        <target state="translated">Выделить страницу вниз</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectToPageUpKeyDisplayString">
+        <source>Shift+PageUp</source>
+        <target state="translated">Shift+PageUp</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SelectToPageUpText">
+        <source>Select To PageUp</source>
+        <target state="translated">Выделить страницу вверх</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetBreakingFailure">
+        <source>Text formatting engine cannot set breaking conditions due to error: '{0}'.</source>
+        <target state="translated">Процессор форматирования текста не может установить условия разбиения из-за ошибки: "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetDocFailure">
+        <source>Text formatting engine cannot set document context due to error: '{0}'.</source>
+        <target state="translated">Процессор форматирования текста не может установить контекст документа из-за ошибки: "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetFocusFailed">
+        <source>The target element cannot receive focus.</source>
+        <target state="translated">Конечный элемент не может получить фокус.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetLengthNotSupported">
+        <source>Stream does not support SetLength.</source>
+        <target state="translated">Поток не поддерживает функцию SetLength.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SetTabsFailure">
+        <source>Text formatting engine cannot set tab stop due to error: '{0}'.</source>
+        <target state="translated">Процессор форматирования текста не может установить позиции табуляции из-за ошибки: "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SidewaysRTLTextIsNotSupported">
+        <source>Sideways right to left text is not supported.</source>
+        <target state="translated">Текст, который читается справа налево, не поддерживается.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Size3D_CannotModifyEmptySize">
+        <source>Cannot modify this property on the Empty Size3D.</source>
+        <target state="translated">Невозможно изменить это свойство для Empty Size3D.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Size3D_DimensionCannotBeNegative">
+        <source>Cannot set a negative dimension.</source>
+        <target state="translated">Невозможно задать отрицательные размеры.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SourceNotSet">
+        <source>Must set Source in RoutedEventArgs before building event route or invoking handlers.</source>
+        <target state="translated">Перед построением маршрута событий или вызовом обработчиков необходимо задать Source в RoutedEventArgs.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SpecificNumberCultureRequired">
+        <source>The CultureInfo object used for number substitution must be a specific culture, not a neutral culture or InvariantCulture.</source>
+        <target state="translated">Объект CultureInfo, предназначенный для замены формата чисел, должен соответствовать определенной культуре, не нейтральной и не InvariantCulture.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StopKeyDisplayString">
+        <source>Esc</source>
+        <target state="translated">ESC</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StopText">
+        <source>Stop</source>
+        <target state="translated">Остановить</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StreamGeometry_NeedBeginFigure">
+        <source>BeginFigure must be called before this API.</source>
+        <target state="translated">Необходимо вызвать BeginFigure до этой API-функции.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringEmpty">
+        <source>Parameter cannot be a zero-length string.</source>
+        <target state="translated">Параметр не может представлять собой строку нулевой длины.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StrokeCollectionCountTooBig">
+        <source>Maximum number of strokes is two.</source>
+        <target state="translated">Максимальное число росчерков равно двум.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StrokeCollectionIsReadOnly">
+        <source>The specified StrokeCollection is read-only.</source>
+        <target state="translated">Указанное семейство StrokeCollection доступно только для чтения.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StrokeIsDuplicated">
+        <source>A duplicate stroke cannot be added to StrokeCollection.</source>
+        <target state="translated">Повторяющиеся росчерки нельзя добавлять в семейство StrokeCollection.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StrokesNotContiguously">
+        <source>The strokes being replaced must exist contiguously in the current StrokeCollection.</source>
+        <target state="translated">Подлежащие замене росчерки должны находиться в текущем семействе StrokeCollection рядом друг с другом.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_CanOnlyCallForDownMoveOrUp">
+        <source>NotifyWhenProcessed can be called only during OnStylusDown, OnStylusMove, or OnStylusUp.</source>
+        <target state="translated">NotifyWhenProcessed можно вызвать только во время OnStylusDown, OnStylusMove или OnStylusUp.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_EnumeratorFailure">
+        <source>No current object to return.</source>
+        <target state="translated">Нет текущего объекта для возврата.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_IndexOutOfRange">
+        <source>'{0}' is not a valid index in the collection.</source>
+        <target state="translated">"{0}" не является допустимым индексом семейства.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_InvalidMax">
+        <source>'{0}' must be greater than or equal to '{1}'.</source>
+        <target state="translated">Значение "{0}" должно быть больше или равно "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_MatrixNotInvertable">
+        <source>Matrix is not invertible.</source>
+        <target state="translated">Matrix не является обратимой.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_MustBeDownToCallReset">
+        <source>Stylus or Mouse must be in the down state when calling Reset.</source>
+        <target state="translated">Во время вызова Reset перо и мышь должны находиться в отключенном состоянии.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_PenContextFailure">
+        <source>Stylus input encountered an error.</source>
+        <target state="translated">При вводе данных с помощью пера произошла ошибка.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_PlugInIsDuplicated">
+        <source>'{0}' already exists in the collection.</source>
+        <target state="translated">Семейство уже содержит элемент "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_PlugInIsNull">
+        <source>'{0}' must be non-null.</source>
+        <target state="translated">"{0}" не может иметь неопределенное значение.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_PlugInNotExist">
+        <source>'{0}' does not exist in the collection.</source>
+        <target state="translated">Элемент "{0}" отсутствует в семействе.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_StylusPointsCantBeEmpty">
+        <source>Count of points must be greater than zero.</source>
+        <target state="translated">Число точек должно быть больше нуля.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextBreakpointHasBeenDisposed">
+        <source>Text breakpoint was previously disposed.</source>
+        <target state="translated">Текстовая точка прерывания была ликвидирована ранее.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextCompositionManager_NoInputManager">
+        <source>'{0}' does not have a valid InputManager.</source>
+        <target state="translated">Для "{0}" нет допустимого InputManager.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextCompositionManager_TextCompositionHasDone">
+        <source>'{0}' has already finished.</source>
+        <target state="translated">"{0}" уже завершен.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextCompositionManager_TextCompositionHasStarted">
+        <source>'{0}' has already started.</source>
+        <target state="translated">"{0}" уже запущен.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextCompositionManager_TextCompositionNotStarted">
+        <source>'{0}' has not yet started.</source>
+        <target state="translated">"{0}" еще не запущен.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextComposition_NullResultText">
+        <source>Result text cannot be null.</source>
+        <target state="translated">Полученный текст не может быть пустым.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextFormatterReentranceProhibited">
+        <source>Cannot reenter Text formatting engine during optimal paragraph formatting.</source>
+        <target state="translated">Невозможно повторно войти в процессор форматирования текста во время оптимизации форматирования абзаца.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextLineHasBeenDisposed">
+        <source>Text line was previously disposed.</source>
+        <target state="translated">Строка текста была ликвидирована ранее.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextObjectMetrics_WidthOutOfRange">
+        <source>The return value of TextEmbeddedObject.Format contains an out-of-range value for the Width property.</source>
+        <target state="translated">Значение, возвращенное методом TextEmbeddedObject.Format, содержит значение свойства Width, лежащее вне допустимого диапазона.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextPenaltyModuleHasBeenDisposed">
+        <source>Text penalty module was previously disposed.</source>
+        <target state="translated">Модуль текстовых штрафов был удален заблаговременно.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextProvider_InvalidChild">
+        <source>'{0}' parameter value is not a valid child element of the text provider.</source>
+        <target state="translated">Значение параметра "{0}" не является допустимым дочерним элементом поставщика текста.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextRangeProvider_InvalidRangeProvider">
+        <source>'{0}' parameter value is not a valid ITextRangeProvider.</source>
+        <target state="translated">Значение параметра "{0}" не является допустимым элементом ITextRangeProvider.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TextRunPropertiesCannotBeNull">
+        <source>The Properties member of this text run cannot be null.</source>
+        <target state="translated">Элемент Properties данного текстового выполнения не может иметь неопределенное значение.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_AccelAndDecelGreaterThanOne">
+        <source>The sum of AccelerationRatio and DecelerationRatio must be less than or equal to one.</source>
+        <target state="translated">Сумма AccelerationRatio и DecelerationRatio должна быть меньше или равна 1.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_CanSlipOnlyOnSimpleTimelines">
+        <source>CanSlip is supported only on timelines without AutoReverse, AccelerationRatio, or DecelerationRatio.</source>
+        <target state="translated">CanSlip поддерживается только для шкал времени без AutoReverse, AccelerationRatio или DecelerationRatio.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_ChildMustBeTimeline">
+        <source>A child of a Timeline in "XAML" must also be a Timeline or a class that derives from Timeline.</source>
+        <target state="translated">Дочерний элемент класса Timeline в "XAML" также должен быть классом Timeline или классом, производным от Timeline.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_CreateClockMustReturnNewClock">
+        <source>The {0}.CreateClock method returned a pre-existing object, rather than a new object inheriting from TimelineClock.</source>
+        <target state="translated">Метод {0}.CreateClock возвратил предварительно созданный объект, вместо объекта, унаследованного от TimelineClock.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_DifferentThreads">
+        <source>The specified timeline belongs to a different thread than this timeline.</source>
+        <target state="translated">Указанная шкала времени принадлежит другому потоку.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_EnumeratorInvalidated">
+        <source>The enumeration is no longer valid because the collection it enumerates has changed.</source>
+        <target state="translated">Перечисление больше не является допустимым, поскольку перечисляемое семейство изменилась.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_EnumeratorOutOfRange">
+        <source>The enumerator is out of range.</source>
+        <target state="translated">Перечислитель выходит за пределы допустимого диапазона.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_InvalidArgAccelAndDecel">
+        <source>Property value must be between 0.0 and 1.0.</source>
+        <target state="translated">Значение свойства должно лежать в интервале от 0,0 до 1,0.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_InvalidArgFiniteNonNegative">
+        <source>Property value must be finite and greater than or equal to zero.</source>
+        <target state="translated">Свойство может принимать конечные неотрицательные значения.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_InvalidArgFinitePositive">
+        <source>Property value must be finite and greater than zero.</source>
+        <target state="translated">Свойство может принимать конечные положительные значения.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_InvalidArgNonNegative">
+        <source>Property value must be greater than or equal to zero or indefinite.</source>
+        <target state="translated">Значение свойства должно быть больше или равно 0 или не определено.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_InvalidArgPositive">
+        <source>Property value must be greater than zero or indefinite.</source>
+        <target state="translated">Значение свойства должно быть больше нуля или не определено.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_NoTextChildren">
+        <source>Timeline objects cannot have text objects as children.</source>
+        <target state="translated">Объекты Timeline не могут иметь дочерние текстовые объекты.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_NotTimeSpan">
+        <source>Unable to return a TimeSpan property value for a Duration value of '{0}'. Check the HasTimeSpan property before requesting the TimeSpan property value from a Duration.</source>
+        <target state="translated">Невозможно вернуть значение свойства TimeSpan для значения Duration, равного "{0}". Проверьте значение свойства HasTimeSpan, прежде чем запросить значение свойства TimeSpan у Duration.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_OperationEnqueuedOutOfOrder">
+        <source>A timing operation has been not been queued in the appropriate order.</source>
+        <target state="translated">Операция распределения времени не была поставлена в очередь в правильном порядке.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_RepeatBehaviorInvalidIterationCount">
+        <source>'{0}' is not a valid IterationCount value for a RepeatBehavior structure. An IterationCount value must represent a number that is greater than or equal to zero but not infinite.</source>
+        <target state="translated">"{0}" не является допустимым значением IterationCount для структуры RepeatBehavior. Значение IterationCount должно быть больше или равно 0, но не должно быть бесконечным.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_RepeatBehaviorInvalidRepeatDuration">
+        <source>'{0}' is not a valid RepeatDuration value for a RepeatBehavior structure. A RepeatDuration value must be a TimeSpan value greater than or equal to zero ticks.</source>
+        <target state="translated">"{0}" не является допустимым значением RepeatDuration для структуры RepeatBehavior. Для RepeatDuration необходимо использовать значение TimeSpan, которое должно быть больше или равно 0 отсчетов.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_RepeatBehaviorNotIterationCount">
+        <source>'{0}' RepeatBehavior does not represent an iteration count and does not have an IterationCount value.</source>
+        <target state="translated">RepeatBehavior "{0}" не представляет количество итераций и не содержит значение IterationCount.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_RepeatBehaviorNotRepeatDuration">
+        <source>'{0}' RepeatBehavior does not represent a repeat duration and does not have a RepeatDuration value.</source>
+        <target state="translated">RepeatBehavior "{0}" не представляет длительность повтора и не содержит значение RepeatDuration.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_SeekDestinationAmbiguousDueToSlip">
+        <source>The ClockController.Seek method was called with arguments that describe a seek destination that seeks a child with Slip but no defined duration. It is unclear if we are seeking the child or seeking past the child's duration.</source>
+        <target state="translated">Метод ClockController.Seek был вызван с аргументами, описывающими искомый элемент. Метод выполняет поиск дочернего элемента со Slip, но без определенной продолжительности. Неясно, что ищется: дочерний элемент или то, что лежит после длительности дочернего элемента.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_SeekDestinationIndefinite">
+        <source>The ClockController.Seek method was called using TimeSeekOrigin.Duration as the seekOrigin parameter for a Clock that has a duration of Forever. Clocks that have duration of Forever must use TimeSeekOrigin.BeginTime.</source>
+        <target state="translated">Метод ClockController.Seek был вызван с использованием TimeSeekOrigin.Duration в качестве параметра seekOrigin для объекта Clock со значением длительности Forever. Объекты Clock, у которых длительность имеет значение Forever, должны использовать метод TimeSeekOrigin.BeginTime.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_SeekDestinationNegative">
+        <source>The ClockController.Seek method was called with arguments that describe a seek destination with a negative value. The seek destination must be a time greater than or equal to zero.</source>
+        <target state="translated">Метод ClockController.Seek был вызван с аргументами, описывающими искомый элемент с отрицательным значением. Искомый элемент должен быть временем, большим или равным 0.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_SkipToFillDestinationIndefinite">
+        <source>Cannot call the ClockController.SkipToFill method for a Clock that has a Duration or RepeatDuration of Forever, because this Clock will never reach its fill period.</source>
+        <target state="translated">Невозможно вызвать метод ClockController.SkipToFill для объекта Clock, у которого для свойств Duration или RepeatDuration установлено значение Forever, поскольку Clock никогда не достигнет периода заполнения.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_SlipBehavior_SlipOnlyOnSimpleTimelines">
+        <source>SlipBehavior.Slip is supported only on root ParallelTimelines that do not reverse, accelerate, decelerate, or have a RepeatBehavior specified as a Duration.</source>
+        <target state="translated">Метод SlipBehavior.Slip поддерживается только для корневого элемента ParallelTimelines, который не выполняет реверсирование, ускорение, замедление и для которого в качестве значения RepeatBehavior не указано Duration.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Timing_SlipBehavior_SyncOnlyWithSimpleParents">
+        <source>Clocks with CanSlip cannot have parents or ancestors with AutoReverse, AccelerationRatio, or DecelerationRatio.</source>
+        <target state="translated">Объекты Clocks с CanSlip не могут иметь родительских объектов или предков с элементами AutoReverse, AccelerationRatio или DecelerationRatio.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperEmptyToken">
+        <source>Empty token encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">При синтаксическом анализе "{1}" обнаружен пустой маркер в позиции {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperExtraDataEncountered">
+        <source>Extra data encountered at position {0} while parsing '{1}'.</source>
+        <target state="translated">При синтаксическом анализе "{1}" обнаружены избыточные данные в позиции {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperMissingEndQuote">
+        <source>Missing end quote encountered while parsing '{0}'.</source>
+        <target state="translated">При синтаксическом анализе "{0}" обнаружена пропущенная закрывающая кавычка.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TokenizerHelperPrematureStringTermination">
+        <source>Premature string termination encountered while parsing '{0}'.</source>
+        <target state="translated">При синтаксическом анализе "{0}" обнаружено преждевременное завершение строки.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyGlyphRuns">
+        <source>Too many glyph runs in the scene to render.</source>
+        <target state="translated">Сцена содержит слишком много глифов, подлежащих обработке.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TooManyRoutedEvents">
+        <source>RoutedEvent/EventPrivateKey limit exceeded. Routed events or EventPrivateKey for CLR events are typically static class members registered with field initializers or static constructors. In this case, routed events or EventPrivateKeys might be getting initialized in instance constructors, causing the limit to be exceeded.</source>
+        <target state="translated">Превышен предел RoutedEvent/EventPrivateKey. Перенаправляемые события или EventPrivateKey для событий CLR обычно являются статическими элементами класса, зарегистрированные инициализаторами полей или статическими конструкторами. В этом случае перенаправляемые события или EventPrivateKeys могут инициализироваться в конструкторах экземпляров, что приводит к превышению предела.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Touch_Category">
+        <source>Touch</source>
+        <target state="translated">Прикосновение</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Touch_DeviceAlreadyActivated">
+        <source>The TouchDevice is already activated.</source>
+        <target state="translated">Устройство сенсорного ввода (TouchDevice) уже активировано.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Touch_DeviceNotActivated">
+        <source>The TouchDevice is not activated.</source>
+        <target state="translated">Устройство сенсорного ввода (TouchDevice) не активировано.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TreeLoop">
+        <source>Potential cycle in tree found while building the event route.</source>
+        <target state="translated">При построении маршрута события в дереве обнаружен потенциальный цикл.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TypeMetadataCannotChangeAfterUse">
+        <source>Cannot change property metadata after it has been associated with a property.</source>
+        <target state="translated">Не удается изменить метаданные свойства после их сопоставления свойству.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UIElement_Layout_InfinityArrange">
+        <source>Cannot call Arrange on a UIElement with infinite size or NaN. Parent of type '{0}' invokes the UIElement. Arrange called on element of type '{1}'.</source>
+        <target state="translated">Метод Arrange запрещено вызывать для элемента UIElement, имеющего бесконечный размер или не являющегося числовым. Родительский элемент типа "{0}" вызывает UIElement. Метод Arrange вызвал элемент типа "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UIElement_Layout_NaNMeasure">
+        <source>UIElement.Measure(availableSize) cannot be called with NaN size.</source>
+        <target state="translated">UIElement.Measure(availableSize) нельзя вызвать с размером NaN.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UIElement_Layout_NaNReturned">
+        <source>Layout measurement override of element '{0}' should not return NaN values as its DesiredSize.</source>
+        <target state="translated">Переопределения измерений макета элемента "{0}" не должны возвращать значения NaN для параметра DesiredSize.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UIElement_Layout_PositiveInfinityReturned">
+        <source>Layout measurement override of element '{0}' should not return PositiveInfinity as its DesiredSize, even if Infinity is passed in as available size.</source>
+        <target state="translated">Переопределения измерений макета элемента "{0}" не должны возвращать значения PositiveInfinity для параметра DesiredSize, даже если в качестве доступного размера передано значение Infinity.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnauthorizedAccessExceptionWithFileName">
+        <source>Access denied to the path '{0}'.</source>
+        <target state="translated">Доступ к пути "{0}" запрещен.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UndoKeyDisplayString">
+        <source>Ctrl+Z</source>
+        <target state="translated">Ctrl+Z</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UndoText">
+        <source>Undo</source>
+        <target state="translated">Отменить</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedParameterType">
+        <source>Parameter is unexpected type '{0}'. Expected type is '{1}'.</source>
+        <target state="translated">Параметр имеет непредвиденный тип "{0}". Ожидается тип "{1}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnexpectedStroke">
+        <source>Unexpected Stroke in PropertyDataChangedEventArgs.Owner.</source>
+        <target state="translated">Непредвиденный росчерк Stroke в PropertyDataChangedEventArgs.Owner.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownPathOperationType">
+        <source>Unknown path operation attempted.</source>
+        <target state="translated">Предпринята попытка выполнить операцию с неизвестным путем.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownStroke">
+        <source>Unrecognized Stroke in PropertyDataChangedEventArgs.Owner.</source>
+        <target state="translated">Нераспознанный росчерк Stroke в PropertyDataChangedEventArgs.Owner.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownStroke1">
+        <source>Unrecognized Stroke in Stroke.Invalidated event arguments.</source>
+        <target state="translated">Нераспознанный росчерк Stroke в аргументах события Stroke.Invalidated.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnknownStroke3">
+        <source>Unrecognized Stroke in StrokeCollectionChangedEventArgs.Removed.</source>
+        <target state="translated">Нераспознанный росчерк Stroke в StrokeCollectionChangedEventArgs.Removed.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnspecifiedGestureConstructionException">
+        <source>Failed to initialize GestureRecognizer.</source>
+        <target state="translated">Ошибка при инициализации GestureRecognizer.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnspecifiedGestureException">
+        <source>Gesture recognition failed.</source>
+        <target state="translated">Ошибка при распознавании жеста.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UnspecifiedSetEnabledGesturesException">
+        <source>Failed to set enabled gestures.</source>
+        <target state="translated">Ошибка при включении разрешенных жестов.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Unsupported_MouseAction">
+        <source>Unsupported MouseAction '{0}'.</source>
+        <target state="translated">Неподдерживаемое действие MouseAction "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UriMustBeAbsolute">
+        <source>URI must be absolute. Relative URIs are not supported.</source>
+        <target state="translated">Идентификатор URI должен быть абсолютным. Относительные идентификаторы URI не поддерживаются.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UriMustBeFileOrPack">
+        <source>Font family Uri should have either file:// or pack://application: scheme.</source>
+        <target state="translated">Идентификатор URI семейства шрифтов должен иметь схему file:// или pack://application.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UriNotAbsolute">
+        <source>URI must be absolute.</source>
+        <target state="translated">Идентификатор URI должен быть абсолютным.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UriSchemeMismatch">
+        <source>This factory supports only URIs with the '{0}' scheme.</source>
+        <target state="translated">Данное производство поддерживает только идентификаторы URI со схемой "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="UsesPerPixelOpacityIsObsolete">
+        <source>UsesPerPixelOpacity is obsolete and should not be set when using UsesPerPixelTransparency</source>
+        <target state="translated">Параметр UsesPerPixelOpacity устарел и не должен задаваться при использовании UsesPerPixelTransparency</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValueNotValidForGuid">
+        <source>Value is not valid for the specified GUID.</source>
+        <target state="translated">Значение не является допустимым для указанного GUID.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Viewport2DVisual3D_MaterialGroupIsInteractiveMaterial">
+        <source>MaterialGroup cannot be an interactive Material (IsVisualHostMaterial is true).</source>
+        <target state="translated">MaterialGroup не может быть интерактивным материалом (IsVisualHostMaterial имеет значение true).</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Viewport2DVisual3D_MultipleInteractiveMaterials">
+        <source>Viewport2DVisual3D supports only one interactive Material.</source>
+        <target state="translated">Viewport2DVisual3D поддерживает только один интерактивный материал.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VisualCannotBeDetached">
+        <source>Specified Visual cannot be detached.</source>
+        <target state="translated">Указанный элемент Visual не может быть отсоединен.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VisualCollection_EntryInUse">
+        <source>Specified index is already in use. Disconnect the Visual child at the specified index first.</source>
+        <target state="translated">Указанный индекс уже используется. Сначала отсоедините дочерний элемент Visual, соответствующий указанному индексу.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VisualCollection_NotEnoughCapacity">
+        <source>Number of entries exceeds specified capacity of the VisualCollection.</source>
+        <target state="translated">Количество записей превышает указанную емкость семейства VisualCollection.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VisualCollection_ReadOnly">
+        <source>This VisualCollection is read only and cannot be modified.</source>
+        <target state="translated">Семейство VisualCollection доступно только для чтения и не может быть изменено.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VisualCollection_VisualHasParent">
+        <source>Specified Visual is already a child of another Visual or the root of a CompositionTarget.</source>
+        <target state="translated">Указанный элемент Visual уже является дочерним по отношению к другому элементу Visual или корневому элементу CompositionTarget.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="VisualTarget_AnotherTargetAlreadyConnected">
+        <source>Another target is already connected to this HostVisual.</source>
+        <target state="translated">Другой целевой элемент уже подключен к данному элементу HostVisual.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_ArgumentOutOfRange">
+        <source>Specified index is out of range or child at index is null. Do not call this method if VisualChildrenCount returns zero, indicating that the Visual has no children.</source>
+        <target state="translated">Указанный индекс вышел за границы массива, или дочерний объект с индексом не определен. Не вызывайте данный метод, если метод VisualChildrenCount возвращает значение 0, указывая на отсутствие дочерних элементов у элемента Visual.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_CannotTransformPoint">
+        <source>This Visual cannot transform the given point.</source>
+        <target state="translated">Этот элемент Visual не может преобразовать данную точку.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_HasParent">
+        <source>Must disconnect specified child from current parent Visual before attaching to new parent Visual.</source>
+        <target state="translated">Необходимо отсоединить указанный дочерний элемент от родительского элемента Visual, прежде чем подсоединять его к новому элементу Visual.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_NoCommonAncestor">
+        <source>The specified Visual and this Visual do not share a common ancestor, so there is no valid transformation between the two Visuals.</source>
+        <target state="translated">Указанный элемент Visual и данный элемент Visual имеют разных предков, поэтому преобразование одного элемента Visual в другой осуществить невозможно.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_NoPresentationSource">
+        <source>This Visual is not connected to a PresentationSource.</source>
+        <target state="translated">Этот элемент Visual не подсоединен к PresentationSource.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_NotA3DVisual">
+        <source>'{0}' is not a Visual3D.</source>
+        <target state="translated">"{0}" не является Visual3D.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_NotADescendant">
+        <source>The specified Visual is not a descendant of this Visual.</source>
+        <target state="translated">Указанный элемент Visual не является потомком данного элемента Visual.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_NotAVisual">
+        <source>'{0}' is not a Visual or Visual3D.</source>
+        <target state="translated">"{0}" не является Visual или Visual3D.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_NotAnAncestor">
+        <source>The specified Visual is not an ancestor of this Visual.</source>
+        <target state="translated">Указанный элемент Visual не является предком данного элемента Visual.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Visual_NotChild">
+        <source>Specified Visual is not a child of this Visual.</source>
+        <target state="translated">Указанный элемент Visual не является дочерним элементом данного элемента Visual.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WIC_NotInitialized">
+        <source>Object must be initialized before operation can be performed.</source>
+        <target state="translated">Объект должен быть инициализирован до выполнения операции.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WebRequestTimeout">
+        <source>WebRequest timed out. Response did not arrive before the specified Timeout period elapsed.</source>
+        <target state="translated">Истекло время ожидания WebRequest. Ответ не пришел в течение заданного периода Timeout.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WebResponseCloseFailure">
+        <source>Error closing the WebResponse.</source>
+        <target state="translated">Ошибка при закрытии WebResponse.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WebResponseFailure">
+        <source>Error processing WebResponse.</source>
+        <target state="translated">Ошибка при обработке WebResponse.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WebResponsePartNotFound">
+        <source>Requested PackagePart not found in target resource.</source>
+        <target state="translated">Запрошенная часть PackagePart не обнаружена в целевом ресурсе.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WriteNotSupported">
+        <source>Stream does not support writing.</source>
+        <target state="translated">Поток не поддерживает запись.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WrongFirstSegment">
+        <source>The required pattern for URI containing ";component" is "AssemblyName;Vxxxx;PublicKey;component", where Vxxxx is the assembly version and PublicKey is the 16-character string representing the assembly public key token. Vxxxx and PublicKey are optional.</source>
+        <target state="translated">Требуемый сегмент идентификатора URI, содержащий параметр ";component", - "AssemblyName;Vxxxx;PublicKey;component", где Vxxxx - версия сборки, а PublicKey - 16-символьная строка, представляющая маркер открытого ключа сборки. Vxxxx и PublicKey указываются по желанию.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlLangGetCultureFailure">
+        <source>There is no registered CultureInfo with the IetfLanguageTag '{0}'.</source>
+        <target state="translated">Нет зарегистрированного свойства CultureInfo со значением IetfLanguageTag "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlLangGetSpecificCulture">
+        <source>Cannot find non-neutral culture related to '{0}'.</source>
+        <target state="translated">Не удается найти культуру, связанную с "{0}" и не являющуюся нейтральной.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XmlLangMalformed">
+        <source>'{0}' language tag must be empty or must conform to grammar defined in IETF RFC 3066.</source>
+        <target state="translated">Тег языка "{0}" должен быть пустым или удовлетворять грамматическим правилам, определенным в IETF RFC 3066.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomText">
+        <source>Zoom</source>
+        <target state="translated">Масштаб</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

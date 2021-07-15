@@ -5,9 +5,7 @@
 // Used to store mapping information for names occuring 
 // within the logical tree section.
 
-using System;
 using System.Globalization;
-
 
 namespace System.Xaml
 {

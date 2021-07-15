@@ -13,11 +13,10 @@
 //  Created:     06/07/2005 Microsoft
 //
 
+using System.Runtime.CompilerServices;
+
 namespace System.Windows.Markup
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
     /// <summary>
     /// Can be specified on a collection type to indicate which 
     /// types are used to wrap content foreign content such as 
@@ -34,47 +33,37 @@ namespace System.Windows.Markup
         /// <param name="contentWrapper"></param>
         public ContentWrapperAttribute(Type contentWrapper)
         {
-            _contentWrapper = contentWrapper;
+            ContentWrapper = contentWrapper;
         }
 
         /// <summary>
         /// The type that is declared as a content wrapper for the collection type
         /// this attribute is declared on.
         /// </summary>
-        public Type ContentWrapper
-        {
-            get { return _contentWrapper; }
-        }
+        public Type ContentWrapper { get; }
 
         /// <summary>
         /// Override to ensure AttributeCollection perserves all instances
         /// </summary>
-        public override object TypeId
-        {
-            get { return this; }
-        }
-
+        public override object TypeId => this;
 
         /// <summary>
         ///     Overrides Object.Equals to implement correct equality semantics for this
         ///     attribute.
         /// </summary>
-        public override bool Equals(object obj) 
+        public override bool Equals(object obj)
         {
-            ContentWrapperAttribute other = obj as ContentWrapperAttribute;
+            var other = obj as ContentWrapperAttribute;
             if (other == null) return false;
-            return _contentWrapper == other._contentWrapper;
+            return ContentWrapper == other.ContentWrapper;
         }
 
         /// <summary>
         ///     Overrides Object.GetHashCode to implement correct hashing semantics.
         /// </summary>
-        public override int GetHashCode() 
+        public override int GetHashCode()
         {
-            return _contentWrapper.GetHashCode();
+            return ContentWrapper.GetHashCode();
         }
-
-
-        private Type _contentWrapper;
     }
 }

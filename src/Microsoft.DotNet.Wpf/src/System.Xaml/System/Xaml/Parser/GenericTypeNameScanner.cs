@@ -3,10 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
-
 using System.Xaml.MS.Impl;
 
 namespace MS.Internal.Xaml.Parser
@@ -56,7 +53,7 @@ namespace MS.Internal.Xaml.Parser
             }
 
             _token = GenericTypeNameScannerToken.NONE;
-            _tokenText = String.Empty;
+            _tokenText = string.Empty;
             _multiCharTokenStartIdx = -1;
             _multiCharTokenLength = 0;
 
@@ -147,7 +144,7 @@ namespace MS.Internal.Xaml.Parser
         // strips the subscript off the end of typeName, and returns it
         internal static string StripSubscript(string typeName, out string subscript)
         {
-            int openBracketNdx = typeName.IndexOf(GenericTypeNameScanner.OpenBracket);
+            int openBracketNdx = typeName.IndexOf(OpenBracket);
             if (openBracketNdx < 0)
             {
                 subscript = null;

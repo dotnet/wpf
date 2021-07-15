@@ -2,11 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Diagnostics;
 using System.Globalization;
-using System.Xaml.MS.Impl;
-using System.Collections.Generic;
 
 namespace MS.Internal.Xaml.Parser
 {
@@ -41,7 +37,7 @@ namespace MS.Internal.Xaml.Parser
 
         public static bool ContainsDot(string name)
         {
-            return name.Contains(".");
+            return name.Contains(Dot);
         }
 
         public static bool IsValidXamlName(string name)

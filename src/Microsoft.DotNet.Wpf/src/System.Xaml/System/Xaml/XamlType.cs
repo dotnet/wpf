@@ -1,8 +1,7 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -11,24 +10,19 @@ using System.Reflection;
 using System.Security;
 using System.Text;
 using System.Threading;
+using System.Windows.Markup;
 using System.Xaml.MS.Impl;
 using System.Xaml.Schema;
-using System.Windows.Markup;
 using MS.Internal.Xaml.Parser;
 
 namespace System.Xaml
 {
-    /// <SecurityNote>
-    /// This class is extensible; various members which could be used for visibility evaluation--
-    /// IsPublic, BaseType, CanAssignTo--are either virtual, or get their data from virtual methods.
-    /// For security-critical data, always check the underlying CLR type.
-    /// </SecurityNote>
     public class XamlType : IEquatable<XamlType>
     {
         // Initialized in constructor
-        string _name;
+        readonly string _name;
         XamlSchemaContext _schemaContext;
-        IList<XamlType> _typeArguments;
+        readonly IList<XamlType> _typeArguments;
 
         // Thread safety: if setting outside ctor, do an interlocked compare against null
         TypeReflector _reflector;
@@ -36,10 +30,6 @@ namespace System.Xaml
         /// <summary>
         /// Lazy init: NullableReference.IsSet is null when not initialized
         /// </summary>
-        /// <SecurityNote>
-        /// We cache a visibility check based on this value, so it must be idempotent
-        /// </SecurityNote>
-        [SecurityCritical]
         private NullableReference<Type> _underlyingType;
         
         // Lazy init: null until initialized
@@ -49,16 +39,8 @@ namespace System.Xaml
 
         protected XamlType(string typeName, IList<XamlType> typeArguments, XamlSchemaContext schemaContext)
         {
-            if (typeName == null)
-            {
-                throw new ArgumentNullException("typeName");
-            }
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException("schemaContext");
-            }
-            _name = typeName;
-            _schemaContext = schemaContext;
+            _name = typeName ?? throw new ArgumentNullException(nameof(typeName));
+            _schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
             _typeArguments = GetTypeArguments(typeArguments);
         }
 
@@ -66,19 +48,12 @@ namespace System.Xaml
         {
             if (unknownTypeNamespace == null)
             {
-                throw new ArgumentNullException("unknownTypeNamespace");
+                throw new ArgumentNullException(nameof(unknownTypeNamespace));
             }
-            if (unknownTypeName == null)
-            {
-                throw new ArgumentNullException("unknownTypeName");
-            }
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException("schemaContext");
-            }
-            _name = unknownTypeName;
+
+            _name = unknownTypeName ?? throw new ArgumentNullException(nameof(unknownTypeName));
             _namespaces = new ReadOnlyCollection<string>(new string[] { unknownTypeNamespace });
-            _schemaContext = schemaContext;
+            _schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
             _typeArguments = GetTypeArguments(typeArguments);
             _reflector = TypeReflector.UnknownReflector;
         }        
@@ -93,24 +68,16 @@ namespace System.Xaml
         {
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _underlyingType
-        /// Safe: Constructor is single-threaded, so idempotence is assured
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal XamlType(string alias, Type underlyingType, XamlSchemaContext schemaContext, XamlTypeInvoker invoker, TypeReflector reflector)
         {
             if (underlyingType == null)
             {
-                throw new ArgumentNullException("underlyingType");
+                throw new ArgumentNullException(nameof(underlyingType));
             }
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException("schemaContext");
-            }
+
             _reflector = reflector ?? new TypeReflector(underlyingType);
             _name = alias ?? GetTypeName(underlyingType);
-            _schemaContext = schemaContext;
+            _schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
             _typeArguments = GetTypeArguments(underlyingType, schemaContext);
             _underlyingType.Value = underlyingType;
             _reflector.Invoker = invoker;
@@ -189,13 +156,8 @@ namespace System.Xaml
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _underlyingType
-        /// Safe: Ensures idempotence via NullableReference.SetIfNull, which uses CompareExchange
-        /// </SecurityNote>
         public Type UnderlyingType
         {
-            [SecuritySafeCritical]
             get
             {
                 if (!_underlyingType.IsSet)
@@ -209,13 +171,8 @@ namespace System.Xaml
         /// <summary>
         /// Accesses UnderlyingType without initializing it
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _underlyingType
-        /// Safe: Doesn't modify field value. Field is value type, so caller cannot modify it.
-        /// </SecurityNote>
         internal NullableReference<Type> UnderlyingTypeInternal
         {
-            [SecuritySafeCritical]
             get { return _underlyingType; }
         }
 
@@ -457,7 +414,7 @@ namespace System.Xaml
 
         public virtual bool CanAssignTo(XamlType xamlType)
         {
-            if (object.ReferenceEquals(xamlType, null))
+            if (xamlType is null)
             {
                 return false;
             }
@@ -1404,19 +1361,19 @@ namespace System.Xaml
             }
             if (!string.IsNullOrEmpty(ns))
             {
-                sb.Append("{");
+                sb.Append('{');
                 sb.Append(PreferredXamlNamespace);
-                sb.Append("}");
+                sb.Append('}');
             }
             else if (UnderlyingTypeInternal.Value != null)
             {
                 sb.Append(UnderlyingTypeInternal.Value.Namespace);
-                sb.Append(".");
+                sb.Append('.');
             }
             sb.Append(Name);
             if (IsGeneric)
             {
-                sb.Append("(");
+                sb.Append('(');
                 for (int i = 0; i < TypeArguments.Count; i++)
                 {
                     TypeArguments[i].AppendTypeName(sb, forceNsInitialization);
@@ -1425,7 +1382,7 @@ namespace System.Xaml
                         sb.Append(", ");
                     }
                 }
-                sb.Append(")");
+                sb.Append(')');
             }
         }
 
@@ -1604,7 +1561,7 @@ namespace System.Xaml
                 }
                 else
                 {
-                    Debug.Assert(this.GetType() != typeof(XamlType), "Default GetAllMembers logic should have already captured all writeable properties");
+                    Debug.Assert(GetType() != typeof(XamlType), "Default GetAllMembers logic should have already captured all writeable properties");
                 }
             }
             return new ReadOnlyCollection<XamlMember>(result);
@@ -1799,11 +1756,11 @@ namespace System.Xaml
         // name/namespace fallback for known non-CLR types
         public static bool operator ==(XamlType xamlType1, XamlType xamlType2)
         {
-            if (object.ReferenceEquals(xamlType1, xamlType2))
+            if (ReferenceEquals(xamlType1, xamlType2))
             {
                 return true;
             }
-            if (object.ReferenceEquals(xamlType1, null) || object.ReferenceEquals(xamlType2, null))
+            if (xamlType1 is null || xamlType2 is null)
             {
                 return false;
             }
@@ -1864,7 +1821,7 @@ namespace System.Xaml
         internal static class EmptyList<T>
         {
             public static readonly ReadOnlyCollection<T> Value =
-                new ReadOnlyCollection<T>(new T[0]);
+                new ReadOnlyCollection<T>(Array.Empty<T>());
         }
     }
 }

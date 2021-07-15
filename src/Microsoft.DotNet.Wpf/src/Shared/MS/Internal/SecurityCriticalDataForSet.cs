@@ -42,28 +42,16 @@ namespace MS.Internal
     [Serializable]
     internal struct SecurityCriticalDataForSet<T>
     {
-        /// <SecurityNote>
-        ///    Critical - "by definition" - this class is intended only for data that's
-        ///               Critical for setting.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal SecurityCriticalDataForSet(T value)
         { 
             _value = value; 
         }
 
-        /// <SecurityNote>
-        ///    Critical - Setter is Critical "by definition" - this class is intended only
-        ///               for data that's Critical for setting.
-        ///     Safe - get is safe by definition.
-        ///     Not Safe - set is not safe by definition.
-        /// </SecurityNote>
         internal T Value 
         {
         #if DEBUG
             [System.Diagnostics.DebuggerStepThrough]
         #endif
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return _value;
@@ -72,17 +60,12 @@ namespace MS.Internal
         #if DEBUG
             [System.Diagnostics.DebuggerStepThrough]
         #endif
-            [SecurityCritical]
             set
             {
                 _value = value;
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - by definition as this data is Critical for set.
-        /// </SecurityNote>>
-        [SecurityCritical]
         private T _value;
     }
 }

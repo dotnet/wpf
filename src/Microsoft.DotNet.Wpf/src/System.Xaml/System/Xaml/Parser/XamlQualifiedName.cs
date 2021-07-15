@@ -3,9 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Diagnostics;
-using System.Xaml.MS.Impl;
-using System.Collections.Generic;
 
 namespace MS.Internal.Xaml.Parser
 {
@@ -32,13 +29,13 @@ namespace MS.Internal.Xaml.Parser
             {
                 return false;
             }
-            if (!XamlName.IsValidNameStartChar(name[0]))
+            if (!IsValidNameStartChar(name[0]))
             {
                 return false;
             }
             for (int i = 1; i < name.Length; i++)
             {
-                if (!XamlName.IsValidQualifiedNameChar(name[i]))
+                if (!IsValidQualifiedNameChar(name[i]))
                 {
                     return false;
                 }
@@ -52,13 +49,13 @@ namespace MS.Internal.Xaml.Parser
             {
                 return false;
             }
-            if (!XamlName.IsValidNameStartChar(name[0]))
+            if (!IsValidNameStartChar(name[0]))
             {
                 return false;
             }
             for (int i = 1; i < name.Length; i++)
             {
-                if (!XamlName.IsValidQualifiedNameCharPlus(name[i]))
+                if (!IsValidQualifiedNameCharPlus(name[i]))
                 {
                     return false;
                 }
@@ -71,8 +68,8 @@ namespace MS.Internal.Xaml.Parser
             int start = 0;
             int colonIdx = longName.IndexOf(':');
 
-            prefix = String.Empty;
-            name = String.Empty;
+            prefix = string.Empty;
+            name = string.Empty;
 
             if (colonIdx != -1)
             {

@@ -2,17 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Windows.Markup;
-using System.Security.Permissions;
-using System.Threading;
-using System.Xaml.MS.Impl;
-using System.Xaml.Schema;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Reflection;
+using System.Threading;
 
 namespace System.Xaml.Schema
 {
@@ -25,9 +16,9 @@ namespace System.Xaml.Schema
 
         private volatile bool _instanceIsSet; // volatile for the same reason as valid flags in TypeReflector/MemberReflector
 
-        public string Name { get; private set; }
-        public Type ConverterType { get; private set; }
-        public XamlType TargetType { get; private set; }
+        public string Name { get; }
+        public Type ConverterType { get; }
+        public XamlType TargetType { get; }
 
         public XamlValueConverter(Type converterType, XamlType targetType)
             :this(converterType, targetType, null)
@@ -112,7 +103,7 @@ namespace System.Xaml.Schema
         public override bool Equals(object obj)
         {
             XamlValueConverter<TConverterBase> other = obj as XamlValueConverter<TConverterBase>;
-            if (object.ReferenceEquals(other, null))
+            if (other is null)
             {
                 return false;
             }
@@ -140,11 +131,11 @@ namespace System.Xaml.Schema
 
         public static bool operator ==(XamlValueConverter<TConverterBase> converter1, XamlValueConverter<TConverterBase> converter2)
         {
-            if (object.ReferenceEquals(converter1, null))
+            if (converter1 is null)
             {
-                return object.ReferenceEquals(converter2, null);
+                return converter2 is null;
             }
-            if (object.ReferenceEquals(converter2, null))
+            if (converter2 is null)
             {
                 return false;
             }

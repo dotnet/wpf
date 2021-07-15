@@ -7,11 +7,16 @@
 //
 
 using System.Runtime.CompilerServices;
-using System.Security;
-using System.Security.Permissions;
+using System.Windows.Markup;
 
-[assembly:DependencyAttribute("mscorlib,", LoadHint.Always)]
-[assembly:DependencyAttribute("System,", LoadHint.Always)]
-[assembly:DependencyAttribute("System.Xml,", LoadHint.Sometimes)]
+[assembly:Dependency("mscorlib,", LoadHint.Always)]
+[assembly:Dependency("System,", LoadHint.Always)]
+[assembly:Dependency("System.Xml,", LoadHint.Sometimes)]
 
-[assembly:System.Windows.Markup.XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml", "System.Windows.Markup")]
+[assembly: TypeForwardedTo(typeof(System.Xaml.Permissions.XamlAccessLevel))]
+#pragma warning disable SYSLIB0003 // Type or member is obsolete
+[assembly: TypeForwardedTo(typeof(System.Xaml.Permissions.XamlLoadPermission))]
+#pragma warning restore SYSLIB0003 // Type or member is obsolete
+[assembly: TypeForwardedTo(typeof(System.Windows.Markup.ValueSerializerAttribute))]
+
+[assembly:XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml", "System.Windows.Markup")]

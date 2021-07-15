@@ -2,10 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Xaml.Schema;
-using System.Xaml;
 using XAML3 = System.Windows.Markup;
 
 namespace System.Xaml.Replacements
@@ -20,7 +19,7 @@ namespace System.Xaml.Replacements
             return sourceType == typeof(string);
         }
 
-        public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             string typeName = value as string;
 
@@ -43,7 +42,7 @@ namespace System.Xaml.Replacements
             return destinationType == typeof(string);
         }
 
-        public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             Type type = value as Type;
 

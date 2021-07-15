@@ -1,0 +1,50 @@
+<Project> 
+  <!-- Defines [assembly:] Attributes that is to be stamped onto assemblies -->
+  <ItemGroup>
+    <ExtendedAssemblyInfo Include="CLSCompliant"
+                          Condition="'$(CLSCompliant)'=='true'">
+      <Parameter1>true</Parameter1>
+      <IsLiteral1>true</IsLiteral1>
+    </ExtendedAssemblyInfo>
+
+    <ExtendedAssemblyInfo Include="ComVisible"
+                          Condition="'$(AssemblyComVisible)'!=''">
+      <Parameter1>$(AssemblyComVisible)</Parameter1>
+      <IsLiteral1>true</IsLiteral1>
+    </ExtendedAssemblyInfo>
+
+    <ExtendedAssemblyInfo Include="DefaultDllImportSearchPaths"
+                          Condition="'$(IncludeDllSafeSearchPathAttribute)'=='true'">
+      <Parameter1>DllImportSearchPath.AssemblyDirectory | DllImportSearchPath.System32</Parameter1>
+      <IsLiteral1>true</IsLiteral1>
+    </ExtendedAssemblyInfo>
+
+    <ExtendedAssemblyInfo Include="AssemblyDefaultAlias">
+      <Parameter1>$(AssemblyName)</Parameter1>
+    </ExtendedAssemblyInfo>
+
+    <ExtendedAssemblyInfo Include="AssemblyDescription"
+                          Condition="'$(AssemblyDescription)'!=''">
+      <Parameter1>$(AssemblyDescription)</Parameter1>
+    </ExtendedAssemblyInfo>
+    
+  <!-- 
+      AssemblyMetadata will be defined in InitializeAssemblyAttributeInformation Target, and 
+      incorporated into ExtendedAssemblyInfo in CoreGenerateExtendedAssemblyInfo Target 
+      
+      When defined, it would typically look like this:
+      
+      <ItemGroup>
+        <AssemblyMetadata Include=".NETCoreAssembly">
+          <Value></Value>
+        </AssemblyMetadata>
+        <AssemblyMetadata Include="Serviceable">
+          <Value>True</Value>
+        </AssemblyMetadata>
+        <AssemblyMetadata Include="PreferInbox">
+          <Value>True</Value>
+        </AssemblyMetadata>
+      </ItemGroup>
+  -->
+  </ItemGroup>
+</Project>

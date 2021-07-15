@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ElementNotAvailable" xml:space="preserve">
+    <value>The target element corresponds to UI that is no longer available (for example, the parent window has closed).</value>
+  </data>
+  <data name="ElementNotEnabled" xml:space="preserve">
+    <value>The operation is not allowed on a nonenabled element.</value>
+  </data>
+  <data name="LocalizedControlTypeButton" xml:space="preserve">
+    <value>button</value>
+  </data>
+  <data name="LocalizedControlTypeCalendar" xml:space="preserve">
+    <value>calendar</value>
+  </data>
+  <data name="LocalizedControlTypeCheckBox" xml:space="preserve">
+    <value>check box</value>
+  </data>
+  <data name="LocalizedControlTypeComboBox" xml:space="preserve">
+    <value>combo box</value>
+  </data>
+  <data name="LocalizedControlTypeCustom" xml:space="preserve">
+    <value>custom</value>
+  </data>
+  <data name="LocalizedControlTypeDataGrid" xml:space="preserve">
+    <value>datagrid</value>
+  </data>
+  <data name="LocalizedControlTypeDataItem" xml:space="preserve">
+    <value>dataitem</value>
+  </data>
+  <data name="LocalizedControlTypeDocument" xml:space="preserve">
+    <value>document</value>
+  </data>
+  <data name="LocalizedControlTypeEdit" xml:space="preserve">
+    <value>edit</value>
+  </data>
+  <data name="LocalizedControlTypeGroup" xml:space="preserve">
+    <value>group</value>
+  </data>
+  <data name="LocalizedControlTypeHeader" xml:space="preserve">
+    <value>header</value>
+  </data>
+  <data name="LocalizedControlTypeHeaderItem" xml:space="preserve">
+    <value>header item</value>
+  </data>
+  <data name="LocalizedControlTypeHyperlink" xml:space="preserve">
+    <value>hyperlink</value>
+  </data>
+  <data name="LocalizedControlTypeImage" xml:space="preserve">
+    <value>image</value>
+  </data>
+  <data name="LocalizedControlTypeListItem" xml:space="preserve">
+    <value>list item</value>
+  </data>
+  <data name="LocalizedControlTypeListView" xml:space="preserve">
+    <value>list view</value>
+  </data>
+  <data name="LocalizedControlTypeMenu" xml:space="preserve">
+    <value>menu</value>
+  </data>
+  <data name="LocalizedControlTypeMenuBar" xml:space="preserve">
+    <value>menu bar</value>
+  </data>
+  <data name="LocalizedControlTypeMenuItem" xml:space="preserve">
+    <value>menu item</value>
+  </data>
+  <data name="LocalizedControlTypePane" xml:space="preserve">
+    <value>pane</value>
+  </data>
+  <data name="LocalizedControlTypeProgressBar" xml:space="preserve">
+    <value>progress bar</value>
+  </data>
+  <data name="LocalizedControlTypeRadioButton" xml:space="preserve">
+    <value>radio button</value>
+  </data>
+  <data name="LocalizedControlTypeScrollBar" xml:space="preserve">
+    <value>scroll bar</value>
+  </data>
+  <data name="LocalizedControlTypeSeparator" xml:space="preserve">
+    <value>separator</value>
+  </data>
+  <data name="LocalizedControlTypeSlider" xml:space="preserve">
+    <value>slider</value>
+  </data>
+  <data name="LocalizedControlTypeSpinner" xml:space="preserve">
+    <value>spinner</value>
+  </data>
+  <data name="LocalizedControlTypeSplitButton" xml:space="preserve">
+    <value>split button</value>
+  </data>
+  <data name="LocalizedControlTypeStatusBar" xml:space="preserve">
+    <value>status bar</value>
+  </data>
+  <data name="LocalizedControlTypeTab" xml:space="preserve">
+    <value>tab</value>
+  </data>
+  <data name="LocalizedControlTypeTabItem" xml:space="preserve">
+    <value>tab item</value>
+  </data>
+  <data name="LocalizedControlTypeTable" xml:space="preserve">
+    <value>table</value>
+  </data>
+  <data name="LocalizedControlTypeText" xml:space="preserve">
+    <value>text</value>
+  </data>
+  <data name="LocalizedControlTypeThumb" xml:space="preserve">
+    <value>thumb</value>
+  </data>
+  <data name="LocalizedControlTypeTitleBar" xml:space="preserve">
+    <value>title bar</value>
+  </data>
+  <data name="LocalizedControlTypeToolBar" xml:space="preserve">
+    <value>tool bar</value>
+  </data>
+  <data name="LocalizedControlTypeToolTip" xml:space="preserve">
+    <value>tool tip</value>
+  </data>
+  <data name="LocalizedControlTypeTreeView" xml:space="preserve">
+    <value>tree view</value>
+  </data>
+  <data name="LocalizedControlTypeTreeViewItem" xml:space="preserve">
+    <value>tree view item</value>
+  </data>
+  <data name="LocalizedControlTypeWindow" xml:space="preserve">
+    <value>window</value>
+  </data>
+</root>

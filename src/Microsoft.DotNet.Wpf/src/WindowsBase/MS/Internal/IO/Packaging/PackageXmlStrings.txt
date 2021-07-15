@@ -1,0 +1,39 @@
+;
+; Package CoreProperties
+;
+
+; Format of the string: ABC=DEF FooNamespace ValueType
+;
+; ABC - Name of the enum
+; DEF - XML string associated with the enum ABC
+; FooNamespace - the enum of the namespace which DEF belongs to
+;	If it does not have have the namespace, use "NotDefined"
+;	FooNamespace is defined in PackageXmlNamespaces.txt
+; ValueType - Type of the value if DEF is XML string that needs to be particular type
+;	e.g. Creator is CoreProperty element tag whose element value should be string
+;		In this case, ValueType is "String"
+;	If the XML string doesn't have any associated value, use "NotSpecified"
+
+
+CoreProperties=coreProperties PackageCorePropertiesNamespace NotSpecified
+Type=type NotDefined NotSpecified
+
+; Dublin Core Properties
+Creator=creator DublinCorePropertiesNamespace String
+Identifier=identifier DublinCorePropertiesNamespace String
+Title=title DublinCorePropertiesNamespace String
+Subject=subject DublinCorePropertiesNamespace String
+Description=description DublinCorePropertiesNamespace String
+Language=language DublinCorePropertiesNamespace String
+Created=created DublinCoreTermsNamespace DateTime
+Modified=modified DublinCoreTermsNamespace DateTime
+
+; Package namespace properties
+ContentType=contentType PackageCorePropertiesNamespace String
+Keywords=keywords PackageCorePropertiesNamespace String
+Category=category PackageCorePropertiesNamespace String
+Version=version PackageCorePropertiesNamespace String
+LastModifiedBy=lastModifiedBy PackageCorePropertiesNamespace String
+ContentStatus=contentStatus PackageCorePropertiesNamespace String
+Revision=revision PackageCorePropertiesNamespace String
+LastPrinted=lastPrinted PackageCorePropertiesNamespace DateTime

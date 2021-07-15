@@ -2,17 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Markup;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Reflection;
-using System.Threading;
-using System.Xaml.Schema;
+using System.Windows.Markup;
 using System.Xaml.MS.Impl;
-using System.Globalization;
+using System.Xaml.Schema;
+using System.Xml.Serialization;
 
 namespace System.Xaml
 {
@@ -97,7 +94,7 @@ namespace System.Xaml
         private static Lazy<XamlType> s_iNameScope =
             new Lazy<XamlType>(() => GetXamlType(typeof(INameScope)));
         private static Lazy<XamlType> s_iXmlSerializable =
-            new Lazy<XamlType>(() => GetXamlType(typeof(System.Xml.Serialization.IXmlSerializable)), true);
+            new Lazy<XamlType>(() => GetXamlType(typeof(IXmlSerializable)), true);
         // This isn't a language built-in, but we use it in ObjectWriter
         private static Lazy<XamlType> s_positionalParameterDescriptor =
             new Lazy<XamlType>(() => GetXamlType(typeof(PositionalParameterDescriptor)), true);

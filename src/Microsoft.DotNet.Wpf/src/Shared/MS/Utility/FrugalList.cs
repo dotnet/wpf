@@ -286,7 +286,7 @@ namespace MS.Utility
                 ++_count;
                 return;
             }
-            throw new ArgumentOutOfRangeException("index");
+            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         public override void SetAt(int index, T value)
@@ -318,7 +318,7 @@ namespace MS.Utility
             }
             else
             {
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
         }
 
@@ -337,7 +337,7 @@ namespace MS.Utility
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), "oldList");
+                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -375,7 +375,7 @@ namespace MS.Utility
             }
             else
             {
-                throw new ArgumentOutOfRangeException("value");
+                throw new ArgumentOutOfRangeException(nameof(value));
             }
         }
 
@@ -481,12 +481,12 @@ namespace MS.Utility
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException("index");
+                        throw new ArgumentOutOfRangeException(nameof(index));
                 }
                 ++_count;
                 return;
             }
-            throw new ArgumentOutOfRangeException("index");
+            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         public override void SetAt(int index, T value)
@@ -507,7 +507,7 @@ namespace MS.Utility
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
             }
         }
 
@@ -557,7 +557,7 @@ namespace MS.Utility
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
             }
             _entry2 = default(T);
             --_count;
@@ -577,7 +577,7 @@ namespace MS.Utility
                     return _entry2;
 
                 default:
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
             }
         }
 
@@ -609,13 +609,13 @@ namespace MS.Utility
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException("oldList");
+                        throw new ArgumentOutOfRangeException(nameof(oldList));
                 }
             }
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), "oldList");
+                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -653,7 +653,7 @@ namespace MS.Utility
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException("oldList");
+                    throw new ArgumentOutOfRangeException(nameof(oldList));
             }
         }
 
@@ -701,7 +701,7 @@ namespace MS.Utility
             }
             else
             {
-                throw new ArgumentOutOfRangeException("value");
+                throw new ArgumentOutOfRangeException(nameof(value));
             }
         }
 
@@ -867,12 +867,12 @@ namespace MS.Utility
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException("index");
+                        throw new ArgumentOutOfRangeException(nameof(index));
                 }
                 ++_count;
                 return;
             }
-            throw new ArgumentOutOfRangeException("index");
+            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         public override void SetAt(int index, T value)
@@ -905,7 +905,7 @@ namespace MS.Utility
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
             }
         }
 
@@ -1001,7 +1001,7 @@ namespace MS.Utility
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
             }
             _entry5 = default(T);
             --_count;
@@ -1030,7 +1030,7 @@ namespace MS.Utility
                     return _entry5;
 
                 default:
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
             }
         }
 
@@ -1086,13 +1086,13 @@ namespace MS.Utility
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException("oldList");
+                        throw new ArgumentOutOfRangeException(nameof(oldList));
                 }
             }
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), "oldList");
+                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -1125,13 +1125,13 @@ namespace MS.Utility
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException("oldList");
+                        throw new ArgumentOutOfRangeException(nameof(oldList));
                 }
             }
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), "oldList");
+                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -1186,7 +1186,7 @@ namespace MS.Utility
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException("oldList");
+                    throw new ArgumentOutOfRangeException(nameof(oldList));
             }
         }
 
@@ -1264,7 +1264,7 @@ namespace MS.Utility
             }
             else
             {
-                throw new ArgumentOutOfRangeException("value");
+                throw new ArgumentOutOfRangeException(nameof(value));
             }
         }
 
@@ -1412,7 +1412,7 @@ namespace MS.Utility
                 ++_count;
                 return;
             }
-            throw new ArgumentOutOfRangeException("index");
+            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         public override void SetAt(int index, T value)
@@ -1464,7 +1464,7 @@ namespace MS.Utility
                     continue;
                 }
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), "oldList");
+                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -1519,7 +1519,7 @@ namespace MS.Utility
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException("oldList");
+                    throw new ArgumentOutOfRangeException(nameof(oldList));
             }
         }
 
@@ -1539,7 +1539,7 @@ namespace MS.Utility
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), "oldList");
+                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -1577,7 +1577,7 @@ namespace MS.Utility
             }
             else
             {
-                throw new ArgumentOutOfRangeException("value");
+                throw new ArgumentOutOfRangeException(nameof(value));
             }
         }
 
@@ -1771,7 +1771,7 @@ namespace MS.Utility
                 {
                     return _listStore.EntryAt(index);
                 }
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             set
@@ -1782,7 +1782,7 @@ namespace MS.Utility
                     _listStore.SetAt(index, value);
                     return;
                 }
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
         }
 
@@ -1898,7 +1898,7 @@ namespace MS.Utility
                 _listStore.Insert(index, value);
                 return;
             }
-            throw new ArgumentOutOfRangeException("index");
+            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         public bool Remove(T value)
@@ -1917,7 +1917,7 @@ namespace MS.Utility
                 _listStore.RemoveAt(index);
                 return;
             }
-            throw new ArgumentOutOfRangeException("index");
+            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         public void EnsureIndex(int index)
@@ -1940,7 +1940,7 @@ namespace MS.Utility
                 }
                 return;
             }
-            throw new ArgumentOutOfRangeException("index");
+            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         public T[] ToArray()
@@ -2136,7 +2136,7 @@ namespace MS.Utility
                 {
                     return _listStore.EntryAt(index);
                 }
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             set
@@ -2147,7 +2147,7 @@ namespace MS.Utility
                     _listStore.SetAt(index, value);
                     return;
                 }
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
         }
 
@@ -2263,7 +2263,7 @@ namespace MS.Utility
                 _listStore.Insert(index, value);
                 return;
             }
-            throw new ArgumentOutOfRangeException("index");
+            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         public bool Remove(T value)
@@ -2282,7 +2282,7 @@ namespace MS.Utility
                 _listStore.RemoveAt(index);
                 return;
             }
-            throw new ArgumentOutOfRangeException("index");
+            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         public void EnsureIndex(int index)
@@ -2305,7 +2305,7 @@ namespace MS.Utility
                 }
                 return;
             }
-            throw new ArgumentOutOfRangeException("index");
+            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         public T[] ToArray()

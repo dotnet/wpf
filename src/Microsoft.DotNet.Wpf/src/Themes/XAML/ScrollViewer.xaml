@@ -1,0 +1,21 @@
+<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor, Aero2.NormalColor, AeroLite.NormalColor, Classic, Luna.HomeStead, Luna.Metallic, Luna.NormalColor, Royale.NormalColor]] -->
+ 
+    <!--=================================================================
+        ScrollViewer
+    ==================================================================-->
+    <Style x:Key="{x:Type ScrollViewer}" 
+           TargetType="{x:Type ScrollViewer}">
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" 
+                     Value="false">
+                <Setter Property="Foreground" 
+                        Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>

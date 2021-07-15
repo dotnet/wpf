@@ -1,27 +1,19 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Security;
-using System.Security.Permissions;
-using System.Xaml;
 using System.Xaml.MS.Impl;
 
 namespace System.Xaml.Schema
 {
-    /// <SecurityNote>
-    /// This class makes the assumption that any internal ShouldSerialize methods in System.Xaml are safe
-    /// for public invocation. If this becomes untrue, then ShouldSerializeValue needs an IsSystemXamlNonPublic
-    /// check, just like GetValue and SetValue have.
-    /// </SecurityNote>
     public class XamlMemberInvoker
     {
         private static XamlMemberInvoker s_Directive;
         private static XamlMemberInvoker s_Unknown;
-        private static object[] s_emptyObjectArray = new object[0];
+        private static object[] s_emptyObjectArray = Array.Empty<object>();
 
         private XamlMember _member;
         private NullableReference<MethodInfo> _shouldSerializeMethod;
@@ -32,11 +24,7 @@ namespace System.Xaml.Schema
 
         public XamlMemberInvoker(XamlMember member)
         {
-            if (member == null)
-            {
-                throw new ArgumentNullException("member");
-            }
-            _member = member;
+            _member = member ?? throw new ArgumentNullException(nameof(member));
         }
 
         public static XamlMemberInvoker UnknownInvoker
@@ -65,7 +53,7 @@ namespace System.Xaml.Schema
         {
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
             ThrowIfUnknown();
             if (UnderlyingGetter == null)
@@ -75,11 +63,6 @@ namespace System.Xaml.Schema
             return GetValueSafeCritical(instance);
         }
 
-        /// <SecurityNote>
-        /// Critical: See explanation in SafeReflectionInvoker
-        /// Safe: See explanation in SafeReflectionInvoker.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private object GetValueSafeCritical(object instance)
         {
             if (UnderlyingGetter.IsStatic)
@@ -96,7 +79,7 @@ namespace System.Xaml.Schema
         {
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
             ThrowIfUnknown();
             if (UnderlyingSetter == null)
@@ -106,11 +89,6 @@ namespace System.Xaml.Schema
             SetValueSafeCritical(instance, value);
         }
 
-        /// <SecurityNote>
-        /// Critical: See explanation in SafeReflectionInvoker
-        /// Safe: See explanation in SafeReflectionInvoker.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private void SetValueSafeCritical(object instance, object value)
         {
             if (UnderlyingSetter.IsStatic)
@@ -182,15 +160,6 @@ namespace System.Xaml.Schema
         }
 
         // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
-        /// <SecurityNote>
-        /// Critical: Sets critical fields _getterIsSystemXamlNonPublic and _setterIsSystemXamlNonPublic
-        /// Safe: Gets the result from SafeCritical method SafeReflectionInvoker.IsSystemXamlNonPublic.
-        ///       The MethodInfo we're checking is exactly the one we're invoking, so even if the
-        ///       MethodInfo lies about its visibility, there is no harm.
-        /// Note: The [SecurityCritical] attribute isn't functionally necessary but flags the
-        ///       method as security critical and changes should be reviewed.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Retained per servicing policy.")]
         private static bool IsSystemXamlNonPublic(
             ref ThreeValuedBool methodIsSystemXamlNonPublic, MethodInfo method)

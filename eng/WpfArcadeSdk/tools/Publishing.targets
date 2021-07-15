@@ -1,0 +1,10 @@
+<Project>
+  <Target Name="_CorePublish" DependsOnTargets="Publish" Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp'" />
+  <Target Name="ReconfigureAssetManifestFileName">
+    <PropertyGroup>
+      <AssetManifestFileName>$(AssetManifestOS)-$(Configuration)-$(PlatformName).xml</AssetManifestFileName>
+      <AssetManifestFilePath>$(ArtifactsLogDir)AssetManifest\$(AssetManifestFileName)</AssetManifestFilePath>
+    </PropertyGroup>
+  </Target>
+
+</Project>

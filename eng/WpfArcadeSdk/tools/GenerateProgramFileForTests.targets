@@ -1,0 +1,16 @@
+<Project>
+  <Target Name="EnsureProgramFileIsGeneratedOnlyForTests"
+          Condition="'$(IsTestProject)'=='true' And '$(GenerateProgramFile)'!='false'"
+          BeforeTargets="CoreCompile">
+    <PropertyGroup>
+      <GenerateProgramFile Condition="'$(InternalMarkupCompilation)'!='true'">true</GenerateProgramFile>
+      <GenerateProgramFile Condition="'$(InternalMarkupCompilation)'=='true'">false</GenerateProgramFile>
+    </PropertyGroup>
+
+    <!-- The natural execution of GenerateProgramFile would have been skipped because 
+        $(GenerateProgramFile) was initially false - call it again 
+    -->
+    <CallTarget Targets="PrepareForBuild;CoreGenerateProgramFile"
+                Condition="'$(GenerateProgramFile)'=='true'" />
+  </Target>
+</Project>

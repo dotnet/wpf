@@ -1,0 +1,740 @@
+﻿<FontFamily
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/composite-font"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:System="clr-namespace:System;assembly=mscorlib"
+    Baseline="0.9"
+    LineSpacing="1.2">
+
+    <!-- Name mapping -->
+    <FontFamily.FamilyNames>
+        <System:String x:Key="en-US">Global Sans Serif</System:String>
+    </FontFamily.FamilyNames>
+
+    <!-- Faces to report in font chooser UI -->
+    <FontFamily.FamilyTypefaces>
+        <FamilyTypeface
+            Weight="Normal" Stretch="Normal" Style="Normal"
+            UnderlinePosition="-0.1" UnderlineThickness="0.05"
+            StrikethroughPosition="0.3" StrikethroughThickness="0.05"
+            CapsHeight="0.5" XHeight="0.3" />
+
+        <FamilyTypeface
+            Weight="Bold" Stretch="Normal" Style="Normal"
+            UnderlinePosition="-0.1" UnderlineThickness="0.05"
+            StrikethroughPosition="0.3" StrikethroughThickness="0.05"
+            CapsHeight="0.5" XHeight="0.3" />
+    </FontFamily.FamilyTypefaces>
+
+    <!-- Character to family lookups (in lookup order) -->
+    <FontFamily.FamilyMaps>
+
+        <!--
+            Basic Latin                 0000-007F
+            Latin-1 Supplement          0080-00FF
+            Latin Extended-A            0100-017F
+            Latin Extended-B            0180-024F
+            IPA Extensions              0250-02AF
+            Spacing Modifier Letters    02B0-02FF 
+            Combining Diacritics Marks  0300-036F 
+            Greek and Coptic            0370-03FF
+            Cyrillic                    0400-04FF 
+            Cyrillic Supplement         0500-052F 
+            Hebrew                      0590-05FF 
+            Arabic                      0600-06FF
+            Arabic Supplement           0750-077F
+            Phonetic Extensions         1D00-1D7F
+            Phonetic Extensions Sup.    1D80-1DBF - Unicode 4.1, supported in Vista fonts
+            Combining Diacritical M. S. 1DC0-1DFF - Unicode 4.1, supported in Vista fonts
+            Latin Extended Additional   1E00-1EFF
+            Latin Extended Additional   1E00-1EFF
+            Greek Extended              1F00-1FFF
+            Alpha Pres Forms Latin      FB00-FB0F
+            Alpha Pres Forms Hebrew     FB1D-FB4F
+            Arabic Pres Forms-A         FB50-FDCF
+            Arabic Pres Forms-A         FDF0-FDFF
+            Combining Half Marks        FE20-FE2F
+            Arabic Pres Forms-B         FE70-FEFE -->
+        <!-- CHS -->    
+        <FontFamilyMap
+            Unicode="0590-06FF, 0750-077F, FB1D-FDCF, FDF0-FDFF, FE70-FEFE"
+            Language="zh-Hans"
+            Target="Microsoft Uighur, Arial"
+            Scale="1.0" />
+        <!-- Other -->
+        <FontFamilyMap
+            Unicode="0000-052F, 0590-06FF, 0750-077F, 1D00-1FFF, FB00-FB0F, FB1D-FBFF"
+            Target="Arial, Microsoft Sans Serif, Lucida Sans Unicode"
+            Scale="1.0" />
+        <FontFamilyMap
+            Unicode="FC00-FDCF, FDF0-FDFF, FE20-FE2F, FE70-FEFE"
+            Target="Arial, Simplified Arabic, Traditional Arabic"
+            Scale="1.0" />
+
+        <!--
+            Armenian                    0530-058F    
+            Georgian (Mkhedruli)        10D0-10FF
+            Alpha Pres Forms (Armenian) FB10-FB1C -->
+        <FontFamilyMap
+            Unicode="0530-058F, 10D0-10FF, FB10-FB1C"
+            Target="Sylfaen"
+            Scale="1.0" />
+
+        <!-- Syriac                      0700-074F -->
+        <FontFamilyMap
+            Unicode="0700-074F"
+            Target="Estrangelo Edessa"
+            Scale="1.0" />
+
+        <!-- Thaana                      0780-07BF -->
+        <FontFamilyMap
+            Unicode="0780-07BF"
+            Target="MV Boli"
+            Scale="1.0" />
+
+        <!-- Devanagari                  0900-097F -->
+        <FontFamilyMap
+            Unicode="0900-097F"
+            Target="Mangal"
+            Scale="1.0" />
+
+        <!-- Bengali                     0980-09FF -->
+        <FontFamilyMap
+            Unicode="0980-09FF"
+            Target="Vrinda"
+            Scale="1.0" />
+
+        <!-- Gurmukhi                    0A00-0A7F -->
+        <FontFamilyMap
+            Unicode="0A00-0A7F"
+            Target="Raavi"
+            Scale="1.0" />
+
+        <!-- Gujarati                    0A80-0AFF -->
+        <FontFamilyMap
+            Unicode="0A80-0AFF"
+            Target="Shruti"
+            Scale="1.0" />
+
+        <!-- Oriya                       0B00-0B7F -->
+        <FontFamilyMap
+            Unicode="0B00-0B7F"
+            Target="Kalinga"
+            Scale="1.0" />
+
+        <!-- Tamil                       0B80-0BFF -->
+        <FontFamilyMap
+            Unicode="0B80-0BFF"
+            Target="Latha"
+            Scale="1.0" />
+
+        <!-- Telugu                      0C00-0C7F -->
+        <FontFamilyMap
+            Unicode="0C00-0C7F"
+            Target="Gautami"
+            Scale="1.0" />
+
+        <!-- Kannada                     0C80-0CFF -->
+        <FontFamilyMap
+            Unicode="0C80-0CFF"
+            Target="Tunga"
+            Scale="1.0" />
+
+        <!-- Malayalam                   0D00-0D7F -->
+        <FontFamilyMap
+            Unicode="0D00-0D7F"
+            Target="Kartika"
+            Scale="1.0" />
+
+        <!-- Sinhala                     0D80-0DFF -->
+        <FontFamilyMap
+            Unicode="0D80-0DFF"
+            Target="Iskoola Pota"
+            Scale="1.0" />
+
+        <!-- Thai                        0E00-0E7F -->
+        <FontFamilyMap
+            Unicode="0E00-0E7F"
+            Target="Cordia New"
+            Scale="1.4" />
+
+        <!-- Lao                         0E80-0EFF -->
+         <FontFamilyMap  
+            Unicode="0E80-0EFF"
+            Target="DokChampa"
+            Scale="1.0"/>
+
+        <!-- Tibetan                     0F00-0FFF -->
+        <FontFamilyMap
+            Unicode="0F00-0FFF"
+            Target="Microsoft Himalaya"
+            Scale="1.0" />
+
+        <!-- 
+            Myanmar                     1000-109F
+            Georgian (Khutsuri)         10A0-10CF
+            Georgian Supplement         2D00-2D2F -->
+        <!-- No font -->
+
+        <!--
+            Hangul Jamo                 1100-11FF  
+            Hangul Compatibility Jamo   3130-318F
+            Enc. CJK Paren Hangul       3200-321F
+            Enc. CJK Circled Hangul     3260-327F
+            Hangul Syllables            AC00-D7AF -->
+        <FontFamilyMap
+            Unicode="1100-11FF, 3130-318F, 3200-321F, 3260-327F, AC00-D7AF"
+            Target="Malgun Gothic, Gulim"
+            Scale="1.0" />
+
+        <!--
+            Ethiopic                   1200-137F
+            Ethiopic Supplement        1380-139F - Unicode 4.1, NOT supported in Vista fonts!
+            Ethiopic Extended          2D80-2DDF - Unicode 4.1, NOT supported in Vista fonts! -->
+        <FontFamilyMap
+            Unicode="1200-137F"
+            Target="Nyala"
+            Scale="1.0" />
+
+        <!-- Cherokee                    13A0-13FF -->
+        <FontFamilyMap
+            Unicode="13A0-13FF"
+            Target="Plantagenet Cherokee"
+            Scale="1.0" />
+
+        <!-- Canadian Aboriginals        1400-167F -->
+        <FontFamilyMap
+            Unicode="1400-167F"
+            Target="Euphemia"
+            Scale="1.0" />
+
+        <!--
+            Ogham                       1680-169F
+            Runic                       16A0-16FF
+            Tagalog                     1700-171F
+            Hanunoo                     1720-173F
+            Buhid                       1740-175F
+            Tagbanwa                    1760-177f -->
+        <!-- No font -->
+
+        <!--
+            Khmer                       1780-17FF
+            Khmer Symbols               19E0-19FF -->
+        <FontFamilyMap
+            Unicode="1780-17FF, 19E0-19FF"
+            Target="DaunPenh"
+            Scale="1.0" />
+
+        <!-- Mongolian                   1800-18AF -->
+        <FontFamilyMap
+            Unicode="1800-18AF"
+            Target="Mongolian Baiti"
+            Scale="1.0" />
+
+        <!--
+            Limbu                       1900-194F
+            Tai Le                      1950-197F
+            New Tai Lue                 1980-19DF
+            Buginese                    1A00-1A1F -->
+        <!-- No font -->
+
+        <!-- NNBSP                       202F -->
+        <!-- Always use Mongolian font to preserve Mongolian shaping -->
+        <FontFamilyMap  
+            Unicode          = "202F" 
+            Target           = "Mongolian Baiti"
+            Scale            = "1.0"/>
+
+        <!--
+            General Punctuation         2000-202E, 2030-206F
+            Superscripts and Subscripts 2070-209F
+            Currency Symbols            20A0-20CF
+            Letterlike Symbols          2100-214F
+            Number Forms                2150-218F
+            Arrows                      2190-21FF
+            Mathematical Operators      2200-22FF
+            Miscelllaneous Technical    2300-23FF
+            Enclosed Alphanumerics      2460-24FF
+            Box Drawing                 2500-257F
+            Block Elements              2580-259F
+            Geometric Shapes            25A0-25FF
+            Miscellaneous Symbols       2600-26FF
+            Dingbats                    2700-27BF
+            Misc Mathematical Symbols-B 2980-29FF -->
+        <!-- CHS -->
+        <FontFamilyMap
+            Unicode="2000-202E, 2030-20CF, 2100-23FF, 2460-27BF, 2980-29FF"
+            Language="zh-Hans"
+            Target="Microsoft YaHei, Meiryo, SimSun, MS Gothic, Arial"
+            Scale="1.0" />
+        <!-- CHT -->
+        <FontFamilyMap
+            Unicode="2000-202E, 2030-20CF, 2100-23FF, 2460-27BF, 2980-29FF"
+            Language="zh-Hant"
+            Target="Microsoft JhengHei, Meiryo, MingLiU, MS Gothic, Arial"
+            Scale="1.0" />
+        <!-- JA -->
+        <FontFamilyMap
+            Unicode="2000-202E, 2030-20CF, 2100-23FF, 2460-27BF, 2980-29FF"
+            Language="ja"
+            Target="Meiryo, MS Gothic, Arial"
+            Scale="1.0" />
+        <!-- KO -->
+        <FontFamilyMap
+            Unicode="2000-202E, 2030-20CF, 2100-23FF, 2460-27BF, 2980-29FF"
+            Language="ko"
+            Target="Malgun Gothic, Gulim, MS Gothic, Arial"
+            Scale="1.0" />
+        <!-- Other -->
+        <FontFamilyMap
+            Unicode="2000-202E, 2030-20CF, 2100-23FF, 2460-27BF, 2980-29FF"
+            Target="Arial, Meiryo, MS Gothic"
+            Scale="1.0" />
+
+        <!--
+            Combining Diacritical Marks 20D0-20FF
+            Control Pictures            2400-243F
+            OCR                         2440-245F
+            Misc Mathematical Symbols-A 27C0-27EF
+            Supplemental Arrows-A       27F0-27FF
+            Braille Patterns            2800-28FF
+            Supplemental Arrows-B       2900-297F
+            Supplemental Math Operators 2A00-2AFF
+            Misc Symbols and Arrows     2B00-2BFF
+            Glagolitic                  2C00-2C5F
+            Coptic                      2C80-2CFF
+            Tifinagh                    2D30-2D7F
+            Supplemental Punctuation    2E00-2E7F -->
+        <!-- No font -->
+
+        <!-- CJK Radicals Supplement    2E80-2EFF -->
+        <!-- CHS -->
+        <FontFamilyMap  
+            Unicode="2E80-2EFF"
+            Language="zh-Hans"
+            Target="Microsoft YaHei, SimSun, Meiryo, MingLiu"
+            Scale="1.0"/>
+        <!-- CHT -->
+        <FontFamilyMap  
+            Unicode="2E80-2EFF"
+            Language="zh-Hant"
+            Target="Microsoft YaHei, MingLiU, Meiryo, SimSun"
+            Scale="1.0"/>
+        <!-- Other (include JA and KO) -->    
+        <FontFamilyMap  
+            Unicode="2E80-2EFF"
+            Target="Meiryo, Microsoft YaHei, MingLiU, SimSun"
+            Scale="1.0"/>
+            
+        <!-- Kangxi Radicals             2F00-2FDF -->
+        <FontFamilyMap  
+            Unicode="2F00-2FDF"
+            Target="Meiryo"
+            Scale="1.0"/>
+
+        <!-- Ideogr Description Char     2FF0-2FFF -->
+        <FontFamilyMap
+            Unicode="2FF0-2FFF"
+            Target="SimSun"
+            Scale="1.0" />
+        
+        <!--
+            Symbols and Punctuation     3000-303F
+            Hiragana                    3040-309F
+            Katakana                    30A0-30FF
+            Katakana Phonetic Ext.      31F0-31FF -->
+        <!-- CHS -->
+        <FontFamilyMap
+            Unicode="3000-30FF, 31F0-31FF"
+            Language="zh-Hans"
+            Target="Microsoft YaHei, MS Gothic, SimSun"
+            Scale="1.0" />
+        <!-- CHT -->
+        <FontFamilyMap
+            Unicode="3000-30FF, 31F0-31FF"
+            Language="zh-Hant"
+            Target="Microsoft JhengHei, MS Gothic, MingLiu"
+            Scale="1.0" />
+        <!-- KO -->
+        <FontFamilyMap
+            Unicode="3000-30FF, 31F0-31FF"
+            Language="ko"
+            Target="Malgun Gothic, Meiryo, Microsoft YaHei, Gulim, MS Gothic, MingLiu"
+            Scale="1.0" />
+        <!-- Other (include JA) -->
+        <FontFamilyMap
+            Unicode="3000-30FF, 31F0-31FF"
+            Target="Meiryo, Microsoft YaHei, MS Gothic, MingLiu"
+            Scale="1.0" />
+
+        <!--
+            Bopomofo                    3100-312F
+            Bopomofo Extended           31A0-31BF -->
+        <!-- CHS -->
+        <FontFamilyMap
+            Unicode="3100-312F, 31A0-31BF"
+            Language="zh-Hans"
+            Target="Microsoft YaHei, SimSun"
+            Scale="1.0" />
+        <!-- Other (include CHT, JA and KO) -->
+        <FontFamilyMap
+            Unicode="3100-312F, 31A0-31BF"
+            Target="Microsoft JhengHei, MingLiu"
+            Scale="1.0" />
+
+        <!-- Kanbun                      3190-319F -->
+        <FontFamilyMap
+            Unicode="3190-319F"
+            Target="Microsoft YaHei, MingLiU"
+            Scale="1.0" />
+
+        <!-- CJK Strokes                 31C0-31EF -->
+        <FontFamilyMap  
+            Unicode          = "31C0-31EF"
+            Target           = "MingLiU"
+            Scale            = "1.0"/>
+
+        <!-- 
+            Enclosed CJK Han            3220-324F
+            Enclosed CJK Numbers 21-35  3251-325F
+            Enclosed CJK (Circled Ideog)3280-32B0
+            Enclosed CJK Numbers 36-50  32B1-32BF
+            Enclosed CJK Month          32C0-32CB
+            Enclosed CJK Katakana       32D0-32FF
+            CJK Comp Square Katakana    3300-3357
+            CJK Comp Hours              3358-3370
+            CJK Comp Latin Abr (hPa-PC) 3371-3376
+            CJK Comp Ja era and corp    337B-337F
+            CJK Comp Days               33E0-33FF -->
+        <FontFamilyMap
+            Unicode="3220-324F,3251-325F, 3280-32CB, 32D0-3376, 337B-337F, 33E0-33FF"
+            Target="Meiryo, MS Gothic"
+            Scale="1.0" />
+
+        <!--
+            Enclosed CJK PTE                  3250
+            Enclosed CJK (Sq Lat Ab Hg to LTD)32CC-32CF
+            CJK Comp (Latin Abr DM-IU)        3377-337A -->
+        <!-- No font -->
+        
+        <!-- CJK Comp Square Latin Abr   3380-33DF -->
+        <!-- CHS -->
+        <FontFamilyMap
+            Unicode="3380-33DF"
+            Language="zh-Hans"
+            Target="Microsoft YaHei, MS Gothic"
+            Scale="1.0" />
+        <!-- CHT -->
+        <FontFamilyMap
+            Unicode="3380-33DF"
+            Language="zh-Hant"
+            Target="Microsoft JhengHei, MS Gothic"
+            Scale="1.0" />
+        <!-- KO -->
+        <FontFamilyMap
+            Unicode="3380-33DF"
+            Language="ko"
+            Target="Malgun Gothic, Meiryo, Gulim, MS Gothic"
+            Scale="1.0" />
+        <!-- Other (include JA) -->
+        <FontFamilyMap
+            Unicode="3380-33DF"
+            Target="Meiryo, MS Gothic"
+            Scale="1.0" />
+
+        <!--
+            CJK Unified Ext A           3400-4DBF
+            CJK Unified                 4E00-9FBB -->
+        <!-- CHS -->
+        <FontFamilyMap
+            Unicode="3400-4DBF, 4E00-9FBB"
+            Language="zh-Hans"
+            Target="Microsoft YaHei, SimSun, SimSun-18030, SimSun-ExtB"
+            Scale="1.0" />
+        <!-- Hong Kong -->
+        <FontFamilyMap
+            Unicode="3400-4DBF, 4E00-9FBB"
+            Language="zh-HK"
+            Target="Microsoft JhengHei, Microsoft YaHei, MingLiU_HKSCS, MingLiU, SimSun-18030, SimSun-ExtB, Simsun"
+            Scale="1.0" />
+        <!-- CHT -->
+        <FontFamilyMap
+            Unicode="3400-4DBF, 4E00-9FBB"
+            Language="zh-Hant"
+            Target="Microsoft JhengHei, Microsoft YaHei, MingLiU, SimSun-18030, SimSun-ExtB, Simsun"
+            Scale="1.0" />
+        <!-- JA -->
+        <FontFamilyMap
+            Unicode="3400-4DBF, 4E00-9FBB"
+            Language="ja"
+            Target="Meiryo, MS Gothic, Microsoft YaHei, SimSun"
+            Scale="1.0" />
+        <!-- KO -->
+        <FontFamilyMap
+            Unicode="3400-4DBF, 4E00-9FBB"
+            Language="ko"
+            Target="Gulim, Microsoft YaHei, MS Gothic, Simsun"
+            Scale="1.0" />
+        <!-- Other -->
+        <FontFamilyMap
+            Unicode="3400-4DBF, 4E00-9FBB"
+            Target="Meiryo, Microsoft YaHei, MS Gothic, Simsun"
+            Scale="1.0" />
+
+        <!-- Yijing Hexagram Symbols     4DC0-4DFF -->
+        <!-- No font -->
+
+        <!--
+            Yi Syllables                   A000-A48F
+            Yi Radicals                    A490-A4CF  -->
+        <FontFamilyMap
+            Unicode="A000-A4CF"
+            Target="Microsoft Yi Baiti, SimSun-18030, SimSun-ExtB"
+            Scale="1.0" />
+
+        <!-- 
+            Modifier Tone Letters       A700-A71F
+            Syloti Nagri                A800-A82F -->
+        <!-- No font -->
+
+        <!-- CHS CJK Compatibility Ideographs F900-FAFF -->
+        <!-- CHS -->
+        <FontFamilyMap
+            Unicode="F900-FAFF"
+            Language="zh-Hans"
+            Target="Microsoft YaHei, Microsoft JhengHei, Meiryo, MS Gothic, Gulim"
+            Scale="1.0" />
+        <!-- CHT -->
+        <FontFamilyMap
+            Unicode="F900-FAFF"
+            Language="zh-Hant"
+            Target="Microsoft JhengHei, Meiryo, MS Gothic, Gulim"
+            Scale="1.0" />
+        <!-- KO -->
+        <FontFamilyMap
+            Unicode="F900-FAFF"
+            Language="ko"
+            Target="Meiryo, Microsoft JhengHei, Gulim, MS Gothic"
+            Scale="1.0" />
+        <!-- Other (include JA) -->
+        <FontFamilyMap
+            Unicode="F900-FAFF"
+            Target="Meiryo, Microsoft JhengHei, MS Gothic, Gulim"
+            Scale="1.0" />
+
+        <!-- Variation Selectors         FE00-FE0F -->
+        <!-- No font -->
+        
+        <!-- Vertical Forms              FE10-FE1F -->
+        <!-- CHS -->
+        <FontFamilyMap  
+            Unicode="FE10-FE1F"
+            Language="zh-Hans"
+            Target="Microsoft YaHei"
+            Scale="1.0"/>
+        <!-- KO -->
+        <FontFamilyMap  
+            Unicode="FE10-FE1F"
+            Language="ko"
+            Target="Malgun Gothic, Microsoft JhengHei"
+            Scale="1.0"/>
+        <!-- Other (include CHT and JA) -->
+        <FontFamilyMap  
+            Unicode="FE10-FE1F"
+            Target="Microsoft JhengHei"
+            Scale="1.0"/>
+        
+        <!--
+            CJK Compatibility Forms     FE30-FE4F
+            Small Form Variants         FE50-FE6F -->
+        <!-- CHS -->
+        <FontFamilyMap
+            Unicode="FE30-FE6F"
+            Language="zh-Hans"
+            Target="Microsoft YaHei, SimSun"
+            Scale="1.0" />
+        <!-- CHT -->
+        <FontFamilyMap
+            Unicode="FE30-FE6F"
+            Language="zh-Hant"
+            Target="Microsoft JhengHei, MingLiU"
+            Scale="1.0" />
+        <!-- JA -->
+        <FontFamilyMap
+            Unicode="FE30-FE6F"
+            Language="ja"
+            Target="Meiryo, Microsoft JhengHei, MingLiU"
+            Scale="1.0" />
+        <!-- KO -->
+        <FontFamilyMap
+            Unicode="FE30-FE6F"
+            Language="ko"
+            Target="Malgun Gothic, Microsoft JhengHei, MingLiU"
+            Scale="1.0" />
+        <!-- Other -->
+        <FontFamilyMap
+            Unicode="FE30-FE6F"
+            Target="Microsoft JhengHei, MingLiu"
+            Scale="1.0" />
+
+        <!-- Character FEFF              FEFF -->
+        <!-- No font -->
+        
+        <!-- Halfw and Fullw Forms Latin FF00-FF60 -->
+        <!-- CHS -->
+        <FontFamilyMap
+            Unicode="FF00-FF60"
+            Language="zh-Hans"
+            Target="Microsoft YaHei, MS Gothic"
+            Scale="1.0" />
+        <!-- CHT -->
+        <FontFamilyMap
+            Unicode="FF00-FF60"
+            Language="zh-Hant"
+            Target="Microsoft JhengHei, MS Gothic"
+            Scale="1.0" />
+        <!-- KO -->
+        <FontFamilyMap
+            Unicode="FF00-FF60"
+            Language="ko"
+            Target="Malgun Gothic, Meiryo, Gulim, MS Gothic"
+            Scale="1.0" />
+        <!-- Other (include JA) -->
+        <FontFamilyMap
+            Unicode="FF00-FF60"
+            Target="Meiryo, MS Gothic"
+            Scale="1.0" />
+
+        <!--
+            Half Full Forms CJK Punct   FF61-FF64
+            Half Full Forms Katakana    FF65-FF9F -->
+        <!-- CHS -->
+        <FontFamilyMap
+            Unicode="FF61-FF9F"
+            Language="zh-Hans"
+            Target="Microsoft YaHei, MingLiU"
+            Scale="1.0" />
+        <!-- CHT -->
+        <FontFamilyMap
+            Unicode="FF61-FF9F"
+            Language="zh-Hans"
+            Target="Microsoft JhengHei, MingLiU"
+            Scale="1.0" />
+        <!-- Other (include JA and KO) -->
+        <FontFamilyMap
+            Unicode="FF61-FF9F"
+            Target="Meiryo, MS Gothic"
+            Scale="1.0" />
+
+        <!-- Half Full Forms Hangul      FFA0-FFDC -->
+        <!-- No font -->
+
+        <!-- Half Full (Symbol Variants) FFE0-FFEE -->
+        <!-- CHS -->
+        <FontFamilyMap
+            Unicode="FFE0-FFEE"
+            Language="zh-Hans"
+            Target="Microsoft YaHei, MS Gothic"
+            Scale="1.0" />
+        <!-- CHT -->
+        <FontFamilyMap
+            Unicode="FFE0-FFEE"
+            Language="zh-Hant"
+            Target="Microsoft JhengHei, MS Gothic"
+            Scale="1.0" />
+        <!-- JA -->
+        <FontFamilyMap  
+            Unicode="FFE0-FFEE"
+            Language="ja"
+            Target="Meiryo, Microsoft JhengHei, MS Gothic"
+            Scale="1.0"/>
+        <!-- KO -->
+        <FontFamilyMap
+            Unicode="FFE0-FFEE"
+            Language="ko"
+            Target="Malgun Gothic, Meiryo, Microsoft JhengHei, Gulim, MS Gothic"
+            Scale="1.0" />
+        <!-- Other -->
+        <FontFamilyMap
+            Unicode="FFE0-FFEE"
+            Target="Microsoft JhengHei, MS Gothic"
+            Scale="1.0" />
+            
+        <!-- Specials                    FFF0-FFFD -->
+        <FontFamilyMap
+            Unicode="FFF0-FFFD"
+            Target="Arial"
+            Scale="1.0" />
+        
+        <!--
+            Linear B Syllabary          10000-1007F
+            Linear B Ideograms          10080-100FF
+            Aegean Numbers              10100-1013F
+            Old Italic                  10300-1032F
+            Gothic                      10330-1034F
+            Ugaritic                    10380-1039F
+            Old Persian                 103A0-103DF
+            Deseret                     10400-1044F
+            Shavian                     10450-1047F
+            Osmanya                     10480-104AF
+            Cypriot Syllabary           10800-1083F
+            Kharoshthi                  10A00-10A5F
+            Byzantine Musical Symbols   1D000-1D0FF
+            Musical Symbols             1D100-1D1FF
+            Ancient Greek Musical Not.  1D200-1D24F
+            Tai Xuan Jing Symbols       1D300-1D35F
+            Math Alphanumeric Symbols   1D400-1D7FF -->
+        <!-- No font -->
+        
+        <!-- CJK Unified Ideographs ExtB 20000-2A6DF -->
+        <!-- CHS -->
+        <FontFamilyMap
+            Unicode="20000-2A6DF"
+            Language="zh-Hans"
+            Target="SimSun-ExtB"
+            Scale="1.0" />
+        <!-- Hong Kong -->
+        <FontFamilyMap
+            Unicode="20000-2A6DF"
+            Language="zh-HK"
+            Target="MingLiU_HKSCS-ExtB, MingLiU-ExtB"
+            Scale="1.0" />
+        <!-- JA -->
+        <FontFamilyMap
+            Unicode="20000-2A6DF"
+            Language="ja"
+            Target="Meiryo, MS Gothic, MingLiU-ExtB"
+            Scale="1.0" />
+        <!-- Other (include CHT and KO) -->
+        <FontFamilyMap
+            Unicode="20000-2A6DF"
+            Target="MingLiU-ExtB"
+            Scale="1.0" />
+
+        <!-- CJK Comp Ideog Supplement      2F800-2FA1F -->
+        <!-- CHS -->
+        <FontFamilyMap  
+            Unicode          = "2F800-2FA1F"
+            Language         = "zh-Hans"
+            Target           = "SimSun-ExtB"
+            Scale            = "1.0"/>
+        <!-- Hong Kong -->
+        <FontFamilyMap  
+            Unicode          = "2F800-2FA1F"
+            Language         = "zh-HK"
+            Target           = "MingLiU_HKSCS-ExtB, MingLiU-ExtB"
+            Scale            = "1.0"/>
+        <!-- CHT -->
+        <FontFamilyMap  
+            Unicode          = "2F800-2FA1F"
+            Language         = "zh-Hant"
+            Target           = "MingLiU-ExtB"
+            Scale            = "1.0"/>
+        <!-- Other (include JA and KO) -->
+        <FontFamilyMap  
+            Unicode          = "2F800-2FA1F"
+            Target           = "Meiryo, MingLiU-ExtB"
+            Scale            = "1.0"/>
+
+    </FontFamily.FamilyMaps>
+
+</FontFamily>

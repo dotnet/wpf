@@ -1,0 +1,12 @@
+Compat issues with assembly ReachFramework:
+MembersMustExist : Member 'internal System.Windows.Xps.Serialization.XpsResourceStream System.Windows.Xps.Serialization.PackageSerializationManager.AcquireResourceStream(System.Type)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal System.Windows.Xps.Serialization.XpsResourceStream System.Windows.Xps.Serialization.PackageSerializationManager.AcquireResourceStream(System.Type, System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal System.Xml.XmlWriter System.Windows.Xps.Serialization.PackageSerializationManager.AcquireXmlWriter(System.Type)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal void System.Windows.Xps.Serialization.PackageSerializationManager.AddRelationshipToCurrentPage(System.Uri, System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal System.String System.Windows.Xps.Serialization.PackageSerializationManager.GetXmlNSForType(System.Type)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal System.Windows.Xps.Serialization.BasePackagingPolicy System.Windows.Xps.Serialization.PackageSerializationManager.PackagingPolicy.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal void System.Windows.Xps.Serialization.PackageSerializationManager.ReleaseResourceStream(System.Type)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal void System.Windows.Xps.Serialization.PackageSerializationManager.ReleaseResourceStream(System.Type, System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal void System.Windows.Xps.Serialization.PackageSerializationManager.ReleaseXmlWriter(System.Type)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal System.Windows.Xps.Packaging.XpsResourcePolicy System.Windows.Xps.Serialization.PackageSerializationManager.ResourcePolicy.get()' does not exist in the implementation but it does exist in the contract.
+Total Issues: 10

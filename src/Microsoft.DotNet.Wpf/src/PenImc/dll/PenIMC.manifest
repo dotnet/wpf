@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+    
+ <file name="PenImc_cor3.dll" hashalg="SHA1">
+    <comClass 
+        clsid="{F269D7C4-EF22-48A1-A503-4E0A620FC746}" 
+        tlbid="{33363EEE-828A-4DFC-BB3C-AB9628E6DD62}" 
+        threadingModel="Both"
+        description="PimcSurrogate3 Class">
+    </comClass>
+
+    <comClass 
+        clsid="{DB88ADFD-BEC7-47B8-A6B5-58CA3DA2B8D6}" 
+        tlbid="{33363EEE-828A-4DFC-BB3C-AB9628E6DD62}" 
+        threadingModel="Apartment"
+        description="PimcManager3 Class">
+    </comClass>
+    
+    <comInterfaceProxyStub 
+        name="IPimcManager3" 
+        iid="{BD2C38C2-E064-41D0-A999-940F526219C2}" 
+        tlbid="{33363EEE-828A-4DFC-BB3C-AB9628E6DD62}"
+        proxyStubClsid32="{BD2C38C2-E064-41D0-A999-940F526219C2}">
+    </comInterfaceProxyStub>
+
+    <comClass 
+        clsid="{A50E4FEE-6A0C-4AD6-8FDE-8E3EC75956BF}" 
+        tlbid="{33363EEE-828A-4DFC-BB3C-AB9628E6DD62}" 
+        threadingModel="Both"
+        description="PimcContext3 Class">
+    </comClass>
+
+    <comClass 
+        clsid="{8E44D1B9-D701-4E65-9917-0FF7488A7F96}" 
+        tlbid="{33363EEE-828A-4DFC-BB3C-AB9628E6DD62}" 
+        threadingModel="Both"
+        description="PimcTablet3 Class">
+    </comClass>
+
+    <comClass
+        description="IPimcTablet3" 
+        clsid="{CEB1EF24-BB4E-498B-9DF7-12887ED0EB24}" 
+        tlbid="{33363EEE-828A-4DFC-BB3C-AB9628E6DD62}">
+    </comClass>
+
+    <comClass 
+        clsid="{74D2B283-EDB3-4A8D-8088-445E8766C872}" 
+        tlbid="{33363EEE-828A-4DFC-BB3C-AB9628E6DD62}" 
+        description="PimcSurrogate3 Proxy Stub Class">
+    </comClass>
+
+    <comClass 
+        clsid="{75C6AAEE-2BA4-4008-B523-4F1E033FF049}" 
+        tlbid="{33363EEE-828A-4DFC-BB3C-AB9628E6DD62}" 
+        description="PimcContext3 Proxy Stub Class">
+    </comClass>
+
+    <typelib tlbid="{33363EEE-828A-4DFC-BB3C-AB9628E6DD62}" version="2.0" helpdir=""></typelib>
+
+  </file>
+    
+    <comInterfaceExternalProxyStub 
+        name="IPimcSurrogate3" 
+        iid="{74D2B283-EDB3-4A8D-8088-445E8766C872}" 
+        tlbid="{33363EEE-828A-4DFC-BB3C-AB9628E6DD62}" 
+        proxyStubClsid32="{74D2B283-EDB3-4A8D-8088-445E8766C872}">
+    </comInterfaceExternalProxyStub>
+
+    <comInterfaceExternalProxyStub 
+        name="IPimcTablet3" 
+        iid="{CEB1EF24-BB4E-498B-9DF7-12887ED0EB24}" 
+        tlbid="{33363EEE-828A-4DFC-BB3C-AB9628E6DD62}" 
+        proxyStubClsid32="{CEB1EF24-BB4E-498B-9DF7-12887ED0EB24}">
+    </comInterfaceExternalProxyStub>
+
+    <comInterfaceExternalProxyStub 
+        name="IPimcContext3" 
+        iid="{75C6AAEE-2BA4-4008-B523-4F1E033FF049}" 
+        tlbid="{33363EEE-828A-4DFC-BB3C-AB9628E6DD62}" 
+        proxyStubClsid32="{75C6AAEE-2BA4-4008-B523-4F1E033FF049}">
+    </comInterfaceExternalProxyStub>
+
+</assembly>
+

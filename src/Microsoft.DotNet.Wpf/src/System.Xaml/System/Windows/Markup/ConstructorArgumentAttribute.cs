@@ -13,7 +13,6 @@
 //  Created:   05/06/2005 Microsoft
 //
 
-using System;
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup
@@ -34,17 +33,12 @@ namespace System.Windows.Markup
         /// <param name="argumentName">Name of the constructor argument that will initialize this property</param>
         public ConstructorArgumentAttribute(string argumentName)
         {
-            _argumentName = argumentName;
+            ArgumentName = argumentName;
         }
 
         /// <summary>
         /// Name of the constructor argument that will initialize this property
         /// </summary>
-        public string ArgumentName
-        {
-            get { return _argumentName; }
-        }
-
-        private string _argumentName;
+        public string ArgumentName { get; }
     }
 }

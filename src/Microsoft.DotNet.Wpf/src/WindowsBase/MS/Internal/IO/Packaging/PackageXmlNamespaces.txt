@@ -1,0 +1,24 @@
+;
+; General XML Prefixes
+;
+
+; String Format: ABC=DEF
+; ABC - Name of the enum associated with DEF
+; DEF - XML Namespace string or prefix
+
+XmlSchemaInstanceNamespace=http://www.w3.org/2001/XMLSchema-instance
+XmlSchemaInstanceNamespacePrefix=xsi
+XmlNamespacePrefix=xmlns
+
+;
+; Package Core Properties Namespace and Prefixes
+;
+
+; namespaces
+PackageCorePropertiesNamespace=http://schemas.openxmlformats.org/package/2006/metadata/core-properties
+DublinCorePropertiesNamespace=http://purl.org/dc/elements/1.1/
+DublinCoreTermsNamespace=http://purl.org/dc/terms/
+
+; prefixes
+DublinCorePropertiesNamespacePrefix=dc
+DublincCoreTermsNamespacePrefix=dcterms

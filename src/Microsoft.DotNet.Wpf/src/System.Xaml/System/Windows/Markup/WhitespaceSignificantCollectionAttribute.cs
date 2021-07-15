@@ -8,7 +8,6 @@
 //
 //  Description: Specifies if a collection considers whitespacing to be significant for each of its "children."
 
-using System;
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup

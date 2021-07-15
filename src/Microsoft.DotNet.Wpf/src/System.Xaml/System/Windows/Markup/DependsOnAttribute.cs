@@ -17,7 +17,6 @@
 //  Created:   04/28/2005 Microsoft
 //
 
-using System;
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup
@@ -31,7 +30,7 @@ namespace System.Windows.Markup
     /// are only detected when writing all the properties in the
     /// cycle.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method, AllowMultiple=true)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method, AllowMultiple = true)]
     [TypeForwardedFrom("WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")]
     public sealed class DependsOnAttribute : Attribute
     {
@@ -41,7 +40,7 @@ namespace System.Windows.Markup
         /// <param name="name">The name of the property that the property depends on</param>
         public DependsOnAttribute(string name)
         {
-            _name = name;
+            Name = name;
         }
 
         /// <summary>
@@ -51,17 +50,12 @@ namespace System.Windows.Markup
         {
             // this allows multiple DependsOn attributes to show up in the
             // PropertyDescriptor.Attributes collection.
-            get { return this; }
+            get => this;
         }
 
         /// <summary>
         /// The name of the property that is declared to depend on
         /// </summary>
-        public string Name
-        {
-            get { return _name; }
-        }
-
-        private string _name;
+        public string Name { get; }
     }
 }

@@ -132,7 +132,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
         {
             if (properties == null)
             {
-                throw new ArgumentNullException("properties");
+                throw new ArgumentNullException(nameof(properties));
             }
 
             foreach (var property in properties)
@@ -151,7 +151,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
         {
             if (types == null)
             {
-                throw new ArgumentNullException("types");
+                throw new ArgumentNullException(nameof(types));
             }
 
             foreach (var type in types)
@@ -172,7 +172,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
         {
             if (properties == null)
             {
-                throw new ArgumentNullException("properties");
+                throw new ArgumentNullException(nameof(properties));
             }
 
             foreach (var property in properties)
@@ -191,7 +191,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
         {
             if (types == null)
             {
-                throw new ArgumentNullException("types");
+                throw new ArgumentNullException(nameof(types));
             }
 
             foreach (var type in types)
@@ -214,7 +214,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
         {
             if (properties == null)
             {
-                throw new ArgumentNullException("properties");
+                throw new ArgumentNullException(nameof(properties));
             }
 
             foreach (var property in properties)
@@ -246,7 +246,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
 
         object IProvideValueTarget.TargetProperty
         {
-            get { return ContextServices.GetTargetProperty(this._xamlContext); }
+            get { return ContextServices.GetTargetProperty(_xamlContext); }
         }
         #endregion
 
@@ -282,8 +282,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
 
         object IXamlNameResolver.Resolve(string name)
         {
-            bool isFullyInitialized;
-            return _xamlContext.ResolveName(name, out isFullyInitialized);
+            return _xamlContext.ResolveName(name, out _);
         }
 
         object IXamlNameResolver.Resolve(string name, out bool isFullyInitialized)
@@ -307,7 +306,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
             token.NeededNames.AddRange(names);
             if (token.CanAssignDirectly && token.NeededNames.Count != 1)
             {
-                throw new ArgumentException(SR.Get(SRID.SimpleFixupsMustHaveOneName), "names");
+                throw new ArgumentException(SR.Get(SRID.SimpleFixupsMustHaveOneName), nameof(names));
             }
 
             // TypeConverter case (aka "Initialization")

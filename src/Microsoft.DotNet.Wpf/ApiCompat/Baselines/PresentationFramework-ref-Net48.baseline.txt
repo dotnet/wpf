@@ -1,0 +1,27 @@
+Compat issues with assembly PresentationFramework:
+MembersMustExist : Member 'internal MS.Internal.AppModel.IFileDialog Microsoft.Win32.FileDialog.CreateVistaDialog()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal System.String[] Microsoft.Win32.FileDialog.ProcessVistaFiles(MS.Internal.AppModel.IFileDialog)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal System.Boolean Microsoft.Win32.FileDialog.RunFileDialog(MS.Win32.NativeMethods.OPENFILENAME_I)' does not exist in the implementation but it does exist in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.AttachedPropertyBrowsableForChildrenAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
+MembersMustExist : Member 'internal void System.Windows.FrameworkTemplate.SetTargetTypeInternal(System.Type)' does not exist in the implementation but it does exist in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.ResourceReferenceKeyNotFoundException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.StyleTypedPropertyAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.TemplatePartAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.TemplateVisualStateAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.ThemeInfoAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
+CannotRemoveAttribute : Attribute 'System.Xml.Serialization.XmlRootAttribute' exists on 'System.Windows.Annotations.Annotation' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Xml.Serialization.XmlRootAttribute' exists on 'System.Windows.Annotations.AnnotationResource' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Xml.Serialization.XmlRootAttribute' exists on 'System.Windows.Annotations.ContentLocator' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Xml.Serialization.XmlRootAttribute' exists on 'System.Windows.Annotations.ContentLocatorGroup' in the contract but not the implementation.
+MembersMustExist : Member 'internal System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> System.Windows.Automation.Peers.ContentTextAutomationPeer.GetAutomationPeersFromRange(System.Windows.Documents.ITextPointer, System.Windows.Documents.ITextPointer)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> System.Windows.Automation.Peers.TextAutomationPeer.GetAutomationPeersFromRange(System.Windows.Documents.ITextPointer, System.Windows.Documents.ITextPointer)' does not exist in the implementation but it does exist in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Controls.PrintDialogException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+MembersMustExist : Member 'internal void System.Windows.Controls.Primitives.GridViewRowPresenterBase.OnColumnPropertyChanged(System.Windows.Controls.GridViewColumn, System.String)' does not exist in the implementation but it does exist in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Data.ValueConversionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Data.ValueUnavailableException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Documents.TextElementEditingBehaviorAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
+TypesMustExist : Type 'System.Windows.Interop.DocObjHost' does not exist in the implementation but it does exist in the contract.
+CannotRemoveAttribute : Attribute 'System.ComponentModel.TypeConverterAttribute' exists on 'System.Windows.Markup.StaticExtension' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ComponentModel.TypeConverterAttribute' exists on 'System.Windows.Markup.TypeExtension' in the contract but not the implementation.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XamlParseException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+Total Issues: 25

@@ -2,12 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Reflection;
-using System.Security;
-using System.Security.Permissions;
+using System.Windows.Markup;
 using System.Xaml.Permissions;
 
 namespace System.Xaml
@@ -22,7 +17,7 @@ namespace System.Xaml
         {
             if (settings == null)
             {
-                throw new ArgumentNullException("settings");
+                throw new ArgumentNullException(nameof(settings));
             }
             AfterBeginInitHandler = settings.AfterBeginInitHandler;
             BeforePropertiesHandler = settings.BeforePropertiesHandler;
@@ -47,12 +42,12 @@ namespace System.Xaml
         public EventHandler<XamlObjectEventArgs> AfterPropertiesHandler { get; set; }
         public EventHandler<XamlObjectEventArgs> AfterEndInitHandler { get; set; }
 #if !TARGETTING35SP1
-        public EventHandler<System.Windows.Markup.XamlSetValueEventArgs> XamlSetValueHandler { get; set; }
+        public EventHandler<XamlSetValueEventArgs> XamlSetValueHandler { get; set; }
 #endif
 
         public Object RootObjectInstance { get; set; }
         public bool IgnoreCanConvert { get; set; }
-        public System.Windows.Markup.INameScope ExternalNameScope { get; set; }
+        public INameScope ExternalNameScope { get; set; }
         public bool SkipDuplicatePropertyCheck { get; set; }
         public bool RegisterNamesOnExternalNamescope { get; set; }
         public bool SkipProvideValueOnRoot { get; set; }

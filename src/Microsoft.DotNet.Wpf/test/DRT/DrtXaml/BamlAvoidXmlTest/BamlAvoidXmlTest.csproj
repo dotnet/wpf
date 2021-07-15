@@ -1,18 +1,17 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>BamlAvoidXmlTest</AssemblyName>
     <RootNamespace>BamlAvoidXmlTest</RootNamespace>
-    <Platforms>AnyCPU;x64</Platforms>
-    <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>
-    <RuntimeIdentifiers>win10-x64;win10-x86</RuntimeIdentifiers>
     <StartupObject>BamlAvoidXmlTest.Entry</StartupObject>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
   </ItemGroup>
+
 </Project>

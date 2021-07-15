@@ -1,0 +1,45 @@
+<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor, Aero2.NormalColor, AeroLite.NormalColor, Classic, Luna.Homestead, Luna.Metallic, Luna.NormalColor, Royale.NormalColor]] -->
+
+    <!--=================================================================
+        Hyperlink
+    ==================================================================-->
+    <Style x:Key="{x:Type Hyperlink}"
+           TargetType="{x:Type Hyperlink}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}"/>
+        <Setter Property="TextDecorations"
+                Value="Underline"/>
+        <Style.Triggers>
+          <MultiDataTrigger>
+            <MultiDataTrigger.Conditions>
+              <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="false"/>
+              <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+            </MultiDataTrigger.Conditions>
+            <Setter Property="Foreground" Value="Red"/>
+          </MultiDataTrigger>
+          <MultiDataTrigger>
+            <MultiDataTrigger.Conditions>
+              <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="true"/>
+              <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+              <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+            </MultiDataTrigger.Conditions>
+            <Setter Property="Foreground" Value="Red"/>
+          </MultiDataTrigger>
+          <Trigger Property="IsEnabled"
+                   Value="false">
+            <Setter Property="Foreground"
+                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+          </Trigger>
+          <Trigger Property="IsEnabled"
+                   Value="true">
+            <Setter Property="Cursor"
+                    Value="Hand"/>
+          </Trigger>
+        </Style.Triggers>
+    </Style>

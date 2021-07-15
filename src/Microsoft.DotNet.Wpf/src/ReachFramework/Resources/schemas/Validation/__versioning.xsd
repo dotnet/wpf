@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+            targetNamespace="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+            xmlns="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+-->
+            
+<xs:schema targetNamespace="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" blockDefault="#all">
+
+    <!-- Attributes -->
+    <xs:attribute name="Ignorable" type="frlrfSystemStringClassTopic">
+        </xs:attribute>
+    
+    <xs:attribute name="ProcessContent" type="frlrfSystemStringClassTopic">
+        </xs:attribute>
+        
+    <xs:attribute name="MustUnderstand" type="frlrfSystemStringClassTopic">
+        </xs:attribute>
+    
+    <!-- Elements -->
+    <xs:element type="dAlternateContent" name="AlternateContent">
+        </xs:element>
+    
+    <xs:complexType name="dCode" mixed="true">
+        </xs:complexType>
+        
+    <xs:complexType name="dAlternateContent">
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element type="dChoice" name="Choice" minOccurs="1" maxOccurs="unbounded">
+                </xs:element>
+            <xs:element type="dFallback" name="Fallback" minOccurs="0" maxOccurs="1">
+                </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="dChoice">
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:any namespace="##any" processContents="skip" />
+        </xs:sequence>
+        <xs:attribute name="Requires" type="frlrfSystemStringClassTopic" use="required" />
+    </xs:complexType>
+    
+    <xs:complexType name="dFallback">
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:any namespace="##any" processContents="skip" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:simpleType name="frlrfSystemStringClassTopic">
+        <xs:restriction base="xs:string" />
+    </xs:simpleType>
+</xs:schema>

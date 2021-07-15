@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Text;
 using System.Reflection;
 using System.Windows.Markup;
 
@@ -18,12 +16,12 @@ namespace System.Xaml
         // names, namespaces, assembly short names, culture infos, and public keys match.
         internal static bool AssemblyQualifiedNameEquals(Type t1, Type t2)
         {
-            if (Object.ReferenceEquals(t1, null))
+            if (t1 is null)
             {
-                return Object.ReferenceEquals(t2, null);
+                return t2 is null;
             }
 
-            if (Object.ReferenceEquals(t2, null))
+            if (t2 is null)
             {
                 return false;
             }

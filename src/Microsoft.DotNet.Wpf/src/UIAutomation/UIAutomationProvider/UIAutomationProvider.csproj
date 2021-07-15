@@ -21,6 +21,7 @@
         <Link>Common\System\SR.cs</Link>
     </Compile>
     <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
+    <Compile Include="Forwards.cs" />
     <Compile Include="MS\Internal\Automation\UiaCoreProviderApi.cs" />
     <Compile Include="System\Windows\Automation\Provider\AutomationInteropProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\IDockProvider.cs" />
@@ -35,7 +36,6 @@
     <Compile Include="System\Windows\Automation\Provider\IRawElementProviderFragment.cs" />
     <Compile Include="System\Windows\Automation\Provider\IRawElementProviderFragmentRoot.cs" />
     <Compile Include="System\Windows\Automation\Provider\IRawElementProviderHwndOverride.cs" />
-    <Compile Include="System\Windows\Automation\Provider\IRawElementProviderSimple.cs" />
     <Compile Include="System\Windows\Automation\Provider\IScrollItemProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\IScrollProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\ISelectionItemProvider.cs" />
@@ -44,7 +44,6 @@
     <Compile Include="System\Windows\Automation\Provider\ITableItemProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\ITableProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\ITextProvider.cs" />
-    <Compile Include="System\Windows\Automation\Provider\ITextRangeProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\IToggleProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\ITransformProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\IValueProvider.cs" />

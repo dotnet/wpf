@@ -34,7 +34,7 @@ namespace MS.Internal.Automation
             if (OSVersionHelper.IsOsWindows10RS5OrGreater)
             {
                 LastSupportedProperty = Properties.IsDialog;
-                LastSupportedEvent = Events.Changes;
+                LastSupportedEvent = Events.ActiveTextPositionChanged;
                 LastSupportedPattern = Patterns.CustomNavigation;
                 LastSupportedTextAttribute = TextAttributes.SayAsInterpretAs;
                 LastSupportedControlType = ControlTypes.AppBar;
@@ -43,6 +43,14 @@ namespace MS.Internal.Automation
             {
                 LastSupportedProperty = Properties.HeadingLevel;
                 LastSupportedEvent = Events.Changes;
+                LastSupportedPattern = Patterns.CustomNavigation;
+                LastSupportedTextAttribute = TextAttributes.SayAsInterpretAs;
+                LastSupportedControlType = ControlTypes.AppBar;
+            }
+            else if (OSVersionHelper.IsOsWindows10RS3OrGreater)
+            {
+                LastSupportedProperty = Properties.Size;
+                LastSupportedEvent = Events.Notification;
                 LastSupportedPattern = Patterns.CustomNavigation;
                 LastSupportedTextAttribute = TextAttributes.SayAsInterpretAs;
                 LastSupportedControlType = ControlTypes.AppBar;
@@ -332,7 +340,9 @@ namespace MS.Internal.Automation
             DropTarget_Dropped,
             TextEdit_TextChanged,
             TextEdit_ConversionTargetChanged,
-            Changes
+            Changes,
+            Notification,
+            ActiveTextPositionChanged,
         };
 
  

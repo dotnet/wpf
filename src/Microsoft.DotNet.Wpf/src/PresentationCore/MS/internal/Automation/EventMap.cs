@@ -71,7 +71,9 @@ namespace MS.Internal.Automation
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         private static bool IsKnownNewEvent(int id)
         {
-            if (id == AutomationElementIdentifiers.LiveRegionChangedEvent?.Id)
+            if (   id == AutomationElementIdentifiers.LiveRegionChangedEvent?.Id
+                || id == AutomationElementIdentifiers.NotificationEvent?.Id
+                || id == AutomationElementIdentifiers.ActiveTextPositionChangedEvent?.Id)
             {
                 return true;
             }
@@ -117,6 +119,8 @@ namespace MS.Internal.Automation
                 case AutomationEvents.InputReachedOtherElement:                             eventObject = SynchronizedInputPatternIdentifiers.InputReachedOtherElementEvent; break;
                 case AutomationEvents.InputDiscarded:                                       eventObject = SynchronizedInputPatternIdentifiers.InputDiscardedEvent; break;
                 case AutomationEvents.LiveRegionChanged:                                    eventObject = AutomationElementIdentifiers.LiveRegionChangedEvent; break;
+                case AutomationEvents.Notification:                                         eventObject = AutomationElementIdentifiers.NotificationEvent; break;
+                case AutomationEvents.ActiveTextPositionChanged:                            eventObject = AutomationElementIdentifiers.ActiveTextPositionChangedEvent; break;
 
                 default:
                     throw new ArgumentException(SR.Get(SRID.Automation_InvalidEventId), "eventId");

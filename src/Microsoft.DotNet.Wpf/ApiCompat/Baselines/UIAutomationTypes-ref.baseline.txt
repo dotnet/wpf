@@ -1,1 +1,4 @@
-Total Issues: 0
+Compat issues with assembly UIAutomationTypes:
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.IRawElementProviderSimple' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.ITextRangeProvider' in the contract but not the implementation.
+Total Issues: 2

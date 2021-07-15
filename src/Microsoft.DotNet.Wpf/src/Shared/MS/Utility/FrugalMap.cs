@@ -5,10 +5,11 @@
 using System;
 using System.Diagnostics;
 using System.Collections;
+using System.Collections.Generic;
 using System.Windows;
 
 #if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
+using MS.Internal.WindowsBase;
 #elif PRESENTATION_CORE
     using MS.Internal.PresentationCore;
 #elif PRESENTATIONFRAMEWORK
@@ -1575,7 +1576,7 @@ namespace MS.Utility
             }
             else
             {
-                _entries = new Hashtable(MINSIZE);
+                _entries = new Dictionary<int, object>(MINSIZE);
             }
 
             _entries[key] = ((value != NullValue) && (value != null)) ? value : NullValue;
@@ -1589,9 +1590,9 @@ namespace MS.Utility
 
         public override Object Search(int key)
         {
-            object value = _entries[key];
-
-            return ((value != NullValue) && (value != null)) ? value : DependencyProperty.UnsetValue;
+            return _entries.TryGetValue(key, out object value) && (value != NullValue) ?
+                value :
+                DependencyProperty.UnsetValue;
         }
 
         public override void Sort()
@@ -1603,7 +1604,7 @@ namespace MS.Utility
         {
             if (index < _entries.Count)
             {
-                IDictionaryEnumerator myEnumerator = _entries.GetEnumerator();
+                Dictionary<int, object>.Enumerator myEnumerator = _entries.GetEnumerator();
 
                 // Move to first valid value
                 myEnumerator.MoveNext();
@@ -1612,15 +1613,12 @@ namespace MS.Utility
                 {
                     myEnumerator.MoveNext();
                 }
-                key = (int)myEnumerator.Key;
-                if ((myEnumerator.Value != NullValue) && (myEnumerator.Value != null))
-                {
-                    value = myEnumerator.Value;
-                }
-                else
-                {
-                    value = DependencyProperty.UnsetValue;
-                }
+
+                KeyValuePair<int, object> current = myEnumerator.Current;
+                key = current.Key;
+                value = (current.Value != NullValue) ?
+                    current.Value :
+                    DependencyProperty.UnsetValue;
             }
             else
             {
@@ -1632,22 +1630,13 @@ namespace MS.Utility
 
         public override void Iterate(ArrayList list, FrugalMapIterationCallback callback)
         {
-            IDictionaryEnumerator myEnumerator = _entries.GetEnumerator();
-            
-            while (myEnumerator.MoveNext())
+            foreach (KeyValuePair<int, object> entry in _entries)
             {
-                int key = (int)myEnumerator.Key;
-                object value;
-                if ((myEnumerator.Value != NullValue) && (myEnumerator.Value != null))
-                {
-                    value = myEnumerator.Value;
-                }
-                else
-                {
-                    value = DependencyProperty.UnsetValue;
-                }
+                object value = (entry.Value != NullValue) ?
+                    entry.Value :
+                    DependencyProperty.UnsetValue;
             
-                callback(list, key, value);
+                callback(list, entry.Key, value);
             }
         }
 
@@ -1674,7 +1663,7 @@ namespace MS.Utility
         // two cases we insert NullValue instead of null.
         private static object NullValue = new object();
 
-        internal Hashtable _entries;
+        internal Dictionary<int, object> _entries;
     }
 
     [FriendAccessAllowed]

@@ -270,8 +270,8 @@ namespace System.Windows.Controls
                     (unit == DataGridLengthUnitType.Pixel) || DoubleUtil.AreClose(unitFactor, 1.0),
                     "unitFactor should not be other than 1.0 unless the unit type is Pixel.");
 
-                string valueString = goodString.Substring(0, strLen - strLenUnit);
-                value = Convert.ToDouble(valueString, cultureInfo) * unitFactor;
+                ReadOnlySpan<char> valueString = goodString.AsSpan(0, strLen - strLenUnit);
+                value = double.Parse(valueString, provider: cultureInfo) * unitFactor;
             }
 
             return new DataGridLength(value, unit);

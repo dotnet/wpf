@@ -1397,6 +1397,7 @@
     <NetCoreReference Include="System.IO.FileSystem" />
     <NetCoreReference Include="System.IO.Compression" />
     <NetCoreReference Include="System.IO.IsolatedStorage" />
+    <NetCoreReference Include="System.Memory" />
     <NetCoreReference Include="System.Net.Primitives" />
     <NetCoreReference Include="System.Net.Requests" />
     <NetCoreReference Include="System.Linq" />

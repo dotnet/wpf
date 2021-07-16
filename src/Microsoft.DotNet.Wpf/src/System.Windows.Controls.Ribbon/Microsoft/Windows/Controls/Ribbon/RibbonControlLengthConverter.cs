@@ -238,8 +238,8 @@ namespace Microsoft.Windows.Controls.Ribbon
                 Debug.Assert(unit == RibbonControlLengthUnitType.Pixel || unit == RibbonControlLengthUnitType.Item ||
                     DoubleUtil.AreClose(unitFactor, 1.0));
 
-                string valueString = goodString.Substring(0, strLen - strLenUnit);
-                value = Convert.ToDouble(valueString, cultureInfo) * unitFactor;
+                ReadOnlySpan<char> valueString = goodString.AsSpan(0, strLen - strLenUnit);
+                value = double.Parse(valueString, provider: cultureInfo) * unitFactor;
             }
 
             return new RibbonControlLength(value, unit);

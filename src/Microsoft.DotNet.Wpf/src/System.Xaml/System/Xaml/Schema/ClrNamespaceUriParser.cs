@@ -29,7 +29,7 @@ namespace System.Xaml.Schema
                 return false;
             }
 
-            string keyword = uriInput.Substring(0, colonIdx);
+            ReadOnlySpan<char> keyword = uriInput.AsSpan(0, colonIdx);
             if (!KS.Eq(keyword, KnownStrings.UriClrNamespace))
             {
                 return false;
@@ -56,7 +56,7 @@ namespace System.Xaml.Schema
                 return false;
             }
 
-            keyword = uriInput.Substring(assemblyKeywordStartIdx, equalIdx - assemblyKeywordStartIdx);
+            keyword = uriInput.AsSpan(assemblyKeywordStartIdx, equalIdx - assemblyKeywordStartIdx);
             if (!KS.Eq(keyword, KnownStrings.UriAssembly))
             {
                 return false;

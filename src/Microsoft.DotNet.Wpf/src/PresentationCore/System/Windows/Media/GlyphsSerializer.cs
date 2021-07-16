@@ -216,7 +216,7 @@ namespace System.Windows.Media
             // remove trailing commas
             RemoveTrailingCharacters(_glyphStringBuider, GlyphSubEntrySeparator);
             _glyphStringBuider.Append(GlyphSeparator);
-            _indicesStringBuider.Append(_glyphStringBuider.ToString());
+            _indicesStringBuider.Append(_glyphStringBuider);
 
             // reset for next glyph
             _glyphStringBuider.Length = 0;

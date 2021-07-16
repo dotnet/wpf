@@ -1866,26 +1866,24 @@ namespace System.Windows.Xps.Packaging
             Uri imageUri
             )
         {
-            //Extract file extension
+            //Extract file extension without '.'
             String path = imageUri.OriginalString;
-            String extension = Path.GetExtension(path).ToLower(CultureInfo.InvariantCulture);
-            //remove .
-            extension = extension.Substring(1);
+            ReadOnlySpan<char> extension = Path.GetExtension(path).ToLower(CultureInfo.InvariantCulture).AsSpan(1);
 
-            ContentType contentType = null;
-            if (String.CompareOrdinal(extension, XpsS0Markup.JpgExtension) == 0)
+            ContentType contentType;
+            if (extension.Equals(XpsS0Markup.JpgExtension, StringComparison.Ordinal))
             {
                 contentType =  XpsS0Markup.JpgContentType;
             }
-            else if (String.CompareOrdinal(extension, XpsS0Markup.PngExtension) == 0)
+            else if (extension.Equals(XpsS0Markup.PngExtension, StringComparison.Ordinal))
             {
                 contentType = XpsS0Markup.PngContentType;
             }
-            else if (String.CompareOrdinal(extension, XpsS0Markup.TifExtension) == 0)
+            else if (extension.Equals(XpsS0Markup.TifExtension, StringComparison.Ordinal))
             {
                 contentType = XpsS0Markup.TifContentType;
             }
-            else if (String.CompareOrdinal(extension, XpsS0Markup.WdpExtension) == 0)
+            else if (extension.Equals(XpsS0Markup.WdpExtension, StringComparison.Ordinal))
             {
                 contentType = XpsS0Markup.WdpContentType;
             }

@@ -168,7 +168,7 @@ namespace System.Windows.Media
                 if (k > i)
                 {
                     // Non-empty field; convert it to double.
-                    string field = s.Substring(i, k - i);
+                    ReadOnlySpan<char> field = s.AsSpan(i, k - i);
                     if (!double.TryParse(
                         field,
                         NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign,
@@ -176,7 +176,7 @@ namespace System.Windows.Media
                         out metrics[fieldIndex]
                         ))
                     {
-                        throw new ArgumentException(SR.Get(SRID.CannotConvertStringToType, field, "double"));
+                        throw new ArgumentException(SR.Get(SRID.CannotConvertStringToType, field.ToString(), "double"));
                     }
                 }
                 else if (fieldIndex < NumRequiredFields)

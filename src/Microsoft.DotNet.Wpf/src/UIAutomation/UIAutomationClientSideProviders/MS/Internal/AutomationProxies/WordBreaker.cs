@@ -158,7 +158,7 @@ namespace MS.Internal.AutomationProxies
                 TextSymbolType.Character;
         }
 
-        public int GetText(LogicalDirection direction, int maxLength, TextPosition limit, char[] chars, int startIndex)
+        public int GetText(LogicalDirection direction, int maxLength, TextPosition limit, Span<char> chars, int startIndex)
         {
             // simplifying assumptions based on usage by word breaker.
             Debug.Assert(direction == LogicalDirection.Forward);
@@ -728,7 +728,7 @@ namespace MS.Internal.AutomationProxies
             StringBuilder output = new StringBuilder();
             TextNavigator navigator = begin.CreateNavigator();
             TextSymbolType type;
-            char[] buffer = new char[1];
+            Span<char> buffer = stackalloc char[1];
             char ch;
 
             if (begin.TextContainer != end.TextContainer)

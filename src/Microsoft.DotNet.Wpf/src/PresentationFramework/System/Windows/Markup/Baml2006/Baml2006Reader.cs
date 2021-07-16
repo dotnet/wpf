@@ -2068,11 +2068,10 @@ namespace System.Windows.Baml2006
             int colonIdx = uriInput.IndexOf(':');
             if (colonIdx != -1)
             {
-                string uriTypePrefix = uriInput.Substring(0, colonIdx);
-                if (String.Equals(uriTypePrefix, "clr-namespace"))
+                ReadOnlySpan<char> uriTypePrefix = uriInput.AsSpan(0, colonIdx);
+                if (uriTypePrefix.Equals("clr-namespace", StringComparison.Ordinal))
                 {
                     //We have a clr-namespace so do special processing
-                    int clrNsStartIdx = colonIdx + 1;
                     int semicolonIdx = uriInput.IndexOf(';');
                     if (-1 == semicolonIdx)
                     {
@@ -2090,13 +2089,13 @@ namespace System.Windows.Baml2006
                         {
                             throw new ArgumentException(SR.Get(SRID.MissingTagInNamespace, "=", uriInput));
                         }
-                        string keyword = uriInput.Substring(assemblyKeywordStartIdx, equalIdx - assemblyKeywordStartIdx);
-                        if (!String.Equals(keyword, "assembly"))
+                        ReadOnlySpan<char> keyword = uriInput.AsSpan(assemblyKeywordStartIdx, equalIdx - assemblyKeywordStartIdx);
+                        if (!keyword.Equals("assembly", StringComparison.Ordinal))
                         {
                             throw new ArgumentException(SR.Get(SRID.AssemblyTagMissing, "assembly", uriInput));
                         }
-                        string assemblyName = uriInput.Substring(equalIdx + 1);
-                        if (String.IsNullOrEmpty(assemblyName))
+                        ReadOnlySpan<char> assemblyName = uriInput.AsSpan(equalIdx + 1);
+                        if (assemblyName.TrimStart().IsEmpty)
                         {
                             return uriInput + GetAssemblyNameForNamespace(_settings.LocalAssembly);
                         }

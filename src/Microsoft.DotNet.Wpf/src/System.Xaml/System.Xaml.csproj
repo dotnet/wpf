@@ -100,6 +100,7 @@
     <NetCoreReference Include="System.Diagnostics.Tools" />
     <NetCoreReference Include="System.Globalization" />
     <NetCoreReference Include="System.IO" />
+    <NetCoreReference Include="System.Memory" />
     <NetCoreReference Include="System.ObjectModel" />
     <NetCoreReference Include="System.Reflection.Emit.ILGeneration" />
     <NetCoreReference Include="System.Reflection.Emit.Lightweight" />

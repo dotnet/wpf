@@ -386,7 +386,7 @@ namespace System.Windows.Documents
             _glyphRunProperties = glyphRunProperties;
         }
 
-        private static bool IsEmpty(string s)
+        private static bool IsEmpty(ReadOnlySpan<char> s)
         {
             foreach (char c in s)
             {
@@ -406,14 +406,14 @@ namespace System.Windows.Documents
         /// <param name="glyphIndex"></param>
         /// <returns>true if glyph index is present, false if glyph index is not present.</returns>
         private bool ReadGlyphIndex(
-            string      valueSpec,
-            ref bool    inCluster,
-            ref int     glyphClusterSize,
-            ref int     characterClusterSize,
-            ref ushort  glyphIndex)
+            ReadOnlySpan<char> valueSpec,
+            ref bool           inCluster,
+            ref int            glyphClusterSize,
+            ref int            characterClusterSize,
+            ref ushort         glyphIndex)
         {
             // the format is ... [(CharacterClusterSize[:GlyphClusterSize])] GlyphIndex ...
-            string glyphIndexString = valueSpec;
+            ReadOnlySpan<char> glyphIndexString = valueSpec;
 
             int firstBracket = valueSpec.IndexOf('(');
             if (firstBracket != -1)
@@ -437,26 +437,26 @@ namespace System.Windows.Documents
                 if (colon == -1)
                 {
                     // parse glyph cluster size
-                    string characterClusterSpec = valueSpec.Substring(firstBracket + 1, secondBracket - (firstBracket + 1));
-                    characterClusterSize = int.Parse(characterClusterSpec, CultureInfo.InvariantCulture);
+                    ReadOnlySpan<char> characterClusterSpec = valueSpec.Slice(firstBracket + 1, secondBracket - (firstBracket + 1));
+                    characterClusterSize = int.Parse(characterClusterSpec, provider: CultureInfo.InvariantCulture);
                     glyphClusterSize = 1;
                 }
                 else
                 {
                     if (colon <= firstBracket + 1 || colon >= secondBracket - 1)
                         throw new ArgumentException(SR.Get(SRID.GlyphsClusterMisplacedSeparator));
-                    string characterClusterSpec = valueSpec.Substring(firstBracket + 1, colon - (firstBracket + 1));
-                    characterClusterSize = int.Parse(characterClusterSpec, CultureInfo.InvariantCulture);
-                    string glyphClusterSpec = valueSpec.Substring(colon + 1, secondBracket - (colon + 1));
-                    glyphClusterSize = int.Parse(glyphClusterSpec, CultureInfo.InvariantCulture);
+                    ReadOnlySpan<char> characterClusterSpec = valueSpec.Slice(firstBracket + 1, colon - (firstBracket + 1));
+                    characterClusterSize = int.Parse(characterClusterSpec, provider: CultureInfo.InvariantCulture);
+                    ReadOnlySpan<char> glyphClusterSpec = valueSpec.Slice(colon + 1, secondBracket - (colon + 1));
+                    glyphClusterSize = int.Parse(glyphClusterSpec, provider: CultureInfo.InvariantCulture);
                 }
                 inCluster = true;
-                glyphIndexString = valueSpec.Substring(secondBracket + 1);
+                glyphIndexString = valueSpec.Slice(secondBracket + 1);
             }
             if (IsEmpty(glyphIndexString))
                 return false;
 
-            glyphIndex = ushort.Parse(glyphIndexString, CultureInfo.InvariantCulture);
+            glyphIndex = ushort.Parse(glyphIndexString, provider: CultureInfo.InvariantCulture);
             return true;
         }
 
@@ -564,7 +564,7 @@ namespace System.Windows.Documents
                     {
                         int len = i - valueStartIndex;
 
-                        string valueSpec = glyphsProp.Substring(valueStartIndex, len);
+                        ReadOnlySpan<char> valueSpec = glyphsProp.AsSpan(valueStartIndex, len);
 
                         #region Interpret one comma-delimited value
 
@@ -611,7 +611,7 @@ namespace System.Windows.Documents
                                 // interpret glyph advance spec
                                 if (!IsEmpty(valueSpec))
                                 {
-                                    parsedGlyphData.advanceWidth = double.Parse(valueSpec, CultureInfo.InvariantCulture);
+                                    parsedGlyphData.advanceWidth = double.Parse(valueSpec, provider: CultureInfo.InvariantCulture);
                                     if (parsedGlyphData.advanceWidth < 0)
                                         throw new ArgumentException(SR.Get(SRID.GlyphsAdvanceWidthCannotBeNegative));
                                 }
@@ -620,13 +620,13 @@ namespace System.Windows.Documents
                             case 2:
                                 // interpret glyph offset X
                                 if (!IsEmpty(valueSpec))
-                                    parsedGlyphData.offsetX = double.Parse(valueSpec, CultureInfo.InvariantCulture);
+                                    parsedGlyphData.offsetX = double.Parse(valueSpec, provider: CultureInfo.InvariantCulture);
                                 break;
 
                             case 3:
                                 // interpret glyph offset Y
                                 if (!IsEmpty(valueSpec))
-                                    parsedGlyphData.offsetY = double.Parse(valueSpec, CultureInfo.InvariantCulture);
+                                    parsedGlyphData.offsetY = double.Parse(valueSpec, provider: CultureInfo.InvariantCulture);
                                 break;
 
                             default:

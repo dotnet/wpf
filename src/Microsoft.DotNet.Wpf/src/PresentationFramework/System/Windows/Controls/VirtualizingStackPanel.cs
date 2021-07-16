@@ -12217,11 +12217,11 @@ namespace System.Windows.Controls
                         sb.Append("/");
                     }
 
-                    string name = t.ToString();
+                    ReadOnlySpan<char> name = t.ToString();
                     isWPFControl = name.StartsWith("System.Windows.Controls.");
                     if (isWPFControl)
                     {
-                        name = name.Substring(24);  // 24 == length of "s.w.c."
+                        name = name.Slice(24); // 24 == length of "s.w.c."
                     }
 
                     sb.Append(name);

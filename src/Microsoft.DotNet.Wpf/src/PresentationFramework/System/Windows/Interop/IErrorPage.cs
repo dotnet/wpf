@@ -48,7 +48,7 @@ namespace System.Windows.Interop
         DispatcherOperationCallback RefreshCallback { get; set;}
 
         /// <summary>
-        /// Callback when user clicks GetWinFx button
+        /// Callback when user clicks GetWinFX button
         /// </summary>
         DispatcherOperationCallback GetWinFxCallback { get; set;}
     }

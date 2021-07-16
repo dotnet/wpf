@@ -23,8 +23,6 @@
     <_TargetFrameworkVersionValue>$([MSBuild]::ValueOrDefault('$(_TargetFrameworkVersionWithoutV)', '$(_UndefinedTargetFrameworkVersion)'))</_TargetFrameworkVersionValue>
   </PropertyGroup>
   
-  <Import Project="Microsoft.WinFX.targets" />
-
   <ItemGroup Condition=" ('$(EnableDefaultItems)' == 'true') And ('$(UseWPF)' == 'true') And ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And 
                          ('$(_TargetFrameworkVersionValue)' >= '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
 
@@ -34,7 +32,6 @@
     -->
     <Page Remove="@(Resource);@(Content)"
           Condition="'$(EnableDefaultPageItems)' != 'false'" />
-
     <!--
         ApplicationDefinition must also be removed from Page.  Otherwise, PresentationBuildTasks will include the
         generated code for the ApplicationDefinition twice.  We cannot do this in all cases in the props file as
@@ -43,7 +40,6 @@
         in WPF.
     -->
     <Page Remove="@(ApplicationDefinition)" />
-    
     <!--
          The WindowsDesktop props file removes "**/*.xaml" from None if both EnableDefaultApplicationDefinition and 
          EnableDefaultPageItems are true.  This is done so that we remove any implicitly globbed XAML files from None
@@ -81,7 +77,6 @@
       <Page Remove="@(Page)" />
       <Page Include="@(DeduplicatedPageItems)" />
     </ItemGroup>
-
   </Target>
 
   <!-- 
@@ -109,4 +104,8 @@
                   ('$(_TargetFrameworkVersionValue)' != '$(_UndefinedTargetFrameworkVersion)') And ('$(_TargetFrameworkVersionValue)' &lt; '$(_WindowsDesktopSdkTargetFrameworkVersionFloor)')">
     <NetSdkWarning ResourceName="WindowsDesktopFrameworkRequiresVersion30" />
   </Target>
+
+  <!-- Import WPF Build logic only when we don't import NETFX's WinFX targets -->
+  <Import Project="Microsoft.WinFX.targets" Condition="'$(ImportFrameworkWinFXTargets)' != 'true'" />
+
 </Project>

@@ -115,10 +115,10 @@ namespace System.Windows.Automation
         /// call may return sometime after the window is ready for user input.  The calling code
         /// should not rely on this call to understand exactly when the window has become idle. 
         /// 
-        /// For now this method works reliably for both WinFx and Win32 Windows that are starting
-        /// up.  However, if called at other times on WinFx Windows (e.g. during a long layout) 
+        /// For now this method works reliably for both WinFX and Win32 Windows that are starting
+        /// up.  However, if called at other times on WinFX Windows (e.g. during a long layout) 
         /// WaitForInputIdle may return true before the Window is actually idle.  Additional work
-        /// needs to be done to detect when WinFx Windows are idle.
+        /// needs to be done to detect when WinFX Windows are idle.
         /// </remarks>
         /// <param name="milliseconds">The amount of time, in milliseconds, to wait for the 
         /// associated process to become idle. The maximum is the largest possible value of a 

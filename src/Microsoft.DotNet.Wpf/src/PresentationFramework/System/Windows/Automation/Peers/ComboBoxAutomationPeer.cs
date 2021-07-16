@@ -63,7 +63,7 @@ namespace System.Windows.Automation.Peers
             }
             else if (pattern == PatternInterface.Scroll && !owner.IsDropDownOpen)
             {
-                iface = this;
+                iface = null;
             }
             else
             {

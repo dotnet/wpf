@@ -84,7 +84,11 @@ namespace System.Windows
                         {
                             Dispatcher.CurrentDispatcher.BeginInvoke(
                                 DispatcherPriority.Loaded,
-                                (DispatcherOperationCallback)ShowCallback,
+                                (DispatcherOperationCallback)(arg =>
+                                {
+                                    ((SplashScreen)arg).Close(TimeSpan.FromSeconds(0.3));
+                                    return null;
+                                }),
                                 this);
                         }
                         // The HWND that we just created is owned by this thread.  When we close we should ensure that it 
@@ -98,13 +102,6 @@ namespace System.Windows
                     }
                 }
             }
-        }
-        
-        private static object ShowCallback(object arg)
-        {
-            SplashScreen splashScreen = (SplashScreen)arg;
-            splashScreen.Close(TimeSpan.FromSeconds(0.3));
-            return null;
         }
 
         // This is 200-300 ms slower than Assembly.GetManifestResourceStream() but works with localization.

@@ -182,10 +182,10 @@ namespace System.Windows.Media
                         DispatcherPriority.Normal,
                         (DispatcherOperationCallback)delegate(object args)
                         {
-                            Invalidate();
+                            ((HostVisual)args).Invalidate();
                             return null;
                         },
-                        null
+                        this
                         );
                 }
             }
@@ -363,10 +363,10 @@ namespace System.Windows.Media
                         DispatcherPriority.Normal,
                         (DispatcherOperationCallback)delegate(object args)
                         {
-                            Invalidate();
+                            ((HostVisual)args).Invalidate();
                             return null;
                         },
-                        null
+                        this
                         );
                 }
             }

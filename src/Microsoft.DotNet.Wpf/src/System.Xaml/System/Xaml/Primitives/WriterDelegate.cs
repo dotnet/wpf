@@ -72,10 +72,11 @@ namespace System.Xaml
                 if (disposing && !IsDisposed)
                 {
                     _addDelegate(XamlNodeType.None, XamlNode.InternalNodeType.EndOfStream);
-                    _addDelegate = new XamlNodeAddDelegate(ThrowBecauseWriterIsClosed);
-                    _addLineInfoDelegate = (_addLineInfoDelegate != null)
-                                ? new XamlLineInfoAddDelegate(ThrowBecauseWriterIsClosed2)
-                                : null;
+                    _addDelegate = delegate { throw new XamlException(SR.Get(SRID.WriterIsClosed)); };
+                    if (_addLineInfoDelegate != null)
+                    {
+                        _addLineInfoDelegate = delegate { throw new XamlException(SR.Get(SRID.WriterIsClosed)); };
+                    }
                 }
             }
             finally
@@ -110,17 +111,6 @@ namespace System.Xaml
             }
         }
         #endregion
-
-
-        private void ThrowBecauseWriterIsClosed(XamlNodeType nodeType, object data)
-        {
-            throw new XamlException(SR.Get(SRID.WriterIsClosed));
-        }
-
-        private void ThrowBecauseWriterIsClosed2(int lineNumber, int linePosition)
-        {
-            throw new XamlException(SR.Get(SRID.WriterIsClosed));
-        }
 
         private void ThrowIsDisposed()
         {

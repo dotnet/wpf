@@ -3222,6 +3222,7 @@ namespace System.Windows.Automation.Peers
         protected override System.Windows.Rect GetBoundingRectangleCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override string GetNameCore() { throw null; }
+        protected override bool IsDialogCore() { throw null; }
     }
 }
 namespace System.Windows.Baml2006

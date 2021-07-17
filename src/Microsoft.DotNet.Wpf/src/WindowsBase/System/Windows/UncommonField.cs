@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 using MS.Internal.WindowsBase;  // for FriendAccessAllowed
@@ -51,7 +52,7 @@ namespace System.Windows
                 EntryIndex entryIndex = instance.LookupEntry(_globalIndex);
 
                 // Set the value if it's not the default, otherwise remove the value.
-                if (!object.ReferenceEquals(value, _defaultValue))
+                if (!EqualityComparer<T>.Default.Equals(value, _defaultValue))
                 {
                     instance.SetEffectiveValue(entryIndex, null /* dp */, _globalIndex, null /* metadata */, value, BaseValueSourceInternal.Local);
                     _hasBeenSet = true;

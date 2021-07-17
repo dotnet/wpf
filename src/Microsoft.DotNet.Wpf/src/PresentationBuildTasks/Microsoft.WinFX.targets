@@ -19,8 +19,8 @@
     <AlwaysCompileMarkupFilesInSeparateDomain Condition="'$(AlwaysCompileMarkupFilesInSeparateDomain)' == '' ">true</AlwaysCompileMarkupFilesInSeparateDomain>
     <LocalizationDirectivesToLocFile Condition="'$(LocalizationDirectivesToLocFile)' == ''">None</LocalizationDirectivesToLocFile>
 
-    <!-- Disable implicit namespace imports for WPF.  This should be removed after support is added in .NET 6.0 Preview 8. -->
-    <DisableImplicitNamespaceImports Condition="'$(DisableImplicitNamespaceImports)' != 'false'">true</DisableImplicitNamespaceImports>
+    <!-- Disable implicit namespace imports for WPF.  This should be removed after support is added in .NET 6.0 rc 1. -->
+    <DisableImplicitNamespaceImports Condition="'$(DisableImplicitNamespaceImports)' != 'false' and '$(UseWPF)' == 'true'">true</DisableImplicitNamespaceImports>
   </PropertyGroup>
 
   <!-- Some Default Settings -->

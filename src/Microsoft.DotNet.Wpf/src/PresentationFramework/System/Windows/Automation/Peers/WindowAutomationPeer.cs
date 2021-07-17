@@ -38,7 +38,7 @@ namespace System.Windows.Automation.Peers
         {
             string name = base.GetNameCore();
 
-            if(name == string.Empty)
+            if(name.Length == 0)
             {
                 Window window = (Window)Owner;
 

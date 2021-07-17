@@ -117,7 +117,7 @@ namespace System.Windows.Input
         {
             if (value != null)
             {
-                if (value != String.Empty)
+                if (value.Length != 0)
                 {
                     Type declaringType = null;
                     String commandName;

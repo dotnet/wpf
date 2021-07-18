@@ -161,4 +161,6 @@
     <SupportedTargetFramework Remove="@(_UnsupportedNETCoreAppTargetFramework);@(_UnsupportedNETStandardTargetFramework);@(_UnsupportedNETFrameworkTargetFramework)" />
   </ItemGroup>
 
+  <Import Project="System.Windows.Forms.GlobalUsings.props" />
+
 </Project>

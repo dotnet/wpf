@@ -1,16 +1,9 @@
 <Project>
+
   <Import Project="$(WpfArcadeSdkTargets)"
           Condition="Exists('$(WpfArcadeSdkProps)') And Exists('$(WpfArcadeSdkTargets)')"/>
 
   <Import Sdk="Microsoft.DotNet.Arcade.Wpf.Sdk"
           Project="Sdk.targets"
           Condition="!Exists('$(WpfArcadeSdkProps)') Or !Exists('$(WpfArcadeSdkTargets)')"/>
-
-  <!-- Temporarily remove analyzers from references until we can update to a Preview7 SDK which handles them correctly 
-       https://github.com/dotnet/wpf/issues/4848 -->
-  <Target Name="_RemoveAnalyzersFromReference" AfterTargets="ResolveTargetingPackAssets">
-    <ItemGroup>
-      <Reference Remove="@(Reference)" Condition="'%(Reference.FrameworkReferenceName)' != '' and $([System.String]::Copy('%(Directory)').IndexOf('analyzers', StringComparison.OrdinalIgnoreCase)) > 0" />
-    </ItemGroup>
-  </Target>
 </Project>

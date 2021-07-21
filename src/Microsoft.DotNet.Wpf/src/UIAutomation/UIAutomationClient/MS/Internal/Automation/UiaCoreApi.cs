@@ -679,8 +679,8 @@ namespace MS.Internal.Automation
 
                 case EventArgsType.AsyncContentLoaded:
                     {
-                        UiaAsyncContentLoadedEventArgs aclargs = (UiaAsyncContentLoadedEventArgs)Marshal.PtrToStructure(argsAddr, typeof(UiaAsyncContentLoadedEventArgs));
-                        return new AsyncContentLoadedEventArgs(aclargs._asyncContentLoadedState, aclargs._percentComplete);
+                        UiaAsyncContentLoadedEventArgs nargs = (UiaAsyncContentLoadedEventArgs)Marshal.PtrToStructure(argsAddr, typeof(UiaAsyncContentLoadedEventArgs));
+                        return new AsyncContentLoadedEventArgs(nargs._asyncContentLoadedState, nargs._percentComplete);
                     }
 
                 case EventArgsType.WindowClosed:
@@ -688,6 +688,19 @@ namespace MS.Internal.Automation
                         UiaWindowClosedEventArgs wcargs = (UiaWindowClosedEventArgs)Marshal.PtrToStructure(argsAddr, typeof(UiaWindowClosedEventArgs));
                         int[] runtimeId = ArrayFromIntPtr(wcargs._pRuntimeId, wcargs._cRuntimeIdLen);
                         return new WindowClosedEventArgs(runtimeId);
+                    }
+
+                case EventArgsType.Notification:
+                    {
+                        UiaNotificationEventArgs nargs = (UiaNotificationEventArgs)Marshal.PtrToStructure(argsAddr, typeof(UiaNotificationEventArgs));
+                        return new NotificationEventArgs(nargs._notificationKind, nargs._notificationProcessing,
+                            Marshal.PtrToStringUni(nargs._displayString), Marshal.PtrToStringUni(nargs._activityId));
+                    }
+
+                case EventArgsType.ActiveTextPositionChanged:
+                    {
+                        UiaActiveTextPositionChangedEventArgs atpcargs = (UiaActiveTextPositionChangedEventArgs)Marshal.PtrToStructure(argsAddr, typeof(UiaActiveTextPositionChangedEventArgs));
+                        return new ActiveTextPositionChangedEventArgs(atpcargs._textRange);
                     }
             }
 
@@ -1448,7 +1461,11 @@ namespace MS.Internal.Automation
             PropertyChanged,
             StructureChanged,
             AsyncContentLoaded,
-            WindowClosed
+            WindowClosed,
+            TextEditTextChanged,
+            Changes,
+            Notification,
+            ActiveTextPositionChanged
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -1496,6 +1513,25 @@ namespace MS.Internal.Automation
             internal int _eventId;
             internal IntPtr _pRuntimeId;
             internal int _cRuntimeIdLen;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct UiaNotificationEventArgs
+        {
+            internal EventArgsType _type;
+            internal int _eventId;
+            internal AutomationNotificationKind _notificationKind;
+            internal AutomationNotificationProcessing _notificationProcessing;
+            internal IntPtr _displayString;
+            internal IntPtr _activityId;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct UiaActiveTextPositionChangedEventArgs
+        {
+            internal EventArgsType _type;
+            internal int _eventId;
+            internal ITextRangeProvider _textRange;
         }
 
         #endregion Private types

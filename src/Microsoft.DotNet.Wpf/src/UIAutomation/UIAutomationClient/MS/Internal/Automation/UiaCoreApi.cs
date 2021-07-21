@@ -679,8 +679,8 @@ namespace MS.Internal.Automation
 
                 case EventArgsType.AsyncContentLoaded:
                     {
-                        UiaAsyncContentLoadedEventArgs nargs = (UiaAsyncContentLoadedEventArgs)Marshal.PtrToStructure(argsAddr, typeof(UiaAsyncContentLoadedEventArgs));
-                        return new AsyncContentLoadedEventArgs(nargs._asyncContentLoadedState, nargs._percentComplete);
+                        UiaAsyncContentLoadedEventArgs aclargs = (UiaAsyncContentLoadedEventArgs)Marshal.PtrToStructure(argsAddr, typeof(UiaAsyncContentLoadedEventArgs));
+                        return new AsyncContentLoadedEventArgs(aclargs._asyncContentLoadedState, aclargs._percentComplete);
                     }
 
                 case EventArgsType.WindowClosed:

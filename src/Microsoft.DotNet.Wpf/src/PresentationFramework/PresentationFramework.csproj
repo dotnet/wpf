@@ -32,16 +32,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <CollectionTemplate Include="ColumnDefinition.cs">
-      <Pattern>MS\Utility\GridContentElementCollection</Pattern>
-      <Template>MS\Utility\ColumnDefinition</Template>
-    </CollectionTemplate>
-    <CollectionTemplate Include="RowDefinition.cs">
-      <Pattern>MS\Utility\GridContentElementCollection</Pattern>
-      <Template>MS\Utility\RowDefinition</Template>
-    </CollectionTemplate>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="$(WpfCommonDir)\src\System\LocalAppContext.cs" />
     <Compile Include="$(WpfCommonDir)\src\System\AppContextDefaultValues.cs" />
     <Compile Include="System\AppContextDefaultValues.cs" />
@@ -555,6 +545,7 @@
     <Compile Include="System\Windows\Controls\CheckBox.cs" />
     <Compile Include="System\Windows\Controls\CleanUpVirtualizedItemEventArgs.cs" />
     <Compile Include="System\Windows\Controls\ClickMode.cs" />
+    <Compile Include="System\Windows\Controls\ColumnDefinition.cs" />
     <Compile Include="System\Windows\Controls\ComboBox.cs" />
     <Compile Include="System\Windows\Controls\ComboBoxItem.cs" />
     <Compile Include="System\Windows\Controls\ContainerTracking.cs" />
@@ -746,6 +737,7 @@
     <Compile Include="System\Windows\Controls\RadioButton.cs" />
     <Compile Include="System\Windows\Controls\RealizedColumnsBlock.cs" />
     <Compile Include="System\Windows\Controls\RichTextBox.cs" />
+    <Compile Include="System\Windows\Controls\RowDefinition.cs" />
     <Compile Include="System\Windows\Controls\ScrollChangedEventArgs.cs" />
     <Compile Include="System\Windows\Controls\ScrollUnit.cs" />
     <Compile Include="System\Windows\Controls\ScrollViewer.cs" />
@@ -1460,31 +1452,6 @@
        doesn’t run before the Build target.-->
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
 
-  <!-- This has to come after the import of Sdk.targets, otherwise the CompileDependsOn property will be overwritten.
-       Once we move these templates to .tt this can be removed. -->
-  <PropertyGroup>
-    <CompileDependsOn>
-      GenerateTemplates;
-      $(CompileDependsOn)
-    </CompileDependsOn>
-  </PropertyGroup>
-
-  <Target Name="GenerateTemplates" DependsOnTargets="GenerateTemplatesCore" Returns="@(Compile)">
-    <Error Condition="!Exists('$(IntermediateOutputPath)\%(CollectionTemplate.Identity)')" Text="$(IntermediateOutputPath)\%(CollectionTemplate.Identity) does not exist" />
-    <ItemGroup>
-      <Compile Include="$(IntermediateOutputPath)%(CollectionTemplate.Identity)" />
-    </ItemGroup>
-  </Target>
-
-  <Target Name="GenerateTemplatesCore" Inputs="%(CollectionTemplate.Template).ti;%(CollectionTemplate.Pattern).tb;%(CollectionTemplate.Pattern).th" Outputs="$(IntermediateOutputPath)\%(CollectionTemplate.Identity)">
-    <MakeDir Condition="!Exists('$(IntermediateOutputPath)')" Directories="$(IntermediateOutputPath)" />
-    <Error Text="CollectionTemplate must have Pattern (header and body) and Template (instances) child elements set." Condition="'%(CollectionTemplate.Pattern)' == '' OR '%(CollectionTemplate.Template)' == ''" />
-    <Error Text="The header file %(CollectionTemplate.Pattern).th is missing.  Cannot generate template in %(CollectionTemplate.Identity)" Condition="!Exists('%(CollectionTemplate.Pattern).th')" />
-    <Error Text="The body file %(CollectionTemplate.Pattern).tb is missing.  Cannot generate template in %(CollectionTemplate.Identity)" Condition="!Exists('%(CollectionTemplate.Pattern).tb')" />
-    <Error Text="The instances file %(Template).ti is missing.  Cannot generate template in %(CollectionTemplate.Identity)" Condition="!Exists('%(CollectionTemplate.Template).ti')" />
-    <Message Text="Generating template in %(CollectionTemplate.Identity)" />
-    <Exec Command="$(PerlCommand) template.pl %(CollectionTemplate.Pattern) %(CollectionTemplate.Template) &gt; $(IntermediateOutputPath)\%(CollectionTemplate.Identity)" Outputs="$(IntermediateOutputPath)\%(CollectionTemplate.Identity)" StandardOutputImportance="normal" />
-  </Target>
   <Import Project="$(WpfCodeGenDir)AvTrace\GenAvMessages.targets" />
   <!-- DevDiv Bug 888747: Re-enable AvTrace codegen -->
   <!-- <Import Project="$(WpfCodeGenDir)DesignTimeTextTemplating.targets" /> -->

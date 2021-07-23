@@ -1,8 +1,23 @@
+using MS.Utility;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Markup;
+using MS.Internal;
+using System.Reflection;
+using System.ComponentModel;
+
+using BuildInfo=MS.Internal.PresentationFramework.BuildInfo;
+
 //---------------------------------------------------------------------------
 //
 //
 //
-// Description: <<COLLECTIONTYPE>> implementation. <<ITEMTYPE>> implemenation.
+// Description: RowDefinitionCollection implementation. RowDefinition implemenation.
 //
 // Specs:
 //      Grid : http://avalon/layout/Specs/Grid.mht
@@ -11,7 +26,7 @@
 // Note:        This source file is auto-generated from:
 //                  \wcp\Framework\Ms\Utility\GridContentElementCollection.th
 //                  \wcp\Framework\Ms\Utility\GridContentElementCollection.tb
-//                  \wcp\Framework\Ms\Utility\<<COLLECTIONTYPE>>.ti
+//                  \wcp\Framework\Ms\Utility\RowDefinitionCollection.ti
 //
 //  
 //
@@ -25,14 +40,14 @@
 namespace System.Windows.Controls
 {
     /// <summary>
-    /// A <<COLLECTIONTYPE>> is an ordered, strongly typed, non-sparse 
-    /// collection of <<ITEMTYPE>>s. 
+    /// A RowDefinitionCollection is an ordered, strongly typed, non-sparse 
+    /// collection of RowDefinitions. 
     /// </summary>
     /// <remarks>
-    /// <<COLLECTIONTYPE>> provides public access for <<ITEMTYPE>>s 
+    /// RowDefinitionCollection provides public access for RowDefinitions 
     /// reading and manipulation. 
     /// </remarks>
-    public sealed class <<COLLECTIONTYPE>> : IList<<<ITEMTYPE>>> , IList
+    public sealed class RowDefinitionCollection : IList<RowDefinition> , IList
     {
         //------------------------------------------------------
         //
@@ -45,7 +60,7 @@ namespace System.Windows.Controls
         /// <summary>
         ///     Default ctor.
         /// </summary>
-        internal <<COLLECTIONTYPE>>(<<OWNERTYPE>> owner)
+        internal RowDefinitionCollection(Grid owner)
         {
             _owner = owner;
             PrivateOnModified();
@@ -93,7 +108,7 @@ namespace System.Windows.Controls
         /// <summary>
         ///     <see cref="ICollection<T>.CopyTo"/>
         /// </summary>
-        public void CopyTo(<<ITEMTYPE>>[] array, int index) //  void ICollection<T>.CopyTo(T[] array, int arrayIndex)
+        public void CopyTo(RowDefinition[] array, int index) //  void ICollection<T>.CopyTo(T[] array, int arrayIndex)
         {
             if (array == null)
             {
@@ -120,20 +135,20 @@ namespace System.Windows.Controls
         /// </summary>
         /// <remarks>
         ///     <para>Adding <c>null</c> as <paramref name="value"/> is prohibited.</para>
-        ///     <para><paramref name="value"/> must be of <<ITEMTYPE>> type.</para>
+        ///     <para><paramref name="value"/> must be of RowDefinition type.</para>
         /// </remarks>
         int IList.Add(object value)
         {
             PrivateVerifyWriteAccess();
             PrivateValidateValueForAddition(value);
-            PrivateInsert(_size, value as <<ITEMTYPE>>);
+            PrivateInsert(_size, value as RowDefinition);
             return (_size - 1);
         }
 
         /// <summary>
         ///     <see cref="ICollection<T>.Add"/>
         /// </summary>
-        public void Add(<<ITEMTYPE>> value) //  void ICollection<T>.Add(T item)
+        public void Add(RowDefinition value) //  void ICollection<T>.Add(T item)
         {
             PrivateVerifyWriteAccess();
             PrivateValidateValueForAddition(value);
@@ -164,7 +179,7 @@ namespace System.Windows.Controls
         /// </summary>
         bool IList.Contains(object value)
         {
-            <<ITEMTYPE>> item = value as <<ITEMTYPE>>;
+            RowDefinition item = value as RowDefinition;
             if (    item != null
                 &&  item.Parent == _owner  )
             {
@@ -178,7 +193,7 @@ namespace System.Windows.Controls
         /// <summary>
         ///     <see cref="ICollection<T>.Contains"/>
         /// </summary>
-        public bool Contains(<<ITEMTYPE>> value)    //  bool ICollection<T>.Contains(T item)
+        public bool Contains(RowDefinition value)    //  bool ICollection<T>.Contains(T item)
         {
             if (    value != null
                 &&  value.Parent == _owner  )
@@ -195,13 +210,13 @@ namespace System.Windows.Controls
         /// </summary>
         int IList.IndexOf(object value)
         {
-            return (this.IndexOf(value as <<ITEMTYPE>>));
+            return (this.IndexOf(value as RowDefinition));
         }
 
         /// <summary>
         ///     <see cref="IList<T>.IndexOf"/>
         /// </summary>
-        public int IndexOf(<<ITEMTYPE>> value)  //  int IList<T>.IndexOf(T item);
+        public int IndexOf(RowDefinition value)  //  int IList<T>.IndexOf(T item);
         {
             if (    value == null 
                 ||  value.Parent != _owner )
@@ -218,7 +233,7 @@ namespace System.Windows.Controls
         ///     <see cref="IList.Insert"/>
         /// </summary>
         /// <remarks>
-        ///     <paramref name="value"/> must be of <<ITEMTYPE>> type.
+        ///     <paramref name="value"/> must be of RowDefinition type.
         /// </remarks>
         void IList.Insert(int index, object value)
         {
@@ -228,13 +243,13 @@ namespace System.Windows.Controls
                 throw new ArgumentOutOfRangeException(SR.Get(SRID.TableCollectionOutOfRange));
             }
             PrivateValidateValueForAddition(value);
-            PrivateInsert(index, value as <<ITEMTYPE>>);
+            PrivateInsert(index, value as RowDefinition);
         }
 
         /// <summary>
         ///     <see cref="IList<T>.Insert"/>
         /// </summary>
-        public void Insert(int index, <<ITEMTYPE>> value)   //  void IList<T>.Insert(int index, T item)
+        public void Insert(int index, RowDefinition value)   //  void IList<T>.Insert(int index, T item)
         {
             PrivateVerifyWriteAccess();
             if (index < 0 || index > _size)
@@ -249,7 +264,7 @@ namespace System.Windows.Controls
         ///     <see cref="IList.Remove"/>
         /// </summary>
         /// <remarks>
-        ///     <paramref name="value"/> must be of <<ITEMTYPE>> type.
+        ///     <paramref name="value"/> must be of RowDefinition type.
         /// </remarks>
         void IList.Remove(object value)
         {
@@ -257,19 +272,19 @@ namespace System.Windows.Controls
             bool found = PrivateValidateValueForRemoval(value);
             if (found)
             {
-                PrivateRemove(value as <<ITEMTYPE>>);
+                PrivateRemove(value as RowDefinition);
             }
         }
 
         /// <summary>
         ///     <see cref="ICollection<T>.Remove"/>
         /// </summary>
-        public bool Remove(<<ITEMTYPE>> value)  //  bool ICollection<T>.Remove(T item)
+        public bool Remove(RowDefinition value)  //  bool ICollection<T>.Remove(T item)
         {
             bool found = PrivateValidateValueForRemoval(value);
             if (found)
             {
-                PrivateRemove(value as <<ITEMTYPE>>);
+                PrivateRemove(value as RowDefinition);
             }
             return (found);
         }
@@ -289,13 +304,13 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     Removes a range of <<ITEMTYPE>>s from the <<COLLECTIONTYPE>>.
+        ///     Removes a range of RowDefinitions from the RowDefinitionCollection.
         /// </summary>
         /// <param name="index">
-        ///     The zero-based index of the range of <<ITEMTYPE>>s to remove.
+        ///     The zero-based index of the range of RowDefinitions to remove.
         /// </param>
         /// <param name="count">
-        ///     The number of <<ITEMTYPE>>s to remove.
+        ///     The number of RowDefinitions to remove.
         /// </param>
         public void RemoveRange(int index, int count) 
         {
@@ -349,7 +364,7 @@ namespace System.Windows.Controls
         /// <summary>
         ///     <see cref="IEnumerable<T>.GetEnumerator"/>
         /// </summary>
-        IEnumerator<<<ITEMTYPE>>> IEnumerable<<<ITEMTYPE>>>.GetEnumerator()
+        IEnumerator<RowDefinition> IEnumerable<RowDefinition>.GetEnumerator()
         {
             return (new Enumerator(this));
         }
@@ -419,7 +434,7 @@ namespace System.Windows.Controls
         /// </summary>
         /// <remarks>
         ///     <para>Setting <c>null</c> as <paramref name="value"/> is prohibited.</para>
-        ///     <para><paramref name="value"/> must be of <<ITEMTYPE>> type.</para>
+        ///     <para><paramref name="value"/> must be of RowDefinition type.</para>
         /// </remarks>
         object IList.this[int index]
         {
@@ -440,14 +455,14 @@ namespace System.Windows.Controls
                     throw new ArgumentOutOfRangeException(SR.Get(SRID.TableCollectionOutOfRange));
                 }
                 PrivateDisconnectChild(_items[index]);
-                PrivateConnectChild(index, value as <<ITEMTYPE>>);
+                PrivateConnectChild(index, value as RowDefinition);
             }
         }
 
         /// <summary>
         ///     <see cref="IList<T>.Item"/>
         /// </summary>
-        public <<ITEMTYPE>> this[int index] //  T IList<T>.this[int index] {get; set;}
+        public RowDefinition this[int index] //  T IList<T>.this[int index] {get; set;}
         {
             get 
             {
@@ -455,7 +470,7 @@ namespace System.Windows.Controls
                 {
                     throw new ArgumentOutOfRangeException(SR.Get(SRID.TableCollectionOutOfRange));
                 }
-                return ((<<ITEMTYPE>>)_items[index]);
+                return ((RowDefinition)_items[index]);
             }
             set 
             {
@@ -531,7 +546,7 @@ namespace System.Windows.Controls
         {
             if (this.IsReadOnly)
             {
-                throw new InvalidOperationException(SR.Get(SRID.GridCollection_CannotModifyReadOnly, "<<COLLECTIONTYPE>>"));
+                throw new InvalidOperationException(SR.Get(SRID.GridCollection_CannotModifyReadOnly, "RowDefinitionCollection"));
             }
         }
 
@@ -545,16 +560,16 @@ namespace System.Windows.Controls
                 throw new ArgumentNullException("value");
             }
             
-            <<ITEMTYPE>> item = value as <<ITEMTYPE>>;
+            RowDefinition item = value as RowDefinition;
 
             if (item == null)
             {
-                throw new ArgumentException(SR.Get(SRID.GridCollection_MustBeCertainType, "<<COLLECTIONTYPE>>", "<<ITEMTYPE>>"));
+                throw new ArgumentException(SR.Get(SRID.GridCollection_MustBeCertainType, "RowDefinitionCollection", "RowDefinition"));
             }
 
             if (item.Parent != null)
             {
-                throw new ArgumentException(SR.Get(SRID.GridCollection_InOtherCollection, "value", "<<COLLECTIONTYPE>>"));
+                throw new ArgumentException(SR.Get(SRID.GridCollection_InOtherCollection, "value", "RowDefinitionCollection"));
             }
         }
 
@@ -569,11 +584,11 @@ namespace System.Windows.Controls
                 throw new ArgumentNullException("value");
             }
             
-            <<ITEMTYPE>> item = value as <<ITEMTYPE>>;
+            RowDefinition item = value as RowDefinition;
 
             if (item == null)
             {
-                throw new ArgumentException(SR.Get(SRID.GridCollection_MustBeCertainType, "<<COLLECTIONTYPE>>", "<<ITEMTYPE>>"));
+                throw new ArgumentException(SR.Get(SRID.GridCollection_MustBeCertainType, "RowDefinitionCollection", "RowDefinition"));
             }
 
             return (item.Parent == _owner);
@@ -586,7 +601,7 @@ namespace System.Windows.Controls
         /// </summary>
         /// <remarks>
         ///     Note that the function requires that _item[index] == null and 
-        ///     it also requires that the passed in value is not included into another <<COLLECTIONTYPE>>.
+        ///     it also requires that the passed in value is not included into another RowDefinitionCollection.
         /// </remarks>
         private void PrivateConnectChild(int index, DefinitionBase value)
         {
@@ -621,7 +636,7 @@ namespace System.Windows.Controls
 
         /// <summary>
         ///     PrivateInsert inserts specified DefinitionBase into the 
-        ///     <<COLLECTIONTYPE>> at the specified index. Index is allowed 
+        ///     RowDefinitionCollection at the specified index. Index is allowed 
         ///     to be equal to the current size of the collection. When index 
         ///     is equal to size, PrivateInsert effectively performs Add 
         ///     operation.
@@ -655,7 +670,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     Removes specified DefinitionBase from the <<COLLECTIONTYPE>>.
+        ///     Removes specified DefinitionBase from the RowDefinitionCollection.
         /// </summary>
         private void PrivateRemove(DefinitionBase value)
         {
@@ -683,13 +698,13 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     Updates version of the <<COLLECTIONTYPE>>.
+        ///     Updates version of the RowDefinitionCollection.
         ///     Norifies owner grid about the change.
         /// </summary>
         private void PrivateOnModified()
         {
             _version++;
-            _owner.<<COLLECTIONTYPE>>Dirty = true;
+            _owner.RowDefinitionCollectionDirty = true;
             _owner.Invalidate();
         }
 
@@ -706,7 +721,7 @@ namespace System.Windows.Controls
             }
             else if (_items == null || value != _items.Length) 
             {
-                <<ITEMTYPE>>[] newItems = new <<ITEMTYPE>>[value];
+                RowDefinition[] newItems = new RowDefinition[value];
                 if (_size > 0) 
                 {
                     Array.Copy(_items, 0, newItems, 0, _size);
@@ -724,7 +739,7 @@ namespace System.Windows.Controls
         //------------------------------------------------------
 
         #region Private Fields 
-        private readonly <<OWNERTYPE>> _owner;      //  owner of the collection
+        private readonly Grid _owner;      //  owner of the collection
         private DefinitionBase[] _items;            //  storage of items
         private int _size;                          //  size of the collection
         private int _version;                       //  version tracks updates in the collection
@@ -746,12 +761,12 @@ namespace System.Windows.Controls
         ///     Enumerator can be initialized with null as a collection reference.
         ///     If the case Enumerator behaves as empty enumerator.
         /// </remarks>
-        internal struct Enumerator : IEnumerator<<<ITEMTYPE>>>, IEnumerator
+        internal struct Enumerator : IEnumerator<RowDefinition>, IEnumerator
         {
             /// <summary>
             ///     Default ctor.
             /// </summary>
-            internal Enumerator(<<COLLECTIONTYPE>> collection)
+            internal Enumerator(RowDefinitionCollection collection)
             {
                 _collection = collection;
                 _index = -1;
@@ -817,7 +832,7 @@ namespace System.Windows.Controls
             /// <summary>
             ///     <see cref="IEnumerator<T>.Current"/>
             /// </summary>
-            public <<ITEMTYPE>> Current
+            public RowDefinition Current
             {
                 get 
                 {
@@ -836,7 +851,7 @@ namespace System.Windows.Controls
                             throw new InvalidOperationException(SR.Get(SRID.EnumeratorReachedEnd));
                         }
                     }
-                    return ((<<ITEMTYPE>>)_currentElement);
+                    return ((RowDefinition)_currentElement);
                 }
             }
 
@@ -884,7 +899,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            private <<COLLECTIONTYPE>> _collection;              //  the collection to be enumerated
+            private RowDefinitionCollection _collection;              //  the collection to be enumerated
             private int _index;                         //  current element index 
             private int _version;                       //  the snapshot of collection's version at the time of creation
             private object _currentElement;             //  multipurpose:
@@ -897,10 +912,10 @@ namespace System.Windows.Controls
     }
 
     /// <summary>
-    ///     <<ITEMTYPE>> is a FrameworkContentElement used by Grid 
+    ///     RowDefinition is a FrameworkContentElement used by Grid 
     ///     to hold column / row specific properties.
     /// </summary>
-    public class <<ITEMTYPE>> : DefinitionBase
+    public class RowDefinition : DefinitionBase
     {
         //------------------------------------------------------
         //
@@ -913,8 +928,8 @@ namespace System.Windows.Controls
         /// <summary>
         ///     Default ctor.
         /// </summary>
-        public <<ITEMTYPE>>()
-            : base(DefinitionBase.ThisIs<<ITEMTYPE>>)
+        public RowDefinition()
+            : base(DefinitionBase.ThisIsRowDefinition)
         {
         }
 
@@ -929,41 +944,41 @@ namespace System.Windows.Controls
         #region Public Properties 
 
         /// <summary>
-        ///     Sets specified <<WIDTHHEIGHT>> value for the <<ITEMTYPE>>.
-        ///     Returns current <<WIDTHHEIGHT>> value for the <<ITEMTYPE>>. 
+        ///     Sets specified Height value for the RowDefinition.
+        ///     Returns current Height value for the RowDefinition. 
         /// </summary>
-        public GridLength <<WIDTHHEIGHT>>
+        public GridLength Height
         {
             get { return (base.UserSizeValueCache); }
-            set { SetValue(<<WIDTHHEIGHT>>Property, value); }
+            set { SetValue(HeightProperty, value); }
         }
 
         /// <summary>
-        ///     Sets specified Min<<WIDTHHEIGHT>> value for the <<ITEMTYPE>>.
-        ///     Returns current Min<<WIDTHHEIGHT>> value for the <<ITEMTYPE>>.
+        ///     Sets specified MinHeight value for the RowDefinition.
+        ///     Returns current MinHeight value for the RowDefinition.
         /// </summary>
         [TypeConverter(typeof(LengthConverter))]
-        public double Min<<WIDTHHEIGHT>>
+        public double MinHeight
         {
             get { return (base.UserMinSizeValueCache); }
-            set { SetValue(Min<<WIDTHHEIGHT>>Property, value); }
+            set { SetValue(MinHeightProperty, value); }
         }
 
         /// <summary>
-        ///     Sets specified Max<<WIDTHHEIGHT>> value for the <<ITEMTYPE>>.
-        ///     Returns current Max<<WIDTHHEIGHT>> value for the <<ITEMTYPE>>.
+        ///     Sets specified MaxHeight value for the RowDefinition.
+        ///     Returns current MaxHeight value for the RowDefinition.
         /// </summary>
         [TypeConverter(typeof(LengthConverter))]
-        public double Max<<WIDTHHEIGHT>>
+        public double MaxHeight
         {
             get { return (base.UserMaxSizeValueCache); }
-            set { SetValue(Max<<WIDTHHEIGHT>>Property, value); }
+            set { SetValue(MaxHeightProperty, value); }
         }
 
         /// <summary>
-        ///     Returns calculated device independent pixel value of <<WIDTHHEIGHT>> for the <<ITEMTYPE>>.
+        ///     Returns calculated device independent pixel value of Height for the RowDefinition.
         /// </summary>
-        public double Actual<<WIDTHHEIGHT>>
+        public double ActualHeight
         {
             get
             {
@@ -971,7 +986,7 @@ namespace System.Windows.Controls
 
                 if (base.InParentLogicalTree)
                 {
-                    value = ((Grid)base.Parent).GetFinal<<ITEMTYPE>><<WIDTHHEIGHT>>(base.Index);
+                    value = ((Grid)base.Parent).GetFinalRowDefinitionHeight(base.Index);
                 }
 
                 return (value);
@@ -979,7 +994,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     Returns calculated device independent pixel value of the <<ITEMTYPE>>'s offset 
+        ///     Returns calculated device independent pixel value of the RowDefinition's offset 
         ///     in the coordinate system of the owning grid.
         /// </summary>
         public double Offset
@@ -1008,44 +1023,44 @@ namespace System.Windows.Controls
         #region Dynamic Properties
 
         /// <summary>
-        /// <<WIDTHHEIGHT>> property.
+        /// Height property.
         /// </summary>
         [MS.Internal.PresentationFramework.CommonDependencyProperty]
-        public static readonly DependencyProperty <<WIDTHHEIGHT>>Property =
+        public static readonly DependencyProperty HeightProperty =
                 DependencyProperty.Register(
-                        "<<WIDTHHEIGHT>>", 
+                        "Height", 
                         typeof(GridLength), 
-                        typeof(<<ITEMTYPE>>),
+                        typeof(RowDefinition),
                         new FrameworkPropertyMetadata(
                                 new GridLength(1.0, GridUnitType.Star), 
                                 new PropertyChangedCallback(OnUserSizePropertyChanged)), 
                         new ValidateValueCallback(IsUserSizePropertyValueValid));
 
         /// <summary>
-        /// Min<<WIDTHHEIGHT>> property.
+        /// MinHeight property.
         /// </summary>
         [MS.Internal.PresentationFramework.CommonDependencyProperty]
         [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
-        public static readonly DependencyProperty Min<<WIDTHHEIGHT>>Property =
+        public static readonly DependencyProperty MinHeightProperty =
                 DependencyProperty.Register(
-                        "Min<<WIDTHHEIGHT>>", 
+                        "MinHeight", 
                         typeof(double), 
-                        typeof(<<ITEMTYPE>>),
+                        typeof(RowDefinition),
                         new FrameworkPropertyMetadata(
                                 0d, 
                                 new PropertyChangedCallback(OnUserMinSizePropertyChanged)), 
                         new ValidateValueCallback(IsUserMinSizePropertyValueValid));
 
         /// <summary>
-        /// Max<<WIDTHHEIGHT>> property.
+        /// MaxHeight property.
         /// </summary>
         [MS.Internal.PresentationFramework.CommonDependencyProperty]
         [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
-        public static readonly DependencyProperty Max<<WIDTHHEIGHT>>Property =
+        public static readonly DependencyProperty MaxHeightProperty =
                 DependencyProperty.Register(
-                        "Max<<WIDTHHEIGHT>>", 
+                        "MaxHeight", 
                         typeof(double), 
-                        typeof(<<ITEMTYPE>>),
+                        typeof(RowDefinition),
                         new FrameworkPropertyMetadata(
                                 Double.PositiveInfinity, 
                                 new PropertyChangedCallback(OnUserMaxSizePropertyChanged)), 
@@ -1054,3 +1069,5 @@ namespace System.Windows.Controls
         #endregion Dynamic Properties
     }
 }
+
+

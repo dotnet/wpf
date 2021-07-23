@@ -876,7 +876,7 @@ namespace System.Windows.Interop
                     if (oldDpi != newDpi)
                     {
                         var nativeRect =
-                            UnsafeNativeMethods.PtrToStructure<NativeMethods.RECT>(lParam);
+                            Marshal.PtrToStructure<NativeMethods.RECT>(lParam);
                         var suggestedRect =
                             new Rect(nativeRect.left, nativeRect.top, nativeRect.Width, nativeRect.Height);
 
@@ -1870,7 +1870,7 @@ namespace System.Windows.Interop
             // size or position changed.  If so, we need to pass this information to
             // the render thread.
             //
-            NativeMethods.WINDOWPOS windowPos = (NativeMethods.WINDOWPOS)UnsafeNativeMethods.PtrToStructure(lParam, typeof(NativeMethods.WINDOWPOS));
+            NativeMethods.WINDOWPOS windowPos = Marshal.PtrToStructure<NativeMethods.WINDOWPOS>(lParam);
             bool isMove = (windowPos.flags & NativeMethods.SWP_NOMOVE) == 0;
             bool isSize = (windowPos.flags & NativeMethods.SWP_NOSIZE) == 0;
             bool positionChanged = (isMove || isSize);

@@ -10,6 +10,7 @@
 //              different DPI, or the dpi of the current monitor changes.
 
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Threading;
 using System.Windows.Interop;
@@ -48,7 +49,7 @@ namespace System.Windows
         {
             OldDpi = new DpiScale(oldDpiX / DpiUtil.DefaultPixelsPerInch, oldDpiY / DpiUtil.DefaultPixelsPerInch);
             NewDpi = new DpiScale(newDpiX / DpiUtil.DefaultPixelsPerInch, newDpiY / DpiUtil.DefaultPixelsPerInch);
-            NativeMethods.RECT suggestedRect = (NativeMethods.RECT)UnsafeNativeMethods.PtrToStructure(lParam, typeof(NativeMethods.RECT));
+            NativeMethods.RECT suggestedRect = Marshal.PtrToStructure<NativeMethods.RECT>(lParam);
             this.SuggestedRect = new Rect((double)suggestedRect.left, (double)suggestedRect.top, (double)suggestedRect.Width, (double)suggestedRect.Height);
         }
 

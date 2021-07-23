@@ -589,7 +589,7 @@ namespace Microsoft.Win32
                     //    }
                     // 
                     // Convert the pointer to our OFNOTIFY stored in lparam to an object using PtrToStructure.
-                    NativeMethods.OFNOTIFY notify = (NativeMethods.OFNOTIFY)UnsafeNativeMethods.PtrToStructure(lParam, typeof(NativeMethods.OFNOTIFY));
+                    NativeMethods.OFNOTIFY notify = Marshal.PtrToStructure<NativeMethods.OFNOTIFY>(lParam);
 
                     // WM_NOTIFY indicates that the dialog is sending us a notification message.
                     // notify.hdr_code is an int defining which notification is being received.
@@ -623,8 +623,7 @@ namespace Microsoft.Win32
 
                             // Retrieve the OPENFILENAME structure from the OFNOTIFY structure
                             // so we can access the CharBuffer inside it.
-                            NativeMethods.OPENFILENAME_I ofn = (NativeMethods.OPENFILENAME_I)
-                                UnsafeNativeMethods.PtrToStructure(notify.lpOFN, typeof(NativeMethods.OPENFILENAME_I));
+                            NativeMethods.OPENFILENAME_I ofn = Marshal.PtrToStructure<NativeMethods.OPENFILENAME_I>(notify.lpOFN);
 
 
                             // Get the buffer size required to store the selected file names.
@@ -1162,7 +1161,7 @@ namespace Microsoft.Win32
         /// </returns>
         private bool DoFileOk(IntPtr lpOFN)
         {
-            NativeMethods.OPENFILENAME_I ofn = (NativeMethods.OPENFILENAME_I)UnsafeNativeMethods.PtrToStructure(lpOFN, typeof(NativeMethods.OPENFILENAME_I));
+            NativeMethods.OPENFILENAME_I ofn = Marshal.PtrToStructure<NativeMethods.OPENFILENAME_I>(lpOFN);
 
             // While processing the results we get from the OPENFILENAME struct,
             // we will adjust several properties of our own class to reflect the

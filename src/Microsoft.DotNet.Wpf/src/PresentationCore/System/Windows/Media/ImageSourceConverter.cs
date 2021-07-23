@@ -261,7 +261,7 @@ namespace System.Windows.Media
                 //
                 // http://support.microsoft.com/default.aspx?scid=KB;EN-US;Q175261
                 //
-                OBJECTHEADER pHeader = (OBJECTHEADER)Marshal.PtrToStructure(addr, typeof(OBJECTHEADER));
+                OBJECTHEADER pHeader = Marshal.PtrToStructure<OBJECTHEADER>(addr);
 
                 //
                 // "PBrush" should be the 6 chars after position 12 as well.

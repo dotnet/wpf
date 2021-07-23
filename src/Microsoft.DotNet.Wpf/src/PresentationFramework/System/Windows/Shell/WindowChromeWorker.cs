@@ -588,7 +588,7 @@ namespace Microsoft.Windows.Shell
 #else
                 Thickness windowResizeBorderThicknessDevice = DpiHelper.LogicalThicknessToDevice(SystemParameters2.Current.WindowResizeBorderThickness, dpi.DpiScaleX, dpi.DpiScaleY);
 #endif
-                var rcClientArea = (RECT)Marshal.PtrToStructure(lParam, typeof(RECT));
+                var rcClientArea = Marshal.PtrToStructure<RECT>(lParam);
                 if (Utility.IsFlagSet((int)_chromeInfo.NonClientFrameEdges, (int)NonClientFrameEdges.Top))
                 {
                     rcClientArea.Top += (int)windowResizeBorderThicknessDevice.Top;
@@ -751,7 +751,7 @@ namespace Microsoft.Windows.Shell
             // reliably use it to react to the window being shown or hidden.
 
             Assert.IsNotDefault(lParam);
-            var wp = (WINDOWPOS)Marshal.PtrToStructure(lParam, typeof(WINDOWPOS));
+            var wp = Marshal.PtrToStructure<WINDOWPOS>(lParam);
 
             // We only care to take action when the window dimensions are changing.
             // Otherwise, we may get a StackOverflowException. 

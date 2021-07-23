@@ -331,10 +331,7 @@ namespace MS.Internal.Documents
 
                 //Get a DsObjectNames structure out of the pointer we
                 //were handed.
-                _dsObjectNames =
-                    (UnsafeNativeMethods.DsObjectNames)Marshal.PtrToStructure(
-                        _ptrToDsObjectNames, typeof(UnsafeNativeMethods.DsObjectNames)); 
-                                                 
+                _dsObjectNames = Marshal.PtrToStructure<UnsafeNativeMethods.DsObjectNames>(_ptrToDsObjectNames);  
             }
 
             /// <summary>
@@ -456,12 +453,9 @@ namespace MS.Internal.Documents
                     index * _sizeOfDsObject);
 
                 //Marshal that to a DsObject structure.
-                UnsafeNativeMethods.DsObject dsObject =
-                        (UnsafeNativeMethods.DsObject)Marshal.PtrToStructure(offset, 
-                            typeof(UnsafeNativeMethods.DsObject));
+                UnsafeNativeMethods.DsObject dsObject = Marshal.PtrToStructure<UnsafeNativeMethods.DsObject>(offset);
 
                 return dsObject;
-
             }
 
             /// <summary>

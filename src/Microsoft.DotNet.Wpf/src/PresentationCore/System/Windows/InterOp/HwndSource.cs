@@ -1368,7 +1368,7 @@ namespace System.Windows.Interop
 
                 // Get WINDOWPOS structure data from lParam; it contains information about the window's
                 // new size and position.
-                NativeMethods.WINDOWPOS windowPos = (NativeMethods.WINDOWPOS)UnsafeNativeMethods.PtrToStructure(lParam, typeof(NativeMethods.WINDOWPOS));
+                NativeMethods.WINDOWPOS windowPos = Marshal.PtrToStructure<NativeMethods.WINDOWPOS>(lParam);
 
                 bool sizeChanged = false;
 

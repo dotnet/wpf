@@ -640,7 +640,7 @@ namespace MS.Internal.Automation
         // into something more managable.
         internal static AutomationEventArgs GetUiaEventArgs(IntPtr argsAddr)
         {
-            UiaEventArgs args = (UiaEventArgs)Marshal.PtrToStructure(argsAddr, typeof(UiaEventArgs));
+            UiaEventArgs args = Marshal.PtrToStructure<UiaEventArgs>(argsAddr);
 
             AutomationEvent eventId = AutomationEvent.LookupById(args._eventId);
             if (eventId == null)
@@ -658,7 +658,7 @@ namespace MS.Internal.Automation
 
                 case EventArgsType.PropertyChanged:
                     {
-                        UiaPropertyChangedEventArgs pcargs = (UiaPropertyChangedEventArgs)Marshal.PtrToStructure(argsAddr, typeof(UiaPropertyChangedEventArgs));
+                        UiaPropertyChangedEventArgs pcargs = Marshal.PtrToStructure<UiaPropertyChangedEventArgs>(argsAddr);
 
                         AutomationProperty propertyId = AutomationProperty.LookupById(pcargs._propertyId);
                         if (propertyId == null)
@@ -672,20 +672,20 @@ namespace MS.Internal.Automation
 
                 case EventArgsType.StructureChanged:
                     {
-                        UiaStructureChangedEventArgs scargs = (UiaStructureChangedEventArgs)Marshal.PtrToStructure(argsAddr, typeof(UiaStructureChangedEventArgs));
+                        UiaStructureChangedEventArgs scargs = Marshal.PtrToStructure<UiaStructureChangedEventArgs>(argsAddr);
                         int[] runtimeId = ArrayFromIntPtr(scargs._pRuntimeId, scargs._cRuntimeIdLen);
                         return new StructureChangedEventArgs(scargs._structureChangeType, runtimeId);
                     }
 
                 case EventArgsType.AsyncContentLoaded:
                     {
-                        UiaAsyncContentLoadedEventArgs aclargs = (UiaAsyncContentLoadedEventArgs)Marshal.PtrToStructure(argsAddr, typeof(UiaAsyncContentLoadedEventArgs));
+                        UiaAsyncContentLoadedEventArgs aclargs = Marshal.PtrToStructure<UiaAsyncContentLoadedEventArgs>(argsAddr);
                         return new AsyncContentLoadedEventArgs(aclargs._asyncContentLoadedState, aclargs._percentComplete);
                     }
 
                 case EventArgsType.WindowClosed:
                     {
-                        UiaWindowClosedEventArgs wcargs = (UiaWindowClosedEventArgs)Marshal.PtrToStructure(argsAddr, typeof(UiaWindowClosedEventArgs));
+                        UiaWindowClosedEventArgs wcargs = Marshal.PtrToStructure<UiaWindowClosedEventArgs>(argsAddr);
                         int[] runtimeId = ArrayFromIntPtr(wcargs._pRuntimeId, wcargs._cRuntimeIdLen);
                         return new WindowClosedEventArgs(runtimeId);
                     }

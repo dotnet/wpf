@@ -4628,11 +4628,11 @@ namespace MS.Win32 {
                     return (val != IntPtr.Zero);
 
                 case (int)tagVT.VT_VARIANT:
-                    VARIANT varStruct = (VARIANT)UnsafeNativeMethods.PtrToStructure(val, typeof(VARIANT));
+                    VARIANT varStruct = Marshal.PtrToStructure<VARIANT>(val);
                     return varStruct.ToObject();
                 case (int)tagVT.VT_CLSID:
                     //Debug.Fail("PtrToStructure will not work with System.Guid...");
-                    Guid guid =(Guid)UnsafeNativeMethods.PtrToStructure(val, typeof(Guid));
+                    Guid guid = Marshal.PtrToStructure<Guid>(val);
                     return guid;
 
                 case (int)tagVT.VT_FILETIME:

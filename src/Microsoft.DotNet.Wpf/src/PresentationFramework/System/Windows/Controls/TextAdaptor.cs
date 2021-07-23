@@ -308,8 +308,9 @@ namespace MS.Internal.Automation
                 rangeEnd = rangeStart;
             }
 
-            // return the resulting range
-            return new TextRangeAdaptor(this, rangeStart, rangeEnd, _textPeer);
+            // return the resulting range, wrapped so that it's ready for use by UIA
+            ITextRangeProvider textRange = new TextRangeAdaptor(this, rangeStart, rangeEnd, _textPeer);
+            return TextRangeProviderWrapper.WrapArgument(textRange, _textPeer);
         }
 
         #endregion Internal Methods

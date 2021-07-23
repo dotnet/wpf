@@ -14,7 +14,7 @@
   <Target Name="_ValidateWindowsFormsPackagingContent">
     <PropertyGroup>
       <_WindowsFormsContentPath>$(_WindowsFormsNuGetPath)\sdk\dotnet-wpf\*</_WindowsFormsContentPath>
-      <_WindowsFormsRequiredFileName>Microsoft.NET.SDk.WindowsDesktop.WindowsForms</_WindowsFormsRequiredFileName>
+      <_WindowsFormsRequiredFileName>Microsoft.NET.Sdk.WindowsDesktop.WindowsForms</_WindowsFormsRequiredFileName>
     </PropertyGroup>
 
     <Error Text="Unable to resolve path to Microsoft.Private.Winforms NuGet package. Is %24(PkgMicrosoft_Private_Winforms) defined?"
@@ -23,7 +23,7 @@
     <ItemGroup>
       <!-- Enumerate all transported files -->
       <_WindowsFormsContent Include="$(_WindowsFormsContentPath)" />
-      <!-- ...and verify Microsoft.NET.SDk.WindowsDesktop.WindowsForms.props/.targets are present -->
+      <!-- ...and verify Microsoft.NET.Sdk.WindowsDesktop.WindowsForms.props/.targets are present -->
       <_WindowsFormsContentFiles Include="@(_WindowsFormsContent->'%(FileName)%(Extension)')"
           Condition=" '%(FileName)%(Extension)' == '$(_WindowsFormsRequiredFileName).props'
                    or '%(FileName)%(Extension)' == '$(_WindowsFormsRequiredFileName).targets' "/>

@@ -166,6 +166,6 @@
     These come via the Windows Forms transport package, that can be found under
     https://github.com/dotnet/winforms/tree/main/pkg/Microsoft.Private.Winforms/sdk
   -->
-  <Import Project="Microsoft.NET.SDk.WindowsDesktop.WindowsForms.props" />
+  <Import Project="Microsoft.NET.Sdk.WindowsDesktop.WindowsForms.props" />
 
 </Project>

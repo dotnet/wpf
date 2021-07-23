@@ -27,7 +27,7 @@
     <PackagingContent Include="useSharedDesignerContext.txt" SubFolder="root" />
   </ItemGroup>
 
-  <!-- Windows Forms specific -->
-  <Import Project="$(RepositoryEngineeringDir)WindowsFormsImports.targets" />
+  <!-- Windows Forms validation and packaging -->
+  <Import Project="Microsoft.NET.Sdk.WindowsDesktop.WinForms.Packaging.targets" />
 
 </Project>

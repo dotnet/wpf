@@ -73,8 +73,7 @@ namespace MS.Internal.AppModel
                 BaseUriHelper.GetAssemblyNameAndPart(Uri, out filePath, out assemblyName, out assemblyVersion, out assemblyKey);
 
                 // filePath should not have leading slash.  GetAssemblyNameAndPart( ) can guarantee it.
-                Uri file = new Uri(codeBase, filePath);
-                _fullPath = file.LocalPath;
+                _fullPath = System.IO.Path.Combine(codeBase.LocalPath, filePath);
             }
 
             stream = CriticalOpenFile(_fullPath);

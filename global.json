@@ -12,8 +12,8 @@
     }
   },
   "msbuild-sdks": {
-    "Microsoft.DotNet.Arcade.Sdk": "6.0.0-beta.21370.12",
-    "Microsoft.DotNet.Helix.Sdk": "6.0.0-beta.21370.12"
+    "Microsoft.DotNet.Arcade.Sdk": "6.0.0-beta.21373.11",
+    "Microsoft.DotNet.Helix.Sdk": "6.0.0-beta.21373.11"
   },
   "sdk": {
     "version": "6.0.100-rc.1.21368.3"
@@ -21,7 +21,6 @@
   "native-tools": {
     "strawberry-perl": "5.28.1.1-1",
     "net-framework-48-ref-assemblies": "0.0.0.1",
-    "dotnet-api-docs_net5.0": "0.0.0.3",
-    "net-framework-472-iltools": "0.0.0.1"
+    "dotnet-api-docs_net5.0": "0.0.0.3"
   }
 }

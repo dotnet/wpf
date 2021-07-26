@@ -68,7 +68,6 @@
     <!-- These versions are specified in global.json -->
     <StrawberryPerlVersion>5.28.1.1-1</StrawberryPerlVersion>
     <NetFramework48RefAssembliesVersion>0.0.0.1</NetFramework48RefAssembliesVersion>
-    <NetFramework472IlToolsVersion>0.0.0.1</NetFramework472IlToolsVersion>
   </PropertyGroup>
   <!--Package names-->
   <PropertyGroup>

@@ -47,28 +47,29 @@ namespace MS.Internal
                 // other wise also we cannot do any processing on a reflection only assembly aside from reflection based actions
                 if (!a.ReflectionOnly)
                 {
-                    // check if it is in the Gac , this ensures that we eliminate any non GAC assembly which are of no risk
-                    #pragma warning disable SYSLIB0005 // 'Assembly.GlobalAssemblyCache' is obsolete.
-                    if (a.GlobalAssemblyCache)
-                    #pragma warning restore SYSLIB0005 // 'Assembly.GlobalAssemblyCache' is obsolete.
-                    {
-                        string assemblyName = AssemblyNameWithFileVersion(a);
-                        // If we are on the disallowed list kill the application domain
-                        if (AssemblyOnDisallowedList(assemblyName))
-                        {
-                            // Kill the application domain
-                            UnsafeNativeMethods.ProcessUnhandledException_DLL(SR.Get(SRID.KillBitEnforcedShutdown) + assemblyName);
-                            // I want to ensure that the process really dies
-                            try
-                            {
-                                System.Environment.Exit(-1);
-                            }
-                            finally
-                            {
-                                Debug.Fail("Environment.Exit() failed.");
-                            }
-                        }
-                    }
+                    /* https://docs.microsoft.com/en-us/dotnet/fundamentals/syslib-diagnostics/syslib0005
+                     * // check if it is in the Gac , this ensures that we eliminate any non GAC assembly which are of no risk
+                       #pragma warning disable SYSLIB0005 // 'Assembly.GlobalAssemblyCache' is obsolete.
+                       if (a.GlobalAssemblyCache)
+                       #pragma warning restore SYSLIB0005 // 'Assembly.GlobalAssemblyCache' is obsolete.
+                       {
+                           string assemblyName = AssemblyNameWithFileVersion(a);
+                           // If we are on the disallowed list kill the application domain
+                           if (AssemblyOnDisallowedList(assemblyName))
+                           {
+                               // Kill the application domain
+                               UnsafeNativeMethods.ProcessUnhandledException_DLL(SR.Get(SRID.KillBitEnforcedShutdown) + assemblyName);
+                               // I want to ensure that the process really dies
+                               try
+                               {
+                                   System.Environment.Exit(-1);
+                               }
+                               finally
+                               {
+                                   Debug.Fail("Environment.Exit() failed.");
+                               }
+                           }
+                       }*/
                 }
             }
         }

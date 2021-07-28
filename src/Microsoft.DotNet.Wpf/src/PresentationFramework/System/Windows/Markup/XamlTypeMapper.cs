@@ -230,7 +230,7 @@ namespace System.Windows.Markup
             // Designer scenario.  (Don't mess with GACed assemblies)
             Assembly assem = ReflectionHelper.GetAlreadyLoadedAssembly(asmName);
             #pragma warning disable SYSLIB0005 // 'Assembly.GlobalAssemblyCache' is obsolete. 
-            if (assem != null && !assem.GlobalAssemblyCache)
+            if (assem != null)
             #pragma warning restore SYSLIB0005 // 'Assembly.GlobalAssemblyCache' is obsolete. 
             {
                 ReflectionHelper.ResetCacheForAssembly(asmName);

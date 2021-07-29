@@ -94,7 +94,7 @@ namespace System.Windows.Markup
             List<Assembly> interestingAssemblies = new List<Assembly>();
 
             // Load all the assemblies into a list.
-            foreach(string assemblyName in _assemblyPathTable.Keys.OfType<string>().OrderBy(s => s))
+            foreach(string assemblyName in _assemblyPathTable.Keys.OfType<string>().OrderBy(s => s, StringComparer.Ordinal))
             {
                 bool hasCacheInfo = true;
                 Assembly assy;

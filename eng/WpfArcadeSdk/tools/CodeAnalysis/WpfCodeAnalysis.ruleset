@@ -19,7 +19,4 @@
   <Rules AnalyzerId="System.Runtime.CSharp.Analyzers" RuleNamespace="System.Runtime.CSharp.Analyzers">
     <Rule Id="CA2213" Action="None" />
   </Rules>
-  <Rules AnalyzerId="Microsoft.CodeAnalysis.FxCopAnalyzers" RuleNamespace="Microsoft.CodeAnalysis.FxCopAnalyzers">
-    <Rule Id="CA1062" Action="None" />
-  </Rules>
 </RuleSet>

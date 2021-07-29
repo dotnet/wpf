@@ -244,6 +244,9 @@ namespace System.Windows.Markup
         /// </summary>
         protected Exception GetConvertToException(object value, Type destinationType)
         {
+            if (destinationType == null)
+                throw new ArgumentNullException(nameof(destinationType));
+
             string text;
             if (value == null)
             {

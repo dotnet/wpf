@@ -542,6 +542,9 @@ namespace System.Xaml
 
         public virtual XamlType GetXamlType(Type type)
         {
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             return GetXamlType(type, XamlLanguage.TypeAlias(type));
         }
 

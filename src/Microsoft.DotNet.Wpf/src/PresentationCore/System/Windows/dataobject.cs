@@ -1939,7 +1939,10 @@ namespace System.Windows
                     currentPtr = (IntPtr)((long)currentPtr + (files[i].Length * 2));
 
                     // Terminate the each of file string.
-                    Marshal.Copy(new char[] { '\0' }, 0, currentPtr, 1);
+                    unsafe
+                    {
+                        *(char*)currentPtr = '\0';
+                    }
 
                     // Increase the current pointer by 2 since it is a unicode.
                     currentPtr = (IntPtr)((long)currentPtr + 2);
@@ -1948,7 +1951,10 @@ namespace System.Windows
 #pragma warning restore 6523
 
                 // Terminate the string and add 2bytes since it is a unicode.
-                Marshal.Copy(new char[] { '\0' }, 0, currentPtr, 1);
+                unsafe
+                {
+                    *(char*)currentPtr = '\0';
+                }
             }
             finally
             {
@@ -2000,7 +2006,10 @@ namespace System.Windows
                     // Terminate the string becasue of GlobalReAlloc GMEM_ZEROINIT will zero
                     // out only the bytes it adds to the memory object. It doesn't initialize
                     // any of the memory that existed before the call.
-                    Marshal.Copy(new char[] { '\0' }, 0, (IntPtr)((ulong)ptr + (ulong)chars.Length * 2), 1);
+                    unsafe
+                    {
+                        *(char*)(IntPtr)((ulong)ptr + (ulong)chars.Length * 2) = '\0';
+                    }
                 }
                 finally
                 {

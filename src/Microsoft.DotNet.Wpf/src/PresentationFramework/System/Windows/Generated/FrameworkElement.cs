@@ -1276,6 +1276,7 @@ namespace System.Windows
         #region Internal Fields
 
         // Optimization, to avoid calling FromSystemType too often
+        // todo BSC: type
         internal new static DependencyObjectType DType = DependencyObjectType.FromSystemTypeInternal(typeof(FrameworkElement));
 
         #endregion Internal Fields

@@ -362,17 +362,17 @@ namespace System.Windows.Input
             // both of which derive from DO
             DependencyObject targetAsDO = (DependencyObject)target;
             
-            if (InputElement.IsUIElement(targetAsDO))
+            if (targetAsDO is UIElement uie)
             {
-                ((UIElement)targetAsDO).RaiseEvent(args, trusted);
+                uie.RaiseEvent(args, trusted);
             }
-            else if (InputElement.IsContentElement(targetAsDO))
+            else if (targetAsDO is ContentElement ce)
             {
-                ((ContentElement)targetAsDO).RaiseEvent(args, trusted);
+                ce.RaiseEvent(args, trusted);
             }
-            else if (InputElement.IsUIElement3D(targetAsDO))
+            else if (targetAsDO is UIElement3D uie3D)
             {
-                ((UIElement3D)targetAsDO).RaiseEvent(args, trusted);
+                uie3D.RaiseEvent(args, trusted);
             }            
         }
         internal bool ExecuteCore(object parameter, IInputElement target, bool userInitiated)

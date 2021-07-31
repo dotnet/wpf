@@ -2059,52 +2059,54 @@ namespace System.Windows.Input.StylusWisp
                 if (oldCapture != null)
                 {
                     o = oldCapture as DependencyObject;
-                    if (InputElement.IsUIElement(o))
+                    if (o is UIElement uie)
                     {
-                        ((UIElement)o).IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
-                        ((UIElement)o).IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
-                        ((UIElement)o).IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
+                        uie.IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
+                        uie.IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
+                        uie.IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
                     }
-                    else if (InputElement.IsContentElement(o))
+                    else if (o is ContentElement ce)
                     {
-                        ((ContentElement)o).IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
+                        ce.IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
 
                         // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                         //
-                        // ((ContentElement)o).IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
-                        // ((ContentElement)o).IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
+                        // ce.IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
+                        // ce.IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
                     }
-                    else
+                    else if (o is UIElement3D uie3D)
                     {
-                        ((UIElement3D)o).IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
-                        ((UIElement3D)o).IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
-                        ((UIElement3D)o).IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
+                        uie3D.IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
+                        uie3D.IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
+                        uie3D.IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
                     }
+                    // todo patternmatching: Should we throw here?
                 }
                 if (_stylusCapture != null)
                 {
                     o = _stylusCapture as DependencyObject;
-                    if (InputElement.IsUIElement(o))
+                    if (o is UIElement uie)
                     {
-                        ((UIElement)o).IsEnabledChanged += _captureIsEnabledChangedEventHandler;
-                        ((UIElement)o).IsVisibleChanged += _captureIsVisibleChangedEventHandler;
-                        ((UIElement)o).IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
+                        uie.IsEnabledChanged += _captureIsEnabledChangedEventHandler;
+                        uie.IsVisibleChanged += _captureIsVisibleChangedEventHandler;
+                        uie.IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
                     }
-                    else if (InputElement.IsContentElement(o))
+                    else if (o is ContentElement ce)
                     {
-                        ((ContentElement)o).IsEnabledChanged += _captureIsEnabledChangedEventHandler;
+                        ce.IsEnabledChanged += _captureIsEnabledChangedEventHandler;
 
                         // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                         //
-                        // ((ContentElement)o).IsVisibleChanged += _captureIsVisibleChangedEventHandler;
-                        // ((ContentElement)o).IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
+                        // ce.IsVisibleChanged += _captureIsVisibleChangedEventHandler;
+                        // ce.IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
                     }
-                    else
+                    else if (o is UIElement3D uie3D)
                     {
-                        ((UIElement3D)o).IsEnabledChanged += _captureIsEnabledChangedEventHandler;
-                        ((UIElement3D)o).IsVisibleChanged += _captureIsVisibleChangedEventHandler;
-                        ((UIElement3D)o).IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
+                        uie3D.IsEnabledChanged += _captureIsEnabledChangedEventHandler;
+                        uie3D.IsVisibleChanged += _captureIsVisibleChangedEventHandler;
+                        uie3D.IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
                     }
+                    // todo patternmatching: Should we throw here?
                 }
 
                 // Oddly enough, update the IsStylusCaptureWithin property first.  This is
@@ -2139,52 +2141,54 @@ namespace System.Windows.Input.StylusWisp
                 if (oldOver != null)
                 {
                     o = oldOver as DependencyObject;
-                    if (InputElement.IsUIElement(o))
+                    if (o is UIElement uie)
                     {
-                        ((UIElement)o).IsEnabledChanged -= _overIsEnabledChangedEventHandler;
-                        ((UIElement)o).IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                        ((UIElement)o).IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                        uie.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                        uie.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                        uie.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                     }
-                    else if (InputElement.IsContentElement(o))
+                    else if (o is ContentElement ce)
                     {
-                        ((ContentElement)o).IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                        ce.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
 
                         // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                         //
-                        // ((ContentElement)o).IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                        // ((ContentElement)o).IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                        // ce.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                        // ce.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                     }
-                    else
+                    else if (o is UIElement3D uie3D)
                     {
-                        ((UIElement3D)o).IsEnabledChanged -= _overIsEnabledChangedEventHandler;
-                        ((UIElement3D)o).IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                        ((UIElement3D)o).IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                        uie3D.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                        uie3D.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                        uie3D.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                     }
+                    // todo patternmatching: Should we throw here?
                 }
                 if (_stylusOver != null)
                 {
                     o = _stylusOver as DependencyObject;
-                    if (InputElement.IsUIElement(o))
+                    if (o is UIElement uie)
                     {
-                        ((UIElement)o).IsEnabledChanged += _overIsEnabledChangedEventHandler;
-                        ((UIElement)o).IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                        ((UIElement)o).IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                        uie.IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                        uie.IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                        uie.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                     }
-                    else if (InputElement.IsContentElement(o))
+                    else if (o is ContentElement ce)
                     {
-                        ((ContentElement)o).IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                        ce.IsEnabledChanged += _overIsEnabledChangedEventHandler;
 
                         // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                         //
-                        // ((ContentElement)o).IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                        // ((ContentElement)o).IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                        // ce.IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                        // ce.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                     }
-                    else
+                    else if (o is UIElement3D uie3D)
                     {
-                        ((UIElement3D)o).IsEnabledChanged += _overIsEnabledChangedEventHandler;
-                        ((UIElement3D)o).IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                        ((UIElement3D)o).IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                        uie3D.IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                        uie3D.IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                        uie3D.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                     }
+                    // todo patternmatching: Should we throw here?
                 }
 
                 // Oddly enough, update the IsStylusOver property first.  This is
@@ -2409,18 +2413,19 @@ namespace System.Windows.Input.StylusWisp
             // First, check things like IsEnabled, IsVisible, etc. on a
             // UIElement vs. ContentElement basis.
             //
-            if (InputElement.IsUIElement(dependencyObject))
+            if (dependencyObject is UIElement)
             {
                 killCapture = !ValidateUIElementForCapture((UIElement)_stylusCapture);
             }
-            else if (InputElement.IsContentElement(dependencyObject))
+            else if (dependencyObject is ContentElement)
             {
                 killCapture = !ValidateContentElementForCapture((ContentElement)_stylusCapture);
             }
-            else
+            else if (dependencyObject is UIElement3D)
             {
                 killCapture = !ValidateUIElement3DForCapture((UIElement3D)_stylusCapture);
             }
+            // todo patternmatching: Should we throw here?
 
             //
             // Second, if we still haven't thought of a reason to kill capture, validate

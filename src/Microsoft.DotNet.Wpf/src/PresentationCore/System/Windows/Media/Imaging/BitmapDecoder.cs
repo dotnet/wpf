@@ -1138,14 +1138,22 @@ namespace System.Windows.Media.Imaging
             if (stream is System.IO.FileStream)
             {
                 System.IO.FileStream filestream = stream as System.IO.FileStream;
-
                 try
                 {
-                    safeFilehandle = filestream.SafeFileHandle;
+                    if (filestream.IsAsync is false)
+                    {
+                        safeFilehandle = filestream.SafeFileHandle;
+                    }
+                    else
+                    {
+                        // If Filestream is async that doesn't support IWICImagingFactory_CreateDecoderFromFileHandle_Proxy, then revert to old code path.
+                        safeFilehandle = null;
+                    }
                 }
                 catch
                 {
                     // If Filestream doesn't support SafeHandle then revert to old code path.
+                    // See https://github.com/dotnet/wpf/issues/4355
                     safeFilehandle = null;
                 }
             }

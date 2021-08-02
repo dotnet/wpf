@@ -18,6 +18,23 @@ using System.Globalization;
 using System.Diagnostics;
 using MS.Internal.Automation;
 
+namespace System.Windows.Automation 
+{
+        public enum AutomationHeadingLevel
+        {
+            None = 0,
+            Level1,
+            Level2,
+            Level3,
+            Level4,
+            Level5,
+            Level6,
+            Level7,
+            Level8,
+            Level9,
+        }
+}
+
 namespace MS.Internal.Automation
 {
     // Disable warning for obsolete types.  These are scheduled to be removed in M8.2 so 
@@ -209,19 +226,6 @@ namespace MS.Internal.Automation
             return els;
         }
 
-        private enum AutomationHeadingLevel
-        {
-            None = 0,
-            Level1,
-            Level2,
-            Level3,
-            Level4,
-            Level5,
-            Level6,
-            Level7,
-            Level8,
-            Level9,
-        }
 
         // Delegate versions of the above...
         private static AutomationPropertyConverter convertToBool = new AutomationPropertyConverter(ConvertToBool);

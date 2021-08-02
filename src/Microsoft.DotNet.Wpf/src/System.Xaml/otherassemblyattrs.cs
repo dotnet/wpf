@@ -14,9 +14,7 @@ using System.Windows.Markup;
 [assembly:Dependency("System.Xml,", LoadHint.Sometimes)]
 
 [assembly: TypeForwardedTo(typeof(System.Xaml.Permissions.XamlAccessLevel))]
-#pragma warning disable SYSLIB0003 // Type or member is obsolete
-[assembly: TypeForwardedTo(typeof(System.Xaml.Permissions.XamlLoadPermission))]
-#pragma warning restore SYSLIB0003 // Type or member is obsolete
+
 [assembly: TypeForwardedTo(typeof(System.Windows.Markup.ValueSerializerAttribute))]
 
 [assembly:XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml", "System.Windows.Markup")]

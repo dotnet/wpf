@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Reflection;
 using System.Security;
 using MS.Internal;
 using MS.Internal.Interop;
@@ -908,12 +909,12 @@ namespace System.Windows.Interop
             //Console.WriteLine("PossiblyDeactivate(" + hwndCapture + ")");
 
             // We are now longer active ourselves, but it is possible that the
-            // window the mouse is going to intereact with is in the same
+            // window the mouse is going to interact with is in the same
             // Dispatcher as ourselves.  If so, we don't want to deactivate the
             // mouse input stream because the other window hasn't activated it
             // yet, and it may result in the input stream "flickering" between
-            // active/inactive/active.  This is ugly, so we try to supress the
-            // uneccesary transitions.
+            // active/inactive/active.  This is ugly, so we try to suppress the
+            // unnecessary transitions.
             //
             IntPtr hwndToCheck = hwndCapture;
             if(hwndToCheck == IntPtr.Zero)
@@ -951,17 +952,16 @@ namespace System.Windows.Interop
                 {
                     // We need to check if the point is over the client or
                     // non-client area.  We only care about being over the
-                    // non-client area.
+                    // client area.
                     try
                     {
-                        NativeMethods.RECT rcClient = new NativeMethods.RECT();
-                        SafeNativeMethods.GetClientRect(new HandleRef(this,hwndToCheck), ref rcClient);
+                        NativeMethods.RECT rcClient = GetEffectiveClientRect(hwndToCheck);
                         SafeNativeMethods.ScreenToClient(new HandleRef(this,hwndToCheck), ptCursor);
 
                         if(ptCursor.x < rcClient.left || ptCursor.x >= rcClient.right ||
                            ptCursor.y < rcClient.top || ptCursor.y >= rcClient.bottom)
                         {
-                            // We are not over the non-client area.  We can bail out.
+                            // We are not over the client area.  We can bail out.
                             //Console.WriteLine("  No capture, mouse outside of client area.");
                             //Console.WriteLine("  Client Area: ({0},{1})-({2},{3})", rcClient.left, rcClient.top, rcClient.right, rcClient.bottom);
                             //Console.WriteLine("  Mouse: ({0},{1})", ptCursor.x, ptCursor.y);
@@ -1005,6 +1005,139 @@ namespace System.Windows.Interop
             }
         }
 
+        /// <summary>
+        /// Returns the effective client rect of the hwnd, for use by PossiblyDeactivate
+        /// when deciding whether to do the "don't deactivate mouse input stream"
+        /// optimization. Specifically:
+        ///   o If the hwnd isn't ours, return Empty.  We never want to do the
+        ///     optimization in this case.
+        ///   o If the hwnd has no custom chrome, return its native client rect.
+        ///   o Otherwise, remove the invisible caption and resize-border areas
+        ///     from the native client rect, and return the result.
+        /// The last case deactivates the mouse stream when the mouse enters the
+        /// "effective" non-client area of a custom-chromed window.  Leaving it
+        /// active leads to mouse events intended only for DWM to be delivered
+        /// to our windows, running user's event handlers at inappropriate times,
+        /// which can cause more or less arbitrary damage.
+        ///
+        /// For example, moving the mouse from one window into the caption area
+        /// of a chromed window, then press-and-drag in the caption area will
+        /// (correctly) cause DWM to move the window, but will also (incorrectly)
+        /// raise MouseMove events to both windows.  [DDVSO 1245503]
+        /// </summary>
+        private NativeMethods.RECT GetEffectiveClientRect(IntPtr hwnd)
+        {
+            NativeMethods.RECT rcClient = new NativeMethods.RECT();
+            HwndSource hwndSource;
+
+            // if the hwnd isn't ours, return an empty rect
+            if (!IsOurWindowImpl(hwnd, out hwndSource))
+            {
+                return rcClient;
+            }
+
+            // if the hwnd has custom chrome, return the reduced client area
+            if (HasCustomChrome(hwndSource, ref rcClient))
+            {
+                return rcClient;
+            }
+
+            // otherwise, return the native client rect
+            SafeNativeMethods.GetClientRect(new HandleRef(this,hwnd), ref rcClient);
+            return rcClient;
+        }
+
+        /// <summary>
+        /// If the given hwndSource has custom chrome via WindowChrome, return
+        /// true and set rcClient to the effective client area.
+        /// </summary>
+        private bool HasCustomChrome(HwndSource hwndSource, ref NativeMethods.RECT rcClient)
+        {
+            if (!EnsureFrameworkAccessors(hwndSource))
+            {
+                return false;
+            }
+
+            // an hwnd has custom chrome if its root visual is a Window whose
+            // WindowChromeWorker property is set.  We can't say it that way here,
+            // because those classes belong to PresentationFramework.  But we
+            // can do the equivalent using dependency properties and reflection.
+            DependencyObject rootVisual = hwndSource.RootVisual;
+
+            DependencyObject windowChromeWorker = rootVisual?.GetValue(WindowChromeWorkerProperty) as DependencyObject;
+            if (windowChromeWorker == null)
+            {
+                return false;
+            }
+
+            // ask the worker for the effective client area
+            object[] args = new object[1] { rcClient };
+            if ((bool)GetEffectiveClientAreaMI.Invoke(windowChromeWorker, args))
+            {
+                // copy the answer back to our caller
+                rcClient = (NativeMethods.RECT)(args[0]);
+                return true;
+            }
+
+            return false;
+        }
+
+        // lazy initialization of static fields that have to be
+        // set by reflection into PresentationFramework
+        private bool EnsureFrameworkAccessors(HwndSource hwndSource)
+        {
+            // if we've already done the work, return
+            if (WindowChromeWorkerProperty != null)
+            {
+                return true;
+            }
+
+            // get a reference to PresentationFramework, either from our own
+            // HwndSource, or (as a fallback) from the target HwndSource
+            Assembly presentationFramework = GetPresentationFrameworkFromHwndSource(_source.Value);
+            if (presentationFramework == null)
+            {
+                presentationFramework = GetPresentationFrameworkFromHwndSource(hwndSource);
+            }
+
+            if (presentationFramework == null)
+            {
+                return false;
+            }
+
+            // reflect into PresentationFramework to the accessors we need
+            Type windowChromeWorker = presentationFramework.GetType("System.Windows.Shell.WindowChromeWorker");
+            FieldInfo fiWindowChromeWorkerProperty = windowChromeWorker?.GetField("WindowChromeWorkerProperty", BindingFlags.Static | BindingFlags.Public);
+            DependencyProperty windowChromeWorkerProperty = fiWindowChromeWorkerProperty?.GetValue(null) as DependencyProperty;
+            GetEffectiveClientAreaMI = windowChromeWorker?.GetMethod("GetEffectiveClientArea", BindingFlags.Instance | BindingFlags.NonPublic);
+
+            // if we got them all, set WindowChromeWorkerProperty to signal that the
+            // initialization succeeded.  This method can run on multiple threads,
+            // but it sets the static members to the same value on each thread, so
+            // it doesn't need any locking.
+            if (windowChromeWorkerProperty != null && GetEffectiveClientAreaMI != null)
+            {
+                WindowChromeWorkerProperty = windowChromeWorkerProperty;
+            }
+
+            return (WindowChromeWorkerProperty != null);
+        }
+
+        // return the Assembly for PresentationFramework.  Usually the root visual
+        // of the given HwndSource is an object whose type is (or derives from)
+        // a type in PF:  Window, PopupRoot, etc.
+        private Assembly GetPresentationFrameworkFromHwndSource(HwndSource hwndSource)
+        {
+            DependencyObject rootVisual = hwndSource?.RootVisual;
+
+            Type type = rootVisual?.GetType();
+            while (type != null && type.Assembly.FullName != PresentationFrameworkAssemblyFullName)
+            {
+                type = type.BaseType;
+            }
+
+            return type?.Assembly;
+        }
         private void StartTracking(IntPtr hwnd)
         {
             if(!_tracking && !_isDwmProcess)
@@ -1048,13 +1181,19 @@ namespace System.Windows.Interop
 
         private bool IsOurWindow(IntPtr hwnd)
         {
+            HwndSource hwndSource;
+            return IsOurWindowImpl(hwnd, out hwndSource);
+        }
+
+        private bool IsOurWindowImpl(IntPtr hwnd, out HwndSource hwndSource)
+        {
             bool isOurWindow = false;
+            hwndSource = null;
 
             Debug.Assert(null != _source && null != _source.Value);
 
             if(hwnd != IntPtr.Zero)
             {
-                HwndSource hwndSource;
                 hwndSource = HwndSource.CriticalFromHwnd(hwnd);
 
                 if(hwndSource != null)
@@ -1340,6 +1479,11 @@ namespace System.Windows.Interop
         private bool _isDwmProcess; // If we are the DWM, we need to always be _active, don't track focus.
 
         private NativeMethods.TRACKMOUSEEVENT _tme = new NativeMethods.TRACKMOUSEEVENT();
+
+        // accessors into PresentationFramework classes
+        const string PresentationFrameworkAssemblyFullName = "PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN;
+        private static DependencyProperty WindowChromeWorkerProperty;
+        private static MethodInfo GetEffectiveClientAreaMI;
 
         // MITIGATION_SETCURSOR
         //

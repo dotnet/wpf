@@ -247,7 +247,7 @@ namespace System.Windows.Markup
 
 #endregion Methods
 
-        #region Properties
+#region Properties
 
         /// <summary>
         ///  Instance of XamlTypeMapper to use if none is specified in a

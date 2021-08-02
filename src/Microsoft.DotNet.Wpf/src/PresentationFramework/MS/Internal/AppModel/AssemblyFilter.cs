@@ -37,6 +37,7 @@ namespace MS.Internal
 
         internal void FilterCallback(Object sender, AssemblyLoadEventArgs args)
         {
+            /* https://docs.microsoft.com/en-us/dotnet/fundamentals/syslib-diagnostics/syslib0005
             // This code is reentrant
             lock (_lock)
             {
@@ -47,7 +48,7 @@ namespace MS.Internal
                 // other wise also we cannot do any processing on a reflection only assembly aside from reflection based actions
                 if (!a.ReflectionOnly)
                 {
-                    /* https://docs.microsoft.com/en-us/dotnet/fundamentals/syslib-diagnostics/syslib0005
+
                      * // check if it is in the Gac , this ensures that we eliminate any non GAC assembly which are of no risk
                        #pragma warning disable SYSLIB0005 // 'Assembly.GlobalAssemblyCache' is obsolete.
                        if (a.GlobalAssemblyCache)
@@ -69,9 +70,9 @@ namespace MS.Internal
                                    Debug.Fail("Environment.Exit() failed.");
                                }
                            }
-                       }*/
+                       }
                 }
-            }
+            }*/
         }
 
         //appends assembly name with file version to generate a unique entry for the assembly lookup process

@@ -209,9 +209,9 @@ namespace MS.Internal.Automation
             return els;
         }
 
-        private enum HeadingLevel
+        private enum AutomationHeadingLevel
         {
-            None = 80050,
+            None = 0,
             Level1,
             Level2,
             Level3,
@@ -288,7 +288,7 @@ namespace MS.Internal.Automation
             new AutomationPropertyInfo( null,                            AutomationElement.ItemStatusProperty,                   typeof(string),                ""                             ),
             new AutomationPropertyInfo( null,                            AutomationElement.SizeOfSetProperty,                    typeof(int),                   -1                             ),
             new AutomationPropertyInfo( null,                            AutomationElement.PositionInSetProperty,                typeof(int),                   -1                             ),
-            new AutomationPropertyInfo( null,                            AutomationElement.HeadingLevelProperty,                 typeof(HeadingLevel),          HeadingLevel.None              ),
+            new AutomationPropertyInfo( null,                            AutomationElement.HeadingLevelProperty,                 typeof(AutomationHeadingLevel),AutomationHeadingLevel.None    ),
             new AutomationPropertyInfo( convertToBool,                   AutomationElement.IsDialogProperty,                     typeof(bool),                  false                          ),
 
             // Pattern Available properties            

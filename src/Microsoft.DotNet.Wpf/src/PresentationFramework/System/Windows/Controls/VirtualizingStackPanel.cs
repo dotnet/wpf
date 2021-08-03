@@ -11032,32 +11032,23 @@ namespace System.Windows.Controls
                 viewportOffset, viewportOffset + viewportSize, targetRectOffset, targetRectOffset + targetRectSize, ref alignTop, ref alignBottom);
 
             // Compute the visible rectangle of the child relative to the viewport.
+            double start = targetRectOffset - minPhysicalOffset;
+            double end = start + targetRectSize;
 
-            if (alignTop)
-            {
-                targetRectOffset = viewportOffset;
-            }
-            else if (alignBottom)
-            {
-                targetRectOffset = viewportOffset + viewportSize - targetRectSize;
-            }
-
-            double left = Math.Max(targetRectOffset, minPhysicalOffset);
-            targetRectSize = Math.Max(Math.Min(targetRectSize + targetRectOffset, minPhysicalOffset + viewportSize) - left, 0);
-            targetRectOffset = left;
-            targetRectOffset -= viewportOffset;
+            double visibleStart = Math.Max(start, 0);
+            double visibleEnd = Math.Max(Math.Min(end, viewportSize), visibleStart);
 
             if (isHorizontal)
             {
                 newOffset.X = minPhysicalOffset;
-                newRect.X = targetRectOffset;
-                newRect.Width = targetRectSize;
+                newRect.X = visibleStart;
+                newRect.Width = visibleEnd - visibleStart;
             }
             else
             {
                 newOffset.Y = minPhysicalOffset;
-                newRect.Y = targetRectOffset;
-                newRect.Height = targetRectSize;
+                newRect.Y = visibleStart;
+                newRect.Height = visibleEnd - visibleStart;
             }
         }
 

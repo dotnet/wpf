@@ -92,10 +92,10 @@
     <Compile Include="System\Windows\Automation\VirtualizedItemPattern.cs" />
     <Compile Include="System\Windows\Automation\WindowPattern.cs" />
     <Compile Include="System\Windows\Automation\Text\TextRange.cs" />
-    <Compile Include="$(WpfSourceDir)PresentationCore\System\Windows\Automation\AutomationHeadingLevel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationClient\ref\UIAutomationClient-ref.csproj">

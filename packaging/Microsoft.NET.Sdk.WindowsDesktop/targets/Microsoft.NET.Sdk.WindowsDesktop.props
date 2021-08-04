@@ -168,4 +168,6 @@
   -->
   <Import Project="Microsoft.NET.Sdk.WindowsDesktop.WindowsForms.props" />
 
+  <Import Project="Microsoft.NET.Sdk.WindowsDesktop.WPF.props" />
+
 </Project>

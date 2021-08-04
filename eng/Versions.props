@@ -4,38 +4,38 @@
     <VersionPrefix>6.0.0</VersionPrefix>
     <PreReleaseVersionLabel>rc</PreReleaseVersionLabel>
     <PreReleaseVersionIteration>1</PreReleaseVersionIteration>
-    <SystemIOPackagingVersion>6.0.0-rc.1.21380.13</SystemIOPackagingVersion>
-    <SystemResourcesExtensionsVersion>6.0.0-rc.1.21380.13</SystemResourcesExtensionsVersion>
+    <SystemIOPackagingVersion>6.0.0-rc.1.21402.10</SystemIOPackagingVersion>
+    <SystemResourcesExtensionsVersion>6.0.0-rc.1.21402.10</SystemResourcesExtensionsVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>6.0.0-rc.1.21403.8</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>6.0.0-rc.1.21403.9</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/coreclr -->
   <PropertyGroup>
     <MicrosoftNETCoreRuntimeCoreCLRVersion>5.0.0-alpha1.19562.1</MicrosoftNETCoreRuntimeCoreCLRVersion>
-    <MicrosoftNETCoreILDAsmVersion>6.0.0-rc.1.21380.13</MicrosoftNETCoreILDAsmVersion>
-    <MicrosoftNETCoreILAsmVersion>6.0.0-rc.1.21380.13</MicrosoftNETCoreILAsmVersion>
+    <MicrosoftNETCoreILDAsmVersion>6.0.0-rc.1.21402.10</MicrosoftNETCoreILDAsmVersion>
+    <MicrosoftNETCoreILAsmVersion>6.0.0-rc.1.21402.10</MicrosoftNETCoreILAsmVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
-    <VSRedistCommonNetCoreSharedFrameworkx6460PackageVersion>6.0.0-rc.1.21380.13</VSRedistCommonNetCoreSharedFrameworkx6460PackageVersion>
-    <MicrosoftNETCoreAppRefVersion>6.0.0-rc.1.21380.13</MicrosoftNETCoreAppRefVersion>
-    <MicrosoftNETCoreAppRuntimewinx64Version>6.0.0-rc.1.21380.13</MicrosoftNETCoreAppRuntimewinx64Version>
-    <MicrosoftNETCorePlatformsVersion>6.0.0-rc.1.21380.13</MicrosoftNETCorePlatformsVersion>
-    <SystemDrawingCommonVersion>6.0.0-rc.1.21380.13</SystemDrawingCommonVersion>
-    <SystemDirectoryServicesVersion>6.0.0-rc.1.21380.13</SystemDirectoryServicesVersion>
-    <SystemReflectionMetadataLoadContextVersion>6.0.0-rc.1.21380.13</SystemReflectionMetadataLoadContextVersion>
+    <VSRedistCommonNetCoreSharedFrameworkx6460PackageVersion>6.0.0-rc.1.21402.10</VSRedistCommonNetCoreSharedFrameworkx6460PackageVersion>
+    <MicrosoftNETCoreAppRefVersion>6.0.0-rc.1.21402.10</MicrosoftNETCoreAppRefVersion>
+    <MicrosoftNETCoreAppRuntimewinx64Version>6.0.0-rc.1.21402.10</MicrosoftNETCoreAppRuntimewinx64Version>
+    <MicrosoftNETCorePlatformsVersion>6.0.0-rc.1.21402.10</MicrosoftNETCorePlatformsVersion>
+    <SystemDrawingCommonVersion>6.0.0-rc.1.21402.10</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>6.0.0-rc.1.21402.10</SystemDirectoryServicesVersion>
+    <SystemReflectionMetadataLoadContextVersion>6.0.0-rc.1.21402.10</SystemReflectionMetadataLoadContextVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefx via core-setup coherency parent dependency -->
   <PropertyGroup>
-    <SystemCodeDomPackageVersion>6.0.0-rc.1.21380.13</SystemCodeDomPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>6.0.0-rc.1.21380.13</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>6.0.0-rc.1.21380.13</SystemDiagnosticsEventLogPackageVersion>
+    <SystemCodeDomPackageVersion>6.0.0-rc.1.21402.10</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>6.0.0-rc.1.21402.10</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>6.0.0-rc.1.21402.10</SystemDiagnosticsEventLogPackageVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>6.0.0-rc.1.21380.13</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>6.0.0-rc.1.21380.13</SystemSecurityPermissionsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>6.0.0-rc.1.21380.13</SystemWindowsExtensionsPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>6.0.0-rc.1.21402.10</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>6.0.0-rc.1.21402.10</SystemSecurityPermissionsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>6.0.0-rc.1.21402.10</SystemWindowsExtensionsPackageVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>

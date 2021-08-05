@@ -50,6 +50,7 @@
     <Compile Include="System\Windows\Automation\ExpandCollapsePatternIdentifiers.cs" />
     <Compile Include="System\Windows\Automation\GridItemPatternIdentifiers.cs" />
     <Compile Include="System\Windows\Automation\GridPatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\HeadingLevel.cs" />
     <Compile Include="System\Windows\Automation\InvokePatternIdentifiers.cs" />
     <Compile Include="System\Windows\Automation\ItemContainerPatternIdentifiers.cs" />
     <Compile Include="System\Windows\Automation\MultipleViewPatternIdentifiers.cs" />

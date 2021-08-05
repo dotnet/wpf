@@ -147,6 +147,7 @@ namespace MS.Internal.Automation
         private static object ConvertToExpandCollapseState(object value)    { return (ExpandCollapseState)value; }
         private static object ConvertToOrientationType(object value)        { return (OrientationType)value; }
         private static object ConvertToDockPosition(object value)           { return (DockPosition)value; }
+        private static object ConvertToAutomationHeadingLevel(object value) { return (HeadingLevel)value; }
 
         private static object ConvertToRect(object value)
         {
@@ -226,6 +227,7 @@ namespace MS.Internal.Automation
         private static AutomationPropertyConverter convertToElementArray            = new AutomationPropertyConverter(ConvertToElementArray);
         private static AutomationPropertyConverter convertToControlType             = new AutomationPropertyConverter(ConvertToControlType);
         private static AutomationPropertyConverter convertToCultureInfo             = new AutomationPropertyConverter(ConvertToCultureInfo);
+        private static AutomationPropertyConverter convertToAutomationHeadingLevel  = new AutomationPropertyConverter(ConvertToAutomationHeadingLevel);
 
         #endregion Private Methods
 
@@ -276,7 +278,7 @@ namespace MS.Internal.Automation
             new AutomationPropertyInfo( null,                            AutomationElement.ItemStatusProperty,                   typeof(string),                ""                             ),
             new AutomationPropertyInfo( null,                            AutomationElement.SizeOfSetProperty,                    typeof(int),                   -1                             ),
             new AutomationPropertyInfo( null,                            AutomationElement.PositionInSetProperty,                typeof(int),                   -1                             ),
-            new AutomationPropertyInfo( null,                            AutomationElement.HeadingLevelProperty,                 typeof(AutomationHeadingLevel),AutomationHeadingLevel.None    ),
+            new AutomationPropertyInfo( convertToAutomationHeadingLevel, AutomationElement.HeadingLevelProperty,                 typeof(HeadingLevel),          HeadingLevel.None              ),
             new AutomationPropertyInfo( convertToBool,                   AutomationElement.IsDialogProperty,                     typeof(bool),                  false                          ),
 
             // Pattern Available properties            

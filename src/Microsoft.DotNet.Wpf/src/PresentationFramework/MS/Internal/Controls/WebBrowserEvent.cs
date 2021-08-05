@@ -261,10 +261,12 @@ namespace MS.Internal.Controls
 
         public void CommandStateChange(long command, bool enable)
         {
-            if (command == NativeMethods.CSC_NAVIGATEBACK) {
+            if (command == NativeMethods.CSC_NAVIGATEBACK)
+            {
                 _parent._canGoBack = enable;
             }
-            else if (command == NativeMethods.CSC_NAVIGATEFORWARD) {
+            else if (command == NativeMethods.CSC_NAVIGATEFORWARD)
+            {
                 _parent._canGoForward = enable;
             }
         }

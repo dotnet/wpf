@@ -70,6 +70,7 @@
     <Compile Include="System\Windows\Automation\ExpandCollapsePattern.cs" />
     <Compile Include="System\Windows\Automation\GridItemPattern.cs" />
     <Compile Include="System\Windows\Automation\GridPattern.cs" />
+    <Compile Include="System\Windows\Automation\HeadingLevel.cs" />
     <Compile Include="System\Windows\Automation\InvokePattern.cs" />
     <Compile Include="System\Windows\Automation\ItemContainerPattern.cs" />
     <Compile Include="System\Windows\Automation\MultipleViewPattern.cs" />

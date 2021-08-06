@@ -147,7 +147,6 @@ namespace MS.Internal.Automation
         private static object ConvertToExpandCollapseState(object value)    { return (ExpandCollapseState)value; }
         private static object ConvertToOrientationType(object value)        { return (OrientationType)value; }
         private static object ConvertToDockPosition(object value)           { return (DockPosition)value; }
-        private static object ConvertToAutomationHeadingLevel(object value) { return (HeadingLevel)value; }
 
         private static object ConvertToRect(object value)
         {
@@ -211,6 +210,35 @@ namespace MS.Internal.Automation
             return els;
         }
 
+        private static object ConvertToAutomationHeadingLevel(object value)
+        {
+            var headingLevel = (HeadingLevel)value;
+            switch(headingLevel)
+            {
+                case HeadingLevel.None:
+                    return AutomationHeadingLevel.None;
+                case HeadingLevel.Level1:
+                    return AutomationHeadingLevel.Level1;
+                case HeadingLevel.Level2:
+                    return AutomationHeadingLevel.Level2;
+                case HeadingLevel.Level3:
+                    return AutomationHeadingLevel.Level3;
+                case HeadingLevel.Level4:
+                    return AutomationHeadingLevel.Level4;
+                case HeadingLevel.Level5:
+                    return AutomationHeadingLevel.Level5;
+                case HeadingLevel.Level6:
+                    return AutomationHeadingLevel.Level6;
+                case HeadingLevel.Level7:
+                    return AutomationHeadingLevel.Level7;
+                case HeadingLevel.Level8:
+                    return AutomationHeadingLevel.Level8;
+                case HeadingLevel.Level9:
+                    return AutomationHeadingLevel.Level9;
+                default:
+                    return AutomationHeadingLevel.None;
+            }
+        }
 
         // Delegate versions of the above...
         private static AutomationPropertyConverter convertToBool = new AutomationPropertyConverter(ConvertToBool);
@@ -278,7 +306,7 @@ namespace MS.Internal.Automation
             new AutomationPropertyInfo( null,                            AutomationElement.ItemStatusProperty,                   typeof(string),                ""                             ),
             new AutomationPropertyInfo( null,                            AutomationElement.SizeOfSetProperty,                    typeof(int),                   -1                             ),
             new AutomationPropertyInfo( null,                            AutomationElement.PositionInSetProperty,                typeof(int),                   -1                             ),
-            new AutomationPropertyInfo( convertToAutomationHeadingLevel, AutomationElement.HeadingLevelProperty,                 typeof(HeadingLevel),          HeadingLevel.None              ),
+            new AutomationPropertyInfo( convertToAutomationHeadingLevel, AutomationElement.HeadingLevelProperty,                 typeof(AutomationHeadingLevel),AutomationHeadingLevel.None              ),
             new AutomationPropertyInfo( convertToBool,                   AutomationElement.IsDialogProperty,                     typeof(bool),                  false                          ),
 
             // Pattern Available properties            

@@ -14,7 +14,7 @@ namespace System.Windows.Automation
     /// <summary>
     /// Describes the heading level of a control
     /// </summary>
-    public enum HeadingLevel
+    internal enum HeadingLevel
     {
         /// <summary>
         /// The element does not have a heading level

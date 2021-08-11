@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 // Turn off CER warnings: The Constrained Execution Region (CER) feature is not supported.  
-#pragma warning (disable : 4950)
         
 #ifndef GDIEXPORTER
 
@@ -101,12 +100,10 @@ public:
 
     property bool IsInvalid
     {
-        [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
         bool virtual get() override { return IsClosed || (handle == IntPtr::Zero); }
     }
 
 protected:
-    [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
     bool virtual ReleaseHandle() override
     {
         IntPtr tempHandle = handle;
@@ -140,7 +137,6 @@ public:
 #endif
 
 protected:
-    [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
     bool virtual ReleaseHandle() override
     {
         IntPtr tempHandle = handle;
@@ -168,7 +164,6 @@ public:
 
     property bool IsInvalid
     {
-        [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
         bool virtual get() override { return IsClosed || (handle == IntPtr::Zero); }
     }
 
@@ -181,7 +176,6 @@ public:
     }
 
 protected:
-    [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
     bool virtual ReleaseHandle() override
     {
         IntPtr tempHandle = handle;

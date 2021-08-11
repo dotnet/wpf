@@ -403,9 +403,8 @@ namespace System.Windows.Media
             {
                 // Adding commands to a channel is not thread-safe,
                 // we must do the actual work on the same dispatcher thread
-                // where the connection happened.  [DDVSO 1054706]
-                if (CoreAppContextSwitches.HostVisualDisconnectsOnWrongThread ||
-                    (channelDispatcher != null && channelDispatcher.CheckAccess()))
+                // where the connection happened.
+                if (channelDispatcher != null && channelDispatcher.CheckAccess())
                 {
                     Disconnect(channel,
                                channelDispatcher,
@@ -519,10 +518,7 @@ namespace System.Windows.Media
                                 DUCE.ResourceHandle targetHandle,
                                 DUCE.MultiChannelResource contentRoot)
         {
-            if (!CoreAppContextSwitches.HostVisualDisconnectsOnWrongThread)
-            {
-                channelDispatcher.VerifyAccess();
-            }
+            channelDispatcher.VerifyAccess();
 
             DUCE.CompositionNode.RemoveChild(
                 hostHandle,

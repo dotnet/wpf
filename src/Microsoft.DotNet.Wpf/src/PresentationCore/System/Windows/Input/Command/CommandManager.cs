@@ -352,7 +352,6 @@ namespace System.Windows.Input
 
             // Determine UIElement/ContentElement/Neither type
             DependencyObject targetElementAsDO = targetElement as DependencyObject;
-            // todo patternmatching: Would an as cast and null checks be faster here instead of casting multiple times?
             bool isUIElement = targetElementAsDO is UIElement;
             bool isContentElement = !isUIElement && targetElementAsDO is ContentElement;
             bool isUIElement3D = !isUIElement && !isContentElement && targetElementAsDO is UIElement3D;

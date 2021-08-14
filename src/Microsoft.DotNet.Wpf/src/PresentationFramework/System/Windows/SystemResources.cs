@@ -2037,7 +2037,7 @@ namespace System.Windows
     internal class DeferredResourceReferenceList : IEnumerable
     {
         private readonly object _syncRoot = new();
-        private readonly Dictionary<object,  WeakReference<DeferredResourceReference>> _entries = new();
+        private readonly Dictionary<object, WeakReference<DeferredResourceReference>> _entries = new();
         private int _potentiallyDeadEntryCount = 0;
 
         public void AddOrSet(DeferredResourceReference deferredResourceReference)

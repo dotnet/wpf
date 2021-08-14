@@ -1739,8 +1739,9 @@ namespace System.Windows
                 {
                     // Note that we are replacing the _keyorValue field
                     // with the value and deleting the _dictionary field.
-                    _keyOrValue = value;
                     RemoveFromDictionary();
+                    // Update after removal from dictionary as we need the key for proper removal
+                    _keyOrValue = value;
                 }
 
                 // Freeze if this value originated from a style or template
@@ -2031,6 +2032,94 @@ namespace System.Windows
         }
 
         #endregion Properties
+    }
+
+    internal class DeferredResourceReferenceList
+    {
+        private readonly object _syncRoot = new();
+        private readonly Dictionary<object,  WeakReference<DeferredResourceReference>> _entries = new();
+        private int _knownDeadEntryCount = 0;
+
+        public void AddOrSet(DeferredResourceReference deferredResourceReference)
+        {
+            lock (_syncRoot)
+            {
+                _entries[deferredResourceReference.Key] = new WeakReference<DeferredResourceReference>(deferredResourceReference);
+            }
+        }
+
+        public void Remove(DeferredResourceReference deferredResourceReference)
+        {
+            lock (_syncRoot)
+            {
+                _entries.Remove(deferredResourceReference.Key);
+            }
+        }
+
+        internal DeferredResourceReference Get(object resourceKey)
+        {
+            WeakReference<DeferredResourceReference> weakReference;
+            lock (_syncRoot)
+            {
+                weakReference = _entries[resourceKey];
+            }
+
+            if (weakReference is null)
+            {
+                return null;
+            }
+
+            if (weakReference.TryGetTarget(out DeferredResourceReference deferredResourceReference))
+            {
+                return deferredResourceReference;
+            }
+            else
+            {
+                ++_knownDeadEntryCount;
+            }
+
+            return null;
+        }
+
+        internal void ChangeDictionary(ResourceDictionary resourceDictionary)
+        {
+            lock (_syncRoot)
+            {
+                foreach (WeakReference<DeferredResourceReference> weakReference in _entries.Values)
+                {
+                    if (weakReference.TryGetTarget(out DeferredResourceReference deferredResourceReference))
+                    {
+                        deferredResourceReference.Dictionary = resourceDictionary;
+                    }
+                    else
+                    {
+                        ++_knownDeadEntryCount;
+                    }
+                }
+            }
+        }
+
+        private void Purge()
+        {
+            lock (_syncRoot)
+            {
+                List<object> deadEntries = new(_knownDeadEntryCount);
+                _knownDeadEntryCount = 0;
+
+                foreach (KeyValuePair<object, WeakReference<DeferredResourceReference>> entry in _entries)
+                {
+                    if (entry.Value.TryGetTarget(out _) == false)
+                    {
+                        deadEntries.Add(entry.Key);
+                    }
+                }
+
+                foreach (object deadKey in deadEntries)
+                {
+                    _entries.Remove(deadKey);
+                }
+            }
+        }
     }
 }
 

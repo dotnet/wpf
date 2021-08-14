@@ -1735,15 +1735,6 @@ namespace System.Windows
                     DeferredResourceReference deferredResourceReference;
                     if (!IsThemeDictionary)
                     {
-                        if (_ownerApps != null)
-                        {
-                            deferredResourceReference = new DeferredAppResourceReference(this, resourceKey);
-                        }
-                        else
-                        {
-                            deferredResourceReference = new DeferredResourceReference(this, resourceKey);
-                        }
-
                         // Cache the deferredResourceReference so that it can be validated
                         // in case of a dictionary change prior to its inflation
                         if (_deferredResourceReferences == null)
@@ -1751,7 +1742,24 @@ namespace System.Windows
                             _deferredResourceReferences = new DeferredResourceReferenceList();
                         }
 
-                        _deferredResourceReferences.AddOrSet(deferredResourceReference);
+                        if (_deferredResourceReferences.Get(resourceKey) is DeferredResourceReference existingDeferredResourceReference
+                            && existingDeferredResourceReference.Dictionary == this)
+                        {
+                            deferredResourceReference = existingDeferredResourceReference;
+                        }
+                        else
+                        {
+                            if (_ownerApps != null)
+                            {
+                                deferredResourceReference = new DeferredAppResourceReference(this, resourceKey);
+                            }
+                            else
+                            {
+                                deferredResourceReference = new DeferredResourceReference(this, resourceKey);
+                            }
+
+                            _deferredResourceReferences.AddOrSet(deferredResourceReference);
+                        }
                     }
                     else
                     {

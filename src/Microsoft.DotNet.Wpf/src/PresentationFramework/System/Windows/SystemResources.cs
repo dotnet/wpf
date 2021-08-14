@@ -2029,11 +2029,11 @@ namespace System.Windows
         #endregion Properties
     }
 
-    internal class DeferredResourceReferenceList
+    internal class DeferredResourceReferenceList : IEnumerable
     {
         private readonly object _syncRoot = new();
         private readonly Dictionary<object,  WeakReference<DeferredResourceReference>> _entries = new();
-        private int _knownDeadEntryCount = 0;
+        private int _potentiallyDeadEntryCount = 0;
 
         public void AddOrSet(DeferredResourceReference deferredResourceReference)
         {
@@ -2056,7 +2056,7 @@ namespace System.Windows
             WeakReference<DeferredResourceReference> weakReference;
             lock (_syncRoot)
             {
-                weakReference = _entries[resourceKey];
+                _entries.TryGetValue(resourceKey, out weakReference);
             }
 
             if (weakReference is null)
@@ -2070,8 +2070,10 @@ namespace System.Windows
             }
             else
             {
-                ++_knownDeadEntryCount;
+                ++_potentiallyDeadEntryCount;
             }
+
+            PurgeIfRequired();
 
             return null;
         }
@@ -2088,9 +2090,19 @@ namespace System.Windows
                     }
                     else
                     {
-                        ++_knownDeadEntryCount;
+                        ++_potentiallyDeadEntryCount;
                     }
                 }
+            }
+
+            PurgeIfRequired();
+        }
+
+        private void PurgeIfRequired()
+        {
+            if (_potentiallyDeadEntryCount > 25)
+            {
+                Purge();
             }
         }
 
@@ -2098,21 +2110,39 @@ namespace System.Windows
         {
             lock (_syncRoot)
             {
-                List<object> deadEntries = new(_knownDeadEntryCount);
-                _knownDeadEntryCount = 0;
+                List<object> deadKeys = new(Math.Min(_potentiallyDeadEntryCount, _entries.Count));
+                _potentiallyDeadEntryCount = 0;
 
                 foreach (KeyValuePair<object, WeakReference<DeferredResourceReference>> entry in _entries)
                 {
                     if (entry.Value.TryGetTarget(out _) == false)
                     {
-                        deadEntries.Add(entry.Key);
+                        deadKeys.Add(entry.Key);
                     }
                 }
 
-                foreach (object deadKey in deadEntries)
+                foreach (object deadKey in deadKeys)
                 {
                     _entries.Remove(deadKey);
                 }
+            }
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            lock (_syncRoot)
+            {
+                var list = new List<DeferredResourceReference>(_entries.Count);
+
+                foreach (KeyValuePair<object, WeakReference<DeferredResourceReference>> entry in _entries)
+                {
+                    if (entry.Value.TryGetTarget(out DeferredResourceReference deferredResourceReference))
+                    {
+                        list.Add(deferredResourceReference);
+                    }
+                }
+
+                return list.GetEnumerator();
             }
         }
     }

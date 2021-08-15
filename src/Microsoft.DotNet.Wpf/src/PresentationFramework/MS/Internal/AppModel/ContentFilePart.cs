@@ -60,7 +60,7 @@ namespace MS.Internal.AppModel
                 // File name will be a path relative to the applications directory.
                 // - We do not want to use SiteOfOriginContainer.SiteOfOrigin because
                 //   for deployed files the <Content> files are deployed with the application.
-                string codeBase = GetEntryAssemblyLocation();
+                string location = GetEntryAssemblyLocation();
 
                 string assemblyName, assemblyVersion, assemblyKey;
                 string filePath;
@@ -73,7 +73,7 @@ namespace MS.Internal.AppModel
                 BaseUriHelper.GetAssemblyNameAndPart(Uri, out filePath, out assemblyName, out assemblyVersion, out assemblyKey);
 
                 // filePath should not have leading slash.  GetAssemblyNameAndPart( ) can guarantee it.
-                _fullPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(codeBase), filePath);
+                _fullPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(location), filePath);
             }
 
             stream = CriticalOpenFile(_fullPath);
@@ -108,8 +108,6 @@ namespace MS.Internal.AppModel
 
             try
             {
-                // We do not want to use Application.ResourceAssembly.CodeBase
-                // because it is obsolete.
                 entryLocation = Application.ResourceAssembly.Location;
             }
             catch (Exception ex)

@@ -21,6 +21,7 @@ namespace System.Windows.Controls
             _cacheLength = cacheLength;
             _cacheLengthUnit = cacheLengthUnit;
             _viewport = viewport;
+            _scrollGeneration = 0;  // internal field set separately by caller
         }
 
         #endregion
@@ -131,11 +132,22 @@ namespace System.Windows.Controls
 
         #endregion
 
+        #region Internal properties
+
+        internal long ScrollGeneration
+        {
+            get { return _scrollGeneration; }
+            set { _scrollGeneration = value; }
+        }
+
+        #endregion
+
         #region Data
 
         VirtualizationCacheLength _cacheLength;
         VirtualizationCacheLengthUnit _cacheLengthUnit;
         Rect _viewport;
+        long _scrollGeneration;
 
         #endregion
     }

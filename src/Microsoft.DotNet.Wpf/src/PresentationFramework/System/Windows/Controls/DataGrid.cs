@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 using System.Windows.Automation;
@@ -8336,8 +8337,15 @@ namespace System.Windows.Controls
                 dataObject.SetData(format, dataGridStringBuilders[format].ToString(), false /*autoConvert*/);
             }
 
-            Clipboard.CriticalSetDataObject(dataObject, true /* Copy */);
-
+            try
+            {
+                Clipboard.CriticalSetDataObject(dataObject, true /* Copy */);
+            }
+            catch (ExternalException)
+            {
+                // Clipboard failed to set the data object - fail silently.
+                return;
+            }
         }
 
         /// <summary>

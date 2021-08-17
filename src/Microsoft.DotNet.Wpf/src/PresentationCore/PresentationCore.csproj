@@ -334,6 +334,7 @@
     <Compile Include="System\Windows\Duration.cs" />
     <Compile Include="System\Windows\DurationConverter.cs" />
     <Compile Include="System\Windows\EventHandlersStore.cs" />
+    <Compile Include="System\Windows\EventHelper.cs" />
     <Compile Include="System\Windows\EventManager.cs" />
     <Compile Include="System\Windows\EventPrivateKey.cs" />
     <Compile Include="System\Windows\EventRoute.cs" />

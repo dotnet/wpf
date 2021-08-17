@@ -173,6 +173,46 @@ namespace System.Windows.Automation
             {
                 val = ((CultureInfo)val).LCID;
             }
+            else if (val is AutomationHeadingLevel)
+            {
+                AutomationHeadingLevel automationHeadingLevel = (AutomationHeadingLevel)(val);
+                switch(automationHeadingLevel)
+                {
+                    case AutomationHeadingLevel.None:
+                        val = HeadingLevel.None;
+                        break;
+                    case AutomationHeadingLevel.Level1:
+                        val = HeadingLevel.Level1;
+                        break;
+                    case AutomationHeadingLevel.Level2:
+                        val = HeadingLevel.Level2;
+                        break;
+                    case AutomationHeadingLevel.Level3:
+                        val = HeadingLevel.Level3;
+                        break;
+                    case AutomationHeadingLevel.Level4:
+                        val = HeadingLevel.Level4;
+                        break;
+                    case AutomationHeadingLevel.Level5:
+                        val = HeadingLevel.Level5;
+                        break;
+                    case AutomationHeadingLevel.Level6:
+                        val = HeadingLevel.Level6;
+                        break;
+                    case AutomationHeadingLevel.Level7:
+                        val = HeadingLevel.Level7;
+                        break;
+                    case AutomationHeadingLevel.Level8:
+                        val = HeadingLevel.Level8;
+                        break;
+                    case AutomationHeadingLevel.Level9:
+                        val = HeadingLevel.Level9;
+                        break;
+                    default:
+                        val = HeadingLevel.None;
+                        break;
+                }
+            }
 
             _property = property;
             _val = val;

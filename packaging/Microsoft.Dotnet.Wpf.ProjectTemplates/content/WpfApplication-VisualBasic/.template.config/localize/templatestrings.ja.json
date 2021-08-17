@@ -1,0 +1,16 @@
+﻿{
+  "author": "Microsoft",
+  "name": "WPF Application",
+  "description": "A project for creating a .NET WPF Application",
+  "symbols/TargetFrameworkOverride/description": "Overrides the target framework",
+  "symbols/Framework/description": "The target framework for the project.",
+  "symbols/Framework/choices/netcoreapp3.0/description": "Target netcoreapp3.0",
+  "symbols/Framework/choices/netcoreapp3.1/description": "Target netcoreapp3.1",
+  "symbols/Framework/choices/net5.0/description": "Target net5.0",
+  "symbols/Framework/choices/net6.0/description": "Target net6.0",
+  "symbols/langVersion/description": "Sets langVersion in the created project file",
+  "symbols/skipRestore/description": "If specified, skips the automatic restore of the project on create.",
+  "postActions/restore/description": "Restore NuGet packages required by this project.",
+  "postActions/restore/manualInstructions/default/text": "Run 'dotnet restore'",
+  "postActions/editor/description": "Opens MainWindow.xaml in the editor"
+}

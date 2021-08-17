@@ -1851,7 +1851,7 @@ namespace MS.Internal.Documents
             ZoomComboBox.Items.Add(newItem);
         }
 
-        private static bool StringToZoomValue(string zoomString, out double zoomValue)
+        private static bool StringToZoomValue(ReadOnlySpan<char> zoomString, out double zoomValue)
         {
             bool isValidArg = false;
             zoomValue = 0.0;
@@ -1862,7 +1862,7 @@ namespace MS.Internal.Documents
             try
             {
                 // Remove whitespace on either end of the string.
-                if ((culture != null) && !String.IsNullOrEmpty(zoomString))
+                if ((culture != null) && !zoomString.IsEmpty)
                 {
                     zoomString = zoomString.Trim();
 
@@ -1879,7 +1879,7 @@ namespace MS.Internal.Documents
                                                                 culture.NumberFormat.PercentSymbol,
                                                                 StringComparison.CurrentCultureIgnoreCase))
                                 {
-                                    zoomString = zoomString.Substring(0, zoomString.Length - 1);
+                                    zoomString = zoomString.Slice(0, zoomString.Length - 1);
                                 }
                                 break;
                             case 2: // %n
@@ -1889,14 +1889,14 @@ namespace MS.Internal.Documents
                                             culture.NumberFormat.PercentSymbol,
                                             StringComparison.CurrentCultureIgnoreCase))
                                 {
-                                    zoomString = zoomString.Substring(1);
+                                    zoomString = zoomString.Slice(1);
                                 }
                                 break;
                         }
                     }
 
                     // If this conversion throws then the string wasn't a valid zoom value.
-                    zoomValue = System.Convert.ToDouble(zoomString, culture);
+                    zoomValue = double.Parse(zoomString, provider: culture);
                     isValidArg = true;
                 }
             }

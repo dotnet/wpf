@@ -1464,23 +1464,24 @@ namespace Microsoft.Win32
                             // somehow slipped through.
                             //
                             // Strip out any extension that may be remaining and place the rest 
-                            // of the filename in s.                
-                            //
-                            // Changed to use StringBuilder for perf reasons as per FxCop CA1818
-                            StringBuilder s = new StringBuilder(fileName.Substring(0, fileName.Length - currentExtension.Length));
-                            // we don't want to append the extension if it contains wild cards
-                            if (extensions[j].IndexOfAny(new char[] { '*', '?' }) == -1)
+                            // of the filename in s.
+
+                            string newFilename;
+                            if (((ReadOnlySpan<char>)extensions[j]).IndexOfAny('*', '?') != -1)
                             {
-                                // No wildcards, so go ahead and append
-                                s.Append(".");
-                                s.Append(extensions[j]);
+                                // we don't want to append the extension if it contains wild cards
+                                newFilename = fileName.Substring(0, fileName.Length - currentExtension.Length);
+                            }
+                            else
+                            {
+                                newFilename = string.Concat(fileName.AsSpan(0, fileName.Length - currentExtension.Length), ".", extensions[j]);
                             }
 
                             // If OFN_FILEMUSTEXIST is not set, or if it is set but the filename we generated
                             // does in fact exist, we update fileName and stop trying new extensions.
-                            if (!GetOption(NativeMethods.OFN_FILEMUSTEXIST) || File.Exists(s.ToString()))
+                            if (!GetOption(NativeMethods.OFN_FILEMUSTEXIST) || File.Exists(newFilename))
                             {
-                                fileName = s.ToString();
+                                fileName = newFilename;
                                 break;
                             }
                         }

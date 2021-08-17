@@ -117,6 +117,13 @@ namespace System.Windows.Interop
                         // window handle for windows attached to the calling
                         // thread's queue.
                         //
+                        int thisPid = 0;
+                        int childPid = 0;
+                        UnsafeNativeMethods.GetWindowThreadProcessId(new HandleRef(null, focus), out childPid);
+                        UnsafeNativeMethods.GetWindowThreadProcessId(thisWindow, out thisPid);
+
+                        if (childPid != thisPid)
+                            UnsafeNativeMethods.TrySetFocus(thisWindow);
                         result = focus != IntPtr.Zero;
                     }
                 }

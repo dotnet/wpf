@@ -44,6 +44,7 @@ namespace System.Windows
                 SetVSP45CompatFromAppSettings(appSettings);
                 SetScrollingTraceFromAppSettings(appSettings);
                 SetShouldThrowOnCopyOrCutFailuresFromAppSettings(appSettings);
+                SetIMECompositionTraceFromAppSettings(appSettings);
             }
         }
 
@@ -406,6 +407,65 @@ namespace System.Windows
 
         #endregion ShouldThrowOnCopyOrCutFailure
 
+
+        #region IMECompositionTrace
+
+        private static string _IMECompositionTraceTarget;
+
+        internal static string GetIMECompositionTraceTarget()
+        {
+            Seal();
+            return _IMECompositionTraceTarget;
+        }
+
+        private static string _IMECompositionTraceFile;
+
+        internal static string GetIMECompositionTraceFile()
+        {
+            Seal();
+            return _IMECompositionTraceFile;
+        }
+
+        static void SetIMECompositionTraceFromAppSettings(NameValueCollection appSettings)
+        {
+            // user can use config file to select a control (TextBox, RichTextBox, etc.)
+            // for in-flight tracing of IME composition behavior:
+            //      <add key="IMECompositionTraceTarget" value="NameOfControl"/>
+            _IMECompositionTraceTarget = appSettings["IMECompositionTraceTarget"];
+
+            // user can direct IMEComposition-tracing output to a file:
+            //      <add key="IMECompositionTraceFile" value="NameOfFile"/>
+            // If the key is not present, or the filename is absent or "default",
+            // the output goes to "IMECompositionTrace.stf".  If the filename is "none",
+            // no file output is produced.
+            //
+            // User can also specify a parameter to control when output is flushed
+            // to the file:
+            //      <add key="IMECompositionTraceFile" value="NameOfFile;nnn"/>
+            // If not specified, the output is flushed after completing Measure or      TODO-rewrite
+            // Arrange of the top-level VirtualizingStackPanel below the trace
+            // target.   In some scenarios it may be desirable to flush the output
+            // more often - for example, an infinite loop that never measures the
+            // top-level panel.   Use the optional nnn parameter to flush after
+            // Measure or Arrange of any panel whose depth is nnn or less.  This flushes
+            // more often, but is more likely to interfere with the timing of the app.
+            _IMECompositionTraceFile = appSettings["IMECompositionTraceFile"];
+
+            // Alternatively, the user can control tracing from the VS debugger.
+            // To enable tracing:
+            //      1. Locate the desired control (TextBox, RichTextBox, etc.) and
+            //          make an Object ID for it.
+            //      2. From the Immediate window, execute
+            //          TextStore.IMECompositionTracer.SetTarget(1#)
+            //          (using the appropriate ID instead of 1#)
+            // To flush the current trace data to the file (useful if the app is
+            // about to terminate - including force-termination from the debugger
+            // or TaskManager - but you want to capture the latest trace data):
+            //      1. From the Immediate window, execute
+            //          TextStore.IMECompositionTracer.Flush()
+        }
+
+        #endregion IMECompositionTrace
         private static void Seal()
         {
             if (!_isSealed)

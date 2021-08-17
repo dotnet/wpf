@@ -282,6 +282,19 @@ namespace System.Windows.Automation
             public int RowCount { get { throw null; } }
         }
     }
+    internal enum HeadingLevel
+    {
+        None = 80050,
+        Level1,
+        Level2,
+        Level3,
+        Level4,
+        Level5,
+        Level6,
+        Level7,
+        Level8,
+        Level9,
+    }
     public partial class InvokePattern : System.Windows.Automation.BasePattern
     {
         internal InvokePattern() { }

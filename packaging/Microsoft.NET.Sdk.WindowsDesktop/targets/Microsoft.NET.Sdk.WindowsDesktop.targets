@@ -159,9 +159,6 @@
   -->
   <Import Project="Microsoft.NET.Sdk.WindowsDesktop.WindowsForms.targets" Condition="'$(UseWindowsForms)' == 'true'"/>
 
-  <!-- Import WPF-specific targets -->
-  <Import Project="Microsoft.NET.Sdk.WindowsDesktop.WPF.targets" Condition="'$(UseWPF)' == 'true'"/>
-
   <!-- Import WPF Build logic only when we don't import NETFX's WinFX targets -->
   <Import Project="Microsoft.WinFX.targets" Condition="'$(ImportFrameworkWinFXTargets)' != 'true'"/>
 

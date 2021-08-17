@@ -15,9 +15,11 @@ internal static class ModuleInitializer
     /// operations are carried out.  To do this, we simply call LoadDwrite
     /// as the module constructor for DirectWriteForwarder would do this anyway.
     /// </summary>
+    #pragma warning disable CA2255 
     [ModuleInitializer]
     public static void Initialize()
     {
         MS.Internal.NativeWPFDLLLoader.LoadDwrite();
     }
+    #pragma warning restore CA2255 
 }

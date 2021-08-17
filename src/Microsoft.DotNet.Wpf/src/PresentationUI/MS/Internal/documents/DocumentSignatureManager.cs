@@ -506,7 +506,9 @@ namespace MS.Internal.Documents
                                             // Get[Algorithm]PrivateKey methods would always have returned the private key if the PrivateKey property would
                                             // But Get[Algorithm]PrivateKey methods never throw but returns null in case of error during cryptographic operations
                                             // But we want exception to be thrown when an error occurs during a cryptographic operation so that we can redisplay the certificate picker
-                                            throw new CryptographicException("PrivateKey is not retrievable.");
+                                            #pragma warning disable SYSLIB0028
+                                            AsymmetricAlgorithm testKey = x509Certificate2.PrivateKey;
+                                            #pragma warning restore SYSLIB0028
                                         }
                                     }
                                 }

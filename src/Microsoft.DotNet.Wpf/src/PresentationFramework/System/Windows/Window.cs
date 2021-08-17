@@ -1280,6 +1280,17 @@ namespace System.Windows
         }
 
         /// <summary>
+        /// Gets Showing as dialog
+        /// </summary>
+        internal bool IsShowingAsDialog
+        {
+            get
+            {
+                return _showingAsDialog;
+            }
+        }
+
+        /// <summary>
         /// Sets/gets DialogResult
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), TypeConverter(typeof(DialogResultConverter))]
@@ -3373,13 +3384,14 @@ namespace System.Windows
                 _contentRenderedCallback.Abort();
             }
             _contentRenderedCallback = Dispatcher.BeginInvoke(DispatcherPriority.Input,
-                                   (DispatcherOperationCallback) delegate (object unused)
+                                   (DispatcherOperationCallback) delegate (object arg)
                                    {
                                        // Event handler exception continuality: there are no state related/depending on ContentRendered event.
                                        // If an exception occurs in event handler, our state will not be corrupted.
                                        // Please check event handler exception continuality if the logic changes.
-                                       _contentRenderedCallback = null;
-                                       OnContentRendered(EventArgs.Empty);
+                                       Window thisRef = (Window)arg;
+                                       thisRef._contentRenderedCallback = null;
+                                       thisRef.OnContentRendered(EventArgs.Empty);
                                        return null;
                                    },
                                    this);
@@ -3582,12 +3594,11 @@ namespace System.Windows
         IntPtr GetCurrentMonitorFromMousePosition()
         {
             // center on the screen on which the mouse is on
-            NativeMethods.POINT pt = new NativeMethods.POINT();
+            NativeMethods.POINT pt = default;
 
-            UnsafeNativeMethods.TryGetCursorPos(pt);
+            UnsafeNativeMethods.TryGetCursorPos(ref pt);
 
-            NativeMethods.POINTSTRUCT ptStruct = new NativeMethods.POINTSTRUCT(pt.x, pt.y);
-            return SafeNativeMethods.MonitorFromPoint(ptStruct, NativeMethods.MONITOR_DEFAULTTONEAREST);
+            return SafeNativeMethods.MonitorFromPoint(pt, NativeMethods.MONITOR_DEFAULTTONEAREST);
         }
 
         // <summary>
@@ -4699,7 +4710,11 @@ namespace System.Windows
 
         private bool WmGetMinMaxInfo( IntPtr lParam )
         {
-            NativeMethods.MINMAXINFO mmi = (NativeMethods.MINMAXINFO)UnsafeNativeMethods.PtrToStructure( lParam, typeof(NativeMethods.MINMAXINFO));
+            NativeMethods.MINMAXINFO mmi;
+            unsafe
+            {
+                mmi = *(NativeMethods.MINMAXINFO*)lParam;
+            }
 
             //
             // For Bug 1380569: Window SizeToContent does not work after changing Max size properties
@@ -4760,7 +4775,10 @@ namespace System.Windows
 
                 // Notify Win32 of the new Min/Max value for this HWND.
 
-                Marshal.StructureToPtr(mmi, lParam, true);
+                unsafe
+                {
+                    *(NativeMethods.MINMAXINFO*)lParam = mmi;
+                }
             }
 
             return true;
@@ -7277,7 +7295,7 @@ namespace System.Windows
                 private NativeMethods.POINT GetWindowScreenLocation(FlowDirection flowDirection)
                 {
                     Debug.Assert(IsSourceWindowNull != true, "IsSourceWindowNull cannot be true here");
-                    NativeMethods.POINT pt = new NativeMethods.POINT(0, 0);
+                    NativeMethods.POINT pt = default;
                     if (flowDirection == FlowDirection.RightToLeft)
                     {
                         NativeMethods.RECT rc = new NativeMethods.RECT(0, 0, 0, 0);
@@ -7288,7 +7306,7 @@ namespace System.Windows
                         // note that we use rc.right here for the RTL case and client to screen that point
                         pt = new NativeMethods.POINT(rc.right, rc.top);
                     }
-                    UnsafeNativeMethods.ClientToScreen(new HandleRef(this, _sourceWindow.CriticalHandle), pt);
+                    UnsafeNativeMethods.ClientToScreen(new HandleRef(this, _sourceWindow.CriticalHandle), ref pt);
 
                     return pt;
                 }

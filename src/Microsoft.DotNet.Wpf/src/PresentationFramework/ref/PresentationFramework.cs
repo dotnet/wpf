@@ -2351,6 +2351,7 @@ namespace System.Windows.Automation.Peers
     public abstract partial class ContentTextAutomationPeer : System.Windows.Automation.Peers.FrameworkContentElementAutomationPeer
     {
         protected ContentTextAutomationPeer(System.Windows.FrameworkContentElement owner) : base (default(System.Windows.FrameworkContentElement)) { }
+        public virtual void RaiseActiveTextPositionChangedEvent(System.Windows.Documents.TextPointer rangeStart, System.Windows.Documents.TextPointer rangeEnd) { }
     }
     public partial class ContextMenuAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
@@ -2403,6 +2404,7 @@ namespace System.Windows.Automation.Peers
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override System.Windows.Point GetClickablePointCore() { throw null; }
+        protected override System.Windows.Automation.AutomationHeadingLevel GetHeadingLevelCore() { throw null; }
         protected override string GetHelpTextCore() { throw null; }
         protected override string GetItemStatusCore() { throw null; }
         protected override string GetItemTypeCore() { throw null; }
@@ -2417,6 +2419,7 @@ namespace System.Windows.Automation.Peers
         protected override bool HasKeyboardFocusCore() { throw null; }
         protected override bool IsContentElementCore() { throw null; }
         protected override bool IsControlElementCore() { throw null; }
+        protected override bool IsDialogCore() { throw null; }
         protected override bool IsEnabledCore() { throw null; }
         protected override bool IsKeyboardFocusableCore() { throw null; }
         protected override bool IsOffscreenCore() { throw null; }
@@ -2540,6 +2543,7 @@ namespace System.Windows.Automation.Peers
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override System.Windows.Point GetClickablePointCore() { throw null; }
+        protected override System.Windows.Automation.AutomationHeadingLevel GetHeadingLevelCore() { throw null; }
         protected override string GetHelpTextCore() { throw null; }
         protected override string GetItemStatusCore() { throw null; }
         protected override string GetItemTypeCore() { throw null; }
@@ -2554,6 +2558,7 @@ namespace System.Windows.Automation.Peers
         protected override bool HasKeyboardFocusCore() { throw null; }
         protected override bool IsContentElementCore() { throw null; }
         protected override bool IsControlElementCore() { throw null; }
+        protected override bool IsDialogCore() { throw null; }
         protected override bool IsEnabledCore() { throw null; }
         protected override bool IsKeyboardFocusableCore() { throw null; }
         protected override bool IsOffscreenCore() { throw null; }
@@ -2795,6 +2800,7 @@ namespace System.Windows.Automation.Peers
         protected override System.Windows.Rect GetBoundingRectangleCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override System.Windows.Point GetClickablePointCore() { throw null; }
+        protected override System.Windows.Automation.AutomationHeadingLevel GetHeadingLevelCore() { throw null; }
         protected override string GetHelpTextCore() { throw null; }
         protected override string GetItemStatusCore() { throw null; }
         protected override string GetItemTypeCore() { throw null; }
@@ -2808,6 +2814,7 @@ namespace System.Windows.Automation.Peers
         protected override bool HasKeyboardFocusCore() { throw null; }
         protected override bool IsContentElementCore() { throw null; }
         protected override bool IsControlElementCore() { throw null; }
+        protected override bool IsDialogCore() { throw null; }
         protected override bool IsEnabledCore() { throw null; }
         protected override bool IsKeyboardFocusableCore() { throw null; }
         protected override bool IsOffscreenCore() { throw null; }
@@ -3092,6 +3099,7 @@ namespace System.Windows.Automation.Peers
     {
         protected TextAutomationPeer(System.Windows.FrameworkElement owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override string GetNameCore() { throw null; }
+        public virtual void RaiseActiveTextPositionChangedEvent(System.Windows.Documents.TextPointer rangeStart, System.Windows.Documents.TextPointer rangeEnd) { }
     }
     public partial class TextBlockAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
@@ -7215,6 +7223,7 @@ namespace System.Windows.Controls
         public static readonly System.Windows.DependencyProperty PlacementProperty;
         public static readonly System.Windows.DependencyProperty PlacementRectangleProperty;
         public static readonly System.Windows.DependencyProperty PlacementTargetProperty;
+        public static readonly System.Windows.DependencyProperty ShowsToolTipOnKeyboardFocusProperty;
         public static readonly System.Windows.DependencyProperty StaysOpenProperty;
         public static readonly System.Windows.DependencyProperty VerticalOffsetProperty;
         public ToolTip() { }
@@ -7241,6 +7250,9 @@ namespace System.Windows.Controls
         [System.ComponentModel.CategoryAttribute("Layout")]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public System.Windows.UIElement PlacementTarget { get { throw null; } set { } }
+        [System.ComponentModel.BindableAttribute(true)]
+        [System.ComponentModel.CategoryAttribute("Behavior")]
+        public bool? ShowsToolTipOnKeyboardFocus { get { throw null; } set { } }
         [System.ComponentModel.BindableAttribute(true)]
         [System.ComponentModel.CategoryAttribute("Behavior")]
         public bool StaysOpen { get { throw null; } set { } }
@@ -7275,6 +7287,7 @@ namespace System.Windows.Controls
         public static readonly System.Windows.DependencyProperty PlacementTargetProperty;
         public static readonly System.Windows.DependencyProperty ShowDurationProperty;
         public static readonly System.Windows.DependencyProperty ShowOnDisabledProperty;
+        public static readonly System.Windows.DependencyProperty ShowsToolTipOnKeyboardFocusProperty;
         public static readonly System.Windows.RoutedEvent ToolTipClosingEvent;
         public static readonly System.Windows.RoutedEvent ToolTipOpeningEvent;
         public static readonly System.Windows.DependencyProperty ToolTipProperty;
@@ -7304,6 +7317,7 @@ namespace System.Windows.Controls
         public static int GetShowDuration(System.Windows.DependencyObject element) { throw null; }
         [System.Windows.AttachedPropertyBrowsableForTypeAttribute(typeof(System.Windows.DependencyObject))]
         public static bool GetShowOnDisabled(System.Windows.DependencyObject element) { throw null; }
+        public static bool? GetShowsToolTipOnKeyboardFocus(System.Windows.DependencyObject element) { throw null; }
         [System.Windows.AttachedPropertyBrowsableForTypeAttribute(typeof(System.Windows.DependencyObject))]
         public static object GetToolTip(System.Windows.DependencyObject element) { throw null; }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.LengthConverter))]
@@ -7321,6 +7335,7 @@ namespace System.Windows.Controls
         public static void SetPlacementTarget(System.Windows.DependencyObject element, System.Windows.UIElement value) { }
         public static void SetShowDuration(System.Windows.DependencyObject element, int value) { }
         public static void SetShowOnDisabled(System.Windows.DependencyObject element, bool value) { }
+        public static void SetShowsToolTipOnKeyboardFocus(System.Windows.DependencyObject element, bool? value) { }
         public static void SetToolTip(System.Windows.DependencyObject element, object value) { }
         public static void SetVerticalOffset(System.Windows.DependencyObject element, double value) { }
     }

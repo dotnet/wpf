@@ -802,7 +802,7 @@ namespace System.Windows.Input
             return GetParentUIElementFromContentElement(ce, ref ichParent);
         }
 
-        private static UIElement GetParentUIElementFromContentElement(ContentElement ce, ref IContentHost ichParent)
+        internal static UIElement GetParentUIElementFromContentElement(ContentElement ce, ref IContentHost ichParent)
         {
             if (ce == null)
                 return null;

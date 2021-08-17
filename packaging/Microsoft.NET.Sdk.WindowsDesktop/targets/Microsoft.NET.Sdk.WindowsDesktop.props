@@ -162,13 +162,12 @@
   </ItemGroup>
 
   <!--
-    Workaround: https://github.com/microsoft/msbuild/issues/4948
-    Disable .NET Framework's inbox WinFX targets when using the SDK, since, we really don't use it's build logic
-    and is superseded by 'WindowsDesktop' SDK that provides it's own WinFX for both NETFX and CoreCLR targets.
-    Make it opt-out, just in case, if something fails or we don't want to use 'WindowsDesktop' SDK's version.
+    Import Windows Forms props.
+    These come via the Windows Forms transport package, that can be found under
+    https://github.com/dotnet/winforms/tree/main/pkg/Microsoft.Private.Winforms/sdk
   -->
-  <PropertyGroup>
-    <ImportFrameworkWinFXTargets Condition="'$(ImportFrameworkWinFXTargets)' == ''">false</ImportFrameworkWinFXTargets>
-  </PropertyGroup>
+  <Import Project="Microsoft.NET.Sdk.WindowsDesktop.WindowsForms.props" />
+
+  <Import Project="Microsoft.NET.Sdk.WindowsDesktop.WPF.props" />
 
 </Project>

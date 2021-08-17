@@ -152,6 +152,16 @@
     <NetSdkWarning ResourceName="WindowsDesktopFrameworkRequiresVersion30" />
   </Target>
 
+  <!--
+    Import Windows Forms targets.
+    These come via the Windows Forms transport package, that can be found under
+    https://github.com/dotnet/winforms/tree/main/pkg/Microsoft.Private.Winforms/sdk
+  -->
+  <Import Project="Microsoft.NET.Sdk.WindowsDesktop.WindowsForms.targets" Condition="'$(UseWindowsForms)' == 'true'"/>
+
+  <!-- Import WPF-specific targets -->
+  <Import Project="Microsoft.NET.Sdk.WindowsDesktop.WPF.targets" Condition="'$(UseWPF)' == 'true'"/>
+
   <!-- Import WPF Build logic only when we don't import NETFX's WinFX targets -->
   <Import Project="Microsoft.WinFX.targets" Condition="'$(ImportFrameworkWinFXTargets)' != 'true'"/>
 

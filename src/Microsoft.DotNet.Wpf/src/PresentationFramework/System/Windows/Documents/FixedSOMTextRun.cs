@@ -153,13 +153,14 @@ namespace System.Windows.Documents
                 && String.IsNullOrEmpty(glyphs.CaretStops)
                 && FixedTextBuilder.MostlyRTL(s))
             {
-                char[] chars = new char[run.Text.Length];
-                for (int i=0; i<run.Text.Length; i++)
-                {
-                    chars[i] = run.Text[run.Text.Length - 1 - i];
-                }
                 run._isReversed = true;
-                run.Text = new string(chars);
+                run.Text = string.Create(run.Text.Length, run.Text, (destination, runText) =>
+                {
+                    for (int i = 0; i < destination.Length; i++)
+                    {
+                        destination[i] = runText[runText.Length - 1 - i];
+                    }
+                });
             }
 
             if (s == "" && glyphs.Indices != null && glyphs.Indices.Length > 0)

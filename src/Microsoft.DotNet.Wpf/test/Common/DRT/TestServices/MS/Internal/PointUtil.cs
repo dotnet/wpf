@@ -153,7 +153,7 @@ namespace MS.Internal
                 ptScreen.x = rcClient.right - ptScreen.x;
             }
 
-            UnsafeNativeMethods.ClientToScreen( handleRef , ptScreen);
+            UnsafeNativeMethods.ClientToScreen( handleRef , ref ptScreen);
             
             return new Point(ptScreen.x, ptScreen.y);
         }
@@ -175,7 +175,7 @@ namespace MS.Internal
             
             // Convert the point from screen coordinates back to client coordinates.
             NativeMethods.POINT ptClient = new NativeMethods.POINT((int)ptScreen.X, (int)ptScreen.Y);
-            SafeNativeMethods.ScreenToClient(handleRef , ptClient);
+            SafeNativeMethods.ScreenToClient(handleRef , ref ptClient);
 
             // MITIGATION: WIN32_AND_AVALON_RTL
             //

@@ -3,6 +3,12 @@
     <RepositoryName>wpf</RepositoryName>
     <WindowsDesktopARM64Support>true</WindowsDesktopARM64Support>
   </PropertyGroup>
+
+  <!-- Disable global usings, as those require 'preview' language version -->
+  <PropertyGroup>
+    <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
+  </PropertyGroup>
+
   <!-- Normalize $(TestWpfArcadeSdkPath) by appending a '\' to it if one is missing -->
   <PropertyGroup Condition="'$(TestWpfArcadeSdkPath)'!=''">
     <WpfArcadeSdkPath>$(TestWpfArcadeSdkPath)</WpfArcadeSdkPath>
@@ -12,14 +18,14 @@
   <PropertyGroup Condition="'$(TestWpfArcadeSdkPath)'=='' And Exists('$(MSBuildThisFileDirectory)eng\WpfArcadeSdk\')">
     <WpfArcadeSdkPath>$(MSBuildThisFileDirectory)eng\WpfArcadeSdk\</WpfArcadeSdkPath>
   </PropertyGroup>
+
   <!-- Select Sdk.props from test location or eng\WpfArcadeSdk\. If neither exists, then fall back to the use of one 
       obtained using MSBuild's Sdk resolver -->
   <PropertyGroup Condition="Exists('$(WpfArcadeSdkPath)')">
     <WpfArcadeSdkProps>$(WpfArcadeSdkPath)Sdk\Sdk.props</WpfArcadeSdkProps>
     <WpfArcadeSdkTargets>$(WpfArcadeSdkPath)Sdk\Sdk.targets</WpfArcadeSdkTargets>
   </PropertyGroup>
-  
-  
+
   <Import Project="$(WpfArcadeSdkProps)"
           Condition="Exists('$(WpfArcadeSdkProps)') And Exists('$(WpfArcadeSdkTargets)')"/>
 

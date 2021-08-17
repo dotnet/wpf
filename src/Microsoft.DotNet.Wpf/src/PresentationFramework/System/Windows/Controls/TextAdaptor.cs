@@ -284,6 +284,35 @@ namespace MS.Internal.Automation
             }
         }
 
+        // convert a range given by TextPointers to a UIA TextRange
+        // (helper method for raising ActiveTextPositionChanged event)
+        internal ITextRangeProvider TextRangeFromTextPointers(ITextPointer rangeStart, ITextPointer rangeEnd)
+        {
+            // special case for the entire range
+            if (rangeStart == null && rangeEnd == null)
+                return null;
+
+            // map null into the appropriate endpoint
+            rangeStart = rangeStart ?? _textContainer.Start;
+            rangeEnd = rangeEnd ?? _textContainer.End;
+
+            // if either pointer belongs to the wrong tree, return null (meaning "entire range")
+            if (rangeStart.TextContainer != _textContainer || rangeEnd.TextContainer != _textContainer)
+                return null;
+
+            // swap the pointers, if necessary
+            if (rangeStart.CompareTo(rangeEnd) > 0)
+            {
+                ITextPointer temp = rangeStart;
+                rangeStart = rangeEnd;
+                rangeEnd = rangeStart;
+            }
+
+            // return the resulting range, wrapped so that it's ready for use by UIA
+            ITextRangeProvider textRange = new TextRangeAdaptor(this, rangeStart, rangeEnd, _textPeer);
+            return TextRangeProviderWrapper.WrapArgument(textRange, _textPeer);
+        }
+
         #endregion Internal Methods
 
         //-------------------------------------------------------------------

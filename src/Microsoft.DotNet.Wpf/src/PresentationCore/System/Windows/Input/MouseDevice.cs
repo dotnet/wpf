@@ -1736,7 +1736,7 @@ namespace System.Windows.Input
                             actions |= RawMouseActions.QueryCursor;
                         }
 
-                        RawMouseActions[] ButtonPressActions =
+                        ReadOnlySpan<RawMouseActions> ButtonPressActions = stackalloc RawMouseActions[5]
                         {
                             RawMouseActions.Button1Press,
                             RawMouseActions.Button2Press,
@@ -1745,7 +1745,7 @@ namespace System.Windows.Input
                             RawMouseActions.Button5Press
                         };
 
-                        RawMouseActions[] ButtonReleaseActions =
+                        ReadOnlySpan<RawMouseActions> ButtonReleaseActions = stackalloc RawMouseActions[5]
                         {
                             RawMouseActions.Button1Release,
                             RawMouseActions.Button2Release,

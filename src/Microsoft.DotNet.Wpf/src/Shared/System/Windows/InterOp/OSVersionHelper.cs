@@ -50,6 +50,8 @@ namespace Microsoft.Internal.Interop
 
         internal static bool IsOsWindows10RS5OrGreater { get; set; }
 
+        internal static bool IsOsWindows10RS4OrGreater { get; set; }
+
         internal static bool IsOsWindows10RS3OrGreater { get; set; }
 
         internal static bool IsOsWindows10RS2OrGreater { get; set; }
@@ -93,6 +95,8 @@ namespace Microsoft.Internal.Interop
         static OSVersionHelper()
         {
             IsOsWindows10RS5OrGreater = IsWindows10RS5OrGreater();
+
+            IsOsWindows10RS4OrGreater = IsWindows10RS4OrGreater();
 
             IsOsWindows10RS3OrGreater = IsWindows10RS3OrGreater();
 
@@ -138,6 +142,10 @@ namespace Microsoft.Internal.Interop
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         static extern bool IsWindows10RS5OrGreater();
+
+        [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        static extern bool IsWindows10RS4OrGreater();
 
         [DllImport(DllImport.PresentationNative, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
@@ -221,6 +229,8 @@ namespace Microsoft.Internal.Interop
             {
                 case OperatingSystemVersion.Windows10RS5:
                     return IsOsWindows10RS5OrGreater;
+                case OperatingSystemVersion.Windows10RS4:
+                    return IsOsWindows10RS4OrGreater;
                 case OperatingSystemVersion.Windows10RS3:
                     return IsOsWindows10RS3OrGreater;
                 case OperatingSystemVersion.Windows10RS2:
@@ -259,6 +269,10 @@ namespace Microsoft.Internal.Interop
             if (IsOsWindows10RS5OrGreater)
             {
                 return OperatingSystemVersion.Windows10RS5;
+            }
+            else if (IsOsWindows10RS4OrGreater)
+            {
+                return OperatingSystemVersion.Windows10RS4;
             }
             else if (IsOsWindows10RS3OrGreater)
             {

@@ -209,6 +209,10 @@ namespace System.Windows.Automation.Peers
         InputDiscarded,
         ///
         LiveRegionChanged,
+        ///
+        Notification,
+        ///
+        ActiveTextPositionChanged,
     }
 
 
@@ -367,6 +371,29 @@ namespace System.Windows.Automation.Peers
                         AutomationElementIdentifiers.AsyncContentLoadedEvent,
                         provider,
                         args);
+                }
+            }
+        }
+
+        /// <summary>
+        /// This method is called by implementation of the peer to raise the automation "notification" event
+        /// </summary>
+        // Never inline, as we don't want to unnecessarily link the automation DLL.
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+        public void RaiseNotificationEvent(AutomationNotificationKind notificationKind,
+                                              AutomationNotificationProcessing notificationProcessing,
+                                              string displayString,
+                                              string activityId)
+        {
+            if (EventMap.HasRegisteredEvent(AutomationEvents.Notification))
+            {
+                IRawElementProviderSimple provider = ProviderFromPeer(this);
+                if (provider != null)
+                {
+                    AutomationInteropProvider.RaiseAutomationEvent(
+                        AutomationElementIdentifiers.NotificationEvent,
+                        provider,
+                        new NotificationEventArgs(notificationKind, notificationProcessing, displayString, activityId));
                 }
             }
         }
@@ -653,6 +680,11 @@ namespace System.Windows.Automation.Peers
         abstract protected bool IsControlElementCore();
 
         ///
+        virtual protected bool IsDialogCore(){
+            return false;
+        }
+
+        ///
         abstract protected AutomationPeer GetLabeledByCore();
 
         ///
@@ -703,6 +735,13 @@ namespace System.Windows.Automation.Peers
             return AutomationProperties.AutomationPositionInSetDefault;
         }
 
+        /// <summary>
+        /// Override this method to provide UIAutomation with the heading level of this element.
+        /// </summary>
+        virtual protected AutomationHeadingLevel GetHeadingLevelCore()
+        {
+            return AutomationHeadingLevel.None;
+        }
 
         //
         // INTERNAL STUFF - NOT OVERRIDABLE
@@ -1264,6 +1303,104 @@ namespace System.Windows.Automation.Peers
         }
 
         /// <summary>
+        /// Attempt to get the value for the HeadingLevel property.
+        /// </summary>
+        /// <remarks>
+        /// This public call cannot be attempted if another public call is in progress.
+        /// </remarks>
+        /// <returns>
+        /// The value for the HeadingLevel property.
+        /// </returns>
+        public AutomationHeadingLevel GetHeadingLevel()
+        {
+            AutomationHeadingLevel result = AutomationHeadingLevel.None;
+
+            if (_publicCallInProgress)
+                throw new InvalidOperationException(SR.Get(SRID.Automation_RecursivePublicCall));
+
+            try
+            {
+                _publicCallInProgress = true;
+                result = GetHeadingLevelCore();
+            }
+            finally
+            {
+                _publicCallInProgress = false;
+            }
+            return result;
+        }
+
+
+        private enum HeadingLevel
+        {
+            None = 80050,
+            Level1,
+            Level2,
+            Level3,
+            Level4,
+            Level5,
+            Level6,
+            Level7,
+            Level8,
+            Level9,
+        }
+        private static HeadingLevel ConvertHeadingLevelToId(AutomationHeadingLevel value){
+            switch(value)
+            {
+                case AutomationHeadingLevel.None:
+                    return HeadingLevel.None;
+                case AutomationHeadingLevel.Level1:
+                    return HeadingLevel.Level1;
+                case AutomationHeadingLevel.Level2:
+                    return HeadingLevel.Level2;
+                case AutomationHeadingLevel.Level3:
+                    return HeadingLevel.Level3;
+                case AutomationHeadingLevel.Level4:
+                    return HeadingLevel.Level4;
+                case AutomationHeadingLevel.Level5:
+                    return HeadingLevel.Level5;
+                case AutomationHeadingLevel.Level6:
+                    return HeadingLevel.Level6;
+                case AutomationHeadingLevel.Level7:
+                    return HeadingLevel.Level7;
+                case AutomationHeadingLevel.Level8:
+                    return HeadingLevel.Level8;
+                case AutomationHeadingLevel.Level9:
+                    return HeadingLevel.Level9;
+                default:
+                    return HeadingLevel.None;
+            }
+        }
+
+
+        /// <summary>
+        /// Attempt to get the value for the IsDialog property.
+        /// </summary>
+        /// <remarks>
+        /// This public call cannot be attempted if another public call is in progress.
+        /// </remarks>
+        /// <returns>
+        /// The value for the IsDialog property.
+        /// </returns>
+        public bool IsDialog()
+        {
+            bool result = false;
+            if(_publicCallInProgress)
+                throw new InvalidOperationException(SR.Get(SRID.Automation_RecursivePublicCall));
+
+            try
+            {
+                _publicCallInProgress = true;
+                result = IsDialogCore();
+            }
+            finally
+            {
+                _publicCallInProgress = false;
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Attempt to get the value for the PositionInSet property.
         /// </summary>
         /// <remarks>
@@ -1756,12 +1893,12 @@ namespace System.Windows.Automation.Peers
 #endif
         }
 
-        // InvalidateLimit – lower bound for  raising ChildrenInvalidated StructureChange event
+        // InvalidateLimit is the lower bound for raising ChildrenInvalidated StructureChange event
         internal void UpdateChildrenInternal(int invalidateLimit)
         {
             List<AutomationPeer> oldChildren = _children;
             List<AutomationPeer> addedChildren = null;
-            Hashtable ht = null;
+            HashSet<AutomationPeer> hs = null;
 
             _childrenValid = false;
             EnsureChildren();
@@ -1770,14 +1907,13 @@ namespace System.Windows.Automation.Peers
             if (!EventMap.HasRegisteredEvent(AutomationEvents.StructureChanged))
                 return;
 
-            //store old children in a hashtable
+            //store old children in a hashset
             if(oldChildren != null)
             {
-                ht =  new Hashtable();
+                hs = new HashSet<AutomationPeer>();
                 for(int count = oldChildren.Count, i = 0; i < count; i++)
                 {
-                    if(!ht.Contains(oldChildren[i]))
-                        ht.Add(oldChildren[i], null);
+                    hs.Add(oldChildren[i]);
                 }
             }
 
@@ -1790,9 +1926,9 @@ namespace System.Windows.Automation.Peers
                 for(int count = _children.Count, i = 0; i < count; i++)
                 {
                     AutomationPeer child = _children[i];
-                    if(ht != null && ht.ContainsKey(child))
+                    if(hs != null && hs.Contains(child))
                     {
-                        ht.Remove(child); //same child, nothing to notify
+                        hs.Remove(child); //same child, nothing to notify
                     }
                     else
                     {
@@ -1808,9 +1944,9 @@ namespace System.Windows.Automation.Peers
                 }
             }
 
-            //now the ht only has "removed" children. If the count does not yet
+            //now the hs only has "removed" children. If the count does not yet
             //calls for "bulk" notification, use per-child notification, otherwise use "bulk"
-            int removedCount = (ht == null ? 0 : ht.Count);
+            int removedCount = (hs == null ? 0 : hs.Count);
 
             if(removedCount + addedCount > invalidateLimit) //bilk invalidation
             {
@@ -1842,11 +1978,9 @@ namespace System.Windows.Automation.Peers
                     IRawElementProviderSimple provider = ProviderFromPeerNoDelegation(this);
                     if (provider != null)
                     {
-                        //ht contains removed children by now
-                        foreach (object key in ht.Keys)
+                        //hs contains removed children by now
+                        foreach (AutomationPeer removedChild in hs)
                         {
-                            AutomationPeer removedChild = (AutomationPeer)key;
-
                             int[] rid = removedChild.GetRuntimeId();
 
                             AutomationInteropProvider.RaiseStructureChangedEvent(
@@ -1857,7 +1991,7 @@ namespace System.Windows.Automation.Peers
                 }
                 if (addedCount > 0)
                 {
-                    //ht contains removed children by now
+                    //hs contains removed children by now
                     foreach (AutomationPeer addedChild in addedChildren)
                     {
                         //for children added, provider is the child itself
@@ -1992,7 +2126,7 @@ namespace System.Windows.Automation.Peers
 
         /// <summary>
         /// propagate the new value for AncestorsInvalid through the parent chain,
-        /// use EventSource (wrapper) peers whenever available as it’s the one connected to the tree.
+        /// use EventSource (wrapper) peers whenever available as it's the one connected to the tree.
         /// </summary>
         internal void InvalidateAncestorsRecursive()
         {
@@ -2064,6 +2198,10 @@ namespace System.Windows.Automation.Peers
             if (getProperty != null)
             {
                 result = getProperty(this);
+                if(AutomationElementIdentifiers.HeadingLevelProperty != null && propertyId == AutomationElementIdentifiers.HeadingLevelProperty.Id)
+                {
+                    result = ConvertHeadingLevelToId((AutomationHeadingLevel)result);
+                }
             }
 
             return result;
@@ -2315,6 +2453,14 @@ namespace System.Windows.Automation.Peers
             {
                 s_propertyInfo[AutomationElementIdentifiers.PositionInSetProperty.Id] = new GetProperty(GetPositionInSet);
             }
+            if (AutomationElementIdentifiers.HeadingLevelProperty != null)
+            { 
+                s_propertyInfo[AutomationElementIdentifiers.HeadingLevelProperty.Id] = new GetProperty(GetHeadingLevel);
+            }
+            if (AutomationElementIdentifiers.IsDialogProperty != null)
+            {
+                s_propertyInfo[AutomationElementIdentifiers.IsDialogProperty.Id] = new GetProperty(IsDialog);
+            }
         }
 
         private delegate object WrapObject(AutomationPeer peer, object iface);
@@ -2366,6 +2512,8 @@ namespace System.Windows.Automation.Peers
         private static object GetControllerFor(AutomationPeer peer)         {   return peer.GetControllerForProviderArray(); }
         private static object GetSizeOfSet(AutomationPeer peer)             {   return peer.GetSizeOfSet(); }
         private static object GetPositionInSet(AutomationPeer peer)         {   return peer.GetPositionInSet(); }
+        private static object GetHeadingLevel(AutomationPeer peer)          {   return peer.GetHeadingLevel(); }
+        private static object IsDialog(AutomationPeer peer)                 {   return peer.IsDialog(); }
 
         private static Hashtable s_patternInfo;
         private static Hashtable s_propertyInfo;

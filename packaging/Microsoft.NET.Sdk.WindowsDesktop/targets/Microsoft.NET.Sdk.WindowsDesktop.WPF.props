@@ -1,0 +1,13 @@
+<Project>
+  <!--
+    Generates implicit global namespace imports file <projectname>.ImplicitGlobalNamespaceImports.cs.
+  -->
+  <ItemGroup Condition="'$(DisableImplicitNamespaceImports_WPF)' != 'true'
+                        and '$(TargetFrameworkIdentifier)' == '.NETCoreApp'
+                        and $([MSBuild]::VersionGreaterThanOrEquals($(_TargetFrameworkVersionWithoutV), '6.0'))
+                        and '$(UseWPF)' == 'true'">
+    <Import Remove="System.IO" />
+    <Import Remove="System.Net.Http" />
+  </ItemGroup>
+
+</Project>

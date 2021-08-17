@@ -1,5 +1,10 @@
 namespace System.Windows.Automation
 {
+    public sealed partial class ActiveTextPositionChangedEventArgs : System.Windows.Automation.AutomationEventArgs
+    {
+        public ActiveTextPositionChangedEventArgs(System.Windows.Automation.Provider.ITextRangeProvider textRangeProvider) : base(default(System.Windows.Automation.AutomationEvent)) { }
+        public System.Windows.Automation.Provider.ITextRangeProvider TextRange { get { throw null; } }
+    }
     public sealed partial class AsyncContentLoadedEventArgs : System.Windows.Automation.AutomationEventArgs
     {
         public AsyncContentLoadedEventArgs(System.Windows.Automation.AsyncContentLoadedState asyncContentState, double percentComplete) : base (default(System.Windows.Automation.AutomationEvent)) { }
@@ -16,6 +21,7 @@ namespace System.Windows.Automation
     {
         public static readonly System.Windows.Automation.AutomationProperty AcceleratorKeyProperty;
         public static readonly System.Windows.Automation.AutomationProperty AccessKeyProperty;
+        public static readonly System.Windows.Automation.AutomationEvent ActiveTextPositionChangedEvent;
         public static readonly System.Windows.Automation.AutomationEvent AsyncContentLoadedEvent;
         public static readonly System.Windows.Automation.AutomationEvent AutomationFocusChangedEvent;
         public static readonly System.Windows.Automation.AutomationProperty AutomationIdProperty;
@@ -28,9 +34,11 @@ namespace System.Windows.Automation
         public static readonly System.Windows.Automation.AutomationProperty CultureProperty;
         public static readonly System.Windows.Automation.AutomationProperty FrameworkIdProperty;
         public static readonly System.Windows.Automation.AutomationProperty HasKeyboardFocusProperty;
+        public static readonly System.Windows.Automation.AutomationProperty HeadingLevelProperty;
         public static readonly System.Windows.Automation.AutomationProperty HelpTextProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsContentElementProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsControlElementProperty;
+        public static readonly System.Windows.Automation.AutomationProperty IsDialogProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsDockPatternAvailableProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsEnabledProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsExpandCollapsePatternAvailableProperty;
@@ -68,6 +76,7 @@ namespace System.Windows.Automation
         public static readonly System.Windows.Automation.AutomationEvent MenuOpenedEvent;
         public static readonly System.Windows.Automation.AutomationProperty NameProperty;
         public static readonly System.Windows.Automation.AutomationProperty NativeWindowHandleProperty;
+        public static readonly System.Windows.Automation.AutomationEvent NotificationEvent;
         public static readonly object NotSupported;
         public static readonly System.Windows.Automation.AutomationProperty OrientationProperty;
         public static readonly System.Windows.Automation.AutomationProperty PositionInSetProperty;
@@ -97,6 +106,22 @@ namespace System.Windows.Automation
         public int CompareTo(object obj) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
+    }
+    public enum AutomationNotificationKind
+    {
+        ItemAdded = 0,
+        ItemRemoved = 1,
+        ActionCompleted = 2,
+        ActionAborted = 3,
+        Other = 4,
+    }
+    public enum AutomationNotificationProcessing
+    {
+        ImportantAll = 0,
+        ImportantMostRecent = 1,
+        All = 2,
+        MostRecent = 3,
+        CurrentThenMostRecent = 4,
     }
     public partial class AutomationPattern : System.Windows.Automation.AutomationIdentifier
     {
@@ -249,6 +274,14 @@ namespace System.Windows.Automation
         public NoClickablePointException(string message) { }
         public NoClickablePointException(string message, System.Exception innerException) { }
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+    }
+    public sealed partial class NotificationEventArgs : System.Windows.Automation.AutomationEventArgs
+    {
+        public NotificationEventArgs(System.Windows.Automation.AutomationNotificationKind notificationKind, System.Windows.Automation.AutomationNotificationProcessing notificationProcessing, string displayString, string activityId) : base(default(System.Windows.Automation.AutomationEvent)) { }
+        public string ActivityId { get { throw null; } }
+        public string DisplayString { get { throw null; } }
+        public System.Windows.Automation.AutomationNotificationKind NotificationKind { get { throw null; } }
+        public System.Windows.Automation.AutomationNotificationProcessing NotificationProcessing { get { throw null; } }
     }
     public enum OrientationType
     {
@@ -478,6 +511,47 @@ namespace System.Windows.Automation
         Normal = 0,
         Maximized = 1,
         Minimized = 2,
+    }
+}
+namespace System.Windows.Automation.Provider
+{
+    public partial interface IRawElementProviderSimple
+    {
+        System.Windows.Automation.Provider.IRawElementProviderSimple HostRawElementProvider { get; }
+        System.Windows.Automation.Provider.ProviderOptions ProviderOptions { get; }
+        object GetPatternProvider(int patternId);
+        object GetPropertyValue(int propertyId);
+    }
+    public partial interface ITextRangeProvider
+    {
+        void AddToSelection();
+        System.Windows.Automation.Provider.ITextRangeProvider Clone();
+        bool Compare(System.Windows.Automation.Provider.ITextRangeProvider range);
+        int CompareEndpoints(System.Windows.Automation.Text.TextPatternRangeEndpoint endpoint, System.Windows.Automation.Provider.ITextRangeProvider targetRange, System.Windows.Automation.Text.TextPatternRangeEndpoint targetEndpoint);
+        void ExpandToEnclosingUnit(System.Windows.Automation.Text.TextUnit unit);
+        System.Windows.Automation.Provider.ITextRangeProvider FindAttribute(int attribute, object value, bool backward);
+        System.Windows.Automation.Provider.ITextRangeProvider FindText(string text, bool backward, bool ignoreCase);
+        object GetAttributeValue(int attribute);
+        double[] GetBoundingRectangles();
+        System.Windows.Automation.Provider.IRawElementProviderSimple[] GetChildren();
+        System.Windows.Automation.Provider.IRawElementProviderSimple GetEnclosingElement();
+        string GetText(int maxLength);
+        int Move(System.Windows.Automation.Text.TextUnit unit, int count);
+        void MoveEndpointByRange(System.Windows.Automation.Text.TextPatternRangeEndpoint endpoint, System.Windows.Automation.Provider.ITextRangeProvider targetRange, System.Windows.Automation.Text.TextPatternRangeEndpoint targetEndpoint);
+        int MoveEndpointByUnit(System.Windows.Automation.Text.TextPatternRangeEndpoint endpoint, System.Windows.Automation.Text.TextUnit unit, int count);
+        void RemoveFromSelection();
+        void ScrollIntoView(bool alignToTop);
+        void Select();
+    }
+    [System.FlagsAttribute]
+    public enum ProviderOptions
+    {
+        ClientSideProvider = 1,
+        ServerSideProvider = 2,
+        NonClientAreaProvider = 4,
+        OverrideProvider = 8,
+        ProviderOwnsSetFocus = 16,
+        UseComThreading = 32,
     }
 }
 namespace System.Windows.Automation.Text

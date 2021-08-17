@@ -98,18 +98,20 @@ installed, we can then simply reference those local binaries directly from the p
 
 ```xml
   <PropertyGroup>
-     <!-- Change this value based on where your local repo is located -->
-     <WpfRepoRoot>d:\dev\src\dotnet\wpf</WpfRepoRoot>
-     <!-- Change based on which assemblies you build (Release/Debug) -->
-     <WpfConfig>Debug</WpfConfig>
-     <!-- Publishing a self-contained app ensures our binaries are used. -->
-     <SelfContained>true</SelfContained>
+    <!-- Change this value based on where your local repo is located -->
+    <WpfRepoRoot>d:\dev\src\dotnet\wpf</WpfRepoRoot>
+    <!-- Change based on which assemblies you build (Release/Debug) -->
+    <WpfConfig>Debug</WpfConfig>
+    <WpfOuputFolder>Microsoft.DotNet.Wpf.GitHub.Debug</WpfOuputFolder>
+    <!-- Publishing a self-contained app ensures our binaries are used. -->
+    <SelfContained>true</SelfContained>
     <!-- The runtime identifier needs to match the architecture you built WPF assemblies for. -->
     <RuntimeIdentifier>win-x86</RuntimeIdentifier>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="$(WpfRepoRoot)\artifacts\packaging\$(WpfConfig)\Microsoft.DotNet.Wpf.GitHub\lib\net6.0\*.dll" />
-    <ReferenceCopyLocalPaths Include="$(WpfRepoRoot)\artifacts\packaging\$(WpfConfig)\Microsoft.DotNet.Wpf.GitHub\lib\$(RuntimeIdentifier)\*.dll" />
+    <Reference Include="$(WpfRepoRoot)\artifacts\packaging\$(WpfConfig)\$(WpfOuputFolder)\lib\net6.0\*.dll" />
+    <ReferenceCopyLocalPaths Include="$(WpfRepoRoot)\artifacts\packaging\$(WpfConfig)\$(WpfOuputFolder)\lib\$(RuntimeIdentifier)\*.dll" />
+    <ReferenceCopyLocalPaths Include="$(WpfRepoRoot)\artifacts\packaging\$(WpfConfig)\$(WpfOuputFolder)\runtimes\$(RuntimeIdentifier)\native\*.dll" />
   </ItemGroup>
 ```
 

@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup>
+    <DisableImplicitNamespaceImports_WPF Condition="'$(DisableImplicitNamespaceImports_WPF)' == ''
+                   and '$(DisableImplicitNamespaceImports)' != 'true'">false</DisableImplicitNamespaceImports_WPF>
+  </PropertyGroup>
+
+</Project>

@@ -469,7 +469,7 @@
       </trans-unit>
       <trans-unit id="ForwardRefDirectives">
         <source>Attempt to reference named object(s) '{0}' which have not yet been defined. Forward references, or references to objects that contain forward references, are not supported on directives other than Key.</source>
-        <target state="translated">Произошла попытка сослаться на один или несколько именованных объектов "{0}",  которые еще не были определены. Ссылки вперед или ссылки на объекты, содержащие ссылки вперед, не поддерживаются для директив, отличных от Key.</target>
+        <target state="translated">Произошла попытка сослаться на один или несколько именованных объектов "{0}", которые еще не были определены. Ссылки вперед или ссылки на объекты, содержащие ссылки вперед, не поддерживаются для директив, отличных от Key.</target>
         <note />
       </trans-unit>
       <trans-unit id="Freezable_CantBeFrozen">

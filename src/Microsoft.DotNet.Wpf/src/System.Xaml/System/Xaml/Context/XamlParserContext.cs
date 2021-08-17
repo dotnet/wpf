@@ -78,16 +78,15 @@ namespace MS.Internal.Xaml.Context
         public override IEnumerable<NamespaceDeclaration> GetNamespacePrefixes()
         {
             XamlParserFrame frame = _stack.CurrentFrame;
-            Dictionary<string, string> keys = new Dictionary<string, string>();
+            HashSet<string> keys = new HashSet<string>();
             while (frame.Depth > 0)
             {
                 if (frame._namespaces != null)
                 {
                     foreach (NamespaceDeclaration namespaceDeclaration in frame.GetNamespacePrefixes())
                     {
-                        if (!keys.ContainsKey(namespaceDeclaration.Prefix))
+                        if (keys.Add(namespaceDeclaration.Prefix))
                         {
-                            keys.Add(namespaceDeclaration.Prefix, null);
                             yield return namespaceDeclaration;
                         }
                     }
@@ -99,9 +98,8 @@ namespace MS.Internal.Xaml.Context
             {
                 foreach (KeyValuePair<string, string> kvp in _prescopeNamespaces)
                 {
-                    if (!keys.ContainsKey(kvp.Key))
+                    if (keys.Add(kvp.Key))
                     {
-                        keys.Add(kvp.Key, null);
                         yield return new NamespaceDeclaration(kvp.Value, kvp.Key);
                     }
                 }

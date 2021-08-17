@@ -182,17 +182,13 @@ namespace MS.Internal.Documents
         {
             CheckDisposed();
 
-            // count is either 0 or 3
+            // count is either 0 or 1
             if (VisualChildrenCount != 0)
             {
                 switch (index)
                 {
                     case 0:
-                        return _dropShadowRight;
-                    case 1:
-                        return _dropShadowBottom;
-                    case 2:
-                        return _pageBorder;
+                        return _documentContainer;
                     default:
                         throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
                 }
@@ -215,7 +211,7 @@ namespace MS.Internal.Documents
             get
             {
                 if (!_disposed && hasAddedChildren)
-                    return 3;
+                    return 1;
                 else
                     return 0;
             }
@@ -233,12 +229,7 @@ namespace MS.Internal.Documents
 
             if (!hasAddedChildren)
             {
-                //Add the drop shadow
-                this.AddVisualChild(_dropShadowRight);
-                this.AddVisualChild(_dropShadowBottom);
-
-                //Add the page (inside the pageBorder)
-                this.AddVisualChild(_pageBorder);
+                this.AddVisualChild(_documentContainer);
 
                 hasAddedChildren = true;
             }
@@ -247,23 +238,16 @@ namespace MS.Internal.Documents
             //state of the ShowPageBorders property.
             if (ShowPageBorders)
             {
-                _pageBorder.BorderThickness = _pageBorderVisibleThickness;
-                _pageBorder.Background = Brushes.White;
-                _dropShadowRight.Opacity = _dropShadowOpacity;
-                _dropShadowBottom.Opacity = _dropShadowOpacity;
+                var key = new ComponentResourceKey(typeof(FrameworkElement), "DocumentGridPageContainerWithBorder");
+                _documentContainer.SetCurrentValue(StyleProperty, TryFindResource(key));
             }
             else
             {
-                _pageBorder.BorderThickness = _pageBorderInvisibleThickness;
-                _pageBorder.Background = Brushes.Transparent;
-                _dropShadowRight.Opacity = 0.0;
-                _dropShadowBottom.Opacity = 0.0;
+                _documentContainer.SetCurrentValue(StyleProperty, TryFindResource(typeof(ContentControl)));
             }
 
             //Measure our children.
-            _dropShadowRight.Measure(availableSize);
-            _dropShadowBottom.Measure(availableSize);
-            _pageBorder.Measure(availableSize);
+            _documentContainer.Measure(availableSize);
 
             //Set the Page Zoom on the DocumentPageView to the ratio between our measure constraint
             //and the actual size of the page; this will cause the DPV to scale our page appropriately.
@@ -283,26 +267,8 @@ namespace MS.Internal.Documents
         {
             CheckDisposed();
 
-            //Arrange the page, no offset.
-            _pageBorder.Arrange(new Rect(new Point(0.0, 0.0), arrangeSize));
-
-            //Arrange the drop shadow parts along the right
-            //and bottom edges of the page.
-
-            //Right edge - as tall as the page (minus the shadow width so we don't overlap
-            //with the bottom edge), 5px wide.  Offset vertically by 5px.
-            _dropShadowRight.Arrange(
-                                new Rect(
-                                    new Point(arrangeSize.Width, _dropShadowWidth),
-                                    new Size(_dropShadowWidth, Math.Max(0.0, arrangeSize.Height - _dropShadowWidth))
-                                    ));
-
-            //Bottom edge - 5px tall, and as wide as the page. Offset horizontally by 5px.
-            _dropShadowBottom.Arrange(
-                                new Rect(
-                                    new Point(_dropShadowWidth, arrangeSize.Height),
-                                    new Size(arrangeSize.Width, _dropShadowWidth)
-                                    ));
+            //Arrange the page container, no offset.
+            _documentContainer.Arrange(new Rect(new Point(0.0, 0.0), arrangeSize));
 
             base.ArrangeOverride(arrangeSize);
             return arrangeSize;
@@ -330,20 +296,9 @@ namespace MS.Internal.Documents
             _documentPageView.StretchDirection = StretchDirection.Both;
             _documentPageView.PageNumber = int.MaxValue;
 
-            //Create the border that goes around the page content.
-            _pageBorder = new Border();
-            _pageBorder.BorderBrush = Brushes.Black;
-            _pageBorder.Child = _documentPageView;
-
-            //Create the drop shadow that goes behind the page, made
-            //of two rectangles in an "L" shape.
-            _dropShadowRight = new Rectangle();
-            _dropShadowRight.Fill = Brushes.Black;
-            _dropShadowRight.Opacity = _dropShadowOpacity;
-
-            _dropShadowBottom = new Rectangle();
-            _dropShadowBottom.Fill = Brushes.Black;
-            _dropShadowBottom.Opacity = _dropShadowOpacity;
+            //Create the content control that contains the page content.
+            _documentContainer = new ContentControl();
+            _documentContainer.Content = _documentPageView;
 
             _loaded = false;
         }
@@ -439,19 +394,10 @@ namespace MS.Internal.Documents
         private bool hasAddedChildren;
         private DocumentPaginator _paginator;
         private DocumentPageView _documentPageView;
-        private Rectangle _dropShadowRight;
-        private Rectangle _dropShadowBottom;
-        private Border _pageBorder;
+        private ContentControl _documentContainer;
 
         private bool _showPageBorders;
         private bool _loaded;
-
-
-        //Constants
-        private const double _dropShadowOpacity = 0.35;
-        private const double _dropShadowWidth = 5.0;
-        private readonly Thickness _pageBorderVisibleThickness = new Thickness(1, 1, 1, 1);
-        private readonly Thickness _pageBorderInvisibleThickness = new Thickness(0, 0, 0, 0);
 
         private bool _disposed;
 

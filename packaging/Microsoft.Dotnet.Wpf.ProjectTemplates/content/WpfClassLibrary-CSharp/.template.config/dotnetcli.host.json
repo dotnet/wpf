@@ -16,6 +16,10 @@
     "langVersion": {
       "longName": "langVersion",
       "shortName": ""
+    },
+    "Nullable": {
+      "longName": "nullable",
+      "shortName": ""
     }
   },
   "usageExamples": [

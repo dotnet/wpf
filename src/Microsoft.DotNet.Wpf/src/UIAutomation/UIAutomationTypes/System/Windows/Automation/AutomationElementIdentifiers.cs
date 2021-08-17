@@ -116,6 +116,12 @@ namespace System.Windows.Automation
         /// <summary>Property ID: FrameworkId - Identifies the underlying UI framework's name for the element being accessed</summary>
         public static readonly AutomationProperty FrameworkIdProperty = AutomationProperty.Register(AutomationIdentifierConstants.Properties.FrameworkId, "AutomationElementIdentifiers.FrameworkIdProperty");
 
+        /// <summary>Property ID: HeadingLevel -  Describes the heading level of an element.</summary>
+        public static readonly AutomationProperty HeadingLevelProperty = AutomationProperty.Register(AutomationIdentifierConstants.Properties.HeadingLevel, "AutomationElementIdentifiers.HeadingLevelProperty");
+
+        /// <summary>Property ID: IsDialog - Identifies if the automation element is a dialog.</summary>
+        public static readonly AutomationProperty IsDialogProperty = AutomationProperty.Register(AutomationIdentifierConstants.Properties.IsDialog, "AutomationElementIdentifiers.IsDialogProperty");
+
         /// <summary>Property ID: IsRequiredForForm - Identifies weather an edit field is required to be filled out on a form</summary>
         public static readonly AutomationProperty IsRequiredForFormProperty = AutomationProperty.Register(AutomationIdentifierConstants.Properties.IsRequiredForForm, "AutomationElementIdentifiers.IsRequiredForFormProperty");
 
@@ -217,10 +223,15 @@ namespace System.Windows.Automation
         /// <summary>Event ID: Raised when the content of a live region has changed. Supported starting with Windows 8.</summary>
         public static readonly AutomationEvent LiveRegionChangedEvent = AutomationEvent.Register(AutomationIdentifierConstants.Events.LiveRegionChanged, "AutomationElementIdentifiers.LiveRegionChangedEvent");
 
+        /// <summary>Event ID: Notification - used mainly by servers to raise a generic notification.</summary>
+        public static readonly AutomationEvent NotificationEvent = AutomationEvent.Register(AutomationIdentifierConstants.Events.Notification, "AutomationElementIdentifiers.NotificationEvent");
+
+        /// <summary>Event ID: ActiveTextPositionChanged - Indicates that the active position within a text element has changed.</summary>
+        public static readonly AutomationEvent ActiveTextPositionChangedEvent = AutomationEvent.Register(AutomationIdentifierConstants.Events.ActiveTextPositionChanged, "AutomationElementIdentifiers.ActiveTextPositionChangedEvent");
 
         #endregion Events
 
-        
+
         #endregion Public Constants and Readonly Fields
     }
 }

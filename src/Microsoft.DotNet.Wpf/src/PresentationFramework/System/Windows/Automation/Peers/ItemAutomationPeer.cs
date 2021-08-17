@@ -148,6 +148,22 @@ namespace System.Windows.Automation.Peers
         }
 
 
+        ///
+        override internal bool IgnoreUpdatePeer()
+        {
+            // Ignore UpdatePeer if the we're no longer in the automation tree.
+            // There's no need to update such a peer, as it no longer
+            // participates in automation.  And UpdatePeer actually throws exceptions
+            // in some cases.
+
+            if (!IsItemInAutomationTree())
+            {
+                return true;
+            }
+
+            return base.IgnoreUpdatePeer();
+        }
+
         override internal bool IsDataItemAutomationPeer()
         {
             return true;
@@ -230,6 +246,24 @@ namespace System.Windows.Automation.Peers
                 ThrowElementNotAvailableException();
 
             return AutomationOrientation.None;
+        }
+
+        ///
+        override protected AutomationHeadingLevel GetHeadingLevelCore()
+        {
+            AutomationPeer wrapperPeer = GetWrapperPeer();
+            AutomationHeadingLevel headingLevel = AutomationHeadingLevel.None;
+
+            if(wrapperPeer != null)
+            {
+                headingLevel = wrapperPeer.GetHeadingLevel();
+            }
+            else
+            {
+                ThrowElementNotAvailableException();
+            }
+
+            return headingLevel;
         }
 
         /// <summary>
@@ -430,6 +464,18 @@ namespace System.Windows.Automation.Peers
             AutomationPeer wrapperPeer = GetWrapperPeer();
             if (wrapperPeer != null)
                 return wrapperPeer.IsEnabled();
+            else
+                ThrowElementNotAvailableException();
+
+            return false;
+        }
+
+        ///
+        protected override bool IsDialogCore()
+        {
+            AutomationPeer wrapperPeer = GetWrapperPeer();
+            if (wrapperPeer != null)
+                return wrapperPeer.IsDialog();
             else
                 ThrowElementNotAvailableException();
 

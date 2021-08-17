@@ -187,8 +187,12 @@ namespace System.Windows
             _blendFunc.SourceConstantAlpha = 255;
             _blendFunc.AlphaFormat = 1; /*AC_SRC_ALPHA*/
 
-            bool result = UnsafeNativeMethods.UpdateLayeredWindow(hWnd, hScreenDC, newLocation, newSize,
-                memDC, sourceLocation, 0, ref _blendFunc, NativeMethods.ULW_ALPHA);
+            bool result;
+            unsafe
+            {
+                result = UnsafeNativeMethods.UpdateLayeredWindow(hWnd, hScreenDC, &newLocation, &newSize,
+                    memDC, &sourceLocation, 0, ref _blendFunc, NativeMethods.ULW_ALPHA);
+            }
 
             UnsafeNativeMethods.SelectObject(new HandleRef(null, memDC), hOldBitmap);
             UnsafeNativeMethods.ReleaseDC(new HandleRef(), new HandleRef(null, memDC));
@@ -277,7 +281,10 @@ namespace System.Windows
             {
                 double progress = (_fadeoutEnd - dtNow).TotalMilliseconds / _fadeoutDuration.TotalMilliseconds;
                 _blendFunc.SourceConstantAlpha = (byte)(255 * progress);
-                UnsafeNativeMethods.UpdateLayeredWindow(_hwnd, IntPtr.Zero, null, null, IntPtr.Zero, null, 0, ref _blendFunc, NativeMethods.ULW_ALPHA);
+                unsafe
+                {
+                    UnsafeNativeMethods.UpdateLayeredWindow(_hwnd, IntPtr.Zero, null, null, IntPtr.Zero, null, 0, ref _blendFunc, NativeMethods.ULW_ALPHA);
+                }
             }
         }
 

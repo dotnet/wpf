@@ -269,27 +269,23 @@ namespace MS.Internal.Automation
             {
                 if (!source.IsDisposed)
                 {
-                    source.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
-                                                  new DispatcherOperationCallback(NotifySource),
-                                                  new object[]{source});
+                    source.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (DispatcherOperationCallback)(state =>
+                    {
+                        PresentationSource source = (PresentationSource)state;
+                        if (source != null && !source.IsDisposed)
+                        {
+                            // setting the RootVisual to itself triggers the logic to
+                            // add to the AutomationEvents list
+                            source.RootVisual = source.RootVisual;
+                        }
+                        return null;
+                    }), source);
                 }
             }
-        }
-
-        private static object NotifySource(Object args)
-        {
-            object[] argsArray = (object[])args;
-            PresentationSource source = argsArray[0] as PresentationSource;
-            if (source != null && !source.IsDisposed)
-            {
-                // setting the RootVisual to itself triggers the logic to
-                // add to the AutomationEvents list
-                source.RootVisual = source.RootVisual;
-            }
-            return null;
         }
 
         private static Dictionary<int, EventInfo> _eventsTable;        // key=event id, data=listener count
         private readonly static object _lock = new object();
     }
 }
+

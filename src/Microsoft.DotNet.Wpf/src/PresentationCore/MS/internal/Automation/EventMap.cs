@@ -12,8 +12,7 @@
 //
 
 using System;
-using System.Collections;
-using System.Security;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
@@ -145,13 +144,12 @@ namespace MS.Internal.Automation
                 {
                     if (_eventsTable == null)
                     {
-                        _eventsTable = new Hashtable(20, .1f);
+                        _eventsTable = new Dictionary<int, EventInfo>(20);
                         firstEvent = true;
                     }
 
-                    if (_eventsTable.ContainsKey(idEvent))
+                    if (_eventsTable.TryGetValue(idEvent, out EventInfo info))
                     {
-                        EventInfo info = (EventInfo)_eventsTable[idEvent];
                         info.NumberOfListeners++;
                     }
                     else
@@ -176,10 +174,8 @@ namespace MS.Internal.Automation
                 if (_eventsTable != null)
                 {
                     // Decrement the count of listeners for this event
-                    if (_eventsTable.ContainsKey(idEvent))
+                    if (_eventsTable.TryGetValue(idEvent, out EventInfo info))
                     {
-                        EventInfo info = (EventInfo)_eventsTable[idEvent];
-
                         // Update or remove the entry based on remaining listeners
                         info.NumberOfListeners--;
                         if (info.NumberOfListeners <= 0)
@@ -273,27 +269,23 @@ namespace MS.Internal.Automation
             {
                 if (!source.IsDisposed)
                 {
-                    source.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
-                                                  new DispatcherOperationCallback(NotifySource),
-                                                  new object[]{source});
+                    source.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (DispatcherOperationCallback)(state =>
+                    {
+                        PresentationSource source = (PresentationSource)state;
+                        if (source != null && !source.IsDisposed)
+                        {
+                            // setting the RootVisual to itself triggers the logic to
+                            // add to the AutomationEvents list
+                            source.RootVisual = source.RootVisual;
+                        }
+                        return null;
+                    }), source);
                 }
             }
         }
 
-        private static object NotifySource(Object args)
-        {
-            object[] argsArray = (object[])args;
-            PresentationSource source = argsArray[0] as PresentationSource;
-            if (source != null && !source.IsDisposed)
-            {
-                // setting the RootVisual to itself triggers the logic to
-                // add to the AutomationEvents list
-                source.RootVisual = source.RootVisual;
-            }
-            return null;
-        }
-
-        private static Hashtable _eventsTable;        // key=event id, data=listener count
+        private static Dictionary<int, EventInfo> _eventsTable;        // key=event id, data=listener count
         private readonly static object _lock = new object();
     }
 }
+

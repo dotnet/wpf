@@ -1313,6 +1313,39 @@ namespace Microsoft.Windows.Shell
             return ht;
         }
 
+        // Return the effective client area, excluding the invisible caption
+        // and resize-border areas.
+        // This method is called via private reflection from PresentationCore,
+        // method HwndMouseInputProvider.HasCustomChrome.  Both places have to
+        // agree on the signature.
+        private bool GetEffectiveClientArea(ref MS.Win32.NativeMethods.RECT rcClient)
+        {
+            if (_window == null || _chromeInfo == null)
+                return false;
+
+            DpiScale dpi = _window.GetDpi();
+            double captionHeight = _chromeInfo.CaptionHeight;
+            Thickness resizeBorderThickness = _chromeInfo.ResizeBorderThickness;
+
+            RECT rcWindow = NativeMethods.GetWindowRect(_hwnd);
+            Size logicalSize = DpiHelper.DeviceSizeToLogical(new Size(rcWindow.Width, rcWindow.Height), dpi.DpiScaleX, dpi.DpiScaleY);
+
+            Point logicalTopLeft     = new Point(resizeBorderThickness.Left,
+                                                 resizeBorderThickness.Top + captionHeight);
+            Point logicalBottomRight = new Point(logicalSize.Width - resizeBorderThickness.Right,
+                                                 logicalSize.Height - resizeBorderThickness.Bottom);
+
+            Point deviceTopLeft     = DpiHelper.LogicalPixelsToDevice(logicalTopLeft,     dpi.DpiScaleX, dpi.DpiScaleY);
+            Point deviceBottomRight = DpiHelper.LogicalPixelsToDevice(logicalBottomRight, dpi.DpiScaleX, dpi.DpiScaleY);
+
+            rcClient.left   = (int)deviceTopLeft.X;
+            rcClient.top    = (int)deviceTopLeft.Y;
+            rcClient.right  = (int)deviceBottomRight.X;
+            rcClient.bottom = (int)deviceBottomRight.Y;
+
+            return true;
+        }
+
         #region Remove Custom Chrome Methods
 
         private void _RestoreStandardChromeState(bool isClosing)

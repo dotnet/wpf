@@ -3212,10 +3212,10 @@ namespace Standard
         private static extern bool _UpdateLayeredWindow(
             IntPtr hwnd,
             SafeDC hdcDst,
-            [In] ref POINT pptDst,
-            [In] ref SIZE psize,
+            ref POINT pptDst,
+            ref SIZE psize,
             SafeDC hdcSrc,
-            [In] ref POINT pptSrc,
+            ref POINT pptSrc,
             int crKey,
             ref BLENDFUNCTION pblend,
             ULW dwFlags);

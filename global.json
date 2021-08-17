@@ -8,12 +8,12 @@
       ]
     },
     "vs": {
-      "version": "16.8"
+      "version": "16.11"
     }
   },
   "msbuild-sdks": {
-    "Microsoft.DotNet.Arcade.Sdk": "6.0.0-beta.21412.1",
-    "Microsoft.DotNet.Helix.Sdk": "6.0.0-beta.21412.1"
+    "Microsoft.DotNet.Arcade.Sdk": "6.0.0-beta.21413.4",
+    "Microsoft.DotNet.Helix.Sdk": "6.0.0-beta.21413.4"
   },
   "sdk": {
     "version": "6.0.100-rc.1.21416.15"

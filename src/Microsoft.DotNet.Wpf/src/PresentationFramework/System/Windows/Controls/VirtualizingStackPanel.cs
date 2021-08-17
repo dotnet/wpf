@@ -931,16 +931,19 @@ namespace System.Windows.Controls
                     // situations where the viewport size has changed)
                     if (!success)
                     {
+                        double computedOffset, maxOffset;
                         if (isHorizontal)
                         {
-                            success = DoubleUtil.GreaterThanOrClose(_scrollData._computedOffset.X,
-                                                                _scrollData._extent.Width - _scrollData._viewport.Width);
+                            computedOffset = _scrollData._computedOffset.X;
+                            maxOffset = _scrollData._extent.Width - _scrollData._viewport.Width;
                         }
                         else
                         {
-                            success = DoubleUtil.GreaterThanOrClose(_scrollData._computedOffset.Y,
-                                                                _scrollData._extent.Height - _scrollData._viewport.Height);
+                            computedOffset = _scrollData._computedOffset.Y;
+                            maxOffset = _scrollData._extent.Height - _scrollData._viewport.Height;
                         }
+                        success = LayoutDoubleUtil.LessThan(maxOffset, computedOffset) ||
+                                  LayoutDoubleUtil.AreClose(maxOffset, computedOffset);
                     }
                 }
             }
@@ -973,7 +976,7 @@ namespace System.Windows.Controls
             else
             {
                 bool remeasure = false;
-                double actualOffset, expectedOffset;
+                double actualOffset, expectedOffset, maxOffset;
 
                 if (isHorizontal)
                 {
@@ -981,13 +984,14 @@ namespace System.Windows.Controls
 
                     actualOffset = _scrollData._computedOffset.X + actualDistanceBetweenViewports;
                     expectedOffset = _scrollData._computedOffset.X + _scrollData._expectedDistanceBetweenViewports;
+                    maxOffset = _scrollData._extent.Width - _scrollData._viewport.Width;
 
-                    if (DoubleUtil.LessThan(expectedOffset, 0) || DoubleUtil.GreaterThan(expectedOffset, _scrollData._extent.Width - _scrollData._viewport.Width))
+                    if (LayoutDoubleUtil.LessThan(expectedOffset, 0) || LayoutDoubleUtil.LessThan(maxOffset, expectedOffset))
                     {
                         // the condition can fail due to estimated sizes in subtrees that contribute
                         // to FindScrollOffset(_scrollData._firstContainerInViewport) but not to
                         // _scrollData._extent.  If that happens, remeasure.
-                        if (DoubleUtil.AreClose(actualOffset, 0) || DoubleUtil.AreClose(actualOffset, _scrollData._extent.Width - _scrollData._viewport.Width))
+                        if (LayoutDoubleUtil.AreClose(actualOffset, 0) || LayoutDoubleUtil.AreClose(actualOffset, maxOffset))
                         {
                             _scrollData._computedOffset.X = actualOffset;
                             _scrollData._offset.X = actualOffset;
@@ -1010,13 +1014,14 @@ namespace System.Windows.Controls
 
                     actualOffset = _scrollData._computedOffset.Y + actualDistanceBetweenViewports;
                     expectedOffset = _scrollData._computedOffset.Y + _scrollData._expectedDistanceBetweenViewports;
+                    maxOffset = _scrollData._extent.Height - _scrollData._viewport.Height;
 
-                    if (DoubleUtil.LessThan(expectedOffset, 0) || DoubleUtil.GreaterThan(expectedOffset, _scrollData._extent.Height - _scrollData._viewport.Height))
+                    if (LayoutDoubleUtil.LessThan(expectedOffset, 0) || LayoutDoubleUtil.LessThan(maxOffset, expectedOffset))
                     {
                         // the condition can fail due to estimated sizes in subtrees that contribute
                         // to FindScrollOffset(_scrollData._firstContainerInViewport) but not to
                         // _scrollData._extent.  If that happens, remeasure.
-                        if (DoubleUtil.AreClose(actualOffset, 0) || DoubleUtil.AreClose(actualOffset, _scrollData._extent.Height - _scrollData._viewport.Height))
+                        if (LayoutDoubleUtil.AreClose(actualOffset, 0) || LayoutDoubleUtil.AreClose(actualOffset, maxOffset))
                         {
                             _scrollData._computedOffset.Y = actualOffset;
                             _scrollData._offset.Y = actualOffset;
@@ -2824,11 +2829,11 @@ namespace System.Windows.Controls
                                 ref scrollGeneration);
 
                             if (ItemsChangedDuringMeasure)
-                                {
-                                    // if the Items collection changed, our state is now invalid.  Start over.
-                                    remeasure = true;
-                                    goto EscapeMeasure;
-                                }
+                            {
+                                // if the Items collection changed, our state is now invalid.  Start over.
+                                remeasure = true;
+                                goto EscapeMeasure;
+                            }
                         }
                     }
 
@@ -2873,11 +2878,11 @@ namespace System.Windows.Controls
                                 ref scrollGeneration);
 
                             if (ItemsChangedDuringMeasure)
-                                {
-                                    // if the Items collection changed, our state is now invalid.  Start over.
-                                    remeasure = true;
-                                    goto EscapeMeasure;
-                                }
+                            {
+                                // if the Items collection changed, our state is now invalid.  Start over.
+                                remeasure = true;
+                                goto EscapeMeasure;
+                            }
                         }
                     }
 
@@ -11134,32 +11139,23 @@ namespace System.Windows.Controls
                 viewportOffset, viewportOffset + viewportSize, targetRectOffset, targetRectOffset + targetRectSize, ref alignTop, ref alignBottom);
 
             // Compute the visible rectangle of the child relative to the viewport.
+            double start = targetRectOffset - minPhysicalOffset;
+            double end = start + targetRectSize;
 
-            if (alignTop)
-            {
-                targetRectOffset = viewportOffset;
-            }
-            else if (alignBottom)
-            {
-                targetRectOffset = viewportOffset + viewportSize - targetRectSize;
-            }
-
-            double left = Math.Max(targetRectOffset, minPhysicalOffset);
-            targetRectSize = Math.Max(Math.Min(targetRectSize + targetRectOffset, minPhysicalOffset + viewportSize) - left, 0);
-            targetRectOffset = left;
-            targetRectOffset -= viewportOffset;
+            double visibleStart = Math.Max(start, 0);
+            double visibleEnd = Math.Max(Math.Min(end, viewportSize), visibleStart);
 
             if (isHorizontal)
             {
                 newOffset.X = minPhysicalOffset;
-                newRect.X = targetRectOffset;
-                newRect.Width = targetRectSize;
+                newRect.X = visibleStart;
+                newRect.Width = visibleEnd - visibleStart;
             }
             else
             {
                 newOffset.Y = minPhysicalOffset;
-                newRect.Y = targetRectOffset;
-                newRect.Height = targetRectSize;
+                newRect.Y = visibleStart;
+                newRect.Height = visibleEnd - visibleStart;
             }
         }
 
@@ -12320,6 +12316,12 @@ namespace System.Windows.Controls
                     "VirtMode:", VirtualizingPanel.GetVirtualizationMode(ic),
                     "ScrollUnit:", VirtualizingPanel.GetScrollUnit(ic),
                     "CacheLen:", VirtualizingPanel.GetCacheLength(ic), VirtualizingPanel.GetCacheLengthUnit(ic));
+
+                DpiScale dpiScale = vsp.GetDpi();
+                AddTrace(null, ScrollTraceOp.ID, _nullInfo,
+                    "DPIScale:", dpiScale.DpiScaleX, dpiScale.DpiScaleY,
+                    "UseLayoutRounding:", vsp.UseLayoutRounding,
+                    "Rounding Quantum:", 1.0/dpiScale.DpiScaleY);
 
                 AddTrace(null, ScrollTraceOp.ID, _nullInfo,
                     "CanContentScroll:", ScrollViewer.GetCanContentScroll(ic),

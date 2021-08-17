@@ -2998,12 +2998,9 @@ namespace MS.Win32 {
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public class POINT {
+        public struct POINT {
             public int x;
             public int y;
-
-            public POINT() {
-            }
 
             public POINT(int x, int y) {
                 this.x = x;
@@ -3019,10 +3016,10 @@ namespace MS.Win32 {
         // use this in cases where the Native API takes a POINT not a POINT*
         // classes marshal by ref.
         [StructLayout(LayoutKind.Sequential)]
-        public struct POINTSTRUCT {
+        public struct POINT {
             public int x;
             public int y;
-            public POINTSTRUCT(int x, int y) {
+            public POINT(int x, int y) {
               this.x = x;
               this.y = y;
             }
@@ -4220,14 +4217,10 @@ namespace MS.Win32 {
 #endif
 
         [StructLayout(LayoutKind.Sequential)/*leftover(noAutoOffset)*/]
-        public sealed class POINTF
+        public sealed struct POINTF
         {
-          [MarshalAs(UnmanagedType.R4)/*leftover(offset=0, x)*/]
           public float x;
-
-          [MarshalAs(UnmanagedType.R4)/*leftover(offset=4, y)*/]
           public float y;
-
         }
 
         [StructLayout(LayoutKind.Sequential)/*leftover(noAutoOffset)*/]
@@ -5224,12 +5217,12 @@ namespace MS.Win32 {
 #endif
 
         [StructLayout(LayoutKind.Sequential)]
-        public class MINMAXINFO {
-            public POINT ptReserved = new POINT();
-            public POINT ptMaxSize = new POINT();
-            public POINT ptMaxPosition = new POINT();
-            public POINT ptMinTrackSize = new POINT();
-            public POINT ptMaxTrackSize = new POINT();
+        public struct MINMAXINFO {
+            public POINT ptReserved;
+            public POINT ptMaxSize;
+            public POINT ptMaxPosition;
+            public POINT ptMinTrackSize;
+            public POINT ptMaxTrackSize;
         }
 #if never
         [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Auto)]

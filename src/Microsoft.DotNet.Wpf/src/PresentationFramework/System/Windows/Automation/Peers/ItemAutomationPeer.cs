@@ -148,6 +148,22 @@ namespace System.Windows.Automation.Peers
         }
 
 
+        ///
+        override internal bool IgnoreUpdatePeer()
+        {
+            // Ignore UpdatePeer if the we're no longer in the automation tree.
+            // There's no need to update such a peer, as it no longer
+            // participates in automation.  And UpdatePeer actually throws exceptions
+            // in some cases.
+
+            if (!IsItemInAutomationTree())
+            {
+                return true;
+            }
+
+            return base.IgnoreUpdatePeer();
+        }
+
         override internal bool IsDataItemAutomationPeer()
         {
             return true;

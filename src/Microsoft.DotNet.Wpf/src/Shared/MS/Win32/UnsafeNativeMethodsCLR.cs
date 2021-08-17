@@ -45,15 +45,6 @@ namespace MS.Win32
     using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
     internal partial class UnsafeNativeMethods {
-        private struct POINTSTRUCT {
-            public int x;
-            public int y;
-
-            public POINTSTRUCT(int x, int y) {
-                this.x = x;
-                this.y = y;
-            }
-        }
 
         // For some reason "PtrToStructure" requires super high permission.
         public static object PtrToStructure(IntPtr lparam, Type cls) {
@@ -461,11 +452,11 @@ namespace MS.Win32
         public static extern IntPtr GetFocus();
 
         [DllImport(ExternDll.User32, EntryPoint = "GetCursorPos", ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern bool IntGetCursorPos([In, Out] NativeMethods.POINT pt);
+        private static extern bool IntGetCursorPos(ref NativeMethods.POINT pt);
 
-        internal static bool GetCursorPos([In, Out] NativeMethods.POINT pt)
+        internal static bool GetCursorPos(ref NativeMethods.POINT pt)
         {
-            bool returnValue = IntGetCursorPos(pt);
+            bool returnValue = IntGetCursorPos(ref pt);
             if (returnValue == false)
             {
                 throw new Win32Exception();
@@ -474,11 +465,11 @@ namespace MS.Win32
         }
 
         [DllImport(ExternDll.User32, EntryPoint = "GetCursorPos", ExactSpelling = true, CharSet = CharSet.Auto)]
-        private static extern bool IntTryGetCursorPos([In, Out] NativeMethods.POINT pt);
+        private static extern bool IntTryGetCursorPos(ref NativeMethods.POINT pt);
 
-        internal static bool TryGetCursorPos([In, Out] NativeMethods.POINT pt)
+        internal static bool TryGetCursorPos(ref NativeMethods.POINT pt)
         {
-            bool returnValue = IntTryGetCursorPos(pt);
+            bool returnValue = IntTryGetCursorPos(ref pt);
 
             // Sometimes Win32 will fail this call, such as if you are
             // not running in the interactive desktop.  For example,
@@ -963,11 +954,11 @@ namespace MS.Win32
         public static extern bool GetSystemPowerStatus(ref NativeMethods.SYSTEM_POWER_STATUS systemPowerStatus);
 
         [DllImport(ExternDll.User32, EntryPoint="ClientToScreen", SetLastError=true, ExactSpelling=true, CharSet=CharSet.Auto)]
-        private static extern int IntClientToScreen(HandleRef hWnd, [In, Out] NativeMethods.POINT pt);
+        private static extern int IntClientToScreen(HandleRef hWnd, ref NativeMethods.POINT pt);
 
-        public static void ClientToScreen(HandleRef hWnd, [In, Out] NativeMethods.POINT pt)
+        public static void ClientToScreen(HandleRef hWnd, ref NativeMethods.POINT pt)
         {
-            if(IntClientToScreen(hWnd, pt) == 0)
+            if(IntClientToScreen(hWnd, ref pt) == 0)
             {
                 throw new Win32Exception();
             }
@@ -1074,7 +1065,7 @@ namespace MS.Win32
 
         [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern bool UpdateLayeredWindow(IntPtr hwnd, IntPtr hdcDst, NativeMethods.POINT pptDst, NativeMethods.POINT pSizeDst, IntPtr hdcSrc, NativeMethods.POINT pptSrc, int crKey, ref NativeMethods.BLENDFUNCTION pBlend, int dwFlags);
+        public static extern unsafe bool UpdateLayeredWindow(IntPtr hwnd, IntPtr hdcDst, NativeMethods.POINT* pptDst, NativeMethods.POINT* pSizeDst, IntPtr hdcSrc, NativeMethods.POINT* pptSrc, int crKey, ref NativeMethods.BLENDFUNCTION pBlend, int dwFlags);
 
         [DllImport(ExternDll.User32, SetLastError = true)]
         public static extern IntPtr SetActiveWindow(HandleRef hWnd);
@@ -1266,10 +1257,10 @@ namespace MS.Win32
 #if BASE_NATIVEMETHODS
 
         [DllImport(ExternDll.User32, EntryPoint="WindowFromPoint", ExactSpelling=true, CharSet=CharSet.Auto)]
-        private static extern IntPtr IntWindowFromPoint(POINTSTRUCT pt);
+        private static extern IntPtr IntWindowFromPoint(POINT pt);
 
         public static IntPtr WindowFromPoint(int x, int y) {
-            POINTSTRUCT ps = new POINTSTRUCT(x, y);
+            POINT ps = new POINT(x, y);
             return IntWindowFromPoint(ps);
         }
 #endif
@@ -1412,10 +1403,8 @@ namespace MS.Win32
 
             [PreserveSig]
             int TransformCoords(
-                [In, Out]
-                NativeMethods.POINT pPtlHimetric,
-                [In, Out]
-                NativeMethods.POINTF pPtfContainer,
+                ref NativeMethods.POINT pPtlHimetric,
+                ref NativeMethods.POINTF pPtfContainer,
                 [In, MarshalAs(UnmanagedType.U4)]
                 int dwFlags);
 
@@ -2625,8 +2614,7 @@ namespace MS.Win32
             int ShowContextMenu(
                 [In, MarshalAs(UnmanagedType.U4)]
                 int dwID,
-                [In]
-                NativeMethods.POINT pt,
+                ref NativeMethods.POINT pt,
                 [In, MarshalAs(UnmanagedType.Interface)]
                 object pcmdtReserved,
                 [In, MarshalAs(UnmanagedType.Interface)]

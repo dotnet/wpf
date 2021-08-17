@@ -2996,12 +2996,9 @@ namespace MS.Win32 {
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public class POINT {
+        public struct POINT {
             public int x;
             public int y;
-
-            public POINT() {
-            }
 
             public POINT(int x, int y) {
                 this.x = x;
@@ -3013,18 +3010,6 @@ namespace MS.Win32 {
             }
 #endif
         }
-
-        // use this in cases where the Native API takes a POINT not a POINT*
-        // classes marshal by ref.
-        [StructLayout(LayoutKind.Sequential)]
-        public struct POINTSTRUCT {
-            public int x;
-            public int y;
-            public POINTSTRUCT(int x, int y) {
-              this.x = x;
-              this.y = y;
-            }
-      }
 
         public delegate IntPtr WndProc(IntPtr hWnd, Int32 msg, IntPtr wParam, IntPtr lParam);
 
@@ -4216,14 +4201,11 @@ namespace MS.Win32 {
 #endif
 
         [StructLayout(LayoutKind.Sequential)/*leftover(noAutoOffset)*/]
-        public sealed class POINTF
+        public struct POINTF
         {
-          [MarshalAs(UnmanagedType.R4)/*leftover(offset=0, x)*/]
           public float x;
-
-          [MarshalAs(UnmanagedType.R4)/*leftover(offset=4, y)*/]
           public float y;
-}
+        }
 
         [StructLayout(LayoutKind.Sequential)/*leftover(noAutoOffset)*/]
         public sealed class OLEINPLACEFRAMEINFO
@@ -4237,7 +4219,7 @@ namespace MS.Win32 {
 
           [MarshalAs(UnmanagedType.U4)/*leftover(offset=16, cAccelEntries)*/]
           public uint cAccelEntries;
-}
+        }
 
 #if never
         [StructLayout(LayoutKind.Sequential)]
@@ -5216,12 +5198,12 @@ namespace MS.Win32 {
 #endif
 
         [StructLayout(LayoutKind.Sequential)]
-        public class MINMAXINFO {
-            public POINT ptReserved = new POINT();
-            public POINT ptMaxSize = new POINT();
-            public POINT ptMaxPosition = new POINT();
-            public POINT ptMinTrackSize = new POINT();
-            public POINT ptMaxTrackSize = new POINT();
+        public struct MINMAXINFO {
+            public POINT ptReserved;
+            public POINT ptMaxSize;
+            public POINT ptMaxPosition;
+            public POINT ptMinTrackSize;
+            public POINT ptMaxTrackSize;
         }
 #if never
         [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Auto)]

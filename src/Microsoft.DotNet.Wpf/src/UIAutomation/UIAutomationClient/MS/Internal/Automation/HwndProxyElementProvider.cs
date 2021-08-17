@@ -792,7 +792,7 @@ namespace MS.Internal.Automation
             if ( ! ((ITransformProvider)this).CanResize )
                 throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
 
-            UnsafeNativeMethods.MINMAXINFO minMaxInfo = new UnsafeNativeMethods.MINMAXINFO();
+            UnsafeNativeMethods.MINMAXINFO minMaxInfo = default;
 
             // get the largest window size that can be produced by using the borders to size the window
             int x = SafeNativeMethods.GetSystemMetrics(SafeNativeMethods.SM_CXMAXTRACK);

@@ -84,7 +84,11 @@ namespace System.Windows
                         {
                             Dispatcher.CurrentDispatcher.BeginInvoke(
                                 DispatcherPriority.Loaded,
-                                (DispatcherOperationCallback)ShowCallback,
+                                (DispatcherOperationCallback)(arg =>
+                                {
+                                    ((SplashScreen)arg).Close(TimeSpan.FromSeconds(0.3));
+                                    return null;
+                                }),
                                 this);
                         }
                         // The HWND that we just created is owned by this thread.  When we close we should ensure that it 
@@ -98,13 +102,6 @@ namespace System.Windows
                     }
                 }
             }
-        }
-        
-        private static object ShowCallback(object arg)
-        {
-            SplashScreen splashScreen = (SplashScreen)arg;
-            splashScreen.Close(TimeSpan.FromSeconds(0.3));
-            return null;
         }
 
         // This is 200-300 ms slower than Assembly.GetManifestResourceStream() but works with localization.
@@ -187,8 +184,12 @@ namespace System.Windows
             _blendFunc.SourceConstantAlpha = 255;
             _blendFunc.AlphaFormat = 1; /*AC_SRC_ALPHA*/
 
-            bool result = UnsafeNativeMethods.UpdateLayeredWindow(hWnd, hScreenDC, newLocation, newSize,
-                memDC, sourceLocation, 0, ref _blendFunc, NativeMethods.ULW_ALPHA);
+            bool result;
+            unsafe
+            {
+                result = UnsafeNativeMethods.UpdateLayeredWindow(hWnd, hScreenDC, &newLocation, &newSize,
+                    memDC, &sourceLocation, 0, ref _blendFunc, NativeMethods.ULW_ALPHA);
+            }
 
             UnsafeNativeMethods.SelectObject(new HandleRef(null, memDC), hOldBitmap);
             UnsafeNativeMethods.ReleaseDC(new HandleRef(), new HandleRef(null, memDC));
@@ -277,7 +278,10 @@ namespace System.Windows
             {
                 double progress = (_fadeoutEnd - dtNow).TotalMilliseconds / _fadeoutDuration.TotalMilliseconds;
                 _blendFunc.SourceConstantAlpha = (byte)(255 * progress);
-                UnsafeNativeMethods.UpdateLayeredWindow(_hwnd, IntPtr.Zero, null, null, IntPtr.Zero, null, 0, ref _blendFunc, NativeMethods.ULW_ALPHA);
+                unsafe
+                {
+                    UnsafeNativeMethods.UpdateLayeredWindow(_hwnd, IntPtr.Zero, null, null, IntPtr.Zero, null, 0, ref _blendFunc, NativeMethods.ULW_ALPHA);
+                }
             }
         }
 

@@ -3,7 +3,7 @@ API compatibility is a build-time check that ensures that an `implementation` as
 
 For `WPF on .NET Core`, this means the following:
 * All `WPF on .NET Core` reference assemblies contain **at least** the API surface area contained by `WPF on .NET Framework 4.8` reference assemblies.
-* All hand-crafted reference assemblies for `WPF on .NET Core` contain **exactly** the needed API surface area defined by their corresponding runtime assemblies.
+* All hand-crafted reference assemblies for `WPF on .NET Core` contain **exactly** the needed API surface area defined by their corresponding runtime assemblies.  (If you're adding new API surface area, you will need to update the hand-crafted reference assemblies, following [these instructions](https://github.com/dotnet/wpf/blob/main/Documentation/gen-api.md).)
 
 This is accomplished by the use of the [Arcade API Compatibility tool](https://github.com/dotnet/arcade/blob/master/src/Microsoft.DotNet.ApiCompat) with some modifications to fit our specific needs.
 

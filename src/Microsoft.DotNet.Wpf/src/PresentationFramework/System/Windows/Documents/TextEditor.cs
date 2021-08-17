@@ -549,14 +549,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void CloseToolTip()
         {
-            PopupControlService popupControlService = PopupControlService.Current;
-
-            if (popupControlService.CurrentToolTip != null &&
-                popupControlService.CurrentToolTip.IsOpen &&
-                popupControlService.CurrentToolTip.PlacementTarget == _uiScope)
-            {
-                popupControlService.CurrentToolTip.IsOpen = false;
-            }
+            PopupControlService.Current.DismissToolTipsForOwner(_uiScope);
         }
 
         /// <summary>

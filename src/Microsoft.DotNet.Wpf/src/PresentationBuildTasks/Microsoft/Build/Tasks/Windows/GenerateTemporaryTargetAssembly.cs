@@ -271,8 +271,8 @@ namespace Microsoft.Build.Tasks.Windows
                     ( nameof(AssemblyName), AssemblyName ),
                     ( nameof(IntermediateOutputPath), IntermediateOutputPath ),
                     ( nameof(BaseIntermediateOutputPath), BaseIntermediateOutputPath ),
-                    ( nameof(MSBuildProjectExtensionsPath), MSBuildProjectExtensionsPath),
-                    ( "_TargetAssemblyProjectName", Path.GetFileNameWithoutExtension(CurrentProject)),
+                    ( nameof(MSBuildProjectExtensionsPath), MSBuildProjectExtensionsPath ),
+                    ( "_TargetAssemblyProjectName", Path.GetFileNameWithoutExtension(CurrentProject) ),
                     ( nameof(Analyzers), Analyzers )
                 };
 

@@ -1595,7 +1595,7 @@ namespace System.Windows.Controls.Primitives
             // the Display on which the PopupRoot is situated, and return that value here. 
             var origin =
                 _positionInfo != null
-                ? new NativeMethods.POINTSTRUCT(_positionInfo.X, _positionInfo.Y)
+                ? new NativeMethods.POINT(_positionInfo.X, _positionInfo.Y)
                 : PopupInitialPlacementHelper.GetPlacementOrigin(this);
 
             _secHelper.BuildWindow(origin.x, origin.y, targetVisual, IsTransparent, PopupFilterMessage, OnWindowResize, OnDpiChanged);
@@ -2843,6 +2843,16 @@ namespace System.Windows.Controls.Primitives
             }
         }
 
+        internal Rect GetParentWindowRect()
+        {
+            return _secHelper.GetParentWindowRect();
+        }
+
+        internal Rect GetWindowRect()
+        {
+            return _secHelper.GetWindowRect();
+        }
+
 #pragma warning restore 6523
 
         #endregion Positioning
@@ -3057,7 +3067,7 @@ namespace System.Windows.Controls.Primitives
                 // This is a fallback if we couldn't convert Mouse.GetPosition
                 NativeMethods.POINT mousePoint = new NativeMethods.POINT(0, 0);
 
-                UnsafeNativeMethods.TryGetCursorPos(mousePoint);
+                UnsafeNativeMethods.TryGetCursorPos(ref mousePoint);
 
                 return mousePoint;
             }
@@ -3086,6 +3096,19 @@ namespace System.Windows.Controls.Primitives
                 if (parent != IntPtr.Zero)
                 {
                     SafeNativeMethods.GetClientRect(new HandleRef(null, parent), ref rect);
+                }
+
+                return PointUtil.ToRect(rect);
+            }
+
+            internal Rect GetWindowRect()
+            {
+                NativeMethods.RECT rect = new NativeMethods.RECT(0, 0, 0, 0);
+
+                IntPtr hwnd = Handle;
+                if (hwnd != IntPtr.Zero)
+                {
+                    SafeNativeMethods.GetWindowRect(new HandleRef(null, hwnd), ref rect);
                 }
 
                 return PointUtil.ToRect(rect);
@@ -3527,7 +3550,7 @@ namespace System.Windows.Controls.Primitives
             /// <summary>
             /// Finds the screen coordinates of the PlacementTarget's (left, top)
             /// </summary>
-            private static NativeMethods.POINTSTRUCT? GetPlacementTargetOriginInScreenCoordinates(Popup popup)
+            private static NativeMethods.POINT? GetPlacementTargetOriginInScreenCoordinates(Popup popup)
             {
                 var target = popup?.GetTarget() as UIElement;
                 if (target != null)
@@ -3541,7 +3564,7 @@ namespace System.Windows.Controls.Primitives
                     if (targetToClientTransform.TryTransform(new Point(0, 0), out ptPlacementTargetOrigin))
                     {
                         var screenOrigin = popup._secHelper.ClientToScreen(rootVisual, ptPlacementTargetOrigin);
-                        return new NativeMethods.POINTSTRUCT((int)screenOrigin.X, (int)screenOrigin.Y);
+                        return new NativeMethods.POINT((int)screenOrigin.X, (int)screenOrigin.Y);
                     }
                 }
 
@@ -3551,13 +3574,13 @@ namespace System.Windows.Controls.Primitives
             /// <summary>
             /// Finds the (top,left) screen coordinates of the monitor that contains the placement target
             /// </summary>
-            internal static NativeMethods.POINTSTRUCT GetPlacementOrigin(Popup popup)
+            internal static NativeMethods.POINT GetPlacementOrigin(Popup popup)
             {
-                var placementOrigin = new NativeMethods.POINTSTRUCT(0, 0);
+                NativeMethods.POINT placementOrigin = default;
 
                 if (IsPerMonitorDpiScalingActive)
                 {
-                    var screenOrigin = GetPlacementTargetOriginInScreenCoordinates(popup);
+                    NativeMethods.POINT? screenOrigin = GetPlacementTargetOriginInScreenCoordinates(popup);
                     if (screenOrigin.HasValue)
                     {
                         try

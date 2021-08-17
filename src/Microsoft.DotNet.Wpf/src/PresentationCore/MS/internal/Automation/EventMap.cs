@@ -12,8 +12,7 @@
 //
 
 using System;
-using System.Collections;
-using System.Security;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
@@ -71,7 +70,9 @@ namespace MS.Internal.Automation
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         private static bool IsKnownNewEvent(int id)
         {
-            if (id == AutomationElementIdentifiers.LiveRegionChangedEvent?.Id)
+            if (   id == AutomationElementIdentifiers.LiveRegionChangedEvent?.Id
+                || id == AutomationElementIdentifiers.NotificationEvent?.Id
+                || id == AutomationElementIdentifiers.ActiveTextPositionChangedEvent?.Id)
             {
                 return true;
             }
@@ -117,6 +118,8 @@ namespace MS.Internal.Automation
                 case AutomationEvents.InputReachedOtherElement:                             eventObject = SynchronizedInputPatternIdentifiers.InputReachedOtherElementEvent; break;
                 case AutomationEvents.InputDiscarded:                                       eventObject = SynchronizedInputPatternIdentifiers.InputDiscardedEvent; break;
                 case AutomationEvents.LiveRegionChanged:                                    eventObject = AutomationElementIdentifiers.LiveRegionChangedEvent; break;
+                case AutomationEvents.Notification:                                         eventObject = AutomationElementIdentifiers.NotificationEvent; break;
+                case AutomationEvents.ActiveTextPositionChanged:                            eventObject = AutomationElementIdentifiers.ActiveTextPositionChangedEvent; break;
 
                 default:
                     throw new ArgumentException(SR.Get(SRID.Automation_InvalidEventId), "eventId");
@@ -141,13 +144,12 @@ namespace MS.Internal.Automation
                 {
                     if (_eventsTable == null)
                     {
-                        _eventsTable = new Hashtable(20, .1f);
+                        _eventsTable = new Dictionary<int, EventInfo>(20);
                         firstEvent = true;
                     }
 
-                    if (_eventsTable.ContainsKey(idEvent))
+                    if (_eventsTable.TryGetValue(idEvent, out EventInfo info))
                     {
-                        EventInfo info = (EventInfo)_eventsTable[idEvent];
                         info.NumberOfListeners++;
                     }
                     else
@@ -172,10 +174,8 @@ namespace MS.Internal.Automation
                 if (_eventsTable != null)
                 {
                     // Decrement the count of listeners for this event
-                    if (_eventsTable.ContainsKey(idEvent))
+                    if (_eventsTable.TryGetValue(idEvent, out EventInfo info))
                     {
-                        EventInfo info = (EventInfo)_eventsTable[idEvent];
-
                         // Update or remove the entry based on remaining listeners
                         info.NumberOfListeners--;
                         if (info.NumberOfListeners <= 0)
@@ -284,7 +284,8 @@ namespace MS.Internal.Automation
             }
         }
 
-        private static Hashtable _eventsTable;        // key=event id, data=listener count
+        private static Dictionary<int, EventInfo> _eventsTable;        // key=event id, data=listener count
         private readonly static object _lock = new object();
     }
 }
+

@@ -10,8 +10,9 @@
                                           and !($(MSBuildProjectName.Contains('_wpftmp')))">true</RunNetFrameworkApiCompat>
   </PropertyGroup>
 
-  <!-- Only enable Ref API Compat for the lib projects using hand-crafted reference assemblies -->
-  <PropertyGroup Condition="'$(RunRefApiCompat)'==''">
+  <!-- Only enable Ref API Compat for the lib projects using hand-crafted reference assemblies,
+  but not if we're generating the reference assemblies -->
+  <PropertyGroup Condition="'$(RunRefApiCompat)'=='' and '$(GenerateReferenceAssemblySource)'==''">
     <RunRefApiCompat>false</RunRefApiCompat>
     <RunRefApiCompat Condition="'$(RefApiCompatNeededProjects)'!=''
                                  and $(RefApiCompatNeededProjects.Contains('$(MSBuildProjectName);'))

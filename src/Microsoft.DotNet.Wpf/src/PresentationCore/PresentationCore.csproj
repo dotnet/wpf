@@ -1,4 +1,4 @@
-﻿<Project>
+<Project>
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);CORE_NATIVEMETHODS;PRESENTATION_CORE;COMMONDPS</DefineConstants>
@@ -9,7 +9,6 @@
     <GenerateResourcesSRNamespace>MS.Internal.PresentationCore</GenerateResourcesSRNamespace>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <Platforms>AnyCPU;x64;arm64</Platforms>
-    <InjectModuleInitializer>true</InjectModuleInitializer>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -335,6 +334,7 @@
     <Compile Include="System\Windows\Duration.cs" />
     <Compile Include="System\Windows\DurationConverter.cs" />
     <Compile Include="System\Windows\EventHandlersStore.cs" />
+    <Compile Include="System\Windows\EventHelper.cs" />
     <Compile Include="System\Windows\EventManager.cs" />
     <Compile Include="System\Windows\EventPrivateKey.cs" />
     <Compile Include="System\Windows\EventRoute.cs" />
@@ -392,6 +392,7 @@
     <Compile Include="System\Windows\UIElement3D.cs" />
     <Compile Include="System\Windows\UIPropertyMetadata.cs" />
     <Compile Include="System\Windows\Automation\AutomationLiveSetting.cs" />
+    <Compile Include="System\Windows\Automation\AutomationHeadingLevel.cs" />
     <Compile Include="System\Windows\Automation\AutomationProperties.cs" />
     <Compile Include="System\Windows\Automation\IsOffscreenBehavior.cs" />
     <Compile Include="System\Windows\Automation\Peers\AutomationPeer.cs" />
@@ -1383,6 +1384,7 @@
     <NetCoreReference Include="System.Diagnostics.TraceSource" />
     <NetCoreReference Include="System.Diagnostics.Tracing" />
     <NetCoreReference Include="System.IO.FileSystem" />
+    <NetCoreReference Include="System.Memory" />
     <NetCoreReference Include="System.Net.Primitives" />
     <NetCoreReference Include="System.Net.Requests" />
     <NetCoreReference Include="System.Net.WebHeaderCollection" />

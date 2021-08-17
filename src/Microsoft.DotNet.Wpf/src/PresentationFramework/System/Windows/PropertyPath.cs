@@ -918,9 +918,10 @@ namespace System.Windows
         // return true if the name has the form:  (nnn)
         internal static bool IsParameterIndex(string name, out int index)
         {
+            ReadOnlySpan<char> toParse;
             if (IsPropertyReference(name))
             {
-                name = name.Substring(1, name.Length - 2);
+                toParse = name.AsSpan(1, name.Length - 2);
             }
             else
             {
@@ -928,7 +929,7 @@ namespace System.Windows
                 return false;
             }
 
-            return Int32.TryParse( name,
+            return Int32.TryParse(toParse,
                                 NumberStyles.Integer,
                                 TypeConverterHelper.InvariantEnglishUS.NumberFormat,
                                 out index);

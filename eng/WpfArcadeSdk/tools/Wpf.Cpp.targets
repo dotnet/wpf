@@ -187,7 +187,7 @@ END
 
     <WriteLinesToFile Lines="@(_ExtendenNativeVersionFileLines)"
                       File="$(NativeResourceFileWithVersionInformation)"
-                      Overwrite="true" />
+                      Overwrite="true" WriteOnlyWhenDifferent="true" />
 
     <ItemGroup>
       <ResourceCompile Remove="$(NativeResourceFileWithVersionInformation)" />
@@ -267,7 +267,7 @@ using namespace System::Runtime::Versioning;
 
     <WriteLinesToFile Lines="@(AssemblyInfoFile->'%(Text)')"
                       File="$(TargetFrameworkMonikerAssemblyAttributesPath)"
-                      Overwrite="true" />
+                      Overwrite="true" WriteOnlyWhenDifferent="true" />
     <ItemGroup>
       <ClCompile Include="$(TargetFrameworkMonikerAssemblyAttributesPath)">
         <!-- The appropriate CompileAsManaged setting will automatically be set depending on the current CLRSupport value -->
@@ -387,7 +387,7 @@ using namespace System::Runtime::Versioning;
 
     <WriteLinesToFile Lines="%(CppClrSupportProject.Text)"
                       File="$(CppCliHelperProject)"
-                      Overwrite="false"/>
+                      Overwrite="false" WriteOnlyWhenDifferent="true" />
 
     <!--
     Do not build - just ask ResolveReferences + IdentifyNetCoreReferences for the information
@@ -541,7 +541,7 @@ using namespace System::Runtime::Versioning;
 
     <WriteLinesToFile Lines="%(CppSupportProject.Text)"
                       File="$(CppHelperProject)"
-                      Overwrite="false"/>
+                      Overwrite="false" WriteOnlyWhenDifferent="true" />
 
     <!--
     Do not build - just ask IdentifyNetCoreReferences for the information

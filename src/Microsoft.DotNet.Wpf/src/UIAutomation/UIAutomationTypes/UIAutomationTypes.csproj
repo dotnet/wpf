@@ -30,12 +30,15 @@
     <Compile Include="MS\Internal\Automation\AutomationIdentifierConstants.cs" />
     <Compile Include="MS\Internal\Automation\CodeQuality_Approved.cs" />
     <Compile Include="MS\Internal\Automation\UiaCoreTypesApi.cs" />
+    <Compile Include="System\Windows\Automation\ActiveTextPositionChangedEventArgs.cs" />
     <Compile Include="System\Windows\Automation\AsyncContentLoadedEventArgs.cs" />
     <Compile Include="System\Windows\Automation\AsyncContentLoadedState.cs" />
     <Compile Include="System\Windows\Automation\AutomationElementIdentifiers.cs" />
     <Compile Include="System\Windows\Automation\AutomationEvent.cs" />
     <Compile Include="System\Windows\Automation\AutomationEventArgs.cs" />
     <Compile Include="System\Windows\Automation\AutomationIdentifier.cs" />
+    <Compile Include="System\Windows\Automation\AutomationNotificationKind.cs" />
+    <Compile Include="System\Windows\Automation\AutomationNotificationProcessing.cs" />
     <Compile Include="System\Windows\Automation\AutomationPattern.cs" />
     <Compile Include="System\Windows\Automation\AutomationProperty.cs" />
     <Compile Include="System\Windows\Automation\AutomationPropertyChangedEventArgs.cs" />
@@ -51,6 +54,7 @@
     <Compile Include="System\Windows\Automation\ItemContainerPatternIdentifiers.cs" />
     <Compile Include="System\Windows\Automation\MultipleViewPatternIdentifiers.cs" />
     <Compile Include="System\Windows\Automation\NoClickablePointException.cs" />
+    <Compile Include="System\Windows\Automation\NotificationEventArgs.cs" />
     <Compile Include="System\Windows\Automation\OrientationType.cs" />
     <Compile Include="System\Windows\Automation\ProxyAssemblyNotLoadedException.cs" />
     <Compile Include="System\Windows\Automation\RangeValuePatternIdentifiers.cs" />
@@ -71,6 +75,8 @@
     <Compile Include="System\Windows\Automation\WindowClosedEventArgs.cs" />
     <Compile Include="System\Windows\Automation\WindowPatternIdentifiers.cs" />
     <Compile Include="System\Windows\Automation\Text\TextEnums.cs" />
+    <Compile Include="System\Windows\Automation\Provider\IRawElementProviderSimple.cs" />
+    <Compile Include="System\Windows\Automation\Provider\ITextRangeProvider.cs" />
   </ItemGroup>
 
   <ItemGroup>

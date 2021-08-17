@@ -35,12 +35,14 @@ GenAPI can be run by setting the following MSBuild property while building.
 When a build is run with that property enabled, GenAPI will read the runtime assembly and generate a new `{AssemblyName}.cs` file under the ref directory in the assembly's source tree.
 
 This new file will contain the newly created surface area and will need to be checked in along with the runtime assembly change.  The next build without `GenerateReferenceAssemblySource` enabled will no longer display an ApiCompat error as the surface area will now match the baseline.
-### Issues with GenAPI
-Often, GenAPI will generate code output that will contain code that is either private, internal, or creates build errors.  For this reason a developer usually cannot just use the output of GenAPI directly.  Instead, the developer should do the following:
+
+### Workflow for GenAPI
+GenAPI generates a lot of code that is either private, internal, or causes build errors.  For this reason a developer usually cannot just use the output of GenAPI directly.  Instead, the developer should do the following:
 * Build with GenAPI enabled
 * Diff the output file against the previous version
-* Extract just the new surface area (and related code) from the generated code
-* Revert the generated file
+* Extract just the new surface area and related code from the generated code (this is typically a very small fraction of the diff)
+* Restore the generated file
 * Add back the new surface area to the reference assembly code
 * Ensure that nothing in the new surface area is private or internal unless requried by XAML compilation or other reference assemblies
+* Restore all other files GenAPI may have generated
 * Rebuild without GenAPI enabled and verify there are no ApiCompat errors

@@ -456,7 +456,7 @@ namespace System.Windows.Xps.Serialization
         {
             do
             {
-                _dispatcher.Invoke(DispatcherPriority.Background, (DispatcherOperationCallback)DoNothingCallback, null);
+                _dispatcher.Invoke(DispatcherPriority.Background, (DispatcherOperationCallback)(_ => null), null);
 
             }
             while (IsAsyncWorkPending());
@@ -492,15 +492,6 @@ namespace System.Windows.Xps.Serialization
             }
 
             return false;
-        }
-
-        private static
-        object
-        DoNothingCallback(
-            object notUsed
-            )
-        {
-            return null;
         }
 
         #endregion private methods

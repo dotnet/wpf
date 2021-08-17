@@ -18,6 +18,7 @@
     <AlwaysCompileMarkupFilesInSeparateDomain Condition="'$(BuildingInsideVisualStudio)' == 'true' and '$(AlwaysCompileMarkupFilesInSeparateDomain)' == ''">true</AlwaysCompileMarkupFilesInSeparateDomain>
     <AlwaysCompileMarkupFilesInSeparateDomain Condition="'$(AlwaysCompileMarkupFilesInSeparateDomain)' == '' ">true</AlwaysCompileMarkupFilesInSeparateDomain>
     <LocalizationDirectivesToLocFile Condition="'$(LocalizationDirectivesToLocFile)' == ''">None</LocalizationDirectivesToLocFile>
+
   </PropertyGroup>
 
   <!-- Some Default Settings -->

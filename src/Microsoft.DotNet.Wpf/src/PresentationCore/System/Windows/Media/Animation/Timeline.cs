@@ -1093,17 +1093,17 @@ namespace System.Windows.Media.Animation
             if (AccelerationRatio != 0.0f)
             {
                 builder.Append(", AccelerationRatio = ");
-                builder.Append(AccelerationRatio.ToString());
+                builder.Append(AccelerationRatio);
             }
             if (AutoReverse != false)
             {
                 builder.Append(", AutoReverse = ");
-                builder.Append(AutoReverse.ToString());
+                builder.Append(AutoReverse);
             }
             if (DecelerationRatio != 0.0f)
             {
                 builder.Append(", DecelerationRatio = ");
-                builder.Append(DecelerationRatio.ToString());
+                builder.Append(DecelerationRatio);
             }
             if (Duration != Duration.Automatic)
             {

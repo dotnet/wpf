@@ -257,8 +257,8 @@ namespace System.Windows.Markup
                 Debug.Assert(   unit == FigureUnitType.Pixel 
                             ||  DoubleUtil.AreClose(unitFactor, 1.0)    );
 
-                string valueString = goodString.Substring(0, strLen - strLenUnit);
-                value = Convert.ToDouble(valueString, cultureInfo) * unitFactor;
+                ReadOnlySpan<char> valueString = goodString.AsSpan(0, strLen - strLenUnit);
+                value = double.Parse(valueString, provider: cultureInfo) * unitFactor;
             }
         }
 

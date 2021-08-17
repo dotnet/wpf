@@ -126,7 +126,7 @@ bool DoesUseMipMapping(MilBitmapInterpolationMode::Enum interpolationMode)
 
 UINT GetPaddedByteCount(UINT cbSize)
 {
-    // We want precisely one of _X86_, _AMD64_, _ARM_, or _ARM64+ to be defined. 
+    // We want precisely one of _X86_, _AMD64_, _ARM_, or _ARM64_ to be defined. 
 #if !((!defined(_X86_) && defined(_AMD64_) && !defined(_ARM_) && !defined(_ARM64_)) || \
       (defined(_X86_) && !defined(_AMD64_) && !defined(_ARM_) && !defined(_ARM64_)) || \
       (!defined(_X86_) && !defined(_AMD64_) && defined(_ARM_) && !defined(_ARM64_)) || \

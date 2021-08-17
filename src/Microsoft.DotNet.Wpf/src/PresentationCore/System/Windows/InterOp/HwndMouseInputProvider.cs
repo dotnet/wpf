@@ -152,15 +152,15 @@ namespace System.Windows.Interop
             // WORKAROUND for the fact that WM_MOUSELEAVE not sent when capture changes
             if (success && !_active)
             {
-                NativeMethods.POINT ptCursor = new NativeMethods.POINT();
+                NativeMethods.POINT ptCursor = default;
 
-                success = UnsafeNativeMethods.TryGetCursorPos(ptCursor);
+                success = UnsafeNativeMethods.TryGetCursorPos(ref ptCursor);
 
                 if(success)
                 {
                     try
                     {
-                        SafeNativeMethods.ScreenToClient(new HandleRef(this, _source.Value.CriticalHandle), ptCursor);
+                        SafeNativeMethods.ScreenToClient(new HandleRef(this, _source.Value.CriticalHandle), ref ptCursor);
                     }
                     catch(System.ComponentModel.Win32Exception)
                     {
@@ -334,7 +334,7 @@ namespace System.Windows.Interop
                 return result;
             }
             /*
-            NativeMethods.POINT ptCursor = new NativeMethods.POINT();
+            NativeMethods.POINT ptCursor = default;
             int messagePos = 0;
             try
             {
@@ -471,7 +471,7 @@ namespace System.Windows.Interop
                     NativeMethods.POINT pt = new NativeMethods.POINT(x,y);
                     try
                     {
-                        SafeNativeMethods.ScreenToClient(new HandleRef(this,hwnd), pt);
+                        SafeNativeMethods.ScreenToClient(new HandleRef(this,hwnd), ref pt);
 
                         x = pt.x;
                         y = pt.y;
@@ -806,22 +806,24 @@ namespace System.Windows.Interop
                         // the queue to do this work. If a WM_MOUSEMOVE comes in earlier, then the operation
                         // is aborted, else it comes through and we update the cursor.
                         _queryCursorOperation = Dispatcher.BeginInvoke(DispatcherPriority.Input,
-                            (DispatcherOperationCallback)delegate(object sender)
+                            (DispatcherOperationCallback)(sender =>
                             {
+                                HwndMouseInputProvider thisRef = (HwndMouseInputProvider)sender;
+
                                 // Since this is an asynchronous operation and an arbitrary amount of time has elapsed
                                 // since we received the WM_SETCURSOR, we need to be careful that the mouse hasn't
                                 // been deactivated in the meanwhile. This is also another reason that we do not ReportInput,
                                 // because the implicit assumption in doing that is to activate the MouseDevice. All we want
                                 // to do is passively try to update the cursor.
-                                if (_active)
+                                if (thisRef._active)
                                 {
                                     Mouse.UpdateCursor();
                                 }
 
-                                _queryCursorOperation = null;
+                                thisRef._queryCursorOperation = null;
                                 return null;
-                            },
-                            null);
+                            }),
+                            this);
                     }
 
                     // MITIGATION_SETCURSOR
@@ -956,7 +958,7 @@ namespace System.Windows.Interop
                     {
                         NativeMethods.RECT rcClient = new NativeMethods.RECT();
                         SafeNativeMethods.GetClientRect(new HandleRef(this,hwndToCheck), ref rcClient);
-                        SafeNativeMethods.ScreenToClient(new HandleRef(this,hwndToCheck), ptCursor);
+                        SafeNativeMethods.ScreenToClient(new HandleRef(this,hwndToCheck), ref ptCursor);
 
                         if(ptCursor.x < rcClient.left || ptCursor.x >= rcClient.right ||
                            ptCursor.y < rcClient.top || ptCursor.y >= rcClient.bottom)
@@ -1163,10 +1165,10 @@ namespace System.Windows.Interop
                     {
                         // If we get this far, "A" does NOT have capture
                         // - now ensure mouse is over "A"
-                        NativeMethods.POINT ptCursor = new NativeMethods.POINT();
+                        NativeMethods.POINT ptCursor = default;
                         try
                         {
-                            UnsafeNativeMethods.GetCursorPos(ptCursor);
+                            UnsafeNativeMethods.GetCursorPos(ref ptCursor);
                         }
                         catch(System.ComponentModel.Win32Exception)
                         {

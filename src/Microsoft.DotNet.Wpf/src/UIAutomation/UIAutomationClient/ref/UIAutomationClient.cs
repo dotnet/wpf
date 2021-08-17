@@ -29,6 +29,7 @@ namespace System.Windows.Automation
         internal AutomationElement() { }
         public static readonly System.Windows.Automation.AutomationProperty AcceleratorKeyProperty;
         public static readonly System.Windows.Automation.AutomationProperty AccessKeyProperty;
+        public static readonly System.Windows.Automation.AutomationEvent ActiveTextPositionChangedEvent;
         public static readonly System.Windows.Automation.AutomationEvent AsyncContentLoadedEvent;
         public static readonly System.Windows.Automation.AutomationEvent AutomationFocusChangedEvent;
         public static readonly System.Windows.Automation.AutomationProperty AutomationIdProperty;
@@ -40,9 +41,11 @@ namespace System.Windows.Automation
         public static readonly System.Windows.Automation.AutomationProperty CultureProperty;
         public static readonly System.Windows.Automation.AutomationProperty FrameworkIdProperty;
         public static readonly System.Windows.Automation.AutomationProperty HasKeyboardFocusProperty;
+        public static readonly System.Windows.Automation.AutomationProperty HeadingLevelProperty;
         public static readonly System.Windows.Automation.AutomationProperty HelpTextProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsContentElementProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsControlElementProperty;
+        public static readonly System.Windows.Automation.AutomationProperty IsDialogProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsDockPatternAvailableProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsEnabledProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsExpandCollapsePatternAvailableProperty;
@@ -78,6 +81,7 @@ namespace System.Windows.Automation
         public static readonly System.Windows.Automation.AutomationEvent MenuOpenedEvent;
         public static readonly System.Windows.Automation.AutomationProperty NameProperty;
         public static readonly System.Windows.Automation.AutomationProperty NativeWindowHandleProperty;
+        public static readonly System.Windows.Automation.AutomationEvent NotificationEvent;
         public static readonly object NotSupported;
         public static readonly System.Windows.Automation.AutomationProperty OrientationProperty;
         public static readonly System.Windows.Automation.AutomationProperty PositionInSetProperty;
@@ -277,6 +281,19 @@ namespace System.Windows.Automation
             public int ColumnCount { get { throw null; } }
             public int RowCount { get { throw null; } }
         }
+    }
+    internal enum HeadingLevel
+    {
+        None = 80050,
+        Level1,
+        Level2,
+        Level3,
+        Level4,
+        Level5,
+        Level6,
+        Level7,
+        Level8,
+        Level9,
     }
     public partial class InvokePattern : System.Windows.Automation.BasePattern
     {

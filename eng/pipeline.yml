@@ -47,12 +47,6 @@ jobs:
           value: real
         - name: _SignArgs
           value: ''
-
-        # needed for darc (dependency flow) publishing
-        - name: _PublishType
-          value: none
-        - name: _DotNetPublishToBlobFeed
-          value: false
         - name: _PublishArgs
           value: ''
         - name: _OfficialBuildIdArgs
@@ -73,24 +67,26 @@ jobs:
           value: ''
         - name: _HelixCreator
           value: ${{ parameters.repoName }}
-        - name: _InternalRuntimeDownloadArgs
-          value: ''
+        - ${{ if ne(variables['System.TeamProject'], 'internal') }}:
+          - name: _InternalRuntimeDownloadArgs
+            value: ''
+        - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+          - group: DotNet-MSRC-Storage
+          - group: AzureDevOps-Artifact-Feeds-Pats
+          - name: _InternalRuntimeDownloadArgs
+            value: >-
+              /p:DotNetRuntimeSourceFeed=https://dotnetclimsrc.blob.core.windows.net/dotnet
+              /p:DotNetRuntimeSourceFeedKey=$(dotnetclimsrc-read-sas-token-base64)
 
 
         # Override some values if we're building internally
         - ${{ if eq(parameters.runAsPublic, 'false') }}:
           # note: You have to use list syntax here (- name: value) or you will get errors about declaring the same variable multiple times
-          - name: _PublishType
-            value: blob
           - name: _SignType
             value: real
-          - name: _DotNetPublishToBlobFeed
-            value: true
           - group: DotNet-Blob-Feed
           - group: DotNet-Symbol-Server-Pats
           - group: DotNet-HelixApi-Access
-          - name: _PublishBlobFeedUrl
-            value: https://dotnetfeed.blob.core.windows.net/dotnet-windowsdesktop/index.json
 
           # note: Even though they are referenced here, user defined variables (like $(_SignType)) are not resolved 
           # until the agent is running on the machine. They can be overridden any time before they are resolved,
@@ -98,13 +94,8 @@ jobs:
           - name: _SignArgs
             value: /p:DotNetSignType=$(_SignType) /p:TeamName=$(_TeamName)
           - name: _PublishArgs
-            value: /p:DotNetPublishBlobFeedKey=$(dotnetfeed-storage-access-key-1)
-              /p:DotNetPublishBlobFeedUrl=$(_PublishBlobFeedUrl)
-              /p:DotNetPublishToBlobFeed=$(_DotNetPublishToBlobFeed)
+            value: 
               /p:DotNetPublishUsingPipelines=$(_PublishUsingPipelines)
-              /p:DotNetArtifactsCategory=$(_DotNetArtifactsCategory)
-              /p:DotNetSymbolServerTokenMsdl=$(microsoft-symbol-server-pat)
-              /p:DotNetSymbolServerTokenSymWeb=$(symweb-symbol-server-pat)
           - name: _OfficialBuildIdArgs
             value: /p:OfficialBuildId=$(BUILD.BUILDNUMBER)
           - name: _PublicBuildPipeline
@@ -117,10 +108,6 @@ jobs:
             value: '' #if _HelixToken is set, Creator must be empty
           - name: _TestHelixAgentPool
             value: 'Windows.10.Amd64.ClientRS5' # Preferred: 'Windows.10.Amd64%3bWindows.7.Amd64%3bWindows.10.Amd64.ClientRS5'
-          - group: DotNet-MSRC-Storage
-          - name: _InternalRuntimeDownloadArgs
-            value: /p:DotNetRuntimeSourceFeed=https://dotnetclimsrc.blob.core.windows.net/dotnet
-              /p:DotNetRuntimeSourceFeedKey=$(dotnetclimsrc-read-sas-token-base64)
 
       strategy:
         matrix:

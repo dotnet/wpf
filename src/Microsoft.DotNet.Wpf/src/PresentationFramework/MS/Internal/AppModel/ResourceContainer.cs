@@ -252,9 +252,7 @@ namespace MS.Internal.AppModel
             // We do not care about assemblies loaded into the reflection-only context or the Gaced assemblies.
             // For example, in Sparkle whenever a project is built all dependent assemblies will be loaded reflection only.
             // We do no care about those. Only when a assembly is loaded into the execution context, we will need to update the cache. 
-            #pragma warning disable SYSLIB0005 // 'Assembly.GlobalAssemblyCache' is obsolete.
-            if ((!assembly.ReflectionOnly) && (!assembly.GlobalAssemblyCache))
-            #pragma warning restore SYSLIB0005 // 'Assembly.GlobalAssemblyCache' is obsolete.
+            if ((!assembly.ReflectionOnly))
             {
                 AssemblyName assemblyInfo = new AssemblyName(assembly.FullName);
 

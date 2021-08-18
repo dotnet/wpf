@@ -52,9 +52,7 @@ namespace MS.Win32
         }
 
         [DllImport(ExternDll.Gdi32, ExactSpelling = true, CharSet = CharSet.Auto)]
-        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
-        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
+
         [ResourceExposure(ResourceScope.None)]
         public static extern bool DeleteDC(IntPtr hDC);
     }

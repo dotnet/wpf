@@ -37,40 +37,7 @@ namespace MS.Internal
 
         internal void FilterCallback(Object sender, AssemblyLoadEventArgs args)
         {
-            // This code is reentrant
-            lock (_lock)
-            {
-                // Extract assembly
-                Assembly a = args.LoadedAssembly;
-                // xmlns cache loads assemblies as reflection only and we cannot inspect these using the code below
-                // so we ignore also keeping this first is super important because the first time cost is really high
-                // other wise also we cannot do any processing on a reflection only assembly aside from reflection based actions
-                if (!a.ReflectionOnly)
-                {
-                    // check if it is in the Gac , this ensures that we eliminate any non GAC assembly which are of no risk
-                    #pragma warning disable SYSLIB0005 // 'Assembly.GlobalAssemblyCache' is obsolete.
-                    if (a.GlobalAssemblyCache)
-                    #pragma warning restore SYSLIB0005 // 'Assembly.GlobalAssemblyCache' is obsolete.
-                    {
-                        string assemblyName = AssemblyNameWithFileVersion(a);
-                        // If we are on the disallowed list kill the application domain
-                        if (AssemblyOnDisallowedList(assemblyName))
-                        {
-                            // Kill the application domain
-                            UnsafeNativeMethods.ProcessUnhandledException_DLL(SR.Get(SRID.KillBitEnforcedShutdown) + assemblyName);
-                            // I want to ensure that the process really dies
-                            try
-                            {
-                                System.Environment.Exit(-1);
-                            }
-                            finally
-                            {
-                                Debug.Fail("Environment.Exit() failed.");
-                            }
-                        }
-                    }
-                }
-            }
+            /* This method no longer applies to .NET Core and should be removed. */
         }
 
         //appends assembly name with file version to generate a unique entry for the assembly lookup process

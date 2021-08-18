@@ -692,14 +692,14 @@ namespace MS.Internal.Automation
 
                 case EventArgsType.Notification:
                     {
-                        UiaNotificationEventArgs nargs = (UiaNotificationEventArgs)Marshal.PtrToStructure(argsAddr, typeof(UiaNotificationEventArgs));
+                        UiaNotificationEventArgs nargs = Marshal.PtrToStructure<UiaNotificationEventArgs>(argsAddr);
                         return new NotificationEventArgs(nargs._notificationKind, nargs._notificationProcessing,
                             Marshal.PtrToStringUni(nargs._displayString), Marshal.PtrToStringUni(nargs._activityId));
                     }
 
                 case EventArgsType.ActiveTextPositionChanged:
                     {
-                        UiaActiveTextPositionChangedEventArgs atpcargs = (UiaActiveTextPositionChangedEventArgs)Marshal.PtrToStructure(argsAddr, typeof(UiaActiveTextPositionChangedEventArgs));
+                        UiaActiveTextPositionChangedEventArgs atpcargs = Marshal.PtrToStructure<UiaActiveTextPositionChangedEventArgs>(argsAddr);
                         return new ActiveTextPositionChangedEventArgs(atpcargs._textRange);
                     }
             }

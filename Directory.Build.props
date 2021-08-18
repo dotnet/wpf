@@ -4,11 +4,6 @@
     <WindowsDesktopARM64Support>true</WindowsDesktopARM64Support>
   </PropertyGroup>
 
-  <!-- Disable global usings, as those require 'preview' language version -->
-  <PropertyGroup>
-    <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
-  </PropertyGroup>
-
   <!-- Normalize $(TestWpfArcadeSdkPath) by appending a '\' to it if one is missing -->
   <PropertyGroup Condition="'$(TestWpfArcadeSdkPath)'!=''">
     <WpfArcadeSdkPath>$(TestWpfArcadeSdkPath)</WpfArcadeSdkPath>

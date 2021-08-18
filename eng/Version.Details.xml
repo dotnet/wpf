@@ -77,9 +77,9 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>69de57bcf2677238bbfb88e601bc38b89dc11dc0</Sha>
     </Dependency>
-    <Dependency Name="VS.Redist.Common.NetCore.SharedFramework.x64.6.0" Version="6.0.0-rc.1.21406.5" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="VS.Redist.Common.NetCore.SharedFramework.x64.7.0" Version="7.0.0-alpha.1.21418.2" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
-      <Sha>58efa4b79751a2dad08d9bf7ca67930f8160afe3</Sha>
+      <Sha>69de57bcf2677238bbfb88e601bc38b89dc11dc0</Sha>
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>

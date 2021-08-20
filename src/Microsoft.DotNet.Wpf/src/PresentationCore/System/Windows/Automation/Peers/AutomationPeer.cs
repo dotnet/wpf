@@ -1181,7 +1181,14 @@ namespace System.Windows.Automation.Peers
             try
             {
                 _publicCallInProgress = true;
-                result = GetClickablePointCore();
+                if (IsOffscreenCore())
+                {
+                    result = new Point(double.NaN, double.NaN);
+                }
+                else
+                {
+                    result = GetClickablePointCore();
+                }
             }
             finally
             {

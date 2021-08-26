@@ -246,30 +246,12 @@ namespace System.Windows.Xps.Serialization
             Type    type
             )
         {
-            bool bSupported = false;
-
-            foreach (Type t in SupportedTargetTypes)
-            {
-                if (t.Equals(type))
-                {
-                    bSupported = true;
-                    break;
-                }
-            }
-
-            return bSupported;
+            return typeof(Uri).Equals(type);
         }
 
         #endregion Private static helper methods
 
         #region Private static data
-
-        /// <summary>
-        /// A table of supported types for this type converter
-        /// </summary>
-        private static Type[] SupportedTargetTypes = {
-            typeof(Uri)
-        };
 
         #endregion Private static data
     }

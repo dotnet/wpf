@@ -201,6 +201,33 @@ namespace System.Windows.Controls.Primitives
             return (bool) element.GetValue(IsSelectionActiveProperty);
         }
 
+        public static readonly DependencyProperty SelectableProperty =
+            DependencyProperty.RegisterAttached(
+                "SelectableProperty",
+                typeof(bool),
+                typeof(Selector),
+                new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        public static bool GetSelectable(DependencyObject element)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+
+            return (bool) element.GetValue(SelectableProperty);
+        }
+
+        public static void SetSelectable(DependencyObject element, bool selectable)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+
+            element.SetValue(SelectableProperty, BooleanBoxes.Box(selectable));
+        }
+
         /// <summary>
         ///     Specifies whether a UI container for an item in a Selector should appear selected.
         /// </summary>
@@ -1865,7 +1892,19 @@ namespace System.Windows.Controls.Primitives
         {
             if (item != null)
             {
-                return !(item is Separator);
+                if (item is Separator)
+                {
+                    return false;
+                }
+                else
+                {
+                    if (item is DependencyObject dependencyObject)
+                    {
+                        return GetSelectable(dependencyObject);
+                    }
+
+                    return true;
+                }
             }
 
             return false;

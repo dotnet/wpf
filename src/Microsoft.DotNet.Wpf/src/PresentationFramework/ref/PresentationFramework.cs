@@ -8436,6 +8436,7 @@ namespace System.Windows.Controls.Primitives
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public abstract partial class Selector : System.Windows.Controls.ItemsControl
     {
+        public static readonly System.Windows.DependencyProperty SelectableProperty;
         public static readonly System.Windows.DependencyProperty IsSelectedProperty;
         public static readonly System.Windows.DependencyProperty IsSelectionActiveProperty;
         public static readonly System.Windows.DependencyProperty IsSynchronizedWithCurrentItemProperty;
@@ -8475,6 +8476,7 @@ namespace System.Windows.Controls.Primitives
         public static void AddSelectedHandler(System.Windows.DependencyObject element, System.Windows.RoutedEventHandler handler) { }
         public static void AddUnselectedHandler(System.Windows.DependencyObject element, System.Windows.RoutedEventHandler handler) { }
         protected override void ClearContainerForItemOverride(System.Windows.DependencyObject element, object item) { }
+        public static bool GetSelectable(System.Windows.DependencyObject element) { throw null; }
         [System.Windows.AttachedPropertyBrowsableForChildrenAttribute]
         public static bool GetIsSelected(System.Windows.DependencyObject element) { throw null; }
         public static bool GetIsSelectionActive(System.Windows.DependencyObject element) { throw null; }
@@ -8487,6 +8489,7 @@ namespace System.Windows.Controls.Primitives
         public static void RemoveSelectedHandler(System.Windows.DependencyObject element, System.Windows.RoutedEventHandler handler) { }
         public static void RemoveUnselectedHandler(System.Windows.DependencyObject element, System.Windows.RoutedEventHandler handler) { }
         public static void SetIsSelected(System.Windows.DependencyObject element, bool isSelected) { }
+        public static void SetSelectable(System.Windows.DependencyObject element, bool selectable) { }
     }
     [System.Windows.StyleTypedPropertyAttribute(Property="ItemContainerStyle", StyleTargetType=typeof(System.Windows.Controls.Primitives.StatusBarItem))]
     public partial class StatusBar : System.Windows.Controls.ItemsControl

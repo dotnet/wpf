@@ -196,16 +196,14 @@ namespace System.Windows.Input
                 {
                     //copy the rest of the data
                     data = new int[dataLength];
-                    for (int localIndex = 0, rawArrayIndex = i + startIndex; localIndex < data.Length; localIndex++, rawArrayIndex++)
-                    {
-                        data[localIndex] = rawPacketData[rawArrayIndex];
-                    }
+                    var rawArrayStartIndex = i + startIndex;
+                    Array.Copy(rawPacketData, rawArrayStartIndex, data, 0, dataLength);
                 }
 
                 StylusPoint newPoint = new StylusPoint(p.X, p.Y, StylusPoint.DefaultPressure, _stylusPointDescription, data, false, false);
                 if (containsTruePressure)
                 {
-                    //use the algoritm to set pressure in StylusPoint
+                    //use the algorithm to set pressure in StylusPoint
                     int pressure = rawPacketData[i + 2];
                     newPoint.SetPropertyValue(StylusPointProperties.NormalPressure, pressure);
                 }

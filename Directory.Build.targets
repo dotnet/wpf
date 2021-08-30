@@ -11,7 +11,7 @@
        https://github.com/dotnet/wpf/issues/5224 -->
   <Target Name="_RemoveFrameworkReferenceAnalyzers" AfterTargets="ResolveTargetingPackAssets">
     <ItemGroup>
-      <Analyzer Remove="@(Analyzer)" Condition="'%(Analyzer.FrameworkReferenceName)' != '' and $([System.String]::Copy('%(Directory)').IndexOf('analyzers', StringComparison.OrdinalIgnoreCase)) > 0" />
+      <Analyzer Remove="@(Analyzer)" Condition="'%(Analyzer.FrameworkReferenceName)' != ''" />
     </ItemGroup>
   </Target>
 </Project>

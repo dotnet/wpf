@@ -195,9 +195,8 @@ namespace System.Windows.Input
                 if (dataLength > 0)
                 {
                     //copy the rest of the data
-                    data = new int[dataLength];
                     var rawArrayStartIndex = i + startIndex;
-                    Array.Copy(rawPacketData, rawArrayStartIndex, data, 0, dataLength);
+                    data = rawPacketData.AsSpan(rawArrayStartIndex, dataLength).ToArray();
                 }
 
                 StylusPoint newPoint = new StylusPoint(p.X, p.Y, StylusPoint.DefaultPressure, _stylusPointDescription, data, false, false);

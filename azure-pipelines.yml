@@ -73,7 +73,7 @@ stages:
         # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
         pool:
           name: NetCoreInternal-Pool
-          queue: buildpool.windows.10.amd64.vs2019.pre
+          queue: BuildPool.Windows.Amd64.VS2022.Pre
         # runAsPublic is used in expressions, which can't read from user-defined variables
         runAsPublic: false
 

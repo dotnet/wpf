@@ -874,9 +874,9 @@ namespace MS.Internal.IO.Packaging
             // Get[Algorithm]PrivateKey methods would always have returned the private key if the PrivateKey property would
             // But Get[Algorithm]PrivateKey methods never throw but returns null in case of error during cryptographic operations
             // But we want exception to be thrown when an error occurs during a cryptographic operation so that we can revert the changes
-            #pragma warning disable SYSLIB0028
-            return cert.PrivateKey;
-            #pragma warning restore SYSLIB0028
+
+            //x509Certificate2.PrivateKey is Obsolete. If we can't retrieve the private key, throw the exception.
+            throw new ArgumentException(SR.Get(SRID.CertificateKeyTypeNotSupported), "cert");
         }
 
         /// <summary>

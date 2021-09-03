@@ -14,8 +14,6 @@
   <!-- Packages that come from https://github.com/dotnet/coreclr -->
   <PropertyGroup>
     <MicrosoftNETCoreRuntimeCoreCLRVersion>5.0.0-alpha1.19562.1</MicrosoftNETCoreRuntimeCoreCLRVersion>
-    <MicrosoftNETCoreILDAsmVersion>7.0.0-alpha.1.21427.1</MicrosoftNETCoreILDAsmVersion>
-    <MicrosoftNETCoreILAsmVersion>7.0.0-alpha.1.21427.1</MicrosoftNETCoreILAsmVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>

@@ -1,5 +1,5 @@
 # GenApi Usage in WPF on .NET Core
-In WPF on .NET Core, C# reference assemblies are created via the use of [GenAPI](https://github.com/dotnet/arcade/tree/master/src/Microsoft.DotNet.GenAPI) and a separate reference assembly project located in the `ref` directory under a particular assemblies source directory.
+In WPF on .NET Core, C# reference assemblies are created via the use of [GenAPI](https://github.com/dotnet/arcade/tree/main/src/Microsoft.DotNet.GenAPI) and a separate reference assembly project located in the `ref` directory under a particular assemblies source directory.
 
 WPF assemblies make extensive use of the [InternalsVisibleToAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.internalsvisibletoattribute?view=netcore-3.0) which precludes the use of [ProduceReferenceAssembly](https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties?view=vs-2019) or [ProduceOnlyReferenceAssembly](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/refonly-compiler-option).  This is because these compiler options will include internal types and members in the reference assembly.  In WPF, this creates dangling references to assemblies that do not exist in the `WindowsDesktop` reference pack.
 

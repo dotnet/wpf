@@ -176,7 +176,7 @@ If you don't have the ability to build from source, you can update the *.runtime
 ```
 
 #### Finding a specific version of Microsoft.WindowsDesktop.App that interests you
-Follow the steps defined [here](https://github.com/dotnet/arcade/blob/master/Documentation/SeePackagesLatestVersion.md) to get setup for [swagger API](https://maestro-prod.westus2.cloudapp.azure.com/swagger/ui/index.html). Note that you need to authorize each time you login, so keep note of your token or you'll have to generate a new one. Assuming you have a commit (and therefore an Azure DevOps build id) that you are interested in, you can enter the build id into your query.
+Follow the steps defined [here](https://github.com/dotnet/arcade/blob/main/Documentation/SeePackagesLatestVersion.md) to get setup for [swagger API](https://maestro-prod.westus2.cloudapp.azure.com/swagger/ui/index.html). Note that you need to authorize each time you login, so keep note of your token or you'll have to generate a new one. Assuming you have a commit (and therefore an Azure DevOps build id) that you are interested in, you can enter the build id into your query.
 
 ### Testing PresentationBuildTasks
 -- add more content here --

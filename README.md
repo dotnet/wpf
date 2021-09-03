@@ -1,7 +1,7 @@
 # Windows Presentation Foundation (WPF)
 [![.NET Foundation](https://img.shields.io/badge/.NET%20Foundation-blueviolet.svg)](https://www.dotnetfoundation.org/)
 [![Build Status](https://dnceng.visualstudio.com/public/_apis/build/status/dotnet/wpf/dotnet-wpf%20CI)](https://dnceng.visualstudio.com/public/_build/latest?definitionId=270)
-[![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/dotnet/wpf/blob/master/LICENSE.TXT)
+[![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/dotnet/wpf/blob/main/LICENSE.TXT)
 
 Windows Presentation Foundation (WPF) is a UI framework for building Windows desktop applications. WPF supports a broad set of application development features, including an application model, resources, controls, graphics, layout, data binding and documents. WPF uses the Extensible Application Markup Language (XAML) to provide a declarative model for application programming.
 
@@ -39,7 +39,7 @@ The Visual Studio WPF designer is now available as part of Visual Studio 2019.
 
 Some of the best ways to contribute are to try things out, file bugs, join in design conversations, and fix issues.
 
-* This repo defines [contributing guidelines](Documentation/contributing.md) and also follows the more general [.NET Core contributing guide](https://github.com/dotnet/runtime/blob/master/CONTRIBUTING.md).
+* This repo defines [contributing guidelines](Documentation/contributing.md) and also follows the more general [.NET Core contributing guide](https://github.com/dotnet/runtime/blob/main/CONTRIBUTING.md).
 * If you have a question or have found a bug, [file an issue](https://github.com/dotnet/wpf/issues/new).
 * Use [daily builds](Documentation/getting-started.md#installation) if you want to contribute and stay up to date with the team.
 

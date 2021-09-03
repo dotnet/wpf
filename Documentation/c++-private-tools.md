@@ -8,7 +8,7 @@ A fix was available in mid Mar, 2019, but this change could not make it into Dev
 
 In collaboration with the C++ team, we decided to build our repo using private (but signed) copies of `c1xx.dll` and `msvcurt(d)_netcore.dll`. 
 
-We have uploaded these private DLL's to an Azure blob at this location using Arcade's [_Native Toolset Bootstrapping_](https://github.com/dotnet/arcade/blob/master/Documentation/NativeToolBootstrapping.md) process. 
+We have uploaded these private DLL's to an Azure blob at this location using Arcade's [_Native Toolset Bootstrapping_](https://github.com/dotnet/arcade/blob/main/Documentation/NativeToolBootstrapping.md) process. 
 
 This results in the the packages being uploaded to locations like these: 
 
@@ -36,7 +36,7 @@ In Azure Storage Explorer, the blobs can be found at this location:
          - msvcurt-c1xx-0.0.0.3-win32-x86.zip
 ```
 
-Writing to this storage account requires special permissions and is only available to Microsoft Employees - please work with DncEng if you need to do this. Also refer to [Native Toolset Bootstrapping documentation](https://github.com/dotnet/arcade/blob/master/Documentation/NativeToolBootstrapping.md).
+Writing to this storage account requires special permissions and is only available to Microsoft Employees - please work with DncEng if you need to do this. Also refer to [Native Toolset Bootstrapping documentation](https://github.com/dotnet/arcade/blob/main/Documentation/NativeToolBootstrapping.md).
 
 
 #### How does msvcurt-c1xx work? 

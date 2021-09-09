@@ -876,7 +876,7 @@ namespace MS.Internal.IO.Packaging
             // But we want exception to be thrown when an error occurs during a cryptographic operation so that we can revert the changes
 
             //x509Certificate2.PrivateKey is Obsolete. If we can't retrieve the private key, throw the exception.
-            throw new ArgumentException(SR.Get(SRID.CertificateKeyTypeNotSupported), "cert");
+            throw new NotSupportedException(SR.Get(SRID.CertificateKeyTypeNotSupported));
         }
 
         /// <summary>

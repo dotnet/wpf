@@ -52,13 +52,10 @@ namespace MS.Internal.Tasks
         // </summary>
         internal static void DisplayLogo(TaskLoggingHelper log, string taskName)
         {
-            string acPath = Assembly.GetExecutingAssembly().Location;
-            FileVersionInfo acFileVersionInfo = FileVersionInfo.GetVersionInfo(acPath);
-
-            string avalonFileVersion = acFileVersionInfo.FileVersion;
+            Version avalonFileVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
             log.LogMessage(MessageImportance.Low,Environment.NewLine);
-            log.LogMessageFromResources(MessageImportance.Low, SRID.TaskLogo, taskName, avalonFileVersion);
+            log.LogMessageFromResources(MessageImportance.Low, SRID.TaskLogo, taskName, avalonFileVersion.ToString());
             log.LogMessageFromResources(MessageImportance.Low, SRID.TaskRight);
             log.LogMessage(MessageImportance.Low, Environment.NewLine);
         }

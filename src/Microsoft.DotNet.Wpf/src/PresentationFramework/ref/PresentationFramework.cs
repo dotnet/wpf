@@ -11057,6 +11057,7 @@ namespace System.Windows.Documents.Serialization
         public string ManufacturerName { get { throw null; } }
         public System.Uri ManufacturerWebsite { get { throw null; } }
         public System.Version WinFXVersion { get { throw null; } }
+        [System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("SingleFile", "IL3000:Avoid accessing Assembly file path when publishing as a single file")]
         public static System.Windows.Documents.Serialization.SerializerDescriptor CreateFromFactoryInstance(System.Windows.Documents.Serialization.ISerializerFactory factoryInstance) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }

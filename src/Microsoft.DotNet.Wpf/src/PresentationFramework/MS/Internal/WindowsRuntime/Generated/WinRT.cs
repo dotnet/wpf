@@ -15,6 +15,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Linq.Expressions;
+using System.Diagnostics.CodeAnalysis;
 
 #pragma warning disable 0169 // The field 'xxx' is never used
 #pragma warning disable 0649 // Field 'xxx' is never assigned to, and will always have its default value
@@ -111,6 +112,8 @@ namespace WinRT
         readonly DllGetActivationFactory _GetActivationFactory;
         readonly DllCanUnloadNow _CanUnloadNow; // TODO: Eventually periodically call
 
+        // Fix for this single file dangerous pattern needs to come from CsWinRT repo https://github.com/microsoft/CsWinRT/issues/992
+        [UnconditionalSuppressMessage ("SingleFile", "IL3000:Avoid accessing Assembly file path when publishing as a single file")]
         static readonly string _currentModuleDirectory = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
         static Dictionary<string, DllModule> _cache = new System.Collections.Generic.Dictionary<string, DllModule>();

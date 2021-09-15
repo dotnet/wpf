@@ -43,13 +43,12 @@ namespace MS.Internal
         //appends assembly name with file version to generate a unique entry for the assembly lookup process
         private string AssemblyNameWithFileVersion(Assembly a)
         {
-            FileVersionInfo fileVersionInfo;
             StringBuilder sb = new StringBuilder(a.FullName);
 
-            fileVersionInfo = FileVersionInfo.GetVersionInfo(a.Location);
-            if (fileVersionInfo != null && fileVersionInfo.ProductVersion != null)
+            Version assemblyVersion = a.GetName().Version;
+            if (assemblyVersion != null)
             {
-                sb.Append(FILEVERSION_STRING + fileVersionInfo.ProductVersion);
+                sb.Append(FILEVERSION_STRING + assemblyVersion.ToString());
             }
             return ((sb.ToString()).ToLower(System.Globalization.CultureInfo.InvariantCulture)).Trim();
         }

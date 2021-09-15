@@ -572,9 +572,7 @@ namespace System.Windows.Documents
             if (customTextElement)
             {
                 // If the element is not from PresentationFramework, we'll need to serialize a namespace
-                // Will module name always have a '.'?  If so, can remove conditional in assembly assignment below
-                int index = elementTypeStandardized.Module.Name.LastIndexOf('.');
-                string assembly = (index == -1 ? elementTypeStandardized.Module.Name : elementTypeStandardized.Module.Name.Substring(0, index));
+                string assembly = elementTypeStandardized.Assembly.GetName().Name;
                 string nameSpace = "clr-namespace:" + elementTypeStandardized.Namespace + ";" + "assembly=" + assembly;
                 string prefix = elementTypeStandardized.Namespace;
                 xmlWriter.WriteStartElement(prefix, elementTypeStandardized.Name, nameSpace);

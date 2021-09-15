@@ -21,6 +21,10 @@
     <WpfArcadeSdkTargets>$(WpfArcadeSdkPath)Sdk\Sdk.targets</WpfArcadeSdkTargets>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(IsTestProject)'!='true'">
+    <EnableSingleFileAnalyzer>true</EnableSingleFileAnalyzer>
+  </PropertyGroup>
+
   <Import Project="$(WpfArcadeSdkProps)"
           Condition="Exists('$(WpfArcadeSdkProps)') And Exists('$(WpfArcadeSdkTargets)')"/>
 

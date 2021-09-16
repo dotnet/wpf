@@ -3,7 +3,8 @@
   <PropertyGroup>
     <VersionPrefix>6.0.0</VersionPrefix>
     <PreReleaseVersionLabel>rtm</PreReleaseVersionLabel>
-    <PreReleaseVersionIteration></PreReleaseVersionIteration>
+    <PreReleaseVersionIteration>
+    </PreReleaseVersionIteration>
     <SystemIOPackagingVersion>6.0.0-rc.2.21464.21</SystemIOPackagingVersion>
     <SystemResourcesExtensionsVersion>6.0.0-rc.2.21464.21</SystemResourcesExtensionsVersion>
   </PropertyGroup>
@@ -80,6 +81,6 @@
     <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
   </PropertyGroup>
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>6.0.0-rc.2.21428.2</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>6.0.0-rtm.21465.4</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

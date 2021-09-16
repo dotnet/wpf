@@ -4,12 +4,12 @@
     <VersionPrefix>7.0.0</VersionPrefix>
     <PreReleaseVersionLabel>alpha</PreReleaseVersionLabel>
     <PreReleaseVersionIteration>1</PreReleaseVersionIteration>
-    <SystemIOPackagingVersion>7.0.0-alpha.1.21463.20</SystemIOPackagingVersion>
-    <SystemResourcesExtensionsVersion>7.0.0-alpha.1.21463.20</SystemResourcesExtensionsVersion>
+    <SystemIOPackagingVersion>7.0.0-alpha.1.21464.4</SystemIOPackagingVersion>
+    <SystemResourcesExtensionsVersion>7.0.0-alpha.1.21464.4</SystemResourcesExtensionsVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>7.0.0-alpha.1.21464.14</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>7.0.0-alpha.1.21465.4</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/coreclr -->
   <PropertyGroup>
@@ -18,22 +18,22 @@
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
     <VSRedistCommonNetCoreSharedFrameworkx6460PackageVersion>6.0.0-rc.1.21406.5</VSRedistCommonNetCoreSharedFrameworkx6460PackageVersion>
-    <MicrosoftNETCoreAppRefVersion>7.0.0-alpha.1.21463.20</MicrosoftNETCoreAppRefVersion>
-    <MicrosoftNETCoreAppRuntimewinx64Version>7.0.0-alpha.1.21463.20</MicrosoftNETCoreAppRuntimewinx64Version>
-    <MicrosoftNETCorePlatformsVersion>7.0.0-alpha.1.21463.20</MicrosoftNETCorePlatformsVersion>
-    <SystemDrawingCommonVersion>7.0.0-alpha.1.21463.20</SystemDrawingCommonVersion>
-    <SystemDirectoryServicesVersion>7.0.0-alpha.1.21463.20</SystemDirectoryServicesVersion>
-    <SystemReflectionMetadataLoadContextVersion>7.0.0-alpha.1.21463.20</SystemReflectionMetadataLoadContextVersion>
+    <MicrosoftNETCoreAppRefVersion>7.0.0-alpha.1.21464.4</MicrosoftNETCoreAppRefVersion>
+    <MicrosoftNETCoreAppRuntimewinx64Version>7.0.0-alpha.1.21464.4</MicrosoftNETCoreAppRuntimewinx64Version>
+    <MicrosoftNETCorePlatformsVersion>7.0.0-alpha.1.21464.4</MicrosoftNETCorePlatformsVersion>
+    <SystemDrawingCommonVersion>7.0.0-alpha.1.21464.4</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>7.0.0-alpha.1.21464.4</SystemDirectoryServicesVersion>
+    <SystemReflectionMetadataLoadContextVersion>7.0.0-alpha.1.21464.4</SystemReflectionMetadataLoadContextVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefx via core-setup coherency parent dependency -->
   <PropertyGroup>
-    <SystemCodeDomPackageVersion>7.0.0-alpha.1.21463.20</SystemCodeDomPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>7.0.0-alpha.1.21463.20</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>7.0.0-alpha.1.21463.20</SystemDiagnosticsEventLogPackageVersion>
+    <SystemCodeDomPackageVersion>7.0.0-alpha.1.21464.4</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>7.0.0-alpha.1.21464.4</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>7.0.0-alpha.1.21464.4</SystemDiagnosticsEventLogPackageVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>7.0.0-alpha.1.21463.20</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>7.0.0-alpha.1.21463.20</SystemSecurityPermissionsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>7.0.0-alpha.1.21463.20</SystemWindowsExtensionsPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>7.0.0-alpha.1.21464.4</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>7.0.0-alpha.1.21464.4</SystemSecurityPermissionsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>7.0.0-alpha.1.21464.4</SystemWindowsExtensionsPackageVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>

@@ -72,8 +72,8 @@ stages:
       ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
         # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
         pool:
-          name: NetCoreInternal-Pool
-          queue: buildpool.windows.10.amd64.vs2019.pre
+          name: NetCore1ESPool-Svc-Internal
+          demands: ImageOverride -equals build.windows.10.amd64.vs2019.pre
         # runAsPublic is used in expressions, which can't read from user-defined variables
         runAsPublic: false
 

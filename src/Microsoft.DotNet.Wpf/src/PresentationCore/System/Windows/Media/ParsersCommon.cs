@@ -435,6 +435,7 @@ namespace MS.Internal.Markup
             }
             else
             {
+#if NETFRAMEWORK
                 string subString = _pathString.Substring(start, _curIndex - start);
 
                 try
@@ -445,6 +446,17 @@ namespace MS.Internal.Markup
                 {
                     throw new System.FormatException(SR.Get(SRID.Parser_UnexpectedToken, _pathString, start), except);
                 }
+#else
+                var span = _pathString.AsSpan(start, _curIndex - start);
+                try
+                {
+                    return double.Parse(span, provider: _formatProvider);
+                }
+                catch (FormatException except)
+                {
+                    throw new System.FormatException(SR.Get(SRID.Parser_UnexpectedToken, _pathString, start), except);
+                }
+#endif
             }
         }
         

@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "components": [
+    "Microsoft.Component.CodeAnalysis.SDK",
+    "Microsoft.Component.MSBuild",
+    "Microsoft.Component.VC.Runtime.UCRTSDK",
+    "Microsoft.Net.Component.4.6.2.SDK",
+    "Microsoft.Net.Component.4.7.2.TargetingPack",
+    "Microsoft.NetCore.Component.DevelopmentTools",
+    "Microsoft.NetCore.Component.SDK",
+    "Microsoft.VisualStudio.Component.Git",
+    "Microsoft.VisualStudio.Component.NuGet",
+    "Microsoft.VisualStudio.Component.Roslyn.Compiler",
+    "Microsoft.VisualStudio.Component.Roslyn.LanguageServices",
+    "Microsoft.VisualStudio.Component.TextTemplating",
+    "Microsoft.VisualStudio.Component.VC.ATL",
+    "Microsoft.VisualStudio.Component.VC.ATLMFC",
+    "Microsoft.VisualStudio.Component.VC.CLI.Support",
+    "Microsoft.VisualStudio.Component.VC.CoreIde",
+    "Microsoft.VisualStudio.Component.VC.Modules.x86.x64",
+    "Microsoft.VisualStudio.Component.VC.Redist.14.Latest",
+    "Microsoft.VisualStudio.Component.VC.Tools.x86.x64",
+    "Microsoft.VisualStudio.Component.VSSDK",
+    "Microsoft.VisualStudio.Component.Windows10SDK.18362"
+  ]
+}

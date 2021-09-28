@@ -1269,9 +1269,9 @@ namespace System.Windows.Media
 
             if ((_flags & GlyphRunFlags.CacheInkBounds) != 0)
             {
-                if (_inkBoundingBox != null)
+                if (_inkBoundingBox.HasValue)
                 {
-                    return (Rect)_inkBoundingBox;
+                    return _inkBoundingBox.Value;
                 }
             }
 
@@ -2504,7 +2504,7 @@ namespace System.Windows.Media
         private IList<bool>         _caretStops;
         private XmlLanguage         _language;
         private string              _deviceFontName;
-        private object              _inkBoundingBox;    // Used when CacheInkBounds is on
+        private Rect?              _inkBoundingBox;    // Used when CacheInkBounds is on
         private TextFormattingMode      _textFormattingMode;
         private float               _pixelsPerDip = MS.Internal.FontCache.Util.PixelsPerDip;
 

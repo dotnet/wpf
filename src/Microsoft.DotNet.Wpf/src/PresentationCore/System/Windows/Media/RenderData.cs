@@ -53,11 +53,6 @@ namespace System.Windows.Media
             CanBeInheritanceContext = false;
         }
 
-        ~RenderData()
-        {
-            ArrayPool<byte>.Shared.Return(_buffer);
-        }
-
         /// <summary>
         /// RecordHeader - This struct is the header for each record entry
         /// </summary>

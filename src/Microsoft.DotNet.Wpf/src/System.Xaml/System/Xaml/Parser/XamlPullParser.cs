@@ -931,7 +931,7 @@ namespace MS.Internal.Xaml.Parser
 
         #region Optimizations
         private readonly XamlTypeName arrayType = new XamlTypeName(@"http://schemas.microsoft.com/winfx/2006/xaml", "Array");
-        private XamlType _arrayExtensionType = null;
+        private XamlType _arrayExtensionType;
         private XamlType ArrayExtensionType
         {
             get
@@ -944,7 +944,7 @@ namespace MS.Internal.Xaml.Parser
             }
         }
 
-        private XamlMember _arrayTypeMember = null;
+        private XamlMember _arrayTypeMember;
         private XamlMember ArrayTypeMember
         {
             get
@@ -957,7 +957,7 @@ namespace MS.Internal.Xaml.Parser
             }
         }
 
-        private XamlMember _itemsTypeMember = null;
+        private XamlMember _itemsTypeMember;
         private XamlMember ItemsTypeMember
         {
             get

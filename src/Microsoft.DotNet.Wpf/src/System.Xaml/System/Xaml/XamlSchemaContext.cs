@@ -542,6 +542,9 @@ namespace System.Xaml
 
         public virtual XamlType GetXamlType(Type type)
         {
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             return GetXamlType(type, XamlLanguage.TypeAlias(type));
         }
 
@@ -683,7 +686,7 @@ namespace System.Xaml
         #region Settings
 
         // Unchanging, initialized in ctor
-        private readonly XamlSchemaContextSettings _settings = null;
+        private readonly XamlSchemaContextSettings _settings;
 
         public bool SupportMarkupExtensionsWithDuplicateArity
         {

@@ -64,7 +64,7 @@ namespace MS.Internal
             {
                 FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assemblyLocation);
                 if (fileVersionInfo != null && fileVersionInfo.ProductVersion != null)
-                    sb.Append(FILEVERSION_STRING + fileVersionInfo.ToString());
+                    sb.Append(FILEVERSION_STRING + fileVersionInfo.ProductVersion);
             }
 
             return ((sb.ToString()).ToLower(System.Globalization.CultureInfo.InvariantCulture)).Trim();

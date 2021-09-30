@@ -67,11 +67,6 @@ namespace MS.Internal
                     sb.Append(FILEVERSION_STRING + fileVersionInfo.ToString());
             }
 
-            Version assemblyVersion = a.GetName().Version;
-            if (assemblyVersion != null)
-            {
-                sb.Append(FILEVERSION_STRING + assemblyVersion.ToString());
-            }
             return ((sb.ToString()).ToLower(System.Globalization.CultureInfo.InvariantCulture)).Trim();
         }
 

@@ -257,7 +257,7 @@ namespace MS.Internal.TextFormatting
                     firstCharIndex,
                     RealToIdealFloor(paragraphWidth),
                     textSource.PixelsPerDip
-                    ) as TextLine;
+                    );
             }
 
             if (textLine == null)

@@ -13,7 +13,6 @@
 using System;
 using System.IO;
 using System.Collections;
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Runtime.InteropServices;
 
@@ -57,6 +56,7 @@ namespace MS.Internal.Tasks
             FileVersionInfo acFileVersionInfo = FileVersionInfo.GetVersionInfo(acPath);
 
             string avalonFileVersion = acFileVersionInfo.FileVersion;
+
             log.LogMessage(MessageImportance.Low,Environment.NewLine);
             log.LogMessageFromResources(MessageImportance.Low, SRID.TaskLogo, taskName, avalonFileVersion);
             log.LogMessageFromResources(MessageImportance.Low, SRID.TaskRight);

@@ -13,6 +13,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Runtime.InteropServices;
 
@@ -52,10 +53,12 @@ namespace MS.Internal.Tasks
         // </summary>
         internal static void DisplayLogo(TaskLoggingHelper log, string taskName)
         {
-            Version avalonFileVersion = Assembly.GetExecutingAssembly().GetName().Version;
+            string acPath = Assembly.GetExecutingAssembly().Location;
+            FileVersionInfo acFileVersionInfo = FileVersionInfo.GetVersionInfo(acPath);
 
+            string avalonFileVersion = acFileVersionInfo.FileVersion;
             log.LogMessage(MessageImportance.Low,Environment.NewLine);
-            log.LogMessageFromResources(MessageImportance.Low, SRID.TaskLogo, taskName, avalonFileVersion.ToString());
+            log.LogMessageFromResources(MessageImportance.Low, SRID.TaskLogo, taskName, avalonFileVersion);
             log.LogMessageFromResources(MessageImportance.Low, SRID.TaskRight);
             log.LogMessage(MessageImportance.Low, Environment.NewLine);
         }

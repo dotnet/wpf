@@ -10,6 +10,7 @@
 //
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using MS.Internal.PresentationFramework;
 using System.Collections.Generic;
@@ -41,9 +42,30 @@ namespace MS.Internal
         }
 
         //appends assembly name with file version to generate a unique entry for the assembly lookup process
+        [UnconditionalSuppressMessage("SingleFile", "IL3000:Avoid accessing Assembly file path when publishing as a single file",
+            Justification = "Code handles when the assembly location is empty")]
         private string AssemblyNameWithFileVersion(Assembly a)
         {
             StringBuilder sb = new StringBuilder(a.FullName);
+
+            string assemblyLocation = a.Location;
+            string productVersion;
+            if (string.IsNullOrEmpty(assemblyLocation))
+            {
+                productVersion = a.GetName().Version.ToString();
+                foreach (Attribute attr in a.GetCustomAttributes())
+                {
+                    if (attr is AssemblyInformationalVersionAttribute informationalVersion)
+                        productVersion = informationalVersion.InformationalVersion;
+                }
+                sb.Append(FILEVERSION_STRING + productVersion);
+            }
+            else
+            {
+                FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assemblyLocation);
+                if (fileVersionInfo != null && fileVersionInfo.ProductVersion != null)
+                    sb.Append(FILEVERSION_STRING + fileVersionInfo.ToString());
+            }
 
             Version assemblyVersion = a.GetName().Version;
             if (assemblyVersion != null)

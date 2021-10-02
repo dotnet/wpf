@@ -774,6 +774,17 @@ namespace Microsoft.Build.Tasks.Windows
                     var sdkValue = xmlAttribute.Value;
                     root.Attributes.Remove(xmlAttribute);
 
+                    // When a version is specified in the Sdk attribute,
+                    // split the Sdk attribute in Sdk and Version.
+                    // The split is required when using explicit import.
+                    string sdkVersionValue = null;
+                    int versionSeparatorIndex = sdkValue.IndexOf("/");
+                    if (versionSeparatorIndex != -1)
+                    {
+                        sdkVersionValue = sdkValue.Substring(versionSeparatorIndex + 1);
+                        sdkValue = sdkValue.Substring(0, versionSeparatorIndex);
+                    }
+
                     //
                     // Add explicit top import
                     //
@@ -782,8 +793,18 @@ namespace Microsoft.Build.Tasks.Windows
                     XmlNode nodeImportProps = xmlProjectDoc.CreateElement("Import", root.NamespaceURI);
                     XmlAttribute projectAttribute = xmlProjectDoc.CreateAttribute("Project");
                     projectAttribute.Value = "Sdk.props";
+                    XmlAttribute sdkAttributeProps = xmlProjectDoc.CreateAttribute("Sdk");
+                    sdkAttributeProps.Value = sdkValue;
                     nodeImportProps.Attributes.Append(projectAttribute);
-                    nodeImportProps.Attributes.Append(xmlAttribute);
+                    nodeImportProps.Attributes.Append(sdkAttributeProps);
+
+                    // Add Sdk version when specified.
+                    if (sdkVersionValue != null)
+                    {
+                        XmlAttribute sdkVersionAttributeProps = xmlProjectDoc.CreateAttribute("Version");
+                        sdkVersionAttributeProps.Value = sdkVersionValue;
+                        nodeImportProps.Attributes.Append(sdkVersionAttributeProps);
+                    }
 
                     // Prepend this Import to the root of the XML document
                     root.PrependChild(nodeImportProps);
@@ -800,6 +821,14 @@ namespace Microsoft.Build.Tasks.Windows
                     projectAttribute3.Value = sdkValue;
                     nodeImportTargets.Attributes.Append(projectAttribute2);
                     nodeImportTargets.Attributes.Append(projectAttribute3);
+
+                    // Add Sdk version when specified.
+                    if (sdkVersionValue != null)
+                    {
+                        XmlAttribute sdkVersionAttributeTargets = xmlProjectDoc.CreateAttribute("Version");
+                        sdkVersionAttributeTargets.Value = sdkVersionValue;
+                        nodeImportTargets.Attributes.Append(sdkVersionAttributeTargets);
+                    }
 
                     // Append this Import to the end of the XML document
                     root.AppendChild(nodeImportTargets);

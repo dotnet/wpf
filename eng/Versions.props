@@ -5,38 +5,38 @@
     <PreReleaseVersionLabel>rtm</PreReleaseVersionLabel>
     <PreReleaseVersionIteration>
     </PreReleaseVersionIteration>
-    <SystemIOPackagingVersion>6.0.0-rtm.21501.9</SystemIOPackagingVersion>
-    <SystemResourcesExtensionsVersion>6.0.0-rtm.21501.9</SystemResourcesExtensionsVersion>
+    <SystemIOPackagingVersion>6.0.0-rtm.21504.6</SystemIOPackagingVersion>
+    <SystemResourcesExtensionsVersion>6.0.0-rtm.21504.6</SystemResourcesExtensionsVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>6.0.0-rtm.21504.1</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>6.0.0-rtm.21504.3</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/coreclr -->
   <PropertyGroup>
     <MicrosoftNETCoreRuntimeCoreCLRVersion>5.0.0-alpha1.19562.1</MicrosoftNETCoreRuntimeCoreCLRVersion>
-    <MicrosoftNETCoreILDAsmVersion>6.0.0-rtm.21501.9</MicrosoftNETCoreILDAsmVersion>
-    <MicrosoftNETCoreILAsmVersion>6.0.0-rtm.21501.9</MicrosoftNETCoreILAsmVersion>
+    <MicrosoftNETCoreILDAsmVersion>6.0.0-rtm.21504.6</MicrosoftNETCoreILDAsmVersion>
+    <MicrosoftNETCoreILAsmVersion>6.0.0-rtm.21504.6</MicrosoftNETCoreILAsmVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
-    <VSRedistCommonNetCoreSharedFrameworkx6460PackageVersion>6.0.0-rtm.21501.9</VSRedistCommonNetCoreSharedFrameworkx6460PackageVersion>
-    <MicrosoftNETCoreAppRefVersion>6.0.0-rtm.21501.9</MicrosoftNETCoreAppRefVersion>
-    <MicrosoftNETCoreAppRuntimewinx64Version>6.0.0-rtm.21501.9</MicrosoftNETCoreAppRuntimewinx64Version>
-    <MicrosoftNETCorePlatformsVersion>6.0.0-rtm.21501.9</MicrosoftNETCorePlatformsVersion>
-    <SystemDrawingCommonVersion>6.0.0-rtm.21501.9</SystemDrawingCommonVersion>
-    <SystemDirectoryServicesVersion>6.0.0-rtm.21501.9</SystemDirectoryServicesVersion>
-    <SystemReflectionMetadataLoadContextVersion>6.0.0-rtm.21501.9</SystemReflectionMetadataLoadContextVersion>
+    <VSRedistCommonNetCoreSharedFrameworkx6460PackageVersion>6.0.0-rtm.21504.6</VSRedistCommonNetCoreSharedFrameworkx6460PackageVersion>
+    <MicrosoftNETCoreAppRefVersion>6.0.0-rtm.21504.6</MicrosoftNETCoreAppRefVersion>
+    <MicrosoftNETCoreAppRuntimewinx64Version>6.0.0-rtm.21504.6</MicrosoftNETCoreAppRuntimewinx64Version>
+    <MicrosoftNETCorePlatformsVersion>6.0.0-rtm.21504.6</MicrosoftNETCorePlatformsVersion>
+    <SystemDrawingCommonVersion>6.0.0-rtm.21504.6</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>6.0.0-rtm.21504.6</SystemDirectoryServicesVersion>
+    <SystemReflectionMetadataLoadContextVersion>6.0.0-rtm.21504.6</SystemReflectionMetadataLoadContextVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefx via core-setup coherency parent dependency -->
   <PropertyGroup>
-    <SystemCodeDomPackageVersion>6.0.0-rtm.21501.9</SystemCodeDomPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>6.0.0-rtm.21501.9</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>6.0.0-rtm.21501.9</SystemDiagnosticsEventLogPackageVersion>
+    <SystemCodeDomPackageVersion>6.0.0-rtm.21504.6</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>6.0.0-rtm.21504.6</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>6.0.0-rtm.21504.6</SystemDiagnosticsEventLogPackageVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>6.0.0-rtm.21501.9</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>6.0.0-rtm.21501.9</SystemSecurityPermissionsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>6.0.0-rtm.21501.9</SystemWindowsExtensionsPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>6.0.0-rtm.21504.6</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>6.0.0-rtm.21504.6</SystemSecurityPermissionsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>6.0.0-rtm.21504.6</SystemWindowsExtensionsPackageVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>

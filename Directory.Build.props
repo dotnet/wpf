@@ -2,6 +2,12 @@
   <PropertyGroup>
     <RepositoryName>wpf</RepositoryName>
     <WindowsDesktopARM64Support>true</WindowsDesktopARM64Support>
+     <!-- WPF's new PackageReference support conflicts with the existing Arcade's WPF temp project 
+          workaround.  Disable IsWpfTempProject to prevent Arcade's WPF temp workaround from colliding 
+          with PackageReference support during WPF Framework compilation.  See 
+          https://github.com/dotnet/arcade/pull/1581.  This property can be removed when 1518 (the 
+          workaround in the Arcade SDK) is removed.  -->
+    <IsWpfTempProject>false</IsWpfTempProject>
   </PropertyGroup>
 
   <!-- Normalize $(TestWpfArcadeSdkPath) by appending a '\' to it if one is missing -->

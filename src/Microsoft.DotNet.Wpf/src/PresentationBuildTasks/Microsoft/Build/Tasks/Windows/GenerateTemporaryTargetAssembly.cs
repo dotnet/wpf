@@ -281,15 +281,11 @@ namespace Microsoft.Build.Tasks.Windows
                 // Save the xmlDocument content into the temporary project file.
                 xmlProjectDoc.Save(TemporaryTargetAssemblyProjectName);
 
-                // Disable conflicting Arcade SDK workaround that imports NuGet props/targets
-                Hashtable globalProperties = new Hashtable(1);
-                globalProperties["_WpfTempProjectNuGetFilePathNoExt"] = "";
-
                 //
                 //  Compile the temporary target assembly project
                 //
                 Dictionary<string, ITaskItem[]> targetOutputs = new Dictionary<string, ITaskItem[]>();
-                retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, globalProperties, targetOutputs);
+                retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, null, targetOutputs);
 
                 // If the inner build succeeds, retrieve the path to the local type assembly from the task's TargetOutputs.
                 if (retValue)

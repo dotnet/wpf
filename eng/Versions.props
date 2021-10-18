@@ -35,6 +35,12 @@
     <SystemSecurityPermissionsPackageVersion>7.0.0-alpha.1.21516.3</SystemSecurityPermissionsPackageVersion>
     <SystemWindowsExtensionsPackageVersion>7.0.0-alpha.1.21516.3</SystemWindowsExtensionsPackageVersion>
   </PropertyGroup>
+
+  <!-- Docs / Intellisense -->
+  <PropertyGroup>
+    <MicrosoftPrivateIntellisenseVersion>6.0.0-preview-20211015.1</MicrosoftPrivateIntellisenseVersion>
+  </PropertyGroup>
+  
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
     <MicrosoftDotNetApiCompatVersion>7.0.0-beta.21515.2</MicrosoftDotNetApiCompatVersion>

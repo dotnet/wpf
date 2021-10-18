@@ -757,29 +757,33 @@ namespace Microsoft.Build.Tasks.Windows
             }
 
             XmlNode root = xmlProjectDoc.DocumentElement;
-          
+
             for (int i = 0; i < root.Attributes.Count; i++)
             {
                 XmlAttribute xmlAttribute = root.Attributes[i] as XmlAttribute;
 
                 if (xmlAttribute.Name.Equals("Sdk", StringComparison.OrdinalIgnoreCase))
                 {
-                    // <Project Sdk="Microsoft.NET.Sdk">
+                    //  <Project Sdk="Microsoft.NET.Sdk">
+                    //  <Project Sdk="My.Custom.Sdk/1.0.0">
+                    //  <Project Sdk="My.Custom.Sdk/min=1.0.0">
+
+                    string sdkValue = xmlAttribute.Value;
+
+                    if (!SdkReference.TryParse(sdkValue, out SdkReference sdkReference))
+                        return;
 
                     // Remove Sdk attribute
-                    var sdkValue = xmlAttribute.Value;
                     root.Attributes.Remove(xmlAttribute);
 
                     //
                     // Add explicit top import
                     //
-                    //  <Import Project = "Sdk.props" Sdk="Microsoft.NET.Sdk" />
+                    //  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+                    //  <Import Project="Sdk.props" Sdk="My.Custom.Sdk" Version="1.0.0" />
+                    //  <Import Project="Sdk.props" Sdk="My.Custom.Sdk" MinimumVersion="1.0.0" />
                     //
-                    XmlNode nodeImportProps = xmlProjectDoc.CreateElement("Import", root.NamespaceURI);
-                    XmlAttribute projectAttribute = xmlProjectDoc.CreateAttribute("Project");
-                    projectAttribute.Value = "Sdk.props";
-                    nodeImportProps.Attributes.Append(projectAttribute);
-                    nodeImportProps.Attributes.Append(xmlAttribute);
+                    XmlNode nodeImportProps = CreateImportProjectSdkNode(xmlProjectDoc, "Sdk.props", sdkReference);
 
                     // Prepend this Import to the root of the XML document
                     root.PrependChild(nodeImportProps);
@@ -787,20 +791,46 @@ namespace Microsoft.Build.Tasks.Windows
                     //
                     // Add explicit bottom import
                     //
-                    //  <Import Project = "Sdk.targets" Sdk="Microsoft.NET.Sdk" 
-                    //                
-                    XmlNode nodeImportTargets = xmlProjectDoc.CreateElement("Import", root.NamespaceURI);
-                    XmlAttribute projectAttribute2 = xmlProjectDoc.CreateAttribute("Project");
-                    projectAttribute2.Value = "Sdk.targets";
-                    XmlAttribute projectAttribute3 = xmlProjectDoc.CreateAttribute("Sdk");
-                    projectAttribute3.Value = sdkValue;
-                    nodeImportTargets.Attributes.Append(projectAttribute2);
-                    nodeImportTargets.Attributes.Append(projectAttribute3);
+                    //  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+                    //  <Import Project="Sdk.targets" Sdk="My.Custom.Sdk" Version="1.0.0" />
+                    //  <Import Project="Sdk.targets" Sdk="My.Custom.Sdk" MinimumVersion="1.0.0" />
+                    //
+                    XmlNode nodeImportTargets = CreateImportProjectSdkNode(xmlProjectDoc, "Sdk.targets", sdkReference);
 
                     // Append this Import to the end of the XML document
                     root.AppendChild(nodeImportTargets);
                 }
             }
+        }
+
+        // Creates an XmlNode that contains an Import Project element
+        //
+        //  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+        static XmlNode CreateImportProjectSdkNode(XmlDocument xmlProjectDoc, string projectAttributeValue, SdkReference sdkReference)
+        {
+            XmlNode nodeImport = xmlProjectDoc.CreateElement("Import", xmlProjectDoc.DocumentElement.NamespaceURI);
+            XmlAttribute projectAttribute = xmlProjectDoc.CreateAttribute("Project");
+            projectAttribute.Value = projectAttributeValue;
+            XmlAttribute sdkAttributeProps = xmlProjectDoc.CreateAttribute("Sdk");
+            sdkAttributeProps.Value = sdkReference.Name;
+            nodeImport.Attributes.Append(projectAttribute);
+            nodeImport.Attributes.Append(sdkAttributeProps);
+
+            if (!string.IsNullOrEmpty(sdkReference.Version))
+            {
+                XmlAttribute sdkVersionAttributeProps = xmlProjectDoc.CreateAttribute("Version");
+                sdkVersionAttributeProps.Value = sdkReference.Version;
+                nodeImport.Attributes.Append(sdkVersionAttributeProps);
+            }
+
+            if (!string.IsNullOrEmpty(sdkReference.MinimumVersion))
+            {
+                XmlAttribute sdkVersionAttributeProps = xmlProjectDoc.CreateAttribute("MinimumVersion");
+                sdkVersionAttributeProps.Value = sdkReference.MinimumVersion;
+                nodeImport.Attributes.Append(sdkVersionAttributeProps);
+            }
+
+            return nodeImport;
         }
 
         #endregion Private Methods

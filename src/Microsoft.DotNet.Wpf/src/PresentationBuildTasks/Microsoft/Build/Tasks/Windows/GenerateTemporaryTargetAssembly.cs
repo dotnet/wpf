@@ -23,7 +23,6 @@ using System.Collections.Generic;
 
 using System.Globalization;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Xml;
@@ -770,36 +769,25 @@ namespace Microsoft.Build.Tasks.Windows
                 if (xmlAttribute.Name.Equals("Sdk", StringComparison.OrdinalIgnoreCase))
                 {
                     //  <Project Sdk="Microsoft.NET.Sdk">
-                    //  <Project Sdk="My.Custom.Sdk/1.0.0" />
-                    //  <Project Sdk="My.Custom.Sdk/min=1.0.0" />
+                    //  <Project Sdk="My.Custom.Sdk/1.0.0">
+                    //  <Project Sdk="My.Custom.Sdk/min=1.0.0">
+
+                    string sdkValue = xmlAttribute.Value;
+
+                    if (!SdkReference.TryParse(sdkValue, out SdkReference sdkReference))
+                        return;
 
                     // Remove Sdk attribute
-                    var sdkValue = xmlAttribute.Value;
                     root.Attributes.Remove(xmlAttribute);
-
-                    string minimumVersionAttributeValue = null;
-                    string versionAttributeValue = null;
-                    var sdkParts = sdkValue.Split('/').Select(i => i.Trim()).ToArray();
-                    sdkValue = sdkParts[0];
-
-                    if (sdkParts.Length == 2)
-                    {
-                        if (sdkParts[1].StartsWith("min=", StringComparison.OrdinalIgnoreCase))
-                        {
-                            minimumVersionAttributeValue = sdkParts[1].Substring(4);
-                        }
-                        else
-                        {
-                            versionAttributeValue = sdkParts[1];
-                        }
-                    }
 
                     //
                     // Add explicit top import
                     //
                     //  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+                    //  <Import Project="Sdk.props" Sdk="My.Custom.Sdk" Version="1.0.0" />
+                    //  <Import Project="Sdk.props" Sdk="My.Custom.Sdk" MinimumVersion="1.0.0" />
                     //
-                    XmlNode nodeImportProps = CreateImportProjectSdkNode(xmlProjectDoc, "Sdk.props", sdkValue, versionAttributeValue, minimumVersionAttributeValue);
+                    XmlNode nodeImportProps = CreateImportProjectSdkNode(xmlProjectDoc, "Sdk.props", sdkReference);
 
                     // Prepend this Import to the root of the XML document
                     root.PrependChild(nodeImportProps);
@@ -807,9 +795,11 @@ namespace Microsoft.Build.Tasks.Windows
                     //
                     // Add explicit bottom import
                     //
-                    //  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" 
+                    //  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+                    //  <Import Project="Sdk.targets" Sdk="My.Custom.Sdk" Version="1.0.0" />
+                    //  <Import Project="Sdk.targets" Sdk="My.Custom.Sdk" MinimumVersion="1.0.0" />
                     //
-                    XmlNode nodeImportTargets = CreateImportProjectSdkNode(xmlProjectDoc,"Sdk.targets", sdkValue, versionAttributeValue, minimumVersionAttributeValue);
+                    XmlNode nodeImportTargets = CreateImportProjectSdkNode(xmlProjectDoc, "Sdk.targets", sdkReference);
 
                     // Append this Import to the end of the XML document
                     root.AppendChild(nodeImportTargets);
@@ -820,32 +810,27 @@ namespace Microsoft.Build.Tasks.Windows
         // Creates an XmlNode that contains an Import Project element
         //
         //  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
-        static XmlNode CreateImportProjectSdkNode(
-            XmlDocument xmlProjectDoc, 
-            string projectAttributeValue, 
-            string sdkAttributeValue,
-            string versionAttributeValue,
-            string minimumVersionAttributeValue)
+        static XmlNode CreateImportProjectSdkNode(XmlDocument xmlProjectDoc, string projectAttributeValue, SdkReference sdkReference)
         {
             XmlNode nodeImport = xmlProjectDoc.CreateElement("Import", xmlProjectDoc.DocumentElement.NamespaceURI);
             XmlAttribute projectAttribute = xmlProjectDoc.CreateAttribute("Project");
             projectAttribute.Value = projectAttributeValue;
             XmlAttribute sdkAttributeProps = xmlProjectDoc.CreateAttribute("Sdk");
-            sdkAttributeProps.Value = sdkAttributeValue;
+            sdkAttributeProps.Value = sdkReference.Name;
             nodeImport.Attributes.Append(projectAttribute);
             nodeImport.Attributes.Append(sdkAttributeProps);
 
-            if (!string.IsNullOrEmpty(versionAttributeValue))
+            if (!string.IsNullOrEmpty(sdkReference.Version))
             {
                 XmlAttribute sdkVersionAttributeProps = xmlProjectDoc.CreateAttribute("Version");
-                sdkVersionAttributeProps.Value = versionAttributeValue;
+                sdkVersionAttributeProps.Value = sdkReference.Version;
                 nodeImport.Attributes.Append(sdkVersionAttributeProps);
             }
 
-            if (!string.IsNullOrEmpty(minimumVersionAttributeValue))
+            if (!string.IsNullOrEmpty(sdkReference.MinimumVersion))
             {
                 XmlAttribute sdkVersionAttributeProps = xmlProjectDoc.CreateAttribute("MinimumVersion");
-                sdkVersionAttributeProps.Value = minimumVersionAttributeValue;
+                sdkVersionAttributeProps.Value = sdkReference.MinimumVersion;
                 nodeImport.Attributes.Append(sdkVersionAttributeProps);
             }
 

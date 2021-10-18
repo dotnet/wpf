@@ -23,6 +23,7 @@ using System.Collections.Generic;
 
 using System.Globalization;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Xml;
@@ -761,50 +762,44 @@ namespace Microsoft.Build.Tasks.Windows
             }
 
             XmlNode root = xmlProjectDoc.DocumentElement;
-          
+
             for (int i = 0; i < root.Attributes.Count; i++)
             {
                 XmlAttribute xmlAttribute = root.Attributes[i] as XmlAttribute;
 
                 if (xmlAttribute.Name.Equals("Sdk", StringComparison.OrdinalIgnoreCase))
                 {
-                    // <Project Sdk="Microsoft.NET.Sdk">
+                    //  <Project Sdk="Microsoft.NET.Sdk">
+                    //  <Project Sdk="My.Custom.Sdk/1.0.0" />
+                    //  <Project Sdk="My.Custom.Sdk/min=1.0.0" />
 
                     // Remove Sdk attribute
                     var sdkValue = xmlAttribute.Value;
                     root.Attributes.Remove(xmlAttribute);
 
-                    // When a version is specified in the Sdk attribute,
-                    // split the Sdk attribute in Sdk and Version.
-                    // The split is required when using explicit import.
-                    string sdkVersionValue = null;
-                    int versionSeparatorIndex = sdkValue.IndexOf("/");
-                    if (versionSeparatorIndex != -1)
+                    string minimumVersionAttributeValue = null;
+                    string versionAttributeValue = null;
+                    var sdkParts = sdkValue.Split('/').Select(i => i.Trim()).ToArray();
+                    sdkValue = sdkParts[0];
+
+                    if (sdkParts.Length == 2)
                     {
-                        sdkVersionValue = sdkValue.Substring(versionSeparatorIndex + 1);
-                        sdkValue = sdkValue.Substring(0, versionSeparatorIndex);
+                        if (sdkParts[1].StartsWith("min=", StringComparison.OrdinalIgnoreCase))
+                        {
+                            minimumVersionAttributeValue = sdkParts[1].Substring(4);
+                        }
+                        else
+                        {
+                            versionAttributeValue = sdkParts[1];
+                        }
                     }
 
                     //
                     // Add explicit top import
                     //
-                    //  <Import Project = "Sdk.props" Sdk="Microsoft.NET.Sdk" />
+                    //  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
                     //
-                    XmlNode nodeImportProps = xmlProjectDoc.CreateElement("Import", root.NamespaceURI);
-                    XmlAttribute projectAttribute = xmlProjectDoc.CreateAttribute("Project");
-                    projectAttribute.Value = "Sdk.props";
-                    XmlAttribute sdkAttributeProps = xmlProjectDoc.CreateAttribute("Sdk");
-                    sdkAttributeProps.Value = sdkValue;
-                    nodeImportProps.Attributes.Append(projectAttribute);
-                    nodeImportProps.Attributes.Append(sdkAttributeProps);
-
-                    // Add Sdk version when specified.
-                    if (sdkVersionValue != null)
-                    {
-                        XmlAttribute sdkVersionAttributeProps = xmlProjectDoc.CreateAttribute("Version");
-                        sdkVersionAttributeProps.Value = sdkVersionValue;
-                        nodeImportProps.Attributes.Append(sdkVersionAttributeProps);
-                    }
+                    XmlNode nodeImportProps = CreateImportProjectSdkNode(xmlProjectDoc, "Sdk.props", sdkValue, versionAttributeValue, minimumVersionAttributeValue);
 
                     // Prepend this Import to the root of the XML document
                     root.PrependChild(nodeImportProps);
@@ -812,28 +807,49 @@ namespace Microsoft.Build.Tasks.Windows
                     //
                     // Add explicit bottom import
                     //
-                    //  <Import Project = "Sdk.targets" Sdk="Microsoft.NET.Sdk" 
-                    //                
-                    XmlNode nodeImportTargets = xmlProjectDoc.CreateElement("Import", root.NamespaceURI);
-                    XmlAttribute projectAttribute2 = xmlProjectDoc.CreateAttribute("Project");
-                    projectAttribute2.Value = "Sdk.targets";
-                    XmlAttribute projectAttribute3 = xmlProjectDoc.CreateAttribute("Sdk");
-                    projectAttribute3.Value = sdkValue;
-                    nodeImportTargets.Attributes.Append(projectAttribute2);
-                    nodeImportTargets.Attributes.Append(projectAttribute3);
-
-                    // Add Sdk version when specified.
-                    if (sdkVersionValue != null)
-                    {
-                        XmlAttribute sdkVersionAttributeTargets = xmlProjectDoc.CreateAttribute("Version");
-                        sdkVersionAttributeTargets.Value = sdkVersionValue;
-                        nodeImportTargets.Attributes.Append(sdkVersionAttributeTargets);
-                    }
+                    //  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" 
+                    //
+                    XmlNode nodeImportTargets = CreateImportProjectSdkNode(xmlProjectDoc,"Sdk.targets", sdkValue, versionAttributeValue, minimumVersionAttributeValue);
 
                     // Append this Import to the end of the XML document
                     root.AppendChild(nodeImportTargets);
                 }
             }
+        }
+
+        // Creates an XmlNode that contains an Import Project element
+        //
+        //  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+        static XmlNode CreateImportProjectSdkNode(
+            XmlDocument xmlProjectDoc, 
+            string projectAttributeValue, 
+            string sdkAttributeValue,
+            string versionAttributeValue,
+            string minimumVersionAttributeValue)
+        {
+            XmlNode nodeImport = xmlProjectDoc.CreateElement("Import", xmlProjectDoc.DocumentElement.NamespaceURI);
+            XmlAttribute projectAttribute = xmlProjectDoc.CreateAttribute("Project");
+            projectAttribute.Value = projectAttributeValue;
+            XmlAttribute sdkAttributeProps = xmlProjectDoc.CreateAttribute("Sdk");
+            sdkAttributeProps.Value = sdkAttributeValue;
+            nodeImport.Attributes.Append(projectAttribute);
+            nodeImport.Attributes.Append(sdkAttributeProps);
+
+            if (!string.IsNullOrEmpty(versionAttributeValue))
+            {
+                XmlAttribute sdkVersionAttributeProps = xmlProjectDoc.CreateAttribute("Version");
+                sdkVersionAttributeProps.Value = versionAttributeValue;
+                nodeImport.Attributes.Append(sdkVersionAttributeProps);
+            }
+
+            if (!string.IsNullOrEmpty(minimumVersionAttributeValue))
+            {
+                XmlAttribute sdkVersionAttributeProps = xmlProjectDoc.CreateAttribute("MinimumVersion");
+                sdkVersionAttributeProps.Value = minimumVersionAttributeValue;
+                nodeImport.Attributes.Append(sdkVersionAttributeProps);
+            }
+
+            return nodeImport;
         }
 
         #endregion Private Methods

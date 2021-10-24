@@ -359,9 +359,9 @@ namespace System.Windows.Controls
                         {
                             shouldScroll =
                                 ((key == Key.Down && IsLogicalHorizontal && DoubleUtil.GreaterThan(ScrollHost.ScrollableHeight, ScrollHost.VerticalOffset))) ||
-                                ((key == Key.Up   && IsLogicalHorizontal && DoubleUtil.GreaterThan(ScrollHost.VerticalOffset, 0d))) ||
+                                ((key == Key.Up   && IsLogicalHorizontal && DoubleUtil.GreaterThanZero(ScrollHost.VerticalOffset))) ||
                                 ((key == Key.Right&& IsLogicalVertical && DoubleUtil.GreaterThan(ScrollHost.ScrollableWidth, ScrollHost.HorizontalOffset))) ||
-                                ((key == Key.Left && IsLogicalVertical && DoubleUtil.GreaterThan(ScrollHost.HorizontalOffset, 0d)));
+                                ((key == Key.Left && IsLogicalVertical && DoubleUtil.GreaterThanZero(ScrollHost.HorizontalOffset)));
                         }
 
                         if (shouldScroll)

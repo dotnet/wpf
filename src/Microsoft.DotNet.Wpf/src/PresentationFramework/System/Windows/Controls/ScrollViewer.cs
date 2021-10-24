@@ -1836,7 +1836,7 @@ namespace System.Windows.Controls
                 unused = 0;
                 delta = 0;
             }
-            else if ((DoubleUtil.GreaterThan(delta, 0) && DoubleUtil.AreClose(offset, 0)) ||
+            else if ((DoubleUtil.GreaterThanZero(delta) && DoubleUtil.IsZero(offset)) ||
                 (DoubleUtil.LessThan(delta, 0) && DoubleUtil.AreClose(offset, scrollableLength)))
             {
                 // If we are past the boundary and the delta is in the same direction,
@@ -1844,7 +1844,7 @@ namespace System.Windows.Controls
                 unused += delta;
                 delta = 0;
             }
-            else if (DoubleUtil.LessThan(delta, 0) && DoubleUtil.GreaterThan(unused, 0))
+            else if (DoubleUtil.LessThan(delta, 0) && DoubleUtil.GreaterThanZero(unused))
             {
                 // If we are past the boundary in positive direction
                 // and the delta is in negative direction,

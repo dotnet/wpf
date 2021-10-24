@@ -1109,7 +1109,7 @@ namespace MS.Internal
                 Thickness correctionFactor = new Thickness(0);
                 Size desiredSize = virtualizingElement.DesiredSize;
 
-                if (DoubleUtil.GreaterThan(itemPixelSize.Height, 0))
+                if (DoubleUtil.GreaterThanZero(itemPixelSize.Height))
                 {
                     correctionFactor = GroupItem.DesiredPixelItemsSizeCorrectionFactorField.GetValue(virtualizingElement);
                     itemPixelSize.Height += correctionFactor.Bottom;
@@ -1119,7 +1119,7 @@ namespace MS.Internal
 
                 if (DoubleUtil.AreClose(itemDesiredSizes.PixelSizeAfterViewport.Height, 0) &&
                     DoubleUtil.AreClose(itemDesiredSizes.PixelSizeInViewport.Height, 0) &&
-                    DoubleUtil.GreaterThan(itemDesiredSizes.PixelSizeBeforeViewport.Height, 0))
+                    DoubleUtil.GreaterThanZero(itemDesiredSizes.PixelSizeBeforeViewport.Height))
                 {
                     if (!correctionComputed)
                     {
@@ -1130,8 +1130,8 @@ namespace MS.Internal
                 }
                 itemPixelSizeBeforeViewport.Width = Math.Max(desiredSize.Width, itemPixelSizeBeforeViewport.Width);
 
-                if (DoubleUtil.AreClose(itemDesiredSizes.PixelSizeAfterViewport.Height, 0) &&
-                    DoubleUtil.GreaterThan(itemDesiredSizes.PixelSizeInViewport.Height, 0))
+                if (DoubleUtil.IsZero(itemDesiredSizes.PixelSizeAfterViewport.Height) &&
+                    DoubleUtil.GreaterThanZero(itemDesiredSizes.PixelSizeInViewport.Height))
                 {
                     if (!correctionComputed)
                     {
@@ -1142,7 +1142,7 @@ namespace MS.Internal
                 }
                 itemPixelSizeInViewport.Width = Math.Max(desiredSize.Width, itemPixelSizeInViewport.Width);
 
-                if (DoubleUtil.GreaterThan(itemDesiredSizes.PixelSizeAfterViewport.Height, 0))
+                if (DoubleUtil.GreaterThanZero(itemDesiredSizes.PixelSizeAfterViewport.Height))
                 {
                     if (!correctionComputed)
                     {

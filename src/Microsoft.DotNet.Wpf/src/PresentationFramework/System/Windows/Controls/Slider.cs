@@ -1130,7 +1130,7 @@ namespace System.Windows.Controls
                         }
                     }
                 }
-                else if (DoubleUtil.GreaterThan(TickFrequency, 0.0))
+                else if (DoubleUtil.GreaterThanZero(TickFrequency))
                 {
                     previous = Minimum + (Math.Round(((value - Minimum) / TickFrequency)) * TickFrequency);
                     next = Math.Min(Maximum, previous + TickFrequency);
@@ -1188,7 +1188,7 @@ namespace System.Windows.Controls
                             }
                         }
                     }
-                    else if (DoubleUtil.GreaterThan(TickFrequency, 0.0))
+                    else if (DoubleUtil.GreaterThanZero(TickFrequency))
                     {
                         // Find the current tick we are at
                         double tickNumber = Math.Round((value - Minimum) / TickFrequency);

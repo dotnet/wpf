@@ -44,9 +44,6 @@ namespace System.Windows.Automation
             SafeConditionMemoryHandle sh = new SafeConditionMemoryHandle();
             int size = Marshal.SizeOf(uiaCondition);
 
-            #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
-            RuntimeHelpers.PrepareConstrainedRegions(); // ensures that the following finally block is atomic
-            #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
             try { }
             finally
             {
@@ -66,9 +63,6 @@ namespace System.Windows.Automation
 
             int intPtrSize = Marshal.SizeOf(typeof(IntPtr));
 
-            #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
-            RuntimeHelpers.PrepareConstrainedRegions(); // ensures that the following finally block is atomic
-            #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
             try { }
             finally
             {

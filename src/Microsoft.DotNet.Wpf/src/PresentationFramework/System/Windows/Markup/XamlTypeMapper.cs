@@ -229,9 +229,11 @@ namespace System.Windows.Markup
             // so they can be loaded again.   The is the Dev build/load/build/load
             // Designer scenario.  (Don't mess with GACed assemblies)
             Assembly assem = ReflectionHelper.GetAlreadyLoadedAssembly(asmName);
-            #pragma warning disable SYSLIB0005 // 'Assembly.GlobalAssemblyCache' is obsolete. 
-            if (assem != null && !assem.GlobalAssemblyCache)
-            #pragma warning restore SYSLIB0005 // 'Assembly.GlobalAssemblyCache' is obsolete. 
+            if (assem != null
+#if NETFX
+                 && !assem.GlobalAssemblyCache
+#endif
+                )
             {
                 ReflectionHelper.ResetCacheForAssembly(asmName);
                 // No way to reset SchemaContext at assembly granularity, so just reset the whole context

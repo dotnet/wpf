@@ -111,18 +111,11 @@ namespace System.Windows.Documents
         {
             base.ArrangeOverride(finalSize);
 
-            Rect inkBoundingBox;
-
             if (_measurementGlyphRun != null)
-                inkBoundingBox = _measurementGlyphRun.ComputeInkBoundingBox();
-            else
-                inkBoundingBox = Rect.Empty;
-
-            if (!inkBoundingBox.IsEmpty)
             {
-                inkBoundingBox.X += _glyphRunOrigin.X;
-                inkBoundingBox.Y += _glyphRunOrigin.Y;
+                _measurementGlyphRun.ComputeInkBoundingBox();
             }
+            
             return finalSize;
         }
 

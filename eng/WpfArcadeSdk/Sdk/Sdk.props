@@ -15,7 +15,10 @@
   <PropertyGroup>
     <GenXmlStringTable>$(WpfArcadeSdkToolsDir)GenXmlStringTable.pl</GenXmlStringTable>
     <LangVersion Condition="'$(LangVersion)'=='' and ($(PreReleaseVersionLabel.Contains('rc')) or $(PreReleaseVersionLabel.Contains('preview')))">preview</LangVersion>
-    <LangVersion Condition="'$(LangVersion)'==''">10</LangVersion>
+    <!--
+        LangVersion 10 can't be set until the build pool machines are updated.  Use version 9 for now.
+    -->
+    <LangVersion Condition="'$(LangVersion)'==''">9</LangVersion>
     <CLSCompliant Condition="'$(CLSCompliant)'==''">true</CLSCompliant>
     <IncludeDllSafeSearchPathAttribute Condition="'$(IncludeDllSafeSearchPathAttribute )'==''">true</IncludeDllSafeSearchPathAttribute>
 

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="5.0.13-servicing.21558.6">
+    <Dependency Name="Microsoft.Private.Winforms" Version="5.0.13-servicing.21560.5">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-winforms</Uri>
-      <Sha>9f90c0e5c58738508d3bde3e5234dca6a982a03c</Sha>
+      <Sha>8e681d559fa8c5f42a7e3671d1fd99367eb4bc0d</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="5.0.13-servicing.21558.6">
+    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="5.0.13-servicing.21560.5">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-winforms</Uri>
-      <Sha>9f90c0e5c58738508d3bde3e5234dca6a982a03c</Sha>
+      <Sha>8e681d559fa8c5f42a7e3671d1fd99367eb4bc0d</Sha>
     </Dependency>
     <Dependency Name="Microsoft.Win32.Registry" Version="5.0.0" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
@@ -31,7 +31,7 @@
     </Dependency>
     <Dependency Name="System.Drawing.Common" Version="5.0.3" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>dcdf74cbb0b398d843ae25921cf8491e733cc2bd</Sha>
+      <Sha>7211aa01b34bb55ca67bdddd6e80ce23ee201bd2</Sha>
     </Dependency>
     <Dependency Name="System.Reflection.Emit" Version="5.0.0-alpha.1.19563.6">
       <Uri>https://github.com/dotnet/corefx</Uri>

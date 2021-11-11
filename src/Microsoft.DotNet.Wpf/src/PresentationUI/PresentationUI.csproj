@@ -251,8 +251,8 @@
     <NetCoreReference Include="System.Runtime.InteropServices" />
     <NetCoreReference Include="System.Runtime.Loader" />
     <NetCoreReference Include="System.Security.AccessControl" />
+    <NetCoreReference Include="System.Security.Cryptography" />
     <NetCoreReference Include="System.Security.Cryptography.Algorithms" />
-    <NetCoreReference Include="System.Security.Cryptography.Primitives" />
     <NetCoreReference Include="System.Security.Cryptography.X509Certificates" />
     <NetCoreReference Include="System.Threading" />
     <NetCoreReference Include="System.Threading.Thread" />

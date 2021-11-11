@@ -1742,7 +1742,7 @@ namespace System.Windows
                             _deferredResourceReferences = new DeferredResourceReferenceList();
                         }
 
-                        if (_deferredResourceReferences.Get(resourceKey) is DeferredResourceReference existingDeferredResourceReference
+                        if (_deferredResourceReferences.Get(resourceKey) is { } existingDeferredResourceReference
                             && existingDeferredResourceReference.Dictionary == this)
                         {
                             deferredResourceReference = existingDeferredResourceReference;

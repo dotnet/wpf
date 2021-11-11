@@ -1,24 +1,29 @@
-# WPF for .NET 5 Roadmap
-WPF is a .NET Core UI framework for building Windows desktop applications. The ownership of WPF was recently transitioned to our team (Developer Ecosystem and Platform team under Windows). This transition enables investments across UI frameworks namely WINUI and WPF to stay aligned and remain future-proof as new technology trends & devices are introduced in the industry.
+# WPF Roadmap FY22
+WPF is a .NET Core UI framework for building Windows desktop applications. WPF is currently supported on the below versions of .NET:
+- .NET Core: .NET 5 or higher (including .NET Core 3.1)
+- .NET Framework: NET Framework 4 and higher
 
-The roadmap below communicates priorities for evolving and extending the scope of WPF for .NET Core through 2020 and into 2021. It will continue to evolve based on market changes and customer feedback, so please note that the plans outlined here are not exhaustive or guaranteed. We welcome your feedback on the roadmap: please feel free to contribute to existing issues or [file a new issue](https://github.com/dotnet/wpf/issues/new/choose "file a new issue").
+[.NET CORE Roadmap](https://github.com/dotnet/core/blob/main/roadmap.md)
+
+
+The roadmap below communicates priorities for evolving and extending the scope of WPF for .NET Core through 2021 and into 2022. It will continue to evolve based on market changes and customer feedback, so please note that the plans outlined here are not exhaustive or guaranteed. We welcome your feedback on the roadmap: please feel free to contribute to existing issues or [file a new issue](https://github.com/dotnet/wpf/issues/new/choose "file a new issue").
 
 ### PROPOSED ROADMAP
-| #  | Milestone  |  Target Delivery |
+| #  | Project Title  |  Target Delivery |
 | :------------: | :------------: | :------------: |
-|1  |Incorporating .NET Framework servicing fixes into .NET Core 3.1 and .NET 5 |Ongoing|
-|2  |Ongoing integration with .NET 5 |20H2|
-|3  |Build out Test Infrastructure to add tests to validate and merge community PRs|20H2|
-|4  |Accessibility updates to .NET 5   |21H1|
-|5  |ARM64 Support|21H1|
+|1  |Incorporating .NET Framework servicing fixes into .NET Core 3.1, .NET 5 and .NET 6 |Ongoing|
+|2  |Performance Improvements |Ongoing|
+|3  |Ongoing support and maintenance for .NET Framework, .NET core 3.1, .NET 5.0 and .NET 6.0 |Ongoing|
+|4  |New API review process for Community PRs  |21H2|
+|5  |ARM64 support on .NET 6|21H2|
+|6  |Open Sourcing of Test Infrastructure and test collateral|22H1|
 
 ### Our SLA
 #### TRIAGING GITHUB ISSUES
-We are committed to a 72 hour (3 working days) turn around on triaging and responding to new issues filed on Github starting July 10th.
-Additionally,  Issues filed prior to July 10th are also being triaged. Issues filed in 2020 will be triaged first based on number of reactions/comments, and we expect to complete doing so by the middle of 20H2. Issues filed before 2020 will be triaged after that based on number of reactions/comments.
+We are committed to 72 Hours (3 working days) timeline for triaging and responding to new issues filed on GitHub according to priority and our resourcing capabilities. Additionally, older issues filed on GitHub are also being triaged. Issues filed in 2021 will be triaged first based on number of likes/reactions/comments. Issues filed before 2021 will be triaged after that based on number of reactions/comments.
 
 #### EVALUATING PULL REQUESTS
-We will begin merging contributions from the community on the WPF repo by picking 1-2 PRs from the community to manually test and integrate per month. When the test infrastructure work is completed we will enable broader community pull request merging. This is our team's commitment until our resourcing for WPF ramps-up.
+We will begin merging contributions from the community on the WPF repo by picking 1-2 PRs from the community to manually test and integrate per month. When the Open Sourcing of Test Infrastructure and test collateral work is completed, we will enable broader community pull request merging. 
 #### Code PRs considered at this time will be based on:
 -	Recency
 -	Extent of Reactions (Likes, comments)
@@ -30,10 +35,9 @@ We will begin merging contributions from the community on the WPF repo by pickin
 -	Is not a new feature request
 
 #### About non-code PRs
-We are committed to a 72 hour (3 working days) turn around on triaging and responding to new non-code PRs filed on Github starting July 10th. These are PRs for documentations bugs, documentation enhancements or a general question not related to source code issues/bugs.
+We are committed to a 72 hour (3 working days) turn around on triaging and responding to new non-code PRs filed on GitHub. These are PRs for documentations bugs, documentation enhancements or a general question not related to source code issues/bugs.
 
 ### COMMUNITY CALLS
-We will host a WPF segment in the existing [WinUI community calls](https://github.com/microsoft/microsoft-ui-xaml#winui-community-calls "WinUI community calls") once every two months (beginning in July 2020).In these calls we’ll discuss the WPF roadmap, our status and your feedback.
+We will host WPF community calls in the existing WinUI calls and will try to do them every two months . In these calls we’ll discuss the WPF roadmap, our status and your feedback.
 
-### RESOURCING STATUS
-Our team’s management has approved additional resourcing needs for this project. However, the global COVID-19 pandemic has caused hiring to be slower than usual. With the available resources on the current team, the roadmap above is what we are committed to getting scheduled and done in the foreseeable future. Stay tuned for schedule and/or investment updates as soon as we are able to actively expand resourcing for our team.
+

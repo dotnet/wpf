@@ -611,17 +611,19 @@ namespace System.Windows.Input
                 FindCommandBinding(commandBindings, sender, e, command, execute);
             }
 
+            Type senderType = sender.GetType();
+
             // If no command binding is found, check class command bindings
             // First find the relevant command bindings, under the lock.
             // Most of the time there are no such bindings;  most of the rest of
             // the time there is only one.   Lazy-allocate with this in mind.
-            Tuple<Type, CommandBinding> tuple = null;       // zero or one binding
-            List<Tuple<Type, CommandBinding>> list = null;  // more than one
-
+            ValueTuple<Type, CommandBinding>? tuple = default;       // zero or one binding
+            List<ValueTuple<Type, CommandBinding>> list = default;   // more than one
+            
             lock (_classCommandBindings.SyncRoot)
             {
                 // Check from the current type to all the base types
-                Type classType = sender.GetType();
+                Type classType = senderType;
                 while (classType is not null)
                 {
                     if (_classCommandBindings[classType] is CommandBindingCollection classCommandBindings)
@@ -637,15 +639,16 @@ namespace System.Windows.Input
 
                             if (tuple is null)
                             {
-                                tuple = new Tuple<Type, CommandBinding>(classType, commandBinding);
+                                tuple = ValueTuple.Create(classType, commandBinding);
                             }
                             else
                             {
-                                list ??= new List<Tuple<Type, CommandBinding>>
+                                list ??= new List<ValueTuple<Type, CommandBinding>>(8)
                                 {
-                                    tuple
+                                    // We know that tuple cannot be null here
+                                    tuple.Value
                                 };
-                                list.Add(new Tuple<Type, CommandBinding>(classType, commandBinding));
+                                list.Add(new ValueTuple<Type, CommandBinding>(classType, commandBinding));
                             }
                         }
                     }
@@ -674,16 +677,16 @@ namespace System.Windows.Input
                     --i;    // back up, so that the outer for-loop advances to the right place
                 }
             }
-            else if (tuple is not null)
+            else if (tuple is var (_, commandBinding))
             {
                 // only one binding
                 if (execute)
                 {
-                    ExecuteCommandBinding(sender, (ExecutedRoutedEventArgs)e, tuple.Item2);
+                    ExecuteCommandBinding(sender, (ExecutedRoutedEventArgs)e, commandBinding);
                 }
                 else
                 {
-                    CanExecuteCommandBinding(sender, (CanExecuteRoutedEventArgs)e, tuple.Item2);
+                    CanExecuteCommandBinding(sender, (CanExecuteRoutedEventArgs)e, commandBinding);
                 }
             }
         }
@@ -694,13 +697,18 @@ namespace System.Windows.Input
             while (true)
             {
                 CommandBinding commandBinding = commandBindings.FindMatch(command, ref index);
-                if (commandBinding == null ||
-                    execute && ExecuteCommandBinding(sender, (ExecutedRoutedEventArgs)e, commandBinding) ||
-                    !execute && CanExecuteCommandBinding(sender, (CanExecuteRoutedEventArgs)e, commandBinding))
+                if (HandleCommandBinding(sender, e, commandBinding, execute))
                 {
                     break;
                 }
             }
+        }
+
+        private static bool HandleCommandBinding(object sender, RoutedEventArgs e, CommandBinding commandBinding, bool execute)
+        {
+            return commandBinding is null ||
+                   execute && ExecuteCommandBinding(sender, (ExecutedRoutedEventArgs)e, commandBinding) ||
+                   !execute && CanExecuteCommandBinding(sender, (CanExecuteRoutedEventArgs)e, commandBinding);
         }
 
         private static void TransferEvent(IInputElement newSource, CanExecuteRoutedEventArgs e)

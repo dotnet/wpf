@@ -599,21 +599,14 @@ namespace System.Windows.Input
         private static void FindCommandBinding(object sender, RoutedEventArgs e, ICommand command, bool execute)
         {
             // Check local command bindings
-            CommandBindingCollection commandBindings = null;
-            DependencyObject senderAsDO = sender as DependencyObject;
-            if (InputElement.IsUIElement(senderAsDO))
+            CommandBindingCollection commandBindings = sender switch
             {
-                commandBindings = ((UIElement)senderAsDO).CommandBindingsInternal;
-            }
-            else if (InputElement.IsContentElement(senderAsDO))
-            {
-                commandBindings = ((ContentElement)senderAsDO).CommandBindingsInternal;
-            }
-            else if (InputElement.IsUIElement3D(senderAsDO))
-            {
-                commandBindings = ((UIElement3D)senderAsDO).CommandBindingsInternal;
-            }
-            if (commandBindings != null)
+                UIElement uiElement => uiElement.CommandBindingsInternal,
+                ContentElement contentElement => contentElement.CommandBindingsInternal,
+                UIElement3D uiElement3d => uiElement3d.CommandBindingsInternal,
+                _ => default
+            };
+            if (commandBindings is not null)
             {
                 FindCommandBinding(commandBindings, sender, e, command, execute);
             }
@@ -629,34 +622,30 @@ namespace System.Windows.Input
             {
                 // Check from the current type to all the base types
                 Type classType = sender.GetType();
-                while (classType != null)
+                while (classType is not null)
                 {
-                    CommandBindingCollection classCommandBindings = _classCommandBindings[classType] as CommandBindingCollection;
-                    if (classCommandBindings != null)
+                    if (_classCommandBindings[classType] is CommandBindingCollection classCommandBindings)
                     {
                         int index = 0;
                         while (true)
                         {
                             CommandBinding commandBinding = classCommandBindings.FindMatch(command, ref index);
-                            if (commandBinding != null)
+                            if (commandBinding is null)
                             {
-                                if (tuple == null)
-                                {
-                                    tuple = new Tuple<Type, CommandBinding>(classType, commandBinding);
-                                }
-                                else
-                                {
-                                    if (list == null)
-                                    {
-                                        list = new List<Tuple<Type, CommandBinding>>();
-                                        list.Add(tuple);
-                                    }
-                                    list.Add(new Tuple<Type, CommandBinding>(classType, commandBinding));
-                                }
+                                break;
+                            }
+
+                            if (tuple is null)
+                            {
+                                tuple = new Tuple<Type, CommandBinding>(classType, commandBinding);
                             }
                             else
                             {
-                                break;
+                                list ??= new List<Tuple<Type, CommandBinding>>
+                                {
+                                    tuple
+                                };
+                                list.Add(new Tuple<Type, CommandBinding>(classType, commandBinding));
                             }
                         }
                     }
@@ -666,28 +655,26 @@ namespace System.Windows.Input
 
             // execute the bindings.  This can call into user code, so it must
             // be done outside the lock to avoid deadlock.
-            if (list != null)
+            if (list is not null)
             {
                 // more than one binding
-                ExecutedRoutedEventArgs exArgs = execute ? (ExecutedRoutedEventArgs)e : null;
-                CanExecuteRoutedEventArgs canExArgs = execute ? null : (CanExecuteRoutedEventArgs)e;
-                for (int i=0; i<list.Count; ++i)
+                ExecutedRoutedEventArgs exArgs = execute ? (ExecutedRoutedEventArgs)e : default;
+                CanExecuteRoutedEventArgs canExArgs = execute ? default : (CanExecuteRoutedEventArgs)e;
+                for (int i = 0; i < list.Count; ++i)
                 {
                     // invoke the binding
-                    if ((execute && ExecuteCommandBinding(sender, exArgs, list[i].Item2)) ||
-                        (!execute && CanExecuteCommandBinding(sender, canExArgs, list[i].Item2)))
+                    if ((!execute || !ExecuteCommandBinding(sender, exArgs, list[i].Item2)) &&
+                        (execute || !CanExecuteCommandBinding(sender, canExArgs, list[i].Item2))) continue;
+                    // if it succeeds, advance past the remaining bindings for this type
+                    Type classType = list[i].Item1;
+                    while (++i < list.Count && list[i].Item1 == classType)
                     {
-                        // if it succeeds, advance past the remaining bindings for this type
-                        Type classType = list[i].Item1;
-                        while (++i<list.Count && list[i].Item1 == classType)
-                        {
-                            // no body needed
-                        }
-                        --i;    // back up, so that the outer for-loop advances to the right place
+                        // no body needed
                     }
+                    --i;    // back up, so that the outer for-loop advances to the right place
                 }
             }
-            else if (tuple != null)
+            else if (tuple is not null)
             {
                 // only one binding
                 if (execute)
@@ -707,9 +694,9 @@ namespace System.Windows.Input
             while (true)
             {
                 CommandBinding commandBinding = commandBindings.FindMatch(command, ref index);
-                if ((commandBinding == null) ||
-                    (execute && ExecuteCommandBinding(sender, (ExecutedRoutedEventArgs)e, commandBinding)) ||
-                    (!execute && CanExecuteCommandBinding(sender, (CanExecuteRoutedEventArgs)e, commandBinding)))
+                if (commandBinding == null ||
+                    execute && ExecuteCommandBinding(sender, (ExecutedRoutedEventArgs)e, commandBinding) ||
+                    !execute && CanExecuteCommandBinding(sender, (CanExecuteRoutedEventArgs)e, commandBinding))
                 {
                     break;
                 }

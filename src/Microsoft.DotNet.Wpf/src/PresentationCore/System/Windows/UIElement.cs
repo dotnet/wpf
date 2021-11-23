@@ -796,7 +796,7 @@ namespace System.Windows
                 // paths.
                 using (Dispatcher.DisableProcessing())
                 {
-                    //enforce that Arrange can not come with Infinity size or NaN
+                    // Enforce that Arrange can not come with Infinity size or NaN
                     if (double.IsPositiveInfinity(finalRect.Width)
                         || double.IsPositiveInfinity(finalRect.Height)
                         || double.IsNaN(finalRect.Width)
@@ -808,19 +808,19 @@ namespace System.Windows
                             SR.Get(
                                 SRID.UIElement_Layout_InfinityArrange,
                                     (parent == null ? "" : parent.GetType().FullName),
-                                    this.GetType().FullName));
+                                    GetType().FullName));
                     }
 
 
-                    //if Collapsed, we should not Arrange, keep dirty bit but remove request
-                    if (this.Visibility == Visibility.Collapsed
-                        || ((Visual)this).CheckFlagsAnd(VisualFlags.IsLayoutSuspended))
+                    // If Collapsed, we should not Arrange, keep dirty bit but remove request
+                    if (Visibility == Visibility.Collapsed
+                        || CheckFlagsAnd(VisualFlags.IsLayoutSuspended))
                     {
-                        //reset arrange request.
+                        // Reset arrange request.
                         if (ArrangeRequest != null)
                             ContextLayoutManager.From(Dispatcher).ArrangeQueue.Remove(this);
 
-                        //  remember though that parent tried to arrange at this rect
+                        //  Remember though that parent tried to arrange at this rect
                         //  in case when later this element is called to arrange incrementally
                         //  it has up-to-date information stored in _finalRect
                         _finalRect = finalRect;
@@ -828,24 +828,24 @@ namespace System.Windows
                         return;
                     }
 
-                    //in case parent did not call Measure on a child, we call it now.
-                    //parent can skip calling Measure on a child if it does not care about child's size
-                    //passing finalSize practically means "set size" because that's what Measure(sz)/Arrange(same_sz) means
-                    //Note that in case of IsLayoutSuspended (temporarily out of the tree) the MeasureDirty can be true
-                    //while it does not indicate that we should re-measure - we just came of Measure that did nothing
-                    //because of suspension
+                    // In case parent did not call Measure on a child, we call it now.
+                    // parent can skip calling Measure on a child if it does not care about child's size
+                    // passing finalSize practically means "set size" because that's what Measure(sz)/Arrange(same_sz) means
+                    // Note that in case of IsLayoutSuspended (temporarily out of the tree) the MeasureDirty can be true
+                    // while it does not indicate that we should re-measure - we just came of Measure that did nothing
+                    // because of suspension
                     if (MeasureDirty
                        || NeverMeasured)
                     {
                         try
                         {
                             MeasureDuringArrange = true;
-                            //If never measured - that means "set size", arrange-only scenario
-                            //Otherwise - the parent previosuly measured the element at constriant
-                            //and the fact that we are arranging the measure-dirty element now means
-                            //we are not in the UpdateLayout loop but rather in manual sequence of Measure/Arrange
-                            //(like in HwndSource when new RootVisual is attached) so there are no loops and there could be
-                            //measure-dirty elements left after previosu single Measure pass) - so need to use cached constraint
+                            // If never measured - that means "set size", arrange-only scenario
+                            // Otherwise - the parent previosuly measured the element at constriant
+                            // and the fact that we are arranging the measure-dirty element now means
+                            // we are not in the UpdateLayout loop but rather in manual sequence of Measure/Arrange
+                            // (like in HwndSource when new RootVisual is attached) so there are no loops and there could be
+                            // measure-dirty elements left after previosu single Measure pass) - so need to use cached constraint
                             if (NeverMeasured)
                                 Measure(finalRect.Size);
                             else
@@ -859,7 +859,7 @@ namespace System.Windows
                         }
                     }
 
-                    //bypass - if clean and rect is the same, no need to re-arrange
+                    // Bypass - if clean and rect is the same, no need to re-arrange
                     if (!IsArrangeValid
                         || NeverArranged
                         || !DoubleUtil.AreClose(finalRect, _finalRect))
@@ -885,13 +885,13 @@ namespace System.Windows
                         {
                             layoutManager.EnterArrange();
 
-                            //This has to update RenderSize
+                            // This has to update RenderSize
                             ArrangeCore(finalRect);
 
-                            //to make sure Clip is tranferred to Visual
+                            // to make sure Clip is tranferred to Visual
                             ensureClip(finalRect.Size);
 
-                            //  see if we need to call OnRenderSizeChanged on this element
+                            // See if we need to call OnRenderSizeChanged on this element
                             sizeChanged = markForSizeChangedIfNeeded(oldSize, RenderSize);
 
                             gotException = false;
@@ -916,8 +916,8 @@ namespace System.Windows
 
                         ArrangeDirty = false;
 
-                        //reset request.
-                        if (ArrangeRequest != null)
+                        // Reset request.
+                        if (ArrangeRequest is not null)
                             ContextLayoutManager.From(Dispatcher).ArrangeQueue.Remove(this);
 
                         if ((sizeChanged || RenderingInvalidated || firstArrange) && IsRenderable())

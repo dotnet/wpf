@@ -15,6 +15,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using MS.Internal.PresentationCore;
+using PresentationCore;
 
 namespace MS.Internal.Media
 {
@@ -45,9 +46,9 @@ namespace MS.Internal.Media
         [FriendAccessAllowed]   // used by Framework
         public static void SetTextHintingMode(DependencyObject element, TextHintingMode value)
         {
-            if (element == null)
+            if (element is null)
             {
-                throw new ArgumentNullException("element");
+                ThrowHelper.ThrowArgumentNullException(nameof(element));
             }
 
             element.SetValue(TextHintingModeProperty, value);
@@ -58,19 +59,12 @@ namespace MS.Internal.Media
         {
             if (element is null)
             {
-                ThrowArgumentNullException(nameof(element));
+                ThrowHelper.ThrowArgumentNullException(nameof(element));
             }
 
             return (TextHintingMode)element.GetValue(TextHintingModeProperty);
         }
 
         #endregion Attached Groperties Getters and Setters
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        [DoesNotReturn]
-        private static void ThrowArgumentNullException(string paramName)
-        {
-            throw new ArgumentNullException(paramName);
-        }
     }
 }

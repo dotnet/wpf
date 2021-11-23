@@ -17,6 +17,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Security;
 using System.Windows.Interop;
+using PresentationCore;
 
 namespace System.Windows.Media
 {
@@ -49,7 +50,7 @@ namespace System.Windows.Media
         {
             if (target is null)
             {
-                ThrowArgumentNullException(nameof(target));
+                ThrowHelper.ThrowArgumentNullException(nameof(target));
             }
             return (EdgeMode)target.GetValue(EdgeModeProperty);
         }
@@ -61,16 +62,9 @@ namespace System.Windows.Media
         {
             if (target is null)
             {
-                ThrowArgumentNullException(nameof(target));
+                ThrowHelper.ThrowArgumentNullException(nameof(target));
             }
             target.SetValue(EdgeModeProperty, edgeMode);
-        }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        [DoesNotReturn]
-        private static void ThrowArgumentNullException(string paramName)
-        {
-            throw new ArgumentNullException(paramName);
         }
 
         //
@@ -95,7 +89,7 @@ namespace System.Windows.Media
         {
             if (target is null)
             {
-                ThrowArgumentNullException(nameof(target));
+                ThrowHelper.ThrowArgumentNullException(nameof(target));
             }
             return (BitmapScalingMode)target.GetValue(BitmapScalingModeProperty);
         }
@@ -131,7 +125,7 @@ namespace System.Windows.Media
         {
             if (target is null)
             {
-                ThrowArgumentNullException(nameof(target));
+                ThrowHelper.ThrowArgumentNullException(nameof(target));
             }
             return (ClearTypeHint)target.GetValue(ClearTypeHintProperty);
         }

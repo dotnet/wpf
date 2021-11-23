@@ -981,50 +981,66 @@ namespace System.Windows
 
         private void UpdatePixelSnappingGuidelines()
         {
-            if((!SnapsToDevicePixels) || (_drawingContent == null))
+            if(!SnapsToDevicePixels || _drawingContent is null)
             {
-                VisualXSnappingGuidelines = VisualYSnappingGuidelines = null;
+                VisualXSnappingGuidelines = null;
+                VisualYSnappingGuidelines = null;
             }
             else
             {
                 DoubleCollection xLines = VisualXSnappingGuidelines;
 
-                if(xLines == null)
+                Span<double> xLinesData;
+                if (xLines is null)
                 {
-                    xLines = new DoubleCollection
+                    unsafe
                     {
-                        0d,
-                        RenderSize.Width
-                    };
-                    VisualXSnappingGuidelines = xLines;
+                        var xLinesStackData = stackalloc double[2];
+                        xLinesData = new Span<double>(xLinesStackData, 2);
+                    }
+
+                    xLinesData[0] = 0d;
+                    xLinesData[1] = RenderSize.Width;
+
                 }
                 else
                 {
+                    xLinesData = xLines.ToSpan();
+
                     // xLines[0] = 0d;  - this already should be so
                     // check to avoid potential dirtiness in renderer
-                    int lastGuideline = xLines.Count - 1;
-                    if(!DoubleUtil.AreClose(xLines[lastGuideline], RenderSize.Width))
-                        xLines[lastGuideline] = RenderSize.Width;
+                    int lastGuideline = xLinesData.Length - 1;
+                    if(!DoubleUtil.AreClose(xLinesData[lastGuideline], RenderSize.Width))
+                        xLinesData[lastGuideline] = RenderSize.Width;
                 }
 
+                VisualXSnappingGuidelines = new DoubleCollection(xLinesData);
+
                 DoubleCollection yLines = VisualYSnappingGuidelines;
-                if(yLines == null)
+                Span<double> yLinesData;
+                if (yLines == null)
                 {
-                    yLines = new DoubleCollection
+                    unsafe
                     {
-                        0d,
-                        RenderSize.Height
-                    };
-                    VisualYSnappingGuidelines = yLines;
+                        var yLinesStackData = stackalloc double[2];
+                        yLinesData = new Span<double>(yLinesStackData, 2);
+                    }
+
+                    yLinesData[0] = 0d;
+                    yLinesData[1] = RenderSize.Height;
                 }
                 else
                 {
+                    yLinesData = yLines.ToSpan();
+
                     // yLines[0] = 0d;  - this already should be so
                     // check to avoid potential dirtiness in renderer
-                    int lastGuideline = yLines.Count - 1;
-                    if(!DoubleUtil.AreClose(yLines[lastGuideline], RenderSize.Height))
-                        yLines[lastGuideline] = RenderSize.Height;
+                    int lastGuideline = yLinesData.Length - 1;
+                    if(!DoubleUtil.AreClose(yLinesData[lastGuideline], RenderSize.Height))
+                        yLinesData[lastGuideline] = RenderSize.Height;
                 }
+
+                VisualYSnappingGuidelines = new DoubleCollection(yLinesData);
             }
         }
 

@@ -368,7 +368,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static double CoerceDesiredOrDisplayWidthValue(double widthValue, double memberValue, DataGridLengthUnitType type)
         {
-            if (DoubleUtil.IsNaN(memberValue))
+            if (double.IsNaN(memberValue))
             {
                 if (type == DataGridLengthUnitType.Pixel)
                 {
@@ -399,8 +399,8 @@ namespace System.Windows.Controls
 
             double newDesiredValue = CoerceDesiredOrDisplayWidthValue(width.Value, width.DesiredValue, width.UnitType);
             double newDisplayValue = CoerceDesiredOrDisplayWidthValue(width.Value, width.DisplayValue, width.UnitType);
-            newDisplayValue = (DoubleUtil.IsNaN(newDisplayValue) ? newDisplayValue : DataGridHelper.CoerceToMinMax(newDisplayValue, column.MinWidth, column.MaxWidth));
-            if (DoubleUtil.IsNaN(newDisplayValue) || DoubleUtil.AreClose(newDisplayValue, width.DisplayValue))
+            newDisplayValue = (double.IsNaN(newDisplayValue) ? newDisplayValue : DataGridHelper.CoerceToMinMax(newDisplayValue, column.MinWidth, column.MaxWidth));
+            if (double.IsNaN(newDisplayValue) || DoubleUtil.AreClose(newDisplayValue, width.DisplayValue))
             {
                 return width;
             }
@@ -455,7 +455,7 @@ namespace System.Windows.Controls
         private static bool ValidateMinWidth(object v)
         {
             double value = (double)v;
-            return !(value < 0d || DoubleUtil.IsNaN(value) || Double.IsPositiveInfinity(value));
+            return !(value < 0d || double.IsNaN(value) || Double.IsPositiveInfinity(value));
         }
 
         /// <summary>
@@ -464,7 +464,7 @@ namespace System.Windows.Controls
         private static bool ValidateMaxWidth(object v)
         {
             double value = (double)v;
-            return !(value < 0d || DoubleUtil.IsNaN(value));
+            return !(value < 0d || double.IsNaN(value));
         }
 
         /// <summary>
@@ -515,7 +515,7 @@ namespace System.Windows.Controls
         internal double GetConstraintWidth(bool isHeader)
         {
             DataGridLength width = Width;
-            if (!DoubleUtil.IsNaN(width.DisplayValue))
+            if (!double.IsNaN(width.DisplayValue))
             {
                 return width.DisplayValue;
             }
@@ -553,10 +553,10 @@ namespace System.Windows.Controls
                 (width.IsSizeToCells && !isHeader) ||
                 (width.IsSizeToHeader && isHeader))
             {
-                if (DoubleUtil.IsNaN(width.DesiredValue) ||
+                if (double.IsNaN(width.DesiredValue) ||
                     DoubleUtil.LessThan(width.DesiredValue, pixelWidth))
                 {
-                    if (DoubleUtil.IsNaN(width.DisplayValue))
+                    if (double.IsNaN(width.DisplayValue))
                     {
                         SetWidthInternal(new DataGridLength(width.Value, width.UnitType, pixelWidth, displayWidth));
                     }
@@ -573,7 +573,7 @@ namespace System.Windows.Controls
                     width = Width;
                 }
 
-                if (DoubleUtil.IsNaN(width.DisplayValue))
+                if (double.IsNaN(width.DisplayValue))
                 {
                     if (ActualWidth < displayWidth)
                     {

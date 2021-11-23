@@ -785,7 +785,7 @@ namespace System.Windows.Documents
                 //If Left is not specified, then Right is used
                 //If both are not there, then 0
                 double left = GetLeft(child);
-                if(!DoubleUtil.IsNaN(left)) 
+                if(!double.IsNaN(left)) 
                 {
                     x = left; 
                 }
@@ -793,14 +793,14 @@ namespace System.Windows.Documents
                 {
                     double right = GetRight(child);
 
-                    if(!DoubleUtil.IsNaN(right)) 
+                    if(!double.IsNaN(right)) 
                     {
                         x = arrangeSize.Width - child.DesiredSize.Width - right;
                     }
                 }
                 
                 double top = GetTop(child);
-                if(!DoubleUtil.IsNaN(top)) 
+                if(!double.IsNaN(top)) 
                 {
                     y = top; 
                 }
@@ -808,7 +808,7 @@ namespace System.Windows.Documents
                 {
                     double bottom = GetBottom(child);
 
-                    if(!DoubleUtil.IsNaN(bottom)) 
+                    if(!double.IsNaN(bottom)) 
                     {
                         y = arrangeSize.Height - child.DesiredSize.Height - bottom;
                     }

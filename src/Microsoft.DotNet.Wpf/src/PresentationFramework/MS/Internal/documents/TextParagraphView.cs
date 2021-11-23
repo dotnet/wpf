@@ -187,7 +187,7 @@ namespace MS.Internal.Documents
             {
                 positionOut = position;
             }
-            else if (!DoubleUtil.IsNaN(suggestedX))
+            else if (!double.IsNaN(suggestedX))
             {
                 positionOut = lines[lineIndex].GetTextPositionFromDistance(suggestedX);
             }

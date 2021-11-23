@@ -260,29 +260,24 @@ namespace System.Windows
         /// </summary>
         public void InvalidateMeasure()
         {
-            if(     !MeasureDirty
-                &&  !MeasureInProgress )
+            if (MeasureDirty || MeasureInProgress) return;
+            Debug.Assert(MeasureRequest is null, "can't be clean and still have MeasureRequest");
+
+            if(!NeverMeasured) // only measured once elements are allowed in *update* queue
             {
-                Debug.Assert(MeasureRequest == null, "can't be clean and still have MeasureRequest");
-
-//                 VerifyAccess();
-
-                if(!NeverMeasured) //only measured once elements are allowed in *update* queue
+                ContextLayoutManager contextLayoutManager = ContextLayoutManager.From(Dispatcher);
+                if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose))
                 {
-                    ContextLayoutManager ContextLayoutManager = ContextLayoutManager.From(Dispatcher);
-                    if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose))
+                    // Knowing when the layout queue goes from clean to dirty is interesting.
+                    if (contextLayoutManager.MeasureQueue.IsEmpty)
                     {
-                        // Knowing when the layout queue goes from clean to dirty is interesting.
-                        if (ContextLayoutManager.MeasureQueue.IsEmpty)
-                        {
-                            EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientLayoutInvalidated, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, PerfService.GetPerfElementID(this));
-                        }
+                        EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientLayoutInvalidated, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, PerfService.GetPerfElementID(this));
                     }
-
-                    ContextLayoutManager.MeasureQueue.Add(this);
                 }
-                MeasureDirty = true;
+
+                contextLayoutManager.MeasureQueue.Add(this);
             }
+            MeasureDirty = true;
         }
 
         /// <summary>
@@ -293,22 +288,17 @@ namespace System.Windows
         /// </summary>
         public void InvalidateArrange()
         {
-            if(   !ArrangeDirty
-               && !ArrangeInProgress)
+            if (ArrangeDirty || ArrangeInProgress) return;
+            Debug.Assert(ArrangeRequest == null, "can't be clean and still have MeasureRequest");
+
+            if(!NeverArranged)
             {
-                Debug.Assert(ArrangeRequest == null, "can't be clean and still have MeasureRequest");
-
-//                 VerifyAccess();
-
-                if(!NeverArranged)
-                {
-                    ContextLayoutManager ContextLayoutManager = ContextLayoutManager.From(Dispatcher);
-                    ContextLayoutManager.ArrangeQueue.Add(this);
-                }
-
-
-                ArrangeDirty = true;
+                ContextLayoutManager contextLayoutManager = ContextLayoutManager.From(Dispatcher);
+                contextLayoutManager.ArrangeQueue.Add(this);
             }
+
+
+            ArrangeDirty = true;
         }
 
         /// <summary>
@@ -564,73 +554,71 @@ namespace System.Windows
         public void Measure(Size availableSize)
         {
             bool etwTracingEnabled = false;
-            long perfElementID = 0;
-            ContextLayoutManager ContextLayoutManager = ContextLayoutManager.From(Dispatcher);
-            if (ContextLayoutManager.AutomationEvents.Count != 0)
+            long perfElementId = 0;
+            ContextLayoutManager contextLayoutManager = ContextLayoutManager.From(Dispatcher);
+            if (contextLayoutManager.AutomationEvents.Count != 0)
                 UIElementHelper.InvalidateAutomationAncestors(this);
 
             if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose))
             {
-                perfElementID = PerfService.GetPerfElementID(this);
+                perfElementId = PerfService.GetPerfElementID(this);
 
                 etwTracingEnabled = true;
-                EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientMeasureElementBegin, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementID, availableSize.Width, availableSize.Height);
+                EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientMeasureElementBegin, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementId, availableSize.Width, availableSize.Height);
             }
             try
             {
-                //             VerifyAccess();
-
                 // Disable reentrancy during the measure pass.  This is because much work is done
                 // during measure - such as inflating templates, formatting PTS stuff, creating
                 // fonts, etc.  Generally speaking, we cannot survive reentrancy in these code
                 // paths.
                 using (Dispatcher.DisableProcessing())
                 {
-                    //enforce that Measure can not receive NaN size .
+                    // Enforce that Measure can not receive NaN size .
                     if (double.IsNaN(availableSize.Width) || double.IsNaN(availableSize.Height))
-                        throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_NaNMeasure));
+                        ThrowInvalidOperationLayoutNaNMeasure();
 
                     bool neverMeasured = NeverMeasured;
 
                     if (neverMeasured)
                     {
-                        switchVisibilityIfNeeded(this.Visibility);
-                        //to make sure effects are set correctly - otherwise it's not used
-                        //simply because it is never pulled by anybody
-                        pushVisualEffects();
+                        SwitchVisibilityIfNeeded(Visibility);
+
+                        // To make sure effects are set correctly - otherwise it's not used
+                        // simply because it is never pulled by anybody
+                        PushVisualEffects();
                     }
 
                     bool isCloseToPreviousMeasure = DoubleUtil.AreClose(availableSize, _previousAvailableSize);
 
 
                     //if Collapsed, we should not Measure, keep dirty bit but remove request
-                    if (this.Visibility == Visibility.Collapsed
-                        || ((Visual)this).CheckFlagsAnd(VisualFlags.IsLayoutSuspended))
+                    if (Visibility == Visibility.Collapsed
+                        || CheckFlagsAnd(VisualFlags.IsLayoutSuspended))
                     {
                         //reset measure request.
-                        if (MeasureRequest != null)
+                        if (MeasureRequest is not null)
                             ContextLayoutManager.From(Dispatcher).MeasureQueue.Remove(this);
 
-                        //  remember though that parent tried to measure at this size
-                        //  in case when later this element is called to measure incrementally
-                        //  it has up-to-date information stored in _previousAvailableSize
-                        if (!isCloseToPreviousMeasure)
-                        {
-                            //this will ensure that element will be actually re-measured at the new available size
-                            //later when it becomes visible.
-                            InvalidateMeasureInternal();
+                        // Remember though that parent tried to measure at this size
+                        // in case when later this element is called to measure incrementally
+                        // it has up-to-date information stored in _previousAvailableSize
+                        if (isCloseToPreviousMeasure) return;
 
-                            _previousAvailableSize = availableSize;
-                        }
+                        // This will ensure that element will be actually re-measured at the new available size
+                        // later when it becomes visible.
+                        InvalidateMeasureInternal();
+
+                        _previousAvailableSize = availableSize;
 
                         return;
                     }
 
 
-                    //your basic bypass. No reason to calc the same thing.
-                    if (IsMeasureValid                       //element is clean
-                        && !neverMeasured                       //previously measured
-                        && isCloseToPreviousMeasure) //and contraint matches
+                    // Your basic bypass. No reason to calc the same thing.
+                    if (IsMeasureValid               // element is clean
+                        && !neverMeasured            // previously measured
+                        && isCloseToPreviousMeasure) // and constraint matches
                     {
                         return;
                     }
@@ -638,15 +626,15 @@ namespace System.Windows
                     NeverMeasured = false;
                     Size prevSize = _desiredSize;
 
-                    //we always want to be arranged, ensure arrange request
-                    //doing it before OnMeasure prevents unneeded requests from children in the queue
+                    // We always want to be arranged, ensure arrange request
+                    // doing it before OnMeasure prevents unneeded requests from children in the queue
                     InvalidateArrange();
-                    //_measureInProgress prevents OnChildDesiredSizeChange to cause the elements be put
-                    //into the queue.
+                    // _measureInProgress prevents OnChildDesiredSizeChange to cause the elements be put
+                    // into the queue.
 
                     MeasureInProgress = true;
 
-                    Size desiredSize = new Size(0, 0);
+                    Size desiredSize;
 
                     ContextLayoutManager layoutManager = ContextLayoutManager.From(Dispatcher);
 
@@ -678,46 +666,65 @@ namespace System.Windows
                         }
                     }
 
-                    //enforce that MeasureCore can not return PositiveInfinity size even if given Infinte availabel size.
+                    //enforce that MeasureCore can not return PositiveInfinity size even if given Infinite available size.
                     //Note: NegativeInfinity can not be returned by definition of Size structure.
                     if (double.IsPositiveInfinity(desiredSize.Width) || double.IsPositiveInfinity(desiredSize.Height))
-                        throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_PositiveInfinityReturned, this.GetType().FullName));
+                        ThrowInvalidOperationLayoutPositiveInfinityReturned();
 
                     //enforce that MeasureCore can not return NaN size .
                     if (double.IsNaN(desiredSize.Width) || double.IsNaN(desiredSize.Height))
-                        throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_NaNReturned, this.GetType().FullName));
+                        ThrowInvalidOperationLayoutNaNReturned();
 
                     //reset measure dirtiness
 
                     MeasureDirty = false;
                     //reset measure request.
-                    if (MeasureRequest != null)
+                    if (MeasureRequest is not null)
                         ContextLayoutManager.From(Dispatcher).MeasureQueue.Remove(this);
 
                     //cache desired size
                     _desiredSize = desiredSize;
 
-                    //notify parent if our desired size changed (watefall effect)
-                    if (!MeasureDuringArrange
-                       && !DoubleUtil.AreClose(prevSize, desiredSize))
+                    //notify parent if our desired size changed (waterfall effect)
+                    if (MeasureDuringArrange || DoubleUtil.AreClose(prevSize, desiredSize)) return;
+
+                    GetUIParentOrICH(out UIElement p, out IContentHost ich); // only one will be returned
+                    if (p is { MeasureInProgress: false })                   // this is what differs this code from signalDesiredSizeChange()
+                        p.OnChildDesiredSizeChanged(this);
+                    else
                     {
-                        UIElement p;
-                        IContentHost ich;
-                        GetUIParentOrICH(out p, out ich); //only one will be returned
-                        if (p != null && !p.MeasureInProgress) //this is what differs this code from signalDesiredSizeChange()
-                            p.OnChildDesiredSizeChanged(this);
-                        else if (ich != null)
-                            ich.OnChildDesiredSizeChanged(this);
+                        ich?.OnChildDesiredSizeChanged(this);
                     }
                 }
             }
             finally
             {
-                if (etwTracingEnabled == true)
+                if (etwTracingEnabled)
                 {
-                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientMeasureElementEnd, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementID, _desiredSize.Width, _desiredSize.Height);
+                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientMeasureElementEnd, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementId, _desiredSize.Width, _desiredSize.Height);
                 }
             }
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        [DoesNotReturn]
+        private void ThrowInvalidOperationLayoutPositiveInfinityReturned()
+        {
+            throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_PositiveInfinityReturned, GetType().FullName));
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        [DoesNotReturn]
+        private void ThrowInvalidOperationLayoutNaNReturned()
+        {
+            throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_NaNReturned, GetType().FullName));
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        [DoesNotReturn]
+        private static void ThrowInvalidOperationLayoutNaNMeasure()
+        {
+            throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_NaNMeasure));
         }
 
          //only one will be returned, whichever found first
@@ -731,11 +738,9 @@ namespace System.Windows
                 ich = v as IContentHost;
                 if (ich != null) break;
 
-                if(v.CheckFlagsAnd(VisualFlags.IsUIElement))
-                {
-                    uiParent = (UIElement)v;
-                    break;
-                }
+                if (!v.CheckFlagsAnd(VisualFlags.IsUIElement)) continue;
+                uiParent = (UIElement)v;
+                break;
             }
         }
 
@@ -1242,8 +1247,8 @@ namespace System.Windows
         /// <returns>Desired Size of the control, given available size passed as parameter.</returns>
         protected virtual Size MeasureCore(Size availableSize)
         {
-            //can not return availableSize here - this is too "greedy" and can cause the Infinity to be
-            //returned. So the next "reasonable" choice is (0,0).
+            // Can not return availableSize here - this is too "greedy" and can cause the Infinity to be
+            // returned. So the next "reasonable" choice is (0,0).
             return new Size(0,0);
         }
 
@@ -2716,7 +2721,7 @@ namespace System.Windows
         private static void Opacity_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = (UIElement) d;
-            uie.pushOpacity();
+            uie.PushOpacity();
         }
 
         /// <summary>
@@ -2730,11 +2735,11 @@ namespace System.Windows
             set { SetValue(OpacityProperty, value); }
         }
 
-        private void pushOpacity()
+        private void PushOpacity()
         {
-            if(this.Visibility == Visibility.Visible)
+            if(Visibility == Visibility.Visible)
             {
-                base.VisualOpacity = Opacity;
+                VisualOpacity = Opacity;
             }
         }
 
@@ -2748,7 +2753,7 @@ namespace System.Windows
         private static void OpacityMask_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = (UIElement) d;
-            uie.pushOpacityMask();
+            uie.PushOpacityMask();
         }
 
         /// <summary>
@@ -2762,9 +2767,9 @@ namespace System.Windows
             set { SetValue(OpacityMaskProperty, value); }
         }
 
-        private void pushOpacityMask()
+        private void PushOpacityMask()
         {
-            base.VisualOpacityMask = OpacityMask;
+            VisualOpacityMask = OpacityMask;
         }
 
         /// <summary>
@@ -2780,7 +2785,7 @@ namespace System.Windows
         private static void OnBitmapEffectChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = (UIElement)d;
-            uie.pushBitmapEffect();
+            uie.PushBitmapEffect();
         }
 
         /// <summary>
@@ -2793,7 +2798,7 @@ namespace System.Windows
             set { SetValue(BitmapEffectProperty, value); }
         }
 
-        private void pushBitmapEffect()
+        private void PushBitmapEffect()
         {
 #pragma warning disable 0618
             base.VisualBitmapEffect = BitmapEffect;
@@ -2867,45 +2872,45 @@ namespace System.Windows
         private static void EdgeMode_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = (UIElement) d;
-            uie.pushEdgeMode();
+            uie.PushEdgeMode();
         }
 
-        private void pushEdgeMode()
+        private void PushEdgeMode()
         {
-            base.VisualEdgeMode = RenderOptions.GetEdgeMode(this);
+            VisualEdgeMode = RenderOptions.GetEdgeMode(this);
         }
 
         private static void BitmapScalingMode_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = (UIElement) d;
-            uie.pushBitmapScalingMode();
+            uie.PushBitmapScalingMode();
         }
 
-        private void pushBitmapScalingMode()
+        private void PushBitmapScalingMode()
         {
-            base.VisualBitmapScalingMode = RenderOptions.GetBitmapScalingMode(this);
+            VisualBitmapScalingMode = RenderOptions.GetBitmapScalingMode(this);
         }
 
         private static void ClearTypeHint_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = (UIElement) d;
-            uie.pushClearTypeHint();
+            uie.PushClearTypeHint();
         }
 
-        private void pushClearTypeHint()
+        private void PushClearTypeHint()
         {
-            base.VisualClearTypeHint = RenderOptions.GetClearTypeHint(this);
+            VisualClearTypeHint = RenderOptions.GetClearTypeHint(this);
         }
 
         private static void TextHintingMode_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = (UIElement) d;
-            uie.pushTextHintingMode();
+            uie.PushTextHintingMode();
         }
 
-        private void pushTextHintingMode()
+        private void PushTextHintingMode()
         {
-            base.VisualTextHintingMode = TextOptionsInternal.GetTextHintingMode(this);
+            VisualTextHintingMode = TextOptionsInternal.GetTextHintingMode(this);
         }
 
         /// <summary>
@@ -2921,7 +2926,7 @@ namespace System.Windows
         private static void OnCacheModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = (UIElement)d;
-            uie.pushCacheMode();
+            uie.PushCacheMode();
         }
 
         /// <summary>
@@ -2934,24 +2939,24 @@ namespace System.Windows
             set { SetValue(CacheModeProperty, value); }
         }
 
-        private void pushCacheMode()
+        private void PushCacheMode()
         {
-            base.VisualCacheMode = CacheMode;
+            VisualCacheMode = CacheMode;
         }
 
         /// <summary>
-        /// pushVisualEffects - helper to propagate cacheMode, Opacity, OpacityMask, BitmapEffect, BitmapScalingMode and EdgeMode
+        /// PushVisualEffects - helper to propagate cacheMode, Opacity, OpacityMask, BitmapEffect, BitmapScalingMode and EdgeMode
         /// </summary>
-        private void pushVisualEffects()
+        private void PushVisualEffects()
         {
-            pushCacheMode();
-            pushOpacity();
-            pushOpacityMask();
-            pushBitmapEffect();
-            pushEdgeMode();
-            pushBitmapScalingMode();
-            pushClearTypeHint();
-            pushTextHintingMode();
+            PushCacheMode();
+            PushOpacity();
+            PushOpacityMask();
+            PushBitmapEffect();
+            PushEdgeMode();
+            PushBitmapScalingMode();
+            PushClearTypeHint();
+            PushTextHintingMode();
         }
 
         #region Uid
@@ -2997,7 +3002,7 @@ namespace System.Windows
 
             Visibility newVisibility = (Visibility) e.NewValue;
             uie.VisibilityCache = newVisibility;
-            uie.switchVisibilityIfNeeded(newVisibility);
+            uie.SwitchVisibilityIfNeeded(newVisibility);
 
             // The IsVisible property depends on this property.
             uie.UpdateIsVisibleCache();
@@ -3019,7 +3024,7 @@ namespace System.Windows
             set { SetValue(VisibilityProperty, VisibilityBoxes.Box(value)); }
         }
 
-        private void switchVisibilityIfNeeded(Visibility visibility)
+        private void SwitchVisibilityIfNeeded(Visibility visibility)
         {
             switch(visibility)
             {

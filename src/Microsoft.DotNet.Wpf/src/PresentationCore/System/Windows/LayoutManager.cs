@@ -153,7 +153,7 @@ namespace System.Windows
             _lastExceptionElement = null;
             _measuresOnStack++;
             if(_measuresOnStack > s_LayoutRecursionLimit)
-                throw new InvalidOperationException(SR.Get(SRID.LayoutManager_DeepRecursion, s_LayoutRecursionLimit));
+                ThrowInvalidOperationForDeepRecursion();
 
             _firePostLayoutEvents = true;
         }

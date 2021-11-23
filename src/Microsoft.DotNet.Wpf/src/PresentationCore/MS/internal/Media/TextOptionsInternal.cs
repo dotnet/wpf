@@ -10,6 +10,8 @@
 //
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using MS.Internal.PresentationCore;
@@ -54,14 +56,21 @@ namespace MS.Internal.Media
         [FriendAccessAllowed]   // used by Framework
         public static TextHintingMode GetTextHintingMode(DependencyObject element)
         {
-            if (element == null)
+            if (element is null)
             {
-                throw new ArgumentNullException("element");
+                ThrowArgumentNullException(nameof(element));
             }
 
             return (TextHintingMode)element.GetValue(TextHintingModeProperty);
         }
 
         #endregion Attached Groperties Getters and Setters
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        [DoesNotReturn]
+        private static void ThrowArgumentNullException(string paramName)
+        {
+            throw new ArgumentNullException(paramName);
+        }
     }
 }

@@ -1000,8 +1000,8 @@ namespace System.Windows
                 }
                 else
                 {
-                // xLines[0] = 0d;  - this already should be so
-                // check to avoid potential dirtiness in renderer
+                    // xLines[0] = 0d;  - this already should be so
+                    // check to avoid potential dirtiness in renderer
                     int lastGuideline = xLines.Count - 1;
                     if(!DoubleUtil.AreClose(xLines[lastGuideline], RenderSize.Width))
                         xLines[lastGuideline] = RenderSize.Width;
@@ -1019,8 +1019,8 @@ namespace System.Windows
                 }
                 else
                 {
-                // yLines[0] = 0d;  - this already should be so
-                // check to avoid potential dirtiness in renderer
+                    // yLines[0] = 0d;  - this already should be so
+                    // check to avoid potential dirtiness in renderer
                     int lastGuideline = yLines.Count - 1;
                     if(!DoubleUtil.AreClose(yLines[lastGuideline], RenderSize.Height))
                         yLines[lastGuideline] = RenderSize.Height;
@@ -1041,28 +1041,26 @@ namespace System.Windows
                 info.Update(widthChanged, heightChanged);
                 return true;
             }
-            else if(widthChanged || heightChanged)
-            {
-                info = new SizeChangedInfo(this, oldSize, widthChanged, heightChanged);
-                sizeChangedInfo = info;
-                ContextLayoutManager.From(Dispatcher).AddToSizeChangedChain(info);
 
-                //
-                // This notifies Visual layer that hittest boundary potentially changed
-                //
 
-                PropagateFlags(
-                    this,
-                    VisualFlags.IsSubtreeDirtyForPrecompute,
-                    VisualProxyFlags.IsSubtreeDirtyForRender);
+            // This result is used to determine if we need to call OnRender after Arrange
+            // OnRender is called for 2 reasons - someone called InvalidateVisual - then OnRender is called
+            // on next Arrange, or the size changed.
+            if (!widthChanged && !heightChanged) return false;
 
-                return true;
-            }
+            info = new SizeChangedInfo(this, oldSize, widthChanged, heightChanged);
+            sizeChangedInfo = info;
+            ContextLayoutManager.From(Dispatcher).AddToSizeChangedChain(info);
 
-            //this result is used to determine if we need to call OnRender after Arrange
-            //OnRender is called for 2 reasons - someone called InvalidateVisual - then OnRender is called
-            //on next Arrange, or the size changed.
-            return false;
+            //
+            // This notifies Visual layer that hittest boundary potentially changed
+            //
+            PropagateFlags(
+                this,
+                VisualFlags.IsSubtreeDirtyForPrecompute,
+                VisualProxyFlags.IsSubtreeDirtyForRender);
+
+            return true;
         }
 
         /// <summary>
@@ -1278,10 +1276,10 @@ namespace System.Windows
                 VisualOffset = new Vector(finalRect.X, finalRect.Y);
             }
 
-            if (renderTransform != null)
+            if (renderTransform is not null)
             {
                 //render transform + layout offset, create a collection
-                TransformGroup t = new TransformGroup();
+                TransformGroup t = new();
 
                 Point origin = RenderTransformOrigin;
                 bool hasOrigin = (origin.X != 0d || origin.Y != 0d);
@@ -3095,7 +3093,7 @@ namespace System.Windows
                     clipGeometry = Clip;
                 else
                 {
-                    CombinedGeometry cg = new CombinedGeometry(
+                    CombinedGeometry cg = new(
                         GeometryCombineMode.Intersect,
                         clipGeometry,
                         Clip);

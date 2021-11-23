@@ -13,7 +13,8 @@
 using System;
 using System.Windows.Threading;
 using System.Collections;
-
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Automation.Peers;
@@ -164,9 +165,16 @@ namespace System.Windows
             _lastExceptionElement = null;
             _arrangesOnStack++;
             if(_arrangesOnStack > s_LayoutRecursionLimit)
-                throw new InvalidOperationException(SR.Get(SRID.LayoutManager_DeepRecursion, s_LayoutRecursionLimit));
+                ThrowInvalidOperationForDeepRecursion();
 
             _firePostLayoutEvents = true;
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        [DoesNotReturn]
+        private static void ThrowInvalidOperationForDeepRecursion()
+        {
+            throw new InvalidOperationException(SR.Get(SRID.LayoutManager_DeepRecursion, s_LayoutRecursionLimit));
         }
 
         internal void ExitArrange()

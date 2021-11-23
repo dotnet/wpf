@@ -240,11 +240,11 @@ namespace MS.Internal
             // At this point, rect1 isn't empty, so the first thing we can test is
             // rect2.IsEmpty, followed by property-wise compares.
 
-            return (!rect2.IsEmpty) &&
-                DoubleUtil.AreClose(rect1.X, rect2.X) &&
-                DoubleUtil.AreClose(rect1.Y, rect2.Y) &&
-                DoubleUtil.AreClose(rect1.Height, rect2.Height) &&
-                DoubleUtil.AreClose(rect1.Width, rect2.Width);
+            return !rect2.IsEmpty &&
+                AreClose(rect1.X, rect2.X) &&
+                AreClose(rect1.Y, rect2.Y) &&
+                AreClose(rect1.Height, rect2.Height) &&
+                AreClose(rect1.Width, rect2.Width);
         }
 
         /// <summary>

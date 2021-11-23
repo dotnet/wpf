@@ -1115,33 +1115,6 @@ namespace System.Windows.Xps.Serialization
     };
 
 
-    internal static class DoubleOperations
-    {
-        [StructLayout(LayoutKind.Explicit)]
-        private struct NanUnion
-        {
-            [FieldOffset(0)] internal double DoubleValue;
-            [FieldOffset(0)] internal UInt64 UintValue;
-        }
-
-        internal
-        static
-        bool
-        IsNaN(
-            double value
-            )
-        {
-            NanUnion t = new NanUnion();
-            t.DoubleValue = value;
-
-            UInt64 exp = t.UintValue & 0xfff0000000000000;
-            UInt64 man = t.UintValue & 0x000fffffffffffff;
-
-            return (exp == 0x7ff0000000000000 || exp == 0xfff0000000000000) && (man != 0);
-        }
-
-    }
-
     internal static class Toolbox
     {
         internal static void EmitEvent(EventTrace.Event evt)
@@ -1220,8 +1193,8 @@ namespace System.Windows.Xps.Serialization
         {
             if (documentSize.Width == 0 ||
                documentSize.Height == 0 ||
-               DoubleOperations.IsNaN(documentSize.Width) ||
-               DoubleOperations.IsNaN(documentSize.Height) ||
+               double.IsNaN(documentSize.Width) ||
+               double.IsNaN(documentSize.Height) ||
                Double.IsPositiveInfinity(documentSize.Width) ||
                Double.IsPositiveInfinity(documentSize.Height) ||
                Double.IsNegativeInfinity(documentSize.Width) ||

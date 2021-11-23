@@ -16,6 +16,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Security;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
@@ -774,18 +776,18 @@ namespace System.Windows
         public void Arrange(Rect finalRect)
         {
             bool etwTracingEnabled = false;
-            long perfElementID = 0;
+            long perfElementId = 0;
 
-            ContextLayoutManager ContextLayoutManager = ContextLayoutManager.From(Dispatcher);
-            if (ContextLayoutManager.AutomationEvents.Count != 0)
+            ContextLayoutManager contextLayoutManager = ContextLayoutManager.From(Dispatcher);
+            if (contextLayoutManager.AutomationEvents.Count != 0)
                 UIElementHelper.InvalidateAutomationAncestors(this);
 
             if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose))
             {
-                perfElementID = PerfService.GetPerfElementID(this);
+                perfElementId = PerfService.GetPerfElementID(this);
 
                 etwTracingEnabled = true;
-                EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientArrangeElementBegin, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementID, finalRect.Top, finalRect.Left, finalRect.Width, finalRect.Height);
+                EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientArrangeElementBegin, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementId, finalRect.Top, finalRect.Left, finalRect.Width, finalRect.Height);
             }
 
             try
@@ -803,12 +805,7 @@ namespace System.Windows
                         || double.IsNaN(finalRect.Height)
                       )
                     {
-                        DependencyObject parent = GetUIParent() as UIElement;
-                        throw new InvalidOperationException(
-                            SR.Get(
-                                SRID.UIElement_Layout_InfinityArrange,
-                                    (parent == null ? "" : parent.GetType().FullName),
-                                    GetType().FullName));
+                        ThrowInvalidOperationExceptionForParent();
                     }
 
 
@@ -817,7 +814,7 @@ namespace System.Windows
                         || CheckFlagsAnd(VisualFlags.IsLayoutSuspended))
                     {
                         // Reset arrange request.
-                        if (ArrangeRequest != null)
+                        if (ArrangeRequest is not null)
                             ContextLayoutManager.From(Dispatcher).ArrangeQueue.Remove(this);
 
                         //  Remember though that parent tried to arrange at this rect
@@ -840,18 +837,14 @@ namespace System.Windows
                         try
                         {
                             MeasureDuringArrange = true;
+
                             // If never measured - that means "set size", arrange-only scenario
-                            // Otherwise - the parent previosuly measured the element at constriant
+                            // Otherwise - the parent previously measured the element at constraint
                             // and the fact that we are arranging the measure-dirty element now means
                             // we are not in the UpdateLayout loop but rather in manual sequence of Measure/Arrange
                             // (like in HwndSource when new RootVisual is attached) so there are no loops and there could be
-                            // measure-dirty elements left after previosu single Measure pass) - so need to use cached constraint
-                            if (NeverMeasured)
-                                Measure(finalRect.Size);
-                            else
-                            {
-                                Measure(PreviousConstraint);
-                            }
+                            // measure-dirty elements left after previous single Measure pass) - so need to use cached constraint
+                            Measure(NeverMeasured ? finalRect.Size : PreviousConstraint);
                         }
                         finally
                         {
@@ -860,112 +853,120 @@ namespace System.Windows
                     }
 
                     // Bypass - if clean and rect is the same, no need to re-arrange
-                    if (!IsArrangeValid
-                        || NeverArranged
-                        || !DoubleUtil.AreClose(finalRect, _finalRect))
+                    if (IsArrangeValid && !NeverArranged && DoubleUtil.AreClose(finalRect, _finalRect)) return;
+
+                    bool firstArrange = NeverArranged;
+                    NeverArranged = false;
+                    ArrangeInProgress = true;
+
+                    ContextLayoutManager layoutManager = ContextLayoutManager.From(Dispatcher);
+
+                    Size oldSize = RenderSize;
+                    bool sizeChanged;
+                    bool gotException = true;
+
+                    // If using layout rounding, round final size before calling ArrangeCore.
+                    if (CheckFlagsAnd(VisualFlags.UseLayoutRounding))
                     {
-                        bool firstArrange = NeverArranged;
-                        NeverArranged = false;
-                        ArrangeInProgress = true;
+                        DpiScale dpi = GetDpi();
+                        finalRect = RoundLayoutRect(finalRect, dpi.DpiScaleX, dpi.DpiScaleY);
+                    }
 
-                        ContextLayoutManager layoutManager = ContextLayoutManager.From(Dispatcher);
+                    try
+                    {
+                        layoutManager.EnterArrange();
 
-                        Size oldSize = RenderSize;
-                        bool sizeChanged = false;
-                        bool gotException = true;
+                        // This has to update RenderSize
+                        ArrangeCore(finalRect);
 
-                        // If using layout rounding, round final size before calling ArrangeCore.
-                        if (CheckFlagsAnd(VisualFlags.UseLayoutRounding))
+                        // to make sure Clip is transferred to Visual
+                        EnsureClip(finalRect.Size);
+
+                        // See if we need to call OnRenderSizeChanged on this element
+                        sizeChanged = MarkForSizeChangedIfNeeded(oldSize, RenderSize);
+
+                        gotException = false;
+                    }
+                    finally
+                    {
+                        ArrangeInProgress = false;
+                        layoutManager.ExitArrange();
+
+                        if (gotException)
                         {
-                            DpiScale dpi = GetDpi();
-                            finalRect = RoundLayoutRect(finalRect, dpi.DpiScaleX, dpi.DpiScaleY);
+                            // We don't want to reset last exception element on layoutManager if it's been already set.
+                            if (layoutManager.GetLastExceptionElement() is null)
+                            {
+                                layoutManager.SetLastExceptionElement(this);
+                            }
                         }
 
+                    }
+
+                    _finalRect = finalRect;
+
+                    ArrangeDirty = false;
+
+                    // Reset request.
+                    if (ArrangeRequest is not null)
+                        ContextLayoutManager.From(Dispatcher).ArrangeQueue.Remove(this);
+
+                    if ((sizeChanged || RenderingInvalidated || firstArrange) && IsRenderable())
+                    {
+                        DrawingContext dc = RenderOpen();
                         try
                         {
-                            layoutManager.EnterArrange();
-
-                            // This has to update RenderSize
-                            ArrangeCore(finalRect);
-
-                            // to make sure Clip is tranferred to Visual
-                            ensureClip(finalRect.Size);
-
-                            // See if we need to call OnRenderSizeChanged on this element
-                            sizeChanged = markForSizeChangedIfNeeded(oldSize, RenderSize);
-
-                            gotException = false;
-                        }
-                        finally
-                        {
-                            ArrangeInProgress = false;
-                            layoutManager.ExitArrange();
-
-                            if (gotException)
+                            bool etwGeneralEnabled = EventTrace.IsEnabled(EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose);
+                            if (etwGeneralEnabled)
                             {
-                                // we don't want to reset last exception element on layoutManager if it's been already set.
-                                if (layoutManager.GetLastExceptionElement() == null)
-                                {
-                                    layoutManager.SetLastExceptionElement(this);
-                                }
+                                EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientOnRenderBegin, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, perfElementId);
                             }
 
-                        }
-
-                        _finalRect = finalRect;
-
-                        ArrangeDirty = false;
-
-                        // Reset request.
-                        if (ArrangeRequest is not null)
-                            ContextLayoutManager.From(Dispatcher).ArrangeQueue.Remove(this);
-
-                        if ((sizeChanged || RenderingInvalidated || firstArrange) && IsRenderable())
-                        {
-                            DrawingContext dc = RenderOpen();
                             try
                             {
-                                bool etwGeneralEnabled = EventTrace.IsEnabled(EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose);
-                                if (etwGeneralEnabled == true)
-                                {
-                                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientOnRenderBegin, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, perfElementID);
-                                }
-
-                                try
-                                {
-                                    OnRender(dc);
-                                }
-                                finally
-                                {
-                                    if (etwGeneralEnabled == true)
-                                    {
-                                        EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientOnRenderEnd, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, perfElementID);
-                                    }
-                                }
+                                OnRender(dc);
                             }
                             finally
                             {
-                                dc.Close();
-                                RenderingInvalidated = false;
+                                if (etwGeneralEnabled)
+                                {
+                                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientOnRenderEnd, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, perfElementId);
+                                }
                             }
-
-                            updatePixelSnappingGuidelines();
                         }
-
-                        if (firstArrange)
+                        finally
                         {
-                            EndPropertyInitialization();
+                            dc.Close();
+                            RenderingInvalidated = false;
                         }
+
+                        UpdatePixelSnappingGuidelines();
+                    }
+
+                    if (firstArrange)
+                    {
+                        EndPropertyInitialization();
                     }
                 }
             }
             finally
             {
-                if (etwTracingEnabled == true)
+                if (etwTracingEnabled)
                 {
-                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientArrangeElementEnd, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementID, finalRect.Top, finalRect.Left, finalRect.Width, finalRect.Height);
+                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientArrangeElementEnd, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementId, finalRect.Top, finalRect.Left, finalRect.Width, finalRect.Height);
                 }
             }
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        [DoesNotReturn]
+        private void ThrowInvalidOperationExceptionForParent()
+        {
+            throw new InvalidOperationException(
+                SR.Get(
+                    SRID.UIElement_Layout_InfinityArrange,
+                    GetUIParent() is UIElement uiElement ? uiElement.GetType().FullName : string.Empty,
+                    GetType().FullName));
         }
 
         /// <summary>
@@ -978,52 +979,56 @@ namespace System.Windows
         {
         }
 
-        private void updatePixelSnappingGuidelines()
+        private void UpdatePixelSnappingGuidelines()
         {
             if((!SnapsToDevicePixels) || (_drawingContent == null))
             {
-                this.VisualXSnappingGuidelines = this.VisualYSnappingGuidelines = null;
+                VisualXSnappingGuidelines = VisualYSnappingGuidelines = null;
             }
             else
             {
-                DoubleCollection xLines = this.VisualXSnappingGuidelines;
+                DoubleCollection xLines = VisualXSnappingGuidelines;
 
                 if(xLines == null)
                 {
-                    xLines = new DoubleCollection();
-                    xLines.Add(0d);
-                    xLines.Add(this.RenderSize.Width);
-                    this.VisualXSnappingGuidelines = xLines;
+                    xLines = new DoubleCollection
+                    {
+                        0d,
+                        RenderSize.Width
+                    };
+                    VisualXSnappingGuidelines = xLines;
                 }
                 else
                 {
                 // xLines[0] = 0d;  - this already should be so
                 // check to avoid potential dirtiness in renderer
                     int lastGuideline = xLines.Count - 1;
-                    if(!DoubleUtil.AreClose(xLines[lastGuideline], this.RenderSize.Width))
-                        xLines[lastGuideline] = this.RenderSize.Width;
+                    if(!DoubleUtil.AreClose(xLines[lastGuideline], RenderSize.Width))
+                        xLines[lastGuideline] = RenderSize.Width;
                 }
 
-                DoubleCollection yLines = this.VisualYSnappingGuidelines;
+                DoubleCollection yLines = VisualYSnappingGuidelines;
                 if(yLines == null)
                 {
-                    yLines = new DoubleCollection();
-                    yLines.Add(0d);
-                    yLines.Add(this.RenderSize.Height);
-                    this.VisualYSnappingGuidelines = yLines;
+                    yLines = new DoubleCollection
+                    {
+                        0d,
+                        RenderSize.Height
+                    };
+                    VisualYSnappingGuidelines = yLines;
                 }
                 else
                 {
                 // yLines[0] = 0d;  - this already should be so
                 // check to avoid potential dirtiness in renderer
                     int lastGuideline = yLines.Count - 1;
-                    if(!DoubleUtil.AreClose(yLines[lastGuideline], this.RenderSize.Height))
-                        yLines[lastGuideline] = this.RenderSize.Height;
+                    if(!DoubleUtil.AreClose(yLines[lastGuideline], RenderSize.Height))
+                        yLines[lastGuideline] = RenderSize.Height;
                 }
             }
         }
 
-        private bool markForSizeChangedIfNeeded(Size oldSize, Size newSize)
+        private bool MarkForSizeChangedIfNeeded(Size oldSize, Size newSize)
         {
             //already marked for SizeChanged, simply update the newSize
             bool widthChanged = !DoubleUtil.AreClose(oldSize.Width, newSize.Width);
@@ -1031,7 +1036,7 @@ namespace System.Windows
 
             SizeChangedInfo info = sizeChangedInfo;
 
-            if(info != null)
+            if(info is not null)
             {
                 info.Update(widthChanged, heightChanged);
                 return true;
@@ -3080,13 +3085,13 @@ namespace System.Windows
                 ich.OnChildDesiredSizeChanged(this);
         }
 
-        private void ensureClip(Size layoutSlotSize)
+        private void EnsureClip(Size layoutSlotSize)
         {
             Geometry clipGeometry = GetLayoutClip(layoutSlotSize);
 
-            if(Clip != null)
+            if(Clip is not null)
             {
-                if(clipGeometry == null)
+                if(clipGeometry is null)
                     clipGeometry = Clip;
                 else
                 {

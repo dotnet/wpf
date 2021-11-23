@@ -2137,17 +2137,12 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         internal void InvalidateAncestorsRecursive()
         {
-            if (!AncestorsInvalid)
-            {
-                AncestorsInvalid = true;
-                if (EventsSource != null)
-                {
-                    EventsSource.InvalidateAncestorsRecursive();
-                }
+            if (AncestorsInvalid) return;
 
-                if (_parent != null)
-                    _parent.InvalidateAncestorsRecursive();
-            }
+            AncestorsInvalid = true;
+            EventsSource?.InvalidateAncestorsRecursive();
+
+            _parent?.InvalidateAncestorsRecursive();
         }
 
         private static object UpdatePeer(object arg)

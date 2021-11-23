@@ -60,18 +60,23 @@ namespace System.Windows
         /// <returns>ContextLayoutManager</returns>
         internal static ContextLayoutManager From(Dispatcher dispatcher)
         {
-            ContextLayoutManager lm = dispatcher.Reserved3 as ContextLayoutManager;
-            if(lm == null)
-            {
-                if(Dispatcher.CurrentDispatcher != dispatcher)
-                {
-                    throw new InvalidOperationException();
-                }
+            if (dispatcher.Reserved3 is ContextLayoutManager lm) return lm;
 
-                lm = new ContextLayoutManager();
-                dispatcher.Reserved3 = lm;
+            if(Dispatcher.CurrentDispatcher != dispatcher)
+            {
+                ThrowInvalidOperationException();
             }
+
+            lm = new ContextLayoutManager();
+            dispatcher.Reserved3 = lm;
             return lm;
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        [DoesNotReturn]
+        private static void ThrowInvalidOperationException()
+        {
+            throw new InvalidOperationException();
         }
 
         private void setForceLayout(UIElement e)
@@ -534,7 +539,7 @@ namespace System.Windows
 
         internal class InternalMeasureQueue: LayoutQueue
         {
-            internal override void setRequest(UIElement e, Request r)
+            internal override void SetRequest(UIElement e, Request r)
             {
                 e.MeasureRequest = r;
             }
@@ -559,7 +564,7 @@ namespace System.Windows
 
         internal class InternalArrangeQueue: LayoutQueue
         {
-            internal override void setRequest(UIElement e, Request r)
+            internal override void SetRequest(UIElement e, Request r)
             {
                 e.ArrangeRequest = r;
             }
@@ -855,7 +860,7 @@ namespace System.Windows
             private const int PocketReserve = 8;
 
             internal abstract Request getRequest(UIElement e);
-            internal abstract void setRequest(UIElement e, Request r);
+            internal abstract void SetRequest(UIElement e, Request r);
             internal abstract bool canRelyOnParentRecalc(UIElement parent);
             internal abstract void invalidate(UIElement e);
 
@@ -888,7 +893,7 @@ namespace System.Windows
                     if(_head != null) _head.Prev = r;
                     _head = r;
 
-                    setRequest(e, r);
+                    SetRequest(e, r);
                 }
             }
 
@@ -948,9 +953,9 @@ namespace System.Windows
             internal void Remove(UIElement e)
             {
                 Request r = getRequest(e);
-                if(r == null) return;
-                _removeRequest(r);
-                setRequest(e, null);
+                if(r is null) return;
+                RemoveRequest(r);
+                SetRequest(e, null);
             }
 
             internal void RemoveOrphans(UIElement parent)
@@ -965,8 +970,8 @@ namespace System.Windows
                     if(   (child.TreeLevel == parentTreeLevel + 1)
                        && (child.GetUIParentWithinLayoutIsland() == parent))
                     {
-                        _removeRequest(getRequest(child));
-                        setRequest(child, null);
+                        RemoveRequest(getRequest(child));
+                        SetRequest(child, null);
                     }
 
                     r = next;
@@ -995,12 +1000,12 @@ namespace System.Windows
                 return found;
             }
 
-            private void _removeRequest(Request entry)
+            private void RemoveRequest(Request entry)
             {
-                if(entry.Prev == null) _head = entry.Next;
+                if(entry.Prev is null) _head = entry.Next;
                 else entry.Prev.Next = entry.Next;
 
-                if(entry.Next != null) entry.Next.Prev = entry.Prev;
+                if(entry.Next is not null) entry.Next.Prev = entry.Prev;
 
                 ReuseRequest(entry);
             }
@@ -1038,12 +1043,11 @@ namespace System.Windows
             {
                 r.Target = null; //let target die
 
-                if (_pocketSize < PocketCapacity)
-                {
-                    r.Next = _pocket;
-                    _pocket = r;
-                    _pocketSize++;
-                }
+                if (_pocketSize >= PocketCapacity) return;
+
+                r.Next = _pocket;
+                _pocket = r;
+                _pocketSize++;
             }
 
             private Request _head;

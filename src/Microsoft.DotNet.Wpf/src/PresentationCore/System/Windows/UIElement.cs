@@ -790,8 +790,6 @@ namespace System.Windows
 
             try
             {
-                //             VerifyAccess();
-
                 // Disable reentrancy during the arrange pass.  This is because much work is done
                 // during arrange - such as formatting PTS stuff, creating
                 // fonts, etc.  Generally speaking, we cannot survive reentrancy in these code

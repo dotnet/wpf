@@ -15,8 +15,7 @@ The roadmap below communicates priorities for evolving and extending the scope o
 |2  |Performance Improvements |Ongoing|
 |3  |Ongoing support and maintenance for .NET Framework, .NET core 3.1, .NET 5.0 and .NET 6.0 |Ongoing|
 |4  |New API review process for Community PRs  |21H2|
-|5  |ARM64 support on .NET 6|21H2|
-|6  |Open Sourcing of Test Infrastructure and test collateral|22H1|
+|5  |Open Sourcing of Test Infrastructure and test collateral|22H1|
 
 ### Our SLA
 #### TRIAGING GITHUB ISSUES

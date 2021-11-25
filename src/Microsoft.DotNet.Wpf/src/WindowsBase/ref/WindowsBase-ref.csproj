@@ -45,7 +45,6 @@
     <NetCoreReference Include="System.Security.Claims" />
     <NetCoreReference Include="System.Security.Cryptography" />
     <NetCoreReference Include="System.Security.Cryptography.Algorithms" />
-    <NetCoreReference Include="System.Security.Cryptography.Primitives" />
     <NetCoreReference Include="System.Security.Cryptography.X509Certificates" />
     <NetCoreReference Include="System.Security.Principal.Windows" />
     <NetCoreReference Include="System.Text.Encoding.Extensions" />

@@ -1419,7 +1419,6 @@
     <NetCoreReference Include="System.Security.Cryptography" />
     <NetCoreReference Include="System.Security.Cryptography.Csp" />
     <NetCoreReference Include="System.Security.Cryptography.Algorithms" />
-    <NetCoreReference Include="System.Security.Cryptography.Primitives" />
     <NetCoreReference Include="System.Security.Cryptography.X509Certificates" />
     <NetCoreReference Include="System.Text.Encoding.Extensions" />
     <NetCoreReference Include="System.Text.Encoding.CodePages" />

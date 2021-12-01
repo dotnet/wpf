@@ -84,7 +84,7 @@ A tooltip closes for one of the following reasons.
 - **Timeout**. When the tooltip's `ShowDuration` time expires, the tooltip closes.
 - **Hover ends**.  When the tooltip opened due to hover, moving the mouse outside a "safe region" closes the tooltip.
 Moving the mouse in a straight line between the parent and the tooltip stays within the safe region.
-- **Keyboard Shortcut**.  When the parent has keyboard focus, typing Ctrl+Shift+F10 or simply Ctrl (without any other keys) closes the tooltip.
+- **Keyboard Shortcut**. When the keyboard focus lies within a window, typing Ctrl+Shift+F10 or ESC or simply Ctrl (without any other keys) closes any open tooltip within that window, whether it was opened from keyboard or mouse. Note: Esc may have consequences beyond the tooltip, and the user would be taking that responsibility on if they do not choose to use Ctrl.
 - **Focus loss**.  When the tooltip opened due to keyboard activity, moving keyboard focus away from the parent element closes the tooltip.
 - **Editor activity**.  When the parent has a text editor, any editor activity closes the tooltip.  
 Elements with editors include `TextBoxBase`, `PasswordBox`, `DocumentViewerBase`, `FlowDocumentScrollViewer`, and classes derived from these.
@@ -158,6 +158,9 @@ Henceforth it will be 1000 (1 second).
 
 **Typing Ctrl to dismiss the tooltip**.
 This response is triggered by the KeyUp event, and only if no other keys have been pressed since the KeyDown event.
+
+**Typing Esc to dismiss the tooltip**.
+This response is triggered by the KeyDown event.
 
 **Safe region**.
 The implementation is expected to find a safe region with a third property:

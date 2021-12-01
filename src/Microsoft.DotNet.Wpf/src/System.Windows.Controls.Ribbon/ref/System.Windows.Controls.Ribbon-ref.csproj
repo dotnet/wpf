@@ -57,6 +57,7 @@
     <NetCoreReference Include="System.Runtime" />
     <NetCoreReference Include="System.Runtime.Extensions" />
     <NetCoreReference Include="System.Runtime.InteropServices" />
+    <NetCoreReference Include="System.Security.Cryptography" />
     <NetCoreReference Include="System.Security.Cryptography.Algorithms" />
     <NetCoreReference Include="System.Security.Cryptography.Primitives" />
     <NetCoreReference Include="System.Security.Cryptography.X509Certificates" />

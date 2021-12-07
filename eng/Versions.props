@@ -4,7 +4,7 @@
     <!-- 
       Primary version prefix for this repo - usually changes only once per major release
     -->
-    <VersionPrefix>4.8.1</VersionPrefix>
+    <VersionPrefix>3.1.23</VersionPrefix>
     <!-- 
       Version prefix used by a few projects like Project Templates
       Revision portion of Major.Minor.Revision usually updated every release

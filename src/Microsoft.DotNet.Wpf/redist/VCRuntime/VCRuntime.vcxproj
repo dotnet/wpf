@@ -35,11 +35,6 @@
   <PropertyGroup>
     <VCRedistCrtFolderName Condition="'$(Configuration)'=='Release'">Microsoft.VC143.CRT</VCRedistCrtFolderName>
     <VCRedistCrtFolderName Condition="'$(Configuration)'=='Debug'">Microsoft.VC143.DebugCRT</VCRedistCrtFolderName>
-    <!--
-    Remove these fallbacks after the build servers are guaranteed to have VC142 
-    -->
-    <VCRedistFallbackCrtFolderName Condition="'$(Configuration)'=='Release'">Microsoft.VC141.CRT</VCRedistFallbackCrtFolderName>
-    <VCRedistFallbackCrtFolderName Condition="'$(Configuration)'=='Debug'">Microsoft.VC141.DebugCRT</VCRedistFallbackCrtFolderName>
     <!-- 
       In Release builds,  the Target assembly will be a privatized copy of VC runtime with a name like vcruntime140_cor3.dll
       In Debug builds, the Target assembly will be a privatize copy of the VC runtime with no name changes - like vcruntime140d.dll

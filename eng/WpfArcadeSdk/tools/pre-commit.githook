@@ -28,7 +28,7 @@ REPO_ROOT=$(git rev-parse --show-toplevel | sort)
 TEMP_FILE_FULL_PATH=$REPO_ROOT/$TEMP_FILE_NAME
 
 # Create the temporary file containing a list of staged files(always overwrite)
-echo "$STAGED_FILES" > "$TEMP_FILE_FULL_PATH"
+echo "$STAGED_FILES" | sort > "$TEMP_FILE_FULL_PATH"
 
 # Find any staged files that intersect with the generated file list
 STAGED_GENERATED_FILES=$(comm -12 $TEMP_FILE_FULL_PATH $GENERATED_FILE_LIST) 

@@ -40,8 +40,9 @@ STAGED_GENERATED_FILES=$(comm -12 $TEMP_FILE_FULL_PATH $GENERATED_FILE_LIST)
 # the user from committing their change locally. 
 if test -n "$STAGED_GENERATED_FILES"
 then
-    echo "Error: WPF generated staged files detected. These files must not be modified."
+    echo "*** Commit aborted because it includes the following WPF generated staged files: "
     echo "$STAGED_GENERATED_FILES"
+    echo "*** If you have generated them properly, use the '--no-verify' to override this check."
 
     exit 1
 fi

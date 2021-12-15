@@ -6,9 +6,9 @@
 //
 //
 //  Abstract:
-//     Media system holds the relation between an application 
-//     domain and the underlying transport system. 
-// 
+//     Media system holds the relation between an application
+//     domain and the underlying transport system.
+//
 
 using System;
 using System.Windows.Threading;
@@ -51,23 +51,23 @@ namespace System.Windows.Media
             //
             // This call will fail if PresentationCore.dll and milcore.dll have mismatched
             // versions -- please make sure that both binaries have been properly built
-            // and deployed. 
+            // and deployed.
             //
             // *** Failure here does NOT indicate a bug in MediaContext.Startup! ***
             //
 
             HRESULT.Check(UnsafeNativeMethods.MilVersionCheck(MS.Internal.Composition.Version.MilSdkVersion));
-            
+
             using (CompositionEngineLock.Acquire())
             {
                 _mediaContexts.Add(mc);
-                
+
                 //Is this the first startup?
                 if (0 == s_refCount)
                 {
                     HRESULT.Check(SafeNativeMethods.MilCompositionEngine_InitializePartitionManager(
                                   0 // THREAD_PRIORITY_NORMAL
-                                  )); 
+                                  ));
 
                     s_forceSoftareForGraphicsStreamMagnifier =
                         UnsafeNativeMethods.WgxConnection_ShouldForceSoftwareForGraphicsStreamClient();
@@ -80,7 +80,7 @@ namespace System.Windows.Media
                 }
                 s_refCount++;
             }
-            // Consider making MediaSystem.ConnectTransport return the state of transport connectedness so 
+            // Consider making MediaSystem.ConnectTransport return the state of transport connectedness so
             // that we can initialize the media system to a disconnected state.
 
             return true;
@@ -138,7 +138,7 @@ namespace System.Windows.Media
                 {
                     // We can shut-down.
                     // Debug.WriteLine("MediSystem::NotifyDisconnect Stop Transport\n");
-                   
+
                     if (IsTransportConnected)
                     {
                         DisconnectTransport();
@@ -150,6 +150,28 @@ namespace System.Windows.Media
         }
 
         /// <summary>
+        /// If the app has asked to disable dirty-rect processing, notify the graphics engine
+        /// </summary>
+        internal static void PropagateDirtyRectangleSettings()
+        {
+            int oldValue = s_DisableDirtyRectangles;
+            int disableDirtyRectangles = CoreAppContextSwitches.DisableDirtyRectangles ? 1 : 0;
+
+            if (disableDirtyRectangles != oldValue)
+            {
+                if (System.Threading.Interlocked.CompareExchange(ref s_DisableDirtyRectangles, disableDirtyRectangles, oldValue) == oldValue)
+                {
+                    NotifyRedirectionEnvironmentChanged();
+                }
+            }
+        }
+
+        internal static bool DisableDirtyRectangles
+        {
+            get { return (s_DisableDirtyRectangles != 0); }
+        }
+
+        /// <summary>
         /// Handle DWM messages that indicate that the state of the connection needs to change.
         /// </summary>
         internal static void NotifyRedirectionEnvironmentChanged()
@@ -157,7 +179,7 @@ namespace System.Windows.Media
             using (CompositionEngineLock.Acquire())
             {
                 // Check to see if we need to force software for the Vista Magnifier
-                s_forceSoftareForGraphicsStreamMagnifier = 
+                s_forceSoftareForGraphicsStreamMagnifier =
                     UnsafeNativeMethods.WgxConnection_ShouldForceSoftwareForGraphicsStreamClient();
 
                 foreach (MediaContext mc in _mediaContexts)
@@ -166,7 +188,7 @@ namespace System.Windows.Media
                 }
             }
         }
-        
+
         /// <summary>
         /// Connect the transport.
         /// </summary>
@@ -178,7 +200,7 @@ namespace System.Windows.Media
             }
 
             //
-            // Create a default transport to be used by this media system. 
+            // Create a default transport to be used by this media system.
             // If creation fails, fall back to a local transport.
             //
 
@@ -198,7 +220,7 @@ namespace System.Windows.Media
                 false);
 
             IsTransportConnected = true;
-        }    
+        }
 
         /// <summary>
         /// Disconnect the transport. If we are calling this function from a disconnect
@@ -284,7 +306,7 @@ namespace System.Windows.Media
         /// </summary>
         internal static bool ForceSoftwareRendering
         {
-            get 
+            get
             {
                 using (CompositionEngineLock.Acquire())
                 {
@@ -294,7 +316,7 @@ namespace System.Windows.Media
         }
 
         /// <summary>
-        /// Returns the service channel for the current media system. This channel 
+        /// Returns the service channel for the current media system. This channel
         /// is used by the glyph cache infrastructure.
         /// </summary>
         internal static DUCE.Channel ServiceChannel
@@ -339,9 +361,13 @@ namespace System.Windows.Media
 
         /// <summary>
         /// Indicates if a graphics stream client is present. If a graphics stream client is present,
-        /// we drop back to sw rendering to enable the Vista magnifier. 
+        /// we drop back to sw rendering to enable the Vista magnifier.
         /// </summary>
         private static bool s_forceSoftareForGraphicsStreamMagnifier;
+
+        // 1 if app is requesting to disable D3D dirty rectangle work, 0 otherwise.
+        // We use Interlocked.CompareExchange to change this, which supports int but not bool.
+        private static int s_DisableDirtyRectangles = 0;
      }
 }
 

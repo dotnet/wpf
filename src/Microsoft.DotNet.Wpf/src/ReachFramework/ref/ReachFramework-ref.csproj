@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>ReachFramework</AssemblyName>
     <PackageId>ReachFramework-ref</PackageId>
@@ -10,7 +10,7 @@
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <Platforms>AnyCPU;x64;arm64</Platforms>
     <GenerateDependencyFile>false</GenerateDependencyFile>
-    <TargetFramework>net6.0</TargetFramework>
+    
   </PropertyGroup>
 
   <ItemGroup>

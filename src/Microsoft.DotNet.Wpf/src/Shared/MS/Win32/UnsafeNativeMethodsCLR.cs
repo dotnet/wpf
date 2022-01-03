@@ -46,23 +46,6 @@ namespace MS.Win32
 
     internal partial class UnsafeNativeMethods {
 
-        // For some reason "PtrToStructure" requires super high permission.
-        public static object PtrToStructure(IntPtr lparam, Type cls) {
-            return Marshal.PtrToStructure(lparam, cls);
-        }
-
-        /// <summary>
-        /// Generic PtrToStructure(T) - because Marshal.PtrToStructure(T) doesn't
-        /// seem to be available in our build environment.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="lParam"></param>
-        /// <returns></returns>
-        public static T PtrToStructure<T>(IntPtr lParam)
-        {
-            return (T)Marshal.PtrToStructure(lParam, typeof(T));
-        }
-
         // For some reason "StructureToPtr" requires super high permission.
         public static void StructureToPtr(object structure, IntPtr ptr, bool fDeleteOld)
         {

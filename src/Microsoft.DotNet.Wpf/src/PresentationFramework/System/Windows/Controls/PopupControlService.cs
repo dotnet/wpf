@@ -314,20 +314,29 @@ namespace System.Windows.Controls
             PendingToolTip = SentinelToolTip(o, triggerAction);
 
             // decide when to promote to current
-            int showDelay;
-            switch (triggerAction)
+            bool showNow = _quickShow;
+            if (!showNow)
             {
-                case ToolTipService.TriggerAction.Mouse:
-                case ToolTipService.TriggerAction.KeyboardFocus:
-                    showDelay = _quickShow ? 0 : ToolTipService.GetInitialShowDelay(o);
-                    break;
-                case ToolTipService.TriggerAction.KeyboardShortcut:
-                default:
-                    showDelay = 0;
-                    break;
+                switch (triggerAction)
+                {
+                    case ToolTipService.TriggerAction.Mouse:
+                        // a mouse request shows without delay if the current tooltip also came from mouse
+                        showNow = !(CurrentToolTip?.FromKeyboard ?? true);
+                        break;
+                    case ToolTipService.TriggerAction.KeyboardFocus:
+                        // a focus request shows without delay if the current tooltip also came from keyboard
+                        showNow = CurrentToolTip?.FromKeyboard ?? false;
+                        break;
+                    case ToolTipService.TriggerAction.KeyboardShortcut:
+                    default:
+                        // an explicit keystroke request always shows without delay
+                        showNow = true;
+                        break;
+                }
             }
 
             // promote now, or schedule delayed promotion
+            int showDelay = (showNow ? 0 : ToolTipService.GetInitialShowDelay(o));
             if (showDelay == 0)
             {
                 PromotePendingToolTipToCurrent(triggerAction);

@@ -828,7 +828,7 @@ namespace MS.Internal.Automation
             FallbackHandlers,
         }
         
-        private static object _lockObj = new object();
+        private static readonly object _lockObj = new object();
 
         // contains ClientSideProviderDescription structs or an Arraylist of ClientSideProviderDescription structs
         private static Hashtable _classHandlers = new Hashtable(22, 1.0f);

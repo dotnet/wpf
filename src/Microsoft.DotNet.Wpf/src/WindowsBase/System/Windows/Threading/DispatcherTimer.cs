@@ -319,7 +319,7 @@ namespace System.Windows.Threading
         }
         
         // This is the object we use to synchronize access.
-        private object _instanceLock = new object();
+        private readonly object _instanceLock = new object();
         
         // Note: We cannot BE a dispatcher-affinity object because we can be
         // created by a worker thread.  We are still associated with a

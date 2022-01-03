@@ -2879,7 +2879,7 @@ namespace System.Windows.Threading
 
         private static List<WeakReference> _dispatchers;
         private static WeakReference _possibleDispatcher;
-        private static object _globalLock;
+        private static readonly object _globalLock;
 
         [ThreadStatic]
         private static Dispatcher _tlsDispatcher;      // use TLS for ownership only

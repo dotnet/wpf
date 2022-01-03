@@ -441,7 +441,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static HandleType[] handleTypes;
         private static int handleTypeCount = 0;
 
-        private static Object handleMutex = new Object();
+        private static readonly Object handleMutex = new Object();
 
         /// <devdoc>
         ///     Adds the given handle to the handle collector.  This keeps the

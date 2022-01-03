@@ -241,7 +241,7 @@ namespace MS.Internal.IO.Packaging
         // Hashtable. HybridDictionary already has functionality of switching between
         //  ListDictionary and Hashtable depending on the size of the collection
         static private HybridDictionary _packagePairs;
-        static private Object           _globalLock;
+        static private readonly Object  _globalLock;
 
         #endregion Private Fields
     }

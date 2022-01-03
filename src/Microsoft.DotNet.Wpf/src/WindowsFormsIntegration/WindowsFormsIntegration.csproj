@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Platforms>AnyCPU;x64;arm64</Platforms>
     <DefineConstants>$(DefineConstants);WINDOWSFORMSINTEGRATION</DefineConstants>
@@ -6,7 +6,7 @@
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    
     <EnableDefaultItems>false</EnableDefaultItems>
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>

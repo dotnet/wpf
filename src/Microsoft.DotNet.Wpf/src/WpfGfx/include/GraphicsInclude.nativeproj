@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="dogfood">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="dogfood">
 
   <Import Project="$(_NTDRIVE)$(_NTROOT)\wpf\src\Microsoft.WPF.Product.Settings.targets" />
 

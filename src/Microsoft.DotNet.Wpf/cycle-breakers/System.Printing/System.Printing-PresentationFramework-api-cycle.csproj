@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>System.Printing</AssemblyName>
     <PackageId>System.Printing-PresentationFramework-api-cycle</PackageId>
@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>  
+      
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 

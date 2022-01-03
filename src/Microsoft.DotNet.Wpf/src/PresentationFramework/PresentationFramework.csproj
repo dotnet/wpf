@@ -1,4 +1,4 @@
-﻿<Project>
+<Project>
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);FRAMEWORK_NATIVEMETHODS;COMMONDPS;PRESENTATIONFRAMEWORK_ONLY;PRESENTATIONFRAMEWORK;RIBBON_IN_FRAMEWORK</DefineConstants>
@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>  
+      
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 

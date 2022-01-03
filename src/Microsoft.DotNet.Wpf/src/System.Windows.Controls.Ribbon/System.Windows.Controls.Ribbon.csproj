@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.Net.Sdk">
+<Project Sdk="Microsoft.Net.Sdk">
 
   <PropertyGroup>
 
-    <TargetFramework>net6.0</TargetFramework>
+    
     <Platforms>AnyCPU;x64;arm64</Platforms>
     <EnableDefaultItems>false</EnableDefaultItems>
     <DefineConstants>$(DefineConstants);RIBBON_IN_FRAMEWORK</DefineConstants>

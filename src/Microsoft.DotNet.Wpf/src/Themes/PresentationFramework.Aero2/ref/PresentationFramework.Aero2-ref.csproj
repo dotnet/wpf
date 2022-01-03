@@ -1,11 +1,11 @@
-﻿<!-- PresentationFramework.Aero2 -->
+<!-- PresentationFramework.Aero2 -->
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <AssemblyName>PresentationFramework.Aero2</AssemblyName>
     <PackageId>PresentationFramework.Aero2-ref</PackageId>
     <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
-    <TargetFramework>net6.0</TargetFramework>
+    
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <Platforms>AnyCPU;x64;arm64</Platforms>
     <GenerateDependencyFile>false</GenerateDependencyFile>

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>WindowsFormsIntegration</AssemblyName>
     <PackageId>WindowsFormsIntegration-ref</PackageId>
@@ -7,7 +7,7 @@
     <DefineConstants>$(DefineConstants);WINDOWSFORMSINTEGRATION</DefineConstants>
     <NoWarn>$(NoWarn);0618</NoWarn>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-    <TargetFramework>net6.0</TargetFramework>
+    
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
   <ItemGroup>

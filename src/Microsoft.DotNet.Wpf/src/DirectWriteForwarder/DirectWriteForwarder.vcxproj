@@ -27,9 +27,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    
     <TargetFrameworkIdentifier>.NETCoreApp</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
     <RestoreProjectStyle>Unknown</RestoreProjectStyle>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

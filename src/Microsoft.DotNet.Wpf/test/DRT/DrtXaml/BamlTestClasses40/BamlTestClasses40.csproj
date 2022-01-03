@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>BamlTestClasses40</AssemblyName>
     <RootNamespace>BamlTestClasses40</RootNamespace>

@@ -1,9 +1,9 @@
-﻿<!-- PresentationFramework.AeroLite -->
+<!-- PresentationFramework.AeroLite -->
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
 
-    <TargetFramework>net6.0</TargetFramework>
+    
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <Platforms>AnyCPU;x64;arm64</Platforms>
     <GenerateDependencyFile>false</GenerateDependencyFile>

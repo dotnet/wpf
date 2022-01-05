@@ -6,7 +6,7 @@
                       GeneratePathProperty="True"
                       Condition="'$(MSBuildProjectExtension)'!='.vcxproj'
                               And '$(TargetFrameworkIdentifier)' == '.NETCoreApp'
-                              And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v6.0')
+                              And $([MSBuild]::VersionGreaterThanOrEquals('$(TargetFrameworkVersion)', '3.0'))
                               And '$(NoAutoMicrosoftPrivateWinformsReference)'!='true'"/>
 
     <!--
@@ -122,7 +122,7 @@
     Condition="'@(MicrosoftDotNetWpfGitHubReference)'!=''
            And '$(MSBuildProjectExtension)' != '.vcxproj'
            And '$(TargetFrameworkIdentifier)' == '.NETCoreApp'
-           And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v6.0')
+           And $([MSBuild]::VersionGreaterThanOrEquals('$(TargetFrameworkVersion)', '3.0'))
            and '$(DoNotLimitMicrosoftDotNetWpfGitHubReferences)'!='true'">
     <!--
     In your project, Add a references to WPF GitHub transport package like this:
@@ -196,7 +196,7 @@
   <Target Name="ResolveWinFormsReferences"
           Condition="'@(MicrosoftPrivateWinFormsReference)'!=''
                  And '$(TargetFrameworkIdentifier)' == '.NETCoreApp'
-                 And ('$(TargetFrameworkVersion)' == 'v3.0' Or '$(TargetFrameworkVersion)' == 'v3.1' Or '$(TargetFrameworkVersion)' == 'v6.0') ">
+                 And $([MSBuild]::VersionGreaterThanOrEquals('$(TargetFrameworkVersion)', '3.0')) ">
     <ItemGroup>
       <Reference Include="$(PkgMicrosoft_Private_Winforms)\ref\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll"
                  Condition="Exists('$(PkgMicrosoft_Private_Winforms)\ref\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll')">

@@ -666,7 +666,7 @@ namespace MS.Internal
                     {
                         _ccRoot.CodeClass.IsPartial = true;
                     }
-
+                    addDirectiveToFile(codeStreamWriter, NULLABLE_RESTORE_DIRECTIVE);
                     codeProvider.GenerateCodeFromCompileUnit(ccu, codeStreamWriter, o);
 
                     codeStreamWriter.Flush();
@@ -683,6 +683,11 @@ namespace MS.Internal
             // or a friend assembly and it is generated only when any such internals are actually
             // encountered in any of the xaml files in the project.
             GenerateInternalTypeHelperImplementation();
+        }
+
+        // adds directrive to top of the file.
+        private static void addDirectiveToFile(StreamWriter streamWriter, string directive) {
+            streamWriter.WriteLine(directive);
         }
 
         //
@@ -1643,6 +1648,7 @@ namespace MS.Internal
 
         private void AddLinePragma(CodeTypeMember ctm, int lineNumber)
         {
+
             CodeLinePragma clp = new CodeLinePragma(ParentFolderPrefix + SourceFileInfo.RelativeSourceFilePath + XAML, lineNumber);
             ctm.LinePragma = clp;
         }
@@ -3608,6 +3614,9 @@ namespace MS.Internal
 
         private static string s_generatedCode_ToolName;
         private static string s_generatedCode_ToolVersion;
+
+        // For enabling nullable in the project
+        private static string NULLABLE_RESTORE_DIRECTIVE = "#nullable restore";
 
 #endregion Private Data
     }

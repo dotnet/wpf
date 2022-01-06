@@ -1,14 +1,16 @@
 <Project>
 
-  <ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition=" '$(_EnableWindowsDesktopGlobbing)' == 'true' ">
     <ApplicationDefinition>
       <Generator>MSBuild:Compile</Generator>
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
     </ApplicationDefinition>
 
     <Page>
       <Generator>MSBuild:Compile</Generator>
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
     </Page>
   </ItemDefinitionGroup>
 

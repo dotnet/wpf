@@ -31,7 +31,7 @@ To build the WPF repo and contribute features and fixes for .NET 6.0, the most r
 
 See the [WPF roadmap](roadmap.md) to learn about the schedule for specific WPF components.
 
-We have published few tests and have limited coverage for PRs at this time as a result. We will add more tests in 2021, however, it will be a progressive process. 
+Test published at [separate repo](https://github.com/dotnet/wpf-test) 
 
 The Visual Studio WPF designer is now available as part of Visual Studio 2019. 
 

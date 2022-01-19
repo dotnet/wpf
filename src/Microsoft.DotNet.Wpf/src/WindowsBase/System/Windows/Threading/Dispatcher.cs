@@ -2419,8 +2419,14 @@ namespace System.Windows.Threading
                     }
                     else if (_postedProcessingType == PROCESS_FOREGROUND)
                     {
+                        // Preserve the thread's current "extra message info"
+                        // (PeekMessage overwrites it).
+                        IntPtr extraInformation = UnsafeNativeMethods.GetMessageExtraInfo();
+
                         MSG msg = new MSG();
                         UnsafeNativeMethods.PeekMessage(ref msg, new HandleRef(this, _window.Value.Handle), _msgProcessQueue, _msgProcessQueue, NativeMethods.PM_REMOVE);
+
+                        UnsafeNativeMethods.SetMessageExtraInfo(extraInformation);
                     }
                     _postedProcessingType = PROCESS_NONE;
                 }

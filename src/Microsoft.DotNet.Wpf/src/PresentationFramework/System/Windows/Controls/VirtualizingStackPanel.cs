@@ -3542,8 +3542,11 @@ namespace System.Windows.Controls
             {
                 ScrollTracer.Trace(this, ScrollTraceOp.ItemsChanged,
                     args.Action,
-                    "pos:", args.OldPosition, args.Position,
+                    "stpos:", args.Position, Generator.IndexFromGeneratorPosition(args.Position),
+                    "oldpos:", args.OldPosition, Generator.IndexFromGeneratorPosition(args.OldPosition),
                     "count:", args.ItemCount, args.ItemUICount,
+                    "ev:", _firstItemInExtendedViewportIndex, "+", _itemsInExtendedViewportCount,
+                    "ext:", IsScrolling ? _scrollData._extent : Size.Empty,
                     MeasureInProgress ? "MeasureInProgress" : String.Empty);
             }
 
@@ -3636,10 +3639,10 @@ namespace System.Windows.Controls
                     {
                         case NotifyCollectionChangedAction.Remove:
                             {
-                                int startOldIndex = Generator.IndexFromGeneratorPosition(args.OldPosition);
+                                int startIndex =  Generator.IndexFromGeneratorPosition(args.Position);
 
                                 shouldItemsChangeAffectLayout = args.ItemUICount > 0 ||
-                                    (startOldIndex < _firstItemInExtendedViewportIndex + _itemsInExtendedViewportCount);
+                                    (startIndex < _firstItemInExtendedViewportIndex + _itemsInExtendedViewportCount);
                             }
                             break;
 
@@ -3765,6 +3768,7 @@ namespace System.Windows.Controls
         {
             bool isHorizontal = (Orientation == Orientation.Horizontal);
             bool isVSP45Compat = IsVSP45Compat;
+            bool isTracing = ScrollTracer.IsEnabled && ScrollTracer.IsTracing(this);
 
             ItemsControl itemsControl;
             GroupItem groupItem;
@@ -3881,6 +3885,11 @@ namespace System.Windows.Controls
                     _scrollData._extent.Height = distance;
                 }
 
+                if (isTracing)
+                {
+                    ScrollTracer.Trace(this, ScrollTraceOp.UpdateExtent, "ext:", _scrollData._extent);
+                }
+
                 ScrollOwner.InvalidateScrollInfo();
             }
             else if (virtualizationInfoProvider != null)
@@ -3897,6 +3906,11 @@ namespace System.Windows.Controls
                     else
                     {
                         pixelSize.Height = distance;
+                    }
+
+                    if (isTracing)
+                    {
+                        ScrollTracer.Trace(this, ScrollTraceOp.UpdateExtent, "ids.Px:", pixelSize);
                     }
 
                     itemDesiredSizes = new HierarchicalVirtualizationItemDesiredSizes(
@@ -3919,6 +3933,11 @@ namespace System.Windows.Controls
                     else
                     {
                         logicalSize.Height = distance;
+                    }
+
+                    if (isTracing)
+                    {
+                        ScrollTracer.Trace(this, ScrollTraceOp.UpdateExtent, "ids.Lg:", logicalSize);
                     }
 
                     itemDesiredSizes = new HierarchicalVirtualizationItemDesiredSizes(
@@ -4770,7 +4789,12 @@ namespace System.Windows.Controls
 
                         if (DoubleUtil.GreaterThan(extendedViewport.X + extendedViewport.Width, _scrollData._extent.Width))
                         {
-                            extendedViewport.Width = _scrollData._extent.Width - extendedViewport.X;
+                            // during Measure the viewport should never start after the extent, but this is possible
+                            // during add/remove item
+                            #if DBG     // can't use Debug.Assert during Measure - the dispatcher is disabled and can't open the dialog
+                            Invariant.Assert(!MeasureInProgress || extendedViewport.X <= _scrollData._extent.Width, "viewport starts after extent");
+                            #endif
+                            extendedViewport.Width = Math.Max(_scrollData._extent.Width - extendedViewport.X, 0.0);
                         }
                     }
                 }
@@ -4805,7 +4829,12 @@ namespace System.Windows.Controls
 
                         if (DoubleUtil.GreaterThan(extendedViewport.X + extendedViewport.Width / approxSizeOfLogicalUnit, _scrollData._extent.Width))
                         {
-                            extendedViewport.Width = (_scrollData._extent.Width - extendedViewport.X) * approxSizeOfLogicalUnit;
+                            // during Measure the viewport should never start after the extent, but this is possible
+                            // during add/remove item
+                            #if DBG     // can't use Debug.Assert during Measure - the dispatcher is disabled and can't open the dialog
+                            Invariant.Assert(!MeasureInProgress || extendedViewport.X <= _scrollData._extent.Width, "viewport starts after extent");
+                            #endif
+                            extendedViewport.Width = Math.Max(_scrollData._extent.Width - extendedViewport.X, 0.0) * approxSizeOfLogicalUnit;
                         }
                     }
                 }
@@ -4876,7 +4905,12 @@ namespace System.Windows.Controls
 
                         if (DoubleUtil.GreaterThan(extendedViewport.Y + extendedViewport.Height, _scrollData._extent.Height))
                         {
-                            extendedViewport.Height = _scrollData._extent.Height - extendedViewport.Y;
+                            // during Measure the viewport should never start after the extent, but this is possible
+                            // during add/remove item
+                            #if DBG     // can't use Debug.Assert during Measure - the dispatcher is disabled and can't open the dialog
+                            Invariant.Assert(!MeasureInProgress || extendedViewport.Y <= _scrollData._extent.Height, "viewport starts after extent");
+                            #endif
+                            extendedViewport.Height = Math.Max(_scrollData._extent.Height - extendedViewport.Y, 0.0);
                         }
                     }
                 }
@@ -4911,7 +4945,12 @@ namespace System.Windows.Controls
 
                         if (DoubleUtil.GreaterThan(extendedViewport.Y + extendedViewport.Height / approxSizeOfLogicalUnit, _scrollData._extent.Height))
                         {
-                            extendedViewport.Height = (_scrollData._extent.Height - extendedViewport.Y) * approxSizeOfLogicalUnit;
+                            // during Measure the viewport should never start after the extent, but this is possible
+                            // during add/remove item [DDVSO 1405478]
+                            #if DBG     // can't use Debug.Assert during Measure - the dispatcher is disabled and can't open the dialog
+                            Invariant.Assert(!MeasureInProgress || extendedViewport.Y <= _scrollData._extent.Height, "viewport starts after extent");
+                            #endif
+                            extendedViewport.Height = Math.Max(_scrollData._extent.Height - extendedViewport.Y, 0.0) * approxSizeOfLogicalUnit;
                         }
                     }
                 }
@@ -11962,7 +12001,7 @@ namespace System.Windows.Controls
         {
             #region static members
 
-            const int s_StfFormatVersion = 2;   // Format of output file
+            const int s_StfFormatVersion = 3;   // Format of output file
             const int s_MaxTraceRecords = 30000;    // max length of in-memory _traceList
             const int s_MinTraceRecords = 5000;     // keep this many records after flushing
             const int s_DefaultLayoutUpdatedThreshold = 20; // see _luThreshold
@@ -12252,6 +12291,12 @@ namespace System.Windows.Controls
                 "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11}",
                 "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}",
                 "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13}",
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}",
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15}",
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16}",
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16} {17}",
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16} {17} {18}",
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16} {17} {18} {19}",
             };
 
             #endregion static members
@@ -12727,6 +12772,9 @@ namespace System.Windows.Controls
             /****** Added in Version 1 ******/
             SetContainerSize,
             SizeChangeDuringAnchorScroll,
+
+            /****** Added in Version 3 ******/
+            UpdateExtent,
         }
 
         private class ScrollTraceRecord

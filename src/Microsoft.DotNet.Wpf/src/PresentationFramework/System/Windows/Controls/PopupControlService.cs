@@ -561,7 +561,13 @@ namespace System.Windows.Controls
         /// <param name="tooltip"></param>
         private void ClearServiceProperties(ToolTip tooltip)
         {
-            if (tooltip != null)
+            // This is normally called from OnToolTipClosed, after CloseToolTip has closed the tooltip
+            // and waited for the tooltip's Popup to destroy its window asynchronously.
+            // Apps can close the Popup directly (not easily done, and not recommended), which leads to
+            // a call from OnToolTipClosed while tooltip.IsOpen is still true.  In that case we need to
+            // leave the properties in place - CloseToolTip needs them (as does the popup if it should
+            // re-open).  They will get cleared by OnForceClose, if not earlier.
+            if (tooltip != null && !tooltip.IsOpen)
             {
                 tooltip.ClearValue(OwnerProperty);
                 tooltip.FromKeyboard = false;
@@ -672,6 +678,7 @@ namespace System.Windows.Controls
                 _forceCloseTimer.Stop();
                 ToolTip toolTip = (ToolTip)_forceCloseTimer.Tag;
                 toolTip.ForceClose();
+                ClearServiceProperties(toolTip);    // this handles the case where app closed the Popup directly
                 _forceCloseTimer = null;
             }
         }
@@ -817,7 +824,19 @@ namespace System.Windows.Controls
 
         private bool MouseHasLeftSafeArea(RawMouseInputReport mouseReport)
         {
-            return !(SafeArea?.ContainsPoint(mouseReport.InputSource, mouseReport.X, mouseReport.Y) ?? true);
+            // if there is no SafeArea, the mouse didn't leave it
+            if (SafeArea == null)
+                return false;
+
+            // if the current tooltip's owner is no longer being displayed, the safe area is no longer valid
+            // so the mouse has effectively left it
+            DependencyObject owner = GetOwner(CurrentToolTip);
+            PresentationSource presentationSource = (owner != null) ? PresentationSource.CriticalFromVisual(owner) : null;
+            if (presentationSource == null)
+                return true;
+
+            // if the safe area is valid, see if it still contains the mouse point
+            return !SafeArea.ContainsPoint(mouseReport.InputSource, mouseReport.X, mouseReport.Y);
         }
 
         private ConvexHull SafeArea { get; set; }

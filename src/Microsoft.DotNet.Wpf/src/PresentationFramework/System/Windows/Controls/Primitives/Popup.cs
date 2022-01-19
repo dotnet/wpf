@@ -266,7 +266,7 @@ namespace System.Windows.Controls.Primitives
                     // for the the PlacementTarget is separate from that for the Popup itself.
                     // This causes Popup and its descedents to miss some change notifications.
                     // Thus a Popup that isnt connected to the tree in any way should be
-                    // designated standalone and thus IsSelfInheritanceParent = true. 
+                    // designated standalone and thus IsSelfInheritanceParent = true.
                     if (!this.IsSelfInheritanceParent)
                     {
                         this.SetIsSelfInheritanceParent();
@@ -878,14 +878,14 @@ namespace System.Windows.Controls.Primitives
         }
 
         /// <summary>
-        ///     Internal implementation of CreateRootPopup to allow tooltips to 
+        ///     Internal implementation of CreateRootPopup to allow tooltips to
         ///     override the popup's placement in case the tooltip comes from keyboard focus.
         /// </summary>
         /// <param name="popup">The parent popup that the child will be hooked up to.</param>
         /// <param name="child">The element to be the child of the popup.</param>
         /// <param name="bindTreatMousePlacementAsBottomProperty">Whether to bind TreatMousePlacementAsBottomProperty to the child's FromKeyboard property</param>
         internal static void CreateRootPopupInternal(Popup popup, UIElement child, bool bindTreatMousePlacementAsBottomProperty)
-        { 
+        {
             if (popup == null)
             {
                 throw new ArgumentNullException("popup");
@@ -954,7 +954,7 @@ namespace System.Windows.Controls.Primitives
             binding.Mode = BindingMode.OneWay;
             binding.Source = child;
             popup.SetBinding(CustomPopupPlacementCallbackProperty, binding);
-            
+
             if (bindTreatMousePlacementAsBottomProperty)
             {
                 binding = new Binding("FromKeyboard");
@@ -1490,6 +1490,12 @@ namespace System.Windows.Controls.Primitives
                     // We'll defer until later if not already in an async call.
                     _asyncCreate = Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(AsyncCreateWindow), this);
                 }
+                else
+                {
+                    // if the target is still not hooked up in the async call, the popup cannot
+                    // be opened;  raise the CouldClosed event, to inform the original caller
+                    FirePopupCouldClose();
+                }
 
                 return;
             }
@@ -1506,7 +1512,7 @@ namespace System.Windows.Controls.Primitives
 
             // When running in Per-Monitor DPI aware mode, always create a new window
             // This ensures that a recycled HWND that is moving from one display
-            // to another does not undergo a WM_DPICHANGED event and thus cause a 
+            // to another does not undergo a WM_DPICHANGED event and thus cause a
             // cascading failure.
             if (PopupInitialPlacementHelper.IsPerMonitorDpiScalingActive)
             {
@@ -1583,8 +1589,8 @@ namespace System.Windows.Controls.Primitives
 
             // We many not have attempted to position the popup yet
             //
-            // If we don't have prior position information and we are currently running in Per-Monitor DPI Aware mode, 
-            // we should build the window by specifying a point on the current monitor. 
+            // If we don't have prior position information and we are currently running in Per-Monitor DPI Aware mode,
+            // we should build the window by specifying a point on the current monitor.
             // Doing so ensures that the underlying HWND is created with the right DPI. Otherwise, the HWND that is created at
             // (0,0) and then shown on another monitor with a different DPI, will immediately receive a WM_DPICHANGED message. This
             // will in turn cause the HWND to be resized, and its layout to be updated. This layout-update can result in the dismissal
@@ -1592,7 +1598,7 @@ namespace System.Windows.Controls.Primitives
             //
             // PopupInitialPlacementHelper.GetPlacementOrigin() will return (0,0) when running in SystemAware and Unaware mode.
             // When running in Per-Monitor DPI Aware mode, this method will obtain the screen coordinates of the (left, top) of
-            // the Display on which the PopupRoot is situated, and return that value here. 
+            // the Display on which the PopupRoot is situated, and return that value here.
             var origin =
                 _positionInfo != null
                 ? new NativeMethods.POINT(_positionInfo.X, _positionInfo.Y)
@@ -1876,14 +1882,14 @@ namespace System.Windows.Controls.Primitives
 
         private void OnDpiChanged(object sender, HwndDpiChangedEventArgs e)
         {
-            // Popups do not handle layout updates due to DPI changes very well  when they are visible. 
-            // Ignore DPI change induced layout-updates when visible. 
-            // This brings the behavior of Popups in line with .NET 4.7.2. Currently, 
+            // Popups do not handle layout updates due to DPI changes very well  when they are visible.
+            // Ignore DPI change induced layout-updates when visible.
+            // This brings the behavior of Popups in line with .NET 4.7.2. Currently,
             // there is no reliable way to opt-into the DPI improvements made in .NET 4.8
             // wholesale for Popups. By creating the Popups more intelligently on the right
             // target monitor, we will vastly improve the DPI scaling of the Popups
             // in .NET 4.8. In rare situations where a DPI change requires a visible Popups
-            // to adapt and resize itself on-the-fly while continuing to remain visible, 
+            // to adapt and resize itself on-the-fly while continuing to remain visible,
             // it will fail to adapt to that particular DPI change.
             if (IsOpen)
             {
@@ -3376,7 +3382,7 @@ namespace System.Windows.Controls.Primitives
                 // add AddAutoResizedEventHandler event handler
                 newWindow.AutoResized += handler;
 
-                // add the DpiChagnedEventHandler 
+                // add the DpiChagnedEventHandler
                 newWindow.DpiChanged += dpiChangedHandler;
             }
 
@@ -3507,21 +3513,21 @@ namespace System.Windows.Controls.Primitives
         #endregion
 
         /// <summary>
-        /// Helper to find the (left, top) of the monitor that contains the placement target, in screen coordinates. 
+        /// Helper to find the (left, top) of the monitor that contains the placement target, in screen coordinates.
         /// </summary>
         /// <remarks>
         /// Normally, the HWND associated with a Popup is created at (0,0), and then 'moved' to the appropriate location.This can
         /// lead to a DPI change when (0,0) lies on another monitor with a different DPI. DPI changes typically lead to size changes
         /// as well, which can lead to dismissals of Popups. To prevent this, we should create the HWND associated with a Popup
         /// on the correct monitor. This helper will identify the origin of the monitor associated with the placement target to help
-        /// with this. 
+        /// with this.
         /// </remarks>
         private static class PopupInitialPlacementHelper
         {
             /// <summary>
-            /// Decides whether this helper should be used. 
-            /// This helper is used when - 
-            ///     a. WPF supports DPI scaling (HwndTarget.IsPerMonitorDpiScalingEnabled), and 
+            /// Decides whether this helper should be used.
+            /// This helper is used when -
+            ///     a. WPF supports DPI scaling (HwndTarget.IsPerMonitorDpiScalingEnabled), and
             ///     b. The process is PMA (HwndTarget.IsProcessPerMonitorDpiAware)
             /// </summary>
             /// <remarks>
@@ -3539,10 +3545,10 @@ namespace System.Windows.Controls.Primitives
                         return HwndTarget.IsProcessPerMonitorDpiAware.Value;
                     }
 
-                    // WPF supports Per-Monitor scaling, but HwndTarget has not 
-                    // yet been initialized with the first HWND, and therefore 
-                    // HwndTarget.IsProcessPerMonitorDpiAware is not queryable. 
-                    // Let's use the current process' DPI awareness as a proxy. 
+                    // WPF supports Per-Monitor scaling, but HwndTarget has not
+                    // yet been initialized with the first HWND, and therefore
+                    // HwndTarget.IsProcessPerMonitorDpiAware is not queryable.
+                    // Let's use the current process' DPI awareness as a proxy.
                     return DpiUtil.GetProcessDpiAwareness(IntPtr.Zero) == NativeMethods.PROCESS_DPI_AWARENESS.PROCESS_PER_MONITOR_DPI_AWARE;
                 }
             }

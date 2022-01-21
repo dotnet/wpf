@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup>
-    
+    <UseDestinationLibFolder>true</UseDestinationLibFolder>
     <TargetFrameworkIdentifier>.NETCoreApp</TargetFrameworkIdentifier>
     <RestoreProjectStyle>Unknown</RestoreProjectStyle>
   </PropertyGroup>

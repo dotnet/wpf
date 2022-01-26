@@ -666,7 +666,7 @@ namespace MS.Internal
                     {
                         _ccRoot.CodeClass.IsPartial = true;
                     }
-                    addDirectiveToFile(codeStreamWriter, NULLABLE_RESTORE_DIRECTIVE);
+                    AddDirectiveToFile(codeStreamWriter, NULLABLE_RESTORE_DIRECTIVE);
                     codeProvider.GenerateCodeFromCompileUnit(ccu, codeStreamWriter, o);
 
                     codeStreamWriter.Flush();
@@ -686,7 +686,7 @@ namespace MS.Internal
         }
 
         // adds directrive to top of the file.
-        private static void addDirectiveToFile(StreamWriter streamWriter, string directive) {
+        private static void AddDirectiveToFile(StreamWriter streamWriter, string directive) {
             streamWriter.WriteLine(directive);
         }
 

@@ -686,7 +686,8 @@ namespace MS.Internal
         }
 
         // adds directrive to top of the file.
-        private static void AddDirectiveToFile(StreamWriter streamWriter, string directive) {
+        private static void AddDirectiveToFile(StreamWriter streamWriter, string directive) 
+        {
             streamWriter.WriteLine(directive);
         }
 

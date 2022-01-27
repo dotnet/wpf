@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>UIAutomationClient</AssemblyName>
     <PackageId>UIAutomationClient-ref</PackageId>
@@ -7,7 +7,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>$(DefineConstants);UIAUTOMATIONCLIENT</DefineConstants>
     <NoWarn>$(NoWarn);0618;CA1821</NoWarn>
-    <TargetFramework>net6.0</TargetFramework>
+    
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
 

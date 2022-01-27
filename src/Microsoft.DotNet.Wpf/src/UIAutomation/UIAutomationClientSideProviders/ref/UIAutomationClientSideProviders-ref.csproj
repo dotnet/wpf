@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>UIAutomationClientSideProviders</AssemblyName>
     <PackageId>UIAutomationClientSideProviders-ref</PackageId>
@@ -7,7 +7,7 @@
     <DefineConstants>$(DefineConstants);UIAUTOMATIONCLIENTSIDEPROVIDERS</DefineConstants>
     <NoWarn>$(NoWarn);0618</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <TargetFramework>net6.0</TargetFramework>
+    
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
 

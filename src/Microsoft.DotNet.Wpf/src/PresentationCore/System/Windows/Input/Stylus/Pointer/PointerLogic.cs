@@ -232,6 +232,15 @@ namespace System.Windows.Input.StylusPointer
                 && !(CurrentStylusDevice?.As<PointerStylusDevice>()?.TouchDevice?.PromotingToOther ?? false)
                 && (CurrentStylusDevice?.As<PointerStylusDevice>()?.TouchDevice?.PromotingToManipulation ?? false))
             {
+                // If the promoted event contains Activate, push a new Activate event to
+                // replace the event we're dropping.  Otherwise the MouseDevice never activates,
+                // which disables all touch and mouse input.
+                if ((rawMouseInputReport.Actions & RawMouseActions.Activate) == RawMouseActions.Activate)
+                {
+                    // don't copy the extra information, so that the new event isn't treated as a promoted event
+                    MouseDevice.PushActivateInputReport(e, input, rawMouseInputReport, clearExtraInformation:true);
+                }
+
                 input.Handled = true;
                 e.Cancel();
             }

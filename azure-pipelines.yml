@@ -40,6 +40,7 @@ trigger:
     - release/3.*
     - release/5.*
     - release/6.*
+    - release/7.*
     - internal/release/5.*
     - internal/release/6.*
     - experimental/*
@@ -56,6 +57,7 @@ pr:
     - internal/release/3.*
     - release/5.*
     - release/6.*
+    - release/7.*
     - experimental/*
   paths:
     exclude:

@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <UseDestinationLibFolder>true</UseDestinationLibFolder>
     <TargetFrameworkIdentifier>.NETCoreApp</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
     <RestoreProjectStyle>Unknown</RestoreProjectStyle>

@@ -365,5 +365,12 @@ namespace MS.Win32
         [DllImport("gdi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool DeleteObject(IntPtr hrgn);
 
+        //
+        // Window Property Functions
+        //
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        internal static extern IntPtr GetProp(IntPtr hwnd, string name);
+
     }
 }

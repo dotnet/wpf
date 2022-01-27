@@ -90,7 +90,7 @@ namespace System.Windows.Controls
                                     if (directlyOver != null)
                                     {
                                         // Process the mouse move
-                                        OnMouseMove(directlyOver);
+                                        OnMouseMove(directlyOver, mouseReport);
                                     }
                                 }
                             }
@@ -139,9 +139,9 @@ namespace System.Windows.Controls
             }
         }
 
-        private void OnMouseMove(IInputElement directlyOver)
+        private void OnMouseMove(IInputElement directlyOver, RawMouseInputReport mouseReport)
         {
-            if (MouseHasLeftSafeArea())
+            if (MouseHasLeftSafeArea(mouseReport))
             {
                 DismissCurrentToolTip();
             }
@@ -822,7 +822,7 @@ namespace System.Windows.Controls
             }
         }
 
-        private bool MouseHasLeftSafeArea()
+        private bool MouseHasLeftSafeArea(RawMouseInputReport mouseReport)
         {
             // if there is no SafeArea, the mouse didn't leave it
             if (SafeArea == null)

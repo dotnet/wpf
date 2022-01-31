@@ -13,7 +13,7 @@ See the [WPF Roadmap](roadmap.md) to learn about project priorities, status and 
 
 [WinForms](https://github.com/dotnet/winforms) is another UI framework for building Windows desktop applications that is supported on .NET (6.0.x/5.0.x/3.1.x). WPF and WinForms applications only run on Windows. They are part of the `Microsoft.NET.Sdk.WindowsDesktop` SDK. You are recommended to use the most recent version of [Visual Studio](https://visualstudio.microsoft.com/downloads/) to develop WPF and WinForms applications for .NET.  
 
-To build the WPF repo and contribute features and fixes for .NET 6.0, please read our [contributing guide](Documentation/contributing.md).  
+To build the WPF repo and contribute features and fixes for .NET 7.0,  [Visual Studio 2022 Preview](https://visualstudio.microsoft.com/vs/preview/) is required.
 
 ## Getting started
 

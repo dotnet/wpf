@@ -1494,6 +1494,44 @@ namespace System.Windows.Controls
                 }
             }
 
+            // Test whether the current mouse point lies within the convex hull
+            internal bool ContainsMousePoint()
+            {
+                IInputElement rootElement = _source.RootVisual as IInputElement;
+                if (rootElement != null)
+                {
+                    // get the coordinates of the current mouse point, relative to our PresentationSource
+                    System.Windows.Point pt = Mouse.PrimaryDevice.GetPosition(rootElement);
+
+                    // check whether the point lies within the hull
+                    return ContainsPoint(_source, (int)pt.X, (int)pt.Y);
+
+                    // NOTE: GetPosition doesn't actually return the position of the current mouse point,
+                    // but rather the last recorded position.  (See MouseDevice.GetScreenPositionFromSystem,
+                    // which says that "Win32 has issues reliably returning where the mouse is".)
+                    // This causes a small problem when (a) the PresentationSource has capture, e.g.
+                    // the popup of a ComboBox, and (b) the mouse moves to a position that lies outside both the
+                    // capturing PresentationSource (popup window) and the input-providing PresentationSource
+                    // (main window).  The MouseDevice only records positions within the input-providing
+                    // PresentationSource, so we'll test the position where the mouse left the main window,
+                    // rather than the current position.
+                    //      This means we may leave a tooltip open even when the mouse leaves its SafeArea,
+                    // but only when the tooltip belongs to a capturing source, and the "leaving the SafeArea"
+                    // action occurs outside the surrounding main window.  For our example, it can happen
+                    // when the ComboBox is close to the edge of the main window so that a tooltip from its
+                    // popup content extends beyond the main window.
+                    //      This can only be fixed by changing MouseDevice.GetScreenPositionFromSystem to
+                    // use a "better way" to find the current mouse position, which allegedly needs work from the OS.
+                    // But we can live with this behavior, because
+                    //  * this is a corner case - tooltips from popup content that extend beyond the main window
+                    //  * the effect is transient - the tooltip will close when the user dismisses the popup
+                    //  * there's no accessibility issue - WCAG 2.1 only requires that the tooltip stays open under
+                    //      proscribed conditions, not that it has to close when the conditions cease to apply
+                }
+                else
+                    return false;
+            }
+
             // Test whether a given mouse point (x,y) lies within the convex hull
             internal bool ContainsPoint(PresentationSource source, int x, int y)
             {

@@ -9,13 +9,19 @@
          See GenerateResxSource.targets in Arcade.
     -->
     <GenerateResxSource>true</GenerateResxSource>
+
+    <_GenerateResourcesCodeAsConstants>true</_GenerateResourcesCodeAsConstants>
+    <DefineConstants Condition="'$(_GenerateResourcesCodeAsConstants)'=='true'">$(DefineConstants);GENERATE_RESOURCES_CODE_AS_CONSTANTS</DefineConstants>
+
+    <!-- We define our own implementation of GetResourceString -->
+    <GenerateResxSourceOmitGetResourceString Condition="'$(_GenerateResourcesCodeAsConstants)'!='true'">true</GenerateResxSourceOmitGetResourceString>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
     <EmbeddedResource>
       <GenerateSource>true</GenerateSource>
       <ManifestResourceName>FxResources.$(AssemblyName).SR</ManifestResourceName>
-      <GenerateResourcesCodeAsConstants>true</GenerateResourcesCodeAsConstants>
+      <GenerateResourcesCodeAsConstants>$(_GenerateResourcesCodeAsConstants)</GenerateResourcesCodeAsConstants>
 
       <ClassName Condition="'$(AssemblyName)'=='PresentationBuildTasks'">MS.Utility.SRID</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='UIAutomationProvider'">System.SR</ClassName>

@@ -964,6 +964,28 @@ namespace System.Windows.Controls
         /// </summary>
         protected override void OnKeyDown(KeyEventArgs e)
         {
+            if ((Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt)
+            {
+                DataGridLength updatedWidth = new DataGridLength();
+
+                if (e.Key == Key.Right)
+                {
+                    updatedWidth = new DataGridLength(this.Column.ActualWidth + _columnWidthStepSize);
+                }
+                else if (e.Key == Key.Left)
+                {
+                    updatedWidth = new DataGridLength(this.Column.ActualWidth - _columnWidthStepSize);
+                }
+
+                if (Column.CanColumnResize(updatedWidth))
+                {
+                    this.Column.SetCurrentValue(DataGridColumn.WidthProperty, updatedWidth);
+                }
+
+                e.Handled = true;
+                return;
+            }
+            
             SendInputToColumn(e);
         }
 
@@ -1100,6 +1122,7 @@ namespace System.Windows.Controls
         private DataGridRow _owner;
         private ContainerTracking<DataGridCell> _tracker;
         private bool _syncingIsSelected;                    // Used to prevent unnecessary notifications
+        private const double _columnWidthStepSize = 10d;
 
         #endregion
     }

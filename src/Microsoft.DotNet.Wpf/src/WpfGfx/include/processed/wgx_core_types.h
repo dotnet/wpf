@@ -858,6 +858,12 @@ BEGIN_MILFLAGENUM( MilRTInitialization )
     //
     IsDisableMultimonDisplayClippingValid = 0x00008000,
 
+    //
+    // This flag directs the render target to render the full scene,
+    // bypassing D3D's dirty-rectangle optimizations.
+    //
+    DisableDirtyRectangles = 0x00010000,
+
 
     //
     // Test only / internal flags

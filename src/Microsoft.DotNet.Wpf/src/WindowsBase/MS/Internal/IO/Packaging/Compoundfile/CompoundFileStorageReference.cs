@@ -103,7 +103,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // different type?
             if (o.GetType() != GetType())
                 throw new ArgumentException(
-                    SR.Get(SRID.CanNotCompareDiffTypes));
+                    SR.CanNotCompareDiffTypes);
 
             // Note that because of the GetType() checking above, the casting must be valid.
             CompoundFileStorageReference r = (CompoundFileStorageReference)o;
@@ -136,7 +136,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 //  it is not necessary since PathSeparatorAsString is a path symbol
                 if (fullName.StartsWith(ContainerUtilities.PathSeparatorAsString, StringComparison.Ordinal))
                     throw new ArgumentException(
-                        SR.Get(SRID.DelimiterLeading), "fullName");
+                        SR.DelimiterLeading, "fullName");
 
                 _fullName = fullName;
 
@@ -144,7 +144,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 string[] strings = ContainerUtilities.ConvertBackSlashPathToStringArrayPath(_fullName);
                 if (strings.Length == 0)
                     throw new ArgumentException (
-                        SR.Get(SRID.CompoundFilePathNullEmpty), "fullName");
+                        SR.CompoundFilePathNullEmpty, "fullName");
             }
         }
 

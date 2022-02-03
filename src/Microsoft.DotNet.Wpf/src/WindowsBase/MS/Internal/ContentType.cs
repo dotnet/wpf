@@ -49,7 +49,7 @@
 using System;
 using System.Collections.Generic;   // For Dictionary<string, string>
 using System.Text;                  // For StringBuilder
-using System.Windows;               // For Exception strings - SRID
+using System.Windows;               // For Exception strings - SR
 using MS.Internal.WindowsBase;      // For FriendAccessAllowed
 using System.Diagnostics;           // For Debug.Assert
 
@@ -93,7 +93,7 @@ namespace MS.Internal
             else
             {
                 if (IsLinearWhiteSpaceChar(contentType[0]) || IsLinearWhiteSpaceChar(contentType[contentType.Length - 1]))
-                    throw new ArgumentException(SR.Get(SRID.ContentTypeCannotHaveLeadingTrailingLWS));
+                    throw new ArgumentException(SR.ContentTypeCannotHaveLeadingTrailingLWS);
 
                 //Carriage return can be expressed as '\r\n' or '\n\r'
                 //We need to make sure that a \r is accompanied by \n
@@ -410,7 +410,7 @@ namespace MS.Internal
                     index = contentType.IndexOf(_LinearWhiteSpaceChars[2], ++index);
                 }
                 else
-                    throw new ArgumentException(SR.Get(SRID.InvalidLinearWhiteSpaceCharacter));
+                    throw new ArgumentException(SR.InvalidLinearWhiteSpaceCharacter);
             }
         }
 
@@ -428,7 +428,7 @@ namespace MS.Internal
             string[] splitBasedOnForwardSlash = typeAndSubType.Split(_forwardSlashSeparator);
 
             if (splitBasedOnForwardSlash.Length != 2)
-                throw new ArgumentException(SR.Get(SRID.InvalidTypeSubType));
+                throw new ArgumentException(SR.InvalidTypeSubType);
 
             _type    = ValidateToken(splitBasedOnForwardSlash[0]);
             _subType = ValidateToken(splitBasedOnForwardSlash[1]);
@@ -447,13 +447,13 @@ namespace MS.Internal
                 //At this point the first character MUST be a semi-colon
                 //First time through this test is serving more as an assert.
                 if (parameterAndValue[0] != _semicolonSeparator)
-                    throw new ArgumentException(SR.Get(SRID.ExpectingSemicolon));
+                    throw new ArgumentException(SR.ExpectingSemicolon);
 
                 //At this point if we have just one semicolon, then its an error.
                 //Also, there can be no trailing LWS characters, as we already checked for that
                 //in the constructor.
                 if (parameterAndValue.Length == 1)
-                    throw new ArgumentException(SR.Get(SRID.ExpectingParameterValuePairs));
+                    throw new ArgumentException(SR.ExpectingParameterValuePairs);
 
                 //Removing the leading ; from the string
                 parameterAndValue = parameterAndValue.Substring(1);
@@ -465,7 +465,7 @@ namespace MS.Internal
                 int equalSignIndex = parameterAndValue.IndexOf(_equalSeparator);
 
                 if (equalSignIndex <= 0 || equalSignIndex == (parameterAndValue.Length - 1))
-                    throw new ArgumentException(SR.Get(SRID.InvalidParameterValuePair));
+                    throw new ArgumentException(SR.InvalidParameterValuePair);
 
                 int parameterStartIndex = equalSignIndex + 1;
 
@@ -529,7 +529,7 @@ namespace MS.Internal
                     length = s.IndexOf('"', ++length);
 
                     if (length == -1)
-                        throw new ArgumentException(SR.Get(SRID.InvalidParameterValue));
+                        throw new ArgumentException(SR.InvalidParameterValue);
 
                     if (s[length - 1] != '\\')
                     {
@@ -553,7 +553,7 @@ namespace MS.Internal
         private static string ValidateToken(string token)
         {
             if (String.CompareOrdinal(token, String.Empty)==0)
-                throw new ArgumentException(SR.Get(SRID.InvalidToken));
+                throw new ArgumentException(SR.InvalidToken);
 
             for (int i = 0; i < token.Length; i++)
             {
@@ -563,7 +563,7 @@ namespace MS.Internal
                     if (IsAllowedCharacter(token[i]))
                         continue;
                     else
-                        throw new ArgumentException(SR.Get(SRID.InvalidToken));
+                        throw new ArgumentException(SR.InvalidToken);
             }
 
             return token;
@@ -579,7 +579,7 @@ namespace MS.Internal
         private static string ValidateQuotedStringOrToken(string parameterValue)
         {
             if (String.CompareOrdinal(parameterValue, String.Empty) == 0)
-                throw new ArgumentException(SR.Get(SRID.InvalidParameterValue));
+                throw new ArgumentException(SR.InvalidParameterValue);
 
             if (parameterValue.Length >= 2 && 
                 parameterValue.StartsWith(_quote, StringComparison.Ordinal) && 
@@ -605,11 +605,11 @@ namespace MS.Internal
                     continue;
 
                 if (quotedText[i] <= ' ' || quotedText[i] >= 0xFF)
-                    throw new ArgumentException(SR.Get(SRID.InvalidParameterValue));
+                    throw new ArgumentException(SR.InvalidParameterValue);
                 else
                     if (quotedText[i] == '"' && 
                         (i==0 || quotedText[i-1] != '\\'))
-                        throw new ArgumentException(SR.Get(SRID.InvalidParameterValue));
+                        throw new ArgumentException(SR.InvalidParameterValue);
             }
         }
 

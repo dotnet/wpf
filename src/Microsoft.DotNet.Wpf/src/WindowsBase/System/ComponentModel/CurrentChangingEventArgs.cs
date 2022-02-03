@@ -84,7 +84,7 @@ namespace System.ComponentModel
                 }
                 else if (value)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CurrentChangingCannotBeCanceled));
+                    throw new InvalidOperationException(SR.CurrentChangingCannotBeCanceled);
                 }
             }
         }

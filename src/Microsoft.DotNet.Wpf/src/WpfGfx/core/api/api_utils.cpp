@@ -70,6 +70,7 @@ HRESULT HrValidateInitializeCall(
         MilRTInitialization::DisableDisplayClipping |
         MilRTInitialization::DisableMultimonDisplayClipping |
         MilRTInitialization::IsDisableMultimonDisplayClippingValid |
+        MilRTInitialization::DisableDirtyRectangles |
         MilRTInitialization::UseRefRast |
         MilRTInitialization::UseRgbRast |
         MilRTInitialization::PresentUsingMask

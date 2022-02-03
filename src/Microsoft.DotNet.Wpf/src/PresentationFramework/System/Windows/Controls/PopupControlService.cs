@@ -153,6 +153,25 @@ namespace System.Windows.Controls
 
                 BeginShowToolTip(owner, ToolTipService.TriggerAction.Mouse);
             }
+            else
+            {
+                if (PendingToolTipTimer?.Tag == BooleanBoxes.TrueBox)
+                {
+                    // the pending tooltip is on a short delay (see BeginShowToolTip)
+                    if (CurrentToolTip == null)
+                    {
+                        // the mouse left the safe area - promote the pending tooltip now
+                        PendingToolTipTimer.Stop();
+                        PromotePendingToolTipToCurrent(ToolTipService.TriggerAction.Mouse);
+                    }
+                    else
+                    {
+                        // the mouse is still in the safe area - restart the timer
+                        PendingToolTipTimer.Stop();
+                        PendingToolTipTimer.Start();
+                    }
+                }
+            }
         }
 
         /////////////////////////////////////////////////////////////////////
@@ -314,20 +333,61 @@ namespace System.Windows.Controls
             PendingToolTip = SentinelToolTip(o, triggerAction);
 
             // decide when to promote to current
-            int showDelay;
-            switch (triggerAction)
+            bool useShortDelay = false;
+            bool showNow = _quickShow;
+            if (!showNow)
             {
-                case ToolTipService.TriggerAction.Mouse:
-                case ToolTipService.TriggerAction.KeyboardFocus:
-                    showDelay = _quickShow ? 0 : ToolTipService.GetInitialShowDelay(o);
-                    break;
-                case ToolTipService.TriggerAction.KeyboardShortcut:
-                default:
-                    showDelay = 0;
-                    break;
+                ToolTip toReplace = CurrentToolTip;
+                switch (triggerAction)
+                {
+                    case ToolTipService.TriggerAction.Mouse:
+                        if (SafeArea != null)
+                        {
+                            // the mouse has moved over a tooltip owner o, while still
+                            // within the safe area of the current tooltip (which must be from mouse).
+                            // This is an ambiguous case - the user could be trying to move the
+                            // mouse toward the tooltip or they could be trying to move the
+                            // mouse over o.  There's no way to know the user's intent.
+                            // But the expected response is much different:  in the first
+                            // case we should leave the current tooltip open, in the second
+                            // we should replace it with o's tooltip.
+                            //
+                            // We use a heuristic to compromise between these conflicting expectations.
+                            // We'll put the pending request on a timer with a very short interval.
+                            // If the user moves the mouse within the interval, we restart the timer;
+                            // this keeps the tooltip open as long as the user keeps moving the mouse.
+                            // But if the timer expires, we promote the pending request;
+                            // this shows o's tooltip shortly after the user stops moving the mouse (or
+                            // moves it outside the current safe area).
+                            useShortDelay = true;
+                        }
+                        break;
+                    case ToolTipService.TriggerAction.KeyboardFocus:
+                        // a focus request shows without delay if the current tooltip also came from keyboard
+                        showNow = toReplace?.FromKeyboard ?? false;
+                        break;
+                    case ToolTipService.TriggerAction.KeyboardShortcut:
+                    default:
+                        // an explicit keystroke request always shows without delay
+                        toReplace = null;
+                        showNow = true;
+                        break;
+                }
+
+                // replacing a tooltip with BetweenShowDelay=0 should invoke the delay
+                if (toReplace != null && (showNow || useShortDelay))
+                {
+                    DependencyObject currentOwner = GetOwner(toReplace);
+                    if (ToolTipService.GetBetweenShowDelay(currentOwner) == 0)
+                    {
+                        showNow = false;
+                        useShortDelay = false;
+                    }
+                }
             }
 
             // promote now, or schedule delayed promotion
+            int showDelay = (showNow ? 0 : useShortDelay ? ShortDelay : ToolTipService.GetInitialShowDelay(o));
             if (showDelay == 0)
             {
                 PromotePendingToolTipToCurrent(triggerAction);
@@ -337,6 +397,7 @@ namespace System.Windows.Controls
                 PendingToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal);
                 PendingToolTipTimer.Interval = TimeSpan.FromMilliseconds(showDelay);
                 PendingToolTipTimer.Tick += new EventHandler((s, e) => { PromotePendingToolTipToCurrent(triggerAction); });
+                PendingToolTipTimer.Tag = BooleanBoxes.Box(useShortDelay);
                 PendingToolTipTimer.Start();
             }
         }
@@ -1621,6 +1682,13 @@ namespace System.Windows.Controls
         #endregion
 
         #region Data
+
+        // see comment in BeginShowTooltip.  This should be large enough to
+        // allow continuous mouse-move events, but small enough to switch
+        // tooltips instantly (where "continuous" and "instantly" are the
+        // end-user's perception).   The value here is large enough to make the
+        // "SafeAreaOnHyperlink" test pass.
+        static private int ShortDelay = 73;
 
         // pending ToolTip
         private ToolTip _pendingToolTip;

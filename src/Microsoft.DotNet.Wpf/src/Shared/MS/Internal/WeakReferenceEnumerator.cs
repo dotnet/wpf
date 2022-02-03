@@ -19,6 +19,11 @@ using System.Windows;
 using MS.Internal.YourAssemblyName;
 #endif
 
+// Remove once dependent projects use SR properties.
+#if WINDOWS_BASE
+using SRID = MS.Internal.WindowsBase.SR;
+#endif
+
 // Disable pragma warnings to enable PREsharp pragmas
 #pragma warning disable 1634, 1691
 
@@ -55,7 +60,7 @@ namespace MS.Internal
                 if( null == _StrongReference )
                 {
 #pragma warning suppress 6503
-                    throw new System.InvalidOperationException(SR.Get(SRID.Enumerator_VerifyContext));
+                    throw new System.InvalidOperationException(SR.Get(nameof(SRID.Enumerator_VerifyContext)));
                 }
                 return _StrongReference;
             }

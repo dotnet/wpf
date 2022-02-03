@@ -21,6 +21,11 @@ using System.Windows;
 using MS.Internal.WindowsBase; // FriendAccessAllowed
 #endif
 
+// Remove once dependent projects use SR properties.
+#if WINDOWS_BASE
+using SRID = MS.Internal.WindowsBase.SR;
+#endif
+
 namespace MS.Internal.IO.Packaging.CompoundFile
 {
     ///<summary>Class for manipulating version object</summary>
@@ -81,7 +86,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             if (featureId.Length == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.ZeroLengthFeatureID));
+                throw new ArgumentException(SR.Get(nameof(SRID.ZeroLengthFeatureID)));
             }
 
             _featureIdentifier = featureId;

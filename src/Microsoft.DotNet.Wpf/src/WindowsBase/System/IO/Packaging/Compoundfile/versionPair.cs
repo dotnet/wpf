@@ -21,6 +21,12 @@ using System.Text;
 using MS.Internal.WindowsBase; // FriendAccessAllowed
 #endif
 
+// Remove once dependent projects use SR properties.
+#if WINDOWS_BASE
+using SRID = MS.Internal.WindowsBase.SR;
+#endif
+
+
 namespace MS.Internal.IO.Packaging.CompoundFile
 {
     ///<summary>Class for a version pair which consists of major and minor numbers</summary>
@@ -49,13 +55,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             if (major < 0)
             {
                 throw new ArgumentOutOfRangeException("major",
-                            SR.Get(SRID.VersionNumberComponentNegative));
+                            SR.Get(nameof(SRID.VersionNumberComponentNegative)));
             }
 
             if (minor < 0)
             {
                 throw new ArgumentOutOfRangeException("minor",
-                            SR.Get(SRID.VersionNumberComponentNegative));
+                            SR.Get(nameof(SRID.VersionNumberComponentNegative)));
             }
 
             _major = major;
@@ -302,7 +308,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             if (obj.GetType() != GetType())
             {
-                throw new ArgumentException(SR.Get(SRID.ExpectedVersionPairObject));
+                throw new ArgumentException(SR.ExpectedVersionPairObject);
             }
 
             VersionPair v = (VersionPair) obj;

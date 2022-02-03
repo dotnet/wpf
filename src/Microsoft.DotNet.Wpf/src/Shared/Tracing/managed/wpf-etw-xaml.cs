@@ -15,6 +15,11 @@
 //---------------------------------------------------------------------
 #if !SILVERLIGHTXAML
 
+// Remove once dependent projects use SR properties.
+#if WINDOWS_BASE
+using SRID = MS.Internal.WindowsBase.SR;
+#endif
+
 using System;
 using MS.Internal.WindowsBase;
 
@@ -143,7 +148,7 @@ namespace MS.Utility
                 case Event.WClientParseXamlEnd:
                     // 3164257a-c9be-4c36-9d8f-09b18ac880a6
                     return new Guid(0x3164257A, 0xC9BE, 0x4C36, 0x9D, 0x8F, 0x9, 0xB1, 0x8A, 0xC8, 0x80, 0xA6);
-                default: throw new ArgumentException(SR.Get(SRID.InvalidEvent),"arg");
+                default: throw new ArgumentException(SR.Get(nameof(SRID.InvalidEvent)),"arg");
             }
         }
         
@@ -188,7 +193,7 @@ namespace MS.Utility
                     return 144;
                 case Event.WClientParseXamlEnd:
                     return 42;
-                default: throw new ArgumentException(SR.Get(SRID.InvalidEvent),"arg");
+                default: throw new ArgumentException(SR.Get(nameof(SRID.InvalidEvent)),"arg");
             }
         }
         
@@ -221,7 +226,7 @@ namespace MS.Utility
                 case Event.WClientResourceFindEnd:
                 case Event.WClientParseXamlEnd:
                     return 2;
-                default: throw new ArgumentException(SR.Get(SRID.InvalidEvent),"arg");
+                default: throw new ArgumentException(SR.Get(nameof(SRID.InvalidEvent)),"arg");
             }
         }
         
@@ -253,7 +258,7 @@ namespace MS.Utility
                 case Event.WClientResourceStock:
                 case Event.WClientResourceBamlAssembly:
                     return 2;
-                default: throw new ArgumentException(SR.Get(SRID.InvalidEvent),"arg");
+                default: throw new ArgumentException(SR.Get(nameof(SRID.InvalidEvent)),"arg");
             }
         }
     }

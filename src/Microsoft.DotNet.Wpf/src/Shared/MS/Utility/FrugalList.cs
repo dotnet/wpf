@@ -14,6 +14,11 @@ using System.Xaml;
 using MS.Internal.WindowsBase;
 #endif
 
+// Remove once dependent projects use SR properties.
+#if WINDOWS_BASE
+using SRID = MS.Internal.WindowsBase.SR;
+#endif
+
 //using MS.Internal.PresentationCore;
 //using SR=MS.Internal.WindowsBase.SR;
 //using SRID=MS.Internal.WindowsBase.SRID;
@@ -337,7 +342,7 @@ namespace MS.Utility
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
+                throw new ArgumentException(SR.Get(nameof(SRID.FrugalList_TargetMapCannotHoldAllData), oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -615,7 +620,7 @@ namespace MS.Utility
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
+                throw new ArgumentException(SR.Get(nameof(SRID.FrugalList_TargetMapCannotHoldAllData), oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -1092,7 +1097,7 @@ namespace MS.Utility
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
+                throw new ArgumentException(SR.Get(nameof(SRID.FrugalList_TargetMapCannotHoldAllData), oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -1131,7 +1136,7 @@ namespace MS.Utility
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
+                throw new ArgumentException(SR.Get(nameof(SRID.FrugalList_TargetMapCannotHoldAllData), oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -1464,7 +1469,7 @@ namespace MS.Utility
                     continue;
                 }
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
+                throw new ArgumentException(SR.Get(nameof(SRID.FrugalList_TargetMapCannotHoldAllData), oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -1539,7 +1544,7 @@ namespace MS.Utility
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
+                throw new ArgumentException(SR.Get(nameof(SRID.FrugalList_TargetMapCannotHoldAllData), oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -1847,7 +1852,7 @@ namespace MS.Utility
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.FrugalList_CannotPromoteBeyondArray));
+                    throw new InvalidOperationException(SR.Get(nameof(SRID.FrugalList_CannotPromoteBeyondArray)));
                 }
             }
             return _listStore.Count - 1;
@@ -2212,7 +2217,7 @@ namespace MS.Utility
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.FrugalList_CannotPromoteBeyondArray));
+                    throw new InvalidOperationException(SR.Get(nameof(SRID.FrugalList_CannotPromoteBeyondArray)));
                 }
             }
             return _listStore.Count - 1;

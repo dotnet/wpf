@@ -10,6 +10,11 @@ using System.Globalization;
 using System.Diagnostics;
 using System.Threading;
 
+// Remove once dependent projects use SR properties.
+#if WINDOWS_BASE
+using SRID = MS.Internal.WindowsBase.SR;
+#endif
+
 #if SYSTEM_XAML
 using System.Xaml;
 #endif
@@ -234,7 +239,7 @@ namespace System.Windows.Markup
                 HandleElementCallback elementCB;
                 if (!_elementHandler.TryGetValue(elementName, out elementCB))
                 {
-                    Error(SR.Get(SRID.XCRUnknownCompatElement), elementName);
+                    Error(SR.Get(nameof(SRID.XCRUnknownCompatElement)), elementName);
                 }
                 elementCB(elementDepth, ref more);
             }
@@ -272,7 +277,7 @@ namespace System.Windows.Markup
                     if (Scope.InAlternateContent)
                     {
                         // if this element is the child of an AlternateContent element, then throw an exception.
-                        Error(SR.Get(SRID.XCRInvalidACChild), Reader.Name);
+                        Error(SR.Get(nameof(SRID.XCRInvalidACChild)), Reader.Name);
                     }
 
                     result = true;
@@ -322,7 +327,7 @@ namespace System.Windows.Markup
                     {
                         // if the current element was a </mc:AlternateContent>, without any Choice
                         // element children, throw an exception
-                        Error(SR.Get(SRID.XCRChoiceNotFound));
+                        Error(SR.Get(nameof(SRID.XCRChoiceNotFound)));
                     }
                 }
                 _depthOffset--;
@@ -834,7 +839,7 @@ namespace System.Windows.Markup
                             // a cycle
                             if (IsNamespaceKnown(mappedNamespace))
                             {
-                                Error(SR.Get(SRID.XCRCompatCycle), mappedNamespace);
+                                Error(SR.Get(nameof(SRID.XCRCompatCycle)), mappedNamespace);
                             }
 
                             // mappedNamespace has not been mapped, so map it
@@ -963,7 +968,7 @@ namespace System.Windows.Markup
                     {
                         // if string does not have a ':', if the last character in the string is a ':'
                         // or if the string contains more than one ':', throw an exception
-                        Error(SR.Get(SRID.XCRInvalidFormat), callerContext);
+                        Error(SR.Get(nameof(SRID.XCRInvalidFormat)), callerContext);
                     }
 
                     string prefix = pair.Substring(0, colonIndex);
@@ -973,12 +978,12 @@ namespace System.Windows.Markup
                     if (namespaceName == null)
                     {
                         // if a prefix does not map to a namespace, throw an exception
-                        Error(SR.Get(SRID.XCRUndefinedPrefix), prefix);
+                        Error(SR.Get(nameof(SRID.XCRUndefinedPrefix)), prefix);
                     }
                     else if (elementName != "*" && !IsName(elementName))
                     {
                         // if the element's name is not valid XML, throw an exception
-                        Error(SR.Get(SRID.XCRInvalidXMLName), pair);
+                        Error(SR.Get(nameof(SRID.XCRInvalidXMLName)), pair);
                     }
                     else
                     {
@@ -1009,7 +1014,7 @@ namespace System.Windows.Markup
                     if (namespaceUri == null)
                     {
                         // if a prefix does not map to a namespace, throw an exception
-                        Error(SR.Get(SRID.XCRUndefinedPrefix), prefix);
+                        Error(SR.Get(nameof(SRID.XCRUndefinedPrefix)), prefix);
                     }
                     else
                     {
@@ -1078,7 +1083,7 @@ namespace System.Windows.Markup
                             HandleAttributeCallback attributeCB;
                             if (!_attributeHandler.TryGetValue(attributeName, out attributeCB))
                             {
-                                Error(SR.Get(SRID.XCRUnknownCompatAttrib), attributeName);
+                                Error(SR.Get(nameof(SRID.XCRUnknownCompatAttrib)), attributeName);
                             }
                             attributeCB(elementDepth);
                         }
@@ -1161,12 +1166,12 @@ namespace System.Windows.Markup
             {
                 // the only valid tags within <AlternateContent> ... </> are
                 // Choice and Fallback
-                Error(SR.Get(SRID.XCRInvalidACChild, Reader.Name));
+                Error(SR.Get(nameof(SRID.XCRInvalidACChild), Reader.Name));
             }
             if (Reader.IsEmptyElement)
             {
                 // AlternateContent blocks must have a Choice, so they can't be empty
-                Error(SR.Get(SRID.XCRChoiceNotFound));
+                Error(SR.Get(nameof(SRID.XCRChoiceNotFound)));
             }
 
             // check for markup-compatibility attributes, then push an AlternateContent scope
@@ -1196,12 +1201,12 @@ namespace System.Windows.Markup
             if (!Scope.InAlternateContent)
             {
                 // Choice must be the child of AlternateContent
-                Error(SR.Get(SRID.XCRChoiceOnlyInAC));
+                Error(SR.Get(nameof(SRID.XCRChoiceOnlyInAC)));
             }
             if (Scope.FallbackSeen)
             {
                 // Choice cannot occur after Fallback
-                Error(SR.Get(SRID.XCRChoiceAfterFallback));
+                Error(SR.Get(nameof(SRID.XCRChoiceAfterFallback)));
             }
 
             string requiresValue = Reader.GetAttribute(Requires);
@@ -1209,12 +1214,12 @@ namespace System.Windows.Markup
             if (requiresValue == null)
             {
                 // Choice must have a requires attribute
-                Error(SR.Get(SRID.XCRRequiresAttribNotFound));
+                Error(SR.Get(nameof(SRID.XCRRequiresAttribNotFound)));
             }
             if (String.IsNullOrEmpty(requiresValue))
             {
                 // Requires attribute may not be empty
-                Error(SR.Get(SRID.XCRInvalidRequiresAttribute));
+                Error(SR.Get(nameof(SRID.XCRInvalidRequiresAttribute)));
             }
 
             CompatibilityScope scope = Scope;
@@ -1234,7 +1239,7 @@ namespace System.Windows.Markup
                 string attributeName = Reader.LocalName;
                 MoveToElement();
 
-                Error(SR.Get(SRID.XCRInvalidAttribInElement), attributeName, Choice);
+                Error(SR.Get(nameof(SRID.XCRInvalidAttribInElement)), attributeName, Choice);
             }
 
             if (scope.ChoiceTaken)
@@ -1266,7 +1271,7 @@ namespace System.Windows.Markup
                 if (!somethingSeen)
                 {
                     // if the Requires value does not contain a valid prefix/namespace, throw an exception
-                    Error(SR.Get(SRID.XCRInvalidRequiresAttribute));
+                    Error(SR.Get(nameof(SRID.XCRInvalidRequiresAttribute)));
                 }
 
                 if (allKnown)
@@ -1309,17 +1314,17 @@ namespace System.Windows.Markup
             if (!Scope.InAlternateContent)
             {
                 // Fallback must be the child of AlternateContent
-                Error(SR.Get(SRID.XCRFallbackOnlyInAC));
+                Error(SR.Get(nameof(SRID.XCRFallbackOnlyInAC)));
             }
             if (!Scope.ChoiceSeen)
             {
                 // AlternateContent block must contain a Choice element
-                Error(SR.Get(SRID.XCRChoiceNotFound));
+                Error(SR.Get(nameof(SRID.XCRChoiceNotFound)));
             }
             if (Scope.FallbackSeen)
             {
                 // AlternateContent block may only contain one Fallback child
-                Error(SR.Get(SRID.XCRMultipleFallbackFound));
+                Error(SR.Get(nameof(SRID.XCRMultipleFallbackFound)));
             }
 
             // mark scope as having a fallback
@@ -1337,7 +1342,7 @@ namespace System.Windows.Markup
                 string attributeName = Reader.LocalName;
                 MoveToElement();
 
-                Error(SR.Get(SRID.XCRInvalidAttribInElement), attributeName, Fallback);
+                Error(SR.Get(nameof(SRID.XCRInvalidAttribInElement)), attributeName, Fallback);
             }
 
             if (choiceTaken)
@@ -1408,7 +1413,7 @@ namespace System.Windows.Markup
             {
                 if (!IsNamespaceKnown(namespaceUri))
                 {
-                    Error(SR.Get(SRID.XCRMustUnderstandFailed), namespaceUri);
+                    Error(SR.Get(nameof(SRID.XCRMustUnderstandFailed)), namespaceUri);
                 }
             }
         }
@@ -1883,7 +1888,7 @@ namespace System.Windows.Markup
                     {
                         if (!IsIgnorableAtCurrentScope(key))
                         {
-                            _reader.Error(SR.Get(SRID.XCRNSProcessContentNotIgnorable), key);
+                            _reader.Error(SR.Get(nameof(SRID.XCRNSProcessContentNotIgnorable)), key);
                         }
                     }
                 }
@@ -1894,7 +1899,7 @@ namespace System.Windows.Markup
                     {
                         if (!IsIgnorableAtCurrentScope(key))
                         {
-                            _reader.Error(SR.Get(SRID.XCRNSPreserveNotIgnorable), key);
+                            _reader.Error(SR.Get(nameof(SRID.XCRNSPreserveNotIgnorable)), key);
                         }
                     }
                 }
@@ -1905,7 +1910,7 @@ namespace System.Windows.Markup
                     {
                         if (!IsIgnorableAtCurrentScope(key))
                         {
-                            _reader.Error(SR.Get(SRID.XCRNSPreserveNotIgnorable), key);
+                            _reader.Error(SR.Get(nameof(SRID.XCRNSPreserveNotIgnorable)), key);
                         }
                     }
                 }
@@ -1936,11 +1941,11 @@ namespace System.Windows.Markup
                 {
                     if (elementName == "*")
                     {
-                        _reader.Error(SR.Get(SRID.XCRDuplicateWildcardProcessContent), _namespaceName);
+                        _reader.Error(SR.Get(nameof(SRID.XCRDuplicateWildcardProcessContent)), _namespaceName);
                     }
                     else
                     {
-                        _reader.Error(SR.Get(SRID.XCRDuplicateProcessContent), _namespaceName, elementName);
+                        _reader.Error(SR.Get(nameof(SRID.XCRDuplicateProcessContent)), _namespaceName, elementName);
                     }
                 }
 
@@ -1948,7 +1953,7 @@ namespace System.Windows.Markup
                 {
                     if (_names != null)
                     {
-                        _reader.Error(SR.Get(SRID.XCRInvalidProcessContent), _namespaceName);
+                        _reader.Error(SR.Get(nameof(SRID.XCRInvalidProcessContent)), _namespaceName);
                     }
                     else
                     {
@@ -1991,11 +1996,11 @@ namespace System.Windows.Markup
                 {
                     if (itemName == "*")
                     {
-                        _reader.Error(SR.Get(SRID.XCRDuplicateWildcardPreserve), _namespaceName);
+                        _reader.Error(SR.Get(nameof(SRID.XCRDuplicateWildcardPreserve)), _namespaceName);
                     }
                     else
                     {
-                        _reader.Error(SR.Get(SRID.XCRDuplicatePreserve), itemName, _namespaceName);
+                        _reader.Error(SR.Get(nameof(SRID.XCRDuplicatePreserve)), itemName, _namespaceName);
                     }
                 }
 
@@ -2003,7 +2008,7 @@ namespace System.Windows.Markup
                 {
                     if (_names != null)
                     {
-                        _reader.Error(SR.Get(SRID.XCRInvalidPreserve), _namespaceName);
+                        _reader.Error(SR.Get(nameof(SRID.XCRInvalidPreserve)), _namespaceName);
                     }
                     else
                     {

@@ -15,6 +15,11 @@
 //---------------------------------------------------------------------
 #if !SILVERLIGHTXAML
 
+// Remove once dependent projects use SR properties.
+#if WINDOWS_BASE
+using SRID = MS.Internal.WindowsBase.SR;
+#endif
+
 using System;
 using MS.Internal.WindowsBase;
 

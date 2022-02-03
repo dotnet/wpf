@@ -15,6 +15,12 @@ using MS.Internal.Drt;
 #else
 #error There is an attempt to use this class from an unexpected assembly.
 #endif
+
+// Remove once dependent projects use SR properties.
+#if WINDOWS_BASE
+using SRID = MS.Internal.WindowsBase.SR;
+#endif
+
 namespace MS.Internal
 {
     using System;
@@ -209,7 +215,7 @@ namespace MS.Internal
 
             Debug.Assert(false, "Invariant failure: " + message, detailMessage);
 
-            Environment.FailFast(SR.Get(SRID.InvariantFailure));
+            Environment.FailFast(SR.Get(nameof(SRID.InvariantFailure)));
         }
 
         #endregion Private Methods

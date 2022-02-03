@@ -13,6 +13,11 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System.Globalization;
 
+// Remove once dependent projects use SR properties.
+#if WINDOWS_BASE
+using SRID = MS.Internal.WindowsBase.SR;
+#endif
+
 #if !PBTCOMPILER
 using System.Windows;
 #endif
@@ -123,7 +128,7 @@ namespace MS.Internal
         {
             if (_charIndex != _strLen)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.TokenizerHelperExtraDataEncountered, _charIndex, _str));
+                throw new System.InvalidOperationException(SR.Get(nameof(SRID.TokenizerHelperExtraDataEncountered), _charIndex, _str));
             }
         }
 
@@ -144,7 +149,7 @@ namespace MS.Internal
         {
             if (!NextToken(false))
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.TokenizerHelperPrematureStringTermination, _str));
+                throw new System.InvalidOperationException(SR.Get(nameof(SRID.TokenizerHelperPrematureStringTermination), _str));
             }
 
             return GetCurrentToken();
@@ -158,7 +163,7 @@ namespace MS.Internal
         {
             if (!NextToken(allowQuotedToken))
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.TokenizerHelperPrematureStringTermination, _str));
+                throw new System.InvalidOperationException(SR.Get(nameof(SRID.TokenizerHelperPrematureStringTermination), _str));
             }
 
             return GetCurrentToken();
@@ -250,7 +255,7 @@ namespace MS.Internal
             // before the ending quote
             if (quoteCount > 0)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.TokenizerHelperMissingEndQuote, _str));                
+                throw new System.InvalidOperationException(SR.Get(nameof(SRID.TokenizerHelperMissingEndQuote), _str));                
             }
 
             ScanToNextToken(separator); // move so at the start of the nextToken for next call
@@ -261,7 +266,7 @@ namespace MS.Internal
 
             if (_currentTokenLength < 1)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.TokenizerHelperEmptyToken, _charIndex, _str));
+                throw new System.InvalidOperationException(SR.Get(nameof(SRID.TokenizerHelperEmptyToken), _charIndex, _str));
             }
 
             return true;
@@ -281,7 +286,7 @@ namespace MS.Internal
                 if (!(currentChar == separator) &&
                     !Char.IsWhiteSpace(currentChar))
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.TokenizerHelperExtraDataEncountered, _charIndex, _str));                    
+                    throw new System.InvalidOperationException(SR.Get(nameof(SRID.TokenizerHelperExtraDataEncountered), _charIndex, _str));                    
                 }
 
                 // loop until hit a character that isn't
@@ -299,7 +304,7 @@ namespace MS.Internal
 
                         if (argSepCount > 1)
                         {
-                            throw new System.InvalidOperationException(SR.Get(SRID.TokenizerHelperEmptyToken, _charIndex, _str));
+                            throw new System.InvalidOperationException(SR.Get(nameof(SRID.TokenizerHelperEmptyToken), _charIndex, _str));
                         }
                     }
                     else if (Char.IsWhiteSpace(currentChar))
@@ -318,7 +323,7 @@ namespace MS.Internal
 
                 if (argSepCount > 0 && _charIndex >= _strLen)
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.TokenizerHelperEmptyToken, _charIndex, _str));
+                    throw new System.InvalidOperationException(SR.Get(nameof(SRID.TokenizerHelperEmptyToken), _charIndex, _str));
                 }
             }
         }

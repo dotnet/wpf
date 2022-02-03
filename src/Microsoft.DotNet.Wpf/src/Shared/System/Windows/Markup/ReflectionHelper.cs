@@ -19,6 +19,11 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using MS.Internal;
 
+// Remove once dependent projects use SR properties.
+#if WINDOWS_BASE
+using SRID = MS.Internal.WindowsBase.SR;
+#endif
+
 #if PBTCOMPILER
 using MS.Utility;
 namespace MS.Internal.Markup
@@ -95,7 +100,7 @@ namespace System.Xaml
             else
             {
                 if (nameFrags.Length != 2)
-                    throw new InvalidOperationException(SR.Get(SRID.QualifiedNameHasWrongFormat, typeName));
+                    throw new InvalidOperationException(SR.Get(nameof(SRID.QualifiedNameHasWrongFormat), typeName));
 
                 Assembly a = null;
                 try
@@ -361,7 +366,7 @@ namespace System.Xaml
 
                     if (attrValue == null)
                     {
-                        throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsLow, attrType.Name));
+                        throw new ArgumentException(SR.Get(nameof(SRID.ParserAttributeArgsLow), attrType.Name));
                     }
                 }
                 else if (constructorArguments.Count == 0)
@@ -374,12 +379,12 @@ namespace System.Xaml
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsLow, attrType.Name));
+                        throw new ArgumentException(SR.Get(nameof(SRID.ParserAttributeArgsLow), attrType.Name));
                     }
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsHigh, attrType.Name));
+                    throw new ArgumentException(SR.Get(nameof(SRID.ParserAttributeArgsHigh), attrType.Name));
                 }
             }
 
@@ -439,7 +444,7 @@ namespace System.Xaml
                     {
                         string request = assemblyName.ToString();
                         string found = cachedName.ToString();
-                        throw new InvalidOperationException(SR.Get(SRID.ParserAssemblyLoadVersionMismatch, request, found));
+                        throw new InvalidOperationException(SR.Get(nameof(SRID.ParserAssemblyLoadVersionMismatch), request, found));
                     }
                 }
             }

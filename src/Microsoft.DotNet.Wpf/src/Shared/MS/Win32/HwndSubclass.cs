@@ -26,6 +26,11 @@ using System.Threading;                      // Thread
 #error Attempt to use a class (duplicated across multiple namespaces) from an unknown assembly.
 #endif
 
+// Remove once dependent projects use SR properties.
+#if WINDOWS_BASE
+using SRID = MS.Internal.WindowsBase.SR;
+#endif
+
 namespace MS.Win32
 {
     /// <summary>
@@ -141,7 +146,7 @@ namespace MS.Win32
         {
 
             if (_bond != Bond.Unattached)
-                throw new InvalidOperationException(SR.Get(SRID.HwndSubclassMultipleAttach));
+                throw new InvalidOperationException(SR.Get(nameof(SRID.HwndSubclassMultipleAttach)));
 
             return CriticalAttach( hwnd ) ;
         }

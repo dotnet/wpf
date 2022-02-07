@@ -90,7 +90,7 @@ namespace System.Windows.Controls
                                     if (directlyOver != null)
                                     {
                                         // Process the mouse move
-                                        OnMouseMove(directlyOver, mouseReport);
+                                        OnMouseMove(directlyOver);
                                     }
                                 }
                             }
@@ -139,9 +139,9 @@ namespace System.Windows.Controls
             }
         }
 
-        private void OnMouseMove(IInputElement directlyOver, RawMouseInputReport mouseReport)
+        private void OnMouseMove(IInputElement directlyOver)
         {
-            if (MouseHasLeftSafeArea(mouseReport))
+            if (MouseHasLeftSafeArea())
             {
                 DismissCurrentToolTip();
             }
@@ -815,9 +815,21 @@ namespace System.Windows.Controls
             }
         }
 
-        private bool MouseHasLeftSafeArea(RawMouseInputReport mouseReport)
+        private bool MouseHasLeftSafeArea()
         {
-            return !(SafeArea?.ContainsPoint(mouseReport.InputSource, mouseReport.X, mouseReport.Y) ?? true);
+            // if there is no SafeArea, the mouse didn't leave it
+            if (SafeArea == null)
+                return false;
+
+            // if the current tooltip's owner is no longer being displayed, the safe area is no longer valid
+            // so the mouse has effectively left it
+            DependencyObject owner = GetOwner(CurrentToolTip);
+            PresentationSource presentationSource = (owner != null) ? PresentationSource.CriticalFromVisual(owner) : null;
+            if (presentationSource == null)
+                return true;
+
+            // if the safe area is valid, see if it still contains the mouse point
+            return !(SafeArea?.ContainsMousePoint() ?? true);
         }
 
         private ConvexHull SafeArea { get; set; }

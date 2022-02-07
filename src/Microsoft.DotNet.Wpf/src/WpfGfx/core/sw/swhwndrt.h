@@ -35,13 +35,13 @@ MtExtern(CSwPresenter32bppGDI);
 **************************************************************************/
 
 //
-// There is only one presenter, CSwPresenter32bppGDI. Having a separate 
+// There is only one presenter, CSwPresenter32bppGDI. Having a separate
 // CSwPresenterBase is probably redundant and unnecessary
 //
 
 class CSwPresenterBase :
     //  This needs to be an IWGXBitmap so it can be used in SetSurface but
-    //  a lock operates on it and our lock implementation, CWGXBitmapLock, 
+    //  a lock operates on it and our lock implementation, CWGXBitmapLock,
     //  requires a CWGXBitmap because of the Unlock() method
     public CWGXBitmap
 {
@@ -166,7 +166,7 @@ public:
         THIS_
         __in_ecount(1) const RECT *prcSource,
         __in_ecount(1) const RECT *prcDest
-        );    
+        );
 
     STDMETHOD(InvalidateRect)(
         __in_ecount(1) CMILSurfaceRect const *prc
@@ -180,7 +180,7 @@ public:
     {
         RRETURN(CBaseSurfaceRenderTarget<CSwRenderTargetLayerData>::ClearInvalidatedRects());
     }
-    
+
     STDMETHOD(Resize)(
         UINT uWidth,
         UINT uHeight
@@ -219,6 +219,7 @@ private:
     HWND m_hwnd;
 
     CSwPresenter32bppGDI *m_pPresenter;
+    BOOL    m_fDisableDirtyRectangles;  // app wants to skip dirty-rect optimization
 };
 
 

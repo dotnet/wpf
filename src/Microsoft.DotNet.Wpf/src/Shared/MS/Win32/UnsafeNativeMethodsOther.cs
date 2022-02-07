@@ -189,9 +189,11 @@ namespace MS.Win32
 
 
 #if BASE_NATIVEMETHODS
-
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
         internal static extern IntPtr GetMessageExtraInfo();
+
+        [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
+        internal static extern IntPtr SetMessageExtraInfo(IntPtr lParam);
 #endif
 
 #if BASE_NATIVEMETHODS

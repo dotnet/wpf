@@ -1189,6 +1189,7 @@ namespace System.Windows.Controls
                     if (fe.IsVisible)
                     {
                         Rect elementRect;
+                        Rect layoutRect;
 
                         // get the vp-position of the element, ignoring the secondary axis
                         // (DevDiv2 1136036, 1203626 show two different cases why we
@@ -1201,7 +1202,8 @@ namespace System.Windows.Controls
                             direction,
                             false /*fullyVisible*/,
                             !isVSP45Compat /*ignorePerpendicularAxis*/,
-                            out elementRect);
+                            out elementRect,
+                            out layoutRect);
 
                         if (elementPosition == ElementViewportPosition.PartiallyInViewport ||
                             elementPosition == ElementViewportPosition.CompletelyInViewport)
@@ -1287,20 +1289,35 @@ namespace System.Windows.Controls
                                 {
                                     if (direction == FocusNavigationDirection.Down)
                                     {
-                                        firstContainerOffsetFromViewport = elementRect.Y;
-                                        if (!isVSP45Compat)
-                                        {
-                                            firstContainerOffsetFromViewport -= fe.Margin.Top;
-                                        }
-                                    }
+                                       if (isVSP45Compat)
+                                       {
+                                           firstContainerOffsetFromViewport = elementRect.Y;
+                                       }
+                                       else
+                                       {
+                                           // include the leading margin in the offset.  Simply subtracting
+                                           // the margin doesn't work when layout rounding is in effect, as
+                                           // we can't deduce how rounding affected the arrangement of the
+                                           // element and its margin.  Instead, just use the layout rect directly.
+                                           firstContainerOffsetFromViewport = layoutRect.Top;
+                                       }
+                                   }
                                     else // (direction == FocusNavigationDirection.Right)
                                     {
-                                        firstContainerOffsetFromViewport = elementRect.X;
-                                        if (!isVSP45Compat)
-                                        {
-                                            firstContainerOffsetFromViewport -= fe.Margin.Left;
-                                        }
-                                    }
+
+                                       if (isVSP45Compat)
+                                       {
+                                           firstContainerOffsetFromViewport = elementRect.X;
+                                       }
+                                       else
+                                       {
+                                           // include the leading margin in the offset.  Simply subtracting
+                                           // the margin doesn't work when layout rounding is in effect, as
+                                           // we can't deduce how rounding affected the arrangement of the
+                                           // element and its margin.  Instead, just use the layout rect directly.
+                                           firstContainerOffsetFromViewport = layoutRect.Left;
+                                       }
+                                   }
                                 }
                                 else if (findTopContainer && isTopContainer)
                                 {
@@ -1931,7 +1948,7 @@ namespace System.Windows.Controls
             }
             set
             {
-                if (_scrollData == null) EnsureScrollData();
+                EnsureScrollData();
                 if (value != _scrollData._scrollOwner)
                 {
                     ResetScrolling(this);
@@ -9510,10 +9527,6 @@ namespace System.Windows.Controls
         private void EnsureScrollData()
         {
             if (_scrollData == null) { _scrollData = new ScrollData(); }
-            else
-            {
-                Debug.Assert(_scrollData._scrollOwner != null, "Scrolling an unconnected VSP");
-            }
         }
 
         private static void ResetScrolling(VirtualizingStackPanel element)

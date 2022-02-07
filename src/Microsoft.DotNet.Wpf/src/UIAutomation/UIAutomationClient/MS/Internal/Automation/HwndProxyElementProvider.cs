@@ -574,7 +574,7 @@ namespace MS.Internal.Automation
 
         WindowInteractionState IWindowProvider.InteractionState
         {
-            // Note: we should consider Implementing InteractionState by finding the gui thread of the 
+            // Note: we should consider Implementing InteractionState by finding the gui thread of the
             // process and mapping ThreadState and WaitReason to a WindowInteractionState
             get
             {
@@ -1457,6 +1457,21 @@ namespace MS.Internal.Automation
         // Check that a window is visible, and has a non-empty rect
         private static bool IsWindowReallyVisible( NativeMethods.HWND hwnd )
         {
+            // check for visibility overrides
+            // The UIA team says:
+            //      * UIA_WindowVisibilityOverridden property was added in 2011 for Win8.1
+            //      * "I'm not actually sure it is documented publicly."
+            //      * "It's a window property that if its handle value is 1 it's ForceVisible, and if it's 2 it's ForceHidden."
+            IntPtr visibilityOverride = UnsafeNativeMethods.GetProp(hwnd, "UIA_WindowVisibilityOverridden");
+            if (visibilityOverride == new IntPtr(1))
+            {
+                return true;
+            }
+            else if (visibilityOverride == new IntPtr(2))
+            {
+                return false;
+            }
+
             if(!SafeNativeMethods.IsWindowVisible(hwnd))
             {
                 return false;

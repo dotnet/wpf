@@ -71,12 +71,12 @@ jobs:
           - name: _InternalRuntimeDownloadArgs
             value: ''
         - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          - group: DotNet-MSRC-Storage
+          - group: DotNetBuilds storage account read tokens
           - group: AzureDevOps-Artifact-Feeds-Pats
           - name: _InternalRuntimeDownloadArgs
             value: >-
-              /p:DotNetRuntimeSourceFeed=https://dotnetclimsrc.blob.core.windows.net/dotnet
-              /p:DotNetRuntimeSourceFeedKey=$(dotnetclimsrc-read-sas-token-base64)
+              /p:DotNetRuntimeSourceFeed=https://dotnetbuilds.blob.core.windows.net/internal
+              /p:DotNetRuntimeSourceFeedKey=$(dotnetbuilds-internal-container-read-token-base64)
 
 
         # Override some values if we're building internally

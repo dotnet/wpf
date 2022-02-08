@@ -249,7 +249,7 @@ namespace mcwpf
             }
 
             writer.Write(DefaultIndent + DefaultIndent);
-            writer.WriteLine("default: throw new ArgumentException(SR.Get(nameof(SRID.InvalidEvent)),\"arg\");");
+            writer.WriteLine("default: throw new ArgumentException(SR.Get(SRID.InvalidEvent),\"arg\");");
             writer.WriteLine(DefaultIndent + "}");
             writer.WriteLine("}");
         }

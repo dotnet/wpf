@@ -4,12 +4,12 @@
     <VersionPrefix>7.0.0</VersionPrefix>
     <PreReleaseVersionLabel>preview</PreReleaseVersionLabel>
     <PreReleaseVersionIteration>2</PreReleaseVersionIteration>
-    <SystemIOPackagingVersion>7.0.0-preview.2.22103.2</SystemIOPackagingVersion>
-    <SystemResourcesExtensionsVersion>7.0.0-preview.2.22103.2</SystemResourcesExtensionsVersion>
+    <SystemIOPackagingVersion>7.0.0-preview.2.22107.26</SystemIOPackagingVersion>
+    <SystemResourcesExtensionsVersion>7.0.0-preview.2.22107.26</SystemResourcesExtensionsVersion>
   </PropertyGroup>
   <!-- NuGet Package Versions -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>7.0.0-preview.2.22107.1</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>7.0.0-preview.2.22108.2</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/coreclr -->
   <PropertyGroup>
@@ -18,22 +18,22 @@
   <!-- Packages that come from https://github.com/dotnet/core-setup -->
   <PropertyGroup>
     <VSRedistCommonNetCoreSharedFrameworkx6460PackageVersion>6.0.0-rc.1.21406.5</VSRedistCommonNetCoreSharedFrameworkx6460PackageVersion>
-    <MicrosoftNETCoreAppRefVersion>7.0.0-preview.2.22103.2</MicrosoftNETCoreAppRefVersion>
-    <MicrosoftNETCoreAppRuntimewinx64Version>7.0.0-preview.2.22103.2</MicrosoftNETCoreAppRuntimewinx64Version>
-    <MicrosoftNETCorePlatformsVersion>7.0.0-preview.2.22103.2</MicrosoftNETCorePlatformsVersion>
-    <SystemDrawingCommonVersion>7.0.0-preview.2.22103.2</SystemDrawingCommonVersion>
-    <SystemDirectoryServicesVersion>7.0.0-preview.2.22103.2</SystemDirectoryServicesVersion>
-    <SystemReflectionMetadataLoadContextVersion>7.0.0-preview.2.22103.2</SystemReflectionMetadataLoadContextVersion>
+    <MicrosoftNETCoreAppRefVersion>7.0.0-preview.2.22107.26</MicrosoftNETCoreAppRefVersion>
+    <MicrosoftNETCoreAppRuntimewinx64Version>7.0.0-preview.2.22107.26</MicrosoftNETCoreAppRuntimewinx64Version>
+    <MicrosoftNETCorePlatformsVersion>7.0.0-preview.2.22107.26</MicrosoftNETCorePlatformsVersion>
+    <SystemDrawingCommonVersion>7.0.0-preview.2.22107.26</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>7.0.0-preview.2.22107.26</SystemDirectoryServicesVersion>
+    <SystemReflectionMetadataLoadContextVersion>7.0.0-preview.2.22107.26</SystemReflectionMetadataLoadContextVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/corefx via core-setup coherency parent dependency -->
   <PropertyGroup>
-    <SystemCodeDomPackageVersion>7.0.0-preview.2.22103.2</SystemCodeDomPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>7.0.0-preview.2.22103.2</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>7.0.0-preview.2.22103.2</SystemDiagnosticsEventLogPackageVersion>
+    <SystemCodeDomPackageVersion>7.0.0-preview.2.22107.26</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>7.0.0-preview.2.22107.26</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>7.0.0-preview.2.22107.26</SystemDiagnosticsEventLogPackageVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>7.0.0-preview.2.22103.2</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>7.0.0-preview.2.22103.2</SystemSecurityPermissionsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>7.0.0-preview.2.22103.2</SystemWindowsExtensionsPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>7.0.0-preview.2.22107.26</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>7.0.0-preview.2.22107.26</SystemSecurityPermissionsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>7.0.0-preview.2.22107.26</SystemWindowsExtensionsPackageVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>

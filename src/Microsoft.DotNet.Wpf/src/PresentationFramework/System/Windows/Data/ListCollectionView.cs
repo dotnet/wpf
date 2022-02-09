@@ -1681,8 +1681,6 @@ namespace System.Windows.Data
             if (args == null)
                 throw new ArgumentNullException("args");
 
-            ValidateCollectionChangedEventArgs(args);
-
             // adding or replacing an item can change CanAddNew, by providing a
             // non-null representative
             if (!_isItemConstructorValid)
@@ -2517,42 +2515,6 @@ namespace System.Windows.Data
         //------------------------------------------------------
 
         #region Private Methods
-
-        private void ValidateCollectionChangedEventArgs(NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    if (e.NewItems.Count != 1)
-                        throw new NotSupportedException(SR.Get(SRID.RangeActionsNotSupported));
-                    break;
-
-                case NotifyCollectionChangedAction.Remove:
-                    if (e.OldItems.Count != 1)
-                        throw new NotSupportedException(SR.Get(SRID.RangeActionsNotSupported));
-                    break;
-
-                case NotifyCollectionChangedAction.Replace:
-                    if (e.NewItems.Count != 1 || e.OldItems.Count != 1)
-                        throw new NotSupportedException(SR.Get(SRID.RangeActionsNotSupported));
-                    break;
-
-                case NotifyCollectionChangedAction.Move:
-                    if (e.NewItems.Count != 1)
-                        throw new NotSupportedException(SR.Get(SRID.RangeActionsNotSupported));
-                    if (e.NewStartingIndex < 0)
-                        throw new InvalidOperationException(SR.Get(SRID.CannotMoveToUnknownPosition));
-                    break;
-
-                case NotifyCollectionChangedAction.Reset:
-                    break;
-
-                default:
-                    throw new NotSupportedException(SR.Get(SRID.UnexpectedCollectionChangeAction, e.Action));
-            }
-        }
-
-
         /// <summary>
         /// Create, filter and sort the local index array.
         /// called from Refresh(), override in derived classes as needed.

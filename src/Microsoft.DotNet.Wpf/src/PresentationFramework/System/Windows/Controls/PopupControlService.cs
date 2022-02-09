@@ -90,7 +90,7 @@ namespace System.Windows.Controls
                                     if (directlyOver != null)
                                     {
                                         // Process the mouse move
-                                        OnMouseMove(directlyOver, mouseReport);
+                                        OnMouseMove(directlyOver);
                                     }
                                 }
                             }
@@ -139,9 +139,9 @@ namespace System.Windows.Controls
             }
         }
 
-        private void OnMouseMove(IInputElement directlyOver, RawMouseInputReport mouseReport)
+        private void OnMouseMove(IInputElement directlyOver)
         {
-            if (MouseHasLeftSafeArea(mouseReport))
+            if (MouseHasLeftSafeArea())
             {
                 DismissCurrentToolTip();
             }
@@ -152,6 +152,25 @@ namespace System.Windows.Controls
                 DependencyObject owner = FindToolTipOwner(directlyOver, ToolTipService.TriggerAction.Mouse);
 
                 BeginShowToolTip(owner, ToolTipService.TriggerAction.Mouse);
+            }
+            else
+            {
+                if (PendingToolTipTimer?.Tag == BooleanBoxes.TrueBox)
+                {
+                    // the pending tooltip is on a short delay (see BeginShowToolTip)
+                    if (CurrentToolTip == null)
+                    {
+                        // the mouse left the safe area - promote the pending tooltip now
+                        PendingToolTipTimer.Stop();
+                        PromotePendingToolTipToCurrent(ToolTipService.TriggerAction.Mouse);
+                    }
+                    else
+                    {
+                        // the mouse is still in the safe area - restart the timer
+                        PendingToolTipTimer.Stop();
+                        PendingToolTipTimer.Start();
+                    }
+                }
             }
         }
 
@@ -314,20 +333,61 @@ namespace System.Windows.Controls
             PendingToolTip = SentinelToolTip(o, triggerAction);
 
             // decide when to promote to current
-            int showDelay;
-            switch (triggerAction)
+            bool useShortDelay = false;
+            bool showNow = _quickShow;
+            if (!showNow)
             {
-                case ToolTipService.TriggerAction.Mouse:
-                case ToolTipService.TriggerAction.KeyboardFocus:
-                    showDelay = _quickShow ? 0 : ToolTipService.GetInitialShowDelay(o);
-                    break;
-                case ToolTipService.TriggerAction.KeyboardShortcut:
-                default:
-                    showDelay = 0;
-                    break;
+                ToolTip toReplace = CurrentToolTip;
+                switch (triggerAction)
+                {
+                    case ToolTipService.TriggerAction.Mouse:
+                        if (SafeArea != null)
+                        {
+                            // the mouse has moved over a tooltip owner o, while still
+                            // within the safe area of the current tooltip (which must be from mouse).
+                            // This is an ambiguous case - the user could be trying to move the
+                            // mouse toward the tooltip or they could be trying to move the
+                            // mouse over o.  There's no way to know the user's intent.
+                            // But the expected response is much different:  in the first
+                            // case we should leave the current tooltip open, in the second
+                            // we should replace it with o's tooltip.
+                            //
+                            // We use a heuristic to compromise between these conflicting expectations.
+                            // We'll put the pending request on a timer with a very short interval.
+                            // If the user moves the mouse within the interval, we restart the timer;
+                            // this keeps the tooltip open as long as the user keeps moving the mouse.
+                            // But if the timer expires, we promote the pending request;
+                            // this shows o's tooltip shortly after the user stops moving the mouse (or
+                            // moves it outside the current safe area).
+                            useShortDelay = true;
+                        }
+                        break;
+                    case ToolTipService.TriggerAction.KeyboardFocus:
+                        // a focus request shows without delay if the current tooltip also came from keyboard
+                        showNow = toReplace?.FromKeyboard ?? false;
+                        break;
+                    case ToolTipService.TriggerAction.KeyboardShortcut:
+                    default:
+                        // an explicit keystroke request always shows without delay
+                        toReplace = null;
+                        showNow = true;
+                        break;
+                }
+
+                // replacing a tooltip with BetweenShowDelay=0 should invoke the delay
+                if (toReplace != null && (showNow || useShortDelay))
+                {
+                    DependencyObject currentOwner = GetOwner(toReplace);
+                    if (ToolTipService.GetBetweenShowDelay(currentOwner) == 0)
+                    {
+                        showNow = false;
+                        useShortDelay = false;
+                    }
+                }
             }
 
             // promote now, or schedule delayed promotion
+            int showDelay = (showNow ? 0 : useShortDelay ? ShortDelay : ToolTipService.GetInitialShowDelay(o));
             if (showDelay == 0)
             {
                 PromotePendingToolTipToCurrent(triggerAction);
@@ -337,6 +397,7 @@ namespace System.Windows.Controls
                 PendingToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal);
                 PendingToolTipTimer.Interval = TimeSpan.FromMilliseconds(showDelay);
                 PendingToolTipTimer.Tick += new EventHandler((s, e) => { PromotePendingToolTipToCurrent(triggerAction); });
+                PendingToolTipTimer.Tag = BooleanBoxes.Box(useShortDelay);
                 PendingToolTipTimer.Start();
             }
         }
@@ -561,7 +622,13 @@ namespace System.Windows.Controls
         /// <param name="tooltip"></param>
         private void ClearServiceProperties(ToolTip tooltip)
         {
-            if (tooltip != null)
+            // This is normally called from OnToolTipClosed, after CloseToolTip has closed the tooltip
+            // and waited for the tooltip's Popup to destroy its window asynchronously.
+            // Apps can close the Popup directly (not easily done, and not recommended), which leads to
+            // a call from OnToolTipClosed while tooltip.IsOpen is still true.  In that case we need to
+            // leave the properties in place - CloseToolTip needs them (as does the popup if it should
+            // re-open).  They will get cleared by OnForceClose, if not earlier.
+            if (tooltip != null && !tooltip.IsOpen)
             {
                 tooltip.ClearValue(OwnerProperty);
                 tooltip.FromKeyboard = false;
@@ -672,6 +739,7 @@ namespace System.Windows.Controls
                 _forceCloseTimer.Stop();
                 ToolTip toolTip = (ToolTip)_forceCloseTimer.Tag;
                 toolTip.ForceClose();
+                ClearServiceProperties(toolTip);    // this handles the case where app closed the Popup directly
                 _forceCloseTimer = null;
             }
         }
@@ -815,9 +883,21 @@ namespace System.Windows.Controls
             }
         }
 
-        private bool MouseHasLeftSafeArea(RawMouseInputReport mouseReport)
+        private bool MouseHasLeftSafeArea()
         {
-            return !(SafeArea?.ContainsPoint(mouseReport.InputSource, mouseReport.X, mouseReport.Y) ?? true);
+            // if there is no SafeArea, the mouse didn't leave it
+            if (SafeArea == null)
+                return false;
+
+            // if the current tooltip's owner is no longer being displayed, the safe area is no longer valid
+            // so the mouse has effectively left it
+            DependencyObject owner = GetOwner(CurrentToolTip);
+            PresentationSource presentationSource = (owner != null) ? PresentationSource.CriticalFromVisual(owner) : null;
+            if (presentationSource == null)
+                return true;
+
+            // if the safe area is valid, see if it still contains the mouse point
+            return !(SafeArea?.ContainsMousePoint() ?? true);
         }
 
         private ConvexHull SafeArea { get; set; }
@@ -1475,6 +1555,44 @@ namespace System.Windows.Controls
                 }
             }
 
+            // Test whether the current mouse point lies within the convex hull
+            internal bool ContainsMousePoint()
+            {
+                IInputElement rootElement = _source.RootVisual as IInputElement;
+                if (rootElement != null)
+                {
+                    // get the coordinates of the current mouse point, relative to our PresentationSource
+                    System.Windows.Point pt = Mouse.PrimaryDevice.GetPosition(rootElement);
+
+                    // check whether the point lies within the hull
+                    return ContainsPoint(_source, (int)pt.X, (int)pt.Y);
+
+                    // NOTE: GetPosition doesn't actually return the position of the current mouse point,
+                    // but rather the last recorded position.  (See MouseDevice.GetScreenPositionFromSystem,
+                    // which says that "Win32 has issues reliably returning where the mouse is".)
+                    // This causes a small problem when (a) the PresentationSource has capture, e.g.
+                    // the popup of a ComboBox, and (b) the mouse moves to a position that lies outside both the
+                    // capturing PresentationSource (popup window) and the input-providing PresentationSource
+                    // (main window).  The MouseDevice only records positions within the input-providing
+                    // PresentationSource, so we'll test the position where the mouse left the main window,
+                    // rather than the current position.
+                    //      This means we may leave a tooltip open even when the mouse leaves its SafeArea,
+                    // but only when the tooltip belongs to a capturing source, and the "leaving the SafeArea"
+                    // action occurs outside the surrounding main window.  For our example, it can happen
+                    // when the ComboBox is close to the edge of the main window so that a tooltip from its
+                    // popup content extends beyond the main window.
+                    //      This can only be fixed by changing MouseDevice.GetScreenPositionFromSystem to
+                    // use a "better way" to find the current mouse position, which allegedly needs work from the OS.
+                    // But we can live with this behavior, because
+                    //  * this is a corner case - tooltips from popup content that extend beyond the main window
+                    //  * the effect is transient - the tooltip will close when the user dismisses the popup
+                    //  * there's no accessibility issue - WCAG 2.1 only requires that the tooltip stays open under
+                    //      proscribed conditions, not that it has to close when the conditions cease to apply
+                }
+                else
+                    return false;
+            }
+
             // Test whether a given mouse point (x,y) lies within the convex hull
             internal bool ContainsPoint(PresentationSource source, int x, int y)
             {
@@ -1564,6 +1682,13 @@ namespace System.Windows.Controls
         #endregion
 
         #region Data
+
+        // see comment in BeginShowTooltip.  This should be large enough to
+        // allow continuous mouse-move events, but small enough to switch
+        // tooltips instantly (where "continuous" and "instantly" are the
+        // end-user's perception).   The value here is large enough to make the
+        // "SafeAreaOnHyperlink" test pass.
+        static private int ShortDelay = 73;
 
         // pending ToolTip
         private ToolTip _pendingToolTip;

@@ -1174,7 +1174,7 @@ namespace System.Windows.Data
             ValidationError oldValidationError = GetValidationErrors(validationStep);
 
             // ignore an error from the implicit DataError rule - this is checked
-            // separately (in BindingExpression.Validate). 
+            // separately (in BindingExpression.Validate).
             if (oldValidationError != null &&
                 oldValidationError.RuleInError == DataErrorValidationRule.Instance)
             {
@@ -1484,6 +1484,15 @@ namespace System.Windows.Data
         {
             if (IsUpdateOnPropertyChanged)
             {
+                // cancel a pending UpdateTarget, so that it doesn't negate
+                // the effect of this change to the target value
+                DispatcherOperation op = (DispatcherOperation)GetValue(Feature.UpdateTargetOperation, null);
+                if (op != null)
+                {
+                    ClearValue(Feature.UpdateTargetOperation);
+                    op.Abort();
+                }
+
                 if (Helper.IsComposing(Target, TargetProperty))
                 {
                     // wait for the IME composition to complete

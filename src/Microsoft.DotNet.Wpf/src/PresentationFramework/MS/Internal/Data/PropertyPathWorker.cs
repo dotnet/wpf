@@ -1468,13 +1468,13 @@ namespace MS.Internal.Data
                 {
                     // We can't recognize such properties in general, but we can
                     // recognize the most common cases - properties declared by .Net
-                    // types on a whitelist.
+                    // types on a allowlist.
                     Type type = pi.DeclaringType;
                     if (type.IsGenericType)
                     {
                         type = type.GetGenericTypeDefinition();
                     }
-                    shouldWrap = IListIndexerWhitelist.Contains(type);
+                    shouldWrap = IListIndexerAllowlist.Contains(type);
                 }
 
                 if (shouldWrap)
@@ -1874,7 +1874,7 @@ namespace MS.Internal.Data
         // a list of types that declare indexers known to be consistent
         // with IList.Item[int index].  It is safe to replace these indexers
         // with the IList one.
-        static readonly IList<Type> IListIndexerWhitelist = new Type[]
+        static readonly IList<Type> IListIndexerAllowlist = new Type[]
         {
             typeof(System.Collections.ArrayList),
             typeof(System.Collections.IList),

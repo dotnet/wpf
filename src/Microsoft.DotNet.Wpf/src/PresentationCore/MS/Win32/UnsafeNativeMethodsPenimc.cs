@@ -154,7 +154,7 @@ namespace MS.Win32.Penimc
             // Instantiating PimcManager using "new PimcManager()" results
             // in calling CoCreateInstanceForApp from an immersive process
             // (like designer). Such a call would fail because PimcManager is not
-            // in white list for that call. Hence we call CoCreateInstance directly.
+            // in allow list for that call. Hence we call CoCreateInstance directly.
             // Note: Normally WPF is not supported for immersive processes
             // but designer is an exception.
             Guid clsid = Guid.Parse(PimcConstants.PimcManager3CLSID);

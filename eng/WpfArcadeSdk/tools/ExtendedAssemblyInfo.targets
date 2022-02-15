@@ -119,8 +119,8 @@
         ItemGroup of fully resolved C# Attribute definitions that are ready to be used in a source file.
   -->
   <UsingTask TaskName="ParseExtendedAssemblyInfo"
-             TaskFactory="CodeTaskFactory"
-             AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+             TaskFactory="RoslynCodeTaskFactory"
+             AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
     <ParameterGroup>
       <ExtendedAssemblyInfo ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
       <Result ParameterType="Microsoft.Build.Framework.ITaskItem[]" Output="true" />
@@ -132,8 +132,6 @@
       <Using Namespace="System.Globalization" />
       <Using Namespace="System.Linq" />
       <Using Namespace="System.Text.RegularExpressions" />
-      <Reference Include="System.Linq" />
-      <Reference Include="System.Core" />
       <Code Type="Fragment" Language="cs">
         <![CDATA[  
             if (ExtendedAssemblyInfo.Length > 0)

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
+
+  <PropertyGroup>
+    <_PowerShellExe Condition="'$(_PowerShellExe)' == ''">%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</_PowerShellExe>
+    <_ScriptLocation Condition="'$(_ScriptLocation)' == ''">$(MSBuildProjectDirectory)\Check-AssemblyVersions.ps1</_ScriptLocation>
+    <_IsServicingRelease>false</_IsServicingRelease>
+    <_IsServicingRelease Condition="'$(PreReleaseVersionLabel)' == 'servicing'">true</_IsServicingRelease>
+  </PropertyGroup>
+
+  <!-- 
+    Inspect the following NuSpecs and validate the assembly versions
+        * .\artifacts\packages\Release\NonShipping\Microsoft.DotNet.Wpf.GitHub.<version>.nuspec produced by Microsoft.DotNet.Wpf.GitHub.ArchNeutral.csproj
+        * .\artifacts\packages\Release\NonShipping\runtime.<arch>.Microsoft.DotNet.Wpf.GitHub.<version>.nuspec produced by Microsoft.DotNet.Wpf.GitHub.csproj
+    -->
+  <Target Name="ValidateTransportPackage"
+          AfterTargets="GenerateNuspec"
+          DependsOnTargets="GenerateNuspec"
+          Condition="'$(IsPackable)' == 'true'">
+    <ItemGroup>
+      <_NuspecFile Include="@(NuGetPackOutput)" Condition="'%(Extension)' == '.nuspec'" />
+    </ItemGroup>
+
+    <PropertyGroup>
+      <_NuspecFilePath>@(_NuspecFile)</_NuspecFilePath>
+      <!--
+          When we build Microsoft.DotNet.Wpf.GitHub.csproj GenerateNuspec task creates an arch-specific NuSpec, and
+          NuSpec declared in NuGetPackOutput does not exist.
+          Look for the arch-specific NuSpec
+       -->
+      <_NuspecFilePath Condition="'$(_NuspecFilePath)' == '' or !Exists('$(_NuspecFilePath)')">$(NuspecOutputPath)\$(PackageId).$(PackageVersion).nuspec</_NuspecFilePath>
+    </PropertyGroup>
+
+    <Error Text="'$(_ScriptLocation)' is missing." Condition="!Exists('$(_ScriptLocation)')" />
+    <Error Text="'$(_NuspecFilePath)' is missing." Condition="!Exists('$(_NuspecFilePath)')" />
+
+    <Exec
+        Command="$(_PowerShellExe) -NonInteractive -ExecutionPolicy Unrestricted -Command &quot;&amp; { &amp;&apos;$(_ScriptLocation)&apos; &apos;$(_NuspecFilePath)&apos; &apos;$(AssemblyVersion)&apos; $(_IsServicingRelease) } &quot;"
+        ContinueOnError="False" />
+
+  </Target>
+
+</Project>

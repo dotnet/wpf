@@ -5,7 +5,7 @@
   <Import Project="Sdk.props" Sdk="Microsoft.DotNet.Arcade.Sdk" />
 
   <PropertyGroup>
-    <WpfArcadeSdkRoot>$([System.IO.Directory]::GetParent("$(MSBuildThisFileDirectory.TrimEnd('\'))"))\</WpfArcadeSdkRoot>
+    <WpfArcadeSdkRoot>$([System.IO.Directory]::GetParent("$(MSBuildThisFileDirectory.TrimEnd('\').TrimEnd('/'))"))\</WpfArcadeSdkRoot>
     <WpfArcadeSdkToolsDir>$(WpfArcadeSdkRoot)tools\</WpfArcadeSdkToolsDir>
   </PropertyGroup>
   

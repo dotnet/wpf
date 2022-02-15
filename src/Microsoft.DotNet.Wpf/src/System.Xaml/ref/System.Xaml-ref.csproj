@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.SDK">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>System.Xaml</AssemblyName>
     <PackageId>System.Xaml-ref</PackageId>

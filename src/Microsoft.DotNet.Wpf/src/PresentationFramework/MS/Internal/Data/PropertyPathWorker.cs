@@ -1468,7 +1468,7 @@ namespace MS.Internal.Data
                 {
                     // We can't recognize such properties in general, but we can
                     // recognize the most common cases - properties declared by .Net
-                    // types on a allowlist.
+                    // types on an allowlist.
                     Type type = pi.DeclaringType;
                     if (type.IsGenericType)
                     {

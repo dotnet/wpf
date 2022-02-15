@@ -970,11 +970,11 @@ namespace System.Windows.Controls
 
                 if (e.Key == Key.Right)
                 {
-                    updatedWidth = new DataGridLength(this.Column.ActualWidth + _columnWidthStepSize);
+                    updatedWidth = new DataGridLength(this.Column.ActualWidth + ColumnWidthStepSize);
                 }
                 else if (e.Key == Key.Left)
                 {
-                    updatedWidth = new DataGridLength(this.Column.ActualWidth - _columnWidthStepSize);
+                    updatedWidth = new DataGridLength(this.Column.ActualWidth - ColumnWidthStepSize);
                 }
 
                 if (Column.CanColumnResize(updatedWidth))
@@ -1122,7 +1122,7 @@ namespace System.Windows.Controls
         private DataGridRow _owner;
         private ContainerTracking<DataGridCell> _tracker;
         private bool _syncingIsSelected;                    // Used to prevent unnecessary notifications
-        private const double _columnWidthStepSize = 10d;
+        private const double ColumnWidthStepSize = 10d;
 
         #endregion
     }

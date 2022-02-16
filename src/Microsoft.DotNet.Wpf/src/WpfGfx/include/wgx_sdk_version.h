@@ -14,10 +14,8 @@
 #pragma once
 
 // MIL protocol fingerprint
-#define MIL_SDK_VERSION 0x200184C0
+#define MIL_SDK_VERSION 0xB5A7A872
 
 // DWM protocol fingerprint
-#define DWM_SDK_VERSION 0xBDDCB2B
-
-
+#define DWM_SDK_VERSION 0xFA198EC2
 

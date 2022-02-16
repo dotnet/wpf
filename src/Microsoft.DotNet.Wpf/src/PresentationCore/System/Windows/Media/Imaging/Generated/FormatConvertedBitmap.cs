@@ -1,13 +1,12 @@
+//---------------------------------------------------------------------------
+//
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-//
 //
 // This file was generated, please do not edit it directly.
 //
-// Please see MilCodeGen.html for more information.
 //
+//---------------------------------------------------------------------------
 
 using MS.Internal;
 using MS.Internal.PresentationCore;
@@ -32,6 +31,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Imaging
 {
+
+
+
     sealed partial class FormatConvertedBitmap : BitmapSource
     {
         //------------------------------------------------------
@@ -73,6 +75,7 @@ namespace System.Windows.Media.Imaging
 
         private static void SourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
             FormatConvertedBitmap target = ((FormatConvertedBitmap) d);
 
 
@@ -372,10 +375,10 @@ namespace System.Windows.Media.Imaging
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app. 
-
+            // of your app.
+            //
             Debug.Assert(s_Source == null || s_Source.IsFrozen,
-                "Detected context bound default value FormatConvertedBitmap.s_Source (See OS Bug #947272).");
+                "Detected context bound default value FormatConvertedBitmap.s_Source.");
 
 
             // Initializations
@@ -418,6 +421,9 @@ namespace System.Windows.Media.Imaging
                                    /* coerceValueCallback */ new CoerceValueCallback(CoerceAlphaThreshold));
         }
 
+
+
         #endregion Constructors
+
     }
 }

@@ -1,15 +1,15 @@
+//---------------------------------------------------------------------------
+//
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 //
 // This file was generated, please do not edit it directly.
 // 
 // This file was generated from the codegen template located at:
-//     wpf\src\WpfGfx\codegen\mcg\generators\FrameworkElementTemplate.cs
+//     wpf\src\Graphics\codegen\mcg\generators\FrameworkElementTemplate.cs
 //
-// Please see MilCodeGen.html for more information.
 //
+//---------------------------------------------------------------------------
 
 using MS.Internal;
 using MS.Utility;
@@ -182,7 +182,7 @@ namespace System.Windows
             return _parent;
         }
 
-        // mark whether Add should be called *before* or *after* the element adds it to its structure
+        // Consider marking whether Add should be called *before* or *after* the element adds it to its structure
         /// <summary>
         ///     Called by an element when that element adds the given object to
         ///     its logical tree.  FrameworkElement updates the affected
@@ -219,7 +219,7 @@ namespace System.Windows
                 {
                     if (exceptionThrown)
                     {
-                        // Future: ILTN removal: make this more robust
+                        // 
                         // At the very least we should disconnect the child that we failed to add.
 
                         // Consider doing this...
@@ -230,7 +230,7 @@ namespace System.Windows
         }
 
 
-        // mark whether Remove should be called *before* or *after* the element removes it from it's structure
+        // 
         /// <summary>
         ///     Called by an element when that element removes the given object from
         ///     its logical tree.  FrameworkElement updates the affected
@@ -304,7 +304,7 @@ namespace System.Windows
             }
 
             // Logical Parent must first be dropped before you are attached to a newParent
-            // This mitigates illegal tree state caused by logical child stealing as illustrated in bug 970706
+            // This mitigates illegal tree state caused by logical child stealing
             if (_parent != null && newParent != null && _parent != newParent)
             {
                 throw new System.InvalidOperationException(SR.Get(SRID.HasLogicalParent));

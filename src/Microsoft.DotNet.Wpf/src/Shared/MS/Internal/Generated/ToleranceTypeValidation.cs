@@ -8,6 +8,10 @@
 //
 //---------------------------------------------------------------------------
 
+using System;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using MS.Internal.PresentationCore;
 #if PRESENTATION_CORE
 using SR=MS.Internal.PresentationCore.SR;
 using SRID=MS.Internal.PresentationCore.SRID;
@@ -16,7 +20,7 @@ using SR=System.Windows.SR;
 using SRID=System.Windows.SRID;
 #endif
 
-namespace System.Windows.Media.Effects
+namespace System.Windows.Media
 {
     internal static partial class ValidateEnums
     {
@@ -29,13 +33,12 @@ namespace System.Windows.Media.Effects
         ///     Enumeration value to validate.
         /// </param>    
         /// <returns> 'true' if the enumeration contains a valid value, 'false' otherwise. </returns>
-        public static bool IsShaderRenderModeValid(object valueObject)
+        public static bool IsToleranceTypeValid(object valueObject)
         {
-            ShaderRenderMode value = (ShaderRenderMode) valueObject;
+            ToleranceType value = (ToleranceType) valueObject;
 
-            return (value == ShaderRenderMode.Auto) || 
-                   (value == ShaderRenderMode.SoftwareOnly) || 
-                   (value == ShaderRenderMode.HardwareOnly);
+            return (value == ToleranceType.Absolute) || 
+                   (value == ToleranceType.Relative);
         }                                
     }
 }

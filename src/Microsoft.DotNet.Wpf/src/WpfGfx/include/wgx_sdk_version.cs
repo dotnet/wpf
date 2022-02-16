@@ -1,11 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-
 //---------------------------------------------------------------------------
 //
-
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
 //
 // This file was generated, please do not edit it directly.
 //
@@ -31,7 +27,7 @@ namespace MS.Internal.Composition
             {
                 unchecked
                 {
-                    return (uint)0x200184C0;
+                    return (uint)0xB5A7A872;
                 }
             }
         }
@@ -45,12 +41,10 @@ namespace MS.Internal.Composition
             {
                 unchecked
                 {
-                    return (uint)0xBDDCB2B;
+                    return (uint)0xFA198EC2;
                 }
             }
         }
     }
 }
-
-
 

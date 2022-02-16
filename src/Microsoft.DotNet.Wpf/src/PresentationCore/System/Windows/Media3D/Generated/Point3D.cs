@@ -1,13 +1,12 @@
+//---------------------------------------------------------------------------
+//
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-//
 //
 // This file was generated, please do not edit it directly.
 //
-// Please see MilCodeGen.html for more information.
 //
+//---------------------------------------------------------------------------
 
 using MS.Internal;
 using MS.Internal.Collections;
@@ -39,6 +38,8 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Media3D
 {
+
+
     [Serializable]
     [TypeConverter(typeof(Point3DConverter))]
     [ValueSerializer(typeof(Point3DValueSerializer))] // Used by MarkupWriter
@@ -211,7 +212,8 @@ namespace System.Windows.Media.Media3D
             {
                 _x = value;
             }
-}
+
+        }
 
         /// <summary>
         ///     Y - double.  Default value is 0.
@@ -227,7 +229,8 @@ namespace System.Windows.Media.Media3D
             {
                 _y = value;
             }
-}
+
+        }
 
         /// <summary>
         ///     Z - double.  Default value is 0.
@@ -243,7 +246,8 @@ namespace System.Windows.Media.Media3D
             {
                 _z = value;
             }
-}
+
+        }
 
         #endregion Public Properties
 
@@ -296,6 +300,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         public override string ToString()
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, null /* format provider */);
         }
@@ -309,6 +314,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         public string ToString(IFormatProvider provider)
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, provider);
         }
@@ -324,6 +330,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         string IFormattable.ToString(string format, IFormatProvider provider)
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(format, provider);
         }
@@ -378,6 +385,9 @@ namespace System.Windows.Media.Media3D
         internal double _y;
         internal double _z;
 
+
+
+
         #endregion Internal Fields
 
 
@@ -394,5 +404,6 @@ namespace System.Windows.Media.Media3D
 
 
         #endregion Constructors
+
     }
 }

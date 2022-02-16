@@ -1,13 +1,12 @@
+//---------------------------------------------------------------------------
+//
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-//
 //
 // This file was generated, please do not edit it directly.
 //
-// Please see MilCodeGen.html for more information.
 //
+//---------------------------------------------------------------------------
 
 using MS.Internal;
 using MS.Internal.KnownBoxes;
@@ -260,11 +259,14 @@ namespace System.Windows.Media
 
                 if (!Object.ReferenceEquals(_collection[ index ], value))
                 {
+
                     GradientStop oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
                     _collection[ index ] = value;
-}
+
+
+                }
 
 
                 ++_version;
@@ -622,8 +624,10 @@ namespace System.Windows.Media
                 GradientStop newValue = (GradientStop) sourceGradientStopCollection._collection[i].Clone();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
@@ -642,8 +646,10 @@ namespace System.Windows.Media
                 GradientStop newValue = (GradientStop) sourceGradientStopCollection._collection[i].CloneCurrentValue();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
@@ -662,8 +668,10 @@ namespace System.Windows.Media
                 GradientStop newValue = (GradientStop) sourceGradientStopCollection._collection[i].GetAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
@@ -682,8 +690,10 @@ namespace System.Windows.Media
                 GradientStop newValue = (GradientStop) sourceGradientStopCollection._collection[i].GetCurrentValueAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
         /// </summary>
@@ -783,6 +793,7 @@ namespace System.Windows.Media
         /// </returns>
         internal string ConvertToString(string format, IFormatProvider provider)
         {
+
             if (_collection.Count == 0)
             {
                 return String.Empty;
@@ -890,6 +901,7 @@ namespace System.Windows.Media
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>
@@ -1058,7 +1070,8 @@ namespace System.Windows.Media
                             GradientStop newValue = item;
                             OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                             _collection.Add(newValue);
-}
+
+                        }
 
                         needsItemValidation = false;
                     }
@@ -1073,7 +1086,8 @@ namespace System.Windows.Media
                             throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
                         }
                         OnFreezablePropertyChanged(/* oldValue = */ null, item);
-}
+
+                    }
                 }
 
 
@@ -1086,5 +1100,6 @@ namespace System.Windows.Media
         }
 
         #endregion Constructors
+
     }
 }

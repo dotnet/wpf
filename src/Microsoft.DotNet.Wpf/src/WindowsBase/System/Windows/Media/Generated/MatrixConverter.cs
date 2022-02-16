@@ -1,13 +1,12 @@
+//---------------------------------------------------------------------------
+//
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-//
 //
 // This file was generated, please do not edit it directly.
 //
-// Please see MilCodeGen.html for more information.
 //
+//---------------------------------------------------------------------------
 
 using MS.Internal;
 using MS.Internal.WindowsBase;
@@ -23,7 +22,6 @@ using System.Windows.Markup;
 using System.Windows.Media.Converters;
 using System.Windows;
 using System.Windows.Media;
-
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Media
@@ -132,4 +130,5 @@ namespace System.Windows.Media
             return base.ConvertTo(context, culture, value, destinationType);
         }
     }
+
 }

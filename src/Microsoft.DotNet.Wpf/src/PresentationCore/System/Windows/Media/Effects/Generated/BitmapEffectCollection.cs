@@ -1,13 +1,12 @@
+//---------------------------------------------------------------------------
+//
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-//
 //
 // This file was generated, please do not edit it directly.
 //
-// Please see MilCodeGen.html for more information.
 //
+//---------------------------------------------------------------------------
 
 using MS.Internal;
 using MS.Internal.Collections;
@@ -258,11 +257,14 @@ namespace System.Windows.Media.Effects
 
                 if (!Object.ReferenceEquals(_collection[ index ], value))
                 {
+
                     BitmapEffect oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
                     _collection[ index ] = value;
-}
+
+
+                }
 
 
                 ++_version;
@@ -620,8 +622,10 @@ namespace System.Windows.Media.Effects
                 BitmapEffect newValue = (BitmapEffect) sourceBitmapEffectCollection._collection[i].Clone();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
@@ -640,8 +644,10 @@ namespace System.Windows.Media.Effects
                 BitmapEffect newValue = (BitmapEffect) sourceBitmapEffectCollection._collection[i].CloneCurrentValue();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
@@ -660,8 +666,10 @@ namespace System.Windows.Media.Effects
                 BitmapEffect newValue = (BitmapEffect) sourceBitmapEffectCollection._collection[i].GetAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
@@ -680,8 +688,10 @@ namespace System.Windows.Media.Effects
                 BitmapEffect newValue = (BitmapEffect) sourceBitmapEffectCollection._collection[i].GetCurrentValueAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
         /// </summary>
@@ -785,6 +795,7 @@ namespace System.Windows.Media.Effects
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>
@@ -953,7 +964,8 @@ namespace System.Windows.Media.Effects
                             BitmapEffect newValue = item;
                             OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                             _collection.Add(newValue);
-}
+
+                        }
 
                         needsItemValidation = false;
                     }
@@ -968,7 +980,8 @@ namespace System.Windows.Media.Effects
                             throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
                         }
                         OnFreezablePropertyChanged(/* oldValue = */ null, item);
-}
+
+                    }
                 }
 
 
@@ -981,5 +994,6 @@ namespace System.Windows.Media.Effects
         }
 
         #endregion Constructors
+
     }
 }

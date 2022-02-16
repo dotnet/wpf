@@ -3,10 +3,6 @@
     <TargetFrameworks>net6.0</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <DefineConstants Condition="$(TargetFramework.Equals('net6.0'))">$(DefineConstants);NETCOREAPP5_0</DefineConstants>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="System.Reflection.Emit" Version="$(SystemReflectionEmitPackageVersion)" />
   </ItemGroup>

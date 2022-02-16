@@ -63,7 +63,6 @@ namespace MS.Internal.MilCodeGen.Generators
                             using System.ComponentModel;
                             using System.Diagnostics;
                             using System.Security;
-                            using System.Security.Permissions;
                             using System.Windows.Input;
                             using System.Windows.Media.Animation;
 
@@ -250,10 +249,6 @@ namespace MS.Internal.MilCodeGen.Generators
                     ///     <see cref="RoutedEventArgs"/> for the event to
                     ///     be raised
                     /// </param>
-                    ///<SecurityNote>
-                    ///     By default clears the user initiated bit.
-                    ///     To guard against "replay" attacks.
-                    ///</SecurityNote>
                     public void RaiseEvent(RoutedEventArgs e)
                     {
                         // VerifyAccess();
@@ -271,10 +266,6 @@ namespace MS.Internal.MilCodeGen.Generators
                     ///     "Trusted" internal flavor of RaiseEvent.
                     ///     Used to set the User-initated RaiseEvent.
                     /// </summary>
-                    ///<SecurityNote>
-                    ///     Critical - sets the MarkAsUserInitiated bit.
-                    ///</SecurityNote>
-                    [SecurityCritical]
                     internal void RaiseEvent(RoutedEventArgs args, bool trusted)
                     {
                         if (args == null)
@@ -294,11 +285,6 @@ namespace MS.Internal.MilCodeGen.Generators
                         }
                     }
 
-                    ///<SecurityNote>
-                    ///     Critical - sets the MarkAsUserInitiated bit.
-                    ///</SecurityNote>
-                    [SecurityCritical]
-                    [MS.Internal.Permissions.UserInitiatedRoutedEventPermissionAttribute(SecurityAction.Assert)]
                     internal void RaiseTrustedEvent(RoutedEventArgs args)
                     {
                         if (args == null)
@@ -654,11 +640,6 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// <summary>
                     /// Used by UIElement, ContentElement, and UIElement3D to register common Events.
                     /// </summary>
-                    /// <SecurityNote>
-                    ///  Critical: This code is used to register various thunks that are used to send input to the tree
-                    ///  TreatAsSafe: This code attaches handlers that are inside the class and private. Not configurable or overridable
-                    /// </SecurityNote>
-                    [SecurityCritical,SecurityTreatAsSafe]
                     internal static void RegisterEvents(Type type)
                     {
                         [[cs]]
@@ -795,10 +776,6 @@ namespace MS.Internal.MilCodeGen.Generators
 
                 cs.WriteBlock(
                     [[inline]]
-                        /// <SecurityNote>
-                        ///     Critical: This code can be used to spoof input
-                        /// </SecurityNote>
-                        [SecurityCritical]
                         private static void [[evt.ThunkName]](object sender, [[evt.ArgsType]] e)
                         {
                             [[body]]

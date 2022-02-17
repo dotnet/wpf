@@ -135,7 +135,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                             namespace System.Windows.Media.Animation
                             {       
-                               
                                 /// <summary>
                                 /// Animates the value of a [[instance.TypeName]] property using linear interpolation
                                 /// between two values.  The values are determined by the combination of

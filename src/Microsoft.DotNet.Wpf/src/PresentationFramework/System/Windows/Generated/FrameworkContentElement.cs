@@ -1,15 +1,16 @@
-//---------------------------------------------------------------------------
-//
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+//
 //
 // This file was generated, please do not edit it directly.
 // 
 // This file was generated from the codegen template located at:
 //     wpf\src\Graphics\codegen\mcg\generators\FrameworkElementTemplate.cs
 //
+// Please see MilCodeGen.html for more information.
 //
-//---------------------------------------------------------------------------
 
 using MS.Internal;
 using MS.Utility;

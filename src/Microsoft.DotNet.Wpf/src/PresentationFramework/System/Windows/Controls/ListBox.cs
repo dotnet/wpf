@@ -350,6 +350,30 @@ namespace System.Windows.Controls
                 case Key.Down:
                 case Key.Right:
                     {
+                    if ((Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt)
+                        {
+                            if(e.OriginalSource is GridViewColumnHeader gridViewColumnHeader)
+                            {
+                                if (key == Key.Left)
+                                {
+                                    if(gridViewColumnHeader.Column.ActualWidth > 0)
+                                    {
+                                        gridViewColumnHeader.Width = gridViewColumnHeader.Column.ActualWidth - ColumnWidthStepSize;
+                                        gridViewColumnHeader.UpdateColumnHeaderWidth(gridViewColumnHeader.Width);
+                                    }
+                                    
+                                    handled = true;
+                                }
+                                else if (key == Key.Right)
+                                {
+                                    gridViewColumnHeader.Width = gridViewColumnHeader.Column.ActualWidth + ColumnWidthStepSize;
+                                    gridViewColumnHeader.UpdateColumnHeaderWidth(gridViewColumnHeader.Width);
+                                    handled = true;
+                                }
+                                break;
+                            }
+                        }
+                    
                         KeyboardNavigation.ShowFocusVisual();
 
                         // Depend on logical orientation we decide to move focus or just scroll
@@ -1011,6 +1035,8 @@ namespace System.Windows.Controls
         private WeakReference _lastActionItem;
 
         private DispatcherTimer _autoScrollTimer;
+        
+        private const double ColumnWidthStepSize = 10d;
 
         private static RoutedUICommand SelectAllCommand =
             new RoutedUICommand(SR.Get(SRID.ListBoxSelectAllText), "SelectAll", typeof(ListBox));

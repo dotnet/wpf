@@ -27,7 +27,6 @@ using MS.Internal.PresentationFramework;
 
 namespace System.Windows.Media.Animation
 {       
-
     /// <summary>
     /// Animates the value of a Thickness property using linear interpolation
     /// between two values.  The values are determined by the combination of

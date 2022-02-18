@@ -536,5 +536,101 @@
         }
       ]
     }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "PullRequestResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "labelAdded",
+            "parameters": {
+              "label": "Servicing-consider"
+            }
+          }
+        ]
+      },
+      "eventType": "pull_request",
+      "eventNames": [
+        "pull_request",
+        "issues",
+        "project_card"
+      ],
+      "taskName": "Use servicing template for `servicing-consider` issues",
+      "actions": [
+        {
+          "name": "addReply",
+          "parameters": {
+            "comment": "Hi @${issueAuthor}. Please make sure you've updated the PR description to use the [Shiproom Template](https://dev.azure.com/devdiv/DevDiv/_wiki/wikis/DevDiv.wiki/545/NET-Servicing#pr-template). Also, make sure this PR is not marked as a draft and is ready-to-merge.\n\nTo learn more about how to prepare a servicing PR [click here](https://aka.ms/aspnet/servicing)."
+          }
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "PullRequestResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isAction",
+            "parameters": {
+              "action": "opened"
+            }
+          },
+          {
+            "name": "activitySenderHasPermissions",
+            "parameters": {
+              "permissions": "read"
+            }
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isActivitySender",
+                "parameters": {
+                  "user": "dotnet-maestro"
+                }
+              }
+            ]
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isActivitySender",
+                "parameters": {
+                  "user": "dotnet-maestro-bot"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "eventType": "pull_request",
+      "eventNames": [
+        "pull_request",
+        "issues",
+        "project_card"
+      ],
+      "taskName": "Label community PRs with `community contribution` label",
+      "actions": [
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "Community Contribution"
+          }
+        }
+      ]
+    }
   }
 ]

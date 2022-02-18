@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="7.0.0-preview.2.22115.3">
+    <Dependency Name="Microsoft.Private.Winforms" Version="7.0.0-preview.3.22115.11">
       <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>2c7cd54ba11a38c55e2454b2084a1d102a1ed817</Sha>
+      <Sha>01fb65d5b107f9b67764c20a10192df0f3809eea</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="7.0.0-preview.2.22115.3">
+    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="7.0.0-preview.3.22115.11">
       <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>2c7cd54ba11a38c55e2454b2084a1d102a1ed817</Sha>
+      <Sha>01fb65d5b107f9b67764c20a10192df0f3809eea</Sha>
     </Dependency>
     <Dependency Name="System.CodeDom" Version="7.0.0-preview.2.22114.13" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
@@ -49,9 +49,9 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>14e64115c99bbad6f22a8e8331052c89e7006a89</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="7.0.0-preview.2.22110.6">
+    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="7.0.0-preview.3.22116.6">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</Uri>
-      <Sha>99a29e88df9c5dc0b3c9c6565ab97a8aad261a53</Sha>
+      <Sha>21ded4b588dd69d8c17e9f8ba21f02f1a83b11dc</Sha>
     </Dependency>
     <Dependency Name="System.IO.Packaging" Version="7.0.0-preview.2.22114.13" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>

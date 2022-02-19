@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PresentationCore.System.Windows.Input.Command
+namespace System.Windows.Input
 {
     public class Command : ICommand
     {

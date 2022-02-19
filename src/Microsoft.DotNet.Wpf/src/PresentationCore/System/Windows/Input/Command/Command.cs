@@ -12,7 +12,7 @@ namespace System.Windows.Input
 
         private readonly Action<object> _execute;
 
-        private readonly WeakEventManager _weakEventManager = new WeakEventManager();
+        private readonly LowEventManager _weakEventManager = new LowEventManager();
 
         /// <summary>
         /// Occurs when the target of the Command should reevaluate whether or not the Command

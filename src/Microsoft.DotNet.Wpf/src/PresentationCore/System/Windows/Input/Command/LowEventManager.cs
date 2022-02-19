@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 
 namespace System.Windows.Input
 {
-    internal class WeakEventManager
+    internal class LowEventManager
     {
         private struct Subscription
         {

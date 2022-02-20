@@ -21,7 +21,7 @@
 
   <PropertyGroup>
     <!-- Turn off default API Compat targets in favor of WPF ones. -->
-    <RunApiCompat>false</RunApiCompat>
+    <RunApiCompat>true</RunApiCompat>
   </PropertyGroup>
 
   <ItemGroup>

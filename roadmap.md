@@ -1,4 +1,4 @@
-# WPF Roadmap FY22
+# WPF Roadmap 
 WPF is a .NET Core UI framework for building Windows desktop applications. WPF is currently supported on the below versions of .NET:
 - .NET Core: .NET 5 or higher (including .NET Core 3.1)
 - .NET Framework: NET Framework 4 and higher
@@ -14,8 +14,7 @@ The roadmap below communicates priorities for evolving and extending the scope o
 |1  |Incorporating .NET Framework servicing fixes into .NET Core 3.1, .NET 5 and .NET 6 |Ongoing|
 |2  |Performance Improvements |Ongoing|
 |3  |Ongoing support and maintenance for .NET Framework, .NET core 3.1, .NET 5.0 and .NET 6.0 |Ongoing|
-|4  |New API review process for Community PRs  |21H2|
-|5  |Open Sourcing of Test Infrastructure and test collateral|22H1|
+|4  |Open Sourcing of Test Infrastructure and test collateral|22H1|
 
 ### Our SLA
 #### TRIAGING GITHUB ISSUES

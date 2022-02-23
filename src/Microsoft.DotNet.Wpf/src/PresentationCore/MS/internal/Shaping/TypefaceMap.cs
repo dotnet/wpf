@@ -120,7 +120,7 @@ namespace MS.Internal.Shaping
                         (char*)ptext.ToPointer(),
                         (uint)stringLength,
                         culture,
-                        MS.Internal.FontCache.DWriteFactory.Instance,
+                        (MS.Internal.Text.TextInterface.Native.IDWriteFactory*)MS.Internal.FontCache.DWriteFactory.Instance.DWriteFactoryAddRef,
                         isRightToLeftParagraph,
                         digitCulture,
                         ignoreUserOverride,

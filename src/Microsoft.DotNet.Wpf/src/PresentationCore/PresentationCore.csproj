@@ -25,6 +25,20 @@
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
         <Link>Common\System\SR.cs</Link>
     </Compile>
+    <Compile Include="$(WpfCommonDir)\src\Interop\Windows\Interop.HRESULT_FROM_WIN32.cs"
+             Link="Common\Interop\Windows\Interop.HRESULT_FROM_WIN32.cs" />
+    <Compile Include="$(WpfCommonDir)\src\Interop\Windows\Interop.Libraries.cs"
+             Link="Common\Interop\Windows\Interop.Libraries.cs" />
+    <Compile Include="$(WpfCommonDir)\src\Interop\Windows\Kernel32\Interop.FreeLibrary.cs"
+             Link="Common\Interop\Windows\Kernel32\Interop.FreeLibrary.cs" />
+    <Compile Include="$(WpfCommonDir)\src\Interop\Windows\Kernel32\Interop.GetModuleHandle.cs"
+             Link="Common\Interop\Windows\Kernel32\Interop.GetModuleHandle.cs" />
+    <Compile Include="$(WpfCommonDir)\src\Interop\Windows\Kernel32\Interop.GetProcAddress.cs"
+             Link="Common\Interop\Windows\Kernel32\Interop.GetProcAddress.cs" />
+    <Compile Include="$(WpfCommonDir)\src\Interop\Windows\Kernel32\Interop.LoadLibrary.cs"
+             Link="Common\Interop\Windows\Kernel32\Interop.LoadLibrary.cs" />
+    <Compile Include="$(WpfCommonDir)\src\Interop\Windows\Kernel32\Interop.LoadLibraryEx.cs"
+             Link="Common\Interop\Windows\Kernel32\Interop.LoadLibraryEx.cs" />
     <Compile Include="$(WpfCommonDir)\Graphics\wgx_error.cs" />
     <Compile Include="$(WpfCommonDir)\Graphics\wgx_render.cs" />
     <Compile Include="$(WpfCommonDir)\Graphics\wgx_exports.cs" />
@@ -231,6 +245,17 @@
     <Compile Include="MS\Internal\Ink\InkSerializedFormat\StrokeDescriptor.cs" />
     <Compile Include="MS\Internal\Ink\InkSerializedFormat\StrokeSerializer.cs" />
     <Compile Include="MS\Internal\Ink\InkSerializedFormat\TransformDescriptor.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\DWRITE_FONT_FACE_TYPE.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\DWRITE_FONT_SIMULATIONS.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFactory.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontCollection.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontCollectionLoader.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontFace.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontFile.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontFileLoader.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteTextAnalyzer.cs" />
+    <Compile Include="MS\Internal\Interop\IUnknown.cs" />
+    <Compile Include="MS\Internal\Interop\NativePointerCriticalHandle.cs" />
     <Compile Include="MS\Internal\Interop\TipTsfHelper.cs" />
     <Compile Include="MS\Internal\IO\Packaging\ByteRangeDownloader.cs" />
     <Compile Include="MS\Internal\IO\Packaging\DeobfuscatingStream.cs" />
@@ -264,6 +289,9 @@
     <Compile Include="MS\Internal\Shaping\Substitution.cs" />
     <Compile Include="MS\Internal\Shaping\TypefaceMap.cs" />
     <Compile Include="MS\Internal\Shaping\UshortList2.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\DWriteLoader.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\DWriteUtil.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\Factory.cs" />
     <Compile Include="MS\Internal\TextFormatting\Bidi.cs" />
     <Compile Include="MS\Internal\TextFormatting\CultureMapper.cs" />
     <Compile Include="MS\Internal\TextFormatting\DrawingState.cs" />

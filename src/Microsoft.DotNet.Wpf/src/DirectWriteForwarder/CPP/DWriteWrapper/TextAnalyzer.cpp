@@ -39,6 +39,9 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             IDWriteTextAnalysisSink* pTextAnalysisSink = NULL;
             IDWriteTextAnalysisSource* pTextAnalysisSource = NULL;
 
+            // We obtain an AddRef factory so as not to worry about having to call GC::KeepAlive(factory)
+            // which puts unnecessary maintenance cost on this code.
+            pDWriteFactory->AddRef();
             HRESULT hr = S_OK;
             try
             {

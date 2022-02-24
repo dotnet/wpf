@@ -26,15 +26,8 @@ namespace MS.Internal.Text.TextInterface
             _factory = new NativeIUnknownWrapper<IDWriteFactory>(nativePointer);
         }
 
-        internal IDWriteFactory* DWriteFactoryAddRef
-        {
-            get
-            {
-                _factory.Value->AddReference();
-
-                return _factory.Value;
-            }
-        }
+        internal IDWriteFactory* DWriteFactory
+            => _factory.Value;
 
         private Factory(FactoryType factoryType, IFontSourceCollectionFactory fontSourceCollectionFactory, IFontSourceFactory fontSourceFactory)
         {

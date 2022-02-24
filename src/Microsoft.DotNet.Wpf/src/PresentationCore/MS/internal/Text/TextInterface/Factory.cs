@@ -9,26 +9,44 @@ using MS.Internal.Text.TextInterface.Interfaces;
 
 namespace MS.Internal.Text.TextInterface
 {
+    /// <summary>
+    /// The root factory interface for all DWrite objects.
+    /// </summary>
     internal unsafe class Factory
     {
         private const int DWRITE_E_FILEFORMAT = unchecked((int)0x88985000L);
-        private NativeIUnknownWrapper<IDWriteFactory> _factory;
-
-        private IFontSourceFactory _fontSourceFactory;
-        private FontFileLoader _wpfFontFileLoader;
-        private FontCollectionLoader _wpfFontCollectionLoader;
 
         // b859ee5a-d838-4b5b-a2e8-1adc7d93db48
         private static readonly Guid IID_IDWriteFactory = new Guid(0xb859ee5a, 0xd838, 0x4b5b, 0xa2, 0xe8, 0x1a, 0xdc, 0x7d, 0x93, 0xdb, 0x48);
 
-        private Factory(IDWriteFactory* nativePointer)
-        {
-            _factory = new NativeIUnknownWrapper<IDWriteFactory>(nativePointer);
-        }
+        /// <summary>
+        /// A pointer to the wrapped DWrite factory object.
+        /// </summary>
+        private NativeIUnknownWrapper<IDWriteFactory> _factory;
 
-        internal IDWriteFactory* DWriteFactory
-            => _factory.Value;
+        /// <summary>
+        /// The custom loader used by WPF to load font files.
+        /// </summary>
+        private readonly FontFileLoader _wpfFontFileLoader;
 
+        /// <summary>
+        /// The custom loader used by WPF to load font collections.
+        /// </summary>
+        private readonly FontCollectionLoader _wpfFontCollectionLoader;
+
+        private readonly IFontSourceFactory _fontSourceFactory;
+
+        /// <summary>
+        /// Constructs a factory object.
+        /// </summary>
+        /// <param name="factoryType">Identifies whether the factory object will be shared or isolated.</param>
+        /// <param name="fontSourceCollectionFactory">A factory object that will create managed FontSourceCollection 
+        /// objects that will be utilized to load embedded fonts.</param>
+        /// <param name="fontSourceFactory">A factory object that will create managed FontSource
+        /// objects that will be utilized to load embedded fonts.</param>
+        /// <returns>
+        /// The factory just created.
+        /// </returns>
         private Factory(FactoryType factoryType, IFontSourceCollectionFactory fontSourceCollectionFactory, IFontSourceFactory fontSourceFactory)
         {
             Initialize(factoryType);
@@ -73,6 +91,13 @@ namespace MS.Internal.Text.TextInterface
             DWriteUtil.ConvertHresultToException(hr);
         }
 
+        internal IDWriteFactory* DWriteFactory
+            => _factory.Value;
+
+        /// <summary>
+        /// Initializes a factory object.
+        /// </summary>
+        /// <param name="factoryType">Identifies whether the factory object will be shared or isolated.</param>
         private void Initialize(FactoryType factoryType)
         {
             Guid iid = IID_IDWriteFactory;
@@ -87,6 +112,17 @@ namespace MS.Internal.Text.TextInterface
             _factory = new NativeIUnknownWrapper<IDWriteFactory>(factory);
         }
 
+        /// <summary>
+        /// Creates a DirectWrite factory object that is used for subsequent creation of individual DirectWrite objects.
+        /// </summary>
+        /// <param name="factoryType">Identifies whether the factory object will be shared or isolated.</param>
+        /// <param name="fontSourceCollectionFactory">A factory object that will create managed FontSourceCollection 
+        /// objects that will be utilized to load embedded fonts.</param>
+        /// <param name="fontSourceFactory">A factory object that will create managed FontSource
+        /// objects that will be utilized to load embedded fonts.</param>
+        /// <returns>
+        /// The factory just created.
+        /// </returns>
         internal static Factory Create(
             FactoryType factoryType,
             IFontSourceCollectionFactory fontSourceCollectionFactory,
@@ -95,15 +131,13 @@ namespace MS.Internal.Text.TextInterface
             return new Factory(factoryType, fontSourceCollectionFactory, fontSourceFactory);
         }
 
-        internal TextAnalyzer CreateTextAnalyzer()
-        {
-            IDWriteTextAnalyzer* textAnalyzer = null;
-
-            _factory.Value->CreateTextAnalyzer(&textAnalyzer);
-
-            return new TextAnalyzer((Native.IDWriteTextAnalyzer*)textAnalyzer);
-        }
-
+        /// <summary>
+        /// Creates a font file object from a local font file.
+        /// </summary>
+        /// <param name="filePathUri">file path uri.</param>
+        /// <returns>
+        /// Newly created font file object, or NULL in case of failure.
+        /// </returns>
         internal FontFile CreateFontFile(Uri filePathUri)
         {
             Native.IDWriteFontFile* dwriteFontFile = null;
@@ -129,6 +163,15 @@ namespace MS.Internal.Text.TextInterface
             return new FontFile(dwriteFontFile);
         }
 
+        /// <summary>
+        /// Creates a font face object.
+        /// </summary>
+        /// <param name="filePathUri">The file path of the font face.</param>
+        /// <param name="faceIndex">The zero based index of a font face in cases when the font files contain a collection of font faces.
+        /// If the font files contain a single face, this value should be zero.</param>
+        /// <returns>
+        /// Newly created font face object, or NULL in case of failure.
+        /// </returns>
         internal FontFace CreateFontFace(Uri filePathUri, uint faceIndex)
         {
             return CreateFontFace(
@@ -138,6 +181,16 @@ namespace MS.Internal.Text.TextInterface
                                  );
         }
 
+        /// <summary>
+        /// Creates a font face object.
+        /// </summary>
+        /// <param name="filePathUri">The file path of the font face.</param>
+        /// <param name="faceIndex">The zero based index of a font face in cases when the font files contain a collection of font faces.
+        /// If the font files contain a single face, this value should be zero.</param>
+        /// <param name="fontSimulationFlags">Font face simulation flags for algorithmic emboldening and italicization.</param>
+        /// <returns>
+        /// Newly created font face object, or NULL in case of failure.
+        /// </returns>
         internal FontFace CreateFontFace(Uri filePathUri, uint faceIndex, FontSimulations fontSimulationFlags)
         {
             FontFile fontFile = CreateFontFile(filePathUri);
@@ -204,22 +257,45 @@ namespace MS.Internal.Text.TextInterface
             return null;
         }
 
+        /// <summary>
+        /// Gets a font collection representing the set of installed fonts.
+        /// </summary>
+        /// <returns>
+        /// The system font collection.
+        /// </returns>
         internal FontCollection GetSystemFontCollection()
         {
             return GetSystemFontCollection(false);
         }
 
-        private FontCollection GetSystemFontCollection(bool checkForUpdate)
+        /// <summary>
+        /// Gets a font collection representing the set of installed fonts.
+        /// </summary>
+        /// <param name="checkForUpdates">If this parameter is true, the function performs an immediate check for changes to the set of
+        /// installed fonts. If this parameter is FALSE, the function will still detect changes if the font cache service is running, but
+        /// there may be some latency. For example, an application might specify TRUE if it has itself just installed a font and wants to 
+        /// be sure the font collection contains that font.</param>
+        /// <returns>
+        /// The system font collection.
+        /// </returns>
+        private FontCollection GetSystemFontCollection(bool checkForUpdates)
         {
             IDWriteFontCollection* fontCollection = null;
-            int checkForUpdateInt = checkForUpdate ? 1 : 0;
-            int hr = _factory.Value->GetSystemFontCollection(&fontCollection, checkForUpdateInt);
+            int checkForUpdatesInt = checkForUpdates ? 1 : 0;
+            int hr = _factory.Value->GetSystemFontCollection(&fontCollection, checkForUpdatesInt);
 
             DWriteUtil.ConvertHresultToException(hr);
 
             return new FontCollection((Native.IDWriteFontCollection*)fontCollection);
         }
 
+        /// <summary>
+        /// Gets a font collection in a custom location.
+        /// </summary>
+        /// <param name="uri">The uri of the font collection.</param>
+        /// <returns>
+        /// The font collection.
+        /// </returns>
         internal FontCollection GetFontCollection(Uri uri)
         {
             IDWriteFontCollection* fontCollection = null;
@@ -233,6 +309,15 @@ namespace MS.Internal.Text.TextInterface
             }
 
             return new FontCollection((Native.IDWriteFontCollection*)fontCollection);
+        }
+
+        internal TextAnalyzer CreateTextAnalyzer()
+        {
+            IDWriteTextAnalyzer* textAnalyzer = null;
+
+            _factory.Value->CreateTextAnalyzer(&textAnalyzer);
+
+            return new TextAnalyzer((Native.IDWriteTextAnalyzer*)textAnalyzer);
         }
 
         internal static bool IsLocalUri(Uri uri)

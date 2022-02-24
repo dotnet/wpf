@@ -16,6 +16,8 @@ namespace MS.Internal.Text.TextInterface
 
         internal static void LoadDWrite()
         {
+            // We load dwrite here because it's cleanup logic is different from the other native dlls
+            // and don't want to abstract that
             _dwrite = LoadDWriteLibraryAndGetProcAddress(out delegate* unmanaged<int, void*, void*, int> dwriteCreateFactory);
 
             if (_dwrite == IntPtr.Zero)

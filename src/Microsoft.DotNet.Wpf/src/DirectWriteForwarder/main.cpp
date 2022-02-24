@@ -50,7 +50,12 @@ public:
     //
     static void LoadDwrite( )
     {
+        // Used to force the compiler to keep LoadDwrite in Release because it is called from PresentationCore.
+        m_temp = NULL;
     }
+
+private:    
+    static void *m_temp;
 }; 
 }} // namespace MS.Internal
     

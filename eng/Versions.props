@@ -21,7 +21,7 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/winforms -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>7.0.0-preview.3.22124.2</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>7.0.0-preview.3.22125.1</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/runtime -->
   <PropertyGroup>
@@ -44,8 +44,8 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
-    <MicrosoftDotNetApiCompatVersion>7.0.0-beta.22122.3</MicrosoftDotNetApiCompatVersion>
-    <MicrosoftDotNetCodeAnalysisPackageVersion>7.0.0-beta.22122.3</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetApiCompatVersion>7.0.0-beta.22124.1</MicrosoftDotNetApiCompatVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>7.0.0-beta.22124.1</MicrosoftDotNetCodeAnalysisPackageVersion>
     <MicrosoftDotNetGenAPIVersion>7.0.0-beta.22124.4</MicrosoftDotNetGenAPIVersion>
   </PropertyGroup>
   <!-- Maintain System.CodeDom PackageVersion at 4.4.0. See https://github.com/Microsoft/msbuild/issues/3627 -->

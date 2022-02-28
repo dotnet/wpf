@@ -964,7 +964,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if ((Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt)
+            if ((Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt && (e.Key == Key.Left || e.Key == Key.Right))
             {
                 DataGridLength updatedWidth = new DataGridLength();
 

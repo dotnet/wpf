@@ -350,7 +350,7 @@ namespace System.Windows.Controls
                 case Key.Down:
                 case Key.Right:
                     {
-                    if ((Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt)
+                    if ((Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt && (e.Key == Key.Left || e.Key == Key.Right))
                         {
                             if(e.OriginalSource is GridViewColumnHeader gridViewColumnHeader)
                             {

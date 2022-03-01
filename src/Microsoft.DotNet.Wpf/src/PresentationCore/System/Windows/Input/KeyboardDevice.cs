@@ -105,7 +105,7 @@ namespace System.Windows.Input
 
         /// <summary>
         ///     The default mode for restoring focus.
-        /// <summary>
+        /// </summary>
         public RestoreFocusMode DefaultRestoreFocusMode {get; set;}
 
         /// <summary>

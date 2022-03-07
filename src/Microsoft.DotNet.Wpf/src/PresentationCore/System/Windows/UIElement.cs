@@ -552,7 +552,7 @@ namespace System.Windows
         /// giving it opportunity to compute its DesiredSize.<para/>
         /// This method will return immediately if child is not Dirty, previously measured
         /// and availableSize is the same as cached. <para/>
-        /// This method also resets the IsMeasureinvalid bit on the child.<para/>
+        /// This method also resets the IsMeasureInvalid bit on the child.<para/>
         /// In case when "unbounded measure to content" is needed, parent can use availableSize
         /// as double.PositiveInfinity. Any returned size is OK in this case.
         /// </remarks>
@@ -562,73 +562,67 @@ namespace System.Windows
         public void Measure(Size availableSize)
         {
             bool etwTracingEnabled = false;
-            long perfElementID = 0;
-            ContextLayoutManager ContextLayoutManager = ContextLayoutManager.From(Dispatcher);
-            if (ContextLayoutManager.AutomationEvents.Count != 0)
+            long perfElementId = 0;
+
+            ContextLayoutManager contextLayoutManager = ContextLayoutManager.From(Dispatcher);
+
+            if (contextLayoutManager.AutomationEvents.Count != 0)
                 UIElementHelper.InvalidateAutomationAncestors(this);
 
-            if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose))
-            {
-                perfElementID = PerfService.GetPerfElementID(this);
-
-                etwTracingEnabled = true;
-                EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientMeasureElementBegin, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementID, availableSize.Width, availableSize.Height);
-            }
+            TraceMeasureStart(ref perfElementId, ref etwTracingEnabled, availableSize.Width, availableSize.Height);
             try
             {
-                //             VerifyAccess();
-
-                // Disable reentrancy during the measure pass.  This is because much work is done
+                // Disable reentrancy during the measure pass. This is because much work is done
                 // during measure - such as inflating templates, formatting PTS stuff, creating
                 // fonts, etc.  Generally speaking, we cannot survive reentrancy in these code
                 // paths.
                 using (Dispatcher.DisableProcessing())
                 {
-                    //enforce that Measure can not receive NaN size .
+                    // Enforce that Measure can not receive NaN size.
                     if (double.IsNaN(availableSize.Width) || double.IsNaN(availableSize.Height))
                         throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_NaNMeasure));
 
+                    // PERF: Cache value to reduce bitwise flag operations
                     bool neverMeasured = NeverMeasured;
 
                     if (neverMeasured)
                     {
-                        switchVisibilityIfNeeded(this.Visibility);
-                        //to make sure effects are set correctly - otherwise it's not used
-                        //simply because it is never pulled by anybody
-                        pushVisualEffects();
+                        InitialMeasure();
                     }
 
                     bool isCloseToPreviousMeasure = DoubleUtil.AreClose(availableSize, _previousAvailableSize);
 
 
-                    //if Collapsed, we should not Measure, keep dirty bit but remove request
-                    if (this.Visibility == Visibility.Collapsed
-                        || ((Visual)this).CheckFlagsAnd(VisualFlags.IsLayoutSuspended))
+                    // if Collapsed, we should not Measure, keep dirty bit but remove request
+                    if (Visibility == Visibility.Collapsed
+                        || CheckFlagsAnd(VisualFlags.IsLayoutSuspended))
                     {
-                        //reset measure request.
-                        if (MeasureRequest != null)
-                            ContextLayoutManager.From(Dispatcher).MeasureQueue.Remove(this);
-
-                        //  remember though that parent tried to measure at this size
-                        //  in case when later this element is called to measure incrementally
-                        //  it has up-to-date information stored in _previousAvailableSize
-                        if (!isCloseToPreviousMeasure)
+                        // Reset measure request.
+                        if (MeasureRequest is not null)
                         {
-                            //this will ensure that element will be actually re-measured at the new available size
-                            //later when it becomes visible.
-                            InvalidateMeasureInternal();
-
-                            _previousAvailableSize = availableSize;
+                            contextLayoutManager.MeasureQueue.Remove(this);
                         }
+
+                        // Remember though that parent tried to measure at this size
+                        // in case when later this element is called to measure incrementally
+                        // it has up-to-date information stored in _previousAvailableSize
+                        if (isCloseToPreviousMeasure) return;
+
+                        // This will ensure that element will be actually re-measured at the new available size
+                        // later when it becomes visible.
+                        InvalidateMeasureInternal();
+
+                        _previousAvailableSize = availableSize;
 
                         return;
                     }
 
-
-                    //your basic bypass. No reason to calc the same thing.
-                    if (IsMeasureValid                       //element is clean
-                        && !neverMeasured                       //previously measured
-                        && isCloseToPreviousMeasure) //and contraint matches
+                    
+                    // There is no reason to re-calculate the same thing.
+                    // So we return if the element is clean, was previously measured and constraint matches
+                    if (IsMeasureValid                    
+                        && !neverMeasured         
+                        && isCloseToPreviousMeasure)
                     {
                         return;
                     }
@@ -636,85 +630,101 @@ namespace System.Windows
                     NeverMeasured = false;
                     Size prevSize = _desiredSize;
 
-                    //we always want to be arranged, ensure arrange request
-                    //doing it before OnMeasure prevents unneeded requests from children in the queue
+                    // We always want to be arranged, ensure arrange request
+                    // doing it before OnMeasure prevents unneeded requests from children in the queue
                     InvalidateArrange();
-                    //_measureInProgress prevents OnChildDesiredSizeChange to cause the elements be put
-                    //into the queue.
 
+                    // MeasureInProgress prevents OnChildDesiredSizeChange to cause the elements be put
+                    // into the queue.
                     MeasureInProgress = true;
 
-                    Size desiredSize = new Size(0, 0);
-
-                    ContextLayoutManager layoutManager = ContextLayoutManager.From(Dispatcher);
-
+                    Size desiredSize;
                     bool gotException = true;
-
                     try
                     {
-                        layoutManager.EnterMeasure();
+                        contextLayoutManager.EnterMeasure();
                         desiredSize = MeasureCore(availableSize);
 
                         gotException = false;
                     }
                     finally
                     {
-                        // reset measure in progress
+                        // Reset measure in progress
                         MeasureInProgress = false;
-
                         _previousAvailableSize = availableSize;
 
-                        layoutManager.ExitMeasure();
+                        contextLayoutManager.ExitMeasure();
 
                         if (gotException)
                         {
-                            // we don't want to reset last exception element on layoutManager if it's been already set.
-                            if (layoutManager.GetLastExceptionElement() == null)
+                            // We don't want to reset last exception element on layoutManager if it's been already set.
+                            if (contextLayoutManager.GetLastExceptionElement() is null)
                             {
-                                layoutManager.SetLastExceptionElement(this);
+                                contextLayoutManager.SetLastExceptionElement(this);
                             }
                         }
                     }
 
-                    //enforce that MeasureCore can not return PositiveInfinity size even if given Infinte availabel size.
-                    //Note: NegativeInfinity can not be returned by definition of Size structure.
+                    // Enforce that MeasureCore can not return PositiveInfinity size even if given Infinte availabel size.
+                    // Note: NegativeInfinity can not be returned by definition of Size structure.
                     if (double.IsPositiveInfinity(desiredSize.Width) || double.IsPositiveInfinity(desiredSize.Height))
                         throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_PositiveInfinityReturned, this.GetType().FullName));
 
-                    //enforce that MeasureCore can not return NaN size .
+                    // Enforce that MeasureCore can not return NaN size .
                     if (double.IsNaN(desiredSize.Width) || double.IsNaN(desiredSize.Height))
                         throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_NaNReturned, this.GetType().FullName));
 
-                    //reset measure dirtiness
-
+                    // Reset measure dirtiness
                     MeasureDirty = false;
-                    //reset measure request.
-                    if (MeasureRequest != null)
-                        ContextLayoutManager.From(Dispatcher).MeasureQueue.Remove(this);
 
-                    //cache desired size
+                    // Reset measure request.
+                    if (MeasureRequest != null)
+                        contextLayoutManager.MeasureQueue.Remove(this);
+
+                    // Cache desired size
                     _desiredSize = desiredSize;
 
-                    //notify parent if our desired size changed (watefall effect)
-                    if (!MeasureDuringArrange
-                       && !DoubleUtil.AreClose(prevSize, desiredSize))
+                    // Notify parent if our desired size changed (waterfall effect), otherwise return
+                    if (MeasureDuringArrange || DoubleUtil.AreClose(prevSize, desiredSize)) return;
+
+                    GetUIParentOrICH(out var parent, out var contentHost); //only one will be returned
+                    if (parent is { MeasureInProgress: false }) //this is what differs this code from signalDesiredSizeChange()
+                        parent.OnChildDesiredSizeChanged(this);
+                    else
                     {
-                        UIElement p;
-                        IContentHost ich;
-                        GetUIParentOrICH(out p, out ich); //only one will be returned
-                        if (p != null && !p.MeasureInProgress) //this is what differs this code from signalDesiredSizeChange()
-                            p.OnChildDesiredSizeChanged(this);
-                        else if (ich != null)
-                            ich.OnChildDesiredSizeChanged(this);
+                        contentHost?.OnChildDesiredSizeChanged(this);
                     }
                 }
             }
             finally
             {
-                if (etwTracingEnabled == true)
-                {
-                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientMeasureElementEnd, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementID, _desiredSize.Width, _desiredSize.Height);
-                }
+                TraceMeasureEnd(perfElementId, etwTracingEnabled);
+            }
+        }
+
+        private void InitialMeasure()
+        {
+            SwitchVisibilityIfNeeded(Visibility);
+
+            // To make sure effects are set correctly - otherwise it's not used
+            // simply because it is never pulled by anybody
+            PushVisualEffects();
+        }
+
+        private void TraceMeasureStart(ref long perfElementId, ref bool etwTracingEnabled, double width, double height)
+        {
+            if (!EventTrace.IsEnabled(EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose)) return;
+            perfElementId = PerfService.GetPerfElementID(this);
+
+            etwTracingEnabled = true;
+            EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientMeasureElementBegin, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementId, availableSize.Width, availableSize.Height);
+        }
+
+        private void TraceMeasureEnd(long perfElementId, bool etwTracingEnabled)
+        {
+            if (etwTracingEnabled)
+            {
+                EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientMeasureElementEnd, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementId, _desiredSize.Width, _desiredSize.Height);
             }
         }
 
@@ -1096,8 +1106,8 @@ namespace System.Windows
                 newValue = Math.Round(value * dpiScale) / dpiScale;
                 // If rounding produces a value unacceptable to layout (NaN, Infinity or MaxValue), use the original value.
                 if (double.IsNaN(newValue) ||
-                    Double.IsInfinity(newValue) ||
-                    DoubleUtil.AreClose(newValue, Double.MaxValue))
+                    double.IsInfinity(newValue) ||
+                    DoubleUtil.AreClose(newValue, double.MaxValue))
                 {
                     newValue = value;
                 }
@@ -2923,9 +2933,9 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// pushVisualEffects - helper to propagate cacheMode, Opacity, OpacityMask, BitmapEffect, BitmapScalingMode and EdgeMode
+        /// PushVisualEffects - helper to propagate cacheMode, Opacity, OpacityMask, BitmapEffect, BitmapScalingMode and EdgeMode
         /// </summary>
-        private void pushVisualEffects()
+        private void PushVisualEffects()
         {
             pushCacheMode();
             pushOpacity();
@@ -2980,7 +2990,7 @@ namespace System.Windows
 
             Visibility newVisibility = (Visibility) e.NewValue;
             uie.VisibilityCache = newVisibility;
-            uie.switchVisibilityIfNeeded(newVisibility);
+            uie.SwitchVisibilityIfNeeded(newVisibility);
 
             // The IsVisible property depends on this property.
             uie.UpdateIsVisibleCache();
@@ -3002,7 +3012,7 @@ namespace System.Windows
             set { SetValue(VisibilityProperty, VisibilityBoxes.Box(value)); }
         }
 
-        private void switchVisibilityIfNeeded(Visibility visibility)
+        private void SwitchVisibilityIfNeeded(Visibility visibility)
         {
             switch(visibility)
             {

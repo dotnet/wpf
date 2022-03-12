@@ -9,7 +9,7 @@ namespace MS.Internal.Interop
     {
         int QueryInterface(Guid* guid, void** comObject);
 
-        uint AddReference();
+        uint AddRef();
 
         uint Release();
     }

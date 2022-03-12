@@ -15,7 +15,7 @@ namespace MS.Internal.Interop.DWrite
             return ((delegate* unmanaged[Stdcall]<IDWriteFactory*, Guid*, void**, int>)(lpVtbl[0]))((IDWriteFactory*)Unsafe.AsPointer(ref this), riid, ppvObject);
         }
 
-        public uint AddReference()
+        public uint AddRef()
         {
             return ((delegate* unmanaged[Stdcall]<IDWriteFactory*, uint>)(lpVtbl[1]))((IDWriteFactory*)Unsafe.AsPointer(ref this));
         }

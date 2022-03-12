@@ -15,7 +15,7 @@ namespace MS.Internal.Interop.DWrite
             return ((delegate* unmanaged[Stdcall]<IDWriteFontFile*, Guid*, void**, int>)(lpVtbl[0]))((IDWriteFontFile*)Unsafe.AsPointer(ref this), riid, ppvObject);
         }
 
-        public uint AddReference()
+        public uint AddRef()
         {
             return ((delegate* unmanaged[Stdcall]<IDWriteFontFile*, uint>)(lpVtbl[1]))((IDWriteFontFile*)Unsafe.AsPointer(ref this));
         }

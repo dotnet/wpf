@@ -15,7 +15,7 @@ namespace MS.Internal.Interop.DWrite
             return ((delegate* unmanaged[Stdcall]<IDWriteTextAnalyzer*, Guid*, void**, int>)(lpVtbl[0]))((IDWriteTextAnalyzer*)Unsafe.AsPointer(ref this), riid, ppvObject);
         }
 
-        public uint AddReference()
+        public uint AddRef()
         {
             return ((delegate* unmanaged[Stdcall]<IDWriteTextAnalyzer*, uint>)(lpVtbl[1]))((IDWriteTextAnalyzer*)Unsafe.AsPointer(ref this));
         }

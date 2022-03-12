@@ -4357,33 +4357,33 @@ namespace System.Windows
             }
 
             LayoutTransformData ltd = LayoutTransformDataField.GetValue(this);
+
+            Transform layoutTransform = LayoutTransform;
+            //  check that LayoutTransform is non-trivial
+            if (layoutTransform is { IsIdentity: false })
             {
-                Transform layoutTransform = LayoutTransform;
-                //  check that LayoutTransform is non-trivial
-                if (layoutTransform is { IsIdentity: false })
+                if (ltd == null)
                 {
-                    if (ltd == null)
-                    {
-                        //  allocate and store ltd if needed
-                        ltd = new LayoutTransformData();
-                        LayoutTransformDataField.SetValue(this, ltd);
-                    }
-
-                    ltd.CreateTransformSnapshot(layoutTransform);
-                    ltd.UntransformedDS = new Size();
-
-                    if (useLayoutRounding)
-                    {
-                        ltd.TransformedUnroundedDS = new Size();
-                    }
+                    //  allocate and store ltd if needed
+                    ltd = new LayoutTransformData();
+                    LayoutTransformDataField.SetValue(this, ltd);
                 }
-                else if (ltd != null)
+
+                ltd.CreateTransformSnapshot(layoutTransform);
+                ltd.UntransformedDS = new Size();
+
+                if (useLayoutRounding)
                 {
-                    //  clear ltd storage
-                    ltd = null;
-                    LayoutTransformDataField.ClearValue(this);
+                    ltd.TransformedUnroundedDS = new Size();
                 }
             }
+            else if (ltd != null)
+            {
+                //  clear ltd storage
+                ltd = null;
+                LayoutTransformDataField.ClearValue(this);
+            }
+
 
             if (ltd != null)
             {

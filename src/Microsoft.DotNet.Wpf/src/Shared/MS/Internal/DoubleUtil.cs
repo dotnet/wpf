@@ -16,9 +16,6 @@
 
 using System;
 using System.Windows;
-using System.Runtime.InteropServices;
-using System.Runtime.Intrinsics;
-using System.Runtime.Intrinsics.X86;
 
 #if WINDOWS_BASE
     using MS.Internal.WindowsBase;
@@ -80,7 +77,7 @@ namespace MS.Internal
         /// <param name="value2"> The second double to compare. </param>
         public static bool LessThan(double value1, double value2)
         {
-            return value1 < value2 && !AreClose(value1, value2);
+            return (value1 < value2) && !AreClose(value1, value2);
         }
 
 
@@ -102,7 +99,7 @@ namespace MS.Internal
         /// <param name="value2"> The second double to compare. </param>
         public static bool GreaterThan(double value1, double value2)
         {
-            return value1 > value2 && !AreClose(value1, value2);
+            return (value1 > value2) && !AreClose(value1, value2);
         }
 
         /// <summary>
@@ -123,7 +120,7 @@ namespace MS.Internal
         /// <param name="value2"> The second double to compare. </param>
         public static bool LessThanOrClose(double value1, double value2)
         {
-            return value1 < value2 || AreClose(value1, value2);
+            return (value1 < value2) || AreClose(value1, value2);
         }
 
         /// <summary>
@@ -144,7 +141,7 @@ namespace MS.Internal
         /// <param name="value2"> The second double to compare. </param>
         public static bool GreaterThanOrClose(double value1, double value2)
         {
-            return value1 > value2 || AreClose(value1, value2);
+            return (value1 > value2) || AreClose(value1, value2);
         }
 
         /// <summary>
@@ -157,7 +154,7 @@ namespace MS.Internal
         /// <param name="value"> The double to compare to 1. </param>
         public static bool IsOne(double value)
         {
-            return Math.Abs(value-1.0) < 10.0 * DBL_EPSILON;
+            return Math.Abs(value - 1.0) < 10.0 * DBL_EPSILON;
         }
 
         /// <summary>

@@ -2413,17 +2413,17 @@ namespace System.Windows.Input.StylusWisp
             // First, check things like IsEnabled, IsVisible, etc. on a
             // UIElement vs. ContentElement basis.
             //
-            if (dependencyObject is UIElement)
+            if (dependencyObject is UIElement uie)
             {
-                killCapture = !ValidateUIElementForCapture((UIElement)_stylusCapture);
+                killCapture = !ValidateUIElementForCapture(uie);
             }
-            else if (dependencyObject is ContentElement)
+            else if (dependencyObject is ContentElement ce)
             {
-                killCapture = !ValidateContentElementForCapture((ContentElement)_stylusCapture);
+                killCapture = !ValidateContentElementForCapture(ce);
             }
-            else if (dependencyObject is UIElement3D)
+            else if (dependencyObject is UIElement3D uie3D)
             {
-                killCapture = !ValidateUIElement3DForCapture((UIElement3D)_stylusCapture);
+                killCapture = !ValidateUIElement3DForCapture(uie3D);
             }
             // todo patternmatching: Should we throw here?
 

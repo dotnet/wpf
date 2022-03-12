@@ -739,17 +739,17 @@ namespace System.Windows.Input
             // First, check things like IsEnabled, IsVisible, etc. on a
             // UIElement vs. ContentElement basis.
             //
-            if (dependencyObject is UIElement)
+            if (dependencyObject is UIElement uie)
             {
-                killCapture = !ValidateUIElementForCapture((UIElement)_mouseCapture);
+                killCapture = !ValidateUIElementForCapture(uie);
             }
-            else if (dependencyObject is ContentElement)
+            else if (dependencyObject is ContentElement ce)
             {
-                killCapture = !ValidateContentElementForCapture((ContentElement)_mouseCapture);
+                killCapture = !ValidateContentElementForCapture(ce);
             }
-            else if (dependencyObject is UIElement3D)
+            else if (dependencyObject is UIElement3D uie3D)
             {
-                killCapture = !ValidateUIElement3DForCapture((UIElement3D)_mouseCapture);
+                killCapture = !ValidateUIElement3DForCapture(uie3D);
             }
 
             //

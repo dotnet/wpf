@@ -2,41 +2,27 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Runtime.CompilerServices;
 
 namespace MS.Internal.Interop.DWrite
 {
     internal unsafe struct IDWriteFontFile : IUnknown
     {
-        private readonly void** Vtbl;
+        public void** lpVtbl;
 
-        public int QueryInterface(Guid* guid, void** comObject)
+        public int QueryInterface(Guid* riid, void** ppvObject)
         {
-            var function = (delegate* unmanaged<IDWriteFontFile*, Guid*, void**, int>)Vtbl[0];
-
-            fixed (IDWriteFontFile* handle = &this)
-            {
-                return function(handle, guid, comObject);
-            }
+            return ((delegate* unmanaged[Stdcall]<IDWriteFontFile*, Guid*, void**, int>)(lpVtbl[0]))((IDWriteFontFile*)Unsafe.AsPointer(ref this), riid, ppvObject);
         }
 
         public uint AddReference()
         {
-            var function = (delegate* unmanaged<IDWriteFontFile*, uint>)Vtbl[1];
-
-            fixed (IDWriteFontFile* handle = &this)
-            {
-                return function(handle);
-            }
+            return ((delegate* unmanaged[Stdcall]<IDWriteFontFile*, uint>)(lpVtbl[1]))((IDWriteFontFile*)Unsafe.AsPointer(ref this));
         }
 
         public uint Release()
         {
-            var function = (delegate* unmanaged<IDWriteFontFile*, uint>)Vtbl[2];
-
-            fixed (IDWriteFontFile* handle = &this)
-            {
-                return function(handle);
-            }
+            return ((delegate* unmanaged[Stdcall]<IDWriteFontFile*, uint>)(lpVtbl[2]))((IDWriteFontFile*)Unsafe.AsPointer(ref this));
         }
     }
 }

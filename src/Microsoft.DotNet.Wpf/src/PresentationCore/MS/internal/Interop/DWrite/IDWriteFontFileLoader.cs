@@ -2,41 +2,27 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Runtime.CompilerServices;
 
 namespace MS.Internal.Interop.DWrite
 {
     internal unsafe struct IDWriteFontFileLoader : IUnknown
     {
-        private readonly void** Vtbl;
+        public void** lpVtbl;
 
-        public int QueryInterface(Guid* guid, void** comObject)
+        public int QueryInterface(Guid* riid, void** ppvObject)
         {
-            var function = (delegate* unmanaged<IDWriteFontFileLoader*, Guid*, void**, int>)Vtbl[0];
-
-            fixed (IDWriteFontFileLoader* handle = &this)
-            {
-                return function(handle, guid, comObject);
-            }
+            return ((delegate* unmanaged[Stdcall]<IDWriteFontFileLoader*, Guid*, void**, int>)(lpVtbl[0]))((IDWriteFontFileLoader*)Unsafe.AsPointer(ref this), riid, ppvObject);
         }
 
         public uint AddReference()
         {
-            var function = (delegate* unmanaged<IDWriteFontFileLoader*, uint>)Vtbl[1];
-
-            fixed (IDWriteFontFileLoader* handle = &this)
-            {
-                return function(handle);
-            }
+            return ((delegate* unmanaged[Stdcall]<IDWriteFontFileLoader*, uint>)(lpVtbl[1]))((IDWriteFontFileLoader*)Unsafe.AsPointer(ref this));
         }
 
         public uint Release()
         {
-            var function = (delegate* unmanaged<IDWriteFontFileLoader*, uint>)Vtbl[2];
-
-            fixed (IDWriteFontFileLoader* handle = &this)
-            {
-                return function(handle);
-            }
+            return ((delegate* unmanaged[Stdcall]<IDWriteFontFileLoader*, uint>)(lpVtbl[2]))((IDWriteFontFileLoader*)Unsafe.AsPointer(ref this));
         }
     }
 }

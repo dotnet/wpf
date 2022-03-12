@@ -2,41 +2,27 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Runtime.CompilerServices;
 
 namespace MS.Internal.Interop.DWrite
 {
     internal unsafe struct IDWriteTextAnalyzer : IUnknown
     {
-        private readonly void** Vtbl;
+        public void** lpVtbl;
 
-        public int QueryInterface(Guid* guid, void** comObject)
+        public int QueryInterface(Guid* riid, void** ppvObject)
         {
-            var function = (delegate* unmanaged<IDWriteTextAnalyzer*, Guid*, void**, int>)Vtbl[0];
-
-            fixed (IDWriteTextAnalyzer* handle = &this)
-            {
-                return function(handle, guid, comObject);
-            }
+            return ((delegate* unmanaged[Stdcall]<IDWriteTextAnalyzer*, Guid*, void**, int>)(lpVtbl[0]))((IDWriteTextAnalyzer*)Unsafe.AsPointer(ref this), riid, ppvObject);
         }
 
         public uint AddReference()
         {
-            var function = (delegate* unmanaged<IDWriteTextAnalyzer*, uint>)Vtbl[1];
-
-            fixed (IDWriteTextAnalyzer* handle = &this)
-            {
-                return function(handle);
-            }
+            return ((delegate* unmanaged[Stdcall]<IDWriteTextAnalyzer*, uint>)(lpVtbl[1]))((IDWriteTextAnalyzer*)Unsafe.AsPointer(ref this));
         }
 
         public uint Release()
         {
-            var function = (delegate* unmanaged<IDWriteTextAnalyzer*, uint>)Vtbl[2];
-
-            fixed (IDWriteTextAnalyzer* handle = &this)
-            {
-                return function(handle);
-            }
+            return ((delegate* unmanaged[Stdcall]<IDWriteTextAnalyzer*, uint>)(lpVtbl[2]))((IDWriteTextAnalyzer*)Unsafe.AsPointer(ref this));
         }
     }
 }

@@ -305,8 +305,8 @@ namespace MS.Internal.Text.TextInterface
                                                     _wpfFontCollectionLoader,
                                                     typeof(IDWriteFontCollectionLoaderMirror));
 
-            IDWriteFontCollectionLoader * pIDWriteFontCollectionLoader = 
-                (IDWriteFontCollectionLoader *)pIDWriteFontCollectionLoaderMirror.ToPointer();
+            IDWriteFontCollectionLoader* pIDWriteFontCollectionLoader = 
+                (IDWriteFontCollectionLoader*)pIDWriteFontCollectionLoaderMirror.ToPointer();
 
             int hr;
 

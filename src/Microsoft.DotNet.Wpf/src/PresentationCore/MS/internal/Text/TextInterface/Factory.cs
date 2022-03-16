@@ -298,17 +298,31 @@ namespace MS.Internal.Text.TextInterface
         /// </returns>
         internal FontCollection GetFontCollection(Uri uri)
         {
-            IDWriteFontCollection* fontCollection = null;
-
             string uriString = uri.AbsoluteUri;
+            IDWriteFontCollection* dwriteFontCollection = null;
+
+            IntPtr pIDWriteFontCollectionLoaderMirror = Marshal.GetComInterfaceForObject(
+                                                    _wpfFontCollectionLoader,
+                                                    typeof(IDWriteFontCollectionLoaderMirror));
+
+            IDWriteFontCollectionLoader * pIDWriteFontCollectionLoader = 
+                (IDWriteFontCollectionLoader *)pIDWriteFontCollectionLoaderMirror.ToPointer();
+
+            int hr;
 
             fixed (char* uriStringPtr = uriString)
             {
                 uint collectionKeySize = (uint)((uriString.Length + 1) * sizeof(char));
-                _factory.Value->CreateCustomFontCollection(null, uriStringPtr, collectionKeySize, &fontCollection);
+                hr = _factory.Value->CreateCustomFontCollection(pIDWriteFontCollectionLoader, uriStringPtr, collectionKeySize, &dwriteFontCollection);
             }
 
-            return new FontCollection((Native.IDWriteFontCollection*)fontCollection);
+            Marshal.Release(pIDWriteFontCollectionLoaderMirror);
+
+            GC.KeepAlive(this);
+
+            DWriteUtil.ConvertHresultToException(hr);
+
+            return new FontCollection((Native.IDWriteFontCollection*)dwriteFontCollection);
         }
 
         internal TextAnalyzer CreateTextAnalyzer()

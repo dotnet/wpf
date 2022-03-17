@@ -396,7 +396,7 @@ namespace MS.Internal.FontCache
                     else
                     {
                         // store the stripped off style names to look for the specific face later.
-                        potentialFaceName.Insert(0, familyName.Substring(indexOfSpace));
+                        potentialFaceName.Insert(0, familyName.AsSpan(indexOfSpace));
                         familyName = familyName.Substring(0, indexOfSpace);
                     }
 

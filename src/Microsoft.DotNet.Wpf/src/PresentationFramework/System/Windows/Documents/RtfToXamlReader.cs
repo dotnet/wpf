@@ -275,7 +275,7 @@ namespace System.Windows.Documents
 
         internal static string StringToXMLAttribute(string s)
         {
-            if (s.IndexOf('"') == -1)
+            if (!s.Contains('"'))
             {
                 return s;
             }

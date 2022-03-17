@@ -110,7 +110,7 @@ namespace MS.Internal
                 else
                 {
                     // Parse content type similar to - type/subtype ; param1=value1 ; param2=value2 ; param3="value3"
-                    ParseTypeAndSubType(contentType.Substring(0, semiColonIndex));
+                    ParseTypeAndSubType(contentType.AsSpan(0, semiColonIndex));
                     ParseParameterAndValue(contentType.Substring(semiColonIndex));
                 }
             }
@@ -282,7 +282,7 @@ namespace MS.Internal
                    || String.CompareOrdinal(_subType, String.Empty) != 0);
             
                 StringBuilder stringBuilder = new StringBuilder(_type);
-                stringBuilder.Append(_forwardSlashSeparator[0]);
+                stringBuilder.Append('/');
                 stringBuilder.Append(_subType);
 
                 if (_parameterDictionary != null && _parameterDictionary.Count > 0)
@@ -420,18 +420,20 @@ namespace MS.Internal
         /// </summary>
         /// <param name="typeAndSubType">substring that has the type and subType of the content type</param>
         /// <exception cref="ArgumentException">If the typeAndSubType parameter does not have the "/" character</exception>
-        private void ParseTypeAndSubType(string typeAndSubType)
+        private void ParseTypeAndSubType(ReadOnlySpan<char> typeAndSubType)
         {
             //okay to trim at this point the end of the string as Linear White Spaces(LWS) chars are allowed here.
             typeAndSubType = typeAndSubType.TrimEnd(_LinearWhiteSpaceChars);
 
-            string[] splitBasedOnForwardSlash = typeAndSubType.Split(_forwardSlashSeparator);
-
-            if (splitBasedOnForwardSlash.Length != 2)
+            int forwardSlashPos = typeAndSubType.IndexOf('/');
+            if (forwardSlashPos < 0 || // no slashes
+                typeAndSubType.Slice(forwardSlashPos + 1).IndexOf('/') >= 0) // more than one slash
+            {
                 throw new ArgumentException(SR.Get(SRID.InvalidTypeSubType));
+            }
 
-            _type    = ValidateToken(splitBasedOnForwardSlash[0]);
-            _subType = ValidateToken(splitBasedOnForwardSlash[1]);
+            _type    = ValidateToken(typeAndSubType.Slice(0, forwardSlashPos).ToString());
+            _subType = ValidateToken(typeAndSubType.Slice(forwardSlashPos + 1).ToString());
         }
 
         /// <summary>
@@ -731,8 +733,6 @@ namespace MS.Internal
            '.' /*46*/, '^' /*94*/ , '_'  /*95*/,
            '`' /*96*/, '|' /*124*/, '~'  /*126*/, 
          };
-
-        private static readonly char[]     _forwardSlashSeparator = { '/' };
         
         //Linear White Space characters
         private static readonly char[]     _LinearWhiteSpaceChars = 

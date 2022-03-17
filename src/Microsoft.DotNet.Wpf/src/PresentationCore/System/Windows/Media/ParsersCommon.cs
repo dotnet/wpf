@@ -435,11 +435,13 @@ namespace MS.Internal.Markup
             }
             else
             {
-                string subString = _pathString.Substring(start, _curIndex - start);
-
                 try
                 {
-                    return System.Convert.ToDouble(subString, _formatProvider);
+#if PRESENTATION_CORE
+                    return double.Parse(_pathString.AsSpan(start, _curIndex - start), provider: _formatProvider);
+#else
+                    return double.Parse(_pathString.Substring(start, _curIndex - start), provider: _formatProvider);
+#endif
                 }
                 catch (FormatException except)
                 {
@@ -691,9 +693,9 @@ namespace MS.Internal.Markup
                             large,
 #if PBTCOMPILER
                             sweep,
-#else                            
+#else
                             sweep ? SweepDirection.Clockwise : SweepDirection.Counterclockwise,
-#endif                             
+#endif
                             IsStroked,
                             ! IsSmoothJoin
                             );

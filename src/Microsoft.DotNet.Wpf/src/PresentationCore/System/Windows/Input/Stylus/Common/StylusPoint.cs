@@ -22,7 +22,7 @@ namespace System.Windows.Input
     /// </summary>
     public struct StylusPoint : IEquatable<StylusPoint>
     {
-        internal static readonly float DefaultPressure = 0.5f;
+        internal const float DefaultPressure = 0.5f;
 
 
         private double _x;

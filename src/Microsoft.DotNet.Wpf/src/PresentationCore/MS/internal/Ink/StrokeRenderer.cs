@@ -1122,8 +1122,8 @@ namespace MS.Internal.Ink
         }
 
         // Opacity for highlighter container visuals
-        internal static readonly double HighlighterOpacity = 0.5;
-        internal static readonly byte SolidStrokeAlpha = 0xFF;
+        internal const double HighlighterOpacity = 0.5;
+        internal const byte SolidStrokeAlpha = 0xFF;
         internal static readonly Point ArcToMarker = new Point(Double.MinValue, Double.MinValue);
 
         /// <summary>

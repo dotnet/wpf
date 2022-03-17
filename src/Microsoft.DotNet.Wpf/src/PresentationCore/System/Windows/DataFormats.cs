@@ -274,11 +274,11 @@ namespace System.Windows
         /// format is to store the permission set of the source application where the content came from.
         /// This is then compared at paste time
         /// </summary>
-        internal static readonly string ApplicationTrust = "ApplicationTrust";
+        internal const string ApplicationTrust = "ApplicationTrust";
 
-        internal static readonly string FileName = "FileName";
-        internal static readonly string FileNameW = "FileNameW";
-        
+        internal const string FileName = "FileName";
+        internal const string FileNameW = "FileNameW";
+
         #endregion  Internal Fields
 
         //------------------------------------------------------

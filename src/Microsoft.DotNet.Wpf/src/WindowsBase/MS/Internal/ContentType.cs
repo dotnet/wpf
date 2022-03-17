@@ -442,9 +442,9 @@ namespace MS.Internal
         /// <param name="parameterAndValue">This string has the parameter and value pair of the form
         /// parameter=value</param>
         /// <exception cref="ArgumentException">If the string does not have the required "="</exception>
-        private void ParseParameterAndValue(string parameterAndValue)
+        private void ParseParameterAndValue(ReadOnlySpan<char> parameterAndValue)
         {
-            while (String.CompareOrdinal(parameterAndValue, String.Empty) != 0)
+            while (!parameterAndValue.IsEmpty)
             {
                 //At this point the first character MUST be a semi-colon
                 //First time through this test is serving more as an assert.
@@ -458,7 +458,7 @@ namespace MS.Internal
                     throw new ArgumentException(SR.Get(SRID.ExpectingParameterValuePairs));
 
                 //Removing the leading ; from the string
-                parameterAndValue = parameterAndValue.Substring(1);
+                parameterAndValue = parameterAndValue.Slice(1);
 
                 //okay to trim start as there can be spaces before the begining
                 //of the parameter name.
@@ -477,10 +477,10 @@ namespace MS.Internal
                 EnsureParameterDictionary();
 
                 _parameterDictionary.Add(
-                    ValidateToken(parameterAndValue.Substring(0, equalSignIndex)),
-                    ValidateQuotedStringOrToken(parameterAndValue.Substring(parameterStartIndex, parameterValueLength)));
+                    ValidateToken(parameterAndValue.Slice(0, equalSignIndex).ToString()),
+                    ValidateQuotedStringOrToken(parameterAndValue.Slice(parameterStartIndex, parameterValueLength).ToString()));
 
-                parameterAndValue = parameterAndValue.Substring(parameterStartIndex + parameterValueLength).TrimStart(_LinearWhiteSpaceChars);
+                parameterAndValue = parameterAndValue.Slice(parameterStartIndex + parameterValueLength).TrimStart(_LinearWhiteSpaceChars);
             }
         }
 
@@ -490,34 +490,31 @@ namespace MS.Internal
         /// <param name="s"></param>
         /// <param name="startIndex">Starting index for parsing</param>
         /// <returns></returns>
-        private static int GetLengthOfParameterValue(string s, int startIndex)
+        private static int GetLengthOfParameterValue(ReadOnlySpan<char> s, int startIndex)
         {
             Debug.Assert(s != null);
 
-            int length = 0;
+            int length;
             
             //if the parameter value does not start with a '"' then,
             //we expect a valid token. So we look for Linear White Spaces or
             //a ';' as the terminator for the token value.
             if (s[startIndex] != '"')
             {
-                int semicolonIndex = s.IndexOf(_semicolonSeparator, startIndex);
+                int semicolonIndex = s.Slice(startIndex).IndexOf(_semicolonSeparator);
 
                 if (semicolonIndex != -1)
                 {
-                    int lwsIndex = s.IndexOfAny(_LinearWhiteSpaceChars, startIndex);
-                    if (lwsIndex != -1 && lwsIndex < semicolonIndex)
-                        length = lwsIndex;
-                    else
-                        length = semicolonIndex;
+                    int lwsIndex = s.Slice(startIndex).IndexOfAny(_LinearWhiteSpaceChars);
+                    length = lwsIndex != -1 && lwsIndex < semicolonIndex ? lwsIndex : semicolonIndex;
+                    length += startIndex; // the indexes from IndexOf{Any} are based on slicing from startIndex
                 }
                 else
-                    length = semicolonIndex;
-
-                //If there is no linear white space found we treat the entire remaining string as 
-                //parameter value.
-                if (length == -1)
+                {
+                    //If there is no linear white space found we treat the entire remaining string as 
+                    //parameter value.
                     length = s.Length;
+                }
             }
             else
             {
@@ -528,10 +525,12 @@ namespace MS.Internal
 
                 while (!found)
                 {
-                    length = s.IndexOf('"', ++length);
+                    int startingLength = ++length;
+                    length = s.Slice(startingLength).IndexOf('"');
 
                     if (length == -1)
                         throw new ArgumentException(SR.Get(SRID.InvalidParameterValue));
+                    length += startingLength; // IndexOf result is based on slicing from startingLength
 
                     if (s[length - 1] != '\\')
                     {
@@ -586,7 +585,7 @@ namespace MS.Internal
             if (parameterValue.Length >= 2 && 
                 parameterValue.StartsWith(_quote, StringComparison.Ordinal) && 
                 parameterValue.EndsWith(_quote, StringComparison.Ordinal))
-                ValidateQuotedText(parameterValue.Substring(1, parameterValue.Length-2));
+                ValidateQuotedText(parameterValue.AsSpan(1, parameterValue.Length-2));
             else
                 ValidateToken(parameterValue);
 
@@ -597,7 +596,7 @@ namespace MS.Internal
         /// This method validates if the text in the quoted string
         /// </summary>
         /// <param name="quotedText"></param>
-        private static void ValidateQuotedText(string quotedText)
+        private static void ValidateQuotedText(ReadOnlySpan<char> quotedText)
         {
             //empty is okay
 
@@ -639,37 +638,9 @@ namespace MS.Internal
         /// </summary>
         /// <param name="character">input character</param>
         /// <returns></returns>
-        private static bool IsAsciiLetterOrDigit(char character)
-        {
-            if (IsAsciiLetter(character))
-            {
-                return true;
-            }
-            if (character >= '0')
-            {
-                return (character <= '9');
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Returns true if the input character is an ASCII letter
-        /// Returns false if the input character is not an ASCII letter
-        /// </summary>
-        /// <param name="character">input character</param>
-        /// <returns></returns>
-        private static bool IsAsciiLetter(char character)
-        {
-            if ((character >= 'a') && (character <= 'z'))
-            {
-                return true;
-            }
-            if (character >= 'A')
-            {
-                return (character <= 'Z');
-            }
-            return false;
-        }
+        private static bool IsAsciiLetterOrDigit(char character) =>
+            ((((uint)character - 'A') & ~0x20) < 26) ||
+            (((uint)character - '0') < 10);
  
         /// <summary>
         /// Returns true if the input character is one of the Linear White Space characters - 

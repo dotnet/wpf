@@ -68,7 +68,7 @@ namespace System.IO.Packaging
             if (_traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " + 
                         "PackWebRequestFactory - responding to uri: " + uri);
 #endif
             // only inspect cache if part name is present because cache only contains an object, not
@@ -107,7 +107,7 @@ namespace System.IO.Packaging
                     if (_traceSwitch.Enabled)
                         System.Diagnostics.Trace.TraceInformation(
                                 DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + 
+                                Environment.CurrentManagedThreadId + ": " + 
                                 "PackWebRequestFactory - cache hit - returning CachedPackWebRequest");
 #endif
                     // use the cached object
@@ -120,7 +120,7 @@ namespace System.IO.Packaging
             if (_traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " + 
                         "PackWebRequestFactory - spawning regular PackWebRequest");
 #endif
             return new PackWebRequest(uri, packageUri, partUri);

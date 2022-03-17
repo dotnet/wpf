@@ -4855,7 +4855,7 @@ namespace System.Windows.Documents
                 {
                     if (needSeparator)
                     {
-                        sb.Append("/");
+                        sb.Append('/');
                     }
 
                     string name = t.ToString();

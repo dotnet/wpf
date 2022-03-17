@@ -507,7 +507,7 @@ namespace System.Windows.Documents
         {
             while (nCount >= 1000)
             {
-                sb.Append("M");
+                sb.Append('M');
                 nCount -= 1000;
             }
 
@@ -523,7 +523,7 @@ namespace System.Windows.Documents
                 case 6:
                     sb.Append("DC"); break;
                 case 5:
-                    sb.Append("D"); break;
+                    sb.Append('D'); break;
                 case 4:
                     sb.Append("CD"); break;
                 case 3:
@@ -531,7 +531,7 @@ namespace System.Windows.Documents
                 case 2:
                     sb.Append("CC"); break;
                 case 1:
-                    sb.Append("C"); break;
+                    sb.Append('C'); break;
                 case 0:
                     break;
             }
@@ -549,7 +549,7 @@ namespace System.Windows.Documents
                 case 6:
                     sb.Append("LX"); break;
                 case 5:
-                    sb.Append("L"); break;
+                    sb.Append('L'); break;
                 case 4:
                     sb.Append("XL"); break;
                 case 3:
@@ -557,7 +557,7 @@ namespace System.Windows.Documents
                 case 2:
                     sb.Append("XX"); break;
                 case 1:
-                    sb.Append("X"); break;
+                    sb.Append('X'); break;
                 case 0:
                     break;
             }
@@ -575,7 +575,7 @@ namespace System.Windows.Documents
                 case 6:
                     sb.Append("VI"); break;
                 case 5:
-                    sb.Append("V"); break;
+                    sb.Append('V'); break;
                 case 4:
                     sb.Append("IV"); break;
                 case 3:
@@ -583,7 +583,7 @@ namespace System.Windows.Documents
                 case 2:
                     sb.Append("II"); break;
                 case 1:
-                    sb.Append("I"); break;
+                    sb.Append('I'); break;
                 case 0:
                     break;
             }
@@ -2178,14 +2178,14 @@ namespace System.Windows.Documents
             else
             {
                 sb.Append(Converters.TwipToPositiveVisiblePxString(BorderLeft.EffectiveWidth));
-                sb.Append(",");
+                sb.Append(',');
                 sb.Append(Converters.TwipToPositiveVisiblePxString(BorderTop.EffectiveWidth));
-                sb.Append(",");
+                sb.Append(',');
                 sb.Append(Converters.TwipToPositiveVisiblePxString(BorderRight.EffectiveWidth));
-                sb.Append(",");
+                sb.Append(',');
                 sb.Append(Converters.TwipToPositiveVisiblePxString(BorderBottom.EffectiveWidth));
             }
-            sb.Append("\"");
+            sb.Append('"');
 
             ColorTableEntry entry = null;
             if (CF >= 0)
@@ -2197,7 +2197,7 @@ namespace System.Windows.Documents
             {
                 sb.Append(" BorderBrush=\"");
                 sb.Append(entry.Color.ToString());
-                sb.Append("\"");
+                sb.Append('"');
             }
             else
             {
@@ -2208,7 +2208,7 @@ namespace System.Windows.Documents
             {
                 sb.Append(" Padding=\"");
                 sb.Append(Converters.TwipToPositivePxString(Spacing));
-                sb.Append("\"");
+                sb.Append('"');
             }
 
             return sb.ToString();
@@ -2751,13 +2751,13 @@ namespace System.Windows.Documents
             // Left,Top,Right,Bottom
             sb.Append(" BorderThickness=\"");
             sb.Append(Converters.TwipToPositiveVisiblePxString(BorderLeft.EffectiveWidth));
-            sb.Append(",");
+            sb.Append(',');
             sb.Append(Converters.TwipToPositiveVisiblePxString(BorderTop.EffectiveWidth));
-            sb.Append(",");
+            sb.Append(',');
             sb.Append(Converters.TwipToPositiveVisiblePxString(BorderRight.EffectiveWidth));
-            sb.Append(",");
+            sb.Append(',');
             sb.Append(Converters.TwipToPositiveVisiblePxString(BorderBottom.EffectiveWidth));
-            sb.Append("\"");
+            sb.Append('"');
 
             // Only grab one color
             ColorTableEntry entry = null;
@@ -2770,7 +2770,7 @@ namespace System.Windows.Documents
             {
                 sb.Append(" BorderBrush=\"");
                 sb.Append(entry.Color.ToString(CultureInfo.InvariantCulture));
-                sb.Append("\"");
+                sb.Append('"');
             }
             else
             {
@@ -2788,13 +2788,13 @@ namespace System.Windows.Documents
             // Left,Top,Right,Bottom
             sb.Append(" Padding=\"");
             sb.Append(Converters.TwipToPositivePxString(PaddingLeft));
-            sb.Append(",");
+            sb.Append(',');
             sb.Append(Converters.TwipToPositivePxString(PaddingTop));
-            sb.Append(",");
+            sb.Append(',');
             sb.Append(Converters.TwipToPositivePxString(PaddingRight));
-            sb.Append(",");
+            sb.Append(',');
             sb.Append(Converters.TwipToPositivePxString(PaddingBottom));
-            sb.Append("\"");
+            sb.Append('"');
 
             return sb.ToString();
         }
@@ -4858,7 +4858,7 @@ namespace System.Windows.Documents
                 {
                     sb.Append("Strikethrough");
                 }
-                sb.Append("\"");
+                sb.Append('"');
             }
 
             if (fsThis.Font != fsParent.Font && fsThis.Font >= 0)
@@ -4881,7 +4881,7 @@ namespace System.Windows.Documents
                         sb.Append(entry.Name);
                     }
 
-                    sb.Append("\"");
+                    sb.Append('"');
                 }
             }
 
@@ -4929,7 +4929,7 @@ namespace System.Windows.Documents
                 {
                     sb.Append(" Foreground=\"");
                     sb.Append(entry.Color.ToString());
-                    sb.Append("\"");
+                    sb.Append('"');
                 }
             }
 
@@ -4941,7 +4941,7 @@ namespace System.Windows.Documents
                     CultureInfo ci = new CultureInfo((int)fsThis.LangCur);
                     sb.Append(" xml:lang=\"");
                     sb.Append(ci.Name);
-                    sb.Append("\"");
+                    sb.Append('"');
                 }
                 catch (System.ArgumentException)
                 {
@@ -5045,7 +5045,7 @@ namespace System.Windows.Documents
                                 xamlStringBuilder.Append("&#x");
                                 int ic = (int)text[currentIndex];
                                 xamlStringBuilder.Append(ic.ToString("x", CultureInfo.InvariantCulture));
-                                xamlStringBuilder.Append(";");
+                                xamlStringBuilder.Append(';');
                                 break;
 
                             default:
@@ -5096,13 +5096,13 @@ namespace System.Windows.Documents
             // Do I need to wrap a font around this?
             if (IsEmptyNode && RequiresXamlFontProperties())
             {
-                xamlStringBuilder.Append("<");
+                xamlStringBuilder.Append('<');
                 xamlStringBuilder.Append(XamlNames[(int)DocumentNodeType.dnInline]);
                 AppendXamlFontProperties(converterState, xamlStringBuilder);
-                xamlStringBuilder.Append(">");
+                xamlStringBuilder.Append('>');
             }
 
-            xamlStringBuilder.Append("<");
+            xamlStringBuilder.Append('<');
             xamlStringBuilder.Append(GetTagName());
 
             switch (Type)
@@ -5141,14 +5141,14 @@ namespace System.Windows.Documents
                 xamlStringBuilder.Append(" /");
             }
 
-            xamlStringBuilder.Append(">");
+            xamlStringBuilder.Append('>');
 
             // Do I need to wrap a font around this?
             if (IsEmptyNode && RequiresXamlFontProperties())
             {
                 xamlStringBuilder.Append("</");
                 xamlStringBuilder.Append(XamlNames[(int)DocumentNodeType.dnInline]);
-                xamlStringBuilder.Append(">");
+                xamlStringBuilder.Append('>');
             }
 
             // Anything after the start tag?
@@ -5176,7 +5176,7 @@ namespace System.Windows.Documents
                 CellFormat cf = rf.RowCellFormat;
                 xamlStringBuilder.Append(" CellSpacing=\"");
                 xamlStringBuilder.Append(Converters.TwipToPositiveVisiblePxString(cf.SpacingLeft));
-                xamlStringBuilder.Append("\"");
+                xamlStringBuilder.Append('"');
                 xamlStringBuilder.Append(" Margin=\"");
                 xamlStringBuilder.Append(Converters.TwipToPositivePxString(rf.Trleft));
                 xamlStringBuilder.Append(",0,0,0\"");
@@ -5205,7 +5205,7 @@ namespace System.Windows.Documents
                 {
                     xamlStringBuilder.Append(" Background=\"");
                     xamlStringBuilder.Append(cToUse.ToString(CultureInfo.InvariantCulture));
-                    xamlStringBuilder.Append("\"");
+                    xamlStringBuilder.Append('"');
                 }
 
                 if (cf.HasBorder)
@@ -5221,13 +5221,13 @@ namespace System.Windows.Documents
             {
                 xamlStringBuilder.Append(" ColumnSpan=\"");
                 xamlStringBuilder.Append(ColSpan.ToString(CultureInfo.InvariantCulture));
-                xamlStringBuilder.Append("\"");
+                xamlStringBuilder.Append('"');
             }
             if (RowSpan > 1)
             {
                 xamlStringBuilder.Append(" RowSpan=\"");
                 xamlStringBuilder.Append(RowSpan.ToString(CultureInfo.InvariantCulture));
-                xamlStringBuilder.Append("\"");
+                xamlStringBuilder.Append('"');
             }
         }
 
@@ -5255,7 +5255,7 @@ namespace System.Windows.Documents
             {
                 xamlStringBuilder.Append(" Background=\"");
                 xamlStringBuilder.Append(cToUse.ToString(CultureInfo.InvariantCulture));
-                xamlStringBuilder.Append("\"");
+                xamlStringBuilder.Append('"');
             }
 
             // Handle paragraph direction
@@ -5264,13 +5264,13 @@ namespace System.Windows.Documents
             // Handle paragraph margins
             xamlStringBuilder.Append(" Margin=\"");
             xamlStringBuilder.Append(Converters.TwipToPositivePxString(NearMargin));
-            xamlStringBuilder.Append(",");
+            xamlStringBuilder.Append(',');
             xamlStringBuilder.Append(Converters.TwipToPositivePxString(fsThis.SB));
-            xamlStringBuilder.Append(",");
+            xamlStringBuilder.Append(',');
             xamlStringBuilder.Append(Converters.TwipToPositivePxString(FarMargin));
-            xamlStringBuilder.Append(",");
+            xamlStringBuilder.Append(',');
             xamlStringBuilder.Append(Converters.TwipToPositivePxString(fsThis.SA));
-            xamlStringBuilder.Append("\"");
+            xamlStringBuilder.Append('"');
 
             // FontFamily, Size, Bold, Italic
             AppendXamlFontProperties(converterState, xamlStringBuilder);
@@ -5296,7 +5296,7 @@ namespace System.Windows.Documents
             {
                 xamlStringBuilder.Append(" TextIndent=\"");
                 xamlStringBuilder.Append(Converters.TwipToPxString(fsThis.FI));
-                xamlStringBuilder.Append("\"");
+                xamlStringBuilder.Append('"');
             }
 
             // Handle paragraph alignment
@@ -5304,7 +5304,7 @@ namespace System.Windows.Documents
             {
                 xamlStringBuilder.Append(" TextAlignment=\"");
                 xamlStringBuilder.Append(Converters.AlignmentToString(fsThis.HAlign, fsThis.DirPara));
-                xamlStringBuilder.Append("\"");
+                xamlStringBuilder.Append('"');
             }
 
             // Handle paragraph borders
@@ -5346,14 +5346,14 @@ namespace System.Windows.Documents
             // Marker style
             xamlStringBuilder.Append(" MarkerStyle=\"");
             xamlStringBuilder.Append(Converters.MarkerStyleToString(FormatState.Marker));
-            xamlStringBuilder.Append("\"");
+            xamlStringBuilder.Append('"');
 
             // Note that we don't allow a value of zero here, since XAML doesn't support it.
             if (FormatState.StartIndex > 0 && FormatState.StartIndex != 1)
             {
                 xamlStringBuilder.Append(" StartIndex=\"");
                 xamlStringBuilder.Append(FormatState.StartIndex.ToString(CultureInfo.InvariantCulture));
-                xamlStringBuilder.Append("\"");
+                xamlStringBuilder.Append('"');
             }
 
             // Handle direction
@@ -5366,7 +5366,7 @@ namespace System.Windows.Documents
             {
                 xamlStringBuilder.Append(" NavigateUri=\"");
                 xamlStringBuilder.Append(Converters.StringToXMLAttribute(NavigateUri));
-                xamlStringBuilder.Append("\"");
+                xamlStringBuilder.Append('"');
             }
         }
 
@@ -5430,7 +5430,7 @@ namespace System.Windows.Documents
 
             xamlStringBuilder.Append("</");
             xamlStringBuilder.Append(GetTagName());
-            xamlStringBuilder.Append(">");
+            xamlStringBuilder.Append('>');
 
             if (IsBlock)
             {
@@ -5460,7 +5460,7 @@ namespace System.Windows.Documents
                 {
                     xamlStringBuilder.Append(" Background=\"");
                     xamlStringBuilder.Append(entry.Color.ToString());
-                    xamlStringBuilder.Append("\"");
+                    xamlStringBuilder.Append('"');
                 }
             }
 
@@ -5489,7 +5489,7 @@ namespace System.Windows.Documents
                 xamlStringBuilder.Append(" Typography.Variants=\"Subscript\"");
             }
 
-            xamlStringBuilder.Append(">");
+            xamlStringBuilder.Append('>');
 
             Xaml = xamlStringBuilder.ToString();
         }
@@ -8507,7 +8507,7 @@ namespace System.Windows.Documents
             }
             if (sBookmark != null)
             {
-                sb.Append("#");
+                sb.Append('#');
                 sb.Append(sBookmark);
             }
 
@@ -8760,7 +8760,7 @@ namespace System.Windows.Documents
                     width = formatState.ImageWidth;
                 }
                 imageStringBuilder.Append(width.ToString(CultureInfo.InvariantCulture));
-                imageStringBuilder.Append("\"");
+                imageStringBuilder.Append('"');
 
                 // Add the xaml image height property
                 imageStringBuilder.Append(" Height=\"");
@@ -8774,7 +8774,7 @@ namespace System.Windows.Documents
                     height = formatState.ImageHeight;
                 }
                 imageStringBuilder.Append(height.ToString(CultureInfo.InvariantCulture));
-                imageStringBuilder.Append("\"");
+                imageStringBuilder.Append('"');
 
                 // Add the xaml image baseline offset property
                 if (formatState.IncludeImageBaselineOffset == true)
@@ -8782,16 +8782,16 @@ namespace System.Windows.Documents
                     double baselineOffset = height - formatState.ImageBaselineOffset;
                     imageStringBuilder.Append(" TextBlock.BaselineOffset=\"");
                     imageStringBuilder.Append(baselineOffset.ToString(CultureInfo.InvariantCulture));
-                    imageStringBuilder.Append("\"");
+                    imageStringBuilder.Append('"');
                 }
 
                 // Add the xaml image stretch property
                 imageStringBuilder.Append(" Stretch=\"Fill");
-                imageStringBuilder.Append("\"");
+                imageStringBuilder.Append('"');
 
 
                 // Add the xaml image close tag
-                imageStringBuilder.Append(">");
+                imageStringBuilder.Append('>');
 
                 // Add the image source property as the complex property
                 // This is for specifying BitmapImage.CacheOption as OnLoad instead of

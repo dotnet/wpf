@@ -1915,7 +1915,7 @@ namespace System.Windows.Markup
             valueBuilder.Append(_clrNamespace);
             valueBuilder.Append("\" Assembly=\"");
             valueBuilder.Append(_assemblyName);
-            valueBuilder.Append("\"");
+            valueBuilder.Append('"');
             _value = valueBuilder.ToString();
         }
 

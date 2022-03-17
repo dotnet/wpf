@@ -12262,7 +12262,7 @@ namespace System.Windows.Controls
                 {
                     if (needSeparator)
                     {
-                        sb.Append("/");
+                        sb.Append('/');
                     }
 
                     ReadOnlySpan<char> name = t.ToString();

@@ -545,7 +545,7 @@ namespace MS.Internal.FontCache
             for (int i = 0; i < SupportedExtensions.Length; ++i)
             {
                 string supportedExtension = SupportedExtensions[i];
-                if (String.Compare(extension, supportedExtension, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(extension, supportedExtension, StringComparison.OrdinalIgnoreCase))
                 {
                     isComposite = (i == 0); // First array entry is *.CompositeFont
                     return true;
@@ -557,7 +557,7 @@ namespace MS.Internal.FontCache
 
         internal static bool IsCompositeFont(string extension)
         {
-            return (String.Compare(extension, CompositeFontExtension, StringComparison.OrdinalIgnoreCase) == 0);
+            return (string.Equals(extension, CompositeFontExtension, StringComparison.OrdinalIgnoreCase));
         }
 
         internal static bool IsEnumerableFontUriScheme(Uri fontLocation)

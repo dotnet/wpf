@@ -140,7 +140,7 @@ namespace MS.Internal.FontCache
             {
                 for (int i = 0; i < _legacyArabicFonts.Length; ++i)
                 {
-                    if (String.Compare(familyName, _legacyArabicFonts[i], StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(familyName, _legacyArabicFonts[i], StringComparison.OrdinalIgnoreCase))
                     {
                         return true;
                     }
@@ -270,7 +270,7 @@ namespace MS.Internal.FontCache
             {
                 for (int i = 0; i < _systemCompositeFontsNames.Length; ++i)
                 {
-                    if (String.Compare(_systemCompositeFontsNames[i], familyName, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(_systemCompositeFontsNames[i], familyName, StringComparison.OrdinalIgnoreCase))
                     {
                         return i;
                     }
@@ -447,7 +447,7 @@ namespace MS.Internal.FontCache
                 {
                     foreach (KeyValuePair<XmlLanguage, string> localizedFamilyName in compositeFamily.FamilyNames)
                     {
-                        if (String.Compare(localizedFamilyName.Value, familyName, StringComparison.OrdinalIgnoreCase) == 0)
+                        if (string.Equals(localizedFamilyName.Value, familyName, StringComparison.OrdinalIgnoreCase))
                         {
                             return compositeFamily;
                         }

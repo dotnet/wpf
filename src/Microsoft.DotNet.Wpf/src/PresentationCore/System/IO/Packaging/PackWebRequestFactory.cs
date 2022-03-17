@@ -61,7 +61,7 @@ namespace System.IO.Packaging
 
             // Ensure uri is correct scheme because we can be called directly.  Case sensitive
             // is fine because Uri.Scheme contract is to return in lower case only.
-            if (String.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal) != 0)
+            if (!string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal))
                 throw new ArgumentException(SR.Get(SRID.UriSchemeMismatch, PackUriHelper.UriSchemePack), "uri");
 
 #if DEBUG
@@ -140,7 +140,7 @@ namespace System.IO.Packaging
         [FriendAccessAllowed]
         internal static WebRequest CreateWebRequest(Uri uri)
         {
-            if (String.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal) == 0)
+            if (string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal))
             {
                 return ((IWebRequestCreate) _factorySingleton).Create(uri);
             }

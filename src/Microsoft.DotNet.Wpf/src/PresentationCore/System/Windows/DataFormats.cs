@@ -94,7 +94,7 @@ namespace System.Windows
 
                     formatItem = (DataFormat)_formatList[n];
 
-                    if (String.Compare(formatItem.Name, format, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(formatItem.Name, format, StringComparison.OrdinalIgnoreCase))
                     {
                         return formatItem;
                     }

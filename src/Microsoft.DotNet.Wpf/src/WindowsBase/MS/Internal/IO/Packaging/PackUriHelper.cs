@@ -213,7 +213,7 @@ namespace MS.Internal.IO.Packaging
 
         private static ArgumentException GetExceptionIfFragmentPresent(string partName)
         {
-            if (partName.Contains("#"))
+            if (partName.Contains('#'))
                 return new ArgumentException(SR.Get(SRID.PartUriCannotHaveAFragment));
             else
                 return null;

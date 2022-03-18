@@ -1177,8 +1177,10 @@ namespace System.Xaml
         {
             bool foundNew = false;
             IList<XmlNsInfo.XmlNsDefinition> xmlnsDefs = nsInfo.NsDefs;
-            foreach (XmlNsInfo.XmlNsDefinition xmlnsDef in xmlnsDefs)
+            int xmlnsDefsCount = xmlnsDefs.Count;
+            for (int i = 0; i < xmlnsDefsCount; i++)
             {
+                XmlNsInfo.XmlNsDefinition xmlnsDef = xmlnsDefs[i];
                 AssemblyNamespacePair pair = new AssemblyNamespacePair(nsInfo.Assembly, xmlnsDef.ClrNamespace);
                 XamlNamespace ns = GetXamlNamespace(xmlnsDef.XmlNamespace);
                 ns.AddAssemblyNamespacePair(pair);

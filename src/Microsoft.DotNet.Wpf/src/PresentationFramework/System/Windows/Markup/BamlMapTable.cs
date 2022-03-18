@@ -65,7 +65,7 @@ namespace System.Windows.Markup
         // Known Types are used to bypass the cost of reflection for the
         // types introduced by the system.
 
-#region Constructor
+        #region Constructor
 
         internal BamlMapTable(XamlTypeMapper xamlTypeMapper)
         {
@@ -80,9 +80,9 @@ namespace System.Windows.Markup
             _knownAssemblyInfoRecord.AssemblyFullName = _knownAssemblyInfoRecord.Assembly.FullName;
         }
 
-#endregion Constructor
+        #endregion Constructor
 
-#region KnownTypes
+        #region KnownTypes
 
 #if !PBTCOMPILER
         // Creates an instance of a known type given the inverse of the known type ID. (which
@@ -127,7 +127,7 @@ namespace System.Windows.Markup
 
             while (low <= high)
             {
-                int probe = (high+low) / 2;
+                int probe = (high + low) / 2;
                 Type probeType = KnownTypes.Types[probe];
                 int cmp = String.CompareOrdinal(typeShortName, probeType.Name);
                 if (cmp == 0)
@@ -141,7 +141,7 @@ namespace System.Windows.Markup
                     if (probeType.Namespace == clrNamespace)
 #endif
                     {
-                        return (short) -probe;
+                        return (short)-probe;
                     }
                     else
                     {
@@ -184,16 +184,16 @@ namespace System.Windows.Markup
             {
                 if (_knownStrings[i] == stringValue)
                 {
-                    return (short) -i;
+                    return (short)-i;
                 }
             }
 
             // return 0 if it is not a known string.
             return 0;
         }
-#endregion KnownTypes
+        #endregion KnownTypes
 
-#region KnownConverters
+        #region KnownConverters
 
         // Known Converters are used to avoid the cost of reflecting for
         // custom attributes on commonly used TypeConverters at load time.
@@ -332,7 +332,7 @@ namespace System.Windows.Markup
         // Return null if there is no property level converter.  In that case, the type
         // level converter is normally used by calling GetKnownConverterTypeFromType()
         private static Type GetKnownConverterTypeFromPropName(
-            Type   propOwnerType,
+            Type propOwnerType,
             string propName)
         {
             short idNumber = GetKnownTypeIdFromType(propOwnerType);
@@ -352,9 +352,9 @@ namespace System.Windows.Markup
             return KnownTypes.Types[(int)converterId];
         }
 
-#endregion KnownConverters
+        #endregion KnownConverters
 
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
         // This is called when a parse is begun when the very first baml record is
@@ -1027,7 +1027,7 @@ namespace System.Windows.Markup
             key.AssemblyFullName = assemblyFullName;
 
             BamlAssemblyInfoRecord bamlAssemblyInfoRecord =
-                (BamlAssemblyInfoRecord) GetHashTableData(key);
+                (BamlAssemblyInfoRecord)GetHashTableData(key);
 
             if (null == bamlAssemblyInfoRecord)
             {
@@ -1066,11 +1066,11 @@ namespace System.Windows.Markup
                         }
                     }
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     if (CriticalExceptions.IsCriticalException(e))
                     {
-                       throw;
+                        throw;
                     }
 
                     // It is possible that the we are writing out a record for the very same assembly
@@ -1079,9 +1079,9 @@ namespace System.Windows.Markup
 #endif
 
                 // review, could be a race condition here.
-                bamlAssemblyInfoRecord.AssemblyId = (short) AssemblyIdMap.Add(bamlAssemblyInfoRecord);
+                bamlAssemblyInfoRecord.AssemblyId = (short)AssemblyIdMap.Add(bamlAssemblyInfoRecord);
 
-                ObjectHashTable.Add(key,bamlAssemblyInfoRecord);
+                ObjectHashTable.Add(key, bamlAssemblyInfoRecord);
 
                 // Write to BAML
                 bamlAssemblyInfoRecord.Write(binaryWriter);
@@ -1096,7 +1096,7 @@ namespace System.Windows.Markup
                     bamlAssemblyInfoRecord.Assembly.FullName == bamlAssemblyInfoRecord.AssemblyFullName);
 
                 // review, could be a race condition here.
-                bamlAssemblyInfoRecord.AssemblyId = (short) AssemblyIdMap.Add(bamlAssemblyInfoRecord);
+                bamlAssemblyInfoRecord.AssemblyId = (short)AssemblyIdMap.Add(bamlAssemblyInfoRecord);
 
                 // Write to BAML
                 bamlAssemblyInfoRecord.Write(binaryWriter);
@@ -1138,7 +1138,7 @@ namespace System.Windows.Markup
             // using a mapping PI.  In that case, add an assembly record to the object cache and
             // populate it with the required data.  Note that it DOES NOT have a valid AssemblyId
             // and this is not written out the the baml stream.
-            if (record == null )
+            if (record == null)
             {
                 record = new BamlAssemblyInfoRecord();
                 record.AssemblyFullName = fullName;
@@ -1152,8 +1152,8 @@ namespace System.Windows.Markup
         // assembly name and type full name.  The type full name must include
         // the entire clr namespace.
         private TypeInfoKey GetTypeInfoKey(
-                               string       assemblyFullName,
-                               string       typeFullName)
+                               string assemblyFullName,
+                               string typeFullName)
         {
             TypeInfoKey key = new TypeInfoKey();
             key.DeclaringAssembly = assemblyFullName;
@@ -1166,16 +1166,16 @@ namespace System.Windows.Markup
         // this type.  If so, set the returned id and answer true.  Otherwise answer false.
         internal bool GetTypeInfoId(
                              BinaryWriter binaryWriter,
-                             string       assemblyFullName,
-                             string       typeFullName,
-                         out short        typeId)
+                             string assemblyFullName,
+                             string typeFullName,
+                         out short typeId)
         {
             int dotIndex = typeFullName.LastIndexOf('.');
             string typeShortName;
             string typeClrNamespace;
             if (dotIndex >= 0)
             {
-                typeShortName = typeFullName.Substring(dotIndex+1);
+                typeShortName = typeFullName.Substring(dotIndex + 1);
                 typeClrNamespace = typeFullName.Substring(0, dotIndex);
             }
             else
@@ -1192,7 +1192,7 @@ namespace System.Windows.Markup
 
             TypeInfoKey key = GetTypeInfoKey(assemblyFullName, typeFullName);
 
-            BamlTypeInfoRecord bamlTypeInfoRecord = (BamlTypeInfoRecord) GetHashTableData(key);
+            BamlTypeInfoRecord bamlTypeInfoRecord = (BamlTypeInfoRecord)GetHashTableData(key);
 
             if (bamlTypeInfoRecord == null)
             {
@@ -1212,7 +1212,7 @@ namespace System.Windows.Markup
         internal short AddTypeInfoMap(BinaryWriter binaryWriter,
                                       string assemblyFullName,
                                       string typeFullName,
-                                      Type   elementType,
+                                      Type elementType,
                                       string serializerAssemblyFullName,
                                       string serializerTypeFullName)
         {
@@ -1249,10 +1249,10 @@ namespace System.Windows.Markup
             bamlTypeInfoRecord.IsInternalType = (elementType != null && ReflectionHelper.IsInternalType(elementType));
 
             // review, could be a race condition here.
-            bamlTypeInfoRecord.TypeId = (short) TypeIdMap.Add(bamlTypeInfoRecord);
+            bamlTypeInfoRecord.TypeId = (short)TypeIdMap.Add(bamlTypeInfoRecord);
 
             // add to the hash
-            ObjectHashTable.Add(key,bamlTypeInfoRecord);
+            ObjectHashTable.Add(key, bamlTypeInfoRecord);
 
             // Write to BAML
             bamlTypeInfoRecord.Write(binaryWriter);
@@ -1279,9 +1279,9 @@ namespace System.Windows.Markup
 
         // Return the key to use when inserting or extracting attribute information
         // from the object cache.
-        internal object GetAttributeInfoKey (
-            string    ownerTypeName,
-            string    attributeName)
+        internal object GetAttributeInfoKey(
+            string ownerTypeName,
+            string attributeName)
         {
             Debug.Assert(ownerTypeName != null);
             Debug.Assert(attributeName != null);
@@ -1296,7 +1296,7 @@ namespace System.Windows.Markup
             BinaryWriter binaryWriter,
             string assemblyFullName,                // Name of assembly for owning or declaring type
             string typeFullName,                    // Type name of object that owns or declares this attribute
-            Type   owningType,                      // Actual type of the object the owns or declares this attribute
+            Type owningType,                      // Actual type of the object the owns or declares this attribute
             string fieldName,                       // Name of the attribute
             Type attributeType,                     // Type of the attribute or property itself; not its owner type
             BamlAttributeUsage attributeUsage)      // Special flags for how this attribute is used.
@@ -1374,12 +1374,12 @@ namespace System.Windows.Markup
         // returns true if a serialiazer was found, else if a converter or nothing was found, returns false.
         internal bool GetCustomSerializerOrConverter(
                 BinaryWriter binaryWriter,
-                Type         ownerType,             // Type of object that owns or declares this attribute
-                Type         attributeType,         // Type of the attribute or property itself; not its owner type
-                object       piOrMi,                // PropertyInfo or AttachedPropertySetter corresponding to the attribute
-                string       fieldName,             // Name of the property
-            out short        converterOrSerializerTypeId,
-            out Type         converterOrSerializerType)
+                Type ownerType,             // Type of object that owns or declares this attribute
+                Type attributeType,         // Type of the attribute or property itself; not its owner type
+                object piOrMi,                // PropertyInfo or AttachedPropertySetter corresponding to the attribute
+                string fieldName,             // Name of the property
+            out short converterOrSerializerTypeId,
+            out Type converterOrSerializerType)
         {
             converterOrSerializerType = null;
             converterOrSerializerTypeId = 0;
@@ -1436,8 +1436,8 @@ namespace System.Windows.Markup
         // that corresponds to this, or if we have already added a string info record for
         // this value.  If so, set the returned id and answer true.  Otherwise answer false.
         internal bool GetStringInfoId(
-                 string    stringValue,
-             out Int16     stringId)
+                 string stringValue,
+             out Int16 stringId)
         {
             stringId = GetKnownStringIdFromName(stringValue);
 
@@ -1446,7 +1446,7 @@ namespace System.Windows.Markup
                 return true;
             }
 
-            BamlStringInfoRecord bamlStringInfoRecord = (BamlStringInfoRecord) GetHashTableData(stringValue);
+            BamlStringInfoRecord bamlStringInfoRecord = (BamlStringInfoRecord)GetHashTableData(stringValue);
 
             if (bamlStringInfoRecord == null)
             {
@@ -1539,8 +1539,8 @@ namespace System.Windows.Markup
         // Particular attributes do need to be tested for custom serialization
         // or type conversion. This method checks for those.
         private bool ShouldBypassCustomCheck(
-            Type    declaringType,  // Type of object that owns or declares this attribute
-            Type    attributeType) // Type of the attribute or property itself; not its owner type
+            Type declaringType,  // Type of object that owns or declares this attribute
+            Type attributeType) // Type of the attribute or property itself; not its owner type
         {
             // declaringType could be null/empty for some Style properties such as PropertyPath/Value/Target.
             if (declaringType == null)
@@ -1559,10 +1559,10 @@ namespace System.Windows.Markup
 
         // Returns a TypeConverter for a property.
         private Type GetCustomConverter(
-                object        piOrMi,             // PropertyInfo or AttachedPropertySetter for the attribute
-                Type          ownerType,          // Type of object that owns or declares this attribute
-                string        fieldName,          // Name of the attribute
-                Type          attributeType)      // Type of the attribute or property itself; not its owner type
+                object piOrMi,             // PropertyInfo or AttachedPropertySetter for the attribute
+                Type ownerType,          // Type of object that owns or declares this attribute
+                string fieldName,          // Name of the attribute
+                Type attributeType)      // Type of the attribute or property itself; not its owner type
         {
             // Check for known per property type converter
             Type converterType = GetKnownConverterTypeFromPropName(ownerType, fieldName);
@@ -1600,8 +1600,8 @@ namespace System.Windows.Markup
         // Returns a custom serializer Type & Id that is used to more
         // efficiently store the value of a "type" instance in binary format
         private Type GetCustomSerializer(
-                Type        type,
-            out short       converterOrSerializerTypeId)
+                Type type,
+            out short converterOrSerializerTypeId)
         {
             int index;
 
@@ -1674,7 +1674,7 @@ namespace System.Windows.Markup
         // if no item is found null is returned.
         internal Object GetHashTableData(object key)
         {
-            return  ObjectHashTable[key];
+            return ObjectHashTable[key];
         }
 
 #if !PBTCOMPILER
@@ -1736,28 +1736,28 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         private Hashtable ObjectHashTable
         {
-            get {return _objectHashTable;}
+            get { return _objectHashTable; }
         }
 
         private ArrayList AssemblyIdMap
         {
-            get { return _assemblyIdToInfo;  }
+            get { return _assemblyIdToInfo; }
         }
 
         private ArrayList TypeIdMap
         {
-            get { return _typeIdToInfo;  }
+            get { return _typeIdToInfo; }
         }
 
         private ArrayList AttributeIdMap
         {
-            get { return _attributeIdToInfo;  }
+            get { return _attributeIdToInfo; }
         }
 
         private ArrayList StringIdMap
@@ -1767,7 +1767,7 @@ namespace System.Windows.Markup
 
         internal XamlTypeMapper XamlTypeMapper
         {
-            get { return _xamlTypeMapper;  }
+            get { return _xamlTypeMapper; }
 
 #if !PBTCOMPILER
             set { _xamlTypeMapper = value;  }
@@ -1796,8 +1796,8 @@ namespace System.Windows.Markup
 
         #region Data
 
-        private const string _coreAssembly                 = "PresentationCore";
-        private const string _frameworkAssembly            = "PresentationFramework";
+        private const string _coreAssembly = "PresentationCore";
+        private const string _frameworkAssembly = "PresentationFramework";
 
         private static string[] _knownStrings =
         {
@@ -1806,20 +1806,20 @@ namespace System.Windows.Markup
             "Uid",
         };
 
-        internal static short  NameStringId  = -1;     // Known index of "Name"
-        internal static short  UidStringId   = -2;     // Known index of "Uid"
-        internal static string NameString    = "Name"; // Now used during Style serialization
+        internal static short NameStringId = -1;     // Known index of "Name"
+        internal static short UidStringId = -2;     // Known index of "Uid"
+        internal static string NameString = "Name"; // Now used during Style serialization
 
         // currently one Hastable for everything, when do perf
         // see if any advantage in breaking up or searching
         // by PropId, etc. instead of Hash. Hash is only used on compile
         // so leave null so Load doesn't take the hit.
-        Hashtable _objectHashTable   = new Hashtable();
+        Hashtable _objectHashTable = new Hashtable();
 
         ArrayList _assemblyIdToInfo = new ArrayList(1);    // arrayList of Assemblies
-        ArrayList _typeIdToInfo      = new ArrayList(0);    // arrayList of class Types
+        ArrayList _typeIdToInfo = new ArrayList(0);    // arrayList of class Types
         ArrayList _attributeIdToInfo = new ArrayList(10);   // arrayList of Attribute Ids
-        ArrayList _stringIdToInfo    = new ArrayList(1);     // arrayList of String Info
+        ArrayList _stringIdToInfo = new ArrayList(1);     // arrayList of String Info
 
         // XamlTypeMapper associated with this map table.  There is always a one-to-one correspondence.
         XamlTypeMapper _xamlTypeMapper;
@@ -1839,14 +1839,14 @@ namespace System.Windows.Markup
         bool   _reusingMapTable = false;
 #endif
 
-#endregion Data
+        #endregion Data
 
     }
 
     // Key object for hash table of assemblies.  This is keyed by assembly full name.
     internal struct AssemblyInfoKey
     {
-        internal string   AssemblyFullName;
+        internal string AssemblyFullName;
 
         /// <summary>
         ///     Determines if the passed in struct is equal to this struct.
@@ -1907,8 +1907,8 @@ namespace System.Windows.Markup
     // type full name.
     internal struct TypeInfoKey
     {
-        internal string   DeclaringAssembly;
-        internal string   TypeFullName;
+        internal string DeclaringAssembly;
+        internal string TypeFullName;
 
         /// <summary>
         ///     Determines if the passed in struct is equal to this struct.
@@ -1961,17 +1961,7 @@ namespace System.Windows.Markup
         /// <summary>
         ///     Return string representation of this key
         /// </summary>
-        public override string ToString()
-        {
-            StringBuilder strBuilder = new StringBuilder(256);
-            strBuilder.Append("TypeInfoKey: Assembly=");
-            strBuilder.Append((DeclaringAssembly != null) ? DeclaringAssembly : "null");
-            strBuilder.Append(" Type=");
-            strBuilder.Append((TypeFullName != null) ? TypeFullName : "null");
-            return strBuilder.ToString();
-        }
-
+        public override string ToString() =>
+            $"TypeInfoKey: Assembly={((DeclaringAssembly != null) ? DeclaringAssembly : "null")} Type={((TypeFullName != null) ? TypeFullName : "null")}";
     }
-
-
 }

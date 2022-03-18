@@ -68,14 +68,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             ContainerUtilities.CheckStringAgainstNullAndEmpty( streamName, "streamName" );
 
             if ((storageName == null) || (storageName.Length == 0))
+            {
                 _fullName = streamName;
+            }
             else
             {
-                // preallocate space for the stream we are building
-                StringBuilder sb = new StringBuilder(storageName, storageName.Length + 1 + streamName.Length);
-                sb.Append(ContainerUtilities.PathSeparator);
-                sb.Append(streamName);
-                _fullName = sb.ToString();
+                _fullName = $"{storageName}{ContainerUtilities.PathSeparator}{streamName}";
             }
         }
         #endregion

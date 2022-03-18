@@ -1673,7 +1673,7 @@ namespace MS.Internal.TextFormatting
             ref int           lastBidiLevel
             )
         {
-            ICollection<TextShapeableSymbols> shapeables = null;
+            IList<TextShapeableSymbols> shapeables = null;
 
             ITextSymbols textSymbols = runInfo.TextRun as ITextSymbols;
 
@@ -1716,8 +1716,11 @@ namespace MS.Internal.TextFormatting
             double realToIdeal = TextFormatterImp.ToIdeal;
             int ich = 0;
 
-            foreach (TextShapeableSymbols shapeable in shapeables)
+            int shapeablesCount = shapeables.Count;
+            for (int i = 0; i < shapeablesCount; i++)
             {
+                TextShapeableSymbols shapeable = shapeables[i];
+
                 int cch = shapeable.Length;
                 Debug.Assert(cch > 0 && cch <= stringLength - ich);
 

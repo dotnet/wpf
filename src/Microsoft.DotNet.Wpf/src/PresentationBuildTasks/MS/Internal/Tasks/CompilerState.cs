@@ -242,7 +242,7 @@ namespace MS.Internal.Tasks
                 for (int i = 0; i < fileItemList.Length; i++)
                 {
                     sb.Append(fileItemList[i].ItemSpec);
-                    sb.Append(";");
+                    sb.Append(';');
                 }
 
                 fileNames = sb.ToString();

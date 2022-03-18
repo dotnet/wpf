@@ -755,7 +755,7 @@ namespace MS.Internal.AutomationProxies
                     case TextSymbolType.ElementEnd:
                         if (IsBreakingSymbol(navigator, LogicalDirection.Forward))
                         {
-                            output.Append(" ");
+                            output.Append(' ');
                         }
                         break;
                 }

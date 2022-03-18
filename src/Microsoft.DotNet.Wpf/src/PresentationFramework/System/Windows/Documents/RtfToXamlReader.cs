@@ -5288,7 +5288,7 @@ namespace System.Windows.Documents
 
             //    xamlStringBuilder.Append(" LineHeight=\"");
             //    xamlStringBuilder.Append(Converters.TwipToPxString(px));
-            //    xamlStringBuilder.Append("\"");
+            //    xamlStringBuilder.Append('"');
             //}
 
             // Indent

@@ -6,8 +6,6 @@ using System;
 using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
-using System.Windows;
-using System.Diagnostics.CodeAnalysis;
 #if SYSTEM_XAML
 using System.Xaml;
 #else
@@ -1284,10 +1282,6 @@ namespace MS.Utility
     /// </summary>
     internal sealed class ArrayItemList<T> : FrugalListBase<T>
     {
-        public ArrayItemList()
-        {
-        }
-
         public ArrayItemList(int size)
         {
             // Make size a multiple of GROWTH
@@ -1298,73 +1292,52 @@ namespace MS.Utility
 
         public ArrayItemList(ICollection collection)
         {
-            if (collection != null)
-            {
-                _count = collection.Count;
-                _entries = new T[_count];
-                collection.CopyTo(_entries, 0);
-            }
+            Debug.Assert(collection is not null);
+            _count = collection.Count;
+            _entries = new T[_count];
+            collection.CopyTo(_entries, 0);
         }
 
         public ArrayItemList(ICollection<T> collection)
         {
-            if (collection != null)
-            {
-                _count = collection.Count;
-                _entries = new T[_count];
-                collection.CopyTo(_entries, 0);
-            }
+            Debug.Assert(collection is not null);
+            _count = collection.Count;
+            _entries = new T[_count];
+            collection.CopyTo(_entries, 0);
         }
 
         // Capacity of this store
-        public override int Capacity
-        {
-            get
-            {
-                if (_entries != null)
-                {
-                    return _entries.Length;
-                }
-                return 0;
-            }
-        }
+        public override int Capacity => _entries.Length;
 
         public override FrugalListStoreState Add(T value)
         {
             // If we don't have any entries or the existing entry is being overwritten,
             // then we can use this store. Otherwise we have to promote.
-            if ((null != _entries) && (_count < _entries.Length))
+            if (_count < _entries.Length)
             {
                 _entries[_count] = value;
                 ++_count;
             }
             else
             {
-                if (null != _entries)
+                int size = _entries.Length;
+
+                // Grow the list slowly while it is small but
+                // faster once it reaches the LARGEGROWTH size
+                if (size < LARGEGROWTH)
                 {
-                    int size = _entries.Length;
-
-                    // Grow the list slowly while it is small but
-                    // faster once it reaches the LARGEGROWTH size
-                    if (size < LARGEGROWTH)
-                    {
-                        size += GROWTH;
-                    }
-                    else
-                    {
-                        size += size >> 2;
-                    }
-
-                    T[] destEntries = new T[size];
-
-                    // Copy old array
-                    Array.Copy(_entries, 0, destEntries, 0, _entries.Length);
-                    _entries = destEntries;
+                    size += GROWTH;
                 }
                 else
                 {
-                    _entries = new T[MINSIZE];
+                    size += size >> 2;
                 }
+
+                T[] destEntries = new T[size];
+
+                // Copy old array
+                Array.Copy(_entries, 0, destEntries, 0, _entries.Length);
+                _entries = destEntries;
 
                 // Insert into new array
                 _entries[_count] = value;
@@ -1373,36 +1346,15 @@ namespace MS.Utility
             return FrugalListStoreState.Success;
         }
 
-        public override void Clear()
-        {
-            // Wipe out the info.
-            for (int i = 0; i < _count; ++i)
-            {
-                _entries[i] = default(T);
-            }
-            _count = 0;
-        }
+        public override void Clear() => _entries.AsSpan(0, _count).Clear();
 
-        public override bool Contains(T value)
-        {
-            return (-1 != IndexOf(value));
-        }
+        public override bool Contains(T value) => IndexOf(value) >= 0;
 
-        public override int IndexOf(T value)
-        {
-            for (int index = 0; index < _count; ++index)
-            {
-                if (EqualityComparer<T>.Default.Equals(_entries[index], value))
-                {
-                    return index;
-                }
-            }
-            return -1;
-        }
+        public override int IndexOf(T value) => Array.IndexOf(_entries, value, 0, _count);
 
         public override void Insert(int index, T value)
         {
-            if ((null != _entries) && (_count < _entries.Length))
+            if (_count < _entries.Length)
             {
                 // Move down the required number of items
                 Array.Copy(_entries, index, _entries, index + 1, _count - index);
@@ -1423,13 +1375,11 @@ namespace MS.Utility
 
         public override bool Remove(T value)
         {
-            for (int index = 0; index < _count; ++index)
+            int index = IndexOf(value);
+            if (index >= 0)
             {
-                if (EqualityComparer<T>.Default.Equals(_entries[index], value))
-                {
-                    RemoveAt(index);
-                    return true;
-                }
+                RemoveAt(index);
+                return true;
             }
 
             return false;
@@ -1543,24 +1493,9 @@ namespace MS.Utility
             }
         }
 
-        public override T[] ToArray()
-        {
-            T[] array = new T[_count];
+        public override T[] ToArray() => _entries.AsSpan(0, _count).ToArray();
 
-            for (int i = 0; i < _count; ++i)
-            {
-                array[i] = _entries[i];
-            }
-            return array;
-        }
-
-        public override void CopyTo(T[] array, int index)
-        {
-            for (int i = 0; i < _count; ++i)
-            {
-                array[index+i] = _entries[i];
-            }
-        }
+        public override void CopyTo(T[] array, int index) => _entries.AsSpan(0, _count).CopyTo(array.AsSpan(index));
 
         public override object Clone()
         {
@@ -2032,14 +1967,15 @@ namespace MS.Utility
 
         public FrugalStructList(ICollection collection)
         {
-            if (collection.Count > 6)
+            int count = collection.Count;
+            if (count > 6)
             {
                 _listStore = new ArrayItemList<T>(collection);
             }
             else
             {
                 _listStore = null;
-                Capacity = collection.Count;
+                Capacity = count;
                 foreach (T item in collection)
                 {
                     Add(item);
@@ -2049,17 +1985,29 @@ namespace MS.Utility
 
         public FrugalStructList(ICollection<T> collection)
         {
-            if (collection.Count > 6)
+            int count = collection.Count;
+            if (count > 6)
             {
                 _listStore = new ArrayItemList<T>(collection);
             }
             else
             {
                 _listStore = null;
-                Capacity = collection.Count;
-                foreach (T item in collection)
+                Capacity = count;
+
+                if (collection is IList<T> list)
                 {
-                    Add(item);
+                    for (int i = 0; i < count; i++)
+                    {
+                        Add(list[i]);
+                    }
+                }
+                else
+                {
+                    foreach (T item in collection)
+                    {
+                        Add(item);
+                    }
                 }
             }
         }

@@ -27,17 +27,6 @@ namespace Microsoft.Internal.AlphaFlattener
         }
     }
 
-    internal class CoordinateComparer : IComparer
-    {
-        int IComparer.Compare(Object x, Object y)
-        {
-            double vx = ((Coordinate)x).value;
-            double vy = ((Coordinate)y).value;
-
-            return vx.CompareTo(vy);
-        }
-    }
-
     internal class CoordinateSearcher : IComparer
     {
         int IComparer.Compare(Object x, Object y)
@@ -237,10 +226,10 @@ namespace Microsoft.Internal.AlphaFlattener
 
             AddPoint(p, count + 1, Double.MaxValue, Double.MaxValue);
 
-            Array.Sort(_xCoord, new CoordinateComparer());
+            Array.Sort(_xCoord, (x, y) => x.value.CompareTo(y.value));
             _xCount = _xCoord.Length;
 
-            Array.Sort(_yCoord, new CoordinateComparer());
+            Array.Sort(_yCoord, (x, y) => x.value.CompareTo(y.value));
             _yCount = _yCoord.Length;
         }
 

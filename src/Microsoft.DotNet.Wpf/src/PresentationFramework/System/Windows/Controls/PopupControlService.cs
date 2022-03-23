@@ -1562,7 +1562,8 @@ namespace System.Windows.Controls
                 if (rootElement != null)
                 {
                     // get the coordinates of the current mouse point, relative to our PresentationSource
-                    System.Windows.Point pt = Mouse.PrimaryDevice.GetPosition(rootElement);
+                    Matrix transform = PresentationSource.FromVisual(_source.RootVisual).CompositionTarget.TransformToDevice;
+                    System.Windows.Point pt = transform.Transform(Mouse.PrimaryDevice.GetPosition(rootElement));
 
                     // check whether the point lies within the hull
                     return ContainsPoint(_source, (int)pt.X, (int)pt.Y);

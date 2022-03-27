@@ -161,13 +161,13 @@ public static class LogicalTreeHelper
         FrameworkElement fe = current as FrameworkElement;
         if (fe != null)
         {
-            return new EnumeratorWrapper(fe.LogicalChildren);
+            return EnumeratorWrapper.Create(fe.LogicalChildren);
         }
 
         FrameworkContentElement fce = current as FrameworkContentElement;
         if (fce != null)
         {
-            return new EnumeratorWrapper(fce.LogicalChildren);
+            return EnumeratorWrapper.Create(fce.LogicalChildren);
         }
 
         return EnumeratorWrapper.Empty;
@@ -183,7 +183,7 @@ public static class LogicalTreeHelper
             throw new ArgumentNullException("current"); 
         }
 
-        return new EnumeratorWrapper(current.LogicalChildren);
+        return EnumeratorWrapper.Create(current.LogicalChildren);
     }
 
     /// <summary>
@@ -196,7 +196,7 @@ public static class LogicalTreeHelper
             throw new ArgumentNullException("current"); 
         }
 
-        return new EnumeratorWrapper(current.LogicalChildren);
+        return EnumeratorWrapper.Create(current.LogicalChildren);
     }
 
     /// <summary>
@@ -489,17 +489,11 @@ public static class LogicalTreeHelper
     //------------------------------------------------------
 
     private class EnumeratorWrapper : IEnumerable
-    {
-        public EnumeratorWrapper(IEnumerator enumerator)
+    {               
+        private EnumeratorWrapper(IEnumerator enumerator)
         {
-            if (enumerator != null)
-            {
-                _enumerator = enumerator;
-            }
-            else
-            {
-                _enumerator = MS.Internal.Controls.EmptyEnumerator.Instance;
-            }
+            Debug.Assert(enumerator != null);
+            _enumerator = enumerator;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -507,8 +501,16 @@ public static class LogicalTreeHelper
             return _enumerator;
         }
 
-        IEnumerator _enumerator;
+        readonly IEnumerator _enumerator;
 
+        internal static EnumeratorWrapper Create(IEnumerator enumerator)
+        {
+            if(enumerator == null || ReferenceEquals(enumerator, MS.Internal.Controls.EmptyEnumerator.Instance))
+                return Empty;
+            
+            return new EnumeratorWrapper(enumerator);
+            
+        }
 
         internal static EnumeratorWrapper Empty
         {
@@ -516,7 +518,7 @@ public static class LogicalTreeHelper
             {
                 if (_emptyInstance == null)
                 {
-                    _emptyInstance = new EnumeratorWrapper(null);
+                    _emptyInstance = new EnumeratorWrapper(MS.Internal.Controls.EmptyEnumerator.Instance);
                 }
 
                 return _emptyInstance;

@@ -489,7 +489,7 @@ public static class LogicalTreeHelper
     //------------------------------------------------------
 
     private class EnumeratorWrapper : IEnumerable
-    {               
+    {
         private EnumeratorWrapper(IEnumerator enumerator)
         {
             Debug.Assert(enumerator != null);

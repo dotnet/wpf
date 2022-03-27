@@ -505,7 +505,7 @@ public static class LogicalTreeHelper
 
         internal static EnumeratorWrapper Create(IEnumerator enumerator)
         {
-            if(enumerator == null || ReferenceEquals(enumerator, MS.Internal.Controls.EmptyEnumerator.Instance))
+            if(enumerator == null || enumerator == MS.Internal.Controls.EmptyEnumerator.Instance)
                 return Empty;
             
             return new EnumeratorWrapper(enumerator);

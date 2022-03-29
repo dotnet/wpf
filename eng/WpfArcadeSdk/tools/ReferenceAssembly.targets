@@ -1,6 +1,6 @@
 <Project>
    <PropertyGroup>
-    <_DotnetApiDocsFilesRoot>$([MSBuild]::NormalizeDirectory('$(NuGetPackageRoot)', 'microsoft.private.intellisense', '$(MicrosoftPrivateIntellisenseVersion)', 'IntellisenseFiles'))</_DotnetApiDocsFilesRoot>
+    <_DotnetApiDocsFilesRoot>$([MSBuild]::NormalizeDirectory('$(NuGetPackageRoot)', '$(_DotnetApiDocsPackageName.ToLower())', '$(MicrosoftPrivateIntellisenseVersion)', 'IntellisenseFiles', 'windowsdesktop'))</_DotnetApiDocsFilesRoot>
     <_IntellisenseXmlDir>$([MSBuild]::NormalizeDirectory('$(ArtifactsBinDir)', 'docs'))</_IntellisenseXmlDir>
   </PropertyGroup>
 

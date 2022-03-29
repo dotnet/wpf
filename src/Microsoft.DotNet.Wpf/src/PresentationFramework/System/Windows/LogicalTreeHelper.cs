@@ -161,13 +161,13 @@ public static class LogicalTreeHelper
         FrameworkElement fe = current as FrameworkElement;
         if (fe != null)
         {
-            return EnumeratorWrapper.Create(fe.LogicalChildren);
+            return EnumeratorWrapper.Wrap(fe.LogicalChildren);
         }
 
         FrameworkContentElement fce = current as FrameworkContentElement;
         if (fce != null)
         {
-            return EnumeratorWrapper.Create(fce.LogicalChildren);
+            return EnumeratorWrapper.Wrap(fce.LogicalChildren);
         }
 
         return EnumeratorWrapper.Empty;
@@ -183,7 +183,7 @@ public static class LogicalTreeHelper
             throw new ArgumentNullException("current"); 
         }
 
-        return EnumeratorWrapper.Create(current.LogicalChildren);
+        return EnumeratorWrapper.Wrap(current.LogicalChildren);
     }
 
     /// <summary>
@@ -196,7 +196,7 @@ public static class LogicalTreeHelper
             throw new ArgumentNullException("current"); 
         }
 
-        return EnumeratorWrapper.Create(current.LogicalChildren);
+        return EnumeratorWrapper.Wrap(current.LogicalChildren);
     }
 
     /// <summary>
@@ -503,7 +503,7 @@ public static class LogicalTreeHelper
 
         readonly IEnumerator _enumerator;
 
-        internal static EnumeratorWrapper Create(IEnumerator enumerator)
+        internal static EnumeratorWrapper Wrap(IEnumerator enumerator)
         {
             if(enumerator == null || enumerator == MS.Internal.Controls.EmptyEnumerator.Instance)
                 return Empty;

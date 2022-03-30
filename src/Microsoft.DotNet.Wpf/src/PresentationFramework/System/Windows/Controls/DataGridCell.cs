@@ -973,11 +973,11 @@ namespace System.Windows.Controls
 
                 if (e.Key == Key.Right)
                 {
-                    updatedWidth = new DataGridLength(Column.ActualWidth + _columnWidthStepSize);
+                    updatedWidth = new DataGridLength(Column.ActualWidth + ColumnWidthStepSize);
                 }
                 else if (e.Key == Key.Left)
                 {
-                    updatedWidth = new DataGridLength(Column.ActualWidth - _columnWidthStepSize);
+                    updatedWidth = new DataGridLength(Column.ActualWidth - ColumnWidthStepSize);
                 }
 
                 if(Column != null && Column.CanColumnResize(updatedWidth))

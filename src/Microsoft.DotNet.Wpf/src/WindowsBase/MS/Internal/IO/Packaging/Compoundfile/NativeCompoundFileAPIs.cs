@@ -41,7 +41,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             //  cost/benefit ratio.
             if( FileAccess.Write == access )
                 throw new NotSupportedException(
-                    SR.Get(SRID.WriteOnlyUnsupported));
+                    SR.WriteOnlyUnsupported);
             
             // Generate STGM from FileAccess
             // STGM_READ is 0x00, so it's "by default"
@@ -57,7 +57,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             else if( FileAccess.Read != (access & FileAccess.Read))
             {
                 throw new ArgumentException(
-                    SR.Get(SRID.FileAccessInvalid));
+                    SR.FileAccessInvalid);
             }
         }
 
@@ -625,7 +625,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 if (cb < 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidArgumentValue, "cb", cb.ToString(CultureInfo.InvariantCulture)));
+                    throw new ArgumentException(SR.Format(SR.InvalidArgumentValue, "cb", cb.ToString(CultureInfo.InvariantCulture)));
                 }
 
                 _unsafeStream.Read(pv, cb, out pcbRead);
@@ -636,7 +636,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 if (cb < 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidArgumentValue, "cb", cb.ToString(CultureInfo.InvariantCulture)));
+                    throw new ArgumentException(SR.Format(SR.InvalidArgumentValue, "cb", cb.ToString(CultureInfo.InvariantCulture)));
                 }
 
                 _unsafeStream.Write(pv, cb, out pcbWritten);
@@ -649,12 +649,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 if (dwOrigin < 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidArgumentValue, "dwOrigin", dwOrigin.ToString(CultureInfo.InvariantCulture)));
+                    throw new ArgumentException(SR.Format(SR.InvalidArgumentValue, "dwOrigin", dwOrigin.ToString(CultureInfo.InvariantCulture)));
                 }
 
                 if (dlibMove < 0 && dwOrigin == SafeNativeCompoundFileConstants.STREAM_SEEK_SET)
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidArgumentValue, "dlibMove", dlibMove.ToString(CultureInfo.InvariantCulture)));
+                    throw new ArgumentException(SR.Format(SR.InvalidArgumentValue, "dlibMove", dlibMove.ToString(CultureInfo.InvariantCulture)));
                 }
 
                 _unsafeStream.Seek(dlibMove, dwOrigin, out plibNewPosition);
@@ -665,7 +665,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 if (libNewSize < 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidArgumentValue, "libNewSize", libNewSize.ToString(CultureInfo.InvariantCulture)));
+                    throw new ArgumentException(SR.Format(SR.InvalidArgumentValue, "libNewSize", libNewSize.ToString(CultureInfo.InvariantCulture)));
                 }
 
                 _unsafeStream.SetSize(libNewSize);
@@ -678,7 +678,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 if (cb < 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidArgumentValue, "cb", cb.ToString(CultureInfo.InvariantCulture)));
+                    throw new ArgumentException(SR.Format(SR.InvalidArgumentValue, "cb", cb.ToString(CultureInfo.InvariantCulture)));
                 }
 
                 _unsafeStream.CopyTo(((SafeIStreamImplementation) pstm)._unsafeStream, cb, out pcbRead, out pcbWritten);
@@ -701,11 +701,11 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 if (libOffset < 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidArgumentValue, "libOffset", libOffset.ToString(CultureInfo.InvariantCulture)));
+                    throw new ArgumentException(SR.Format(SR.InvalidArgumentValue, "libOffset", libOffset.ToString(CultureInfo.InvariantCulture)));
                 }
                 if (cb < 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidArgumentValue, "cb", cb.ToString(CultureInfo.InvariantCulture)));
+                    throw new ArgumentException(SR.Format(SR.InvalidArgumentValue, "cb", cb.ToString(CultureInfo.InvariantCulture)));
                 }
 
                 _unsafeStream.LockRegion(libOffset, cb, dwLockType);
@@ -716,11 +716,11 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 if (libOffset < 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidArgumentValue, "libOffset", libOffset.ToString(CultureInfo.InvariantCulture)));
+                    throw new ArgumentException(SR.Format(SR.InvalidArgumentValue, "libOffset", libOffset.ToString(CultureInfo.InvariantCulture)));
                 }
                 if (cb < 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidArgumentValue, "cb", cb.ToString(CultureInfo.InvariantCulture)));
+                    throw new ArgumentException(SR.Format(SR.InvalidArgumentValue, "cb", cb.ToString(CultureInfo.InvariantCulture)));
                 }
 
                 _unsafeStream.UnlockRegion(libOffset, cb, dwLockType);
@@ -1159,7 +1159,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 if (celt != 1)
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidArgumentValue, "celt", celt.ToString(CultureInfo.InvariantCulture)));
+                    throw new ArgumentException(SR.Format(SR.InvalidArgumentValue, "celt", celt.ToString(CultureInfo.InvariantCulture)));
                 }
                 
                 _unsafeEnumSTATSTG.Next(

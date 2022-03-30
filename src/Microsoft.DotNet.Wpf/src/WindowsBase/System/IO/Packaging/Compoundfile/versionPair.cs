@@ -49,13 +49,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             if (major < 0)
             {
                 throw new ArgumentOutOfRangeException("major",
-                            SR.Get(SRID.VersionNumberComponentNegative));
+                            SR.VersionNumberComponentNegative);
             }
 
             if (minor < 0)
             {
                 throw new ArgumentOutOfRangeException("minor",
-                            SR.Get(SRID.VersionNumberComponentNegative));
+                            SR.VersionNumberComponentNegative);
             }
 
             _major = major;
@@ -302,7 +302,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             if (obj.GetType() != GetType())
             {
-                throw new ArgumentException(SR.Get(SRID.ExpectedVersionPairObject));
+                throw new ArgumentException(SR.ExpectedVersionPairObject);
             }
 
             VersionPair v = (VersionPair) obj;

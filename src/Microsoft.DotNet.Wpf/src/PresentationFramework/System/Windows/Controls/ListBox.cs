@@ -350,28 +350,34 @@ namespace System.Windows.Controls
                 case Key.Down:
                 case Key.Right:
                     {
-                    if ((Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt && (e.Key == Key.Left || e.Key == Key.Right))
+                        const ModifierKeys ModifierMask = ModifierKeys.Alt | ModifierKeys.Control | ModifierKeys.Shift | ModifierKeys.Windows;
+                        ModifierKeys modifierKeys = Keyboard.Modifiers & ModifierMask;
+
+                        if ((modifierKeys == ModifierKeys.Alt) && (key == Key.Left || key == Key.Right))
                         {
-                            if(e.OriginalSource is GridViewColumnHeader gridViewColumnHeader)
+                            if(e.OriginalSource is GridViewColumnHeader gridViewColumnHeader && gridViewColumnHeader.Column != null)
                             {
+                                double width;
                                 if (key == Key.Left)
                                 {
-                                    if(gridViewColumnHeader.Column.ActualWidth > 0)
+                                    width = gridViewColumnHeader.Column.ActualWidth - ColumnWidthStepSize;
+                                    if (width > 0)
                                     {
-                                        gridViewColumnHeader.Width = gridViewColumnHeader.Column.ActualWidth - ColumnWidthStepSize;
-                                        gridViewColumnHeader.UpdateColumnHeaderWidth(gridViewColumnHeader.Width);
-                                    }
-                                    
-                                    handled = true;
+                                        gridViewColumnHeader.UpdateColumnHeaderWidth(width);
+                                    }                                    
                                 }
                                 else if (key == Key.Right)
                                 {
-                                    gridViewColumnHeader.Width = gridViewColumnHeader.Column.ActualWidth + ColumnWidthStepSize;
-                                    gridViewColumnHeader.UpdateColumnHeaderWidth(gridViewColumnHeader.Width);
-                                    handled = true;
+                                    width = gridViewColumnHeader.Column.ActualWidth + ColumnWidthStepSize;
+                                    gridViewColumnHeader.UpdateColumnHeaderWidth(width);
                                 }
-                                break;
                             }
+                            else
+                            {
+                                handled = false;
+                            }
+
+                            break;
                         }
                     
                         KeyboardNavigation.ShowFocusVisual();

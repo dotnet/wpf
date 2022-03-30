@@ -11,7 +11,9 @@
     <GenerateResxSource>true</GenerateResxSource>
 
     <_GenerateResourcesCodeAsConstants>true</_GenerateResourcesCodeAsConstants>
+
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='WindowsBase'">false</_GenerateResourcesCodeAsConstants>
+
     <DefineConstants Condition="'$(_GenerateResourcesCodeAsConstants)'=='true'">$(DefineConstants);GENERATE_RESOURCES_CODE_AS_CONSTANTS</DefineConstants>
 
     <!-- We define our own implementation of GetResourceString -->

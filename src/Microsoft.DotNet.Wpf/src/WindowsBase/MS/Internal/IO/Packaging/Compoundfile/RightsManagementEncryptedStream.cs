@@ -160,14 +160,14 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                         }
                     default:
                         {
-                            throw new ArgumentOutOfRangeException("origin", SR.Get(SRID.SeekOriginInvalid));
+                            throw new ArgumentOutOfRangeException("origin", SR.SeekOriginInvalid);
                         }
                 }
             }
             
             if (temp < 0)
             {
-                throw new ArgumentOutOfRangeException("offset", SR.Get(SRID.SeekNegative));
+                throw new ArgumentOutOfRangeException("offset", SR.SeekNegative);
             }
 
             _streamPosition = temp;
@@ -183,7 +183,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             
             if (newLength < 0)
             {
-                throw new ArgumentOutOfRangeException("newLength", SR.Get(SRID.CannotMakeStreamLengthNegative));
+                throw new ArgumentOutOfRangeException("newLength", SR.CannotMakeStreamLengthNegative);
             }
 
             _streamCachedLength = newLength;
@@ -299,12 +299,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             if (!cryptoProvider.CanDecrypt )
             {
-                throw new ArgumentException(SR.Get(SRID.CryptoProviderCanNotDecrypt), "cryptoProvider");            
+                throw new ArgumentException(SR.CryptoProviderCanNotDecrypt, "cryptoProvider");            
             }
 
             if (!cryptoProvider.CanMergeBlocks)
             {
-                throw new ArgumentException(SR.Get(SRID.CryptoProviderCanNotMergeBlocks), "cryptoProvider");            
+                throw new ArgumentException(SR.CryptoProviderCanNotMergeBlocks, "cryptoProvider");            
             }
             
             _baseStream = baseStream;
@@ -350,7 +350,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     if (bytesRead < _prefixLengthSize)
                     {
                         // not zero and shorter than legal length == corrupt file
-                        throw new FileFormatException(SR.Get(SRID.EncryptedDataStreamCorrupt));
+                        throw new FileFormatException(SR.EncryptedDataStreamCorrupt);
                     }
                     else
                     {
@@ -612,7 +612,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 if (bytesRead < _cryptoProvider.BlockSize)
                 {
                     // we have found an unexpected end of stream 
-                    throw new FileFormatException(SR.Get(SRID.EncryptedDataStreamCorrupt));
+                    throw new FileFormatException(SR.EncryptedDataStreamCorrupt);
                 }
 
                 /////////////////////////////////////////////
@@ -735,7 +735,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             if (_baseStream == null)
             {
-                throw new ObjectDisposedException(null, SR.Get(SRID.StreamObjectDisposed));
+                throw new ObjectDisposedException(null, SR.StreamObjectDisposed);
             }
         }
 

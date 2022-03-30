@@ -86,7 +86,7 @@ namespace MS.Internal.IO.Packaging
                         return;
                     else
                         //if the encoding attribute has any other value we throw an exception
-                        throw new FileFormatException(SR.Get(SRID.EncodingNotSupported));
+                        throw new FileFormatException(SR.EncodingNotSupported);
                 }
             }
 
@@ -98,7 +98,7 @@ namespace MS.Internal.IO.Packaging
             //Note: If not encoding attribute is present or no byte order marking is present the
             //encoding default to UTF8
             if (!(reader.Encoding is UnicodeEncoding || reader.Encoding is UTF8Encoding))
-                throw new FileFormatException(SR.Get(SRID.EncodingNotSupported));
+                throw new FileFormatException(SR.EncodingNotSupported);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace MS.Internal.IO.Packaging
         static internal void VerifyStreamReadArgs(Stream s, byte[] buffer, int offset, int count)
         {
             if (!s.CanRead)
-                throw new NotSupportedException(SR.Get(SRID.ReadNotSupported));
+                throw new NotSupportedException(SR.ReadNotSupported);
 
             if (buffer == null)
             {
@@ -121,19 +121,19 @@ namespace MS.Internal.IO.Packaging
 
             if (offset < 0)
             {
-                throw new ArgumentOutOfRangeException("offset", SR.Get(SRID.OffsetNegative));
+                throw new ArgumentOutOfRangeException("offset", SR.OffsetNegative);
             }
 
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException("count", SR.Get(SRID.ReadCountNegative));
+                throw new ArgumentOutOfRangeException("count", SR.ReadCountNegative);
             }
 
             checked     // catch any integer overflows
             {
                 if (offset + count > buffer.Length)
                 {
-                    throw new ArgumentException(SR.Get(SRID.ReadBufferTooSmall), "buffer");
+                    throw new ArgumentException(SR.ReadBufferTooSmall, "buffer");
                 }
             }
         }
@@ -149,7 +149,7 @@ namespace MS.Internal.IO.Packaging
         static internal void VerifyStreamWriteArgs(Stream s, byte[] buffer, int offset, int count)
         {
             if (!s.CanWrite)
-                throw new NotSupportedException(SR.Get(SRID.WriteNotSupported));
+                throw new NotSupportedException(SR.WriteNotSupported);
 
             if (buffer == null)
             {
@@ -158,18 +158,18 @@ namespace MS.Internal.IO.Packaging
 
             if (offset < 0)
             {
-                throw new ArgumentOutOfRangeException("offset", SR.Get(SRID.OffsetNegative));
+                throw new ArgumentOutOfRangeException("offset", SR.OffsetNegative);
             }
 
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException("count", SR.Get(SRID.WriteCountNegative));
+                throw new ArgumentOutOfRangeException("count", SR.WriteCountNegative);
             }
 
             checked
             {
                 if (offset + count > buffer.Length)
-                    throw new ArgumentException(SR.Get(SRID.WriteBufferTooSmall), "buffer");
+                    throw new ArgumentException(SR.WriteBufferTooSmall, "buffer");
             }
         }
 

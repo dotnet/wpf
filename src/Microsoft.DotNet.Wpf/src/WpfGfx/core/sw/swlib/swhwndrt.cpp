@@ -60,7 +60,7 @@ HRESULT CSwPresenterBase::GetSize(
 {
     *puiWidth = m_nWidth;
     *puiHeight = m_nHeight;
-    
+
     return S_OK;
 }
 
@@ -75,7 +75,7 @@ HRESULT CSwPresenterBase::GetSize(
 HRESULT CSwPresenterBase::GetPixelFormat(
     __out_ecount(1) MilPixelFormat::Enum *pPixelFormat
     )
-{   
+{
     *pPixelFormat = m_RenderPixelFormat;
 
     return S_OK;
@@ -97,7 +97,7 @@ HRESULT CSwPresenterBase::GetResolution(
 
     *pDpiX = primaryDisplayDpi.DpiScaleX;
     *pDpiY = primaryDisplayDpi.DpiScaleY;
-    
+
     return S_OK;
 }
 
@@ -336,6 +336,7 @@ HRESULT CSwRenderTargetHWND::Init(
         );
 
     m_hwnd = hwnd;
+    m_fDisableDirtyRectangles = (nFlags & MilRTInitialization::DisableDirtyRectangles) != 0;
 
 #if DBG_STEP_RENDERING
     m_fDbgClearOnPresent = !(nFlags & MilRTInitialization::PresentRetainContents);
@@ -368,8 +369,14 @@ STDMETHODIMP CSwRenderTargetHWND::Present(
     CMILSurfaceRect presentRect;
 
     bool fPresent = false;
-    
+
     RGNDATA *pDirtyRegion = NULL;
+
+    if (m_fDisableDirtyRectangles)
+    {
+        // invalidating the empty rect tells ShouldPresent to present everything
+        InvalidateRect(reinterpret_cast<const CMILSurfaceRect *>(&CMILSurfaceRect::sc_rcEmpty));
+    }
 
     IFC(ShouldPresent(
         pRect,
@@ -377,7 +384,7 @@ STDMETHODIMP CSwRenderTargetHWND::Present(
         &pDirtyRegion,
         &fPresent
         ));
-    
+
     if (fPresent)
     {
         IFC(m_pPresenter->Present(
@@ -441,7 +448,7 @@ CSwRenderTargetHWND::ScrollBlt (
     IFC(m_pPresenter->ScrollBlt(&source, &dest, true, true));
 
 Cleanup:
-    RRETURN(hr);    
+    RRETURN(hr);
 }
 
 

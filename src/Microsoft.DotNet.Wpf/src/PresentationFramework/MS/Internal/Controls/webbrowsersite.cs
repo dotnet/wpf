@@ -146,7 +146,7 @@ namespace MS.Internal.Controls
         {
             //
             // Set to null no matter what we return, to prevent the marshaller
-            // from going crazy if the pointer points to random stuff.
+            // from behaving erroneously if the pointer points to random stuff.
             ppDropTarget = null;
             return NativeMethods.E_NOTIMPL;
         }

@@ -1,0 +1,636 @@
+[
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "PullRequestResponder",
+    "version": "1.0",
+    "config": {
+      "eventType": "pull_request",
+      "eventNames": [
+        "pull_request",
+        "issues",
+        "project_card"
+      ],
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isAction",
+            "parameters": {
+              "action": "opened"
+            }
+          }
+        ]
+      },
+      "taskName": "Add PR Label to new Pull Requests",
+      "actions": [
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "PR"
+          }
+        },
+        {
+          "name": "requestReviewer",
+          "parameters": {
+            "reviewer": "dipeshmsft"
+          }
+        },
+        {
+          "name": "requestReviewer",
+          "parameters": {
+            "reviewer": "singhashish-wpf"
+          }
+        },
+        {
+          "name": "requestReviewer",
+          "parameters": {
+            "reviewer": "dotnet/wpf-developers"
+          }
+        },
+        {
+          "name": "requestReviewer",
+          "parameters": {
+            "reviewer": "SamBent"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssuesOnlyResponder",
+    "version": "1.0",
+    "config": {
+      "eventType": "issue",
+      "eventNames": [
+        "issues",
+        "project_card"
+      ],
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "labelAdded",
+            "parameters": {
+              "label": "declined"
+            }
+          }
+        ]
+      },
+      "taskName": "When \"declined\" label is added, close and respond",
+      "actions": [
+        {
+          "name": "addReply",
+          "parameters": {
+            "comment": "We appreciate the feedback, however this doesn’t currently align to the project’s goals and [roadmap](https://github.com/dotnet/wpf/blob/master/roadmap.md) and so will be automatically closed. Thank you for your contributions!"
+          }
+        },
+        {
+          "name": "closeIssue",
+          "parameters": {}
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssuesOnlyResponder",
+    "version": "1.0",
+    "config": {
+      "taskName": "Remove no recent activity label from issues",
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isAction",
+                "parameters": {
+                  "action": "closed"
+                }
+              }
+            ]
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          }
+        ]
+      },
+      "actions": [
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "no-recent-activity"
+          }
+        }
+      ],
+      "eventType": "issue",
+      "eventNames": [
+        "issues",
+        "project_card"
+      ]
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssueCommentResponder",
+    "version": "1.0",
+    "config": {
+      "taskName": "Remove no recent activity label when an issue is commented on",
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          },
+          {
+            "name": "isAction",
+            "parameters": {
+              "action": "edited"
+            }
+          }
+        ]
+      },
+      "actions": [
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "no-recent-activity"
+          }
+        }
+      ],
+      "eventType": "issue",
+      "eventNames": [
+        "issue_comment"
+      ]
+    }
+  },
+  {
+    "taskType": "scheduled",
+    "capabilityId": "ScheduledSearch",
+    "subCapability": "ScheduledSearch",
+    "version": "1.1",
+    "config": {
+      "taskName": "Close stale issues",
+      "frequency": [
+        {
+          "weekDay": 0,
+          "hours": [
+            1,
+            4,
+            7,
+            10,
+            13,
+            16,
+            19,
+            22
+          ],
+          "timezoneOffset": -8
+        },
+        {
+          "weekDay": 1,
+          "hours": [
+            1,
+            4,
+            7,
+            10,
+            13,
+            16,
+            19,
+            22
+          ],
+          "timezoneOffset": -8
+        },
+        {
+          "weekDay": 2,
+          "hours": [
+            1,
+            4,
+            7,
+            10,
+            13,
+            16,
+            19,
+            22
+          ],
+          "timezoneOffset": -8
+        },
+        {
+          "weekDay": 3,
+          "hours": [
+            1,
+            4,
+            7,
+            10,
+            13,
+            16,
+            19,
+            22
+          ],
+          "timezoneOffset": -8
+        },
+        {
+          "weekDay": 4,
+          "hours": [
+            1,
+            4,
+            7,
+            10,
+            13,
+            16,
+            19,
+            22
+          ],
+          "timezoneOffset": -8
+        },
+        {
+          "weekDay": 5,
+          "hours": [
+            1,
+            4,
+            7,
+            10,
+            13,
+            16,
+            19,
+            22
+          ],
+          "timezoneOffset": -8
+        },
+        {
+          "weekDay": 6,
+          "hours": [
+            1,
+            4,
+            7,
+            10,
+            13,
+            16,
+            19,
+            22
+          ],
+          "timezoneOffset": -8
+        }
+      ],
+      "searchTerms": [
+        {
+          "name": "isIssue",
+          "parameters": {}
+        },
+        {
+          "name": "isOpen",
+          "parameters": {}
+        },
+        {
+          "name": "hasLabel",
+          "parameters": {
+            "label": "needs-author-feedback"
+          }
+        },
+        {
+          "name": "hasLabel",
+          "parameters": {
+            "label": "no-recent-activity"
+          }
+        },
+        {
+          "name": "noActivitySince",
+          "parameters": {
+            "days": 3
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "closeIssue",
+          "parameters": {}
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "scheduled",
+    "capabilityId": "ScheduledSearch",
+    "subCapability": "ScheduledSearch",
+    "version": "1.1",
+    "config": {
+      "taskName": "Add no recent activity label to issues",
+      "frequency": [
+        {
+          "weekDay": 0,
+          "hours": [
+            2,
+            5,
+            8,
+            11,
+            14,
+            17,
+            20,
+            23
+          ],
+          "timezoneOffset": -8
+        },
+        {
+          "weekDay": 1,
+          "hours": [
+            2,
+            5,
+            8,
+            11,
+            14,
+            17,
+            20,
+            23
+          ],
+          "timezoneOffset": -8
+        },
+        {
+          "weekDay": 2,
+          "hours": [
+            2,
+            5,
+            8,
+            11,
+            14,
+            17,
+            20,
+            23
+          ],
+          "timezoneOffset": -8
+        },
+        {
+          "weekDay": 3,
+          "hours": [
+            2,
+            5,
+            8,
+            11,
+            14,
+            17,
+            20,
+            23
+          ],
+          "timezoneOffset": -8
+        },
+        {
+          "weekDay": 4,
+          "hours": [
+            2,
+            5,
+            8,
+            11,
+            14,
+            17,
+            20,
+            23
+          ],
+          "timezoneOffset": -8
+        },
+        {
+          "weekDay": 5,
+          "hours": [
+            2,
+            5,
+            8,
+            11,
+            14,
+            17,
+            20,
+            23
+          ],
+          "timezoneOffset": -8
+        },
+        {
+          "weekDay": 6,
+          "hours": [
+            2,
+            5,
+            8,
+            11,
+            14,
+            17,
+            20,
+            23
+          ],
+          "timezoneOffset": -8
+        }
+      ],
+      "searchTerms": [
+        {
+          "name": "isIssue",
+          "parameters": {}
+        },
+        {
+          "name": "isOpen",
+          "parameters": {}
+        },
+        {
+          "name": "hasLabel",
+          "parameters": {
+            "label": "needs-author-feedback"
+          }
+        },
+        {
+          "name": "noActivitySince",
+          "parameters": {
+            "days": 4
+          }
+        },
+        {
+          "name": "noLabel",
+          "parameters": {
+            "label": "no-recent-activity"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "no-recent-activity"
+          }
+        },
+        {
+          "name": "addReply",
+          "parameters": {
+            "comment": "This issue has been automatically marked as stale because it has marked as requiring author feedback but has not had any activity for **4 days**. It will be closed if no further activity occurs **within 3 days of this comment**. Thank you for your contributions!"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "AutoMerge",
+    "subCapability": "AutoMerge",
+    "version": "1.0",
+    "config": {
+      "taskName": "Auto merge PR's marked auto_merge when all checks have passed",
+      "label": "auto_merge",
+      "allowAutoMergeInstructionsWithoutLabel": true,
+      "mergeType": "squash",
+      "deleteBranches": true,
+      "requireAllStatuses": false,
+      "removeLabelOnPush": true,
+      "conditionalMergeTypes": [],
+      "minMinutesOpen": "30",
+      "enforceDMPAsStatus": true
+    }
+  },
+  {
+    "taskType": "scheduled",
+    "capabilityId": "ScheduledSearch",
+    "subCapability": "ScheduledSearch",
+    "version": "1.1",
+    "config": {
+      "frequency": [
+        {
+          "weekDay": 1,
+          "hours": [
+            8,
+            17
+          ],
+          "timezoneOffset": -8,
+          "restrictions": [
+            {
+              "name": "isLastInMonth",
+              "parameters": {}
+            }
+          ]
+        }
+      ],
+      "searchTerms": [
+        {
+          "name": "isOpen",
+          "parameters": {}
+        },
+        {
+          "name": "hasLabel",
+          "parameters": {
+            "label": "netfx-servicing-approved"
+          }
+        }
+      ],
+      "taskName": "Move 'open' area-servicing-approved bugs back to Triage (milestone = empty) every month(30 days) for status update to community",
+      "actions": [
+        {
+          "name": "removeMilestone",
+          "parameters": {}
+        },
+        {
+          "name": "addReply",
+          "parameters": {
+            "comment": "@dotnet/wpf-developers,  It's time to give an update to the community. "
+          }
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "PullRequestResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "labelAdded",
+            "parameters": {
+              "label": "Servicing-consider"
+            }
+          }
+        ]
+      },
+      "eventType": "pull_request",
+      "eventNames": [
+        "pull_request",
+        "issues",
+        "project_card"
+      ],
+      "taskName": "Use servicing template for `servicing-consider` issues",
+      "actions": [
+        {
+          "name": "addReply",
+          "parameters": {
+            "comment": "Hi @${issueAuthor}. Please make sure you've updated the PR description to use the [Shiproom Template](https://dev.azure.com/devdiv/DevDiv/_wiki/wikis/DevDiv.wiki/545/NET-Servicing#pr-template). Also, make sure this PR is not marked as a draft and is ready-to-merge.\n\nTo learn more about how to prepare a servicing PR [click here](https://aka.ms/aspnet/servicing)."
+          }
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "PullRequestResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isAction",
+            "parameters": {
+              "action": "opened"
+            }
+          },
+          {
+            "name": "activitySenderHasPermissions",
+            "parameters": {
+              "permissions": "read"
+            }
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isActivitySender",
+                "parameters": {
+                  "user": "dotnet-maestro"
+                }
+              }
+            ]
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isActivitySender",
+                "parameters": {
+                  "user": "dotnet-maestro-bot"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "eventType": "pull_request",
+      "eventNames": [
+        "pull_request",
+        "issues",
+        "project_card"
+      ],
+      "taskName": "Label community PRs with `community contribution` label",
+      "actions": [
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "Community Contribution"
+          }
+        }
+      ]
+    }
+  }
+]

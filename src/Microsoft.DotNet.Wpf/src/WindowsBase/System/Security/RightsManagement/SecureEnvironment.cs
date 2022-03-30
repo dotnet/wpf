@@ -84,7 +84,7 @@ namespace System.Security.RightsManagement
             if ((user.AuthenticationType != AuthenticationType.Windows) && 
                  (user.AuthenticationType != AuthenticationType.Passport))
             {
-                throw new ArgumentOutOfRangeException("user", SR.Get(SRID.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed));
+                throw new ArgumentOutOfRangeException("user", SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed);
             }
             
             using (ClientSession userClientSession = new ClientSession(user))
@@ -109,7 +109,7 @@ namespace System.Security.RightsManagement
             if ((user.AuthenticationType != AuthenticationType.Windows) && 
                  (user.AuthenticationType != AuthenticationType.Passport))
             {
-                throw new ArgumentOutOfRangeException("user", SR.Get(SRID.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed));
+                throw new ArgumentOutOfRangeException("user", SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed);
             }
 
             // Generic client session to enumerate user certificates 

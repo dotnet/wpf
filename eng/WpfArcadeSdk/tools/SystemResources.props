@@ -11,6 +11,9 @@
     <GenerateResxSource>true</GenerateResxSource>
 
     <_GenerateResourcesCodeAsConstants>true</_GenerateResourcesCodeAsConstants>
+
+    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='WindowsBase'">false</_GenerateResourcesCodeAsConstants>
+
     <DefineConstants Condition="'$(_GenerateResourcesCodeAsConstants)'=='true'">$(DefineConstants);GENERATE_RESOURCES_CODE_AS_CONSTANTS</DefineConstants>
 
     <!-- We define our own implementation of GetResourceString -->
@@ -26,7 +29,7 @@
       <ClassName Condition="'$(AssemblyName)'=='PresentationBuildTasks'">MS.Utility.SRID</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='UIAutomationProvider'">System.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='UIAutomationTypes'">System.SR</ClassName>
-      <ClassName Condition="'$(AssemblyName)'=='WindowsBase'">MS.Internal.WindowsBase.SRID</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='WindowsBase'">MS.Internal.WindowsBase.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='System.Windows.Controls.Ribbon'">Microsoft.Windows.Controls.SRID</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='System.Windows.Input.Manipulations'">System.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='ReachFramework'">System.Windows.Xps.SRID</ClassName>

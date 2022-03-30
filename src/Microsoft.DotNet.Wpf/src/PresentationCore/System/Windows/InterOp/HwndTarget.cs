@@ -48,6 +48,7 @@ namespace System.Windows.Interop
         HardwareReference = MILRTInitializationFlags.MIL_RT_HARDWARE_ONLY | MILRTInitializationFlags.MIL_RT_USE_REF_RAST,
         DisableMultimonDisplayClipping = MILRTInitializationFlags.MIL_RT_DISABLE_MULTIMON_DISPLAY_CLIPPING,
         IsDisableMultimonDisplayClippingValid = MILRTInitializationFlags.MIL_RT_IS_DISABLE_MULTIMON_DISPLAY_CLIPPING_VALID,
+        DisableDirtyRectangles = MILRTInitializationFlags.MIL_RT_DISABLE_DIRTY_RECTANGLES,
     }
 
     // This is the public, more limited, enum exposed for use with the RenderMode property.
@@ -621,6 +622,11 @@ namespace System.Windows.Interop
                 }
             }
 
+            if (MediaSystem.DisableDirtyRectangles)
+            {
+                mode |= RenderingMode.DisableDirtyRectangles;
+            }
+
             // Select the render target initialization flags based on the requested
             // rendering mode.
 
@@ -1075,8 +1081,8 @@ namespace System.Windows.Interop
                     // pollute the measure data based on the Minized window size.
                     if (NativeMethods.IntPtrToInt32(wparam) != NativeMethods.SIZE_MINIMIZED)
                     {
-                        // Rendering sometimes does not refresh propertly,and results in 
-                        // rendering artifacts that look like a patchwork of black unpainted squares. 
+                        // Rendering sometimes does not refresh propertly,and results in
+                        // rendering artifacts that look like a patchwork of black unpainted squares.
                         // This is is caused by a race condition in Windows 7 (and possibly
                         // Windows Vista, though we haven't observed the effect there).
                         // Sometimes when we restore from minimized, when we present into the newly
@@ -1122,7 +1128,7 @@ namespace System.Windows.Interop
                     bool enableRenderTarget = (wparam != IntPtr.Zero);
                     OnShowWindow(enableRenderTarget);
                     //
-                    //  
+                    //
                     //      When locked on downlevel, MIL stops rendering and invalidates the
                     //      window causing WM_PAINT. When the window is layered and hidden
                     //      before the lock, it won't get the WM_PAINT on unlock and the MIL will
@@ -2018,7 +2024,7 @@ namespace System.Windows.Interop
         private DpiAwarenessContextValue DpiAwarenessContext { get; set; }
 
         internal DpiScale2 CurrentDpiScale { get; private set; }
-        
+
         internal static bool IsPerMonitorDpiScalingSupportedOnCurrentPlatform
         {
             get
@@ -2311,7 +2317,7 @@ namespace System.Windows.Interop
 
                     // UIAutomation listens for the EventObjectUIFragmentCreate WinEvent to
                     // understand when UI that natively implements UIAutomation comes up
-                    
+
                     // Need to figure out how to handle when _rootVisual is replaced above (is there some
                     // event when this happens?); MS.Internal.Automation.NativeEventListener may have a context
                     // monitor that is holding onto the old _rootVisual and that would need to be cleaned up.

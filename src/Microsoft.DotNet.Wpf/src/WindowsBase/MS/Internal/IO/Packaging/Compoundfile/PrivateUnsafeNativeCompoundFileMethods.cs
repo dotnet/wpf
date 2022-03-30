@@ -93,7 +93,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 if( !underlyingStream.CanSeek )
                 {
                     throw new NotSupportedException(
-                        SR.Get(SRID.ILockBytesStreamMustSeek));
+                        SR.ILockBytesStreamMustSeek);
                 }
 
                 _baseStream = underlyingStream;
@@ -126,7 +126,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 if (_baseStream==null)
                 {
-                    throw new ObjectDisposedException(null, SR.Get(SRID.StreamObjectDisposed));
+                    throw new ObjectDisposedException(null, SR.StreamObjectDisposed);
                 }
             }
 
@@ -199,7 +199,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                                      SafeNativeCompoundFileConstants.STATFLAG_NOOPEN  )) != 0)
                 {
                     // validate grfStatFlag's value
-                    throw new ArgumentException(SR.Get(SRID.InvalidArgumentValue, "grfStatFlag", grfStatFlag.ToString(CultureInfo.InvariantCulture)));
+                    throw new ArgumentException(SR.Format(SR.InvalidArgumentValue, "grfStatFlag", grfStatFlag.ToString(CultureInfo.InvariantCulture)));
                 }
 
                 System.Runtime.InteropServices.ComTypes.STATSTG returnValue = new System.Runtime.InteropServices.ComTypes.STATSTG();

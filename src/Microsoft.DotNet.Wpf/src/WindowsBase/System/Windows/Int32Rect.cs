@@ -81,22 +81,22 @@ namespace System.Windows
         {
             if (_x < 0)
             {
-                throw new ArgumentOutOfRangeException(paramName, SR.Get(SRID.ParameterCannotBeNegative));
+                throw new ArgumentOutOfRangeException(paramName, SR.ParameterCannotBeNegative);
             }
 
             if (_y < 0)
             {
-                throw new ArgumentOutOfRangeException(paramName, SR.Get(SRID.ParameterCannotBeNegative));
+                throw new ArgumentOutOfRangeException(paramName, SR.ParameterCannotBeNegative);
             }            
             
             if (_width < 0 || _width > width)
             {
-                throw new ArgumentOutOfRangeException(paramName, SR.Get(SRID.ParameterMustBeBetween, 0, width));
+                throw new ArgumentOutOfRangeException(paramName, SR.Format(SR.ParameterMustBeBetween, 0, width));
             }
 
             if (_height < 0 || _height > height)
             {
-                throw new ArgumentOutOfRangeException(paramName, SR.Get(SRID.ParameterMustBeBetween, 0, height));
+                throw new ArgumentOutOfRangeException(paramName, SR.Format(SR.ParameterMustBeBetween, 0, height));
             }
         }
 

@@ -48,7 +48,7 @@ namespace System.Windows.Markup
         {
             if (_member == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MarkupExtensionStaticMember));
+                throw new InvalidOperationException(SR.MarkupExtensionStaticMember);
             }
 
             object value;
@@ -69,7 +69,7 @@ namespace System.Windows.Markup
                 int dotIndex = _member.IndexOf('.');
                 if (dotIndex < 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.MarkupExtensionBadStatic, _member));
+                    throw new ArgumentException(SR.Format(SR.MarkupExtensionBadStatic, _member));
                 }
 
                 // Pull out the type substring (this will include any XML prefix, e.g. "av:Button")
@@ -77,7 +77,7 @@ namespace System.Windows.Markup
                 string typeString = _member.Substring(0, dotIndex);
                 if (string.IsNullOrEmpty(typeString))
                 {
-                    throw new ArgumentException(SR.Get(SRID.MarkupExtensionBadStatic, _member));
+                    throw new ArgumentException(SR.Format(SR.MarkupExtensionBadStatic, _member));
                 }
 
                 // Get the IXamlTypeResolver from the service provider
@@ -90,7 +90,7 @@ namespace System.Windows.Markup
                 IXamlTypeResolver xamlTypeResolver = serviceProvider.GetService(typeof(IXamlTypeResolver)) as IXamlTypeResolver;
                 if (xamlTypeResolver == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.MarkupExtensionNoContext, GetType().Name, "IXamlTypeResolver"));
+                    throw new ArgumentException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, "IXamlTypeResolver"));
                 }
 
                 // Use the type resolver to get a Type instance
@@ -102,7 +102,7 @@ namespace System.Windows.Markup
                 fieldString = _member.Substring(dotIndex + 1, _member.Length - dotIndex - 1);
                 if (string.IsNullOrEmpty(typeString))
                 {
-                    throw new ArgumentException(SR.Get(SRID.MarkupExtensionBadStatic, _member));
+                    throw new ArgumentException(SR.Format(SR.MarkupExtensionBadStatic, _member));
                 }
             }
 
@@ -120,7 +120,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.MarkupExtensionBadStatic, memberFullName));
+                throw new ArgumentException(SR.Format(SR.MarkupExtensionBadStatic, memberFullName));
             }
         }
 

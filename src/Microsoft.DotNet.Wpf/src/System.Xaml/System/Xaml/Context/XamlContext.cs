@@ -76,14 +76,14 @@ namespace MS.Internal.Xaml
         {
             if (tagType == null)
             {
-                throw new XamlInternalException(SR.Get(SRID.ParentlessPropertyElement, propName.ScopedName));
+                throw new XamlInternalException(SR.Format(SR.ParentlessPropertyElement, propName.ScopedName));
             }
             XamlMember property = null;
             XamlType ownerType = null;
             string ns = ResolveXamlNameNS(propName);
             if (ns == null)
             {
-                throw new XamlParseException(SR.Get(SRID.PrefixNotFound, propName.Prefix));
+                throw new XamlParseException(SR.Format(SR.PrefixNotFound, propName.Prefix));
             }
             XamlType rootTagType = tagIsRoot ? tagType : null;
 
@@ -236,7 +236,7 @@ namespace MS.Internal.Xaml
             string xamlNs = ResolveXamlNameNS(typeName);
             if (xamlNs == null)
             {
-                throw new XamlParseException(SR.Get(SRID.PrefixNotFound, typeName.Prefix));
+                throw new XamlParseException(SR.Format(SR.PrefixNotFound, typeName.Prefix));
             }
             return new XamlTypeName(xamlNs, typeName.Name);
         }

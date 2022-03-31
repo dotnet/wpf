@@ -201,7 +201,7 @@ namespace System.Xaml
             {
                 if (ns == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.CollectionCannotContainNulls, "xamlNamespaces"));
+                    throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "xamlNamespaces"));
                 }
             }
             return nsList.AsReadOnly();

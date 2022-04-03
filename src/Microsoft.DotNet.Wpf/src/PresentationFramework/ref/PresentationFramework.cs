@@ -26,6 +26,7 @@ namespace Microsoft.Win32
         public int FilterIndex { get { throw null; } set { } }
         public string InitialDirectory { get { throw null; } set { } }
         protected int Options { get { throw null; } }
+        protected int VistaOptions { get { throw null; } }
         public bool RestoreDirectory { get { throw null; } set { } }
         public string SafeFileName { get { throw null; } }
         public string[] SafeFileNames { get { throw null; } }
@@ -69,6 +70,7 @@ namespace Microsoft.Win32
     {
         public OpenFileDialog() { }
         public bool Multiselect { get { throw null; } set { } }
+        public bool PickFolders { get { throw null; } set { } }
         public bool ReadOnlyChecked { get { throw null; } set { } }
         public bool ShowReadOnly { get { throw null; } set { } }
         protected override void CheckPermissionsToShowDialog() { }

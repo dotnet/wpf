@@ -190,6 +190,35 @@ namespace Microsoft.Win32
             set
             {
                 SetOption(NativeMethods.OFN_ALLOWMULTISELECT, value);
+                SetVistaOption(FOS.ALLOWMULTISELECT, value);
+            }
+        }
+
+        //   FOS_PICKFOLDERS
+        //   Present an Open dialog that offers a choice of folders
+        //   rather than files.
+        //
+        /// <summary>
+        /// Gets or sets an option flag indicating whether the
+        /// dialog offers a choice of folders rather than files.
+        /// </summary>
+        public bool PickFolders
+        {
+            get
+            {
+                return GetVistaOption(FOS.PICKFOLDERS);
+            }
+            set
+            {
+                SetVistaOption(FOS.PICKFOLDERS, value);
+
+                if (value)
+                {
+                    // FILEMUSTEXIST is set by default in Initialize
+                    // the combination with PICKFOLDERS is valid
+                    // but does not allow user to pick any folder
+                    SetVistaOption(FOS.FILEMUSTEXIST, false);
+                }
             }
         }
 
@@ -212,6 +241,7 @@ namespace Microsoft.Win32
             set
             {
                 SetOption(NativeMethods.OFN_READONLY, value);
+                // not available in Vista dialogs
             }
         }
 
@@ -238,6 +268,7 @@ namespace Microsoft.Win32
             {
                 // ... and SetOption.
                 SetOption(NativeMethods.OFN_HIDEREADONLY, !value);
+                // not available in Vista dialogs
             }
         }
 
@@ -415,6 +446,7 @@ namespace Microsoft.Win32
             // the user enters an invalid name, we display a warning in a 
             // message box.   Implies OFN_PATHMUSTEXIST.
             SetOption(NativeMethods.OFN_FILEMUSTEXIST, true);
+            SetVistaOption(FOS.FILEMUSTEXIST, true);
         }
 
         #endregion Private Methods

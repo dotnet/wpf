@@ -145,6 +145,7 @@ namespace Microsoft.Win32
             {
 
                 SetOption(NativeMethods.OFN_CREATEPROMPT, value);
+                SetVistaOption(FOS.CREATEPROMPT, value);
             }
         }
 
@@ -169,6 +170,7 @@ namespace Microsoft.Win32
             {
 
                 SetOption(NativeMethods.OFN_OVERWRITEPROMPT, value);
+                SetVistaOption(FOS.OVERWRITEPROMPT, value);
             }
         }
 
@@ -378,6 +380,7 @@ namespace Microsoft.Win32
             // the selected file already exists. The user must confirm 
             // whether to overwrite the file.  Default is true.
             SetOption(NativeMethods.OFN_OVERWRITEPROMPT, true);
+            SetVistaOption(FOS.OVERWRITEPROMPT, true);
         }
 
         /// <summary>

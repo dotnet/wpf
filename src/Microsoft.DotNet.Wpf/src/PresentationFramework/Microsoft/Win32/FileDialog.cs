@@ -168,6 +168,7 @@ namespace Microsoft.Win32
             {
 
                 SetOption(NativeMethods.OFN_FILEMUSTEXIST, value);
+                SetVistaOption(FOS.FILEMUSTEXIST, value);
             }
         }
 
@@ -187,6 +188,7 @@ namespace Microsoft.Win32
             {
 
                 SetOption(NativeMethods.OFN_PATHMUSTEXIST, value);
+                SetVistaOption(FOS.PATHMUSTEXIST, value);
             }
         }
 
@@ -243,6 +245,7 @@ namespace Microsoft.Win32
             {
 
                 SetOption(NativeMethods.OFN_NODEREFERENCELINKS, !value);
+                SetVistaOption(FOS.NODEREFERENCELINKS, !value);
             }
         }
 
@@ -476,6 +479,7 @@ namespace Microsoft.Win32
             {
 
                 SetOption(NativeMethods.OFN_NOCHANGEDIR, value);
+                SetVistaOption(FOS.NOCHANGEDIR, value);
             }
         }
 
@@ -516,6 +520,7 @@ namespace Microsoft.Win32
             {
 
                 SetOption(NativeMethods.OFN_NOVALIDATE, !value);
+                SetVistaOption(FOS.NOVALIDATE, !value);
             }
         }
 
@@ -1007,6 +1012,32 @@ namespace Microsoft.Win32
         }
 
         /// <summary>
+        ///  Returns the state of the given options flag.
+        /// </summary>
+        internal bool GetVistaOption(FOS option)
+        {
+            return (_vistaDialogOptions.Value & option) != 0;
+        }
+
+        /// <summary>
+        ///     Sets the given option to the given boolean value.
+        /// </summary>
+        internal void SetVistaOption(FOS option, bool value)
+        {
+            if (value)
+            {
+                // if value is true, bitwise OR the option with _vistaDialogOptions
+                _vistaDialogOptions.Value |= option;
+            }
+            else
+            {
+                // if value is false, AND the bitwise complement of the 
+                // option with _vistaDialogOptions
+                _vistaDialogOptions.Value &= ~option;
+            }
+        }
+
+        /// <summary>
         ///  Prompts the user with a System.Windows.MessageBox
         ///  with the given parameters. It also ensures that
         ///  the focus is set back on the window that had
@@ -1332,15 +1363,19 @@ namespace Microsoft.Win32
                                         // here and then call SetOption to get _dialogOptions
                                         // into the default state.
 
+            _vistaDialogOptions.Value = 0; // Similarly _vistaDialogOption is an uint containing a set of
+                                           // bit flags used to initialize the Vista dialog.
+                                           // It is used directly to set the dialog options.
+
             //
             // Set some default options
             //
-            // - Hide the Read Only check box.
+            // - Hide the Read Only check box. (not available on Vista dialogs)
             SetOption(NativeMethods.OFN_HIDEREADONLY, true);
 
             // - Specifies that the user can type only valid paths and file names. If this flag is
             //   used and the user types an invalid path and file name in the File Name entry field,
-            //   we will display a warning in a message box.
+            //   we will display a warning in a message box. (not available on Vista dialogs)
             SetOption(NativeMethods.OFN_PATHMUSTEXIST, true);
 
             // - This is our own flag, not a standard one defined in OPENFILEDIALOG.  We use this to
@@ -1348,7 +1383,6 @@ namespace Microsoft.Win32
             //   user does not enter it in themselves in ProcessFileNames.  (See that function for
             //   details.)
             SetOption(OPTION_ADDEXTENSION, true);
-
 
             //
             // Initialize additional properties
@@ -1688,6 +1722,18 @@ namespace Microsoft.Win32
             }
         }
 
+        /// <summary>
+        /// Gets an integer represeting the Commmon Item Dialog FOS_* option flags
+        /// used to display a dialog with the current set of property values.
+        /// </summary>
+        protected int VistaOptions
+        {
+            get
+            {
+                return (int)(_vistaDialogOptions.Value & c_VistaFileDialogMask);
+            }
+        }
+
         #endregion Private Properties
 
         #region Vista COM interfaces Augmentation
@@ -1791,7 +1837,7 @@ namespace Microsoft.Win32
 
             // Force no mini mode for the SaveFileDialog.
             // Only accept physically backed locations.
-            FOS options = ((FOS)Options & c_VistaFileDialogMask) | FOS.DEFAULTNOMINIMODE | FOS.FORCEFILESYSTEM;
+            FOS options = (FOS)VistaOptions | FOS.DEFAULTNOMINIMODE | FOS.FORCEFILESYSTEM;
             dialog.SetOptions(options);
 
             COMDLG_FILTERSPEC[] filterItems = GetFilterItems(Filter);
@@ -1932,11 +1978,15 @@ namespace Microsoft.Win32
         //---------------------------------------------------
         #region Private Fields
 
-        private const FOS c_VistaFileDialogMask = FOS.OVERWRITEPROMPT | FOS.NOCHANGEDIR | FOS.NOVALIDATE | FOS.ALLOWMULTISELECT | FOS.PATHMUSTEXIST | FOS.FILEMUSTEXIST | FOS.CREATEPROMPT | FOS.NODEREFERENCELINKS;
+        private const FOS c_VistaFileDialogMask = FOS.OVERWRITEPROMPT | FOS.NOCHANGEDIR | FOS.NOVALIDATE | FOS.ALLOWMULTISELECT | FOS.PATHMUSTEXIST | FOS.FILEMUSTEXIST | FOS.CREATEPROMPT | FOS.NODEREFERENCELINKS | FOS.PICKFOLDERS;
 
         // _dialogOptions is a set of bit flags used to control the behavior
-        // of the Win32 dialog box.
+        // of the legacy Win32 dialog box.
         private SecurityCriticalDataForSet<int> _dialogOptions;
+
+        // _vistaDialogOptions is a set of bit flags used to control the behavior
+        // of the Common Item Dialog.
+        private SecurityCriticalDataForSet<FOS> _vistaDialogOptions;
 
         // These two flags are related to a fix for an issue where Windows
         // sends two FileOK notifications back to back after a sharing

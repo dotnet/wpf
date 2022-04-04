@@ -147,6 +147,14 @@ namespace System.Windows
                                                                         false, // disableThrowOnResourceFailure
                                                                         true,  // allowDeferredResourceReference
                                                                         false  /* mustReturnDeferredResourceReference*/);
+
+                // If there is no mentor, changes to the App and Theme resources will not propagate
+                // to the target object, and we need to subscribe to notifications directly.
+                Application app = Application.Current;
+                if (app != null)
+                {
+                    app.ResourcesChanged += new EventHandler(InvalidateExpressionValue);
+                }
             }
 
             if (resource == null)
@@ -321,6 +329,14 @@ namespace System.Windows
 
                     // Drop the mentor cache
                     _mentorCache = null;
+                }
+                else
+                {
+                    Application app = Application.Current;
+                    if (app != null)
+                    {
+                        app.ResourcesChanged -= new EventHandler(InvalidateExpressionValue);
+                    }
                 }
 
                 // Mark the cache invalid

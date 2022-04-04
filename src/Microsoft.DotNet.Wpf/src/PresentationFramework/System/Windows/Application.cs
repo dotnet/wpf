@@ -1702,7 +1702,11 @@ namespace System.Windows
             // modifying the collection while we iterate over it
             InvalidateResourceReferenceOnWindowCollection(WindowsInternal.Clone(), info);
             InvalidateResourceReferenceOnWindowCollection(NonAppWindowsInternal.Clone(), info);
+            
+            ResourcesChanged?.Invoke(this, new ResourcesChangedEventArgs(info));
         }
+
+        internal event EventHandler ResourcesChanged;
 
         // Creates and returns a NavigationWindow for standalone cases
         // For browser hosted cases, returns the existing RootBrowserWindow which

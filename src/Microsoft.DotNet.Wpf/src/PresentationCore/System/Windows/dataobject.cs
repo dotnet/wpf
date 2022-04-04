@@ -202,6 +202,37 @@ namespace System.Windows
         /// <summary>
         /// Retrieves the data associated with the specified data
         /// format, using an automated conversion parameter to determine whether to convert
+        /// the data to the format and an index to specify the desired view of the data.
+        /// </summary>
+        public object GetData(string format, bool autoConvert, int index)
+        {
+            if (format == null)
+            {
+                throw new ArgumentNullException("format");
+            }
+
+            if (format == string.Empty)
+            {
+                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+            }
+
+            if (_innerData is OleConverter converter)
+            {
+                return converter.GetData(format, autoConvert, index);
+            }
+
+            if (_innerData is DataStore store)
+            {
+                return store.GetData(format, autoConvert, index);
+            }
+
+            // This should be unreachable (constructor ensures one of the above)
+            return _innerData.GetData(format, autoConvert);
+        }
+
+        /// <summary>
+        /// Retrieves the data associated with the specified data
+        /// format, using an automated conversion parameter to determine whether to convert
         /// the data to the format.
         /// </summary>
         public object GetData(string format, bool autoConvert)
@@ -2507,9 +2538,14 @@ namespace System.Windows
                 return GetData(format.FullName);
             }
 
+            public Object GetData(string format, bool autoConvert, int index)
+            {
+                return GetData(format, autoConvert, DVASPECT.DVASPECT_CONTENT, index);
+            }
+
             public Object GetData(string format, bool autoConvert)
             {
-                return GetData(format, autoConvert, DVASPECT.DVASPECT_CONTENT, -1);
+                return GetData(format, autoConvert, -1);
             }
 
             public bool GetDataPresent(string format)
@@ -3408,7 +3444,12 @@ namespace System.Windows
 
             public Object GetData(string format, bool autoConvert)
             {
-                return GetData(format, autoConvert, DVASPECT.DVASPECT_CONTENT, -1);
+                return GetData(format, autoConvert, -1);
+            }
+
+            public Object GetData(string format, bool autoConvert, int index)
+            {
+                return GetData(format, autoConvert, DVASPECT.DVASPECT_CONTENT, index);
             }
 
             public bool GetDataPresent(string format)

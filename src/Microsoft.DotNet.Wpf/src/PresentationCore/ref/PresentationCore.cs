@@ -492,6 +492,7 @@ namespace System.Windows
         public System.IO.Stream GetAudioStream() { throw null; }
         public object GetData(string format) { throw null; }
         public object GetData(string format, bool autoConvert) { throw null; }
+        public object GetData(string format, bool autoConvert, int index) { throw null; }
         public object GetData(System.Type format) { throw null; }
         public bool GetDataPresent(string format) { throw null; }
         public bool GetDataPresent(string format, bool autoConvert) { throw null; }

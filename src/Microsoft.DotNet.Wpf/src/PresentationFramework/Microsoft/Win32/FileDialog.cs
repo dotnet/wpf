@@ -1363,8 +1363,8 @@ namespace Microsoft.Win32
                                         // here and then call SetOption to get _dialogOptions
                                         // into the default state.
 
-            _vistaDialogOptions.Value = 0; // Similarly _vistaDialogOption is an uint containing a set of
-                                           // bit flags used to initialize the Vista dialog.
+            _vistaDialogOptions.Value = 0; // Similarly _vistaDialogOption is an int containing
+                                           // a set of bit flags used to initialize the Vista dialog.
                                            // It is used directly to set the dialog options.
 
             //

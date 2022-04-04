@@ -447,6 +447,8 @@ namespace Microsoft.Win32
             // message box.   Implies OFN_PATHMUSTEXIST.
             SetOption(NativeMethods.OFN_FILEMUSTEXIST, true);
             SetVistaOption(FOS.FILEMUSTEXIST, true);
+
+            // FOS_PICKFOLDERS is reset in the base
         }
 
         #endregion Private Methods

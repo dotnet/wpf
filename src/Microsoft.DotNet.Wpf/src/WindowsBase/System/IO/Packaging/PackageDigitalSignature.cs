@@ -14,7 +14,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Windows;           // For Exception strings - SRID
+using System.Windows;           // For Exception strings - SR
 using System.Text;              // for StringBuilder
 using System.Diagnostics;        // for Assert
 using System.Security;          // for SecurityCritical
@@ -392,7 +392,7 @@ namespace System.IO.Packaging
                 {
                     // don't resolve if external
                     if (relationship.TargetMode != TargetMode.Internal)
-                        throw new FileFormatException(SR.Get(SRID.PackageSignatureCorruption));
+                        throw new FileFormatException(SR.PackageSignatureCorruption);
 
                     Uri resolvedUri = PackUriHelper.ResolvePartUri(SignaturePart.Uri, relationship.TargetUri);
 
@@ -433,7 +433,7 @@ namespace System.IO.Packaging
         private void ThrowIfInvalidated()
         {
             if (_invalid)
-                throw new InvalidOperationException(SR.Get(SRID.SignatureDeleted));
+                throw new InvalidOperationException(SR.SignatureDeleted);
         }
 
         #endregion Private Methods

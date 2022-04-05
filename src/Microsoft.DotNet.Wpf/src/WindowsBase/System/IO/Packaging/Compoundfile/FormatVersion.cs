@@ -81,7 +81,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             if (featureId.Length == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.ZeroLengthFeatureID));
+                throw new ArgumentException(SR.ZeroLengthFeatureID);
             }
 
             _featureIdentifier = featureId;

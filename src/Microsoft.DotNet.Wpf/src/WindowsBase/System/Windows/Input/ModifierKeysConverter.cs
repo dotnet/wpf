@@ -189,7 +189,7 @@ namespace System.Windows.Input
                             break;
 
                         default:
-                            throw new NotSupportedException(SR.Get(SRID.Unsupported_Modifier, token));
+                            throw new NotSupportedException(SR.Format(SR.Unsupported_Modifier, token));
                     }
 
                     modifiersToken = modifiersToken.Substring(offset + 1);

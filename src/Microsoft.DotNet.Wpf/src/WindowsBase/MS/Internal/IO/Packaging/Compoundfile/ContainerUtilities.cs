@@ -209,9 +209,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                         if (reader.BaseStream.Length < bytesRead / 2)
                         {
 #if !PBTCOMPILER
-                            throw new FileFormatException(SR.Get(SRID.InvalidStringFormat));
+                            throw new FileFormatException(SR.InvalidStringFormat);
 #else
-                        throw new SerializationException(SR.Get(SRID.InvalidStringFormat));
+                        throw new SerializationException(SR.InvalidStringFormat);
 #endif
                         }
                     }
@@ -226,9 +226,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     if (inString.Length != (bytesRead / 2))
                     {
 #if !PBTCOMPILER
-                        throw new FileFormatException(SR.Get(SRID.InvalidStringFormat));
+                        throw new FileFormatException(SR.InvalidStringFormat);
 #else
-                    throw new SerializationException(SR.Get(SRID.InvalidStringFormat));
+                    throw new SerializationException(SR.InvalidStringFormat);
 #endif
                     }
                 }
@@ -239,9 +239,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 else
                 {
 #if !PBTCOMPILER
-                    throw new FileFormatException(SR.Get(SRID.InvalidStringFormat));
+                    throw new FileFormatException(SR.InvalidStringFormat);
 #else
-                throw new SerializationException(SR.Get(SRID.InvalidStringFormat));
+                throw new SerializationException(SR.InvalidStringFormat);
 #endif
                 }
 
@@ -258,9 +258,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     if (padding.Length != padLength)
                     {
 #if !PBTCOMPILER
-                        throw new FileFormatException(SR.Get(SRID.InvalidStringFormat));
+                        throw new FileFormatException(SR.InvalidStringFormat);
 #else
-                    throw new SerializationException(SR.Get(SRID.InvalidStringFormat));
+                    throw new SerializationException(SR.InvalidStringFormat);
 #endif
                     }
                     bytesRead += padLength;
@@ -342,7 +342,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             if (Char.IsWhiteSpace(backSlashPath[0]) ||
                 Char.IsWhiteSpace(backSlashPath[backSlashPath.Length - 1]))
             {
-                throw new ArgumentException(SR.Get(SRID.MalformedCompoundFilePath));
+                throw new ArgumentException(SR.MalformedCompoundFilePath);
             }
 
             // Build the array
@@ -354,7 +354,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 if (0 == arrayElement.Length)
                     throw new ArgumentException(
-                        SR.Get(SRID.PathHasEmptyElement), "backSlashPath");
+                        SR.PathHasEmptyElement, "backSlashPath");
             }
 
             // No empty strings, this array should be fine.
@@ -451,7 +451,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 throw new ArgumentNullException(testStringIdentifier);
 
             if (testString.Length == 0)
-                throw new ArgumentException(SR.Get(SRID.StringEmpty), testStringIdentifier);
+                throw new ArgumentException(SR.StringEmpty, testStringIdentifier);
         }
 
         /// <summary>
@@ -465,7 +465,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             if (IsReservedName(nameString))
                 throw new ArgumentException(
-                    SR.Get(SRID.StringCanNotBeReservedName, nameStringIdentifier));
+                    SR.Format(SR.StringCanNotBeReservedName, nameStringIdentifier));
         }
 
         /// <summary>
@@ -495,7 +495,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             if (testString.IndexOf(PathSeparator) != -1)
                 throw new ArgumentException(
-                    SR.Get(SRID.NameCanNotHaveDelimiter,
+                    SR.Format(SR.NameCanNotHaveDelimiter,
                         testStringIdentifier,
                         PathSeparator), "testString");
         }

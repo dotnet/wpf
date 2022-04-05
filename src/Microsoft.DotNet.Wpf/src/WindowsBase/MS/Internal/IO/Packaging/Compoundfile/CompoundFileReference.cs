@@ -114,7 +114,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // what are we dealing with here?
             CompoundFileStreamReference streamReference = reference as CompoundFileStreamReference;
             if ((streamReference == null) && (!(reference is CompoundFileStorageReference)))
-                throw new ArgumentException(SR.Get(SRID.UnknownReferenceSerialize), "reference");
+                throw new ArgumentException(SR.UnknownReferenceSerialize, "reference");
 
             // first parse the path into strings
             string[] segments = ContainerUtilities.ConvertBackSlashPathToStringArrayPath(reference.FullName);
@@ -178,7 +178,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // EntryCount of zero indicates the root storage.
             if (entryCount < 0)
                 throw new FileFormatException(
-                    SR.Get(SRID.CFRCorrupt));
+                    SR.CFRCorrupt);
 
             // need a temp collection because we don't know what we're dealing with until a non-storage component
             // type is encountered
@@ -200,7 +200,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     {
                         if (streamName != null)
                             throw new FileFormatException(
-                                SR.Get(SRID.CFRCorruptStgFollowStm));
+                                SR.CFRCorruptStgFollowStm);
 
                         if (storageList == null)
                             storageList = new StringCollection();
@@ -213,7 +213,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     {
                         if (streamName != null)
                             throw new FileFormatException(
-                                SR.Get(SRID.CFRCorruptMultiStream));
+                                SR.CFRCorruptMultiStream);
 
                         streamName = ContainerUtilities.ReadByteLengthPrefixedDWordPaddedUnicodeString(reader, out byteLength);
                         bytesRead += byteLength;
@@ -222,7 +222,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     // we don't handle these types yet
                     default:
                         throw new FileFormatException(
-                            SR.Get(SRID.UnknownReferenceComponentType));
+                            SR.UnknownReferenceComponentType);
                 }
 
                 --entryCount;

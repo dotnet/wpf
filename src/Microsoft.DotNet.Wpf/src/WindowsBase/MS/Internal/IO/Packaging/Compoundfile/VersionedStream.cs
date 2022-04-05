@@ -269,7 +269,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         protected void CheckDisposed()
         {
             if (_stream == null)
-                throw new ObjectDisposedException(null, SR.Get(SRID.StreamObjectDisposed));
+                throw new ObjectDisposedException(null, SR.StreamObjectDisposed);
         }
 
         //------------------------------------------------------

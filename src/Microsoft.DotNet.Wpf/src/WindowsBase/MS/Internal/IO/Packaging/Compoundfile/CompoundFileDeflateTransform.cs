@@ -105,7 +105,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                         if (bytesRead > 0)
                         {
                             if (compressedSize != bytesRead)
-                                throw new FileFormatException(SR.Get(SRID.CorruptStream));
+                                throw new FileFormatException(SR.CorruptStream);
 
                             // prepare structure
                             // The buffer pointers must be reset for every call
@@ -128,7 +128,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                                 // verify that data matches header
                                 if (decompressedSize != uncompressedSize)
-                                    throw new FileFormatException(SR.Get(SRID.CorruptStream));
+                                    throw new FileFormatException(SR.CorruptStream);
 
                                 destStreamLength += decompressedSize;
 
@@ -140,7 +140,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                         {
                             // block header but no block data
                             if (compressedSize != 0)
-                                throw new FileFormatException(SR.Get(SRID.CorruptStream));
+                                throw new FileFormatException(SR.CorruptStream);
                         }
                     }
 
@@ -359,13 +359,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             if (bytesRead > 0)
             {
                 if (bytesRead < _headerBuf.Length)
-                    throw new FileFormatException(SR.Get(SRID.CorruptStream));
+                    throw new FileFormatException(SR.CorruptStream);
 
                 // header format = 3 ulong's
                 // read and inspect token
                 uint token = BitConverter.ToUInt32(_headerBuf, _ulongSize * 0);
                 if (token != _blockHeaderToken)
-                    throw new FileFormatException(SR.Get(SRID.CorruptStream));
+                    throw new FileFormatException(SR.CorruptStream);
 
                 // convert to int's as that's what we use everywhere
                 checked
@@ -376,7 +376,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     // screen out malicious data
                     if (uncompressedSize < 0 || uncompressedSize > _maxAllowableBlockSize
                         || compressedSize < 0 || compressedSize > _maxAllowableBlockSize)
-                        throw new FileFormatException(SR.Get(SRID.CorruptStream));
+                        throw new FileFormatException(SR.CorruptStream);
                 }
             }
             else
@@ -421,7 +421,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     invalidOperation = true; break;
 
                 case ZLibNative.ErrorCode.VersionError:
-                    throw new InvalidOperationException(SR.Get(SRID.ZLibVersionError,
+                    throw new InvalidOperationException(SR.Format(SR.ZLibVersionError,
                         System.Text.Encoding.UTF8.GetString(ZLibVersion, 0, ZLibVersion.Length)));
 
                 default:
@@ -435,7 +435,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 throw new InvalidOperationException();
 
             if (corruption)
-                throw new FileFormatException(SR.Get(SRID.CorruptStream));
+                throw new FileFormatException(SR.CorruptStream);
 }
 
         //------------------------------------------------------

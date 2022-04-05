@@ -98,7 +98,7 @@ namespace System.Windows
                     }
                     else
                     {
-                        throw new IOException(SR.Get(SRID.UnableToLocateResource, _resourceName));
+                        throw new IOException(SR.Format(SR.UnableToLocateResource, _resourceName));
                     }
                 }
             }
@@ -165,7 +165,7 @@ namespace System.Windows
             // CreateWindowEx will either succeed or throw
             IntPtr hWnd =  MS.Win32.UnsafeNativeMethods.CreateWindowEx(
                 windowCreateFlags,
-                CLASSNAME, SR.Get(SRID.SplashScreenIsLoading),
+                CLASSNAME, SR.SplashScreenIsLoading,
                 MS.Win32.NativeMethods.WS_POPUP | MS.Win32.NativeMethods.WS_VISIBLE,
                 x, y, width, height,
                 nullHandle, nullHandle, new HandleRef(null, _hInstance), IntPtr.Zero);

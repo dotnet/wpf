@@ -75,13 +75,13 @@ namespace System.Windows
                 if(_index == -1 )
                 {
                     #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
-                    throw new InvalidOperationException(SR.Get(SRID.LocalValueEnumerationReset));
+                    throw new InvalidOperationException(SR.LocalValueEnumerationReset);
                 }
 
                 if(_index >= Count )
                 {
                     #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
-                    throw new InvalidOperationException(SR.Get(SRID.LocalValueEnumerationOutOfBounds));
+                    throw new InvalidOperationException(SR.LocalValueEnumerationOutOfBounds);
                 }
                 
                 return _snapshot[_index];

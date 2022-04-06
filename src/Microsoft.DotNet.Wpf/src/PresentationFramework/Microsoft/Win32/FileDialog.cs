@@ -1792,6 +1792,19 @@ namespace Microsoft.Win32
             // Force no mini mode for the SaveFileDialog.
             // Only accept physically backed locations.
             FOS options = ((FOS)Options & c_VistaFileDialogMask) | FOS.DEFAULTNOMINIMODE | FOS.FORCEFILESYSTEM;
+
+            // FILEMUSTEXIST is set by default in OpenFileDialog.
+            // While the combination of PICKFOLDERS and FILEMUSTEXIST is valid,
+            // it currently does not let users select anything in the dialog.
+            // We therefore disable FILEMUSTEXIST for folder selection.
+            // This needs to be persisted in the options, because ProcessFileNames
+            // and PromptUserIfAppropriate check it when user presses OK.
+            if (GetOption(OPTION_PICKFOLDERS))
+            {
+                options |= FOS.PICKFOLDERS;
+                SetOption(NativeMethods.OFN_FILEMUSTEXIST, false);
+            }
+
             dialog.SetOptions(options);
 
             COMDLG_FILTERSPEC[] filterItems = GetFilterItems(Filter);
@@ -1981,6 +1994,10 @@ namespace Microsoft.Win32
         // OPTION_ADDEXTENSION is our own bit flag that we use to control our
         // own automatic extension appending feature.
         private const int OPTION_ADDEXTENSION = unchecked(unchecked((int)0x80000000));
+
+        // OPTION_PICKFOLDERS is our own bit flag to specify FOS_PICKFOLDERS
+        // which otherwise conflicts with OFN_ENABLEHOOK
+        internal const int OPTION_PICKFOLDERS = unchecked(unchecked((int)0x08000000));
 
         #endregion Private Fields
     }

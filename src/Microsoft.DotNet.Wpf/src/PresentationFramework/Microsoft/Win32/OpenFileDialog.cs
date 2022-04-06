@@ -193,6 +193,25 @@ namespace Microsoft.Win32
             }
         }
 
+        //  OPTIONS_PICKFOLDERS
+        //  Causes the Vista dialog to allow picking a folder only.
+        //  This option disables OFN_FILEMUSTEXIST when the dialog is prepared.
+        //
+        /// <summary>
+        ///  Gets or sets whether the dialog box allows to pick a folder.
+        /// </summary>
+        public bool PickFolders
+        {
+            get
+            {
+                return GetOption(OPTION_PICKFOLDERS);
+            }
+            set
+            {
+                SetOption(OPTION_PICKFOLDERS, value);
+            }
+        }
+
         //  OFN_READONLY
         //  Causes the Read Only check box to be selected initially 
         //  when the dialog box is created. This flag indicates the 

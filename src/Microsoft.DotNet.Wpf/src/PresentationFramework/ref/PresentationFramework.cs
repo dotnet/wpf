@@ -69,6 +69,7 @@ namespace Microsoft.Win32
     {
         public OpenFileDialog() { }
         public bool Multiselect { get { throw null; } set { } }
+        public bool PickFolders { get { throw null; } set { } }
         public bool ReadOnlyChecked { get { throw null; } set { } }
         public bool ShowReadOnly { get { throw null; } set { } }
         protected override void CheckPermissionsToShowDialog() { }

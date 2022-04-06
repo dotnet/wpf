@@ -1092,8 +1092,8 @@ namespace Microsoft.Win32
             bool fileExists = true;
 
             // The only option we deal with in this implementation of
-            // PromptUserIfAppropriate is OFN_FILEMUSTEXIST.
-            if (GetOption(NativeMethods.OFN_FILEMUSTEXIST))
+            // PromptUserIfAppropriate is FOS_FILEMUSTEXIST.
+            if (GetVistaOption(FOS.FILEMUSTEXIST))
             {
                 try
                 {
@@ -1473,8 +1473,8 @@ namespace Microsoft.Win32
         /// </summary>
         private bool ProcessFileNames()
         {
-            // Only process the filenames if OFN_NOVALIDATE is not set.
-            if (!GetOption(NativeMethods.OFN_NOVALIDATE))
+            // Only process the filenames if FOS_NOVALIDATE is not set.
+            if (!GetVistaOption(FOS.NOVALIDATE))
             {
                 // Call the FilterExtensions private property to get
                 // a list of valid extensions from the filter(s).
@@ -1528,7 +1528,7 @@ namespace Microsoft.Win32
 
                             // If OFN_FILEMUSTEXIST is not set, or if it is set but the filename we generated
                             // does in fact exist, we update fileName and stop trying new extensions.
-                            if (!GetOption(NativeMethods.OFN_FILEMUSTEXIST) || File.Exists(newFilename))
+                            if (!GetVistaOption(FOS.FILEMUSTEXIST) || File.Exists(newFilename))
                             {
                                 fileName = newFilename;
                                 break;
@@ -1845,13 +1845,14 @@ namespace Microsoft.Win32
             // While the combination of PICKFOLDERS and FILEMUSTEXIST is valid,
             // it currently does not let users select anything in the dialog.
             // We therefore force unset FILEMUSTEXIST for folder selection.
-            FOS options = (FOS)VistaOptions;
-            if ((options & FOS.PICKFOLDERS) != 0)
+            // This needs to be persisted in the options, because ProcessFileNames
+            // and PromptUserIfAppropriate do check it when user presses OK.
+            if (GetVistaOption(FOS.PICKFOLDERS))
             {
-                options &= ~FOS.FILEMUSTEXIST;
+                SetVistaOption(FOS.FILEMUSTEXIST, false);
             }
 
-            dialog.SetOptions(options);
+            dialog.SetOptions((FOS)VistaOptions);
 
             COMDLG_FILTERSPEC[] filterItems = GetFilterItems(Filter);
             if (filterItems.Length > 0)
@@ -1911,7 +1912,7 @@ namespace Microsoft.Win32
             UnsafeNativeMethods.IOleWindow oleWindow = (UnsafeNativeMethods.IOleWindow)dialog;
             oleWindow.GetWindow(out _hwndFileDialog);
 
-            int saveOptions = _dialogOptions.Value;
+            FOS saveOptions = _vistaDialogOptions.Value;
             int saveFilterIndex = _filterIndex;
             string[] saveFileNames = _fileNames;
             bool ok = false;
@@ -1933,17 +1934,8 @@ namespace Microsoft.Win32
                 if (!ok)
                 {
                     _fileNames = saveFileNames;
-                    _dialogOptions.Value = saveOptions;
+                    _vistaDialogOptions.Value = saveOptions;
                     _filterIndex = saveFilterIndex;
-                }
-                else
-                {
-                    if (0 != (Options & NativeMethods.OFN_HIDEREADONLY))
-                    {
-                        // When the dialog is dismissed OK, the Readonly bit can't be left on if ShowReadOnly was false
-                        // Downlevel this happens automatically.  On Vista we need to watch out for it.
-                        _dialogOptions.Value &= ~NativeMethods.OFN_READONLY;
-                    }
                 }
             }
             return ok;

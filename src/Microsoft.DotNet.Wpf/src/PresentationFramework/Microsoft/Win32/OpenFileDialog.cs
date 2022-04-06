@@ -211,14 +211,6 @@ namespace Microsoft.Win32
             set
             {
                 SetVistaOption(FOS.PICKFOLDERS, value);
-
-                if (value)
-                {
-                    // FILEMUSTEXIST is set by default in Initialize
-                    // the combination with PICKFOLDERS is valid
-                    // but does not allow user to pick any folder
-                    SetVistaOption(FOS.FILEMUSTEXIST, false);
-                }
             }
         }
 

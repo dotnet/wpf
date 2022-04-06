@@ -1838,6 +1838,16 @@ namespace Microsoft.Win32
             // Force no mini mode for the SaveFileDialog.
             // Only accept physically backed locations.
             FOS options = (FOS)VistaOptions | FOS.DEFAULTNOMINIMODE | FOS.FORCEFILESYSTEM;
+
+            // FILEMUSTEXIST is set by default by OpenFileDialog.
+            // While the combination of PICKFOLDERS and FILEMUSTEXIST is valid,
+            // it currently does not let users select anything in the dialog.
+            // We therefore disable FILEMUSTEXIST for folder selection.
+            if ((options & FOS.PICKFOLDERS) != 0)
+            {
+                options &= ~FOS.FILEMUSTEXIST;
+            }
+
             dialog.SetOptions(options);
 
             COMDLG_FILTERSPEC[] filterItems = GetFilterItems(Filter);

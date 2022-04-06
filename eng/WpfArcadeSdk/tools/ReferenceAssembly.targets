@@ -1,58 +1,12 @@
 <Project>
    <PropertyGroup>
-    <_DotnetApiDocsFilesRoot>$([MSBuild]::NormalizeDirectory('$(NuGetPackageRoot)', '$(_DotnetApiDocsPackageName.ToLower())', '$(MicrosoftPrivateIntellisenseVersion)', 'IntellisenseFiles', 'windowsdesktop'))</_DotnetApiDocsFilesRoot>
-    <_IntellisenseXmlDir>$([MSBuild]::NormalizeDirectory('$(ArtifactsBinDir)', 'docs'))</_IntellisenseXmlDir>
+    <_DotnetApiDocsFilesRoot>$([MSBuild]::NormalizeDirectory('$(NuGetPackageRoot)', '$(_DotnetApiDocsPackageName.ToLower())', '$(MicrosoftPrivateIntellisenseVersion)', 'IntellisenseFiles', 'windowsdesktop', '1033'))</_DotnetApiDocsFilesRoot>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageDownload Include="Microsoft.Private.Intellisense" Version="[$(MicrosoftPrivateIntellisenseVersion)]" />
   </ItemGroup>
 
-  <!--
-    ============================================================
-                      GetDocFiles
-    Restore intellisense xml files from the centrally managed NuGet package that originates from https://github.com/dotnet/dotnet-api-docs.
-    This packages is published to 'dotnet6-transport' feed.
-    Note: The intellisense package doesn't use NuGet conventions so we need to select manually.
-    ============================================================
-    -->
-  <Target Name="GetDocFiles"
-          AfterTargets="Restore">
-
-    <ItemGroup>
-      <DocFile Include="$(_DotnetApiDocsFilesRoot)**\*.xml"/>
-      <DocFile>
-        <!-- trim off slash since it differs by platform and we need to do a string compare -->
-        <LCID>$([System.String]::new('%(RecursiveDir)').TrimEnd('\/'))</LCID>
-      </DocFile>
-      <DocFile>
-        <!-- map LCID to culture name that VS expects -->
-        <Culture>unknown</Culture>
-        <Culture Condition="'%(LCID)' == '1028'">zh-hant/</Culture>
-        <Culture Condition="'%(LCID)' == '1031'">de/</Culture>
-        <!-- english is placed in the root -->
-        <Culture Condition="'%(LCID)' == '1033'"></Culture>
-        <Culture Condition="'%(LCID)' == '1036'">fr/</Culture>
-        <Culture Condition="'%(LCID)' == '1040'">it/</Culture>
-        <Culture Condition="'%(LCID)' == '1041'">ja/</Culture>
-        <Culture Condition="'%(LCID)' == '1042'">ko/</Culture>
-        <Culture Condition="'%(LCID)' == '1049'">ru/</Culture>
-        <Culture Condition="'%(LCID)' == '2052'">zh-hans/</Culture>
-        <Culture Condition="'%(LCID)' == '3082'">es/</Culture>
-      </DocFile>
-      <DocFile>
-        <SubFolder>%(Culture)/</SubFolder>
-      </DocFile>
-    </ItemGroup>
-
-    <Error Condition="'%(DocFile.Culture)' == 'unknown'" Text="Unknown language folder '%(LCID)' for doc files '@(DocFile)'" />
-
-    <Copy SourceFiles="@(DocFile)"
-          DestinationFiles="$(_IntellisenseXmlDir)\%(SubFolder)%(FileName)%(Extension)"
-          SkipUnchangedFiles="true"
-          UseHardlinksIfPossible="true" />
-
-  </Target>
   <PropertyGroup>
     <EnsureReferenceAssemblyPrerequisitesDependsOn>
       $(EnsureReferenceAssemblyPrerequisitesDependsOn);
@@ -98,7 +52,8 @@
           Condition="'$(ReferenceProjectRepoLocation)'=='External' and '$(RepositoryName)'=='wpf'"
           Outputs="$(IntellisenseXmlDir)$(AssemblyName).xml">
     <PropertyGroup>
-      <IntellisenseXmlFileSource>$(_IntellisenseXmlDir)$(AssemblyName).xml</IntellisenseXmlFileSource>
+            <!-- The intellisense provided by the Docs system -->
+      <IntellisenseXmlFileSource>$([MSBuild]::NormalizePath('$(_DotnetApiDocsFilesRoot)', '$(AssemblyName).xml'))</IntellisenseXmlFileSource>
       <!-- Set the xml destination (for a later step that copies files from the dotnet-api-docs to local build artifacts) -->
       <IntellisenseXmlDest Condition="'$(ProduceReferenceAssembly)' == 'true' And '$(PackageAsRefAndLib)' != 'true'" >$([System.IO.Path]::ChangeExtension('$(TargetRefPath)', '.xml'))</IntellisenseXmlDest>
       <IntellisenseXmlDest Condition="'$(PackageAsRefAndLib)' == 'true'" >$([System.IO.Path]::ChangeExtension('$(TargetPath)', '.xml'))</IntellisenseXmlDest>

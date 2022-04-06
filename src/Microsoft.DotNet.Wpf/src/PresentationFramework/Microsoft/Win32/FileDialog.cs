@@ -922,19 +922,8 @@ namespace Microsoft.Win32
                 // Flags
                 // A set of bit flags you can use to initialize the dialog box.
                 // Most of these will be set through public properties that then call
-                // GetOption or SetOption.  We retrieve the flags using the Options property
-                // and then add three additional flags here:
-                //
-                //     OFN_EXPLORER
-                //         display an Explorer-style box (newer style)
-                //     OFN_ENABLEHOOK
-                //         enable the hook procedure (important for much of our functionality)
-                //     OFN_ENABLESIZING
-                //         allow the user to resize the dialog box
-                //         
-                ofn.Flags = Options | (NativeMethods.OFN_EXPLORER |
-                                       NativeMethods.OFN_ENABLEHOOK |
-                                       NativeMethods.OFN_ENABLESIZING);
+                // GetOption or SetOption.
+                ofn.Flags = Options;
 
                 // lpfnHook
                 // Pointer to the hook procedure.
@@ -1351,7 +1340,7 @@ namespace Microsoft.Win32
         private void Initialize()
         {
             // 
-            // Initialize Options Flags
+            // Initialize Legacy Options Flags
             // 
             _dialogOptions.Value = 0;   // _dialogOptions is an int containing a set of
                                         // bit flags used to initialize the dialog box.
@@ -1363,26 +1352,53 @@ namespace Microsoft.Win32
                                         // here and then call SetOption to get _dialogOptions
                                         // into the default state.
 
-            _vistaDialogOptions.Value = 0; // Similarly _vistaDialogOption is an int containing
-                                           // a set of bit flags used to initialize the Vista dialog.
-                                           // It is used directly to set the dialog options.
-
             //
-            // Set some default options
+            // Set some default options applicable to legacy dialogs only
             //
-            // - Hide the Read Only check box. (not available on Vista dialogs)
+            // - Hide the Read Only check box.
             SetOption(NativeMethods.OFN_HIDEREADONLY, true);
 
             // - Specifies that the user can type only valid paths and file names. If this flag is
             //   used and the user types an invalid path and file name in the File Name entry field,
-            //   we will display a warning in a message box. (not available on Vista dialogs)
+            //   we will display a warning in a message box.
             SetOption(NativeMethods.OFN_PATHMUSTEXIST, true);
 
-            // - This is our own flag, not a standard one defined in OPENFILEDIALOG.  We use this to
-            //   indicate to ourselves that we should add the default extension automatically if the
-            //   user does not enter it in themselves in ProcessFileNames.  (See that function for
-            //   details.)
+            // - Display an Explorer-style box (newer style)
+            SetOption(NativeMethods.OFN_EXPLORER, true);
+
+            // - Enable the hook procedure (important for much of our functionality)
+            SetOption(NativeMethods.OFN_ENABLEHOOK, true);
+
+            // - Allow the user to resize the dialog box
+            SetOption(NativeMethods.OFN_ENABLESIZING, true);
+
+
+
+            //
+            // Initialize Vista Options Flags
+            //
+            _vistaDialogOptions.Value = 0; // _vistaDialogOption is an int containing
+                                           // a set of bit flags used to initialize the Vista dialog.
+                                           // It is used directly to set the dialog options.
+
+            //
+            // Set some default options applicable to Vista dialogs only
+            //
+            // Force no mini mode for the SaveFileDialog.
+            SetVistaOption(FOS.DEFAULTNOMINIMODE, true);
+
+            // Only accept physically backed locations.
+            SetVistaOption(FOS.FORCEFILESYSTEM, true);
+ 
+
+
+            // This is our own flag, not a standard one defined in OPENFILEDIALOG.  We use this to
+            // indicate to ourselves that we should add the default extension automatically if the
+            // user does not enter it in themselves in ProcessFileNames.  (See that function for
+            // details.)
             SetOption(OPTION_ADDEXTENSION, true);
+
+
 
             //
             // Initialize additional properties
@@ -1701,24 +1717,14 @@ namespace Microsoft.Win32
         ///  Gets an integer representing the Win32 common Open File Dialog OFN_* option flags
         ///  used to display a dialog with the current set of property values.
         /// </summary>
-        //
-        //   We bitwise AND _dialogOptions with all of the options we consider valid
-        //   before returning the resulting bitmask to avoid accidentally setting a
-        //   flag we don't intend to.  Note that this list doesn't include a few of the
-        //   flags we set right before showing the dialog in RunDialog (like 
-        //   NativeMethods.OFN_EXPLORER), since those are only added when creating
-        //   the OPENFILENAME structure.
         //  
-        //   Also note that our private flags are not included in this list (like
-        //   OPTION_ADDEXTENSION)
+        //   Note that our private flags that share the same storage are not included in
+        //   this list (like OPTION_ADDEXTENSION).
         protected int Options
         {
             get
             {
-                return _dialogOptions.Value & (NativeMethods.OFN_READONLY | NativeMethods.OFN_HIDEREADONLY |
-                                  NativeMethods.OFN_NOCHANGEDIR | NativeMethods.OFN_NOVALIDATE |
-                                  NativeMethods.OFN_ALLOWMULTISELECT | NativeMethods.OFN_PATHMUSTEXIST |
-                                  NativeMethods.OFN_NODEREFERENCELINKS);
+                return _dialogOptions.Value & ~(OPTION_ADDEXTENSION);
             }
         }
 
@@ -1730,7 +1736,7 @@ namespace Microsoft.Win32
         {
             get
             {
-                return (int)(_vistaDialogOptions.Value & c_VistaFileDialogMask);
+                return (int)_vistaDialogOptions.Value;
             }
         }
 
@@ -1835,14 +1841,11 @@ namespace Microsoft.Win32
 
             dialog.SetTitle(Title);
 
-            // Force no mini mode for the SaveFileDialog.
-            // Only accept physically backed locations.
-            FOS options = (FOS)VistaOptions | FOS.DEFAULTNOMINIMODE | FOS.FORCEFILESYSTEM;
-
             // FILEMUSTEXIST is set by default by OpenFileDialog.
             // While the combination of PICKFOLDERS and FILEMUSTEXIST is valid,
             // it currently does not let users select anything in the dialog.
-            // We therefore disable FILEMUSTEXIST for folder selection.
+            // We therefore force unset FILEMUSTEXIST for folder selection.
+            FOS options = (FOS)VistaOptions;
             if ((options & FOS.PICKFOLDERS) != 0)
             {
                 options &= ~FOS.FILEMUSTEXIST;
@@ -1987,8 +1990,6 @@ namespace Microsoft.Win32
         //
         //---------------------------------------------------
         #region Private Fields
-
-        private const FOS c_VistaFileDialogMask = FOS.OVERWRITEPROMPT | FOS.NOCHANGEDIR | FOS.NOVALIDATE | FOS.ALLOWMULTISELECT | FOS.PATHMUSTEXIST | FOS.FILEMUSTEXIST | FOS.CREATEPROMPT | FOS.NODEREFERENCELINKS | FOS.PICKFOLDERS;
 
         // _dialogOptions is a set of bit flags used to control the behavior
         // of the legacy Win32 dialog box.

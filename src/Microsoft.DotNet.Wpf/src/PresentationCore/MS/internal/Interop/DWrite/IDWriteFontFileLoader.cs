@@ -12,17 +12,17 @@ namespace MS.Internal.Interop.DWrite
 
         public int QueryInterface(Guid* riid, void** ppvObject)
         {
-            return ((delegate* unmanaged[Stdcall]<IDWriteFontFileLoader*, Guid*, void**, int>)(lpVtbl[0]))((IDWriteFontFileLoader*)Unsafe.AsPointer(ref this), riid, ppvObject);
+            return ((delegate* unmanaged<IDWriteFontFileLoader*, Guid*, void**, int>)(lpVtbl[0]))((IDWriteFontFileLoader*)Unsafe.AsPointer(ref this), riid, ppvObject);
         }
 
         public uint AddRef()
         {
-            return ((delegate* unmanaged[Stdcall]<IDWriteFontFileLoader*, uint>)(lpVtbl[1]))((IDWriteFontFileLoader*)Unsafe.AsPointer(ref this));
+            return ((delegate* unmanaged<IDWriteFontFileLoader*, uint>)(lpVtbl[1]))((IDWriteFontFileLoader*)Unsafe.AsPointer(ref this));
         }
 
         public uint Release()
         {
-            return ((delegate* unmanaged[Stdcall]<IDWriteFontFileLoader*, uint>)(lpVtbl[2]))((IDWriteFontFileLoader*)Unsafe.AsPointer(ref this));
+            return ((delegate* unmanaged<IDWriteFontFileLoader*, uint>)(lpVtbl[2]))((IDWriteFontFileLoader*)Unsafe.AsPointer(ref this));
         }
     }
 }

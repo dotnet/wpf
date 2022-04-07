@@ -353,7 +353,7 @@ namespace System.Windows.Controls
                         const ModifierKeys ModifierMask = ModifierKeys.Alt | ModifierKeys.Control | ModifierKeys.Shift | ModifierKeys.Windows;
                         ModifierKeys modifierKeys = Keyboard.Modifiers & ModifierMask;
 
-                        if ((modifierKeys == ModifierKeys.Alt) && (key == Key.Left || key == Key.Right))
+                        if ((modifierKeys & ModifierKeys.Alt) == ModifierKeys.Alt && (key == Key.Left || key == Key.Right))
                         {
                             if(e.OriginalSource is GridViewColumnHeader gridViewColumnHeader && gridViewColumnHeader.Column != null)
                             {

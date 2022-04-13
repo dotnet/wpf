@@ -80,17 +80,8 @@ namespace System.Windows.Markup
         /// <param name="prefix">The XML namespace prefix to look up</param>
         /// <returns>The namespace corresponding to the given prefix if it exists, 
         /// null otherwise</returns>
-        public static string LookupNamespace(DependencyObject elem, string prefix)
+        public static string LookupNamespace(DependencyObject elem!!, string prefix!!)
         {
-            if (elem == null)
-            {
-                throw new ArgumentNullException( "elem" ); 
-            }
-            if (prefix == null)
-            {
-                throw new ArgumentNullException( "prefix" ); 
-            }
-
             // Walk up the parent chain until one of the parents has the passed prefix in 
             // its xmlns dictionary, or until a null parent is reached.
             XmlnsDictionary d = GetXmlnsDictionary(elem);
@@ -123,17 +114,9 @@ namespace System.Windows.Markup
         /// string.Empty if the given namespace corresponds to the default namespace; otherwise, 
         /// the XML prefix corresponding to the given namespace, or null if none exists
         /// </returns>
-        public static string LookupPrefix(DependencyObject elem, string uri)
+        public static string LookupPrefix(DependencyObject elem!!, string uri!!)
         {
             DependencyObject oldElem = elem;
-            if (elem == null)
-            {
-                throw new ArgumentNullException( "elem" ); 
-            }
-            if (uri == null)
-            {
-                throw new ArgumentNullException( "uri" ); 
-            }
 
             // Following the letter of the specification, the default namespace should take 
             // precedence in the case of redundancy, so we check that first.
@@ -187,26 +170,16 @@ namespace System.Windows.Markup
         /// </summary>
         [DesignerSerializationOptions(DesignerSerializationOptions.SerializeAsAttribute)]
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
-        public static string GetXmlSpace(DependencyObject dependencyObject)
+        public static string GetXmlSpace(DependencyObject dependencyObject!!)
         {
-            if (dependencyObject == null)
-            {
-                throw new ArgumentNullException( "dependencyObject" );
-            }
-
             return (string)dependencyObject.GetValue(XmlSpaceProperty);
         }
 
         /// <summary>
         /// Set value of xml:space on the passed DependencyObject
         /// </summary>
-        public static void SetXmlSpace(DependencyObject dependencyObject, string value)
+        public static void SetXmlSpace(DependencyObject dependencyObject!!, string value)
         {
-            if (dependencyObject == null)
-            {
-                throw new ArgumentNullException( "dependencyObject" );
-            }
-
             dependencyObject.SetValue(XmlSpaceProperty, value);
         }
 
@@ -221,26 +194,16 @@ namespace System.Windows.Markup
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
-        public static XmlnsDictionary GetXmlnsDictionary(DependencyObject dependencyObject)
+        public static XmlnsDictionary GetXmlnsDictionary(DependencyObject dependencyObject!!)
         {
-            if (dependencyObject == null)
-            {
-                throw new ArgumentNullException( "dependencyObject" );
-            }
-
             return (XmlnsDictionary)dependencyObject.GetValue(XmlnsDictionaryProperty);
         }
 
         /// <summary>
         /// Set value of XmlnsDictionary on the passed DependencyObject
         /// </summary>
-        public static void SetXmlnsDictionary(DependencyObject dependencyObject, XmlnsDictionary value)
+        public static void SetXmlnsDictionary(DependencyObject dependencyObject!!, XmlnsDictionary value)
         {
-            if (dependencyObject == null)
-            {
-                throw new ArgumentNullException( "dependencyObject" );
-            }
-
             if (dependencyObject.IsSealed == false)
             {
                 dependencyObject.SetValue(XmlnsDictionaryProperty, value);
@@ -259,26 +222,16 @@ namespace System.Windows.Markup
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [DesignerSerializationOptions(DesignerSerializationOptions.SerializeAsAttribute)]
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
-        public static string GetXmlnsDefinition(DependencyObject dependencyObject)
+        public static string GetXmlnsDefinition(DependencyObject dependencyObject!!)
         {
-            if (dependencyObject == null)
-            {
-                throw new ArgumentNullException( "dependencyObject" );
-            }
-
             return (string)dependencyObject.GetValue(XmlnsDefinitionProperty);
         }
 
         /// <summary>
         /// Set value of xmlns definition directory on the passed DependencyObject
         /// </summary>
-        public static void SetXmlnsDefinition(DependencyObject dependencyObject, string value)
+        public static void SetXmlnsDefinition(DependencyObject dependencyObject!!, string value)
         {
-            if (dependencyObject == null)
-            {
-                throw new ArgumentNullException( "dependencyObject" );
-            }
-
             dependencyObject.SetValue(XmlnsDefinitionProperty, value);
         }
 
@@ -296,13 +249,8 @@ namespace System.Windows.Markup
         /// </remarks>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
-        public static string GetXmlNamespaceMaps(DependencyObject dependencyObject)
+        public static string GetXmlNamespaceMaps(DependencyObject dependencyObject!!)
         {
-            if (dependencyObject == null)
-            {
-                throw new ArgumentNullException( "dependencyObject" );
-            }
-
             return (string)dependencyObject.GetValue(XmlNamespaceMapsProperty);
         }
 
@@ -312,13 +260,8 @@ namespace System.Windows.Markup
         /// <remarks>
         /// XmlNamespaceMaps map xml namespace uri to Assembly/CLR namespaces
         /// </remarks>
-        public static void SetXmlNamespaceMaps(DependencyObject dependencyObject, string value)
+        public static void SetXmlNamespaceMaps(DependencyObject dependencyObject!!, string value)
         {
-            if (dependencyObject == null)
-            {
-                throw new ArgumentNullException( "dependencyObject" );
-            }
-
             dependencyObject.SetValue(XmlNamespaceMapsProperty, value);
         }
 

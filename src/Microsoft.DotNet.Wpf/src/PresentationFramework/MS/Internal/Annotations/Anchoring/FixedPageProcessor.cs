@@ -78,14 +78,9 @@ namespace MS.Internal.Annotations.Anchoring
         ///     if the node is FixedPage, but annotations are not loaded
         /// </returns>
         /// <exception cref="ArgumentNullException">node is null</exception>
-        public override IList<IAttachedAnnotation> PreProcessNode(DependencyObject node, out bool calledProcessAnnotations)
+        public override IList<IAttachedAnnotation> PreProcessNode(DependencyObject node!!, out bool calledProcessAnnotations)
         {
-            if (node == null)
-                throw new ArgumentNullException("node");
-
-            DocumentPageView dpv = node as DocumentPageView;
-
-            if (dpv != null && (dpv.DocumentPage is FixedDocumentPage || dpv.DocumentPage is FixedDocumentSequenceDocumentPage))
+            if (node is DocumentPageView dpv && (dpv.DocumentPage is FixedDocumentPage || dpv.DocumentPage is FixedDocumentSequenceDocumentPage))
             {
                 calledProcessAnnotations = true;
                 return Manager.ProcessAnnotations(dpv);
@@ -111,20 +106,16 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">node is null</exception>
         /// <exception cref="ArgumentException">node points to a Document Page View which
         /// doesn't contain a FixedDocumentPage</exception>
-        public override ContentLocator GenerateLocator(PathNode node, out bool continueGenerating)
+        public override ContentLocator GenerateLocator(PathNode node!!, out bool continueGenerating)
         {
-            if (node == null)
-                throw new ArgumentNullException("node");
-
             // Initial value
             continueGenerating = true;
 
             ContentLocator locator = null;
-            DocumentPageView dpv = node.Node as DocumentPageView;
-
+            
             int pageNb = -1;
 
-            if (dpv != null)
+            if (node.Node is DocumentPageView dpv)
             {
                 // Only produce locator parts for FixedDocumentPages
                 if (dpv.DocumentPage is FixedDocumentPage || dpv.DocumentPage is FixedDocumentSequenceDocumentPage)
@@ -134,8 +125,7 @@ namespace MS.Internal.Annotations.Anchoring
             }
             else
             {
-                FixedTextSelectionProcessor.FixedPageProxy fPage = node.Node as FixedTextSelectionProcessor.FixedPageProxy;
-                if (fPage != null)
+                if (node.Node is FixedTextSelectionProcessor.FixedPageProxy fPage)
                 {
                     pageNb = fPage.Page;
                 }
@@ -171,16 +161,10 @@ namespace MS.Internal.Annotations.Anchoring
         /// null</exception>
         /// <exception cref="ArgumentException">locatorPart is of the incorrect 
         /// type</exception>
-        public override DependencyObject ResolveLocatorPart(ContentLocatorPart locatorPart, DependencyObject startNode, out bool continueResolving)
+        public override DependencyObject ResolveLocatorPart(ContentLocatorPart locatorPart!!, DependencyObject startNode!!, out bool continueResolving)
         {
-            if (locatorPart == null)
-                throw new ArgumentNullException("locatorPart");
-
-            if (startNode == null)
-                throw new ArgumentNullException("startNode");
-
             if (PageNumberElementName != locatorPart.PartType)
-                throw new ArgumentException(SR.Get(SRID.IncorrectLocatorPartType, locatorPart.PartType.Namespace + ":" + locatorPart.PartType.Name), "locatorPart");
+                throw new ArgumentException(SR.Get(SRID.IncorrectLocatorPartType, locatorPart.PartType.Namespace + ":" + locatorPart.PartType.Name), nameof(locatorPart));
 
             // Initial value
             continueResolving = true;
@@ -191,7 +175,7 @@ namespace MS.Internal.Annotations.Anchoring
             if (pageNumberString != null)
                 pageNumber = Int32.Parse(pageNumberString, NumberFormatInfo.InvariantInfo);
             else
-                throw new ArgumentException(SR.Get(SRID.IncorrectLocatorPartType, locatorPart.PartType.Namespace + ":" + locatorPart.PartType.Name), "locatorPart");
+                throw new ArgumentException(SR.Get(SRID.IncorrectLocatorPartType, locatorPart.PartType.Namespace + ":" + locatorPart.PartType.Name), nameof(locatorPart));
 
 
             // Get the actual FixedPage for the page number specified in the LocatorPart.  We need
@@ -212,8 +196,7 @@ namespace MS.Internal.Annotations.Anchoring
                     document = startNode as FixedDocumentSequence;
                     if (document != null)
                     {
-                        FixedDocumentSequenceDocumentPage sequencePage = document.DocumentPaginator.GetPage(pageNumber) as FixedDocumentSequenceDocumentPage;
-                        if (sequencePage != null)
+                        if (document.DocumentPaginator.GetPage(pageNumber) is FixedDocumentSequenceDocumentPage sequencePage)
                         {
                             page = sequencePage.ChildDocumentPage as FixedDocumentPage;
                         }
@@ -222,8 +205,7 @@ namespace MS.Internal.Annotations.Anchoring
             }
             else
             {
-                dpv = startNode as DocumentPageView;
-                if (dpv != null)
+                if (startNode is DocumentPageView dpv)
                 {
                     page = dpv.DocumentPage as FixedDocumentPage;
                     if (page == null)

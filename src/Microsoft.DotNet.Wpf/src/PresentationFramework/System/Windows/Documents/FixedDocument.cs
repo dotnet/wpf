@@ -99,13 +99,9 @@ namespace System.Windows.Documents
         /// <param name="serviceType">
         /// Specifies the type of service object to get.
         /// </param>
-        object IServiceProvider.GetService(Type serviceType)
+        object IServiceProvider.GetService(Type serviceType!!)
         {
 //             Dispatcher.VerifyAccess();
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
 
             if (serviceType == typeof(ITextContainer))
             {
@@ -116,11 +112,7 @@ namespace System.Windows.Documents
             {
                 // create this on demand, but not through the property, only through the
                 // service, so it is only created when it's actually used
-                if (_rubberbandSelector == null)
-                {
-                    _rubberbandSelector = new RubberbandSelector();
-                }
-                return _rubberbandSelector;
+                return _rubberbandSelector ??= new RubberbandSelector();
             }
 
             return null;
@@ -137,20 +129,15 @@ namespace System.Windows.Documents
         ///<param name="value">
         /// Object to add as a child
         ///</param>
-        void IAddChild.AddChild(Object value)
+        void IAddChild.AddChild(Object value!!)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
-
-//             Dispatcher.VerifyAccess();
+            //             Dispatcher.VerifyAccess();
 
             PageContent fp = value as PageContent;
 
             if (fp == null)
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(PageContent)), "value");
+                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(PageContent)), nameof(value));
             }
 
             if (fp.IsInitialized)
@@ -372,7 +359,7 @@ namespace System.Windows.Documents
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">pageNumber is less than zero.</exception>
         /// <exception cref="ArgumentNullException">userState is NULL.</exception>
-        internal void GetPageAsync(int pageNumber, object userState)
+        internal void GetPageAsync(int pageNumber, object userState!!)
         {
             DocumentsTrace.FixedFormat.IDF.Trace(string.Format("IDP.GetPageAsync({0}, {1})", pageNumber, userState));
 
@@ -382,12 +369,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.Get(SRID.IDPNegativePageNumber));
-            }
-
-            if (userState == null)
-            {
-                throw new ArgumentNullException("userState");
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), SR.Get(SRID.IDPNegativePageNumber));
             }
 
             if (pageNumber < Pages.Count)
@@ -412,14 +394,9 @@ namespace System.Windows.Documents
         /// </summary>
         /// <exception cref="ArgumentNullException">contentPosition is NULL.</exception>
         /// <exception cref="ArgumentException">ContentPosition does not exist within this element?s tree.</exception>
-        internal int GetPageNumber(ContentPosition contentPosition)
+        internal int GetPageNumber(ContentPosition contentPosition!!)
         {
 //             Dispatcher.VerifyAccess();
-
-            if (contentPosition == null)
-            {
-                throw new ArgumentNullException("contentPosition");
-            }
 
             FixedTextPointer fixedTextPointer = contentPosition as FixedTextPointer;
             if (fixedTextPointer == null)
@@ -434,18 +411,13 @@ namespace System.Windows.Documents
         /// <see cref="System.Windows.Documents.DocumentPaginator.CancelAsync"/>
         /// </summary>
         /// <exception cref="ArgumentNullException">userState is NULL.</exception>
-        internal void CancelAsync(object userState)
+        internal void CancelAsync(object userState!!)
         {
             DocumentsTrace.FixedFormat.IDF.Trace(string.Format("IDP.GetPageAsyncCancel([{0}])", userState));
 //             Dispatcher.VerifyAccess();
 
-            if (userState == null)
-            {
-                throw new ArgumentNullException("userState");
-            }
-
             GetPageAsyncRequest asyncRequest;
-            if (_asyncOps.TryGetValue(userState,out asyncRequest))
+            if (_asyncOps.TryGetValue(userState, out asyncRequest))
             {
                 if (asyncRequest != null)
                 {
@@ -459,13 +431,8 @@ namespace System.Windows.Documents
         /// <see cref="DynamicDocumentPaginator.GetObjectPosition"/>
         /// </summary>
         /// <exception cref="ArgumentNullException">element is NULL.</exception>
-        internal ContentPosition GetObjectPosition(Object o)
+        internal ContentPosition GetObjectPosition(object o!!)
         {
-            if (o == null)
-            {
-                throw new ArgumentNullException("o");
-            }
-            
             DependencyObject element = o as DependencyObject;
 
             if (element == null)
@@ -514,8 +481,8 @@ namespace System.Windows.Documents
             {
                 FixedPosition fixedPosition;
                 FlowPosition flowPosition=null;
-                System.Windows.Shapes.Path p = element as System.Windows.Shapes.Path;
-                if (element is Glyphs || element is Image || (p != null &&  p.Fill is ImageBrush))
+                
+                if (element is Glyphs || element is Image || (element is System.Windows.Shapes.Path p &&  p.Fill is ImageBrush))
                 {
                     fixedPosition = new FixedPosition(fixedPage.CreateFixedNode(pageIndex, (UIElement)element), 0);
                     flowPosition = FixedContainer.FixedTextBuilder.CreateFlowPosition(fixedPosition);
@@ -536,12 +503,11 @@ namespace System.Windows.Documents
         /// </summary>
         internal ContentPosition GetPagePosition(DocumentPage page)
         {
-            FixedDocumentPage docPage = page as FixedDocumentPage;
-            if (docPage == null)
-            {
-                return ContentPosition.Missing;
-            }
+           if (page is FixedDocumentPage docPage) 
+           {
             return docPage.ContentPosition;
+           }
+           return ContentPosition.Missing;
         }
 
         /// <summary>
@@ -877,13 +843,10 @@ namespace System.Windows.Documents
             if (PageCount > 0)
             {
                 DocumentPage docPage = GetPage(0);
-                if (docPage != null)
+                
+                if (docPage?.Visual is FixedPage page) 
                 {
-                    FixedPage page = docPage.Visual as FixedPage;
-                    if (page != null)
-                    {
-                        this.Language = page.Language;
-                    }
+                   this.Language = page.Language;
                 }
             }
 
@@ -1041,11 +1004,12 @@ namespace System.Windows.Documents
         internal FixedPage GetFixedPage(int pageNumber)
         {
             FixedPage fp = null;
-            FixedDocumentPage fdp = GetPage(pageNumber) as FixedDocumentPage;
-            if (fdp != null && fdp != DocumentPage.Missing)
+            
+            if (GetPage(pageNumber) is FixedDocumentPage fdp && fdp != DocumentPage.Missing) 
             {
                 fp = fdp.FixedPage;
             }
+            
             return fp;
         }
 
@@ -1158,7 +1122,7 @@ namespace System.Windows.Documents
                 }
             }
 
-            ArrayList dirtyPages = new ArrayList();
+            List<int> dirtyPages = new List<int>();
             IList ranges = args.Ranges;
 
             // Find the dirty page
@@ -1170,7 +1134,7 @@ namespace System.Windows.Documents
 
                 for (int count = startPage; count <= endPage; count ++)
                 {
-                    if (dirtyPages.IndexOf(count) < 0)
+                    if (dirtyPages.IndexOf(count) < 0)  // contains?
                     {
                         dirtyPages.Add(count);
                     }
@@ -1240,8 +1204,8 @@ namespace System.Windows.Documents
             _pendingPages.Remove(pc);
 
             // Notify all outstanding request for this particular page
-            ArrayList completedRequests = new ArrayList();
-            IEnumerator<KeyValuePair<Object, GetPageAsyncRequest>> ienum = _asyncOps.GetEnumerator();
+            List<object> completedRequests = new List<object>();
+            IEnumerator<KeyValuePair<object, GetPageAsyncRequest>> ienum = _asyncOps.GetEnumerator();
             try
             {
                 while (ienum.MoveNext())
@@ -1272,7 +1236,7 @@ namespace System.Windows.Documents
             finally
             {
                 // Remove completed requests from current async ops list
-                foreach (Object userState in completedRequests)
+                foreach (object userState in completedRequests)
                 {
                     _asyncOps.Remove(userState);
                 }
@@ -1401,13 +1365,8 @@ namespace System.Windows.Documents
         /// <param name="serviceType">
         /// Specifies the type of service object to get.
         /// </param>
-        object IServiceProvider.GetService(Type serviceType)
+        object IServiceProvider.GetService(Type serviceType!!)
         {
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
-
             if (serviceType == typeof(ITextView))
             {
                 return this.TextView;
@@ -1438,8 +1397,7 @@ namespace System.Windows.Documents
                 {
                     _layedOut = true;
 
-                    UIElement e;
-                    if ((e = ((object)base.Visual) as UIElement)!=null)
+                    if (((object)base.Visual) is UIElement e) 
                     {
                         e.Measure(base.Size);
                         e.Arrange(new Rect(base.Size));
@@ -1485,11 +1443,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_textView == null)
-                {
-                    _textView = new FixedTextView(this);
-                }
-                return _textView;
+                return _textView ??= new FixedTextView(this);
             }
         }
 

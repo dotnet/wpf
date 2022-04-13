@@ -24,26 +24,16 @@ namespace System.Windows.Automation
         /// <summary>
         /// Helper for setting AutomationId property on a DependencyObject. 
         /// </summary>
-        public static void SetAutomationId(DependencyObject element, string value)
+        public static void SetAutomationId(DependencyObject element!!, string value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             element.SetValue(AutomationIdProperty, value);
         }
 
         /// <summary>
         /// Helper for reading AutomationId property from a DependencyObject.
         /// </summary>
-        public static string GetAutomationId(DependencyObject element)
+        public static string GetAutomationId(DependencyObject element!!)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             return ((string)element.GetValue(AutomationIdProperty));
         }
         #endregion AutomationId
@@ -63,13 +53,8 @@ namespace System.Windows.Automation
         /// <summary>
         /// Helper for setting Name property on a DependencyObject. 
         /// </summary>
-        public static void SetName(DependencyObject element, string value)
+        public static void SetName(DependencyObject element!!, string value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             element.SetValue(NameProperty, value);
         }
 
@@ -102,26 +87,16 @@ namespace System.Windows.Automation
         /// <summary>
         /// Helper for setting HelpText property on a DependencyObject. 
         /// </summary>
-        public static void SetHelpText(DependencyObject element, string value)
+        public static void SetHelpText(DependencyObject element!!, string value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             element.SetValue(HelpTextProperty, value);
         }
 
         /// <summary>
         /// Helper for reading HelpText property from a DependencyObject.
         /// </summary>
-        public static string GetHelpText(DependencyObject element)
+        public static string GetHelpText(DependencyObject element!!)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             return ((string)element.GetValue(HelpTextProperty));
         }
         #endregion HelpText
@@ -141,26 +116,16 @@ namespace System.Windows.Automation
         /// <summary>
         /// Helper for setting AcceleratorKey property on a DependencyObject. 
         /// </summary>
-        public static void SetAcceleratorKey(DependencyObject element, string value)
+        public static void SetAcceleratorKey(DependencyObject element!!, string value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             element.SetValue(AcceleratorKeyProperty, value);
         }
 
         /// <summary>
         /// Helper for reading AcceleratorKey property from a DependencyObject.
         /// </summary>
-        public static string GetAcceleratorKey(DependencyObject element)
+        public static string GetAcceleratorKey(DependencyObject element!!)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             return ((string)element.GetValue(AcceleratorKeyProperty));
         }
         #endregion AcceleratorKey
@@ -180,26 +145,16 @@ namespace System.Windows.Automation
         /// <summary>
         /// Helper for setting AccessKey property on a DependencyObject. 
         /// </summary>
-        public static void SetAccessKey(DependencyObject element, string value)
+        public static void SetAccessKey(DependencyObject element!!, string value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             element.SetValue(AccessKeyProperty, value);
         }
 
         /// <summary>
         /// Helper for reading AccessKey property from a DependencyObject.
         /// </summary>
-        public static string GetAccessKey(DependencyObject element)
+        public static string GetAccessKey(DependencyObject element!!)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             return ((string)element.GetValue(AccessKeyProperty));
         }
         #endregion AccessKey
@@ -219,26 +174,16 @@ namespace System.Windows.Automation
         /// <summary>
         /// Helper for setting ItemStatus property on a DependencyObject. 
         /// </summary>
-        public static void SetItemStatus(DependencyObject element, string value)
+        public static void SetItemStatus(DependencyObject element!!, string value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             element.SetValue(ItemStatusProperty, value);
         }
 
         /// <summary>
         /// Helper for reading ItemStatus property from a DependencyObject.
         /// </summary>
-        public static string GetItemStatus(DependencyObject element)
+        public static string GetItemStatus(DependencyObject element!!)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             return ((string)element.GetValue(ItemStatusProperty));
         }
         #endregion ItemStatus
@@ -258,26 +203,16 @@ namespace System.Windows.Automation
         /// <summary>
         /// Helper for setting ItemType property on a DependencyObject. 
         /// </summary>
-        public static void SetItemType(DependencyObject element, string value)
+        public static void SetItemType(DependencyObject element!!, string value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             element.SetValue(ItemTypeProperty, value);
         }
 
         /// <summary>
         /// Helper for reading ItemType property from a DependencyObject.
         /// </summary>
-        public static string GetItemType(DependencyObject element)
+        public static string GetItemType(DependencyObject element!!)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             return ((string)element.GetValue(ItemTypeProperty));
         }
         #endregion ItemType
@@ -296,26 +231,16 @@ namespace System.Windows.Automation
         /// <summary>
         /// Helper for setting IsColumnHeader property on a DependencyObject. 
         /// </summary>
-        public static void SetIsColumnHeader(DependencyObject element, bool value)
+        public static void SetIsColumnHeader(DependencyObject element!!, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             element.SetValue(IsColumnHeaderProperty, value);
         }
 
         /// <summary>
         /// Helper for reading IsColumnHeader property from a DependencyObject.
         /// </summary>
-        public static bool GetIsColumnHeader(DependencyObject element)
+        public static bool GetIsColumnHeader(DependencyObject element!!)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             return ((bool)element.GetValue(IsColumnHeaderProperty));
         }
         #endregion IsColumnHeader
@@ -334,26 +259,16 @@ namespace System.Windows.Automation
         /// <summary>
         /// Helper for setting IsRowHeader property on a DependencyObject. 
         /// </summary>
-        public static void SetIsRowHeader(DependencyObject element, bool value)
+        public static void SetIsRowHeader(DependencyObject element!!, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             element.SetValue(IsRowHeaderProperty, value);
         }
 
         /// <summary>
         /// Helper for reading IsRowHeader property from a DependencyObject.
         /// </summary>
-        public static bool GetIsRowHeader(DependencyObject element)
+        public static bool GetIsRowHeader(DependencyObject element!!)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             return ((bool)element.GetValue(IsRowHeaderProperty));
         }
         #endregion IsRowHeader
@@ -372,26 +287,16 @@ namespace System.Windows.Automation
         /// <summary>
         /// Helper for setting IsRequiredForForm property on a DependencyObject. 
         /// </summary>
-        public static void SetIsRequiredForForm(DependencyObject element, bool value)
+        public static void SetIsRequiredForForm(DependencyObject element!!, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             element.SetValue(IsRequiredForFormProperty, value);
         }
 
         /// <summary>
         /// Helper for reading IsRequiredForForm property from a DependencyObject.
         /// </summary>
-        public static bool GetIsRequiredForForm(DependencyObject element)
+        public static bool GetIsRequiredForForm(DependencyObject element!!)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             return ((bool)element.GetValue(IsRequiredForFormProperty));
         }
         #endregion IsRequiredForForm
@@ -410,26 +315,16 @@ namespace System.Windows.Automation
         /// <summary>
         /// Helper for setting LabeledBy property on a DependencyObject. 
         /// </summary>
-        public static void SetLabeledBy(DependencyObject element, UIElement value)
+        public static void SetLabeledBy(DependencyObject element!!, UIElement value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             element.SetValue(LabeledByProperty, value);
         }
 
         /// <summary>
         /// Helper for reading LabeledBy property from a DependencyObject.
         /// </summary>
-        public static UIElement GetLabeledBy(DependencyObject element)
+        public static UIElement GetLabeledBy(DependencyObject element!!)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             return ((UIElement)element.GetValue(LabeledByProperty));
         }
         #endregion LabeledBy
@@ -448,26 +343,16 @@ namespace System.Windows.Automation
         /// <summary>
         /// Helper for setting IsOffscreenBehavior property on a DependencyObject. 
         /// </summary>
-        public static void SetIsOffscreenBehavior(DependencyObject element, IsOffscreenBehavior value)
+        public static void SetIsOffscreenBehavior(DependencyObject element!!, IsOffscreenBehavior value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             element.SetValue(IsOffscreenBehaviorProperty, value);
         }
 
         /// <summary>
         /// Helper for reading IsOffscreenBehavior property from a DependencyObject.
         /// </summary>
-        public static IsOffscreenBehavior GetIsOffscreenBehavior(DependencyObject element)
+        public static IsOffscreenBehavior GetIsOffscreenBehavior(DependencyObject element!!)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             return ((IsOffscreenBehavior)element.GetValue(IsOffscreenBehaviorProperty));
         }
         #endregion IsOffscreenBehavior
@@ -486,26 +371,16 @@ namespace System.Windows.Automation
         /// <summary>
         /// Helper for setting LiveSetting property on a DependencyObject. 
         /// </summary>
-        public static void SetLiveSetting(DependencyObject element, AutomationLiveSetting value)
+        public static void SetLiveSetting(DependencyObject element!!, AutomationLiveSetting value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             element.SetValue(LiveSettingProperty, value);
         }
 
         /// <summary>
         /// Helper for reading LiveSetting property from a DependencyObject.
         /// </summary>
-        public static AutomationLiveSetting GetLiveSetting(DependencyObject element)
+        public static AutomationLiveSetting GetLiveSetting(DependencyObject element!!)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             return ((AutomationLiveSetting)element.GetValue(LiveSettingProperty));
         }
         #endregion LiveSetting
@@ -528,26 +403,16 @@ namespace System.Windows.Automation
         /// <summary>
         /// Helper for setting PositionInSet property on a DependencyObject. 
         /// </summary>
-        public static void SetPositionInSet(DependencyObject element, int value)
+        public static void SetPositionInSet(DependencyObject element!!, int value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             element.SetValue(PositionInSetProperty, value);
         }
 
         /// <summary>
         /// Helper for reading PositionInSet property from a DependencyObject.
         /// </summary>
-        public static int GetPositionInSet(DependencyObject element)
+        public static int GetPositionInSet(DependencyObject element!!)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             return ((int)element.GetValue(PositionInSetProperty));
         }
         #endregion
@@ -570,26 +435,16 @@ namespace System.Windows.Automation
         /// <summary>
         /// Helper for setting SizeOfSet property on a DependencyObject. 
         /// </summary>
-        public static void SetSizeOfSet(DependencyObject element, int value)
+        public static void SetSizeOfSet(DependencyObject element!!, int value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             element.SetValue(SizeOfSetProperty, value);
         }
 
         /// <summary>
         /// Helper for reading SizeOfSet property from a DependencyObject.
         /// </summary>
-        public static int GetSizeOfSet(DependencyObject element)
+        public static int GetSizeOfSet(DependencyObject element!!)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             return ((int)element.GetValue(SizeOfSetProperty));
         }
         #endregion
@@ -605,26 +460,16 @@ namespace System.Windows.Automation
         /// <summary>
         /// Helper for setting HeadingLevel property on a DependencyObject. 
         /// </summary>
-        public static void SetHeadingLevel(DependencyObject element, AutomationHeadingLevel value)
+        public static void SetHeadingLevel(DependencyObject element!!, AutomationHeadingLevel value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             element.SetValue(HeadingLevelProperty, value);
         }
 
         /// <summary>
         /// Helper for reading HeadingLevel property from a DependencyObject.
         /// </summary>
-        public static AutomationHeadingLevel GetHeadingLevel(DependencyObject element)
+        public static AutomationHeadingLevel GetHeadingLevel(DependencyObject element!!)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             return ((AutomationHeadingLevel)element.GetValue(HeadingLevelProperty));
         }
         #endregion
@@ -640,25 +485,16 @@ namespace System.Windows.Automation
         /// <summary>
         /// Helper for setting IsDialog property on a DependencyObject. 
         /// </summary>
-        public static void SetIsDialog(DependencyObject element, bool value)
+        public static void SetIsDialog(DependencyObject element!!, bool value)
         {
-            if(element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
             element.SetValue(IsDialogProperty, value);
         }
 
         /// <summary>
         /// Helper for reading IsDialog property from a DependencyObject.
         /// </summary>
-        public static bool GetIsDialog(DependencyObject element)
+        public static bool GetIsDialog(DependencyObject element!!)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
             return (bool)element.GetValue(IsDialogProperty);
         }
         #endregion

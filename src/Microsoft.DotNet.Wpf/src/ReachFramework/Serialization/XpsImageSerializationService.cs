@@ -47,17 +47,13 @@ namespace System.Windows.Xps.Serialization
         {
             BitmapEncoder encoder = null;
 
-            if (bitmapSource is BitmapFrame)
+            if (bitmapSource is BitmapFrame bitmapImage)
             {
                 //
                 // This code gets the encoder based on the decoder that was
                 // used for this specific BitmapSource.
                 //
-                BitmapFrame bitmapImage = bitmapSource as BitmapFrame;
-                BitmapCodecInfo codecInfo = null;
-
-                if (bitmapImage != null && bitmapImage.Decoder != null)
-                    codecInfo = bitmapImage.Decoder.CodecInfo;
+                BitmapCodecInfo codecInfo = bitmapImage.Decoder?.CodecInfo;
 
                 if (codecInfo != null)
                 {
@@ -80,19 +76,9 @@ namespace System.Windows.Xps.Serialization
             // a BitmapImage.  If it is not then we assume Png and use
             // that encoder.
             //
-            if (encoder == null)
-            {
-                if (Microsoft.Internal.AlphaFlattener.Utility.NeedPremultiplyAlpha(bitmapSource))
-                {
-                    encoder = new WmpBitmapEncoder();
-                }
-                else
-                {
-                    encoder = new PngBitmapEncoder();
-                }
-            }
-
-            return encoder;
+            return encoder ?? Microsoft.Internal.AlphaFlattener.Utility.NeedPremultiplyAlpha(bitmapSource)
+                    ? new WmpBitmapEncoder()
+                    : new PngBitmapEncoder();;
         }
 
 
@@ -113,17 +99,15 @@ namespace System.Windows.Xps.Serialization
             )
         {
             BitmapCodecInfo codecInfo = null;
-            string imageMimeType = "";
+            string imageMimeType = string.Empty;
 
-            if (bitmapSource is BitmapFrame)
+            if (bitmapSource is BitmapFrame bitmapFrame)
             {
                 //
                 // This code gets the encoder based on the decoder that was
                 // used for this specific BitmapSource.
                 //
-                BitmapFrame bitmapFrame = bitmapSource as BitmapFrame;
-                
-                if (bitmapFrame != null && bitmapFrame.Decoder != null)
+                if (bitmapFrame.Decoder != null)
                 {
                     codecInfo = bitmapFrame.Decoder.CodecInfo;
                 }
@@ -133,6 +117,7 @@ namespace System.Windows.Xps.Serialization
             {
                 imageMimeType = codecInfo.MimeTypes;
             }
+            
             int start = 0;
             int comma = imageMimeType.IndexOf(',', start);
             bool foundType = false;
@@ -143,7 +128,7 @@ namespace System.Windows.Xps.Serialization
             {
                 while (comma != -1 && !foundType)
                 {
-                    string subString =  imageMimeType.Substring(start, comma);
+                    string subString =  imageMimeType.Substring(start, comma); // span?
                     foundType = XpsManager.SupportedImageType( new ContentType(subString) );
                     start = comma+1;
                     comma = imageMimeType.IndexOf(',', start);

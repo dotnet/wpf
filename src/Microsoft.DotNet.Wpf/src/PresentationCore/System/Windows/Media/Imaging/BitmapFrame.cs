@@ -83,7 +83,7 @@ namespace System.Windows.Media.Imaging
 
                 if (decoder.Frames.Count == 0)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.Image_NoDecodeFrames), "uri");
+                    throw new System.ArgumentException(SR.Get(SRID.Image_NoDecodeFrames), nameof(uri));
                 }
 
                 return decoder.Frames[0];
@@ -100,7 +100,7 @@ namespace System.Windows.Media.Imaging
 
                 if (decoder.Frames.Count == 0)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.Image_NoDecodeFrames), "stream");
+                    throw new System.ArgumentException(SR.Get(SRID.Image_NoDecodeFrames), nameof(stream));
                 }
 
                 return decoder.Frames[0];
@@ -132,7 +132,7 @@ namespace System.Windows.Media.Imaging
         {
             if (bitmapUri == null)
             {
-                throw new ArgumentNullException("bitmapUri");
+                throw new ArgumentNullException(nameof(bitmapUri));
             }
 
             return CreateFromUriOrStream(
@@ -178,7 +178,7 @@ namespace System.Windows.Media.Imaging
         {
             if (bitmapUri == null)
             {
-                throw new ArgumentNullException("bitmapUri");
+                throw new ArgumentNullException(nameof(bitmapUri));
             }
 
             return CreateFromUriOrStream(
@@ -202,7 +202,7 @@ namespace System.Windows.Media.Imaging
         {
             if (bitmapStream == null)
             {
-                throw new ArgumentNullException("bitmapStream");
+                throw new ArgumentNullException(nameof(bitmapStream));
             }
 
             return CreateFromUriOrStream(
@@ -230,7 +230,7 @@ namespace System.Windows.Media.Imaging
         {
             if (bitmapStream == null)
             {
-                throw new ArgumentNullException("bitmapStream");
+                throw new ArgumentNullException(nameof(bitmapStream));
             }
 
             return CreateFromUriOrStream(
@@ -253,7 +253,7 @@ namespace System.Windows.Media.Imaging
         {
             if (source == null)
             {
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
             }
 
             BitmapMetadata metadata = null;
@@ -288,7 +288,7 @@ namespace System.Windows.Media.Imaging
         {
             if (source == null)
             {
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
             }
 
             BitmapMetadata metadata = null;
@@ -329,7 +329,7 @@ namespace System.Windows.Media.Imaging
         {
             if (source == null)
             {
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
             }
 
             return new BitmapFrameEncode(source, thumbnail, metadata, colorContexts);

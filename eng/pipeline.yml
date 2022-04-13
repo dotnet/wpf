@@ -35,10 +35,10 @@ jobs:
         # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
           name: NetCore1ESPool-Svc-Public
-          demands: ImageOverride -equals Build.Windows.10.Amd64.VS2019.Pre.Open
+          demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre.Open
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
           name: NetCore1ESPool-Svc-Internal
-          demands: ImageOverride -equals build.windows.10.amd64.vs2019.pre
+          demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre
       variables:
         # needed for signing
         - name: _TeamName
@@ -71,12 +71,12 @@ jobs:
           - name: _InternalRuntimeDownloadArgs
             value: ''
         - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          - group: DotNet-MSRC-Storage
+          - group: DotNetBuilds storage account read tokens
           - group: AzureDevOps-Artifact-Feeds-Pats
           - name: _InternalRuntimeDownloadArgs
             value: >-
-              /p:DotNetRuntimeSourceFeed=https://dotnetclimsrc.blob.core.windows.net/dotnet
-              /p:DotNetRuntimeSourceFeedKey=$(dotnetclimsrc-read-sas-token-base64)
+              /p:DotNetRuntimeSourceFeed=https://dotnetbuilds.blob.core.windows.net/internal
+              /p:DotNetRuntimeSourceFeedKey=$(dotnetbuilds-internal-container-read-token-base64)
 
 
         # Override some values if we're building internally

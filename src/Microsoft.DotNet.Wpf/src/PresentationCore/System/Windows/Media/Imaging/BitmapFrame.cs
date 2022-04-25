@@ -126,10 +126,15 @@ namespace System.Windows.Media.Imaging
         /// <param name="bitmapUri">Uri of the Bitmap</param>
         /// <param name="uriCachePolicy">Optional web request cache policy</param>
         public static BitmapFrame Create(
-            Uri bitmapUri!!,
+            Uri bitmapUri,
             RequestCachePolicy uriCachePolicy
             )
         {
+        if (bitmapUri == null)
+            {
+                throw new ArgumentNullException(nameof(bitmapUri));
+            }
+            
             return CreateFromUriOrStream(
                 null,
                 bitmapUri,
@@ -165,12 +170,17 @@ namespace System.Windows.Media.Imaging
         /// <param name="cacheOption">Caching option</param>
         /// <param name="uriCachePolicy">Optional web request cache policy</param>
         public static BitmapFrame Create(
-            Uri bitmapUri!!,
+            Uri bitmapUri,
             BitmapCreateOptions createOptions,
             BitmapCacheOption cacheOption,
             RequestCachePolicy uriCachePolicy
             )
         {
+        if (bitmapUri == null)
+            {
+                throw new ArgumentNullException(nameof(bitmapUri));
+            }
+            
             return CreateFromUriOrStream(
                 null,
                 bitmapUri,
@@ -187,9 +197,14 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         /// <param name="bitmapStream">Stream of the Bitmap</param>
         public static BitmapFrame Create(
-            Stream bitmapStream!!
+            Stream bitmapStream
             )
         {
+        if (bitmapStream == null)
+            {
+                throw new ArgumentNullException(nameof(bitmapStream));
+            }
+            
             return CreateFromUriOrStream(
                 null,
                 null,
@@ -208,11 +223,16 @@ namespace System.Windows.Media.Imaging
         /// <param name="createOptions">Creation options</param>
         /// <param name="cacheOption">Caching option</param>
         public static BitmapFrame Create(
-            Stream bitmapStream!!,
+            Stream bitmapStream,
             BitmapCreateOptions createOptions,
             BitmapCacheOption cacheOption
             )
         {
+        if (bitmapStream == null)
+            {
+                throw new ArgumentNullException(nameof(bitmapStream));
+            }
+            
             return CreateFromUriOrStream(
                 null,
                 null,
@@ -228,9 +248,14 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         /// <param name="source">Source input of the Bitmap</param>
         public static BitmapFrame Create(
-            BitmapSource source!!
+            BitmapSource source
             )
         {
+        if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+            
             BitmapMetadata metadata = null;
 
             try
@@ -257,12 +282,15 @@ namespace System.Windows.Media.Imaging
         /// <param name="source">Source input of the Bitmap</param>
         /// <param name="thumbnail">Thumbnail of the resulting Bitmap</param>
         public static BitmapFrame Create(
-            BitmapSource source!!,
+            BitmapSource source,
             BitmapSource thumbnail
             )
         {
             BitmapMetadata metadata = null;
-
+if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
             try
             {
                 metadata = source.Metadata as BitmapMetadata;
@@ -291,12 +319,17 @@ namespace System.Windows.Media.Imaging
         /// <param name="metadata">BitmapMetadata of the resulting Bitmap</param>
         /// <param name="colorContexts">The ColorContexts for the resulting Bitmap</param>
         public static BitmapFrame Create(
-            BitmapSource source!!,
+            BitmapSource source,
             BitmapSource thumbnail,
             BitmapMetadata metadata,
             ReadOnlyCollection<ColorContext> colorContexts
             )
         {
+        if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+            
             return new BitmapFrameEncode(source, thumbnail, metadata, colorContexts);
         }
 

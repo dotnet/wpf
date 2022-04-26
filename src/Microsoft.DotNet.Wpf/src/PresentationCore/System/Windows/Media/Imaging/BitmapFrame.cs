@@ -251,7 +251,7 @@ namespace System.Windows.Media.Imaging
             BitmapSource source
             )
         {
-        if (source == null)
+          if (source == null)
             {
                 throw new ArgumentNullException(nameof(source));
             }

@@ -102,7 +102,7 @@ stages:
         -TsaPublish $True'
 
 - stage: Test
-  displayName: Build 
+  displayName: Test 
   jobs:
     - job: download_unzip_testbins
       steps:

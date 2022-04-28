@@ -100,13 +100,27 @@ stages:
         -TsaRepositoryName "wpf"
         -TsaCodebaseName "wpf"
         -TsaPublish $True'
-- task: DownloadBuildArtifacts@1
-  inputs:
-    buildType: 'specific'
-    project: '7ea9116e-9fac-403d-b258-b31fcf1bb293'
-    pipeline: '479'
-    buildVersionToDownload: 'latest'
-    downloadType: 'specific'
-    itemPattern: '*Tests.Release*'
-    downloadPath: '$(System.ArtifactsDirectory)\testzips'
-    checkDownloadedFiles: true
+
+- stage: Test
+  displayName: Build 
+  jobs:
+    - job: download_unzip_testbins
+      steps:
+        - task: DownloadBuildArtifacts@1
+          inputs:
+            buildType: 'specific'
+            project: '7ea9116e-9fac-403d-b258-b31fcf1bb293'
+            pipeline: '479'
+            buildVersionToDownload: 'latest'
+            downloadType: 'specific'
+            itemPattern: '*Tests.Release.*'
+            downloadPath: '$(System.ArtifactsDirectory)\testzips\'
+            checkDownloadedFiles: true
+        - task: unzip@0
+          inputs:
+            pathToZipFile: '$(System.ArtifactsDirectory)\testzips\Tests.Release.x64.zip'
+            pathToZipFolder: '$(System.ArtifactsDirectory)\testbins\x64\'
+        - task: unzip@0
+          inputs:
+            pathToZipFile: '$(System.ArtifactsDirectory)\testzips\Tests.Release.x86.zip'
+            pathToZipFolder: '$(System.ArtifactsDirectory)\testbins\x86\'

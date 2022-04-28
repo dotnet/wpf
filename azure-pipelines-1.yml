@@ -100,3 +100,13 @@ stages:
         -TsaRepositoryName "wpf"
         -TsaCodebaseName "wpf"
         -TsaPublish $True'
+- task: DownloadBuildArtifacts@1
+  inputs:
+    buildType: 'specific'
+    project: '7ea9116e-9fac-403d-b258-b31fcf1bb293'
+    pipeline: '479'
+    buildVersionToDownload: 'latest'
+    downloadType: 'specific'
+    itemPattern: '*Tests.Release*'
+    downloadPath: '$(System.ArtifactsDirectory)\testzips'
+    checkDownloadedFiles: true

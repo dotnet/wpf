@@ -491,6 +491,7 @@ namespace System.Windows.Data
         }
 
         // Print various interesting statistics
+        [Conditional("DEBUG")]
         internal static void PrintStats()
         {
             DataBindEngine.CurrentDataBindEngine.AccessorTable.PrintStats();

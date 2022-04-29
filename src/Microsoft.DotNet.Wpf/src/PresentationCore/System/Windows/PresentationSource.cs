@@ -654,11 +654,11 @@ namespace System.Windows
         ///   over a ReadOnly SnapShot of the List of sources.  The Enumerator
         ///   skips over the any dead weak references in the list.
         /// </summary>
-        internal static IEnumerable CriticalCurrentSources
+        internal static WeakReferenceList CriticalCurrentSources
         {
             get
             {
-                return (IEnumerable)_sources;
+                return _sources;
             }
         }
 

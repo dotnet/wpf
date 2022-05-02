@@ -2464,7 +2464,7 @@ namespace System.Windows.Data
                 count++;
             }
 
-            Collection<WeakDependencySource> tempList = new Collection<WeakDependencySource>();
+            var tempList = new List<WeakDependencySource>();
 
             if (commonSources != null)
             {
@@ -2502,19 +2502,9 @@ namespace System.Windows.Data
                 }
             }
 
-            WeakDependencySource[] result;
-            if (tempList.Count > 0)
-            {
-                result = new WeakDependencySource[tempList.Count];
-                tempList.CopyTo(result, 0);
-                tempList.Clear();
-            }
-            else
-            {
-                result = null;
-            }
-
-            return result;
+            return result = tempList.Count > 0 ?
+                tempList.ToArray() :
+                null;
         }
 
         internal void ResolvePropertyDefaultSettings(BindingMode mode, UpdateSourceTrigger updateTrigger, FrameworkPropertyMetadata fwMetaData)

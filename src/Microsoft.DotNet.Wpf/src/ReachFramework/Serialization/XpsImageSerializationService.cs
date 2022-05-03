@@ -76,9 +76,13 @@ namespace System.Windows.Xps.Serialization
             // a BitmapImage.  If it is not then we assume Png and use
             // that encoder.
             //
-            return encoder ?? Microsoft.Internal.AlphaFlattener.Utility.NeedPremultiplyAlpha(bitmapSource)
+            if (encoder == null) 
+            {
+                encoder = Microsoft.Internal.AlphaFlattener.Utility.NeedPremultiplyAlpha(bitmapSource)
                     ? new WmpBitmapEncoder()
-                    : new PngBitmapEncoder();;
+                    : new PngBitmapEncoder();
+            }
+            return encoder;
         }
 
 

@@ -78,8 +78,13 @@ namespace MS.Internal.Annotations.Anchoring
         ///     if the node is FixedPage, but annotations are not loaded
         /// </returns>
         /// <exception cref="ArgumentNullException">node is null</exception>
-        public override IList<IAttachedAnnotation> PreProcessNode(DependencyObject node!!, out bool calledProcessAnnotations)
+        public override IList<IAttachedAnnotation> PreProcessNode(DependencyObject node, out bool calledProcessAnnotations)
         {
+            if (node == null)
+            {
+                throw new ArgumentNullException(nameof(node));
+            }
+        
             if (node is DocumentPageView dpv && (dpv.DocumentPage is FixedDocumentPage || dpv.DocumentPage is FixedDocumentSequenceDocumentPage))
             {
                 calledProcessAnnotations = true;
@@ -106,8 +111,13 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">node is null</exception>
         /// <exception cref="ArgumentException">node points to a Document Page View which
         /// doesn't contain a FixedDocumentPage</exception>
-        public override ContentLocator GenerateLocator(PathNode node!!, out bool continueGenerating)
+        public override ContentLocator GenerateLocator(PathNode node, out bool continueGenerating)
         {
+            if (node == null)
+            {
+                throw new ArgumentNullException(nameof(node));
+            }
+            
             // Initial value
             continueGenerating = true;
 
@@ -161,8 +171,18 @@ namespace MS.Internal.Annotations.Anchoring
         /// null</exception>
         /// <exception cref="ArgumentException">locatorPart is of the incorrect 
         /// type</exception>
-        public override DependencyObject ResolveLocatorPart(ContentLocatorPart locatorPart!!, DependencyObject startNode!!, out bool continueResolving)
+        public override DependencyObject ResolveLocatorPart(ContentLocatorPart locatorPart, DependencyObject startNode, out bool continueResolving)
         {
+            if (locatorPart == null)
+            {
+                throw new ArgumentNullException(nameof(locatorPart));
+            }
+
+            if (startNode == null)
+            {
+                throw new ArgumentNullException(nameof(startNode));
+            }
+        
             if (PageNumberElementName != locatorPart.PartType)
                 throw new ArgumentException(SR.Get(SRID.IncorrectLocatorPartType, locatorPart.PartType.Namespace + ":" + locatorPart.PartType.Name), nameof(locatorPart));
 

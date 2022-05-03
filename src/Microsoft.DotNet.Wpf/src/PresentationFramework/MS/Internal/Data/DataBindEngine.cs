@@ -368,13 +368,14 @@ namespace MS.Internal.Data
                                                         Type targetType,
                                                         bool targetToSource)
         {
-            IValueConverter result = _valueConverterTable[sourceType, targetType, targetToSource];
-
-            if (result == null)
+            ValueConverterTableKey key = new ValueConverterTableKey(sourceType, targetType, targetToSource);
+            if (!_valueConverterTable.TryGetValue(key, out IValueConverter result))
             {
                 result = DefaultValueConverter.Create(sourceType, targetType, targetToSource, this);
                 if (result != null)
-                    _valueConverterTable.Add(sourceType, targetType, targetToSource, result);
+                {
+                    _valueConverterTable.Add(key, result);
+                }
             }
 
             return result;
@@ -657,63 +658,26 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        // cache of default value converters (so that all uses of string-to-int can
-        // share the same converter)
-        class ValueConverterTable : Hashtable
+        private readonly struct ValueConverterTableKey : IEquatable<ValueConverterTableKey>
         {
-            struct Key
+            private readonly Type _sourceType, _targetType;
+            private readonly bool _targetToSource;
+
+            public ValueConverterTableKey(Type sourceType, Type targetType, bool targetToSource)
             {
-                Type _sourceType, _targetType;
-                bool _targetToSource;
-
-                public Key(Type sourceType, Type targetType, bool targetToSource)
-                {
-                    _sourceType = sourceType;
-                    _targetType = targetType;
-                    _targetToSource = targetToSource;
-                }
-
-                public override int GetHashCode()
-                {
-                    return _sourceType.GetHashCode() + _targetType.GetHashCode();
-                }
-
-                public override bool Equals(object o)
-                {
-                    if (o is Key)
-                    {
-                        return (this == (Key)o);
-                    }
-                    return false;
-                }
-
-                public static bool operator ==(Key k1, Key k2)
-                {
-                    return k1._sourceType == k2._sourceType &&
-                            k1._targetType == k2._targetType &&
-                            k1._targetToSource == k2._targetToSource;
-                }
-
-                public static bool operator !=(Key k1, Key k2)
-                {
-                    return !(k1 == k2);
-                }
+                _sourceType = sourceType;
+                _targetType = targetType;
+                _targetToSource = targetToSource;
             }
 
-            public IValueConverter this[Type sourceType, Type targetType, bool targetToSource]
-            {
-                get
-                {
-                    Key key = new Key(sourceType, targetType, targetToSource);
-                    object value = base[key];
-                    return (IValueConverter)value;
-                }
-            }
+            public override int GetHashCode() => _sourceType.GetHashCode() + _targetType.GetHashCode();
 
-            public void Add(Type sourceType, Type targetType, bool targetToSource, IValueConverter value)
-            {
-                base.Add(new Key(sourceType, targetType, targetToSource), value);
-            }
+            public override bool Equals(object o) => o is ValueConverterTableKey other && Equals(other);
+
+            public bool Equals(ValueConverterTableKey other) =>
+                _sourceType == other._sourceType &&
+                _targetType == other._targetType &&
+                _targetToSource == other._targetToSource;
         }
 
         private sealed class DataBindEngineShutDownListener : ShutDownListener
@@ -741,7 +705,7 @@ namespace MS.Internal.Data
         private UIElement _layoutElement;
         private ViewManager _viewManager = new ViewManager();
         private CommitManager _commitManager = new CommitManager();
-        private ValueConverterTable _valueConverterTable = new ValueConverterTable();
+        private Dictionary<ValueConverterTableKey, IValueConverter> _valueConverterTable = new Dictionary<ValueConverterTableKey, IValueConverter>();
         private PathParser _pathParser = new PathParser();
         private IAsyncDataDispatcher _defaultAsyncDataDispatcher;
         private HybridDictionary _asyncDispatchers;

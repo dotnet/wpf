@@ -223,7 +223,7 @@ namespace MS.Internal.Annotations.Anchoring
                 }
             }
             else
-            {f
+            {
                 if (startNode is DocumentPageView dpv)
                 {
                     page = dpv.DocumentPage as FixedDocumentPage;

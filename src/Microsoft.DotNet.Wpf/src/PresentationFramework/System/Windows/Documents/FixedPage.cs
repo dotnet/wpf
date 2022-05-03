@@ -224,7 +224,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForChildren()]
         public static double GetLeft(UIElement element)
         {
-            if (elemenet == null)
+            if (element == null)
             {
                 throw new ArgumentNullException(nameof(element));
             }
@@ -1245,7 +1245,6 @@ namespace System.Windows.Documents
         internal static DebugVisualAdorner GetDebugVisual(FixedPage page)
         {
             AdornerLayer al = AdornerLayer.GetAdornerLayer(page);
-            DebugVisualAdorner debugVisualAd;
 
             if (al == null)
             {
@@ -1258,9 +1257,9 @@ namespace System.Windows.Documents
             {
                 foreach (Adorner ad in adorners)
                 {
-                    if (ad is DebugVisualAdorner debugVisualAd) 
+                    if (ad is DebugVisualAdorner debugVisualAdorner) 
                     {
-                        return debugVisualAd;
+                        return debugVisualAdorner;
                     }
                 }
             }

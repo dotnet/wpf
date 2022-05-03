@@ -99,9 +99,14 @@ namespace System.Windows.Documents
         /// <param name="serviceType">
         /// Specifies the type of service object to get.
         /// </param>
-        object IServiceProvider.GetService(Type serviceType!!)
+        object IServiceProvider.GetService(Type serviceType)
         {
 //             Dispatcher.VerifyAccess();
+
+            if (serviceType == null)
+            {
+                throw new ArgumentNullException(nameof(serviceType));
+            }
 
             if (serviceType == typeof(ITextContainer))
             {
@@ -129,9 +134,14 @@ namespace System.Windows.Documents
         ///<param name="value">
         /// Object to add as a child
         ///</param>
-        void IAddChild.AddChild(Object value!!)
+        void IAddChild.AddChild(Object value)
         {
             //             Dispatcher.VerifyAccess();
+
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             PageContent fp = value as PageContent;
 
@@ -359,8 +369,12 @@ namespace System.Windows.Documents
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">pageNumber is less than zero.</exception>
         /// <exception cref="ArgumentNullException">userState is NULL.</exception>
-        internal void GetPageAsync(int pageNumber, object userState!!)
+        internal void GetPageAsync(int pageNumber, object userState)
         {
+            if (userState == null)
+            {
+                throw new ArgumentNullException(nameof(userState));
+            }
             DocumentsTrace.FixedFormat.IDF.Trace(string.Format("IDP.GetPageAsync({0}, {1})", pageNumber, userState));
 
             // Make sure that the call is in the right context.
@@ -394,9 +408,14 @@ namespace System.Windows.Documents
         /// </summary>
         /// <exception cref="ArgumentNullException">contentPosition is NULL.</exception>
         /// <exception cref="ArgumentException">ContentPosition does not exist within this element?s tree.</exception>
-        internal int GetPageNumber(ContentPosition contentPosition!!)
+        internal int GetPageNumber(ContentPosition contentPosition)
         {
 //             Dispatcher.VerifyAccess();
+
+            if (contentPosition == null)
+            {
+                throw new ArgumentNullException(nameof(contentPosition));
+            }
 
             FixedTextPointer fixedTextPointer = contentPosition as FixedTextPointer;
             if (fixedTextPointer == null)
@@ -411,8 +430,13 @@ namespace System.Windows.Documents
         /// <see cref="System.Windows.Documents.DocumentPaginator.CancelAsync"/>
         /// </summary>
         /// <exception cref="ArgumentNullException">userState is NULL.</exception>
-        internal void CancelAsync(object userState!!)
+        internal void CancelAsync(object userState)
         {
+            if (userState == null)
+            {
+                throw new ArgumentNullException(nameof(userState));
+            }
+            
             DocumentsTrace.FixedFormat.IDF.Trace(string.Format("IDP.GetPageAsyncCancel([{0}])", userState));
 //             Dispatcher.VerifyAccess();
 
@@ -431,8 +455,13 @@ namespace System.Windows.Documents
         /// <see cref="DynamicDocumentPaginator.GetObjectPosition"/>
         /// </summary>
         /// <exception cref="ArgumentNullException">element is NULL.</exception>
-        internal ContentPosition GetObjectPosition(object o!!)
+        internal ContentPosition GetObjectPosition(object o)
         {
+            if (o == null)
+            {
+                throw new ArgumentNullException(nameof(o));
+            }
+        
             DependencyObject element = o as DependencyObject;
 
             if (element == null)
@@ -1365,8 +1394,13 @@ namespace System.Windows.Documents
         /// <param name="serviceType">
         /// Specifies the type of service object to get.
         /// </param>
-        object IServiceProvider.GetService(Type serviceType!!)
+        object IServiceProvider.GetService(Type serviceType)
         {
+            if (serviceType == null)
+            {
+                throw new ArgumentNullException(nameof(serviceType));
+            }
+        
             if (serviceType == typeof(ITextView))
             {
                 return this.TextView;

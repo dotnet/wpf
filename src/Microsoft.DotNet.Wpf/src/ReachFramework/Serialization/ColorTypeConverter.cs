@@ -110,7 +110,7 @@ namespace System.Windows.Xps.Serialization
         {
             if( value == null )
             {
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
             }
             if (!IsSupportedType(value.GetType()))
             {
@@ -297,7 +297,7 @@ namespace System.Windows.Xps.Serialization
 
             if( colorContext == null )
             {
-                throw new ArgumentNullException("colorContext");
+                throw new ArgumentNullException(nameof(colorContext));
             }
             if ( context!= null )
             {

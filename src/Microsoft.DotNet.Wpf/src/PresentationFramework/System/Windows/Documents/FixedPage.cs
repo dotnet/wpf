@@ -182,8 +182,13 @@ namespace System.Windows.Documents
         /// The object to add as a child; it must be a UIElement.
         ///</param>
         /// <ExternalAPI/>
-        void IAddChild.AddChild (Object value!!)
+        void IAddChild.AddChild (Object value)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+        
             UIElement uie = value as UIElement;
 
             if (uie == null)
@@ -217,8 +222,13 @@ namespace System.Windows.Documents
         /// <seealso cref="Canvas.LeftProperty" />
         [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
         [AttachedPropertyBrowsableForChildren()]
-        public static double GetLeft(UIElement element!!)
+        public static double GetLeft(UIElement element)
         {
+            if (elemenet == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+
             return (double)element.GetValue(LeftProperty);
         }
 
@@ -229,8 +239,13 @@ namespace System.Windows.Documents
         /// <param name="element">The element to which to write the Left attached property.</param>
         /// <param name="length">The Length to set</param>
         /// <seealso cref="Canvas.LeftProperty" />
-        public static void SetLeft(UIElement element!!, double length)
+        public static void SetLeft(UIElement element, double length)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+
             element.SetValue(LeftProperty, length);
         }
 
@@ -243,8 +258,12 @@ namespace System.Windows.Documents
         /// <seealso cref="Canvas.TopProperty" />
         [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
         [AttachedPropertyBrowsableForChildren()]
-        public static double GetTop(UIElement element!!)
+        public static double GetTop(UIElement element)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             return (double)element.GetValue(TopProperty);
         }
 
@@ -255,8 +274,12 @@ namespace System.Windows.Documents
         /// <param name="element">The element to which to write the Top attached property.</param>
         /// <param name="length">The Length to set</param>
         /// <seealso cref="Canvas.TopProperty" />
-        public static void SetTop(UIElement element!!, double length)
+        public static void SetTop(UIElement element, double length)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             element.SetValue(TopProperty, length);
         }
 
@@ -269,8 +292,12 @@ namespace System.Windows.Documents
         /// <seealso cref="Canvas.RightProperty" />
         [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
         [AttachedPropertyBrowsableForChildren()]
-        public static double GetRight(UIElement element!!)
+        public static double GetRight(UIElement element)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             return (double)element.GetValue(RightProperty);
         }
 
@@ -281,8 +308,12 @@ namespace System.Windows.Documents
         /// <param name="element">The element to which to write the Right attached property.</param>
         /// <param name="length">The Length to set</param>
         /// <seealso cref="Canvas.RightProperty" />
-        public static void SetRight(UIElement element!!, double length)
+        public static void SetRight(UIElement element, double length)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             element.SetValue(RightProperty, length);
         }
 
@@ -295,8 +326,12 @@ namespace System.Windows.Documents
         /// <seealso cref="Canvas.BottomProperty" />
         [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
         [AttachedPropertyBrowsableForChildren()]
-        public static double GetBottom(UIElement element!!)
+        public static double GetBottom(UIElement element)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             return (double)element.GetValue(BottomProperty);
         }
 
@@ -307,8 +342,12 @@ namespace System.Windows.Documents
         /// <param name="element">The element to which to write the Bottom attached property.</param>
         /// <param name="length">The Length to set</param>
         /// <seealso cref="Canvas.BottomProperty" />
-        public static void SetBottom(UIElement element!!, double length)
+        public static void SetBottom(UIElement element, double length)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             element.SetValue(BottomProperty, length);
         }
 
@@ -318,8 +357,12 @@ namespace System.Windows.Documents
         /// <exception cref="ArgumentNullException">element is NULL.</exception>
         /// <remarks>Should be kept here for compatibility since the attached property has moved from FixedPage to Hyperlink.</remarks>
         [AttachedPropertyBrowsableForChildren()]
-        public static Uri GetNavigateUri(UIElement element!!)
+        public static Uri GetNavigateUri(UIElement element)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             return (Uri)element.GetValue(NavigateUriProperty);
         }
 
@@ -328,8 +371,12 @@ namespace System.Windows.Documents
         /// </summary>
         /// <exception cref="ArgumentNullException">element is NULL.</exception>
         /// <remarks>Should be kept here for compatibility since the attached property has moved from FixedPage to Hyperlink.</remarks>
-        public static void SetNavigateUri(UIElement element!!, Uri uri)
+        public static void SetNavigateUri(UIElement element, Uri uri)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             element.SetValue(NavigateUriProperty, uri);
         }
 

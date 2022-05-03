@@ -203,7 +203,6 @@ namespace MS.Internal.Annotations.Anchoring
             // anchor the annotations to.
             FixedDocumentPage page = null;
             IDocumentPaginatorSource document = null;
-            DocumentPageView dpv = null;
             if (_useLogicalTree)
             {
                 document = startNode as FixedDocument;
@@ -224,7 +223,7 @@ namespace MS.Internal.Annotations.Anchoring
                 }
             }
             else
-            {
+            {f
                 if (startNode is DocumentPageView dpv)
                 {
                     page = dpv.DocumentPage as FixedDocumentPage;

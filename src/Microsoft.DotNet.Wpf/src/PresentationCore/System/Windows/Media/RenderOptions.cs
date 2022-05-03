@@ -43,16 +43,25 @@ namespace System.Windows.Media
         /// Reads the attached property EdgeMode from the given object.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
-        public static EdgeMode GetEdgeMode(DependencyObject target!!)
+        public static EdgeMode GetEdgeMode(DependencyObject target)
         {
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+            
             return (EdgeMode)target.GetValue(EdgeModeProperty);
         }
 
         /// <summary>
         /// Writes the attached property EdgeMode to the given object.
         /// </summary>
-        public static void SetEdgeMode(DependencyObject target!!, EdgeMode edgeMode)
+        public static void SetEdgeMode(DependencyObject target, EdgeMode edgeMode)
         {
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             target.SetValue(EdgeModeProperty, edgeMode);
         }
 
@@ -74,16 +83,24 @@ namespace System.Windows.Media
         /// Reads the attached property BitmapScalingMode from the given object.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
-        public static BitmapScalingMode GetBitmapScalingMode(DependencyObject target!!)
+        public static BitmapScalingMode GetBitmapScalingMode(DependencyObject target)
         {
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             return (BitmapScalingMode)target.GetValue(BitmapScalingModeProperty);
         }
 
         /// <summary>
         /// Writes the attached property BitmapScalingMode to the given object.
         /// </summary>
-        public static void SetBitmapScalingMode(DependencyObject target!!, BitmapScalingMode bitmapScalingMode)
+        public static void SetBitmapScalingMode(DependencyObject target, BitmapScalingMode bitmapScalingMode)
         {
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             target.SetValue(BitmapScalingModeProperty, bitmapScalingMode);
         }       
 
@@ -105,16 +122,25 @@ namespace System.Windows.Media
         /// Reads the attached property ClearTypeHint from the given object.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
-        public static ClearTypeHint GetClearTypeHint(DependencyObject target!!)
+        public static ClearTypeHint GetClearTypeHint(DependencyObject target)
         {
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+            
             return (ClearTypeHint)target.GetValue(ClearTypeHintProperty);
         }
 
         /// <summary>
         /// Writes the attached property ClearTypeHint to the given object.
         /// </summary>
-        public static void SetClearTypeHint(DependencyObject target!!, ClearTypeHint clearTypeHint)
+        public static void SetClearTypeHint(DependencyObject target, ClearTypeHint clearTypeHint)
         {
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             target.SetValue(ClearTypeHintProperty, clearTypeHint);
         } 
 
@@ -137,16 +163,24 @@ namespace System.Windows.Media
         /// Reads the attached property CachingHint from the given object.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(TileBrush))]
-        public static CachingHint GetCachingHint(DependencyObject target!!)
+        public static CachingHint GetCachingHint(DependencyObject target)
         {
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             return (CachingHint)target.GetValue(CachingHintProperty);
         }
 
         /// <summary>
         /// Writes the attached property CachingHint to the given object.
         /// </summary>
-        public static void SetCachingHint(DependencyObject target!!, CachingHint cachingHint)
+        public static void SetCachingHint(DependencyObject target, CachingHint cachingHint)
         {
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             target.SetValue(CachingHintProperty, cachingHint);
         }
 
@@ -168,16 +202,24 @@ namespace System.Windows.Media
         /// Reads the attached property CacheInvalidationThresholdMinimum from the given object.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(TileBrush))]
-        public static double GetCacheInvalidationThresholdMinimum(DependencyObject target!!)
+        public static double GetCacheInvalidationThresholdMinimum(DependencyObject target)
         {
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             return (double)target.GetValue(CacheInvalidationThresholdMinimumProperty);
         }
 
         /// <summary>
         /// Writes the attached property CacheInvalidationThresholdMinimum to the given object.
         /// </summary>
-        public static void SetCacheInvalidationThresholdMinimum(DependencyObject target!!, double cacheInvalidationThresholdMinimum)
+        public static void SetCacheInvalidationThresholdMinimum(DependencyObject target, double cacheInvalidationThresholdMinimum)
         {
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             target.SetValue(CacheInvalidationThresholdMinimumProperty, cacheInvalidationThresholdMinimum);
         }
 
@@ -199,16 +241,24 @@ namespace System.Windows.Media
         /// Reads the attached property CacheInvalidationThresholdMaximum from the given object.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(TileBrush))]
-        public static double GetCacheInvalidationThresholdMaximum(DependencyObject target!!)
+        public static double GetCacheInvalidationThresholdMaximum(DependencyObject target)
         {
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             return (double)target.GetValue(CacheInvalidationThresholdMaximumProperty);
         }
 
         /// <summary>
         /// Writes the attached property CacheInvalidationThresholdMaximum to the given object.
         /// </summary>
-        public static void SetCacheInvalidationThresholdMaximum(DependencyObject target!!, double cacheInvalidationThresholdMaximum)
+        public static void SetCacheInvalidationThresholdMaximum(DependencyObject target, double cacheInvalidationThresholdMaximum)
         {
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             target.SetValue(CacheInvalidationThresholdMaximumProperty, cacheInvalidationThresholdMaximum);
         }     
 

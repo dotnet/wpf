@@ -153,6 +153,8 @@ private:
         __in              QPC_TIME qpcCurrentTime
         );
 
+    bool ShouldIgnoreDwmFlushErrors();
+
 private:
     // The owning compositor. Note that we do not add-ref it 
     // to avoid cyclical dependencies.

@@ -1235,7 +1235,7 @@ namespace System.Xaml
 
             var rawArgs = (List<PositionalParameterDescriptor>)ctx.CurrentCollection;
             object[] argInstances = new object[rawArgs.Count];
-            IEnumerable<XamlType> paramTypes = meType.GetPositionalParameters(rawArgs.Count);
+            IList<XamlType> paramTypes = meType.GetPositionalParameters(rawArgs.Count);
 
             if (null == paramTypes)
             {
@@ -1244,29 +1244,21 @@ namespace System.Xaml
                 throw ctx.WithLineInfo(new XamlObjectWriterException(msg));
             }
 
-            int i = 0;
-            foreach (XamlType pparamType in paramTypes)
+            int paramTypesCount = paramTypes.Count;
+            for (int i = 0; i < paramTypesCount; i++)
             {
-                if (i < rawArgs.Count)
-                {
-                    object inst;
-                    PositionalParameterDescriptor pparam = rawArgs[i];
-                    if (pparam.WasText)
-                    {
-                        XamlValueConverter<TypeConverter> ts = pparamType.TypeConverter;
-                        object value = pparam.Value;
-                        inst = Logic_CreateFromValue(ctx, ts, value, null, pparamType.Name);
-                    }
-                    else
-                    {
-                        inst = rawArgs[i].Value;
-                    }
-                    argInstances[i++] = inst;
-                }
-                else
+                if (i >= rawArgs.Count)
                 {
                     throw ctx.WithLineInfo(new XamlInternalException(SR.Get(SRID.PositionalParamsWrongLength)));
                 }
+
+                XamlType pparamType = paramTypes[i];
+                PositionalParameterDescriptor pparam = rawArgs[i];
+
+                argInstances[i] = pparam.WasText ?
+                    Logic_CreateFromValue(ctx, pparamType.TypeConverter, pparam.Value, null, pparamType.Name) :
+                    rawArgs[i].Value;
+
                 ctx.CurrentCtorArgs = argInstances;
             }
         }

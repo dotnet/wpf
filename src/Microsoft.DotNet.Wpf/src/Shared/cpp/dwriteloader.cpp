@@ -7,8 +7,6 @@
 namespace WPFUtils
 {
 
-#if defined(__cplusplus_cli)
-#endif
 HMODULE LoadDWriteLibraryAndGetProcAddress(void **pfncptrDWriteCreateFactory)
 {
     HMODULE hDWriteLibrary = LoadLibraryEx(L"dwrite.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);

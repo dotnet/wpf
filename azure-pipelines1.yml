@@ -52,13 +52,6 @@ pr:
   autoCancel: true
   branches:
     include:
-    - main
-    - release/3.* 
-    - internal/release/3.*
-    - release/5.*
-    - release/6.*
-    - release/7.*
-    - experimental/*
   paths:
     exclude:
     - Documentation/*

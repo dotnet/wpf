@@ -46,12 +46,6 @@ namespace MS.Win32
 
     internal partial class UnsafeNativeMethods {
 
-        // For some reason "StructureToPtr" requires super high permission.
-        public static void StructureToPtr(object structure, IntPtr ptr, bool fDeleteOld)
-        {
-            Marshal.StructureToPtr(structure, ptr, fDeleteOld);
-        }
-
 #if BASE_NATIVEMETHODS
         [DllImport(ExternDll.Ole32, ExactSpelling = true, CharSet = CharSet.Auto)]
         public static extern int OleGetClipboard(ref IComDataObject data);

@@ -183,7 +183,7 @@ namespace MS.Internal.IO.Packaging
                         //If we encounter more than one <SignatureProperty> tag with the expected
                         //id, then its an error.
                         if (signatureTimeIdFound)
-                            throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                            throw new XmlException(SR.PackageSignatureCorruption);
                         else
                             signatureTimeIdFound = true;
                         
@@ -211,13 +211,13 @@ namespace MS.Internal.IO.Packaging
                         && (reader.NodeType == XmlNodeType.EndElement)))
                             break;
                         else
-                            throw new XmlException(SR.Get(SRID.RequiredTagNotFound, signaturePropertyTag));
+                            throw new XmlException(SR.Format(SR.RequiredTagNotFound, signaturePropertyTag));
             }
 
             //We did find one or more <SignatureProperty> tags but there were none that
             //defined the id attribute and target attribute and <SignatureTime> element tag correctly.
             if(!signatureTimePropertyFound)
-                throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                throw new XmlException(SR.PackageSignatureCorruption);
 
             return signingTime;
         }
@@ -285,7 +285,7 @@ namespace MS.Internal.IO.Packaging
                             else
                                 //This would happen if we found more than one Value tags or if there
                                 //are other nested elements of if they are of a different XmlNodeType type
-                                throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                                throw new XmlException(SR.PackageSignatureCorruption);
 }
                         else if ((String.CompareOrdinal(reader.LocalName, timeFormatTagName) == 0)
                                  && PackagingUtilities.GetNonXmlnsAttributeCount(reader) == expectedAttributeCount)
@@ -305,11 +305,11 @@ namespace MS.Internal.IO.Packaging
                             else
                                 //This would happen if we found more than one Format tags or if there
                                 //are other nested elements of if they are of a different XmlNodeType type
-                                throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                                throw new XmlException(SR.PackageSignatureCorruption);
                         }
                         else
                             //If we encounter any tag other than <Format> or <Time> nested within the <SignatureTime> tag
-                            throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                            throw new XmlException(SR.PackageSignatureCorruption);
                     }
                     else
                         //If we have encountered the end tag for the <SignatureTime> tag
@@ -325,22 +325,22 @@ namespace MS.Internal.IO.Packaging
                                 && String.CompareOrdinal(signaturePropertyTag, reader.LocalName) == 0)
                                 break;
                             else
-                                throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                                throw new XmlException(SR.PackageSignatureCorruption);
                         }
                         else
                             // if we do not find the nested elements as expected
-                            throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                            throw new XmlException(SR.PackageSignatureCorruption);
                 }
             }
             else
-                throw new XmlException(SR.Get(SRID.RequiredTagNotFound, signatureTimeTag));
+                throw new XmlException(SR.Format(SR.RequiredTagNotFound, signatureTimeTag));
 
 
             // generate an equivalent DateTime object
             if (timeValue != null && timeFormat != null)
                 return XmlFormattedTimeToDateTime(timeValue, timeFormat);
             else
-                throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                throw new XmlException(SR.PackageSignatureCorruption);
         }
         
         /// <summary>

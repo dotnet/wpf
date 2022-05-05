@@ -5,7 +5,7 @@
     <MinorVersion>0</MinorVersion>
     <PatchVersion>0</PatchVersion>
     <PreReleaseVersionLabel>preview</PreReleaseVersionLabel>
-    <PreReleaseVersionIteration>3</PreReleaseVersionIteration>
+    <PreReleaseVersionIteration>5</PreReleaseVersionIteration>
     <VersionPrefix>$(MajorVersion).$(MinorVersion).$(PatchVersion)</VersionPrefix>
     <!--
       Set assembly version to align with major and minor version, as for the patches and revisions should be manually
@@ -21,31 +21,35 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/winforms -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>7.0.0-preview.3.22165.2</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>7.0.0-preview.4.22254.3</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/runtime -->
   <PropertyGroup>
-    <VSRedistCommonNetCoreSharedFrameworkx6470PackageVersion>7.0.0-preview.3.22165.1</VSRedistCommonNetCoreSharedFrameworkx6470PackageVersion>
-    <MicrosoftNETCoreAppRefVersion>7.0.0-preview.3.22165.1</MicrosoftNETCoreAppRefVersion>
-    <MicrosoftNETCoreAppRuntimewinx64Version>7.0.0-preview.3.22165.1</MicrosoftNETCoreAppRuntimewinx64Version>
-    <MicrosoftNETCorePlatformsVersion>7.0.0-preview.3.22165.1</MicrosoftNETCorePlatformsVersion>
-    <SystemCodeDomPackageVersion>7.0.0-preview.3.22165.1</SystemCodeDomPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>7.0.0-preview.3.22165.1</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>7.0.0-preview.3.22165.1</SystemDiagnosticsEventLogPackageVersion>
-    <SystemDrawingCommonVersion>7.0.0-preview.3.22165.1</SystemDrawingCommonVersion>
-    <SystemDirectoryServicesVersion>7.0.0-preview.3.22165.1</SystemDirectoryServicesVersion>
-    <SystemIOPackagingVersion>7.0.0-preview.3.22165.1</SystemIOPackagingVersion>
-    <SystemReflectionMetadataLoadContextVersion>7.0.0-preview.3.22165.1</SystemReflectionMetadataLoadContextVersion>
+    <VSRedistCommonNetCoreSharedFrameworkx6470PackageVersion>7.0.0-preview.5.22254.1</VSRedistCommonNetCoreSharedFrameworkx6470PackageVersion>
+    <MicrosoftNETCoreAppRefVersion>7.0.0-preview.5.22254.1</MicrosoftNETCoreAppRefVersion>
+    <MicrosoftNETCoreAppRuntimewinx64Version>7.0.0-preview.5.22254.1</MicrosoftNETCoreAppRuntimewinx64Version>
+    <MicrosoftNETCorePlatformsVersion>7.0.0-preview.5.22254.1</MicrosoftNETCorePlatformsVersion>
+    <SystemCodeDomPackageVersion>7.0.0-preview.5.22254.1</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>7.0.0-preview.5.22254.1</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>7.0.0-preview.5.22254.1</SystemDiagnosticsEventLogPackageVersion>
+    <SystemDrawingCommonVersion>7.0.0-preview.5.22254.1</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>7.0.0-preview.5.22254.1</SystemDirectoryServicesVersion>
+    <SystemIOPackagingVersion>7.0.0-preview.5.22254.1</SystemIOPackagingVersion>
+    <SystemReflectionMetadataLoadContextVersion>7.0.0-preview.5.22254.1</SystemReflectionMetadataLoadContextVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemResourcesExtensionsVersion>7.0.0-preview.3.22165.1</SystemResourcesExtensionsVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>7.0.0-preview.3.22165.1</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>7.0.0-preview.3.22165.1</SystemSecurityPermissionsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>7.0.0-preview.3.22165.1</SystemWindowsExtensionsPackageVersion>
+    <SystemResourcesExtensionsVersion>7.0.0-preview.5.22254.1</SystemResourcesExtensionsVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>7.0.0-preview.5.22254.1</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>7.0.0-preview.5.22254.1</SystemSecurityPermissionsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>7.0.0-preview.5.22254.1</SystemWindowsExtensionsPackageVersion>
+  </PropertyGroup>
+  <!-- Docs / Intellisense -->
+  <PropertyGroup>
+    <MicrosoftPrivateIntellisenseVersion>7.0.0-preview-20220331.1</MicrosoftPrivateIntellisenseVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
-    <MicrosoftDotNetApiCompatVersion>7.0.0-beta.22157.6</MicrosoftDotNetApiCompatVersion>
-    <MicrosoftDotNetCodeAnalysisPackageVersion>7.0.0-beta.22157.6</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetApiCompatVersion>7.0.0-beta.22225.6</MicrosoftDotNetApiCompatVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>7.0.0-beta.22225.6</MicrosoftDotNetCodeAnalysisPackageVersion>
   </PropertyGroup>
   <!-- Maintain System.CodeDom PackageVersion at 4.4.0. See https://github.com/Microsoft/msbuild/issues/3627 -->
   <!-- Pin specific versions of S.Memory so that it would supply AssemblyVersion=4.0.1.0. See https://github.com/dotnet/runtime/issues/31672 -->
@@ -84,6 +88,6 @@
     <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
   </PropertyGroup>
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>7.0.0-preview.3.22118.1</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>7.0.0-preview.5.22219.1</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

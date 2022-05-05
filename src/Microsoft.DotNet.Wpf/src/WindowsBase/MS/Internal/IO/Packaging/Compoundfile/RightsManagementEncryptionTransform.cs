@@ -74,11 +74,11 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             
             Stream instanceDataStream = transformEnvironment.GetPrimaryInstanceData();
 
-            Debug.Assert(instanceDataStream != null, SR.Get(SRID.NoPublishLicenseStream));
+            Debug.Assert(instanceDataStream != null, SR.NoPublishLicenseStream);
 
             _useLicenseStorage = transformEnvironment.GetInstanceDataStorage();
 
-            Debug.Assert(_useLicenseStorage != null, SR.Get(SRID.NoUseLicenseStorage));
+            Debug.Assert(_useLicenseStorage != null, SR.NoUseLicenseStorage);
 
             // Create a wrapper that manages persistence and comparison of FormatVersion
             // in our InstanceData stream.  We can read/write to this stream as needed (though CompressionTransform
@@ -146,13 +146,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             Int32 headerLen = utf8Reader.ReadInt32();
             if (headerLen < CU.Int32Size)
             {
-                throw new FileFormatException(SR.Get(SRID.PublishLicenseStreamCorrupt));
+                throw new FileFormatException(SR.PublishLicenseStreamCorrupt);
             }
 
             if (headerLen > MaxPublishLicenseHeaderLen)
             {
                 throw new FileFormatException(
-                                SR.Get(SRID.PublishLicenseStreamHeaderTooLong,
+                                SR.Format(SR.PublishLicenseStreamHeaderTooLong,
                                 headerLen,
                                 MaxPublishLicenseHeaderLen
                                 ));
@@ -171,7 +171,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 if (PackagingUtilities.ReliableRead(_publishLicenseStream, _publishLicenseHeaderExtraBytes, 0, numPublishLicenseHeaderExtraBytes)
                         != numPublishLicenseHeaderExtraBytes)
                 {
-                    throw new FileFormatException(SR.Get(SRID.PublishLicenseStreamCorrupt));
+                    throw new FileFormatException(SR.PublishLicenseStreamCorrupt);
                 }
             }
 
@@ -222,7 +222,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             if (_fixedSettings)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotChangePublishLicense));
+                throw new InvalidOperationException(SR.CannotChangePublishLicense);
             }
 
             // We seek to position 0 but under the covers, the VersionedStream maintains a FormatVersion
@@ -362,7 +362,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 user.AuthenticationType != AuthenticationType.Passport)
             {
                 throw new ArgumentException(
-                    SR.Get(SRID.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed),
+                    SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed,
                     "user"
                     );
             }
@@ -529,7 +529,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 if (_fixedSettings)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeCryptoProvider));
+                    throw new InvalidOperationException(SR.CannotChangeCryptoProvider);
                 }
 
                 if (value == null)
@@ -539,7 +539,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 
                 if (!value.CanEncrypt && !value.CanDecrypt)
                 {
-                    throw new ArgumentException(SR.Get(SRID.CryptoProviderIsNotReady), "value");
+                    throw new ArgumentException(SR.CryptoProviderIsNotReady, "value");
                 }
 
                 _cryptoProvider = value;
@@ -739,7 +739,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             Int32 headerLength = utf8Reader.ReadInt32();
             if (headerLength < UseLicenseStreamLengthMin)
             {
-                throw new FileFormatException(SR.Get(SRID.UseLicenseStreamCorrupt));
+                throw new FileFormatException(SR.UseLicenseStreamCorrupt);
             }
 
             //
@@ -807,7 +807,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             LoadUseLicenseForUserParams lulfup = param as LoadUseLicenseForUserParams;
             if (lulfup == null)
             {
-                throw new ArgumentException(SR.Get(SRID.CallbackParameterInvalid), "param");
+                throw new ArgumentException(SR.CallbackParameterInvalid, "param");
             }
 
             ContentUser userDesired = lulfup.User;
@@ -862,7 +862,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             ContentUser userToDelete = param as ContentUser;
             if (userToDelete == null)
             {
-                throw new ArgumentException(SR.Get(SRID.CallbackParameterInvalid), "param");
+                throw new ArgumentException(SR.CallbackParameterInvalid, "param");
             }
 
             ContentUser userFromStream = null;
@@ -1135,7 +1135,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             int colonIndex = typePrefixedUserName.IndexOf(':');
             if (colonIndex < 1 || colonIndex >= typePrefixedUserName.Length - 1)
             {
-                throw new FileFormatException(SR.Get(SRID.InvalidTypePrefixedUserName));
+                throw new FileFormatException(SR.InvalidTypePrefixedUserName);
             }
 
             // No need to use checked{} here since colonIndex cannot be >= to (max int - 1)
@@ -1166,8 +1166,8 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             if (!validEnum)
             {
                 throw new FileFormatException(
-                                SR.Get(
-                                    SRID.InvalidAuthenticationTypeString,
+                                SR.Format(
+                                    SR.InvalidAuthenticationTypeString,
                                     typePrefixedUserName
                                     )
                                 );
@@ -1196,7 +1196,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             Int32 headerLength = utf8Reader.ReadInt32();
             if (headerLength < UseLicenseStreamLengthMin)
             {
-                throw new FileFormatException(SR.Get(SRID.UseLicenseStreamCorrupt));
+                throw new FileFormatException(SR.UseLicenseStreamCorrupt);
             }
 
             //
@@ -1232,7 +1232,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             Int32 headerLength = utf8Reader.ReadInt32();
             if (headerLength < UseLicenseStreamLengthMin)
             {
-                throw new FileFormatException(SR.Get(SRID.UseLicenseStreamCorrupt));
+                throw new FileFormatException(SR.UseLicenseStreamCorrupt);
             }
 
             string base64UserName = ReadLengthPrefixedString(utf8Reader, Encoding.UTF8, UserNameLengthMax);
@@ -1278,13 +1278,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             Int32 length = reader.ReadInt32();
             if (length > maxLength)
             {
-                throw new FileFormatException(SR.Get(SRID.ExcessiveLengthPrefix, length, maxLength));
+                throw new FileFormatException(SR.Format(SR.ExcessiveLengthPrefix, length, maxLength));
             }
 
             byte[] bytes = reader.ReadBytes(length);
             if (bytes.Length != length)
             {
-                throw new FileFormatException(SR.Get(SRID.InvalidStringFormat));
+                throw new FileFormatException(SR.InvalidStringFormat);
             }
 
             string s = encoding.GetString(bytes);
@@ -1316,7 +1316,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 byte[] bytes = reader.ReadBytes(CU.Int32Size - extra);
                 if (bytes.Length != CU.Int32Size - extra)
                 {
-                    throw new FileFormatException(SR.Get(SRID.InvalidStringFormat));
+                    throw new FileFormatException(SR.InvalidStringFormat);
                 }
             }
         }

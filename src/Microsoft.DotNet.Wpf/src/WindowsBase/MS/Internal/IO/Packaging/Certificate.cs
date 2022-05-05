@@ -14,7 +14,7 @@
 using System;
 using System.Diagnostics;                               // for Assert
 using System.Security.Cryptography.X509Certificates;
-using System.Windows;                                   // For Exception strings - SRID
+using System.Windows;                                   // For Exception strings - SR
 using System.IO.Packaging;      
 using System.IO;                                        // for Stream
 using MS.Internal;                                      // For ContentType
@@ -108,7 +108,7 @@ namespace MS.Internal.IO.Packaging
                     {
                         // throw if stream is beyond any reasonable length
                         if (s.Length > _maximumCertificateStreamLength)
-                            throw new FileFormatException(SR.Get(SRID.CorruptedData));
+                            throw new FileFormatException(SR.CorruptedData);
 
                         // X509Certificate constructor desires a byte array
                         Byte[] byteArray = new Byte[s.Length];
@@ -158,7 +158,7 @@ namespace MS.Internal.IO.Packaging
 
                 // ensure the part is of the expected type
                 if (_part.ValidatedContentType().AreTypeAndSubTypeEqual(_certificatePartContentType) == false)
-                    throw new FileFormatException(SR.Get(SRID.CertificatePartContentTypeMismatch));
+                    throw new FileFormatException(SR.CertificatePartContentTypeMismatch);
             }
             else
             {

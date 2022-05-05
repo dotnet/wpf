@@ -261,7 +261,7 @@ namespace System.Windows.Threading
             }
             if(min == DispatcherPriority.Inactive)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidPriority), "min");
+                throw new ArgumentException(SR.InvalidPriority, "min");
             }
 
             /*            
@@ -282,12 +282,12 @@ namespace System.Windows.Threading
             }
             if(max == DispatcherPriority.Inactive)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidPriority), "max");
+                throw new ArgumentException(SR.InvalidPriority, "max");
             }
             
             if (max < min)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidPriorityRangeOrder));
+                throw new ArgumentException(SR.InvalidPriorityRangeOrder);
             }
 
             _min = min;

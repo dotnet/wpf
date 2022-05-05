@@ -5,6 +5,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Reflection;
 using System.Xaml.Schema;
 
@@ -13,12 +14,19 @@ namespace System.Xaml
     public class XamlDirective : XamlMember
     {
         private AllowedMemberLocations _allowedLocation;
-        private readonly IList<string> _xamlNamespaces;
+        private readonly ReadOnlyCollection<string> _xamlNamespaces;
 
-        internal XamlDirective(IEnumerable<string> xamlNamespaces, string name, AllowedMemberLocations allowedLocation, MemberReflector reflector)
+        internal XamlDirective(ReadOnlyCollection<string> immutableXamlNamespaces, string name, AllowedMemberLocations allowedLocation, MemberReflector reflector)
             : base(name, reflector) 
         {
-            _xamlNamespaces = GetReadOnly(xamlNamespaces);
+#if DEBUG
+            Debug.Assert(immutableXamlNamespaces is not null);
+            foreach (string ns in immutableXamlNamespaces)
+            {
+                Debug.Assert(ns is not null);
+            }
+#endif
+            _xamlNamespaces = immutableXamlNamespaces;
             _allowedLocation = allowedLocation;
         }
 
@@ -30,15 +38,33 @@ namespace System.Xaml
             {
                 throw new ArgumentNullException(nameof(xamlType));
             }
+            if (xamlNamespaces == null)
+            {
+                throw new ArgumentNullException(nameof(xamlNamespaces));
+            }
 
-            _xamlNamespaces = GetReadOnly(xamlNamespaces);
+            List<string> nsList = new List<string>(xamlNamespaces);
+            foreach (string ns in nsList)
+            {
+                if (ns == null)
+                {
+                    throw new ArgumentException(SR.Get(SRID.CollectionCannotContainNulls, nameof(xamlNamespaces)));
+                }
+            }
+
+            _xamlNamespaces = nsList.AsReadOnly();
             _allowedLocation = allowedLocation;
         }
 
         public XamlDirective(string xamlNamespace, string name)
             :base(name, null)
         {
-            _xamlNamespaces = GetReadOnly(xamlNamespace);
+            if (xamlNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(xamlNamespace));
+            }
+
+            _xamlNamespaces = new ReadOnlyCollection<string>(new string[] { xamlNamespace });
             _allowedLocation = AllowedMemberLocations.Any;
         }
 
@@ -47,10 +73,13 @@ namespace System.Xaml
         public override int GetHashCode()
         {
             int result = (Name == null) ? 0 : Name.GetHashCode();
-            foreach (string ns in _xamlNamespaces)
+
+            ReadOnlyCollection<string> ns = _xamlNamespaces;
+            for (int i = 0; i < ns.Count; i++)
             {
-                result ^= ns.GetHashCode();
+                result ^= ns[i].GetHashCode();
             }
+
             return result;
         }
 
@@ -77,8 +106,8 @@ namespace System.Xaml
         // from the ones passed in the ctor. Ideally we would provide overridable equality here.
         internal static bool NamespacesAreEqual(XamlDirective directive1, XamlDirective directive2)
         {
-            IList<string> ns1 = directive1._xamlNamespaces;
-            IList<string> ns2 = directive2._xamlNamespaces;
+            ReadOnlyCollection<string> ns1 = directive1._xamlNamespaces;
+            ReadOnlyCollection<string> ns2 = directive2._xamlNamespaces;
 
             if (ns1.Count != ns2.Count)
             {
@@ -179,32 +208,6 @@ namespace System.Xaml
         protected sealed override MethodInfo LookupUnderlyingSetter()
         {
             return null;
-        }
-
-        private static ReadOnlyCollection<string> GetReadOnly(string xamlNamespace)
-        {
-            if (xamlNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(xamlNamespace));
-            }
-            return new ReadOnlyCollection<string>(new string[] { xamlNamespace });
-        }
-
-        private static ReadOnlyCollection<string> GetReadOnly(IEnumerable<string> xamlNamespaces)
-        {
-            if (xamlNamespaces == null)
-            {
-                throw new ArgumentNullException(nameof(xamlNamespaces));
-            }
-            List<string> nsList = new List<string>(xamlNamespaces);
-            foreach (string ns in nsList)
-            {
-                if (ns == null)
-                {
-                    throw new ArgumentException(SR.Get(SRID.CollectionCannotContainNulls, "xamlNamespaces"));
-                }
-            }
-            return nsList.AsReadOnly();
         }
     }
 }

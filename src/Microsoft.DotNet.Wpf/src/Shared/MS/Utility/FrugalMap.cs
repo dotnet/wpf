@@ -17,7 +17,6 @@ using MS.Internal.WindowsBase;
 #elif DRT
     using MS.Internal.Drt;
 #else
-#error Attempt to use FriendAccessAllowedAttribute from an unknown assembly.
 using MS.Internal.YourAssemblyName;
 #endif
 
@@ -1666,7 +1665,6 @@ namespace MS.Utility
         internal Dictionary<int, object> _entries;
     }
 
-    [FriendAccessAllowed]
     internal struct FrugalMap
     {
         public object this[int key]

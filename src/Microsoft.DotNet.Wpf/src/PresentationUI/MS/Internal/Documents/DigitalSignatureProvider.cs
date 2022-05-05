@@ -14,14 +14,11 @@ using System.Security.Cryptography.X509Certificates;
 using System.Windows.TrustUI;
 using System.Windows.Xps.Packaging;
 
-using MS.Internal.PresentationUI;   // For FriendAccessAllowed
-
 namespace MS.Internal.Documents
 {
     /// <summary>
     /// DigitalSignatureProvider is used to connect DRP to Xps dig sig 
     /// </summary>
-    [FriendAccessAllowed]
     internal class DigitalSignatureProvider : IDigitalSignatureProvider
     {
         #region Constructors

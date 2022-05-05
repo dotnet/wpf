@@ -12,7 +12,7 @@ using System.Collections;
 using System.Globalization; // CultureInfo 
 
 #if PRESENTATION_CORE
-using MS.Internal.PresentationCore;     // FriendAccessAllowed
+using MS.Internal.PresentationCore;
 #elif PRESENTATIONFRAMEWORK
 using MS.Internal.PresentationFramework; 
 #endif 
@@ -188,9 +188,6 @@ namespace MS.Internal.Media
         /// <remarks>
         /// This is called ONLY from the Parser and is not a general public method.  
         /// </remarks>
-#if !PBTCOMPILER        
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
-#endif        
         internal static bool SerializePoint3D(BinaryWriter writer, string stringValues)
         {
 #if PBTCOMPILER            
@@ -223,9 +220,6 @@ namespace MS.Internal.Media
         /// <remarks>
         /// This is called ONLY from the Parser and is not a general public method.  
         /// </remarks>
-#if !PBTCOMPILER        
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
-#endif        
         internal static bool SerializeVector3D(BinaryWriter writer, string stringValues)
         {
 #if PBTCOMPILER            
@@ -258,9 +252,6 @@ namespace MS.Internal.Media
         /// <remarks>
         /// This is called ONLY from the Parser and is not a general public method.  
         /// </remarks>
-#if !PBTCOMPILER        
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
-#endif        
         internal static bool SerializePoint(BinaryWriter writer, string stringValue)
         {
 #if PBTCOMPILER            

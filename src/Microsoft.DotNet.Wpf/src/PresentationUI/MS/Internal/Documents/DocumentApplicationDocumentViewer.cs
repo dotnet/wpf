@@ -10,7 +10,6 @@
 
 using MS.Internal.Documents.Application;
 using MS.Internal.IO.Packaging;             // For PreloadedPackages
-using MS.Internal.PresentationUI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;                // For IValueConverter
@@ -36,7 +35,6 @@ using System.Windows.Media;                 // Visual Stuff
 
 namespace MS.Internal.Documents
 {
-    [FriendAccessAllowed]
     internal sealed class DocumentApplicationDocumentViewer : DocumentViewer
     {
         //------------------------------------------------------

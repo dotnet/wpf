@@ -877,7 +877,6 @@ namespace System.Windows.Xps.Packaging
                                          );
            return AddSignature(packSignature);
         }
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         internal
         static
         XpsDocument
@@ -899,7 +898,6 @@ namespace System.Windows.Xps.Packaging
             return document;
         }
 
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         internal
         void
         DisposeXpsDocument(
@@ -1005,7 +1003,6 @@ namespace System.Windows.Xps.Packaging
         /// Creates and returns the appropriate <c>PackageSerializationManager</c>.
         /// </summary>
         /// <returns><c>PackageSerializationManager</c></returns>
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         internal
         PackageSerializationManager
         CreateSerializationManager(
@@ -1027,7 +1024,6 @@ namespace System.Windows.Xps.Packaging
         /// Creates and returns the appropriate <c>MetroAsyncSerializationManager</c>.
         /// </summary>
         /// <returns><c>AsyncPackageSerializationManager</c></returns>
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         internal
         PackageSerializationManager
         CreateAsyncSerializationManager(
@@ -1046,7 +1042,6 @@ namespace System.Windows.Xps.Packaging
         /// <summary>
         /// Dispose a serializaiton manager
         /// </summary>
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         internal
         void
         DisposeSerializationManager(

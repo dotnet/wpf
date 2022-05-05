@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Threading;
 
 using MS.Internal;                          // for Invariant
-using MS.Internal.WindowsBase;              // FriendAccessAllowed
+using MS.Internal.WindowsBase;
 using MS.Utility;                           // FrugalList
 
 namespace System.Windows
@@ -1744,7 +1744,6 @@ namespace System.Windows
         /// </summary>
         internal override DependencyObject InheritanceContext
         {
-            [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
             get
             {
                 if (!Freezable_HasMultipleInheritanceContexts)
@@ -1785,7 +1784,6 @@ namespace System.Windows
         /// </summary>
         internal override bool HasMultipleInheritanceContexts
         {
-            [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
             get { return Freezable_HasMultipleInheritanceContexts; }
         }
 

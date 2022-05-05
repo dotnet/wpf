@@ -20,7 +20,6 @@ using System.Windows.Threading;
 using System.Windows.TrustUI;
 
 using MS.Internal.Documents.Application;
-using MS.Internal.PresentationUI;
 
 namespace MS.Internal.Documents
 {
@@ -31,7 +30,6 @@ namespace MS.Internal.Documents
     /// This class serves as the controller that is between the UI and the facade for
     /// the RM APIs.
     /// </remarks>
-    [FriendAccessAllowed]
     internal sealed class DocumentRightsManagementManager
     {
         #region Constructors

@@ -12,7 +12,6 @@ using System.Security.RightsManagement;
 using System.Windows.TrustUI;
 
 using MS.Internal.Documents.Application;
-using MS.Internal.PresentationUI;
 
 using Microsoft.Win32;
 
@@ -39,7 +38,6 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     /// can be null
     /// <<param name="package">The encrypted package</param>
     /// </summary>
-    [MS.Internal.PresentationUI.FriendAccessAllowed]
     public RightsManagementProvider(EncryptedPackageEnvelope encryptedPackage)
     {
         _encryptedPackageEnvelope = encryptedPackage;

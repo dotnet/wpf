@@ -13,7 +13,7 @@
 using System;
 using System.IO;
 using System.IO.IsolatedStorage;
-using MS.Internal.WindowsBase;  // FriendAccessAllowed
+using MS.Internal.WindowsBase;
 using System.Xml;               // For XmlReader
 using System.Diagnostics;       // For Debug.Assert
 using System.Text;              // For Encoding
@@ -26,7 +26,6 @@ using MS.Internal;
 
 namespace MS.Internal.IO.Packaging
 {
-    [FriendAccessAllowed] // Built into Base, used by Framework and Core
     internal static class PackagingUtilities
     {
         //------------------------------------------------------

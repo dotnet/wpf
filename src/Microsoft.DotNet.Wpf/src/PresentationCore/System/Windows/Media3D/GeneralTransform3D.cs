@@ -88,7 +88,6 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         internal abstract Transform3D AffineTransform
         {
-            [FriendAccessAllowed] // Built into Core, also used by Framework.
             get;
         }
     }

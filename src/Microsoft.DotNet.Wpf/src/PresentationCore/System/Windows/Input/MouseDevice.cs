@@ -12,7 +12,6 @@ using System.Windows.Interop;
 using System.Windows.Threading;
 using System.Security;
 using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 using MS.Win32; // *NativeMethods
 using System.Runtime.InteropServices;
 using System;
@@ -255,7 +254,6 @@ namespace System.Windows.Input
         ///     Returns the element that the mouse is over regardless of
         ///     its IsEnabled state.
         /// </summary>
-        [FriendAccessAllowed]
         internal IInputElement RawDirectlyOver
         {
             get

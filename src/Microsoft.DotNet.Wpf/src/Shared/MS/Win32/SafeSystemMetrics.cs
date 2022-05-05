@@ -20,14 +20,11 @@ using MS.Win32;
 using MS.Internal;
 using MS.Internal.Interop;
 
-using MS.Internal.PresentationCore;
-
 namespace MS.Win32
 {
     /// <summary>
     ///     Contains properties that are queries into the system's various settings.
     /// </summary>
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
     internal sealed class SafeSystemMetrics
     {
 

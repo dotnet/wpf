@@ -30,7 +30,6 @@ using MS.Internal.PresentationCore;
 
 namespace MS.Internal.FontCache
 {
-    [FriendAccessAllowed]
     internal sealed class FontFaceLayoutInfo
     {
         private FontTechnology _fontTechnology;

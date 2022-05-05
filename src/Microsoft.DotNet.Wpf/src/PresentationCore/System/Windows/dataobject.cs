@@ -30,7 +30,6 @@ namespace System.Windows
     using System.Windows.Media.Imaging;
     using System.Text;
     using MS.Internal;
-    using MS.Internal.PresentationCore;                        // SecurityHelper
 
     using SR=MS.Internal.PresentationCore.SR;
     using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
@@ -334,7 +333,6 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionClipboard.AllClipboard) to call this API.
         /// </remarks>
-        [FriendAccessAllowed]
         public void SetData(string format, Object data, bool autoConvert)
         {
             ArgumentNullException.ThrowIfNull(format);

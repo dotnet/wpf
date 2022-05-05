@@ -18,7 +18,6 @@ using System.Security;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Runtime.InteropServices;
-using MS.Internal.PresentationCore;
 
 using SR = MS.Internal.PresentationCore.SR;
 
@@ -31,7 +30,6 @@ namespace MS.Internal.TextFormatting
     /// access to the underlying dangerous handle to the unmanaged resource whose
     /// lifetime is bound to the the underlying LS context.
     /// </summary>
-    [FriendAccessAllowed]   // used by Framework
     internal sealed class TextPenaltyModule : IDisposable
     {
         private SecurityCriticalDataForSet<IntPtr>  _ploPenaltyModule;  // Pointer to LS penalty module

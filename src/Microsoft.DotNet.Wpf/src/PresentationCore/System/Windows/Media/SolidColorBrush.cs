@@ -12,7 +12,6 @@
 //
 
 using MS.Internal;
-using MS.Internal.PresentationCore;
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -79,7 +78,6 @@ namespace System.Windows.Media
         /// <exception cref="System.ArgumentNullException">
         /// Thrown if "writer" is null.
         /// </exception>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static bool SerializeOn(BinaryWriter writer, string stringValue)
         {
             // ********* VERY IMPORTANT NOTE *****************

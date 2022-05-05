@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using MS.Internal.WindowsBase;  // FriendAccessAllowed
 
 namespace System.Windows
 {
@@ -40,7 +39,6 @@ namespace System.Windows
             IsAValueChange        = true;
         }
 
-        [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
         internal DependencyPropertyChangedEventArgs(DependencyProperty property, PropertyMetadata metadata, object oldValue, object newValue)
         {
             _property = property;
@@ -110,7 +108,6 @@ namespace System.Windows
         /// <summary>
         ///     Whether or not this change indicates a change to the property value
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
         internal bool IsAValueChange
         {
             get { return ReadPrivateFlag(PrivateFlags.IsAValueChange); }
@@ -120,7 +117,6 @@ namespace System.Windows
         /// <summary>
         ///     Whether or not this change indicates a change to the subproperty
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
         internal bool IsASubPropertyChange
         {
             get { return ReadPrivateFlag(PrivateFlags.IsASubPropertyChange); }
@@ -130,7 +126,6 @@ namespace System.Windows
         /// <summary>
         ///     Metadata for the property
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
         internal PropertyMetadata Metadata
         {
             get { return _metadata; }
@@ -139,7 +134,6 @@ namespace System.Windows
         /// <summary>
         ///     Says what operation caused this property change
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
         internal OperationType OperationType
         {
             get { return _operationType; }
@@ -172,7 +166,6 @@ namespace System.Windows
         /// <summary>
         ///     The entry for the old value (contains value and all modifier info)
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
         internal EffectiveValueEntry OldEntry
         {
             get { return _oldEntry; }
@@ -181,7 +174,6 @@ namespace System.Windows
         /// <summary>
         ///     The source of the old value
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
         internal BaseValueSourceInternal OldValueSource
         {
             get { return _oldEntry.BaseValueSourceInternal; }
@@ -190,7 +182,6 @@ namespace System.Windows
         /// <summary>
         ///     Says if the old value was a modified value (coerced, animated, expression)
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
         internal bool IsOldValueModified
         {
             get { return _oldEntry.HasModifiers; }
@@ -199,7 +190,6 @@ namespace System.Windows
         /// <summary>
         ///     Says if the old value was a deferred value
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
         internal bool IsOldValueDeferred
         {
             get { return _oldEntry.IsDeferredReference; }
@@ -231,7 +221,6 @@ namespace System.Windows
         /// <summary>
         ///     The entry for the new value (contains value and all modifier info)
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
         internal EffectiveValueEntry NewEntry
         {
             get { return _newEntry; }
@@ -240,7 +229,6 @@ namespace System.Windows
         /// <summary>
         ///     The source of the new value
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
         internal BaseValueSourceInternal NewValueSource
         {
             get { return _newEntry.BaseValueSourceInternal; }
@@ -249,7 +237,6 @@ namespace System.Windows
         /// <summary>
         ///     Says if the new value was a modified value (coerced, animated, expression)
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
         internal bool IsNewValueModified
         {
             get { return _newEntry.HasModifiers; }
@@ -258,7 +245,6 @@ namespace System.Windows
         /// <summary>
         ///     Says if the new value was a deferred value
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
         internal bool IsNewValueDeferred
         {
             get { return _newEntry.IsDeferredReference; }
@@ -358,7 +344,6 @@ namespace System.Windows
         #endregion Data
     }
 
-    [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
     internal enum OperationType : byte
     {
         Unknown                     = 0,

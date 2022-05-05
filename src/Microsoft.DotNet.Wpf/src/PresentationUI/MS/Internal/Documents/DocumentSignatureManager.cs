@@ -20,14 +20,12 @@ using System.Windows.Interop;
 using System.Windows.Threading;
 
 using MS.Internal.Documents.Application;
-using MS.Internal.PresentationUI;
 
 namespace MS.Internal.Documents
 {
     /// <summary>
     /// DocumentSignatureManager is a internal Avalon class used to expose the DigSig Document API 
     /// </summary>
-    [FriendAccessAllowed]
     internal sealed class DocumentSignatureManager
     {
         #region Constructors

@@ -27,11 +27,10 @@ using System.IO;                    // FileNotFoundException
 using System.Reflection;            // Assembly
 using System.Security;              // 
 
-using MS.Internal.WindowsBase;      // [FriendAccessAllowed] // BuildInfo
+using MS.Internal.WindowsBase;      // BuildInfo
 
 namespace MS.Internal
 {
-    [FriendAccessAllowed]
     internal enum UncommonAssembly
     {
         // Each enum name must match the assembly name, with dots replaced by underscores
@@ -42,7 +41,6 @@ namespace MS.Internal
         System_Linq_Expressions,
     }
 
-    [FriendAccessAllowed]
     internal static class AssemblyHelper
     {
         #region Constructors
@@ -93,7 +91,6 @@ namespace MS.Internal
 
         #region Internal Methods
 
-        [FriendAccessAllowed]
         internal static bool IsLoaded(UncommonAssembly assemblyEnum)
         {
             // this method is typically called by WPF code on a UI thread.

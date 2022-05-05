@@ -53,17 +53,15 @@ namespace System.Windows.Markup
 
             object value;
             Type type = MemberType;
-            string fieldString = null;
-            string memberFullName = null;
+            string fieldString;
+            string typeNameForError = null;
             if (type != null)
             {
                 fieldString = _member;
-                memberFullName = type.FullName + "." + _member;
+                typeNameForError = type.FullName;
             }
             else
             {
-                memberFullName = _member;
-
                 // Validate the _member
 
                 int dotIndex = _member.IndexOf('.');
@@ -120,7 +118,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.MarkupExtensionBadStatic, memberFullName));
+                throw new ArgumentException(SR.Get(SRID.MarkupExtensionBadStatic, typeNameForError is not null ? $"{typeNameForError}.{_member}" : _member));
             }
         }
 

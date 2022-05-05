@@ -68,15 +68,15 @@ namespace System.Xaml.Schema
             {
                 return null;
             }
-            string fallbackName = GetTypeExtensionName(typeName);
+
             if (typeArgs == null || typeArgs.Length == 0)
             {
-                return TryGetXamlType(typeName) ?? TryGetXamlType(fallbackName);
+                return TryGetXamlType(typeName) ?? TryGetXamlType(GetTypeExtensionName(typeName));
             }
             else
             {
                 Type[] clrTypeArgs = ConvertArrayOfXamlTypesToTypes(typeArgs);
-                return TryGetXamlType(typeName, clrTypeArgs) ?? TryGetXamlType(fallbackName, clrTypeArgs);
+                return TryGetXamlType(typeName, clrTypeArgs) ?? TryGetXamlType(GetTypeExtensionName(typeName), clrTypeArgs);
             }
         }
 

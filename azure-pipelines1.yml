@@ -52,6 +52,7 @@ pr:
   autoCancel: true
   branches:
     include:
+    - drttesting
   paths:
     exclude:
     - Documentation/*

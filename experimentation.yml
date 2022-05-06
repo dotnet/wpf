@@ -94,3 +94,29 @@ stages:
         -TsaRepositoryName "wpf"
         -TsaCodebaseName "wpf"
         -TsaPublish $True'
+- stage: drttesting
+  displayName: drttesting
+  jobs:
+  - job: 
+    steps:
+    - task: DownloadBuildArtifacts@1
+      inputs:
+        buildType: 'specific'
+        project: '7ea9116e-9fac-403d-b258-b31fcf1bb293'
+        pipeline: '479'
+        buildVersionToDownload: 'specific'
+        buildId: '1702475'
+        downloadType: 'specific'
+        itemPattern: 'Tests.Release.x64.*'
+        downloadPath: '$(System.ArtifactsDirectory)\testszip\'
+
+    - task: DownloadBuildArtifacts@1
+      inputs:
+        buildType: 'specific'
+        project: '7ea9116e-9fac-403d-b258-b31fcf1bb293'
+        pipeline: '479'
+        buildVersionToDownload: 'specific'
+        buildId: '1702475'
+        downloadType: 'specific'
+        itemPattern: 'Tests.Release.x86*'
+        downloadPath: '$(System.ArtifactsDirectory)\testszip\' 

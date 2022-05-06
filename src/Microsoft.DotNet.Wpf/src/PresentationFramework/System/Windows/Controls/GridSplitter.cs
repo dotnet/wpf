@@ -490,7 +490,7 @@ namespace System.Windows.Controls
         // Initialize the data needed for resizing
         private void InitializeData(bool ShowsPreview)
         {
-            Grid grid = Parent as Grid;
+            Grid grid = VisualTreeHelper.GetParent(this) as Grid;
 
             // If not in a grid or can't resize, do nothing
             if (grid != null)
@@ -734,7 +734,7 @@ namespace System.Windows.Controls
         private void CancelResize()
         {
             // Restore original column/row lengths
-            Grid grid = Parent as Grid;
+            Grid grid = VisualTreeHelper.GetParent(this) as Grid;
 
             if (_resizeData.ShowsPreview)
             {

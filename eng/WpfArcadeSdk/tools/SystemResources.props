@@ -12,6 +12,7 @@
 
     <_GenerateResourcesCodeAsConstants>true</_GenerateResourcesCodeAsConstants>
 
+    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='System.Xaml'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='WindowsBase'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='WindowsFormsIntegration'">false</_GenerateResourcesCodeAsConstants>
 
@@ -38,6 +39,7 @@
       <ClassName Condition="'$(AssemblyName)'=='PresentationUI'">System.Windows.TrustUI.SRID</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='WindowsFormsIntegration'">System.Windows.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='PresentationCore'">MS.Internal.PresentationCore.SRID </ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='System.Xaml'">System.SR</ClassName>
       <Classname Condition="'%(ClassName)'==''">System.SRID</Classname>
     </EmbeddedResource>
   </ItemDefinitionGroup>

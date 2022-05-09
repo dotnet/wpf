@@ -1563,15 +1563,15 @@ namespace System.Windows
         public static System.Windows.ResourceKey MenuCheckmarkHeightKey { get { throw null; } }
         public static double MenuCheckmarkWidth { get { throw null; } }
         public static System.Windows.ResourceKey MenuCheckmarkWidthKey { get { throw null; } }
-        public static bool MenuDropAlignment { get { throw null; } }
+        public static bool MenuDropAlignment { get { throw null; } set {} }
         public static System.Windows.ResourceKey MenuDropAlignmentKey { get { throw null; } }
-        public static bool MenuFade { get { throw null; } }
+        public static bool MenuFade { get { throw null; } set { } }
         public static System.Windows.ResourceKey MenuFadeKey { get { throw null; } }
         public static double MenuHeight { get { throw null; } }
         public static System.Windows.ResourceKey MenuHeightKey { get { throw null; } }
         public static System.Windows.Controls.Primitives.PopupAnimation MenuPopupAnimation { get { throw null; } }
         public static System.Windows.ResourceKey MenuPopupAnimationKey { get { throw null; } }
-        public static int MenuShowDelay { get { throw null; } }
+        public static int MenuShowDelay { get { throw null; } set { } }
         public static System.Windows.ResourceKey MenuShowDelayKey { get { throw null; } }
         public static double MenuWidth { get { throw null; } }
         public static System.Windows.ResourceKey MenuWidthKey { get { throw null; } }

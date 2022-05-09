@@ -48,7 +48,7 @@ namespace System.Xaml
             {
                 if (ns == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.CollectionCannotContainNulls, nameof(xamlNamespaces)));
+                    throw new ArgumentException(SR.CollectionCannotContainNulls, nameof(xamlNamespaces));
                 }
             }
 
@@ -208,32 +208,6 @@ namespace System.Xaml
         protected sealed override MethodInfo LookupUnderlyingSetter()
         {
             return null;
-        }
-
-        private static ReadOnlyCollection<string> GetReadOnly(string xamlNamespace)
-        {
-            if (xamlNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(xamlNamespace));
-            }
-            return new ReadOnlyCollection<string>(new string[] { xamlNamespace });
-        }
-
-        private static ReadOnlyCollection<string> GetReadOnly(IEnumerable<string> xamlNamespaces)
-        {
-            if (xamlNamespaces == null)
-            {
-                throw new ArgumentNullException(nameof(xamlNamespaces));
-            }
-            List<string> nsList = new List<string>(xamlNamespaces);
-            foreach (string ns in nsList)
-            {
-                if (ns == null)
-                {
-                    throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "xamlNamespaces"));
-                }
-            }
-            return nsList.AsReadOnly();
         }
     }
 }

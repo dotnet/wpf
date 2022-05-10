@@ -127,8 +127,7 @@ namespace System.Windows.Documents
                 //
                 if (_uiElementCollection.Count != 0)
                 {
-                    Path path = _uiElementCollection[0] as Path;
-                    if (path != null)
+                    if (_uiElementCollection[0] is Path path)
                     {
                         if (_drawDebugVisual == 0)
                         {
@@ -164,7 +163,7 @@ namespace System.Windows.Documents
             if (al != null)
             {
                 Adorner[] adorners = al.GetAdorners(this);
-                if (adorners != null && adorners.Length > 0)
+                if (adorners?.Length > 0)
                 {
                     al.Update(this);
                 }
@@ -187,14 +186,14 @@ namespace System.Windows.Documents
         {
             if (value == null)
             {
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
             }
-
+        
             UIElement uie = value as UIElement;
 
             if (uie == null)
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
+                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(UIElement)), nameof(value));
             }
 
             Children.Add(uie);
@@ -225,7 +224,11 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForChildren()]
         public static double GetLeft(UIElement element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+
             return (double)element.GetValue(LeftProperty);
         }
 
@@ -238,7 +241,11 @@ namespace System.Windows.Documents
         /// <seealso cref="Canvas.LeftProperty" />
         public static void SetLeft(UIElement element, double length)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+
             element.SetValue(LeftProperty, length);
         }
 
@@ -253,7 +260,10 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForChildren()]
         public static double GetTop(UIElement element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             return (double)element.GetValue(TopProperty);
         }
 
@@ -266,7 +276,10 @@ namespace System.Windows.Documents
         /// <seealso cref="Canvas.TopProperty" />
         public static void SetTop(UIElement element, double length)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             element.SetValue(TopProperty, length);
         }
 
@@ -281,7 +294,10 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForChildren()]
         public static double GetRight(UIElement element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             return (double)element.GetValue(RightProperty);
         }
 
@@ -294,7 +310,10 @@ namespace System.Windows.Documents
         /// <seealso cref="Canvas.RightProperty" />
         public static void SetRight(UIElement element, double length)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             element.SetValue(RightProperty, length);
         }
 
@@ -309,7 +328,10 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForChildren()]
         public static double GetBottom(UIElement element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             return (double)element.GetValue(BottomProperty);
         }
 
@@ -322,7 +344,10 @@ namespace System.Windows.Documents
         /// <seealso cref="Canvas.BottomProperty" />
         public static void SetBottom(UIElement element, double length)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             element.SetValue(BottomProperty, length);
         }
 
@@ -334,7 +359,10 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForChildren()]
         public static Uri GetNavigateUri(UIElement element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             return (Uri)element.GetValue(NavigateUriProperty);
         }
 
@@ -345,7 +373,10 @@ namespace System.Windows.Documents
         /// <remarks>Should be kept here for compatibility since the attached property has moved from FixedPage to Hyperlink.</remarks>
         public static void SetNavigateUri(UIElement element, Uri uri)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
             element.SetValue(NavigateUriProperty, uri);
         }
 
@@ -577,20 +608,18 @@ namespace System.Windows.Documents
                 if (highlightVisual == null && al != null)
                 {
                     //Get Page Content
-                    PageContent pc = LogicalTreeHelper.GetParent(this) as PageContent;
-                    if (pc != null)
+                    if (LogicalTreeHelper.GetParent(this) is PageContent pc)
                     {
                         //Get FixedDocument
-                        FixedDocument doc = LogicalTreeHelper.GetParent(pc) as FixedDocument;
-                        if (doc != null)
+                        if (LogicalTreeHelper.GetParent(pc) is FixedDocument doc)
                         {
-                            if (al != null)
-                            {
+                            //if (al != null) // <-- already checked in upper if-statement if all is null or not
+                            //{
                                 //The Text Selection adorner must have predefined ZOrder MaxInt/2, 
                                 //we assign the ZOrder to annotation adorners respectively
                                 int zOrder = System.Int32.MaxValue / 2; 
                                 al.Add(new HighlightVisual(doc, this),zOrder);
-                            }
+                            //}
                         }
                     }
                 }
@@ -716,7 +745,7 @@ namespace System.Windows.Documents
         {
             if (_uiElementCollection == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Get(SRID.Visual_ArgumentOutOfRange));
             }
             return _uiElementCollection[index];            
         }
@@ -897,12 +926,12 @@ namespace System.Windows.Documents
             {
                 // Follow the path if necessary
                 currentLevelIndex = node[level];
-                if (element is Canvas)
+                if (element is Canvas canvEl)
                 {
                     // Canvas is a known S0 grouping element.
                     // Boundary Node only would appear in first level!
-                    Debug.Assert(currentLevelIndex >= 0 && currentLevelIndex <= ((Canvas)element).Children.Count);
-                    element = ((Canvas)element).Children[currentLevelIndex];
+                    Debug.Assert(currentLevelIndex >= 0 && currentLevelIndex <= canvEl.Children.Count);
+                    element = canvEl.Children[currentLevelIndex];
                 }
                 else 
                 {
@@ -1016,18 +1045,18 @@ namespace System.Windows.Documents
 
         internal int[] _CreateChildIndex(DependencyObject e)
         {
-            ArrayList childPath = new ArrayList();
+            List<int> childPath = new List<int>();
             while (e != this)
             {
                 DependencyObject parent = LogicalTreeHelper.GetParent(e);
                 int childIndex = -1;
-                if (parent is FixedPage)
+                if (parent is FixedPage parentFP)
                 {
-                    childIndex = ((FixedPage)parent).Children.IndexOf((UIElement)e);
+                    childIndex = parentFP.Children.IndexOf((UIElement)e);
                 }
-                else if (parent is Canvas)
+                else if (parent is Canvas parentCan)
                 {
-                    childIndex = ((Canvas)parent).Children.IndexOf((UIElement)e);
+                    childIndex = parentCan.Children.IndexOf((UIElement)e);
                 }
                 else
                 {
@@ -1051,7 +1080,7 @@ namespace System.Windows.Documents
             }
             while (e != this) ;
 
-            return (int[])childPath.ToArray(typeof(int));
+            return childPath.ToArray();
         }
 
         // Making this function private and only expose the versions
@@ -1092,14 +1121,13 @@ namespace System.Windows.Documents
                 DependencyObject parent = LogicalTreeHelper.GetParent(current);
                 while (parent != null)
                 {
-                    FixedDocumentSequence docSequence = parent as FixedDocumentSequence;
-                    if (docSequence != null)
+                    if (parent is FixedDocumentSequence docSequence)
                     {
                         //4) Retrieve DocumentSequence Uri
                         Uri startPartUri = ((IUriContext)docSequence).BaseUri;
                         if (startPartUri != null)
                         {
-                            String startPartUriString = startPartUri.ToString();
+                            String startPartUriString = startPartUri.ToString(); // span?
 
                             // If there is a fragment we need to strip it off
                             String fragment = startPartUri.Fragment;
@@ -1107,7 +1135,7 @@ namespace System.Windows.Documents
                             int fragmentLength = (fragment == null) ? 0 : fragment.Length;
                             if (fragmentLength != 0)
                             {
-                                fixedPage.StartPartUriString = startPartUriString.Substring(0, startPartUriString.IndexOf('#'));
+                                fixedPage.StartPartUriString = startPartUriString.Substring(0, startPartUriString.IndexOf('#')); // span?
                             }
                             else
                             {
@@ -1217,7 +1245,6 @@ namespace System.Windows.Documents
         internal static DebugVisualAdorner GetDebugVisual(FixedPage page)
         {
             AdornerLayer al = AdornerLayer.GetAdornerLayer(page);
-            DebugVisualAdorner debugVisualAd;
 
             if (al == null)
             {
@@ -1230,10 +1257,9 @@ namespace System.Windows.Documents
             {
                 foreach (Adorner ad in adorners)
                 {
-                    debugVisualAd = ad as DebugVisualAdorner;
-                    if (debugVisualAd != null)
+                    if (ad is DebugVisualAdorner debugVisualAdorner) 
                     {
-                        return debugVisualAd;
+                        return debugVisualAdorner;
                     }
                 }
             }
@@ -1247,9 +1273,8 @@ namespace System.Windows.Documents
             foreach (FixedNode node in markupOrder)
             {
                 DependencyObject ob = _fixedPage.GetElement(node);
-                Glyphs glyphs = ob as Glyphs;
-                Path path = ob as Path;
-                if (glyphs != null)
+                
+                if (ob is Glyphs glyphs)
                 {
                     GlyphRun glyphRun = glyphs.ToGlyphRun();
                     Rect alignmentBox = glyphRun.ComputeAlignmentBox();
@@ -1263,7 +1288,7 @@ namespace System.Windows.Documents
 
                     ++order;
                 }
-                else if (path != null)
+                else if (ob is Path path)
                 {
                     Geometry renderGeom = path.RenderedGeometry;
                     Pen backgroundPen = new Pen(Brushes.Black,1);

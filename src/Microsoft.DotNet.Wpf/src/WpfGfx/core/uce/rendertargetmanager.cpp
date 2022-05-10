@@ -1186,6 +1186,10 @@ CRenderTargetManager::WaitForDwm(
             || hr == WGXERR_UCE_CHANNELSYNCABANDONED)
         {
             hr = S_OK;
+        }        
+        else if (ShouldIgnoreDwmFlushErrors())
+        {
+            hr = S_OK;
         }
         else 
         {
@@ -1363,4 +1367,96 @@ Cleanup:
     
     RRETURN(hr);
 }
+
+//+------------------------------------------------------------------------
+//
+//  Function:   ShouldIgnoreDwmFlushErrors
+//
+//  Synopsis:
+//      Checks to see if all errors returned by DwmFlush should be ignored.
+//      For bug [DDVSO 1425279], an app can opt-in to this behavior by
+//      setting a regkey in
+//          HKCU\Software\Microsoft\Avalon.Graphics\IgnoreDwmFlushErrors
+//      or
+//          HKLM\Software\Microsoft\Avalon.Graphics\IgnoreDwmFlushErrors
+//      whose name is the full path to the .exe that wants to opt-in,
+//      and whose DWORD value is 1.
+//
+//      The regkey is checked in the first call to this function, and the
+//      value is cached for all future calls in this process.
+//
+//-------------------------------------------------------------------------
+bool
+CRenderTargetManager::ShouldIgnoreDwmFlushErrors()
+{
+    enum ShouldIgnoreDwmFlushErrorsState
+    {
+        SIDFS_Uninitialized,
+        SIDFS_True,
+        SIDFS_False,
+    };
+    static ShouldIgnoreDwmFlushErrorsState s_sidfs = SIDFS_Uninitialized;
+
+    if (s_sidfs == SIDFS_Uninitialized)
+    {
+        TCHAR szFullPath[MAX_PATH];
+
+        DWORD cFullPath = GetModuleFileName(NULL, szFullPath, sizeof(szFullPath)/sizeof(szFullPath[0]));
+        if (cFullPath > 0)
+        {
+            // First check for a value in HKCU (which should override any HKLM setting).
+            HKEY hKey = NULL;
+            LONG r = RegOpenKeyEx(
+                HKEY_CURRENT_USER,
+                _T("Software\\Microsoft\\Avalon.Graphics\\IgnoreDwmFlushErrors"),
+                0,
+                KEY_QUERY_VALUE,
+                &hKey
+                );
+
+            if (r == ERROR_SUCCESS)
+            {
+                DWORD dwValue = 0; // default to false (don't ignore errors)
+                if (RegGetDword(hKey, szFullPath, &dwValue))
+                {
+                    s_sidfs = (dwValue == 0) ? SIDFS_False : SIDFS_True;
+                }
+
+                RegCloseKey(hKey);
+            }
+
+            // If we didn't set a value from HKCU, try HKLM.
+            if (s_sidfs == SIDFS_Uninitialized)
+            {
+                r = RegOpenKeyEx(
+                    HKEY_LOCAL_MACHINE,
+                    _T("Software\\Microsoft\\Avalon.Graphics\\IgnoreDwmFlushErrors"),
+                    0,
+                    KEY_QUERY_VALUE,
+                    &hKey
+                    );
+
+                if (r == ERROR_SUCCESS)
+                {
+                    DWORD dwValue = 0; // default to false (don't ignore errors)
+                    if (RegGetDword(hKey, szFullPath, &dwValue))
+                    {
+                        s_sidfs = (dwValue == 0) ? SIDFS_False : SIDFS_True;
+                    }
+
+                    RegCloseKey(hKey);
+                }
+            }
+        }
+
+        // If we still haven't set a value, then either we failed to get the full path
+        // or no value was set in the registry.  Default to false (don't ignore errors).
+        if (s_sidfs == SIDFS_Uninitialized)
+        {
+            s_sidfs = SIDFS_False;
+        }
+    }
+    return (s_sidfs == SIDFS_True);
+}
+
 

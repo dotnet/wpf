@@ -83,7 +83,7 @@ namespace System.Windows.Media.Imaging
 
                 if (decoder.Frames.Count == 0)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.Image_NoDecodeFrames), "uri");
+                    throw new System.ArgumentException(SR.Get(SRID.Image_NoDecodeFrames), nameof(uri));
                 }
 
                 return decoder.Frames[0];
@@ -100,7 +100,7 @@ namespace System.Windows.Media.Imaging
 
                 if (decoder.Frames.Count == 0)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.Image_NoDecodeFrames), "stream");
+                    throw new System.ArgumentException(SR.Get(SRID.Image_NoDecodeFrames), nameof(stream));
                 }
 
                 return decoder.Frames[0];
@@ -130,11 +130,11 @@ namespace System.Windows.Media.Imaging
             RequestCachePolicy uriCachePolicy
             )
         {
-            if (bitmapUri == null)
+        if (bitmapUri == null)
             {
-                throw new ArgumentNullException("bitmapUri");
+                throw new ArgumentNullException(nameof(bitmapUri));
             }
-
+            
             return CreateFromUriOrStream(
                 null,
                 bitmapUri,
@@ -176,11 +176,11 @@ namespace System.Windows.Media.Imaging
             RequestCachePolicy uriCachePolicy
             )
         {
-            if (bitmapUri == null)
+        if (bitmapUri == null)
             {
-                throw new ArgumentNullException("bitmapUri");
+                throw new ArgumentNullException(nameof(bitmapUri));
             }
-
+            
             return CreateFromUriOrStream(
                 null,
                 bitmapUri,
@@ -200,11 +200,11 @@ namespace System.Windows.Media.Imaging
             Stream bitmapStream
             )
         {
-            if (bitmapStream == null)
+        if (bitmapStream == null)
             {
-                throw new ArgumentNullException("bitmapStream");
+                throw new ArgumentNullException(nameof(bitmapStream));
             }
-
+            
             return CreateFromUriOrStream(
                 null,
                 null,
@@ -228,11 +228,11 @@ namespace System.Windows.Media.Imaging
             BitmapCacheOption cacheOption
             )
         {
-            if (bitmapStream == null)
+        if (bitmapStream == null)
             {
-                throw new ArgumentNullException("bitmapStream");
+                throw new ArgumentNullException(nameof(bitmapStream));
             }
-
+            
             return CreateFromUriOrStream(
                 null,
                 null,
@@ -251,11 +251,11 @@ namespace System.Windows.Media.Imaging
             BitmapSource source
             )
         {
-            if (source == null)
+          if (source == null)
             {
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
             }
-
+            
             BitmapMetadata metadata = null;
 
             try
@@ -286,13 +286,11 @@ namespace System.Windows.Media.Imaging
             BitmapSource thumbnail
             )
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
-
             BitmapMetadata metadata = null;
-
+if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
             try
             {
                 metadata = source.Metadata as BitmapMetadata;
@@ -327,11 +325,11 @@ namespace System.Windows.Media.Imaging
             ReadOnlyCollection<ColorContext> colorContexts
             )
         {
-            if (source == null)
+        if (source == null)
             {
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
             }
-
+            
             return new BitmapFrameEncode(source, thumbnail, metadata, colorContexts);
         }
 

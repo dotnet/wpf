@@ -30,7 +30,7 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
+            
             element.SetValue(AutomationIdProperty, value);
         }
 
@@ -43,7 +43,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             return ((string)element.GetValue(AutomationIdProperty));
         }
         #endregion AutomationId
@@ -69,7 +68,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             element.SetValue(NameProperty, value);
         }
 
@@ -108,7 +106,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             element.SetValue(HelpTextProperty, value);
         }
 
@@ -121,7 +118,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             return ((string)element.GetValue(HelpTextProperty));
         }
         #endregion HelpText
@@ -147,7 +143,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             element.SetValue(AcceleratorKeyProperty, value);
         }
 
@@ -160,7 +155,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             return ((string)element.GetValue(AcceleratorKeyProperty));
         }
         #endregion AcceleratorKey
@@ -186,7 +180,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             element.SetValue(AccessKeyProperty, value);
         }
 
@@ -199,7 +192,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             return ((string)element.GetValue(AccessKeyProperty));
         }
         #endregion AccessKey
@@ -225,7 +217,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             element.SetValue(ItemStatusProperty, value);
         }
 
@@ -238,7 +229,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             return ((string)element.GetValue(ItemStatusProperty));
         }
         #endregion ItemStatus
@@ -264,7 +254,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             element.SetValue(ItemTypeProperty, value);
         }
 
@@ -277,7 +266,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             return ((string)element.GetValue(ItemTypeProperty));
         }
         #endregion ItemType
@@ -302,7 +290,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             element.SetValue(IsColumnHeaderProperty, value);
         }
 
@@ -315,7 +302,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             return ((bool)element.GetValue(IsColumnHeaderProperty));
         }
         #endregion IsColumnHeader
@@ -340,7 +326,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             element.SetValue(IsRowHeaderProperty, value);
         }
 
@@ -353,7 +338,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             return ((bool)element.GetValue(IsRowHeaderProperty));
         }
         #endregion IsRowHeader
@@ -378,7 +362,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             element.SetValue(IsRequiredForFormProperty, value);
         }
 
@@ -391,7 +374,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             return ((bool)element.GetValue(IsRequiredForFormProperty));
         }
         #endregion IsRequiredForForm
@@ -416,7 +398,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             element.SetValue(LabeledByProperty, value);
         }
 
@@ -429,7 +410,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             return ((UIElement)element.GetValue(LabeledByProperty));
         }
         #endregion LabeledBy
@@ -454,7 +434,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             element.SetValue(IsOffscreenBehaviorProperty, value);
         }
 
@@ -467,7 +446,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             return ((IsOffscreenBehavior)element.GetValue(IsOffscreenBehaviorProperty));
         }
         #endregion IsOffscreenBehavior
@@ -492,7 +470,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             element.SetValue(LiveSettingProperty, value);
         }
 
@@ -505,7 +482,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             return ((AutomationLiveSetting)element.GetValue(LiveSettingProperty));
         }
         #endregion LiveSetting
@@ -534,7 +510,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             element.SetValue(PositionInSetProperty, value);
         }
 
@@ -547,7 +522,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             return ((int)element.GetValue(PositionInSetProperty));
         }
         #endregion
@@ -576,7 +550,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             element.SetValue(SizeOfSetProperty, value);
         }
 
@@ -589,7 +562,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             return ((int)element.GetValue(SizeOfSetProperty));
         }
         #endregion
@@ -611,7 +583,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             element.SetValue(HeadingLevelProperty, value);
         }
 
@@ -624,7 +595,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             return ((AutomationHeadingLevel)element.GetValue(HeadingLevelProperty));
         }
         #endregion
@@ -642,7 +612,7 @@ namespace System.Windows.Automation
         /// </summary>
         public static void SetIsDialog(DependencyObject element, bool value)
         {
-            if(element == null)
+            if (element == null)
             {
                 throw new ArgumentNullException(nameof(element));
             }
@@ -658,7 +628,6 @@ namespace System.Windows.Automation
             {
                 throw new ArgumentNullException(nameof(element));
             }
-
             return (bool)element.GetValue(IsDialogProperty);
         }
         #endregion

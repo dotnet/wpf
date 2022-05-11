@@ -45,7 +45,11 @@ namespace System.Windows.Media
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static EdgeMode GetEdgeMode(DependencyObject target)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+            
             return (EdgeMode)target.GetValue(EdgeModeProperty);
         }
 
@@ -54,7 +58,10 @@ namespace System.Windows.Media
         /// </summary>
         public static void SetEdgeMode(DependencyObject target, EdgeMode edgeMode)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             target.SetValue(EdgeModeProperty, edgeMode);
         }
 
@@ -78,7 +85,10 @@ namespace System.Windows.Media
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static BitmapScalingMode GetBitmapScalingMode(DependencyObject target)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             return (BitmapScalingMode)target.GetValue(BitmapScalingModeProperty);
         }
 
@@ -87,7 +97,10 @@ namespace System.Windows.Media
         /// </summary>
         public static void SetBitmapScalingMode(DependencyObject target, BitmapScalingMode bitmapScalingMode)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             target.SetValue(BitmapScalingModeProperty, bitmapScalingMode);
         }       
 
@@ -111,7 +124,11 @@ namespace System.Windows.Media
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static ClearTypeHint GetClearTypeHint(DependencyObject target)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+            
             return (ClearTypeHint)target.GetValue(ClearTypeHintProperty);
         }
 
@@ -120,7 +137,10 @@ namespace System.Windows.Media
         /// </summary>
         public static void SetClearTypeHint(DependencyObject target, ClearTypeHint clearTypeHint)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             target.SetValue(ClearTypeHintProperty, clearTypeHint);
         } 
 
@@ -145,7 +165,10 @@ namespace System.Windows.Media
         [AttachedPropertyBrowsableForType(typeof(TileBrush))]
         public static CachingHint GetCachingHint(DependencyObject target)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             return (CachingHint)target.GetValue(CachingHintProperty);
         }
 
@@ -154,7 +177,10 @@ namespace System.Windows.Media
         /// </summary>
         public static void SetCachingHint(DependencyObject target, CachingHint cachingHint)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             target.SetValue(CachingHintProperty, cachingHint);
         }
 
@@ -178,7 +204,10 @@ namespace System.Windows.Media
         [AttachedPropertyBrowsableForType(typeof(TileBrush))]
         public static double GetCacheInvalidationThresholdMinimum(DependencyObject target)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             return (double)target.GetValue(CacheInvalidationThresholdMinimumProperty);
         }
 
@@ -187,7 +216,10 @@ namespace System.Windows.Media
         /// </summary>
         public static void SetCacheInvalidationThresholdMinimum(DependencyObject target, double cacheInvalidationThresholdMinimum)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             target.SetValue(CacheInvalidationThresholdMinimumProperty, cacheInvalidationThresholdMinimum);
         }
 
@@ -211,7 +243,10 @@ namespace System.Windows.Media
         [AttachedPropertyBrowsableForType(typeof(TileBrush))]
         public static double GetCacheInvalidationThresholdMaximum(DependencyObject target)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             return (double)target.GetValue(CacheInvalidationThresholdMaximumProperty);
         }
 
@@ -220,7 +255,10 @@ namespace System.Windows.Media
         /// </summary>
         public static void SetCacheInvalidationThresholdMaximum(DependencyObject target, double cacheInvalidationThresholdMaximum)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             target.SetValue(CacheInvalidationThresholdMaximumProperty, cacheInvalidationThresholdMaximum);
         }     
 
@@ -245,7 +283,7 @@ namespace System.Windows.Media
             {
                 if (value != RenderMode.Default && value != RenderMode.SoftwareOnly)
                 {
-                    throw new System.ComponentModel.InvalidEnumArgumentException("value", (int)value, typeof(RenderMode));
+                    throw new System.ComponentModel.InvalidEnumArgumentException(nameof(value), (int)value, typeof(RenderMode));
                 }
                 
                 UnsafeNativeMethods.MilCoreApi.RenderOptions_ForceSoftwareRenderingModeForProcess(

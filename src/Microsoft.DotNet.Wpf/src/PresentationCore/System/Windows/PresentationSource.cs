@@ -792,7 +792,7 @@ namespace System.Windows
         private static readonly RoutedEvent SourceChangedEvent = EventManager.RegisterRoutedEvent("SourceChanged", RoutingStrategy.Direct, typeof(SourceChangedEventHandler), typeof(PresentationSource));
 
         // The lock we use to protect our static data.
-        private static object _globalLock = new object();
+        private static readonly object _globalLock = new object();
 
         // An array of weak-references to sources that we know about.
         private static WeakReferenceList _sources = new WeakReferenceList(_globalLock);

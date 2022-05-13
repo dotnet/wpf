@@ -8,14 +8,14 @@ namespace System.Windows.Xps
 {
     internal static partial class SR
     {
-        public static string Get(string id)
+        public static string Get(string name)
         {
-             return SR.Format(id);
+            return GetResourceString(name, null);
         }
-        
-        public static string Get(string id, params object[] args)
+
+        public static string Get(string name, params object[] args)
         {
-             return SR.Format(id, args);
+            return Format(GetResourceString(name, null), args);
         }
     }
 }

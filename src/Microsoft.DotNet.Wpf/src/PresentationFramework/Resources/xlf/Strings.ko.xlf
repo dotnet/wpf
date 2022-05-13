@@ -139,12 +139,12 @@
       </trans-unit>
       <trans-unit id="AppActivationException">
         <source>Unable to activate application. Try deleting the online application cache.</source>
-        <target state="translated">응용 프로그램을 활성화할 수 없습니다. 온라인 응용 프로그램 캐시를 삭제하십시오.</target>
+        <target state="translated">애플리케이션을 활성화할 수 없습니다. 온라인 애플리케이션 캐시를 삭제하십시오.</target>
         <note />
       </trans-unit>
       <trans-unit id="ApplicationAlreadyRunning">
         <source>Application is already running the Dispatcher.</source>
-        <target state="translated">응용 프로그램에서 Dispatcher를 이미 실행하고 있습니다.</target>
+        <target state="translated">애플리케이션에서 Dispatcher를 이미 실행하고 있습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="ApplicationShuttingDown">
@@ -279,7 +279,7 @@
       </trans-unit>
       <trans-unit id="BamlIsNotSupportedOutsideOfApplicationResources">
         <source>Navigation to BAML outside of the application is not supported.</source>
-        <target state="translated">응용 프로그램 외부에서 BAML에 대한 탐색이 지원되지 않습니다.</target>
+        <target state="translated">애플리케이션 외부에서 BAML에 대한 탐색이 지원되지 않습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="BamlReaderClosed">
@@ -504,12 +504,12 @@
       </trans-unit>
       <trans-unit id="CancelledText">
         <source>The application deployment was canceled.</source>
-        <target state="translated">응용 프로그램 배포가 취소되었습니다.</target>
+        <target state="translated">애플리케이션 배포가 취소되었습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="CancelledTitle">
         <source>Application Deployment Canceled</source>
-        <target state="translated">응용 프로그램 배포 취소</target>
+        <target state="translated">애플리케이션 배포 취소</target>
         <note />
       </trans-unit>
       <trans-unit id="CannotBeInsidePopup">
@@ -544,7 +544,7 @@
       </trans-unit>
       <trans-unit id="CannotChangeMainWindowInBrowser">
         <source>Cannot change MainWindow in a browser-hosted application.</source>
-        <target state="translated">브라우저에서 호스트된 응용 프로그램에서 MainWindow를 변경할 수 없습니다.</target>
+        <target state="translated">브라우저에서 호스트된 애플리케이션에서 MainWindow를 변경할 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="CannotConvertStringToType">
@@ -719,7 +719,7 @@
       </trans-unit>
       <trans-unit id="CantShowModalOnNonInteractive">
         <source>Cannot show a file dialog unless the application is running in UserInteractive mode.</source>
-        <target state="translated">UserInteractive 모드로 응용 프로그램을 실행하지 않으면 파일 대화 상자를 표시할 수 없습니다.</target>
+        <target state="translated">UserInteractive 모드로 애플리케이션을 실행하지 않으면 파일 대화 상자를 표시할 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="CantShowOnDifferentThread">
@@ -1194,12 +1194,12 @@
       </trans-unit>
       <trans-unit id="DeployText">
         <source>The application cannot be deployed. Contact the application publisher for assistance.</source>
-        <target state="translated">응용 프로그램을 배포할 수 없습니다. 도움이 필요하면 응용 프로그램 게시자에게 문의하십시오.</target>
+        <target state="translated">애플리케이션을 배포할 수 없습니다. 도움이 필요하면 애플리케이션 게시자에게 문의하십시오.</target>
         <note />
       </trans-unit>
       <trans-unit id="DeployTitle">
         <source>Application Deployment Error</source>
-        <target state="translated">응용 프로그램 배포 오류</target>
+        <target state="translated">애플리케이션 배포 오류</target>
         <note />
       </trans-unit>
       <trans-unit id="DesignerMetadata_CustomCategory_Accessibility">
@@ -1439,12 +1439,12 @@
       </trans-unit>
       <trans-unit id="DownloadText">
         <source>The application cannot be downloaded. Check for network connectivity issues or contact the application publisher for assistance.</source>
-        <target state="translated">응용 프로그램을 다운로드할 수 없습니다. 네트워크 연결 문제를 확인하거나, 도움이 필요한 경우 응용 프로그램 게시자에게 문의하십시오.</target>
+        <target state="translated">애플리케이션을 다운로드할 수 없습니다. 네트워크 연결 문제를 확인하거나, 도움이 필요한 경우 애플리케이션 게시자에게 문의하십시오.</target>
         <note />
       </trans-unit>
       <trans-unit id="DownloadTitle">
         <source>Application Download Error</source>
-        <target state="translated">응용 프로그램 다운로드 오류</target>
+        <target state="translated">애플리케이션 다운로드 오류</target>
         <note />
       </trans-unit>
       <trans-unit id="DragMoveFail">
@@ -1623,7 +1623,7 @@ Do you want to create it?</source>
         <source>'{0}' does not exist.
 Verify that the file name is correct.</source>
         <target state="translated">'{0}'이(가) 없습니다.
-파일 이름이 올바른지 확인하세요.</target>
+파일 이름이 올바른지 확인하십시오.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogInvalidFileName">
@@ -1644,7 +1644,7 @@ Verify that the file name is correct.</source>
       <trans-unit id="FileDialogOverwritePrompt">
         <source>'{0}' already exists.
 Do you want to replace it?</source>
-        <target state="translated">’{0}'이(가) 이미 있습니다.
+        <target state="translated">'{0}'이(가) 이미 있습니다.
 바꾸시겠습니까?</target>
         <note />
       </trans-unit>
@@ -1920,7 +1920,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="Generator_Readme7">
         <source>To get a more timely exception, set the attached property '{0}' on the generator to value '{1}' and rerun the scenario.</source>
-        <target state="translated">보다 시기적절한 예외를 얻으려면 생성자의 연결된 속성 '{0}'에 값 '{1}'을(를) 설정하고 시나리오를 다시 실행하세요.</target>
+        <target state="translated">보다 시기적절한 예외를 얻으려면 생성기의 연결된 속성 '{0}'에 값 '{1}'을(를) 설정하고 시나리오를 다시 실행하세요.</target>
         <note />
       </trans-unit>
       <trans-unit id="Generator_Readme8">
@@ -1930,7 +1930,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="Generator_Readme9">
         <source>from the Immediate window.  This causes the detection logic to run after every CollectionChanged event, so it will slow down the application.</source>
-        <target state="translated">그러면 모든 CollectionChanged 이벤트 다음에 검색 논리가 실행되어 응용 프로그램 속도가 느려집니다.</target>
+        <target state="translated">그러면 모든 CollectionChanged 이벤트 다음에 검색 논리가 실행되어 애플리케이션 속도가 느려집니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="Generator_Unnamed">
@@ -2060,32 +2060,32 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="HostingStatusCancelled">
         <source>Application Deployment Canceled</source>
-        <target state="translated">응용 프로그램 배포 취소</target>
+        <target state="translated">애플리케이션 배포 취소</target>
         <note />
       </trans-unit>
       <trans-unit id="HostingStatusDownloadApp">
         <source>Downloading Application</source>
-        <target state="translated">응용 프로그램 다운로드</target>
+        <target state="translated">애플리케이션 다운로드</target>
         <note />
       </trans-unit>
       <trans-unit id="HostingStatusDownloadAppInfo">
         <source>Downloading Application Information</source>
-        <target state="translated">응용 프로그램 정보 다운로드</target>
+        <target state="translated">애플리케이션 정보 다운로드</target>
         <note />
       </trans-unit>
       <trans-unit id="HostingStatusFailed">
         <source>Application Deployment Failed</source>
-        <target state="translated">응용 프로그램 배포 실패</target>
+        <target state="translated">애플리케이션 배포 실패</target>
         <note />
       </trans-unit>
       <trans-unit id="HostingStatusPreparingToRun">
         <source>Preparing to Run Application</source>
-        <target state="translated">응용 프로그램 실행 준비</target>
+        <target state="translated">애플리케이션 실행 준비</target>
         <note />
       </trans-unit>
       <trans-unit id="HostingStatusVerifying">
         <source>Verifying Application Requirements</source>
-        <target state="translated">응용 프로그램 요구 사항 확인</target>
+        <target state="translated">애플리케이션 요구 사항 확인</target>
         <note />
       </trans-unit>
       <trans-unit id="HwndHostDoesNotSupportChildKeyboardSinks">
@@ -2160,12 +2160,12 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="IncompatibleCLRText">
         <source>Unable to install or run the application. The application requires Microsoft .NET Framework containing Common Language Runtime v{0} to be installed.</source>
-        <target state="translated">응용 프로그램을 설치하거나 실행할 수 없습니다. 공용 언어 런타임 v{0}(이)가 포함된 Microsoft .NET Framework를 설치해야 합니다.</target>
+        <target state="translated">애플리케이션을 설치하거나 실행할 수 없습니다. 공용 언어 런타임 v{0}(이)가 포함된 Microsoft .NET Framework를 설치해야 합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="IncompatibleWinFXText">
         <source>Unable to install or run the application. The application requires Microsoft .NET Framework v{0} or compatible to be installed.</source>
-        <target state="translated">응용 프로그램을 설치하거나 실행할 수 없습니다. Microsoft .NET Framework v{0} 또는 호환되는 구성 요소를 설치해야 합니다.</target>
+        <target state="translated">애플리케이션을 설치하거나 실행할 수 없습니다. Microsoft .NET Framework v{0} 또는 호환되는 구성 요소를 설치해야 합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="InconsistentBindingList">
@@ -2305,12 +2305,12 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="InvalidDeployText">
         <source>There is a problem with how the application was built or published. Contact the application publisher for assistance.</source>
-        <target state="translated">응용 프로그램을 빌드하거나 게시한 방식에 문제가 있습니다. 응용 프로그램 게시자에게 문의하십시오.</target>
+        <target state="translated">애플리케이션을 빌드하거나 게시한 방식에 문제가 있습니다. 애플리케이션 게시자에게 문의하십시오.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidDeployTitle">
         <source>Application File Not Valid</source>
-        <target state="translated">잘못된 응용 프로그램 파일</target>
+        <target state="translated">잘못된 애플리케이션 파일</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidDiameter">
@@ -3025,7 +3025,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="KillBitEnforcedShutdown">
         <source>Unsecure component was detected while loading this application. The unsecure assembly was:</source>
-        <target state="translated">이 응용 프로그램을 로드하는 동안 안전하지 않은 구성 요소가 발견되었습니다. 안전하지 않은 어셈블리는 다음과 같습니다.</target>
+        <target state="translated">이 애플리케이션을 로드하는 동안 안전하지 않은 구성 요소가 발견되었습니다. 안전하지 않은 어셈블리는 다음과 같습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="KnownTypeIdNegative">
@@ -3450,7 +3450,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="NonClsActivationException">
         <source>Nonstandard exception occurred while activating the application.</source>
-        <target state="translated">응용 프로그램을 활성화하는 동안 비표준 예외가 발생했습니다.</target>
+        <target state="translated">애플리케이션을 활성화하는 동안 비표준 예외가 발생했습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="NonPackAppAbsoluteUriNotAllowed">
@@ -4405,7 +4405,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="ParserXmlIslandMissing">
         <source>Parent element or property '{0}' requires an XML data island. To distinguish an XML island from surrounding XAML, wrap the XML data island in &lt;x:XData&gt; ... &lt;/x:XData&gt;.</source>
-        <target state="translated">부모 요소 또는 '{0}' 속성에 XML 데이터 아일랜드가 있어야 합니다. XML 아일랜드를 주변 XAML과 구별하려면 XML 데이터 아일랜드를 &lt;x:XData&gt; ... &lt;/x:XData&gt; 사이에 두십시오.</target>
+        <target state="translated">부모 요소 또는 '{0}' 속성에 XML 데이터 아일랜드가 있어야 합니다. XML 아일랜드를 주변 XAML과 구별하려면 XML 데이터 아일랜드를 &lt;x:XData&gt; ... &lt;/x:XData&gt;에서 래핑하십시오.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserXmlIslandUnexpected">
@@ -5000,7 +5000,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="ShutdownModeWhenAppShutdown">
         <source>Cannot set ShutdownMode when application is shutting down or already shut down.</source>
-        <target state="translated">응용 프로그램이 종료 중이거나 이미 종료되었으면 ShutdownMode를 설정할 수 없습니다.</target>
+        <target state="translated">애플리케이션이 종료 중이거나 이미 종료되었으면 ShutdownMode를 설정할 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="SourceNameNotSupportedForDataTriggers">
@@ -6035,7 +6035,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="TrustNotGrantedText">
         <source>The application cannot be deployed because it is not trusted and possibly unsafe.</source>
-        <target state="translated">신뢰할 수 없으며 안전하지 않으므로 응용 프로그램을 배포할 수 없습니다.</target>
+        <target state="translated">신뢰할 수 없으며 안전하지 않으므로 애플리케이션을 배포할 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="TrustNotGrantedTitle">
@@ -6115,12 +6115,12 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="UndoNoOpenParentUnit">
         <source>Cannot add nonparent undo unit when there is no open IParentUndoUnit.</source>
-        <target state="translated">열려 있는 IParentUndoUnit이 없으면 부모가 없는 실행 취소 단위를 추가할 수 없습니다.</target>
+        <target state="translated">열려 있는 IParentUndoUnit이 없으면 부모가 없는 undo 단위를 추가할 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoNoOpenUnit">
         <source>Cannot close undo unit because no opened unit exists.</source>
-        <target state="translated">열려 있는 단위가 없으므로 실행 취소 단위를 닫을 수 없습니다.</target>
+        <target state="translated">열려 있는 단위가 없으므로 undo 단위를 닫을 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoNotInNormalState">
@@ -6135,17 +6135,17 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="UndoUnitAlreadyOpen">
         <source>Cannot Reopen undo unit while another unit is already open.</source>
-        <target state="translated">다른 단위가 이미 열려 있으면 실행 취소 단위의 Reopen을 실행할 수 없습니다.</target>
+        <target state="translated">다른 단위가 이미 열려 있으면 undo 단위의 Reopen을 실행할 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitCantBeAddedTwice">
         <source>Cannot add undo unit to itself or one of its own children.</source>
-        <target state="translated">자신 또는 자기 자식 중 하나에 실행 취소 단위를 추가할 수 없습니다.</target>
+        <target state="translated">자신 또는 자기 자식 중 하나에 undo 단위를 추가할 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitCantBeOpenedTwice">
         <source>Cannot open undo unit that is already open.</source>
-        <target state="translated">이미 열려 있는 실행 취소 단위를 열 수 없습니다.</target>
+        <target state="translated">이미 열려 있는 undo 단위를 열 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitLocked">
@@ -6160,12 +6160,12 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="UndoUnitNotOnTopOfStack">
         <source>Cannot Reopen undo unit that is not on top of stack.</source>
-        <target state="translated">스택 맨 위에 있지 않은 실행 취소 단위인 Reopen을 실행할 수 없습니다.</target>
+        <target state="translated">스택 맨 위에 있지 않은 undo 단위인 Reopen을 실행할 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitOpen">
         <source>Cannot Undo or Redo while undo unit is open.</source>
-        <target state="translated">실행 취소 단위가 열려 있으면 Undo 또는 Redo를 실행할 수 없습니다.</target>
+        <target state="translated">undo 단위가 열려 있으면 Undo 또는 Redo를 실행할 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnexpectedAttribute">
@@ -6220,7 +6220,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="UnknownErrorText">
         <source>The application cannot be deployed because of an unknown error. Contact the application publisher for more information.</source>
-        <target state="translated">알 수 없는 오류 때문에 응용 프로그램을 배포할 수 없습니다. 자세한 내용은 응용 프로그램 게시자에게 문의하십시오.</target>
+        <target state="translated">알 수 없는 오류 때문에 애플리케이션을 배포할 수 없습니다. 자세한 내용은 애플리케이션 게시자에게 문의하십시오.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnknownErrorTitle">

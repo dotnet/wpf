@@ -757,6 +757,12 @@ namespace MS.Win32
             /// 
             /// </summary>
             public int y;
+
+            public POINT(int x, int y)
+            {
+                this.x = x;
+                this.y = y;
+            }
         }
 
         /// <summary></summary>

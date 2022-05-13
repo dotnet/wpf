@@ -2099,7 +2099,7 @@
       </trans-unit>
       <trans-unit id="SignatureOriginNotFound">
         <source>Relationship was found to the signature origin but the part is missing. Package signature structures are corrupted.</source>
-        <target state="translated">Une relation a été trouvée avec l'origine de la signature, mais le composant est manquant. Les structures de signature du package sont endommagées.</target>
+        <target state="translated">Une relation a été trouvée avec l'origine de la signature, mais le composant est manquant. Les structures de signature de package sont endommagées.</target>
         <note />
       </trans-unit>
       <trans-unit id="SignaturePackageObjectTagMustBeUnique">

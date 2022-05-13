@@ -139,12 +139,12 @@
       </trans-unit>
       <trans-unit id="AutomationDispatcherShutdown">
         <source>Automation client cannot access UI because application is shutting down.</source>
-        <target state="translated">응용 프로그램을 종료하고 있기 때문에 자동화 클라이언트가 UI에 액세스할 수 없습니다.</target>
+        <target state="translated">애플리케이션을 종료하고 있기 때문에 자동화 클라이언트가 UI에 액세스할 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="AutomationTimeout">
         <source>Timeout occurred while attempting to access UI. The application might be busy or unresponsive.</source>
-        <target state="translated">UI에 액세스하려고 시도하는 동안 제한 시간이 초과되었습니다. 응용 프로그램이 사용 중이거나 응답하지 않을 수 있습니다.</target>
+        <target state="translated">UI에 액세스하려고 시도하는 동안 제한 시간이 초과되었습니다. 애플리케이션이 사용 중이거나 응답하지 않을 수 있습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="Automation_InvalidConnectedPeer">
@@ -284,7 +284,7 @@
       </trans-unit>
       <trans-unit id="CannotNavigateToApplicationResourcesInWebBrowser">
         <source>Cannot navigate to application resource '{0}' by using a WebBrowser control. For URI navigation, the resource must be at the application's site of origin. Use the pack://siteoforigin:,,,/ prefix to avoid hard-coding the URI.</source>
-        <target state="translated">WebBrowser 컨트롤을 사용하여 응용 프로그램 리소스 '{0}'(으)로 이동할 수 없습니다. URI로 탐색하려면 리소스가 응용 프로그램의 원본 사이트에 있어야 합니다. URI를 하드 코딩하지 않으려면 pack://siteoforigin:,,,/ 접두사를 사용합니다.</target>
+        <target state="translated">WebBrowser 컨트롤을 사용하여 애플리케이션 리소스 '{0}'(으)로 이동할 수 없습니다. URI로 탐색하려면 리소스가 애플리케이션의 원본 사이트에 있어야 합니다. URI를 하드 코딩하지 않으려면 pack://siteoforigin:,,,/ 접두사를 사용합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="CannotRetrievePartsOfWriteOnlyContainer">
@@ -629,7 +629,7 @@
       </trans-unit>
       <trans-unit id="D3DImage_InvalidDevice">
         <source>Back buffer's device is not valid.</source>
-        <target state="translated">백 버퍼의 장치가 잘못되었습니다.</target>
+        <target state="translated">백 버퍼의 디바이스가 잘못되었습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="D3DImage_InvalidPool">
@@ -2759,7 +2759,7 @@
       </trans-unit>
       <trans-unit id="ReentrantVisualTreeChangeWarning">
         <source>WARNING. The visual tree has been changed during a '{0}' event.  This is not supported in a production application.  Be sure to correct this before shipping the application.</source>
-        <target state="translated">경고. '{0}' 이벤트 중 시각적 트리가 변경되었습니다. 이는 프로덕션 응용 프로그램에서 지원되지 않습니다. 응용 프로그램을 제공하기 전에 이를 수정하세요.</target>
+        <target state="translated">경고. '{0}' 이벤트 중 시각적 트리가 변경되었습니다. 이는 프로덕션 애플리케이션에서 지원되지 않습니다. 애플리케이션을 제공하기 전에 이를 수정하세요.</target>
         <note />
       </trans-unit>
       <trans-unit id="RefreshKeyDisplayString">

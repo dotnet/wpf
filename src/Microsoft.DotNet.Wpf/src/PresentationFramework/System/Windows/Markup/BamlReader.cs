@@ -392,7 +392,7 @@ namespace System.Windows.Markup
                 {
                     _name = info.Name;
                     _localName = info.LocalName;
-                    int index = info.Name.LastIndexOf(".", StringComparison.Ordinal);
+                    int index = info.Name.LastIndexOf('.');
                     if (index > 0)
                     {
                         _ownerTypeName = info.Name.Substring(0, index);
@@ -439,7 +439,7 @@ namespace System.Windows.Markup
                     _connectionId = 0;
                     _prefix = string.Empty;
                     _name = cpInfo.Name;
-                    int index = cpInfo.Name.LastIndexOf(".", StringComparison.Ordinal);
+                    int index = cpInfo.Name.LastIndexOf('.');
                     if (index > 0)
                     {
                         _ownerTypeName = cpInfo.Name.Substring(0, index);
@@ -1305,7 +1305,7 @@ namespace System.Windows.Markup
                         }
                         BamlTypeInfoRecord typeInfo = MapTable.GetTypeInfoFromId(typeKeyRecord.TypeId);
                         string typeName = typeInfo.TypeFullName;
-                        typeName = typeName.Substring(typeName.LastIndexOf(".", StringComparison.Ordinal) + 1);
+                        typeName = typeName.Substring(typeName.LastIndexOf('.') + 1);
                         string assemblyName;
                         string prefix;
                         string xmlNamespace;
@@ -1425,7 +1425,7 @@ namespace System.Windows.Markup
             // a x:Key attribute.
             BamlTypeInfoRecord typeInfo = MapTable.GetTypeInfoFromId(keyStartRecord.TypeId);
             string markupString = typeInfo.TypeFullName;
-            markupString = markupString.Substring(markupString.LastIndexOf(".", StringComparison.Ordinal) + 1);
+            markupString = markupString.Substring(markupString.LastIndexOf('.') + 1);
             string assemblyName;
             string prefix;
             string xmlNamespace;
@@ -1552,7 +1552,7 @@ namespace System.Windows.Markup
                         BamlElementStartRecord elementStartRecord = _currentBamlRecord as BamlElementStartRecord;
                         BamlTypeInfoRecord elementTypeInfo = MapTable.GetTypeInfoFromId(elementStartRecord.TypeId);
                         string typename = elementTypeInfo.TypeFullName;
-                        typename = typename.Substring(typename.LastIndexOf(".", StringComparison.Ordinal) + 1);
+                        typename = typename.Substring(typename.LastIndexOf('.') + 1);
                         GetAssemblyAndPrefixAndXmlns(elementTypeInfo, out assemblyName, out prefix, out xmlNamespace);
                         if (prefix != string.Empty)
                         {
@@ -1964,7 +1964,7 @@ namespace System.Windows.Markup
 
             NodeTypeInternal = BamlNodeType.StartElement;
             _name = typeInfo.TypeFullName;
-            _localName = _name.Substring(_name.LastIndexOf(".", StringComparison.Ordinal) + 1);
+            _localName = _name.Substring(_name.LastIndexOf('.') + 1);
             _ownerTypeName = string.Empty;
             _clrNamespace = typeInfo.ClrNamespace;
             GetAssemblyAndPrefixAndXmlns(typeInfo, out _assemblyName, out _prefix, out _xmlNamespace);
@@ -2081,7 +2081,7 @@ namespace System.Windows.Markup
             // Set instance variables to node info extracted from record.
             NodeTypeInternal = BamlNodeType.StartComplexProperty;
             _localName = nodeInfo.LocalName;
-            int index = nodeInfo.Name.LastIndexOf(".", StringComparison.Ordinal);
+            int index = nodeInfo.Name.LastIndexOf('.');
             if (index > 0)
             {
                 _ownerTypeName = nodeInfo.Name.Substring(0, index);
@@ -2152,7 +2152,7 @@ namespace System.Windows.Markup
             NodeTypeInternal = BamlNodeType.EndComplexProperty;
             _name = nodeInfo.Name;
             _localName = nodeInfo.LocalName;
-            int index = nodeInfo.Name.LastIndexOf(".", StringComparison.Ordinal);
+            int index = nodeInfo.Name.LastIndexOf('.');
             if (index > 0)
             {
                 _ownerTypeName = nodeInfo.Name.Substring(0, index);
@@ -2409,7 +2409,7 @@ namespace System.Windows.Markup
                 string valueAssemblyName;
                 GetAssemblyAndPrefixAndXmlns(valueTypeInfo, out valueAssemblyName, out valuePrefix, out valueXmlNamespace);
                 typeName = valueTypeInfo.TypeFullName;
-                typeName = typeName.Substring(typeName.LastIndexOf(".", StringComparison.Ordinal) + 1);
+                typeName = typeName.Substring(typeName.LastIndexOf('.') + 1);
                 propName = attrInfo.Name;
             }
 
@@ -2484,7 +2484,7 @@ namespace System.Windows.Markup
                 string valueAssemblyName;
                 GetAssemblyAndPrefixAndXmlns(valueTypeInfo, out valueAssemblyName, out valuePrefix, out valueXmlNamespace);
                 typeName = valueTypeInfo.TypeFullName;
-                typeName = typeName.Substring(typeName.LastIndexOf(".", StringComparison.Ordinal) + 1);
+                typeName = typeName.Substring(typeName.LastIndexOf('.') + 1);
                 propName = attrInfo.Name;
             }
 
@@ -2598,7 +2598,7 @@ namespace System.Windows.Markup
             string valueAssemblyName;
             GetAssemblyAndPrefixAndXmlns(valueTypeInfo, out valueAssemblyName, out valuePrefix, out valueXmlNamespace);
             string typeName = valueTypeInfo.TypeFullName;
-            typeName = typeName.Substring(typeName.LastIndexOf(".", StringComparison.Ordinal) + 1);
+            typeName = typeName.Substring(typeName.LastIndexOf('.') + 1);
             if (valuePrefix == string.Empty)
             {
                 valueString += typeName;

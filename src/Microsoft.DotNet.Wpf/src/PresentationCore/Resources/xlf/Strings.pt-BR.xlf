@@ -2199,7 +2199,7 @@
       </trans-unit>
       <trans-unit id="Media_PlaylistFormatNotSupported">
         <source>Unrecognized playlist file format.</source>
-        <target state="translated">Formato de arquivo da lista de reprodução não reconhecido.</target>
+        <target state="translated">Formato de arquivo da playlist não reconhecido.</target>
         <note />
       </trans-unit>
       <trans-unit id="Media_StreamClosed">

@@ -117,7 +117,7 @@ namespace MS.Internal.Automation
                 {
                     return ProviderOptions.ServerSideProvider;
                 }
-                return (ProviderOptions)ElementUtil.Invoke(peer, new DispatcherOperationCallback( InContextGetProviderOptions ), null); 
+                return (ProviderOptions)ElementUtil.Invoke(peer, state => ((ElementProxy)state).InContextGetProviderOptions(), this); 
             }
         }  
 
@@ -168,7 +168,7 @@ namespace MS.Internal.Automation
             {
                 throw new ElementNotAvailableException();
             }
-            return (int []) ElementUtil.Invoke( peer, new DispatcherOperationCallback( InContextGetRuntimeId ), null );
+            return (int []) ElementUtil.Invoke( peer, state => ((ElementProxy)state).InContextGetRuntimeId(), this);
         }
 
         public Rect BoundingRectangle
@@ -180,7 +180,7 @@ namespace MS.Internal.Automation
                 {
                     throw new ElementNotAvailableException();
                 }
-                return (Rect)ElementUtil.Invoke(peer, new DispatcherOperationCallback(InContextBoundingRectangle), null); 
+                return (Rect)ElementUtil.Invoke(peer, state => ((ElementProxy)state).InContextBoundingRectangle(), this); 
             }
         }
         
@@ -196,7 +196,7 @@ namespace MS.Internal.Automation
             {
                 throw new ElementNotAvailableException();
             }
-            ElementUtil.Invoke(peer, new DispatcherOperationCallback( InContextSetFocus ), null);
+            ElementUtil.Invoke(peer, state => ((ElementProxy)state).InContextSetFocus(), this);
         }
 
         public IRawElementProviderFragmentRoot FragmentRoot
@@ -208,7 +208,7 @@ namespace MS.Internal.Automation
                 {
                     return null;
                 }
-                return (IRawElementProviderFragmentRoot) ElementUtil.Invoke( peer, new DispatcherOperationCallback( InContextFragmentRoot ), null ); 
+                return (IRawElementProviderFragmentRoot) ElementUtil.Invoke( peer, state => ((ElementProxy)state).InContextFragmentRoot(), this); 
             }
         }
 
@@ -230,7 +230,7 @@ namespace MS.Internal.Automation
             {
                 return null;
             }
-            return (IRawElementProviderFragment) ElementUtil.Invoke( peer, new DispatcherOperationCallback( InContextGetFocus ), null );
+            return (IRawElementProviderFragment) ElementUtil.Invoke( peer, state => ((ElementProxy)state).InContextGetFocus(), this);
         }
 
         // Event support: EventMap is a static class and access is synchronized, so no need to access it in UI thread context.
@@ -344,7 +344,7 @@ namespace MS.Internal.Automation
         }
 
         // Return proxy representing currently focused element (if any)
-        private object InContextGetFocus( object unused )
+        private object InContextGetFocus()
         {
             // Note: - what if a custom element - eg anchor in a text box - has focus?
             // won't have a UIElement there, can we even find the host?
@@ -427,7 +427,7 @@ namespace MS.Internal.Automation
 
     
         // Return value for specified property; or null if not supported
-        private object InContextGetProviderOptions( object arg )
+        private object InContextGetProviderOptions()
         {
             ProviderOptions options = ProviderOptions.ServerSideProvider;
             AutomationPeer peer = Peer;
@@ -464,7 +464,7 @@ namespace MS.Internal.Automation
         }
 
         // Return unique ID for this element...
-        private object InContextGetRuntimeId( object unused )
+        private object InContextGetRuntimeId()
         {
             AutomationPeer peer = Peer;
             if (peer == null)
@@ -475,7 +475,7 @@ namespace MS.Internal.Automation
         }
 
         // Return bounding rectangle (screen coords) for this element...
-        private object InContextBoundingRectangle(object unused)
+        private object InContextBoundingRectangle()
         {
             AutomationPeer peer = Peer;
             if (peer == null)
@@ -486,7 +486,7 @@ namespace MS.Internal.Automation
         }
 
         // Set focus to this element...
-        private object InContextSetFocus( object unused )
+        private object InContextSetFocus()
         {
             AutomationPeer peer = Peer;
             if (peer == null)
@@ -498,7 +498,7 @@ namespace MS.Internal.Automation
         }
 
         // Return proxy representing the root of this WCP tree...
-        private object InContextFragmentRoot( object unused )
+        private object InContextFragmentRoot()
         {
             AutomationPeer peer = Peer;
             AutomationPeer root = peer;

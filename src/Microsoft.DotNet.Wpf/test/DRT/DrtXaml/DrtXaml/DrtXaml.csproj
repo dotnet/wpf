@@ -4,7 +4,7 @@
     <RootNamespace>DrtXaml</RootNamespace>
     <LinkSubsystem>console</LinkSubsystem>
     <OutputType>Exe</OutputType>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <StartupObject>DrtXaml.XamlDrt</StartupObject>
     <CreateTestPayload>true</CreateTestPayload>
   </PropertyGroup>

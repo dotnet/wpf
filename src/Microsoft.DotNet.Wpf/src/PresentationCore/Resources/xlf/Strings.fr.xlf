@@ -2499,7 +2499,7 @@
       </trans-unit>
       <trans-unit id="OptimalParagraphMustWrap">
         <source>Paragraph must be allowed to wrap in total-fit formatting.</source>
-        <target state="translated">Le paragraphe doit être autorisé à appliquer la mise en forme complète.</target>
+        <target state="translated">Le paragraphe doit être autorisé à être enveloppé dans la mise en forme complète.</target>
         <note />
       </trans-unit>
       <trans-unit id="PackWebRequestCachePolicyIllegal">

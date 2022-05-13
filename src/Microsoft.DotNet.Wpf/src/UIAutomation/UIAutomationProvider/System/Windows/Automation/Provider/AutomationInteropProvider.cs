@@ -133,6 +133,37 @@ namespace System.Windows.Automation.Provider
                 UiaCoreProviderApi.UiaRaiseAsyncContentLoadedEvent(provider, asyncArgs.AsyncContentLoadedState, asyncArgs.PercentComplete);
                 return;
             }
+
+            // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
+            // False positive, e is checked, see above
+#pragma warning suppress 6506
+            if (e.EventId == AutomationElementIdentifiers.NotificationEvent)
+            {
+                NotificationEventArgs notificationArgs = e as NotificationEventArgs;
+                if (notificationArgs == null)
+                    ThrowInvalidArgument("e");
+
+                UiaCoreProviderApi.UiaRaiseNotificationEvent(provider,
+                    notificationArgs.NotificationKind,
+                    notificationArgs.NotificationProcessing,
+                    notificationArgs.DisplayString,
+                    notificationArgs.ActivityId);
+                return;
+            }
+
+            // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
+            // False positive, e is checked, see above
+#pragma warning suppress 6506
+            if (e.EventId == AutomationElementIdentifiers.ActiveTextPositionChangedEvent)
+            {
+                ActiveTextPositionChangedEventArgs activeTextPositionChangedArgs = e as ActiveTextPositionChangedEventArgs;
+                if (activeTextPositionChangedArgs == null)
+                    ThrowInvalidArgument("e");
+
+                UiaCoreProviderApi.UiaRaiseActiveTextPositionChangedEvent(provider, activeTextPositionChangedArgs.TextRange);
+                return;
+            }
+
             // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
             // False positive, e is checked, see above
 #pragma warning suppress 6506

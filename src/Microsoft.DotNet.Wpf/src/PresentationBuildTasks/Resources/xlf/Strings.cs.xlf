@@ -264,7 +264,7 @@
       </trans-unit>
       <trans-unit id="MissingClassDefinitionForTypeArgs">
         <source>MC6025: '{0}' root element is a generic type and requires a {1}:Class attribute to support the {1}:TypeArguments attribute specified on the root element tag.</source>
-        <target state="translated">MC6025: Kořenový prvek {0} je generický typ a vyžaduje atribut {1}:Class, aby podporoval atribut třídy  {1}:TypeArguments určený na tagu kořenového prvku.</target>
+        <target state="translated">MC6025: Kořenový prvek {0} je generický typ a vyžaduje atribut {1}:Class, aby podporoval atribut třídy {1}:TypeArguments určený na tagu kořenového prvku.</target>
         <note />
       </trans-unit>
       <trans-unit id="MissingClassWithFieldModifier">
@@ -464,7 +464,7 @@
       </trans-unit>
       <trans-unit id="ParserDupDictionaryKey">
         <source>MC3020: The dictionary key '{0}' is already used. Key attributes are used as keys when inserting objects into a dictionary and must be unique.</source>
-        <target state="translated">MC3020: Klíč slovníku {0} je již používán. Klíčové atributy se používají jako klíče při vkládání  objektů do slovníku a musejí být jedinečné.</target>
+        <target state="translated">MC3020: Klíč slovníku {0} je již používán. Klíčové atributy se používají jako klíče při vkládání objektů do slovníku a musejí být jedinečné.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserDuplicateMarkupExtensionProperty">
@@ -544,7 +544,7 @@
       </trans-unit>
       <trans-unit id="ParserMarkupExtensionBadDelimiter">
         <source>MC3041: Markup extensions require a single '=' between name and value, and a single ',' between constructor parameters and name/value pairs. The arguments '{0}' are not valid.</source>
-        <target state="translated">MC3041: Přípony označení vyžadují jedno rovnítko  = mezi názvem a hodnotou a jednu čárku , mezi parametry konstruktoru a dvojicemi název/hodnota. Argumenty {0} nejsou platné.</target>
+        <target state="translated">MC3041: Přípony označení vyžadují jedno rovnítko = mezi názvem a hodnotou a jednu čárku, mezi parametry konstruktoru a dvojicemi název/hodnota. Argumenty {0} nejsou platné.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserMarkupExtensionDelimiterBeforeFirstAttribute">
@@ -569,7 +569,7 @@
       </trans-unit>
       <trans-unit id="ParserMarkupExtensionNoNameValue">
         <source>MC3042: Name/value pairs in MarkupExtensions must have the format 'Name = Value' and each pair is separated by a comma. '{0}' does not follow this format.</source>
-        <target state="translated">MC3042: Dvojice název/hodnota ve třídě MarkupExtensions musejí být ve formátu Název = Hodnota a jednotlivé dvojice musejí být odděleny  čárkou. Element {0} tento formát nedodržuje.</target>
+        <target state="translated">MC3042: Dvojice název/hodnota ve třídě MarkupExtensions musejí být ve formátu Název = Hodnota a jednotlivé dvojice musejí být odděleny čárkou. Element {0} tento formát nedodržuje.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserMarkupExtensionNoQuotesInName">
@@ -644,7 +644,7 @@
       </trans-unit>
       <trans-unit id="ParserNoNameOnType">
         <source>MC3054: The type '{0}' cannot have a Name attribute. Value types and types without a default constructor can be used as items within a ResourceDictionary.</source>
-        <target state="translated">MC3054: Typ {0} nemůže obsahovat atribut Name. Tyto hodnoty a typy bez výchozího konstruktoru  mohou být použity jako položky slovníku ResourceDictionary.</target>
+        <target state="translated">MC3054: Typ {0} nemůže obsahovat atribut Name. Tyto hodnoty a typy bez výchozího konstruktoru mohou být použity jako položky slovníku ResourceDictionary.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserNoNameUnderDefinitionScopeType">
@@ -794,7 +794,7 @@
       </trans-unit>
       <trans-unit id="ParserXmlReaderNoLineInfo">
         <source>MC3077: The class '{0}' does not implement IXmlLineInfo. This is required to get position information for the XAML being parsed.</source>
-        <target state="translated">MC3077: Třída {0} neimplementuje IXmlLineInfo. To je požadováno pro získání informace o pozici pro analyzovaný soubor  XAML.</target>
+        <target state="translated">MC3077: Třída {0} neimplementuje IXmlLineInfo. To je požadováno pro získání informace o pozici pro analyzovaný soubor XAML.</target>
         <note />
       </trans-unit>
       <trans-unit id="Parser_UnexpectedToken">
@@ -1069,7 +1069,7 @@
       </trans-unit>
       <trans-unit id="WrongLocalizationPropertySetting_Pass1">
         <source>MC1001: The LocalizationDirectivesToLocFile property value is not valid and must be changed to None, CommentsOnly, or All for the MarkupCompilePass1 task.</source>
-        <target state="translated">MC1001: Hodnota vlastnosti  LocalizationDirectivesToLocFile není platná a musí být změněna na None, CommentsOnly, nebo All pro úlohu MarkupCompilePass1.</target>
+        <target state="translated">MC1001: Hodnota vlastnosti LocalizationDirectivesToLocFile není platná a musí být změněna na None, CommentsOnly, nebo All pro úlohu MarkupCompilePass1.</target>
         <note />
       </trans-unit>
       <trans-unit id="WrongPropertySetting">

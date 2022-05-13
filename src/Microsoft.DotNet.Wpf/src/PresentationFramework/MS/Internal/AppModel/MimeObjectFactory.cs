@@ -66,7 +66,7 @@ namespace MS.Internal.AppModel
 
         #region private members
 
-        private static readonly Dictionary<ContentType, StreamToObjectFactoryDelegate> _objectConverters = new Dictionary<ContentType, StreamToObjectFactoryDelegate>(5, new ContentType.WeakComparer());
+        private static readonly Dictionary<ContentType, StreamToObjectFactoryDelegate> _objectConverters = new Dictionary<ContentType, StreamToObjectFactoryDelegate>(capacity: 9, new ContentType.WeakComparer());
 
         #endregion
     }

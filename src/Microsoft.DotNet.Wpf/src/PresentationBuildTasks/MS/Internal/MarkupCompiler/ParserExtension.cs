@@ -839,7 +839,7 @@ namespace MS.Internal
                 {
                     if (_class == MarkupCompiler.DOT)
                     {
-                        int index = xamlDefAttributeNode.Value.LastIndexOf(MarkupCompiler.DOT, StringComparison.Ordinal);
+                        int index = xamlDefAttributeNode.Value.LastIndexOf(MarkupCompiler.DOTCHAR);
                         ThrowException(SRID.InvalidClassName,
                                        MarkupCompiler.DefinitionNSPrefix,
                                        CLASS,
@@ -869,7 +869,7 @@ namespace MS.Internal
                 {
                     if (_subClass == MarkupCompiler.DOT)
                     {
-                        int index = xamlDefAttributeNode.Value.LastIndexOf(MarkupCompiler.DOT, StringComparison.Ordinal);
+                        int index = xamlDefAttributeNode.Value.LastIndexOf(MarkupCompiler.DOTCHAR);
                         ThrowException(SRID.InvalidClassName,
                                        MarkupCompiler.DefinitionNSPrefix,
                                        SUBCLASS,

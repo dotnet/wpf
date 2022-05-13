@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <DefineConstants>$(DefineConstants);WINDOWSFORMSINTEGRATION</DefineConstants>
     <NoWarn>$(NoWarn);0618</NoWarn>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFramework>netcoreapp5.0</TargetFramework>
+    
     <EnableDefaultItems>false</EnableDefaultItems>
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
@@ -17,7 +17,6 @@
     <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
     <Compile Include="$(WpfSharedDir)MS\Win32\NativeMethodsSetLastError.cs" />
     <Compile Include="OtherAssemblyAttrs.cs" />
-    <Compile Include="SR.cs" />
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
       <Link>Common\System\SR.cs</Link>
     </Compile>
@@ -48,6 +47,7 @@
     <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
 
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
 
     <ProjectReference Include="$(WpfSourceDir)WindowsFormsIntegration\ref\WindowsFormsIntegration-ref.csproj" >
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
@@ -70,7 +70,7 @@
     <NetCoreReference Include="System.Runtime.Extensions" />
     <NetCoreReference Include="System.Runtime.InteropServices" />
     <NetCoreReference Include="System.Threading" />
-    
+
     <MicrosoftPrivateWinFormsReference Include="System.Windows.Forms" />
     <MicrosoftPrivateWinFormsReference Include="System.Windows.Forms.Primitives" />
   </ItemGroup>

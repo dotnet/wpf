@@ -150,7 +150,7 @@ namespace Standard
 
             if (msg == WM.CREATE)
             {
-                var createStruct = (CREATESTRUCT)Marshal.PtrToStructure(lParam, typeof(CREATESTRUCT));
+                var createStruct = Marshal.PtrToStructure<CREATESTRUCT>(lParam);
                 GCHandle gcHandle = GCHandle.FromIntPtr(createStruct.lpCreateParams);
                 hwndWrapper = (MessageWindow)gcHandle.Target;
                 s_windowLookup.Add(hwnd, hwndWrapper);

@@ -1215,20 +1215,7 @@ namespace System.Windows.Input
                             actionsArgs.RoutedEvent=InputManager.PreviewInputReportEvent;
                             e.PushInput(actionsArgs, null);
 
-                            // Create a new RawMouseInputReport for the activate.
-                            RawMouseInputReport reportActivate = new RawMouseInputReport(rawMouseInputReport.Mode,
-                                                                                         rawMouseInputReport.Timestamp,
-                                                                                         rawMouseInputReport.InputSource,
-                                                                                         RawMouseActions.Activate,
-                                                                                         rawMouseInputReport.X,
-                                                                                         rawMouseInputReport.Y,
-                                                                                         rawMouseInputReport.Wheel,
-                                                                                         rawMouseInputReport.ExtraInformation);
-
-                            // Push a new RawMouseInputReport for the activate.
-                            InputReportEventArgs activateArgs = new InputReportEventArgs(inputReportEventArgs.Device, reportActivate);
-                            activateArgs.RoutedEvent=InputManager.PreviewInputReportEvent;
-                            e.PushInput(activateArgs, null);
+                            PushActivateInputReport(e, inputReportEventArgs, rawMouseInputReport, clearExtraInformation:false);
                         }
                     }
                     // Only process mouse input that is from our active PresentationSource.
@@ -1387,6 +1374,30 @@ namespace System.Windows.Input
                 }
             }
 }
+
+        /// <summary>
+        /// Push an Activate input report, on behalf of the given RawMouseInputReport.
+        /// Common logic used by MouseDevice.PreProcessInput and PointerDevice.PreProcessMouseInput
+        /// </summary>
+        internal static void PushActivateInputReport(PreProcessInputEventArgs e, InputReportEventArgs inputReportEventArgs, RawMouseInputReport rawMouseInputReport, bool clearExtraInformation)
+        {
+            IntPtr extraInformation = clearExtraInformation ? IntPtr.Zero : rawMouseInputReport.ExtraInformation;
+
+            // Create a new RawMouseInputReport for the activate.
+            RawMouseInputReport reportActivate = new RawMouseInputReport(rawMouseInputReport.Mode,
+                                                                         rawMouseInputReport.Timestamp,
+                                                                         rawMouseInputReport.InputSource,
+                                                                         RawMouseActions.Activate,
+                                                                         rawMouseInputReport.X,
+                                                                         rawMouseInputReport.Y,
+                                                                         rawMouseInputReport.Wheel,
+                                                                         extraInformation);
+
+            // Push a new RawMouseInputReport for the activate.
+            InputReportEventArgs activateArgs = new InputReportEventArgs(inputReportEventArgs.Device, reportActivate);
+            activateArgs.RoutedEvent=InputManager.PreviewInputReportEvent;
+            e.PushInput(activateArgs, null);
+        }
 
         private void PreNotifyInput(object sender, NotifyInputEventArgs e)
         {
@@ -1736,7 +1747,7 @@ namespace System.Windows.Input
                             actions |= RawMouseActions.QueryCursor;
                         }
 
-                        RawMouseActions[] ButtonPressActions =
+                        ReadOnlySpan<RawMouseActions> ButtonPressActions = stackalloc RawMouseActions[5]
                         {
                             RawMouseActions.Button1Press,
                             RawMouseActions.Button2Press,
@@ -1745,7 +1756,7 @@ namespace System.Windows.Input
                             RawMouseActions.Button5Press
                         };
 
-                        RawMouseActions[] ButtonReleaseActions =
+                        ReadOnlySpan<RawMouseActions> ButtonReleaseActions = stackalloc RawMouseActions[5]
                         {
                             RawMouseActions.Button1Release,
                             RawMouseActions.Button2Release,

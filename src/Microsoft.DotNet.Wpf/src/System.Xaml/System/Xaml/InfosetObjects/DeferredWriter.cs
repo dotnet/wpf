@@ -78,7 +78,7 @@ namespace System.Xaml
                     break;
 
                 case DeferringMode.TemplateReady:
-                    throw new XamlInternalException(SR.Get(SRID.TemplateNotCollected, methodName));
+                    throw new XamlInternalException(SR.Format(SR.TemplateNotCollected, methodName));
 
                 case DeferringMode.TemplateStarting:
                     StartDeferredList();
@@ -99,7 +99,7 @@ namespace System.Xaml
                     break;
 
                 default:
-                    throw new XamlInternalException(SR.Get(SRID.MissingCase, _mode.ToString(), methodName));
+                    throw new XamlInternalException(SR.Format(SR.MissingCase, _mode.ToString(), methodName));
             }
         }
 
@@ -112,7 +112,7 @@ namespace System.Xaml
                 break;
 
             case DeferringMode.TemplateReady:
-                throw new XamlInternalException(SR.Get(SRID.TemplateNotCollected, "WriteEndObject"));
+                throw new XamlInternalException(SR.Format(SR.TemplateNotCollected, "WriteEndObject"));
 
             case DeferringMode.TemplateDeferring:
                 _deferredWriter.WriteEndObject();
@@ -128,7 +128,7 @@ namespace System.Xaml
                 break;
 
             default:
-                throw new XamlInternalException(SR.Get(SRID.MissingCase, _mode.ToString(), "WriteEndObject"));
+                throw new XamlInternalException(SR.Format(SR.MissingCase, _mode.ToString(), "WriteEndObject"));
             }
         }
 
@@ -148,7 +148,7 @@ namespace System.Xaml
                 break;
 
             case DeferringMode.TemplateReady:
-                throw new XamlInternalException(SR.Get(SRID.TemplateNotCollected, "WriteMember"));
+                throw new XamlInternalException(SR.Format(SR.TemplateNotCollected, "WriteMember"));
 
             case DeferringMode.TemplateDeferring:
                 _deferredWriter.WriteStartMember(property);
@@ -156,7 +156,7 @@ namespace System.Xaml
                 break;
 
             default:
-                throw new XamlInternalException(SR.Get(SRID.MissingCase, _mode.ToString(), "WriteMember"));
+                throw new XamlInternalException(SR.Format(SR.MissingCase, _mode.ToString(), "WriteMember"));
             }
         }
 
@@ -169,7 +169,7 @@ namespace System.Xaml
                 break;
 
             case DeferringMode.TemplateReady:
-                throw new XamlInternalException(SR.Get(SRID.TemplateNotCollected, "WriteEndMember"));
+                throw new XamlInternalException(SR.Format(SR.TemplateNotCollected, "WriteEndMember"));
 
             case DeferringMode.TemplateDeferring:
                 _deferredWriter.WriteEndMember();
@@ -177,7 +177,7 @@ namespace System.Xaml
                 break;
 
             default:
-                throw new XamlInternalException(SR.Get(SRID.MissingCase, _mode.ToString(), "WriteEndMember"));
+                throw new XamlInternalException(SR.Format(SR.MissingCase, _mode.ToString(), "WriteEndMember"));
             }
         }
 
@@ -190,7 +190,7 @@ namespace System.Xaml
                 break;
 
             case DeferringMode.TemplateReady:
-                throw new XamlInternalException(SR.Get(SRID.TemplateNotCollected, "WriteValue"));
+                throw new XamlInternalException(SR.Format(SR.TemplateNotCollected, "WriteValue"));
 
             case DeferringMode.TemplateStarting:
                 // This handles the case of SM template; V object; EM
@@ -215,7 +215,7 @@ namespace System.Xaml
                 break;
 
             default:
-                throw new XamlInternalException(SR.Get(SRID.MissingCase, _mode.ToString(), "WriteValue"));
+                throw new XamlInternalException(SR.Format(SR.MissingCase, _mode.ToString(), "WriteValue"));
             }
         }
 
@@ -227,7 +227,7 @@ namespace System.Xaml
                 return;
 
             case DeferringMode.TemplateReady:
-                throw new XamlInternalException(SR.Get(SRID.TemplateNotCollected, "WriteNamespace"));
+                throw new XamlInternalException(SR.Format(SR.TemplateNotCollected, "WriteNamespace"));
 
             case DeferringMode.TemplateStarting:
                 StartDeferredList();
@@ -240,7 +240,7 @@ namespace System.Xaml
                 break;
 
             default:
-                throw new XamlInternalException(SR.Get(SRID.MissingCase, _mode.ToString(), "WriteNamespace"));
+                throw new XamlInternalException(SR.Format(SR.MissingCase, _mode.ToString(), "WriteNamespace"));
             }
         }
 
@@ -281,7 +281,7 @@ namespace System.Xaml
                 return;
 
             case DeferringMode.TemplateReady:
-                throw new XamlInternalException(SR.Get(SRID.TemplateNotCollected, nameof(SetLineInfo)));
+                throw new XamlInternalException(SR.Format(SR.TemplateNotCollected, nameof(SetLineInfo)));
 
             case DeferringMode.TemplateStarting:
                 StartDeferredList();
@@ -296,7 +296,7 @@ namespace System.Xaml
                 break;
 
             default:
-                throw new XamlInternalException(SR.Get(SRID.MissingCase, _mode.ToString(), nameof(SetLineInfo)));
+                throw new XamlInternalException(SR.Format(SR.MissingCase, _mode.ToString(), nameof(SetLineInfo)));
             }
         }
 

@@ -219,7 +219,7 @@ namespace System.Windows.Forms.Integration
 
         private void OnLayoutError()
         {
-            InvalidOperationException exception = new InvalidOperationException(SR.Get(SRID.Host_CannotRotateWindowsFormsHost));
+            InvalidOperationException exception = new InvalidOperationException(SR.Host_CannotRotateWindowsFormsHost);
             LayoutExceptionEventArgs args = new LayoutExceptionEventArgs(exception);
             if (_layoutError != null)
             {
@@ -322,7 +322,7 @@ namespace System.Windows.Forms.Integration
                 {
                     if (form.TopLevel)
                     {  //WinOS #1030878 - Can't host top-level forms
-                        throw new ArgumentException(SR.Get(SRID.Host_ChildCantBeTopLevelForm));
+                        throw new ArgumentException(SR.Host_ChildCantBeTopLevelForm);
                     }
                     else
                     {

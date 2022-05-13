@@ -244,7 +244,7 @@
       </trans-unit>
       <trans-unit id="DocumentPropertiesDialogDocumentCreatedLabel">
         <source>Published:</source>
-        <target state="translated">Vydal:</target>
+        <target state="translated">Publikoval:</target>
         <note />
       </trans-unit>
       <trans-unit id="DocumentPropertiesDialogDocumentDetailBoxLabel">

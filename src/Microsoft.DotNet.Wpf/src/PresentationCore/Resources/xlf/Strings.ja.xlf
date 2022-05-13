@@ -324,7 +324,7 @@
       </trans-unit>
       <trans-unit id="CloneBreakRecordFailure">
         <source>Text formatting engine cannot clone break record due to error: '{0}'.</source>
-        <target state="translated">テキスト形式設定エンジンは、エラー '{0}' のために中断レコードを複製できません。</target>
+        <target state="translated">テキスト形式設定エンジンは、エラー '{0}' のために中断レコードをクローンできません。</target>
         <note />
       </trans-unit>
       <trans-unit id="CloseText">
@@ -1929,7 +1929,7 @@
       </trans-unit>
       <trans-unit id="KeyGesture_Invalid">
         <source>'{0}+{1}' key and modifier combination is not supported for KeyGesture.</source>
-        <target state="translated">'{0}+{1}' キーと修飾キーの組み合わせは、KeyGesture ではサポートされていません。</target>
+        <target state="translated">'{0}+{1}' キーと修飾子キーの組み合わせは、KeyGesture ではサポートされていません。</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyboardSinkAlreadyOwned">

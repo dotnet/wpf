@@ -65,7 +65,7 @@ namespace MS.Internal.Controls
 
         #region IDocHostUIHandler Implementation
 
-        int UnsafeNativeMethods.IDocHostUIHandler.ShowContextMenu(int dwID, NativeMethods.POINT pt, object pcmdtReserved, object pdispReserved)
+        int UnsafeNativeMethods.IDocHostUIHandler.ShowContextMenu(int dwID, ref NativeMethods.POINT pt, object pcmdtReserved, object pdispReserved)
         {
             //
             // Returning S_FALSE will allow the native control to do default processing,
@@ -146,7 +146,7 @@ namespace MS.Internal.Controls
         {
             //
             // Set to null no matter what we return, to prevent the marshaller
-            // from going crazy if the pointer points to random stuff.
+            // from behaving erroneously if the pointer points to random stuff.
             ppDropTarget = null;
             return NativeMethods.E_NOTIMPL;
         }

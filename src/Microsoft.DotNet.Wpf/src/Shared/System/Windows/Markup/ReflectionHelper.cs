@@ -95,7 +95,7 @@ namespace System.Xaml
             else
             {
                 if (nameFrags.Length != 2)
-                    throw new InvalidOperationException(SR.Get(SRID.QualifiedNameHasWrongFormat, typeName));
+                    throw new InvalidOperationException(SR.Format(SR.QualifiedNameHasWrongFormat, typeName));
 
                 Assembly a = null;
                 try
@@ -361,7 +361,7 @@ namespace System.Xaml
 
                     if (attrValue == null)
                     {
-                        throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsLow, attrType.Name));
+                        throw new ArgumentException(SR.Format(SR.ParserAttributeArgsLow, attrType.Name));
                     }
                 }
                 else if (constructorArguments.Count == 0)
@@ -374,12 +374,12 @@ namespace System.Xaml
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsLow, attrType.Name));
+                        throw new ArgumentException(SR.Format(SR.ParserAttributeArgsLow, attrType.Name));
                     }
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsHigh, attrType.Name));
+                    throw new ArgumentException(SR.Format(SR.ParserAttributeArgsHigh, attrType.Name));
                 }
             }
 
@@ -439,7 +439,7 @@ namespace System.Xaml
                     {
                         string request = assemblyName.ToString();
                         string found = cachedName.ToString();
-                        throw new InvalidOperationException(SR.Get(SRID.ParserAssemblyLoadVersionMismatch, request, found));
+                        throw new InvalidOperationException(SR.Format(SR.ParserAssemblyLoadVersionMismatch, request, found));
                     }
                 }
             }
@@ -505,7 +505,7 @@ namespace System.Xaml
 
             for (int j = 0; j < list.Count; j++)
             {
-                friendAssemblyName = GetCustomAttributeData(list[j], typeof(InternalsVisibleToAttribute), out typeValue, false, false, false);
+                friendAssemblyName = GetCustomAttributeData(list[j], GetMscorlibType(typeof(InternalsVisibleToAttribute)), out typeValue, false, false, false);
                 if (friendAssemblyName != null && friendAssemblyName == LocalAssemblyName)
                 {
                     isFriend = true;

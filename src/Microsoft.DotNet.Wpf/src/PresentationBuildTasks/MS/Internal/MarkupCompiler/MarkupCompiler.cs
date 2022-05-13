@@ -154,6 +154,11 @@ namespace MS.Internal
             set { _taskLogger = value; }
         }
 
+        /// <summary>
+        /// Support custom IntermediateOutputPath and BaseIntermediateOutputPath outside the project path
+        /// </summary>
+        internal bool SupportCustomOutputPaths { get; set; } = false;
+
         // If the xaml has local references, then it could have internal element & properties
         // but there is no way to determine this until MCPass2. Yet, GeneratedInternalTypeHelper,
         // which is the class that allows access to legitimate internals, needs to be generated
@@ -487,7 +492,7 @@ namespace MS.Internal
                     }
                 }
 
-                int pathEndIndex = SourceFileInfo.RelativeSourceFilePath.LastIndexOf(string.Empty + Path.DirectorySeparatorChar, StringComparison.Ordinal);
+                int pathEndIndex = SourceFileInfo.RelativeSourceFilePath.LastIndexOf(Path.DirectorySeparatorChar);
                 string targetPath = TargetPath + SourceFileInfo.RelativeSourceFilePath.Substring(0, pathEndIndex + 1);
 
                 // Create if not already exists
@@ -711,7 +716,7 @@ namespace MS.Internal
 
                 if (sourceFileInfo.IsXamlFile)
                 {
-                    int fileExtIndex = file.Path.LastIndexOf(DOT, StringComparison.Ordinal);
+                    int fileExtIndex = file.Path.LastIndexOf(DOTCHAR);
                     
                     sourceFileInfo.RelativeSourceFilePath = file.Path.Substring(0, fileExtIndex);
                 }
@@ -1415,7 +1420,7 @@ namespace MS.Internal
         internal void ValidateFullSubClassName(ref string subClassFullName)
         {
             bool isValid = false;
-            int index = subClassFullName.LastIndexOf(DOT, StringComparison.Ordinal);
+            int index = subClassFullName.LastIndexOf(DOTCHAR);
 
             if (index > 0)
             {
@@ -1444,7 +1449,7 @@ namespace MS.Internal
             if (className.Length > 0)
             {
                 // Split the Namespace
-                int index = className.LastIndexOf(DOT, StringComparison.Ordinal);
+                int index = className.LastIndexOf(DOTCHAR);
 
                 if (index > 0)
                 {
@@ -1575,11 +1580,64 @@ namespace MS.Internal
         {
             get
             {
-#if NETFX 
-                return PathInternal.GetRelativePath(TargetPath, SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase) + Path.DirectorySeparatorChar;
+                if (SupportCustomOutputPaths)
+                {
+                    //  During code generation, ParentFolderPrefix returns the relative path from a .g.cs file to its markup file.
+                    //
+                    //      One example is generated #pragmas: #pragma checksum "..\..\..\..\Views\ExportNotificationView.xaml"  
+                    //
+                    //  The path information for a markup file is represented in SourceFileInfo: 
+                    //
+                    //      SourceFileInfo.OriginalFilePath: "c:\\greenshot\\src\\Greenshot.Addons\\Views\\ExportNotificationView.xaml"
+                    //      SourceFileInfo.TargetPath: "c:\\greenshot\\src\\Greenshot.Addons\\obj\\Debug\\net6.0-windows\\"
+                    //      SourceFileInfo.RelativeFilePath: "Views\\ExportNotificationView"
+                    //      SourceFileInfo.SourcePath = "c:\\greenshot\\src\\Greenshot.Addons\\"
+                    //
+                    //  The path of the generated code file associated with this markup file is:
+                    //
+                    //      "c:\greenshot\src\Greenshot.Addons\obj\Debug\net6.0-windows\Views\ExportNotificationView.g.cs"
+                    //
+                    //  The markup file path is in SourceFileInfo.OriginalFilePath:
+                    //
+                    //      "c:\\greenshot\\src\\Greenshot.Addons\\Views\\ExportNotificationView.xaml"
+                    //
+                    //  The relative path calculation must take in to account both the TargetPath and the RelativeFilePath:
+                    //
+                    //      "c:\\greenshot\\src\\Greenshot.Addons\\obj\\Debug\\net6.0-windows\\" [SourceFileInfo.TargetPath]      
+                    //      "Views\\ExportNotificationView" [SourceFileInfo.RelativeTargetPath]
+                    //
+                    //   TargetPath concatenated with the directory portion of the RelativeTargetPath is the location to the .g.cs file:
+                    //
+                    //      "c:\\greenshot\\src\\Greenshot.Addons\\obj\\Debug\\net6.0-windows\\Views"
+                    //      
+                    string pathOfRelativeSourceFilePath = System.IO.Path.GetDirectoryName(SourceFileInfo.RelativeSourceFilePath);
+
+                    // Return the parent folder of the target file with a trailing DirectorySeparatorChar.  
+                    // Return a relative path if possible.  Else, return an absolute path.
+                    #if NETFX 
+                    string path = PathInternal.GetRelativePath(TargetPath + pathOfRelativeSourceFilePath, SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase);
 #else
-                return Path.GetRelativePath(TargetPath, SourceFileInfo.SourcePath) + Path.DirectorySeparatorChar;
+                    string path = Path.GetRelativePath(TargetPath + pathOfRelativeSourceFilePath, SourceFileInfo.SourcePath);
 #endif
+                    // Always return a path with a trailing DirectorySeparatorChar.  
+                    return path.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
+                }
+                else
+                {
+                    string parentFolderPrefix = string.Empty;
+                    if (TargetPath.StartsWith(SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase))
+                    {
+                        string relPath = TargetPath.Substring(SourceFileInfo.SourcePath.Length);
+                        relPath += SourceFileInfo.RelativeSourceFilePath;
+                        string[] dirs = relPath.Split(new Char[] { Path.DirectorySeparatorChar });
+                        for (int i = 1; i < dirs.Length; i++)
+                        {
+                            parentFolderPrefix += PARENTFOLDER;
+                        }
+                    }
+
+                    return parentFolderPrefix;
+                } 
             }
         }
 
@@ -2265,7 +2323,7 @@ namespace MS.Internal
 
                     // NOTE: Remove when CodeDom is fixed to understand mangled generic names.
                     genericName = t.FullName;
-                    int bang = genericName.IndexOf(GENERIC_DELIMITER, StringComparison.Ordinal);
+                    int bang = genericName.IndexOf(GENERIC_DELIMITER);
                     if (bang > 0)
                     {
                         genericName = genericName.Substring(0, bang);
@@ -2308,7 +2366,7 @@ namespace MS.Internal
 
                 // NOTE: Remove when CodeDom is fixed to understand mangled generic names.
                 string genericName = t.Namespace + DOT + t.Name;
-                int bang = genericName.IndexOf(GENERIC_DELIMITER, StringComparison.Ordinal);
+                int bang = genericName.IndexOf(GENERIC_DELIMITER);
                 if (bang > 0)
                 {
                     genericName = genericName.Substring(0, bang);
@@ -3484,7 +3542,7 @@ namespace MS.Internal
         private const string            ANONYMOUS_ENTRYCLASS_PREFIX = "Generated";
         private const string            DEFINITION_PREFIX = "x";
         private const char              COMMA = ',';
-        private const string            GENERIC_DELIMITER = "`";
+        private const char              GENERIC_DELIMITER = '`';
         internal const char             DOTCHAR = '.';
         internal const string           DOT = ".";
         internal const string           CODETAG = "Code";

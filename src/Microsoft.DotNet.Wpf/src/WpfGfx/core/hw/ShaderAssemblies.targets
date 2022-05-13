@@ -19,8 +19,11 @@
     <ResourceFileOutputPath>$(ResourceFileIncludePath)\ShaderAssemblies</ResourceFileOutputPath>
   </PropertyGroup>
   
+  <!-- To support building ARM64 on x86/x64, this must use x64 for ARM64 -->
   <PropertyGroup>
-    <FXCTOOL>$(Windows10SdkPath)bin\$(WindowsTargetPlatformVersion)\$(Architecture)\fxc.exe</FXCTOOL>
+    <FXCTOOLArchitecture Condition="'$(Architecture)'=='ARM64'">x64</FXCTOOLArchitecture>
+    <FXCTOOLArchitecture Condition="'$(Architecture)'!='ARM64'">$(Architecture)</FXCTOOLArchitecture>
+    <FXCTOOL>$(Windows10SdkPath)bin\$(WindowsTargetPlatformVersion)\$(FXCTOOLArchitecture)\fxc.exe</FXCTOOL>
   </PropertyGroup>
   
   <ItemGroup>

@@ -234,7 +234,7 @@
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderDisposed">
         <source>Cannot access a disposed HTTP byte range downloader.</source>
-        <target state="translated">Bırakılmış bir HTTP bayt aralığı yükleyicisine erişilemiyor.</target>
+        <target state="translated">Bırakılmış bir HTTP bayt aralığı indirme programına erişilemiyor.</target>
         <note />
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderErroredOut">
@@ -1499,7 +1499,7 @@
       </trans-unit>
       <trans-unit id="Image_OnlyOrthogonal">
         <source>Transform must be a combination of scales, flips, and 90 degree rotations.</source>
-        <target state="translated">Dönüştürme ölçek, ters çevirme ve 90 derece döndürmelerden oluşmalıdır.</target>
+        <target state="translated">Dönüştürme işlemi ölçeklendirme, ters çevirme ve 90 derece döndürmelerden oluşmalıdır.</target>
         <note />
       </trans-unit>
       <trans-unit id="Image_OriginalStreamReadOnly">
@@ -1809,7 +1809,7 @@
       </trans-unit>
       <trans-unit id="InvalidScheme">
         <source>HTTP byte range downloader can support only HTTP or HTTPS schemes.</source>
-        <target state="translated">HTTP bayt aralığı yükleyicisi yalnızca HTTP veya HTTPS düzenlerini destekleyebilir.</target>
+        <target state="translated">HTTP bayt aralığı indirme programı yalnızca HTTP veya HTTPS düzenlerini destekleyebilir.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidSiteOfOriginUri">

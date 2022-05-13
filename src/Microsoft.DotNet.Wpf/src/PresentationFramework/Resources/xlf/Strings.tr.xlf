@@ -404,7 +404,7 @@
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderNotInitialized">
         <source>HTTP byte range downloader is not initialized.</source>
-        <target state="translated">HTTP bayt aralığı yükleyicisi başlatılmadı.</target>
+        <target state="translated">HTTP bayt aralığı indirme programı başlatılmadı.</target>
         <note />
       </trans-unit>
       <trans-unit id="CalendarAutomationPeer_BlackoutDayHelpText">
@@ -1616,14 +1616,14 @@
         <source>'{0}' does not exist.
 Do you want to create it?</source>
         <target state="translated">'{0}' yok.
-Oluşturmak istiyor musunuz?</target>
+Oluşturmak ister misiniz?</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogFileNotFound">
         <source>'{0}' does not exist.
 Verify that the file name is correct.</source>
         <target state="translated">'{0}' yok.
-Dosya adının doğru olduğunu kontrol edin.</target>
+Dosya adının doğruluğunu denetleyin.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogInvalidFileName">
@@ -4405,7 +4405,7 @@ Değiştirmek istiyor musunuz?</target>
       </trans-unit>
       <trans-unit id="ParserXmlIslandMissing">
         <source>Parent element or property '{0}' requires an XML data island. To distinguish an XML island from surrounding XAML, wrap the XML data island in &lt;x:XData&gt; ... &lt;/x:XData&gt;.</source>
-        <target state="translated">Üst öğe veya '{0}' özelliği için bir XML veri adası gerekiyor. Bir XML veri adasını, çevreleyen XAML'den ayırmak için, XML veri adasını &lt;x:XData&gt; ... &lt;/x:XData&gt; içine alın.</target>
+        <target state="translated">Üst öğe veya '{0}' özelliği için bir XML veri adası gerekiyor. Bir XML veri adasını, çevreleyen XAML'den ayırmak için, XML veri adasını &lt;x:XData&gt; ... &lt;/x:XData&gt; içinde sarmalayın.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserXmlIslandUnexpected">

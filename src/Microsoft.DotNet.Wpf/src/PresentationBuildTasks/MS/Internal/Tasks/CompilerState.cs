@@ -215,7 +215,7 @@ namespace MS.Internal.Tasks
 
                 for (int i = 0; i < iCount; i++)
                 {
-                    iHashCode += fileItemList[i].ItemSpec.GetHashCode();
+                    iHashCode += GetNonRandomizedHashCode(fileItemList[i].ItemSpec);
                 }
 
                 StringBuilder sb = new StringBuilder();
@@ -249,6 +249,49 @@ namespace MS.Internal.Tasks
             }
 
             return fileNames;
+        }
+
+        //
+        // Generates a stable hash code value for strings.
+        // In .NET Core the hash values for the same string can be different between
+        // subsequent program runs and cannot be used for caching here.
+        // Copied from String.Comparison.cs 
+        //
+        private static unsafe int GetNonRandomizedHashCode(string str)
+        {
+            fixed (char* src = str)
+            {
+                Debug.Assert(src[str.Length] == '\0', "src[str.Length] == '\\0'");
+                Debug.Assert(((int)src) % 4 == 0, "Managed string should start at 4 bytes boundary");
+
+                uint hash1 = (5381 << 16) + 5381;
+                uint hash2 = hash1;
+
+                uint* ptr = (uint*)src;
+                int length = str.Length;
+
+                while (length > 2)
+                {
+                    length -= 4;
+                    // Where length is 4n-1 (e.g. 3,7,11,15,19) this additionally consumes the null terminator
+                    hash1 = (RotateLeft(hash1, 5) + hash1) ^ ptr[0];
+                    hash2 = (RotateLeft(hash2, 5) + hash2) ^ ptr[1];
+                    ptr += 2;
+                }
+
+                if (length > 0)
+                {
+                    // Where length is 4n-3 (e.g. 1,5,9,13,17) this additionally consumes the null terminator
+                    hash2 = (RotateLeft(hash2, 5) + hash2) ^ ptr[0];
+                }
+
+                return (int)(hash1 + (hash2 * 1566083941));
+            }
+        }
+
+        private static uint RotateLeft(uint value, int offset)
+        {
+            return (value << offset) | (value >> (32 - offset));
         }
 
         #endregion

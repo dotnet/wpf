@@ -34,7 +34,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                throw new InvalidEnumArgumentException(SR.Get(SRID.Enum_Invalid, "DesignerSerializationOptions"));
+                throw new InvalidEnumArgumentException(SR.Format(SR.Enum_Invalid, "DesignerSerializationOptions"));
             }
         }
 

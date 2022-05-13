@@ -386,7 +386,7 @@ namespace System.Windows.Documents
                 return position;
             }
 
-            if (DoubleUtil.IsNaN(suggestedX))
+            if (double.IsNaN(suggestedX))
             {
                 suggestedX = 0;
             }

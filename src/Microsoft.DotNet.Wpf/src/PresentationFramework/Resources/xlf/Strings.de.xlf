@@ -1615,14 +1615,14 @@
       <trans-unit id="FileDialogCreatePrompt">
         <source>'{0}' does not exist.
 Do you want to create it?</source>
-        <target state="translated">"{0}" ist nicht vorhanden.
+        <target state="translated">'{0}' ist nicht vorhanden.
 Möchten Sie das Element erstellen?</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogFileNotFound">
         <source>'{0}' does not exist.
 Verify that the file name is correct.</source>
-        <target state="translated">"{0}" ist nicht vorhanden.
+        <target state="translated">'{0}' ist nicht vorhanden.
 Überprüfen Sie den Dateinamen.</target>
         <note />
       </trans-unit>
@@ -1644,7 +1644,7 @@ Verify that the file name is correct.</source>
       <trans-unit id="FileDialogOverwritePrompt">
         <source>'{0}' already exists.
 Do you want to replace it?</source>
-        <target state="translated">"{0}" ist bereits vorhanden.
+        <target state="translated">'{0}' ist bereits vorhanden.
 Möchten Sie das Element ersetzen?</target>
         <note />
       </trans-unit>
@@ -6115,12 +6115,12 @@ Möchten Sie das Element ersetzen?</target>
       </trans-unit>
       <trans-unit id="UndoNoOpenParentUnit">
         <source>Cannot add nonparent undo unit when there is no open IParentUndoUnit.</source>
-        <target state="translated">Die nicht übergeordnete Rückgängig-Komponente kann nicht hinzugefügt werden, wenn keine geöffnete "IParentUndoUnit" vorhanden ist.</target>
+        <target state="translated">Die nicht übergeordnete Rückgängig-Einheit kann nicht hinzugefügt werden, wenn keine geöffnete "IParentUndoUnit" vorhanden ist.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoNoOpenUnit">
         <source>Cannot close undo unit because no opened unit exists.</source>
-        <target state="translated">Die Rückgängig-Komponente kann nicht geschlossen werden, da keine geöffnete Komponente vorhanden ist.</target>
+        <target state="translated">Die Rückgängig-Einheit kann nicht geschlossen werden, weil keine geöffnete Komponente vorhanden ist.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoNotInNormalState">
@@ -6135,17 +6135,17 @@ Möchten Sie das Element ersetzen?</target>
       </trans-unit>
       <trans-unit id="UndoUnitAlreadyOpen">
         <source>Cannot Reopen undo unit while another unit is already open.</source>
-        <target state="translated">"Reopen" ist für die Rückgängig-Komponente nicht möglich, während bereits eine andere Komponente geöffnet ist.</target>
+        <target state="translated">"Reopen" ist für die Rückgängig-Einheit nicht möglich, während bereits eine andere Einheit geöffnet ist.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitCantBeAddedTwice">
         <source>Cannot add undo unit to itself or one of its own children.</source>
-        <target state="translated">Die Rückgängig-Komponente kann nicht sich selbst oder einem ihr untergeordneten Element hinzugefügt werden.</target>
+        <target state="translated">Die Rückgängig-Einheit kann nicht sich selbst oder einem ihr untergeordneten Element hinzugefügt werden.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitCantBeOpenedTwice">
         <source>Cannot open undo unit that is already open.</source>
-        <target state="translated">Die Rückgängig-Komponente kann nicht geöffnet werden, da sie bereits geöffnet ist.</target>
+        <target state="translated">Die Rückgängig-Einheit kann nicht geöffnet werden, weil sie bereits geöffnet ist.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitLocked">
@@ -6160,12 +6160,12 @@ Möchten Sie das Element ersetzen?</target>
       </trans-unit>
       <trans-unit id="UndoUnitNotOnTopOfStack">
         <source>Cannot Reopen undo unit that is not on top of stack.</source>
-        <target state="translated">"Reopen" ist nicht möglich für eine Rückgängig-Komponente, die sich nicht auf der höchsten Ebene befindet.</target>
+        <target state="translated">"Reopen" ist für eine Rückgängig-Einheit nicht möglich, die sich nicht auf der höchsten Ebene befindet.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitOpen">
         <source>Cannot Undo or Redo while undo unit is open.</source>
-        <target state="translated">"Undo" oder "Redo" ist nicht möglich, während die Rückgängig-Komponente geöffnet ist.</target>
+        <target state="translated">"Undo" oder "Redo" ist nicht möglich, während die Rückgängig-Einheit geöffnet ist.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnexpectedAttribute">

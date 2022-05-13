@@ -5,7 +5,6 @@
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace System
 {
@@ -14,11 +13,6 @@ namespace System
 #pragma warning disable 436
     internal partial class LocalAppContext
     {
-        private delegate bool TryGetSwitchDelegate(string switchName, out bool value);
-
-        private static TryGetSwitchDelegate TryGetSwitchFromCentralAppContext;
-        private static bool s_canForwardCalls;
-
         private static Dictionary<string, bool> s_switchMap = new Dictionary<string, bool>();
         private static readonly object s_syncLock = new object();
 
@@ -26,9 +20,6 @@ namespace System
 
         static LocalAppContext()
         {
-            // Try to setup the callback into the central AppContext
-            s_canForwardCalls = SetupDelegate();
-
             // Populate the default values of the local app context 
             AppContextDefaultValues.PopulateDefaultValues();
 
@@ -38,16 +29,12 @@ namespace System
 
         public static bool IsSwitchEnabled(string switchName)
         {
-            if (s_canForwardCalls)
+            if (System.AppContext.TryGetSwitch(switchName, out var isEnabledCentrally))
             {
-                bool isEnabledCentrally;
-                if (TryGetSwitchFromCentralAppContext(switchName, out isEnabledCentrally))
-                {
-                    // we found the switch, so return whatever value it has
-                    return isEnabledCentrally;
-                }
-                // if we could not get the value from the central authority, try the local storage.
+                // we found the switch, so return whatever value it has
+                return isEnabledCentrally;
             }
+            // if we could not get the value from the central authority, try the local storage.
 
             return IsSwitchEnabledLocal(switchName);
         }
@@ -70,27 +57,6 @@ namespace System
             // if we could not find the switch name, we should return 'false'
             // This will preserve the concept of switches been 'off' unless explicitly set to 'on'
             return false;
-        }
-
-        private static bool SetupDelegate()
-        {
-            Type appContextType = typeof(object).Assembly.GetType("System.AppContext");
-            if (appContextType == null)
-                return false;
-
-            MethodInfo method = appContextType.GetMethod(
-                                            "TryGetSwitch",  // the method name
-                                            BindingFlags.Static | BindingFlags.Public,  // binding flags
-                                            null, // use the default binder
-                                            new Type[] { typeof(string), typeof(bool).MakeByRefType() },
-                                            null); // parameterModifiers - this is ignored by the default binder 
-            if (method == null)
-                return false;
-
-            // Create delegate if we found the method.
-            TryGetSwitchFromCentralAppContext = (TryGetSwitchDelegate)Delegate.CreateDelegate(typeof(TryGetSwitchDelegate), method);
-
-            return true;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

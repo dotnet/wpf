@@ -606,7 +606,7 @@ namespace System.Windows.Documents
                         candform.rcArea.right = 0;
                         candform.rcArea.top = 0;
                         candform.rcArea.bottom = 0;
-                        candform.ptCurrentPos = new NativeMethods.POINT(0, 0);
+                        candform.ptCurrentPos = default;
                     }
                     else
                     {
@@ -1358,7 +1358,7 @@ namespace System.Windows.Documents
                 string surrounding = GetSurroundingText(range, out offsetStart);
 
                 // Create RECONVERTSTRING structure from lParam.
-                NativeMethods.RECONVERTSTRING reconv = (NativeMethods.RECONVERTSTRING)Marshal.PtrToStructure(lParam, typeof(NativeMethods.RECONVERTSTRING));
+                NativeMethods.RECONVERTSTRING reconv = Marshal.PtrToStructure<NativeMethods.RECONVERTSTRING>(lParam);
 
                 reconv.dwSize = requestSize;
                 reconv.dwVersion = 0;                                                         // must be 0
@@ -1520,7 +1520,7 @@ namespace System.Windows.Documents
                 return IntPtr.Zero;
             }
 
-            NativeMethods.RECONVERTSTRING reconv = (NativeMethods.RECONVERTSTRING)Marshal.PtrToStructure(lParam, typeof(NativeMethods.RECONVERTSTRING));
+            NativeMethods.RECONVERTSTRING reconv = Marshal.PtrToStructure<NativeMethods.RECONVERTSTRING>(lParam);
 
             // If the entire string in RECONVERTSTRING has been changed, we don't handle it.
             if (_reconv.dwStrLen != reconv.dwStrLen)

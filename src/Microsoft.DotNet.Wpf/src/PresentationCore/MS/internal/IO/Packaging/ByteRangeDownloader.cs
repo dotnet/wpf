@@ -798,13 +798,13 @@ namespace MS.Internal.IO.Packaging
             }
 
             // Get the first byte offset of the range (XXX)
-            int firstByteOffset = Int32.Parse(contentRange.Substring(ByteRangeUnit.Length,
+            int firstByteOffset = Int32.Parse(contentRange.AsSpan(ByteRangeUnit.Length,
                                                                         index - ByteRangeUnit.Length),
                                                 NumberStyles.None, NumberFormatInfo.InvariantInfo);
 
-            contentRange = contentRange.Substring(index + 1);
+            ReadOnlySpan<char> contentRangeSpan = contentRange.AsSpan(index + 1);
             // ContentRange: YYY/ZZZ
-            index = contentRange.IndexOf('/');
+            index = contentRangeSpan.IndexOf('/');
 
             if (index == -1)
             {
@@ -812,18 +812,18 @@ namespace MS.Internal.IO.Packaging
             }
 
             // Get the last byte offset of the range (YYY)
-            int lastByteOffset = Int32.Parse(contentRange.Substring(0, index), NumberStyles.None, NumberFormatInfo.InvariantInfo);
+            int lastByteOffset = Int32.Parse(contentRangeSpan.Slice(0, index), NumberStyles.None, NumberFormatInfo.InvariantInfo);
 
             // Get the instance length
             // ContentRange: ZZZ
-            contentRange = contentRange.Substring(index + 1);
-            if (String.CompareOrdinal(contentRange, "*") != 0)
+            contentRangeSpan = contentRangeSpan.Slice(index + 1);
+            if (!contentRangeSpan.Equals("*", StringComparison.Ordinal))
             {
                 // Note: for firstByteOffset and lastByteOffset, we are using Int32.Parse to make sure Int32.Parse to throw
                 //  if it is not an integer or the integer is bigger than Int32 since HttpWebRequest.AddRange
                 //  only supports Int32
                 //  Once HttpWebRequest.AddRange start supporting Int64 we should change it to Int64 and long
-                Int32.Parse(contentRange, NumberStyles.None, NumberFormatInfo.InvariantInfo);
+                Int32.Parse(contentRangeSpan, NumberStyles.None, NumberFormatInfo.InvariantInfo);
             }
 
             // The response is considered to be successful if

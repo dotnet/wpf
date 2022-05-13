@@ -30,8 +30,8 @@ namespace System.Windows.Documents.MsSpellCheckLib
         /// Extracts a list of strings from an RCW.IEnumString instance.
         /// </summary>
         internal static List<string> ToList(
-            this IEnumString enumString, 
-            bool shouldSuppressCOMExceptions = true, 
+            this IEnumString enumString,
+            bool shouldSuppressCOMExceptions = true,
             bool shouldReleaseCOMObject = true)
         {
             var result = new List<string>();
@@ -77,10 +77,10 @@ namespace System.Windows.Documents.MsSpellCheckLib
         /// Extracts a list of SpellingError's from an RCW.IEnumSpellingError instance.
         /// </summary>
         internal static List<SpellingError> ToList(
-            this IEnumSpellingError spellingErrors, 
-            SpellChecker spellChecker, 
-            string text, 
-            bool shouldSuppressCOMExceptions = true, 
+            this IEnumSpellingError spellingErrors,
+            SpellChecker spellChecker,
+            string text,
+            bool shouldSuppressCOMExceptions = true,
             bool shouldReleaseCOMObject = true)
         {
             if (spellingErrors == null)
@@ -99,7 +99,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
                     if (iSpellingError == null)
                     {
                         // no more ISpellingError objects left in the enum
-                        break; 
+                        break;
                     }
 
                     var error = new SpellingError(iSpellingError, spellChecker, text, shouldSuppressCOMExceptions, true);
@@ -108,8 +108,8 @@ namespace System.Windows.Documents.MsSpellCheckLib
             }
             catch (COMException) when (shouldSuppressCOMExceptions)
             {
-                // do nothing here 
-                // the exception filter does it all. 
+                // do nothing here
+                // the exception filter does it all.
             }
             finally
             {
@@ -125,7 +125,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
         /// <summary>
         /// Determines whether a collection of SpellingError instances
         /// has any actual errors, or whether they represent a 'clean'
-        /// result. 
+        /// result.
         /// </summary>
         internal static bool IsClean(this List<SpellingError> errors)
         {
@@ -134,7 +134,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
                 throw new ArgumentNullException(nameof(errors));
             }
 
-            bool isClean = true; 
+            bool isClean = true;
             foreach (var error in errors)
             {
                 if (error.CorrectiveAction != CorrectiveAction.None)
@@ -145,6 +145,57 @@ namespace System.Windows.Documents.MsSpellCheckLib
             }
 
             return isClean;
+        }
+
+        /// <summary>
+        /// Determines whether an RCW.IEnumSpellingError instance has any errors,
+        /// without asking for expensive details.
+        /// </summary>
+        internal static bool HasErrors(
+            this IEnumSpellingError spellingErrors,
+            bool shouldSuppressCOMExceptions = true,
+            bool shouldReleaseCOMObject = true)
+        {
+            if (spellingErrors == null)
+            {
+                throw new ArgumentNullException(nameof(spellingErrors));
+            }
+
+            bool result = false;
+
+            try
+            {
+                while (!result)
+                {
+                    ISpellingError iSpellingError = spellingErrors.Next();
+
+                    if (iSpellingError == null)
+                    {
+                        // no more ISpellingError objects left in the enum
+                        break;
+                    }
+
+                    if ((CorrectiveAction)iSpellingError.CorrectiveAction != CorrectiveAction.None)
+                    {
+                        result = true;
+                    }
+                    Marshal.ReleaseComObject(iSpellingError);
+                }
+            }
+            catch (COMException) when (shouldSuppressCOMExceptions)
+            {
+                // do nothing here
+                // the exception filter does it all.
+            }
+            finally
+            {
+                if (shouldReleaseCOMObject)
+                {
+                    Marshal.ReleaseComObject(spellingErrors);
+                }
+            }
+
+            return result;
         }
     }
 }

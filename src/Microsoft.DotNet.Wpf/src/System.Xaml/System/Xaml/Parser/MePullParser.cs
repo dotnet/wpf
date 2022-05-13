@@ -53,11 +53,11 @@ namespace MS.Internal.Xaml.Parser
             }
             if (_tokenizer.Token != MeTokenType.None)
             {
-                throw new XamlParseException(_tokenizer, SR.Get(SRID.UnexpectedTokenAfterME));
+                throw new XamlParseException(_tokenizer, SR.UnexpectedTokenAfterME);
             }
             if (_tokenizer.HasTrailingWhitespace)
             {
-                throw new XamlParseException(_tokenizer, SR.Get(SRID.WhitespaceAfterME));
+                throw new XamlParseException(_tokenizer, SR.WhitespaceAfterME);
             }
         }
 
@@ -65,7 +65,7 @@ namespace MS.Internal.Xaml.Parser
         {
             if (String.IsNullOrEmpty(_brokenRule))
             {
-                _brokenRule = SR.Get(SRID.UnexpectedToken,
+                _brokenRule = SR.Format(SR.UnexpectedToken,
                                             _tokenizer.Token, ruleString, _originalText);
             }
         }
@@ -408,11 +408,11 @@ namespace MS.Internal.Xaml.Parser
                         string error;
                         if (_context.CurrentMember == null)
                         {
-                            error = SR.Get(SRID.MissingComma1,  _tokenizer.TokenText);
+                            error = SR.Format(SR.MissingComma1,  _tokenizer.TokenText);
                         }
                         else
                         {
-                            error = SR.Get(SRID.MissingComma2, _context.CurrentMember.Name, _tokenizer.TokenText);
+                            error = SR.Format(SR.MissingComma2, _context.CurrentMember.Name, _tokenizer.TokenText);
                         }
                         throw new XamlParseException(_tokenizer, error);
                     }
@@ -494,8 +494,6 @@ namespace MS.Internal.Xaml.Parser
             // the Ctor args were pushed onto the Builder (XamlWriter)
             // stack, but were not pushed onto the parser stack, so the
             // ME is still the CurrentType for us.
-
-            XamlType xamlType = _context.CurrentType;
 
             _context.CurrentArgCount = 0;
             _context.CurrentMember = null;

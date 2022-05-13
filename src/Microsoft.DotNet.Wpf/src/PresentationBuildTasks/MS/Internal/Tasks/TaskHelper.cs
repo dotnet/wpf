@@ -223,7 +223,7 @@ namespace MS.Internal.Tasks
         //
         // Helper to create CompilerWrapper.
         //
-        internal static CompilerWrapper CreateCompilerWrapper(bool fInSeparateDomain, ref AppDomain  appDomain)
+        internal static CompilerWrapper CreateCompilerWrapper()
         {
             return new CompilerWrapper();
         }

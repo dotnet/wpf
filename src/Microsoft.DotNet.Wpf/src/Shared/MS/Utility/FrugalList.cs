@@ -265,12 +265,12 @@ namespace MS.Utility
 
         public override bool Contains(T value)
         {
-            return _loneEntry.Equals(value);
+            return EqualityComparer<T>.Default.Equals(_loneEntry, value);
         }
 
         public override int IndexOf(T value)
         {
-            if (_loneEntry.Equals(value))
+            if (EqualityComparer<T>.Default.Equals(_loneEntry, value))
             {
                 return 0;
             }
@@ -298,7 +298,7 @@ namespace MS.Utility
         public override bool Remove(T value)
         {
             // Wipe out the info in the only entry if it matches the item.
-            if (_loneEntry.Equals(value))
+            if (EqualityComparer<T>.Default.Equals(_loneEntry, value))
             {
                 _loneEntry = default(T);
                 --_count;
@@ -337,7 +337,7 @@ namespace MS.Utility
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
+                throw new ArgumentException(SR.Format(SR.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -440,17 +440,17 @@ namespace MS.Utility
 
         public override int IndexOf(T value)
         {
-            if (_entry0.Equals(value))
+            if (EqualityComparer<T>.Default.Equals(_entry0, value))
             {
                 return 0;
             }
             if (_count > 1)
             {
-                if (_entry1.Equals(value))
+                if (EqualityComparer<T>.Default.Equals(_entry1, value))
                 {
                     return 1;
                 }
-                if ((3 == _count) && (_entry2.Equals(value)))
+                if ((3 == _count) && EqualityComparer<T>.Default.Equals(_entry2, value))
                 {
                     return 2;
                 }
@@ -516,19 +516,19 @@ namespace MS.Utility
             // If the item matches an existing entry, wipe out the last
             // entry and move all the other entries up.  Because we only
             // have three entries we can just unravel all the cases.
-            if (_entry0.Equals(value))
+            if (EqualityComparer<T>.Default.Equals(_entry0, value))
             {
                 RemoveAt(0);
                 return true;
             }
             else if ( _count > 1)
             {
-                if (_entry1.Equals(value))
+                if (EqualityComparer<T>.Default.Equals(_entry1, value))
                 {
                     RemoveAt(1);
                     return true;
                 }
-                else if ((3 == _count) && (_entry2.Equals(value)))
+                else if ((3 == _count) && EqualityComparer<T>.Default.Equals(_entry2, value))
                 {
                     RemoveAt(2);
                     return true;
@@ -615,7 +615,7 @@ namespace MS.Utility
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
+                throw new ArgumentException(SR.Format(SR.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -781,35 +781,35 @@ namespace MS.Utility
 
         public override int IndexOf(T value)
         {
-            if (_entry0.Equals(value))
+            if (EqualityComparer<T>.Default.Equals(_entry0, value))
             {
                 return 0;
             }
             if (_count > 1)
             {
-                if (_entry1.Equals(value))
+                if (EqualityComparer<T>.Default.Equals(_entry1, value))
                 {
                     return 1;
                 }
                 if (_count > 2)
                 {
-                    if (_entry2.Equals(value))
+                    if (EqualityComparer<T>.Default.Equals(_entry2, value))
                     {
                         return 2;
                     }
                     if (_count > 3)
                     {
-                        if (_entry3.Equals(value))
+                        if (EqualityComparer<T>.Default.Equals(_entry3, value))
                         {
                             return 3;
                         }
                         if (_count > 4)
                         {
-                            if (_entry4.Equals(value))
+                            if (EqualityComparer<T>.Default.Equals(_entry4, value))
                             {
                                 return 4;
                             }
-                            if ((6 == _count) && (_entry5.Equals(value)))
+                            if ((6 == _count) && EqualityComparer<T>.Default.Equals(_entry5, value))
                             {
                                 return 5;
                             }
@@ -914,40 +914,40 @@ namespace MS.Utility
             // If the item matches an existing entry, wipe out the last
             // entry and move all the other entries up.  Because we only
             // have six entries we can just unravel all the cases.
-            if (_entry0.Equals(value))
+            if (EqualityComparer<T>.Default.Equals(_entry0, value))
             {
                 RemoveAt(0);
                 return true;
             }
             else if (_count > 1)
             {
-                if (_entry1.Equals(value))
+                if (EqualityComparer<T>.Default.Equals(_entry1, value))
                 {
                     RemoveAt(1);
                     return true;
                 }
                 else if (_count > 2)
                 {
-                    if (_entry2.Equals(value))
+                    if (EqualityComparer<T>.Default.Equals(_entry2, value))
                     {
                         RemoveAt(2);
                         return true;
                     }
                     else if (_count > 3)
                     {
-                        if (_entry3.Equals(value))
+                        if (EqualityComparer<T>.Default.Equals(_entry3, value))
                         {
                             RemoveAt(3);
                             return true;
                         }
                         else if (_count > 4)
                         {
-                            if (_entry4.Equals(value))
+                            if (EqualityComparer<T>.Default.Equals(_entry4, value))
                             {
                                 RemoveAt(4);
                                 return true;
                             }
-                            else if ((6 == _count) && (_entry5.Equals(value)))
+                            else if ((6 == _count) && EqualityComparer<T>.Default.Equals(_entry5, value))
                             {
                                 RemoveAt(5);
                                 return true;
@@ -1092,7 +1092,7 @@ namespace MS.Utility
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
+                throw new ArgumentException(SR.Format(SR.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -1131,7 +1131,7 @@ namespace MS.Utility
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
+                throw new ArgumentException(SR.Format(SR.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -1392,7 +1392,7 @@ namespace MS.Utility
         {
             for (int index = 0; index < _count; ++index)
             {
-                if (_entries[index].Equals(value))
+                if (EqualityComparer<T>.Default.Equals(_entries[index], value))
                 {
                     return index;
                 }
@@ -1425,7 +1425,7 @@ namespace MS.Utility
         {
             for (int index = 0; index < _count; ++index)
             {
-                if (_entries[index].Equals(value))
+                if (EqualityComparer<T>.Default.Equals(_entries[index], value))
                 {
                     RemoveAt(index);
                     return true;
@@ -1464,7 +1464,7 @@ namespace MS.Utility
                     continue;
                 }
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
+                throw new ArgumentException(SR.Format(SR.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -1539,7 +1539,7 @@ namespace MS.Utility
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
+                throw new ArgumentException(SR.Format(SR.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -1847,7 +1847,7 @@ namespace MS.Utility
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.FrugalList_CannotPromoteBeyondArray));
+                    throw new InvalidOperationException(SR.FrugalList_CannotPromoteBeyondArray);
                 }
             }
             return _listStore.Count - 1;
@@ -2212,7 +2212,7 @@ namespace MS.Utility
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.FrugalList_CannotPromoteBeyondArray));
+                    throw new InvalidOperationException(SR.FrugalList_CannotPromoteBeyondArray);
                 }
             }
             return _listStore.Count - 1;

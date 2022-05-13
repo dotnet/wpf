@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 #include "FontCollection.h"
-#include <wpfvcclr.h>
 
 namespace MS { namespace Internal { namespace Text { namespace TextInterface
 {

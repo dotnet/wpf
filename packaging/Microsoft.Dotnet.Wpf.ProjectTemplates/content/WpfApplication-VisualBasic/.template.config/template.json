@@ -27,26 +27,30 @@
       "type": "parameter",
       "description": "The target framework for the project.",
       "datatype": "choice",
-      "choices": [
-        {
-          "choice": "netcoreapp3.0",
-          "description": "Target netcoreapp3.0"
-        },
-        {
-          "choice": "netcoreapp3.1",
-          "description": "Target netcoreapp3.1"
-        },
-        {
-          "choice": "net5.0",
-          "description": "Target net5.0"
-        },
-        {
-          "choice": "net6.0",
-          "description": "Target net6.0"
-        }
-      ],
+        "choices": [
+            {
+                "choice": "netcoreapp3.0",
+                "description": "Target netcoreapp3.0"
+            },
+            {
+                "choice": "netcoreapp3.1",
+                "description": "Target netcoreapp3.1"
+            },
+            {
+                "choice": "net5.0",
+                "description": "Target net5.0"
+            },
+            {
+                "choice": "net6.0",
+                "description": "Target net6.0"
+            },
+            {
+                "choice": "net7.0",
+                "description": "Target net7.0"
+            }
+        ],
       "replaces": "FrameworkParameter",
-      "defaultValue": "net6.0"
+      "defaultValue": "net7.0"
     },
     "UseWindowsDesktopSdk": {
       "type": "computed",
@@ -105,6 +109,7 @@
   "defaultName": "WpfApp1",
   "postActions": [
     {
+      "id": "restore",
       "condition": "(!skipRestore)",
       "description": "Restore NuGet packages required by this project.",
       "manualInstructions": [
@@ -114,6 +119,7 @@
       "continueOnError": true
     },
     {
+      "id": "editor",
       "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
       "description": "Opens MainWindow.xaml in the editor",
       "manualInstructions": [ ],

@@ -589,7 +589,7 @@ namespace Microsoft.Win32
                     //    }
                     // 
                     // Convert the pointer to our OFNOTIFY stored in lparam to an object using PtrToStructure.
-                    NativeMethods.OFNOTIFY notify = (NativeMethods.OFNOTIFY)UnsafeNativeMethods.PtrToStructure(lParam, typeof(NativeMethods.OFNOTIFY));
+                    NativeMethods.OFNOTIFY notify = Marshal.PtrToStructure<NativeMethods.OFNOTIFY>(lParam);
 
                     // WM_NOTIFY indicates that the dialog is sending us a notification message.
                     // notify.hdr_code is an int defining which notification is being received.
@@ -623,8 +623,7 @@ namespace Microsoft.Win32
 
                             // Retrieve the OPENFILENAME structure from the OFNOTIFY structure
                             // so we can access the CharBuffer inside it.
-                            NativeMethods.OPENFILENAME_I ofn = (NativeMethods.OPENFILENAME_I)
-                                UnsafeNativeMethods.PtrToStructure(notify.lpOFN, typeof(NativeMethods.OPENFILENAME_I));
+                            NativeMethods.OPENFILENAME_I ofn = Marshal.PtrToStructure<NativeMethods.OPENFILENAME_I>(notify.lpOFN);
 
 
                             // Get the buffer size required to store the selected file names.
@@ -1162,7 +1161,7 @@ namespace Microsoft.Win32
         /// </returns>
         private bool DoFileOk(IntPtr lpOFN)
         {
-            NativeMethods.OPENFILENAME_I ofn = (NativeMethods.OPENFILENAME_I)UnsafeNativeMethods.PtrToStructure(lpOFN, typeof(NativeMethods.OPENFILENAME_I));
+            NativeMethods.OPENFILENAME_I ofn = Marshal.PtrToStructure<NativeMethods.OPENFILENAME_I>(lpOFN);
 
             // While processing the results we get from the OPENFILENAME struct,
             // we will adjust several properties of our own class to reflect the
@@ -1464,23 +1463,24 @@ namespace Microsoft.Win32
                             // somehow slipped through.
                             //
                             // Strip out any extension that may be remaining and place the rest 
-                            // of the filename in s.                
-                            //
-                            // Changed to use StringBuilder for perf reasons as per FxCop CA1818
-                            StringBuilder s = new StringBuilder(fileName.Substring(0, fileName.Length - currentExtension.Length));
-                            // we don't want to append the extension if it contains wild cards
-                            if (extensions[j].IndexOfAny(new char[] { '*', '?' }) == -1)
+                            // of the filename in s.
+
+                            string newFilename;
+                            if (((ReadOnlySpan<char>)extensions[j]).IndexOfAny('*', '?') != -1)
                             {
-                                // No wildcards, so go ahead and append
-                                s.Append(".");
-                                s.Append(extensions[j]);
+                                // we don't want to append the extension if it contains wild cards
+                                newFilename = fileName.Substring(0, fileName.Length - currentExtension.Length);
+                            }
+                            else
+                            {
+                                newFilename = string.Concat(fileName.AsSpan(0, fileName.Length - currentExtension.Length), ".", extensions[j]);
                             }
 
                             // If OFN_FILEMUSTEXIST is not set, or if it is set but the filename we generated
                             // does in fact exist, we update fileName and stop trying new extensions.
-                            if (!GetOption(NativeMethods.OFN_FILEMUSTEXIST) || File.Exists(s.ToString()))
+                            if (!GetOption(NativeMethods.OFN_FILEMUSTEXIST) || File.Exists(newFilename))
                             {
-                                fileName = s.ToString();
+                                fileName = newFilename;
                                 break;
                             }
                         }

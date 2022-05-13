@@ -643,8 +643,7 @@ namespace System.Windows.Navigation
                 byte[] keyToken = new byte[byteCount];
                 for (int i = 0; i < byteCount; i++)
                 {
-                    string byteString = assemblyKey.Substring(i * 2, 2);
-                    keyToken[i] = byte.Parse(byteString, NumberStyles.HexNumber, CultureInfo.InvariantCulture);
+                    keyToken[i] = byte.Parse(assemblyKey.AsSpan(i * 2, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
                 }
 
                 return keyToken;

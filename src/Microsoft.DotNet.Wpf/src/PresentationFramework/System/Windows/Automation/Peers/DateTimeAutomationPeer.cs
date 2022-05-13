@@ -459,6 +459,24 @@ namespace System.Windows.Automation.Peers
             return AutomationProperties.AutomationSizeOfSetDefault;
         }
 
+        ///
+        override protected AutomationHeadingLevel GetHeadingLevelCore()
+        {
+            AutomationPeer wrapperPeer = WrapperPeer;
+            AutomationHeadingLevel headingLevel = AutomationHeadingLevel.None;
+
+            if(wrapperPeer != null)
+            {
+                headingLevel = wrapperPeer.GetHeadingLevel();
+            }
+            else
+            {
+                ThrowElementNotAvailableException();
+            }
+
+            return headingLevel;
+        }
+
         internal override Rect GetVisibleBoundingRectCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
@@ -508,6 +526,21 @@ namespace System.Windows.Automation.Peers
             }
 
             return true;
+        }
+
+        protected override bool IsDialogCore()
+        {
+            AutomationPeer wrapperPeer = WrapperPeer;
+            if (wrapperPeer != null)
+            {
+                return wrapperPeer.IsDialog();
+            }
+            else
+            {
+                ThrowElementNotAvailableException();
+            }
+
+            return false;
         }
 
         protected override bool IsEnabledCore()

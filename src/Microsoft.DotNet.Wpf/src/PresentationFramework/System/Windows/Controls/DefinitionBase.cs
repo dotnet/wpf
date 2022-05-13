@@ -211,7 +211,7 @@ namespace System.Windows.Controls
         internal static bool IsUserMinSizePropertyValueValid(object value)
         {
             double v = (double)value;
-            return (!DoubleUtil.IsNaN(v) && v >= 0.0d && !Double.IsPositiveInfinity(v));
+            return (!double.IsNaN(v) && v >= 0.0d && !Double.IsPositiveInfinity(v));
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace System.Windows.Controls
         internal static bool IsUserMaxSizePropertyValueValid(object value)
         {
             double v = (double)value;
-            return (!DoubleUtil.IsNaN(v) && v >= 0.0d);
+            return (!double.IsNaN(v) && v >= 0.0d);
         }
 
         /// <summary>

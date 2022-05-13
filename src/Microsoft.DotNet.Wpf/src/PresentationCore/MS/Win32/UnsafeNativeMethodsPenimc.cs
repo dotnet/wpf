@@ -154,7 +154,7 @@ namespace MS.Win32.Penimc
             // Instantiating PimcManager using "new PimcManager()" results
             // in calling CoCreateInstanceForApp from an immersive process
             // (like designer). Such a call would fail because PimcManager is not
-            // in white list for that call. Hence we call CoCreateInstance directly.
+            // in the allowlist for that call. Hence we call CoCreateInstance directly.
             // Note: Normally WPF is not supported for immersive processes
             // but designer is an exception.
             Guid clsid = Guid.Parse(PimcConstants.PimcManager3CLSID);
@@ -630,7 +630,7 @@ namespace MS.Win32.Penimc
         /// This value is used as a cookie to identify a specific activated activation context.</param>
         /// <returns>True on success, false otherwise.</returns>
         [return: MarshalAs(UnmanagedType.Bool)]
-        [DllImport(ExternDll.Kernel32, ExactSpelling = true, PreserveSig = false)]
+        [DllImport(ExternDll.Kernel32, ExactSpelling = true)]
         private static extern bool DeactivateActCtx(int flags, IntPtr activationCtxCookie);
     }
 

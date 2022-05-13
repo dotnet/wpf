@@ -219,7 +219,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
             // Divide remainingHeight equally among starLayoutProviders
             remainingHeight = finalSize.Height - totalDesiredHeight;
-            Dictionary<UIElement, object> starLayoutTargets = GetStarLayoutProviderTargets();
+            HashSet<UIElement> starLayoutTargets = GetStarLayoutProviderTargets();
             if (DoubleUtil.GreaterThan(remainingHeight, 0.0) && starLayoutTargets.Count > 0)
             {
                 surplusHeight = remainingHeight / starLayoutTargets.Count;
@@ -230,7 +230,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             for (int i = 0; i < children.Count; i++)
             {
                 UIElement child = children[i];
-                if (starLayoutTargets.ContainsKey(child))
+                if (starLayoutTargets.Contains(child))
                 {
                     // if the child is a StarLayoutProvider, give it the surplusHeight.
                     double availableHeight = child.DesiredSize.Height + surplusHeight;
@@ -266,16 +266,16 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             base.BringIndexIntoView(index);
         }
 
-        private Dictionary<UIElement, object> GetStarLayoutProviderTargets()
+        private HashSet<UIElement> GetStarLayoutProviderTargets()
         {
-            Dictionary<UIElement, object> targets = new Dictionary<UIElement, object>();
+            HashSet<UIElement> targets = new HashSet<UIElement>();
 
             foreach (IProvideStarLayoutInfoBase starProvider in _registeredStarLayoutProviders)
             {
                 UIElement starLayoutTarget = starProvider.TargetElement;
                 if (starLayoutTarget != null)
                 {
-                    targets.Add(starLayoutTarget, null);
+                    targets.Add(starLayoutTarget);
                 }
             }
 

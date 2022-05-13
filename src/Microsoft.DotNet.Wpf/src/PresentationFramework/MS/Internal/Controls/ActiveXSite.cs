@@ -69,7 +69,7 @@ namespace MS.Internal.Controls
             return NativeMethods.E_NOTIMPL;
         }
 
-        int UnsafeNativeMethods.IOleControlSite.TransformCoords(NativeMethods.POINT pPtlHimetric, NativeMethods.POINTF pPtfContainer, int dwFlags)
+        int UnsafeNativeMethods.IOleControlSite.TransformCoords(ref NativeMethods.POINT pPtlHimetric, ref NativeMethods.POINTF pPtfContainer, int dwFlags)
         {
             if ((dwFlags & NativeMethods.XFORMCOORDS_HIMETRICTOCONTAINER) != 0)
             {

@@ -201,7 +201,7 @@ namespace System.Xaml
                         {
                             //
                             // If for some reason it doesn't, throw.
-                            throw new InvalidOperationException(SR.Get(SRID.DefaultAttachablePropertyStoreCannotAddInstance));
+                            throw new InvalidOperationException(SR.DefaultAttachablePropertyStoreCannotAddInstance);
                         }
                     }
                 }

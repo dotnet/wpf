@@ -352,7 +352,10 @@ namespace System.Windows.Media.Imaging
         /// <param name="sourceRect">The rect to copy from the input buffer.</param>
         /// <param name="sourceBuffer">The input buffer used to update the bitmap.</param>
         /// <param name="sourceBufferSize">The size of the input buffer in bytes.</param>
-        /// <param name="sourceBufferStride">The stride of the input buffer in bytes.</param>
+        /// <param name="sourceBufferStride">
+        ///     The stride of the input buffer in bytes.
+        ///     It indicates where the next row starts in the input buffer.
+        /// </param>
         /// <param name="destinationX">The destination x-coordinate of the left-most pixel to copy.</param>
         /// <param name="destinationY">The destination y-coordinate of the top-most pixel to copy.</param>
         public void WritePixels(
@@ -380,7 +383,10 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         /// <param name="sourceRect">The rect to copy from the input buffer.</param>
         /// <param name="sourceBuffer">The input buffer used to update the bitmap.</param>
-        /// <param name="sourceBufferStride">The stride of the input buffer in bytes.</param>
+        /// <param name="sourceBufferStride">
+        ///     The stride of the input buffer in bytes.
+        ///     It indicates where the next row starts in the input buffer.
+        /// </param>
         /// <param name="destinationX">The destination x-coordinate of the left-most pixel to copy.</param>
         /// <param name="destinationY">The destination y-coordinate of the top-most pixel to copy.</param>
         public void WritePixels(
@@ -436,7 +442,7 @@ namespace System.Windows.Media.Imaging
         /// <param name="sourceRect">Area to update</param>
         /// <param name="buffer">Input buffer</param>
         /// <param name="bufferSize">Size of the buffer</param>
-        /// <param name="stride">Stride</param>
+        /// <param name="stride">Stride of the input buffer</param>
         public unsafe void WritePixels(
             Int32Rect sourceRect,
             IntPtr buffer,
@@ -488,7 +494,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         /// <param name="sourceRect">Area to update</param>
         /// <param name="pixels">Input buffer</param>
-        /// <param name="stride">Stride</param>
+        /// <param name="stride">Stride of the input buffer</param>
         /// <param name="offset">Input buffer offset</param>
         public void WritePixels(
             Int32Rect sourceRect,
@@ -814,6 +820,7 @@ namespace System.Windows.Media.Imaging
         /// </param>
         /// <param name="sourceBufferStride">
         ///     The stride of the input buffer in bytes.
+        ///     It indicates where the next row starts in the input buffer.
         /// </param>
         /// <param name="destX">
         ///     The destination x-coordinate of the left-most pixel to copy.

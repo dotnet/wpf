@@ -1280,6 +1280,17 @@ namespace System.Windows
         }
 
         /// <summary>
+        /// Gets Showing as dialog
+        /// </summary>
+        internal bool IsShowingAsDialog
+        {
+            get
+            {
+                return _showingAsDialog;
+            }
+        }
+
+        /// <summary>
         /// Sets/gets DialogResult
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), TypeConverter(typeof(DialogResultConverter))]
@@ -2597,7 +2608,7 @@ namespace System.Windows
             Point requestedLocationDeviceUnits = LogicalToDeviceUnits(new Point(requestedLeft, requestedTop));
 
             // if Width was specified and is not the same as the current width, then update it
-            if ((!DoubleUtil.IsNaN(requestedWidth)) && (!DoubleUtil.AreClose(sizeDeviceUnits.Width, requestedSizeDeviceUnits.X)))
+            if ((!double.IsNaN(requestedWidth)) && (!DoubleUtil.AreClose(sizeDeviceUnits.Width, requestedSizeDeviceUnits.X)))
             {
                 // at this stage, ActualWidth/Height is not set since
                 // layout has not happened (it happens when we set the
@@ -2614,7 +2625,7 @@ namespace System.Windows
             }
 
             // if Height was specified and is not the same as the current height, then update it
-            if (!DoubleUtil.IsNaN(requestedHeight) && (!DoubleUtil.AreClose(sizeDeviceUnits.Height, requestedSizeDeviceUnits.Y)))
+            if (!double.IsNaN(requestedHeight) && (!DoubleUtil.AreClose(sizeDeviceUnits.Height, requestedSizeDeviceUnits.Y)))
             {
                 // at this stage, ActualWidth/Height is not set since
                 // layout has not happened (it happens when we set the
@@ -2631,7 +2642,7 @@ namespace System.Windows
             }
 
             // if left was specified and is not the same as the current left, then update it
-            if (!DoubleUtil.IsNaN(requestedLeft) && (!DoubleUtil.AreClose(xDeviceUnits, requestedLocationDeviceUnits.X)))
+            if (!double.IsNaN(requestedLeft) && (!DoubleUtil.AreClose(xDeviceUnits, requestedLocationDeviceUnits.X)))
             {
                 updateHwndPlacement = true;
                 xDeviceUnits = requestedLocationDeviceUnits.X;
@@ -2644,7 +2655,7 @@ namespace System.Windows
             }
 
             // if top was specified and is not the same as the current top, then update it
-            if (!DoubleUtil.IsNaN(requestedTop) && (!DoubleUtil.AreClose(yDeviceUnits, requestedLocationDeviceUnits.Y)))
+            if (!double.IsNaN(requestedTop) && (!DoubleUtil.AreClose(yDeviceUnits, requestedLocationDeviceUnits.Y)))
             {
                 updateHwndPlacement = true;
                 yDeviceUnits = requestedLocationDeviceUnits.Y;
@@ -3373,13 +3384,14 @@ namespace System.Windows
                 _contentRenderedCallback.Abort();
             }
             _contentRenderedCallback = Dispatcher.BeginInvoke(DispatcherPriority.Input,
-                                   (DispatcherOperationCallback) delegate (object unused)
+                                   (DispatcherOperationCallback) delegate (object arg)
                                    {
                                        // Event handler exception continuality: there are no state related/depending on ContentRendered event.
                                        // If an exception occurs in event handler, our state will not be corrupted.
                                        // Please check event handler exception continuality if the logic changes.
-                                       _contentRenderedCallback = null;
-                                       OnContentRendered(EventArgs.Empty);
+                                       Window thisRef = (Window)arg;
+                                       thisRef._contentRenderedCallback = null;
+                                       thisRef.OnContentRendered(EventArgs.Empty);
                                        return null;
                                    },
                                    this);
@@ -3582,12 +3594,11 @@ namespace System.Windows
         IntPtr GetCurrentMonitorFromMousePosition()
         {
             // center on the screen on which the mouse is on
-            NativeMethods.POINT pt = new NativeMethods.POINT();
+            NativeMethods.POINT pt = default;
 
-            UnsafeNativeMethods.TryGetCursorPos(pt);
+            UnsafeNativeMethods.TryGetCursorPos(ref pt);
 
-            NativeMethods.POINTSTRUCT ptStruct = new NativeMethods.POINTSTRUCT(pt.x, pt.y);
-            return SafeNativeMethods.MonitorFromPoint(ptStruct, NativeMethods.MONITOR_DEFAULTTONEAREST);
+            return SafeNativeMethods.MonitorFromPoint(pt, NativeMethods.MONITOR_DEFAULTTONEAREST);
         }
 
         // <summary>
@@ -3777,16 +3788,16 @@ namespace System.Windows
                 // then we cannot CenterOwner
                 if (Owner.IsSourceWindowNull)
                 {
-                    if ((DoubleUtil.IsNaN(Owner.Width)) ||
-                        (DoubleUtil.IsNaN(Owner.Height)))
+                    if ((double.IsNaN(Owner.Width)) ||
+                        (double.IsNaN(Owner.Height)))
                     {
                         return false;
                     }
                 }
 
                 // if Owner's Top or Left is not specified, we cannot CenterOwner
-                if ((DoubleUtil.IsNaN(Owner.Left)) ||
-                    (DoubleUtil.IsNaN(Owner.Top)))
+                if ((double.IsNaN(Owner.Left)) ||
+                    (double.IsNaN(Owner.Top)))
                 {
                     return false;
                 }
@@ -4699,7 +4710,11 @@ namespace System.Windows
 
         private bool WmGetMinMaxInfo( IntPtr lParam )
         {
-            NativeMethods.MINMAXINFO mmi = (NativeMethods.MINMAXINFO)UnsafeNativeMethods.PtrToStructure( lParam, typeof(NativeMethods.MINMAXINFO));
+            NativeMethods.MINMAXINFO mmi;
+            unsafe
+            {
+                mmi = *(NativeMethods.MINMAXINFO*)lParam;
+            }
 
             //
             // For Bug 1380569: Window SizeToContent does not work after changing Max size properties
@@ -4760,7 +4775,10 @@ namespace System.Windows
 
                 // Notify Win32 of the new Min/Max value for this HWND.
 
-                Marshal.StructureToPtr(mmi, lParam, true);
+                unsafe
+                {
+                    *(NativeMethods.MINMAXINFO*)lParam = mmi;
+                }
             }
 
             return true;
@@ -5522,7 +5540,7 @@ namespace System.Windows
         {
             //basically, NaN and PositiveInfinity are ok, and then anything
             //that can be converted to Int32
-            if (!Double.IsPositiveInfinity(l) && !DoubleUtil.IsNaN(l) &&
+            if (!Double.IsPositiveInfinity(l) && !double.IsNaN(l) &&
                 ((l > Int32.MaxValue) || (l < Int32.MinValue)))
             {
                 throw new ArgumentException(SR.Get(SRID.ValueNotBetweenInt32MinMax, l));
@@ -5563,7 +5581,7 @@ namespace System.Windows
             ValidateLengthForHeightWidth(height);
 
             // Adding check for IsCompositionTargetInvalid
-            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false && !DoubleUtil.IsNaN(height))
+            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false && !double.IsNaN(height))
             {
                 UpdateHeight(height);
             }
@@ -5661,7 +5679,7 @@ namespace System.Windows
             ValidateLengthForHeightWidth(width);
 
             // Adding check for IsCompositionTargetInvalid
-            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false && !DoubleUtil.IsNaN(width))
+            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false && !double.IsNaN(width))
             {
                 UpdateWidth(width);
             }
@@ -5952,7 +5970,7 @@ namespace System.Windows
             {
                 // NaN is special and indicates using Win32 default,
                 // so we exclude that.
-                if (DoubleUtil.IsNaN(newTop) == false)
+                if (double.IsNaN(newTop) == false)
                 {
                     if (WindowState == WindowState.Normal)
                     {
@@ -6047,7 +6065,7 @@ namespace System.Windows
             {
                 // NaN is special and indicates using Win32 default,
                 // so we exclude that here.
-                if (DoubleUtil.IsNaN(newLeft) == false)
+                if (double.IsNaN(newLeft) == false)
                 {
                     if (WindowState == WindowState.Normal)
                     {
@@ -7277,7 +7295,7 @@ namespace System.Windows
                 private NativeMethods.POINT GetWindowScreenLocation(FlowDirection flowDirection)
                 {
                     Debug.Assert(IsSourceWindowNull != true, "IsSourceWindowNull cannot be true here");
-                    NativeMethods.POINT pt = new NativeMethods.POINT(0, 0);
+                    NativeMethods.POINT pt = default;
                     if (flowDirection == FlowDirection.RightToLeft)
                     {
                         NativeMethods.RECT rc = new NativeMethods.RECT(0, 0, 0, 0);
@@ -7288,7 +7306,7 @@ namespace System.Windows
                         // note that we use rc.right here for the RTL case and client to screen that point
                         pt = new NativeMethods.POINT(rc.right, rc.top);
                     }
-                    UnsafeNativeMethods.ClientToScreen(new HandleRef(this, _sourceWindow.CriticalHandle), pt);
+                    UnsafeNativeMethods.ClientToScreen(new HandleRef(this, _sourceWindow.CriticalHandle), ref pt);
 
                     return pt;
                 }

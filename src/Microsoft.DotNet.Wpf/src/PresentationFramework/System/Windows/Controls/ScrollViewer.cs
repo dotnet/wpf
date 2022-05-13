@@ -246,7 +246,7 @@ namespace System.Windows.Controls
             // We also don't invalidate measure if we are in the middle of the
             // measure pass, as the ScrollViewer will already be updating the
             // visibility of the autoscrollbars.
-            if(!MeasureInProgress && 
+            if(!MeasureInProgress &&
                (!ArrangeInProgress || !InvalidatedMeasureFromArrange))
             {
                 //
@@ -892,7 +892,7 @@ namespace System.Windows.Controls
         protected override void OnStylusSystemGesture(StylusSystemGestureEventArgs e)
         {
             // DevDiv:1139804
-            // Keep track of seeing a tap gesture so that we can use this information to 
+            // Keep track of seeing a tap gesture so that we can use this information to
             // make decisions about panning.
             _seenTapGesture = e.SystemGesture == SystemGesture.Tap;
         }
@@ -1175,7 +1175,7 @@ namespace System.Windows.Controls
             ScrollBarVisibility vsbv = VerticalScrollBarVisibility;
             ScrollBarVisibility hsbv = HorizontalScrollBarVisibility;
             Size desiredSize = new Size();
-            
+
             if (child != null)
             {
                 bool etwTracingEnabled = EventTrace.IsEnabled(EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Info);
@@ -1511,7 +1511,7 @@ namespace System.Windows.Controls
             PanningMode mode = PanningMode;
 
             // Call InvalidateProperty for IsManipulationEnabledProperty
-            // to reset previous SetCurrentValueInternal if any. 
+            // to reset previous SetCurrentValueInternal if any.
             // Then call SetCurrentValueInternal to
             // set the value of these properties if needed.
             InvalidateProperty(IsManipulationEnabledProperty);
@@ -1742,7 +1742,7 @@ namespace System.Windows.Controls
                     // High precision touch devices can trigger a panning manipulation
                     // due to the low threshold we set for pan initiation.  This may be
                     // undesirable since we may enter pan for what the system considers a
-                    // tap.  Panning should be contingent on a drag gesture as that is the 
+                    // tap.  Panning should be contingent on a drag gesture as that is the
                     // most consistent with the system at large.  So if we have seen a tap
                     // on our main input, we should cancel any panning.
                     if (_seenTapGesture)
@@ -1831,7 +1831,7 @@ namespace System.Windows.Controls
 
             if (DoubleUtil.AreClose(scrollableLength, 0))
             {
-                // If the Scrollable length in this direction is 0, 
+                // If the Scrollable length in this direction is 0,
                 // then we should neither scroll nor report the boundary feedback
                 unused = 0;
                 delta = 0;
@@ -1846,7 +1846,7 @@ namespace System.Windows.Controls
             }
             else if (DoubleUtil.LessThan(delta, 0) && DoubleUtil.GreaterThan(unused, 0))
             {
-                // If we are past the boundary in positive direction 
+                // If we are past the boundary in positive direction
                 // and the delta is in negative direction,
                 // then compensate the delta from unused vector.
                 double newUnused = Math.Max(unused + delta, 0);
@@ -1855,7 +1855,7 @@ namespace System.Windows.Controls
             }
             else if (DoubleUtil.GreaterThan(delta, 0) && DoubleUtil.LessThan(unused, 0))
             {
-                // If we are past the boundary in negative direction 
+                // If we are past the boundary in negative direction
                 // and the delta is in positive direction,
                 // then compensate the delta from unused vector.
                 double newUnused = Math.Min(unused + delta, 0);
@@ -1878,7 +1878,7 @@ namespace System.Windows.Controls
                 if (!DoubleUtil.AreClose(delta, 0))
                 {
                     // if there is any delta left, then re-evalute the vertical offset
-                    ScrollToVerticalOffset(_panningInfo.OriginalVerticalOffset - 
+                    ScrollToVerticalOffset(_panningInfo.OriginalVerticalOffset -
                         Math.Round(PanningRatio * cumulativeTranslation / _panningInfo.DeltaPerVerticalOffset));
                 }
                 _panningInfo.UnusedTranslation = new Vector(_panningInfo.UnusedTranslation.X, unused);
@@ -1903,7 +1903,7 @@ namespace System.Windows.Controls
 
         /// <summary>
         ///     Scrolling due to manipulation can start only if there is a considerable delta
-        ///     in the direction based on the mode. This method makes sure that the delta is 
+        ///     in the direction based on the mode. This method makes sure that the delta is
         ///     considerable.
         /// </summary>
         private bool CanStartScrollManipulation(Vector translation, out bool cancelManipulation)
@@ -2312,6 +2312,15 @@ namespace System.Windows.Controls
 
                         if (!rcNew.IsEmpty)
                         {
+                            // clip the new rect to isi's bounds, in case isi didn't.
+                            // The ancestor's scroll should only depend on the visible
+                            // portion of the new rect.
+                            UIElement uie = visi as UIElement;
+                            if (uie != null)
+                            {
+                                rcNew.Intersect(new Rect(uie.RenderSize));
+                            }
+
                             GeneralTransform t = visi.TransformToAncestor(this);
                             rcNew = t.TransformBounds(rcNew);
                         }
@@ -2609,7 +2618,7 @@ namespace System.Windows.Controls
             ScrollViewer sv = target as ScrollViewer;
             if (sv != null)
             {
-                // If any of the ScrollBar scroll commands are raised while 
+                // If any of the ScrollBar scroll commands are raised while
                 // scroll manipulation is in its inertia, then the manipualtion
                 // should be completed.
                 sv.CompleteScrollManipulation = true;
@@ -2636,8 +2645,8 @@ namespace System.Windows.Controls
                 {
                     args.CanExecute = false;
                     args.ContinueRouting = true;
-                    
-                    // It is important to handle this event to prevent any 
+
+                    // It is important to handle this event to prevent any
                     // other ScrollViewers in the ancestry from claiming it.
                     args.Handled = true;
                 }
@@ -2654,7 +2663,7 @@ namespace System.Windows.Controls
                 {
                     args.CanExecute = false;
 
-                    // It is important to handle this event to prevent any 
+                    // It is important to handle this event to prevent any
                     // other ScrollViewers in the ancestry from claiming it.
                     args.Handled = true;
                 }
@@ -2933,7 +2942,7 @@ namespace System.Windows.Controls
 
         private PanningInfo _panningInfo = null;
         private Flags _flags = Flags.HandlesMouseWheelScrolling;
-        
+
         #endregion
 
         //-------------------------------------------------------------------

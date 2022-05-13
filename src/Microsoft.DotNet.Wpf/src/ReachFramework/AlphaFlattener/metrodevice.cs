@@ -17,7 +17,6 @@ using System.Printing;
 using System.Printing.Interop;
 using System.Security;
 using System.Text;
-using System.Drawing.Printing;
 using MS.Utility;
 
 namespace Microsoft.Internal.AlphaFlattener

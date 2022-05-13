@@ -36,7 +36,6 @@ using System.Windows.Threading;
 using System.Collections.Generic;
 using System.Threading;
 using System.Diagnostics;
-using System.Drawing.Printing;
 using MS.Internal.PrintWin32Thunk; 
 
 namespace MS.Internal.Printing.Configuration

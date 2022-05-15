@@ -40,7 +40,7 @@ namespace MS.Internal.FontCache
             }
         }
 
-        internal static Text.TextInterface.FontCollection SystemFontCollection
+        internal static unsafe Text.TextInterface.FontCollection SystemFontCollection
         {
             get
             {
@@ -50,8 +50,13 @@ namespace MS.Internal.FontCache
                     {
                         if (_systemFontCollection == null)
                         {
-                            var x = Instance.DWriteFactoryAddRef;
-                            _systemFontCollection = Instance.GetSystemFontCollection();
+                            var dwriteFactory = Instance.DWriteFactoryAddRef;
+                            IDWriteFontCollection* dwriteFontCollection = null;
+                            var checkForUpdates = false;
+                            var hr = dwriteFactory->GetSystemFontCollection(&dwriteFontCollection, checkForUpdates);
+                            System.GC.KeepAlive(this);
+                            _systemFontCollection = new FontCollection(dwriteFontCollection);
+                            dwriteFactory->Release();
                         }
                     }
                 }

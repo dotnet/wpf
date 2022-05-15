@@ -50,7 +50,8 @@ namespace MS.Internal.FontCache
                     {
                         if (_systemFontCollection == null)
                         {
-                            _systemFontCollection = DWriteFactory.Instance.GetSystemFontCollection();
+                            var x = Instance.DWriteFactoryAddRef;
+                            _systemFontCollection = Instance.GetSystemFontCollection();
                         }
                     }
                 }

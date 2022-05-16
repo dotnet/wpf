@@ -55,7 +55,7 @@ namespace MS.Internal.FontCache
                             var checkForUpdates = false;
                             var hr = dwriteFactory->GetSystemFontCollection(&dwriteFontCollection, checkForUpdates);
                             System.GC.KeepAlive(this);
-                            _systemFontCollection = new FontCollection(dwriteFontCollection);
+                            _systemFontCollection = new MS.Internal.Text.TextInterface.FontCollection(dwriteFontCollection);
                             dwriteFactory->Release();
                         }
                     }

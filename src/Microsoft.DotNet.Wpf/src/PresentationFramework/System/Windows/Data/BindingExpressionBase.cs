@@ -2502,7 +2502,7 @@ namespace System.Windows.Data
                 }
             }
 
-            return result = tempList.Count > 0 ?
+            return tempList.Count > 0 ?
                 tempList.ToArray() :
                 null;
         }

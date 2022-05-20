@@ -6,17 +6,26 @@ namespace MS.Internal;
 
 using System;
 using System.Runtime.InteropServices;
+using System.Windows.Interop;
+using MS.Win32;
 using static global::MS.Win32.UnsafeNativeMethods;
 
 internal partial class WpfComWrappers
 {
-    internal unsafe class TfThreadMgrWrapper : ITfThreadMgr
+    internal unsafe class TfThreadMgrWrapper : ITfThreadMgr, ITfMessagePump
     {
         private readonly IntPtr _wrappedInstance;
+        private readonly IntPtr _messagePumpInstance;
 
         internal TfThreadMgrWrapper(IntPtr wrappedInstance)
         {
             _wrappedInstance = wrappedInstance;
+            var tfMessagePumpIid = IID_ITfMessagePump;
+            var result = Marshal.QueryInterface(wrappedInstance, ref tfMessagePumpIid, out _messagePumpInstance);
+            if (NativeMethods.Failed(result))
+            {
+                Marshal.ThrowExceptionForHR(result);
+            }
         }
 
         public void Dispose()
@@ -30,7 +39,7 @@ internal partial class WpfComWrappers
             {
                 var result = ((delegate* unmanaged<IntPtr, int*, int>)(*(*(void***)_wrappedInstance + 3)))
                     (_wrappedInstance, pClientId);
-                if (result < 0)
+                if (NativeMethods.Failed(result))
                 {
                     Marshal.ThrowExceptionForHR(result);
                 }
@@ -41,7 +50,7 @@ internal partial class WpfComWrappers
         {
             var result = ((delegate* unmanaged<IntPtr, int>)(*(*(void***)_wrappedInstance + 4)))
                 (_wrappedInstance);
-            if (result < 0)
+            if (NativeMethods.Failed(result))
             {
                 Marshal.ThrowExceptionForHR(result);
             }
@@ -52,7 +61,7 @@ internal partial class WpfComWrappers
             IntPtr docMgrPtr = IntPtr.Zero;
             var result = ((delegate* unmanaged<IntPtr, IntPtr*, int>)(*(*(void***)_wrappedInstance + 5)))
                 (_wrappedInstance, &docMgrPtr);
-            if (result < 0)
+            if (NativeMethods.Failed(result))
             {
                 Marshal.ThrowExceptionForHR(result);
             }
@@ -65,7 +74,7 @@ internal partial class WpfComWrappers
             IntPtr enumDocMgrsPtr = IntPtr.Zero;
             var result = ((delegate* unmanaged<IntPtr, IntPtr*, int>)(*(*(void***)_wrappedInstance + 6)))
                 (_wrappedInstance, &enumDocMgrsPtr);
-            if (result < 0)
+            if (NativeMethods.Failed(result))
             {
                 Marshal.ThrowExceptionForHR(result);
             }
@@ -78,7 +87,7 @@ internal partial class WpfComWrappers
             IntPtr docMgrPtr = IntPtr.Zero;
             var result = ((delegate* unmanaged<IntPtr, IntPtr*, int>)(*(*(void***)_wrappedInstance + 7)))
                 (_wrappedInstance, &docMgrPtr);
-            if (result < 0)
+            if (NativeMethods.Failed(result))
             {
                 Marshal.ThrowExceptionForHR(result);
             }
@@ -91,14 +100,14 @@ internal partial class WpfComWrappers
             IntPtr unknownPtr = Marshal.GetIUnknownForObject(docMgr);
             var tfDocumentMgr = IID_ITfDocumentMgr;
             var result = Marshal.QueryInterface(unknownPtr, ref tfDocumentMgr, out IntPtr docMgrPtr);
-            if (result < 0)
+            if (NativeMethods.Failed(result))
             {
                 Marshal.ThrowExceptionForHR(result);
             }
 
             result = ((delegate* unmanaged<IntPtr, IntPtr, int>)(*(*(void***)_wrappedInstance + 8)))
                 (_wrappedInstance, docMgrPtr);
-            if (result < 0)
+            if (NativeMethods.Failed(result))
             {
                 Marshal.ThrowExceptionForHR(result);
             }
@@ -109,7 +118,7 @@ internal partial class WpfComWrappers
             IntPtr unknownPtr = Marshal.GetIUnknownForObject(newDocMgr);
             var tfDocumentMgr = IID_ITfDocumentMgr;
             var result = Marshal.QueryInterface(unknownPtr, ref tfDocumentMgr, out IntPtr newDocMgrPtr);
-            if (result < 0)
+            if (NativeMethods.Failed(result))
             {
                 Marshal.ThrowExceptionForHR(result);
             }
@@ -117,7 +126,7 @@ internal partial class WpfComWrappers
             IntPtr prevDocMgrPtr = IntPtr.Zero;
             result = ((delegate* unmanaged<IntPtr, IntPtr, IntPtr, IntPtr*, int>)(*(*(void***)_wrappedInstance + 9)))
                 (_wrappedInstance, hwnd, newDocMgrPtr, &prevDocMgrPtr);
-            if (result < 0)
+            if (NativeMethods.Failed(result))
             {
                 Marshal.ThrowExceptionForHR(result);
             }
@@ -130,7 +139,7 @@ internal partial class WpfComWrappers
             int isFocusNative;
             var result = ((delegate* unmanaged<IntPtr, int*, int>)(*(*(void***)_wrappedInstance + 10)))
                 (_wrappedInstance, &isFocusNative);
-            if (result < 0)
+            if (NativeMethods.Failed(result))
             {
                 Marshal.ThrowExceptionForHR(result);
             }
@@ -145,7 +154,7 @@ internal partial class WpfComWrappers
             {
                 var result = ((delegate* unmanaged<IntPtr, Guid*, IntPtr*, int>)(*(*(void***)_wrappedInstance + 11)))
                     (_wrappedInstance, pClassId, &funcProviderPtr);
-                if (result < 0)
+                if (NativeMethods.Failed(result))
                 {
                     funcProvider = null;
                     return result;
@@ -153,7 +162,7 @@ internal partial class WpfComWrappers
             }
 
             funcProvider = (ITfFunctionProvider)Marshal.GetObjectForIUnknown(funcProviderPtr);
-            return 0;
+            return NativeMethods.S_OK;
         }
 
         public void EnumFunctionProviders(out IEnumTfFunctionProviders enumProviders)
@@ -161,7 +170,7 @@ internal partial class WpfComWrappers
             IntPtr enumProvidersPtr = IntPtr.Zero;
             var result = ((delegate* unmanaged<IntPtr, IntPtr*, int>)(*(*(void***)_wrappedInstance + 12)))
                 (_wrappedInstance, &enumProvidersPtr);
-            if (result < 0)
+            if (NativeMethods.Failed(result))
             {
                 Marshal.ThrowExceptionForHR(result);
             }
@@ -174,12 +183,68 @@ internal partial class WpfComWrappers
             IntPtr compartmentMgrPtr = IntPtr.Zero;
             var result = ((delegate* unmanaged<IntPtr, IntPtr*, int>)(*(*(void***)_wrappedInstance + 12)))
                 (_wrappedInstance, &compartmentMgrPtr);
-            if (result < 0)
+            if (NativeMethods.Failed(result))
             {
                 Marshal.ThrowExceptionForHR(result);
             }
 
             compartmentMgr = (ITfCompartmentMgr)Marshal.GetObjectForIUnknown(compartmentMgrPtr);
+        }
+
+        public void PeekMessageA(ref MSG msg, IntPtr hwnd, int msgFilterMin, int msgFilterMax, int removeMsg, out int result)
+        {
+            fixed (MSG* msgPtr = &msg)
+            fixed (int* resultPtr = &result)
+            {
+                var hr = ((delegate* unmanaged<IntPtr, MSG*, IntPtr, int, int, int, int*, int>)(*(*(void***)_messagePumpInstance + 3)))
+                    (_messagePumpInstance, msgPtr, hwnd, msgFilterMin, msgFilterMax, removeMsg, resultPtr);
+                if (NativeMethods.Failed(hr))
+                {
+                    Marshal.ThrowExceptionForHR(hr);
+                }
+            }
+        }
+
+        public void GetMessageA(ref MSG msg, IntPtr hwnd, int msgFilterMin, int msgFilterMax, out int result)
+        {
+            fixed (MSG* msgPtr = &msg)
+            fixed (int* resultPtr = &result)
+            {
+                var hr = ((delegate* unmanaged<IntPtr, MSG*, IntPtr, int, int, int*, int>)(*(*(void***)_messagePumpInstance + 4)))
+                    (_messagePumpInstance, msgPtr, hwnd, msgFilterMin, msgFilterMax, resultPtr);
+                if (NativeMethods.Failed(hr))
+                {
+                    Marshal.ThrowExceptionForHR(hr);
+                }
+            }
+        }
+
+        public void PeekMessageW(ref MSG msg, IntPtr hwnd, int msgFilterMin, int msgFilterMax, int removeMsg, out int result)
+        {
+            fixed (MSG* msgPtr = &msg)
+            fixed (int* resultPtr = &result)
+            {
+                var hr = ((delegate* unmanaged<IntPtr, MSG*, IntPtr, int, int, int, int*, int>)(*(*(void***)_messagePumpInstance + 5)))
+                    (_messagePumpInstance, msgPtr, hwnd, msgFilterMin, msgFilterMax, removeMsg, resultPtr);
+                if (NativeMethods.Failed(hr))
+                {
+                    Marshal.ThrowExceptionForHR(hr);
+                }
+            }
+        }
+
+        public void GetMessageW(ref MSG msg, IntPtr hwnd, int msgFilterMin, int msgFilterMax, out int result)
+        {
+            fixed (MSG* msgPtr = &msg)
+            fixed (int* resultPtr = &result)
+            {
+                var hr = ((delegate* unmanaged<IntPtr, MSG*, IntPtr, int, int, int*, int>)(*(*(void***)_messagePumpInstance + 6)))
+                    (_messagePumpInstance, msgPtr, hwnd, msgFilterMin, msgFilterMax, resultPtr);
+                if (NativeMethods.Failed(hr))
+                {
+                    Marshal.ThrowExceptionForHR(hr);
+                }
+            }
         }
     }
 }

@@ -16,6 +16,9 @@ internal partial class WpfComWrappers : ComWrappers
     // AA80E7F4-2021-11D2-93E0-0060B067B86E
     private static readonly Guid IID_ITfDocumentMgr = new Guid(0xAA80E7F4, 0x2021, 0x11D2, 0x93, 0xE0, 0x00, 0x60, 0xB0, 0x67, 0xB8, 0x6E);
 
+    // 8F1B8AD8-0B6B-4874-90C5-BD76011E8F7C
+    private static readonly Guid IID_ITfMessagePump = new Guid(0x8F1B8AD8, 0x0B6B, 0x4874, 0x90, 0xC5, 0xBD, 0x76, 0x01, 0x1E, 0x8F, 0x7C);
+
     public static WpfComWrappers Instance { get; } = new WpfComWrappers();
 
     protected override unsafe ComInterfaceEntry* ComputeVtables(object obj, CreateComInterfaceFlags flags, out int count)

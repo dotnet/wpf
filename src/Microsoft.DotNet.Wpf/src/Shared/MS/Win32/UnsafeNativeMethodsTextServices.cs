@@ -6,7 +6,8 @@ namespace MS.Win32
 {
     using System;
     using System.Runtime.InteropServices;
-    
+    using MS.Internal;
+
     internal partial class UnsafeNativeMethods {
         //------------------------------------------------------
         //
@@ -22,9 +23,9 @@ namespace MS.Win32
         internal static int TF_CreateThreadMgr(out ITfThreadMgr threadManager)
         {
             var result = TF_CreateThreadMgr(out IntPtr threadManagerPtr);
-            if (result == 0)
+            if (result == NativeMethods.S_OK)
             {
-                threadManager = (ITfThreadMgr)MS.Internal.WpfComWrappers.Instance.GetOrCreateObjectForComInstance(threadManagerPtr, CreateObjectFlags.Unwrap);
+                threadManager = (WpfComWrappers.TfThreadMgrWrapper)WpfComWrappers.Instance.GetOrCreateObjectForComInstance(threadManagerPtr, CreateObjectFlags.Unwrap);
             }
             else
             {

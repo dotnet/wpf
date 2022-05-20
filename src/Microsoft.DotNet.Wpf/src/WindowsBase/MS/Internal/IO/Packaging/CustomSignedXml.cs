@@ -84,7 +84,7 @@ namespace MS.Internal.IO.Packaging
                 {
                     // anticipate duplicate ID's and throw if any found
                     if (node != null)
-                        throw new XmlException(SR.Get(SRID.DuplicateObjectId));
+                        throw new XmlException(SR.DuplicateObjectId);
 
                     node = dataObject.GetXml();
                 }
@@ -169,7 +169,7 @@ namespace MS.Internal.IO.Packaging
                         if (!AllowAmbiguousReferenceTargets() &&
                             (nodeList.Count > 1 || foundMatch))
                         {
-                            throw new XmlException(SR.Get(SRID.DuplicateObjectId));
+                            throw new XmlException(SR.DuplicateObjectId);
                         }
 
                         foundMatch = true;

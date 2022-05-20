@@ -64,7 +64,7 @@ namespace System.ComponentModel
             set
             {
                 if (_sealed)
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "SortDescription"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "SortDescription"));
 
                 _propertyName = value;
             }
@@ -79,7 +79,7 @@ namespace System.ComponentModel
             set
             {
                 if (_sealed)
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "SortDescription"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "SortDescription"));
 
                 if (value < ListSortDirection.Ascending || value > ListSortDirection.Descending)
                     throw new InvalidEnumArgumentException("value", (int) value, typeof(ListSortDirection));

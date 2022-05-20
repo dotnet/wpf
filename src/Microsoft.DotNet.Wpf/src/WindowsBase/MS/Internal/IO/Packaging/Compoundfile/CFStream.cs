@@ -112,7 +112,7 @@ internal class CFStream : Stream
 
             if (!CanSeek)
             {
-                throw new NotSupportedException(SR.Get(SRID.SetPositionNotSupported));
+                throw new NotSupportedException(SR.SetPositionNotSupported);
             }
             
             long seekPos = 0;
@@ -125,7 +125,7 @@ internal class CFStream : Stream
             if( value != seekPos )
             {
                 throw new IOException(
-                    SR.Get(SRID.SeekFailed));
+                    SR.SeekFailed);
             }
         }
     }
@@ -157,7 +157,7 @@ internal class CFStream : Stream
 
         if (!CanSeek)
         {
-            throw new NotSupportedException(SR.Get(SRID.SeekNotSupported));
+            throw new NotSupportedException(SR.SeekNotSupported);
         }
         
         // 
@@ -171,7 +171,7 @@ internal class CFStream : Stream
                 if( 0 > offset )
                 {
                     throw new ArgumentOutOfRangeException("offset",
-                        SR.Get(SRID.SeekNegative));
+                        SR.SeekNegative);
                 }
                 break;
             case SeekOrigin.Current:
@@ -203,13 +203,13 @@ internal class CFStream : Stream
 
         if (!CanWrite)
         {
-            throw new NotSupportedException(SR.Get(SRID.SetLengthNotSupported));
+            throw new NotSupportedException(SR.SetLengthNotSupported);
         }
 
         if( 0 > newLength )
         {
             throw new ArgumentOutOfRangeException("newLength",
-                SR.Get(SRID.StreamLengthNegative));
+                SR.StreamLengthNegative);
         }
         
         _safeIStream.SetSize( newLength );
@@ -280,7 +280,7 @@ internal class CFStream : Stream
 
         if( count != written )
             throw new IOException(
-                SR.Get(SRID.WriteFailure));
+                SR.WriteFailure);
 }
 
     //------------------------------------------------------
@@ -294,7 +294,7 @@ internal class CFStream : Stream
     internal void CheckDisposedStatus()
     {
         if( StreamDisposed )
-            throw new ObjectDisposedException(null, SR.Get(SRID.StreamObjectDisposed));
+            throw new ObjectDisposedException(null, SR.StreamObjectDisposed);
     }
 
     // Check whether this Stream object is still valid.

@@ -250,13 +250,13 @@ namespace System.Windows.Markup
             string text;
             if (value == null)
             {
-                text = SR.Get(SRID.ToStringNull);
+                text = SR.ToStringNull;
             }
             else
             {
                 text = value.GetType().FullName;
             }
-            return new NotSupportedException(SR.Get(SRID.ConvertToException, base.GetType().Name, text, destinationType.FullName));
+            return new NotSupportedException(SR.Format(SR.ConvertToException, base.GetType().Name, text, destinationType.FullName));
         }
 
         /// <summary>
@@ -267,13 +267,13 @@ namespace System.Windows.Markup
             string text;
             if (value == null)
             {
-                text = SR.Get(SRID.ToStringNull);
+                text = SR.ToStringNull;
             }
             else
             {
                 text = value.GetType().FullName;
             }
-            return new NotSupportedException(SR.Get(SRID.ConvertFromException, base.GetType().Name, text));
+            return new NotSupportedException(SR.Format(SR.ConvertFromException, base.GetType().Name, text));
         }
 
         private static void TypeDescriptorRefreshed(RefreshEventArgs args) {

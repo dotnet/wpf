@@ -2,36 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Threading;
-using System.ComponentModel;
-using System.Diagnostics;
-
-// The SecurityHelper class differs between assemblies and could not actually be
-//  shared, so it is duplicated across namespaces to prevent name collision.
-#if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-    using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-    using MS.Internal.PresentationFramework;
-#elif DRT
-    using MS.Internal.Drt;
-#else
-#error Attempt to use a class (duplicated across multiple namespaces) from an unknown assembly.
-#endif
 namespace MS.Win32
 {
-    using Accessibility;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.ConstrainedExecution;
-    using System.Runtime.InteropServices;
     using System;
-    using System.Security;
-    using System.Collections;
-    using System.IO;
-    using System.Text;
-    using Microsoft.Win32.SafeHandles;
-
+    using System.Runtime.InteropServices;
     
     internal partial class UnsafeNativeMethods {
         //------------------------------------------------------
@@ -43,7 +17,22 @@ namespace MS.Win32
         #region public Methods
 
         [DllImport("msctf.dll")]
-        internal static extern int TF_CreateThreadMgr(out ITfThreadMgr threadManager);
+        private static extern int TF_CreateThreadMgr(out IntPtr threadManager);
+
+        internal static int TF_CreateThreadMgr(out ITfThreadMgr threadManager)
+        {
+            var result = TF_CreateThreadMgr(out IntPtr threadManagerPtr);
+            if (result == 0)
+            {
+                threadManager = (ITfThreadMgr)MS.Internal.WpfComWrappers.Instance.GetOrCreateObjectForComInstance(threadManagerPtr, CreateObjectFlags.Unwrap);
+            }
+            else
+            {
+                threadManager = null;
+            }
+
+            return result;
+        }
 
         /// <summary></summary>
         [DllImport("msctf.dll")]

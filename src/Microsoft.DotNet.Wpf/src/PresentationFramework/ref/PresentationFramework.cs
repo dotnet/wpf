@@ -1981,7 +1981,7 @@ namespace System.Windows
         [System.ComponentModel.TypeConverterAttribute("System.Windows.LengthConverter, PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, Custom=null")]
         public double Left { get { throw null; } set { } }
         protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
-        protected IntPtr CriticalHandle { get { throw null; } }
+        protected IntPtr Handle { get { throw null; } }
         public System.Windows.WindowCollection OwnedWindows { get { throw null; } }
         [System.ComponentModel.DefaultValueAttribute(null)]
         public System.Windows.Window Owner { get { throw null; } set { } }

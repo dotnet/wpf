@@ -3074,6 +3074,17 @@ namespace System.Windows
         }
 
         /// <summary>
+        /// Get the Handle of the window.
+        /// </summary>
+        protected IntPtr Handle
+        {
+            get
+            {
+                return CriticalHandle;
+            }
+        }
+
+        /// <summary>
         ///     Enables to get/set the owner handle for this window. This property is used by
         ///     the WindowInteropHelper class
         /// </summary>

@@ -3076,7 +3076,7 @@ namespace System.Windows
         /// <summary>
         /// Get the Handle of the window.
         /// </summary>
-        protected IntPtr Handle
+        internal IntPtr Handle
         {
             get
             {

@@ -3091,7 +3091,7 @@ namespace System.Windows
         ///<remarks>
         ///     This API is currently not available for use in Internet Zone.
         ///</remarks>
-        protected IntPtr OwnerHandle
+        internal IntPtr OwnerHandle
         {
             get
             {

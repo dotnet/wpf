@@ -3076,7 +3076,7 @@ namespace System.Windows
         /// <summary>
         /// Get the Handle of the window.
         /// </summary>
-        internal IntPtr Handle
+        protected IntPtr Handle
         {
             get
             {
@@ -3091,7 +3091,7 @@ namespace System.Windows
         ///<remarks>
         ///     This API is currently not available for use in Internet Zone.
         ///</remarks>
-        internal IntPtr OwnerHandle
+        protected IntPtr OwnerHandle
         {
             get
             {

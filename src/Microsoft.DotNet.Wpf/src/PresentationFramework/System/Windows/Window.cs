@@ -1693,23 +1693,15 @@ namespace System.Windows
         //
         //----------------------------------------------
         #region Protected properties
-        
+
         /// <summary>
-        /// Exposes the hWnd of the window. This property is used by the WindowInteropHandler
-        /// class.
+        /// Get the Handle of the window
         /// </summary>
-        protected IntPtr CriticalHandle
+        protected IntPtr Handle
         {
             get
             {
-                VerifyContextAndObjectState();
-                
-                if (_swh != null)
-                {
-                    return _swh.CriticalHandle;
-                }
-
-                return IntPtr.Zero;
+                return CriticalHandle;
             }
         }
 
@@ -3074,13 +3066,21 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// Get the Handle of the window.
+        /// Exposes the hWnd of the window. This property is used by the WindowInteropHandler
+        /// class.
         /// </summary>
-        protected IntPtr Handle
+        internal IntPtr CriticalHandle
         {
             get
             {
-                return CriticalHandle;
+                VerifyContextAndObjectState();
+                
+                if (_swh != null)
+                {
+                    return _swh.CriticalHandle;
+                }
+
+                return IntPtr.Zero;
             }
         }
 

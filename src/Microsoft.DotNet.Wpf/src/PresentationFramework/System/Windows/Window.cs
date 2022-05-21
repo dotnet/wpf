@@ -1687,6 +1687,34 @@ namespace System.Windows
 
         #endregion
 
+        //----------------------------------------------
+        //
+        // Protected properties
+        //
+        //----------------------------------------------
+        #region Protected properties
+        
+        /// <summary>
+        /// Exposes the hWnd of the window. This property is used by the WindowInteropHandler
+        /// class.
+        /// </summary>
+        protected IntPtr CriticalHandle
+        {
+            get
+            {
+                VerifyContextAndObjectState();
+                
+                if (_swh != null)
+                {
+                    return _swh.CriticalHandle;
+                }
+
+                return IntPtr.Zero;
+            }
+        }
+
+        #endregion Protected properties
+
         //---------------------------------------------------
         //
         // Protected Methods
@@ -3042,24 +3070,6 @@ namespace System.Windows
             {
                 VerifyContextAndObjectState();
                 return _isVisibilitySet;
-            }
-        }
-
-        /// <summary>
-        ///     Exposes the hwnd of the window. This property is used by the WindowInteropHandler
-        ///     class
-        /// </summary>
-        internal IntPtr CriticalHandle
-        {
-            get
-            {
-                VerifyContextAndObjectState();
-                if (_swh != null)
-                {
-                    return _swh.CriticalHandle;
-                }
-                else
-                return IntPtr.Zero;
             }
         }
 

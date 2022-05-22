@@ -2170,45 +2170,38 @@ namespace System.Windows.Threading
             // Win32 GetMessage().
             bool result;
             UnsafeNativeMethods.ITfMessagePump messagePump = GetMessagePump();
-            try
+            if (messagePump == null)
             {
-                if (messagePump == null)
+                // We have foreground items to process.
+                // By posting a message, Win32 will service us fairly promptly.
+                result = UnsafeNativeMethods.GetMessageW(ref msg,
+                                                         new HandleRef(this, hwnd),
+                                                         minMessage,
+                                                         maxMessage);
+            }
+            else
+            {
+                int intResult;
+
+                messagePump.GetMessageW(
+                    ref msg,
+                    hwnd,
+                    minMessage,
+                    maxMessage,
+                    out intResult);
+
+                if (intResult == -1)
                 {
-                    // We have foreground items to process.
-                    // By posting a message, Win32 will service us fairly promptly.
-                    result = UnsafeNativeMethods.GetMessageW(ref msg,
-                                                             new HandleRef(this, hwnd),
-                                                             minMessage,
-                                                             maxMessage);
+                    throw new Win32Exception();
+                }
+                else if (intResult == 0)
+                {
+                    result = false;
                 }
                 else
                 {
-                    int intResult;
-
-                    messagePump.GetMessageW(
-                        ref msg,
-                        hwnd,
-                        minMessage,
-                        maxMessage,
-                        out intResult);
-
-                    if (intResult == -1)
-                    {
-                        throw new Win32Exception();
-                    }
-                    else if (intResult == 0)
-                    {
-                        result = false;
-                    }
-                    else
-                    {
-                        result = true;
-                    }
+                    result = true;
                 }
-            }
-            finally
-            {
-                if (messagePump != null) Marshal.ReleaseComObject(messagePump);
             }
 
             return result;

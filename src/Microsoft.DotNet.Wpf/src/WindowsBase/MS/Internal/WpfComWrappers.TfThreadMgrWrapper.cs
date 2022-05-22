@@ -22,21 +22,21 @@ internal partial class WpfComWrappers
         internal TfThreadMgrWrapper(IntPtr wrappedInstance)
         {
             _wrappedInstance = wrappedInstance;
-            var tfMessagePumpIid = IID_ITfMessagePump;
+            Guid tfMessagePumpIid = IID_ITfMessagePump;
             var result = Marshal.QueryInterface(wrappedInstance, ref tfMessagePumpIid, out _messagePumpInstance);
             if (NativeMethods.Failed(result))
             {
                 Marshal.ThrowExceptionForHR(result);
             }
 
-            var tfSourceIid = IID_ITfSource;
+            Guid tfSourceIid = IID_ITfSource;
             result = Marshal.QueryInterface(wrappedInstance, ref tfSourceIid, out _sourceInstance);
             if (NativeMethods.Failed(result))
             {
                 Marshal.ThrowExceptionForHR(result);
             }
 
-            var tfKeystrokeMgrIid = IID_ITfKeystrokeMgr;
+            Guid tfKeystrokeMgrIid = IID_ITfKeystrokeMgr;
             result = Marshal.QueryInterface(wrappedInstance, ref tfKeystrokeMgrIid, out _keystrokeMgrInstance);
             if (NativeMethods.Failed(result))
             {
@@ -55,7 +55,7 @@ internal partial class WpfComWrappers
         {
             fixed (int* pClientId = &clientId)
             {
-                var result = ((delegate* unmanaged<IntPtr, int*, int>)(*(*(void***)_wrappedInstance + 3)))
+                int result = ((delegate* unmanaged<IntPtr, int*, int>)(*(*(void***)_wrappedInstance + 3)))
                     (_wrappedInstance, pClientId);
                 if (NativeMethods.Failed(result))
                 {
@@ -66,7 +66,7 @@ internal partial class WpfComWrappers
 
         public void Deactivate()
         {
-            var result = ((delegate* unmanaged<IntPtr, int>)(*(*(void***)_wrappedInstance + 4)))
+            int result = ((delegate* unmanaged<IntPtr, int>)(*(*(void***)_wrappedInstance + 4)))
                 (_wrappedInstance);
             if (NativeMethods.Failed(result))
             {
@@ -77,7 +77,7 @@ internal partial class WpfComWrappers
         public void CreateDocumentMgr(out ITfDocumentMgr docMgr)
         {
             IntPtr docMgrPtr = IntPtr.Zero;
-            var result = ((delegate* unmanaged<IntPtr, IntPtr*, int>)(*(*(void***)_wrappedInstance + 5)))
+            int result = ((delegate* unmanaged<IntPtr, IntPtr*, int>)(*(*(void***)_wrappedInstance + 5)))
                 (_wrappedInstance, &docMgrPtr);
             if (NativeMethods.Failed(result))
             {
@@ -90,7 +90,7 @@ internal partial class WpfComWrappers
         public void EnumDocumentMgrs(out IEnumTfDocumentMgrs enumDocMgrs)
         {
             IntPtr enumDocMgrsPtr = IntPtr.Zero;
-            var result = ((delegate* unmanaged<IntPtr, IntPtr*, int>)(*(*(void***)_wrappedInstance + 6)))
+            int result = ((delegate* unmanaged<IntPtr, IntPtr*, int>)(*(*(void***)_wrappedInstance + 6)))
                 (_wrappedInstance, &enumDocMgrsPtr);
             if (NativeMethods.Failed(result))
             {
@@ -103,7 +103,7 @@ internal partial class WpfComWrappers
         public void GetFocus(out ITfDocumentMgr docMgr)
         {
             IntPtr docMgrPtr = IntPtr.Zero;
-            var result = ((delegate* unmanaged<IntPtr, IntPtr*, int>)(*(*(void***)_wrappedInstance + 7)))
+            int result = ((delegate* unmanaged<IntPtr, IntPtr*, int>)(*(*(void***)_wrappedInstance + 7)))
                 (_wrappedInstance, &docMgrPtr);
             if (NativeMethods.Failed(result))
             {
@@ -115,47 +115,79 @@ internal partial class WpfComWrappers
 
         public void SetFocus(ITfDocumentMgr docMgr)
         {
+            IntPtr docMgrPtr = IntPtr.Zero;
             IntPtr unknownPtr = Marshal.GetIUnknownForObject(docMgr);
-            var tfDocumentMgr = IID_ITfDocumentMgr;
-            var result = Marshal.QueryInterface(unknownPtr, ref tfDocumentMgr, out IntPtr docMgrPtr);
-            if (NativeMethods.Failed(result))
+            try
             {
-                Marshal.ThrowExceptionForHR(result);
-            }
+                Guid tfDocumentMgr = IID_ITfDocumentMgr;
+                int result = Marshal.QueryInterface(unknownPtr, ref tfDocumentMgr, out docMgrPtr);
+                if (NativeMethods.Failed(result))
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
 
-            result = ((delegate* unmanaged<IntPtr, IntPtr, int>)(*(*(void***)_wrappedInstance + 8)))
-                (_wrappedInstance, docMgrPtr);
-            if (NativeMethods.Failed(result))
+                result = ((delegate* unmanaged<IntPtr, IntPtr, int>)(*(*(void***)_wrappedInstance + 8)))
+                    (_wrappedInstance, docMgrPtr);
+                if (NativeMethods.Failed(result))
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
+            }
+            finally
             {
-                Marshal.ThrowExceptionForHR(result);
+                if (unknownPtr != IntPtr.Zero)
+                {
+                    Marshal.Release(unknownPtr);
+                }
+
+                if (docMgrPtr != IntPtr.Zero)
+                {
+                    Marshal.Release(docMgrPtr);
+                }
             }
         }
 
         public void AssociateFocus(IntPtr hwnd, ITfDocumentMgr newDocMgr, out ITfDocumentMgr prevDocMgr)
         {
+            IntPtr newDocMgrPtr = IntPtr.Zero;
             IntPtr unknownPtr = Marshal.GetIUnknownForObject(newDocMgr);
-            var tfDocumentMgr = IID_ITfDocumentMgr;
-            var result = Marshal.QueryInterface(unknownPtr, ref tfDocumentMgr, out IntPtr newDocMgrPtr);
-            if (NativeMethods.Failed(result))
+            try
             {
-                Marshal.ThrowExceptionForHR(result);
-            }
+                Guid tfDocumentMgr = IID_ITfDocumentMgr;
+                int result = Marshal.QueryInterface(unknownPtr, ref tfDocumentMgr, out newDocMgrPtr);
+                if (NativeMethods.Failed(result))
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
 
-            IntPtr prevDocMgrPtr = IntPtr.Zero;
-            result = ((delegate* unmanaged<IntPtr, IntPtr, IntPtr, IntPtr*, int>)(*(*(void***)_wrappedInstance + 9)))
-                (_wrappedInstance, hwnd, newDocMgrPtr, &prevDocMgrPtr);
-            if (NativeMethods.Failed(result))
+                IntPtr prevDocMgrPtr = IntPtr.Zero;
+                result = ((delegate* unmanaged<IntPtr, IntPtr, IntPtr, IntPtr*, int>)(*(*(void***)_wrappedInstance + 9)))
+                    (_wrappedInstance, hwnd, newDocMgrPtr, &prevDocMgrPtr);
+                if (NativeMethods.Failed(result))
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
+
+                prevDocMgr = (ITfDocumentMgr)Marshal.GetObjectForIUnknown(prevDocMgrPtr);
+            }
+            finally
             {
-                Marshal.ThrowExceptionForHR(result);
-            }
+                if (unknownPtr != IntPtr.Zero)
+                {
+                    Marshal.Release(unknownPtr);
+                }
 
-            prevDocMgr = (ITfDocumentMgr)Marshal.GetObjectForIUnknown(prevDocMgrPtr);
+                if (newDocMgrPtr != IntPtr.Zero)
+                {
+                    Marshal.Release(newDocMgrPtr);
+                }
+            }
         }
 
         public void IsThreadFocus([MarshalAs(UnmanagedType.Bool)] out bool isFocus)
         {
             int isFocusNative;
-            var result = ((delegate* unmanaged<IntPtr, int*, int>)(*(*(void***)_wrappedInstance + 10)))
+            int result = ((delegate* unmanaged<IntPtr, int*, int>)(*(*(void***)_wrappedInstance + 10)))
                 (_wrappedInstance, &isFocusNative);
             if (NativeMethods.Failed(result))
             {
@@ -170,7 +202,7 @@ internal partial class WpfComWrappers
             IntPtr funcProviderPtr = IntPtr.Zero;
             fixed (Guid* pClassId = &classId)
             {
-                var result = ((delegate* unmanaged<IntPtr, Guid*, IntPtr*, int>)(*(*(void***)_wrappedInstance + 11)))
+                int result = ((delegate* unmanaged<IntPtr, Guid*, IntPtr*, int>)(*(*(void***)_wrappedInstance + 11)))
                     (_wrappedInstance, pClassId, &funcProviderPtr);
                 if (NativeMethods.Failed(result))
                 {
@@ -186,7 +218,7 @@ internal partial class WpfComWrappers
         public void EnumFunctionProviders(out IEnumTfFunctionProviders enumProviders)
         {
             IntPtr enumProvidersPtr = IntPtr.Zero;
-            var result = ((delegate* unmanaged<IntPtr, IntPtr*, int>)(*(*(void***)_wrappedInstance + 12)))
+            int result = ((delegate* unmanaged<IntPtr, IntPtr*, int>)(*(*(void***)_wrappedInstance + 12)))
                 (_wrappedInstance, &enumProvidersPtr);
             if (NativeMethods.Failed(result))
             {
@@ -199,7 +231,7 @@ internal partial class WpfComWrappers
         public void GetGlobalCompartment(out ITfCompartmentMgr compartmentMgr)
         {
             IntPtr compartmentMgrPtr = IntPtr.Zero;
-            var result = ((delegate* unmanaged<IntPtr, IntPtr*, int>)(*(*(void***)_wrappedInstance + 12)))
+            int result = ((delegate* unmanaged<IntPtr, IntPtr*, int>)(*(*(void***)_wrappedInstance + 12)))
                 (_wrappedInstance, &compartmentMgrPtr);
             if (NativeMethods.Failed(result))
             {
@@ -214,7 +246,7 @@ internal partial class WpfComWrappers
             fixed (MSG* msgPtr = &msg)
             fixed (int* resultPtr = &result)
             {
-                var hr = ((delegate* unmanaged<IntPtr, MSG*, IntPtr, int, int, int, int*, int>)(*(*(void***)_messagePumpInstance + 3)))
+                int hr = ((delegate* unmanaged<IntPtr, MSG*, IntPtr, int, int, int, int*, int>)(*(*(void***)_messagePumpInstance + 3)))
                     (_messagePumpInstance, msgPtr, hwnd, msgFilterMin, msgFilterMax, removeMsg, resultPtr);
                 if (NativeMethods.Failed(hr))
                 {
@@ -228,7 +260,7 @@ internal partial class WpfComWrappers
             fixed (MSG* msgPtr = &msg)
             fixed (int* resultPtr = &result)
             {
-                var hr = ((delegate* unmanaged<IntPtr, MSG*, IntPtr, int, int, int*, int>)(*(*(void***)_messagePumpInstance + 4)))
+                int hr = ((delegate* unmanaged<IntPtr, MSG*, IntPtr, int, int, int*, int>)(*(*(void***)_messagePumpInstance + 4)))
                     (_messagePumpInstance, msgPtr, hwnd, msgFilterMin, msgFilterMax, resultPtr);
                 if (NativeMethods.Failed(hr))
                 {
@@ -242,7 +274,7 @@ internal partial class WpfComWrappers
             fixed (MSG* msgPtr = &msg)
             fixed (int* resultPtr = &result)
             {
-                var hr = ((delegate* unmanaged<IntPtr, MSG*, IntPtr, int, int, int, int*, int>)(*(*(void***)_messagePumpInstance + 5)))
+                int hr = ((delegate* unmanaged<IntPtr, MSG*, IntPtr, int, int, int, int*, int>)(*(*(void***)_messagePumpInstance + 5)))
                     (_messagePumpInstance, msgPtr, hwnd, msgFilterMin, msgFilterMax, removeMsg, resultPtr);
                 if (NativeMethods.Failed(hr))
                 {
@@ -256,7 +288,7 @@ internal partial class WpfComWrappers
             fixed (MSG* msgPtr = &msg)
             fixed (int* resultPtr = &result)
             {
-                var hr = ((delegate* unmanaged<IntPtr, MSG*, IntPtr, int, int, int*, int>)(*(*(void***)_messagePumpInstance + 6)))
+                int hr = ((delegate* unmanaged<IntPtr, MSG*, IntPtr, int, int, int*, int>)(*(*(void***)_messagePumpInstance + 6)))
                     (_messagePumpInstance, msgPtr, hwnd, msgFilterMin, msgFilterMax, resultPtr);
                 if (NativeMethods.Failed(hr))
                 {
@@ -268,21 +300,31 @@ internal partial class WpfComWrappers
         public void AdviseSink(ref Guid riid, [MarshalAs(UnmanagedType.Interface)] object obj, out int cookie)
         {
             IntPtr unknownPtr = Marshal.GetIUnknownForObject(obj);
-            fixed (Guid* iidPtr = &riid)
-            fixed (int* cookiePtr = &cookie)
+            try
             {
-                var hr = ((delegate* unmanaged<IntPtr, Guid*, IntPtr, int*, int>)(*(*(void***)_sourceInstance + 3)))
-                    (_sourceInstance, iidPtr, unknownPtr, cookiePtr);
-                if (NativeMethods.Failed(hr))
+                fixed (Guid* iidPtr = &riid)
+                fixed (int* cookiePtr = &cookie)
                 {
-                    Marshal.ThrowExceptionForHR(hr);
+                    int hr = ((delegate* unmanaged<IntPtr, Guid*, IntPtr, int*, int>)(*(*(void***)_sourceInstance + 3)))
+                        (_sourceInstance, iidPtr, unknownPtr, cookiePtr);
+                    if (NativeMethods.Failed(hr))
+                    {
+                        Marshal.ThrowExceptionForHR(hr);
+                    }
+                }
+            }
+            finally
+            {
+                if (unknownPtr != IntPtr.Zero)
+                {
+                    Marshal.Release(unknownPtr);
                 }
             }
         }
 
         public void UnadviseSink(int cookie)
         {
-            var hr = ((delegate* unmanaged<IntPtr, int, int>)(*(*(void***)_sourceInstance + 4)))
+            int hr = ((delegate* unmanaged<IntPtr, int, int>)(*(*(void***)_sourceInstance + 4)))
                 (_sourceInstance, cookie);
             if (NativeMethods.Failed(hr))
             {
@@ -293,17 +335,27 @@ internal partial class WpfComWrappers
         public void AdviseKeyEventSink(int clientId, [MarshalAs(UnmanagedType.Interface)] object obj, [MarshalAs(UnmanagedType.Bool)] bool fForeground)
         {
             IntPtr unknownPtr = Marshal.GetIUnknownForObject(obj);
-            var hr = ((delegate* unmanaged<IntPtr, int, IntPtr, int, int>)(*(*(void***)_keystrokeMgrInstance + 3)))
-                (_keystrokeMgrInstance, clientId, unknownPtr, fForeground ? 1 : 0);
-            if (NativeMethods.Failed(hr))
+            try
             {
-                Marshal.ThrowExceptionForHR(hr);
+                int hr = ((delegate* unmanaged<IntPtr, int, IntPtr, int, int>)(*(*(void***)_keystrokeMgrInstance + 3)))
+                    (_keystrokeMgrInstance, clientId, unknownPtr, fForeground ? 1 : 0);
+                if (NativeMethods.Failed(hr))
+                {
+                    Marshal.ThrowExceptionForHR(hr);
+                }
+            }
+            finally
+            {
+                if (unknownPtr != IntPtr.Zero)
+                {
+                    Marshal.Release(unknownPtr);
+                }
             }
         }
 
         public void UnadviseKeyEventSink(int clientId)
         {
-            var hr = ((delegate* unmanaged<IntPtr, int, int>)(*(*(void***)_keystrokeMgrInstance + 4)))
+            int hr = ((delegate* unmanaged<IntPtr, int, int>)(*(*(void***)_keystrokeMgrInstance + 4)))
                 (_keystrokeMgrInstance, clientId);
             if (NativeMethods.Failed(hr))
             {
@@ -315,7 +367,7 @@ internal partial class WpfComWrappers
         {
             fixed (Guid* clsidPtr = &clsid)
             {
-                var hr = ((delegate* unmanaged<IntPtr, Guid*, int>)(*(*(void***)_keystrokeMgrInstance + 5)))
+                int hr = ((delegate* unmanaged<IntPtr, Guid*, int>)(*(*(void***)_keystrokeMgrInstance + 5)))
                     (_keystrokeMgrInstance, clsidPtr);
                 if (NativeMethods.Failed(hr))
                 {
@@ -327,7 +379,7 @@ internal partial class WpfComWrappers
         public void TestKeyDown(int wParam, int lParam, [MarshalAs(UnmanagedType.Bool)] out bool eaten)
         {
             int eatenNative;
-            var hr = ((delegate* unmanaged<IntPtr, int, int, int*, int>)(*(*(void***)_keystrokeMgrInstance + 6)))
+            int hr = ((delegate* unmanaged<IntPtr, int, int, int*, int>)(*(*(void***)_keystrokeMgrInstance + 6)))
                 (_keystrokeMgrInstance, wParam, lParam, &eatenNative);
             if (NativeMethods.Failed(hr))
             {
@@ -340,7 +392,7 @@ internal partial class WpfComWrappers
         public void TestKeyUp(int wParam, int lParam, [MarshalAs(UnmanagedType.Bool)] out bool eaten)
         {
             int eatenNative;
-            var hr = ((delegate* unmanaged<IntPtr, int, int, int*, int>)(*(*(void***)_keystrokeMgrInstance + 7)))
+            int hr = ((delegate* unmanaged<IntPtr, int, int, int*, int>)(*(*(void***)_keystrokeMgrInstance + 7)))
                 (_keystrokeMgrInstance, wParam, lParam, &eatenNative);
             if (NativeMethods.Failed(hr))
             {
@@ -353,7 +405,7 @@ internal partial class WpfComWrappers
         public void KeyDown(int wParam, int lParam, [MarshalAs(UnmanagedType.Bool)] out bool eaten)
         {
             int eatenNative;
-            var hr = ((delegate* unmanaged<IntPtr, int, int, int*, int>)(*(*(void***)_keystrokeMgrInstance + 8)))
+            int hr = ((delegate* unmanaged<IntPtr, int, int, int*, int>)(*(*(void***)_keystrokeMgrInstance + 8)))
                 (_keystrokeMgrInstance, wParam, lParam, &eatenNative);
             if (NativeMethods.Failed(hr))
             {
@@ -366,7 +418,7 @@ internal partial class WpfComWrappers
         public void KeyUp(int wParam, int lParam, [MarshalAs(UnmanagedType.Bool)] out bool eaten)
         {
             int eatenNative;
-            var hr = ((delegate* unmanaged<IntPtr, int, int, int*, int>)(*(*(void***)_keystrokeMgrInstance + 9)))
+            int hr = ((delegate* unmanaged<IntPtr, int, int, int*, int>)(*(*(void***)_keystrokeMgrInstance + 9)))
                 (_keystrokeMgrInstance, wParam, lParam, &eatenNative);
             if (NativeMethods.Failed(hr))
             {
@@ -379,8 +431,8 @@ internal partial class WpfComWrappers
         public void GetPreservedKey(ITfContext context, ref TF_PRESERVEDKEY key, out Guid guid)
         {
             IntPtr unknownPtr = Marshal.GetIUnknownForObject(context);
-            var contextIID = IID_ITfContext;
-            var result = Marshal.QueryInterface(unknownPtr, ref contextIID, out IntPtr contextPtr);
+            Guid contextIID = IID_ITfContext;
+            int result = Marshal.QueryInterface(unknownPtr, ref contextIID, out IntPtr contextPtr);
             if (NativeMethods.Failed(result))
             {
                 Marshal.ThrowExceptionForHR(result);
@@ -389,7 +441,7 @@ internal partial class WpfComWrappers
             fixed (TF_PRESERVEDKEY* keyPtr = &key)
             fixed (Guid* guidPtr = &guid)
             {
-                var hr = ((delegate* unmanaged<IntPtr, IntPtr, TF_PRESERVEDKEY*, Guid*, int>)(*(*(void***)_keystrokeMgrInstance + 10)))
+                int hr = ((delegate* unmanaged<IntPtr, IntPtr, TF_PRESERVEDKEY*, Guid*, int>)(*(*(void***)_keystrokeMgrInstance + 10)))
                     (_keystrokeMgrInstance, contextPtr, keyPtr, guidPtr);
                 if (NativeMethods.Failed(hr))
                 {
@@ -483,25 +535,41 @@ internal partial class WpfComWrappers
 
         public void SimulatePreservedKey(ITfContext context, ref Guid guid, [MarshalAs(UnmanagedType.Bool)] out bool eaten)
         {
-            int eatenNative;
+            IntPtr contextPtr = IntPtr.Zero;
             IntPtr unknownPtr = Marshal.GetIUnknownForObject(context);
-            var contextIID = IID_ITfContext;
-            var result = Marshal.QueryInterface(unknownPtr, ref contextIID, out IntPtr contextPtr);
-            if (NativeMethods.Failed(result))
+            try
             {
-                Marshal.ThrowExceptionForHR(result);
-            }
-
-            fixed (Guid* guidPtr = &guid)
-            {
-                var hr = ((delegate* unmanaged<IntPtr, IntPtr, Guid*, int*, int>)(*(*(void***)_keystrokeMgrInstance + 16)))
-                    (_keystrokeMgrInstance, contextPtr, guidPtr, &eatenNative);
-                if (NativeMethods.Failed(hr))
+                int eatenNative;
+                Guid contextIID = IID_ITfContext;
+                int result = Marshal.QueryInterface(unknownPtr, ref contextIID, out contextPtr);
+                if (NativeMethods.Failed(result))
                 {
-                    Marshal.ThrowExceptionForHR(hr);
+                    Marshal.ThrowExceptionForHR(result);
                 }
 
-                eaten = eatenNative != 0;
+                fixed (Guid* guidPtr = &guid)
+                {
+                    int hr = ((delegate* unmanaged<IntPtr, IntPtr, Guid*, int*, int>)(*(*(void***)_keystrokeMgrInstance + 16)))
+                        (_keystrokeMgrInstance, contextPtr, guidPtr, &eatenNative);
+                    if (NativeMethods.Failed(hr))
+                    {
+                        Marshal.ThrowExceptionForHR(hr);
+                    }
+
+                    eaten = eatenNative != 0;
+                }
+            }
+            finally
+            {
+                if (unknownPtr != IntPtr.Zero)
+                {
+                    Marshal.Release(unknownPtr);
+                }
+
+                if (contextPtr != IntPtr.Zero)
+                {
+                    Marshal.Release(contextPtr);
+                }
             }
         }
     }

@@ -2296,33 +2296,8 @@ namespace MS.Win32
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("86462810-593B-4916-9764-19C08E9CE110")]
-        public interface ITfContextOwnerCompositionServices /*: ITfContextComposition*/
+        public interface ITfContextOwnerCompositionServices
         {
-            /// <summary></summary>
-            //HRESULT StartComposition([in] TfEditCookie ecWrite,
-            //                         [in] ITfRange *pCompositionRange,
-            //                         [in] ITfCompositionSink *pSink,
-            //                         [out] ITfComposition **ppComposition);
-            void StartComposition(int ecWrite, ITfRange range, [MarshalAs(UnmanagedType.Interface)] object /*ITfCompositionSink */sink, [MarshalAs(UnmanagedType.Interface)] out object /*ITfComposition */composition);
-
-            /// <summary></summary>
-            //HRESULT EnumCompositions([out] IEnumITfCompositionView **ppEnum);
-            void EnumCompositions([MarshalAs(UnmanagedType.Interface)] out object /*IEnumITfCompositionView*/ enumView);
-
-            /// <summary></summary>
-            //HRESULT FindComposition([in] TfEditCookie ecRead,
-            //                        [in] ITfRange *pTestRange,
-            //                        [out] IEnumITfCompositionView **ppEnum);
-            void FindComposition(int ecRead, ITfRange testRange, [MarshalAs(UnmanagedType.Interface)] out object /*IEnumITfCompositionView*/ enumView);
-
-            /// <summary></summary>
-            //HRESULT TakeOwnership([in] TfEditCookie ecWrite,
-            //                      [in] ITfCompositionView *pComposition,
-            //                      [in] ITfCompositionSink *pSink,
-            //                      [out] ITfComposition **ppComposition);
-            void TakeOwnership(int ecWrite, ITfCompositionView view, [MarshalAs(UnmanagedType.Interface)] object /*ITfCompositionSink */ sink,
-                            [MarshalAs(UnmanagedType.Interface)] out object /*ITfComposition*/ composition);
-
             /// <summary></summary>
             //HRESULT TerminateComposition([in] ITfCompositionView *pComposition);
             [PreserveSig]

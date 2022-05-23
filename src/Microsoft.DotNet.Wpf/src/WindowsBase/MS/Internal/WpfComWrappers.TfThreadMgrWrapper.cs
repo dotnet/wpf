@@ -115,10 +115,11 @@ internal partial class WpfComWrappers
 
         public void SetFocus(ITfDocumentMgr docMgr)
         {
-            IntPtr docMgrPtr = IntPtr.Zero;
-            IntPtr unknownPtr = Marshal.GetIUnknownForObject(docMgr);
+            IntPtr docMgrPtr = default;
+            IntPtr unknownPtr = default;
             try
             {
+                unknownPtr = Marshal.GetIUnknownForObject(docMgr);
                 Guid tfDocumentMgr = IID_ITfDocumentMgr;
                 int result = Marshal.QueryInterface(unknownPtr, ref tfDocumentMgr, out docMgrPtr);
                 if (NativeMethods.Failed(result))
@@ -150,9 +151,10 @@ internal partial class WpfComWrappers
         public void AssociateFocus(IntPtr hwnd, ITfDocumentMgr newDocMgr, out ITfDocumentMgr prevDocMgr)
         {
             IntPtr newDocMgrPtr = IntPtr.Zero;
-            IntPtr unknownPtr = Marshal.GetIUnknownForObject(newDocMgr);
+            IntPtr unknownPtr = default;
             try
             {
+                unknownPtr = Marshal.GetIUnknownForObject(newDocMgrPtr);
                 Guid tfDocumentMgr = IID_ITfDocumentMgr;
                 int result = Marshal.QueryInterface(unknownPtr, ref tfDocumentMgr, out newDocMgrPtr);
                 if (NativeMethods.Failed(result))
@@ -299,9 +301,10 @@ internal partial class WpfComWrappers
 
         public void AdviseSink(ref Guid riid, [MarshalAs(UnmanagedType.Interface)] object obj, out int cookie)
         {
-            IntPtr unknownPtr = Marshal.GetIUnknownForObject(obj);
+            IntPtr unknownPtr = default;
             try
             {
+                unknownPtr = Marshal.GetIUnknownForObject(obj);
                 fixed (Guid* iidPtr = &riid)
                 fixed (int* cookiePtr = &cookie)
                 {
@@ -334,9 +337,10 @@ internal partial class WpfComWrappers
 
         public void AdviseKeyEventSink(int clientId, [MarshalAs(UnmanagedType.Interface)] object obj, [MarshalAs(UnmanagedType.Bool)] bool fForeground)
         {
-            IntPtr unknownPtr = Marshal.GetIUnknownForObject(obj);
+            IntPtr unknownPtr = default;
             try
             {
+                unknownPtr = Marshal.GetIUnknownForObject(obj);
                 int hr = ((delegate* unmanaged<IntPtr, int, IntPtr, int, int>)(*(*(void***)_keystrokeMgrInstance + 3)))
                     (_keystrokeMgrInstance, clientId, unknownPtr, fForeground ? 1 : 0);
                 if (NativeMethods.Failed(hr))
@@ -430,22 +434,39 @@ internal partial class WpfComWrappers
 
         public void GetPreservedKey(ITfContext context, ref TF_PRESERVEDKEY key, out Guid guid)
         {
-            IntPtr unknownPtr = Marshal.GetIUnknownForObject(context);
-            Guid contextIID = IID_ITfContext;
-            int result = Marshal.QueryInterface(unknownPtr, ref contextIID, out IntPtr contextPtr);
-            if (NativeMethods.Failed(result))
+            IntPtr unknownPtr = default;
+            IntPtr contextPtr = default;
+            try
             {
-                Marshal.ThrowExceptionForHR(result);
-            }
-
-            fixed (TF_PRESERVEDKEY* keyPtr = &key)
-            fixed (Guid* guidPtr = &guid)
-            {
-                int hr = ((delegate* unmanaged<IntPtr, IntPtr, TF_PRESERVEDKEY*, Guid*, int>)(*(*(void***)_keystrokeMgrInstance + 10)))
-                    (_keystrokeMgrInstance, contextPtr, keyPtr, guidPtr);
-                if (NativeMethods.Failed(hr))
+                unknownPtr = Marshal.GetIUnknownForObject(context);
+                Guid contextIID = IID_ITfContext;
+                int result = Marshal.QueryInterface(unknownPtr, ref contextIID, out contextPtr);
+                if (NativeMethods.Failed(result))
                 {
-                    Marshal.ThrowExceptionForHR(hr);
+                    Marshal.ThrowExceptionForHR(result);
+                }
+
+                fixed (TF_PRESERVEDKEY* keyPtr = &key)
+                fixed (Guid* guidPtr = &guid)
+                {
+                    int hr = ((delegate* unmanaged<IntPtr, IntPtr, TF_PRESERVEDKEY*, Guid*, int>)(*(*(void***)_keystrokeMgrInstance + 10)))
+                        (_keystrokeMgrInstance, contextPtr, keyPtr, guidPtr);
+                    if (NativeMethods.Failed(hr))
+                    {
+                        Marshal.ThrowExceptionForHR(hr);
+                    }
+                }
+            }
+            finally
+            {
+                if (unknownPtr != IntPtr.Zero)
+                {
+                    Marshal.Release(unknownPtr);
+                }
+
+                if (unknownPtr != IntPtr.Zero)
+                {
+                    Marshal.Release(contextPtr);
                 }
             }
         }
@@ -512,7 +533,7 @@ internal partial class WpfComWrappers
 
         public void GetPreservedKeyDescription(ref Guid guid, [MarshalAs(UnmanagedType.BStr)] out string desc)
         {
-            IntPtr deskPtr = IntPtr.Zero;
+            IntPtr deskPtr = default;
             try
             {
                 fixed (Guid* guidPtr = &guid)
@@ -535,10 +556,11 @@ internal partial class WpfComWrappers
 
         public void SimulatePreservedKey(ITfContext context, ref Guid guid, [MarshalAs(UnmanagedType.Bool)] out bool eaten)
         {
-            IntPtr contextPtr = IntPtr.Zero;
-            IntPtr unknownPtr = Marshal.GetIUnknownForObject(context);
+            IntPtr contextPtr = default;
+            IntPtr unknownPtr = default;
             try
             {
+                unknownPtr = Marshal.GetIUnknownForObject(context);
                 int eatenNative;
                 Guid contextIID = IID_ITfContext;
                 int result = Marshal.QueryInterface(unknownPtr, ref contextIID, out contextPtr);

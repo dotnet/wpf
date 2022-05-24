@@ -52,13 +52,7 @@ pr:
   autoCancel: true
   branches:
     include:
-    - main
-    - release/3.* 
-    - internal/release/3.*
-    - release/5.*
-    - release/6.*
-    - release/7.*
-    - experimental/*
+    - drttesting
   paths:
     exclude:
     - Documentation/*
@@ -100,3 +94,27 @@ stages:
         -TsaRepositoryName "wpf"
         -TsaCodebaseName "wpf"
         -TsaPublish $True'
+
+- stage: DrtTesting
+  displayName: DrtTesting
+  jobs:
+    - job: DownloadTestsZip
+      steps:
+      - task: DownloadPipelineArtifact@2
+        inputs:
+          buildType: 'specific'
+          project: '7ea9116e-9fac-403d-b258-b31fcf1bb293'
+          definition: '479'
+          buildVersionToDownload: 'specific'
+          pipelineId: '1702475'
+          artifactName: 'Tests.Release.x64.zip'
+          targetPath: '$(Pipeline.Workspace)\testszip\'
+      - task: DownloadPipelineArtifact@2
+        inputs:
+          buildType: 'specific'
+          project: '7ea9116e-9fac-403d-b258-b31fcf1bb293'
+          definition: '479'
+          buildVersionToDownload: 'specific'
+          pipelineId: '1702475'
+          artifactName: 'Tests.Release.x86.zip'
+          targetPath: '$(Pipeline.Workspace)\testszip\'

@@ -137,9 +137,9 @@ namespace System.Windows.Automation
         {
             Misc.ValidateArgumentNonNull(element, "element" );
             Misc.ValidateArgumentNonNull(eventHandler, "eventHandler" );
-            Misc.ValidateArgument( eventId != AutomationElement.AutomationFocusChangedEvent, SRID.EventIdMustNotBeAutomationFocusChanged );
-            Misc.ValidateArgument( eventId != AutomationElement.StructureChangedEvent,SRID.EventIdMustNotBeStructureChanged );
-            Misc.ValidateArgument( eventId != AutomationElement.AutomationPropertyChangedEvent, SRID.EventIdMustNotBeAutomationPropertyChanged );
+            Misc.ValidateArgument( eventId != AutomationElement.AutomationFocusChangedEvent, nameof(SR.EventIdMustNotBeAutomationFocusChanged) );
+            Misc.ValidateArgument( eventId != AutomationElement.StructureChangedEvent, nameof(SR.EventIdMustNotBeStructureChanged) );
+            Misc.ValidateArgument( eventId != AutomationElement.AutomationPropertyChangedEvent, nameof(SR.EventIdMustNotBeAutomationPropertyChanged) );
 
             if (eventId == WindowPattern.WindowClosedEvent)
             {
@@ -184,7 +184,7 @@ namespace System.Windows.Automation
 
                 if ( !paramsValidated )
                 {
-                    throw new ArgumentException( SR.Get( SRID.ParamsNotApplicableToWindowClosedEvent ) );
+                    throw new ArgumentException( SR.ParamsNotApplicableToWindowClosedEvent );
                 }
             }
 
@@ -208,9 +208,9 @@ namespace System.Windows.Automation
         {
             Misc.ValidateArgumentNonNull(element, "element" );
             Misc.ValidateArgumentNonNull(eventHandler, "eventHandler" );
-            Misc.ValidateArgument( eventId != AutomationElement.AutomationFocusChangedEvent, SRID.EventIdMustNotBeAutomationFocusChanged );
-            Misc.ValidateArgument( eventId != AutomationElement.StructureChangedEvent, SRID.EventIdMustNotBeStructureChanged );
-            Misc.ValidateArgument( eventId != AutomationElement.AutomationPropertyChangedEvent, SRID.EventIdMustNotBeAutomationPropertyChanged );
+            Misc.ValidateArgument( eventId != AutomationElement.AutomationFocusChangedEvent, nameof(SR.EventIdMustNotBeAutomationFocusChanged) );
+            Misc.ValidateArgument( eventId != AutomationElement.StructureChangedEvent, nameof(SR.EventIdMustNotBeStructureChanged) );
+            Misc.ValidateArgument( eventId != AutomationElement.AutomationPropertyChangedEvent, nameof(SR.EventIdMustNotBeAutomationPropertyChanged) );
 
             // Remove the client-side listener for for this event
             ClientEventManager.RemoveListener( eventId, element, eventHandler );
@@ -235,7 +235,7 @@ namespace System.Windows.Automation
             Misc.ValidateArgumentNonNull(properties, "properties" );
             if (properties.Length == 0)
             {
-                throw new ArgumentException( SR.Get(SRID.AtLeastOnePropertyMustBeSpecified) );
+                throw new ArgumentException( SR.AtLeastOnePropertyMustBeSpecified );
             }
 
             // Check that no properties are interpreted properties

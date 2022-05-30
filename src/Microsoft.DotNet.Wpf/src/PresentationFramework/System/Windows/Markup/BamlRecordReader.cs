@@ -5680,7 +5680,15 @@ namespace System.Windows.Markup
 
         internal override DeferredResourceReference PrefetchedValue
         {
-            get { return _prefetchedValue; }
+            get
+            {
+                if (_prefetchedValue == null || _prefetchedValue.Value == DependencyProperty.UnsetValue)
+                {
+                    return null;
+                }
+
+                return _prefetchedValue;
+            }
         }
 
         #endregion Methods

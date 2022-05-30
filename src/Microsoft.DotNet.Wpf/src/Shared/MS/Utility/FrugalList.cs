@@ -1346,7 +1346,11 @@ namespace MS.Utility
             return FrugalListStoreState.Success;
         }
 
-        public override void Clear() => _entries.AsSpan(0, _count).Clear();
+        public override void Clear()
+        {
+            _entries.AsSpan(0, _count).Clear();
+            _count = 0;
+        }
 
         public override bool Contains(T value) => IndexOf(value) >= 0;
 

@@ -437,7 +437,7 @@ namespace MS.Internal.Markup
             {
                 try
                 {
-#if PRESENTATION_CORE
+#if NET
                     return double.Parse(_pathString.AsSpan(start, _curIndex - start), provider: _formatProvider);
 #else
                     return double.Parse(_pathString.Substring(start, _curIndex - start), provider: _formatProvider);

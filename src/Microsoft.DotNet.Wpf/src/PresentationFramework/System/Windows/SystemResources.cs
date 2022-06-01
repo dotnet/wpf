@@ -2053,24 +2053,23 @@ namespace System.Windows
 
         internal DeferredResourceReference Get(object resourceKey)
         {
-            WeakReference<DeferredResourceReference> weakReference;
             lock (_syncRoot)
             {
-                _entries.TryGetValue(resourceKey, out weakReference);
-            }
+                _entries.TryGetValue(resourceKey, out var weakReference);
 
-            if (weakReference is null)
-            {
-                return null;
-            }
+                if (weakReference is null)
+                {
+                    return null;
+                }
 
-            if (weakReference.TryGetTarget(out DeferredResourceReference deferredResourceReference))
-            {
-                return deferredResourceReference;
-            }
-            else
-            {
-                ++_potentiallyDeadEntryCount;
+                if (weakReference.TryGetTarget(out var deferredResourceReference))
+                {
+                    return deferredResourceReference;
+                }
+                else
+                {
+                    ++_potentiallyDeadEntryCount;
+                }
             }
 
             PurgeIfRequired();
@@ -2084,7 +2083,7 @@ namespace System.Windows
             {
                 foreach (WeakReference<DeferredResourceReference> weakReference in _entries.Values)
                 {
-                    if (weakReference.TryGetTarget(out DeferredResourceReference deferredResourceReference))
+                    if (weakReference.TryGetTarget(out var deferredResourceReference))
                     {
                         deferredResourceReference.Dictionary = resourceDictionary;
                     }
@@ -2136,7 +2135,7 @@ namespace System.Windows
 
                 foreach (KeyValuePair<object, WeakReference<DeferredResourceReference>> entry in _entries)
                 {
-                    if (entry.Value.TryGetTarget(out DeferredResourceReference deferredResourceReference))
+                    if (entry.Value.TryGetTarget(out var deferredResourceReference))
                     {
                         list.Add(deferredResourceReference);
                     }

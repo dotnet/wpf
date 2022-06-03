@@ -228,7 +228,7 @@ namespace MS.Internal.Globalization
                             attributeGroup
                             );
 
-                        builder = new StringBuilder();
+                        builder.Clear();
                     }
                 }
                 else

@@ -2078,7 +2078,7 @@ namespace System.Windows.Baml2006
                         // We need to append local assembly
 
                         return uriInput + ((_settings.LocalAssembly != null)
-                                                ? ";assembly=" + GetAssemblyNameForNamespace(_settings.LocalAssembly)
+                                                ? string.Concat(";assembly=", GetAssemblyNameForNamespace(_settings.LocalAssembly))
                                                 : String.Empty);
                     }
                     else
@@ -2097,7 +2097,7 @@ namespace System.Windows.Baml2006
                         ReadOnlySpan<char> assemblyName = uriInput.AsSpan(equalIdx + 1);
                         if (assemblyName.TrimStart().IsEmpty)
                         {
-                            return uriInput + GetAssemblyNameForNamespace(_settings.LocalAssembly);
+                            return string.Concat(uriInput, GetAssemblyNameForNamespace(_settings.LocalAssembly));
                         }
                     }
                 }
@@ -2106,14 +2106,13 @@ namespace System.Windows.Baml2006
             return uriInput;
         }
 
-        //  Providing the assembly short name may lead to ambiguity between two versions of the same assembly, but we need to
+        // Providing the assembly short name may lead to ambiguity between two versions of the same assembly, but we need to
         // keep it this way since it is exposed publicly via the Namespace property, Baml2006ReaderInternal provides the full Assembly name.
         // We need to avoid Assembly.GetName() so we run in PartialTrust without asserting.
-        internal virtual string GetAssemblyNameForNamespace(Assembly assembly)
+        internal virtual ReadOnlySpan<char> GetAssemblyNameForNamespace(Assembly assembly)
         {
             string assemblyLongName = assembly.FullName;
-            string assemblyShortName = assemblyLongName.Substring(0, assemblyLongName.IndexOf(','));
-            return assemblyShortName;
+            return assemblyLongName.AsSpan(0, assemblyLongName.IndexOf(','));
         }
 
         // (prefix, namespaceUri)

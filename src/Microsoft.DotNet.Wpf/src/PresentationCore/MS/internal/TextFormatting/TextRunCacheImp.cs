@@ -329,13 +329,13 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         internal IList<TextSpan<TextRun>> GetTextRunSpans()
         {
-            IList<TextSpan<TextRun>> textRunList = new List<TextSpan<TextRun>>(_textRunVector.Count);
+            TextSpan<TextRun>[] textRunList = new TextSpan<TextRun>[_textRunVector.Count];
 
-            for (int i = 0; i < _textRunVector.Count; i++)
+            for (int i = 0; i < textRunList.Length; i++)
             {
-                Span currentSpan = _textRunVector[i];                
-                textRunList.Add(new TextSpan<TextRun>(currentSpan.length, currentSpan.element as TextRun));
-            }            
+                Span currentSpan = _textRunVector[i];
+                textRunList[i] = new TextSpan<TextRun>(currentSpan.length, currentSpan.element as TextRun);
+            }
 
             return textRunList;
         }

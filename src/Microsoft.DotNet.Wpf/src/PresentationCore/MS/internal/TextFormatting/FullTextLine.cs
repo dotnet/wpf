@@ -2080,7 +2080,7 @@ namespace MS.Internal.TextFormatting
                     return Array.Empty<TextSpan<TextRun>>();
                 }
 
-                IList<TextSpan<TextRun>> lsrunList = new List<TextSpan<TextRun>>(2);
+                List<TextSpan<TextRun>> lsrunList = new List<TextSpan<TextRun>>(2);
 
                 TextRun lastTextRun = null;
                 int cchAcc = 0;

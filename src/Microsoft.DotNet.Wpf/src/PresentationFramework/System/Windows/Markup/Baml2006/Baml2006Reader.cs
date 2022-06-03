@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Xaml;
@@ -1122,13 +1123,27 @@ namespace System.Windows.Baml2006
 
         private void Process_Header()
         {
-            Int32 stringLength = _binaryReader.ReadInt32();
+            int stringLength = _binaryReader.ReadInt32();
+            int toRead = stringLength + (3 * sizeof(int)); // stringLength bytes + readerVersion, updateVersion, and writerVersion Int32s.
 
-            byte[] headerString = _binaryReader.ReadBytes(stringLength);
-
-            Int32 readerVersion = _binaryReader.ReadInt32();
-            Int32 updateVersion = _binaryReader.ReadInt32();
-            Int32 writerVersion = _binaryReader.ReadInt32();
+            // Ignore toRead bytes.
+            Stream s = _binaryReader.BaseStream;
+            if (s.CanSeek)
+            {
+                // If the stream underlying the reader is seekable, we can just skip past the bytes.
+                s.Position += toRead;
+            }
+            else
+            {
+                // In the less common case where it's not seekable, we need to actually read.
+                byte[] pooledArray = ArrayPool<byte>.Shared.Rent(toRead);
+                int totalRead = 0, bytesRead;
+                while (totalRead < toRead && (bytesRead = s.Read(pooledArray, 0, toRead - totalRead)) > 0)
+                {
+                    totalRead += bytesRead;
+                }
+                ArrayPool<byte>.Shared.Return(pooledArray);
+            }
         }
 
         private void Process_ElementStart()

@@ -100,11 +100,11 @@ namespace System.Windows.Forms.Integration
                 //apply the translator
                 if (string.IsNullOrEmpty(propertyName))
                 {
-                    throw new ArgumentNullException(string.Format(CultureInfo.CurrentCulture, SR.Get(SRID.WFI_NullArgument), "propertyName"));
+                    throw new ArgumentNullException(string.Format(CultureInfo.CurrentCulture, SR.WFI_NullArgument, "propertyName"));
                 }
                 if (value == null)
                 {
-                    throw new ArgumentNullException(string.Format(CultureInfo.CurrentCulture, SR.Get(SRID.WFI_NullArgument), "translator"));
+                    throw new ArgumentNullException(string.Format(CultureInfo.CurrentCulture, SR.WFI_NullArgument, "translator"));
                 }
                 ThrowIfPropertyDoesntExistOnSource(propertyName);
                 _wrappedDictionary[propertyName] = value;    //This will replace an existing mapping, unlike Add.
@@ -146,7 +146,7 @@ namespace System.Windows.Forms.Integration
         {
             if (Contains(propertyName))
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, SR.Get(SRID.WFI_PropertyMappingExists), propertyName));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, SR.WFI_PropertyMappingExists, propertyName));
             }
             this[propertyName] = translator;
         }
@@ -158,7 +158,7 @@ namespace System.Windows.Forms.Integration
                 if (GetProperty(propertyName) == null)
                 {
                     // Property 'Foreground' doesn't exist on type 'Window'
-                    throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, SR.Get(SRID.WFI_PropertyDoesntExist), propertyName, SourceObject.GetType().FullName));
+                    throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, SR.WFI_PropertyDoesntExist, propertyName, SourceObject.GetType().FullName));
                 }
             }
         }
@@ -268,7 +268,7 @@ namespace System.Windows.Forms.Integration
         {
             if (string.IsNullOrEmpty(propertyName))
             {
-                throw new ArgumentNullException(string.Format(CultureInfo.CurrentCulture, SR.Get(SRID.WFI_ArgumentNullOrEmpty), "propertyName"));
+                throw new ArgumentNullException(string.Format(CultureInfo.CurrentCulture, SR.WFI_ArgumentNullOrEmpty, "propertyName"));
             }
 
             //Resetting means get the value from the list of default values,
@@ -341,7 +341,7 @@ namespace System.Windows.Forms.Integration
                 }
                 if (args.ThrowException)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.WFI_PropertyMapError), ex);
+                    throw new InvalidOperationException(SR.WFI_PropertyMapError, ex);
                 }
             }
         }

@@ -96,12 +96,12 @@ namespace System.Windows
             {
                 if (Sealed)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.TypeMetadataCannotChangeAfterUse));
+                    throw new InvalidOperationException(SR.TypeMetadataCannotChangeAfterUse);
                 }
 
                 if (value == DependencyProperty.UnsetValue)
                 {
-                    throw new ArgumentException(SR.Get(SRID.DefaultValueMayNotBeUnset));
+                    throw new ArgumentException(SR.DefaultValueMayNotBeUnset);
                 }
 
                 _defaultValue = value;
@@ -354,7 +354,7 @@ namespace System.Windows
             {
                 if (Sealed)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.TypeMetadataCannotChangeAfterUse));
+                    throw new InvalidOperationException(SR.TypeMetadataCannotChangeAfterUse);
                 }
 
                 _propertyChangedCallback = value;
@@ -374,7 +374,7 @@ namespace System.Windows
             {
                 if (Sealed)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.TypeMetadataCannotChangeAfterUse));
+                    throw new InvalidOperationException(SR.TypeMetadataCannotChangeAfterUse);
                 }
 
                 _coerceValueCallback = value;
@@ -427,7 +427,7 @@ namespace System.Windows
             {
                 if (Sealed)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.TypeMetadataCannotChangeAfterUse));
+                    throw new InvalidOperationException(SR.TypeMetadataCannotChangeAfterUse);
                 }
 
                 _freezeValueCallback = value;
@@ -575,7 +575,7 @@ namespace System.Windows
 
             if (Sealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TypeMetadataCannotChangeAfterUse));
+                throw new InvalidOperationException(SR.TypeMetadataCannotChangeAfterUse);
             }
 
             // Merge source metadata into this

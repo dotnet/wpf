@@ -30,13 +30,13 @@ namespace System.Windows.Markup
             var nameResolver = (IXamlNameResolver)context.GetService(typeof(IXamlNameResolver));
             if (nameResolver == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MissingNameResolver));
+                throw new InvalidOperationException(SR.MissingNameResolver);
             }
 
             string name = value as string;
             if (String.IsNullOrEmpty(name))
             {
-                throw new InvalidOperationException(SR.Get(SRID.MustHaveName));
+                throw new InvalidOperationException(SR.MustHaveName);
             }
             object obj = nameResolver.Resolve(name);
             if (obj == null)
@@ -73,7 +73,7 @@ namespace System.Windows.Markup
             var nameProvider = (IXamlNameProvider)context.GetService(typeof(IXamlNameProvider));
             if (nameProvider == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MissingNameProvider));
+                throw new InvalidOperationException(SR.MissingNameProvider);
             }
 
             return nameProvider.GetName(value);            

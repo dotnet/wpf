@@ -115,7 +115,7 @@ namespace System.IO.Packaging
             //
             if (_root.OpenAccess != FileAccess.ReadWrite)
             {
-                throw new NotSupportedException(SR.Get(SRID.StreamNeedsReadWriteAccess));
+                throw new NotSupportedException(SR.StreamNeedsReadWriteAccess);
             }
 
             InitializeRMForCreate(publishLicense, cryptoProvider);
@@ -211,7 +211,7 @@ namespace System.IO.Packaging
             //
             if (_root.OpenAccess != FileAccess.ReadWrite)
             {
-                throw new NotSupportedException(SR.Get(SRID.StreamNeedsReadWriteAccess));
+                throw new NotSupportedException(SR.StreamNeedsReadWriteAccess);
             }
 
             InitializeRMForCreate(publishLicense, cryptoProvider);
@@ -921,7 +921,7 @@ namespace System.IO.Packaging
             StreamInfo siPackage = new StreamInfo(_root, PackageStreamName);
             if (!siPackage.InternalExists())
             {
-                throw new FileFormatException(SR.Get(SRID.PackageNotFound));
+                throw new FileFormatException(SR.PackageNotFound);
             }
 
             //If the StreamInfo exists we go on to check if correct transform has been
@@ -943,7 +943,7 @@ namespace System.IO.Packaging
                     // Do not allow more than one RM Transform
                     if (rmet != null)
                     {
-                        throw new FileFormatException(SR.Get(SRID.MultipleRightsManagementEncryptionTransformFound));
+                        throw new FileFormatException(SR.MultipleRightsManagementEncryptionTransformFound);
                     }
 
                     rmet = dataTransform as RightsManagementEncryptionTransform;
@@ -952,7 +952,7 @@ namespace System.IO.Packaging
 
             if (rmet == null)
             {
-                throw new FileFormatException(SR.Get(SRID.RightsManagementEncryptionTransformNotFound));
+                throw new FileFormatException(SR.RightsManagementEncryptionTransformNotFound);
             }
 
             //
@@ -1005,7 +1005,7 @@ namespace System.IO.Packaging
                 {
                     //Error. This package is created in InitForCreate while creating EncryptedPackageEnvelope.
                     //If it does not exist, throw an error.
-                    throw new FileFormatException(SR.Get(SRID.PackageNotFound));
+                    throw new FileFormatException(SR.PackageNotFound);
                 }
             }
         }
@@ -1120,7 +1120,7 @@ namespace System.IO.Packaging
         CheckDisposed()
         {
             if (_disposed)
-                throw new ObjectDisposedException(null, SR.Get(SRID.EncryptedPackageEnvelopeDisposed));
+                throw new ObjectDisposedException(null, SR.EncryptedPackageEnvelopeDisposed);
         }
 
         /// <summary>

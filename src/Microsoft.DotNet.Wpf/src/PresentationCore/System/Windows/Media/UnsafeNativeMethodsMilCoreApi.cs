@@ -112,7 +112,7 @@ namespace MS.Win32.PresentationCore
                 UInt32 nSize2,
                 double rTolerance,
                 bool fRelative,
-                Delegate addFigureCallback,
+                PathGeometry.AddFigureToListDelegate addFigureCallback,
                 GeometryCombineMode combineMode,
                 out FillRule resultFillRule);
 
@@ -126,7 +126,7 @@ namespace MS.Win32.PresentationCore
                 UInt32 nSize,
                 double rTolerance,
                 bool fRelative,
-                Delegate addFigureCallback,
+                PathGeometry.AddFigureToListDelegate addFigureCallback,
                 out FillRule widenedFillRule);
 
             [DllImport(DllImport.MilCore)]
@@ -137,7 +137,7 @@ namespace MS.Win32.PresentationCore
                 UInt32 nSize,
                 double rTolerance,
                 bool fRelative,
-                Delegate addFigureCallback,
+                PathGeometry.AddFigureToListDelegate addFigureCallback,
                 out FillRule outlinedFillRule);
 
             [DllImport(DllImport.MilCore)]
@@ -148,13 +148,8 @@ namespace MS.Win32.PresentationCore
                 UInt32 nSize,
                 double rTolerance,
                 bool fRelative,
-                Delegate addFigureCallback,
+                PathGeometry.AddFigureToListDelegate addFigureCallback,
                 out FillRule resultFillRule);
-
-            [DllImport(DllImport.MilCore)]
-            internal unsafe static extern int /* HRESULT */ MilGlyphCache_SetCreateGlyphBitmapsCallback(
-                MulticastDelegate del
-                );
 
             [DllImport(DllImport.MilCore)]
             internal unsafe static extern int MilGlyphCache_BeginCommandAtRenderTime(

@@ -165,7 +165,7 @@ namespace MS.Internal.Xaml.Context
             {
                 XamlTypeName name = XamlTypeName.Parse(qName, _serviceProviderContext);
                 xamlType = GetXamlType(name, true, true);
-                throw new XamlParseException(SR.Get(SRID.TypeNotFound, xamlType.GetQualifiedName()));
+                throw new XamlParseException(SR.Format(SR.TypeNotFound, xamlType.GetQualifiedName()));
             }
             return xamlType.UnderlyingType;
         }
@@ -314,7 +314,7 @@ namespace MS.Internal.Xaml.Context
             {
                 if (!xamlMember.IsAmbient)
                 {
-                    throw new ArgumentException(SR.Get(SRID.NotAmbientProperty, xamlMember.DeclaringType.Name, xamlMember.Name), nameof(properties));
+                    throw new ArgumentException(SR.Format(SR.NotAmbientProperty, xamlMember.DeclaringType.Name, xamlMember.Name), nameof(properties));
                 }
             }
 
@@ -431,7 +431,7 @@ namespace MS.Internal.Xaml.Context
             {
                 if (!xamlType.IsAmbient)
                 {
-                    throw new ArgumentException(SR.Get(SRID.NotAmbientType, xamlType.Name), nameof(types));
+                    throw new ArgumentException(SR.Format(SR.NotAmbientType, xamlType.Name), nameof(types));
                 }
             }
 
@@ -878,7 +878,7 @@ namespace MS.Internal.Xaml.Context
             object inst = rootFrame.Instance;
             if (inst == null && rootFrame.XamlType.IsNameScope)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NameScopeOnRootInstance));
+                throw new InvalidOperationException(SR.NameScopeOnRootInstance);
             }
 
             XAML3.INameScopeDictionary nameScopeDictionary = null;

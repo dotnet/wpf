@@ -13,7 +13,10 @@
   <PropertyGroup>
     <WpfConfig Condition="'$(WpfConfig)'==''">Debug</WpfConfig>
     <RuntimeIdentifier>win-$(PlatformTarget)</RuntimeIdentifier>
-    <WPFArtifactsPath>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\'))\artifacts\packaging\$(WpfConfig)\Microsoft.DotNet.Wpf.GitHub.$(WpfConfig)</WPFArtifactsPath>
+    
+    <WpfArtifactsPackagesCommonPath>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\'))\artifacts\packaging</WpfArtifactsPackagesCommonPath>
+    <WpfPlatformTargetArtifactsDirectory Condition="'$(PlatformTarget)'=='x64'">x64\</WpfPlatformTargetArtifactsDirectory>
+    <WPFArtifactsPath>$(WpfPackagesCommonPath)\$(WpfConfig)\$(WpfPlatformTargetArtifactsDirectory)Microsoft.DotNet.Wpf.GitHub.$(WpfConfig)</WPFArtifactsPath>
   </PropertyGroup>
 
   <ItemGroup>

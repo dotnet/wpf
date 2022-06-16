@@ -171,7 +171,7 @@ namespace System.Windows.Input
         /// <returns>true if the command can be executed, false otherwise.</returns>
         internal bool CriticalCanExecute(object parameter, IInputElement target, bool trusted, out bool continueRouting)
         {
-            // We only support UIElement, ContentElement, and UIElement3D
+            // We only support UIElement, ContentElement and UIElement3D
             if ((target != null) && !InputElement.IsValid(target))
             {
                 throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, target.GetType()));

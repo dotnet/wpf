@@ -139,7 +139,7 @@ namespace System.Windows.Input
             DependencyObject oFocus = null;
             bool forceToNullIfFailed = false;
 
-            // Validate that if elt is either a UIElement or a ContentElement.
+            // Validate that elt is either a UIElement, a ContentElement or a UIElement3D.
             if(element != null)
             {
                 if(!InputElement.IsValid(element))
@@ -513,7 +513,7 @@ namespace System.Windows.Input
                 // The preferred input methods should be applied after Cicero TIP gots SetFocus callback.
                 InputMethod.Current.GotKeyboardFocus(_focus);
 
-                //Could be also built-in into IsKeyboardFocused_Changed static on UIElement and ContentElement
+                //Could be also built-in into IsKeyboardFocused_Changed static on UIElement, ContentElement and UIElement3D.
                 //However the Automation likes to go immediately back on us so it would be better be last one...
                 AutomationPeer.RaiseFocusChangedEventHelper((IInputElement)_focus);
             }

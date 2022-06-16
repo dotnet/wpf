@@ -132,7 +132,7 @@ namespace System.Windows
             // Either UIElement or ContentElement
             if (!InputElement.IsValid(element))
             {
-                throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement), "element");
+                throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, element.GetType()), nameof(element));
             }
             DependencyObject o = (DependencyObject)element;
 
@@ -197,7 +197,7 @@ namespace System.Windows
 
             if (!InputElement.IsValid(e))
             {
-                throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement), "e");
+                throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, e.GetType()), nameof(e));
             }
             DependencyObject o = (DependencyObject)e;
 

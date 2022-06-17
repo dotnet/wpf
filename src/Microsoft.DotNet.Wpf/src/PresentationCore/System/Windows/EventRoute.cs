@@ -195,25 +195,28 @@ namespace System.Windows
 
                     if( TraceRoutedEvent.IsEnabled )
                     {
+                        _traceArguments ??= new object[3];
+                        _traceArguments[0] = _routeItemList[i].Target;
+                        _traceArguments[1] = args;
+                        _traceArguments[2] = args.Handled ? _true : _false;
                         TraceRoutedEvent.Trace(
                             TraceEventType.Start,
-                            TraceRoutedEvent.InvokeHandlers,  
-                            _routeItemList[i].Target,
-                            args,
-                            args.Handled );
-
+                            TraceRoutedEvent.InvokeHandlers,
+                            _traceArguments);
                     }
                     
                     _routeItemList[i].InvokeHandler(args);
 
                     if( TraceRoutedEvent.IsEnabled )
                     {
+                        _traceArguments ??= new object[3];
+                        _traceArguments[0] = _routeItemList[i].Target;
+                        _traceArguments[1] = args;
+                        _traceArguments[2] = args.Handled ? _true : _false;
                         TraceRoutedEvent.Trace(
                             TraceEventType.Stop,
-                            TraceRoutedEvent.InvokeHandlers,  
-                            _routeItemList[i].Target,
-                            args,
-                            args.Handled );
+                            TraceRoutedEvent.InvokeHandlers,
+                            _traceArguments);
                     }
 
 
@@ -266,12 +269,14 @@ namespace System.Windows
                         
                         if( TraceRoutedEvent.IsEnabled )
                         {
+                            _traceArguments ??= new object[3];
+                            _traceArguments[0] = _routeItemList[i].Target;
+                            _traceArguments[1] = args;
+                            _traceArguments[2] = args.Handled ? _true : _false;
                             TraceRoutedEvent.Trace(
                                 TraceEventType.Start,
-                                TraceRoutedEvent.InvokeHandlers,  
-                                _routeItemList[i].Target,
-                                args,
-                                args.Handled );
+                                TraceRoutedEvent.InvokeHandlers,
+                                _traceArguments);
                         }
 
                         // Invoke listeners
@@ -279,12 +284,14 @@ namespace System.Windows
 
                         if( TraceRoutedEvent.IsEnabled )
                         {
+                            _traceArguments ??= new object[3];
+                            _traceArguments[0] = _routeItemList[i].Target;
+                            _traceArguments[1] = args;
+                            _traceArguments[2] = args.Handled ? _true : _false;
                             TraceRoutedEvent.Trace(
                                 TraceEventType.Stop,
-                                TraceRoutedEvent.InvokeHandlers,  
-                                _routeItemList[i].Target,
-                                args,
-                                args.Handled );
+                                TraceRoutedEvent.InvokeHandlers,
+                                _traceArguments);
                         }
 
                     }
@@ -551,6 +558,11 @@ namespace System.Windows
 
         // Stores Source Items for separated trees
         private FrugalStructList<SourceItem> _sourceItemList;
+
+        // Stores arguments that are passed to TraceRoutedEvent.Trace (to reduce allocations)
+        private object[] _traceArguments;
+        private static readonly object _true = true;
+        private static readonly object _false = false;
 
         #endregion Data
     }

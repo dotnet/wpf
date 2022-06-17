@@ -1282,7 +1282,7 @@ namespace System.Xaml
                     {
                         return null;
                     }
-                    return (EventHandler<XamlSetMarkupExtensionEventArgs>)SafeReflectionInvoker.CreateDelegate(
+                    return (EventHandler<XamlSetMarkupExtensionEventArgs>)Delegate.CreateDelegate(
                         typeof(EventHandler<XamlSetMarkupExtensionEventArgs>), UnderlyingType, methodName);
                 }
             }
@@ -1304,7 +1304,7 @@ namespace System.Xaml
                     {
                         return null;
                     }
-                    return (EventHandler<XamlSetTypeConverterEventArgs>)SafeReflectionInvoker.CreateDelegate(
+                    return (EventHandler<XamlSetTypeConverterEventArgs>)Delegate.CreateDelegate(
                         typeof(EventHandler<XamlSetTypeConverterEventArgs>), UnderlyingType, methodName);
                 }
             }

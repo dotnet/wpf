@@ -92,7 +92,7 @@ namespace System.Xaml.Schema
             {
                 throw new XamlSchemaException(SR.Format(SR.NoAddMethodFound, _xamlType, itemType));
             }
-            SafeReflectionInvoker.InvokeMethod(addMethod, instance, new object[] { item });
+            addMethod.Invoke(instance, new object[] { item });
         }
 
         public virtual void AddToDictionary(object instance, object key, object item)
@@ -127,7 +127,7 @@ namespace System.Xaml.Schema
             {
                 throw new XamlSchemaException(SR.Format(SR.NoAddMethodFound, _xamlType, itemType));
             }
-            SafeReflectionInvoker.InvokeMethod(addMethod, instance, new object[] { key, item });
+            addMethod.Invoke(instance, new object[] { key, item });
         }
 
         public virtual object CreateInstance(object[] arguments)
@@ -141,7 +141,7 @@ namespace System.Xaml.Schema
                     return result;
                 }
             }
-            return CreateInstanceWithActivator(_xamlType.UnderlyingType, arguments);
+            return Activator.CreateInstance(_xamlType.UnderlyingType, arguments);
         }
 
         public virtual MethodInfo GetAddMethod(XamlType contentType)
@@ -226,7 +226,7 @@ namespace System.Xaml.Schema
                 throw new NotSupportedException(SR.OnlySupportedOnCollectionsAndDictionaries);
             }
             MethodInfo getEnumMethod = GetEnumeratorMethod();
-            return (IEnumerator)SafeReflectionInvoker.InvokeMethod(getEnumMethod, instance, s_emptyObjectArray);
+            return (IEnumerator)getEnumMethod.Invoke(instance, s_emptyObjectArray);
         }
 
         // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
@@ -264,11 +264,6 @@ namespace System.Xaml.Schema
             get { return _xamlType == null || _xamlType.UnderlyingType == null; }
         }
 
-        private object CreateInstanceWithActivator(Type type, object[] arguments)
-        {
-            return SafeReflectionInvoker.CreateInstance(type, arguments);
-        }
-
         private void ThrowIfUnknown()
         {
             if (IsUnknown)
@@ -294,9 +289,6 @@ namespace System.Xaml.Schema
                 return inst;
             }
 
-#if TARGETTING35SP1
-#else
-#endif
             private static object CallCtorDelegate(XamlTypeInvoker type)
             {
                 object inst = FormatterServices.GetUninitializedObject(type._xamlType.UnderlyingType);
@@ -309,9 +301,6 @@ namespace System.Xaml.Schema
                 action.Invoke(argument);
             }
 
-#if TARGETTING35SP1
-#else
-#endif
             // returns true if a delegate is available, false if not
             private static bool EnsureConstructorDelegate(XamlTypeInvoker type)
             {

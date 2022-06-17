@@ -60,18 +60,14 @@ namespace System.Xaml.Schema
             {
                 throw new NotSupportedException(SR.Format(SR.CantGetWriteonlyProperty, _member));
             }
-            return GetValueSafeCritical(instance);
-        }
 
-        private object GetValueSafeCritical(object instance)
-        {
             if (UnderlyingGetter.IsStatic)
             {
-                return SafeReflectionInvoker.InvokeMethod(UnderlyingGetter, null, new object[] { instance });
+                return UnderlyingGetter.Invoke(null, new object[] { instance });
             }
             else
             {
-                return SafeReflectionInvoker.InvokeMethod(UnderlyingGetter, instance, s_emptyObjectArray);
+                return UnderlyingGetter.Invoke(instance, s_emptyObjectArray);
             }
         }
 
@@ -86,18 +82,14 @@ namespace System.Xaml.Schema
             {
                 throw new NotSupportedException(SR.Format(SR.CantSetReadonlyProperty, _member));
             }
-            SetValueSafeCritical(instance, value);
-        }
 
-        private void SetValueSafeCritical(object instance, object value)
-        {
             if (UnderlyingSetter.IsStatic)
             {
-                SafeReflectionInvoker.InvokeMethod(UnderlyingSetter, null, new object[] { instance, value });
+                UnderlyingSetter.Invoke(null, new object[] { instance, value });
             }
             else
             {
-                SafeReflectionInvoker.InvokeMethod(UnderlyingSetter, instance, new object[] { value });
+                UnderlyingSetter.Invoke(instance, new object[] { value });
             }
         }
 

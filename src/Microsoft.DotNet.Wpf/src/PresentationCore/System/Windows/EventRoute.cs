@@ -193,7 +193,8 @@ namespace System.Windows
                     
                     // Invoke listeners
 
-                    if( TraceRoutedEvent.IsEnabled )
+                    var traceRoutedEventIsEnabled = TraceRoutedEvent.IsEnabled;
+                    if ( traceRoutedEventIsEnabled )
                     {
                         _traceArguments ??= new object[3];
                         _traceArguments[0] = _routeItemList[i].Target;
@@ -207,11 +208,8 @@ namespace System.Windows
                     
                     _routeItemList[i].InvokeHandler(args);
 
-                    if( TraceRoutedEvent.IsEnabled )
+                    if( traceRoutedEventIsEnabled )
                     {
-                        _traceArguments ??= new object[3];
-                        _traceArguments[0] = _routeItemList[i].Target;
-                        _traceArguments[1] = args;
                         _traceArguments[2] = args.Handled ? _true : _false;
                         TraceRoutedEvent.Trace(
                             TraceEventType.Stop,
@@ -267,7 +265,8 @@ namespace System.Windows
                         }
                         
                         
-                        if( TraceRoutedEvent.IsEnabled )
+                        var traceRoutedEventIsEnabled = TraceRoutedEvent.IsEnabled;
+                        if ( traceRoutedEventIsEnabled )
                         {
                             _traceArguments ??= new object[3];
                             _traceArguments[0] = _routeItemList[i].Target;
@@ -282,11 +281,8 @@ namespace System.Windows
                         // Invoke listeners
                         _routeItemList[i].InvokeHandler(args);
 
-                        if( TraceRoutedEvent.IsEnabled )
+                        if (traceRoutedEventIsEnabled)
                         {
-                            _traceArguments ??= new object[3];
-                            _traceArguments[0] = _routeItemList[i].Target;
-                            _traceArguments[1] = args;
                             _traceArguments[2] = args.Handled ? _true : _false;
                             TraceRoutedEvent.Trace(
                                 TraceEventType.Stop,

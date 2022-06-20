@@ -34,10 +34,10 @@ jobs:
         # Will eventually change this to two BYOC pools.
         # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: NetCore1ESPool-Svc-Public
+          name: NetCore1ESPool-Svc-Public-Int
           demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre.Open
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          name: NetCore1ESPool-Svc-Internal
+          name: NetCore1ESPool-Svc-Internal-Int
           demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre
       variables:
         # needed for signing

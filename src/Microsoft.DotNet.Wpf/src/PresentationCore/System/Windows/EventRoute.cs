@@ -11,6 +11,7 @@ using MS.Utility;
 using SR=MS.Internal.PresentationCore.SR;
 using SRID=MS.Internal.PresentationCore.SRID;
 using MS.Internal;
+using MS.Internal.KnownBoxes;
 
 namespace System.Windows
 {
@@ -199,7 +200,7 @@ namespace System.Windows
                         _traceArguments ??= new object[3];
                         _traceArguments[0] = _routeItemList[i].Target;
                         _traceArguments[1] = args;
-                        _traceArguments[2] = args.Handled ? _true : _false;
+                        _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                         TraceRoutedEvent.Trace(
                             TraceEventType.Start,
                             TraceRoutedEvent.InvokeHandlers,
@@ -210,7 +211,7 @@ namespace System.Windows
 
                     if( traceRoutedEventIsEnabled )
                     {
-                        _traceArguments[2] = args.Handled ? _true : _false;
+                        _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                         TraceRoutedEvent.Trace(
                             TraceEventType.Stop,
                             TraceRoutedEvent.InvokeHandlers,
@@ -271,7 +272,7 @@ namespace System.Windows
                             _traceArguments ??= new object[3];
                             _traceArguments[0] = _routeItemList[i].Target;
                             _traceArguments[1] = args;
-                            _traceArguments[2] = args.Handled ? _true : _false;
+                            _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                             TraceRoutedEvent.Trace(
                                 TraceEventType.Start,
                                 TraceRoutedEvent.InvokeHandlers,
@@ -283,7 +284,7 @@ namespace System.Windows
 
                         if (traceRoutedEventIsEnabled)
                         {
-                            _traceArguments[2] = args.Handled ? _true : _false;
+                            _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                             TraceRoutedEvent.Trace(
                                 TraceEventType.Stop,
                                 TraceRoutedEvent.InvokeHandlers,
@@ -557,8 +558,6 @@ namespace System.Windows
 
         // Stores arguments that are passed to TraceRoutedEvent.Trace (to reduce allocations)
         private object[] _traceArguments;
-        private static readonly object _true = true;
-        private static readonly object _false = false;
 
         #endregion Data
     }

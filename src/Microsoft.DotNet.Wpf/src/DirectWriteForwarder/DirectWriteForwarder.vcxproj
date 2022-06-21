@@ -31,6 +31,11 @@
     <TargetFrameworkIdentifier>.NETCoreApp</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
     <RestoreProjectStyle>Unknown</RestoreProjectStyle>
+    <!-- 
+      Opting out of this to ensure _WindowsBaseReference is used as 
+      OutputItemsType in the project reference later.
+    -->
+    <LegacyNativeReferenceResolution>true</LegacyNativeReferenceResolution>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup>

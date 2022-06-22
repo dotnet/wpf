@@ -949,12 +949,6 @@ namespace System.Windows.Controls
             bool oldValue = (bool)e.OldValue;
             bool newValue = (bool)e.NewValue;
 
-            MenuItemAutomationPeer peer = UIElementAutomationPeer.FromElement(menuItem) as MenuItemAutomationPeer;
-            if (peer != null)
-            {
-                peer.RaiseToggleStatePropertyChangedEvent(oldValue, newValue);
-            }
-
             if (newValue)
             {
                 menuItem.OnChecked(new RoutedEventArgs(CheckedEvent));
@@ -962,6 +956,12 @@ namespace System.Windows.Controls
             else
             {
                 menuItem.OnUnchecked(new RoutedEventArgs(UncheckedEvent));
+            }
+            
+            MenuItemAutomationPeer peer = UIElementAutomationPeer.FromElement(menuItem) as MenuItemAutomationPeer;
+            if (peer != null)
+            {
+                peer.RaiseToggleStatePropertyChangedEvent(oldValue, newValue);
             }
         }
 

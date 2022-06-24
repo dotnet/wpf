@@ -16,7 +16,8 @@
     
     <WpfArtifactsPackagesCommonPath>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\'))\artifacts\packaging</WpfArtifactsPackagesCommonPath>
     <WpfPlatformTargetArtifactsDirectory Condition="'$(PlatformTarget)'=='x64'">x64\</WpfPlatformTargetArtifactsDirectory>
-    <WPFArtifactsPath>$(WpfPackagesCommonPath)\$(WpfConfig)\$(WpfPlatformTargetArtifactsDirectory)Microsoft.DotNet.Wpf.GitHub.$(WpfConfig)</WPFArtifactsPath>
+    <WPFArtifactsPathSuffix Condition="'$(WpfConfig)'=='Debug'">.$(WpfConfig)</WPFArtifactsPathSuffix>
+    <WPFArtifactsPath>$(WpfArtifactsPackagesCommonPath)\$(WpfConfig)\$(WpfPlatformTargetArtifactsDirectory)Microsoft.DotNet.Wpf.GitHub$(WPFArtifactsPathSuffix)</WPFArtifactsPath>
   </PropertyGroup>
 
   <ItemGroup>

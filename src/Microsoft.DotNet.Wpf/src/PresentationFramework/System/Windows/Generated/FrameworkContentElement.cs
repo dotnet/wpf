@@ -1220,20 +1220,6 @@ namespace System.Windows
 
         //------------------------------------------------------
         //
-        //  Internal Fields
-        //
-        //------------------------------------------------------
-
-        #region Internal Fields
-
-        // Optimization, to avoid calling FromSystemType too often
-        // todo BSC: type
-        internal new static DependencyObjectType DType = DependencyObjectType.FromSystemTypeInternal(typeof(FrameworkContentElement));
-
-        #endregion Internal Fields
-
-        //------------------------------------------------------
-        //
         //  Private Fields
         //
         //------------------------------------------------------

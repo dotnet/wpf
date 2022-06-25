@@ -174,7 +174,10 @@ namespace System.Windows
                         AddElementToWatchList(ce);
                     }
                 }
-                // todo patternmatching: Should we throw here?
+                else
+                {
+                    throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, o.GetType())); 
+                }
             }
         }
 
@@ -252,7 +255,10 @@ namespace System.Windows
                         RemoveElementFromWatchList(ce);
                     }
                 }
-                // todo patternmatching: Should we throw here?
+                else
+                {
+                    throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, o.GetType())); 
+                }
             }
         }
 
@@ -750,7 +756,10 @@ namespace System.Windows
                 {
                     uiElement3D.RaiseEvent(args);
                 }
-                // todo patternmatching: Should we throw here?
+                else
+                {
+                    throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, doTarget.GetType())); 
+                }
 
                 calledOut = true;
             }

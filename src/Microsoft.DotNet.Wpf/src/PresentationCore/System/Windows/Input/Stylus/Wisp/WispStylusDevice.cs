@@ -439,7 +439,10 @@ namespace System.Windows.Input.StylusWisp
                     uie3D.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
                     uie3D.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                 }
-                // todo patternmatching: Should we throw here?
+                else
+                {
+                    throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, oldOver.GetType())); 
+                }
             }
             if (_stylusOver != null)
             {
@@ -465,7 +468,10 @@ namespace System.Windows.Input.StylusWisp
                     uie3D.IsVisibleChanged += _overIsVisibleChangedEventHandler;
                     uie3D.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                 }
-                // todo patternmatching: Should we throw here?
+                else
+                {
+                    throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, _stylusOver.GetType())); 
+                }
             }
 
             // Oddly enough, update the IsStylusOver property first.  This is

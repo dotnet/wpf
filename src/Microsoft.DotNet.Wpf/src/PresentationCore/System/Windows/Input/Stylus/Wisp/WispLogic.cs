@@ -2080,7 +2080,10 @@ namespace System.Windows.Input.StylusWisp
                         uie3D.IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
                         uie3D.IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
                     }
-                    // todo patternmatching: Should we throw here?
+                    else
+                    {
+                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, oldCapture.GetType())); 
+                    }
                 }
                 if (_stylusCapture != null)
                 {
@@ -2106,7 +2109,10 @@ namespace System.Windows.Input.StylusWisp
                         uie3D.IsVisibleChanged += _captureIsVisibleChangedEventHandler;
                         uie3D.IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
                     }
-                    // todo patternmatching: Should we throw here?
+                    else
+                    {
+                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, _stylusCapture.GetType())); 
+                    }
                 }
 
                 // Oddly enough, update the IsStylusCaptureWithin property first.  This is
@@ -2162,7 +2168,10 @@ namespace System.Windows.Input.StylusWisp
                         uie3D.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
                         uie3D.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                     }
-                    // todo patternmatching: Should we throw here?
+                    else
+                    {
+                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, oldOver.GetType())); 
+                    }
                 }
                 if (_stylusOver != null)
                 {
@@ -2188,7 +2197,10 @@ namespace System.Windows.Input.StylusWisp
                         uie3D.IsVisibleChanged += _overIsVisibleChangedEventHandler;
                         uie3D.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                     }
-                    // todo patternmatching: Should we throw here?
+                    else
+                    {
+                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, _stylusOver.GetType())); 
+                    }
                 }
 
                 // Oddly enough, update the IsStylusOver property first.  This is
@@ -2425,7 +2437,10 @@ namespace System.Windows.Input.StylusWisp
             {
                 killCapture = !ValidateUIElement3DForCapture(uie3D);
             }
-            // todo patternmatching: Should we throw here?
+            else
+            {
+                throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, _stylusCapture.GetType())); 
+            }
 
             //
             // Second, if we still haven't thought of a reason to kill capture, validate

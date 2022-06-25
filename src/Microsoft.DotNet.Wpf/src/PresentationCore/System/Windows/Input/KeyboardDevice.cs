@@ -438,7 +438,10 @@ namespace System.Windows.Input
                             uie3D.IsVisibleChanged -= _isVisibleChangedEventHandler;
                             uie3D.FocusableChanged -= _focusableChangedEventHandler;
                         }
-                        // todo patternmatching: Should we throw here?
+                        else
+                        {
+                            throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, o.GetType())); 
+                        }
                     }
                     if(_focus != null)
                     {
@@ -461,7 +464,10 @@ namespace System.Windows.Input
                             uie3D.IsVisibleChanged += _isVisibleChangedEventHandler;
                             uie3D.FocusableChanged += _focusableChangedEventHandler;
                         }
-                        // todo patternmatching: Should we throw here?
+                        else
+                        {
+                            throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, o.GetType())); 
+                        }
                     }
                 }
 

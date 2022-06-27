@@ -324,18 +324,7 @@ namespace System.Windows.Automation.Peers
             }
         }
 
-        private static ToggleState ConvertToToggleState(bool? value)
-        {
-            switch (value)
-            {
-                case (true):
-                    return ToggleState.On;
-                case (false):
-                    return ToggleState.Off;
-                default:
-                    return ToggleState.Indeterminate;
-            }
-        }
+        private static ToggleState ConvertToToggleState(bool value) => value ? ToggleState.On : ToggleState.Off;
 
         // Return the base without the AccessKey character
         ///

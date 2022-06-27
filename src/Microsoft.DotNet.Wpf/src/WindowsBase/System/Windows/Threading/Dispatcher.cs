@@ -224,16 +224,14 @@ namespace System.Windows.Threading
         {
             if(!CheckAccess())
             {
+                // Used to inline VerifyAccess.
+                [DoesNotReturn]
+                [MethodImpl(MethodImplOptions.NoInlining)]
+                static void ThrowVerifyAccess()
+                    => throw new InvalidOperationException(SR.VerifyAccess);
+
                 ThrowVerifyAccess();
             }
-        }
-
-        // Used to inline VerifyAccess.
-        [DoesNotReturn]
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static void ThrowVerifyAccess()
-        {
-            throw new InvalidOperationException(SR.VerifyAccess);
         }
 
         /// <summary>

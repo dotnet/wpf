@@ -209,15 +209,15 @@ jobs:
         displayName: Copy WPF binaries
         inputs:
           targetType: 'inline'
-          script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -release -arch x64'
+          script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
       - task: DownloadBuildArtifacts@1
         displayName: Fetch Test Binaries
         inputs:
           buildType: 'specific'
           project: '9ee6d478-d288-47f7-aacc-f6e6d082ae6d'
           pipeline: '1145'
-          buildVersionToDownload: 'latest'
-          downloadType: 'specific'
+          buildVersionToDownload: 'specific'
+          buildId: '1854309'
           downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
           checkDownloadedFiles: true
 

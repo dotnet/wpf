@@ -318,10 +318,9 @@ namespace System.Windows.Automation.Peers
 
         internal void RaiseToggleStatePropertyChangedEvent(bool oldValue, bool newValue)
         {
-            if (oldValue != newValue)
-            {
-                RaisePropertyChangedEvent(TogglePatternIdentifiers.ToggleStateProperty, ConvertToToggleState(oldValue), ConvertToToggleState(newValue));
-            }
+            RaisePropertyChangedEvent(TogglePatternIdentifiers.ToggleStateProperty,
+                oldValue ? ConvertToToggleState(oldValue) : ConvertToToggleState(newValue),
+                newValue ? ConvertToToggleState(oldValue) : ConvertToToggleState(newValue));
         }
 
         private static ToggleState ConvertToToggleState(bool value) => value ? ToggleState.On : ToggleState.Off;

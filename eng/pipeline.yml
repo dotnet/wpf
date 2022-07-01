@@ -205,8 +205,6 @@ jobs:
         #
         condition: and(succeeded(), eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))
 
-    - job:
-      steps:
       - task: PowerShell@2
         displayName: Copy WPF binaries
         inputs:
@@ -242,4 +240,3 @@ jobs:
       #     downloadType: 'specific'
       #     downloadPath: '$(System.ArtifactsDirectory)\wpfbins\'
       #     checkDownloadedFiles: true
-      

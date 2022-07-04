@@ -316,6 +316,7 @@ namespace System.Windows.Automation.Peers
                 newValue ? ExpandCollapseState.Expanded : ExpandCollapseState.Collapsed);
         }
 
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         internal void RaiseToggleStatePropertyChangedEvent(bool oldValue, bool newValue)
         {
             RaisePropertyChangedEvent(TogglePatternIdentifiers.ToggleStateProperty,

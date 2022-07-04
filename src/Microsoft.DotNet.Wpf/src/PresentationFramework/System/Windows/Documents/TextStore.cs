@@ -586,7 +586,7 @@ namespace System.Windows.Documents
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
-        public void QueryInsertEmbedded(ref Guid guidService, int formatEtc, out bool insertable)
+        public void QueryInsertEmbedded(ref Guid guidService, IntPtr formatEtc, out bool insertable)
         {
 #if true
             //

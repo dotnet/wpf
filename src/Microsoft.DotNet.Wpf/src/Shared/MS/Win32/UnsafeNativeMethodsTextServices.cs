@@ -1630,7 +1630,7 @@ namespace MS.Win32
             //HRESULT QueryInsertEmbedded([in] const GUID *pguidService,
             //                            [in] const FORMATETC *pFormatEtc,
             //                            [out] BOOL *pfInsertable);
-            void QueryInsertEmbedded(ref Guid guidService, int /*ref Win32.FORMATETC*/ formatEtc, [MarshalAs(UnmanagedType.Bool)] out bool insertable);
+            void QueryInsertEmbedded(ref Guid guidService, IntPtr /*ref Win32.FORMATETC*/ formatEtc, [MarshalAs(UnmanagedType.Bool)] out bool insertable);
 
             /// <summary></summary>
             //HRESULT InsertEmbedded([in] DWORD dwFlags,

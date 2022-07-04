@@ -263,6 +263,9 @@ namespace Microsoft.Build.Tasks.Windows
                 // Add GeneratedCodeFiles to Compile item list.
                 AddNewItems(xmlProjectDoc, CompileTypeName, GeneratedCodeFiles);
 
+                // Add Analyzers to Analyzer item list.
+                AddNewItems(xmlProjectDoc, AnalyzerTypeName, Analyzers);
+
                 // Replace implicit SDK imports with explicit SDK imports
                 ReplaceImplicitImports(xmlProjectDoc); 
 
@@ -274,7 +277,6 @@ namespace Microsoft.Build.Tasks.Windows
                     ( nameof(BaseIntermediateOutputPath), BaseIntermediateOutputPath ),
                     ( nameof(MSBuildProjectExtensionsPath), MSBuildProjectExtensionsPath ),
                     ( "_TargetAssemblyProjectName", Path.GetFileNameWithoutExtension(CurrentProject) ),
-                    ( nameof(Analyzers), Analyzers )
                 };
 
                 AddNewProperties(xmlProjectDoc, properties);
@@ -481,8 +483,19 @@ namespace Microsoft.Build.Tasks.Windows
         /// Required for Source Generator support. May be null.
         /// 
         /// </summary>
-        public string Analyzers 
+        public ITaskItem[] Analyzers 
         { get; set; }
+
+        /// <summary>
+        /// AnalyzerTypeName
+        ///   The appropriate item name which can be accepted by managed compiler task.
+        ///   It is "Analyzer" for now.
+        ///   
+        ///   Adding this property is to make the type name configurable, if it is changed, 
+        ///   No code is required to change in this task, but set a new type name in project file.
+        /// </summary>
+        [Required]
+        public string AnalyzerTypeName { get; set; }
 
         /// <summary>
         /// BaseIntermediateOutputPath

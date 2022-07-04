@@ -946,13 +946,22 @@ namespace System.Windows.Controls
         {
             MenuItem menuItem = (MenuItem) d;
 
-            if ((bool) e.NewValue)
+            bool oldValue = (bool)e.OldValue;
+            bool newValue = (bool)e.NewValue;
+
+            if (newValue)
             {
                 menuItem.OnChecked(new RoutedEventArgs(CheckedEvent));
             }
             else
             {
                 menuItem.OnUnchecked(new RoutedEventArgs(UncheckedEvent));
+            }
+            
+            MenuItemAutomationPeer peer = UIElementAutomationPeer.FromElement(menuItem) as MenuItemAutomationPeer;
+            if (peer != null)
+            {
+                peer.RaiseToggleStatePropertyChangedEvent(oldValue, newValue);
             }
         }
 

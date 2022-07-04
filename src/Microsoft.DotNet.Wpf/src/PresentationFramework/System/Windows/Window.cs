@@ -637,7 +637,7 @@ namespace System.Windows
                     // Explorer being non-responsive should be a transient issue.  Post back to apply the full TaskbarItemInfo.
                     _taskbarRetryTimer.Start();
                 }
-                else if (hr == (HRESULT)Win32Error.ERROR_INVALID_WINDOW_HANDLE)
+                else if (hr == (HRESULT)Win32Error.ERROR_INVALID_WINDOW_HANDLE || hr == HRESULT.E_NOTIMPL)
                 {
                     // We'll get this when Explorer's not running.  This means there's no Shell to integrate with.
                     if (TraceShell.IsEnabled)
@@ -6292,6 +6292,7 @@ namespace System.Windows
                 return;
             }
 
+            HRESULT hr = HRESULT.S_OK;
             if (_taskbarList == null)
             {
                 // If we don't have a handle and there isn't a TaskbarItemInfo, then we don't have anything to apply or remove.
@@ -6304,12 +6305,19 @@ namespace System.Windows
                 try
                 {
                     taskbarList = (ITaskbarList)Activator.CreateInstance(Type.GetTypeFromCLSID(new Guid(CLSID.TaskbarList)));
-                    taskbarList.HrInit();
+
+                    hr = taskbarList.HrInit();
+                    if (hr != HRESULT.S_OK)
+                    {
+                        // Taskbar not available (no user logged in, running under terminal service, custom shell, etc.)
+                        HandleTaskbarListError(hr);
+                        return;
+                    }
 
                     // This QI will only work on Win7.
                     _taskbarList = (ITaskbarList3)taskbarList;
                     taskbarList = null;
-}
+                }
                 finally
                 {
                     Utilities.SafeRelease(ref taskbarList);
@@ -6334,7 +6342,6 @@ namespace System.Windows
             }
 
             // Apply (or clear) all aspects of the TaskbarItemInfo to this Window.
-            HRESULT hr = HRESULT.S_OK;
             hr = RegisterTaskbarThumbButtons();
 
             if (hr.Succeeded)

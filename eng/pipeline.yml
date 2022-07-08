@@ -231,7 +231,7 @@ jobs:
       - task: PowerShell@2
         inputs:
           targetType: 'inline'
-          script: '.\RunDrts.cmd'
+          script: '.\CIRunDrts.cmd'
           workingDirectory: '$(System.ArtifactsDirectory)\testbins'
       # - task: DownloadBuildArtifacts@1
       #   displayName: Download wpf built binaries

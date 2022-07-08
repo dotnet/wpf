@@ -204,35 +204,34 @@ jobs:
         #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
         #
         condition: and(succeeded(), eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))
-    - job: Run DRTs
-      steps:
-        - task: PowerShell@2
-          displayName: Copy WPF binaries
-          inputs:
-            targetType: 'inline'
-            script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
-        - task: DownloadBuildArtifacts@1
-          displayName: Fetch Test Binaries
-          inputs:
-            buildType: 'specific'
-            project: '9ee6d478-d288-47f7-aacc-f6e6d082ae6d'
-            pipeline: '1145'
-            buildVersionToDownload: 'specific'
-            buildId: '1867477'
-            downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
-            checkDownloadedFiles: true
 
-        - task: ExtractFiles@1
-          displayName: Extract Test Bins
-          inputs:
-            archiveFilePatterns: '$(System.ArtifactsDirectory)\testbinzip\*.zip'
-            destinationFolder: '$(System.ArtifactsDirectory)\testbins'
-            cleanDestinationFolder: true
-            overwriteExistingFiles: false
-        - task: PowerShell@2
-          inputs:
+      - task: PowerShell@2
+        displayName: Copy WPF binaries
+        inputs:
           targetType: 'inline'
-          script: '.\CIRunDrts.cmd'
+          script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
+      - task: DownloadBuildArtifacts@1
+        displayName: Fetch Test Binaries
+        inputs:
+          buildType: 'specific'
+          project: '9ee6d478-d288-47f7-aacc-f6e6d082ae6d'
+          pipeline: '1145'
+          buildVersionToDownload: 'specific'
+          buildId: '1867477'
+          downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
+          checkDownloadedFiles: true
+
+      - task: ExtractFiles@1
+        displayName: Extract Test Bins
+        inputs:
+          archiveFilePatterns: '$(System.ArtifactsDirectory)\testbinzip\*.zip'
+          destinationFolder: '$(System.ArtifactsDirectory)\testbins'
+          cleanDestinationFolder: true
+          overwriteExistingFiles: false
+      - task: PowerShell@2
+        inputs:
+          targetType: 'inline'
+          script: '.\RunDrts.cmd'
           workingDirectory: '$(System.ArtifactsDirectory)\testbins'
       # - task: DownloadBuildArtifacts@1
       #   displayName: Download wpf built binaries

@@ -28,4 +28,10 @@
   <Import Sdk="Microsoft.DotNet.Arcade.Wpf.Sdk"
           Project="Sdk.props"
           Condition="!Exists('$(WpfArcadeSdkProps)') Or !Exists('$(WpfArcadeSdkTargets)')"/>
+
+          
+  <PropertyGroup>
+    <WarningsAsErrors>$(WarningsAsErrors);SYSLIB0011</WarningsAsErrors>
+    <WarningsNotAsErrors>$(WarningsNotAsErrors);NU1605</WarningsNotAsErrors>
+  </PropertyGroup>
 </Project>

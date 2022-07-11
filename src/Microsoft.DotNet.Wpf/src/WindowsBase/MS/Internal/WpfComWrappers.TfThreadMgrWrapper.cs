@@ -464,7 +464,7 @@ internal partial class WpfComWrappers
                     Marshal.Release(unknownPtr);
                 }
 
-                if (unknownPtr != IntPtr.Zero)
+                if (contextPtr != IntPtr.Zero)
                 {
                     Marshal.Release(contextPtr);
                 }

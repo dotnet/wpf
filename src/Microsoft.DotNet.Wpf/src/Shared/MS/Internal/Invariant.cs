@@ -241,13 +241,14 @@ namespace MS.Internal
                 object dbgJITDebugLaunchSettingValue;
                 string dbgManagedDebuggerValue;
                 key = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\.NETFramework");
-                dbgJITDebugLaunchSettingValue = key.GetValue("DbgJITDebugLaunchSetting");
-                dbgManagedDebuggerValue = key.GetValue("DbgManagedDebugger") as string;
                 //
                 // Check for the enable.
                 //
                 if (key != null)
                 {
+                    dbgJITDebugLaunchSettingValue = key.GetValue("DbgJITDebugLaunchSetting");
+                    dbgManagedDebuggerValue = key.GetValue("DbgManagedDebugger") as string;
+
                     //
                     // Only count the enable if there's a JIT debugger to launch.
                     //

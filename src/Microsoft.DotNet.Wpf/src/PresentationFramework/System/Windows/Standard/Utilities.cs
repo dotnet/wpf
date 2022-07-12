@@ -48,13 +48,15 @@ namespace Standard
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static int GET_X_LPARAM(IntPtr lParam)
         {
-            return LOWORD(lParam.ToInt32());
+            // ToInt64 to fix https://github.com/dotnet/wpf/issues/6777
+            return LOWORD((int) lParam.ToInt64());
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static int GET_Y_LPARAM(IntPtr lParam)
         {
-            return HIWORD(lParam.ToInt32());
+            // ToInt64 to fix https://github.com/dotnet/wpf/issues/6777
+            return HIWORD((int) lParam.ToInt64());
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]

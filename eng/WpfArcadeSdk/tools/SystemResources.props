@@ -12,6 +12,8 @@
 
     <_GenerateResourcesCodeAsConstants>true</_GenerateResourcesCodeAsConstants>
 
+    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='UIAutomationClient'">false</_GenerateResourcesCodeAsConstants>
+    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='UIAutomationProvider'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='System.Xaml'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='WindowsBase'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='WindowsFormsIntegration'">false</_GenerateResourcesCodeAsConstants>
@@ -29,7 +31,8 @@
       <GenerateResourcesCodeAsConstants>$(_GenerateResourcesCodeAsConstants)</GenerateResourcesCodeAsConstants>
 
       <ClassName Condition="'$(AssemblyName)'=='PresentationBuildTasks'">MS.Utility.SRID</ClassName>
-      <ClassName Condition="'$(AssemblyName)'=='UIAutomationProvider'">System.SR</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='UIAutomationClient'">System.SR</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='UIAutomationProvider'">MS.Internal.Automation.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='UIAutomationTypes'">System.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='WindowsBase'">MS.Internal.WindowsBase.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='System.Windows.Controls.Ribbon'">Microsoft.Windows.Controls.SRID</ClassName>

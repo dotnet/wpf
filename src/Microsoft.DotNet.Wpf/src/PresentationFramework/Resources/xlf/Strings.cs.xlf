@@ -5595,7 +5595,7 @@ Chcete ho nahradit?</target>
       </trans-unit>
       <trans-unit id="TextBox_ContextMenu_Cut">
         <source>Cu_t</source>
-        <target state="translated">Od_stranit</target>
+        <target state="translated">V_yjmout</target>
         <note />
       </trans-unit>
       <trans-unit id="TextBox_ContextMenu_Description_DBCSSpace">

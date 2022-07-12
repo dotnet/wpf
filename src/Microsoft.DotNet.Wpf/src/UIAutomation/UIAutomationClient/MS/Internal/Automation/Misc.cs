@@ -149,7 +149,7 @@ namespace MS.Internal.Automation
 
             if (!Schema.GetPatternInfo(pattern, out pi))
             {
-                throw new ArgumentException(SR.Get(SRID.UnsupportedPattern));
+                throw new ArgumentException(SR.UnsupportedPattern);
             }
 
             if (pi.ClientSideWrapper == null)
@@ -180,7 +180,7 @@ namespace MS.Internal.Automation
         // Throw an argument Exception with a generic error
         internal static void ThrowInvalidArgument(string argName)
         {
-            throw new ArgumentException(SR.Get(SRID.GenericInvalidArgument, argName));
+            throw new ArgumentException(SR.Format(SR.GenericInvalidArgument, argName));
         }
 
         // Check that specified condition is true; if not, throw exception
@@ -188,7 +188,7 @@ namespace MS.Internal.Automation
         {
             if (!cond)
             {
-                throw new ArgumentException(SR.Get(reason));
+                throw new ArgumentException(SR.GetResourceString(reason, null));
             }
         }
 
@@ -206,7 +206,7 @@ namespace MS.Internal.Automation
         {
             if (!cached)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CacheRequestNeedCache));
+                throw new InvalidOperationException(SR.CacheRequestNeedCache);
             }
         }
 
@@ -215,7 +215,7 @@ namespace MS.Internal.Automation
         {
             if (hPattern.IsInvalid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CacheRequestNeedLiveForProperties));
+                throw new InvalidOperationException(SR.CacheRequestNeedLiveForProperties);
             }
         }
 

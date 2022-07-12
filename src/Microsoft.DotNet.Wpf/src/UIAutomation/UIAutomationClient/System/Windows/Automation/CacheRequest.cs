@@ -198,7 +198,7 @@ namespace System.Windows.Automation
             // (no lock needed here, since this is per-thread state)
             if (_threadStack == null || _threadStack.Count == 0 || _threadStack.Peek() != this)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CacheReqestCanOnlyPopTop));
+                throw new InvalidOperationException(SR.CacheReqestCanOnlyPopTop);
             }
 
             _threadStack.Pop();
@@ -303,12 +303,12 @@ namespace System.Windows.Automation
             {
                 if (value == 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.TreeScopeNeedAtLeastOne));
+                    throw new ArgumentException(SR.TreeScopeNeedAtLeastOne);
                 }
 
                 if ((value & ~(TreeScope.Element | TreeScope.Children | TreeScope.Descendants)) != 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.TreeScopeElementChildrenDescendantsOnly));
+                    throw new ArgumentException(SR.TreeScopeElementChildrenDescendantsOnly);
                 }
 
                 lock (_instanceLock)
@@ -472,7 +472,7 @@ namespace System.Windows.Automation
             // is never explicitly added to the stack)
             if (_refCount != 0 || this == DefaultCacheRequest)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CacheReqestCantModifyWhileActive));
+                throw new InvalidOperationException(SR.CacheReqestCantModifyWhileActive);
             }
         }
 

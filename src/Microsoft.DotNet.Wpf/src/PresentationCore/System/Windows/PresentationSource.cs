@@ -145,9 +145,8 @@ namespace System.Windows
             {
                 FrugalObjectList<RoutedEventHandlerInfo> info;
 
-                if (InputElement.IsUIElement(o))
+                if (o is UIElement uie)
                 {
-                    UIElement uie = o as UIElement;
                     uie.AddHandler(SourceChangedEvent, handler);
                     info = uie.EventHandlersStore[SourceChangedEvent];
                     if (1 == info.Count)
@@ -156,9 +155,8 @@ namespace System.Windows
                         AddElementToWatchList(uie);
                     }
                 }
-                else if (InputElement.IsUIElement3D(o))
+                else if (o is UIElement3D uie3D)
                 {
-                    UIElement3D uie3D = o as UIElement3D;
                     uie3D.AddHandler(SourceChangedEvent, handler);
                     info = uie3D.EventHandlersStore[SourceChangedEvent];
                     if (1 == info.Count)
@@ -167,13 +165,18 @@ namespace System.Windows
                         AddElementToWatchList(uie3D);
                     }
                 }
-                else
+                else if (o is ContentElement ce)
                 {
-                    ContentElement ce = o as ContentElement;
                     ce.AddHandler(SourceChangedEvent, handler);
                     info = ce.EventHandlersStore[SourceChangedEvent];
                     if (1 == info.Count)
+                    {
                         AddElementToWatchList(ce);
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, o.GetType())); 
                 }
             }
         }
@@ -211,9 +214,8 @@ namespace System.Windows
                 EventHandlersStore store;
 
                 // Either UIElement or ContentElement.
-                if (InputElement.IsUIElement(o))
+                if (o is UIElement uie)
                 {
-                    UIElement uie = o as UIElement;
                     uie.RemoveHandler(SourceChangedEvent, handler);
                     store = uie.EventHandlersStore;
                     if (store != null)
@@ -226,9 +228,8 @@ namespace System.Windows
                         RemoveElementFromWatchList(uie);
                     }
                 }
-                else if (InputElement.IsUIElement3D(o))
+                else if (o is UIElement3D uie3D)
                 {
-                    UIElement3D uie3D = o as UIElement3D;
                     uie3D.RemoveHandler(SourceChangedEvent, handler);
                     store = uie3D.EventHandlersStore;
                     if (store != null)
@@ -241,9 +242,8 @@ namespace System.Windows
                         RemoveElementFromWatchList(uie3D);
                     }
                 }
-                else
+                else if (o is ContentElement ce)
                 {
-                    ContentElement ce = o as ContentElement;
                     ce.RemoveHandler(SourceChangedEvent, handler);
                     store = ce.EventHandlersStore;
                     if (store != null)
@@ -254,6 +254,10 @@ namespace System.Windows
                     {
                         RemoveElementFromWatchList(ce);
                     }
+                }
+                else
+                {
+                    throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, o.GetType())); 
                 }
             }
         }
@@ -548,7 +552,7 @@ namespace System.Windows
         /// <param name="e">  Event Args.</param>
         internal static void OnVisualAncestorChanged(DependencyObject uie, AncestorChangedEventArgs e)
         {
-            Debug.Assert(InputElement.IsUIElement3D(uie) || InputElement.IsUIElement(uie));
+            Debug.Assert(uie is UIElement3D or UIElement);
             
             if (true == (bool)uie.GetValue(GetsSourceChangedEventProperty))
             {
@@ -740,17 +744,21 @@ namespace System.Windows
                 SourceChangedEventArgs args = new SourceChangedEventArgs(cachedSource, realSource);
 
                 args.RoutedEvent=SourceChangedEvent;
-                if (InputElement.IsUIElement(doTarget))
+                if (doTarget is UIElement uiElement)
                 {
-                    ((UIElement)doTarget).RaiseEvent(args);
+                    uiElement.RaiseEvent(args);
                 }                
-                else if (InputElement.IsContentElement(doTarget))
+                else if (doTarget is ContentElement contentElement)
                 {
-                    ((ContentElement)doTarget).RaiseEvent(args);
+                    contentElement.RaiseEvent(args);
+                }
+                else if (doTarget is UIElement3D uiElement3D)
+                {
+                    uiElement3D.RaiseEvent(args);
                 }
                 else
                 {
-                    ((UIElement3D)doTarget).RaiseEvent(args);
+                    throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, doTarget.GetType())); 
                 }
 
                 calledOut = true;

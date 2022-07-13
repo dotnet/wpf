@@ -420,45 +420,53 @@ namespace System.Windows.Input
                     if(oldFocus != null)
                     {
                         o = oldFocus;
-                        if (InputElement.IsUIElement(o))
+                        if (o is UIElement uie)
                         {
-                            ((UIElement)o).IsEnabledChanged -= _isEnabledChangedEventHandler;
-                            ((UIElement)o).IsVisibleChanged -= _isVisibleChangedEventHandler;
-                            ((UIElement)o).FocusableChanged -= _focusableChangedEventHandler;
+                            uie.IsEnabledChanged -= _isEnabledChangedEventHandler;
+                            uie.IsVisibleChanged -= _isVisibleChangedEventHandler;
+                            uie.FocusableChanged -= _focusableChangedEventHandler;
                         }
-                        else if (InputElement.IsContentElement(o))
+                        else if (o is ContentElement ce)
                         {
-                            ((ContentElement)o).IsEnabledChanged -= _isEnabledChangedEventHandler;
+                            ce.IsEnabledChanged -= _isEnabledChangedEventHandler;
                             // NOTE: there is no IsVisible property for ContentElements.
-                            ((ContentElement)o).FocusableChanged -= _focusableChangedEventHandler;
+                            ce.FocusableChanged -= _focusableChangedEventHandler;
+                        }
+                        else if (o is UIElement3D uie3D)
+                        {
+                            uie3D.IsEnabledChanged -= _isEnabledChangedEventHandler;
+                            uie3D.IsVisibleChanged -= _isVisibleChangedEventHandler;
+                            uie3D.FocusableChanged -= _focusableChangedEventHandler;
                         }
                         else
                         {
-                            ((UIElement3D)o).IsEnabledChanged -= _isEnabledChangedEventHandler;
-                            ((UIElement3D)o).IsVisibleChanged -= _isVisibleChangedEventHandler;
-                            ((UIElement3D)o).FocusableChanged -= _focusableChangedEventHandler;
+                            throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, o.GetType())); 
                         }
                     }
                     if(_focus != null)
                     {
                         o = _focus;
-                        if (InputElement.IsUIElement(o))
+                        if (o is UIElement uie)
                         {
-                            ((UIElement)o).IsEnabledChanged += _isEnabledChangedEventHandler;
-                            ((UIElement)o).IsVisibleChanged += _isVisibleChangedEventHandler;
-                            ((UIElement)o).FocusableChanged += _focusableChangedEventHandler;
+                            uie.IsEnabledChanged += _isEnabledChangedEventHandler;
+                            uie.IsVisibleChanged += _isVisibleChangedEventHandler;
+                            uie.FocusableChanged += _focusableChangedEventHandler;
                         }                        
-                        else if (InputElement.IsContentElement(o))
+                        else if (o is ContentElement ce)
                         {
-                            ((ContentElement)o).IsEnabledChanged += _isEnabledChangedEventHandler;
+                            ce.IsEnabledChanged += _isEnabledChangedEventHandler;
                             // NOTE: there is no IsVisible property for ContentElements.
-                            ((ContentElement)o).FocusableChanged += _focusableChangedEventHandler;
+                            ce.FocusableChanged += _focusableChangedEventHandler;
+                        }
+                        else if (o is UIElement3D uie3D)
+                        {
+                            uie3D.IsEnabledChanged += _isEnabledChangedEventHandler;
+                            uie3D.IsVisibleChanged += _isVisibleChangedEventHandler;
+                            uie3D.FocusableChanged += _focusableChangedEventHandler;
                         }
                         else
                         {
-                            ((UIElement3D)o).IsEnabledChanged += _isEnabledChangedEventHandler;
-                            ((UIElement3D)o).IsVisibleChanged += _isVisibleChangedEventHandler;
-                            ((UIElement3D)o).FocusableChanged += _focusableChangedEventHandler;
+                            throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, o.GetType())); 
                         }
                     }
                 }

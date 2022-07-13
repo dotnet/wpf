@@ -23,7 +23,7 @@ using System.Runtime.InteropServices;           // for Marshal class
 using MS.Internal.IO.Packaging;                 // for PackagingUtilities
 using System.Security;                          // for SecurityCritical and SecurityTreatAsSafe
 using MS.Internal.WindowsBase;
-using static Interop.zlib;                     // workaround namespace collision with MS.Internal.interop
+using static Interop.Zlib;                     // workaround namespace collision with MS.Internal.interop
 
 namespace MS.Internal.IO.Packaging.CompoundFile
 {

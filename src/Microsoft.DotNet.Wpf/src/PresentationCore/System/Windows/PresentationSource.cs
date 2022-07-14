@@ -129,10 +129,10 @@ namespace System.Windows
                 throw new ArgumentNullException("element");
             }
 
-            // Either UIElement or ContentElement
+            // Either UIElement, ContentElement or UIElement3D.
             if (!InputElement.IsValid(element))
             {
-                throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement), "element");
+                throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, element.GetType()), nameof(element));
             }
             DependencyObject o = (DependencyObject)element;
 
@@ -198,9 +198,10 @@ namespace System.Windows
                 throw new ArgumentNullException("e");
             }
 
+            // Either UIElement, ContentElement or UIElement3D.
             if (!InputElement.IsValid(e))
             {
-                throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement), "e");
+                throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, e.GetType()), nameof(e));
             }
             DependencyObject o = (DependencyObject)e;
 
@@ -213,8 +214,10 @@ namespace System.Windows
                 FrugalObjectList<RoutedEventHandlerInfo> info = null;
                 EventHandlersStore store;
 
-                // Either UIElement or ContentElement.
+
+                // Either UIElement, ContentElement or UIElement3D.
                 if (o is UIElement uie)
+
                 {
                     uie.RemoveHandler(SourceChangedEvent, handler);
                     store = uie.EventHandlersStore;

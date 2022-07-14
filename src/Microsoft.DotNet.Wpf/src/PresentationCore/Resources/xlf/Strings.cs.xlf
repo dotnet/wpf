@@ -1908,8 +1908,8 @@
         <note />
       </trans-unit>
       <trans-unit id="Invalid_IInputElement">
-        <source>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</source>
-        <target state="translated">Prvek {0} není platný typ prvku IInputElement. Platnými typy jsou UIElement nebo ContentElement.</target>
+        <source>'{0}' is not a valid type for IInputElement. UIElement, ContentElement or UIElement3D expected.</source>
+        <target state="needs-review-translation">Prvek {0} není platný typ prvku IInputElement. Platnými typy jsou UIElement nebo ContentElement.</target>
         <note />
       </trans-unit>
       <trans-unit id="Invalid_URI">

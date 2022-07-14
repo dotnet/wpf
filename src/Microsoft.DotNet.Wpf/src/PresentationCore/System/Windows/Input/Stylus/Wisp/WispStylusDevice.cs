@@ -273,7 +273,7 @@ namespace System.Windows.Input.StylusWisp
                 element = null;
             }
 
-            // Validate that element is either a UIElement or a ContentElement
+            // Validate that element is either a UIElement, a ContentElement or a UIElement3D.
             DependencyObject doStylusCapture = element as DependencyObject;
             if (doStylusCapture != null && !InputElement.IsValid(element))
             {
@@ -1192,7 +1192,7 @@ namespace System.Windows.Input.StylusWisp
         {
             VerifyAccess();
 
-            // Validate that relativeTo is either a UIElement or a ContentElement
+            // Validate that relativeTo is either a UIElement, a ContentElement or a UIElement3D.
             if (relativeTo != null && !InputElement.IsValid(relativeTo))
             {
                 throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, relativeTo.GetType()));

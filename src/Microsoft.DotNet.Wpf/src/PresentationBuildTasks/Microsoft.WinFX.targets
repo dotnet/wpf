@@ -499,7 +499,7 @@
         <Analyzer Remove="@(Analyzer)" />
         <Analyzer Include="@(FilteredAnalyzer)" />
     </ItemGroup>
-</Target>
+  </Target>
 
 <!--
     ================================================================

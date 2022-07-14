@@ -435,11 +435,6 @@
           <_IntermediateOutputPathNoTargetFrameworkOrRID>$([System.Text.RegularExpressions.Regex]::Replace($(_IntermediateOutputPathNoTargetFrameworkOrRID), "$(TargetFramework)\\$",, System.Text.RegularExpressions.RegexOptions.IgnoreCase))</_IntermediateOutputPathNoTargetFrameworkOrRID>
       </PropertyGroup>
 
-      <ItemGroup>
-          <!-- Include analyzers that are coming from a FrameworkReference in the temporary target assembly project. -->
-          <_TemporaryTargetAssemblyAnalyzer Include="@(Analyzer)" Condition="'%(Analyzer.FrameworkReferenceName)' != ''" />
-      </ItemGroup>
-
        <!--  Use the legacy .NET Framework/.NET Core 3.0 GenerateTemporaryTargetAssembly path if 'IncludePackageReferencesDuringMarkupCompilation' is 'false',. -->
        <GenerateTemporaryTargetAssembly
                 CurrentProject="$(MSBuildProjectFullPath)"
@@ -455,7 +450,7 @@
                 CompileTargetName="$(_CompileTargetNameForLocalType)"
                 GenerateTemporaryTargetAssemblyDebuggingInformation="$(GenerateTemporaryTargetAssemblyDebuggingInformation)"
                 IncludePackageReferencesDuringMarkupCompilation="$(IncludePackageReferencesDuringMarkupCompilation)"
-                Analyzers="@(_TemporaryTargetAssemblyAnalyzer)"
+                Analyzers="@(Analyzer)"
                 TemporaryTargetAssemblyProjectName="$(_TemporaryTargetAssemblyProjectName)"
                 MSBuildProjectExtensionsPath="$(MSBuildProjectExtensionsPath)"
                  >
@@ -491,6 +486,20 @@
                      Condition="Exists('%(Fullpath)')" />
   </Target>
 
+  <!--
+                 ===========================================
+                          RemoveDuplicateAnalyzers
+                 ===========================================
+
+                Name : RemoveDuplicateAnalyzers
+  -->
+  <Target Name="RemoveDuplicateAnalyzers" BeforeTargets="CoreCompile">
+    <ItemGroup>
+        <FilteredAnalyzer Include="@(Analyzer->Distinct())" />
+        <Analyzer Remove="@(Analyzer)" />
+        <Analyzer Include="@(FilteredAnalyzer)" />
+    </ItemGroup>
+  </Target>
 
 <!--
     ================================================================

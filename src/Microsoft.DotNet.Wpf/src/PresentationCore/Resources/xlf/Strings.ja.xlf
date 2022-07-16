@@ -1909,7 +1909,7 @@
       </trans-unit>
       <trans-unit id="Invalid_IInputElement">
         <source>'{0}' is not a valid type for IInputElement. UIElement, ContentElement or UIElement3D expected.</source>
-        <target state="new">'{0}' is not a valid type for IInputElement. UIElement, ContentElement or UIElement3D expected.</target>
+        <target state="translated">'{0}' は、IInputElement に対して有効な型ではありません。UIElement、ContentElement、または UIElement3D を使用してください。</target>
         <note />
       </trans-unit>
       <trans-unit id="Invalid_URI">

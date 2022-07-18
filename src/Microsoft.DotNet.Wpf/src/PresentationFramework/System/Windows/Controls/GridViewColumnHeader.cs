@@ -452,6 +452,19 @@ namespace System.Windows.Controls
             SetFlag(ignoreFlag, false);
         }
 
+        // Set column header width and associated column width
+        internal void UpdateColumnHeaderWidth(double width)
+        {
+            if (Column != null)
+            {
+                Column.Width = width;
+            }
+            else
+            {
+                Width = width;
+            }
+        }
+
         #endregion Internal Methods
 
         //-------------------------------------------------------------------
@@ -785,19 +798,6 @@ namespace System.Windows.Controls
                 {
                     _headerGripper.Cursor = gripperCursor;
                 }
-            }
-        }
-
-        // Set column header width and associated column width
-        internal void UpdateColumnHeaderWidth(double width)
-        {
-            if (Column != null)
-            {
-                Column.Width = width;
-            }
-            else
-            {
-                Width = width;
             }
         }
 

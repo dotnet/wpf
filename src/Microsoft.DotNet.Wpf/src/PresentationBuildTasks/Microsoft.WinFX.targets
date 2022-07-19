@@ -513,6 +513,20 @@
 
   </Target>
 
+  <!--
+                 ===========================================
+                          RemoveDuplicateAnalyzers
+                 ===========================================
+
+                Name : RemoveDuplicateAnalyzers
+  -->
+  <Target Name="RemoveDuplicateAnalyzers" BeforeTargets="CoreCompile">
+    <ItemGroup>
+        <FilteredAnalyzer Include="@(Analyzer->Distinct())" />
+        <Analyzer Remove="@(Analyzer)" />
+        <Analyzer Include="@(FilteredAnalyzer)" />
+    </ItemGroup>
+  </Target>
 
 
 <!--
@@ -997,4 +1011,3 @@
   <!-- End of the project file, Do not add any more propeties, items, targets etc. -->
 
 </Project>
-

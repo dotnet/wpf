@@ -93,7 +93,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
                     doubleValue = Convert.ToDouble(value, culture);
 
-                    if (DoubleUtil.IsNaN(doubleValue))
+                    if (double.IsNaN(doubleValue))
                     {
                         //  this allows for conversion from Width / Height = "Auto" 
                         doubleValue = 1.0;

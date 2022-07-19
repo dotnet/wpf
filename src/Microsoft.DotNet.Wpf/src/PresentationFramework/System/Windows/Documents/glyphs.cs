@@ -111,18 +111,9 @@ namespace System.Windows.Documents
         {
             base.ArrangeOverride(finalSize);
 
-            Rect inkBoundingBox;
-
             if (_measurementGlyphRun != null)
-                inkBoundingBox = _measurementGlyphRun.ComputeInkBoundingBox();
-            else
-                inkBoundingBox = Rect.Empty;
-
-            if (!inkBoundingBox.IsEmpty)
-            {
-                inkBoundingBox.X += _glyphRunOrigin.X;
-                inkBoundingBox.Y += _glyphRunOrigin.Y;
-            }
+                _measurementGlyphRun.ComputeInkBoundingBox();
+            
             return finalSize;
         }
 
@@ -191,8 +182,8 @@ namespace System.Windows.Documents
 
             bool leftToRight = ((BidiLevel & 1) == 0);
 
-            bool haveOriginX = !DoubleUtil.IsNaN(OriginX);
-            bool haveOriginY = !DoubleUtil.IsNaN(OriginY);
+            bool haveOriginX = !double.IsNaN(OriginX);
+            bool haveOriginY = !double.IsNaN(OriginY);
 
             bool measurementGlyphRunOriginValid = false;
 

@@ -454,7 +454,7 @@ namespace System.Windows.Media
             }
             else
             {
-                if (DoubleUtil.IsNaN(renderingEmSize))
+                if (double.IsNaN(renderingEmSize))
                     throw new ArgumentOutOfRangeException("renderingEmSize", SR.Get(SRID.ParameterValueCannotBeNaN));
 
                 if (renderingEmSize < 0.0)
@@ -1781,11 +1781,11 @@ namespace System.Windows.Media
                 _baseVectorX = Math.Sqrt(m11 * m11 + m12 * m12);
 
                 // Check for wrong matrix.
-                if (DoubleUtil.IsNaN(_baseVectorX))
+                if (double.IsNaN(_baseVectorX))
                     _baseVectorX = 0;
 
                 _baseVectorY = _baseVectorX == 0 ? 0 : Math.Abs(m11 * m22 - m12 * m21) / _baseVectorX;
-                if (DoubleUtil.IsNaN(_baseVectorY))
+                if (double.IsNaN(_baseVectorY))
                     _baseVectorY = 0;
             }
 

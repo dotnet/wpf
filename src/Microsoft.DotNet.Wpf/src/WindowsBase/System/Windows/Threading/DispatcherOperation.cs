@@ -197,7 +197,7 @@ namespace System.Windows.Threading
                         // executing (on this thread) and is trying to wait for the execution
                         // to complete.  Unfortunately, the thread will now deadlock, so
                         // we throw an exception instead.
-                        throw new InvalidOperationException(SR.Get(SRID.ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread));
+                        throw new InvalidOperationException(SR.ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread);
                     }
                     
                     // We are the dispatching thread for this operation, so

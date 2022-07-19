@@ -20,6 +20,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 using System.Globalization;
 using System.Diagnostics;
@@ -262,6 +263,9 @@ namespace Microsoft.Build.Tasks.Windows
                 // Add GeneratedCodeFiles to Compile item list.
                 AddNewItems(xmlProjectDoc, CompileTypeName, GeneratedCodeFiles);
 
+                // Add Analyzers to Analyzer item list.
+                AddNewItems(xmlProjectDoc, AnalyzerTypeName, Analyzers);
+
                 // Replace implicit SDK imports with explicit SDK imports
                 ReplaceImplicitImports(xmlProjectDoc); 
 
@@ -273,7 +277,6 @@ namespace Microsoft.Build.Tasks.Windows
                     ( nameof(BaseIntermediateOutputPath), BaseIntermediateOutputPath ),
                     ( nameof(MSBuildProjectExtensionsPath), MSBuildProjectExtensionsPath ),
                     ( "_TargetAssemblyProjectName", Path.GetFileNameWithoutExtension(CurrentProject) ),
-                    ( nameof(Analyzers), Analyzers )
                 };
 
                 AddNewProperties(xmlProjectDoc, properties);
@@ -281,15 +284,11 @@ namespace Microsoft.Build.Tasks.Windows
                 // Save the xmlDocument content into the temporary project file.
                 xmlProjectDoc.Save(TemporaryTargetAssemblyProjectName);
 
-                // Disable conflicting Arcade SDK workaround that imports NuGet props/targets
-                Hashtable globalProperties = new Hashtable(1);
-                globalProperties["_WpfTempProjectNuGetFilePathNoExt"] = "";
-
                 //
                 //  Compile the temporary target assembly project
                 //
                 Dictionary<string, ITaskItem[]> targetOutputs = new Dictionary<string, ITaskItem[]>();
-                retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, globalProperties, targetOutputs);
+                retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, null, targetOutputs);
 
                 // If the inner build succeeds, retrieve the path to the local type assembly from the task's TargetOutputs.
                 if (retValue)
@@ -484,8 +483,19 @@ namespace Microsoft.Build.Tasks.Windows
         /// Required for Source Generator support. May be null.
         /// 
         /// </summary>
-        public string Analyzers 
+        public ITaskItem[] Analyzers 
         { get; set; }
+
+        /// <summary>
+        /// AnalyzerTypeName
+        ///   The appropriate item name which can be accepted by managed compiler task.
+        ///   It is "Analyzer" for now.
+        ///   
+        ///   Adding this property is to make the type name configurable, if it is changed, 
+        ///   No code is required to change in this task, but set a new type name in project file.
+        /// </summary>
+        [Required]
+        public string AnalyzerTypeName { get; set; }
 
         /// <summary>
         /// BaseIntermediateOutputPath
@@ -752,7 +762,7 @@ namespace Microsoft.Build.Tasks.Windows
         //
         // Replace implicit SDK imports with explicit imports 
         //
-        static private void ReplaceImplicitImports(XmlDocument xmlProjectDoc)
+        private static void ReplaceImplicitImports(XmlDocument xmlProjectDoc)
         {
             if (xmlProjectDoc == null)
             {
@@ -764,45 +774,70 @@ namespace Microsoft.Build.Tasks.Windows
 
             for (int i = 0; i < root.Attributes.Count; i++)
             {
-                XmlAttribute xmlAttribute = root.Attributes[i] as XmlAttribute;
+                XmlAttribute xmlAttribute = root.Attributes[i];
 
                 if (xmlAttribute.Name.Equals("Sdk", StringComparison.OrdinalIgnoreCase))
                 {
-                    //  <Project Sdk="Microsoft.NET.Sdk">
-                    //  <Project Sdk="My.Custom.Sdk/1.0.0">
-                    //  <Project Sdk="My.Custom.Sdk/min=1.0.0">
+                    string sdks = xmlAttribute.Value;
 
-                    string sdkValue = xmlAttribute.Value;
+                    bool removedSdkAttribute = false;
+                    XmlNode previousNodeImportProps = null;
+                    XmlNode previousNodeImportTargets = null;
 
-                    if (!SdkReference.TryParse(sdkValue, out SdkReference sdkReference))
-                        return;
+                    foreach (string sdk in sdks.Split(_semicolonChar).Select(i => i.Trim()))
+                    {
+                        //  <Project Sdk="Microsoft.NET.Sdk">
+                        //  <Project Sdk="My.Custom.Sdk/1.0.0">
+                        //  <Project Sdk="My.Custom.Sdk/min=1.0.0">
+                        if (!SdkReference.TryParse(sdk, out SdkReference sdkReference))
+                            break;
 
-                    // Remove Sdk attribute
-                    root.Attributes.Remove(xmlAttribute);
+                        // Remove Sdk attribute
+                        if (!removedSdkAttribute)
+                        {
+                            root.Attributes.Remove(xmlAttribute);
 
-                    //
-                    // Add explicit top import
-                    //
-                    //  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
-                    //  <Import Project="Sdk.props" Sdk="My.Custom.Sdk" Version="1.0.0" />
-                    //  <Import Project="Sdk.props" Sdk="My.Custom.Sdk" MinimumVersion="1.0.0" />
-                    //
-                    XmlNode nodeImportProps = CreateImportProjectSdkNode(xmlProjectDoc, "Sdk.props", sdkReference);
+                            removedSdkAttribute = true;
+                        }
 
-                    // Prepend this Import to the root of the XML document
-                    root.PrependChild(nodeImportProps);
+                        //
+                        // Add explicit top import
+                        //
+                        //  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+                        //  <Import Project="Sdk.props" Sdk="My.Custom.Sdk" Version="1.0.0" />
+                        //  <Import Project="Sdk.props" Sdk="My.Custom.Sdk" MinimumVersion="1.0.0" />
+                        //
+                        XmlNode nodeImportProps = CreateImportProjectSdkNode(xmlProjectDoc, "Sdk.props", sdkReference);
 
-                    //
-                    // Add explicit bottom import
-                    //
-                    //  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
-                    //  <Import Project="Sdk.targets" Sdk="My.Custom.Sdk" Version="1.0.0" />
-                    //  <Import Project="Sdk.targets" Sdk="My.Custom.Sdk" MinimumVersion="1.0.0" />
-                    //
-                    XmlNode nodeImportTargets = CreateImportProjectSdkNode(xmlProjectDoc, "Sdk.targets", sdkReference);
+                        // Prepend this Import to the root of the XML document
+                        if (previousNodeImportProps == null)
+                        {
+                            previousNodeImportProps = root.PrependChild(nodeImportProps);
+                        }
+                        else
+                        {
+                            previousNodeImportProps = root.InsertAfter(nodeImportProps, previousNodeImportProps);
+                        }
 
-                    // Append this Import to the end of the XML document
-                    root.AppendChild(nodeImportTargets);
+                        //
+                        // Add explicit bottom import
+                        //
+                        //  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+                        //  <Import Project="Sdk.targets" Sdk="My.Custom.Sdk" Version="1.0.0" />
+                        //  <Import Project="Sdk.targets" Sdk="My.Custom.Sdk" MinimumVersion="1.0.0" />
+                        //
+                        XmlNode nodeImportTargets = CreateImportProjectSdkNode(xmlProjectDoc, "Sdk.targets", sdkReference);
+
+                        // Append this Import to the end of the XML document
+                        if (previousNodeImportTargets == null)
+                        {
+                            previousNodeImportTargets = root.AppendChild(nodeImportTargets);
+                        }
+                        else
+                        {
+                            previousNodeImportTargets = root.InsertAfter(nodeImportTargets, previousNodeImportTargets);
+                        }
+                    }
                 }
             }
         }
@@ -879,6 +914,8 @@ namespace Microsoft.Build.Tasks.Windows
         private const string INCLUDE_ATTR_NAME = "Include";
 
         private const string WPFTMP = "wpftmp";
+
+        private static readonly char[] _semicolonChar = new char[] { ';' };
 
         #endregion Private Fields
 

@@ -178,7 +178,7 @@ function InstallDotNetSdk {
   if [[ $# -ge 3 ]]; then
     architecture=$3
   fi
-  InstallDotNet "$root" "$version" $architecture 'sdk' 'false' $runtime_source_feed $runtime_source_feed_key
+  InstallDotNet "$root" "$version" $architecture 'sdk' 'true' $runtime_source_feed $runtime_source_feed_key
 }
 
 function InstallDotNet {
@@ -312,7 +312,7 @@ function InitializeBuildTool {
   # return values
   _InitializeBuildTool="$_InitializeDotNetCli/dotnet"
   _InitializeBuildToolCommand="msbuild"
-  _InitializeBuildToolFramework="netcoreapp3.1"
+  _InitializeBuildToolFramework="net7.0"
 }
 
 # Set RestoreNoCache as a workaround for https://github.com/NuGet/Home/issues/3116
@@ -403,13 +403,6 @@ function StopProcesses {
   pkill -9 "dotnet" || true
   pkill -9 "vbcscompiler" || true
   return 0
-}
-
-function TryLogClientIpAddress () {
-  echo 'Attempting to log this client''s IP for Azure Package feed telemetry purposes'
-  if command -v curl > /dev/null; then
-    curl -s 'http://co1r5a.msedge.net/fdv2/diagnostics.aspx' | grep ' IP: ' || true
-  fi
 }
 
 function MSBuild {

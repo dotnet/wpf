@@ -176,7 +176,7 @@ namespace System.Xaml
 
             if (!type.IsNameValid)
             {
-                throw new ArgumentException(SR.Get(SRID.TypeHasInvalidXamlName, type.Name), nameof(type));
+                throw new ArgumentException(SR.Format(SR.TypeHasInvalidXamlName, type.Name), nameof(type));
             }
 
             currentState.WriteObject(this, type, false);
@@ -204,7 +204,7 @@ namespace System.Xaml
 
             if (!property.IsNameValid)
             {
-                throw new ArgumentException(SR.Get(SRID.MemberHasInvalidXamlName, property.Name), nameof(property));
+                throw new ArgumentException(SR.Format(SR.MemberHasInvalidXamlName, property.Name), nameof(property));
             }
 
             currentState.WriteStartMember(this, property);
@@ -229,7 +229,7 @@ namespace System.Xaml
                 string s = value as string;
                 if (s == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.XamlXmlWriterCannotWriteNonstringValue), nameof(value));
+                    throw new ArgumentException(SR.XamlXmlWriterCannotWriteNonstringValue, nameof(value));
                 }
                 currentState.WriteValue(this, s);
             }
@@ -246,17 +246,17 @@ namespace System.Xaml
 
             if (namespaceDeclaration.Prefix == null)
             {
-                throw new ArgumentException(SR.Get(SRID.NamespaceDeclarationPrefixCannotBeNull), nameof(namespaceDeclaration));
+                throw new ArgumentException(SR.NamespaceDeclarationPrefixCannotBeNull, nameof(namespaceDeclaration));
             }
 
             if (namespaceDeclaration.Namespace == null)
             {
-                throw new ArgumentException(SR.Get(SRID.NamespaceDeclarationNamespaceCannotBeNull), nameof(namespaceDeclaration));
+                throw new ArgumentException(SR.NamespaceDeclarationNamespaceCannotBeNull, nameof(namespaceDeclaration));
             }
 
             if (namespaceDeclaration.Prefix == "xml")
             {
-                throw new ArgumentException(SR.Get(SRID.NamespaceDeclarationCannotBeXml), nameof(namespaceDeclaration));
+                throw new ArgumentException(SR.NamespaceDeclarationCannotBeXml, nameof(namespaceDeclaration));
             }
 
             currentState.WriteNamespace(this, namespaceDeclaration);
@@ -411,7 +411,7 @@ namespace System.Xaml
                 }
             }
 
-            throw new InvalidOperationException(SR.Get(SRID.PrefixNotInFrames, prefix));
+            throw new InvalidOperationException(SR.Format(SR.PrefixNotInFrames, prefix));
         }
 
         //
@@ -527,7 +527,7 @@ namespace System.Xaml
                 }
                 else if (objectFrame.Members.Contains(property))
                 {
-                    throw new XamlXmlWriterException(SR.Get(SRID.XamlXmlWriterDuplicateMember, property.Name));
+                    throw new XamlXmlWriterException(SR.Format(SR.XamlXmlWriterDuplicateMember, property.Name));
                 }
                 objectFrame.Members.Add(property);
             }
@@ -751,12 +751,12 @@ namespace System.Xaml
                 if (prefixMap.ContainsKey(prefix))
                 {
                     // we don't allow re-defining the same prefix-to-namespace mapping twice
-                    throw new XamlXmlWriterException(SR.Get(SRID.XamlXmlWriterPrefixAlreadyDefinedInCurrentScope, prefix));
+                    throw new XamlXmlWriterException(SR.Format(SR.XamlXmlWriterPrefixAlreadyDefinedInCurrentScope, prefix));
                 }
 
                 if (namespaceMap.ContainsKey(ns))
                 {
-                    throw new XamlXmlWriterException(SR.Get(SRID.XamlXmlWriterNamespaceAlreadyHasPrefixInCurrentScope, ns));
+                    throw new XamlXmlWriterException(SR.Format(SR.XamlXmlWriterNamespaceAlreadyHasPrefixInCurrentScope, ns));
                 }
 
                 prefixMap[prefix] = ns;
@@ -789,32 +789,32 @@ namespace System.Xaml
         {
             public virtual void WriteObject(XamlXmlWriter writer, XamlType type, bool isObjectFromMember)
             {
-                throw new XamlXmlWriterException(SR.Get(SRID.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteObject"));
+                throw new XamlXmlWriterException(SR.Format(SR.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteObject"));
             }
 
             public virtual void WriteEndObject(XamlXmlWriter writer)
             {
-                throw new XamlXmlWriterException(SR.Get(SRID.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteEndObject"));
+                throw new XamlXmlWriterException(SR.Format(SR.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteEndObject"));
             }
 
             public virtual void WriteStartMember(XamlXmlWriter writer, XamlMember property)
             {
-                throw new XamlXmlWriterException(SR.Get(SRID.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteStartMember"));
+                throw new XamlXmlWriterException(SR.Format(SR.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteStartMember"));
             }
 
             public virtual void WriteEndMember(XamlXmlWriter writer)
             {
-                throw new XamlXmlWriterException(SR.Get(SRID.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteEndMember"));
+                throw new XamlXmlWriterException(SR.Format(SR.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteEndMember"));
             }
 
             public virtual void WriteValue(XamlXmlWriter writer, string value)
             {
-                throw new XamlXmlWriterException(SR.Get(SRID.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteValue"));
+                throw new XamlXmlWriterException(SR.Format(SR.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteValue"));
             }
 
             public virtual void WriteNamespace(XamlXmlWriter writer, NamespaceDeclaration namespaceDeclaration)
             {
-                throw new XamlXmlWriterException(SR.Get(SRID.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteNamespace"));
+                throw new XamlXmlWriterException(SR.Format(SR.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteNamespace"));
             }
 
             protected static void WriteMemberAsElement(XamlXmlWriter writer)
@@ -940,7 +940,7 @@ namespace System.Xaml
                         break;
 
                     default:
-                        throw new NotSupportedException(SR.Get(SRID.MissingCaseXamlNodes));
+                        throw new NotSupportedException(SR.MissingCaseXamlNodes);
                 }
             }
         }
@@ -970,7 +970,7 @@ namespace System.Xaml
                 if (isObjectFromMember)
                 {
                     // The root element cannot be from member
-                    throw new XamlXmlWriterException(SR.Get(SRID.XamlXmlWriterWriteObjectNotSupportedInCurrentState));
+                    throw new XamlXmlWriterException(SR.XamlXmlWriterWriteObjectNotSupportedInCurrentState);
                 }
                 else
                 {
@@ -1045,14 +1045,14 @@ namespace System.Xaml
                 {
                     if (!writer.namespaceScopes.Peek().IsEmpty())
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteStartMember"));
+                        throw new InvalidOperationException(SR.Format(SR.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteStartMember"));
                     }
                 }
                 else if (property == containingType.ContentProperty)
                 {
                     if (!writer.namespaceScopes.Peek().IsEmpty())
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteStartMember"));
+                        throw new InvalidOperationException(SR.Format(SR.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteStartMember"));
                     }
                     else
                     {
@@ -1077,7 +1077,7 @@ namespace System.Xaml
 
                     if (containingType != null && containingType.ConstructionRequiresArguments)
                     {
-                        throw new XamlXmlWriterException(SR.Get(SRID.ExpandPositionalParametersinTypeWithNoDefaultConstructor));
+                        throw new XamlXmlWriterException(SR.ExpandPositionalParametersinTypeWithNoDefaultConstructor);
                     }
 
                     writer.ppStateInfo.ReturnState = State;
@@ -1096,7 +1096,7 @@ namespace System.Xaml
                 if (frame.AllocatingNodeType != XamlNodeType.StartObject &&
                     frame.AllocatingNodeType != XamlNodeType.GetObject)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteEndObject"));
+                    throw new InvalidOperationException(SR.Format(SR.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteEndObject"));
                 }
 
                 if (!frame.IsObjectFromMember)
@@ -1185,7 +1185,7 @@ namespace System.Xaml
 
                     if (containingType != null && containingType.ConstructionRequiresArguments)
                     {
-                        throw new XamlXmlWriterException(SR.Get(SRID.ExpandPositionalParametersinTypeWithNoDefaultConstructor));
+                        throw new XamlXmlWriterException(SR.ExpandPositionalParametersinTypeWithNoDefaultConstructor);
                     }
 
                     writer.ppStateInfo.ReturnState = State;
@@ -1255,7 +1255,7 @@ namespace System.Xaml
                 Frame frame = writer.namespaceScopes.Peek();
                 if (frame.AllocatingNodeType != XamlNodeType.StartMember)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteValue"));
+                    throw new InvalidOperationException(SR.Format(SR.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteValue"));
                 }
 
                 if (frame.Member.DeclaringType == XamlLanguage.XData)
@@ -1292,7 +1292,7 @@ namespace System.Xaml
                             }
                             else
                             {
-                                throw new InvalidOperationException(SR.Get(SRID.WhiteSpaceInCollection, value, containingXamlType.Name));
+                                throw new InvalidOperationException(SR.Format(SR.WhiteSpaceInCollection, value, containingXamlType.Name));
                             }
                         }
                         else
@@ -1332,7 +1332,7 @@ namespace System.Xaml
                 var frameWithXmlSpacePreserve = FindFrameWithXmlSpacePreserve(writer);
                 if (frameWithXmlSpacePreserve.AllocatingNodeType == XamlNodeType.StartMember)
                 {
-                    throw new XamlXmlWriterException(SR.Get(SRID.CannotWriteXmlSpacePreserveOnMember, frameWithXmlSpacePreserve.Member, value));
+                    throw new XamlXmlWriterException(SR.Format(SR.CannotWriteXmlSpacePreserveOnMember, frameWithXmlSpacePreserve.Member, value));
                 }
 
                 WriteXmlSpace(writer);
@@ -1385,7 +1385,7 @@ namespace System.Xaml
                 {
                     if (!writer.namespaceScopes.Peek().IsEmpty())
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.XamlXmlWriterWriteObjectNotSupportedInCurrentState));
+                        throw new InvalidOperationException(SR.XamlXmlWriterWriteObjectNotSupportedInCurrentState);
                     }
 
                     Frame tempFrame = writer.namespaceScopes.Pop();
@@ -1397,7 +1397,7 @@ namespace System.Xaml
                         XamlType memberType = frame.Member.Type;
                         if (memberType != null && !memberType.IsCollection && !memberType.IsDictionary)
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.XamlXmlWriterIsObjectFromMemberSetForArraysOrNonCollections));
+                            throw new InvalidOperationException(SR.XamlXmlWriterIsObjectFromMemberSetForArraysOrNonCollections);
                         }
                     }
 
@@ -1490,7 +1490,7 @@ namespace System.Xaml
                 else
                 {
                     XamlType containingXamlType = GetContainingXamlType(writer);
-                    throw new InvalidOperationException(SR.Get(SRID.WhiteSpaceInCollection, writer.deferredValue, containingXamlType.Name));
+                    throw new InvalidOperationException(SR.Format(SR.WhiteSpaceInCollection, writer.deferredValue, containingXamlType.Name));
                 }
             }
 
@@ -1909,8 +1909,8 @@ namespace System.Xaml
                 Type objectClrType = objectXamlType.UnderlyingType;
                 if (objectClrType == null)
                 {
-                    throw new XamlXmlWriterException(SR.Get(
-                        SRID.ExpandPositionalParametersWithoutUnderlyingType, objectXamlType.GetQualifiedName()));
+                    throw new XamlXmlWriterException(SR.Format(
+                        SR.ExpandPositionalParametersWithoutUnderlyingType, objectXamlType.GetQualifiedName()));
                 }
 
                 int numOfParameters = writer.ppStateInfo.NodesList.Count;
@@ -1921,7 +1921,7 @@ namespace System.Xaml
                 // If there aren't the same number of parameters then we throw
                 if (constructorParameters.Length != ctorArgProps.Count)
                 {
-                    throw new XamlXmlWriterException(SR.Get(SRID.ConstructorNotFoundForGivenPositionalParameters));
+                    throw new XamlXmlWriterException(SR.ConstructorNotFoundForGivenPositionalParameters);
                 }
 
                 for (int i = 0; i < constructorParameters.Length; i++)
@@ -1941,7 +1941,7 @@ namespace System.Xaml
 
                     if (matchingProperty == null)
                     {
-                        throw new XamlXmlWriterException(SR.Get(SRID.ConstructorNotFoundForGivenPositionalParameters));
+                        throw new XamlXmlWriterException(SR.ConstructorNotFoundForGivenPositionalParameters);
                     }
 
                     XamlMember member = objectXamlType.GetMember(matchingProperty.Name);
@@ -1949,7 +1949,7 @@ namespace System.Xaml
 
                     if (member.IsReadOnly)
                     {
-                        throw new XamlXmlWriterException(SR.Get(SRID.ExpandPositionalParametersWithReadOnlyProperties));
+                        throw new XamlXmlWriterException(SR.ExpandPositionalParametersWithReadOnlyProperties);
                     }
                     writer.ppStateInfo.NodesList[i].Insert(0, new XamlNode(XamlNodeType.StartMember, member));
                     writer.ppStateInfo.NodesList[i].Add(new XamlNode(XamlNodeType.EndMember));
@@ -1962,7 +1962,7 @@ namespace System.Xaml
 
                 if (paramXamlTypes == null)
                 {
-                    throw new XamlXmlWriterException(SR.Get(SRID.ConstructorNotFoundForGivenPositionalParameters));
+                    throw new XamlXmlWriterException(SR.ConstructorNotFoundForGivenPositionalParameters);
                 }
 
                 Type[] paramClrTypes = new Type[numOfParameters];
@@ -1977,7 +1977,7 @@ namespace System.Xaml
                     }
                     else
                     {
-                        throw new XamlXmlWriterException(SR.Get(SRID.ConstructorNotFoundForGivenPositionalParameters));
+                        throw new XamlXmlWriterException(SR.ConstructorNotFoundForGivenPositionalParameters);
                     }
                 }
 
@@ -1985,7 +1985,7 @@ namespace System.Xaml
 
                 if (constructor == null)
                 {
-                    throw new XamlXmlWriterException(SR.Get(SRID.ConstructorNotFoundForGivenPositionalParameters));
+                    throw new XamlXmlWriterException(SR.ConstructorNotFoundForGivenPositionalParameters);
                 }
 
                 return constructor.GetParameters();
@@ -2035,7 +2035,7 @@ namespace System.Xaml
             {
                 if (fail)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.XamlXmlWriterWriteNotSupportedInCurrentState, operation));
+                    throw new InvalidOperationException(SR.Format(SR.XamlXmlWriterWriteNotSupportedInCurrentState, operation));
                 }
             }
 
@@ -2060,7 +2060,7 @@ namespace System.Xaml
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteGetObject"));
+                    throw new InvalidOperationException(SR.Format(SR.XamlXmlWriterWriteNotSupportedInCurrentState, "WriteGetObject"));
                 }
             }
 

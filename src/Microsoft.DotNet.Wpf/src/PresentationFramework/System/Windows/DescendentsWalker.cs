@@ -56,8 +56,8 @@ namespace System.Windows
 
             if (!skipStartNode)
             {
-                if (FrameworkElement.DType.IsInstanceOfType(_startNode) ||
-                    FrameworkContentElement.DType.IsInstanceOfType(_startNode))
+                if (_startNode is FrameworkElement
+                    or FrameworkContentElement)
                 {
                     // Callback for the root of the subtree
                     continueWalk = _callback(_startNode, _data, _priority == TreeWalkPriority.VisualTree);
@@ -79,9 +79,8 @@ namespace System.Windows
         {
             _recursionDepth++;
 
-            if (FrameworkElement.DType.IsInstanceOfType(d))
+            if (d is FrameworkElement fe)
             {
-                FrameworkElement fe = (FrameworkElement) d;
                 bool hasLogicalChildren = fe.HasLogicalChildren;
 
                 // FrameworkElement have both a visual and a logical tree.
@@ -100,11 +99,10 @@ namespace System.Windows
                     Debug.Assert( false, "Tree walk priority should be Visual first or Logical first - but this instance of DescendentsWalker has an invalid priority setting that's neither of the two." );
                 }
             }
-            else if (FrameworkContentElement.DType.IsInstanceOfType(d))
+            else if (d is FrameworkContentElement fce)
             {
                 // FrameworkContentElement only has a logical tree, so we
                 // Walk logical children
-                FrameworkContentElement fce = d as FrameworkContentElement;
                 if (fce.HasLogicalChildren)
                 {
                     WalkLogicalChildren( null, fce, fce.LogicalChildren );
@@ -114,18 +112,13 @@ namespace System.Windows
             {
                 // Neither a FrameworkElement nor FrameworkContentElement.  See
                 //  if it's a Visual and if so walk the Visual collection
-                Visual v = d as Visual;
-                if (v != null)
+                if (d is Visual v)
                 {
                     WalkVisualChildren(v);
                 }
-                else
+                else if (d is Visual3D v3D)
                 {
-                    Visual3D v3D = d as Visual3D;
-                    if (v3D != null)
-                    {
-                        WalkVisualChildren(v3D);
-                    }
+                    WalkVisualChildren(v3D);
                 }
             }
 
@@ -324,12 +317,12 @@ namespace System.Windows
                 for(int i = 0; i < count; i++)
                 {
                     Visual child = feParent.InternalGetVisualChild(i);
-                    if (child != null && FrameworkElement.DType.IsInstanceOfType(child))
+                    if (child != null && child is FrameworkElement fe)
                     {
                         // For the case that both parents are identical, this node should
                         // have already been visited when walking through logical
                         // children, hence we short-circuit here
-                        if (VisualTreeHelper.GetParent(child) != ((FrameworkElement) child).Parent)
+                        if (VisualTreeHelper.GetParent(child) != fe.Parent)
                         {
                             bool visitedViaVisualTree = true;
                             VisitNode(child, visitedViaVisualTree);
@@ -404,11 +397,11 @@ namespace System.Windows
         {
             if (_recursionDepth <= ContextLayoutManager.s_LayoutRecursionLimit)
             {
-                if (FrameworkElement.DType.IsInstanceOfType(d))
+                if (d is FrameworkElement fe)
                 {
-                    VisitNode(d as FrameworkElement, visitedViaVisualTree);
+                    VisitNode(fe, visitedViaVisualTree);
                 }
-                else if (FrameworkContentElement.DType.IsInstanceOfType(d))
+                else if (d is FrameworkContentElement)
                 {
                     _VisitNode(d, visitedViaVisualTree);
                 }

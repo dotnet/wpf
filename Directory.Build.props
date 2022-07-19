@@ -2,8 +2,9 @@
   <PropertyGroup>
     <RepositoryName>wpf</RepositoryName>
     <WindowsDesktopARM64Support>true</WindowsDesktopARM64Support>
+    <TargetFramework>net7.0</TargetFramework>
+    <TargetFrameworkVersion>7.0</TargetFrameworkVersion>
   </PropertyGroup>
-
   <!-- Normalize $(TestWpfArcadeSdkPath) by appending a '\' to it if one is missing -->
   <PropertyGroup Condition="'$(TestWpfArcadeSdkPath)'!=''">
     <WpfArcadeSdkPath>$(TestWpfArcadeSdkPath)</WpfArcadeSdkPath>

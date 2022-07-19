@@ -168,7 +168,7 @@ namespace System.Xaml
             // At this point it can only be empty
             if (string.IsNullOrEmpty(fileName))
             {
-                throw new ArgumentException(SR.Get(SRID.StringIsNullOrEmpty), nameof(fileName));
+                throw new ArgumentException(SR.StringIsNullOrEmpty, nameof(fileName));
             }
             using (var writer = XmlWriter.Create(fileName, new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true }))
             {

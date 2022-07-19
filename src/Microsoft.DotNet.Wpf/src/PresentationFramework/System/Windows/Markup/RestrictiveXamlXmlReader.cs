@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//
+//
 // Description: This class provides a XamlXmlReader implementation that skips over some known dangerous 
 // types when calling into the Read method, this is meant to prevent WpfXamlLoader from instantiating.
 //

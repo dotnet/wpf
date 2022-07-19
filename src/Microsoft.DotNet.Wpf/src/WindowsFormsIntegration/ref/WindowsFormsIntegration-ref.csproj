@@ -7,7 +7,7 @@
     <DefineConstants>$(DefineConstants);WINDOWSFORMSINTEGRATION</DefineConstants>
     <NoWarn>$(NoWarn);0618</NoWarn>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-    <TargetFramework>net6.0</TargetFramework>
+    
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
   <ItemGroup>

@@ -48,7 +48,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public RibbonControlLength(double value, RibbonControlLengthUnitType type)
         {
-            if (DoubleUtil.IsNaN(value))
+            if (double.IsNaN(value))
             {
                 throw new ArgumentException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.InvalidCtorParameterNoNaN, "value"));
             }

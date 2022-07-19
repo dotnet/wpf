@@ -427,7 +427,7 @@ namespace MS.Internal.AppModel
 
         // Object to be used for locking.  Using typeof(Util) causes an FxCop
         // violation DoNotLockOnObjectsWithWeakIdentity
-        private static object _lockObj = new object();
+        private static readonly object _lockObj = new object();
 
         private static UnsafeNativeMethods.IInternetSecurityManager _secMgr;
 

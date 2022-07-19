@@ -2233,8 +2233,10 @@ namespace System.Windows
                                 {
                                     //let incrementally-updating FrameworkElements to mark the vicinity of the affected child
                                     //to perform partial update.
-                                    if(FrameworkElement.DType.IsInstanceOfType(layoutParent))
-                                        ((FrameworkElement)layoutParent).ParentLayoutInvalidated(this);
+                                    if(layoutParent is FrameworkElement fe)
+                                    {
+                                        fe.ParentLayoutInvalidated(this);
+                                    }
 
                                     if (affectsParentMeasure)
                                     {
@@ -3458,19 +3460,19 @@ namespace System.Windows
         private static bool IsWidthHeightValid(object value)
         {
             double v = (double)value;
-            return (DoubleUtil.IsNaN(v)) || (v >= 0.0d && !Double.IsPositiveInfinity(v));
+            return (double.IsNaN(v)) || (v >= 0.0d && !Double.IsPositiveInfinity(v));
         }
 
         private static bool IsMinWidthHeightValid(object value)
         {
             double v = (double)value;
-            return (!DoubleUtil.IsNaN(v) && v >= 0.0d && !Double.IsPositiveInfinity(v));
+            return (!double.IsNaN(v) && v >= 0.0d && !Double.IsPositiveInfinity(v));
         }
 
         private static bool IsMaxWidthHeightValid(object value)
         {
             double v = (double)value;
-            return (!DoubleUtil.IsNaN(v) && v >= 0.0d);
+            return (!double.IsNaN(v) && v >= 0.0d);
         }
 
         private static void OnTransformDirty(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -4062,20 +4064,20 @@ namespace System.Windows
                 minHeight = e.MinHeight;
                 double l  = e.Height;
 
-                double height = (DoubleUtil.IsNaN(l) ? Double.PositiveInfinity : l);
+                double height = (double.IsNaN(l) ? Double.PositiveInfinity : l);
                 maxHeight = Math.Max(Math.Min(height, maxHeight), minHeight);
 
-                height = (DoubleUtil.IsNaN(l) ? 0 : l);
+                height = (double.IsNaN(l) ? 0 : l);
                 minHeight = Math.Max(Math.Min(maxHeight, height), minHeight);
 
                 maxWidth = e.MaxWidth;
                 minWidth = e.MinWidth;
                 l        = e.Width;
 
-                double width = (DoubleUtil.IsNaN(l) ? Double.PositiveInfinity : l);
+                double width = (double.IsNaN(l) ? Double.PositiveInfinity : l);
                 maxWidth = Math.Max(Math.Min(width, maxWidth), minWidth);
 
-                width = (DoubleUtil.IsNaN(l) ? 0 : l);
+                width = (double.IsNaN(l) ? 0 : l);
                 minWidth = Math.Max(Math.Min(maxWidth, width), minWidth);
             }
 

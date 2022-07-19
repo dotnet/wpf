@@ -146,13 +146,13 @@ internal  class StorageRoot : StorageInfo
                 
                 if( FileMode.Create == mode )
                     throw new ArgumentException(
-                        SR.Get(SRID.CanNotCreateContainerOnReadOnlyStream));
+                        SR.CanNotCreateContainerOnReadOnlyStream);
             }
         }
         else
         {
             throw new ArgumentException(
-                SR.Get(SRID.CanNotCreateStorageRootOnNonReadableStream));
+                SR.CanNotCreateStorageRootOnNonReadableStream);
         }
 
         if( FileMode.Create == mode )
@@ -172,7 +172,7 @@ internal  class StorageRoot : StorageInfo
         else
         {
             throw new ArgumentException(
-                SR.Get(SRID.CreateModeMustBeCreateOrOpen));
+                SR.CreateModeMustBeCreateOrOpen);
         }
         
         switch( (uint) returnValue )
@@ -183,9 +183,9 @@ internal  class StorageRoot : StorageInfo
 
             default:
                 throw new IOException(
-                    SR.Get(SRID.UnableToCreateOnStream),
+                    SR.UnableToCreateOnStream,
                     new COMException(
-                        SR.Get(SRID.CFAPIFailure), 
+                        SR.CFAPIFailure, 
                         returnValue));
         }
     }
@@ -268,7 +268,7 @@ internal  class StorageRoot : StorageInfo
         {
             case FileMode.Append:
                 throw new ArgumentException(
-                    SR.Get(SRID.FileModeUnsupported));
+                    SR.FileModeUnsupported);
             case FileMode.Create:
                 grfMode |= SafeNativeCompoundFileConstants.STGM_CREATE;
                 break;
@@ -278,7 +278,7 @@ internal  class StorageRoot : StorageInfo
                     if( existTest.Exists )
                     {
                         throw new IOException(
-                            SR.Get(SRID.FileAlreadyExists));
+                            SR.FileAlreadyExists);
                     }
                 }
                 goto case FileMode.Create;
@@ -300,10 +300,10 @@ internal  class StorageRoot : StorageInfo
                 }
             case FileMode.Truncate:
                 throw new ArgumentException(
-                    SR.Get(SRID.FileModeUnsupported));
+                    SR.FileModeUnsupported);
             default:
                 throw new ArgumentException(
-                    SR.Get(SRID.FileModeInvalid));
+                    SR.FileModeInvalid);
         }
 
         // Generate the access flags from the access parameter
@@ -317,7 +317,7 @@ internal  class StorageRoot : StorageInfo
         if( 0 != (share & FileShare.Inheritable) )
         {
             throw new ArgumentException(
-                SR.Get(SRID.FileShareUnsupported));
+                SR.FileShareUnsupported);
         }
         else if( share == FileShare.None ) // FileShare.None is zero, using "&" to check causes unreachable code error
         {
@@ -338,7 +338,7 @@ internal  class StorageRoot : StorageInfo
         else
         {
             throw new ArgumentException(
-                SR.Get(SRID.FileShareInvalid));
+                SR.FileShareInvalid);
         }
 
         if( 0 != (grfMode & SafeNativeCompoundFileConstants.STGM_CREATE))
@@ -375,18 +375,18 @@ internal  class StorageRoot : StorageInfo
                     newRootStorage );
             case SafeNativeCompoundFileConstants.STG_E_FILENOTFOUND:
                 throw new FileNotFoundException( 
-                    SR.Get(SRID.ContainerNotFound));
+                    SR.ContainerNotFound);
             case SafeNativeCompoundFileConstants.STG_E_INVALIDFLAG:
                 throw new ArgumentException( 
-                    SR.Get(SRID.StorageFlagsUnsupported),
+                    SR.StorageFlagsUnsupported,
                     new COMException(
-                        SR.Get(SRID.CFAPIFailure), 
+                        SR.CFAPIFailure, 
                         returnValue));
             default:
                 throw new IOException(
-                    SR.Get(SRID.ContainerCanNotOpen),
+                    SR.ContainerCanNotOpen,
                     new COMException(
-                        SR.Get(SRID.CFAPIFailure), 
+                        SR.CFAPIFailure, 
                         returnValue));
         }
     }
@@ -468,7 +468,7 @@ internal  class StorageRoot : StorageInfo
     internal void CheckRootDisposedStatus()
     {
         if( RootDisposed )
-            throw new ObjectDisposedException(null, SR.Get(SRID.StorageRootDisposed));
+            throw new ObjectDisposedException(null, SR.StorageRootDisposed);
     }
 
     // Check whether this StorageRoot class still has its underlying storage.

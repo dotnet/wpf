@@ -114,7 +114,7 @@ namespace System.Windows.Documents.Tracing
         /// A lock object to serialize updates to <see cref="_instanceInfos"/>
         /// and the <see cref="InstanceInfo"/> instances contained therein.
         /// </summary>
-        private static object _lockObject = new object();
+        private static readonly object _lockObject = new object();
 
         /// <summary>
         /// The current COM action being tracked

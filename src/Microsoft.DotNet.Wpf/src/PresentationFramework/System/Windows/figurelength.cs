@@ -100,7 +100,7 @@ namespace System.Windows
             double maxColumns = PTS.Restrictions.tscColumnRestriction;
             double maxPixel = Math.Min(1000000, PTS.MaxPageSize);
 
-            if (DoubleUtil.IsNaN(value))
+            if (double.IsNaN(value))
             {
                 throw new ArgumentException(SR.Get(SRID.InvalidCtorParameterNoNaN, "value"));
             }

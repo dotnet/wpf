@@ -765,7 +765,7 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Lock.
         /// </summary>
-        private object _lock = new object();
+        private readonly object _lock = new object();
 
         /// <summary>
         /// Whether object is already disposed.

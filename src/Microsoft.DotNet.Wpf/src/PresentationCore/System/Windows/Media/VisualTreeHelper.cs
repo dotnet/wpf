@@ -254,14 +254,11 @@ namespace System.Windows.Media
 
             while ((current != null) && (current != ancestor) && !stopType.IsInstanceOfType(current))
             {
-                Visual visual;
-                Visual3D visual3D;
-
-                if ((visual = current as Visual) != null)
+                if (current is Visual visual)
                 {
                     current = visual.InternalVisualParent;
                 }
-                else if ((visual3D = current as Visual3D) != null)
+                else if (current is Visual3D visual3D)
                 {
                     current = visual3D.InternalVisualParent;
                 }

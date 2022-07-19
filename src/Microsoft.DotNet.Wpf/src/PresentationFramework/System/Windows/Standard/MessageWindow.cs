@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿
+
 
 namespace Standard
 {
@@ -150,7 +150,7 @@ namespace Standard
 
             if (msg == WM.CREATE)
             {
-                var createStruct = (CREATESTRUCT)Marshal.PtrToStructure(lParam, typeof(CREATESTRUCT));
+                var createStruct = Marshal.PtrToStructure<CREATESTRUCT>(lParam);
                 GCHandle gcHandle = GCHandle.FromIntPtr(createStruct.lpCreateParams);
                 hwndWrapper = (MessageWindow)gcHandle.Target;
                 s_windowLookup.Add(hwnd, hwndWrapper);

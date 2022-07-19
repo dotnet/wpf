@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//
+//
 //
 
 using System;
@@ -332,6 +332,49 @@ namespace MS.Internal
             get
             {
                 return LocalAppContext.GetCachedSwitchValue(AllowExternalProcessToBlockAccessToTemporaryFilesSwitchName, ref _allowExternalProcessToBlockAccessToTemporaryFiles);
+            }
+        }
+
+        #endregion
+
+        #region DisableDirtyRectangles
+
+        internal const string DisableDirtyRectanglesSwitchName = "Switch.System.Windows.Media.MediaContext.DisableDirtyRectangles";
+        private static int _DisableDirtyRectangles;
+        public static bool DisableDirtyRectangles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                /// <summary>
+                /// Due to a limitation of D3D's implementation of
+                /// dirty-rectangle processing, images occasionally render incorrectly.
+                /// An app can disable dirty-rectangle processing by setting this switch to true.
+                /// This will cause more work for the GPU, but the results will be better.
+                /// </summary>
+                if (EnableDynamicDirtyRectangles)
+                {
+                    bool disableDirtyRectangles;
+                    AppContext.TryGetSwitch(DisableDirtyRectanglesSwitchName, out disableDirtyRectangles);
+                    return disableDirtyRectangles;
+                }
+
+                return LocalAppContext.GetCachedSwitchValue(DisableDirtyRectanglesSwitchName, ref _DisableDirtyRectangles);
+            }
+        }
+
+        internal const string EnableDynamicDirtyRectanglesSwitchName = "Switch.System.Windows.Media.MediaContext.EnableDynamicDirtyRectangles";
+        private static int _EnableDynamicDirtyRectangles;
+        public static bool EnableDynamicDirtyRectangles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                /// <summary>
+                /// Setting this switch to true causes the DisableDirtyRectangles
+                /// switch to be re-evaluated before each render.
+                /// </summary>
+                return LocalAppContext.GetCachedSwitchValue(EnableDynamicDirtyRectanglesSwitchName, ref _EnableDynamicDirtyRectangles);
             }
         }
 

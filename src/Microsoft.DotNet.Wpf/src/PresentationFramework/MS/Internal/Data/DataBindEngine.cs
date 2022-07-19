@@ -755,7 +755,7 @@ namespace MS.Internal.Data
         private CleanupHelper _cleanupHelper;
 
         private Queue<DataBindOperation> _crossThreadQueue = new Queue<DataBindOperation>();
-        private object _crossThreadQueueLock = new object();
+        private readonly object _crossThreadQueueLock = new object();
         private int _crossThreadCost;
         private DispatcherOperation _crossThreadDispatcherOperation;
         internal const int CrossThreadThreshold = 50000;   // 50 msec

@@ -1847,7 +1847,7 @@ namespace System.Windows.Media.Imaging
                     }
                     else
                     {
-                        rc = (Int32Rect)Marshal.PtrToStructure(prc, typeof(Int32Rect));
+                        rc = Marshal.PtrToStructure<Int32Rect>(prc);
                     }
                     
                     int rectHeight, rectWidth;

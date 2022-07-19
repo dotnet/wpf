@@ -235,9 +235,7 @@ namespace MS.Internal.Printing
                 //
                 if (!Is64Bit())
                 {
-                    NativeMethods.PRINTDLGEX32 pdex = (NativeMethods.PRINTDLGEX32)Marshal.PtrToStructure(
-                        unmanagedBuffer,
-                        typeof(NativeMethods.PRINTDLGEX32));
+                    NativeMethods.PRINTDLGEX32 pdex = Marshal.PtrToStructure<NativeMethods.PRINTDLGEX32>(unmanagedBuffer);
                     devModeHandle = pdex.hDevMode;
                     devNamesHandle = pdex.hDevNames;
                     flags = pdex.Flags;
@@ -245,9 +243,7 @@ namespace MS.Internal.Printing
                 }
                 else
                 {
-                    NativeMethods.PRINTDLGEX64 pdex = (NativeMethods.PRINTDLGEX64)Marshal.PtrToStructure(
-                        unmanagedBuffer,
-                        typeof(NativeMethods.PRINTDLGEX64));
+                    NativeMethods.PRINTDLGEX64 pdex = Marshal.PtrToStructure<NativeMethods.PRINTDLGEX64>(unmanagedBuffer);
                     devModeHandle = pdex.hDevMode;
                     devNamesHandle = pdex.hDevNames;
                     flags = pdex.Flags;
@@ -261,9 +257,7 @@ namespace MS.Internal.Printing
                 if (((flags & NativeMethods.PD_PAGENUMS) == NativeMethods.PD_PAGENUMS) &&
                      (pageRangePtr != IntPtr.Zero))
                 {
-                    NativeMethods.PRINTPAGERANGE pageRangeStruct = (NativeMethods.PRINTPAGERANGE)Marshal.PtrToStructure(
-                            pageRangePtr,
-                            typeof(NativeMethods.PRINTPAGERANGE));
+                    NativeMethods.PRINTPAGERANGE pageRangeStruct = Marshal.PtrToStructure<NativeMethods.PRINTPAGERANGE>(pageRangePtr);
 
                     pageRange = new PageRange((int)pageRangeStruct.nFromPage, (int)pageRangeStruct.nToPage);
                 }
@@ -282,9 +276,7 @@ namespace MS.Internal.Printing
                     {
                         pDevNames = UnsafeNativeMethods.GlobalLock(devNamesHandle);
 
-                        NativeMethods.DEVNAMES devNames = (NativeMethods.DEVNAMES)Marshal.PtrToStructure(
-                            pDevNames,
-                            typeof(NativeMethods.DEVNAMES));
+                        NativeMethods.DEVNAMES devNames = Marshal.PtrToStructure<NativeMethods.DEVNAMES>(pDevNames);
                         int devNamesOffset = checked(devNames.wDeviceOffset * Marshal.SystemDefaultCharSize);
                         printerName = Marshal.PtrToStringAuto(pDevNames + devNamesOffset);
                     }
@@ -380,9 +372,7 @@ namespace MS.Internal.Printing
                 {
                     pDevMode = UnsafeNativeMethods.GlobalLock(devModeHandle);
 
-                    NativeMethods.DEVMODE devMode = (NativeMethods.DEVMODE)Marshal.PtrToStructure(
-                        pDevMode,
-                        typeof(NativeMethods.DEVMODE));
+                    NativeMethods.DEVMODE devMode = Marshal.PtrToStructure<NativeMethods.DEVMODE>(pDevMode);
                     devModeData = new byte[devMode.dmSize + devMode.dmDriverExtra];
                     Marshal.Copy(pDevMode, devModeData, 0, devModeData.Length);
                 }
@@ -428,16 +418,12 @@ namespace MS.Internal.Printing
                 //
                 if (!Is64Bit())
                 {
-                    NativeMethods.PRINTDLGEX32 pdex = (NativeMethods.PRINTDLGEX32)Marshal.PtrToStructure(
-                        unmanagedBuffer,
-                        typeof(NativeMethods.PRINTDLGEX32));
+                    NativeMethods.PRINTDLGEX32 pdex = Marshal.PtrToStructure<NativeMethods.PRINTDLGEX32>(unmanagedBuffer);
                     result = pdex.dwResultAction;
                 }
                 else
                 {
-                    NativeMethods.PRINTDLGEX64 pdex = (NativeMethods.PRINTDLGEX64)Marshal.PtrToStructure(
-                        unmanagedBuffer,
-                        typeof(NativeMethods.PRINTDLGEX64));
+                    NativeMethods.PRINTDLGEX64 pdex = Marshal.PtrToStructure<NativeMethods.PRINTDLGEX64>(unmanagedBuffer);
                     result = pdex.dwResultAction;
                 }
 
@@ -668,18 +654,14 @@ namespace MS.Internal.Printing
                 //
                 if (!Is64Bit())
                 {
-                    NativeMethods.PRINTDLGEX32 pdex = (NativeMethods.PRINTDLGEX32)Marshal.PtrToStructure(
-                        unmanagedBuffer,
-                        typeof(NativeMethods.PRINTDLGEX32));
+                    NativeMethods.PRINTDLGEX32 pdex = Marshal.PtrToStructure<NativeMethods.PRINTDLGEX32>(unmanagedBuffer);
                     devModeHandle = pdex.hDevMode;
                     devNamesHandle = pdex.hDevNames;
                     pageRangePtr = pdex.lpPageRanges;
                 }
                 else
                 {
-                    NativeMethods.PRINTDLGEX64 pdex = (NativeMethods.PRINTDLGEX64)Marshal.PtrToStructure(
-                        unmanagedBuffer,
-                        typeof(NativeMethods.PRINTDLGEX64));
+                    NativeMethods.PRINTDLGEX64 pdex = Marshal.PtrToStructure<NativeMethods.PRINTDLGEX64>(unmanagedBuffer);
                     devModeHandle = pdex.hDevMode;
                     devNamesHandle = pdex.hDevNames;
                     pageRangePtr = pdex.lpPageRanges;

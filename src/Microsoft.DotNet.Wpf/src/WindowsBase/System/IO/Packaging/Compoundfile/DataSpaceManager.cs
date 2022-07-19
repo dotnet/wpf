@@ -392,7 +392,7 @@ internal class DataSpaceManager
         {
             if (_baseStream == null)
             {
-                throw new ObjectDisposedException(null, SR.Get(SRID.StreamObjectDisposed));            
+                throw new ObjectDisposedException(null, SR.StreamObjectDisposed);            
             }
         }
 
@@ -580,7 +580,7 @@ internal class DataSpaceManager
             Debug.Assert( null == _transformDefinitions,
                 "Having a null data space map and a non-null transform definition map is an inconsistent state" );
 
-            throw new ObjectDisposedException(null, SR.Get(SRID.DataSpaceManagerDisposed));
+            throw new ObjectDisposedException(null, SR.DataSpaceManagerDisposed);
         }
     }
 
@@ -598,7 +598,7 @@ internal class DataSpaceManager
         if( null == transformStack ||
             0 == transformStack.Length )
             throw new ArgumentException(
-                SR.Get(SRID.TransformStackValid));
+                SR.TransformStackValid);
 
         // Given label must be a non-empty string
         CU.CheckStringAgainstNullAndEmpty(newDataSpaceLabel, "newDataSpaceLabel");
@@ -609,7 +609,7 @@ internal class DataSpaceManager
         // Given label must not already be in use
         if( DataSpaceIsDefined( newDataSpaceLabel ) )
             throw new ArgumentException(
-                SR.Get(SRID.DataSpaceLabelInUse));
+                SR.DataSpaceLabelInUse);
 
         // Given transform array must include labels that have already been defined
         foreach( string transformLabel in transformStack )
@@ -618,7 +618,7 @@ internal class DataSpaceManager
             
             if( !TransformLabelIsDefined( transformLabel ) )
                 throw new ArgumentException(
-                    SR.Get(SRID.TransformLabelUndefined));
+                    SR.TransformLabelUndefined);
         }
 
         // Passes all inspection, data space definition successful.
@@ -738,7 +738,7 @@ internal class DataSpaceManager
         object transformInstance = null;
 
         if (transformClassType != (int) TransformIdentifierTypes_PredefinedTransformName)
-            throw new NotSupportedException(SR.Get(SRID.TransformTypeUnsupported));
+            throw new NotSupportedException(SR.TransformTypeUnsupported);
 
         // Transform Identifier: we preserve casing, but do case-insensitive comparison
         if (((IEqualityComparer) CU.StringCaseInsensitiveComparer).Equals(transformClassName,
@@ -755,14 +755,14 @@ internal class DataSpaceManager
         {
             //this transform class is not supported. Need to change this to appropriate error.
             throw new ArgumentException(
-                    SR.Get(SRID.TransformLabelUndefined));
+                    SR.TransformLabelUndefined);
         }
 
         if (null != transformInstance)
         {
             if( !( transformInstance is IDataTransform ) )
                 throw new ArgumentException(
-                    SR.Get(SRID.TransformObjectImplementIDataTransform));
+                    SR.TransformObjectImplementIDataTransform);
             return (IDataTransform)transformInstance;
         }
 
@@ -937,7 +937,7 @@ internal class DataSpaceManager
         // Can't re-use an existing transform name
         if( TransformLabelIsDefined( newTransformLabel ) )
             throw new ArgumentException(
-                SR.Get(SRID.TransformLabelInUse));
+                SR.TransformLabelInUse);
 
         // Create class the transform object will use to communicate to us
         TransformEnvironment transformEnvironment = new TransformEnvironment( this, newTransformLabel );
@@ -1059,19 +1059,19 @@ internal class DataSpaceManager
                     int entryCount = dataSpaceMapReader.ReadInt32();
 
                     if (headerLength < KnownBytesInMapTableHeader || entryCount < 0)
-                        throw new FileFormatException(SR.Get(SRID.CorruptedData));
+                        throw new FileFormatException(SR.CorruptedData);
 
                     int extraDataSize = headerLength - KnownBytesInMapTableHeader;
 
                     if( 0 < extraDataSize )
                     {
                         if (extraDataSize > AllowedExtraDataMaximumSize)
-                            throw new FileFormatException(SR.Get(SRID.CorruptedData));
+                            throw new FileFormatException(SR.CorruptedData);
 
                         _mapTableHeaderPreservation = dataSpaceMapReader.ReadBytes(extraDataSize);
 
                         if (_mapTableHeaderPreservation.Length != extraDataSize)
-                            throw new FileFormatException(SR.Get(SRID.CorruptedData));
+                            throw new FileFormatException(SR.CorruptedData);
                     }
 
                     _dataSpaceMap.Capacity = entryCount;
@@ -1085,7 +1085,7 @@ internal class DataSpaceManager
                         entryLength = dataSpaceMapReader.ReadInt32();
 
                         if (entryLength < 0)
-                            throw new FileFormatException(SR.Get(SRID.CorruptedData));
+                            throw new FileFormatException(SR.CorruptedData);
 
                         totalBytesRead = 4; // entryLength
                         // Read the container reference entry
@@ -1102,7 +1102,7 @@ internal class DataSpaceManager
                         // Verify entryLength against what was actually read:
                         if (entryLength != totalBytesRead)
                         {
-                            throw new IOException(SR.Get(SRID.DataSpaceMapEntryInvalid));
+                            throw new IOException(SR.DataSpaceMapEntryInvalid);
                         }
                     }
                 }                    
@@ -1213,21 +1213,21 @@ internal class DataSpaceManager
                         int transformCount = definitionReader.ReadInt32();
 
                         if (headerLength < KnownBytesInDataSpaceDefinitionHeader || transformCount < 0)
-                            throw new FileFormatException(SR.Get(SRID.CorruptedData));
+                            throw new FileFormatException(SR.CorruptedData);
 
                         ArrayList transformLabels = new ArrayList(transformCount);
                         byte[] extraData = null;
                         int extraDataSize = headerLength - KnownBytesInDataSpaceDefinitionHeader;
 
                         if (extraDataSize > AllowedExtraDataMaximumSize)
-                            throw new FileFormatException(SR.Get(SRID.CorruptedData));
+                            throw new FileFormatException(SR.CorruptedData);
 
                         if (extraDataSize > 0)
                         {
                             extraData = definitionReader.ReadBytes(extraDataSize);
 
                             if (extraData.Length != extraDataSize)
-                                throw new FileFormatException(SR.Get(SRID.CorruptedData));
+                                throw new FileFormatException(SR.CorruptedData);
                         }
 
                         // Read the array of strings that make up the transform stack
@@ -1334,7 +1334,7 @@ internal class DataSpaceManager
                         int transformType = definitionReader.ReadInt32();
 
                         if (headerLength < 0)
-                            throw new FileFormatException(SR.Get(SRID.CorruptedData));
+                            throw new FileFormatException(SR.CorruptedData);
 
                         // Create a TransformInstance class using name from file
                         TransformInstance transformInstance =
@@ -1344,18 +1344,18 @@ internal class DataSpaceManager
                         int extraDataSize = checked ((int) (headerLength - transformDefinition.Position));
 
                         if (extraDataSize < 0)
-                            throw new FileFormatException(SR.Get(SRID.CorruptedData));
+                            throw new FileFormatException(SR.CorruptedData);
 
                         if (extraDataSize > 0)
                         {
                             if (extraDataSize > AllowedExtraDataMaximumSize)
-                                throw new FileFormatException(SR.Get(SRID.CorruptedData));
+                                throw new FileFormatException(SR.CorruptedData);
 
                             // Preserve the fields we don't know about.
                             byte[] extraData = definitionReader.ReadBytes(extraDataSize);
 
                             if (extraData.Length != extraDataSize)
-                                throw new FileFormatException(SR.Get(SRID.CorruptedData));
+                                throw new FileFormatException(SR.CorruptedData);
 
                             transformInstance.ExtraData = extraData;
                         }
@@ -1565,7 +1565,7 @@ internal class DataSpaceManager
 
                 if( ! transformObject.IsReady ) // If STILL not ready, nobody could make it "ready".
                     throw new InvalidOperationException(
-                        SR.Get(SRID.TransformObjectInitFailed));
+                        SR.TransformObjectInitFailed);
             }
             // Everything is setup, get a transformed stream
             outputStream = transformObject.GetTransformedStream( outputStream, transformContext );
@@ -1619,7 +1619,7 @@ internal class DataSpaceManager
                                        DataSpaceVersionIdentifier))
                     {
                         throw new FileFormatException(
-                                            SR.Get(SRID.InvalidTransformFeatureName,
+                                            SR.Format(SR.InvalidTransformFeatureName,
                                             _fileFormatVersion.FeatureIdentifier,
                                             DataSpaceVersionIdentifier));                       
                     }
@@ -1663,8 +1663,8 @@ internal class DataSpaceManager
         if (!_fileFormatVersion.IsReadableBy(DataSpaceCurrentReaderVersion))
         {
             throw new FileFormatException(
-                            SR.Get(
-                                SRID.ReaderVersionError,
+                            SR.Format(
+                                SR.ReaderVersionError,
                                 _fileFormatVersion.ReaderVersion,
                                 DataSpaceCurrentReaderVersion
                                 )
@@ -1687,8 +1687,8 @@ internal class DataSpaceManager
         if (!_fileFormatVersion.IsUpdatableBy(DataSpaceCurrentUpdaterVersion))
         {
             throw new FileFormatException(
-                            SR.Get(
-                                SRID.UpdaterVersionError,
+                            SR.Format(
+                                SR.UpdaterVersionError,
                                 _fileFormatVersion.UpdaterVersion,
                                 DataSpaceCurrentUpdaterVersion
                                 )
@@ -1831,7 +1831,7 @@ internal  class TransformEnvironment
         {
             transformHost.CheckDisposedStatus();
             throw new NotSupportedException(
-                SR.Get(SRID.NYIDefault));
+                SR.NYIDefault);
         }
     }
 
@@ -1849,7 +1849,7 @@ internal  class TransformEnvironment
         {
             transformHost.CheckDisposedStatus();
             throw new NotSupportedException(
-                SR.Get(SRID.NYIDefault));
+                SR.NYIDefault);
         }
     }
 
@@ -1867,7 +1867,7 @@ internal  class TransformEnvironment
         {
             transformHost.CheckDisposedStatus();
             throw new NotSupportedException(
-                SR.Get(SRID.NYIDefault));
+                SR.NYIDefault);
         }
     }
 

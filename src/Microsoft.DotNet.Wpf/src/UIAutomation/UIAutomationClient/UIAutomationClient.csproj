@@ -7,7 +7,7 @@
     <NoWarn>$(NoWarn);0618;CA1821</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    
     <EnableDefaultItems>false</EnableDefaultItems>
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
@@ -17,7 +17,6 @@
   <ItemGroup>
     <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
     <Compile Include="$(WpfSharedDir)MS\Win32\NativeMethodsSetLastError.cs" />
-    <Compile Include="SR.cs" />
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
       <Link>Common\System\SR.cs</Link>
     </Compile>

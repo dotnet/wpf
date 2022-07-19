@@ -18,7 +18,7 @@ using System.IO;
 using System.Globalization;             //  CultureInfo.InvariantCulture
 
 
-using System.Windows;                 //  SR.Get(SRID.[exception message])
+using System.Windows;                 //  SR.[exception message]
 using MS.Internal.IO.Packaging.CompoundFile;
 using CU = MS.Internal.IO.Packaging.CompoundFile.ContainerUtilities;
 using MS.Internal; // for Invariant & CriticalExceptions
@@ -187,7 +187,7 @@ public class StorageInfo
         {
             // Name is already in use, but not as a StorageInfo
             throw new InvalidOperationException(
-                SR.Get(SRID.NameAlreadyInUse, storageNname ));
+                SR.Format(SR.NameAlreadyInUse, storageNname ));
         }
         else if( null == childElement )
         {
@@ -214,7 +214,7 @@ public class StorageInfo
         {
             // Name is already in use, but not as a StreamInfo
             throw new InvalidOperationException(
-                SR.Get(SRID.NameAlreadyInUse, streamName ));
+                SR.Format(SR.NameAlreadyInUse, streamName ));
         }
         else if( null == childElement )
         {
@@ -287,13 +287,13 @@ public class StorageInfo
         // Stream names: we preserve casing, but do case-insensitive comparison (Native CompoundFile API behavior)
         if (((IEqualityComparer) CU.StringCaseInsensitiveComparer).Equals(name,
                     EncryptedPackageEnvelope.PackageStreamName))
-            throw new ArgumentException(SR.Get(SRID.StreamNameNotValid,name));
+            throw new ArgumentException(SR.Format(SR.StreamNameNotValid,name));
 
         //create a new streaminfo object
         StreamInfo streamInfo = new StreamInfo(this, name, compressionOption, encryptionOption);
         if (streamInfo.InternalExists())
         {
-            throw new IOException(SR.Get(SRID.StreamAlreadyExist));
+            throw new IOException(SR.StreamAlreadyExist);
         }
 
         //Define the compression and encryption options in the dataspacemanager
@@ -318,7 +318,7 @@ public class StorageInfo
                 {
                     //We really cannot define RM transform completely here because the transform initialization cannot be done here without publishlicense and cryptoprovider.
                     //However it will always be defined because this method is accessed only through an EncryptedPackageEnvelope and RM transform is always defined in EncryptedPackageEnvelope.Create()
-                    throw new SystemException(SR.Get(SRID.RightsManagementEncryptionTransformNotFound));
+                    throw new SystemException(SR.RightsManagementEncryptionTransformNotFound);
                 }
             }
 
@@ -404,7 +404,7 @@ public class StorageInfo
         }
         else
         {
-            throw new IOException(SR.Get(SRID.StreamNotExist));
+            throw new IOException(SR.StreamNotExist);
         }
     }
 
@@ -476,7 +476,7 @@ public class StorageInfo
         }
         else
         {
-            throw new IOException(SR.Get(SRID.StorageNotExist));
+            throw new IOException(SR.StorageNotExist);
         }
     }
 
@@ -657,9 +657,9 @@ public class StorageInfo
             if( !CU.IsValidCompoundFileName(name))
             {
                 throw new IOException(
-                        SR.Get(SRID.UnableToCreateStorage),
+                        SR.UnableToCreateStorage,
                         new COMException( 
-                            SR.Get(SRID.NamedAPIFailure, "IStorage.CreateStorage"), 
+                            SR.Format(SR.NamedAPIFailure, "IStorage.CreateStorage"), 
                             nativeCallErrorCode ));
                 }
                 */
@@ -680,17 +680,17 @@ public class StorageInfo
                 if( nativeCallErrorCode == SafeNativeCompoundFileConstants.STG_E_ACCESSDENIED )
                 {
                     throw new UnauthorizedAccessException(
-                            SR.Get(SRID.CanNotCreateAccessDenied),
+                            SR.CanNotCreateAccessDenied,
                             new COMException( 
-                            SR.Get(SRID.NamedAPIFailure, "IStorage.CreateStorage"), 
+                            SR.Format(SR.NamedAPIFailure, "IStorage.CreateStorage"), 
                             nativeCallErrorCode ));
                 }
                 else
                 {
                     throw new IOException(
-                        SR.Get(SRID.UnableToCreateStorage),
+                        SR.UnableToCreateStorage,
                         new COMException( 
-                            SR.Get(SRID.NamedAPIFailure, "IStorage.CreateStorage"), 
+                            SR.Format(SR.NamedAPIFailure, "IStorage.CreateStorage"), 
                             nativeCallErrorCode ));
                 }
             }
@@ -700,7 +700,7 @@ public class StorageInfo
         }
         else
         {
-            throw new IOException(SR.Get(SRID.StorageAlreadyExist));
+            throw new IOException(SR.StorageAlreadyExist);
         }
     
         // Return a reference
@@ -720,7 +720,7 @@ public class StorageInfo
         {
             // We are the root storage, you can't "delete" the root storage!
             throw new InvalidOperationException(
-                SR.Get(SRID.CanNotDeleteRoot));
+                SR.CanNotDeleteRoot);
         }
 
         if( InternalExists(name) )
@@ -728,7 +728,7 @@ public class StorageInfo
             if( !recursive && !StorageIsEmpty())
             {
                 throw new IOException(
-                    SR.Get(SRID.CanNotDeleteNonEmptyStorage));
+                    SR.CanNotDeleteNonEmptyStorage);
             }
 
             InvalidateEnumerators();
@@ -782,7 +782,7 @@ public class StorageInfo
         if( FileAccess.Read == Root.OpenAccess )
         {
             throw new UnauthorizedAccessException(
-                SR.Get(SRID.CanNotDeleteInReadOnly));
+                SR.CanNotDeleteInReadOnly);
         }
 
         //Clean out the entry in dataspacemanager for stream transforms
@@ -813,13 +813,13 @@ public class StorageInfo
             if( e.ErrorCode == SafeNativeCompoundFileConstants.STG_E_ACCESSDENIED )
             {
                 throw new UnauthorizedAccessException(
-                    SR.Get(SRID.CanNotDeleteAccessDenied),
+                    SR.CanNotDeleteAccessDenied,
                     e );
             }
             else
             {
                 throw new IOException(
-                    SR.Get(SRID.CanNotDelete),
+                    SR.CanNotDelete,
                     e );
             }
         }
@@ -1124,9 +1124,9 @@ public class StorageInfo
         {
             // Error is not STG_E_FILENOTFOUND, pass it on.
             throw new IOException(
-                SR.Get(SRID.CanNotOpenStorage), 
+                SR.CanNotOpenStorage, 
                 new COMException( 
-                    SR.Get(SRID.NamedAPIFailure, "IStorage::OpenStorage"), 
+                    SR.Format(SR.NamedAPIFailure, "IStorage::OpenStorage"), 
                     nativeCallErrorCode ));
         }
         // STG_E_NOTFOUND - return openSuccess as false 
@@ -1145,7 +1145,7 @@ public class StorageInfo
         if( !InternalExists() )
         {
             throw new DirectoryNotFoundException(
-                SR.Get(SRID.CanNotOnNonExistStorage));
+                SR.CanNotOnNonExistStorage);
         }
         return;
     }
@@ -1179,7 +1179,7 @@ public class StorageInfo
         if( 0 == time.dwHighDateTime &&
             0 == time.dwLowDateTime )
             throw new NotSupportedException(
-                SR.Get(SRID.TimeStampNotAvailable));
+                SR.TimeStampNotAvailable);
         
         // CLR 
 
@@ -1290,7 +1290,7 @@ public class StorageInfo
     {
         // null == parentStorage means we're root.
         if( StorageDisposed )
-            throw new ObjectDisposedException(null, SR.Get(SRID.StorageInfoDisposed));
+            throw new ObjectDisposedException(null, SR.StorageInfoDisposed);
     }
 
     // Check whether this StorageInfo is still valid.
@@ -1390,7 +1390,7 @@ public class StorageInfo
                 else
                 {
                     throw new NotSupportedException(
-                        SR.Get(SRID.UnsupportedTypeEncounteredWhenBuildingStgEnum));
+                        SR.UnsupportedTypeEncounteredWhenBuildingStgEnum);
                 }
 
                 // Move on to the next element

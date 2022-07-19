@@ -93,7 +93,7 @@ namespace System.Windows.Input
                 }
                 else
                 {
-                    throw new NotSupportedException(SR.Get(SRID.Unsupported_Key, fullName));
+                    throw new NotSupportedException(SR.Format(SR.Unsupported_Key, fullName));
                 }
             }
             throw GetConvertFromException(source);
@@ -161,7 +161,7 @@ namespace System.Windows.Input
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Get(SRID.CannotConvertStringToType, keyToken, typeof(Key)));
+                        throw new ArgumentException(SR.Format(SR.CannotConvertStringToType, keyToken, typeof(Key)));
                     }
                 }
                 else

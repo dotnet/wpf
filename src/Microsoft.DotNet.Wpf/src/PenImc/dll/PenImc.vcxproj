@@ -71,7 +71,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <UseOfATL>true</UseOfATL>
+      <UseOfATL>false</UseOfATL>
       <PreprocessorDefinitions>_MERGE_PROXYSTUB;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(WpfSourceDir)PenImc\inc\;$(IntermediateOutputPath)</AdditionalIncludeDirectories>
     </ClCompile>

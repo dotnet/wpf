@@ -49,13 +49,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             if (major < 0)
             {
                 throw new ArgumentOutOfRangeException("major",
-                            SR.Get(SRID.VersionNumberComponentNegative));
+                            SR.VersionNumberComponentNegative);
             }
 
             if (minor < 0)
             {
                 throw new ArgumentOutOfRangeException("minor",
-                            SR.Get(SRID.VersionNumberComponentNegative));
+                            SR.VersionNumberComponentNegative);
             }
 
             _major = major;
@@ -109,16 +109,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// Returns a string that represents the current VersionPair object.
         /// The string is of the form (major,minor).
         /// </summary>
-        public override string ToString()
-        {
-            StringBuilder stringFormBuilder = new StringBuilder("(");
-            stringFormBuilder.Append(_major);
-            stringFormBuilder.Append(",");
-            stringFormBuilder.Append(_minor);
-            stringFormBuilder.Append(")");
-            
-            return stringFormBuilder.ToString();
-        }
+        public override string ToString() => string.Create(null, stackalloc char[64], $"({_major},{_minor})");
 #endif
 
         #endregion
@@ -302,7 +293,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             if (obj.GetType() != GetType())
             {
-                throw new ArgumentException(SR.Get(SRID.ExpectedVersionPairObject));
+                throw new ArgumentException(SR.ExpectedVersionPairObject);
             }
 
             VersionPair v = (VersionPair) obj;

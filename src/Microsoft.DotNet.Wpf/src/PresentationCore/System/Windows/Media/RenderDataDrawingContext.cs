@@ -16,7 +16,7 @@ using MS.Internal;
 using System.Security;
 
 //------------------------------------------------------------------------------
-// This section lists various things that we could improve on the DrawingContxt
+// This section lists various things that we could improve on the DrawingContext
 // class.
 //
 // - Remove the isAnimated flag from being propagated everywhere. Rather mark

@@ -1,4 +1,4 @@
-Fixes Issue <!-- Issue Number -->
+Fixes # <!-- Issue Number -->
 
 Main PR <!-- Link to PR if any that fixed this in the main branch. -->
 

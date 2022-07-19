@@ -236,11 +236,11 @@ namespace System.Xaml.Schema
         {
             if (Namespace == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.XamlTypeNameNamespaceIsNull));
+                throw new InvalidOperationException(SR.XamlTypeNameNamespaceIsNull);
             }
             if (string.IsNullOrEmpty(Name))
             {
-                throw new InvalidOperationException(SR.Get(SRID.XamlTypeNameNameIsNullOrEmpty));
+                throw new InvalidOperationException(SR.XamlTypeNameNameIsNullOrEmpty);
             }
             if (prefixGenerator == null)
             {
@@ -253,7 +253,7 @@ namespace System.Xaml.Schema
                 string prefix = prefixGenerator.Invoke(Namespace);
                 if (prefix == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.XamlTypeNameCannotGetPrefix, Namespace));
+                    throw new InvalidOperationException(SR.Format(SR.XamlTypeNameCannotGetPrefix, Namespace));
                 }
                 if (prefix.Length != 0)
                 {

@@ -55,7 +55,7 @@ namespace MS.Internal
                 if( null == _StrongReference )
                 {
 #pragma warning suppress 6503
-                    throw new System.InvalidOperationException(SR.Get(SRID.Enumerator_VerifyContext));
+                    throw new System.InvalidOperationException(SR.Enumerator_VerifyContext);
                 }
                 return _StrongReference;
             }

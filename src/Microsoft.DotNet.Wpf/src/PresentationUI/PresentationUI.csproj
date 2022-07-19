@@ -2,7 +2,7 @@
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
   <PropertyGroup>
 
-    <TargetFramework>net6.0</TargetFramework>
+    
     <Platforms>AnyCPU;x64;arm64</Platforms>
 
     <EnableDefaultItems>false</EnableDefaultItems>
@@ -216,7 +216,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Private.Winforms" Version="$(MicrosoftPrivateWinformsVersion)" />
     <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" />
     <PackageReference Include="System.Drawing.Common" Version="$(SystemDrawingCommonVersion)" />
     <PackageReference Include="$(SystemDirectoryServicesPackage)" Version="$(SystemDirectoryServicesVersion)" />

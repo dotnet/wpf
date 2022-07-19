@@ -160,7 +160,7 @@ namespace System.Windows.Input
                  for (int i = 0; i < nCount; i++)
                  {
                      // Unmarshal each langid from short array.
-                     short langid = (short)Marshal.PtrToStructure((IntPtr)((Int64)langids + sizeOfShort * i), typeof(short));
+                     short langid = Marshal.PtrToStructure<short>((IntPtr)((Int64)langids + sizeOfShort * i));
                      arrayLang.Add(new CultureInfo(langid));
                  }
 

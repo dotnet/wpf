@@ -121,7 +121,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
         Uri IUriContext.BaseUri
         {
             get { return _xamlContext.BaseUri; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
         #endregion
 
@@ -140,7 +140,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
                 if (property == null)
                 {
                     // we don't allow any property to be null
-                    throw new ArgumentException(SR.Get(SRID.ValueInArrayIsNull, "properties"));
+                    throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "properties"));
                 }
             }
 
@@ -159,7 +159,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
                 if (type == null)
                 {
                     // we don't allow any type to be null
-                    throw new ArgumentException(SR.Get(SRID.ValueInArrayIsNull, "types"));
+                    throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "types"));
                 }
             }
             return _xamlContext.ServiceProvider_GetFirstAmbientValue(types);
@@ -180,7 +180,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
                 if (property == null)
                 {
                     // we don't allow any property to be null
-                    throw new ArgumentException(SR.Get(SRID.ValueInArrayIsNull, "properties"));
+                    throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "properties"));
                 }
             }
 
@@ -199,7 +199,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
                 if (type == null)
                 {
                     // we don't allow any type to be null
-                    throw new ArgumentException(SR.Get(SRID.ValueInArrayIsNull, "types"));
+                    throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "types"));
                 }
             }
 
@@ -222,7 +222,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
                 if (property == null)
                 {
                     // we don't allow any property to be null
-                    throw new ArgumentException(SR.Get(SRID.ValueInArrayIsNull, "properties"));
+                    throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "properties"));
                 }
             }
 
@@ -306,7 +306,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
             token.NeededNames.AddRange(names);
             if (token.CanAssignDirectly && token.NeededNames.Count != 1)
             {
-                throw new ArgumentException(SR.Get(SRID.SimpleFixupsMustHaveOneName), nameof(names));
+                throw new ArgumentException(SR.SimpleFixupsMustHaveOneName, nameof(names));
             }
 
             // TypeConverter case (aka "Initialization")

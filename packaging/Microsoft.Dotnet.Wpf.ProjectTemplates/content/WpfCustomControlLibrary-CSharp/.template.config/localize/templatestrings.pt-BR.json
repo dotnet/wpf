@@ -1,8 +1,8 @@
-{
+﻿{
   "author": "Microsoft",
   "name": "Biblioteca de Controles Personalizados do WPF",
   "description": "Um projeto para a criação de uma biblioteca de controles personalizada para aplicativos .NET WPF",
-  "symbols/TargetFrameworkOverride/description": "Substitui a estrutura de\u00A0destino",
+  "symbols/TargetFrameworkOverride/description": "Substitui a estrutura de destino",
   "symbols/Framework/description": "A estrutura de destino do projeto.",
   "symbols/Framework/choices/netcoreapp3.0/description": "Netcoreapp3.0 de destino",
   "symbols/Framework/choices/netcoreapp3.1/description": "Netcoreapp3.1 de destino",

@@ -1,8 +1,8 @@
-{
+﻿{
   "author": "Microsoft",
   "name": "Aplicativo WPF",
   "description": "Um projeto para a criação de um aplicativo .NET WPF",
-  "symbols/TargetFrameworkOverride/description": "Substitui a estrutura de\u00A0destino",
+  "symbols/TargetFrameworkOverride/description": "Substitui a estrutura de destino",
   "symbols/Framework/description": "A estrutura de destino do projeto.",
   "symbols/Framework/choices/netcoreapp3.0/description": "Netcoreapp3.0 de destino",
   "symbols/Framework/choices/netcoreapp3.1/description": "Netcoreapp3.1 de destino",

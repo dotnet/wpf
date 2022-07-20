@@ -6205,7 +6205,7 @@ Değiştirmek istiyor musunuz?</target>
       </trans-unit>
       <trans-unit id="UnexpectedXmlNodeInXmlFixedPageInfoConstructor">
         <source>\"{{{0}}}{1}\" element found. Expected fixed page element ({{{2}}}{3}).</source>
-        <target state="translated">"{{{0}}}{1}" öğe bulundu. Sabit sayfa öğesi bekleniyor ({{{2}}}{3}).</target>
+        <target state="translated">\"{{{0}}}{1}\" öğe bulundu. Sabit sayfa öğesi bekleniyor ({{{2}}}{3}).</target>
         <note />
       </trans-unit>
       <trans-unit id="UnknownBamlRecord">

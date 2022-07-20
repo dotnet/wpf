@@ -67,11 +67,11 @@ namespace MS.Internal.AutomationProxies
                 // regarding this calculation of the allowed maximum.
                 if (pos > si.nMax - si.nPage + (si.nPage > 0 ? 1 : 0))
                 {
-                    throw new ArgumentOutOfRangeException("value", val, SR.Get(SRID.RangeValueMax));
+                    throw new ArgumentOutOfRangeException("value", val, SR.RangeValueMax);
                 }
                 else if (pos < si.nMin)
                 {
-                    throw new ArgumentOutOfRangeException("value", val, SR.Get(SRID.RangeValueMin));
+                    throw new ArgumentOutOfRangeException("value", val, SR.RangeValueMin);
                 }
 
                 // LVM_SCROLL does not work in mode Report, use SetScrollPos instead

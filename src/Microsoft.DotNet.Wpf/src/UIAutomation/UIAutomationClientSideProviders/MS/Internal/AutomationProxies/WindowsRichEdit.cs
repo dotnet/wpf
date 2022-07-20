@@ -66,7 +66,7 @@ namespace MS.Internal.AutomationProxies
             if (idChild != 0)
             {
                 Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.Get(SRID.ShouldBeZero));
+                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
             }
 
             return new WindowsRichEdit(hwnd, null, 0);
@@ -175,7 +175,7 @@ namespace MS.Internal.AutomationProxies
 
             if (Misc.IsBitSet(WindowStyle, NativeMethods.ES_READONLY))
             {
-                throw new InvalidOperationException(SR.Get(SRID.ValueReadonly));
+                throw new InvalidOperationException(SR.ValueReadonly);
             }
 
             // check if control only accepts numbers
@@ -186,7 +186,7 @@ namespace MS.Internal.AutomationProxies
                 {
                     if (char.IsLetter(ch))
                     {
-                        throw new ArgumentException(SR.Get(SRID.NotAValidValue, str), "val");
+                        throw new ArgumentException(SR.Format(SR.NotAValidValue, str), "val");
                     }
                 }
             }
@@ -197,14 +197,14 @@ namespace MS.Internal.AutomationProxies
             int result = Misc.ProxySendMessageInt(_hwnd, NativeMethods.EM_GETLIMITTEXT, IntPtr.Zero, IntPtr.Zero);
             if (result < str.Length)
             {
-                throw new InvalidOperationException (SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException (SR.OperationCannotBePerformed);
             }
 
             // Send the message...
             result = Misc.ProxySendMessageInt(_hwnd, NativeMethods.WM_SETTEXT, IntPtr.Zero, new StringBuilder(str));
             if (result != 1)
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
         }
 
@@ -266,7 +266,7 @@ namespace MS.Internal.AutomationProxies
         {
             // we don't have any children so this call must be in error.
             // if we implement children for hyperlinks and embedded objects then we'll need to change this.
-            throw new InvalidOperationException(SR.Get(SRID.RichEditTextPatternHasNoChildren,GetType().FullName));
+            throw new InvalidOperationException(SR.Format(SR.RichEditTextPatternHasNoChildren, GetType().FullName));
         }
 
         ITextRangeProvider ITextProvider.RangeFromPoint(Point screenLocation)
@@ -491,7 +491,7 @@ namespace MS.Internal.AutomationProxies
 
                 if (UnsafeNativeMethods.AccessibleObjectFromWindow(WindowHandle, NativeMethods.OBJID_NATIVEOM, ref UnsafeNativeMethods.IID_IDispatch, ref obj) != NativeMethods.S_OK)
                 {
-                    throw new System.NotImplementedException(SR.Get(SRID.NoITextDocumentFromRichEdit));
+                    throw new System.NotImplementedException(SR.NoITextDocumentFromRichEdit);
                 }
 
                 // This is temp solution which will prevent exception in the case
@@ -500,7 +500,7 @@ namespace MS.Internal.AutomationProxies
                 _document = obj as ITextDocument;
                 if (_document == null)
                 {
-                    throw new System.NotImplementedException(SR.Get(SRID.NoITextDocumentFromRichEdit));
+                    throw new System.NotImplementedException(SR.NoITextDocumentFromRichEdit);
                 }
             }
         }

@@ -136,7 +136,7 @@ namespace MS.Internal.AutomationProxies
 #pragma warning suppress 6507
             if (text.Length == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidParameter));
+                throw new ArgumentException(SR.InvalidParameter);
             }
 
             // copy the our range and search from the start point or end point depending on 

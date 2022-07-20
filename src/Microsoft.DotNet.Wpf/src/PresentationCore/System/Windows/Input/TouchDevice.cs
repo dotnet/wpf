@@ -263,7 +263,7 @@ namespace System.Windows.Input
 
         private static void EnsureValid(ref IInputElement element)
         {
-            // We understand UIElements and ContentElements.
+            // We understand UIElements, ContentElements and UIElement3Ds.
             // If we are over something else (like a raw visual) find the containing element.
             if ((element != null) && !InputElement.IsValid(element))
             {

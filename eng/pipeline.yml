@@ -218,7 +218,7 @@ jobs:
           project: '9ee6d478-d288-47f7-aacc-f6e6d082ae6d'
           pipeline: '1145'
           buildVersionToDownload: 'specific'
-          buildId: '1867477'
+          buildId: '1894970'
           downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
           checkDownloadedFiles: true
 

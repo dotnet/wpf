@@ -428,8 +428,7 @@ namespace System.Windows.Input
                 Type compositionTargetType = compositionTarget.GetType();
                 if (compositionTargetType == typeof(HwndTarget))
                 {
-                    var hwndTarget = (HwndTarget) compositionTarget;
-                    DpiScale2 currentDpiScale = hwndTarget.CurrentDpiScale;
+                    DpiScale2 currentDpiScale = compositionTarget.CurrentDpiScale;
                     toDevice.Scale(currentDpiScale.DpiScaleX, currentDpiScale.DpiScaleY);
                 }
                 else

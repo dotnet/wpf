@@ -1,3 +1,10 @@
+# Windows Presentation Foundation Cross-platform (WPFC)
+Windows Presentation Foundation Cross-platform (WPFC) is a UI framework based on WPF but we are now changing its Rendering backend from Direct9 to Vulkan.
+### Step 1.  Change the rendering backend. Compile a wpfcgfx_cor3.dll and replace wpfgfx_cor3.dll.
+Now it still can only running on Windows. Because it depends on WIN32API such as window message process.
+### Step 2.  Change the window manager and Win32 interop. We plan to use GLFW for window management and something else.
+From now on, it should can be run on Windows/Linux/Mac OS even on Mobile devices.
+
 # Windows Presentation Foundation (WPF)
 [![.NET Foundation](https://img.shields.io/badge/.NET%20Foundation-blueviolet.svg)](https://www.dotnetfoundation.org/)
 [![Build Status](https://dnceng.visualstudio.com/public/_apis/build/status/dotnet/wpf/dotnet-wpf%20CI)](https://dnceng.visualstudio.com/public/_build/latest?definitionId=270)

@@ -8,21 +8,23 @@ Param(
   [string] $RuntimeSourceFeedKey = ''
 )
 
-. $PSScriptRoot\tools.ps1
+if (false) {
+    . $PSScriptRoot\tools.ps1
 
-$dotnetRoot = Join-Path $RepoRoot '.dotnet'
+    $dotnetRoot = Join-Path $RepoRoot '.dotnet'
 
-$installdir = $dotnetRoot
-try {
-    if ($architecture -and $architecture.Trim() -eq 'x86') {
-        $installdir = Join-Path $installdir 'x86'
+    $installdir = $dotnetRoot
+    try {
+        if ($architecture -and $architecture.Trim() -eq 'x86') {
+            $installdir = Join-Path $installdir 'x86'
+        }
+        InstallDotNet $installdir $version $architecture $runtime $true -RuntimeSourceFeed $RuntimeSourceFeed -RuntimeSourceFeedKey $RuntimeSourceFeedKey
     }
-    InstallDotNet $installdir $version $architecture $runtime $true -RuntimeSourceFeed $RuntimeSourceFeed -RuntimeSourceFeedKey $RuntimeSourceFeedKey
-}
-catch {
-  Write-Host $_.ScriptStackTrace
-  Write-PipelineTelemetryError -Category 'InitializeToolset' -Message $_
-  ExitWithExitCode 1
-}
+    catch {
+      Write-Host $_.ScriptStackTrace
+      Write-PipelineTelemetryError -Category 'InitializeToolset' -Message $_
+      ExitWithExitCode 1
+    }
 
-ExitWithExitCode 0
+    ExitWithExitCode 0
+}

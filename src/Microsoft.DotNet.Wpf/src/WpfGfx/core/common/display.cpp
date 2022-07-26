@@ -991,6 +991,22 @@ CDisplaySet::Init()
     //
     m_hrD3DInitialization = CD3DModuleLoader::CreateD3DObjects(&m_pID3D, &m_pID3DEx);
 
+    auto const app = vk::ApplicationInfo()
+        .setPApplicationName("WPFC")
+        .setApplicationVersion(0)
+        .setPEngineName("WPFC")
+        .setEngineVersion(0);
+    auto const createInfo = vk::InstanceCreateInfo()
+        .setPApplicationInfo(&app)
+        //.setFlags(portabilityEnumerationActive ? vk::InstanceCreateFlagBits::eEnumeratePortabilityKHR
+        //    : static_cast<vk::InstanceCreateFlagBits>(0))
+        //.setPNext((use_debug_messenger && validate) ? &debug_utils_create_info : nullptr)
+        //.setPEnabledLayerNames(enabled_layers)
+        //.setPEnabledExtensionNames(enabled_instance_extensions)
+        ;
+
+    m_rVkInstInitialization = vk::createInstance(&createInfo, nullptr, &m_inst);
+
     Assert(FAILED(m_hrD3DInitialization) == (m_pID3D == NULL));
 
     ReadRequiredVideoDriverDate();
@@ -1112,6 +1128,12 @@ CDisplaySet::GetD3DObjectNoRef(
 {
     Assert(m_pID3D || FAILED(m_hrD3DInitialization));
     *pID3D = m_pID3D;
+    return m_hrD3DInitialization;
+}
+
+HRESULT CDisplaySet::GetVkInstanceNoRef(vk::Instance *pInst) const {
+    Assert(m_inst || FAILED(m_hrD3DInitialization));
+    *pInst = m_inst;
     return m_hrD3DInitialization;
 }
 

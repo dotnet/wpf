@@ -202,14 +202,14 @@ MtDefine(CD3DRegistryData, MILRender, "CD3DRegistryDatabase enable array")
 
 HRESULT 
 CD3DRegistryDatabase::InitializeFromRegistry(
-    __in_ecount(1) IDirect3D9 *pD3D
+    __in_ecount(1) vk::Instance *pInst
     )
 {
     HRESULT hr = S_OK;
 
     Assert(!m_fInitialized);
 
-    IFC(InitializeDriversFromRegistry(pD3D));
+    IFC(InitializeDriversFromRegistry(pInst));
 
 Cleanup:
     m_fInitialized = SUCCEEDED(hr);
@@ -226,7 +226,7 @@ Cleanup:
 //-------------------------------------------------------------------------
 HRESULT
 CD3DRegistryDatabase::InitializeDriversFromRegistry(
-    __inout_ecount(1) IDirect3D9 *pD3D
+    __inout_ecount(1) vk::Instance *pInst
     )
 {
     HRESULT hr = S_OK;
@@ -235,13 +235,13 @@ CD3DRegistryDatabase::InitializeDriversFromRegistry(
     DWORD dwDisableHWAccleration;
     DWORD dwDataSize;
 
-    Assert(pD3D);
+    Assert(pInst);
 
     //
     // Get number of adaptors
     //
-
-    m_cNumAdapters = pD3D->GetAdapterCount();
+    auto result = pInst->enumeratePhysicalDevices(&m_cNumAdapters, NULL);
+    IFCV(result);
 
     //
     // Allocate adapter enable array
@@ -277,6 +277,7 @@ CD3DRegistryDatabase::InitializeDriversFromRegistry(
     // Check if HW acceleration is disabled
     //
 
+#ifdef _WIN32
     dwDataSize = 4;
     if (RegQueryValueEx(
         hRegAvalonGraphics,
@@ -293,6 +294,9 @@ CD3DRegistryDatabase::InitializeDriversFromRegistry(
             goto Cleanup;
         }
     }
+#else
+    #error Not impl.
+#endif
 
     EnableAllAdapters(true /* fEnabled */);
 

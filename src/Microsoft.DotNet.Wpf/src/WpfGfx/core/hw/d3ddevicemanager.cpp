@@ -77,12 +77,13 @@ CD3DDeviceManager::Delete()
 {
     if (g_D3DDeviceManager.m_fD3DLoaded)
     {
-        ReleaseInterface(g_D3DDeviceManager.m_pID3D);
+        DestroyVk(g_D3DDeviceManager.m_pInst);
         ReleaseInterface(g_D3DDeviceManager.m_pDisplaySet);
         g_D3DDeviceManager.m_fD3DLoaded = false;
     }
     else
     {
+        Assert(!g_D3DDeviceManager.m_pInst);
         Assert(!g_D3DDeviceManager.m_pID3D);
         Assert(!g_D3DDeviceManager.m_pDisplaySet);
     }
@@ -152,6 +153,7 @@ void CD3DDeviceManager::NotifyDisplayChange(
 CD3DDeviceManager::CD3DDeviceManager()
 {
     m_cCallers = 0;
+    m_pInst = NULL;
     m_pID3D = NULL;
     m_fD3DLoaded = false;
     m_pDisplaySet = NULL;
@@ -196,6 +198,7 @@ CD3DDeviceManager::~CD3DDeviceManager()
 
     if (m_fD3DLoaded)
     {
+        DestroyVk(m_pInst);
         ReleaseInterfaceNoNULL(m_pNullRefDevice);
         ReleaseInterfaceNoNULL(m_pSWDevice);
         ReleaseInterfaceNoNULL(m_pID3D);
@@ -435,6 +438,7 @@ CD3DDeviceManager::InitializeD3DReferences(
 
     CDisplaySet const *pDisplaySet = NULL;
     IDirect3D9 *pID3DNoRef = NULL;
+    vk::Instance instNoRef;
 
     IFC(g_DisplayManager.DangerousGetLatestDisplaySet(&pDisplaySet));
 
@@ -459,8 +463,10 @@ CD3DDeviceManager::InitializeD3DReferences(
     //
 
     IFC(pDisplaySet->GetD3DObjectNoRef(&pID3DNoRef));
+    IFC(pDisplaySet->GetVkInstanceNoRef(&instNoRef));
 
     Assert(pID3DNoRef);
+    Assert(&instNoRef);
 
     Assert(m_cCallers > 0);
 
@@ -487,7 +493,7 @@ CD3DDeviceManager::InitializeD3DReferences(
         // Initialize registry
         //
 
-        IFC(CD3DRegistryDatabase::InitializeFromRegistry(pID3DNoRef));
+        IFC(CD3DRegistryDatabase::InitializeFromRegistry(&instNoRef));
 
         //
         // Save D3D reference

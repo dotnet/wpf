@@ -49,7 +49,7 @@ LoadUpdateLayeredWindowIndirectProc(
                 ));
 
         // Make sure result is written before result status is set.
-        MemoryBarrier();
+        _mm_mfence();
     }
     else
     {
@@ -297,7 +297,7 @@ public:
             }
 
             // Make sure result is written before result status is set.
-            MemoryBarrier();
+            _mm_mfence();
             
             m_fInitialized = true;
         }

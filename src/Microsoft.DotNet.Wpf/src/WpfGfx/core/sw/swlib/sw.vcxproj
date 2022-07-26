@@ -43,7 +43,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>precomp.hpp</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MsBuildThisFileDirectory);$(WpfGraphicsPath)core\sw\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MsBuildThisFileDirectory);$(WpfGraphicsPath)core\sw\;$(VULKAN_INCLUDE)</AdditionalIncludeDirectories>
       <!-- graphics\common\shared\xmm.h(679): warning C4127: conditional expression is constant -->
       <!-- graphics\common\shared\xmm.h(714): warning C4127: conditional expression is constant -->
       <!-- note: consider using 'if constexpr' statement instead                                -->

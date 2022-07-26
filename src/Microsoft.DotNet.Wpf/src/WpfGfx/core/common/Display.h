@@ -255,8 +255,13 @@ public:
         __deref_out_ecount(1) IDirect3D9 **pID3D
         ) const;
 
+    HRESULT GetVkInstanceNoRef(
+        __deref_out_ecount(1) vk::Instance *pInst
+        ) const;
+
     __out_ecount(1) IDirect3D9* D3DObject() const {return m_pID3D;}
     __out_ecount(1) IDirect3D9Ex* D3DExObject() const {return m_pID3DEx;}
+    __out_ecount(1) vk::Instance VkInstance() const { return m_inst; }
 
     // Get HRESULT to detect why D3DObject() returned NULL.
     HRESULT GetD3DInitializationError() const {return m_hrD3DInitialization;}
@@ -327,7 +332,13 @@ private:
     IDirect3D9* m_pID3D;
     IDirect3D9Ex *m_pID3DEx;
 
+    /// <summary>
+    /// This is a handle
+    /// </summary>
+    vk::Instance m_inst;
+
     HRESULT m_hrD3DInitialization;
+    vk::Result m_rVkInstInitialization;
     mutable HRESULT m_hrSwRastRegistered;
 
     UINT m_uD3DAdapterCount;

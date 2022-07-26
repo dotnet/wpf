@@ -43,14 +43,14 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>precomp.hpp</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MsBuildThisFileDirectory);$(WpfSharedDir)\tracing\resources;$(VULKAN_INCLUDE)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MsBuildThisFileDirectory);$(WpfSharedDir)\tracing\resources;</AdditionalIncludeDirectories>
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(WpfSharedDir)\Tracing\Resources</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <ModuleDefinitionFile>$(IntermediateOutputPath)wpfgfx.i</ModuleDefinitionFile>
-      <AdditionalDependencies>%(AdditionalDependencies);kernel32.lib;winmm.lib;user32.lib;gdi32.lib;ole32.lib;oleaut32.lib;uuid.lib;advapi32.lib;rpcrt4.lib;windowscodecs.lib;evr.lib;strmbase.lib;psapi.lib;ntdll.lib;vulkan-1.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);kernel32.lib;winmm.lib;user32.lib;gdi32.lib;ole32.lib;oleaut32.lib;uuid.lib;advapi32.lib;rpcrt4.lib;windowscodecs.lib;evr.lib;strmbase.lib;psapi.lib;ntdll.lib;vulkan-1.lib;</AdditionalDependencies>
       <DelayLoadDLLs>%(DelayLoadDlls);winmm.dll;WindowsCodecs.dll</DelayLoadDLLs>
       <MergeSections>%(MergeSections);_PAGE=PAGE;_TEXT_.text</MergeSections>
       <StackReserveSize>0x40000</StackReserveSize>
@@ -63,7 +63,7 @@
       <EntryPointSymbol Condition="'$(Architecture)'=='x86'">%(Link.EntryPointSymbol)@12</EntryPointSymbol>
       <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(VULKAN_LIB);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(VULKAN_LIB);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_LIB);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_LIB);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -80,6 +80,9 @@ COPY $(TargetDir)$(TargetName).pdb $(LocalDebuggerWorkingDirectory)$(TargetName)
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">COPY $(TargetDir)$(TargetName).dll $(LocalDebuggerWorkingDirectory)$(TargetName).dll
 COPY $(TargetDir)$(TargetName).pdb $(LocalDebuggerWorkingDirectory)$(TargetName).pdb</Command>
     </PostBuildEvent>
+    <ProjectReference>
+      <LinkLibraryDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="precomp.cpp">

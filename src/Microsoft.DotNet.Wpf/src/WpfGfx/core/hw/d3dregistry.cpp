@@ -200,10 +200,11 @@ CD3DRegistryDatabase::EnableAllAdapters(bool fEnabled)
 
 MtDefine(CD3DRegistryData, MILRender, "CD3DRegistryDatabase enable array")
 
-HRESULT 
+#ifdef VULKAN
+HRESULT
 CD3DRegistryDatabase::InitializeFromRegistry(
-    __in_ecount(1) vk::Instance *pInst
-    )
+    __in_ecount(1) vk::Instance* pInst
+)
 {
     HRESULT hr = S_OK;
 
@@ -216,6 +217,9 @@ Cleanup:
 
     RRETURN(hr);
 }
+#endif // VULKAN
+
+
 
 //+------------------------------------------------------------------------
 //
@@ -226,7 +230,9 @@ Cleanup:
 //-------------------------------------------------------------------------
 HRESULT
 CD3DRegistryDatabase::InitializeDriversFromRegistry(
-    __inout_ecount(1) vk::Instance *pInst
+#ifdef VULKAN
+    __inout_ecount(1) vk::Instance* pInst
+#endif // VULKAN
     )
 {
     HRESULT hr = S_OK;
@@ -234,14 +240,18 @@ CD3DRegistryDatabase::InitializeDriversFromRegistry(
     DWORD dwType;
     DWORD dwDisableHWAccleration;
     DWORD dwDataSize;
-
+#ifdef VULKAN
     Assert(pInst);
-
     //
     // Get number of adaptors
     //
     auto result = pInst->enumeratePhysicalDevices(&m_cNumAdapters, NULL);
     IFCV(result);
+#endif // VULKAN
+
+    
+
+    
 
     //
     // Allocate adapter enable array

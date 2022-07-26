@@ -37,7 +37,9 @@ public:
     //
 
     static HRESULT InitializeFromRegistry(
-        __in_ecount(1) vk::Instance *pInst
+#ifdef VULKAN
+    __in_ecount(1) vk::Instance *pInst
+#endif // VULKAN
         );
 
     static HRESULT IsAdapterEnabled(
@@ -63,7 +65,11 @@ private:
         );
 
     static HRESULT InitializeDriversFromRegistry(
-        __inout_ecount(1) vk::Instance *pInst
+#ifdef  VULKAN
+    __inout_ecount(1) vk::Instance *pInst
+#endif //  VULKAN
+
+        
         );
 
 private:

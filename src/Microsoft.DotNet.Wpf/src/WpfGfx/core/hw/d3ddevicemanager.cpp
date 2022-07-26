@@ -77,13 +77,21 @@ CD3DDeviceManager::Delete()
 {
     if (g_D3DDeviceManager.m_fD3DLoaded)
     {
+#ifdef VULKAN
         DestroyVk(g_D3DDeviceManager.m_pInst);
+#endif // VULKAN
+
+       
         ReleaseInterface(g_D3DDeviceManager.m_pDisplaySet);
         g_D3DDeviceManager.m_fD3DLoaded = false;
     }
     else
     {
+#ifdef VULKAN
         Assert(!g_D3DDeviceManager.m_pInst);
+#endif // VULKAN
+
+       
         Assert(!g_D3DDeviceManager.m_pID3D);
         Assert(!g_D3DDeviceManager.m_pDisplaySet);
     }
@@ -153,7 +161,11 @@ void CD3DDeviceManager::NotifyDisplayChange(
 CD3DDeviceManager::CD3DDeviceManager()
 {
     m_cCallers = 0;
+#ifdef VULKAN
     m_pInst = NULL;
+#endif // VULKAN
+
+    
     m_pID3D = NULL;
     m_fD3DLoaded = false;
     m_pDisplaySet = NULL;
@@ -198,7 +210,11 @@ CD3DDeviceManager::~CD3DDeviceManager()
 
     if (m_fD3DLoaded)
     {
-        DestroyVk(m_pInst);
+#ifdef VULKAN
+     DestroyVk(m_pInst);
+#endif // VULKAN
+
+        
         ReleaseInterfaceNoNULL(m_pNullRefDevice);
         ReleaseInterfaceNoNULL(m_pSWDevice);
         ReleaseInterfaceNoNULL(m_pID3D);
@@ -438,7 +454,11 @@ CD3DDeviceManager::InitializeD3DReferences(
 
     CDisplaySet const *pDisplaySet = NULL;
     IDirect3D9 *pID3DNoRef = NULL;
+#ifdef VULKAN
     vk::Instance instNoRef;
+#endif // VULKAN
+
+    
 
     IFC(g_DisplayManager.DangerousGetLatestDisplaySet(&pDisplaySet));
 
@@ -462,11 +482,14 @@ CD3DDeviceManager::InitializeD3DReferences(
     // Make sure ID3D is available
     //
 
-    IFC(pDisplaySet->GetD3DObjectNoRef(&pID3DNoRef));
-    IFC(pDisplaySet->GetVkInstanceNoRef(&instNoRef));
 
-    Assert(pID3DNoRef);
+    IFC(pDisplaySet->GetD3DObjectNoRef(&pID3DNoRef));
+#ifdef VULKAN
+    IFC(pDisplaySet->GetVkInstanceNoRef(&instNoRef));
     Assert(&instNoRef);
+#endif // VULKAN
+    Assert(pID3DNoRef);
+   
 
     Assert(m_cCallers > 0);
 
@@ -492,8 +515,11 @@ CD3DDeviceManager::InitializeD3DReferences(
         //
         // Initialize registry
         //
+#ifdef VULKAN
+    IFC(CD3DRegistryDatabase::InitializeFromRegistry(&instNoRef));
+#endif // VULKAN
 
-        IFC(CD3DRegistryDatabase::InitializeFromRegistry(&instNoRef));
+        
 
         //
         // Save D3D reference

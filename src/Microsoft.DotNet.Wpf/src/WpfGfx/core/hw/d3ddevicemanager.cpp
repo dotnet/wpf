@@ -474,7 +474,7 @@ CD3DDeviceManager::InitializeD3DReferences(
 
 
     IFC(pDisplaySet->GetD3DObjectNoRef(&pID3DNoRef));
-    IFC(pDisplaySet->GetVkInstanceNoRef(&instNoRef));
+    IFCV(pDisplaySet->GetVkInstanceNoRef(&instNoRef));
     Assert(&instNoRef);
     Assert(pID3DNoRef);
 

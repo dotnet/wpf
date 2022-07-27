@@ -482,6 +482,10 @@ public:
         return m_pDisplaySet->D3DExObject();
     }
 
+    vk::Instance VkInstance() const {
+        return m_pDisplaySet->VkInstance();
+    }
+
     LUID GetLUID() const { return m_luidD3DAdapter;}
     __out HMONITOR GetHMONITOR() const { return m_hMonitor; }
 

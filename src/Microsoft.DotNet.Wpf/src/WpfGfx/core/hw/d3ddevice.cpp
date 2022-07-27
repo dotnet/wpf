@@ -1712,7 +1712,7 @@ CD3DDeviceLevel1::MarkUnusable(
 
     if (m_hrDisplayInvalid == D3DERR_DRIVERINTERNALERROR)
     {
-        IGNORE_HR(CVkConfigDatabase::HandleAdapterUnexpectedError(m_caps.AdapterOrdinal));
+        IGNORE_HR(CVkConfigDatabase::HandleGpuUnexpectedError(m_caps.AdapterOrdinal));
     }
 
     //
@@ -3459,7 +3459,7 @@ CD3DDeviceLevel1::HandlePresentFailure(
         //    which is handled below.
         //
         hr = D3DERR_DEVICELOST;
-        IGNORE_HR(CVkConfigDatabase::HandleAdapterUnexpectedError(m_caps.AdapterOrdinal));
+        IGNORE_HR(CVkConfigDatabase::HandleGpuUnexpectedError(m_caps.AdapterOrdinal));
     }
     else if (hr == E_INVALIDARG && IsLDDMDevice())
     {

@@ -203,7 +203,7 @@ namespace System.Xaml.MS.Impl
         {
             if (String.IsNullOrEmpty(xmlns) || clrns == null)
             {
-                throw new XamlSchemaException(SR.Get(SRID.BadXmlnsDefinition, assemblyName));
+                throw new XamlSchemaException(SR.Format(SR.BadXmlnsDefinition, assemblyName));
             }
 
             result.Add(new XmlNsDefinition { ClrNamespace = clrns, XmlNamespace = xmlns, AssemblyName = assemblyName });

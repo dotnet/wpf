@@ -18,5 +18,5 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Build
-      run: eng\CIBuild.cmd
+      run: .\eng\CIBuild.cmd
 

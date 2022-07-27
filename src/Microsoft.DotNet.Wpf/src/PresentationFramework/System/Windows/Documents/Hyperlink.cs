@@ -263,7 +263,9 @@ namespace System.Windows.Documents
                         "CommandParameter",
                         typeof(object),
                         typeof(Hyperlink),
-                        new FrameworkPropertyMetadata((object)null));
+                        new FrameworkPropertyMetadata(
+                            (object)null,
+                            new PropertyChangedCallback(OnCommandParameterChanged)));
 
         /// <summary>
         /// Reflects the parameter to pass to the CommandProperty upon execution.
@@ -280,6 +282,12 @@ namespace System.Windows.Documents
             {
                 SetValue(CommandParameterProperty, value);
             }
+        }
+
+        private static void OnCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            Hyperlink h = (Hyperlink)d;
+            h.UpdateCanExecute();
         }
 
         /// <summary>

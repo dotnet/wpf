@@ -29,8 +29,8 @@ namespace System.Xaml
         XamlWriter _writer;
 
         bool _wrappedReaderHasLineInfo;
-        int _lineNumber=0;
-        int _linePosition=0;
+        int _lineNumber;
+        int _linePosition;
         
         Thread _thread;
         Exception _caughtException;
@@ -87,7 +87,7 @@ namespace System.Xaml
         {
             if (_thread != null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ThreadAlreadyStarted));
+                throw new InvalidOperationException(SR.ThreadAlreadyStarted);
             }
             ParameterizedThreadStart start = new ParameterizedThreadStart(XamlReaderThreadStart);
             _thread = new Thread(start);

@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,10 +30,6 @@ namespace System.Windows.Automation.Peers
         internal DateTimeAutomationPeer(DateTime date, Calendar owningCalendar, CalendarMode buttonMode)
             : base()
         {
-            if (date == null)
-            {
-                throw new ArgumentNullException("date");
-            }
             if (owningCalendar == null)
             {
                 throw new ArgumentNullException("owningCalendar");
@@ -463,6 +459,24 @@ namespace System.Windows.Automation.Peers
             return AutomationProperties.AutomationSizeOfSetDefault;
         }
 
+        ///
+        override protected AutomationHeadingLevel GetHeadingLevelCore()
+        {
+            AutomationPeer wrapperPeer = WrapperPeer;
+            AutomationHeadingLevel headingLevel = AutomationHeadingLevel.None;
+
+            if(wrapperPeer != null)
+            {
+                headingLevel = wrapperPeer.GetHeadingLevel();
+            }
+            else
+            {
+                ThrowElementNotAvailableException();
+            }
+
+            return headingLevel;
+        }
+
         internal override Rect GetVisibleBoundingRectCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
@@ -512,6 +526,21 @@ namespace System.Windows.Automation.Peers
             }
 
             return true;
+        }
+
+        protected override bool IsDialogCore()
+        {
+            AutomationPeer wrapperPeer = WrapperPeer;
+            if (wrapperPeer != null)
+            {
+                return wrapperPeer.IsDialog();
+            }
+            else
+            {
+                ThrowElementNotAvailableException();
+            }
+
+            return false;
         }
 
         protected override bool IsEnabledCore()

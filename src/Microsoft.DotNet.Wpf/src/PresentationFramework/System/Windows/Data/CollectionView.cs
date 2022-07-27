@@ -74,7 +74,7 @@ namespace System.Windows.Data
             {
                 if (TraceData.IsEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotify(TraceEventType.Warning,
                         TraceData.CollectionViewIsUnsupported);
                 }
             }

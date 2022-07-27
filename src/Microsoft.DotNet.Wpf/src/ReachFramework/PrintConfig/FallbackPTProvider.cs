@@ -20,7 +20,6 @@ namespace MS.Internal.Printing.Configuration
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Drawing.Printing;
     using System.Globalization;
     using System.IO;
     using System.Printing;
@@ -400,7 +399,7 @@ namespace MS.Internal.Printing.Configuration
                             CultureInfo.InvariantCulture,
                             DeviceNamespaceFormat,
                             BuildInfo.WCP_VERSION_SUFFIX,
-                            Uri.EscapeUriString(this._driverName),
+                            Uri.EscapeDataString(this._driverName),
                             this._driverVersion);
                     }
 

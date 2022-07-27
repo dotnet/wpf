@@ -204,7 +204,7 @@ namespace System
 
         /// This is a partial method. This method is responsible for populating the default values based on a TFM.
         /// It is partial because each library should define this method in their code to contain their defaults.
-        static partial void PopulateDefaultValuesPartial(string platformIdentifier, string profile, int version);
+        static partial void PopulateDefaultValuesPartial(string platformIdentifier, string profile, int targetFrameworkVersion);
     }
 }
 

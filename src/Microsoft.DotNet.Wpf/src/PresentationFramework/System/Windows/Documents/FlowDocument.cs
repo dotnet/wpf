@@ -1008,19 +1008,19 @@ namespace System.Windows.Documents
             Thickness pageMargin = this.PagePadding;
 
             // If Padding value is 'Auto', treat it as 1*LineHeight.
-            if (DoubleUtil.IsNaN(pageMargin.Left))
+            if (double.IsNaN(pageMargin.Left))
             {
                 pageMargin.Left = lineHeight;
             }
-            if (DoubleUtil.IsNaN(pageMargin.Top))
+            if (double.IsNaN(pageMargin.Top))
             {
                 pageMargin.Top = lineHeight;
             }
-            if (DoubleUtil.IsNaN(pageMargin.Right))
+            if (double.IsNaN(pageMargin.Right))
             {
                 pageMargin.Right = lineHeight;
             }
-            if (DoubleUtil.IsNaN(pageMargin.Bottom))
+            if (double.IsNaN(pageMargin.Bottom))
             {
                 pageMargin.Bottom = lineHeight;
             }
@@ -1335,7 +1335,7 @@ namespace System.Windows.Documents
             FlowDocument fd = (FlowDocument) d;
             double width = (double) value;
 
-            if (!DoubleUtil.IsNaN(width))
+            if (!double.IsNaN(width))
             {
                 double max = fd.MaxPageWidth;
                 if (width > max)
@@ -1361,7 +1361,7 @@ namespace System.Windows.Documents
             FlowDocument fd = (FlowDocument) d;
             double height = (double) value;
 
-            if (!DoubleUtil.IsNaN(height))
+            if (!double.IsNaN(height))
             {
                 double max = fd.MaxPageHeight;
                 if (height > max)

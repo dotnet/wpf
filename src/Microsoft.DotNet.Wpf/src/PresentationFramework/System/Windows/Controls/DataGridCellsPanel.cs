@@ -146,7 +146,7 @@ namespace System.Windows.Controls
                 // the desired width is greater than display value.
                 DataGridLength width = column.Width;
                 if (remeasure &&
-                    !DoubleUtil.IsNaN(width.DisplayValue) &&
+                    !double.IsNaN(width.DisplayValue) &&
                     DoubleUtil.GreaterThan(desiredWidth, width.DisplayValue))
                 {
                     childMeasureConstraint.Width = width.DisplayValue;
@@ -575,7 +575,7 @@ namespace System.Windows.Controls
 
             DataGridLength width = column.Width;
             childSize = child.DesiredSize;
-            if (!DoubleUtil.IsNaN(width.DisplayValue))
+            if (!double.IsNaN(width.DisplayValue))
             {
                 childSize = new Size(width.DisplayValue, childSize.Height);
             }
@@ -1474,7 +1474,7 @@ namespace System.Windows.Controls
             {
                 Debug.Assert(cell.Column != null, "column cannot be null.");
                 childWidth = cell.Column.Width.DisplayValue;
-                if (DoubleUtil.IsNaN(childWidth))
+                if (double.IsNaN(childWidth))
                 {
                     childWidth = cell.Column.ActualWidth;
                 }
@@ -1903,7 +1903,7 @@ namespace System.Windows.Controls
             }
 
             double childMeasureWidth = column.Width.DisplayValue;
-            if (DoubleUtil.IsNaN(childMeasureWidth))
+            if (double.IsNaN(childMeasureWidth))
             {
                 childMeasureWidth = Math.Max(averageColumnWidth, column.MinWidth);
                 childMeasureWidth = Math.Min(childMeasureWidth, column.MaxWidth);
@@ -2024,7 +2024,7 @@ namespace System.Windows.Controls
             if (DoubleUtil.AreClose(availableViewportWidth, 0.0) && parentRowsPresenter != null)
             {
                 Size rowPresenterAvailableSize = parentRowsPresenter.AvailableSize;
-                if (!DoubleUtil.IsNaN(rowPresenterAvailableSize.Width) && !Double.IsInfinity(rowPresenterAvailableSize.Width))
+                if (!double.IsNaN(rowPresenterAvailableSize.Width) && !Double.IsInfinity(rowPresenterAvailableSize.Width))
                 {
                     availableViewportWidth = rowPresenterAvailableSize.Width;
                 }

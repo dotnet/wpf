@@ -66,6 +66,7 @@ namespace System.IO.Packaging
         /// <param name="cachedPackageIsThreadSafe">is the cacheEntry thread-safe?</param>
         /// <remarks>This should only be called by PackWebRequestFactory</remarks>
         /// <exception cref="ArgumentException">Will throw an ArgumentException if the given URI is not of the correct scheme</exception>
+        #pragma warning disable SYSLIB0014 
         internal PackWebRequest(Uri uri, Uri packageUri, Uri partUri, Package cacheEntry,
             bool respectCachePolicy, bool cachedPackageIsThreadSafe)
         {
@@ -89,6 +90,7 @@ namespace System.IO.Packaging
                         "PackWebRequest - working from Package Cache");
 #endif
         }
+        #pragma warning restore SYSLIB0014 
 
         //------------------------------------------------------
         //

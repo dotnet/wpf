@@ -17,7 +17,7 @@ namespace System.Windows.Documents
     using System.Windows.Markup;
     using System.Windows.Shapes;
     using System.Windows.Documents.DocumentStructures;
-    using ds=System.Windows.Documents.DocumentStructures;
+    using Ds=System.Windows.Documents.DocumentStructures;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -219,7 +219,7 @@ namespace System.Windows.Documents
 
         private void SpecialProcessing(SemanticBasicElement sbe)
         {
-            ds.ListItemStructure listItem = sbe as ds.ListItemStructure;
+            Ds.ListItemStructure listItem = sbe as Ds.ListItemStructure;
             if (listItem != null && listItem.Marker != null)
             {
                 NameHashFixedNode fen;

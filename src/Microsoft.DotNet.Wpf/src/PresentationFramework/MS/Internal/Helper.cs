@@ -286,15 +286,15 @@ namespace MS.Internal
                                     out FrameworkElement fe, out FrameworkContentElement fce,
                                     bool throwIfNeither)
         {
-            if (FrameworkElement.DType.IsInstanceOfType(d))
+            if (d is FrameworkElement frameworkElement)
             {
-                fe = (FrameworkElement)d;
+                fe = frameworkElement;
                 fce = null;
             }
-            else if (FrameworkContentElement.DType.IsInstanceOfType(d))
+            else if (d is FrameworkContentElement frameworkContentElement)
             {
                 fe = null;
-                fce = (FrameworkContentElement)d;
+                fce = frameworkContentElement;
             }
             else if (throwIfNeither)
             {
@@ -334,7 +334,8 @@ namespace MS.Internal
                     if (style != DependencyProperty.UnsetValue &&
                         (style is Style || style is ResourceReferenceExpression))
                     {
-                        TraceData.Trace(TraceEventType.Error, TraceData.StyleAndStyleSelectorDefined(name), d);
+                        TraceData.TraceAndNotify(TraceEventType.Error, TraceData.StyleAndStyleSelectorDefined(name), null,
+                            traceParameters: new object[] { d });
                     }
                 }
             }
@@ -360,7 +361,8 @@ namespace MS.Internal
                 {
                     if (IsTemplateDefined(templateProperty, d))
                     {
-                        TraceData.Trace(TraceEventType.Error, TraceData.TemplateAndTemplateSelectorDefined(name), d);
+                        TraceData.TraceAndNotify(TraceEventType.Error, TraceData.TemplateAndTemplateSelectorDefined(name), null,
+                            traceParameters: new object[] { d });
                     }
                 }
             }

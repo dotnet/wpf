@@ -87,14 +87,6 @@ namespace System.Windows.Controls
             }
         }
 
-        internal virtual bool ShouldShowOnKeyboardFocus
-        {
-            get
-            {
-                return true;
-            }
-        }
-
         /// <summary>
         /// The DependencyProperty for the HorizontalOffset property.
         /// Default: Length(0.0)
@@ -347,6 +339,24 @@ namespace System.Windows.Controls
             set { SetValue(StaysOpenProperty, value); }
         }
 
+        /// <summary>
+        ///     The DependencyProperty for the ShowsToolTipOnKeyboardFocus property.
+        ///     Flags:              None
+        ///     Default Value:      null
+        /// </summary>
+        public static readonly DependencyProperty ShowsToolTipOnKeyboardFocusProperty =
+                    ToolTipService.ShowsToolTipOnKeyboardFocusProperty.AddOwner(typeof(ToolTip));
+
+        /// <summary>
+        ///     Get or set ShowsToolTipOnKeyboardFocus property of the ToolTip
+        /// </summary>
+        [Bindable(true), Category("Behavior")]
+        public bool? ShowsToolTipOnKeyboardFocus
+        {
+            get { return (bool?)GetValue(ShowsToolTipOnKeyboardFocusProperty); }
+            set { SetValue(ShowsToolTipOnKeyboardFocusProperty, NullableBooleanBoxes.Box(value)); }
+        }
+
         #endregion
 
         #region Public Events
@@ -491,8 +501,7 @@ namespace System.Windows.Controls
                 (bool)GetValue(PopupControlService.ServiceOwnedProperty) &&
                 newContent is ToolTip)
             {
-                popupControlService.OnRaiseToolTipClosingEvent(null, EventArgs.Empty);
-                popupControlService.OnRaiseToolTipOpeningEvent(null, EventArgs.Empty);
+                popupControlService.ReplaceCurrentToolTip();
             }
             else
             {
@@ -566,6 +575,20 @@ namespace System.Windows.Controls
             OnClosed(new RoutedEventArgs(ClosedEvent, this));
         }
 
+        // return the tooltip's bounding rectangle, in screen coords.
+        // used by PopupControlService while building the SafeArea
+        internal Rect GetScreenRect()
+        {
+            if (_parentPopup != null)
+            {
+                return _parentPopup.GetWindowRect();
+            }
+            else
+            {
+                return Rect.Empty;
+            }
+        }
+
         #endregion
 
         #region Data
@@ -586,12 +609,5 @@ namespace System.Windows.Controls
         private static DependencyObjectType _dType;
 
         #endregion DTypeThemeStyleKey
-
-        internal enum ToolTipTrigger
-        {
-            Mouse,
-            KeyboardFocus,
-            KeyboardShortcut
-        }
     }
 }

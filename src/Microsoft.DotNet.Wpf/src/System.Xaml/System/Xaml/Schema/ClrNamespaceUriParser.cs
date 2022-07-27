@@ -23,20 +23,20 @@ namespace System.Xaml.Schema
             // xmlns:bar="clr-namespace:MyAppsNs"
             // xmlns:spam="clr-namespace:MyAppsNs;assembly="  
 
-            int colonIdx = KS.IndexOf(uriInput, ":");
+            int colonIdx = KS.IndexOf(uriInput, ':');
             if (colonIdx == -1)
             {
                 return false;
             }
 
-            string keyword = uriInput.Substring(0, colonIdx);
+            ReadOnlySpan<char> keyword = uriInput.AsSpan(0, colonIdx);
             if (!KS.Eq(keyword, KnownStrings.UriClrNamespace))
             {
                 return false;
             }
 
             int clrNsStartIdx = colonIdx + 1;
-            int semicolonIdx = KS.IndexOf(uriInput, ";");
+            int semicolonIdx = KS.IndexOf(uriInput, ';');
             if (semicolonIdx == -1)
             {
                 clrNs = uriInput.Substring(clrNsStartIdx);
@@ -50,13 +50,13 @@ namespace System.Xaml.Schema
             }
 
             int assemblyKeywordStartIdx = semicolonIdx+1;
-            int equalIdx = KS.IndexOf(uriInput, "=");
+            int equalIdx = KS.IndexOf(uriInput, '=');
             if (equalIdx == -1)
             {
                 return false;
             }
 
-            keyword = uriInput.Substring(assemblyKeywordStartIdx, equalIdx - assemblyKeywordStartIdx);
+            keyword = uriInput.AsSpan(assemblyKeywordStartIdx, equalIdx - assemblyKeywordStartIdx);
             if (!KS.Eq(keyword, KnownStrings.UriAssembly))
             {
                 return false;

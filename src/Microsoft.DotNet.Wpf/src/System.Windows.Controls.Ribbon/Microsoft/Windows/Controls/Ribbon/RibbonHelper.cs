@@ -2326,8 +2326,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             markupProp.PropertyDescriptor.ComponentType == typeof(ItemsControl))
                         {
                             // Skip the ItemsControl.Items property
-                            // since this will be copied as part of
-                            // the whitelist properties.
+                            // since this will be copied automatically.
 
                             continue;
                         }

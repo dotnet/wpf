@@ -16,7 +16,7 @@ namespace MS.Internal.Ink
     /// inner area being on the right side.
     /// Used in hit-testing a contour vs another contour.
     /// </summary> 
-    internal struct ContourSegment
+    internal readonly struct ContourSegment
     {
         /// <summary>
         /// Constructor for linear segments
@@ -61,9 +61,9 @@ namespace MS.Internal.Ink
 
         #region Fields
 
-        private Point   _begin;
-        private Vector  _vector;
-        private Vector  _radius;
+        private readonly Point   _begin;
+        private readonly Vector  _vector;
+        private readonly Vector  _radius;
 
         #endregion
     }

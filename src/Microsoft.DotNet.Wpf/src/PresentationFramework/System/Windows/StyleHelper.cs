@@ -168,7 +168,6 @@ namespace System.Windows
             // Fetch the DefaultStyleKey and the self Style for
             // the given Framework[Content]Element
             object themeStyleKey = null;
-            Style selfStyle = null;
             Style oldThemeStyle = null;
             Style newThemeStyle = null;
             bool overridesDefaultStyle;
@@ -180,10 +179,7 @@ namespace System.Windows
 
                 themeStyleKey = fe.DefaultStyleKey;
                 overridesDefaultStyle = fe.OverridesDefaultStyle;
-                if(ShouldGetValueFromStyle ( FrameworkElement.DefaultStyleKeyProperty ) )
-                {
-                    selfStyle = fe.Style;
-                }
+              
                 oldThemeStyle = fe.ThemeStyle;
             }
             else
@@ -194,10 +190,7 @@ namespace System.Windows
 
                 themeStyleKey = fce.DefaultStyleKey;
                 overridesDefaultStyle = fce.OverridesDefaultStyle;
-                if(ShouldGetValueFromStyle ( FrameworkContentElement.DefaultStyleKeyProperty) )
-                {
-                    selfStyle = fce.Style;
-                }
+               
                 oldThemeStyle = fce.ThemeStyle;
             }
 
@@ -2334,15 +2327,15 @@ namespace System.Windows
                                     out FrameworkElement fe, out FrameworkContentElement fce,
                                     bool throwIfNeither)
         {
-            if (FrameworkElement.DType.IsInstanceOfType(d))
+            if (d is FrameworkElement frameworkElement)
             {
-                fe = (FrameworkElement)d;
+                fe = frameworkElement;
                 fce = null;
             }
-            else if (FrameworkContentElement.DType.IsInstanceOfType(d))
+            else if (d is FrameworkContentElement frameworkContentElement)
             {
                 fe = null;
-                fce = (FrameworkContentElement)d;
+                fce = frameworkContentElement;
             }
             else if (throwIfNeither && !(d is System.Windows.Media.Media3D.Visual3D) )
             {

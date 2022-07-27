@@ -193,7 +193,7 @@ namespace System.Windows.Controls.Primitives
                 return baseSize;
             }
 
-            if (DoubleUtil.IsNaN(dataGridOwner.RowHeaderWidth) &&
+            if (double.IsNaN(dataGridOwner.RowHeaderWidth) &&
                 baseSize.Width > dataGridOwner.RowHeaderActualWidth)
             {
                 dataGridOwner.RowHeaderActualWidth = baseSize.Width;

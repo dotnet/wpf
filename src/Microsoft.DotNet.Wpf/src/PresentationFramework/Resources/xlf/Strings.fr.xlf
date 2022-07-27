@@ -4405,7 +4405,7 @@ Voulez-vous le remplacer ?</target>
       </trans-unit>
       <trans-unit id="ParserXmlIslandMissing">
         <source>Parent element or property '{0}' requires an XML data island. To distinguish an XML island from surrounding XAML, wrap the XML data island in &lt;x:XData&gt; ... &lt;/x:XData&gt;.</source>
-        <target state="translated">L'élément parent ou la propriété '{0}' nécessite un îlot de données XML. Pour distinguer un îlot de données XML du XAML environnant, incluez dans un wrapper l'îlot de données XML dans &lt;x:XData&gt; ... &lt;/x:XData&gt;.</target>
+        <target state="translated">L'élément parent ou la propriété '{0}' nécessite un îlot de données XML. Pour distinguer un îlot de données XML du XAML environnant, enveloppez l'îlot de données XML dans &lt;x:XData&gt; ... &lt;/x:XData&gt;.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserXmlIslandUnexpected">
@@ -6115,12 +6115,12 @@ Voulez-vous le remplacer ?</target>
       </trans-unit>
       <trans-unit id="UndoNoOpenParentUnit">
         <source>Cannot add nonparent undo unit when there is no open IParentUndoUnit.</source>
-        <target state="translated">Impossible d'ajouter une unité Undo non parent quand il n'y a aucun IParentUndoUnit ouvert.</target>
+        <target state="translated">Impossible d'ajouter une unité d'annulation non parent quand il n'y a aucun IParentUndoUnit ouvert.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoNoOpenUnit">
         <source>Cannot close undo unit because no opened unit exists.</source>
-        <target state="translated">Impossible de fermer l'unité undo parce qu'il n'existe aucune unité ouverte.</target>
+        <target state="translated">Impossible de fermer l'unité d'annulation parce qu'il n'existe aucune unité ouverte.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoNotInNormalState">
@@ -6135,17 +6135,17 @@ Voulez-vous le remplacer ?</target>
       </trans-unit>
       <trans-unit id="UndoUnitAlreadyOpen">
         <source>Cannot Reopen undo unit while another unit is already open.</source>
-        <target state="translated">Impossible de rouvrir l'unité undo quand une autre unité est déjà ouverte.</target>
+        <target state="translated">Impossible de rouvrir l'unité d'annulation quand une autre unité est déjà ouverte.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitCantBeAddedTwice">
         <source>Cannot add undo unit to itself or one of its own children.</source>
-        <target state="translated">Impossible d'ajouter l'unité undo à elle-même ou à l'un de ses propres enfants.</target>
+        <target state="translated">Impossible d'ajouter l'unité d'annulation à elle-même ou à l'un de ses propres enfants.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitCantBeOpenedTwice">
         <source>Cannot open undo unit that is already open.</source>
-        <target state="translated">Impossible d'ouvrir une unité undo qui est déjà ouverte.</target>
+        <target state="translated">Impossible d'ouvrir une unité d'annulation qui est déjà ouverte.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitLocked">
@@ -6160,12 +6160,12 @@ Voulez-vous le remplacer ?</target>
       </trans-unit>
       <trans-unit id="UndoUnitNotOnTopOfStack">
         <source>Cannot Reopen undo unit that is not on top of stack.</source>
-        <target state="translated">Impossible de rouvrir l'unité undo qui n'est pas en haut de la pile.</target>
+        <target state="translated">Impossible de rouvrir l'unité d'annulation qui n'est pas en haut de la pile.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitOpen">
         <source>Cannot Undo or Redo while undo unit is open.</source>
-        <target state="translated">Impossible de rétablir ou d'annuler quand l'unité undo est ouverte.</target>
+        <target state="translated">Impossible de rétablir ou d'annuler quand l'unité d'annulation est ouverte.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnexpectedAttribute">

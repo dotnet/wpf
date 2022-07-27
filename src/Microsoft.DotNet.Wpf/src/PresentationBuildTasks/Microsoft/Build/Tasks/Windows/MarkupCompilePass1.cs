@@ -74,7 +74,7 @@ namespace Microsoft.Build.Tasks.Windows
         public MarkupCompilePass1( ) : base(SR.SharedResourceManager)
         {
             // set the source directory
-            _sourceDir = Directory.GetCurrentDirectory() + "\\";
+            _sourceDir = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar;
 
             _outputType = SharedStrings.WinExe;
 
@@ -276,10 +276,10 @@ namespace Microsoft.Build.Tasks.Windows
                 // Get the relative path based on sourceDir
                 _outputDir= TaskHelper.CreateFullFilePath(filePath, SourceDir);
 
-                // Make sure OutputDir always ends with '\\'.
-                if (!_outputDir.EndsWith("\\", StringComparison.Ordinal))
+                // Make sure OutputDir always ends with Path.DirectorySeparatorChar
+                if (!_outputDir.EndsWith(string.Empty + Path.DirectorySeparatorChar, StringComparison.Ordinal))
                 {
-                    _outputDir += "\\";
+                    _outputDir += Path.DirectorySeparatorChar;
                 }
             }
         }
@@ -586,6 +586,11 @@ namespace Microsoft.Build.Tasks.Windows
             get { return _isRunningInVisualStudio;   }
             set { _isRunningInVisualStudio = value;  }
         }
+
+        ///<summary>
+        /// Support custom IntermediateOutputPath and BaseIntermediateOutputPath outside the project path
+        ///</summary>
+        public bool SupportCustomOutputPaths { get; set; } = false;
 
         ///<summary>
         /// Generated source code files for the given programing language.
@@ -1080,8 +1085,8 @@ namespace Microsoft.Build.Tasks.Windows
                 // and put the deepest directory that file is in as the new
                 // SourceDir.
                 //
-                int pathEndIndex = fullFilePath.LastIndexOf("\\", StringComparison.Ordinal);
-
+                int pathEndIndex = fullFilePath.LastIndexOf(Path.DirectorySeparatorChar);
+                
                 newSourceDir = fullFilePath.Substring(0, pathEndIndex + 1);
                 newRelativeFilePath = TaskHelper.GetRootRelativePath(newSourceDir, fullFilePath);
             }
@@ -1215,7 +1220,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             try
             {
-                compilerWrapper = TaskHelper.CreateCompilerWrapper(AlwaysCompileMarkupFilesInSeparateDomain, ref appDomain);
+                compilerWrapper = TaskHelper.CreateCompilerWrapper();
 
                 if (compilerWrapper != null)
                 {
@@ -1238,6 +1243,8 @@ namespace Microsoft.Build.Tasks.Windows
                     }
 
                     compilerWrapper.ContentFiles = CompilerAnalyzer.ContentFiles;
+
+                    compilerWrapper.SupportCustomOutputPaths = SupportCustomOutputPaths;
 
                     // Process Reference list here.
                     ArrayList referenceList = ProcessReferenceList();
@@ -1270,7 +1277,11 @@ namespace Microsoft.Build.Tasks.Windows
                     {
                         // Better GC behavior in 4.6 and later when wrapped in Task.Run().
                         // Inside of VisualStudio, when DesignTimeMarkupCompilation happens, it uses MarkupCompilePass1 only (not Pass2).
+
+                        // AppDomains are not supported on .NET Core.  'AppDomain.Unload' will always throw `CannotUnloadAppDomainException`.  
+                        #pragma warning disable SYSLIB0024
                         AppDomain.Unload(appDomain);
+                        #pragma warning restore SYSLIB0024
                     });
                 }
 
@@ -1466,7 +1477,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                     codeItem = new TaskItem();
                     codeItem.ItemSpec = genLangFilePath;
-
+                    
                     outputCodeFileList.Add(codeItem);
 
                     Log.LogMessageFromResources(MessageImportance.Low, SRID.GeneratedCodeFile, codeItem.ItemSpec);

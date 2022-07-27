@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -278,7 +278,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    if (item != null && DateTime.Compare(this[index], item) != 0 && Calendar.IsValidDateSelection(this._owner, item))
+                    if (DateTime.Compare(this[index], item) != 0 && Calendar.IsValidDateSelection(this._owner, item))
                     {
                         removedItems.Add(this[index]);
                         base.SetItem(index, item);

@@ -111,7 +111,7 @@ namespace System.Xaml.Schema
             if (!DirectiveTypes.TryGetValue(name, out dirType))
             {
                 // throw in the early versions, do something better for error path.
-                throw new KeyNotFoundException(SR.Get(SRID.DirectiveNotFound, name, this.TargetNamespace));
+                throw new KeyNotFoundException(SR.Format(SR.DirectiveNotFound, name, this.TargetNamespace));
             }
             return dirType;
         }
@@ -127,7 +127,7 @@ namespace System.Xaml.Schema
             if (!DirectiveProperties.TryGetValue(name, out dirProperty))
             {
                 // throw in the early versions, do something better for error path.
-                throw new KeyNotFoundException(SR.Get(SRID.DirectiveNotFound, name, this.TargetNamespace));
+                throw new KeyNotFoundException(SR.Format(SR.DirectiveNotFound, name, this.TargetNamespace));
             }
             return dirProperty;
         }

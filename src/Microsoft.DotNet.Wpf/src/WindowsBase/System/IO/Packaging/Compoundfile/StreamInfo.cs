@@ -23,7 +23,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
 
-using System.Windows;                 //  SR.Get(SRID.[exception message])
+using System.Windows;                 //  SR.[exception message]
 using MS.Internal.IO.Packaging.CompoundFile;
 using CU = MS.Internal.IO.Packaging.CompoundFile.ContainerUtilities;
 
@@ -287,7 +287,7 @@ namespace System.IO.Packaging
             {
                 case FileMode.Append:
                     throw new ArgumentException(
-                        SR.Get(SRID.FileModeUnsupported));
+                        SR.FileModeUnsupported);
                 case FileMode.Create:
                     // Check to make sure root container is not read-only, and that
                     //  we're not pointlessly trying to create a read-only stream.
@@ -315,7 +315,7 @@ namespace System.IO.Packaging
                     break;
                 case FileMode.CreateNew:
                     throw new ArgumentException(
-                        SR.Get(SRID.FileModeUnsupported));
+                        SR.FileModeUnsupported);
                 case FileMode.Open:
                     // If we've got a stream, return a CFStream built from its clone
                     if( null != core.safeIStream )
@@ -360,9 +360,9 @@ namespace System.IO.Packaging
                             SafeNativeCompoundFileConstants.STG_E_FILEALREADYEXISTS != nativeCallErrorCode )
                         {
                             throw new IOException(
-                                SR.Get(SRID.UnableToCreateStream),
+                                SR.UnableToCreateStream,
                                 new COMException( 
-                                    SR.Get(SRID.NamedAPIFailure, "IStorage.CreateStream"),
+                                    SR.Format(SR.NamedAPIFailure, "IStorage.CreateStream"),
                                     nativeCallErrorCode ));
                         }
                         
@@ -384,10 +384,10 @@ namespace System.IO.Packaging
                     break;
                 case FileMode.Truncate:
                     throw new ArgumentException(
-                        SR.Get(SRID.FileModeUnsupported));
+                        SR.FileModeUnsupported);
                 default:
                     throw new ArgumentException(
-                        SR.Get(SRID.FileModeInvalid));
+                        SR.FileModeInvalid);
             }
 
             core.safeIStream = openedIStream;
@@ -467,12 +467,12 @@ namespace System.IO.Packaging
             {
                 if( 0 == dataSpace.Length )
                     throw new ArgumentException(
-                        SR.Get(SRID.DataSpaceLabelInvalidEmpty));
+                        SR.DataSpaceLabelInvalidEmpty);
             
                 dataSpaceManager = parentStorage.Root.GetDataSpaceManager();
                 if( !dataSpaceManager.DataSpaceIsDefined( dataSpace ) )
                     throw new ArgumentException(
-                        SR.Get(SRID.DataSpaceLabelUndefined));
+                        SR.DataSpaceLabelUndefined);
             }
 
             openFileAccess = access;
@@ -522,7 +522,7 @@ namespace System.IO.Packaging
                     // If we've created a CFStream, this fails because stream is already there.
                     if( null != core.safeIStream )
                         throw new IOException(
-                            SR.Get(SRID.StreamAlreadyExist));
+                            SR.StreamAlreadyExist);
 
                     // Need to call Create API with NULL create flags
                     createdSafeIStream = CreateStreamOnParentIStorage(
@@ -535,7 +535,7 @@ namespace System.IO.Packaging
                 case FileMode.Truncate:
                 default:
                     throw new ArgumentException(
-                        SR.Get(SRID.FileModeInvalid));
+                        SR.FileModeInvalid);
             }
 
             core.safeIStream = createdSafeIStream;
@@ -589,12 +589,12 @@ namespace System.IO.Packaging
             // Can't create a stream if the root container is read-only
             if( FileAccess.Read == parentStorage.Root.OpenAccess )
                 throw new IOException(
-                    SR.Get(SRID.CanNotCreateInReadOnly));
+                    SR.CanNotCreateInReadOnly);
 
             // Doesn't make sense to create a new stream just to make it read-only
             if( access == FileAccess.Read )
                 throw new ArgumentException(
-                    SR.Get(SRID.CanNotCreateAsReadOnly));
+                    SR.CanNotCreateAsReadOnly);
         }
         
         /// <summary>
@@ -623,14 +623,14 @@ namespace System.IO.Packaging
             if( SafeNativeCompoundFileConstants.STG_E_INVALIDFLAG == nativeCallErrorCode )
             {
                 throw new ArgumentException(
-                    SR.Get(SRID.StorageFlagsUnsupported));
+                    SR.StorageFlagsUnsupported);
             }
             else if ( SafeNativeCompoundFileConstants.S_OK != nativeCallErrorCode )
             {
                 throw new IOException(
-                    SR.Get(SRID.UnableToCreateStream),
+                    SR.UnableToCreateStream,
                     new COMException( 
-                        SR.Get(SRID.NamedAPIFailure, "IStorage.CreateStream"),
+                        SR.Format(SR.NamedAPIFailure, "IStorage.CreateStream"),
                         nativeCallErrorCode ));
             }
 
@@ -661,9 +661,9 @@ namespace System.IO.Packaging
             if( SafeNativeCompoundFileConstants.S_OK != nativeCallErrorCode )
             {
                 throw new IOException(
-                    SR.Get(SRID.UnableToOpenStream),
+                    SR.UnableToOpenStream,
                     new COMException( 
-                        SR.Get(SRID.NamedAPIFailure, "IStorage.OpenStream"),
+                        SR.Format(SR.NamedAPIFailure, "IStorage.OpenStream"),
                         nativeCallErrorCode ));
             }
             return openedStream;
@@ -735,7 +735,7 @@ namespace System.IO.Packaging
             if( !InternalExists() )
             {
                 throw new IOException(
-                    SR.Get(SRID.StreamNotExist));
+                    SR.StreamNotExist);
             }
             return;
         }
@@ -762,7 +762,7 @@ namespace System.IO.Packaging
         {
             // Check to see if we're still valid.
             if( StreamInfoDisposed ) // Null name in core signifies the core object is disposed
-                throw new ObjectDisposedException(null, SR.Get(SRID.StreamInfoDisposed));
+                throw new ObjectDisposedException(null, SR.StreamInfoDisposed);
         }
 
         // Check whether this StreamInfo object is still valid.  Return result.

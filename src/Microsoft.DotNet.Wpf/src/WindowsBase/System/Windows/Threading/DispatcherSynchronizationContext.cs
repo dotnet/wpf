@@ -89,7 +89,6 @@ namespace System.Windows.Threading
         /// <summary>
         ///     Wait for a set of handles.
         /// </summary>
-        [PrePrepareMethod]
         public override int Wait(IntPtr[] waitHandles, bool waitAll, int millisecondsTimeout)
         {
             if(_dispatcher._disableProcessingCount > 0)

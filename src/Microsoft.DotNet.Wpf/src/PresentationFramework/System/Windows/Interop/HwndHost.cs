@@ -983,7 +983,6 @@ namespace System.Windows.Interop
                     // window later when a new parent is available
                     var hwnd = SystemResources.GetDpiAwarenessCompatibleNotificationWindow(_hwnd);
                     Debug.Assert(hwnd != null);
-                    Trace.WriteLineIf(hwnd == null, $"- Warning - Notification Window is null\n{new System.Diagnostics.StackTrace(true).ToString()}");
                     if (hwnd != null)
                     {
                         UnsafeNativeMethods.SetParent(_hwnd, new HandleRef(null, hwnd.Handle));
@@ -997,6 +996,10 @@ namespace System.Windows.Interop
                         // To avoid this situation, we make sure SystemResources responds to the Dispatcher 
                         // shutdown event after this HwndHost.
                         SystemResources.DelayHwndShutdown();
+                    }
+                    else
+                    {
+                        Trace.WriteLineIf(hwnd == null, $"- Warning - Notification Window is null\n{new System.Diagnostics.StackTrace(true).ToString()}");
                     }
                 }
             }

@@ -258,7 +258,7 @@ namespace MS.Win32
             private BitmapHandle(bool ownsHandle) : base(ownsHandle, NativeMethods.CommonHandles.GDI)
             {
             }
-            [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+            
             protected override bool ReleaseHandle()
             {
                 return UnsafeNativeMethods.DeleteObject(handle);
@@ -283,8 +283,7 @@ namespace MS.Win32
             private IconHandle() : base(true, NativeMethods.CommonHandles.Icon)
             {
             }
-            
-            [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+
             protected override bool ReleaseHandle()
             {
                 return UnsafeNativeMethods.DestroyIcon(handle);
@@ -310,7 +309,6 @@ namespace MS.Win32
             {
             }
 
-            [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
             protected override bool ReleaseHandle()
             {
                 return UnsafeNativeMethods.DestroyCursor( handle );
@@ -588,7 +586,6 @@ namespace MS.Win32
 		        return (LocalFree(base.handle) == IntPtr.Zero);
 		    }
 
-		    [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
             [DllImport("kernel32.dll")]
 		    private static extern IntPtr LocalFree(IntPtr hMem);
 		}

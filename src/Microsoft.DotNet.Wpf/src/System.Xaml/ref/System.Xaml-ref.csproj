@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.SDK">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>System.Xaml</AssemblyName>
     <PackageId>System.Xaml-ref</PackageId>
     <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
-    <TargetFramework>netcoreapp5.0</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
+    
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <NoWarn>$(NoWarn);0618;NU5125;0618</NoWarn>
     <DefineConstants>$(DefineConstants);OLDRESOURCES;SYSTEM_XAML</DefineConstants>
   </PropertyGroup>

@@ -157,7 +157,7 @@ namespace MS.Internal.Data
 
             Console.WriteLine("AccessorTable had {0} hits, {1} misses ({2,2}%) in {3} generations.",
                         _hits, _misses, (100*_hits)/(_hits+_misses), _generation);
-            Console.WriteLine("  Age   Hits   Pct   Cum");
+            Console.WriteLine("  Age   Hits   Pct   Cumulative");
             int cumulativeHits = 0;
             for (int i=0; i<_ages.Length; ++i)
             {

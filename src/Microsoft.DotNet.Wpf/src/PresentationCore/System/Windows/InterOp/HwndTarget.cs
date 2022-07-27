@@ -48,6 +48,7 @@ namespace System.Windows.Interop
         HardwareReference = MILRTInitializationFlags.MIL_RT_HARDWARE_ONLY | MILRTInitializationFlags.MIL_RT_USE_REF_RAST,
         DisableMultimonDisplayClipping = MILRTInitializationFlags.MIL_RT_DISABLE_MULTIMON_DISPLAY_CLIPPING,
         IsDisableMultimonDisplayClippingValid = MILRTInitializationFlags.MIL_RT_IS_DISABLE_MULTIMON_DISPLAY_CLIPPING_VALID,
+        DisableDirtyRectangles = MILRTInitializationFlags.MIL_RT_DISABLE_DIRTY_RECTANGLES,
     }
 
     // This is the public, more limited, enum exposed for use with the RenderMode property.
@@ -114,7 +115,6 @@ namespace System.Windows.Interop
         private static readonly IntPtr Unhandled = IntPtr.Zero;
 
         private MatrixTransform _worldTransform;
-        private DpiScale2 _currentDpiScale;
 
         private SecurityCriticalDataForSet<RenderMode> _renderModePreference = new SecurityCriticalDataForSet<RenderMode>(RenderMode.Default);
 
@@ -275,13 +275,13 @@ namespace System.Windows.Interop
                 //      system DPI scale
                 //  Initialize per-HwndTarget values (done once per HwndTarget instance)
                 //      DPI_AWARENESS_CONTEXT (DpiAwarenessContext property)
-                //      Window DPI scale (_currentDpiScale field)
+                //      Window DPI scale (CurrentDpiScale field)
                 InitializeDpiAwarenessAndDpiScales();
 
                 _worldTransform = new MatrixTransform(
                     new Matrix(
-                        _currentDpiScale.DpiScaleX, 0,
-                        0 , _currentDpiScale.DpiScaleY,
+                        CurrentDpiScale.DpiScaleX, 0,
+                        0 , CurrentDpiScale.DpiScaleY,
                         0 , 0));
 
                 //
@@ -343,7 +343,7 @@ namespace System.Windows.Interop
             // Initialize DpiAwarenessContext (DPI_AWARENESS_CONTEXT) every
             // time the HwndTarget constructor runs- this can change for each HWND
             DpiAwarenessContext = (DpiAwarenessContextValue)DpiUtil.GetDpiAwarenessContext(_hWnd);
-            _currentDpiScale = GetDpiScaleForWindow(_hWnd);
+            CurrentDpiScale = GetDpiScaleForWindow(_hWnd);
         }
 
         /// <summary>
@@ -622,6 +622,11 @@ namespace System.Windows.Interop
                 }
             }
 
+            if (MediaSystem.DisableDirtyRectangles)
+            {
+                mode |= RenderingMode.DisableDirtyRectangles;
+            }
+
             // Select the render target initialization flags based on the requested
             // rendering mode.
 
@@ -753,7 +758,7 @@ namespace System.Windows.Interop
                 _hwndClientRectInScreenCoords.bottom - _hwndClientRectInScreenCoords.top,
                 MediaSystem.ForceSoftwareRendering,
                 (int)DpiAwarenessContext,
-                _currentDpiScale,
+                CurrentDpiScale,
                 channel
                 );
 
@@ -869,7 +874,7 @@ namespace System.Windows.Interop
                 var hwndSource = HwndSource.FromHwnd(_hWnd);
                 if (hwndSource != null)
                 {
-                    var oldDpi = _currentDpiScale;
+                    var oldDpi = CurrentDpiScale;
                     var newDpi =
                         DpiScale2.FromPixelsPerInch(
                             NativeMethods.SignedLOWORD(wParam),
@@ -877,7 +882,7 @@ namespace System.Windows.Interop
                     if (oldDpi != newDpi)
                     {
                         var nativeRect =
-                            UnsafeNativeMethods.PtrToStructure<NativeMethods.RECT>(lParam);
+                            Marshal.PtrToStructure<NativeMethods.RECT>(lParam);
                         var suggestedRect =
                             new Rect(nativeRect.left, nativeRect.top, nativeRect.Width, nativeRect.Height);
 
@@ -902,7 +907,7 @@ namespace System.Windows.Interop
 
             if (IsPerMonitorDpiScalingEnabled)
             {
-                var oldDpi = _currentDpiScale;
+                var oldDpi = CurrentDpiScale;
                 var newDpi = GetDpiScaleForWindow(_hWnd);
 
                 if (oldDpi != newDpi)
@@ -1076,8 +1081,8 @@ namespace System.Windows.Interop
                     // pollute the measure data based on the Minized window size.
                     if (NativeMethods.IntPtrToInt32(wparam) != NativeMethods.SIZE_MINIMIZED)
                     {
-                        // Rendering sometimes does not refresh propertly,and results in 
-                        // rendering artifacts that look like a patchwork of black unpainted squares. 
+                        // Rendering sometimes does not refresh propertly,and results in
+                        // rendering artifacts that look like a patchwork of black unpainted squares.
                         // This is is caused by a race condition in Windows 7 (and possibly
                         // Windows Vista, though we haven't observed the effect there).
                         // Sometimes when we restore from minimized, when we present into the newly
@@ -1123,7 +1128,7 @@ namespace System.Windows.Interop
                     bool enableRenderTarget = (wparam != IntPtr.Zero);
                     OnShowWindow(enableRenderTarget);
                     //
-                    //  
+                    //
                     //      When locked on downlevel, MIL stops rendering and invalidates the
                     //      window causing WM_PAINT. When the window is layered and hidden
                     //      before the lock, it won't get the WM_PAINT on unlock and the MIL will
@@ -1637,10 +1642,10 @@ namespace System.Windows.Interop
 
             // Convert the client rect to screen coordinates, adjusting for RTL
             NativeMethods.POINT ptClientTopLeft = new NativeMethods.POINT(rcClient.left, rcClient.top);
-            UnsafeNativeMethods.ClientToScreen(hWnd, ptClientTopLeft);
+            UnsafeNativeMethods.ClientToScreen(hWnd, ref ptClientTopLeft);
 
             NativeMethods.POINT ptClientBottomRight = new NativeMethods.POINT(rcClient.right, rcClient.bottom);
-            UnsafeNativeMethods.ClientToScreen(hWnd, ptClientBottomRight);
+            UnsafeNativeMethods.ClientToScreen(hWnd, ref ptClientBottomRight);
 
             if(ptClientBottomRight.x >= ptClientTopLeft.x)
             {
@@ -1747,9 +1752,9 @@ namespace System.Windows.Interop
         /// </summary>
         internal void OnDpiChanged(HwndDpiChangedEventArgs e)
         {
-            var oldDpi = _currentDpiScale;
+            var oldDpi = CurrentDpiScale;
             var newDpi = new DpiScale2(e.NewDpi);
-            _currentDpiScale = newDpi;
+            CurrentDpiScale = newDpi;
 
             UpdateWorldTransform(newDpi);
             PropagateDpiChangeToRootVisual(oldDpi, newDpi);
@@ -1769,9 +1774,9 @@ namespace System.Windows.Interop
         /// </summary>
         internal void OnDpiChangedAfterParent(HwndDpiChangedAfterParentEventArgs e)
         {
-            var oldDpi = _currentDpiScale;
+            var oldDpi = CurrentDpiScale;
             var newDpi = new DpiScale2(e.NewDpi);
-            _currentDpiScale = newDpi;
+            CurrentDpiScale = newDpi;
 
             UpdateWorldTransform(newDpi);
             PropagateDpiChangeToRootVisual(oldDpi, newDpi);
@@ -1797,7 +1802,7 @@ namespace System.Windows.Interop
 
             DUCE.CompositionTarget.ProcessDpiChanged(
                 _compositionTarget.GetHandle(channel),
-                _currentDpiScale,
+                CurrentDpiScale,
                 afterParent,
                 channel);
         }
@@ -1871,7 +1876,7 @@ namespace System.Windows.Interop
             // size or position changed.  If so, we need to pass this information to
             // the render thread.
             //
-            NativeMethods.WINDOWPOS windowPos = (NativeMethods.WINDOWPOS)UnsafeNativeMethods.PtrToStructure(lParam, typeof(NativeMethods.WINDOWPOS));
+            NativeMethods.WINDOWPOS windowPos = Marshal.PtrToStructure<NativeMethods.WINDOWPOS>(lParam);
             bool isMove = (windowPos.flags & NativeMethods.SWP_NOMOVE) == 0;
             bool isSize = (windowPos.flags & NativeMethods.SWP_NOSIZE) == 0;
             bool positionChanged = (isMove || isSize);
@@ -2017,6 +2022,8 @@ namespace System.Windows.Interop
         ///   is currently operating in per-monitor DPI or better mode.
         /// </remarks>
         private DpiAwarenessContextValue DpiAwarenessContext { get; set; }
+
+        internal DpiScale2 CurrentDpiScale { get; private set; }
 
         internal static bool IsPerMonitorDpiScalingSupportedOnCurrentPlatform
         {
@@ -2200,7 +2207,10 @@ namespace System.Windows.Interop
                 NativeMethods.BLENDFUNCTION blend = new NativeMethods.BLENDFUNCTION();
                 blend.BlendOp = NativeMethods.AC_SRC_OVER;
                 blend.SourceConstantAlpha = 0; // transparent
-                UnsafeNativeMethods.UpdateLayeredWindow(_hWnd.h, IntPtr.Zero, null, null, IntPtr.Zero, null, 0, ref blend, NativeMethods.ULW_ALPHA);
+                unsafe
+                {
+                    UnsafeNativeMethods.UpdateLayeredWindow(_hWnd.h, IntPtr.Zero, null, null, IntPtr.Zero, null, 0, ref blend, NativeMethods.ULW_ALPHA);
+                }
             }
             isLayered = (flags != MILTransparencyFlags.Opaque);
 
@@ -2300,14 +2310,14 @@ namespace System.Windows.Interop
                     // output is the index that will be set to the visual flags.
                     if (IsProcessPerMonitorDpiAware == true)
                     {
-                        DpiFlags dpiFlags = DpiUtil.UpdateDpiScalesAndGetIndex(_currentDpiScale.PixelsPerInchX, _currentDpiScale.PixelsPerInchY);
+                        DpiFlags dpiFlags = DpiUtil.UpdateDpiScalesAndGetIndex(CurrentDpiScale.PixelsPerInchX, CurrentDpiScale.PixelsPerInchY);
                         DpiScale newDpiScale = new DpiScale(UIElement.DpiScaleXValues[dpiFlags.Index], UIElement.DpiScaleYValues[dpiFlags.Index]);
                         RootVisual.RecursiveSetDpiScaleVisualFlags(new DpiRecursiveChangeArgs( dpiFlags, RootVisual.GetDpi(), newDpiScale));
                     }
 
                     // UIAutomation listens for the EventObjectUIFragmentCreate WinEvent to
                     // understand when UI that natively implements UIAutomation comes up
-                    
+
                     // Need to figure out how to handle when _rootVisual is replaced above (is there some
                     // event when this happens?); MS.Internal.Automation.NativeEventListener may have a context
                     // monitor that is holding onto the old _rootVisual and that would need to be cleaned up.
@@ -2327,7 +2337,7 @@ namespace System.Windows.Interop
             {
                 VerifyAPIReadOnly();
                 Matrix m = Matrix.Identity;
-                m.Scale(_currentDpiScale.DpiScaleX, _currentDpiScale.DpiScaleY);
+                m.Scale(CurrentDpiScale.DpiScaleX, CurrentDpiScale.DpiScaleY);
                 return m;
             }
         }
@@ -2342,7 +2352,7 @@ namespace System.Windows.Interop
             {
                 VerifyAPIReadOnly();
                 Matrix m = Matrix.Identity;
-                m.Scale(1.0f/_currentDpiScale.DpiScaleX, 1.0f/_currentDpiScale.DpiScaleY);
+                m.Scale(1.0f/CurrentDpiScale.DpiScaleX, 1.0f/CurrentDpiScale.DpiScaleY);
                 return m;
             }
         }

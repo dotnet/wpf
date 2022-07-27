@@ -139,7 +139,7 @@ namespace System.Windows.Media
         /// "FactoryMaker" is free threaded. This lock is used to synchronize
         /// access to the FactoryMaker.
         /// </summary>
-        private static object s_factoryMakerLock = new object();
+        private static readonly object s_factoryMakerLock = new object();
         private bool _fValidObject;
     }
 }

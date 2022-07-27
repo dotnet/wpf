@@ -94,7 +94,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             }
 
             if (temp < 0)
-                throw new ArgumentException(SR.Get(SRID.SeekNegative));
+                throw new ArgumentException(SR.SeekNegative);
 
             checked { BaseStream.Position = temp + _dataOffset; }
             return temp;
@@ -268,8 +268,8 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     if (!_fileVersion.IsUpdatableBy(_codeVersion.UpdaterVersion))
                     {
                         throw new FileFormatException(
-                                        SR.Get(
-                                            SRID.UpdaterVersionError,
+                                        SR.Format(
+                                            SR.UpdaterVersionError,
                                             _fileVersion.UpdaterVersion,
                                             _codeVersion
                                             )
@@ -313,15 +313,15 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 if (throwIfEmpty || BaseStream.Length > 0)
                 {
                     if (_fileVersion == null)
-                        throw new FileFormatException(SR.Get(SRID.VersionStreamMissing));
+                        throw new FileFormatException(SR.VersionStreamMissing);
 
                     // compare versions
                     // verify we can read this version
                     if (!_fileVersion.IsReadableBy(_codeVersion.ReaderVersion))
                     {
                         throw new FileFormatException(
-                                        SR.Get(
-                                            SRID.ReaderVersionError,
+                                        SR.Format(
+                                            SR.ReaderVersionError,
                                             _fileVersion.ReaderVersion,
                                             _codeVersion
                                             )
@@ -350,7 +350,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         private void PersistVersion(FormatVersion version)
         {
             if (!BaseStream.CanWrite)
-                throw new NotSupportedException(SR.Get(SRID.WriteNotSupported));
+                throw new NotSupportedException(SR.WriteNotSupported);
 
             // normalize and save
             long tempPos = checked(BaseStream.Position - _dataOffset);
@@ -363,7 +363,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // existing value - ensure we didn't change sizes as this could lead to
             // data corruption
             if ((_dataOffset != 0) && (offset != _dataOffset))
-                throw new FileFormatException(SR.Get(SRID.VersionUpdateFailure));
+                throw new FileFormatException(SR.VersionUpdateFailure);
 
             // at this point we know the offset
             _dataOffset = offset;
@@ -388,7 +388,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 // if no version was found and we cannot read from it, then the format is invalid
                 if (!BaseStream.CanRead)
-                    throw new NotSupportedException(SR.Get(SRID.ReadNotSupported));
+                    throw new NotSupportedException(SR.ReadNotSupported);
 
                 //
                 // The physical stream begins with a header that identifies the transform to
@@ -413,8 +413,8 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                                 _codeVersion.FeatureIdentifier.ToUpper(CultureInfo.InvariantCulture)) != 0)
                 {
                     throw new FileFormatException(
-                                    SR.Get(
-                                        SRID.InvalidTransformFeatureName,
+                                    SR.Format(
+                                        SR.InvalidTransformFeatureName,
                                         _fileVersion.FeatureIdentifier,
                                         _codeVersion.FeatureIdentifier
                                         )

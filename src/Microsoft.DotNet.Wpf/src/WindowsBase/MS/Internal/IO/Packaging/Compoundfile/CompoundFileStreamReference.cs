@@ -68,14 +68,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             ContainerUtilities.CheckStringAgainstNullAndEmpty( streamName, "streamName" );
 
             if ((storageName == null) || (storageName.Length == 0))
+            {
                 _fullName = streamName;
+            }
             else
             {
-                // preallocate space for the stream we are building
-                StringBuilder sb = new StringBuilder(storageName, storageName.Length + 1 + streamName.Length);
-                sb.Append(ContainerUtilities.PathSeparator);
-                sb.Append(streamName);
-                _fullName = sb.ToString();
+                _fullName = $"{storageName}{ContainerUtilities.PathSeparator}{streamName}";
             }
         }
         #endregion
@@ -120,7 +118,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // different type?
             if (o.GetType() != GetType())
                 throw new ArgumentException(
-                    SR.Get(SRID.CanNotCompareDiffTypes));
+                    SR.CanNotCompareDiffTypes);
 
             CompoundFileStreamReference r = (CompoundFileStreamReference)o;
             return String.CompareOrdinal(_fullName.ToUpperInvariant(), r._fullName.ToUpperInvariant());
@@ -147,13 +145,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             //  it is not necessary since PathSeparatorAsString is a path symbol
             if (fullName.StartsWith(ContainerUtilities.PathSeparatorAsString, StringComparison.Ordinal))
                 throw new ArgumentException(
-                    SR.Get(SRID.DelimiterLeading), "fullName");
+                    SR.DelimiterLeading, "fullName");
 
             _fullName = fullName;
             string[] strings = ContainerUtilities.ConvertBackSlashPathToStringArrayPath(fullName);
             if (strings.Length == 0)
                 throw new ArgumentException(
-                    SR.Get(SRID.CompoundFilePathNullEmpty), "fullName");
+                    SR.CompoundFilePathNullEmpty, "fullName");
         }
 
         //------------------------------------------------------

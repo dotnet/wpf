@@ -159,7 +159,7 @@ namespace System.Windows.Markup
             // included in the output formulation -- UTC gets written out with a "Z",
             // and Local gets written out with e.g. "-08:00" for Pacific Standard Time.
             
-            formatString.Append("K");
+            formatString.Append('K');
 
             // We've finally got our format string built, we can create the string.
 

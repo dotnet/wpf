@@ -266,17 +266,6 @@ namespace System.Windows
             return handlers != null && handlers.Count != 0;
         }
 
-
-        
-        private static void OnEventHandlersIterationCallback(ArrayList list, int key, object value)
-        {
-            RoutedEvent routedEvent = GlobalEventManager.EventFromGlobalIndex(key) as RoutedEvent;
-            if (routedEvent != null && ((FrugalObjectList<RoutedEventHandlerInfo>)value).Count > 0)
-            {
-                list.Add(routedEvent);
-            }
-        }
-
         /// <summary>
         ///     Get all the event handlers in this store for the given routed event
         /// </summary>
@@ -347,8 +336,6 @@ namespace System.Windows
 
         // Map of EventPrivateKey/RoutedEvent to Delegate/FrugalObjectList<RoutedEventHandlerInfo> (respectively)
         private FrugalMap _entries;
-
-        private static FrugalMapIterationCallback _iterationCallback = new FrugalMapIterationCallback(OnEventHandlersIterationCallback);
         
         #endregion Data
     }

@@ -1164,7 +1164,12 @@ namespace System.Windows.Input
                     Debug.WriteLine(String.Format("PenThreadWorker::ThreadProc():  Update __penContextWeakRefList loop"));
 #endif
 
-                    WorkerOperation [] workerOps = null;
+                    // We need to ensure that the PenIMC COM objects can be used from this thread.
+                    // Try this every outer loop since we're, generally, about to do management
+                    // operations.
+                    MS.Win32.Penimc.UnsafeNativeMethods.EnsurePenImcClassesActivated();
+
+                    WorkerOperation[] workerOps = null;
 
                     lock(_workerOperationLock)
                     {
@@ -1288,6 +1293,9 @@ namespace System.Windows.Input
                     // Ensure that all native references are released.
                     _pimcContexts[i].ShutdownComm();
                 }
+
+                // Ensure that any activation contexts used on this thread are cleaned.
+                MS.Win32.Penimc.UnsafeNativeMethods.DeactivatePenImcClasses();
 
                 // Make sure the _pimcResetHandle is still valid after Dispose is called and before
                 // our thread exits.

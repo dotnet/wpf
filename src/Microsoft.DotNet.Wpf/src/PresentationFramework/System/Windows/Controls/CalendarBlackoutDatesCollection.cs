@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿
+
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -349,9 +349,6 @@ namespace System.Windows.Controls
         /// <returns></returns>
         private CalendarDateRange GetContainingDateRange(DateTime date)
         {
-            if (date == null)
-                return null;
-
             for (int i = 0; i < Count; i++)
             {
                 if (DateTimeHelper.InRange(date, this[i]))

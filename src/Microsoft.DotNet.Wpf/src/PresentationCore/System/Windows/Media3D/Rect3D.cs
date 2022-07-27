@@ -111,7 +111,7 @@ namespace System.Windows.Media.Media3D
         /// <param name="vector">Vector extending the rectangle from the location.</param>
         internal Rect3D(Point3D point, Vector3D vector): this(point, point+vector)
         {
-}
+        }
 
         #endregion Constructors
 

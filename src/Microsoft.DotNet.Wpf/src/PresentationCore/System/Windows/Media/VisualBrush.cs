@@ -38,7 +38,7 @@ namespace System.Windows.Media
         /// </summary>
         public VisualBrush()
         {
-}
+        }
 
         /// <summary>
         /// VisualBrush Constructor where the image is set to the parameter's value

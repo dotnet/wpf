@@ -10,6 +10,12 @@ parameters:
   repoName: dotnet/wpf
 
 jobs:
+- ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
+  - template: /eng/common/templates/job/onelocbuild.yml
+    parameters:
+      MirrorRepo: wpf
+      LclSource: lclFilesfromPackage
+      LclPackageId: 'LCL-JUNO-PROD-WPF'
 - template: /eng/common/templates/jobs/jobs.yml
   parameters:
     enableMicrobuild: true
@@ -18,6 +24,17 @@ jobs:
     enablePublishBuildAssets: true
     enablePublishUsingPipelines: $(_PublishUsingPipelines)
     enableTelemetry: true
+    enableSourceIndex: true
+    sourceIndexParams:
+      condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+      binlogPath: artifacts/log/Debug/x86/Build.binlog
+      pool:
+        ${{ if eq(variables['System.TeamProject'], 'public') }}:
+          name: NetCore1ESPool-Public
+          demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre.Open
+        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+          name: NetCore1ESPool-Internal
+          demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre
     helixRepo: $(repoName)
 
     jobs:
@@ -28,11 +45,11 @@ jobs:
         # Will eventually change this to two BYOC pools.
         # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: NetCorePublic-Pool
-          queue: BuildPool.Windows.10.Amd64.VS2019.Pre.Open
+          name: NetCore1ESPool-Public
+          demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre.Open
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          name: NetCoreInternal-Pool
-          queue: buildpool.windows.10.amd64.vs2019.pre
+          name: NetCore1ESPool-Internal
+          demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre
       variables:
         # needed for signing
         - name: _TeamName
@@ -41,12 +58,6 @@ jobs:
           value: real
         - name: _SignArgs
           value: ''
-
-        # needed for darc (dependency flow) publishing
-        - name: _PublishType
-          value: none
-        - name: _DotNetPublishToBlobFeed
-          value: false
         - name: _PublishArgs
           value: ''
         - name: _OfficialBuildIdArgs
@@ -67,22 +78,26 @@ jobs:
           value: ''
         - name: _HelixCreator
           value: ${{ parameters.repoName }}
+        - ${{ if ne(variables['System.TeamProject'], 'internal') }}:
+          - name: _InternalRuntimeDownloadArgs
+            value: ''
+        - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+          - group: DotNet-MSRC-Storage
+          - group: AzureDevOps-Artifact-Feeds-Pats
+          - name: _InternalRuntimeDownloadArgs
+            value: >-
+              /p:DotNetRuntimeSourceFeed=https://dotnetclimsrc.blob.core.windows.net/dotnet
+              /p:DotNetRuntimeSourceFeedKey=$(dotnetclimsrc-read-sas-token-base64)
 
 
         # Override some values if we're building internally
         - ${{ if eq(parameters.runAsPublic, 'false') }}:
           # note: You have to use list syntax here (- name: value) or you will get errors about declaring the same variable multiple times
-          - name: _PublishType
-            value: blob
           - name: _SignType
             value: real
-          - name: _DotNetPublishToBlobFeed
-            value: true
           - group: DotNet-Blob-Feed
           - group: DotNet-Symbol-Server-Pats
           - group: DotNet-HelixApi-Access
-          - name: _PublishBlobFeedUrl
-            value: https://dotnetfeed.blob.core.windows.net/dotnet-windowsdesktop/index.json
 
           # note: Even though they are referenced here, user defined variables (like $(_SignType)) are not resolved 
           # until the agent is running on the machine. They can be overridden any time before they are resolved,
@@ -90,13 +105,8 @@ jobs:
           - name: _SignArgs
             value: /p:DotNetSignType=$(_SignType) /p:TeamName=$(_TeamName)
           - name: _PublishArgs
-            value: /p:DotNetPublishBlobFeedKey=$(dotnetfeed-storage-access-key-1)
-              /p:DotNetPublishBlobFeedUrl=$(_PublishBlobFeedUrl)
-              /p:DotNetPublishToBlobFeed=$(_DotNetPublishToBlobFeed)
+            value: 
               /p:DotNetPublishUsingPipelines=$(_PublishUsingPipelines)
-              /p:DotNetArtifactsCategory=$(_DotNetArtifactsCategory)
-              /p:DotNetSymbolServerTokenMsdl=$(microsoft-symbol-server-pat)
-              /p:DotNetSymbolServerTokenSymWeb=$(symweb-symbol-server-pat)
           - name: _OfficialBuildIdArgs
             value: /p:OfficialBuildId=$(BUILD.BUILDNUMBER)
           - name: _PublicBuildPipeline
@@ -128,6 +138,15 @@ jobs:
           Build_Release_x64:
             _BuildConfig: Release
             _Platform: x64
+          ${{ if eq(parameters.runAsPublic, 'true') }}:
+            Build_Debug_arm64:
+              _BuildConfig: Debug
+              # override some variables for debug
+              # _SignType has to be real for package publishing to succeed - do not override to test.
+              _Platform: arm64
+          Build_Release_arm64:
+            _BuildConfig: Release
+            _Platform: arm64
       steps:
       - checkout: self
         clean: true
@@ -135,6 +154,15 @@ jobs:
       # Set VSO Variable(s)
       - powershell: eng\pre-build.ps1
         displayName: Pre-Build - Set VSO Variables
+
+      - ${{ if ne(variables['System.TeamProject'], 'public') }}:
+        - task: PowerShell@2
+          displayName: Setup Private Feeds Credentials
+          inputs:
+            filePath: $(Build.SourcesDirectory)/eng/common/SetupNugetSources.ps1
+            arguments: -ConfigFile $(Build.SourcesDirectory)/NuGet.config -Password $Env:Token
+          env:
+            Token: $(dn-bot-dnceng-artifact-feeds-rw)
 
       # Use utility script to run script command dependent on agent OS.
       - script: eng\common\cibuild.cmd
@@ -144,6 +172,7 @@ jobs:
           $(_SignArgs)
           $(_OfficialBuildIdArgs)
           $(_PlatformArgs)
+          $(_InternalRuntimeDownloadArgs)
         displayName: Windows Build / Publish
         # This condition should be kept in sync with the condition for 'Run DRTs' step 
         #   When building on a regular pipeline (!_HelixPipeline), build as usual 

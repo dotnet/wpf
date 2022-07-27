@@ -94,7 +94,7 @@ namespace MS.Internal.IO.Packaging
                 if (ex.ErrorCode == (int)FilterErrorCode.FILTER_E_END_OF_CHUNKS)
                     ReleaseResources();
 
-                throw ex;
+                throw;
             }
         }
 

@@ -581,7 +581,7 @@ namespace System.Windows.Data
                 TraceData.IsEnabled)
             {
                 string name = (property != null) ? property.Name : "(null)";
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotify(TraceEventType.Warning,
                         TraceData.BindingGroupWrongProperty(name, context.GetType().FullName));
             }
 
@@ -615,7 +615,7 @@ namespace System.Windows.Data
             // is amiss.
             if (_hasMultipleInheritanceContexts && property != ItemsControl.ItemBindingGroupProperty && TraceData.IsEnabled)
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotify(TraceEventType.Warning,
                         TraceData.BindingGroupMultipleInheritance);
             }
         }

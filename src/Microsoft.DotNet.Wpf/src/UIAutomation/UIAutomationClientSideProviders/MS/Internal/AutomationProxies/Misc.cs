@@ -995,7 +995,6 @@ namespace MS.Internal.AutomationProxies
             }
             else
             {
-                RuntimeHelpers.PrepareConstrainedRegions();
                 bool fRelease = false;
                 try
                 {

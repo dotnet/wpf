@@ -52,7 +52,7 @@ namespace System.Windows.Media.Imaging
         public BitmapImage(Uri uriSource)
             : this(uriSource, null)
         {
-}
+        }
 
         /// <summary>
         /// Construct a BitmapImage with the given Uri and RequestCachePolicy

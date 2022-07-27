@@ -19,12 +19,6 @@ namespace System.Windows
     /// </summary>
     public class KeyTimeConverter : TypeConverter
     {
-        #region Data
-
-        private static char[] _percentCharacter = new char[] { '%' };
-
-        #endregion
-
         /// <summary>
         /// Returns whether or not this class can convert from a given type
         /// to an instance of a KeyTime.
@@ -88,9 +82,9 @@ namespace System.Windows
                 {
                     return KeyTime.Paced;
                 }
-                else if (stringValue[stringValue.Length - 1] == _percentCharacter[0])
+                else if (stringValue[stringValue.Length - 1] == '%')
                 {
-                    stringValue = stringValue.TrimEnd(_percentCharacter);
+                    stringValue = stringValue.TrimEnd('%');
 
                     double doubleValue = (double)TypeDescriptor.GetConverter(
                         typeof(double)).ConvertFrom(
@@ -195,7 +189,7 @@ namespace System.Windows
                                     keyTime.Percent * 100.0,
                                     destinationType);
 
-                            return returnValue + _percentCharacter[0].ToString();
+                            return string.Concat(returnValue, (ReadOnlySpan<char>)stackalloc char[] { '%' });
 
                         case KeyTimeType.TimeSpan:
 

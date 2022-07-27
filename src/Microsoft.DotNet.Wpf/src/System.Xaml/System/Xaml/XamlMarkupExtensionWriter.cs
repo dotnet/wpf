@@ -133,7 +133,7 @@ namespace System.Xaml
                 }
                 else if (objectNode.Members.Contains(property))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.XamlMarkupExtensionWriterDuplicateMember, property.Name));
+                    throw new InvalidOperationException(SR.Format(SR.XamlMarkupExtensionWriterDuplicateMember, property.Name));
                 }
                 objectNode.Members.Add(property);
             }
@@ -175,7 +175,7 @@ namespace System.Xaml
 
             if (s == null)
             {
-                throw new ArgumentException(SR.Get(SRID.XamlMarkupExtensionWriterCannotWriteNonstringValue));
+                throw new ArgumentException(SR.XamlMarkupExtensionWriterCannotWriteNonstringValue);
             }
 
             currentState.WriteValue(this, s);
@@ -260,12 +260,12 @@ namespace System.Xaml
 
                     if (s[i] == '\\' || s[i] == '"')
                     {
-                        sb.Append("\\");
+                        sb.Append('\\');
                     }
                     sb.Append(s[i]);
                 }
 
-                sb.Append("\"");
+                sb.Append('\"');
                 return sb.ToString();
             }
 
@@ -274,7 +274,7 @@ namespace System.Xaml
                 if (!string.IsNullOrEmpty(prefix))
                 {
                     writer.sb.Append(prefix);
-                    writer.sb.Append(":");
+                    writer.sb.Append(':');
                 }
             }
 
@@ -308,7 +308,7 @@ namespace System.Xaml
 
                 string prefix = writer.LookupPrefix(type);
 
-                writer.sb.Append("{");
+                writer.sb.Append('{');
                 WritePrefix(writer, prefix);
                 writer.sb.Append(XamlXmlWriter.GetTypeName(type));
 
@@ -332,17 +332,17 @@ namespace System.Xaml
             {
                 if (writer.nodes.Count == 0)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.XamlMarkupExtensionWriterInputInvalid));
+                    throw new InvalidOperationException(SR.XamlMarkupExtensionWriterInputInvalid);
                 }
 
                 Node node = writer.nodes.Pop();
 
                 if (node.NodeType != XamlNodeType.StartObject)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.XamlMarkupExtensionWriterInputInvalid));
+                    throw new InvalidOperationException(SR.XamlMarkupExtensionWriterInputInvalid);
                 }
 
-                writer.sb.Append("}");
+                writer.sb.Append('}');
 
                 if (writer.nodes.Count == 0)
                 {
@@ -353,7 +353,7 @@ namespace System.Xaml
                     Node member = writer.nodes.Peek();
                     if (member.NodeType != XamlNodeType.StartMember)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.XamlMarkupExtensionWriterInputInvalid));
+                        throw new InvalidOperationException(SR.XamlMarkupExtensionWriterInputInvalid);
                     }
 
                     if (member.XamlProperty == XamlLanguage.PositionalParameters)
@@ -371,14 +371,14 @@ namespace System.Xaml
             {
                 if (writer.nodes.Count == 0)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.XamlMarkupExtensionWriterInputInvalid));
+                    throw new InvalidOperationException(SR.XamlMarkupExtensionWriterInputInvalid);
                 }
 
                 Node objectNode = writer.nodes.Peek();
 
                 if (objectNode.NodeType != XamlNodeType.StartObject)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.XamlMarkupExtensionWriterInputInvalid));
+                    throw new InvalidOperationException(SR.XamlMarkupExtensionWriterInputInvalid);
                 }
 
                 writer.CheckMemberForUniqueness(objectNode, property);
@@ -419,7 +419,7 @@ namespace System.Xaml
                     writer.sb.Append(property.Name);
                 }
 
-                writer.sb.Append("=");
+                writer.sb.Append('=');
 
                 writer.currentState = InMember.State;
             }
@@ -543,7 +543,7 @@ namespace System.Xaml
 
                 if (node.NodeType != XamlNodeType.StartMember || node.XamlProperty != XamlLanguage.PositionalParameters)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.XamlMarkupExtensionWriterInputInvalid));
+                    throw new InvalidOperationException(SR.XamlMarkupExtensionWriterInputInvalid);
                 }
                 writer.currentState = InObjectAfterMember.State;
             }
@@ -576,7 +576,7 @@ namespace System.Xaml
                 }
                 string prefix = writer.LookupPrefix(type);
 
-                writer.sb.Append("{");
+                writer.sb.Append('{');
                 WritePrefix(writer, prefix);
                 writer.sb.Append(XamlXmlWriter.GetTypeName(type));
 
@@ -600,14 +600,14 @@ namespace System.Xaml
             {
                 if (writer.nodes.Count == 0)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.XamlMarkupExtensionWriterInputInvalid));
+                    throw new InvalidOperationException(SR.XamlMarkupExtensionWriterInputInvalid);
                 }
 
                 Node member = writer.nodes.Pop();
 
                 if (member.NodeType != XamlNodeType.StartMember)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.XamlMarkupExtensionWriterInputInvalid));
+                    throw new InvalidOperationException(SR.XamlMarkupExtensionWriterInputInvalid);
                 }
 
                 writer.currentState = InObjectAfterMember.State;

@@ -263,7 +263,7 @@ namespace System.Windows.Input
 
         private static void EnsureValid(ref IInputElement element)
         {
-            // We understand UIElements and ContentElements.
+            // We understand UIElements, ContentElements and UIElement3Ds.
             // If we are over something else (like a raw visual) find the containing element.
             if ((element != null) && !InputElement.IsValid(element))
             {
@@ -507,10 +507,11 @@ namespace System.Windows.Input
                 _reevaluateCapture = Dispatcher.BeginInvoke(DispatcherPriority.Input,
                     (DispatcherOperationCallback)delegate(object args)
                     {
-                        _reevaluateCapture = null;
-                        OnReevaluateCapturedWithinAsync();
+                        TouchDevice thisRef = (TouchDevice)args;
+                        thisRef._reevaluateCapture = null;
+                        thisRef.OnReevaluateCapturedWithinAsync();
                         return null;
-                    }, null);
+                    }, this);
             }
         }
 
@@ -593,10 +594,11 @@ namespace System.Windows.Input
                     _reevaluateCapture = Dispatcher.BeginInvoke(DispatcherPriority.Input,
                         (DispatcherOperationCallback)delegate(object args)
                         {
-                            _reevaluateCapture = null;
-                            Capture(null);
+                            TouchDevice thisRef = (TouchDevice)args;
+                            thisRef._reevaluateCapture = null;
+                            thisRef.Capture(null);
                             return null;
-                        }, null);
+                        }, this);
                 }
             }
         }
@@ -847,10 +849,11 @@ namespace System.Windows.Input
                 _reevaluateOver = Dispatcher.BeginInvoke(DispatcherPriority.Input,
                     (DispatcherOperationCallback)delegate(object args)
                     {
-                        _reevaluateOver = null;
-                        OnHitTestInvalidatedAsync(this, EventArgs.Empty);
+                        TouchDevice thisRef = (TouchDevice)args;
+                        thisRef._reevaluateOver = null;
+                        thisRef.OnHitTestInvalidatedAsync(this, EventArgs.Empty);
                         return null;
-                    }, null);
+                    }, this);
             }
         }
 

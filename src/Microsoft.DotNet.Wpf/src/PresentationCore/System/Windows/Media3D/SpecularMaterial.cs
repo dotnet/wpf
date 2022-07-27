@@ -40,7 +40,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public SpecularMaterial()
         {
-}
+        }
 
         /// <summary>
         ///     Constructor that sets the initial values

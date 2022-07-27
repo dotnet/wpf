@@ -274,7 +274,7 @@
       </trans-unit>
       <trans-unit id="MissingClassWithModifier">
         <source>MC6009: {0}:ClassModifier attribute cannot be specified on the root tag because a {0}:Class attribute is also required. Either add a {0}:Class attribute or remove the {0}:ClassModifier attribute.</source>
-        <target state="translated">MC6009: o atributo {0}:ClassModifier não pode ser especificado na marca raiz porque um atributo {0}:Class também é necessário. Adicione um atributo {0}:Class ou remova o atributo  {0}:ClassModifier.</target>
+        <target state="translated">MC6009: o atributo {0}:ClassModifier não pode ser especificado na marca raiz porque um atributo {0}:Class também é necessário. Adicione um atributo {0}:Class ou remova o atributo {0}:ClassModifier.</target>
         <note />
       </trans-unit>
       <trans-unit id="MissingClassWithSubClass">
@@ -684,7 +684,7 @@
       </trans-unit>
       <trans-unit id="ParserNotMarkupExtension">
         <source>MC3048: '{0}' value is not a valid MarkupExtension expression. Cannot resolve '{1}' in namespace '{2}'. '{1}' must be a subclass of MarkupExtension.</source>
-        <target state="translated">MC3048: o valor '{0}' não é uma expressão  MarkupExtension válida. Não é possível resolver '{1}' no namespace '{2}'. '{1}' deve ser uma subclasse de MarkupExtension.</target>
+        <target state="translated">MC3048: o valor '{0}' não é uma expressão MarkupExtension válida. Não é possível resolver '{1}' no namespace '{2}'. '{1}' deve ser uma subclasse de MarkupExtension.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserPrefixNSElement">
@@ -764,7 +764,7 @@
       </trans-unit>
       <trans-unit id="ParserUnknownDefAttribute">
         <source>MC3073: The attribute '{0}' does not exist in XML namespace 'http://schemas.microsoft.com/winfx/2006/xaml'.</source>
-        <target state="translated">MC3073: o atributo '{0}' não existe no namespace XML  'http://schemas.microsoft.com/winfx/2006/xaml'.</target>
+        <target state="translated">MC3073: o atributo '{0}' não existe no namespace XML 'http://schemas.microsoft.com/winfx/2006/xaml'.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserUnknownTag">

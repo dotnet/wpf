@@ -232,14 +232,14 @@ namespace System.Windows.Documents
             }
         }
 
-        internal static bool StringToDouble(string s, ref double d)
+        internal static bool StringToDouble(ReadOnlySpan<char> s, ref double d)
         {
             bool ret = true;
 
             d = 0.0;
             try
             {
-                d = System.Convert.ToDouble(s, CultureInfo.InvariantCulture);
+                d = double.Parse(s, provider: CultureInfo.InvariantCulture);
             }
             catch (System.OverflowException)
             {
@@ -253,14 +253,14 @@ namespace System.Windows.Documents
             return ret;
         }
 
-        internal static bool StringToInt(string s, ref int i)
+        internal static bool StringToInt(ReadOnlySpan<char> s, ref int i)
         {
             bool ret = true;
 
             i = 0;
             try
             {
-                i = System.Convert.ToInt32(s, CultureInfo.InvariantCulture);
+                i = int.Parse(s, provider: CultureInfo.InvariantCulture);
             }
             catch (System.OverflowException)
             {
@@ -280,24 +280,10 @@ namespace System.Windows.Documents
                 return s;
             }
 
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < s.Length; i++)
-            {
-                if (s[i] == '"')
-                {
-                    sb.Append("&quot;");
-                }
-                else
-                {
-                    sb.Append(s[i]);
-                }
-            }
-
-            return sb.ToString();
+            return s.Replace("\"", "&quot;");
         }
 
-        internal static bool HexStringToInt(string s, ref int i)
+        internal static bool HexStringToInt(ReadOnlySpan<char> s, ref int i)
         {
             bool ret = true;
 
@@ -605,7 +591,6 @@ namespace System.Windows.Documents
             int toThe3 = 17576;
             int toThe4 = 456976;
 
-            char[] ca = new char[1];
             int temp;
 
             temp = 0;
@@ -617,8 +602,7 @@ namespace System.Windows.Documents
             if (temp > 0)
             {
                 if (temp > 26) temp = 26;
-                ca[0] = (char)('A' + (temp - 1));
-                sb.Append(ca);
+                sb.Append((char)('A' + (temp - 1)));
             }
 
             temp = 0;
@@ -629,8 +613,7 @@ namespace System.Windows.Documents
             }
             if (temp > 0)
             {
-                ca[0] = (char)('A' + (temp - 1));
-                sb.Append(ca);
+                sb.Append((char)('A' + (temp - 1)));
             }
 
             temp = 0;
@@ -641,8 +624,7 @@ namespace System.Windows.Documents
             }
             if (temp > 0)
             {
-                ca[0] = (char)('A' + (temp - 1));
-                sb.Append(ca);
+                sb.Append((char)('A' + (temp - 1)));
             }
 
             temp = 0;
@@ -653,12 +635,10 @@ namespace System.Windows.Documents
             }
             if (temp > 0)
             {
-                ca[0] = (char)('A' + (temp - 1));
-                sb.Append(ca);
+                sb.Append((char)('A' + (temp - 1)));
             }
 
-            ca[0] = (char)('A' + (nCount - 1));
-            sb.Append(ca);
+            sb.Append((char)('A' + (nCount - 1)));
 
             if (ms == MarkerStyle.MarkerUpperAlpha)
             {
@@ -1975,30 +1955,10 @@ namespace System.Windows.Documents
             }
         }
 
-        internal string RTFEncoding
-        {
-            get
-            {
-                StringBuilder sb = new StringBuilder();
-
-                if (IsNone)
-                {
-                    sb.Append("\\brdrnone");
-                }
-                else
-                {
-                    sb.Append("\\brdrs\\brdrw");
-                    sb.Append(EffectiveWidth.ToString(CultureInfo.InvariantCulture));
-                    if (CF >= 0)
-                    {
-                        sb.Append("\\brdrcf");
-                        sb.Append(CF.ToString(CultureInfo.InvariantCulture));
-                    }
-                }
-
-                return sb.ToString();
-            }
-        }
+        internal string RTFEncoding =>
+            IsNone ? "\\brdrnone" :
+            CF < 0 ? string.Create(CultureInfo.InvariantCulture, stackalloc char[128], $"\\brdrs\\brdrw{EffectiveWidth}") :
+            string.Create(CultureInfo.InvariantCulture, stackalloc char[128], $"\\brdrs\\brdrw{EffectiveWidth}\\brdrcf{CF}");
 
         static internal BorderFormat EmptyBorderFormat
         {
@@ -2224,45 +2184,43 @@ namespace System.Windows.Documents
         {
             get
             {
-                StringBuilder sb = new StringBuilder();
-
                 if (IsNone)
                 {
-                    sb.Append("\\brdrnil");
+                    return "\\brdrnil";
                 }
-                else
+
+                StringBuilder sb = new StringBuilder();
+
+                sb.Append("\\brdrl");
+                sb.Append(BorderLeft.RTFEncoding);
+                if (BorderLeft.CF >= 0)
                 {
-                    sb.Append("\\brdrl");
-                    sb.Append(BorderLeft.RTFEncoding);
-                    if (BorderLeft.CF >= 0)
-                    {
-                        sb.Append("\\brdrcf");
-                        sb.Append(BorderLeft.CF.ToString(CultureInfo.InvariantCulture));
-                    }
-                    sb.Append("\\brdrt");
-                    sb.Append(BorderTop.RTFEncoding);
-                    if (BorderTop.CF >= 0)
-                    {
-                        sb.Append("\\brdrcf");
-                        sb.Append(BorderTop.CF.ToString(CultureInfo.InvariantCulture));
-                    }
-                    sb.Append("\\brdrr");
-                    sb.Append(BorderRight.RTFEncoding);
-                    if (BorderRight.CF >= 0)
-                    {
-                        sb.Append("\\brdrcf");
-                        sb.Append(BorderRight.CF.ToString(CultureInfo.InvariantCulture));
-                    }
-                    sb.Append("\\brdrb");
-                    sb.Append(BorderBottom.RTFEncoding);
-                    if (BorderBottom.CF >= 0)
-                    {
-                        sb.Append("\\brdrcf");
-                        sb.Append(BorderBottom.CF.ToString(CultureInfo.InvariantCulture));
-                    }
-                    sb.Append("\\brsp");
-                    sb.Append(Spacing.ToString(CultureInfo.InvariantCulture));
+                    sb.Append("\\brdrcf");
+                    sb.Append(BorderLeft.CF.ToString(CultureInfo.InvariantCulture));
                 }
+                sb.Append("\\brdrt");
+                sb.Append(BorderTop.RTFEncoding);
+                if (BorderTop.CF >= 0)
+                {
+                    sb.Append("\\brdrcf");
+                    sb.Append(BorderTop.CF.ToString(CultureInfo.InvariantCulture));
+                }
+                sb.Append("\\brdrr");
+                sb.Append(BorderRight.RTFEncoding);
+                if (BorderRight.CF >= 0)
+                {
+                    sb.Append("\\brdrcf");
+                    sb.Append(BorderRight.CF.ToString(CultureInfo.InvariantCulture));
+                }
+                sb.Append("\\brdrb");
+                sb.Append(BorderBottom.RTFEncoding);
+                if (BorderBottom.CF >= 0)
+                {
+                    sb.Append("\\brdrcf");
+                    sb.Append(BorderBottom.CF.ToString(CultureInfo.InvariantCulture));
+                }
+                sb.Append("\\brsp");
+                sb.Append(Spacing.ToString(CultureInfo.InvariantCulture));
 
                 return sb.ToString();
             }
@@ -2786,24 +2744,9 @@ namespace System.Windows.Documents
             return sb.ToString();
         }
 
-        internal string GetPaddingAttributeString()
-        {
+        internal string GetPaddingAttributeString() =>
             // Build the padding attribute string based on padding values
-            StringBuilder sb = new StringBuilder();
-
-            // Left,Top,Right,Bottom
-            sb.Append(" Padding=\"");
-            sb.Append(Converters.TwipToPositivePxString(PaddingLeft));
-            sb.Append(",");
-            sb.Append(Converters.TwipToPositivePxString(PaddingTop));
-            sb.Append(",");
-            sb.Append(Converters.TwipToPositivePxString(PaddingRight));
-            sb.Append(",");
-            sb.Append(Converters.TwipToPositivePxString(PaddingBottom));
-            sb.Append("\"");
-
-            return sb.ToString();
-        }
+            $" Padding=\"{Converters.TwipToPositivePxString(PaddingLeft)},{Converters.TwipToPositivePxString(PaddingTop)},{Converters.TwipToPositivePxString(PaddingRight)},{Converters.TwipToPositivePxString(PaddingBottom)}\"";
 
         #endregion Internal Methods
 
@@ -3803,8 +3746,8 @@ namespace System.Windows.Documents
                                     {
                                         if (lhs_name.Length > rhs_name.Length)
                                         {
-                                            string s = lhs_name.Substring(0, rhs_name.Length);
-                                            if (string.Compare(s, rhs_name, StringComparison.OrdinalIgnoreCase) == 0)
+                                            ReadOnlySpan<char> s = lhs_name.AsSpan(0, rhs_name.Length);
+                                            if (s.Equals(rhs_name, StringComparison.OrdinalIgnoreCase))
                                             {
                                                 bAdd = true;
                                             }
@@ -4795,9 +4738,7 @@ namespace System.Windows.Documents
             {
                 string plaintext = StripInvalidChars(Xaml);
                 AppendXamlPrefix(converterState);
-                StringBuilder xamlBuilder = new StringBuilder(Xaml);
-                xamlBuilder.Append(plaintext);
-                Xaml = xamlBuilder.ToString();
+                Xaml += plaintext;
                 AppendXamlPostfix(converterState);
                 IsTerminated = true;
             }
@@ -5038,7 +4979,7 @@ namespace System.Windows.Documents
                 }
                 if (currentIndex != index)
                 {
-                    string substring = text.Substring(index, currentIndex - index);
+                    ReadOnlySpan<char> substring = text.AsSpan(index, currentIndex - index);
                     xamlStringBuilder.Append(substring);
                 }
                 if (currentIndex < text.Length)
@@ -5432,18 +5373,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            StringBuilder xamlStringBuilder = new StringBuilder(Xaml);
-
-            xamlStringBuilder.Append("</");
-            xamlStringBuilder.Append(GetTagName());
-            xamlStringBuilder.Append(">");
-
-            if (IsBlock)
-            {
-                xamlStringBuilder.Append("\r\n");
-            }
-
-            Xaml = xamlStringBuilder.ToString();
+            Xaml = $"{Xaml}</{GetTagName()}>{(IsBlock ? "\r\n" : "")}";
         }
 
         internal void AppendInlineXamlPrefix(ConverterState converterState)
@@ -5502,25 +5432,17 @@ namespace System.Windows.Documents
 
         internal void AppendInlineXamlPostfix(ConverterState converterState)
         {
-            StringBuilder xamlStringBuilder = new StringBuilder(Xaml);
-
-            xamlStringBuilder.Append("</Span>");
-
-            Xaml = xamlStringBuilder.ToString();
+            Xaml = Xaml + "</Span>";
         }
 
         internal void AppendImageXamlPrefix()
         {
-            StringBuilder xamlStringBuilder = new StringBuilder();
-            xamlStringBuilder.Append("<InlineUIContainer>");
-            Xaml = xamlStringBuilder.ToString();
+            Xaml = "<InlineUIContainer>";
         }
 
         internal void AppendImageXamlPostfix()
         {
-            StringBuilder xamlStringBuilder = new StringBuilder(Xaml);
-            xamlStringBuilder.Append("</InlineUIContainer>");
-            Xaml = xamlStringBuilder.ToString();
+            Xaml += "</InlineUIContainer>";
         }
 
         internal bool IsAncestorOf(DocumentNode documentNode)
@@ -8238,7 +8160,7 @@ namespace System.Windows.Documents
                     // is very low. Now we replace image with the included picture uri to get
                     // the image directly from the specified Uri.
                     int uriSourceIndex = dnImage.Xaml.IndexOf("UriSource=", StringComparison.Ordinal);
-                    int uriSourceEndIndex = dnImage.Xaml.IndexOf("\"", uriSourceIndex + 11,  StringComparison.Ordinal);
+                    int uriSourceEndIndex = dnImage.Xaml.IndexOf('\"', uriSourceIndex + 11);
 
                     string imageXaml = dnImage.Xaml.Substring(0, uriSourceIndex);
                     imageXaml += "UriSource=\"" + pictureUri + "\"";
@@ -8288,10 +8210,7 @@ namespace System.Windows.Documents
                         if (dn.Type == DocumentNodeType.dnParagraph && !dn.IsTerminated)
                         {
                             Debug.Assert(dn.ChildCount == 0);
-                            StringBuilder sb = new StringBuilder(dnInstruction.Xaml);
-                            sb.Append(dn.Xaml);
-                            sb.Append("</Hyperlink>");
-                            dn.Xaml = sb.ToString();
+                            dn.Xaml = dnInstruction.Xaml + dn.Xaml + "</Hyperlink>";
                         }
                     }
 
@@ -8319,10 +8238,7 @@ namespace System.Windows.Documents
                         if (dn.Type == DocumentNodeType.dnParagraph && !dn.IsTerminated)
                         {
                             Debug.Assert(dn.ChildCount == 0);
-                            StringBuilder sb = new StringBuilder(dnInstruction.Xaml);
-                            sb.Append(dn.Xaml);
-                            sb.Append("</Hyperlink>");
-                            dn.Xaml = sb.ToString();
+                            dn.Xaml = dnInstruction.Xaml + dn.Xaml + "</Hyperlink>";
                         }
                     }
                 }
@@ -8410,7 +8326,7 @@ namespace System.Windows.Documents
             {
                 pictureUri = instructionName.Substring(uriIndex, instructionName.Length - uriIndex - 1);
 
-                int pictureUriEndIndex = pictureUri.IndexOf("\"", StringComparison.OrdinalIgnoreCase);
+                int pictureUriEndIndex = pictureUri.IndexOf('\"');
                 if (pictureUriEndIndex != -1)
                 {
                     pictureUri = pictureUri.Substring(0, pictureUriEndIndex);
@@ -8632,7 +8548,7 @@ namespace System.Windows.Documents
                     {
                         continue;
                     }
-                    string ptString = instr.Substring(iStart, i - iStart);
+                    ReadOnlySpan<char> ptString = instr.AsSpan(iStart, i - iStart);
 
                     // Now convert number part
                     bool ret = true;
@@ -8640,7 +8556,7 @@ namespace System.Windows.Documents
 
                     try
                     {
-                        d = System.Convert.ToDouble(ptString, CultureInfo.InvariantCulture);
+                        d = double.Parse(ptString, provider: CultureInfo.InvariantCulture);
                     }
                     catch (System.OverflowException)
                     {
@@ -8834,10 +8750,7 @@ namespace System.Windows.Documents
                 case EncodeType.Unicode:
                     if (nChar < 0xFFFF)
                     {
-                        char[] unicodeChar = new char[1];
-
-                        unicodeChar[0] = (char)nChar;
-                        dn.AppendXamlEncoded(new string(unicodeChar));
+                        dn.AppendXamlEncoded(char.ToString((char)nChar));
                     }
                     break;
 
@@ -11412,12 +11325,7 @@ namespace System.Windows.Documents
                     formatState.RtfDestination = RtfDestination.DestUPR;
                     break;
                 case RtfControlWord.Ctrl_U:
-                    {
-                        char[] unicodeChar = new char[1];
-
-                        unicodeChar[0] = (char)token.Parameter;
-                        ProcessText(new string(unicodeChar));
-                    }
+                    ProcessText(char.ToString((char)token.Parameter));
                     break;
                 case RtfControlWord.Ctrl_UD:
                     {

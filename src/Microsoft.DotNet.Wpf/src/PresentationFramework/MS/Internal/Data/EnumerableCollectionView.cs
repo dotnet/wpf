@@ -586,7 +586,7 @@ namespace MS.Internal.Data
                     if (TraceData.IsEnabled && !_warningHasBeenRaised)
                     {
                         _warningHasBeenRaised = true;
-                        TraceData.Trace(TraceEventType.Warning,
+                        TraceData.TraceAndNotify(TraceEventType.Warning,
                             TraceData.CollectionChangedWithoutNotification(SourceCollection.GetType().FullName));
                     }
 

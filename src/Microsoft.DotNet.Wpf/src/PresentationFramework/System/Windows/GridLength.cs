@@ -89,7 +89,7 @@ namespace System.Windows
         /// </exception>
         public GridLength(double value, GridUnitType type)
         {
-            if (DoubleUtil.IsNaN(value))
+            if (double.IsNaN(value))
             {
                 throw new ArgumentException(SR.Get(SRID.InvalidCtorParameterNoNaN, "value"));
             }

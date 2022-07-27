@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
@@ -363,6 +363,24 @@ namespace System.Windows.Automation.Peers
             return size;
         }
 
+        ///
+        override protected AutomationHeadingLevel GetHeadingLevelCore()
+        {
+            AutomationPeer wrapperPeer = OwningCellPeer;
+            AutomationHeadingLevel headingLevel = AutomationHeadingLevel.None;
+
+            if(wrapperPeer != null)
+            {
+                headingLevel = wrapperPeer.GetHeadingLevel();
+            }
+            else
+            {
+                ThrowElementNotAvailableException();
+            }
+
+            return headingLevel;
+        }
+
         override internal Rect GetVisibleBoundingRectCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
@@ -403,6 +421,18 @@ namespace System.Windows.Automation.Peers
                 return wrapperPeer.IsControlElement();
 
             return true;
+        }
+
+        ///
+        protected override bool IsDialogCore()
+        {
+            AutomationPeer wrapperPeer = OwningCellPeer;
+            if (wrapperPeer != null)
+                return wrapperPeer.IsDialog();
+            else
+                ThrowElementNotAvailableException();
+
+            return false;
         }
 
         ///

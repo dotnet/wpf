@@ -799,7 +799,7 @@
       </trans-unit>
       <trans-unit id="RMPublishingPeoplePickerButton">
         <source>People Picker</source>
-        <target state="translated">상대 선택</target>
+        <target state="translated">상대 선택기</target>
         <note />
       </trans-unit>
       <trans-unit id="RMPublishingPeoplePickerButtonToolTip">
@@ -849,7 +849,7 @@
       </trans-unit>
       <trans-unit id="RMPublishingSaveButton">
         <source>&amp;Save</source>
-        <target state="translated">저장</target>
+        <target state="translated">저장(&amp;S)</target>
         <note />
       </trans-unit>
       <trans-unit id="RMPublishingSaveButtonToolTip">
@@ -944,12 +944,12 @@
       </trans-unit>
       <trans-unit id="RightsManagementWarnErrorConfigurationError">
         <source>This application has detected a problem with your Rights Management configuration. Contact your network administrator or support personnel.</source>
-        <target state="translated">이 응용 프로그램에서 Rights Management 구성에 대한 문제점을 발견했습니다. 네트워크 관리자 또는 고객 지원 담당자에게 문의하십시오.</target>
+        <target state="translated">이 애플리케이션에서 Rights Management 구성에 대한 문제점을 발견했습니다. 네트워크 관리자 또는 고객 지원 담당자에게 문의하십시오.</target>
         <note />
       </trans-unit>
       <trans-unit id="RightsManagementWarnErrorDebuggerDetected">
         <source>Cannot open or publish documents with restricted permissions because a debugging application has been detected.</source>
-        <target state="translated">디버깅 응용 프로그램이 발견되어 권한이 제한된 문서를 열거나 게시할 수 없습니다.</target>
+        <target state="translated">디버깅 애플리케이션이 발견되어 권한이 제한된 문서를 열거나 게시할 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="RightsManagementWarnErrorExpiredPermission">
@@ -1194,7 +1194,7 @@
       </trans-unit>
       <trans-unit id="XpsViewerGenericException">
         <source>There has been an exception in this application.</source>
-        <target state="translated">이 응용 프로그램에 예외가 있습니다.</target>
+        <target state="translated">이 애플리케이션에 예외가 있습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="XpsViewerRightsManagementException">

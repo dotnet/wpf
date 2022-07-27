@@ -293,7 +293,7 @@ namespace System.Windows.Data
         {
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.ProviderQuery))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotify(TraceEventType.Warning,
                                     TraceData.BeginQuery(
                                         TraceData.Identify(this),
                                         IsAsynchronous ? "asynchronous" : "synchronous"));
@@ -385,7 +385,7 @@ namespace System.Windows.Data
             if (_mode == SourceMode.NoSource || _objectType == null)
             {
                 if (TraceData.IsEnabled)
-                    TraceData.Trace(TraceEventType.Error, TraceData.ObjectDataProviderHasNoSource);
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.ObjectDataProviderHasNoSource);
                 e = new InvalidOperationException(SR.Get(SRID.ObjectDataProviderHasNoSource));
             }
             else
@@ -425,7 +425,7 @@ namespace System.Windows.Data
 
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.ProviderQuery))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotify(TraceEventType.Warning,
                                     TraceData.QueryFinished(
                                         TraceData.Identify(this),
                                         Dispatcher.CheckAccess() ? "synchronous" : "asynchronous",
@@ -501,7 +501,11 @@ namespace System.Windows.Data
             {
                 // report known errors through TraceData (instead of throwing exceptions)
                 if (TraceData.IsEnabled)
-                    TraceData.Trace(TraceEventType.Error, TraceData.ObjDPCreateFailed, _objectType.Name, error, e);
+                {
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.ObjDPCreateFailed, null,
+                        traceParameters: new object[] { _objectType.Name, error, e },
+                        eventParameters: new object[] { e });
+                }
 
                 // in async mode we pass all exceptions to main thread;
                 // in sync mode we don't handle unknown exceptions.
@@ -587,7 +591,11 @@ namespace System.Windows.Data
             {
                 // report known errors through TraceData (instead of throwing exceptions)
                 if (TraceData.IsEnabled)
-                    TraceData.Trace(TraceEventType.Error, TraceData.ObjDPInvokeFailed, MethodName, _objectType.Name, error, e);
+                {
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.ObjDPInvokeFailed, null,
+                        traceParameters: new object[] { MethodName, _objectType.Name, error, e },
+                        eventParameters: new object[] { e });
+                }
 
                 // in async mode we pass all exceptions to main thread;
                 // in sync mode we don't handle unknown exceptions.

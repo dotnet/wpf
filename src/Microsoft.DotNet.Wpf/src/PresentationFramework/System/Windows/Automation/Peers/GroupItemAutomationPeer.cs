@@ -274,8 +274,8 @@ namespace System.Windows.Automation.Peers
                             // but only if we haven't added a peer for this item during this GetChildrenCore call.
                             bool itemMissingPeerInGlobalStorage = itemsControlAP.ItemPeers[item] == null;
 
-                            if (itemMissingPeerInGlobalStorage
-                                || (peer?.GetParent() == this && addedChildren[item] == null))
+                            if (peer != null && (itemMissingPeerInGlobalStorage
+                                || (peer.GetParent() == this && addedChildren[item] == null)))
                             {
                                 children.Add(peer);
                                 addedChildren[item] = peer;

@@ -3,24 +3,21 @@
     <NoWarn>$(NoWarn);0618</NoWarn>
     <DefineConstants>$(DefineConstants);AUTOMATION</DefineConstants>
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
-    <GenerateResourcesSRNamespace>MS.Internal.Automation</GenerateResourcesSRNamespace>
-    <GenerateResourcesResourcesClassName>SRID</GenerateResourcesResourcesClassName>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp5.0</TargetFramework>  
+    
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Strings.resx">
-      <ClassName>$(GenerateResourcesSRNamespace).$(GenerateResourcesResourcesClassName)</ClassName>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.resx" />
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
         <Link>Common\System\SR.cs</Link>
     </Compile>
     <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
+    <Compile Include="Forwards.cs" />
     <Compile Include="MS\Internal\Automation\UiaCoreProviderApi.cs" />
     <Compile Include="System\Windows\Automation\Provider\AutomationInteropProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\IDockProvider.cs" />
@@ -35,7 +32,6 @@
     <Compile Include="System\Windows\Automation\Provider\IRawElementProviderFragment.cs" />
     <Compile Include="System\Windows\Automation\Provider\IRawElementProviderFragmentRoot.cs" />
     <Compile Include="System\Windows\Automation\Provider\IRawElementProviderHwndOverride.cs" />
-    <Compile Include="System\Windows\Automation\Provider\IRawElementProviderSimple.cs" />
     <Compile Include="System\Windows\Automation\Provider\IScrollItemProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\IScrollProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\ISelectionItemProvider.cs" />
@@ -44,14 +40,13 @@
     <Compile Include="System\Windows\Automation\Provider\ITableItemProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\ITableProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\ITextProvider.cs" />
-    <Compile Include="System\Windows\Automation\Provider\ITextRangeProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\IToggleProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\ITransformProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\IValueProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\IVirtualizedItemProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\IWindowProvider.cs" />
   </ItemGroup>
-    
+
   <ItemGroup>
     <NetCoreReference Include="netstandard" />
     <NetCoreReference Include="Microsoft.Win32.Primitives" />

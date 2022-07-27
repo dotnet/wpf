@@ -5,14 +5,10 @@
       <DefineConstants>$(DefineConstants);FRAMEWORK_NATIVEMETHODS;CORE_NATIVEMETHODS;DRT</DefineConstants>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
       <NoWarn>$(NoWarn);CS0618;0618</NoWarn>
-      <Platforms>AnyCPU;x64</Platforms>
+      <Platforms>AnyCPU;x64;arm64</Platforms>
       <CLSCompliant>false</CLSCompliant>
       <OutputType>Library</OutputType>
     </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Win32.Registry" Version="$(MicrosoftWin32RegistryPackageVersion)" />
-  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="$(PkgMicrosoft_Private_Winforms)\lib\$(TargetFramework)\Accessibility.dll" />

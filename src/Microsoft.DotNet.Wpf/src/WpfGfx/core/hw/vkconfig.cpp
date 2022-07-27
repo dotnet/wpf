@@ -8,37 +8,37 @@
 
 //
 //  Description:
-//      CD3DRegistryDatabase implementation.  
+//      CVkConfigDatabase implementation.  
 //
 
 #include "precomp.hpp"
 
-MtDefine(CD3DRegistryDatabase, MILRender, "CD3DRegistryDatabase");
+MtDefine(CVkConfigDatabase, MILRender, "CVkConfigDatabase");
 
 //
 // Statics
 //
 
-bool CD3DRegistryDatabase::m_fInitialized = false;
-UINT CD3DRegistryDatabase::m_cNumAdapters = 0;
-UINT *CD3DRegistryDatabase::m_prguErrorCount = NULL;
-bool CD3DRegistryDatabase::m_fSkipDriverCheck = false;
+bool CVkConfigDatabase::m_fInitialized = false;
+UINT CVkConfigDatabase::m_cNumGpus = 0;
+UINT *CVkConfigDatabase::m_prguErrorCount = NULL;
+bool CVkConfigDatabase::m_fSkipDriverCheck = false;
 
 // Maximum number of internal errors on the D3DDevice before we disable it.
-// Set m_prguErrorCount[adapter] to this to disable.
+// Set m_prguErrorCount[gpu] to this to disable.
 const UINT c_uMaxErrorCount = 5;
 
 //+------------------------------------------------------------------------
 //
-//  Function:  CD3DRegistryDatabase::IsAdapterEnabled
+//  Function:  CVkConfigDatabase::IsGpuEnabled
 //
 //  Synopsis:  1. Ensure we initialized our status
-//             2. Look up adapter in our list
+//             2. Look up gpu in our list
 //
 //-------------------------------------------------------------------------
 HRESULT 
-CD3DRegistryDatabase::IsAdapterEnabled(
-    UINT uAdapter, 
+CVkConfigDatabase::IsGpuEnabled(
+    UINT uGpu, 
     __out_ecount(1) bool *pfEnabled
     )
 {
@@ -49,7 +49,7 @@ CD3DRegistryDatabase::IsAdapterEnabled(
     *pfEnabled = false;
 
     //
-    // Make sure that we have initialized our list from the registry
+    // Make sure that we have initialized our list from the config
     //
 
     Assert(m_fInitialized);
@@ -58,7 +58,7 @@ CD3DRegistryDatabase::IsAdapterEnabled(
     // Ensure parameters are valid
     //
 
-    if (uAdapter >= m_cNumAdapters)
+    if (uGpu >= m_cNumGpus)
     {
         IFC(E_INVALIDARG);
     }
@@ -67,7 +67,7 @@ CD3DRegistryDatabase::IsAdapterEnabled(
     // Return status
     //
 
-    *pfEnabled = m_prguErrorCount[uAdapter] < c_uMaxErrorCount;
+    *pfEnabled = m_prguErrorCount[uGpu] < c_uMaxErrorCount;
 
 Cleanup:
     RRETURN(hr);
@@ -75,20 +75,20 @@ Cleanup:
 
 //+------------------------------------------------------------------------
 //
-//  Function:  CD3DRegistryDatabase::DisableAdapter
+//  Function:  CVkConfigDatabase::DisableGpu
 //
-//  Synopsis:  Mark a given adapter as unusable
+//  Synopsis:  Mark a given gpu as unusable
 //
 //-------------------------------------------------------------------------
 HRESULT 
-CD3DRegistryDatabase::DisableAdapter(
-    UINT uAdapter
+CVkConfigDatabase::DisableGpu(
+    UINT uGpu
     )
 {
     HRESULT hr = S_OK;
 
     //
-    // Make sure that we have initialized our list from the registry
+    // Make sure that we have initialized our list from the config
     //
 
     Assert(m_fInitialized);
@@ -97,7 +97,7 @@ CD3DRegistryDatabase::DisableAdapter(
     // Ensure parameters are valid
     //
 
-    if (uAdapter >= m_cNumAdapters)
+    if (uGpu >= m_cNumGpus)
     {
         IFC(E_INVALIDARG);
     }
@@ -106,7 +106,7 @@ CD3DRegistryDatabase::DisableAdapter(
     // Set status
     //
 
-    m_prguErrorCount[uAdapter] = c_uMaxErrorCount;
+    m_prguErrorCount[uGpu] = c_uMaxErrorCount;
 
 Cleanup:
     RRETURN(hr);
@@ -114,21 +114,21 @@ Cleanup:
 
 //+------------------------------------------------------------------------
 //
-//  Function:  CD3DRegistryDatabase::HandleAdapterUnexpectedError
+//  Function:  CVkConfigDatabase::HandleGpuUnexpectedError
 //
-//  Synopsis:  Handle an unexpected error from an adapter, possibly
-//             disabling the adapter.
+//  Synopsis:  Handle an unexpected error from an gpu, possibly
+//             disabling the gpu.
 //
 //-------------------------------------------------------------------------
 HRESULT 
-CD3DRegistryDatabase::HandleAdapterUnexpectedError(
-    UINT uAdapter
+CVkConfigDatabase::HandleGpuUnexpectedError(
+    UINT uGpu
     )
 {
     HRESULT hr = S_OK;
 
     //
-    // Make sure that we have initialized our list from the registry
+    // Make sure that we have initialized our list from the config
     //
 
     Assert(m_fInitialized);
@@ -137,7 +137,7 @@ CD3DRegistryDatabase::HandleAdapterUnexpectedError(
     // Ensure parameters are valid
     //
 
-    if (uAdapter >= m_cNumAdapters)
+    if (uGpu >= m_cNumGpus)
     {
         IFC(E_INVALIDARG);
     }
@@ -146,12 +146,12 @@ CD3DRegistryDatabase::HandleAdapterUnexpectedError(
     // Increment errors
     //
 
-    if (m_prguErrorCount[uAdapter] < c_uMaxErrorCount)
+    if (m_prguErrorCount[uGpu] < c_uMaxErrorCount)
     {
-        ++m_prguErrorCount[uAdapter];
-        if (m_prguErrorCount[uAdapter] >= c_uMaxErrorCount)
+        ++m_prguErrorCount[uGpu];
+        if (m_prguErrorCount[uGpu] >= c_uMaxErrorCount)
         {
-            TraceTag((tagError, "MIL-HW(adapter=%d): Too many d3d internal errors-- switching to software rendering.", uAdapter));
+            TraceTag((tagError, "MIL-HW(gpu=%d): Too many d3d internal errors-- switching to software rendering.", uGpu));
         }
     }
 
@@ -161,7 +161,7 @@ Cleanup:
 
 //+------------------------------------------------------------------------
 //
-//  Function:  CD3DRegistryDatabase::ShouldSkipDriverCheck
+//  Function:  CVkConfigDatabase::ShouldSkipDriverCheck
 //
 //  Synopsis:  Should we skip driver/vendor checks?  This flag enables 
 //             IHV's to investigate issues after we've disabled their 
@@ -169,22 +169,22 @@ Cleanup:
 //
 //-------------------------------------------------------------------------
 bool
-CD3DRegistryDatabase::ShouldSkipDriverCheck()
+CVkConfigDatabase::ShouldSkipDriverCheck()
 {
     return m_fSkipDriverCheck;
 }
 
 //+------------------------------------------------------------------------
 //
-//  Function:  CD3DRegistryDatabase::EnableAllAdapters
+//  Function:  CVkConfigDatabase::EnableAllGpus
 //
-//  Synopsis:  Either enable or disable all adapters
+//  Synopsis:  Either enable or disable all gpus
 //
 //-------------------------------------------------------------------------
 void 
-CD3DRegistryDatabase::EnableAllAdapters(bool fEnabled)
+CVkConfigDatabase::EnableAllGpus(bool fEnabled)
 {
-    for (UINT i = 0; i < m_cNumAdapters; i++)
+    for (UINT i = 0; i < m_cNumGpus; i++)
     {
         m_prguErrorCount[i] = fEnabled ? 0 : c_uMaxErrorCount;
     }
@@ -192,17 +192,16 @@ CD3DRegistryDatabase::EnableAllAdapters(bool fEnabled)
 
 //+------------------------------------------------------------------------
 //
-//  Function:  CD3DRegistryDatabase::InitializeFromRegistry
+//  Function:  CVkConfigDatabase::InitializeFromConfig
 //
 //  Synopsis:  Initialize our database from the driver list
 //
 //-------------------------------------------------------------------------
 
-MtDefine(CD3DRegistryData, MILRender, "CD3DRegistryDatabase enable array")
+MtDefine(CVkConfigData, MILRender, "CVkConfigData enable array")
 
-#ifdef VULKAN
 HRESULT
-CD3DRegistryDatabase::InitializeFromRegistry(
+CVkConfigDatabase::InitializeFromConfig(
     __in_ecount(1) vk::Instance* pInst
 )
 {
@@ -210,67 +209,60 @@ CD3DRegistryDatabase::InitializeFromRegistry(
 
     Assert(!m_fInitialized);
 
-    IFC(InitializeDriversFromRegistry(pInst));
+    IFC(InitializeDriversFromConfig(pInst));
 
 Cleanup:
     m_fInitialized = SUCCEEDED(hr);
 
     RRETURN(hr);
 }
-#endif // VULKAN
 
 
 
 //+------------------------------------------------------------------------
 //
-//  Function:  CD3DRegistryDatabase::InitializeDriversFromRegistry
+//  Function:  CVkConfigDatabase::InitializeDriversFromConfig
 //
-//  Synopsis:  Initialize Drivers based on registry key settings
+//  Synopsis:  Initialize Drivers based on config key settings
 //
 //-------------------------------------------------------------------------
 HRESULT
-CD3DRegistryDatabase::InitializeDriversFromRegistry(
-#ifdef VULKAN
+CVkConfigDatabase::InitializeDriversFromConfig(
     __inout_ecount(1) vk::Instance* pInst
-#endif // VULKAN
     )
 {
     HRESULT hr = S_OK;
     HKEY hRegAvalonGraphics = NULL;
     DWORD dwType;
-    DWORD dwDisableHWAccleration;
+    DWORD dwDisableHWAcceleration;
     DWORD dwDataSize;
-#ifdef VULKAN
+
     Assert(pInst);
     //
-    // Get number of adaptors
+    // Get number of GPUs
     //
-    auto result = pInst->enumeratePhysicalDevices(&m_cNumAdapters, NULL);
+    auto result = pInst->enumeratePhysicalDevices(&m_cNumGpus, NULL);
     IFCV(result);
-#endif // VULKAN
-
-    
-
-    
 
     //
-    // Allocate adapter enable array
+    // Allocate gpu enable array
     //
 
     {
         UINT cAllocSize = 0;
-        IFC(MultiplyUINT(m_cNumAdapters, sizeof(*m_prguErrorCount), OUT cAllocSize));
+        IFC(MultiplyUINT(m_cNumGpus, sizeof(*m_prguErrorCount), OUT cAllocSize));
 
         m_prguErrorCount = WPFAllocType(UINT *,
             ProcessHeap,
-            Mt(CD3DRegistryData),
+            Mt(CVkConfigDatabase),
             cAllocSize
             );
         IFCOOM(m_prguErrorCount);
     }
 
+#ifdef _WIN32
     //
-    // Check for global Avalon registry hooks
+    // Check for global Avalon register hooks
     //
 
     hr = GetAvalonRegistrySettingsKey(&hRegAvalonGraphics);
@@ -278,7 +270,7 @@ CD3DRegistryDatabase::InitializeDriversFromRegistry(
     {
         // If we can't open the root key, assume everything is enabled
         // and ignore the error
-        EnableAllAdapters(true /* fEnabled */);
+        EnableAllGpus(true /* fEnabled */);
         hr = S_OK;
         goto Cleanup;
     }
@@ -287,20 +279,19 @@ CD3DRegistryDatabase::InitializeDriversFromRegistry(
     // Check if HW acceleration is disabled
     //
 
-#ifdef _WIN32
     dwDataSize = 4;
     if (RegQueryValueEx(
         hRegAvalonGraphics,
         _T("DisableHWAcceleration"),
         NULL,
         &dwType,
-        (LPBYTE)&dwDisableHWAccleration,
+        reinterpret_cast<LPBYTE>(&dwDisableHWAcceleration),
         &dwDataSize
         ) == ERROR_SUCCESS)
     {
-        if (dwType != REG_DWORD || dwDisableHWAccleration)
+        if (dwType != REG_DWORD || dwDisableHWAcceleration)
         {
-            EnableAllAdapters(false /* fEnabled */);
+            EnableAllGpus(false /* fEnabled */);
             goto Cleanup;
         }
     }
@@ -308,7 +299,7 @@ CD3DRegistryDatabase::InitializeDriversFromRegistry(
     #error Not impl.
 #endif
 
-    EnableAllAdapters(true /* fEnabled */);
+    EnableAllGpus(true /* fEnabled */);
 
 Cleanup:
     if (FAILED(hr))
@@ -317,33 +308,33 @@ Cleanup:
         m_prguErrorCount = NULL;
     }
 
+#ifdef _WIN32
     if (hRegAvalonGraphics != NULL)
     {
         RegCloseKey(hRegAvalonGraphics);
     }
+#else
+    #error Not impl.
+#endif
 
     RRETURN(hr);
 }
 
 //+------------------------------------------------------------------------
 //
-//  Function:  CD3DRegistryDatabase::Cleanup
+//  Function:  CVkConfigDatabase::Cleanup
 //
 //  Synopsis:  Reset to uninitialized state
 //
 //-------------------------------------------------------------------------
 void 
-CD3DRegistryDatabase::Cleanup(
+CVkConfigDatabase::Cleanup(
     )
 {
     WPFFree(ProcessHeap, m_prguErrorCount);
 
     m_fInitialized = false;
-    m_cNumAdapters = 0;
+    m_cNumGpus = 0;
     m_prguErrorCount = NULL;
 }
-
-
-
-
 

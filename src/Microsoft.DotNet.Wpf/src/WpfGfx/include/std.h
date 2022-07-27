@@ -356,12 +356,9 @@ RtlAssert(
 #include "dwrite.h"
 #pragma warning(pop)
 
-#ifdef VULKAN
 #define VULKAN_HPP_NO_EXCEPTIONS
 #define VULKAN_HPP_TYPESAFE_CONVERSION
 #include <vulkan/vulkan.hpp>
-#endif // VULKAN
-
 
 
 #ifdef __cplusplus

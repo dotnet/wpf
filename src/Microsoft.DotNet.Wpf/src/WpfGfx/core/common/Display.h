@@ -255,19 +255,13 @@ public:
         __deref_out_ecount(1) IDirect3D9 **pID3D
         ) const;
 
-    HRESULT GetVkInstanceNoRef(
-#ifdef VULKAN
+    vk::Result GetVkInstanceNoRef(
     __deref_out_ecount(1) vk::Instance *pInst
-#endif // VULKAN
-
-        
         ) const;
 
     __out_ecount(1) IDirect3D9* D3DObject() const {return m_pID3D;}
     __out_ecount(1) IDirect3D9Ex* D3DExObject() const {return m_pID3DEx;}
-#ifdef VULKAN
     __out_ecount(1) vk::Instance VkInstance() const { return m_inst; }
-#endif // VULKAN
 
  
 
@@ -340,13 +334,11 @@ private:
     IDirect3D9* m_pID3D;
     IDirect3D9Ex *m_pID3DEx;
 
-#ifdef VULKAN
     /// <summary>
     /// This is a handle
     /// </summary>
     vk::Instance m_inst;
     vk::Result m_rVkInstInitialization;
-#endif // VULKAN
 
     
     HRESULT m_hrD3DInitialization;

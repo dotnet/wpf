@@ -991,7 +991,6 @@ CDisplaySet::Init()
     //
     m_hrD3DInitialization = CD3DModuleLoader::CreateD3DObjects(&m_pID3D, &m_pID3DEx);
 
-#ifdef VULKAN
     auto const app = vk::ApplicationInfo()
         .setPApplicationName("WPFC")
         .setApplicationVersion(0)
@@ -1006,7 +1005,6 @@ CDisplaySet::Init()
         //.setPEnabledExtensionNames(enabled_instance_extensions)
         ;
     m_rVkInstInitialization = vk::createInstance(&createInfo, nullptr, &m_inst);
-#endif // VULKAN
 
    
 
@@ -1133,13 +1131,12 @@ CDisplaySet::GetD3DObjectNoRef(
     *pID3D = m_pID3D;
     return m_hrD3DInitialization;
 }
-#ifdef VULKAN
-HRESULT CDisplaySet::GetVkInstanceNoRef(vk::Instance* pInst) const {
-    Assert(m_inst || FAILED(m_hrD3DInitialization));
+
+vk::Result CDisplaySet::GetVkInstanceNoRef(vk::Instance* pInst) const {
+    Assert(m_inst || FAILED(m_rVkInstInitialization));
     *pInst = m_inst;
-    return m_hrD3DInitialization;
+    return m_rVkInstInitialization;
 }
-#endif // VULAKN
 
 
 //+------------------------------------------------------------------------

@@ -67,7 +67,7 @@
     <ClCompile Include="d3dglyphrun.cpp" />
     <ClCompile Include="d3dlockabletexture.cpp" />
     <ClCompile Include="d3dlog.cpp" />
-    <ClCompile Include="d3dregistry.cpp" />
+    <ClCompile Include="vkconfig.cpp" />
     <ClCompile Include="d3drenderstate.cpp" />
     <ClCompile Include="d3dresource.cpp" />
     <ClCompile Include="d3dstats.cpp" />

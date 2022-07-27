@@ -432,7 +432,7 @@ CD3DDeviceLevel1::Init(
     //
     // If we are rendering with a SW Rasterizer we don't need to check the drivers.
     //
-    if (   CD3DRegistryDatabase::ShouldSkipDriverCheck() == false
+    if (   CVkConfigDatabase::ShouldSkipDriverCheck() == false
         && m_caps.DeviceType != D3DDEVTYPE_SW
         && m_caps.DeviceType != D3DDEVTYPE_REF)
     {
@@ -1331,7 +1331,7 @@ Cleanup:
         (hr != D3DERR_DRIVERINTERNALERROR) &&
         (m_caps.DeviceType == D3DDEVTYPE_HAL))
     {
-        IGNORE_HR(CD3DRegistryDatabase::DisableAdapter(m_caps.AdapterOrdinal));
+        IGNORE_HR(CVkConfigDatabase::DisableGpu(m_caps.AdapterOrdinal));
     }
 
     RRETURN(hr); // D3DERR_DRIVERINTERNALERROR OK here
@@ -1712,7 +1712,7 @@ CD3DDeviceLevel1::MarkUnusable(
 
     if (m_hrDisplayInvalid == D3DERR_DRIVERINTERNALERROR)
     {
-        IGNORE_HR(CD3DRegistryDatabase::HandleAdapterUnexpectedError(m_caps.AdapterOrdinal));
+        IGNORE_HR(CVkConfigDatabase::HandleAdapterUnexpectedError(m_caps.AdapterOrdinal));
     }
 
     //
@@ -3459,7 +3459,7 @@ CD3DDeviceLevel1::HandlePresentFailure(
         //    which is handled below.
         //
         hr = D3DERR_DEVICELOST;
-        IGNORE_HR(CD3DRegistryDatabase::HandleAdapterUnexpectedError(m_caps.AdapterOrdinal));
+        IGNORE_HR(CVkConfigDatabase::HandleAdapterUnexpectedError(m_caps.AdapterOrdinal));
     }
     else if (hr == E_INVALIDARG && IsLDDMDevice())
     {

@@ -8,73 +8,69 @@
 
 //
 //  Description:
-//      Contains CD3DRegistryDatabase
+//      Contains CVkConfigDatabase
 //
 
-MtExtern(CD3DRegistryDatabase);
+MtExtern(CVkConfigDatabase);
 
 //------------------------------------------------------------------------------
 //
-//  Class: CD3DRegistryDatabase
+//  Class: CVkConfigDatabase
 //
 //  Description:
-//      Accesses the registry to determine if we can run hw accelerated on
+//      Accesses the config to determine if we can run hw accelerated on
 //      the current driver
 //
+//      Config means Register in Windows
+//
 //      Note that all methods and data here are static so that we can be
-//      smart enough to only access the registry once to query this 
+//      smart enough to only access the config once to query this 
 //      information.
 //
 //------------------------------------------------------------------------------
 
-class CD3DRegistryDatabase  
+class CVkConfigDatabase  
 {
 public:
-    DECLARE_METERHEAP_ALLOC(ProcessHeap, Mt(CD3DRegistryDatabase));
+    DECLARE_METERHEAP_ALLOC(ProcessHeap, Mt(CVkConfigDatabase));
 
     //
-    // CD3DRegistryDatabase methods
+    // CVkConfigDatabase methods
     //
 
-    static HRESULT InitializeFromRegistry(
-#ifdef VULKAN
+    static HRESULT InitializeFromConfig(
     __in_ecount(1) vk::Instance *pInst
-#endif // VULKAN
         );
 
-    static HRESULT IsAdapterEnabled(
-        UINT uAdapter, 
+    static HRESULT IsGpuEnabled(
+        UINT uGpu, 
         __out_ecount(1) bool *pfEnabled
         );
 
     static bool ShouldSkipDriverCheck();
 
-    static HRESULT DisableAdapter(
-        UINT uAdapter
+    static HRESULT DisableGpu(
+        UINT uGpu
         );
 
-    static HRESULT HandleAdapterUnexpectedError(
-        UINT uAdapter
+    static HRESULT HandleGpuUnexpectedError(
+        UINT uGpu
         );
 
     static void Cleanup();
     
 private:
-    static void EnableAllAdapters(
+    static void EnableAllGpus(
         bool fEnabled
         );
 
-    static HRESULT InitializeDriversFromRegistry(
-#ifdef  VULKAN
+    static HRESULT InitializeDriversFromConfig(
     __inout_ecount(1) vk::Instance *pInst
-#endif //  VULKAN
-
-        
         );
 
 private:
     static bool m_fInitialized;
-    static UINT m_cNumAdapters;
+    static UINT m_cNumGpus;
 
     // Error count is number of errors associated with this adapter.  If
     // it is greater than or equal to c_uMaxErrorCount the adapter is

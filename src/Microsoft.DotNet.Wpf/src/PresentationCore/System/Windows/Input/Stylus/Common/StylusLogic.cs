@@ -419,8 +419,7 @@ namespace System.Windows.Input
             var hwndSource = source as HwndSource;
             Matrix toDevice = Matrix.Identity;
 
-            HwndTarget compositionTarget = hwndSource?.CompositionTarget;
-            if (compositionTarget != null)
+            if (hwndSource?.CompositionTarget is { } compositionTarget)
             {
                 // We can calculate the Matrix fast without any cache and avoid any thread issues.
                 // If others inherit HwndTarget, the following rules may not apply. Because they can override the TransformToDevice property.
@@ -434,25 +433,23 @@ namespace System.Windows.Input
                 else
                 {
                     // If we have not yet seen this DPI, store the matrix for it.
-                    if (!_transformToDeviceMatrices.ContainsKey(compositionTarget.CurrentDpiScale))
+                    if (!_transformToDeviceMatrices.TryGetValue(compositionTarget.CurrentDpiScale, out toDevice))
                     {
                         // The Stylus Input thread will enter this case.
                         if (compositionTarget.Dispatcher.CheckAccess())
                         {
-                            _transformToDeviceMatrices[compositionTarget.CurrentDpiScale] = compositionTarget.TransformToDevice;
+                            toDevice = compositionTarget.TransformToDevice;
                         }
                         else
                         {
                             // We have to run it in UI Thread, see https://github.com/dotnet/wpf/issues/6829
-                            compositionTarget.Dispatcher.Invoke(() =>
-                                _transformToDeviceMatrices[compositionTarget.CurrentDpiScale] =
-                                    compositionTarget.TransformToDevice);
+                            compositionTarget.Dispatcher.Invoke(() => toDevice = compositionTarget.TransformToDevice);
                         }
 
-                        Debug.Assert(_transformToDeviceMatrices[compositionTarget.CurrentDpiScale].HasInverse);
-                    }
+                        Debug.Assert(toDevice.HasInverse);
 
-                    toDevice = _transformToDeviceMatrices[compositionTarget.CurrentDpiScale];
+                        _transformToDeviceMatrices[compositionTarget.CurrentDpiScale] = toDevice;
+                    }
                 }
             }
 

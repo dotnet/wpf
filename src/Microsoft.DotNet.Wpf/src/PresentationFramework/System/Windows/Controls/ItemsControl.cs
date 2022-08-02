@@ -4010,6 +4010,15 @@ namespace System.Windows.Controls
             return SR.Get(SRID.ToStringFormatString_ItemsControl, this.GetType(), itemsCount);
         }
 
+        protected virtual AutomationPeer OnCreateAutomationPeer()
+        {
+            if (!AccessibilitySwitches.ItemsControlDoesNotSupportAutomation)
+            {
+                return new ItemsControlWrapperAutomationPeer(this);
+            }
+            return null;
+        }
+
         // This should really override OnCreateAutomationPeer, but that API addition
         // isn't an option.   When it becomes an option:
         //  a. rename this method to OnCreateAutomationPeer

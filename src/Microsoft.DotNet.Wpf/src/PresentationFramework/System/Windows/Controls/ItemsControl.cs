@@ -4010,7 +4010,7 @@ namespace System.Windows.Controls
             return SR.Get(SRID.ToStringFormatString_ItemsControl, this.GetType(), itemsCount);
         }
 
-        protected virtual AutomationPeer OnCreateAutomationPeer()
+        protected override AutomationPeer OnCreateAutomationPeer()
         {
             if (!AccessibilitySwitches.ItemsControlDoesNotSupportAutomation)
             {

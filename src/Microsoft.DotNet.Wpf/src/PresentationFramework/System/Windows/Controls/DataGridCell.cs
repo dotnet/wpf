@@ -991,9 +991,9 @@ namespace System.Windows.Controls
                 if (Column.CanUserSort)
                 {
                     Column.DataGridOwner.PerformSort(Column);
+                    e.Handled = true;
+                    return;
                 }
-                e.Handled = true;
-                return;
             }
         
             SendInputToColumn(e);

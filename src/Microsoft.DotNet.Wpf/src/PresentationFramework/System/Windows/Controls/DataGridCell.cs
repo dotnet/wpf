@@ -985,7 +985,15 @@ namespace System.Windows.Controls
                 e.Handled = true;
                 return;
             }
-            
+
+            else if(e.Key == Key.F3)
+            {
+                if (Column.CanUserSort)
+                {
+                    Column.DataGridOwner.PerformSort(Column);
+                }
+            }
+        
             SendInputToColumn(e);
         }
 

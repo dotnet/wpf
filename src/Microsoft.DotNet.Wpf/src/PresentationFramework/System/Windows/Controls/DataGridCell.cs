@@ -992,6 +992,8 @@ namespace System.Windows.Controls
                 {
                     Column.DataGridOwner.PerformSort(Column);
                 }
+                e.Handled = true;
+                return;
             }
         
             SendInputToColumn(e);

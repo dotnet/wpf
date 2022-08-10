@@ -548,7 +548,7 @@ namespace MS.Internal.AutomationProxies
                         {
                             // If there is some kind of error, just append a space to the text.  In this way
                             // we will be no worse of then before implementing the embedded object get text.
-                            sbText.Append(" ");
+                            sbText.Append(' ');
                         }
                         start = embeddedObjectOffset + 1;
                         embeddedObjectOffset = text.IndexOf((char)0xFFFC, start);

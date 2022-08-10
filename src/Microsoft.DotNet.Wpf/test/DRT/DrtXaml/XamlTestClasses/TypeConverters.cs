@@ -392,7 +392,7 @@ namespace Test.Elements
 
                     if (i != animals.Count - 1)
                     {
-                        text.Append("#");
+                        text.Append('#');
                     }
                 }
                 return text.ToString();

@@ -110,6 +110,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// The string is of the form (major,minor).
         /// </summary>
         public override string ToString() => string.Create(null, stackalloc char[64], $"({_major},{_minor})");
+
 #endif
 
         #endregion

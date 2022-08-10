@@ -56,7 +56,7 @@ namespace MS.Internal.AppModel
             if (SiteOfOriginContainer._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + 
+                        Environment.CurrentManagedThreadId + 
                         ": SiteOfOriginPart: Getting stream.");
 #endif
             return GetStreamAndSetContentType(false);
@@ -68,7 +68,7 @@ namespace MS.Internal.AppModel
             if (SiteOfOriginContainer._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + 
+                        Environment.CurrentManagedThreadId + 
                         ": SiteOfOriginPart: Getting content type.");
 #endif
             
@@ -96,7 +96,7 @@ namespace MS.Internal.AppModel
                     if (SiteOfOriginContainer._traceSwitch.Enabled)
                         System.Diagnostics.Trace.TraceInformation(
                                 DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                System.Threading.Thread.CurrentThread.ManagedThreadId + 
+                                Environment.CurrentManagedThreadId + 
                                 ": SiteOfOriginPart: Getting content type and using previously determined value");
 #endif
                     return null;
@@ -112,7 +112,7 @@ namespace MS.Internal.AppModel
                     if (SiteOfOriginContainer._traceSwitch.Enabled)
                         System.Diagnostics.Trace.TraceInformation(
                                 DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                System.Threading.Thread.CurrentThread.ManagedThreadId +
+                                Environment.CurrentManagedThreadId +
                                 "SiteOfOriginPart: Using Cached stream");
 #endif
                     Stream temp = _cacheStream;
@@ -126,7 +126,7 @@ namespace MS.Internal.AppModel
                     if (SiteOfOriginContainer._traceSwitch.Enabled)
                         System.Diagnostics.Trace.TraceInformation(
                                 DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                System.Threading.Thread.CurrentThread.ManagedThreadId + 
+                                Environment.CurrentManagedThreadId + 
                                 ": SiteOfOriginPart: Determining absolute uri for this resource");
 #endif
                     string original = Uri.ToString();
@@ -139,7 +139,7 @@ namespace MS.Internal.AppModel
                 if (SiteOfOriginContainer._traceSwitch.Enabled)
                     System.Diagnostics.Trace.TraceInformation(
                             DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                            System.Threading.Thread.CurrentThread.ManagedThreadId + 
+                            Environment.CurrentManagedThreadId + 
                             ": SiteOfOriginPart: Making web request to " + _absoluteLocation);
 #endif
                 
@@ -165,7 +165,7 @@ namespace MS.Internal.AppModel
             if (SiteOfOriginContainer._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + 
+                        Environment.CurrentManagedThreadId + 
                         ": Opening local file " + _absoluteLocation);
 #endif
             if (_contentType == MS.Internal.ContentType.Empty)
@@ -189,7 +189,7 @@ namespace MS.Internal.AppModel
             if (SiteOfOriginContainer._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + 
+                        Environment.CurrentManagedThreadId + 
                         ": Successfully retrieved stream from " + _absoluteLocation);
 #endif
 
@@ -199,7 +199,7 @@ namespace MS.Internal.AppModel
                 if (SiteOfOriginContainer._traceSwitch.Enabled)
                     System.Diagnostics.Trace.TraceInformation(
                             DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                            System.Threading.Thread.CurrentThread.ManagedThreadId + 
+                            Environment.CurrentManagedThreadId + 
                             ": SiteOfOriginPart: Setting _contentType");
 #endif                    
 

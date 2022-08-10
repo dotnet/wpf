@@ -389,7 +389,7 @@ namespace Utilities
                     oldLength = builder.Length;
                     builder.Append("    <");
                     builder.Append(this.defaultArgument.LongName);
-                    builder.Append(">");
+                    builder.Append('>');
                     builder.Append(Utility.NewLine);
                 }
                 

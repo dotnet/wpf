@@ -123,8 +123,8 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <summary>
         /// Statics / constants
         /// </summary>
-        private static readonly int FirstMaxMatchLength = 0x10;
-        private static readonly int RingBufferLength = 4069;
-        private static readonly int MaxLiteralLength = 2;
-}
+        private const int FirstMaxMatchLength = 0x10;
+        private const int RingBufferLength = 4069;
+        private const int MaxLiteralLength = 2;
+    }
 }

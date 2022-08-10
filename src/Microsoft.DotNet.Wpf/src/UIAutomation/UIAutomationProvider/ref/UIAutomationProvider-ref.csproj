@@ -6,8 +6,6 @@
     <NoWarn>$(NoWarn);0618</NoWarn>
     <DefineConstants>$(DefineConstants);AUTOMATION</DefineConstants>
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
-    <GenerateResourcesSRNamespace>MS.Internal.Automation</GenerateResourcesSRNamespace>
-    <GenerateResourcesResourcesClassName>SRID</GenerateResourcesResourcesClassName>
     <Platforms>AnyCPU;x64;arm64</Platforms>
     
   </PropertyGroup>

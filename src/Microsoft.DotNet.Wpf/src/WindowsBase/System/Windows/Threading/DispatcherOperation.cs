@@ -425,7 +425,7 @@ namespace System.Windows.Threading
             EventHandler handler; // either completed or aborted
             lock(DispatcherLock)
             {
-                if(_exception != null && _exception is OperationCanceledException)
+                if(_exception is OperationCanceledException)
                 {
                     // A new way to abort/cancel an operation is to raise an
                     // OperationCanceledException exception.  This only works

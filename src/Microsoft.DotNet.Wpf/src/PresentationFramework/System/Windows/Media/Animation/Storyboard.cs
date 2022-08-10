@@ -929,13 +929,13 @@ public class Storyboard : ParallelTimeline
     /// </summary>
     private void VerifyComplexPathSupport( DependencyObject targetObject )
     {
-        if( FrameworkElement.DType.IsInstanceOfType(targetObject) )
+        if(targetObject is FrameworkElement)
         {
             // FrameworkElement and derived types are supported.
             return;
         }
 
-        if( FrameworkContentElement.DType.IsInstanceOfType(targetObject) )
+        if(targetObject is FrameworkContentElement)
         {
             // FrameworkContentElement and derived types are supported.
             return;

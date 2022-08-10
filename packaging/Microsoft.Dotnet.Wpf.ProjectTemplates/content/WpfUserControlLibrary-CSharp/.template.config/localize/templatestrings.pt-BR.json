@@ -1,14 +1,14 @@
-{
+﻿{
   "author": "Microsoft",
   "name": "Biblioteca de Controles de Usuário do WPF",
   "description": "Um projeto para criar uma biblioteca de controles de usuário para aplicativos .NET WPF",
-  "symbols/TargetFrameworkOverride/description": "Substitui a estrutura de\u00A0destino",
+  "symbols/TargetFrameworkOverride/description": "Substitui a estrutura de destino",
   "symbols/Framework/description": "A estrutura de destino do projeto.",
   "symbols/Framework/choices/netcoreapp3.0/description": "Netcoreapp3.0 de destino",
   "symbols/Framework/choices/netcoreapp3.1/description": "Netcoreapp3.1 de destino",
   "symbols/Framework/choices/net5.0/description": "Net5.0 de destino",
   "symbols/Framework/choices/net6.0/description": "Net6.0 de destino",
-  "symbols/Framework/choices/net7.0/description": "Target net7.0",
+  "symbols/Framework/choices/net7.0/description": "Alvo .NET7.0",
   "symbols/langVersion/description": "Define a langVersion no arquivo do projeto criado",
   "symbols/skipRestore/description": "Se especificado, ignora a restauração automática do projeto sendo criado.",
   "symbols/Nullable/description": "Se permitir tipos de referência anuláveis para este projeto.",

@@ -694,16 +694,7 @@ namespace System.Windows.Input
         /// <returns></returns>        
         private void CopyAdditionalData()
         {
-            if (null != _additionalValues)
-            {
-                int[] newData = new int[_additionalValues.Length];
-                for (int x = 0; x < _additionalValues.Length; x++)
-                {
-                    newData[x] = _additionalValues[x];
-                }
-
-                _additionalValues = newData;
-            }
+            _additionalValues = (int[])_additionalValues?.Clone();
         }
 
         /// <summary>

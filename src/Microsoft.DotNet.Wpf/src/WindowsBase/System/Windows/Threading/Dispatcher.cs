@@ -17,6 +17,8 @@ using MS.Internal.Interop;                   // WM
 using MS.Internal.WindowsBase;               // SecurityHelper
 using System.Threading;
 using System.ComponentModel;                 // EditorBrowsableAttribute, BrowsableAttribute
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 // Disabling 1634 and 1691:
 // In order to avoid generating warnings about unknown message numbers and
@@ -222,7 +224,13 @@ namespace System.Windows.Threading
         {
             if(!CheckAccess())
             {
-                throw new InvalidOperationException(SR.VerifyAccess);
+                // Used to inline VerifyAccess.
+                [DoesNotReturn]
+                [MethodImpl(MethodImplOptions.NoInlining)]
+                static void ThrowVerifyAccess()
+                    => throw new InvalidOperationException(SR.VerifyAccess);
+
+                ThrowVerifyAccess();
             }
         }
 

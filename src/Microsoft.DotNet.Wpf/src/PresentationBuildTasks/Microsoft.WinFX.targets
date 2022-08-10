@@ -441,6 +441,7 @@
                 MSBuildBinPath="$(MSBuildBinPath)"
                 ReferencePathTypeName="ReferencePath"
                 CompileTypeName="Compile"
+                AnalyzerTypeName="Analyzer"
                 GeneratedCodeFiles="@(_GeneratedCodeFiles)"
                 ReferencePath="@(ReferencePath)"
                 BaseIntermediateOutputPath="$(BaseIntermediateOutputPath)"
@@ -449,7 +450,7 @@
                 CompileTargetName="$(_CompileTargetNameForLocalType)"
                 GenerateTemporaryTargetAssemblyDebuggingInformation="$(GenerateTemporaryTargetAssemblyDebuggingInformation)"
                 IncludePackageReferencesDuringMarkupCompilation="$(IncludePackageReferencesDuringMarkupCompilation)"
-                Analyzers="$(Analyzers)"
+                Analyzers="@(Analyzer)"
                 TemporaryTargetAssemblyProjectName="$(_TemporaryTargetAssemblyProjectName)"
                 MSBuildProjectExtensionsPath="$(MSBuildProjectExtensionsPath)"
                  >
@@ -485,6 +486,20 @@
                      Condition="Exists('%(Fullpath)')" />
   </Target>
 
+  <!--
+                 ===========================================
+                          RemoveDuplicateAnalyzers
+                 ===========================================
+
+                Name : RemoveDuplicateAnalyzers
+  -->
+  <Target Name="RemoveDuplicateAnalyzers" BeforeTargets="CoreCompile">
+    <ItemGroup>
+        <FilteredAnalyzer Include="@(Analyzer->Distinct())" />
+        <Analyzer Remove="@(Analyzer)" />
+        <Analyzer Include="@(FilteredAnalyzer)" />
+    </ItemGroup>
+  </Target>
 
 <!--
     ================================================================

@@ -1000,7 +1000,7 @@ namespace System.Windows
                 // only then do we need to Invalidate the property
                 if (BaseValueSourceInternal.Inherited >= oldEntry.BaseValueSourceInternal)
                 {
-                    if (visitedViaVisualTree && FrameworkElement.DType.IsInstanceOfType(d))
+                    if (visitedViaVisualTree && d is FrameworkElement)
                     {
                         DependencyObject logicalParent = LogicalTreeHelper.GetParent(d);
                         if (logicalParent != null)

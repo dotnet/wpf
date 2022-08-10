@@ -51,7 +51,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // Build the result string
-            return SR.Get(SRID.KeyAlt) + "+" + s[iPosShortCut + 1];
+            return SR.KeyAlt + "+" + s[iPosShortCut + 1];
         }
 
         // Extend an existing RunTimeID by one element

@@ -13,6 +13,7 @@
     <_GenerateResourcesCodeAsConstants>true</_GenerateResourcesCodeAsConstants>
 
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='UIAutomationClient'">false</_GenerateResourcesCodeAsConstants>
+    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='UIAutomationClientSideProviders'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='UIAutomationProvider'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='System.Xaml'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='WindowsBase'">false</_GenerateResourcesCodeAsConstants>
@@ -32,6 +33,7 @@
 
       <ClassName Condition="'$(AssemblyName)'=='PresentationBuildTasks'">MS.Utility.SRID</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='UIAutomationClient'">System.SR</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='UIAutomationClientSideProviders'">System.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='UIAutomationProvider'">MS.Internal.Automation.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='UIAutomationTypes'">System.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='WindowsBase'">MS.Internal.WindowsBase.SR</ClassName>

@@ -499,10 +499,7 @@ namespace MS.Internal.FontCache
                 foreach (KeyValuePair<CultureInfo, string> name in font.FaceNames)
                 {
                     string currentFontName = name.Value.ToUpper(CultureInfo.InvariantCulture);
-                    if (!faces.ContainsKey(currentFontName))
-                    {
-                        faces.Add(currentFontName, font);
-                    }
+                    faces.TryAdd(currentFontName, font);
                 }
             }
 

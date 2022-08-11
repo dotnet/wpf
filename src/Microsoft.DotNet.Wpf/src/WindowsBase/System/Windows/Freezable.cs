@@ -183,7 +183,7 @@ namespace System.Windows
             // Check up front that the operation will succeed before we begin.
             if (!CanFreeze)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Freezable_CantFreeze));
+                throw new InvalidOperationException(SR.Freezable_CantFreeze);
             }
 
             Freeze(/* isChecking = */ false);
@@ -639,7 +639,7 @@ namespace System.Windows
             if (IsFrozenInternal)
             {
                 throw new InvalidOperationException(
-                    SR.Get(SRID.Freezable_CantBeFrozen,GetType().FullName));
+                    SR.Format(SR.Freezable_CantBeFrozen,GetType().FullName));
             }
         }
 
@@ -1038,7 +1038,7 @@ namespace System.Windows
                 owner.Dispatcher != child.Dispatcher)
             {
                 throw new InvalidOperationException(
-                    SR.Get(SRID.Freezable_AttemptToUseInnerValueWithDifferentThread));
+                    SR.Freezable_AttemptToUseInnerValueWithDifferentThread);
             }
         }
 
@@ -1111,7 +1111,7 @@ namespace System.Windows
             // Make sure we actually removed something - if not throw an exception
             if (failed)
             {
-                throw new ArgumentException(SR.Get(SRID.Freezable_NotAContext), "context");
+                throw new ArgumentException(SR.Freezable_NotAContext, "context");
             }
         }
 
@@ -1471,7 +1471,7 @@ namespace System.Windows
 
             if (failed)
             {
-                throw new ArgumentException(SR.Get(SRID.Freezable_UnregisteredHandler), "handler");
+                throw new ArgumentException(SR.Freezable_UnregisteredHandler, "handler");
             }
         }
 

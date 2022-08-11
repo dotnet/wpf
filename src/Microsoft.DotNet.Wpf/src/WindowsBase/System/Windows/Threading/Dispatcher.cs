@@ -17,6 +17,8 @@ using MS.Internal.Interop;                   // WM
 using MS.Internal.WindowsBase;               // SecurityHelper
 using System.Threading;
 using System.ComponentModel;                 // EditorBrowsableAttribute, BrowsableAttribute
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 // Disabling 1634 and 1691:
 // In order to avoid generating warnings about unknown message numbers and
@@ -222,7 +224,13 @@ namespace System.Windows.Threading
         {
             if(!CheckAccess())
             {
-                throw new InvalidOperationException(SR.Get(SRID.VerifyAccess));
+                // Used to inline VerifyAccess.
+                [DoesNotReturn]
+                [MethodImpl(MethodImplOptions.NoInlining)]
+                static void ThrowVerifyAccess()
+                    => throw new InvalidOperationException(SR.VerifyAccess);
+
+                ThrowVerifyAccess();
             }
         }
 
@@ -312,17 +320,17 @@ namespace System.Windows.Threading
             Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
             if(dispatcher._hasShutdownFinished) // Dispatcher thread - no lock needed for read
             {
-                throw new InvalidOperationException(SR.Get(SRID.DispatcherHasShutdown));
+                throw new InvalidOperationException(SR.DispatcherHasShutdown);
             }
 
             if(frame.Dispatcher != dispatcher)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MismatchedDispatchers));
+                throw new InvalidOperationException(SR.MismatchedDispatchers);
             }
 
             if(dispatcher._disableProcessingCount > 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.DispatcherProcessingDisabled));
+                throw new InvalidOperationException(SR.DispatcherProcessingDisabled);
             }
 
             dispatcher.PushFrameImpl(frame);
@@ -365,7 +373,7 @@ namespace System.Windows.Threading
             Dispatcher currentDispatcher = FromThread(Thread.CurrentThread);;
             if(currentDispatcher == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.DispatcherYieldNoAvailableDispatcher));
+                throw new InvalidOperationException(SR.DispatcherYieldNoAvailableDispatcher);
             }
 
             return new DispatcherPriorityAwaitable(currentDispatcher, priority);
@@ -1275,7 +1283,7 @@ namespace System.Windows.Threading
             ValidatePriority(priority, "priority");
             if(priority == DispatcherPriority.Inactive)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidPriority), "priority");
+                throw new ArgumentException(SR.InvalidPriority, "priority");
             }
 
             if(method == null)
@@ -2279,7 +2287,7 @@ namespace System.Windows.Threading
             WindowMessage message = (WindowMessage)msg;
             if(_disableProcessingCount > 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.DispatcherProcessingDisabledButStillPumping));
+                throw new InvalidOperationException(SR.DispatcherProcessingDisabledButStillPumping);
             }
 
             if(message == WindowMessage.WM_DESTROY)
@@ -2559,7 +2567,7 @@ namespace System.Windows.Threading
                 case BaseCompatibilityPreferences.HandleDispatcherRequestProcessingFailureOptions.Continue:
                     break;
                 case BaseCompatibilityPreferences.HandleDispatcherRequestProcessingFailureOptions.Throw:
-                    throw new InvalidOperationException(SR.Get(SRID.DispatcherRequestProcessingFailed));
+                    throw new InvalidOperationException(SR.DispatcherRequestProcessingFailed);
                 case BaseCompatibilityPreferences.HandleDispatcherRequestProcessingFailureOptions.Reset:
                     _postedProcessingType = PROCESS_NONE;
                     break;

@@ -53,7 +53,7 @@ namespace System.Windows
             if (!typeof(DependencyObject).IsAssignableFrom(systemType))
             {
                 #pragma warning suppress 6506 // systemType is obviously not null
-                throw new ArgumentException(SR.Get(SRID.DTypeNotSupportForSystemType, systemType.Name));
+                throw new ArgumentException(SR.Format(SR.DTypeNotSupportForSystemType, systemType.Name));
             }
 
             return FromSystemTypeInternal(systemType);

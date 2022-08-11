@@ -52,7 +52,7 @@ namespace MS.Internal.AutomationProxies
             if (idChild != 0)
             {
                 System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.Get(SRID.ShouldBeZero));
+                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
             }
 
             return new FormsLink(hwnd, null, idChild);
@@ -130,7 +130,7 @@ namespace MS.Internal.AutomationProxies
 
             if (!SafeNativeMethods.IsWindowVisible(_hwnd))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             Misc.SetFocus(_hwnd);

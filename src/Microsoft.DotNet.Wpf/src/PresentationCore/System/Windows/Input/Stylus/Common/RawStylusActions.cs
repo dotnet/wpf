@@ -72,7 +72,7 @@ namespace System.Windows.Input
     /// </summary>
     internal static class RawStylusActionsHelper
     {
-        private static readonly RawStylusActions MaxActions =    
+        private const RawStylusActions MaxActions =
             RawStylusActions.None |
             RawStylusActions.Activate |
             RawStylusActions.Deactivate |

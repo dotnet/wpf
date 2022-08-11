@@ -1481,7 +1481,7 @@ namespace System.Xaml
             {
                 if (typeArg == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.CollectionCannotContainNulls, "typeArguments"));
+                    throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "typeArguments"));
                 }
             }
             return new List<XamlType>(typeArguments).AsReadOnly();
@@ -1597,7 +1597,7 @@ namespace System.Xaml
                 {
                     if (!SchemaContext.SupportMarkupExtensionsWithDuplicateArity)
                     {
-                        throw new XamlSchemaException(SR.Get(SRID.MarkupExtensionWithDuplicateArity, UnderlyingType, typeVector.Length));
+                        throw new XamlSchemaException(SR.Format(SR.MarkupExtensionWithDuplicateArity, UnderlyingType, typeVector.Length));
                     }
                     // Otherwise we just ignore the dupe
                 }
@@ -1647,7 +1647,7 @@ namespace System.Xaml
                     if (bit && IsMarkupExtension)
                     {
                         // MarkupExtension cannot be used during initialization.
-                        string err = SR.Get(SRID.UsableDuringInitializationOnME, this);
+                        string err = SR.Format(SR.UsableDuringInitializationOnME, this);
                         throw new XamlSchemaException(err);
                     }
                     break;

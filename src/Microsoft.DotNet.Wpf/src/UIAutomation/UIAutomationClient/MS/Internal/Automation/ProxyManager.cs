@@ -61,20 +61,20 @@ namespace MS.Internal.Automation
             }
             catch(System.IO.FileNotFoundException)
             {
-                throw new ProxyAssemblyNotLoadedException(SR.Get(SRID.Assembly0NotFound,assemblyName));
+                throw new ProxyAssemblyNotLoadedException(SR.Format(SR.Assembly0NotFound,assemblyName));
             } 
             
             string typeName = assemblyName.Name + ".UIAutomationClientSideProviders";
             Type t = a.GetType( typeName );
             if( t == null )
             {
-                throw new ProxyAssemblyNotLoadedException(SR.Get(SRID.CouldNotFindType0InAssembly1, typeName, assemblyName));
+                throw new ProxyAssemblyNotLoadedException(SR.Format(SR.CouldNotFindType0InAssembly1, typeName, assemblyName));
             }
 
             FieldInfo fi = t.GetField("ClientSideProviderDescriptionTable", BindingFlags.Static | BindingFlags.Public);
             if (fi == null || fi.FieldType !=  typeof(ClientSideProviderDescription[]))
             {
-                throw new ProxyAssemblyNotLoadedException(SR.Get(SRID.CouldNotFindRegisterMethodOnType0InAssembly1, typeName, assemblyName));
+                throw new ProxyAssemblyNotLoadedException(SR.Format(SR.CouldNotFindRegisterMethodOnType0InAssembly1, typeName, assemblyName));
             }
 
             ClientSideProviderDescription[] table = fi.GetValue(null) as ClientSideProviderDescription[];
@@ -734,7 +734,7 @@ namespace MS.Internal.Automation
                         {
                             if( pi.ImageName != null || pi.Flags != 0 )
                             {
-                                throw new ArgumentException(SR.Get(SRID.NonclientClassnameCannotBeUsedWithFlagsOrImagename));
+                                throw new ArgumentException(SR.NonclientClassnameCannotBeUsedWithFlagsOrImagename);
                             }
 
                             _pseudoProxies[j] = pi.ClientSideProviderFactoryCallback;

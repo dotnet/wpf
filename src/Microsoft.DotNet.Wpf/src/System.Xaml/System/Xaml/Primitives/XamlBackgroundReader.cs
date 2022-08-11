@@ -87,7 +87,7 @@ namespace System.Xaml
         {
             if (_thread != null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ThreadAlreadyStarted));
+                throw new InvalidOperationException(SR.ThreadAlreadyStarted);
             }
             ParameterizedThreadStart start = new ParameterizedThreadStart(XamlReaderThreadStart);
             _thread = new Thread(start);

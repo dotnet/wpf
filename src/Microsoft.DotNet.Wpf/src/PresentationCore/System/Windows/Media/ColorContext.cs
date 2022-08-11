@@ -834,9 +834,9 @@ namespace System.Windows.Media
                 NativeMethods.COLORTYPE.COLOR_8_CHANNEL
                 };
 
-        private readonly static string _colorProfileResources = "ColorProfiles";
+        private const string _colorProfileResources = "ColorProfiles";
 
-        private readonly static string _sRGBProfileName = "sRGB_icm";
+        private const string _sRGBProfileName = "sRGB_icm";
 
         [StructLayout(LayoutKind.Sequential)]
         private struct AbbreviatedPROFILEHEADER

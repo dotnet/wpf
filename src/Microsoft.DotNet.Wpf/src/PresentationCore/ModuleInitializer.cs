@@ -25,11 +25,18 @@ internal static class ModuleInitializer
 
     private static void IsProcessDpiAware()
     {
+        bool disableDpiAware = false;
+
         // By default, Application is DPIAware.
         Assembly assemblyApp = Assembly.GetEntryAssembly();
 
         // Check if the Application has explicitly set DisableDpiAwareness attribute.
         if (assemblyApp != null && Attribute.IsDefined(assemblyApp, typeof(System.Windows.Media.DisableDpiAwarenessAttribute)))
+        {
+            disableDpiAware = true;
+        }
+
+        if (!disableDpiAware)
         {
             // DpiAware composition is enabled for this application.
             SetProcessDPIAware_Internal();

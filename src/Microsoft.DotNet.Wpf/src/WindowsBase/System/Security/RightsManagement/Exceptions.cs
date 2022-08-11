@@ -34,7 +34,7 @@ namespace System.Security.RightsManagement
         /// that describes the error. This message takes into account the current system culture.
         /// </summary>
         public RightsManagementException() : 
-                                                    base(SR.Get(SRID.RmExceptionGenericMessage))
+                                                    base(SR.RmExceptionGenericMessage)
         {}
 
         /// <summary>

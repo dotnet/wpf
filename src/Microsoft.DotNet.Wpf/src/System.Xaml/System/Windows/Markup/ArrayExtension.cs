@@ -109,7 +109,7 @@ namespace System.Windows.Markup
         {
             if (_arrayType == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MarkupExtensionArrayType));
+                throw new InvalidOperationException(SR.MarkupExtensionArrayType);
             }
             
             object retArray = null;
@@ -123,7 +123,7 @@ namespace System.Windows.Markup
                 // If an element was added to the ArrayExtension that does not agree with the
                 // ArrayType, then an InvalidCastException will occur.  Generate a more
                 // meaningful error for this case.
-                throw new InvalidOperationException(SR.Get(SRID.MarkupExtensionArrayBadType, _arrayType.Name));
+                throw new InvalidOperationException(SR.Format(SR.MarkupExtensionArrayBadType, _arrayType.Name));
             }
 
             return retArray;

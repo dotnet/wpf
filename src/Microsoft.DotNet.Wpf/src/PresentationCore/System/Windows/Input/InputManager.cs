@@ -801,22 +801,16 @@ namespace System.Windows.Input
                     {
                         if (eventSource != null)
                         {
-                            if (InputElement.IsUIElement(eventSource))
+                            if (eventSource is UIElement e)
                             {
-                                UIElement e = (UIElement)eventSource;
-
                                 e.RaiseEvent(input, true); // Call the "trusted" flavor of RaiseEvent. 
                             }
-                            else if (InputElement.IsContentElement(eventSource))
+                            else if (eventSource is ContentElement ce)
                             {
-                                ContentElement ce = (ContentElement)eventSource;
-
                                 ce.RaiseEvent(input, true);// Call the "trusted" flavor of RaiseEvent.
                             }
-                            else if (InputElement.IsUIElement3D(eventSource))
+                            else if (eventSource is UIElement3D e3D)
                             {
-                                UIElement3D e3D = (UIElement3D)eventSource;
-
                                 e3D.RaiseEvent(input, true); // Call the "trusted" flavor of RaiseEvent
                             }
 

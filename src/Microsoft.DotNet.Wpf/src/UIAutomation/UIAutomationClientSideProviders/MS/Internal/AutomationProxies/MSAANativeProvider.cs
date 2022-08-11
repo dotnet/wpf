@@ -1215,7 +1215,7 @@ namespace MS.Internal.AutomationProxies
                     throw;
                 }
 
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed), e);
+                throw new InvalidOperationException(SR.OperationCannotBePerformed, e);
             }
         }
 

@@ -3,7 +3,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <CharacterSet>Unicode</CharacterSet>
 
-    <!-- v142 = Visual Studio 2019 -->
+    <!-- v143 = Visual Studio 2022 -->
     <PlatformToolset>v143</PlatformToolset>
 
     <!-- 17134 is Windows 10 v1903 (19H1) SDK -->

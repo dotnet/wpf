@@ -227,7 +227,7 @@ namespace MS.Internal.AutomationProxies
             {
                 if (child is ListViewItem)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
 
                 WindowsListViewGroup windowsListViewGroup = child as WindowsListViewGroup;
@@ -670,7 +670,7 @@ namespace MS.Internal.AutomationProxies
                 }
             }
 
-            throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+            throw new InvalidOperationException(SR.OperationCannotBePerformed);
         }
 
         // Calc the position of the horizontal scroll bar thumb in the 0..100 % range
@@ -745,12 +745,12 @@ namespace MS.Internal.AutomationProxies
 
             if (row < 0 || row >= maxRow)
             {
-                throw new ArgumentOutOfRangeException("row", row, SR.Get(SRID.GridRowOutOfRange));
+                throw new ArgumentOutOfRangeException("row", row, SR.GridRowOutOfRange);
             }
 
             if (column < 0 || column >= maxColumn)
             {
-                throw new ArgumentOutOfRangeException("column", column, SR.Get(SRID.GridColumnOutOfRange));
+                throw new ArgumentOutOfRangeException("column", column, SR.GridColumnOutOfRange);
             }
 
             // GetCell
@@ -829,7 +829,7 @@ namespace MS.Internal.AutomationProxies
         {
             if ( viewID < 0 || viewID > ListViewViews.Length )
             {
-                throw new ArgumentException( SR.Get( SRID.InvalidParameter ) );
+                throw new ArgumentException(SR.InvalidParameter);
             }
             return ListViewViews [viewID];
         }
@@ -838,7 +838,7 @@ namespace MS.Internal.AutomationProxies
         {
             if ( viewID < 0 || viewID > ListViewViews.Length )
             {
-                throw new ArgumentException( SR.Get( SRID.InvalidParameter ) );
+                throw new ArgumentException(SR.InvalidParameter);
             }
             // App specific: App will provide us with the SupportedViews array
             // How this would be done is TBD
@@ -1661,7 +1661,7 @@ namespace MS.Internal.AutomationProxies
 
             if (fScrollPos < 0 || fScrollPos > 100)
             {
-                throw new ArgumentOutOfRangeException(sbFlag == NativeMethods.SB_HORZ ? "horizontalPercent" : "verticalPercent", SR.Get(SRID.ScrollBarOutOfRange));
+                throw new ArgumentOutOfRangeException(sbFlag == NativeMethods.SB_HORZ ? "horizontalPercent" : "verticalPercent", SR.ScrollBarOutOfRange);
             }
 
             int scrollBar = sbFlag == NativeMethods.SB_HORZ ? NativeMethods.OBJID_HSCROLL : NativeMethods.OBJID_VSCROLL;

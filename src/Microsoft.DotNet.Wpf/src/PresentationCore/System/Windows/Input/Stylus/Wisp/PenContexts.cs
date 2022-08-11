@@ -126,7 +126,7 @@ namespace System.Windows.Input
 
         internal void OnPenOutOfRange(PenContext penContext, int tabletDeviceId, int stylusPointerId, int timestamp)
         {
-            ProcessInput(RawStylusActions.OutOfRange, penContext, tabletDeviceId, stylusPointerId, new int[]{}, timestamp);
+            ProcessInput(RawStylusActions.OutOfRange, penContext, tabletDeviceId, stylusPointerId, Array.Empty<int>(), timestamp);
         }
 
         /////////////////////////////////////////////////////////////////////

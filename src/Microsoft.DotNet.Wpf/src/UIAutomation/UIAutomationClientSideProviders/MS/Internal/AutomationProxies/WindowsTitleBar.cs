@@ -374,24 +374,24 @@ namespace MS.Internal.AutomationProxies
                     {
                         case NativeMethods.INDEX_TITLEBAR_MINBUTTON:
                             if (Misc.IsBitSet(WindowStyle, NativeMethods.WS_MINIMIZE))
-                                return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonRestore);
+                                return SR.LocalizedNameWindowsTitleBarButtonRestore;
                             else
-                                return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonMinimize);
+                                return SR.LocalizedNameWindowsTitleBarButtonMinimize;
 
                         case NativeMethods.INDEX_TITLEBAR_HELPBUTTON:
-                            return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonContextHelp);
+                            return SR.LocalizedNameWindowsTitleBarButtonContextHelp;
 
                         case NativeMethods.INDEX_TITLEBAR_MAXBUTTON:
                             if (Misc.IsBitSet(WindowStyle, NativeMethods.WS_MAXIMIZE))
-                                return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonRestore);
+                                return SR.LocalizedNameWindowsTitleBarButtonRestore;
                             else
-                                return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonMaximize);
+                                return SR.LocalizedNameWindowsTitleBarButtonMaximize;
 
                         case NativeMethods.INDEX_TITLEBAR_CLOSEBUTTON:
-                            return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonClose);
+                            return SR.LocalizedNameWindowsTitleBarButtonClose;
 
                         default:
-                            return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonUnknown);
+                            return SR.LocalizedNameWindowsTitleBarButtonUnknown;
                     }
                 }
             }

@@ -126,7 +126,7 @@ namespace MS.Internal.Annotations
         }
 
         /// <summary>
-        ///     Returns an enumerator forthe key/value pairs in this ContentLocatorPart.
+        ///     Returns an enumerator for the key/value pairs in this ContentLocatorPart.
         /// </summary>
         /// <returns>an enumerator for the key/value pairs; never returns null</returns>
         public IEnumerator<KeyValuePair<string, string>> GetEnumerator()

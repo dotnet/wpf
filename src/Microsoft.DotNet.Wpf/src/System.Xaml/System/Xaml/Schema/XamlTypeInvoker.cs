@@ -76,7 +76,7 @@ namespace System.Xaml.Schema
             ThrowIfUnknown();
             if (!_xamlType.IsCollection)
             {
-                throw new NotSupportedException(SR.Get(SRID.OnlySupportedOnCollections));
+                throw new NotSupportedException(SR.OnlySupportedOnCollections);
             }
             XamlType itemType;
             if (item != null)
@@ -90,7 +90,7 @@ namespace System.Xaml.Schema
             MethodInfo addMethod = GetAddMethod(itemType);
             if (addMethod == null)
             {
-                throw new XamlSchemaException(SR.Get(SRID.NoAddMethodFound, _xamlType, itemType));
+                throw new XamlSchemaException(SR.Format(SR.NoAddMethodFound, _xamlType, itemType));
             }
             SafeReflectionInvoker.InvokeMethod(addMethod, instance, new object[] { item });
         }
@@ -111,7 +111,7 @@ namespace System.Xaml.Schema
             ThrowIfUnknown();
             if (!_xamlType.IsDictionary)
             {
-                throw new NotSupportedException(SR.Get(SRID.OnlySupportedOnDictionaries));
+                throw new NotSupportedException(SR.OnlySupportedOnDictionaries);
             }
             XamlType itemType;
             if (item != null)
@@ -125,7 +125,7 @@ namespace System.Xaml.Schema
             MethodInfo addMethod = GetAddMethod(itemType);
             if (addMethod == null)
             {
-                throw new XamlSchemaException(SR.Get(SRID.NoAddMethodFound, _xamlType, itemType));
+                throw new XamlSchemaException(SR.Format(SR.NoAddMethodFound, _xamlType, itemType));
             }
             SafeReflectionInvoker.InvokeMethod(addMethod, instance, new object[] { key, item });
         }
@@ -223,7 +223,7 @@ namespace System.Xaml.Schema
             ThrowIfUnknown();
             if (!_xamlType.IsCollection && !_xamlType.IsDictionary)
             {
-                throw new NotSupportedException(SR.Get(SRID.OnlySupportedOnCollectionsAndDictionaries));
+                throw new NotSupportedException(SR.OnlySupportedOnCollectionsAndDictionaries);
             }
             MethodInfo getEnumMethod = GetEnumeratorMethod();
             return (IEnumerator)SafeReflectionInvoker.InvokeMethod(getEnumMethod, instance, s_emptyObjectArray);
@@ -273,7 +273,7 @@ namespace System.Xaml.Schema
         {
             if (IsUnknown)
             {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnUnknownType));
+                throw new NotSupportedException(SR.NotSupportedOnUnknownType);
             }
         }
 
@@ -339,7 +339,7 @@ namespace System.Xaml.Schema
                 if (tConstInfo == null)
                 {
                     // Throwing MissingMethodException for equivalence with Activator.CreateInstance
-                    throw new MissingMethodException(SR.Get(SRID.NoDefaultConstructor, underlyingType.FullName));
+                    throw new MissingMethodException(SR.Format(SR.NoDefaultConstructor, underlyingType.FullName));
                 }
                 if ((tConstInfo.IsSecurityCritical && !tConstInfo.IsSecuritySafeCritical) ||
                     (tConstInfo.Attributes & MethodAttributes.HasSecurity) == MethodAttributes.HasSecurity ||
@@ -363,22 +363,22 @@ namespace System.Xaml.Schema
         {
             public override void AddToCollection(object instance, object item)
             {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnUnknownType));
+                throw new NotSupportedException(SR.NotSupportedOnUnknownType);
             }
 
             public override void AddToDictionary(object instance, object key, object item)
             {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnUnknownType));
+                throw new NotSupportedException(SR.NotSupportedOnUnknownType);
             }
 
             public override object CreateInstance(object[] arguments)
             {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnUnknownType));
+                throw new NotSupportedException(SR.NotSupportedOnUnknownType);
             }
 
             public override IEnumerator GetItems(object instance)
             {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnUnknownType));
+                throw new NotSupportedException(SR.NotSupportedOnUnknownType);
             }
         }
     }

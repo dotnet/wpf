@@ -230,7 +230,7 @@ namespace MS.Internal.Xaml.Runtime
             MethodInfo getter = member.Invoker.UnderlyingGetter;
             if (getter == null)
             {
-                throw new NotSupportedException(SR.Get(SRID.CantGetWriteonlyProperty, member));
+                throw new NotSupportedException(SR.Format(SR.CantGetWriteonlyProperty, member));
             }
 
             PropertyGetDelegate getterDelegate;
@@ -247,7 +247,7 @@ namespace MS.Internal.Xaml.Runtime
             MethodInfo setter = member.Invoker.UnderlyingSetter;
             if (setter == null)
             {
-                throw new NotSupportedException(SR.Get(SRID.CantSetReadonlyProperty, member));
+                throw new NotSupportedException(SR.Format(SR.CantSetReadonlyProperty, member));
             }
 
             PropertySetDelegate setterDelegate;

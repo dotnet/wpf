@@ -1009,7 +1009,7 @@ namespace MS.Utility
                 case Event.WClientUIContextIdle:
                     // c626ebef-0780-487f-81d7-38d3f0a6f05e
                     return new Guid(0xC626EBEF, 0x780, 0x487F, 0x81, 0xD7, 0x38, 0xD3, 0xF0, 0xA6, 0xF0, 0x5E);
-                default: throw new ArgumentException(SR.Get(SRID.InvalidEvent),"arg");
+                default: throw new ArgumentException(SR.InvalidEvent,"arg");
             }
         }
         
@@ -1489,7 +1489,7 @@ namespace MS.Utility
                     return 23;
                 case Event.WClientUIContextIdle:
                     return 24;
-                default: throw new ArgumentException(SR.Get(SRID.InvalidEvent),"arg");
+                default: throw new ArgumentException(SR.InvalidEvent,"arg");
             }
         }
         
@@ -1902,7 +1902,7 @@ namespace MS.Utility
                     return 154;
                 case Event.WpfHostUm_AdHocProfile2End:
                     return 155;
-                default: throw new ArgumentException(SR.Get(SRID.InvalidEvent),"arg");
+                default: throw new ArgumentException(SR.InvalidEvent,"arg");
             }
         }
         
@@ -2246,7 +2246,7 @@ namespace MS.Utility
                 case Event.WClientUIContextAbort:
                 case Event.WClientUIContextPromote:
                     return 3;
-                default: throw new ArgumentException(SR.Get(SRID.InvalidEvent),"arg");
+                default: throw new ArgumentException(SR.InvalidEvent,"arg");
             }
         }
     }

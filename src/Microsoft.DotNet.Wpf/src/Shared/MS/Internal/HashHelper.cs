@@ -32,9 +32,11 @@ namespace MS.Internal.YourAssemblyName
         {
             Initialize();       // this makes FxCop happy - otherwise Initialize is "unused code"
 
-            Type[] types = new Type[] {
 #if WINDOWS_BASE
-#elif PRESENTATION_CORE
+            Type[] types = Type.EmptyTypes;
+#else
+            Type[] types = new Type[] {
+#if PRESENTATION_CORE
                 typeof(System.Windows.Media.CharacterMetrics),      // bug 1612093
                 typeof(System.Windows.Ink.ExtendedProperty),        // bug 1612101
                 typeof(System.Windows.Media.FamilyTypeface),        // bug 1612103
@@ -44,7 +46,7 @@ namespace MS.Internal.YourAssemblyName
                 typeof(System.Windows.ComponentResourceKey),        // bug 1612119
 #endif
             };
-
+#endif
             BaseHashHelper.RegisterTypes(typeof(HashHelper).Assembly, types);
 
             // initialize lower-level assemblies

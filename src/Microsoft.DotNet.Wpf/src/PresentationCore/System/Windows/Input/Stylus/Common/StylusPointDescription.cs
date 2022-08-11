@@ -25,11 +25,11 @@ namespace System.Windows.Input
         /// <summary>
         /// Internal statics for our magic numbers
         /// </summary>
-        internal static readonly int RequiredCountOfProperties = 3;
-        internal static readonly int RequiredXIndex = 0;
-        internal static readonly int RequiredYIndex = 1;
-        internal static readonly int RequiredPressureIndex = 2;
-        internal static readonly int MaximumButtonCount = 31;
+        internal const int RequiredCountOfProperties = 3;
+        internal const int RequiredXIndex = 0;
+        internal const int RequiredYIndex = 1;
+        internal const int RequiredPressureIndex = 2;
+        internal const int MaximumButtonCount = 31;
 
         private int                         _buttonCount = 0;
         private int                         _originalPressureIndex = RequiredPressureIndex;

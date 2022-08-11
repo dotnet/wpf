@@ -276,28 +276,21 @@ namespace System.Windows.Media
         /// </returns>
         internal string ConvertToString(string format, IFormatProvider provider)
         {
-            StringBuilder sb = new StringBuilder();
-
             if (context == null)
             {
                 if (format == null)
                 {
-                    sb.AppendFormat(provider, "#{0:X2}", this.sRgbColor.a);
-                    sb.AppendFormat(provider, "{0:X2}", this.sRgbColor.r);
-                    sb.AppendFormat(provider, "{0:X2}", this.sRgbColor.g);
-                    sb.AppendFormat(provider, "{0:X2}", this.sRgbColor.b);
+                    return string.Create(provider, stackalloc char[128], $"#{this.sRgbColor.a:X2}{this.sRgbColor.r:X2}{this.sRgbColor.g:X2}{this.sRgbColor.b:X2}");
                 }
                 else
                 {
                     // Helper to get the numeric list separator for a given culture.
                     char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
-
-                    sb.AppendFormat(provider,
-                        "sc#{1:" + format + "}{0} {2:" + format + "}{0} {3:" + format + "}{0} {4:" + format + "}",
-                        separator, scRgbColor.a, scRgbColor.r,
-                        scRgbColor.g, scRgbColor.b);
+                    return string.Format(provider,
+                        $"sc#{{1:{format}}}{{0}} {{{format}}}{{0}} {{3:{format}}}{{0}} {{4:{format}}}",
+                        separator, scRgbColor.a, scRgbColor.r, scRgbColor.g, scRgbColor.b);
                 }
-            }    
+            }
             else
             {
                 char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
@@ -310,6 +303,7 @@ namespace System.Windows.Media
                 //Second Step make sure that everything that should escaped is escaped
                 String uriString = safeUnescapedUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.UriEscaped);
 
+                var sb = new StringBuilder();
                 sb.AppendFormat(provider, "{0}{1} ", Parsers.s_ContextColor, uriString);
                 sb.AppendFormat(provider,"{1:" + format + "}{0}",separator,scRgbColor.a);
                 for (int i= 0; i< nativeColorValue.GetLength(0); ++i )
@@ -320,9 +314,8 @@ namespace System.Windows.Media
                         sb.AppendFormat(provider,"{0}",separator);
                     }
                 }
+                return sb.ToString();
             }
-
-            return sb.ToString();
         }
 
         /// <summary>

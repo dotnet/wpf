@@ -58,7 +58,7 @@ namespace System.Xaml.Schema
             ThrowIfUnknown();
             if (UnderlyingGetter == null)
             {
-                throw new NotSupportedException(SR.Get(SRID.CantGetWriteonlyProperty, _member));
+                throw new NotSupportedException(SR.Format(SR.CantGetWriteonlyProperty, _member));
             }
             return GetValueSafeCritical(instance);
         }
@@ -84,7 +84,7 @@ namespace System.Xaml.Schema
             ThrowIfUnknown();
             if (UnderlyingSetter == null)
             {
-                throw new NotSupportedException(SR.Get(SRID.CantSetReadonlyProperty, _member));
+                throw new NotSupportedException(SR.Format(SR.CantSetReadonlyProperty, _member));
             }
             SetValueSafeCritical(instance, value);
         }
@@ -182,7 +182,7 @@ namespace System.Xaml.Schema
         {
             if (IsUnknown)
             {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnUnknownMember));
+                throw new NotSupportedException(SR.NotSupportedOnUnknownMember);
             }
         }
 
@@ -190,12 +190,12 @@ namespace System.Xaml.Schema
         {
             public override object GetValue(object instance)
             {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnDirective));
+                throw new NotSupportedException(SR.NotSupportedOnDirective);
             }
 
             public override void SetValue(object instance, object value)
             {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnDirective));
+                throw new NotSupportedException(SR.NotSupportedOnDirective);
             }
         }
     }

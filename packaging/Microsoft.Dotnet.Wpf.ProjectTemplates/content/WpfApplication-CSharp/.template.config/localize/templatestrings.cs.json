@@ -1,4 +1,4 @@
-{
+﻿{
   "author": "Microsoft",
   "name": "Aplikace WPF",
   "description": "Projekt pro vytvoření aplikace WPF .NET",
@@ -8,7 +8,7 @@
   "symbols/Framework/choices/netcoreapp3.1/description": "Cílit na netcoreapp3.1",
   "symbols/Framework/choices/net5.0/description": "Cílit na net5.0",
   "symbols/Framework/choices/net6.0/description": "Cílit na net6.0",
-  "symbols/Framework/choices/net7.0/description": "Target net7.0",
+  "symbols/Framework/choices/net7.0/description": "Cílový net7.0",
   "symbols/langVersion/description": "Nastaví langVersion ve vytvořeném souboru projektu.",
   "symbols/skipRestore/description": "Pokud se tato možnost zadá, přeskočí automatické obnovení projektu při vytvoření.",
   "symbols/Nullable/description": "Určuje, zda se mají pro tento projekt povolit odkazové typy s možnou hodnotou null.",

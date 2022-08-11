@@ -39,7 +39,7 @@ namespace System.Xaml.Schema
 
             if (mi == null)
             {
-                throw new XamlSchemaException(SR.Get(SRID.SetOnlyProperty, declaringType.Name, name));
+                throw new XamlSchemaException(SR.Format(SR.SetOnlyProperty, declaringType.Name, name));
             }
 
             _isPublic = mi.IsPublic;

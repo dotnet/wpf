@@ -141,7 +141,7 @@ namespace MS.Internal
         [FriendAccessAllowed]
         internal static bool IsUIElementOrUIElement3D(DependencyObject o)
         {
-            return (o is UIElement || o is UIElement3D);
+            return (o is UIElement or UIElement3D);
         }
 
         [FriendAccessAllowed]

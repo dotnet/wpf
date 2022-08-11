@@ -353,6 +353,16 @@ using namespace System::Runtime::Versioning;
        <AdditionalNugetIds Remove="%40(AdditionalNugetIds)" />
        <AdditionalNugetIds Include="%24([System.String]::Copy('%25(_AdditionalPackages.Identity)').Split('+')[0])" />
      </ItemGroup>
+
+     <!-- 
+      Removing the Microsoft.NETCore.Platforms directly and then 
+      adding it again to remove the duplicate reference.
+     -->
+     <ItemGroup>
+        <PackageReference Remove="Microsoft.NETCore.Platforms" />   
+        <PackageReference Include="Microsoft.NETCore.Platforms" 
+                      Version="$(MicrosoftNETCorePlatformsVersion)" />
+     </ItemGroup> 
   </Target>
 
 <Target

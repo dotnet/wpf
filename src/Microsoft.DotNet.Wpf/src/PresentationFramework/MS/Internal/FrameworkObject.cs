@@ -57,21 +57,8 @@ namespace MS.Internal
             // [code should be identical to Reset(d)]
             _do = d;
 
-            if (FrameworkElement.DType.IsInstanceOfType(d))
-            {
-                _fe = (FrameworkElement)d;
-                _fce = null;
-            }
-            else if (FrameworkContentElement.DType.IsInstanceOfType(d))
-            {
-                _fe = null;
-                _fce = (FrameworkContentElement)d;
-            }
-            else
-            {
-                _fe = null;
-                _fce = null;
-            }
+            _fe = d as FrameworkElement;
+            _fce = d as FrameworkContentElement;
         }
 
         internal FrameworkObject(DependencyObject d, bool throwIfNeither)
@@ -99,21 +86,8 @@ namespace MS.Internal
         {
             _do = d;
 
-            if (FrameworkElement.DType.IsInstanceOfType(d))
-            {
-                _fe = (FrameworkElement)d;
-                _fce = null;
-            }
-            else if (FrameworkContentElement.DType.IsInstanceOfType(d))
-            {
-                _fe = null;
-                _fce = (FrameworkContentElement)d;
-            }
-            else
-            {
-                _fe = null;
-                _fce = null;
-            }
+            _fe = d as FrameworkElement;
+            _fce = d as FrameworkContentElement;
         }
 
         #endregion Constructors

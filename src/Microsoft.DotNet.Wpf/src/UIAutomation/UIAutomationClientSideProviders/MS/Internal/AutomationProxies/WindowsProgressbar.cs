@@ -51,7 +51,7 @@ namespace MS.Internal.AutomationProxies
             if (idChild != 0)
             {
                 System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.Get(SRID.ShouldBeZero));
+                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
             }
 
             return new WindowsProgressBar(hwnd, null, 0);
@@ -92,7 +92,7 @@ namespace MS.Internal.AutomationProxies
         void IRangeValueProvider.SetValue (double val)
         {
             //This proxy is readonly
-            throw new InvalidOperationException(SR.Get(SRID.ValueReadonly));
+            throw new InvalidOperationException(SR.ValueReadonly);
         }
 
         // Request to get the value that this UI element is representing in a native format

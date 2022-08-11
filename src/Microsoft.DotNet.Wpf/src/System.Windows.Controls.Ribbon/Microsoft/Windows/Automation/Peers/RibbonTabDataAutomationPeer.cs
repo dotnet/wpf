@@ -150,7 +150,7 @@ namespace Microsoft.Windows.Automation.Peers
             RibbonTab tab = GetWrapper() as RibbonTab;
             if (tab != null && tab.IsSelected)
             {
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
         }
 
@@ -165,7 +165,7 @@ namespace Microsoft.Windows.Automation.Peers
             Selector parentSelector = (Selector)(ItemsControlAutomationPeer.Owner);
             if ((parentSelector == null) || (parentSelector.SelectedItem != null && parentSelector.SelectedItem != Item))
             {
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
         }
 

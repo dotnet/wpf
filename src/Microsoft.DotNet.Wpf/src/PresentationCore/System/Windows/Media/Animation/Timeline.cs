@@ -1088,7 +1088,7 @@ namespace System.Windows.Media.Animation
             {
                 builder.Append(", Name=\"");
                 builder.Append(Name);
-                builder.Append("\"");
+                builder.Append('"');
             }
             if (AccelerationRatio != 0.0f)
             {

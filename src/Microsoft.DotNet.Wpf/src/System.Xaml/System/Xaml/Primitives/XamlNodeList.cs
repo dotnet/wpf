@@ -61,11 +61,11 @@ namespace System.Xaml
         {
             if (!_readMode)
             {
-                throw new XamlException(SR.Get(SRID.CloseXamlWriterBeforeReading));
+                throw new XamlException(SR.CloseXamlWriterBeforeReading);
             }
             if (_writer.SchemaContext == null)
             {
-                throw new XamlException(SR.Get(SRID.SchemaContextNotInitialized));
+                throw new XamlException(SR.SchemaContextNotInitialized);
             }
             return new ReaderMultiIndexDelegate(_writer.SchemaContext, Index, _nodeList.Count, _hasLineInfo);
         }
@@ -85,7 +85,7 @@ namespace System.Xaml
             }
             else
             {
-                throw new XamlException(SR.Get(SRID.CannotWriteClosedWriter));
+                throw new XamlException(SR.CannotWriteClosedWriter);
             }
         }
 
@@ -93,7 +93,7 @@ namespace System.Xaml
         {
             if (_readMode)
             {
-                throw new XamlException(SR.Get(SRID.CannotWriteClosedWriter));
+                throw new XamlException(SR.CannotWriteClosedWriter);
             }
 
             XamlNode node = new XamlNode(new LineInfo(lineNumber, linePosition));
@@ -108,7 +108,7 @@ namespace System.Xaml
         {
             if (!_readMode)
             {
-                throw new XamlException(SR.Get(SRID.CloseXamlWriterBeforeReading));
+                throw new XamlException(SR.CloseXamlWriterBeforeReading);
             }
             return _nodeList[idx];
         }

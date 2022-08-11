@@ -312,7 +312,7 @@ namespace MS.Internal.Xaml.Parser
             XamlPropertyName propName = XamlPropertyName.Parse(longName);
             if (propName == null)
             {
-                throw new ArgumentException(SR.Get(SRID.MalformedPropertyName));
+                throw new ArgumentException(SR.MalformedPropertyName);
             }
 
             XamlMember prop = null;
@@ -390,7 +390,7 @@ namespace MS.Internal.Xaml.Parser
                         }
                         else
                         {
-                            throw new XamlParseException(this, SR.Get(SRID.InvalidClosingBracketCharacers, ch.ToString()));
+                            throw new XamlParseException(this, SR.Format(SR.InvalidClosingBracketCharacers, ch.ToString()));
                         }
                     }
                     else if (ch == Backslash)
@@ -454,7 +454,7 @@ namespace MS.Internal.Xaml.Parser
                     case Quote2:
                         if (!atStart)
                         {
-                            throw new XamlParseException(this, SR.Get(SRID.QuoteCharactersOutOfPlace));
+                            throw new XamlParseException(this, SR.QuoteCharactersOutOfPlace);
                         }
                         quoteChar = ch;
                         wasQuoted = true;
@@ -478,13 +478,13 @@ namespace MS.Internal.Xaml.Parser
                     {
                         if (braceCount > 0)
                         {
-                            throw new XamlParseException(this, SR.Get(SRID.UnexpectedTokenAfterME));
+                            throw new XamlParseException(this, SR.UnexpectedTokenAfterME);
                         }
                         else
                         {
                             if (_context.CurrentBracketModeParseParameters?.BracketCharacterStack.Count > 0)
                             {
-                                throw new XamlParseException(this, SR.Get(SRID.MalformedBracketCharacters, ch.ToString()));
+                                throw new XamlParseException(this, SR.Format(SR.MalformedBracketCharacters, ch.ToString()));
                             }
                         }
 
@@ -498,7 +498,7 @@ namespace MS.Internal.Xaml.Parser
 
             if (quoteChar != NullChar)
             {
-                throw new XamlParseException(this, SR.Get(SRID.UnclosedQuote));
+                throw new XamlParseException(this, SR.UnclosedQuote);
             }
 
             string result = sb.ToString();

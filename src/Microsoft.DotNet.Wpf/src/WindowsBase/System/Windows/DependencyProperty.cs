@@ -251,7 +251,7 @@ namespace System.Windows
 
             if (name.Length == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.StringEmpty), "name");
+                throw new ArgumentException(SR.StringEmpty, "name");
             }
 
             if (ownerType == null)
@@ -272,7 +272,7 @@ namespace System.Windows
             {
                 if (PropertyFromName.Contains(key))
                 {
-                    throw new ArgumentException(SR.Get(SRID.PropertyAlreadyRegistered, name, ownerType.Name));
+                    throw new ArgumentException(SR.Format(SR.PropertyAlreadyRegistered, name, ownerType.Name));
                 }
             }
 
@@ -359,7 +359,7 @@ namespace System.Windows
                 !validateValueCallback(defaultValue))
             {
                 // Didn't work - require the caller to specify one.
-                throw new ArgumentException(SR.Get(SRID.DefaultValueAutoAssignFailed, name, ownerType.Name));
+                throw new ArgumentException(SR.Format(SR.DefaultValueAutoAssignFailed, name, ownerType.Name));
             }
 
             return new PropertyMetadata(defaultValue);
@@ -402,14 +402,14 @@ namespace System.Windows
             // Ensure default value is the correct type
             if (!IsValidType(defaultValue, propertyType))
             {
-                throw new ArgumentException(SR.Get(SRID.DefaultValuePropertyTypeMismatch, propertyName));
+                throw new ArgumentException(SR.Format(SR.DefaultValuePropertyTypeMismatch, propertyName));
             }
 
             // An Expression used as default value won't behave as expected since
             //  it doesn't get evaluated.  We explicitly fail it here.
             if (defaultValue is Expression )
             {
-                throw new ArgumentException(SR.Get(SRID.DefaultValueMayNotBeExpression));
+                throw new ArgumentException(SR.DefaultValueMayNotBeExpression);
             }
 
             if (checkThreadAffinity)
@@ -441,7 +441,7 @@ namespace System.Windows
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Get(SRID.DefaultValueMustBeFreeThreaded, propertyName));
+                        throw new ArgumentException(SR.Format(SR.DefaultValueMustBeFreeThreaded, propertyName));
                     }
                 }
             }
@@ -452,7 +452,7 @@ namespace System.Windows
             if ( validateValueCallback != null &&
                 !validateValueCallback(defaultValue))
             {
-                throw new ArgumentException(SR.Get(SRID.DefaultValueInvalid, propertyName));
+                throw new ArgumentException(SR.Format(SR.DefaultValueInvalid, propertyName));
             }
         }
 
@@ -480,12 +480,12 @@ namespace System.Windows
 
             if (typeMetadata.Sealed)
             {
-                throw new ArgumentException(SR.Get(SRID.TypeMetadataAlreadyInUse));
+                throw new ArgumentException(SR.TypeMetadataAlreadyInUse);
             }
 
             if (!typeof(DependencyObject).IsAssignableFrom(forType))
             {
-                throw new ArgumentException(SR.Get(SRID.TypeMustBeDependencyObjectDerived, forType.Name));
+                throw new ArgumentException(SR.Format(SR.TypeMustBeDependencyObjectDerived, forType.Name));
             }
 
             // Ensure default value is a correct value (if it was supplied,
@@ -507,7 +507,7 @@ namespace System.Windows
             // the base metadata
             if (!baseMetadata.GetType().IsAssignableFrom(typeMetadata.GetType()))
             {
-                throw new ArgumentException(SR.Get(SRID.OverridingMetadataDoesNotMatchBaseMetadataType));
+                throw new ArgumentException(SR.OverridingMetadataDoesNotMatchBaseMetadataType);
             }
         }
 
@@ -529,7 +529,7 @@ namespace System.Windows
             if (ReadOnly)
             {
                 // Readonly and no DependencyPropertyKey - not allowed.
-                throw new InvalidOperationException(SR.Get(SRID.ReadOnlyOverrideNotAllowed, Name));
+                throw new InvalidOperationException(SR.Format(SR.ReadOnlyOverrideNotAllowed, Name));
             }
 
             ProcessOverrideMetadata(forType, typeMetadata, dType, baseMetadata);
@@ -559,14 +559,14 @@ namespace System.Windows
 
                 if (key.DependencyProperty != this)
                 {
-                    throw new ArgumentException(SR.Get(SRID.ReadOnlyOverrideKeyNotAuthorized, Name));
+                    throw new ArgumentException(SR.Format(SR.ReadOnlyOverrideKeyNotAuthorized, Name));
                 }
 
                 VerifyReadOnlyKey(key);
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.PropertyNotReadOnly));
+                throw new InvalidOperationException(SR.PropertyNotReadOnly);
             }
 
             // Either the property doesn't require a key, or the key match was
@@ -594,7 +594,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.TypeMetadataAlreadyRegistered, forType.Name));
+                    throw new ArgumentException(SR.Format(SR.TypeMetadataAlreadyRegistered, forType.Name));
                 }
            }
 
@@ -796,7 +796,7 @@ namespace System.Windows
             {
                 if (PropertyFromName.Contains(key))
                 {
-                    throw new ArgumentException(SR.Get(SRID.PropertyAlreadyRegistered, Name, ownerType.Name));
+                    throw new ArgumentException(SR.Format(SR.PropertyAlreadyRegistered, Name, ownerType.Name));
                 }
             }
 
@@ -970,7 +970,7 @@ namespace System.Windows
 
             if (_readOnlyKey != candidateKey)
             {
-                throw new ArgumentException(SR.Get(SRID.ReadOnlyKeyNotAuthorized));
+                throw new ArgumentException(SR.ReadOnlyKeyNotAuthorized);
             }
         }
 
@@ -1168,11 +1168,11 @@ namespace System.Windows
             {
                 if (ownerType != null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.TooManyDependencyProperties, ownerType.Name + "." + name));
+                    throw new InvalidOperationException(SR.Format(SR.TooManyDependencyProperties, ownerType.Name + "." + name));
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.TooManyDependencyProperties, "ConstantProperty"));
+                    throw new InvalidOperationException(SR.Format(SR.TooManyDependencyProperties, "ConstantProperty"));
                 }
             }
 
@@ -1193,7 +1193,7 @@ namespace System.Windows
             {
                 if (ReadOnly)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.ReadOnlyDesignerCoersionNotAllowed, Name));
+                    throw new InvalidOperationException(SR.Format(SR.ReadOnlyDesignerCoersionNotAllowed, Name));
                 }
 
                 _designerCoerceValueCallback = value;

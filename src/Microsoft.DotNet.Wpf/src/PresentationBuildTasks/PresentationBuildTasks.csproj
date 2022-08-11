@@ -124,20 +124,20 @@
     <Compile Include="$(WpfSharedDir)\System\Windows\Markup\XmlWrappingReader.cs">
       <Link>Shared\System\Windows\Markup\XmlWrappingReader.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\WindowsBase\System\IO\Packaging\Compoundfile\FormatVersion.cs">
-      <Link>WindowsBase\System\IO\Packaging\Compoundfile\FormatVersion.cs</Link>
+    <Compile Include="$(WpfSourceDir)\WindowsBase\System\IO\Packaging\CompoundFile\FormatVersion.cs">
+      <Link>WindowsBase\System\IO\Packaging\CompoundFile\FormatVersion.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\WindowsBase\System\IO\Packaging\Compoundfile\versionPair.cs">
-      <Link>WindowsBase\System\IO\Packaging\Compoundfile\versionPair.cs</Link>
+    <Compile Include="$(WpfSourceDir)\WindowsBase\System\IO\Packaging\CompoundFile\VersionPair.cs">
+      <Link>WindowsBase\System\IO\Packaging\CompoundFile\VersionPair.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\WindowsBase\MS\Internal\IO\Packaging\Compoundfile\ContainerUtilities.cs">
-      <Link>WindowsBase\MS\Internal\IO\Packaging\Compoundfile\ContainerUtilities.cs</Link>
+    <Compile Include="$(WpfSourceDir)\WindowsBase\MS\Internal\IO\Packaging\CompoundFile\ContainerUtilities.cs">
+      <Link>WindowsBase\MS\Internal\IO\Packaging\CompoundFile\ContainerUtilities.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\internal\Media\XamlSerializationHelper.cs">
-      <Link>PresentationCore\MS\internal\Media\XamlSerializationHelper.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\Internal\Media\XamlSerializationHelper.cs">
+      <Link>PresentationCore\MS\Internal\Media\XamlSerializationHelper.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\internal\Media\ParserStreamGeometryContext.cs">
-      <Link>PresentationCore\MS\internal\Media\ParserStreamGeometryContext.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\Internal\Media\ParserStreamGeometryContext.cs">
+      <Link>PresentationCore\MS\Internal\Media\ParserStreamGeometryContext.cs</Link>
     </Compile>
     <Compile Include="$(WpfSourceDir)\PresentationCore\System\Windows\Media\StreamGeometryContext.cs">
       <Link>PresentationCore\System\Windows\Media\StreamGeometryContext.cs</Link>
@@ -236,8 +236,8 @@
     <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlNodes.cs">
       <Link>PresentationFramework\System\Windows\Markup\XamlNodes.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XAMLParseException.cs">
-      <Link>PresentationFramework\System\Windows\Markup\XAMLParseException.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlParseException.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XamlParseException.cs</Link>
     </Compile>
     <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlParser.cs">
       <Link>PresentationFramework\System\Windows\Markup\XamlParser.cs</Link>

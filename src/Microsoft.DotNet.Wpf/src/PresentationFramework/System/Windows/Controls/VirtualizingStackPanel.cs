@@ -12262,7 +12262,7 @@ namespace System.Windows.Controls
                 {
                     if (needSeparator)
                     {
-                        sb.Append("/");
+                        sb.Append('/');
                     }
 
                     ReadOnlySpan<char> name = t.ToString();
@@ -12560,9 +12560,7 @@ namespace System.Windows.Controls
                     {
                         int dotIndex = filename.LastIndexOf('.');
                         if (dotIndex < 0) dotIndex = filename.Length;
-                        filename = filename.Substring(0, dotIndex) +
-                            s_seqno.ToString() +
-                            filename.Substring(dotIndex);
+                        filename = $"{filename.AsSpan(0, dotIndex)}{s_seqno}{filename.AsSpan(dotIndex)}";
                     }
 
                     // create the TraceList

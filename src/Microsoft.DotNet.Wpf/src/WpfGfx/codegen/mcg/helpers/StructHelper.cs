@@ -204,9 +204,9 @@ namespace MS.Internal.MilCodeGen.Helpers
             {
                 foreach (McgArrayDimension dim in array.Dimensions)
                 {
-                    sb.Append("[");
+                    sb.Append('[');
                     sb.Append(dim.Size);
-                    sb.Append("]");
+                    sb.Append(']');
                 }
             }
 

@@ -86,10 +86,10 @@ namespace System.Windows.Threading
             }
 
             if (interval.TotalMilliseconds < 0)
-                throw new ArgumentOutOfRangeException("interval", SR.Get(SRID.TimeSpanPeriodOutOfRange_TooSmall));
+                throw new ArgumentOutOfRangeException("interval", SR.TimeSpanPeriodOutOfRange_TooSmall);
 
             if (interval.TotalMilliseconds > Int32.MaxValue)
-                throw new ArgumentOutOfRangeException("interval", SR.Get(SRID.TimeSpanPeriodOutOfRange_TooLarge));
+                throw new ArgumentOutOfRangeException("interval", SR.TimeSpanPeriodOutOfRange_TooLarge);
 
             Initialize(dispatcher, priority, interval);
             
@@ -149,10 +149,10 @@ namespace System.Windows.Threading
                 bool updateWin32Timer = false;
                 
                 if (value.TotalMilliseconds < 0)
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.TimeSpanPeriodOutOfRange_TooSmall));
+                    throw new ArgumentOutOfRangeException("value", SR.TimeSpanPeriodOutOfRange_TooSmall);
 
                 if (value.TotalMilliseconds > Int32.MaxValue)
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.TimeSpanPeriodOutOfRange_TooLarge));
+                    throw new ArgumentOutOfRangeException("value", SR.TimeSpanPeriodOutOfRange_TooLarge);
 
                 lock(_instanceLock)
                 {
@@ -246,7 +246,7 @@ namespace System.Windows.Threading
             Dispatcher.ValidatePriority(priority, "priority");
             if(priority == DispatcherPriority.Inactive)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidPriority), "priority");
+                throw new ArgumentException(SR.InvalidPriority, "priority");
             }
 
             _dispatcher = dispatcher;

@@ -38,7 +38,8 @@ namespace System.Windows.Automation
         }
 
         // uiaCondition is one of the Uia condition structs - eg UiaCoreApi.UiaAndOrCondition
-        internal static SafeConditionMemoryHandle AllocateConditionHandle(object uiaCondition)
+        internal static SafeConditionMemoryHandle AllocateConditionHandle<T>(T uiaCondition)
+            where T : struct
         {
             // Allocate SafeHandle first to avoid failure later.
             SafeConditionMemoryHandle sh = new SafeConditionMemoryHandle();
@@ -138,7 +139,8 @@ namespace System.Windows.Automation
  
         #region Internal Methods
 
-        internal void SetMarshalData(object uiaCondition)
+        internal void SetMarshalData<T>(T uiaCondition)
+            where T : struct
         {
             // Takes one of the interop UiaCondition classes (from UiaCoreApi.cs), and allocs
             // a SafeHandle with associated unmanaged memory - can then pass that to the UIA APIs.

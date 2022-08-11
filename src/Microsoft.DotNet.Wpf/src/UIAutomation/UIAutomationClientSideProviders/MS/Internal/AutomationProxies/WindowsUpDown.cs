@@ -58,7 +58,7 @@ namespace MS.Internal.AutomationProxies
             if (idChild != 0)
             {
                 System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.Get(SRID.ShouldBeZero));
+                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
             }
 
             return new WindowsUpDown(hwnd, null, idChild);
@@ -141,7 +141,7 @@ namespace MS.Internal.AutomationProxies
         {
             get
             {
-                return SR.Get(SRID.LocalizedNameWindowsUpDown);
+                return SR.LocalizedNameWindowsUpDown;
             }
         }
 
@@ -219,16 +219,16 @@ namespace MS.Internal.AutomationProxies
 
             if (double.IsNaN(val))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidParameter));
+                throw new ArgumentException(SR.InvalidParameter);
             }
 
             if (val > Max)
             {
-                throw new ArgumentOutOfRangeException("value", val, SR.Get(SRID.RangeValueMax));
+                throw new ArgumentOutOfRangeException("value", val, SR.RangeValueMax);
             }
             else if (val < Min)
             {
-                throw new ArgumentOutOfRangeException("value", val, SR.Get(SRID.RangeValueMin));
+                throw new ArgumentOutOfRangeException("value", val, SR.RangeValueMin);
             }
 
             short newPos = Convert.ToInt16(val);
@@ -505,7 +505,7 @@ namespace MS.Internal.AutomationProxies
                         item = 1 - item;
                     }
 
-                    return SR.Get(_asNames[item]);
+                    return SR.GetResourceString(_asNames[item]);
                 }
             }
 
@@ -543,7 +543,7 @@ namespace MS.Internal.AutomationProxies
 
                 if (!Misc.GetWindowRect(_hwnd, ref updownRect))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
 
                 int x = (int) rc.Left - updownRect.left + (int) rc.Width / 2;
@@ -658,8 +658,8 @@ namespace MS.Internal.AutomationProxies
             private bool _isInsideOfTab;
 
             private static string [] _asNames = {
-                SRID.LocalizedNameWindowsSpinButtonItemForward,
-                SRID.LocalizedNameWindowsSpinButtonItemBackward
+                nameof(SR.LocalizedNameWindowsSpinButtonItemForward),
+                nameof(SR.LocalizedNameWindowsSpinButtonItemBackward)
             };
 
             private static string[] _asAutomationId = new string[] {

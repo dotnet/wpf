@@ -537,7 +537,7 @@ namespace MS.Internal.Ink
         private List<Point>             _points;
         private Rect                    _bounds                 = Rect.Empty;
         private bool                    _incrementalLassoDirty  = false;
-        private static readonly double  MinDistance             = 1.0;
+        private const double MinDistance = 1.0;
 
         #endregion
 

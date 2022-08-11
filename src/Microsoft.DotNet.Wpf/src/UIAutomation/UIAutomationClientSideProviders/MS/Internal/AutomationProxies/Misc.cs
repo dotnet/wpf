@@ -51,7 +51,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // Build the result string
-            return SR.Get(SRID.KeyAlt) + "+" + s[iPosShortCut + 1];
+            return SR.KeyAlt + "+" + s[iPosShortCut + 1];
         }
 
         // Extend an existing RunTimeID by one element
@@ -1139,7 +1139,7 @@ namespace MS.Internal.AutomationProxies
             {
                 sb.Append(" (");
                 sb.Append(sbFlag);
-                sb.Append(")");
+                sb.Append(')');
             }
             sb.AppendFormat("\n\r\thwndActive = 0x{0:x8}", gui.hwndActive.ToInt32());
             sb.AppendFormat("\n\r\thwndFocus = 0x{0:x8}", gui.hwndFocus.ToInt32());

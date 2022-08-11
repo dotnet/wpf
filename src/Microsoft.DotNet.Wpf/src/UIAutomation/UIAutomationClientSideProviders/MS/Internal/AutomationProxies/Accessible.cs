@@ -549,7 +549,7 @@ namespace MS.Internal.AutomationProxies
                         throw;
                     }
 
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed), e);
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed, e);
                 }
             }
         }
@@ -1155,7 +1155,7 @@ namespace MS.Internal.AutomationProxies
                 {
                     throw;
                 }
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed), e);
+                throw new InvalidOperationException(SR.OperationCannotBePerformed, e);
             }
         }
 
@@ -1385,7 +1385,7 @@ namespace MS.Internal.AutomationProxies
                         // One or more arguments were invalid. This error occurs when the caller attempts to identify
                         // a child object using an identifier that the server does not recognize. This error also results
                         // when a client attempts to identify a child object within an object that has no children.
-                        throw new ArgumentException(SR.Get(SRID.InvalidParameter));
+                        throw new ArgumentException(SR.InvalidParameter);
 
                     case NativeMethods.E_ACCESSDENIED:
                         // This is returned when you call get_accValue to get the value of a password control.

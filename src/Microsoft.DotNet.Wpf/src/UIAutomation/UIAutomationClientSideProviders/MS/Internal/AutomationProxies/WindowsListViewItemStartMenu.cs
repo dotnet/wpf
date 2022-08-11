@@ -94,7 +94,7 @@ namespace MS.Internal.AutomationProxies
                     string key = AccessibleObject.get_accKeyboardShortcut(_item + 1);
                     if (!string.IsNullOrEmpty(key))
                     {
-                        return SR.Get(SRID.KeyAlt) + "+" + key;
+                        return SR.KeyAlt + "+" + key;
                     }
                 }
                 catch (Exception e)

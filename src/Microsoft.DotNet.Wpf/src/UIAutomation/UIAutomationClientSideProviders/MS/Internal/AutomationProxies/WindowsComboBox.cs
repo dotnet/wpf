@@ -72,7 +72,7 @@ namespace MS.Internal.AutomationProxies
             if (idChild != 0)
             {
                 System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.Get(SRID.ShouldBeZero));
+                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
             }
 
             return new WindowsComboBox(hwnd, null, HostedByComboEx(hwnd), idChild);
@@ -404,7 +404,7 @@ namespace MS.Internal.AutomationProxies
                 return;
             }
 
-            throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+            throw new InvalidOperationException(SR.OperationCannotBePerformed);
         }
 
         // Request to get the value that this UI element is representing as a string
@@ -944,7 +944,7 @@ namespace MS.Internal.AutomationProxies
             {
                 get
                 {
-                    return SR.Get(SRID.LocalizedNameWindowsComboButton);
+                    return SR.LocalizedNameWindowsComboButton;
                 }
             }
 

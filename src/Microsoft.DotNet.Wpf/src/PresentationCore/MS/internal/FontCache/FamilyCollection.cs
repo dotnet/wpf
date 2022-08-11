@@ -140,7 +140,7 @@ namespace MS.Internal.FontCache
             {
                 for (int i = 0; i < _legacyArabicFonts.Length; ++i)
                 {
-                    if (String.Compare(familyName, _legacyArabicFonts[i], StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(familyName, _legacyArabicFonts[i], StringComparison.OrdinalIgnoreCase))
                     {
                         return true;
                     }
@@ -270,7 +270,7 @@ namespace MS.Internal.FontCache
             {
                 for (int i = 0; i < _systemCompositeFontsNames.Length; ++i)
                 {
-                    if (String.Compare(_systemCompositeFontsNames[i], familyName, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(_systemCompositeFontsNames[i], familyName, StringComparison.OrdinalIgnoreCase))
                     {
                         return i;
                     }
@@ -396,7 +396,7 @@ namespace MS.Internal.FontCache
                     else
                     {
                         // store the stripped off style names to look for the specific face later.
-                        potentialFaceName.Insert(0, familyName.Substring(indexOfSpace));
+                        potentialFaceName.Insert(0, familyName.AsSpan(indexOfSpace));
                         familyName = familyName.Substring(0, indexOfSpace);
                     }
 
@@ -447,7 +447,7 @@ namespace MS.Internal.FontCache
                 {
                     foreach (KeyValuePair<XmlLanguage, string> localizedFamilyName in compositeFamily.FamilyNames)
                     {
-                        if (String.Compare(localizedFamilyName.Value, familyName, StringComparison.OrdinalIgnoreCase) == 0)
+                        if (string.Equals(localizedFamilyName.Value, familyName, StringComparison.OrdinalIgnoreCase))
                         {
                             return compositeFamily;
                         }
@@ -499,10 +499,7 @@ namespace MS.Internal.FontCache
                 foreach (KeyValuePair<CultureInfo, string> name in font.FaceNames)
                 {
                     string currentFontName = name.Value.ToUpper(CultureInfo.InvariantCulture);
-                    if (!faces.ContainsKey(currentFontName))
-                    {
-                        faces.Add(currentFontName, font);
-                    }
+                    faces.TryAdd(currentFontName, font);
                 }
             }
 

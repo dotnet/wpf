@@ -1185,7 +1185,7 @@ namespace MS.Internal.Automation
             {
                 string description;
                 if (!UiaGetErrorDescription(out description))
-                    description = SR.Get(SRID.UnknownCoreAPIError);
+                    description = SR.UnknownCoreAPIError;
 
                 switch (hr)
                 {

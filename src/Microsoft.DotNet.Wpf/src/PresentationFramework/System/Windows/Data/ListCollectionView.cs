@@ -2447,7 +2447,7 @@ namespace System.Windows.Data
 
         // return an appropriate comparer.   Common logic used by ListCollectionView
         // and by CollectionViewGroupInternal.
-        internal static IComparer PrepareComparer(IComparer customSort, SortDescriptionCollection sort, Func<CollectionView> lazyGetCollectionView)
+        internal static IComparer PrepareComparer(IComparer customSort, SortDescriptionCollection sort, Func<object, CollectionView> lazyGetCollectionView, object state)
         {
             if (customSort != null)
             {
@@ -2456,7 +2456,7 @@ namespace System.Windows.Data
 
             if (sort != null && sort.Count > 0)
             {
-                CollectionView view = lazyGetCollectionView();
+                CollectionView view = lazyGetCollectionView(state);
                 Debug.Assert(view != null, "lazyGetCollectionView should not return null");
 
                 if (view.SourceCollection != null)
@@ -2895,7 +2895,7 @@ namespace System.Windows.Data
         private void PrepareShaping()
         {
             // sort:  prepare the comparer
-            ActiveComparer = ListCollectionView.PrepareComparer(_customSort, _sort, () => { return this; });
+            ActiveComparer = PrepareComparer(_customSort, _sort, static state => (ListCollectionView)state, this);
 
             // filter:  prepare the Predicate<object> filter
             ActiveFilter = Filter;

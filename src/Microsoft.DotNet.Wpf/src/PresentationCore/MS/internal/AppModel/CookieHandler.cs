@@ -82,7 +82,7 @@ static class CookieHandler
             // associated with it. (WebHeaderCollection's internal storage is a string->ArrayList(of string) map.)
             for (int i = headers.Count-1; i >= 0; i--)
             {
-                if (string.Compare(headers.Keys[i], "Set-Cookie", StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(headers.Keys[i], "Set-Cookie", StringComparison.OrdinalIgnoreCase))
                 {
                     string p3pHeader = httpResponse.Headers["P3P"];
                     foreach (string cookie in headers.GetValues(i))

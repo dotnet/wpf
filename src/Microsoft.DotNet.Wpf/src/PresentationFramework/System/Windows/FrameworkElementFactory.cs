@@ -547,11 +547,12 @@ namespace System.Windows
             // Scan for record
             for (int i = 0; i < PropertyValues.Count; i++)
             {
-                if (PropertyValues[i].ValueType == PropertyValueType.Set &&
-                    PropertyValues[i].Property == dp)
+                var propertyValue = PropertyValues[i];
+                if (propertyValue.ValueType == PropertyValueType.Set &&
+                    propertyValue.Property == dp)
                 {
                     // Found a Set record, return the value
-                    return PropertyValues[i].ValueInternal;
+                    return propertyValue.ValueInternal;
                 }
             }
 
@@ -840,10 +841,11 @@ namespace System.Windows
 
                     for (int i = 0; i < PropertyValues.Count; i++)
                     {
-                        if (PropertyValues[i].ValueType == PropertyValueType.Set)
+                        var propertyValue = PropertyValues[i];
+                        if (propertyValue.ValueType == PropertyValueType.Set)
                         {
                             // Get the value out of the table.
-                            object o = PropertyValues[i].ValueInternal;
+                            object o = propertyValue.ValueInternal;
 
 
                             // If it's a freezable that can't be frozen, it's probably not sharable,
@@ -860,22 +862,19 @@ namespace System.Windows
                             if (me != null)
                             {
                                 ProvideValueServiceProvider serviceProvider = new ProvideValueServiceProvider();
-                                serviceProvider.SetData( treeNodeVisual3D, PropertyValues[i].Property );
+                                serviceProvider.SetData( treeNodeVisual3D, propertyValue.Property );
                                 o = me.ProvideValue( serviceProvider );
                             }
 
                             // Finally, set the value onto the object.
-                            treeNodeVisual3D.SetValue(PropertyValues[i].Property, o);
+                            treeNodeVisual3D.SetValue(propertyValue.Property, o);
 
                         }
-
                         else
                         {
                             // We don't support resource references, triggers, etc within the 3D content
-                            throw new NotSupportedException(SR.Get(SRID.Template3DValueOnly, PropertyValues[i].Property) );
-
+                            throw new NotSupportedException(SR.Get(SRID.Template3DValueOnly, propertyValue.Property) );
                         }
-
                     }
                 }
 
@@ -1276,10 +1275,11 @@ namespace System.Windows
         {
             for (int i = 0; i < PropertyValues.Count; i++)
             {
-                if (PropertyValues[i].Property == dp &&
-                    (PropertyValues[i].ValueType == PropertyValueType.Set ||
-                     PropertyValues[i].ValueType == PropertyValueType.Resource ||
-                     PropertyValues[i].ValueType == PropertyValueType.TemplateBinding))
+                var propertyValue = PropertyValues[i];
+                if (propertyValue.Property == dp &&
+                    (propertyValue.ValueType == PropertyValueType.Set ||
+                     propertyValue.ValueType == PropertyValueType.Resource ||
+                     propertyValue.ValueType == PropertyValueType.TemplateBinding))
                 {
                     return true;
                 }

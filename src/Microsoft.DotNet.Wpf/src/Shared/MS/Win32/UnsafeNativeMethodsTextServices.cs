@@ -1630,7 +1630,7 @@ namespace MS.Win32
             //HRESULT QueryInsertEmbedded([in] const GUID *pguidService,
             //                            [in] const FORMATETC *pFormatEtc,
             //                            [out] BOOL *pfInsertable);
-            void QueryInsertEmbedded(ref Guid guidService, int /*ref Win32.FORMATETC*/ formatEtc, [MarshalAs(UnmanagedType.Bool)] out bool insertable);
+            void QueryInsertEmbedded(ref Guid guidService, IntPtr /*ref Win32.FORMATETC*/ formatEtc, [MarshalAs(UnmanagedType.Bool)] out bool insertable);
 
             /// <summary></summary>
             //HRESULT InsertEmbedded([in] DWORD dwFlags,
@@ -1972,14 +1972,14 @@ namespace MS.Win32
             //                   [out] LONG *pcch,
             //                   [in, unique] const TF_HALTCOND *pHalt);
             /// <summary></summary>
-            void ShiftStart(int ec, int count, out int result, int ZeroForNow); // "ZeroForNow" should be a struct ptr if we ever use this
+            void ShiftStart(int ec, int count, out int result, IntPtr pHalt);
 
             //HRESULT ShiftEnd([in] TfEditCookie ec,
             //                 [in] LONG cchReq,
             //                 [out] LONG *pcch,
             //                 [in, unique] const TF_HALTCOND *pHalt);
             /// <summary></summary>
-            void ShiftEnd(int ec, int count, out int result, int ZeroForNow); // "ZeroForNow" should be a struct ptr if we ever use this
+            void ShiftEnd(int ec, int count, out int result, IntPtr pHalt);
 
             //HRESULT ShiftStartToRange([in] TfEditCookie ec,
             //                          [in] ITfRange *pRange,
@@ -2117,14 +2117,14 @@ namespace MS.Win32
             //                   [out] LONG *pcch,
             //                   [in, unique] const TF_HALTCOND *pHalt);
             /// <summary></summary>
-            void ShiftStart(int ec, int count, out int result, int ZeroForNow); // "ZeroForNow" should be a struct ptr if we ever use this
+            void ShiftStart(int ec, int count, out int result, IntPtr pHalt);
 
             //HRESULT ShiftEnd([in] TfEditCookie ec,
             //                 [in] LONG cchReq,
             //                 [out] LONG *pcch,
             //                 [in, unique] const TF_HALTCOND *pHalt);
             /// <summary></summary>
-            void ShiftEnd(int ec, int count, out int result, int ZeroForNow); // "ZeroForNow" should be a struct ptr if we ever use this
+            void ShiftEnd(int ec, int count, out int result, IntPtr pHalt);
 
             //HRESULT ShiftStartToRange([in] TfEditCookie ec,
             //                          [in] ITfRange *pRange,

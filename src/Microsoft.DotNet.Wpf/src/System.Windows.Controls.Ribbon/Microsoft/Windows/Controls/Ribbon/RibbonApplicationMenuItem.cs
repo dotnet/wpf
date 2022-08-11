@@ -76,7 +76,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     }
                     else
                     {
-                        throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.InvalidApplicationMenuOrItemContainer, this.GetType().Name, itemContainer));
+                        throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Format(Microsoft.Windows.Controls.SR.InvalidApplicationMenuOrItemContainer, this.GetType().Name, itemContainer));
                     }
                 }
             }

@@ -77,7 +77,7 @@ namespace System.Xaml.Schema
             MethodInfo mi = pi.GetGetMethod(true);
             if (mi == null)
             {
-                throw new XamlSchemaException(SR.Get(SRID.SetOnlyProperty, declaringType.Name, name));
+                throw new XamlSchemaException(SR.Format(SR.SetOnlyProperty, declaringType.Name, name));
             }
 
             _declaringType = declaringType;
@@ -119,13 +119,13 @@ namespace System.Xaml.Schema
         protected override string NameCore
         {
             get { return _name; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsPublicCore
         {
             get { return _isPublic; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsBrowsableCore
@@ -135,13 +135,13 @@ namespace System.Xaml.Schema
                 bool ret = CheckPropertyBit(BoolPropertyBits.IsBrowsable);
                 return ret;
             }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override XamlType DeclaringTypeCore
         {
             get { return _declaringType; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override XamlType TypeCore
@@ -154,7 +154,7 @@ namespace System.Xaml.Schema
                 }
                 return _xamlTypeOfProperty;
             }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override XamlTextSyntax TextSyntaxCore
@@ -172,7 +172,7 @@ namespace System.Xaml.Schema
                 }
                 return _textSyntax;
             }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override XamlProperty DependsOnCore
@@ -186,37 +186,37 @@ namespace System.Xaml.Schema
                 }
                 return _dependsOn;
             }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsReadOnlyCore
         {
             get { return _isReadOnly; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsStaticCore
         {
             get { return _isStatic; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsAttachableCore
         {
             get { return _isAttachable; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsEventCore
         {
             get { return _isEvent; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsDirectiveCore
         {
             get { return false; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override XamlType TargetTypeCore
@@ -230,13 +230,13 @@ namespace System.Xaml.Schema
                 }
                 return _targetType;
             }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override AllowedMemberLocation AllowedLocationCore
         {
             get { return AllowedMemberLocation.Any; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsAmbientCore
@@ -246,7 +246,7 @@ namespace System.Xaml.Schema
                 bool ret = CheckPropertyBit(BoolPropertyBits.IsAmbient);
                 return ret;
             }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsObsoleteCore
@@ -256,7 +256,7 @@ namespace System.Xaml.Schema
                 bool ret = CheckPropertyBit(BoolPropertyBits.IsObsolete);
                 return ret;
             }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         // ==============================================
@@ -303,7 +303,7 @@ namespace System.Xaml.Schema
             }
             if (objs.Length > 1)
             {
-                string message = SR.Get(SRID.TooManyAttributes, DeclaringType.Name, Name, attrType.Name);
+                string message = SR.Format(SR.TooManyAttributes, DeclaringType.Name, Name, attrType.Name);
                 throw new XamlSchemaException(message);
             }
             return objs[0];
@@ -387,7 +387,7 @@ namespace System.Xaml.Schema
                     return xp;
                 else
                 {
-                    string err = SR.Get(SRID.UnknownAttributeProperty, typeof(DependsOnAttribute).Name, doPropertyName, _name);
+                    string err = SR.Format(SR.UnknownAttributeProperty, typeof(DependsOnAttribute).Name, doPropertyName, _name);
                     throw new XamlSchemaException(err);
                 }
             }
@@ -440,7 +440,7 @@ namespace System.Xaml.Schema
                 break;
 
             default:
-                throw new XamlInternalException(SR.Get(SRID.MissingLookPropertyBit));
+                throw new XamlInternalException(SR.MissingLookPropertyBit);
             }
             return bit;
         }

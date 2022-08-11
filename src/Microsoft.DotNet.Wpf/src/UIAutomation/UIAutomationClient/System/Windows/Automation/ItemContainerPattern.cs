@@ -130,7 +130,7 @@ namespace System.Windows.Automation
             AutomationPropertyInfo info;
             if (!Schema.GetPropertyInfo(property, out info))
             {
-                throw new ArgumentException(SR.Get(SRID.UnsupportedProperty));
+                throw new ArgumentException(SR.UnsupportedProperty);
             }
 
             // Check type is appropriate: NotSupported is allowed against any property,
@@ -141,7 +141,7 @@ namespace System.Windows.Automation
                 ((value == null && expectedType.IsValueType)
                 || (value != null && !expectedType.IsAssignableFrom(value.GetType()))))
             {
-                throw new ArgumentException(SR.Get(SRID.PropertyConditionIncorrectType, property.ProgrammaticName, expectedType.Name));
+                throw new ArgumentException(SR.Format(SR.PropertyConditionIncorrectType, property.ProgrammaticName, expectedType.Name));
             }
 
             // Some types are handled differently in managed vs unmanaged - handle those here...

@@ -1908,8 +1908,8 @@
         <note />
       </trans-unit>
       <trans-unit id="Invalid_IInputElement">
-        <source>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</source>
-        <target state="translated">'{0}' non è un tipo valido per IInputElement. Previsto UIElement o ContentElement.</target>
+        <source>'{0}' is not a valid type for IInputElement. UIElement, ContentElement or UIElement3D expected.</source>
+        <target state="translated">'{0}' non è un tipo valido per IInputElement. Previsto UIElement, ContentElement o UIElement3D.</target>
         <note />
       </trans-unit>
       <trans-unit id="Invalid_URI">

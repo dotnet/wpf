@@ -1633,7 +1633,7 @@ Verify that the file name is correct.</source>
       </trans-unit>
       <trans-unit id="FileDialogInvalidFilter">
         <source>Provided filter string is not valid. Filter string should contain a description of the filter, followed by a vertical bar and the filter pattern. Must also separate multiple filter description and pattern pairs by a vertical bar. Must separate multiple extensions in a filter pattern with a semicolon. Example: \"Image files (*.bmp, *.jpg)|*.bmp;*.jpg|All files (*.*)|*.*\"</source>
-        <target state="translated">Die bereitgestellte Filterzeichenfolge ist ungültig. Die Filterzeichenfolge muss eine Beschreibung des Filters enthalten, gefolgt von einem vertikalen Strich und dem Filtermuster. Weitere Paare aus Filterbeschreibung und Muster müssen ebenfalls durch einen vertikalen Strich getrennt werden. Mehrere Erweiterungen in Filtermustern werden mit einem Semikolon getrennt. Beispiel: "Bilddateien (*.bmp, *.jpg)|*.bmp;*.jpg|Alle Dateien (*.*)|*.*"</target>
+        <target state="translated">Die bereitgestellte Filterzeichenfolge ist ungültig. Die Filterzeichenfolge muss eine Beschreibung des Filters enthalten, gefolgt von einem vertikalen Strich und dem Filtermuster. Weitere Paare aus Filterbeschreibung und Muster müssen ebenfalls durch einen vertikalen Strich getrennt werden. Mehrere Erweiterungen in Filtermustern werden mit einem Semikolon getrennt. Beispiel: \"Bilddateien (*.bmp, *.jpg)|*.bmp;*.jpg|Alle Dateien (*.*)|*.*\"</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogInvalidFilterIndex">

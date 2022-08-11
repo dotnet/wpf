@@ -32,19 +32,13 @@ namespace Microsoft.Windows.Themes
             //
             // Parameter Validation
             //
-            Type doubleType = typeof(double);
             if (values == null ||
-                (values.Length != 5) ||
-                (values[0] == null)  ||
-                (values[1] == null)  ||
-                (values[2] == null)  ||
-                (values[3] == null) ||
-                (values[4] == null) ||
-                !typeof(Brush).IsAssignableFrom(values[0].GetType()) || 
-                !typeof(bool).IsAssignableFrom(values[1].GetType()) ||
-                !doubleType.IsAssignableFrom(values[2].GetType()) ||
-                !doubleType.IsAssignableFrom(values[3].GetType()) ||
-                !doubleType.IsAssignableFrom(values[4].GetType()))
+                values.Length != 5 ||
+                values[0] is not Brush ||
+                values[1] is not bool ||
+                values[2] is not double ||
+                values[3] is not double ||
+                values[4] is not double)
             {
                 return null;
             }

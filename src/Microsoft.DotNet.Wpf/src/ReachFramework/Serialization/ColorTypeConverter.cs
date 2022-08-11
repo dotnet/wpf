@@ -255,18 +255,7 @@ namespace System.Windows.Xps.Serialization
             Type            type
             )
         {
-            bool isSupported = false;
-
-            foreach (Type t in SupportedTargetTypes)
-            {
-                if (t.Equals(type))
-                {
-                    isSupported = true;
-                    break;
-                }
-            }
-
-            return isSupported;
+            return typeof(string).Equals(type);
         }
 
         #endregion Private static helper methods
@@ -385,13 +374,6 @@ namespace System.Windows.Xps.Serialization
         #endregion Public static helper methods
 
         #region Private static data
-
-        /// <summary>
-        /// A table of supported types for this type converter
-        /// </summary>
-        private static Type[] SupportedTargetTypes = {
-            typeof(string)
-        };
 
         #endregion Private static data
     }

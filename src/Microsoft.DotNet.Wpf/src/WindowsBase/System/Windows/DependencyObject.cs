@@ -336,7 +336,7 @@ namespace System.Windows
 
                     if (!dp.IsValidValue(value))
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.InvalidPropertyValue, value, dp.Name));
+                        throw new InvalidOperationException(SR.Format(SR.InvalidPropertyValue, value, dp.Name));
                     }
 
                     // Make sure the entryIndex is in sync after
@@ -389,7 +389,7 @@ namespace System.Windows
 
                 if (!dp.IsValidValue(value))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.InvalidPropertyValue, value, dp.Name));
+                    throw new InvalidOperationException(SR.Format(SR.InvalidPropertyValue, value, dp.Name));
                 }
 
                 // Make sure the entryIndex is in sync after
@@ -608,7 +608,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.ReadOnlyChangeNotAllowed, dp.Name));
+                    throw new InvalidOperationException(SR.Format(SR.ReadOnlyChangeNotAllowed, dp.Name));
                 }
             }
             else
@@ -655,7 +655,7 @@ namespace System.Windows
         {
             if (IsSealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.SetOnReadOnlyObjectNotAllowed, this));
+                throw new InvalidOperationException(SR.Format(SR.SetOnReadOnlyObjectNotAllowed, this));
             }
 
             Expression newExpr = null;
@@ -694,7 +694,7 @@ namespace System.Windows
                         // Make sure Expression is "attachable"
                         if (!newExpr.Attachable)
                         {
-                            throw new ArgumentException(SR.Get(SRID.SharingNonSharableExpression));
+                            throw new ArgumentException(SR.SharingNonSharableExpression);
                         }
 
                         // Check dispatchers of all Sources
@@ -711,7 +711,7 @@ namespace System.Windows
                             if (!isValidValue)
                             {
                                 // it's not a valid value & it's not an expression, so throw
-                                throw new ArgumentException(SR.Get(SRID.InvalidPropertyValue, value, dp.Name));
+                                throw new ArgumentException(SR.Format(SR.InvalidPropertyValue, value, dp.Name));
                             }
                         }
                     }
@@ -992,7 +992,7 @@ namespace System.Windows
         {
             if (IsSealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ClearOnReadOnlyObjectNotAllowed, this));
+                throw new InvalidOperationException(SR.Format(SR.ClearOnReadOnlyObjectNotAllowed, this));
             }
 
             // Get old value
@@ -1071,7 +1071,7 @@ namespace System.Windows
 
                 if (!entryIndex.Found || (d._effectiveValues[entryIndex.Index].LocalValue != expr))
                 {
-                    throw new ArgumentException(SR.Get(SRID.SourceChangeExpressionMismatch));
+                    throw new ArgumentException(SR.SourceChangeExpressionMismatch);
                 }
             }
 
@@ -1736,7 +1736,7 @@ namespace System.Windows
                 {
                     // well... unless it's the control's "current value"
                     if (!(coerceWithCurrentValue && coercedValue is DeferredReference))
-                        throw new ArgumentException(SR.Get(SRID.InvalidPropertyValue, coercedValue, dp.Name));
+                        throw new ArgumentException(SR.Format(SR.InvalidPropertyValue, coercedValue, dp.Name));
                 }
 
                 // Set the coerced value here. All other values would
@@ -1825,7 +1825,7 @@ namespace System.Windows
                     }
 #endif
 #endregion EventTracing
-                    throw new InvalidOperationException(SR.Get(SRID.InvalidPropertyValue, value, dp.Name));
+                    throw new InvalidOperationException(SR.Format(SR.InvalidPropertyValue, value, dp.Name));
                 }
             }
             else
@@ -2067,7 +2067,7 @@ namespace System.Windows
 
             if( e.Property == null )
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "e.Property"), "e");
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "e.Property"), "e");
             }
 
             if (e.IsAValueChange || e.IsASubPropertyChange || e.OperationType == OperationType.ChangeMutableDefaultValue)
@@ -2491,7 +2491,7 @@ namespace System.Windows
                     Dispatcher sourceDispatcher = newSources[i].DependencyObject.Dispatcher;
                     if (sourceDispatcher != dispatcher && !(expr.SupportsUnboundSources && sourceDispatcher == null))
                     {
-                        throw new ArgumentException(SR.Get(SRID.SourcesMustBeInSameThread));
+                        throw new ArgumentException(SR.SourcesMustBeInSameThread);
                     }
                 }
             }
@@ -3189,7 +3189,7 @@ namespace System.Windows
 
             if (CanModifyEffectiveValues == false)
             {
-                throw new InvalidOperationException(SR.Get(SRID.LocalValueEnumerationInvalidated));
+                throw new InvalidOperationException(SR.LocalValueEnumerationInvalidated);
             }
 
             uint effectiveValuesCount = EffectiveValuesCount;
@@ -3234,7 +3234,7 @@ namespace System.Windows
 
             if (CanModifyEffectiveValues == false)
             {
-                throw new InvalidOperationException(SR.Get(SRID.LocalValueEnumerationInvalidated));
+                throw new InvalidOperationException(SR.LocalValueEnumerationInvalidated);
             }
 
             uint effectiveValuesCount = EffectiveValuesCount;

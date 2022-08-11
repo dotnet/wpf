@@ -229,7 +229,7 @@ namespace MS.Internal.Annotations.Anchoring
             Debug.Assert(node != null, "node can not be null");
 
             DependencyObject current = node;
-            DependencyObject parent = null;
+            DependencyObject parent;
 
             while (true)
             {
@@ -255,16 +255,15 @@ namespace MS.Internal.Annotations.Anchoring
                 }
 
                 // Check if located a parent, if so, check if it's the correct type
-                if ((parent == null) ||
-                    FrameworkElement.DType.IsInstanceOfType(parent) ||
-                    FrameworkContentElement.DType.IsInstanceOfType(parent))
+                if (parent is null
+                    or FrameworkElement
+                    or FrameworkContentElement)
                 {
                     break;
                 }
 
                 // Parent found but not of correct type, continue
                 current = parent;
-                parent = null;
             }
 
             return parent;

@@ -110,7 +110,7 @@ namespace System.Windows
         {
             StringBuilder uri = new StringBuilder(assemblyName.Length + 50);
 
-            uri.Append("/");
+            uri.Append('/');
             uri.Append(assemblyName);
 
             // If assembly is PresentationFramework, append the Theme name

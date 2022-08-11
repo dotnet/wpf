@@ -118,6 +118,6 @@ Finally, we need to declare everything created above in the reference file.
 
  Starting with the peers changed: [DataGridCellItem](https://github.com/dotnet/wpf/pull/4751/files#diff-8c5e1efe3927fbf477c421d45b1896e23bbedbd69d8770ce9e994c223bff0414R2406-R2421), [DateTime](https://github.com/dotnet/wpf/pull/4751/files#diff-8c5e1efe3927fbf477c421d45b1896e23bbedbd69d8770ce9e994c223bff0414R2545-R2560) and [Item](https://github.com/dotnet/wpf/pull/4751/files#diff-8c5e1efe3927fbf477c421d45b1896e23bbedbd69d8770ce9e994c223bff0414R2802-R2816) automation peers.  And the new method in WindowAutomationPeer.
 
- ## Testing
+## Testing
 
- After that, the new properties should be now possible to be set in a WPF project. Also, will be seen in AccessibilityInsights.
+After that, the new properties should be now possible to be set in a WPF project. Also, will be seen in AccessibilityInsights.

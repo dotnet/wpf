@@ -779,7 +779,7 @@ namespace System.Windows
                 StringBuilder sb = new StringBuilder(_assemblyName.Length + 10);
 
                 sb.Append(_assemblyName);
-                sb.Append(".");
+                sb.Append('.');
 
                 if (generic)
                 {

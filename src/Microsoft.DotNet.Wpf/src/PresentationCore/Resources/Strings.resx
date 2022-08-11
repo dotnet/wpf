@@ -1286,7 +1286,7 @@
     <value>Value must be of type '{0}' or '{1}'.</value>
   </data>
   <data name="Invalid_IInputElement" xml:space="preserve">
-    <value>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</value>
+    <value>'{0}' is not a valid type for IInputElement. UIElement, ContentElement or UIElement3D expected.</value>
   </data>
   <data name="Invalid_isfData_Length" xml:space="preserve">
     <value>The length of the ISF data must be greater than zero.</value>

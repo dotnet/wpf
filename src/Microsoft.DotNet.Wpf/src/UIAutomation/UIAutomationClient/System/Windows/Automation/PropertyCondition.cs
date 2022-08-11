@@ -127,7 +127,7 @@ namespace System.Windows.Automation
             AutomationPropertyInfo info;
             if (!Schema.GetPropertyInfo(property, out info))
             {
-                throw new ArgumentException(SR.Get(SRID.UnsupportedProperty));
+                throw new ArgumentException(SR.UnsupportedProperty);
             }
 
             // Check type is appropriate: NotSupported is allowed against any property,
@@ -138,12 +138,12 @@ namespace System.Windows.Automation
                 ((val == null && expectedType.IsValueType)
                 || (val != null && !expectedType.IsAssignableFrom(val.GetType()))))
             {
-                throw new ArgumentException(SR.Get(SRID.PropertyConditionIncorrectType, property.ProgrammaticName, expectedType.Name));
+                throw new ArgumentException(SR.Format(SR.PropertyConditionIncorrectType, property.ProgrammaticName, expectedType.Name));
             }
 
             if ((flags & PropertyConditionFlags.IgnoreCase) != 0)
             {
-                Misc.ValidateArgument(val is string, SRID.IgnoreCaseRequiresString);
+                Misc.ValidateArgument(val is string, nameof(SR.IgnoreCaseRequiresString));
             }
 
             // Some types are handled differently in managed vs unmanaged - handle those here...

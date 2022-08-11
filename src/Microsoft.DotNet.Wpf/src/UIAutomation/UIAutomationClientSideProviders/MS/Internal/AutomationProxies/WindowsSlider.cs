@@ -57,7 +57,7 @@ namespace MS.Internal.AutomationProxies
             if (idChild != 0)
             {
                 System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.Get(SRID.ShouldBeZero));
+                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
             }
 
             return new WindowsSlider(hwnd, null, idChild);
@@ -281,11 +281,11 @@ namespace MS.Internal.AutomationProxies
             // check for the range
             if (val > Max)
             {
-                throw new ArgumentOutOfRangeException("value", val, SR.Get(SRID.RangeValueMax));
+                throw new ArgumentOutOfRangeException("value", val, SR.RangeValueMax);
             }
             else if (val < Min)
             {
-                throw new ArgumentOutOfRangeException("value", val, SR.Get(SRID.RangeValueMin));
+                throw new ArgumentOutOfRangeException("value", val, SR.RangeValueMin);
             }
 
             Misc.ProxySendMessage(_hwnd, NativeMethods.TBM_SETPOS, new IntPtr(1), new IntPtr(val));
@@ -423,7 +423,7 @@ namespace MS.Internal.AutomationProxies
             {
                 get
                 {
-                    return SR.Get(_asNames[_item]);
+                    return SR.GetResourceString(_asNames[_item]);
                 }
             }
 
@@ -545,9 +545,9 @@ namespace MS.Internal.AutomationProxies
             private bool _fHorizontal;
 
             private string [] _asNames = {
-                SRID.LocalizedNameWindowsSliderItemBackByLargeAmount,
-                SRID.LocalizedNameWindowsSliderItemThumb,
-                SRID.LocalizedNameWindowsSliderItemForwardByLargeAmount
+                nameof(SR.LocalizedNameWindowsSliderItemBackByLargeAmount),
+                nameof(SR.LocalizedNameWindowsSliderItemThumb),
+                nameof(SR.LocalizedNameWindowsSliderItemForwardByLargeAmount)
             };
 
             private static string[] _asAutomationId = new string[] {

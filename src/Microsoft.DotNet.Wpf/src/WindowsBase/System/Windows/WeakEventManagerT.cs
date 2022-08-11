@@ -28,7 +28,7 @@ namespace System.Windows
             _eventInfo = typeof(TEventSource).GetEvent(_eventName);
 
             if (_eventInfo == null)
-                throw new ArgumentException(SR.Get(SRID.EventNotFound, typeof(TEventSource).FullName, eventName));
+                throw new ArgumentException(SR.Format(SR.EventNotFound, typeof(TEventSource).FullName, eventName));
 
             _handler = Delegate.CreateDelegate(_eventInfo.EventHandlerType, this, DeliverEventMethodInfo);
         }

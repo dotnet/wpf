@@ -424,7 +424,7 @@ namespace System.Windows.Interop
         /// <remarks>Not intended to be tested outside test code</remarks>
         internal static void SetPlatformSupportsTransparentChildWindowsForTestingOnly(bool value)
         {
-            if (string.Compare(System.Reflection.Assembly.GetEntryAssembly().GetName().Name, "drthwndsource", true) == 0)
+            if (string.Equals(System.Reflection.Assembly.GetEntryAssembly().GetName().Name, "drthwndsource", StringComparison.CurrentCultureIgnoreCase))
             {
                 _platformSupportsTransparentChildWindows = value;
             }

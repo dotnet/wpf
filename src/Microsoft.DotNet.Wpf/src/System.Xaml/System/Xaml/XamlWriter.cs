@@ -58,7 +58,7 @@ namespace System.Xaml
                 break;
 
             default:
-                throw new NotImplementedException(SR.Get(SRID.MissingCaseXamlNodes));
+                throw new NotImplementedException(SR.MissingCaseXamlNodes);
             }
         }
 

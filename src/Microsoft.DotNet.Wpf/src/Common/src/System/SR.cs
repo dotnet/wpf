@@ -30,7 +30,9 @@ namespace System
 {
     internal partial class SR
     {
+#if GENERATE_RESOURCES_CODE_AS_CONSTANTS
         private static ResourceManager ResourceManager => SRID.ResourceManager;
+#endif
 
         // This method is used to decide if we need to append the exception message parameters to the message when calling SR.Format.
         // by default it returns false.
@@ -40,11 +42,18 @@ namespace System
             return false;
         }
 
-        internal static string GetResourceString(string resourceKey, string defaultString)
+        internal static string GetResourceString(string resourceKey)
         {
             string resourceString = null;
             try { resourceString = ResourceManager.GetString(resourceKey); }
             catch (MissingManifestResourceException) { }
+
+            return resourceString;
+        }
+
+        internal static string GetResourceString(string resourceKey, string defaultString)
+        {
+            string resourceString = GetResourceString(resourceKey);
 
             if (defaultString != null && resourceKey.Equals(resourceString, StringComparison.Ordinal))
             {

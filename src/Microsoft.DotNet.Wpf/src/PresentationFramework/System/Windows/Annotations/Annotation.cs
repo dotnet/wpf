@@ -966,7 +966,7 @@ namespace System.Windows.Annotations
         /// <summary>
         /// Colon used to split the parts of a qualified name attribute value
         /// </summary>
-        private static readonly char[] _Colon = new char[] { ':' };
+        private const char _Colon = ':';
 
         #endregion Private Fields
     }

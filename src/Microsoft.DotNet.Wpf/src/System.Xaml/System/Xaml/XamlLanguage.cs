@@ -444,15 +444,13 @@ namespace System.Xaml
         private static XamlDirective GetXamlDirective(string name, XamlType xamlType,
             XamlValueConverter<TypeConverter> typeConverter, AllowedMemberLocations allowedLocation)
         {
-            XamlDirective result = new XamlDirective(s_xamlNamespaces, name, xamlType,
-                typeConverter, allowedLocation);
+            XamlDirective result = new XamlDirective(s_xamlNamespaces, name, allowedLocation, new MemberReflector(xamlType, typeConverter));
             return result;
         }
 
         private static XamlDirective GetXmlDirective(string name)
         {
-            XamlDirective result = new XamlDirective(s_xmlNamespaces, name, String,
-                BuiltInValueConverter.String, AllowedMemberLocations.Attribute);
+            XamlDirective result = new XamlDirective(s_xmlNamespaces, name, AllowedMemberLocations.Attribute, new MemberReflector(String, BuiltInValueConverter.String));
             return result;
         }
 

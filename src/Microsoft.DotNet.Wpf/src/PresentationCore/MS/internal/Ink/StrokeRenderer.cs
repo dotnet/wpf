@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//#define DEBUG_RENDERING_FEEDBACK
+//#define DEBUG_RENDERING_FEEDBACK
 
 using System;
 using System.Collections.Generic;
@@ -1122,8 +1122,8 @@ namespace MS.Internal.Ink
         }
 
         // Opacity for highlighter container visuals
-        internal static readonly double HighlighterOpacity = 0.5;
-        internal static readonly byte SolidStrokeAlpha = 0xFF;
+        internal const double HighlighterOpacity = 0.5;
+        internal const byte SolidStrokeAlpha = 0xFF;
         internal static readonly Point ArcToMarker = new Point(Double.MinValue, Double.MinValue);
 
         /// <summary>

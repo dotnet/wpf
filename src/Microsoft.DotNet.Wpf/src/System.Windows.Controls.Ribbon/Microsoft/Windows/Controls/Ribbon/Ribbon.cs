@@ -753,7 +753,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 if (ContextualTabGroupsSource != null && ContextualTabGroups.Count > 0)
                 {
-                    throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.Ribbon_ContextualTabHeadersSourceInvalid));
+                    throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Ribbon_ContextualTabHeadersSourceInvalid);
                 }
                 if (ContextualTabGroupsSource != null)
                 {
@@ -1470,7 +1470,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             if (ContextualTabGroupsSource != null && ContextualTabGroups.Count > 0)
             {
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.Ribbon_ContextualTabHeadersSourceInvalid));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Ribbon_ContextualTabHeadersSourceInvalid);
             }
         }
 
@@ -1480,7 +1480,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             if (ribbon.ContextualTabGroupsSource != null && ribbon.ContextualTabGroups.Count > 0)
             {
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.Ribbon_ContextualTabHeadersSourceInvalid));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Ribbon_ContextualTabHeadersSourceInvalid);
             }
 
             if (ribbon.ContextualTabGroupItemsControl != null)

@@ -17,17 +17,15 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         // guarantee that this problem will be fixed so we will use the GetUnmanagedStream(). Note: This path will only 
         // be taken for embedded fonts among which XPS is a main scenario. For local fonts we use DWrite's APIs.
         _fontSourceStream = fontSource->GetUnmanagedStream();
+        _fontSourcePointer = _fontSourceStream->PositionPointer - _fontSourceStream->Position;
         try
         {
             _lastWriteTime = fontSource->GetLastWriteTimeUtc().ToFileTimeUtc();
-        }    
+        }
         catch(System::ArgumentOutOfRangeException^) //The resulting file time would represent a date and time before 12:00 midnight January 1, 1601 C.E. UTC. 
         {
             _lastWriteTime = -1;
-        }        
-
-        // Create lock to control access to font source stream.
-        _fontSourceStreamLock = gcnew Object();
+        }
     }
 
     FontFileStream::~FontFileStream()
@@ -61,31 +59,9 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                 return E_INVALIDARG;
             }
 
-            int fragmentSizeInt = (int)fragmentSize;
-            array<byte>^ buffer = gcnew array<byte>(fragmentSizeInt);
-            
-            // DWrite may call this method from multiple threads. We need to ensure thread safety by making Seek and Read atomic.
-            System::Threading::Monitor::Enter(_fontSourceStreamLock);
-            try
-            {
-                _fontSourceStream->Seek(fileOffset, //long
-                                        System::IO::SeekOrigin::Begin);
-
-                _fontSourceStream->Read(buffer,         //byte[]
-                                        0,              //int
-                                        fragmentSizeInt //int
-                                        );
-            }
-            finally 
-            {
-                System::Threading::Monitor::Exit(_fontSourceStreamLock);
-            }
-
-            GCHandle gcHandle = GCHandle::Alloc(buffer, GCHandleType::Pinned);
-
-            *fragmentStart = (byte*)(gcHandle.AddrOfPinnedObject().ToPointer());
-            
-            *fragmentContext = GCHandle::ToIntPtr(gcHandle).ToPointer();
+            // Return a pointer to the font data that is already loaded in memory (because the font source resource is mmapped into the process' address space).
+            *fragmentStart = _fontSourcePointer + fileOffset;
+            *fragmentContext = nullptr;
         }
         catch(System::Exception^ exception)
         {
@@ -102,11 +78,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         void* fragmentContext
         )
     {
-        if (fragmentContext != NULL)
-        {
-            GCHandle gcHandle = GCHandle::FromIntPtr(IntPtr(fragmentContext));
-            gcHandle.Free();
-        }
     }
 
     [ComVisible(true)]

@@ -278,11 +278,11 @@ namespace System.Xaml
             }
             if (xamlTypeName.Name == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "xamlTypeName.Name"), nameof(xamlTypeName));
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "xamlTypeName.Name"), nameof(xamlTypeName));
             }
             if (xamlTypeName.Namespace == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "xamlTypeName.Namespace"), nameof(xamlTypeName));
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "xamlTypeName.Namespace"), nameof(xamlTypeName));
             }
 
             XamlType[] typeArgs = null;
@@ -293,7 +293,7 @@ namespace System.Xaml
                 {
                     if (xamlTypeName.TypeArguments[i] == null)
                     {
-                        throw new ArgumentException(SR.Get(SRID.CollectionCannotContainNulls, "xamlTypeName.TypeArguments"));
+                        throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "xamlTypeName.TypeArguments"));
                     }
                     typeArgs[i] = GetXamlType(xamlTypeName.TypeArguments[i]);
                     if (typeArgs[i] == null)
@@ -321,7 +321,7 @@ namespace System.Xaml
                 {
                     if (typeArg == null)
                     {
-                        throw new ArgumentException(SR.Get(SRID.CollectionCannotContainNulls, "typeArguments"));
+                        throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "typeArguments"));
                     }
                     if (typeArg.UnderlyingType == null)
                     {
@@ -469,7 +469,7 @@ namespace System.Xaml
                     {
                         if (result != null && result != newNs)
                         {
-                            throw new XamlSchemaException(SR.Get(SRID.DuplicateXmlnsCompatAcrossAssemblies,
+                            throw new XamlSchemaException(SR.Format(SR.DuplicateXmlnsCompatAcrossAssemblies,
                                 resultAssembly.FullName, curAssembly.FullName, oldNs));
                         }
                         result = newNs;
@@ -1177,8 +1177,10 @@ namespace System.Xaml
         {
             bool foundNew = false;
             IList<XmlNsInfo.XmlNsDefinition> xmlnsDefs = nsInfo.NsDefs;
-            foreach (XmlNsInfo.XmlNsDefinition xmlnsDef in xmlnsDefs)
+            int xmlnsDefsCount = xmlnsDefs.Count;
+            for (int i = 0; i < xmlnsDefsCount; i++)
             {
+                XmlNsInfo.XmlNsDefinition xmlnsDef = xmlnsDefs[i];
                 AssemblyNamespacePair pair = new AssemblyNamespacePair(nsInfo.Assembly, xmlnsDef.ClrNamespace);
                 XamlNamespace ns = GetXamlNamespace(xmlnsDef.XmlNamespace);
                 ns.AddAssemblyNamespacePair(pair);

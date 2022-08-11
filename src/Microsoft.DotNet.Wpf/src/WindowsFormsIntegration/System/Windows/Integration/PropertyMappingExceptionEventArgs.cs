@@ -23,11 +23,11 @@ namespace System.Windows.Forms.Integration
         {
             if (exception == null)
             {
-                throw new ArgumentNullException(string.Format(CultureInfo.CurrentCulture, SR.Get(SRID.WFI_NullArgument), "exception"));
+                throw new ArgumentNullException(string.Format(CultureInfo.CurrentCulture, SR.WFI_NullArgument, "exception"));
             }
             if (string.IsNullOrEmpty(propertyName))
             {
-                throw new ArgumentNullException(string.Format(CultureInfo.CurrentCulture, SR.Get(SRID.WFI_ArgumentNullOrEmpty), "propertyName"));
+                throw new ArgumentNullException(string.Format(CultureInfo.CurrentCulture, SR.WFI_ArgumentNullOrEmpty, "propertyName"));
             }
             _propertyName = propertyName;
             _propertyValue = propertyValue;

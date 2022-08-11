@@ -85,14 +85,14 @@ namespace System.Xaml.Schema
                     bool isCollection = TryGetCollectionAdder(type, true /*mayBeICollection*/, out result);
                     if (isCollection && result == null)
                     {
-                        throw new XamlSchemaException(SR.Get(SRID.AmbiguousCollectionItemType, type));
+                        throw new XamlSchemaException(SR.Format(SR.AmbiguousCollectionItemType, type));
                     }
                     break;
                 case XamlCollectionKind.Dictionary:
                     bool isDictionary = TryGetDictionaryAdder(type, true /*mayBeIDictionary*/, out result);
                     if (isDictionary && result == null)
                     {
-                        throw new XamlSchemaException(SR.Get(SRID.AmbiguousDictionaryItemType, type));
+                        throw new XamlSchemaException(SR.Format(SR.AmbiguousDictionaryItemType, type));
                     }
                     break;
             }

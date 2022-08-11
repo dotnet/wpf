@@ -30,7 +30,7 @@ namespace MS.Internal
             get 
             {
                 // Get the UI Language from the string table
-                string uiLanguage = SR.Get(SRID.WPF_UILanguage);
+                string uiLanguage = SR.WPF_UILanguage;
                 Invariant.Assert(!string.IsNullOrEmpty(uiLanguage), "No UILanguage was specified in stringtable.");
     
                 // Return the CultureInfo for this UI language.

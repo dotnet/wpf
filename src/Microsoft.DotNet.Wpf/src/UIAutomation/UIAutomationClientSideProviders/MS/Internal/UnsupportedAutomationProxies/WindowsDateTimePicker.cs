@@ -31,7 +31,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
         {
             // DateTimePicker is custom so need to also return LocalizedControlType property
             _cControlType = ControlType.Custom;
-            _sType = SR.Get( SRID.LocalizedControlTypeDateTimePicker );
+            _sType = SR.LocalizedControlTypeDateTimePicker;
 
             // support for events
             _IsDropDownType = IsDropDownType ();
@@ -59,7 +59,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
             if (idChild != 0)
             {
                 System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.Get(SRID.ShouldBeZero));
+                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
             }
 
             return new WindowsDateTimePicker(hwnd, null, idChild);
@@ -222,7 +222,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
 
             if (!SetValue(DateTime.Parse(val, CultureInfo.CurrentCulture)))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
         }
 
@@ -271,7 +271,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
             {
                 case ExpandCollapseState.LeafNode :
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
 
                 case ExpandCollapseState.Expanded :
@@ -287,7 +287,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                     }
             }
 
-            throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+            throw new InvalidOperationException(SR.OperationCannotBePerformed);
         }
 
         void IExpandCollapseProvider.Collapse ()
@@ -303,7 +303,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
             {
                 case ExpandCollapseState.LeafNode :
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
 
                 case ExpandCollapseState.Expanded :
@@ -319,7 +319,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                     }
             }
 
-            throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+            throw new InvalidOperationException(SR.OperationCannotBePerformed);
         }
 
         ExpandCollapseState IExpandCollapseProvider.ExpandCollapseState
@@ -483,7 +483,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
             {
                 get
                 {
-                    return SR.Get(SRID.LocalizedNameWindowsDateTimeButton);
+                    return SR.LocalizedNameWindowsDateTimeButton;
                 }
             }
 

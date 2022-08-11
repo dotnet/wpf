@@ -463,12 +463,12 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <summary>
         /// Static members defined in Penimc code
         /// </summary>
-        internal static readonly byte NoCompression = 0x00;
-        internal static readonly byte DefaultCompression = 0xC0;
-        internal static readonly byte IndexedHuffman = 0x80;
-        internal static readonly byte LempelZiv = 0x80;
-        internal static readonly byte DefaultBAACount = 8;
-        internal static readonly byte MaxBAACount = 10;
+        internal const byte NoCompression = 0x00;
+        internal const byte DefaultCompression = 0xC0;
+        internal const byte IndexedHuffman = 0x80;
+        internal const byte LempelZiv = 0x80;
+        internal const byte DefaultBAACount = 8;
+        internal const byte MaxBAACount = 10;
 
 
         private static readonly double[] DefaultFirstSquareRoot = { 1, 1, 1, 4, 9, 16, 36, 49};

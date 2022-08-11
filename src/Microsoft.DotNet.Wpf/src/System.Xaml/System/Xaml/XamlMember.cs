@@ -120,7 +120,7 @@ namespace System.Xaml
             MethodInfo accessor = getter ?? setter;
             if (accessor == null)
             {
-                throw new ArgumentNullException(SR.Get(SRID.GetterOrSetterRequired), (Exception)null);
+                throw new ArgumentNullException(SR.GetterOrSetterRequired, (Exception)null);
             }
             _name = attachablePropertyName ?? throw new ArgumentNullException(nameof(attachablePropertyName));
 
@@ -823,7 +823,7 @@ namespace System.Xaml
             }
             if ((method.GetParameters().Length != 1) || (method.ReturnType == typeof(void)))
             {
-                throw new ArgumentException(SR.Get(SRID.IncorrectGetterParamNum), argumentName);
+                throw new ArgumentException(SR.IncorrectGetterParamNum, argumentName);
             }
         }
 
@@ -831,7 +831,7 @@ namespace System.Xaml
         {
             if ((method != null) && (method.GetParameters().Length != 2))
             {
-                throw new ArgumentException(SR.Get(SRID.IncorrectSetterParamNum), argumentName);
+                throw new ArgumentException(SR.IncorrectSetterParamNum, argumentName);
             }
         }
 

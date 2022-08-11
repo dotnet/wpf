@@ -61,7 +61,7 @@ namespace System.Windows.Automation.Provider
         /// <returns>base raw element for specified window</returns>
         public static IRawElementProviderSimple HostProviderFromHandle ( IntPtr hwnd )
         {
-            ValidateArgument(hwnd != IntPtr.Zero, nameof(SRID.HwndMustBeNonNULL));
+            ValidateArgument(hwnd != IntPtr.Zero, nameof(SR.HwndMustBeNonNULL));
             return UiaCoreProviderApi.UiaHostProviderFromHwnd(hwnd);
         }
     
@@ -75,7 +75,7 @@ namespace System.Windows.Automation.Provider
         /// <returns>Server should return the return value as the lresult return value to the WM_GETOBJECT windows message</returns>
         public static IntPtr ReturnRawElementProvider (IntPtr hwnd, IntPtr wParam, IntPtr lParam, IRawElementProviderSimple el )
         {
-            ValidateArgument( hwnd != IntPtr.Zero, nameof(SRID.HwndMustBeNonNULL));
+            ValidateArgument( hwnd != IntPtr.Zero, nameof(SR.HwndMustBeNonNULL));
             ValidateArgumentNonNull(el, "el" );
             
             return UiaCoreProviderApi.UiaReturnRawElementProvider(hwnd, wParam, lParam, el);
@@ -215,7 +215,7 @@ namespace System.Windows.Automation.Provider
         // Throw an argument Exception with a generic error
         private static void ThrowInvalidArgument(string argName)
         {
-            throw new ArgumentException(SR.Format(SRID.GenericInvalidArgument, argName));
+            throw new ArgumentException(SR.Format(SR.GenericInvalidArgument, argName));
         }
 
         // Check that specified condition is true; if not, throw exception

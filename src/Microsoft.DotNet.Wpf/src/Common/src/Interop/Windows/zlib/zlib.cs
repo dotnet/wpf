@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 internal static partial class Interop
 {
-    internal static partial class zlib
+    internal static partial class Zlib
     {
         internal static readonly byte[] ZLibVersion = { (byte)'1', (byte)'.', (byte)'2', (byte)'.', (byte)'3', 0 };
         [DllImport(Libraries.CompressionNative, EntryPoint = "CompressionNative_DeflateInit2_")]

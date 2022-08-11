@@ -436,11 +436,10 @@ namespace System.Windows.Media.Effects
 
             if (newValue != null)
             {
-                if (!(typeof(VisualBrush).IsInstanceOfType(newValue) ||
-                      typeof(BitmapCacheBrush).IsInstanceOfType(newValue) ||
-                      typeof(ImplicitInputBrush).IsInstanceOfType(newValue) ||
-                      typeof(ImageBrush).IsInstanceOfType(newValue))
-                      )
+                if (newValue is not VisualBrush
+                    and not BitmapCacheBrush
+                    and not ImplicitInputBrush
+                    and not ImageBrush)
                 {
                     // Note that if the type of the brush is ImplicitInputBrush and the value is non null, the value is actually
                     // Effect.ImplicitInput. This is because ImplicitInputBrush is internal and the user can only get to the singleton

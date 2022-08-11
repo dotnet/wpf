@@ -180,16 +180,8 @@ namespace System.Windows.Controls
         {
             char listSeparator = TokenizerHelper.GetNumericListSeparator(cultureInfo);
 
-            // Initial capacity [64] is an estimate based on a sum of:
-            // 24 = 2x double (twelve digits is generous for the range of values likely)
-            //  2 = 2x separator characters
-            // Is 26 really a good number??? 
-            StringBuilder sb = new StringBuilder(26);
-
-            sb.Append(cacheLength.CacheBeforeViewport.ToString(cultureInfo));
-            sb.Append(listSeparator);
-            sb.Append(cacheLength.CacheAfterViewport.ToString(cultureInfo));
-            return sb.ToString();
+            return string.Create(cultureInfo, stackalloc char[128],
+                $"{cacheLength.CacheBeforeViewport}{listSeparator}{cacheLength.CacheAfterViewport}");
         }
         /// <summary>
         /// Parses a VirtualizationCacheLength from a string given the CultureInfo.

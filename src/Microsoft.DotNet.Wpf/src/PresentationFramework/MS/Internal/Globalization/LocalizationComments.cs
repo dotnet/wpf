@@ -103,7 +103,7 @@ namespace MS.Internal.Globalization
                         {
                             // terminate the PropertyName by an unesacped whitespace
                             currentPair.PropertyName = tokenBuffer.ToString();
-                            tokenBuffer = new StringBuilder();
+                            tokenBuffer.Clear();
                         }
 
                         // else ignore whitespace at the beginning of the PropertyName name
@@ -116,7 +116,7 @@ namespace MS.Internal.Globalization
                             {
                                 // terminate the PropertyName by an unescaped CommentStart char
                                 currentPair.PropertyName = tokenBuffer.ToString();
-                                tokenBuffer = new StringBuilder();
+                                tokenBuffer.Clear();
                                 i--; // put back this char and continue
                             }
                             else
@@ -161,9 +161,9 @@ namespace MS.Internal.Globalization
                             if (!escaped)
                             {
                                 // terminated by unescaped Comment
-                                currentPair.Value = tokenBuffer.ToString().Substring(1);
+                                currentPair.Value = tokenBuffer.ToString(1, tokenBuffer.Length - 1);
                                 tokens.Add(currentPair);
-                                tokenBuffer = new StringBuilder();
+                                tokenBuffer.Clear();
                                 currentPair = new PropertyComment();
                             }
                             else
@@ -228,7 +228,7 @@ namespace MS.Internal.Globalization
                             attributeGroup
                             );
 
-                        builder = new StringBuilder();
+                        builder.Clear();
                     }
                 }
                 else

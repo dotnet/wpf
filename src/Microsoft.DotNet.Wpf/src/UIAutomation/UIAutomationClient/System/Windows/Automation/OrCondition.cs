@@ -36,7 +36,7 @@ namespace System.Windows.Automation
         public OrCondition( params Condition [ ] conditions )
         {
             Misc.ValidateArgumentNonNull( conditions, "conditions" );
-            Misc.ValidateArgument( conditions.Length >= 2, SRID.MustBeAtLeastTwoConditions );
+            Misc.ValidateArgument( conditions.Length >= 2, nameof(SR.MustBeAtLeastTwoConditions) );
             foreach( Condition condition in conditions )
             {
                 Misc.ValidateArgumentNonNull( condition, "conditions" );

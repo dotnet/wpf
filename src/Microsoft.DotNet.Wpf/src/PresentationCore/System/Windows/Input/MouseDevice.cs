@@ -328,7 +328,7 @@ namespace System.Windows.Input
                 element = null;
             }
 
-            // Validate that elt is either a UIElement or a ContentElement
+            // Validate that elt is either a UIElement, a ContentElement or a UIElement3D.
             DependencyObject eltDO = element as DependencyObject;
             if (eltDO != null && !InputElement.IsValid(element))
             {
@@ -579,7 +579,7 @@ namespace System.Windows.Input
         {
 //             VerifyAccess();
 
-            // Validate that relativeTo is either a UIElement or a ContentElement
+            // Validate that relativeTo is either a UIElement, a ContentElement or a UIElement3D.
             if (relativeTo != null && !InputElement.IsValid(relativeTo))
             {
                 throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, relativeTo.GetType()));
@@ -739,17 +739,17 @@ namespace System.Windows.Input
             // First, check things like IsEnabled, IsVisible, etc. on a
             // UIElement vs. ContentElement basis.
             //
-            if (InputElement.IsUIElement(dependencyObject))
+            if (dependencyObject is UIElement uie)
             {
-                killCapture = !ValidateUIElementForCapture((UIElement)_mouseCapture);
+                killCapture = !ValidateUIElementForCapture(uie);
             }
-            else if (InputElement.IsContentElement(dependencyObject))
+            else if (dependencyObject is ContentElement ce)
             {
-                killCapture = !ValidateContentElementForCapture((ContentElement)_mouseCapture);
+                killCapture = !ValidateContentElementForCapture(ce);
             }
-            else if (InputElement.IsUIElement3D(dependencyObject))
+            else if (dependencyObject is UIElement3D uie3D)
             {
-                killCapture = !ValidateUIElement3DForCapture((UIElement3D)_mouseCapture);
+                killCapture = !ValidateUIElement3DForCapture(uie3D);
             }
 
             //
@@ -993,51 +993,51 @@ namespace System.Windows.Input
                     if(oldMouseOver != null)
                     {
                         o = oldMouseOver as DependencyObject;
-                        if (InputElement.IsUIElement(o))
+                        if (o is UIElement uie)
                         {
-                            ((UIElement)o).IsEnabledChanged -= _overIsEnabledChangedEventHandler;
-                            ((UIElement)o).IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                            ((UIElement)o).IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                            uie.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                            uie.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                            uie.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                         }
-                        else if (InputElement.IsContentElement(o))
+                        else if (o is ContentElement ce)
                         {
-                            ((ContentElement)o).IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                            ce.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
 
                             // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                             //
-                            // ((ContentElement)o).IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                            // ((ContentElement)o).IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                            // ce.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                            // ce.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                         }
-                        else if (InputElement.IsUIElement3D(o))
+                        else if (o is UIElement3D uie3D)
                         {
-                            ((UIElement3D)o).IsEnabledChanged -= _overIsEnabledChangedEventHandler;
-                            ((UIElement3D)o).IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                            ((UIElement3D)o).IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                            uie3D.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                            uie3D.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                            uie3D.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                         }
                     }
                     if(_mouseOver != null)
                     {
                         o = _mouseOver as DependencyObject;
-                        if (InputElement.IsUIElement(o))
+                        if (o is UIElement uie)
                         {
-                            ((UIElement)o).IsEnabledChanged += _overIsEnabledChangedEventHandler;
-                            ((UIElement)o).IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                            ((UIElement)o).IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                            uie.IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                            uie.IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                            uie.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                         }
-                        else if (InputElement.IsContentElement(o))
+                        else if (o is ContentElement ce)
                         {
-                            ((ContentElement)o).IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                            ce.IsEnabledChanged += _overIsEnabledChangedEventHandler;
 
                             // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                             //
-                            // ((ContentElement)o).IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                            // ((ContentElement)o).IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                            // ce.IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                            // ce.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                         }
-                        else if (InputElement.IsUIElement3D(o))
+                        else if (o is UIElement3D uie3D)
                         {
-                            ((UIElement3D)o).IsEnabledChanged += _overIsEnabledChangedEventHandler;
-                            ((UIElement3D)o).IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                            ((UIElement3D)o).IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                            uie3D.IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                            uie3D.IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                            uie3D.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                         }
                     }
                 }
@@ -1087,51 +1087,51 @@ namespace System.Windows.Input
                     if (oldMouseCapture != null)
                     {
                         o = oldMouseCapture as DependencyObject;
-                        if (InputElement.IsUIElement(o))
+                        if (o is UIElement uie)
                         {
-                            ((UIElement)o).IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
-                            ((UIElement)o).IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
-                            ((UIElement)o).IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
+                            uie.IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
+                            uie.IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
+                            uie.IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
                         }
-                        else if (InputElement.IsContentElement(o))
+                        else if (o is ContentElement ce)
                         {
-                            ((ContentElement)o).IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
+                            ce.IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
 
                             // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                             //
-                            // ((ContentElement)o).IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
-                            // ((ContentElement)o).IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
+                            // ce.IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
+                            // ce.IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
                         }
-                        else if (InputElement.IsUIElement3D(o))
+                        else if (o is UIElement3D uie3D)
                         {
-                            ((UIElement3D)o).IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
-                            ((UIElement3D)o).IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
-                            ((UIElement3D)o).IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
+                            uie3D.IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
+                            uie3D.IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
+                            uie3D.IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
                         }
                     }
                     if (_mouseCapture != null)
                     {
                         o = _mouseCapture as DependencyObject;
-                        if (InputElement.IsUIElement(o))
+                        if (o is UIElement uie)
                         {
-                            ((UIElement)o).IsEnabledChanged += _captureIsEnabledChangedEventHandler;
-                            ((UIElement)o).IsVisibleChanged += _captureIsVisibleChangedEventHandler;
-                            ((UIElement)o).IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
+                            uie.IsEnabledChanged += _captureIsEnabledChangedEventHandler;
+                            uie.IsVisibleChanged += _captureIsVisibleChangedEventHandler;
+                            uie.IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
                         }
-                        else if (InputElement.IsContentElement(o))
+                        else if (o is ContentElement ce)
                         {
-                            ((ContentElement)o).IsEnabledChanged += _captureIsEnabledChangedEventHandler;
+                            ce.IsEnabledChanged += _captureIsEnabledChangedEventHandler;
 
                             // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                             //
-                            // ((ContentElement)o).IsVisibleChanged += _captureIsVisibleChangedEventHandler;
-                            // ((ContentElement)o).IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
+                            // ce.IsVisibleChanged += _captureIsVisibleChangedEventHandler;
+                            // ce.IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
                         }
-                        else if (InputElement.IsUIElement3D(o))
+                        else if (o is UIElement3D uie3D)
                         {
-                            ((UIElement3D)o).IsEnabledChanged += _captureIsEnabledChangedEventHandler;
-                            ((UIElement3D)o).IsVisibleChanged += _captureIsVisibleChangedEventHandler;
-                            ((UIElement3D)o).IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
+                            uie3D.IsEnabledChanged += _captureIsEnabledChangedEventHandler;
+                            uie3D.IsVisibleChanged += _captureIsVisibleChangedEventHandler;
+                            uie3D.IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
                         }
                     }
                 }
@@ -1538,9 +1538,13 @@ namespace System.Windows.Input
                                             // If we are over something else (like a raw visual)
                                             // find the containing element.
                                             if (!InputElement.IsValid(mouseOver))
+                                            {
                                                 mouseOver = InputElement.GetContainingInputElement(mouseOver as DependencyObject);
+                                            }
                                             if ((rawMouseOver != null) && !InputElement.IsValid(rawMouseOver))
+                                            {
                                                 rawMouseOver = InputElement.GetContainingInputElement(rawMouseOver as DependencyObject);
+                                            }
                                         }
                                         break;
 

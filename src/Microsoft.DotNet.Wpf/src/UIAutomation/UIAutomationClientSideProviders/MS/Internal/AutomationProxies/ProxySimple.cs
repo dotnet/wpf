@@ -560,7 +560,7 @@ namespace MS.Internal.AutomationProxies
                 return;
             }
 
-            throw new InvalidOperationException(SR.Get(SRID.SetFocusFailed));
+            throw new InvalidOperationException(SR.SetFocusFailed);
         }
 
         #endregion

@@ -34,7 +34,7 @@ namespace System.Xaml.Schema
 
             if (getter == null && setter == null)
             {
-                throw new XamlSchemaException(SR.Get(SRID.SetOnlyProperty, declaringType.Name, name));
+                throw new XamlSchemaException(SR.Format(SR.SetOnlyProperty, declaringType.Name, name));
             }
 
             _isPublic = (getter != null) ? getter.IsPublic : setter.IsPublic;
@@ -73,7 +73,7 @@ namespace System.Xaml.Schema
                     }
                     else
                     {
-                        throw new XamlSchemaException(SR.Get(SRID.IncorrectSetterParamNum, ClrBindingSetterMethodInfo.Name, 2));
+                        throw new XamlSchemaException(SR.Format(SR.IncorrectSetterParamNum, ClrBindingSetterMethodInfo.Name, 2));
                     }
                 }
             }

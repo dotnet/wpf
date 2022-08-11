@@ -72,7 +72,7 @@ namespace MS.Internal
                     {
                         // This type checking is done in DescendentsWalker.  Doing it here
                         // keeps us consistent.
-                        if (FrameworkElement.DType.IsInstanceOfType(startNode) || FrameworkContentElement.DType.IsInstanceOfType(startNode))
+                        if (startNode is FrameworkElement or FrameworkContentElement)
                         {
                             _postCallback(startNode, this.Data, _priority == TreeWalkPriority.VisualTree);
                         }

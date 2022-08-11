@@ -36,7 +36,7 @@ namespace System.Windows.Markup
                 TypeExtension typeExtension = value as TypeExtension;
                 if (typeExtension == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.MustBeOfType, "value", "TypeExtension")); 
+                    throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "TypeExtension")); 
                 }
                 return new InstanceDescriptor(typeof(TypeExtension).GetConstructor(new Type[] { typeof(Type) }),
                                               new object[] { typeExtension.Type });

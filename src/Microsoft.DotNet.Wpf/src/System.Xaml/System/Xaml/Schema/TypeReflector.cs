@@ -1053,7 +1053,7 @@ namespace System.Xaml.Schema
             }
             if (objs.Length > 1)
             {
-                string message = SR.Get(SRID.TooManyAttributesOnType,
+                string message = SR.Format(SR.TooManyAttributesOnType,
                                                     reflectedType.Name, attrType.Name);
                 throw new XamlSchemaException(message);
             }

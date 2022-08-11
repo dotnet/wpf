@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System.Diagnostics.Tracing;
+using System.Diagnostics.Tracing;
 
 // Use the naming convention MS.Internal.Telemetry.<assemblyname> while adding assemblies to the provider
 #if WINDOWS_BASE

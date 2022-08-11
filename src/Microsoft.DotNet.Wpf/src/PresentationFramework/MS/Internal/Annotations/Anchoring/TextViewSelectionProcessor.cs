@@ -158,7 +158,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             ContentLocatorPart part = new ContentLocatorPart(TextSelectionProcessor.CharacterRangeElementName);// DocumentPageViewLocatorPart();
             part.NameValuePairs.Add(TextSelectionProcessor.CountAttribute, 1.ToString(NumberFormatInfo.InvariantInfo));
-            part.NameValuePairs.Add(TextSelectionProcessor.SegmentAttribute + 0.ToString(NumberFormatInfo.InvariantInfo), startOffset.ToString(NumberFormatInfo.InvariantInfo) + TextSelectionProcessor.Separator[0] + endOffset.ToString(NumberFormatInfo.InvariantInfo));
+            part.NameValuePairs.Add(TextSelectionProcessor.SegmentAttribute + 0.ToString(NumberFormatInfo.InvariantInfo), startOffset.ToString(NumberFormatInfo.InvariantInfo) + TextSelectionProcessor.Separator + endOffset.ToString(NumberFormatInfo.InvariantInfo));
             part.NameValuePairs.Add(TextSelectionProcessor.IncludeOverlaps, Boolean.TrueString);
 
             res.Add(part);

@@ -36,7 +36,7 @@ namespace DRT
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(target.GetType().Name);
-            sb.Append(".");
+            sb.Append('.');
             sb.Append(target.GetHashCode().ToString());
 
             string name = null;
@@ -48,9 +48,9 @@ namespace DRT
 
             if (!String.IsNullOrEmpty(name))
             {
-                sb.Append("\"");
+                sb.Append('"');
                 sb.Append(name);
-                sb.Append("\"");
+                sb.Append('"');
             }
 
             return sb.ToString();

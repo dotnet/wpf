@@ -732,7 +732,7 @@ namespace MS.Internal.AutomationProxies
             char ch;
 
             if (begin.TextContainer != end.TextContainer)
-                throw new ArgumentException(SR.Get(SRID.BeginEndTextContainerMismatch));
+                throw new ArgumentException(SR.BeginEndTextContainerMismatch);
 
             navigator.MoveToPosition(begin);
             type = navigator.GetSymbolType(LogicalDirection.Forward);
@@ -755,7 +755,7 @@ namespace MS.Internal.AutomationProxies
                     case TextSymbolType.ElementEnd:
                         if (IsBreakingSymbol(navigator, LogicalDirection.Forward))
                         {
-                            output.Append(" ");
+                            output.Append(' ');
                         }
                         break;
                 }

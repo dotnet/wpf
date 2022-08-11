@@ -19,7 +19,7 @@ namespace System.Windows.Forms.Integration
         {
             if (exception == null)
             {
-                throw new ArgumentNullException(string.Format(CultureInfo.CurrentCulture, SR.Get(SRID.WFI_NullArgument), "exception"));
+                throw new ArgumentNullException(string.Format(CultureInfo.CurrentCulture, SR.WFI_NullArgument, "exception"));
             }
             _throwException = throwException;
             _exception = exception;

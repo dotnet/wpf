@@ -59,7 +59,15 @@ namespace System.Windows.Controls
             // Hook a change handler for IsVisible so we can start/stop animating.
             // Ideally we would do this by overriding metadata, but it's a read-only
             // property so we can't.
-            IsVisibleChanged += (s, e) => { UpdateAnimation(); };
+            IsVisibleChanged += (s, e) =>
+            {
+                UpdateAnimation();
+
+                // Update the visual state when IsVisible changes for performance reasons.
+                // See comment in ChangeVisualState for an explanation.
+                if (_glow == null)
+                    UpdateVisualState();
+            };
         }
 
         #endregion Constructors
@@ -270,7 +278,9 @@ namespace System.Windows.Controls
 
         internal override void ChangeVisualState(bool useTransitions)
         {
-            if (!IsIndeterminate)
+            // We change the visual state to determinate when not IsVisible for performance reasons.
+            // By default, the animation for the Indeterminate state will continue even when the progress bar is not visible.
+            if (!IsIndeterminate || !IsVisible)
             {
                 VisualStateManager.GoToState(this, VisualStates.StateDeterminate, useTransitions);
             }

@@ -396,7 +396,7 @@ namespace System.Security.RightsManagement
         private void CheckDisposed()
         {
             if (_disposed)
-                throw new ObjectDisposedException(null, SR.Get(SRID.CryptoProviderDisposed));
+                throw new ObjectDisposedException(null, SR.CryptoProviderDisposed);
         }
 
 

@@ -316,6 +316,16 @@ namespace System.Windows.Automation.Peers
                 newValue ? ExpandCollapseState.Expanded : ExpandCollapseState.Collapsed);
         }
 
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+        internal void RaiseToggleStatePropertyChangedEvent(bool oldValue, bool newValue)
+        {
+            RaisePropertyChangedEvent(TogglePatternIdentifiers.ToggleStateProperty,
+                oldValue ? ConvertToToggleState(oldValue) : ConvertToToggleState(newValue),
+                newValue ? ConvertToToggleState(oldValue) : ConvertToToggleState(newValue));
+        }
+
+        private static ToggleState ConvertToToggleState(bool value) => value ? ToggleState.On : ToggleState.Off;
+
         // Return the base without the AccessKey character
         ///
         override protected string GetNameCore()

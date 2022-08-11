@@ -1030,9 +1030,9 @@ namespace System.Windows.Ink
         /// <summary>
         /// Statics
         /// </summary>
-        internal static readonly float StylusPrecision = 1000.0f;
-        internal static readonly double DefaultWidth = 2.0031496062992127;
-        internal static readonly double DefaultHeight = 2.0031496062992127;
+        internal const float StylusPrecision = 1000.0f;
+        internal const double DefaultWidth = 2.0031496062992127;
+        internal const double DefaultHeight = 2.0031496062992127;
 
 
         #endregion

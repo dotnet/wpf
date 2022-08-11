@@ -23,7 +23,7 @@ using SecurityHelper = MS.Internal.WindowsBase.SecurityHelper;
 using System.Text;
 using System.Globalization;                 // For CultureInfo
 // for Invariant
-using System.Windows;                       // for SR and SRID
+using System.Windows;                       // for SR and SR
 
 using MS.Internal;
 using System.Runtime.InteropServices;
@@ -543,7 +543,7 @@ namespace MS.Internal.Security.RightsManagement
                 string clientLicensorCertificate = GetClientLicensorCert();
 
                 if (clientLicensorCertificate == null)
-                    throw new RightsManagementException(SR.Get(SRID.UserHasNoClientLicensorCert));
+                    throw new RightsManagementException(SR.UserHasNoClientLicensorCert);
 
                 // Trim all the leading and trailing white space characters
                 // of the clientLicensorCertificate.
@@ -553,7 +553,7 @@ namespace MS.Internal.Security.RightsManagement
                 // above, if the certificate string is empty or contains only white spaces, it
                 // is empty now.
                 if (clientLicensorCertificate.Length == 0)
-                    throw new RightsManagementException(SR.Get(SRID.UserHasNoClientLicensorCert));
+                    throw new RightsManagementException(SR.UserHasNoClientLicensorCert);
 
                 // Offline publishing supported no Online publishing support 
                 int hr = SafeNativeMethods.DRMGetSignedIssuanceLicense(

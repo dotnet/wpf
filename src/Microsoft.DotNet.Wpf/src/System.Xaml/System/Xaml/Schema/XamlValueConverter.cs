@@ -29,7 +29,7 @@ namespace System.Xaml.Schema
         {
             if (converterType == null && targetType == null && name == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ArgumentRequired, "converterType, targetType, name"));
+                throw new ArgumentException(SR.Format(SR.ArgumentRequired, "converterType, targetType, name"));
             }
             ConverterType = converterType;
             TargetType = targetType;
@@ -77,7 +77,7 @@ namespace System.Xaml.Schema
             {
                 if (!typeof(TConverterBase).IsAssignableFrom(ConverterType))
                 {
-                    throw new XamlSchemaException(SR.Get(SRID.ConverterMustDeriveFromBase,
+                    throw new XamlSchemaException(SR.Format(SR.ConverterMustDeriveFromBase,
                        ConverterType, typeof(TConverterBase)));
                 }
                 return (TConverterBase)SafeReflectionInvoker.CreateInstance(ConverterType, null);

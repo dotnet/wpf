@@ -326,7 +326,7 @@ namespace MS.Internal.IO.Packaging
         {
             // Make sure we have at least on '-' since Guid constructor will take both dash'ed and non-dash'ed format of GUID string
             //  while XPS spec requires dash'ed format of GUID
-            if (guidString.IndexOf('-') == -1)
+            if (!guidString.Contains('-'))
             {
                 throw new ArgumentException(SR.Get(SRID.InvalidPartName));
             }

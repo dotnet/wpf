@@ -1,4 +1,4 @@
-{
+﻿{
   "author": "Microsoft",
   "name": "Application WPF",
   "description": "Projet de création d'une application WPF .NET",
@@ -8,7 +8,7 @@
   "symbols/Framework/choices/netcoreapp3.1/description": "netcoreapp3.1 cible",
   "symbols/Framework/choices/net5.0/description": "net5.0 cible",
   "symbols/Framework/choices/net6.0/description": "net6.0 cible",
-  "symbols/Framework/choices/net7.0/description": "Target net7.0",
+  "symbols/Framework/choices/net7.0/description": "Cible net7.0",
   "symbols/langVersion/description": "Définit langVersion dans le fichier projet créé",
   "symbols/skipRestore/description": "S’il est spécifié, ignore la restauration automatique du projet lors de la création.",
   "symbols/Nullable/description": "Indique s’il faut activer les types référence Nullable pour ce projet.",

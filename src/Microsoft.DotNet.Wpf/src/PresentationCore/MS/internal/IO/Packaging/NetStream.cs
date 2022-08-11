@@ -96,8 +96,8 @@ namespace MS.Internal.IO.Packaging
 
             // only attempt out-of-order requests on well-behaved HTTP servers
             // (Note: MSDN indicates that uri.Scheme is always lower case)
-            if (fullStreamLength > 0 && ((String.Compare(uri.Scheme, Uri.UriSchemeHttp, StringComparison.Ordinal) == 0) ||
-                (String.Compare(uri.Scheme, Uri.UriSchemeHttps, StringComparison.Ordinal) == 0)))
+            if (fullStreamLength > 0 && ((string.Equals(uri.Scheme, Uri.UriSchemeHttp, StringComparison.Ordinal)) ||
+                (string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.Ordinal))))
             {
                 _allowByteRangeRequests = true;
                 _readEventHandles[(int)ReadEvent.ByteRangeReadEvent] = new AutoResetEvent(false);

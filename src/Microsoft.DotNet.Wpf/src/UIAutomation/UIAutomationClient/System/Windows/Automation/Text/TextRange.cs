@@ -184,12 +184,12 @@ namespace System.Windows.Automation.Text
             AutomationAttributeInfo ai;
             if(!Schema.GetAttributeInfo(attribute, out ai))
             {
-                throw new ArgumentException(SR.Get(SRID.UnsupportedAttribute));
+                throw new ArgumentException(SR.UnsupportedAttribute);
             }
 
             if (value.GetType() != ai.Type)
             {
-                throw new ArgumentException(SR.Get(SRID.TextAttributeValueWrongType, attribute, ai.Type.Name, value.GetType().Name), "value");
+                throw new ArgumentException(SR.Format(SR.TextAttributeValueWrongType, attribute, ai.Type.Name, value.GetType().Name), "value");
             }
 
             // note: if we implement attributes whose values are logical elements, patterns,
@@ -221,7 +221,7 @@ namespace System.Windows.Automation.Text
             // Therefore we can not use IsNullOrEmpty() here, suppress the warning.
             Misc.ValidateArgumentNonNull(text, "text");
 #pragma warning suppress 6507
-            Misc.ValidateArgument(text.Length != 0, SRID.TextMustNotBeNullOrEmpty);
+            Misc.ValidateArgument(text.Length != 0, nameof(SR.TextMustNotBeNullOrEmpty));
 
             SafeTextRangeHandle hResultTextRange = UiaCoreApi.TextRange_FindText(_hTextRange, text, backward, ignoreCase);
             return Wrap(hResultTextRange, _pattern);
@@ -240,7 +240,7 @@ namespace System.Windows.Automation.Text
             AutomationAttributeInfo ai;
             if(!Schema.GetAttributeInfo(attribute, out ai))
             {
-                throw new ArgumentException(SR.Get(SRID.UnsupportedAttribute));
+                throw new ArgumentException(SR.UnsupportedAttribute);
             }
 
             object obj = UiaCoreApi.TextRange_GetAttributeValue(_hTextRange, attribute.Id);

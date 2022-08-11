@@ -87,11 +87,11 @@ namespace MS.Internal.Data
                     ListCollectionView.PrepareComparer(
                         _groupBy.CustomSort,
                         _groupBy.SortDescriptionsInternal,
-                        () =>
+                        static state =>
                         {
-                            for (CollectionViewGroupInternal group = this;
-                                    group != null;
-                                    group = group.Parent)
+                            for (CollectionViewGroupInternal group = (CollectionViewGroupInternal)state;
+                                 group != null;
+                                 group = group.Parent)
                             {
                                 CollectionViewGroupRoot root = group as CollectionViewGroupRoot;
                                 if (root != null)
@@ -100,7 +100,7 @@ namespace MS.Internal.Data
                                 }
                             }
                             return null;    // this should never happen - root should always be present
-                        });
+                        }, this);
 
                 if (oldIsBottomLevel != IsBottomLevel)
                 {

@@ -110,7 +110,7 @@ namespace System.Windows
                     break;
 
                 default:
-                    throw new ArgumentException(SR.Get(SRID.UnknownExpressionMode));
+                    throw new ArgumentException(SR.UnknownExpressionMode);
             }
         }
 
@@ -212,7 +212,7 @@ namespace System.Windows
 
             if (Shareable)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ShareableExpressionsCannotChangeSources));
+                throw new InvalidOperationException(SR.ShareableExpressionsCannotChangeSources);
             }
 
             DependencyObject.ValidateSources(d, newSources, this);

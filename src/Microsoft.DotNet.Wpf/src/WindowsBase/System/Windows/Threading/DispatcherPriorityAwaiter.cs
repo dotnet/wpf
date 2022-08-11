@@ -58,7 +58,7 @@ namespace System.Windows.Threading
         {
             if(_dispatcher == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.DispatcherPriorityAwaiterInvalid));
+                throw new InvalidOperationException(SR.DispatcherPriorityAwaiterInvalid);
             }
             
             _dispatcher.InvokeAsync(continuation, _priority);

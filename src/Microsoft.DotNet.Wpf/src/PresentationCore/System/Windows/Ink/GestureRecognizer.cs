@@ -131,7 +131,7 @@ namespace System.Windows.Ink
             //can be null if the call to SetEnabledGestures failed
             if (_enabledGestures == null)
             {
-                _enabledGestures = new ApplicationGesture[] { };
+                _enabledGestures = Array.Empty<ApplicationGesture>();
             }
             return new ReadOnlyCollection<ApplicationGesture>(_enabledGestures);
         }

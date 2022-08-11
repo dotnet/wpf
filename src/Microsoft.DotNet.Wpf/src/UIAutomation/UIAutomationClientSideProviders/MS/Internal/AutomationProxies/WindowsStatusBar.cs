@@ -58,7 +58,7 @@ namespace MS.Internal.AutomationProxies
             if (idChild != 0)
             {
                 System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.Get(SRID.ShouldBeZero));
+                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
             }
 
             return new WindowsStatusBar(hwnd, null, idChild, null);
@@ -260,12 +260,12 @@ namespace MS.Internal.AutomationProxies
             // NOTE: Status bar has only 1 row
             if (row != 0)
             {
-                throw new ArgumentOutOfRangeException("row", row, SR.Get(SRID.GridRowOutOfRange));
+                throw new ArgumentOutOfRangeException("row", row, SR.GridRowOutOfRange);
             }
 
             if (column < 0 || column >= Count)
             {
-                throw new ArgumentOutOfRangeException("column", column, SR.Get(SRID.GridColumnOutOfRange));
+                throw new ArgumentOutOfRangeException("column", column, SR.GridColumnOutOfRange);
             }
 
             return CreateStatusBarPane(column);
@@ -528,7 +528,7 @@ namespace MS.Internal.AutomationProxies
             void IValueProvider.SetValue(string str)
             {
                 // This is a read only element.
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             // Request to get the value that this UI element is representing as a string
@@ -758,7 +758,7 @@ namespace MS.Internal.AutomationProxies
             public StatusBarGrip (IntPtr hwnd, ProxyHwnd parent, int item)
                 : base( hwnd, parent, item)
             {
-                _sType = SR.Get(SRID.LocalizedControlTypeGrip);
+                _sType = SR.LocalizedControlTypeGrip;
                 _sAutomationId = "StatusBar.Grip"; // This string is a non-localizable string
             }
 

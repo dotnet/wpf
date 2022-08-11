@@ -176,20 +176,7 @@ namespace System.Windows
         {
             char listSeparator = TokenizerHelper.GetNumericListSeparator(cultureInfo);
 
-            // Initial capacity [64] is an estimate based on a sum of:
-            // 48 = 4x double (twelve digits is generous for the range of values likely)
-            //  8 = 4x UnitType string (approx two characters)
-            //  4 = 4x separator characters
-            StringBuilder sb = new StringBuilder(64);
-
-            sb.Append(cr.TopLeft.ToString(cultureInfo));
-            sb.Append(listSeparator);
-            sb.Append(cr.TopRight.ToString(cultureInfo));
-            sb.Append(listSeparator);
-            sb.Append(cr.BottomRight.ToString(cultureInfo));
-            sb.Append(listSeparator);
-            sb.Append(cr.BottomLeft.ToString(cultureInfo));
-            return sb.ToString();
+            return string.Create(cultureInfo, stackalloc char[64], $"{cr.TopLeft}{listSeparator}{cr.TopRight}{listSeparator}{cr.BottomRight}{listSeparator}{cr.BottomLeft}");
         }
 
         static internal CornerRadius FromString(string s, CultureInfo cultureInfo)

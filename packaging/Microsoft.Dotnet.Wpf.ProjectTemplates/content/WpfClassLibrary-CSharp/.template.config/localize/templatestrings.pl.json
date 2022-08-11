@@ -1,18 +1,18 @@
-{
+﻿{
   "author": "Microsoft",
   "name": "Biblioteka klas WPF",
-  "description": "Projekt służący do tworzenia biblioteki klas przeznaczonej dla aplikacji WPF w\u00A0środowisku .NET",
+  "description": "Projekt służący do tworzenia biblioteki klas przeznaczonej dla aplikacji WPF w środowisku .NET",
   "symbols/TargetFrameworkOverride/description": "Zastępuje platformę docelową",
   "symbols/Framework/description": "Platforma docelowa dla tego projektu.",
   "symbols/Framework/choices/netcoreapp3.0/description": "Docelowy netcoreapp3.0",
   "symbols/Framework/choices/netcoreapp3.1/description": "Docelowy netcoreapp3.1",
   "symbols/Framework/choices/net5.0/description": "Docelowy net5.0",
   "symbols/Framework/choices/net6.0/description": "Docelowy net6.0",
-  "symbols/Framework/choices/net7.0/description": "Target net7.0",
-  "symbols/langVersion/description": "Ustawia langVersion w\u00A0utworzonym pliku projektu",
+  "symbols/Framework/choices/net7.0/description": "Docelowe środowisko net7.0",
+  "symbols/langVersion/description": "Ustawia langVersion w utworzonym pliku projektu",
   "symbols/skipRestore/description": "Jeśli ta opcja jest określona, pomija automatyczne przywracanie projektu podczas tworzenia.",
   "symbols/Nullable/description": "Określa, czy w przypadku tego projektu mają być włączane typy pustych referencji.",
   "postActions/restore/description": "Przywróć pakiety NuGet wymagane przez ten projekt.",
   "postActions/restore/manualInstructions/default/text": "Uruchom polecenie \"dotnet restore\"",
-  "postActions/editor/description": "Otwiera plik Class1.cs w\u00A0edytorze"
+  "postActions/editor/description": "Otwiera plik Class1.cs w edytorze"
 }

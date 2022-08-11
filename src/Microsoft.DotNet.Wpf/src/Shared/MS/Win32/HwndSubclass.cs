@@ -141,7 +141,7 @@ namespace MS.Win32
         {
 
             if (_bond != Bond.Unattached)
-                throw new InvalidOperationException(SR.Get(SRID.HwndSubclassMultipleAttach));
+                throw new InvalidOperationException(SR.HwndSubclassMultipleAttach);
 
             return CriticalAttach( hwnd ) ;
         }

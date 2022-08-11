@@ -737,8 +737,8 @@ namespace Microsoft.Windows.Controls.Ribbon
         private const string ScrollUpRepeatButtonTemplatePartName = "PART_ScrollUp";
         private const string ScrollDownRepeatButtonTemplatePartName = "PART_ScrollDown";
 
-        private static string _scrollUpButtonAutomationName = Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.InRibbonGallery_ScrollUpButtonAutomationName);
-        private static string _scrollDownButtonAutomationName = Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.InRibbonGallery_ScrollDownButtonAutomationName);
+        private static string _scrollUpButtonAutomationName = Microsoft.Windows.Controls.SR.InRibbonGallery_ScrollUpButtonAutomationName;
+        private static string _scrollDownButtonAutomationName = Microsoft.Windows.Controls.SR.InRibbonGallery_ScrollDownButtonAutomationName;
 
         #endregion
 

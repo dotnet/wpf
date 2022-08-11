@@ -820,7 +820,7 @@ namespace MS.Internal.AutomationProxies
                 // do the selection
                 if (!Select(multipleSelected))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
             }
 
@@ -853,7 +853,7 @@ namespace MS.Internal.AutomationProxies
                     // an AddToSelection is valid.
                     if (selectionRequired || _listBox.HasSelection())
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.DoesNotSupportMultipleSelection));
+                        throw new InvalidOperationException(SR.DoesNotSupportMultipleSelection);
                     }
                 }
 
@@ -872,7 +872,7 @@ namespace MS.Internal.AutomationProxies
                 // Try to select an item
                 if (!Select(multipleSelection))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
             }
 
@@ -898,12 +898,12 @@ namespace MS.Internal.AutomationProxies
                     // single-selected lb - user cannot remove the selection using keyboard and mouse
                     // At this point we know that item is selected, lb is single-selected hence
                     // RemoveFromSelection is not possible
-                    throw new InvalidOperationException(SR.Get(SRID.SelectionRequired));
+                    throw new InvalidOperationException(SR.SelectionRequired);
                 }
 
                 if (!UnSelect(_hwnd, _item))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
             }
 
@@ -934,12 +934,12 @@ namespace MS.Internal.AutomationProxies
             {
                 if (_listBox._parentedByCombo && !SafeNativeMethods.IsWindowVisible(_hwnd))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
 
                 if (!WindowScroll.IsScrollable(_hwnd))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
 
                 // It is assumed that in a listbox an item will always be smaller than the scrolling area
@@ -960,7 +960,7 @@ namespace MS.Internal.AutomationProxies
                 }
                 if (!SafeNativeMethods.IsWindowVisible(_hwnd))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
 
                 Toggle();

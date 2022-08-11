@@ -43,9 +43,9 @@ namespace System.Xaml
                 {
                     if (LinePosition != 0)
                     {
-                        return SR.Get(SRID.LineNumberAndPosition, base.Message, LineNumber, LinePosition);
+                        return SR.Format(SR.LineNumberAndPosition, base.Message, LineNumber, LinePosition);
                     }
-                    return SR.Get(SRID.LineNumberOnly, base.Message, LineNumber);
+                    return SR.Format(SR.LineNumberOnly, base.Message, LineNumber);
                 }
                 return base.Message;
             }
@@ -145,7 +145,7 @@ namespace System.Xaml
         public XamlDuplicateMemberException() { }
 
         public XamlDuplicateMemberException(XamlMember member, XamlType type)
-            : base(SR.Get(SRID.DuplicateMemberSet, (member != null) ? member.Name : null, (type != null) ? type.Name : null))
+            : base(SR.Format(SR.DuplicateMemberSet, (member != null) ? member.Name : null, (type != null) ? type.Name : null))
         {
             DuplicateMember = member;
             ParentType = type;

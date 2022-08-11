@@ -213,9 +213,9 @@ namespace MS.Internal.Ink
                                 // If the Xaml data has been set in an InkCanvas, the top element will be a container InkCanvas.
                                 // In this case, the new elements will be the children of the container.
                                 // Otherwise, the new elements will be whatever data from the data object.
-                                if (elements.Count == 1 && ClipboardProcessor.InkCanvasDType.IsInstanceOfType(elements[0]))
+                                if (elements.Count == 1 && elements[0] is InkCanvas inkCanvas)
                                 {
-                                    TearDownInkCanvasContainer((InkCanvas)( elements[0] ), ref newStrokes, ref newElements);
+                                    TearDownInkCanvasContainer(inkCanvas, ref newStrokes, ref newElements);
                                 }
                                 else
                                 {

@@ -59,7 +59,7 @@ namespace MS.Internal.AppModel
             if (_traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + 
+                        Environment.CurrentManagedThreadId + 
                         ": SiteOfOriginContainer: returning site of origin " + siteOfOrigin);
 #endif
 
@@ -230,7 +230,7 @@ namespace MS.Internal.AppModel
             if (_traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + 
+                        Environment.CurrentManagedThreadId + 
                         ": SiteOfOriginContainer: Creating SiteOfOriginPart for Uri " + uri);
 #endif
             return new SiteOfOriginPart(this, uri);

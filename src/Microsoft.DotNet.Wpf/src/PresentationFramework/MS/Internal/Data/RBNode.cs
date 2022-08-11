@@ -774,22 +774,24 @@ namespace MS.Internal.Data
         protected void SaveTree(RBNode<T> node, StringBuilder sb)
         {
             if (node == null)
+            {
                 sb.Append("()");
+            }
             else
             {
-                sb.Append("(");
+                sb.Append('(');
                 sb.Append(node.IsRed ? 'T' : 'F');
                 sb.Append(node.LeftSize);
-                sb.Append(",");
+                sb.Append(',');
                 sb.Append(node.Size);
                 for (int k = 0; k < node.Size; ++k)
                 {
-                    sb.Append(",");
+                    sb.Append(',');
                     sb.Append(AsInt(node.GetItemAt(k)));
                 }
                 SaveTree(node.LeftChild, sb);
                 SaveTree(node.RightChild, sb);
-                sb.Append(")");
+                sb.Append(')');
             }
         }
 

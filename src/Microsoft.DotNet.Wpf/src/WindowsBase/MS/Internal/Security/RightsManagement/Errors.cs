@@ -35,7 +35,7 @@ namespace MS.Internal.Security.RightsManagement
             }
             else
             {
-                return SR.Get(SRID.RmExceptionGenericMessage);
+                return SR.RmExceptionGenericMessage;
             }
         }
 
@@ -75,7 +75,7 @@ namespace MS.Internal.Security.RightsManagement
                 catch (Exception e)
                 {
                     // rethrow the exception as an inner exception of the RmExceptionGenericMessage
-                    throw new RightsManagementException(SR.Get(SRID.RmExceptionGenericMessage), e);
+                    throw new RightsManagementException(SR.RmExceptionGenericMessage, e);
                 }
 #pragma warning restore 56500
             }
@@ -87,191 +87,191 @@ namespace MS.Internal.Security.RightsManagement
             switch (failureCode)
             {
                 case RightsManagementFailureCode.InvalidLicense:
-                    result=SRID.RmExceptionInvalidLicense; break;
+                    result=nameof(SR.RmExceptionInvalidLicense); break;
                 case RightsManagementFailureCode.InfoNotInLicense:
-                    result=SRID.RmExceptionInfoNotInLicense; break;
+                    result=nameof(SR.RmExceptionInfoNotInLicense); break;
                 case RightsManagementFailureCode.InvalidLicenseSignature:
-                    result=SRID.RmExceptionInvalidLicenseSignature; break;
+                    result=nameof(SR.RmExceptionInvalidLicenseSignature); break;
                 case RightsManagementFailureCode.EncryptionNotPermitted:
-                    result=SRID.RmExceptionEncryptionNotPermitted; break;
+                    result=nameof(SR.RmExceptionEncryptionNotPermitted); break;
                 case RightsManagementFailureCode.RightNotGranted:
-                    result=SRID.RmExceptionRightNotGranted; break;
+                    result=nameof(SR.RmExceptionRightNotGranted); break;
                 case RightsManagementFailureCode.InvalidVersion:
-                    result=SRID.RmExceptionInvalidVersion; break;
+                    result=nameof(SR.RmExceptionInvalidVersion); break;
                 case RightsManagementFailureCode.InvalidEncodingType:
-                    result=SRID.RmExceptionInvalidEncodingType; break;
+                    result=nameof(SR.RmExceptionInvalidEncodingType); break;
                 case RightsManagementFailureCode.InvalidNumericalValue:
-                    result=SRID.RmExceptionInvalidNumericalValue; break;
+                    result=nameof(SR.RmExceptionInvalidNumericalValue); break;
                 case RightsManagementFailureCode.InvalidAlgorithmType:
-                    result=SRID.RmExceptionInvalidAlgorithmType; break;
+                    result=nameof(SR.RmExceptionInvalidAlgorithmType); break;
                 case RightsManagementFailureCode.EnvironmentNotLoaded:
-                    result=SRID.RmExceptionEnvironmentNotLoaded; break;
+                    result=nameof(SR.RmExceptionEnvironmentNotLoaded); break;
                 case RightsManagementFailureCode.EnvironmentCannotLoad:
-                    result=SRID.RmExceptionEnvironmentCannotLoad; break;
+                    result=nameof(SR.RmExceptionEnvironmentCannotLoad); break;
                 case RightsManagementFailureCode.TooManyLoadedEnvironments:
-                    result=SRID.RmExceptionTooManyLoadedEnvironments; break;
+                    result=nameof(SR.RmExceptionTooManyLoadedEnvironments); break;
                 case RightsManagementFailureCode.IncompatibleObjects:
-                    result=SRID.RmExceptionIncompatibleObjects; break;
+                    result=nameof(SR.RmExceptionIncompatibleObjects); break;
                 case RightsManagementFailureCode.LibraryFail:
-                    result=SRID.RmExceptionLibraryFail; break;
+                    result=nameof(SR.RmExceptionLibraryFail); break;
                 case RightsManagementFailureCode.EnablingPrincipalFailure:
-                    result=SRID.RmExceptionEnablingPrincipalFailure; break;
+                    result=nameof(SR.RmExceptionEnablingPrincipalFailure); break;
                 case RightsManagementFailureCode.InfoNotPresent:
-                    result=SRID.RmExceptionInfoNotPresent; break;
+                    result=nameof(SR.RmExceptionInfoNotPresent); break;
                 case RightsManagementFailureCode.BadGetInfoQuery:
-                    result=SRID.RmExceptionBadGetInfoQuery; break;
+                    result=nameof(SR.RmExceptionBadGetInfoQuery); break;
                 case RightsManagementFailureCode.KeyTypeUnsupported:
-                    result=SRID.RmExceptionKeyTypeUnsupported; break;
+                    result=nameof(SR.RmExceptionKeyTypeUnsupported); break;
                 case RightsManagementFailureCode.CryptoOperationUnsupported:
-                    result=SRID.RmExceptionCryptoOperationUnsupported; break;
+                    result=nameof(SR.RmExceptionCryptoOperationUnsupported); break;
                 case RightsManagementFailureCode.ClockRollbackDetected:
-                    result=SRID.RmExceptionClockRollbackDetected; break;
+                    result=nameof(SR.RmExceptionClockRollbackDetected); break;
                 case RightsManagementFailureCode.QueryReportsNoResults:
-                    result=SRID.RmExceptionQueryReportsNoResults; break;
+                    result=nameof(SR.RmExceptionQueryReportsNoResults); break;
                 case RightsManagementFailureCode.UnexpectedException:
-                    result=SRID.RmExceptionUnexpectedException; break;
+                    result=nameof(SR.RmExceptionUnexpectedException); break;
                 case RightsManagementFailureCode.BindValidityTimeViolated:
-                    result=SRID.RmExceptionBindValidityTimeViolated; break;
+                    result=nameof(SR.RmExceptionBindValidityTimeViolated); break;
                 case RightsManagementFailureCode.BrokenCertChain:
-                    result=SRID.RmExceptionBrokenCertChain; break;
+                    result=nameof(SR.RmExceptionBrokenCertChain); break;
                 case RightsManagementFailureCode.BindPolicyViolation:
-                    result=SRID.RmExceptionBindPolicyViolation; break;
+                    result=nameof(SR.RmExceptionBindPolicyViolation); break;
                 case RightsManagementFailureCode.ManifestPolicyViolation:
-                    result=SRID.RmExceptionManifestPolicyViolation; break;
+                    result=nameof(SR.RmExceptionManifestPolicyViolation); break;
                 case RightsManagementFailureCode.BindRevokedLicense:
-                    result=SRID.RmExceptionBindRevokedLicense; break;
+                    result=nameof(SR.RmExceptionBindRevokedLicense); break;
                 case RightsManagementFailureCode.BindRevokedIssuer:
-                    result=SRID.RmExceptionBindRevokedIssuer; break;
+                    result=nameof(SR.RmExceptionBindRevokedIssuer); break;
                 case RightsManagementFailureCode.BindRevokedPrincipal:
-                    result=SRID.RmExceptionBindRevokedPrincipal; break;
+                    result=nameof(SR.RmExceptionBindRevokedPrincipal); break;
                 case RightsManagementFailureCode.BindRevokedResource:
-                    result=SRID.RmExceptionBindRevokedResource; break;
+                    result=nameof(SR.RmExceptionBindRevokedResource); break;
                 case RightsManagementFailureCode.BindRevokedModule:
-                    result=SRID.RmExceptionBindRevokedModule; break;
+                    result=nameof(SR.RmExceptionBindRevokedModule); break;
                 case RightsManagementFailureCode.BindContentNotInEndUseLicense:
-                    result=SRID.RmExceptionBindContentNotInEndUseLicense; break;
+                    result=nameof(SR.RmExceptionBindContentNotInEndUseLicense); break;
                 case RightsManagementFailureCode.BindAccessPrincipalNotEnabling:
-                    result=SRID.RmExceptionBindAccessPrincipalNotEnabling; break;
+                    result=nameof(SR.RmExceptionBindAccessPrincipalNotEnabling); break;
                 case RightsManagementFailureCode.BindAccessUnsatisfied:
-                    result=SRID.RmExceptionBindAccessUnsatisfied; break;
+                    result=nameof(SR.RmExceptionBindAccessUnsatisfied); break;
                 case RightsManagementFailureCode.BindIndicatedPrincipalMissing:
-                    result=SRID.RmExceptionBindIndicatedPrincipalMissing; break;
+                    result=nameof(SR.RmExceptionBindIndicatedPrincipalMissing); break;
                 case RightsManagementFailureCode.BindMachineNotFoundInGroupIdentity:
-                    result=SRID.RmExceptionBindMachineNotFoundInGroupIdentity; break;
+                    result=nameof(SR.RmExceptionBindMachineNotFoundInGroupIdentity); break;
                 case RightsManagementFailureCode.LibraryUnsupportedPlugIn:
-                    result=SRID.RmExceptionLibraryUnsupportedPlugIn; break;
+                    result=nameof(SR.RmExceptionLibraryUnsupportedPlugIn); break;
                 case RightsManagementFailureCode.BindRevocationListStale:
-                    result=SRID.RmExceptionBindRevocationListStale; break;
+                    result=nameof(SR.RmExceptionBindRevocationListStale); break;
                 case RightsManagementFailureCode.BindNoApplicableRevocationList:
-                    result=SRID.RmExceptionBindNoApplicableRevocationList; break;
+                    result=nameof(SR.RmExceptionBindNoApplicableRevocationList); break;
                 case RightsManagementFailureCode.InvalidHandle:
-                    result=SRID.RmExceptionInvalidHandle; break;
+                    result=nameof(SR.RmExceptionInvalidHandle); break;
                 case RightsManagementFailureCode.BindIntervalTimeViolated:
-                    result=SRID.RmExceptionBindIntervalTimeViolated; break;
+                    result=nameof(SR.RmExceptionBindIntervalTimeViolated); break;
                 case RightsManagementFailureCode.BindNoSatisfiedRightsGroup:
-                    result=SRID.RmExceptionBindNoSatisfiedRightsGroup; break;
+                    result=nameof(SR.RmExceptionBindNoSatisfiedRightsGroup); break;
                 case RightsManagementFailureCode.BindSpecifiedWorkMissing:
-                    result=SRID.RmExceptionBindSpecifiedWorkMissing; break;
+                    result=nameof(SR.RmExceptionBindSpecifiedWorkMissing); break;
                 case RightsManagementFailureCode.NoMoreData:
-                    result=SRID.RmExceptionNoMoreData; break;
+                    result=nameof(SR.RmExceptionNoMoreData); break;
                 case RightsManagementFailureCode.LicenseAcquisitionFailed:
-                    result=SRID.RmExceptionLicenseAcquisitionFailed; break;
+                    result=nameof(SR.RmExceptionLicenseAcquisitionFailed); break;
                 case RightsManagementFailureCode.IdMismatch:
-                    result=SRID.RmExceptionIdMismatch; break;
+                    result=nameof(SR.RmExceptionIdMismatch); break;
                 case RightsManagementFailureCode.TooManyCertificates:
-                    result=SRID.RmExceptionTooManyCertificates; break;
+                    result=nameof(SR.RmExceptionTooManyCertificates); break;
                 case RightsManagementFailureCode.NoDistributionPointUrlFound:
-                    result=SRID.RmExceptionNoDistributionPointUrlFound; break;
+                    result=nameof(SR.RmExceptionNoDistributionPointUrlFound); break;
                 case RightsManagementFailureCode.AlreadyInProgress:
-                    result=SRID.RmExceptionAlreadyInProgress; break;
+                    result=nameof(SR.RmExceptionAlreadyInProgress); break;
                 case RightsManagementFailureCode.GroupIdentityNotSet:
-                    result=SRID.RmExceptionGroupIdentityNotSet; break;
+                    result=nameof(SR.RmExceptionGroupIdentityNotSet); break;
                 case RightsManagementFailureCode.RecordNotFound:
-                    result=SRID.RmExceptionRecordNotFound; break;
+                    result=nameof(SR.RmExceptionRecordNotFound); break;
                 case RightsManagementFailureCode.NoConnect:
-                    result=SRID.RmExceptionNoConnect; break;
+                    result=nameof(SR.RmExceptionNoConnect); break;
                 case RightsManagementFailureCode.NoLicense:
-                    result=SRID.RmExceptionNoLicense; break;
+                    result=nameof(SR.RmExceptionNoLicense); break;
                 case RightsManagementFailureCode.NeedsMachineActivation:
-                    result=SRID.RmExceptionNeedsMachineActivation; break;
+                    result=nameof(SR.RmExceptionNeedsMachineActivation); break;
                 case RightsManagementFailureCode.NeedsGroupIdentityActivation:
-                    result=SRID.RmExceptionNeedsGroupIdentityActivation; break;
+                    result=nameof(SR.RmExceptionNeedsGroupIdentityActivation); break;
                 case RightsManagementFailureCode.ActivationFailed:
-                    result=SRID.RmExceptionActivationFailed; break;
+                    result=nameof(SR.RmExceptionActivationFailed); break;
                 case RightsManagementFailureCode.Aborted:
-                    result=SRID.RmExceptionAborted; break;
+                    result=nameof(SR.RmExceptionAborted); break;
                 case RightsManagementFailureCode.OutOfQuota:
-                    result=SRID.RmExceptionOutOfQuota; break;
+                    result=nameof(SR.RmExceptionOutOfQuota); break;
                 case RightsManagementFailureCode.AuthenticationFailed:
-                    result=SRID.RmExceptionAuthenticationFailed; break;
+                    result=nameof(SR.RmExceptionAuthenticationFailed); break;
                 case RightsManagementFailureCode.ServerError:
-                    result=SRID.RmExceptionServerError; break;
+                    result=nameof(SR.RmExceptionServerError); break;
                 case RightsManagementFailureCode.InstallationFailed:
-                    result=SRID.RmExceptionInstallationFailed; break;
+                    result=nameof(SR.RmExceptionInstallationFailed); break;
                 case RightsManagementFailureCode.HidCorrupted:
-                    result=SRID.RmExceptionHidCorrupted; break;
+                    result=nameof(SR.RmExceptionHidCorrupted); break;
                 case RightsManagementFailureCode.InvalidServerResponse:
-                    result=SRID.RmExceptionInvalidServerResponse; break;
+                    result=nameof(SR.RmExceptionInvalidServerResponse); break;
                 case RightsManagementFailureCode.ServiceNotFound:
-                    result=SRID.RmExceptionServiceNotFound; break;
+                    result=nameof(SR.RmExceptionServiceNotFound); break;
                 case RightsManagementFailureCode.UseDefault:
-                    result=SRID.RmExceptionUseDefault; break;
+                    result=nameof(SR.RmExceptionUseDefault); break;
                 case RightsManagementFailureCode.ServerNotFound:
-                    result=SRID.RmExceptionServerNotFound; break;
+                    result=nameof(SR.RmExceptionServerNotFound); break;
                 case RightsManagementFailureCode.InvalidEmail:
-                    result=SRID.RmExceptionInvalidEmail; break;
+                    result=nameof(SR.RmExceptionInvalidEmail); break;
                 case RightsManagementFailureCode.ValidityTimeViolation:
-                    result=SRID.RmExceptionValidityTimeViolation; break;
+                    result=nameof(SR.RmExceptionValidityTimeViolation); break;
                 case RightsManagementFailureCode.OutdatedModule:
-                    result=SRID.RmExceptionOutdatedModule; break;
+                    result=nameof(SR.RmExceptionOutdatedModule); break;
                 case RightsManagementFailureCode.ServiceMoved:
-                    result=SRID.RmExceptionServiceMoved; break;
+                    result=nameof(SR.RmExceptionServiceMoved); break;
                 case RightsManagementFailureCode.ServiceGone:
-                    result=SRID.RmExceptionServiceGone; break;
+                    result=nameof(SR.RmExceptionServiceGone); break;
                 case RightsManagementFailureCode.AdEntryNotFound:
-                    result=SRID.RmExceptionAdEntryNotFound; break;
+                    result=nameof(SR.RmExceptionAdEntryNotFound); break;
                 case RightsManagementFailureCode.NotAChain:
-                    result=SRID.RmExceptionNotAChain; break;
+                    result=nameof(SR.RmExceptionNotAChain); break;
                 case RightsManagementFailureCode.RequestDenied:
-                    result=SRID.RmExceptionRequestDenied; break;
+                    result=nameof(SR.RmExceptionRequestDenied); break;
                 case RightsManagementFailureCode.NotSet:
-                    result=SRID.RmExceptionNotSet; break;
+                    result=nameof(SR.RmExceptionNotSet); break;
                 case RightsManagementFailureCode.MetadataNotSet:
-                    result=SRID.RmExceptionMetadataNotSet; break;
+                    result=nameof(SR.RmExceptionMetadataNotSet); break;
                 case RightsManagementFailureCode.RevocationInfoNotSet:
-                    result=SRID.RmExceptionRevocationInfoNotSet; break;
+                    result=nameof(SR.RmExceptionRevocationInfoNotSet); break;
                 case RightsManagementFailureCode.InvalidTimeInfo:
-                    result=SRID.RmExceptionInvalidTimeInfo; break;
+                    result=nameof(SR.RmExceptionInvalidTimeInfo); break;
                 case RightsManagementFailureCode.RightNotSet:
-                    result=SRID.RmExceptionRightNotSet; break;
+                    result=nameof(SR.RmExceptionRightNotSet); break;
                 case RightsManagementFailureCode.LicenseBindingToWindowsIdentityFailed:
-                    result=SRID.RmExceptionLicenseBindingToWindowsIdentityFailed; break;
+                    result=nameof(SR.RmExceptionLicenseBindingToWindowsIdentityFailed); break;
                 case RightsManagementFailureCode.InvalidIssuanceLicenseTemplate:
-                    result=SRID.RmExceptionInvalidIssuanceLicenseTemplate; break;
+                    result=nameof(SR.RmExceptionInvalidIssuanceLicenseTemplate); break;
                 case RightsManagementFailureCode.InvalidKeyLength:
-                    result=SRID.RmExceptionInvalidKeyLength; break;
+                    result=nameof(SR.RmExceptionInvalidKeyLength); break;
                 case RightsManagementFailureCode.ExpiredOfficialIssuanceLicenseTemplate:
-                    result=SRID.RmExceptionExpiredOfficialIssuanceLicenseTemplate; break;
+                    result=nameof(SR.RmExceptionExpiredOfficialIssuanceLicenseTemplate); break;
                 case RightsManagementFailureCode.InvalidClientLicensorCertificate:
-                    result=SRID.RmExceptionInvalidClientLicensorCertificate; break;
+                    result=nameof(SR.RmExceptionInvalidClientLicensorCertificate); break;
                 case RightsManagementFailureCode.HidInvalid:
-                    result=SRID.RmExceptionHidInvalid; break;
+                    result=nameof(SR.RmExceptionHidInvalid); break;
                 case RightsManagementFailureCode.EmailNotVerified:
-                    result=SRID.RmExceptionEmailNotVerified; break;
+                    result=nameof(SR.RmExceptionEmailNotVerified); break;
                 case RightsManagementFailureCode.DebuggerDetected:
-                    result=SRID.RmExceptionDebuggerDetected; break;
+                    result=nameof(SR.RmExceptionDebuggerDetected); break;
                 case RightsManagementFailureCode.InvalidLockboxType:
-                    result=SRID.RmExceptionInvalidLockboxType; break;
+                    result=nameof(SR.RmExceptionInvalidLockboxType); break;
                 case RightsManagementFailureCode.InvalidLockboxPath:
-                    result=SRID.RmExceptionInvalidLockboxPath; break;
+                    result=nameof(SR.RmExceptionInvalidLockboxPath); break;
                 case RightsManagementFailureCode.InvalidRegistryPath:
-                    result=SRID.RmExceptionInvalidRegistryPath; break;
+                    result=nameof(SR.RmExceptionInvalidRegistryPath); break;
                 case RightsManagementFailureCode.NoAesCryptoProvider:
-                    result=SRID.RmExceptionNoAesCryptoProvider; break;
+                    result=nameof(SR.RmExceptionNoAesCryptoProvider); break;
                 case RightsManagementFailureCode.GlobalOptionAlreadySet:
-                    result=SRID.RmExceptionGlobalOptionAlreadySet; break;
+                    result=nameof(SR.RmExceptionGlobalOptionAlreadySet); break;
                 case RightsManagementFailureCode.OwnerLicenseNotFound:
-                    result=SRID.RmExceptionOwnerLicenseNotFound; break;
+                    result=nameof(SR.RmExceptionOwnerLicenseNotFound); break;
                 default:
                     return null;
             }

@@ -352,9 +352,9 @@ namespace System.Windows.Input
 
             // Determine UIElement/ContentElement/Neither type
             DependencyObject targetElementAsDO = targetElement as DependencyObject;
-            bool isUIElement = InputElement.IsUIElement(targetElementAsDO);
-            bool isContentElement = !isUIElement && InputElement.IsContentElement(targetElementAsDO);
-            bool isUIElement3D = !isUIElement && !isContentElement && InputElement.IsUIElement3D(targetElementAsDO);
+            bool isUIElement = targetElementAsDO is UIElement;
+            bool isContentElement = !isUIElement && targetElementAsDO is ContentElement;
+            bool isUIElement3D = !isUIElement && !isContentElement && targetElementAsDO is UIElement3D;
 
             // Step 1: Check local input bindings
             InputBindingCollection localInputBindings = null;
@@ -370,6 +370,7 @@ namespace System.Windows.Input
             {
                 localInputBindings = ((UIElement3D)targetElement).InputBindingsInternal;
             }
+
             if (localInputBindings != null)
             {
                 InputBinding inputBinding = localInputBindings.FindMatch(targetElement, inputEventArgs);
@@ -423,6 +424,7 @@ namespace System.Windows.Input
                 {
                     localCommandBindings = ((UIElement3D)targetElement).CommandBindingsInternal;
                 }
+
                 if (localCommandBindings != null)
                 {
                     command = localCommandBindings.FindMatch(targetElement, inputEventArgs);

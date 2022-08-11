@@ -1193,7 +1193,7 @@ namespace MS.Internal.Xaml.Parser
             : base(message, innerException) { }
 
         public XamlUnexpectedParseException(XamlScanner xamlScanner, ScannerNodeType nodetype, string parseRule)
-            : base(xamlScanner, SR.Get(SRID.UnexpectedNodeType, nodetype.ToString(), parseRule)) { }
+            : base(xamlScanner, SR.Format(SR.UnexpectedNodeType, nodetype.ToString(), parseRule)) { }
 
         protected XamlUnexpectedParseException(SerializationInfo info,
                                                StreamingContext context)

@@ -30,7 +30,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
             : base (hwnd, parent, item)
         {
             // Set the strings to return properly the properties.
-            _sType = SR.Get(SRID.LocalizedControlTypePager);
+            _sType = SR.LocalizedControlTypePager;
 
             // support for events
             _createOnEvent = new WinEventTracker.ProxyRaiseEvents (RaiseEvents);
@@ -53,7 +53,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
             if (idChild != 0)
             {
                 System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.Get(SRID.ShouldBeZero));
+                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
             }
 
             return new WindowsPager(hwnd, null, idChild);
@@ -89,7 +89,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
         {
             get
             {
-                return SR.Get(SRID.LocalizedNameWindowsPager);
+                return SR.LocalizedNameWindowsPager;
             }
         }
 
@@ -254,7 +254,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
 
             if (!IsScrollable())
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             bool fHorizontal = IsHorizontal(_hwnd);
@@ -263,12 +263,12 @@ namespace MS.Internal.UnsupportedAutomationProxies
             if ((fHorizontal && (int)verticalPercent != (int)ScrollPattern.NoScroll) || 
                 (!fHorizontal && (int)horizontalPercent != (int)ScrollPattern.NoScroll))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             if (!ScrollByPercent(fHorizontal ? horizontalPercent : verticalPercent))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
         }
 
@@ -283,14 +283,14 @@ namespace MS.Internal.UnsupportedAutomationProxies
 
             if (!IsScrollable())
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             bool fHorizontal = IsHorizontal(_hwnd);
 
             if ((fHorizontal && VerticalAmount != ScrollAmount.NoAmount) || (!fHorizontal && HorizontalAmount != ScrollAmount.NoAmount))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             // Fake the scroll with pushes on the buttons
@@ -306,7 +306,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                         ((IInvokeProvider) pagerButton).Invoke ();
                         return;
                     }
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
 
                 case ScrollAmount.LargeIncrement :
                 case ScrollAmount.SmallIncrement :
@@ -316,10 +316,10 @@ namespace MS.Internal.UnsupportedAutomationProxies
                         ((IInvokeProvider) pagerButton).Invoke ();
                         return;
                     }
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
 
                 default :
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
         }
 
@@ -422,7 +422,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
 
             if (scrollPercent < 0 || scrollPercent > 100)
             {
-                throw new ArgumentOutOfRangeException(IsHorizontal(_hwnd) ? "horizontalPercent" : "verticalPercent", SR.Get(SRID.ScrollBarOutOfRange));
+                throw new ArgumentOutOfRangeException(IsHorizontal(_hwnd) ? "horizontalPercent" : "verticalPercent", SR.ScrollBarOutOfRange);
             }
 
             NativeMethods.Win32Rect rcChild = new NativeMethods.Win32Rect();
@@ -567,7 +567,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
             : base(hwnd, parent, (int) item)
             {
                 // Set the strings to return properly the properties.
-                _sType = SR.Get(SRID.LocalizedControlTypePagerButton);
+                _sType = SR.LocalizedControlTypePagerButton;
             }
 
             #endregion
@@ -608,11 +608,11 @@ namespace MS.Internal.UnsupportedAutomationProxies
                 {
                     if ((PagerItem)_item == WindowsPager.PagerItem.PrevBtn)
                     {
-                        return SR.Get(SRID.LocalizedNameWindowsPagerButtonPrev);
+                        return SR.LocalizedNameWindowsPagerButtonPrev;
                     }
                     else
                     {
-                        return SR.Get(SRID.LocalizedNameWindowsPagerButtonNext);
+                        return SR.LocalizedNameWindowsPagerButtonNext;
                     }
                 }
             }
@@ -633,14 +633,14 @@ namespace MS.Internal.UnsupportedAutomationProxies
                 // Only if the button is visible
                 if (!IsVisible(_hwnd, _item == (int)WindowsPager.PagerItem.PrevBtn ? NativeMethods.PGB_TOPORLEFT : NativeMethods.PGB_BOTTOMORRIGHT))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
 
                 // rect of entire pager this is used to get the calc for the button
                 NativeMethods.Win32Rect rcPager = new NativeMethods.Win32Rect ();
                 if (!Misc.GetWindowRect(_hwnd, ref rcPager))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
 
                 NativeMethods.Win32Rect rcButton = BoundingRect(_hwnd, (PagerItem)_item);

@@ -759,6 +759,8 @@ CManagedStreamWrapper::Seek(
     __out_ecount(1) ULARGE_INTEGER* newPos
     )
 {
+    ULARGE_INTEGER newPosLocal;
+    if (!newPos) newPos = &newPosLocal;
     RRETURN(m_sd.pfnSeek(&m_sd, offset, origin, newPos));
 }
 
@@ -778,6 +780,8 @@ CManagedStreamWrapper::Write(
     __out_ecount(1) ULONG* cbWritten
     )
 {
+    ULONG cbWrittenLocal;
+    if (!cbWritten) cbWritten = &cbWrittenLocal;
     RRETURN(m_sd.pfnWrite(&m_sd, buf, cb, cbWritten));
 }
 
@@ -789,6 +793,10 @@ CManagedStreamWrapper::CopyTo(
     __out_ecount(1) ULARGE_INTEGER* cbWritten
     )
 {
+    ULARGE_INTEGER cbReadLocal;
+    ULARGE_INTEGER cbWrittenLocal;
+    if (!cbRead) cbRead = &cbReadLocal;
+    if (!cbWritten) cbWritten = &cbWrittenLocal;
     RRETURN(m_sd.pfnCopyTo(&m_sd, stream,cb, cbRead, cbWritten));
 }
 

@@ -30,11 +30,11 @@ namespace System.Windows.Markup
             IXamlNameResolver nameResolver = serviceProvider.GetService(typeof(IXamlNameResolver)) as IXamlNameResolver;
             if (nameResolver == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MissingNameResolver));
+                throw new InvalidOperationException(SR.MissingNameResolver);
             }
             if (String.IsNullOrEmpty(Name))
             {
-                throw new InvalidOperationException(SR.Get(SRID.MustHaveName));
+                throw new InvalidOperationException(SR.MustHaveName);
             }
             object obj = nameResolver.Resolve(Name);
             if (obj == null)

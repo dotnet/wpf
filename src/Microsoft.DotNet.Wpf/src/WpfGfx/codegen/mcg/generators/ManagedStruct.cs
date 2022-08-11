@@ -372,7 +372,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                                     if (i != _collection.Count-1)
                                     {
-                                        str.Append(" ");
+                                        str.Append(' ');
                                     }
                                 }
 

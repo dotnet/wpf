@@ -86,7 +86,7 @@ namespace Microsoft.Windows.Controls
             {
                 if (double.IsInfinity(value) || double.IsNaN(value))
                 {
-                    throw new ArgumentException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.InvalidKeyTipOffset));
+                    throw new ArgumentException(Microsoft.Windows.Controls.SR.InvalidKeyTipOffset);
                 }
                 _horizontalOffset = value;
             }
@@ -105,7 +105,7 @@ namespace Microsoft.Windows.Controls
             {
                 if (double.IsInfinity(value) || double.IsNaN(value))
                 {
-                    throw new ArgumentException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.InvalidKeyTipOffset));
+                    throw new ArgumentException(Microsoft.Windows.Controls.SR.InvalidKeyTipOffset);
                 }
                 _verticalOffset = value;
             }

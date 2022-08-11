@@ -340,7 +340,7 @@ namespace MS.Internal.Ink
         // should be further tuned considering trade-off of performance and accuracy.
         // In general, the larger the value, more points are filtered but less accurate.
         // For a value of 0.5, typically 70% - 80% percent of the points are filtered out.
-        private static readonly double CollinearTolerance = 0.1f;
+        private const double CollinearTolerance = 0.1f;
 
         #endregion
     }

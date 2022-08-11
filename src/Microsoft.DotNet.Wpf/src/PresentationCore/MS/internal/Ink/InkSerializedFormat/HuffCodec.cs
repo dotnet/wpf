@@ -266,7 +266,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <summary>
         /// Private statics
         /// </summary>
-        private static readonly byte MaxBAASize = 10;
+        private const byte MaxBAASize = 10;
 
         /// <summary>
         /// Private helper class
@@ -334,8 +334,8 @@ namespace MS.Internal.Ink.InkSerializedFormat
             /// <summary>
             /// Private statics
             /// </summary>
-            private static readonly byte MaxBAASize = 10;
-            private static readonly byte DefaultBAACount = 8;
+            private const byte MaxBAASize = 10;
+            private const byte DefaultBAACount = 8;
             private static readonly byte[][] DefaultBAAData = new byte[][]
             {
                 new byte[]{0, 1,  2,  4,  6,  8, 12, 16, 24, 32},

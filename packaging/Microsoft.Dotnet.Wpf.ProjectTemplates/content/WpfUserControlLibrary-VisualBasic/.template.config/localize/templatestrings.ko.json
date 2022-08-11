@@ -1,4 +1,4 @@
-{
+﻿{
   "author": "Microsoft",
   "name": "WPF 사용자 정의 컨트롤 라이브러리",
   "description": ".NET WPF 애플리케이션용 사용자 정의 컨트롤 라이브러리 만들기 프로젝트",
@@ -8,7 +8,7 @@
   "symbols/Framework/choices/netcoreapp3.1/description": "대상 netcoreapp3.1",
   "symbols/Framework/choices/net5.0/description": "대상 net5.0",
   "symbols/Framework/choices/net6.0/description": "대상 net6.0",
-  "symbols/Framework/choices/net7.0/description": "Target net7.0",
+  "symbols/Framework/choices/net7.0/description": "대상 net7.0",
   "symbols/langVersion/description": "만든 프로젝트 파일의 langVersion를 설정합니다",
   "symbols/skipRestore/description": "지정된 경우, 프로젝트 생성 시 자동 복원을 건너뜁니다.",
   "postActions/restore/description": "이 프로젝트에 필요한 NuGet 패키지를 복원합니다.",

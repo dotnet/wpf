@@ -779,7 +779,7 @@ namespace System.Windows.Data
                 treeContextIsRequired = (_attachedPropertiesInPath > 0);
 
                 // namespace prefixes in the XPath need an XmlNamespaceManager
-                if (!treeContextIsRequired && HasValue(Feature.XPath) && XPath.IndexOf(':') >= 0)
+                if (!treeContextIsRequired && HasValue(Feature.XPath) && XPath.Contains(':'))
                 {
                     treeContextIsRequired = true;
                 }

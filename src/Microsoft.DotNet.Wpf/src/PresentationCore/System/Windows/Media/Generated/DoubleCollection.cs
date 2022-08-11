@@ -723,7 +723,7 @@ namespace System.Windows.Media
 
                 if (i != _collection.Count-1)
                 {
-                    str.Append(" ");
+                    str.Append(' ');
                 }
             }
 

@@ -996,10 +996,9 @@ namespace System.Windows.Media
                     if (Channel != null)
                     {
                         // SyncFlush will Commit()
-                        if (CommittingBatch != null)
-                        {
-                            CommittingBatch(Channel, new EventArgs());
-                        }
+
+                        CommittingBatch?.Invoke(Channel, new EventArgs());
+                        
 
                         Channel.SyncFlush();
                     }
@@ -1849,7 +1848,7 @@ namespace System.Windows.Media
                         // (TimeManager gets its tick time from MediaContext's IClock implementation).
                         // In the case where we can't query QPC or aren't doing interlocked presents,
                         // this will be equal to the current time, which is a good enough approximation.
-                        Rendering(this.Dispatcher, new RenderingEventArgs(_timeManager.LastTickTime));
+                        Rendering?.Invoke(this.Dispatcher, new RenderingEventArgs(_timeManager.LastTickTime));
 
                         // call all render callbacks again in case the Rendering event affects layout
                         // this will enable layout effecting changes to get triggered this frame
@@ -2185,10 +2184,7 @@ namespace System.Windows.Media
                     _lastCommitTime = currentTicks;
                 }
 
-                if (CommittingBatch != null)
-                {
-                    CommittingBatch(Channel, new EventArgs());
-                }
+                CommittingBatch?.Invoke(Channel, new EventArgs());
 
                 Channel.Commit();
 
@@ -2266,10 +2262,8 @@ namespace System.Windows.Media
                         do
                         {
                             // WaitForNextMessage will Commit()
-                            if (CommittingBatch != null)
-                            {
-                                CommittingBatch(Channel, new EventArgs());
-                            }
+                            CommittingBatch?.Invoke(Channel, new EventArgs());
+                            
 
                             Channel.WaitForNextMessage();
                             NotifyChannelMessage();
@@ -2309,10 +2303,8 @@ namespace System.Windows.Media
                 else
                 {
                     // SyncFlush() will Commit()
-                    if (CommittingBatch != null)
-                    {
-                        CommittingBatch(Channel, new EventArgs());
-                    }
+                    CommittingBatch?.Invoke(Channel, new EventArgs());
+                    
 
                     //
                     // Issue a sync flush, which will only return after

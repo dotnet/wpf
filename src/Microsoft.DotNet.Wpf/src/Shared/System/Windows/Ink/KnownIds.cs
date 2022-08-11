@@ -314,7 +314,7 @@ namespace System.Windows.Ink
                                 System.Reflection.BindingFlags.Instance |
                                 System.Reflection.BindingFlags.Public |
                                 System.Reflection.BindingFlags.Default,
-                                null, null, new object[]{},
+                                null, null, Array.Empty<object>(),
                                 System.Globalization.CultureInfo.InvariantCulture) )
                 {
                     return info.Name;

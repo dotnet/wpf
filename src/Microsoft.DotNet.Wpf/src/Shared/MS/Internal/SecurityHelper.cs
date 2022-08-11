@@ -228,7 +228,7 @@ internal static class SecurityHelper
 
         internal static bool AreStringTypesEqual(string m1, string m2)
         {
-            return (String.Compare(m1, m2, StringComparison.OrdinalIgnoreCase) == 0);
+            return (string.Equals(m1, m2, StringComparison.OrdinalIgnoreCase));
         }
 
 #endif //PRESENTATION_CORE || PRESENTATIONFRAMEWORK || WINDOWS_BASE

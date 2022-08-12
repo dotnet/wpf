@@ -448,14 +448,14 @@ namespace System.Windows
             // Always clear the RootSourceProperty on the old root.
             if (oldRoot != null)
             {
-                oldSource = CriticalGetPresentationSourceFromElement(oldRoot, RootSourceProperty);
+                oldSource = (PresentationSource)oldRoot.GetValue(RootSourceProperty);
                 oldRoot.ClearValue(RootSourceProperty);
             }
             
             // Always set the SourceProperty on the new root.
             if (newRoot != null)
             {
-                newRoot.SetValue(RootSourceProperty, new SecurityCriticalDataForMultipleGetAndSet<PresentationSource>(this));
+                newRoot.SetValue(RootSourceProperty, this);
             }
 
             UIElement oldRootUIElement = oldRoot as UIElement;
@@ -493,7 +493,7 @@ namespace System.Windows
                 // same context as this presentation source.
                 if (element.Dispatcher == Dispatcher)
                 {
-                    PresentationSource testSource = CriticalGetPresentationSourceFromElement(element,CachedSourceProperty);
+                    PresentationSource testSource = (PresentationSource)element.GetValue(CachedSourceProperty);
                     // 1) If we are removing the rootvisual, then fire on any node whos old
                     // PresetationSource was the oldSource.
                     // 2) If we are attaching a rootvisual then fire on any node whos old
@@ -669,29 +669,11 @@ namespace System.Windows
             }
         }
 
-        private static PresentationSource CriticalGetPresentationSourceFromElement(DependencyObject dObject,DependencyProperty dp)
-        {
-            PresentationSource testSource;
-            SecurityCriticalDataForMultipleGetAndSet<PresentationSource> tempCriticalDataWrapper =
-                (SecurityCriticalDataForMultipleGetAndSet < PresentationSource > )
-                dObject.GetValue(dp);
-            if (tempCriticalDataWrapper == null || tempCriticalDataWrapper.Value == null)
-            {
-                testSource = null;
-            }
-            else
-            {   
-                testSource = tempCriticalDataWrapper.Value;
-            }
-            return testSource;
-        }
-
         private static void AddElementToWatchList(DependencyObject element)
         {
             if(_watchers.Add(element))
             {
-                element.SetValue(CachedSourceProperty,new 
-                    SecurityCriticalDataForMultipleGetAndSet<PresentationSource>(PresentationSource.FindSource(element)));
+                element.SetValue(CachedSourceProperty, PresentationSource.FindSource(element));
                 element.SetValue(GetsSourceChangedEventProperty, true);
             }
         }
@@ -727,7 +709,7 @@ namespace System.Windows
             DependencyObject v = InputElement.GetRootVisual(o, enable2DTo3DTransition);
             if (v != null)
             {
-               source = CriticalGetPresentationSourceFromElement(v, RootSourceProperty);
+               source = (PresentationSource)v.GetValue(RootSourceProperty);
             }
             return source;
         }
@@ -739,10 +721,10 @@ namespace System.Windows
             bool calledOut = false;
             
             PresentationSource realSource = FindSource(doTarget);
-            PresentationSource cachedSource = CriticalGetPresentationSourceFromElement(doTarget, CachedSourceProperty);
+            PresentationSource cachedSource = (PresentationSource)doTarget.GetValue(CachedSourceProperty);
             if (cachedSource != realSource)
             {
-                doTarget.SetValue(CachedSourceProperty, new SecurityCriticalDataForMultipleGetAndSet<PresentationSource>(realSource));
+                doTarget.SetValue(CachedSourceProperty, realSource);
 
                 SourceChangedEventArgs args = new SourceChangedEventArgs(cachedSource, realSource);
 
@@ -783,16 +765,16 @@ namespace System.Windows
         // element in a tree to the source it is displayed in).  Use the public
         // API FromVisual to get the source that a visual is displayed in.
         private static readonly DependencyProperty RootSourceProperty   
-            = DependencyProperty.RegisterAttached("RootSource", typeof(SecurityCriticalDataForMultipleGetAndSet<PresentationSource>), typeof(PresentationSource),
-                                          new PropertyMetadata((SecurityCriticalDataForMultipleGetAndSet<PresentationSource>)null));
+            = DependencyProperty.RegisterAttached("RootSource", typeof(PresentationSource), typeof(PresentationSource),
+                                          new PropertyMetadata((PresentationSource)null));
 
         // We use a private DP for the CachedSource (stored on the elements 
         // that we are watching, so that we can send a change notification).
         // Use the public API FromVisual to get the source that a visual is
         // displayed in.
         private static readonly DependencyProperty CachedSourceProperty
-            = DependencyProperty.RegisterAttached("CachedSource", typeof(SecurityCriticalDataForMultipleGetAndSet<PresentationSource>), typeof(PresentationSource),
-                                          new PropertyMetadata((SecurityCriticalDataForMultipleGetAndSet<PresentationSource>)null));
+            = DependencyProperty.RegisterAttached("CachedSource", typeof(PresentationSource), typeof(PresentationSource),
+                                          new PropertyMetadata((PresentationSource)null));
 
         // We use a private DP to mark elements that we are watchin.
         private static readonly DependencyProperty GetsSourceChangedEventProperty = DependencyProperty.RegisterAttached("IsBeingWatched", typeof(bool), typeof(PresentationSource), new PropertyMetadata((bool)false));

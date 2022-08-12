@@ -544,7 +544,7 @@ namespace System.Windows.Controls
             DependencyProperty.RegisterAttached("ShowsToolTipOnKeyboardFocus",     // Name
                                                 typeof(bool?),          // Type
                                                 typeof(ToolTipService), // Owner
-                                                new FrameworkPropertyMetadata(NullableBooleanBoxes.NullBox));   // Default Value
+                                                new FrameworkPropertyMetadata(null));   // Default Value
 
         /// <summary>
         ///     Gets the value of the ShowsToolTipOnKeyboardFocus property.
@@ -573,7 +573,7 @@ namespace System.Windows.Controls
             {
                 throw new ArgumentNullException("element");
             }
-            element.SetValue(ShowsToolTipOnKeyboardFocusProperty, NullableBooleanBoxes.Box(value));
+            element.SetValue(ShowsToolTipOnKeyboardFocusProperty, BooleanBoxes.Box(value));
         }
 
         #endregion

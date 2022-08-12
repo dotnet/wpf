@@ -86,7 +86,7 @@ namespace System.IO.Packaging
             if (PackWebRequestFactory._traceSwitch.Enabled && (cacheEntry != null))
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " + 
                         "PackWebRequest - working from Package Cache");
 #endif
         }
@@ -158,7 +158,7 @@ namespace System.IO.Packaging
                 if (PackWebRequestFactory._traceSwitch.Enabled)
                     System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " + 
                         "PackWebRequest - Getting response from Package Cache");
 #endif
                 return new PackWebResponse(_uri, _innerUri, _partName, _cacheEntry, _cachedPackageIsThreadSafe);
@@ -174,7 +174,7 @@ namespace System.IO.Packaging
                 if (PackWebRequestFactory._traceSwitch.Enabled)
                     System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " + 
                         "PackWebRequest - Getting new response");
 #endif
                 // Create a new response for every call

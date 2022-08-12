@@ -109,7 +109,7 @@ namespace Microsoft.Windows.Automation.Peers
             }
             else
             {
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
         }
 
@@ -121,7 +121,7 @@ namespace Microsoft.Windows.Automation.Peers
             }
             else
             {
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
         }
 

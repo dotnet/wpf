@@ -1053,7 +1053,7 @@ namespace System.Windows.Media.Imaging
                 if (uri.IsAbsoluteUri)
                 {
                     // This code path executes only for pack web requests
-                    if (String.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase))
                     {
                         WebResponse response = WpfWebRequestHelper.CreateRequestAndGetResponse(uri);
                         bitmapStream = response.GetResponseStream();

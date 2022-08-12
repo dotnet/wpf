@@ -354,7 +354,7 @@ namespace System.Windows.Controls
         public bool? ShowsToolTipOnKeyboardFocus
         {
             get { return (bool?)GetValue(ShowsToolTipOnKeyboardFocusProperty); }
-            set { SetValue(ShowsToolTipOnKeyboardFocusProperty, NullableBooleanBoxes.Box(value)); }
+            set { SetValue(ShowsToolTipOnKeyboardFocusProperty, BooleanBoxes.Box(value)); }
         }
 
         #endregion

@@ -125,7 +125,7 @@ internal class PackageController : IDocumentController
             if (source.GetHashCode() == destination.GetHashCode())
             {
                 throw new InvalidOperationException(
-                    SR.Get(SRID.PackageControllerStreamCorruption));
+                    SR.PackageControllerStreamCorruption);
             }
 
             // this will catch the case where no one was able to copy the stream
@@ -133,7 +133,7 @@ internal class PackageController : IDocumentController
             if (doc.Source.Length != doc.Destination.Length)
             {
                 throw new InvalidOperationException(
-                    SR.Get(SRID.PackageControllerStreamCorruption));
+                    SR.PackageControllerStreamCorruption);
             }
 
             // Flush the package to ensure that the relationship parts are

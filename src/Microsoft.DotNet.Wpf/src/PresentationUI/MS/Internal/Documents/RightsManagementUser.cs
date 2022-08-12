@@ -142,7 +142,7 @@ namespace MS.Internal.Documents
                 if (AnyoneRightsManagementUser.Equals(this))
                 {
                     // Since this is the AnyoneUser return the localized representation for the name.
-                    name = SR.Get(SRID.RMPublishingAnyoneUserDisplay);
+                    name = SR.RMPublishingAnyoneUserDisplay;
                 }
                 else
                 {

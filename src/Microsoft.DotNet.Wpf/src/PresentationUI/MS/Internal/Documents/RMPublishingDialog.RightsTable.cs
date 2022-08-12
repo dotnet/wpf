@@ -57,7 +57,7 @@ namespace MS.Internal.Documents
             /// <returns>True if the user name is the Everyone user</returns>
             public static bool IsEveryone(string userName)
             {
-                return userName.Equals(SR.Get(SRID.RMPublishingAnyoneUserDisplay), StringComparison.OrdinalIgnoreCase);
+                return userName.Equals(SR.RMPublishingAnyoneUserDisplay, StringComparison.OrdinalIgnoreCase);
             }
 
             /// <summary>
@@ -445,17 +445,17 @@ namespace MS.Internal.Documents
             {
                 // Add the column headers.
                 Columns.Add(
-                    CreateColumnHeader("Name", SR.Get(SRID.RMPublishingUserHeader), typeof(string), 150));
+                    CreateColumnHeader("Name", SR.RMPublishingUserHeader, typeof(string), 150));
                 Columns.Add(
-                    CreateColumnHeader("AllowView", SR.Get(SRID.RMPublishingReadHeader), typeof(bool), -1));
+                    CreateColumnHeader("AllowView", SR.RMPublishingReadHeader, typeof(bool), -1));
                 Columns.Add(
-                    CreateColumnHeader("AllowCopy", SR.Get(SRID.RMPublishingCopyHeader), typeof(bool), -1));
+                    CreateColumnHeader("AllowCopy", SR.RMPublishingCopyHeader, typeof(bool), -1));
                 Columns.Add(
-                    CreateColumnHeader("AllowPrint", SR.Get(SRID.RMPublishingPrintHeader), typeof(bool), -1));
+                    CreateColumnHeader("AllowPrint", SR.RMPublishingPrintHeader, typeof(bool), -1));
                 Columns.Add(
-                    CreateColumnHeader("AllowSign", SR.Get(SRID.RMPublishingSignHeader), typeof(bool), -1));
+                    CreateColumnHeader("AllowSign", SR.RMPublishingSignHeader, typeof(bool), -1));
                 Columns.Add(
-                    CreateColumnHeader("AllowOwner", SR.Get(SRID.RMPublishingOwnerHeader), typeof(bool), -1));
+                    CreateColumnHeader("AllowOwner", SR.RMPublishingOwnerHeader, typeof(bool), -1));
 
                 // Set the TextBox cell style
                 _textCellStyle = new DataGridViewCellStyle();

@@ -277,8 +277,8 @@ namespace MS.Internal.Documents
             if (!VerifySignability())
             {
                 System.Windows.MessageBox.Show(
-                    SR.Get(SRID.DigitalSignatureMessageDocumentNotSignable),
-                    SR.Get(SRID.DigitalSignatureMessageDocumentNotSignableTitle),
+                    SR.DigitalSignatureMessageDocumentNotSignable,
+                    SR.DigitalSignatureMessageDocumentNotSignableTitle,
                     System.Windows.MessageBoxButton.OK,
                     System.Windows.MessageBoxImage.Exclamation);
             }
@@ -306,8 +306,8 @@ namespace MS.Internal.Documents
                 if (!IsSigningAllowed)
                 {
                     System.Windows.MessageBox.Show(
-                        SR.Get(SRID.DigitalSignatureWarnErrorRMSigningMessage),
-                        SR.Get(SRID.DigitalSignatureWarnErrorSigningErrorTitle),
+                        SR.DigitalSignatureWarnErrorRMSigningMessage,
+                        SR.DigitalSignatureWarnErrorSigningErrorTitle,
                         System.Windows.MessageBoxButton.OK,
                         System.Windows.MessageBoxImage.Exclamation
                         );
@@ -315,8 +315,8 @@ namespace MS.Internal.Documents
                 else
                 {
                     System.Windows.MessageBox.Show(
-                        SR.Get(SRID.DigitalSignatureWarnErrorReadOnlyNoMoreRequest),
-                        SR.Get(SRID.DigitalSignatureWarnErrorSigningErrorTitle),
+                        SR.DigitalSignatureWarnErrorReadOnlyNoMoreRequest,
+                        SR.DigitalSignatureWarnErrorSigningErrorTitle,
                         System.Windows.MessageBoxButton.OK,
                         System.Windows.MessageBoxImage.Exclamation
                         );
@@ -363,8 +363,8 @@ namespace MS.Internal.Documents
             if (!IsSigningAllowed)
             {
                 System.Windows.MessageBox.Show(
-                    SR.Get(SRID.DigitalSignatureWarnErrorRMSigningMessage),
-                    SR.Get(SRID.DigitalSignatureWarnErrorSigningErrorTitle),
+                    SR.DigitalSignatureWarnErrorRMSigningMessage,
+                    SR.DigitalSignatureWarnErrorSigningErrorTitle,
                     System.Windows.MessageBoxButton.OK,
                     System.Windows.MessageBoxImage.Exclamation);
 
@@ -375,8 +375,8 @@ namespace MS.Internal.Documents
             if (!VerifySignability())
             {
                 System.Windows.MessageBox.Show(
-                    SR.Get(SRID.DigitalSignatureMessageDocumentNotSignable),
-                    SR.Get(SRID.DigitalSignatureMessageDocumentNotSignableTitle),
+                    SR.DigitalSignatureMessageDocumentNotSignable,
+                    SR.DigitalSignatureMessageDocumentNotSignableTitle,
                     System.Windows.MessageBoxButton.OK,
                     System.Windows.MessageBoxImage.Exclamation);
 
@@ -388,8 +388,8 @@ namespace MS.Internal.Documents
             if (IsSigned && !IsSigningAllowedByPolicy)
             {
                 System.Windows.MessageBoxResult dialogResult = System.Windows.MessageBox.Show(
-                    SR.Get(SRID.DigitalSignatureMessageActionInvalidatesSignature),
-                    SR.Get(SRID.DigitalSignatureMessageSignNowTitle),
+                    SR.DigitalSignatureMessageActionInvalidatesSignature,
+                    SR.DigitalSignatureMessageSignNowTitle,
                     System.Windows.MessageBoxButton.YesNo,
                     System.Windows.MessageBoxImage.Exclamation);
 
@@ -404,8 +404,8 @@ namespace MS.Internal.Documents
             if (IsSigned && !HasRequests)
             {
                 System.Windows.MessageBoxResult dialogResult = System.Windows.MessageBox.Show(
-                    SR.Get(SRID.DigitalSignatureMessageSignNoPending),
-                    SR.Get(SRID.DigitalSignatureMessageSignNowTitle),
+                    SR.DigitalSignatureMessageSignNoPending,
+                    SR.DigitalSignatureMessageSignNowTitle,
                     System.Windows.MessageBoxButton.YesNo,
                     System.Windows.MessageBoxImage.Exclamation);
 
@@ -420,8 +420,8 @@ namespace MS.Internal.Documents
             else if (IsSigned && HasRequests && digitalSignatureRequest == null)
             {
                 System.Windows.MessageBoxResult dialogResult = System.Windows.MessageBox.Show(
-                    SR.Get(SRID.DigitalSignatureMessageSignPending),
-                    SR.Get(SRID.DigitalSignatureMessageSignNowTitle),
+                    SR.DigitalSignatureMessageSignPending,
+                    SR.DigitalSignatureMessageSignNowTitle,
                     System.Windows.MessageBoxButton.YesNo,
                     System.Windows.MessageBoxImage.Exclamation);
 
@@ -449,8 +449,8 @@ namespace MS.Internal.Documents
                     // should add signature requests before signing and give the user the option
                     // to cancel
                     System.Windows.MessageBoxResult dialogResult = System.Windows.MessageBox.Show(
-                        SR.Get(SRID.DigitalSignatureMessageAddRequestsBeforeSigning),
-                        SR.Get(SRID.DigitalSignatureMessageAddRequestsBeforeSigningTitle),
+                        SR.DigitalSignatureMessageAddRequestsBeforeSigning,
+                        SR.DigitalSignatureMessageAddRequestsBeforeSigningTitle,
                         System.Windows.MessageBoxButton.YesNo,
                         System.Windows.MessageBoxImage.Exclamation);
 
@@ -592,8 +592,8 @@ namespace MS.Internal.Documents
             //Show the progress dialog
             ProgressDialog dialog =
                 ProgressDialog.CreateThreaded(
-                    SR.Get(SRID.SigningProgressTitle),
-                    SR.Get(SRID.SigningProgressLabel)).Form;
+                    SR.SigningProgressTitle,
+                    SR.SigningProgressLabel).Form;
 
             try
             {
@@ -626,9 +626,9 @@ namespace MS.Internal.Documents
                         System.Windows.MessageBoxResult dialogResult = System.Windows.MessageBox.Show(
                             String.Format(
                                 CultureInfo.CurrentCulture,
-                                SR.Get(SRID.DigitalSignatureWarnErrorGeneric),
+                                SR.DigitalSignatureWarnErrorGeneric,
                                 e.Message),
-                            SR.Get(SRID.DigitalSignatureWarnErrorSigningErrorTitle),
+                            SR.DigitalSignatureWarnErrorSigningErrorTitle,
                             System.Windows.MessageBoxButton.OK,
                             System.Windows.MessageBoxImage.Exclamation);
                     }
@@ -950,8 +950,8 @@ namespace MS.Internal.Documents
             {
                 collection = X509Certificate2UI.SelectFromCollection(
                     collection,
-                    SR.Get(SRID.CertSelectionDialogTitle),
-                    SR.Get(SRID.CertSelectionDialogMessage),
+                    SR.CertSelectionDialogTitle,
+                    SR.CertSelectionDialogMessage,
                     X509SelectionFlag.SingleSelection,
                     parentWindow);
 
@@ -963,8 +963,8 @@ namespace MS.Internal.Documents
             else
             {
                 System.Windows.MessageBox.Show(
-                    SR.Get(SRID.DigitalSignatureWarnErrorRMSigningMessageNoCerts),
-                    SR.Get(SRID.DigitalSignatureWarnErrorSigningErrorTitle),
+                    SR.DigitalSignatureWarnErrorRMSigningMessageNoCerts,
+                    SR.DigitalSignatureWarnErrorSigningErrorTitle,
                     System.Windows.MessageBoxButton.OK,
                     System.Windows.MessageBoxImage.Exclamation);
             }
@@ -1197,8 +1197,8 @@ namespace MS.Internal.Documents
             //Show the Progress dialog
             ProgressDialog dialog = 
                 ProgressDialog.CreateThreaded(
-                    SR.Get(SRID.ValidationProgressTitle),
-                    SR.Get(SRID.ValidationProgressLabel)).Form;        
+                    SR.ValidationProgressTitle,
+                    SR.ValidationProgressLabel).Form;        
 
             try
             {

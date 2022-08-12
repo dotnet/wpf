@@ -209,7 +209,7 @@ namespace MS.Internal.Documents
                 //hresult included.
                 throw new InvalidOperationException(
                     String.Format(CultureInfo.CurrentCulture,
-                        SR.Get(SRID.PeoplePickerErrorConditionFromOpenQueryWindow), hresult));
+                        SR.PeoplePickerErrorConditionFromOpenQueryWindow, hresult));
             }
         
         }                    
@@ -269,7 +269,7 @@ namespace MS.Internal.Documents
 
                 if (rmPublishingDialog == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.PeoplePickerInvalidParentWindow));
+                    throw new InvalidOperationException(SR.PeoplePickerInvalidParentWindow);
                 }
             }            
         }

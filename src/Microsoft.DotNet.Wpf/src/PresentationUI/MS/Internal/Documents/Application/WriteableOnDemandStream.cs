@@ -284,7 +284,7 @@ internal sealed class WriteableOnDemandStream : Stream
         if (!_wantedWrite)
         {
             throw new NotSupportedException(
-                SR.Get(SRID.PackagingWriteNotSupported));
+                SR.PackagingWriteNotSupported);
         }
 
         if (!_isActiveWriteable)
@@ -293,13 +293,13 @@ internal sealed class WriteableOnDemandStream : Stream
             if (writer == null)
             {
                 throw new IOException(
-                    SR.Get(SRID.PackagingWriteableDelegateGaveNullStream));
+                    SR.PackagingWriteableDelegateGaveNullStream);
             }
 
             if (writer.Equals(this))
             {
                 throw new IOException(
-                    SR.Get(SRID.PackagingCircularReference));
+                    SR.PackagingCircularReference);
             }
 
             writer.Position = _active.Position;

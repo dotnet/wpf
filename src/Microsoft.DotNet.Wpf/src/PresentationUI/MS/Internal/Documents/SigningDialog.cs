@@ -103,7 +103,7 @@ namespace MS.Internal.Documents
             // default values for Reason and Location.
             if (_isSecondSignatureNotRequested)
             {
-                string none = SR.Get(SRID.SignatureResourceHelperNone);
+                string none = SR.SignatureResourceHelperNone;
                 digSig.Reason = none;
                 digSig.Location = none;
             }
@@ -175,7 +175,7 @@ namespace MS.Internal.Documents
         private void ApplySignatureSpecificResources()
         {
             _signerlabel.Text = String.Format(CultureInfo.CurrentCulture,
-                                    SR.Get(SRID.SigningDialogSignerlabel),
+                                    SR.SigningDialogSignerlabel,
                                     Certificate.GetNameInfo(X509NameType.SimpleName,
                                     false /*Issuer*/)
                                   );
@@ -190,7 +190,7 @@ namespace MS.Internal.Documents
                     String.IsNullOrEmpty(_digitalSignatureRequest.Location))
                 {
                     _isSecondSignatureNotRequested = true;
-                    string na = SR.Get(SRID.SigningDialogNA);
+                    string na = SR.SigningDialogNA;
                     _reasonComboBox.Text = na;
                     _locationTextBox.Text = na;
                 }
@@ -198,7 +198,7 @@ namespace MS.Internal.Documents
                 {
                     // Since this is a requested signature replace any empty strings 
                     // with "<none>"
-                    string none = SR.Get(SRID.SignatureResourceHelperNone);
+                    string none = SR.SignatureResourceHelperNone;
                     _reasonComboBox.Text = String.IsNullOrEmpty(_digitalSignatureRequest.Reason) ?
                         none : _digitalSignatureRequest.Reason;
                     _locationTextBox.Text = String.IsNullOrEmpty(_digitalSignatureRequest.Location) ?
@@ -240,23 +240,23 @@ namespace MS.Internal.Documents
             base.ApplyResources();
 
             //Get the localized text strings.            
-            _reasonLabel.Text = SR.Get(SRID.SigningDialogReasonLabel);
-            _locationLabel.Text = SR.Get(SRID.SigningDialogLocationLabel);
-            _actionlabel.Text = SR.Get(SRID.SigningDialogActionlabel);            
-            _addDocPropCheckBox.Text = SR.Get(SRID.SigningDialogAddDocPropCheckBox);
-            _addDigSigCheckBox.Text = SR.Get(SRID.SigningDialogAddDigSigCheckBox);
-            _cancelButton.Text = SR.Get(SRID.SigningDialogCancelButton);
-            _signButton.Text = SR.Get(SRID.SigningDialogSignButton);            
-            _signSaveAsButton.Text = SR.Get(SRID.SigningDialogSignSaveAsButton);            
-            Text = SR.Get(SRID.SigningDialogTitle);
+            _reasonLabel.Text = SR.SigningDialogReasonLabel;
+            _locationLabel.Text = SR.SigningDialogLocationLabel;
+            _actionlabel.Text = SR.SigningDialogActionlabel;            
+            _addDocPropCheckBox.Text = SR.SigningDialogAddDocPropCheckBox;
+            _addDigSigCheckBox.Text = SR.SigningDialogAddDigSigCheckBox;
+            _cancelButton.Text = SR.SigningDialogCancelButton;
+            _signButton.Text = SR.SigningDialogSignButton;            
+            _signSaveAsButton.Text = SR.SigningDialogSignSaveAsButton;            
+            Text = SR.SigningDialogTitle;
 
             //Load the Intent/Reason combo
-            _reasonComboBox.Items.Add(SR.Get(SRID.DigSigIntentString1));
-            _reasonComboBox.Items.Add(SR.Get(SRID.DigSigIntentString2));
-            _reasonComboBox.Items.Add(SR.Get(SRID.DigSigIntentString3));
-            _reasonComboBox.Items.Add(SR.Get(SRID.DigSigIntentString4));
-            _reasonComboBox.Items.Add(SR.Get(SRID.DigSigIntentString5));
-            _reasonComboBox.Items.Add(SR.Get(SRID.DigSigIntentString6));
+            _reasonComboBox.Items.Add(SR.DigSigIntentString1);
+            _reasonComboBox.Items.Add(SR.DigSigIntentString2);
+            _reasonComboBox.Items.Add(SR.DigSigIntentString3);
+            _reasonComboBox.Items.Add(SR.DigSigIntentString4);
+            _reasonComboBox.Items.Add(SR.DigSigIntentString5);
+            _reasonComboBox.Items.Add(SR.DigSigIntentString6);
         }
 
         /// <summary>

@@ -206,13 +206,13 @@ internal sealed class WriteableOnDemandPackagePart : PackagePart
             if (writingPart == null)
             {
                 throw new IOException(
-                    SR.Get(SRID.PackagingWriteableDelegateGaveNullPart));
+                    SR.PackagingWriteableDelegateGaveNullPart);
             }
 
             if (writingPart.Equals(this))
             {
                 throw new IOException(
-                    SR.Get(SRID.PackagingCircularReference));
+                    SR.PackagingCircularReference);
             }
 
             _activePart = writingPart;

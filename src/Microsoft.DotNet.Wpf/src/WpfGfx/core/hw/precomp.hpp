@@ -65,7 +65,7 @@
 
 #include "resources\resources.h"
 
-#include "d3dregistry.h"
+#include "vkconfig.h"
 
 #include "HwTexturedColorSourceBrush.h"
 #include "D3DTextureSurface.h"

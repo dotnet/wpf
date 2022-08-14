@@ -45,7 +45,7 @@ namespace System.Windows.Media
     /// shut down the media system.
     /// <seealso cref="CompositionTarget"/>
     /// </remarks>
-    internal partial class MediaContext : DispatcherObject, IDisposable, IClock
+    public partial class MediaContext : DispatcherObject, IDisposable, IClock
     {
         /// <summary>
         /// Initializes the MediaContext's clock service.
@@ -705,6 +705,11 @@ namespace System.Windows.Media
         }
 
         /// <summary>
+        /// Triggered when NotifyPresented was called.
+        /// </summary>
+        public event EventHandler<int> Presented;
+
+        /// <summary>
         /// Processes the Presented composition engine notification.
         /// </summary>
         /// <param name="presentationResults">
@@ -869,10 +874,12 @@ namespace System.Windows.Media
                     Debug.Assert(InterlockIsWaiting,
                         "We had something to commit, we should be waiting for that"+
                         "notification to come back");
-               }
+                }
 
                 ScheduleNextRenderOp(presentationDelay);
             }
+
+            Presented?.Invoke(this, (int)presentationResults);
         }
 
 
@@ -1389,7 +1396,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Gets the MediaContext from the context passed in as argument.
         /// </summary>
-        internal static MediaContext From(Dispatcher dispatcher)
+        public static MediaContext From(Dispatcher dispatcher)
         {
             Debug.Assert(dispatcher != null, "Dispatcher required");
             MediaContext cm = (MediaContext)dispatcher.Reserved0;
@@ -2385,7 +2392,7 @@ namespace System.Windows.Media
         /// This is used for ink transition. Currently this event is internal and will
         /// be accessed using reflection until proper object model is defined.
         /// </summary>
-        internal event EventHandler RenderComplete
+        public event EventHandler RenderComplete
         {
             add
             {

@@ -65,6 +65,7 @@ template < class T > inline T max ( T a, T b ) { return a > b ? a : b; }
 
 
 #define ReleaseInterface(x) if (x) {(x)->Release(); (x) = NULL; }
+#define DestroyVk(x) if (x) {(x)->destroy(); (x) = NULL; }
 #define SetInterface(x,y) {(x)=(y); if (y) {(y)->AddRef();}}
 #define ReplaceInterface(x,y) {if (x) {(x)->Release();} (x)=(y); if (y) {(y)->AddRef();}}
 

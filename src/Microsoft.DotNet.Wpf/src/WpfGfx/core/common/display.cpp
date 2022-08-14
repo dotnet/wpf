@@ -990,8 +990,24 @@ CDisplaySet::Init()
     // Failure here is not fatal.
     //
     m_hrD3DInitialization = CD3DModuleLoader::CreateD3DObjects(&m_pID3D, &m_pID3DEx);
-
     Assert(FAILED(m_hrD3DInitialization) == (m_pID3D == NULL));
+
+    auto const app = vk::ApplicationInfo()
+        .setPApplicationName("WPFC")
+        .setApplicationVersion(0)
+        .setPEngineName("WPFC")
+        .setEngineVersion(0);
+    auto const createInfo = vk::InstanceCreateInfo()
+        .setPApplicationInfo(&app)
+        //.setFlags(portabilityEnumerationActive ? vk::InstanceCreateFlagBits::eEnumeratePortabilityKHR
+        //    : static_cast<vk::InstanceCreateFlagBits>(0))
+        //.setPNext((use_debug_messenger && validate) ? &debug_utils_create_info : nullptr)
+        //.setPEnabledLayerNames(enabled_layers)
+        //.setPEnabledExtensionNames(enabled_instance_extensions)
+        ;
+    m_rVkInstInitialization = vk::createInstance(&createInfo, nullptr, &m_inst);
+    Assert(FAILED(m_rVkInstInitialization) == (&m_inst == NULL));
+
 
     ReadRequiredVideoDriverDate();
 
@@ -1114,6 +1130,13 @@ CDisplaySet::GetD3DObjectNoRef(
     *pID3D = m_pID3D;
     return m_hrD3DInitialization;
 }
+
+vk::Result CDisplaySet::GetVkInstanceNoRef(vk::Instance* pInst) const {
+    Assert(m_inst || FAILED(m_rVkInstInitialization));
+    *pInst = m_inst;
+    return m_rVkInstInitialization;
+}
+
 
 //+------------------------------------------------------------------------
 //
@@ -1612,16 +1635,17 @@ Cleanup:
 HRESULT
 CDisplaySet::ArrangeDXAdapters()
 {
-    Assert(m_pID3D);
+    Assert(m_inst);
     HRESULT hr = S_OK;
+    vk::PhysicalDevice *gpus = nullptr;
 
-    m_uD3DAdapterCount = m_pID3D->GetAdapterCount();
+    IFCV(m_inst.enumeratePhysicalDevices(&m_uD3DAdapterCount, nullptr));
 
     // DevDiv Servicing :
     // If this app has asked to disable the multi-adapter code, then always
     // pretend like there is a single adapter, to match the single display
     // created in EnumerateDevices().
-    if (!IsMultiAdapterCodeEnabled() && m_uD3DAdapterCount > 1)
+    if (m_uD3DAdapterCount > 1 && !IsMultiAdapterCodeEnabled())
     {
         m_uD3DAdapterCount = 1;
     }
@@ -1632,6 +1656,9 @@ CDisplaySet::ArrangeDXAdapters()
         IFC(WGXERR_DISPLAYSTATEINVALID);
     }
 
+    gpus = new vk::PhysicalDevice[m_uD3DAdapterCount];
+    IFCV(m_inst.enumeratePhysicalDevices(&m_uD3DAdapterCount, gpus));
+
     for (UINT i = 0; i < m_uD3DAdapterCount; i++)
     {
         HMONITOR hMonitor = m_pID3D->GetAdapterMonitor(i);
@@ -1639,7 +1666,7 @@ CDisplaySet::ArrangeDXAdapters()
         // DevDiv Servicing :
         // If this app has asked to disable the multi-adapter code, then always
         // use the monitor for the one and only display we should have created.
-        if (!IsMultiAdapterCodeEnabled() && m_rgpDisplays.GetCount() > 0)
+        if (m_rgpDisplays.GetCount() > 0 && !IsMultiAdapterCodeEnabled())
         {
             hMonitor = m_rgpDisplays[0]->m_hMonitor;
         }
@@ -1699,6 +1726,7 @@ CDisplaySet::ArrangeDXAdapters()
 
 Cleanup:
 
+    delete[] gpus;
     RRETURN(hr);
 }
 

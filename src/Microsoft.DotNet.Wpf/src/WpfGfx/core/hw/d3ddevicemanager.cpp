@@ -77,12 +77,17 @@ CD3DDeviceManager::Delete()
 {
     if (g_D3DDeviceManager.m_fD3DLoaded)
     {
-        ReleaseInterface(g_D3DDeviceManager.m_pID3D);
+        DestroyVk(g_D3DDeviceManager.m_pInst);
+
+       
         ReleaseInterface(g_D3DDeviceManager.m_pDisplaySet);
         g_D3DDeviceManager.m_fD3DLoaded = false;
     }
     else
     {
+        Assert(!g_D3DDeviceManager.m_pInst);
+
+       
         Assert(!g_D3DDeviceManager.m_pID3D);
         Assert(!g_D3DDeviceManager.m_pDisplaySet);
     }
@@ -152,6 +157,9 @@ void CD3DDeviceManager::NotifyDisplayChange(
 CD3DDeviceManager::CD3DDeviceManager()
 {
     m_cCallers = 0;
+    m_pInst = NULL;
+
+    
     m_pID3D = NULL;
     m_fD3DLoaded = false;
     m_pDisplaySet = NULL;
@@ -196,6 +204,9 @@ CD3DDeviceManager::~CD3DDeviceManager()
 
     if (m_fD3DLoaded)
     {
+        DestroyVk(m_pInst);
+
+        
         ReleaseInterfaceNoNULL(m_pNullRefDevice);
         ReleaseInterfaceNoNULL(m_pSWDevice);
         ReleaseInterfaceNoNULL(m_pID3D);
@@ -401,7 +412,7 @@ void CD3DDeviceManager::DecCallers()
             if (m_pID3D)
             {
                 ReleaseInterface(m_pNullRefDevice);
-                CD3DRegistryDatabase::Cleanup();
+                CVkConfigDatabase::Cleanup();
                 m_pID3D->Release();
                 m_pID3D = NULL;
             }
@@ -435,6 +446,9 @@ CD3DDeviceManager::InitializeD3DReferences(
 
     CDisplaySet const *pDisplaySet = NULL;
     IDirect3D9 *pID3DNoRef = NULL;
+    vk::Instance instNoRef;
+
+    
 
     IFC(g_DisplayManager.DangerousGetLatestDisplaySet(&pDisplaySet));
 
@@ -458,8 +472,10 @@ CD3DDeviceManager::InitializeD3DReferences(
     // Make sure ID3D is available
     //
 
-    IFC(pDisplaySet->GetD3DObjectNoRef(&pID3DNoRef));
 
+    IFC(pDisplaySet->GetD3DObjectNoRef(&pID3DNoRef));
+    IFCV(pDisplaySet->GetVkInstanceNoRef(&instNoRef));
+    Assert(&instNoRef);
     Assert(pID3DNoRef);
 
     Assert(m_cCallers > 0);
@@ -470,7 +486,7 @@ CD3DDeviceManager::InitializeD3DReferences(
     // Check if there is a new D3D that we should be using
     //
 
-    if (m_pID3D != pID3DNoRef)
+    if (m_pInst != &instNoRef)
     {
         //
         // If there was a prior D3D (and the new one is different) then there
@@ -480,14 +496,15 @@ CD3DDeviceManager::InitializeD3DReferences(
         // that should release m_pID3D and m_pDisplaySet.
         //
 
-        Assert(!m_pID3D);
+        Assert(!m_pInst);
         Assert(!m_pDisplaySet);
 
         //
         // Initialize registry
         //
+        IFC(CVkConfigDatabase::InitializeFromConfig(&instNoRef));
 
-        IFC(CD3DRegistryDatabase::InitializeFromRegistry(pID3DNoRef));
+        
 
         //
         // Save D3D reference
@@ -575,7 +592,7 @@ CD3DDeviceManager::HandleDisplayChange(
 
             if (m_pID3D)
             {
-                CD3DRegistryDatabase::Cleanup();
+                CVkConfigDatabase::Cleanup();
                 m_pID3D->Release();
                 m_pID3D = NULL;
             }
@@ -955,7 +972,7 @@ CD3DDeviceManager::GetD3DDeviceAndPresentParams(
 
         bool fEnabled;
 
-        IFC(CD3DRegistryDatabase::IsAdapterEnabled(uAdapter, &fEnabled));
+        IFC(CVkConfigDatabase::IsGpuEnabled(uAdapter, &fEnabled));
 
         if (!fEnabled)
         {

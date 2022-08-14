@@ -171,6 +171,7 @@ private:
     CCriticalSection m_csManagement;
 
     ULONG m_cCallers;
+    vk::Instance *m_pInst;
     IDirect3D9 *m_pID3D;
     bool m_fD3DLoaded;
 

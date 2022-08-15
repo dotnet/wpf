@@ -97,6 +97,6 @@
     <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
   </PropertyGroup>
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>6.0.0-rtm.22412.6</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>6.0.0-rtm.22415.2</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

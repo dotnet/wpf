@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="6.0.9-servicing.22417.1">
+    <Dependency Name="Microsoft.Private.Winforms" Version="6.0.9-servicing.22418.3">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-winforms</Uri>
-      <Sha>5d275019237fbf9f4bf5d867f779c616ec264718</Sha>
+      <Sha>0a6ea378000e25e4cbcc17485513fd487fec5dab</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="6.0.9-servicing.22417.1">
+    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="6.0.9-servicing.22418.3">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-winforms</Uri>
-      <Sha>5d275019237fbf9f4bf5d867f779c616ec264718</Sha>
+      <Sha>0a6ea378000e25e4cbcc17485513fd487fec5dab</Sha>
     </Dependency>
     <Dependency Name="System.CodeDom" Version="6.0.0" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
@@ -35,7 +35,7 @@
     </Dependency>
     <Dependency Name="System.Security.Cryptography.Xml" Version="6.0.1" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>b114055b16ac8213ce47891aae7de2f7ccda93ab</Sha>
+      <Sha>55fb7ef977e7d120dc12f0960edcff0739d7ee0e</Sha>
     </Dependency>
     <Dependency Name="System.Security.Permissions" Version="6.0.0" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>

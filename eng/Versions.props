@@ -21,26 +21,26 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/winforms -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>7.0.0-rc.1.22420.4</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>7.0.0-rc.1.22421.3</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/runtime -->
   <PropertyGroup>
-    <VSRedistCommonNetCoreSharedFrameworkx6470PackageVersion>7.0.0-rc.1.22420.2</VSRedistCommonNetCoreSharedFrameworkx6470PackageVersion>
-    <MicrosoftNETCoreAppRefVersion>7.0.0-rc.1.22420.2</MicrosoftNETCoreAppRefVersion>
-    <MicrosoftNETCoreAppRuntimewinx64Version>7.0.0-rc.1.22420.2</MicrosoftNETCoreAppRuntimewinx64Version>
-    <MicrosoftNETCorePlatformsVersion>7.0.0-rc.1.22420.2</MicrosoftNETCorePlatformsVersion>
-    <SystemCodeDomPackageVersion>7.0.0-rc.1.22420.2</SystemCodeDomPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>7.0.0-rc.1.22420.2</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>7.0.0-rc.1.22420.2</SystemDiagnosticsEventLogPackageVersion>
-    <SystemDrawingCommonVersion>7.0.0-rc.1.22420.2</SystemDrawingCommonVersion>
-    <SystemDirectoryServicesVersion>7.0.0-rc.1.22420.2</SystemDirectoryServicesVersion>
-    <SystemIOPackagingVersion>7.0.0-rc.1.22420.2</SystemIOPackagingVersion>
-    <SystemReflectionMetadataLoadContextVersion>7.0.0-rc.1.22420.2</SystemReflectionMetadataLoadContextVersion>
+    <VSRedistCommonNetCoreSharedFrameworkx6470PackageVersion>7.0.0-rc.1.22421.12</VSRedistCommonNetCoreSharedFrameworkx6470PackageVersion>
+    <MicrosoftNETCoreAppRefVersion>7.0.0-rc.1.22421.12</MicrosoftNETCoreAppRefVersion>
+    <MicrosoftNETCoreAppRuntimewinx64Version>7.0.0-rc.1.22421.12</MicrosoftNETCoreAppRuntimewinx64Version>
+    <MicrosoftNETCorePlatformsVersion>7.0.0-rc.1.22421.12</MicrosoftNETCorePlatformsVersion>
+    <SystemCodeDomPackageVersion>7.0.0-rc.1.22421.12</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>7.0.0-rc.1.22421.12</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>7.0.0-rc.1.22421.12</SystemDiagnosticsEventLogPackageVersion>
+    <SystemDrawingCommonVersion>7.0.0-rc.1.22421.12</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>7.0.0-rc.1.22421.12</SystemDirectoryServicesVersion>
+    <SystemIOPackagingVersion>7.0.0-rc.1.22421.12</SystemIOPackagingVersion>
+    <SystemReflectionMetadataLoadContextVersion>7.0.0-rc.1.22421.12</SystemReflectionMetadataLoadContextVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemResourcesExtensionsVersion>7.0.0-rc.1.22420.2</SystemResourcesExtensionsVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>7.0.0-rc.1.22420.2</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>7.0.0-rc.1.22420.2</SystemSecurityPermissionsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>7.0.0-rc.1.22420.2</SystemWindowsExtensionsPackageVersion>
+    <SystemResourcesExtensionsVersion>7.0.0-rc.1.22421.12</SystemResourcesExtensionsVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>7.0.0-rc.1.22421.12</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>7.0.0-rc.1.22421.12</SystemSecurityPermissionsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>7.0.0-rc.1.22421.12</SystemWindowsExtensionsPackageVersion>
   </PropertyGroup>
   <!-- Docs / Intellisense -->
   <PropertyGroup>

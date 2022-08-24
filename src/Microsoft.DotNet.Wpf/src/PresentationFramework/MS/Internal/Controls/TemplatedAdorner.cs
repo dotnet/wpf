@@ -30,7 +30,7 @@ namespace MS.Internal.Controls
     /// This class is sealed because it calls OnVisualChildrenChanged virtual in the
     /// constructor and it does not override it, but derived classes could.
     /// </summary>
-    internal sealed class TemplatedAdorner : Adorner
+    public sealed class TemplatedAdorner : Adorner
     {
         private Control _child;
 

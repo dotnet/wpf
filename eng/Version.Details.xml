@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="8.0.0-alpha.1.22430.10">
+    <Dependency Name="Microsoft.Private.Winforms" Version="8.0.0-alpha.1.22430.11">
       <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>6b7163160eb4d1c9038cf2a274f8d5871ee92a7f</Sha>
+      <Sha>2dce3534848dceec8b0d375f247507d7b759c8fb</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="8.0.0-alpha.1.22430.10">
+    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="8.0.0-alpha.1.22430.11">
       <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>6b7163160eb4d1c9038cf2a274f8d5871ee92a7f</Sha>
+      <Sha>2dce3534848dceec8b0d375f247507d7b759c8fb</Sha>
     </Dependency>
     <Dependency Name="System.CodeDom" Version="8.0.0-alpha.1.22429.10" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
@@ -69,9 +69,9 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>bc9c37105c87b1f763692a33c0304e4e81fbbb92</Sha>
     </Dependency>
-    <Dependency Name="VS.Redist.Common.NetCore.SharedFramework.x64.8.0" Version="7.0.0-rc.1.22415.13" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="VS.Redist.Common.NetCore.SharedFramework.x64.8.0" Version="8.0.0-alpha.1.22429.10" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
-      <Sha>7d981168a2a2ed7d2190776a08ece88665cba727</Sha>
+      <Sha>bc9c37105c87b1f763692a33c0304e4e81fbbb92</Sha>
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>

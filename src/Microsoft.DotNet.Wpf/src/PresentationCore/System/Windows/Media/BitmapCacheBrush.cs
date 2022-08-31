@@ -23,7 +23,7 @@ namespace System.Windows.Media
         #region Constructors        
         public BitmapCacheBrush()
         {
-}
+        }
 
         /// <summary>
         /// VisualBrush Constructor where the image is set to the parameter's value

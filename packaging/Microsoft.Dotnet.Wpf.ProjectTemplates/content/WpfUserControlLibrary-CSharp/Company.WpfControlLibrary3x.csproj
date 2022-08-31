@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework Condition="'$(TargetFrameworkOverride)' == ''">FrameworkParameter</TargetFramework>
+    <TargetFramework Condition="'$(TargetFrameworkOverride)' != ''">TargetFrameworkOverride</TargetFramework>
+    <RootNamespace Condition="'$(name)' != '$(name{-VALUE-FORMS-}safe_namespace)'">Company.WpfControlLibrary</RootNamespace>
+    <LangVersion Condition="'$(langVersion)' != ''">$(ProjectLanguageVersion)</LangVersion>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+</Project>

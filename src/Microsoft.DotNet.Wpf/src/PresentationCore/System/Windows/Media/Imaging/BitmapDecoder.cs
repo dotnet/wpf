@@ -1035,7 +1035,6 @@ namespace System.Windows.Media.Imaging
             SafeMILHandle decoderHandle;
             IntPtr decoder = IntPtr.Zero;
             System.IO.Stream bitmapStream = null;
-            string mimeType = String.Empty;
             unmanagedMemoryStream = null;
             safeFilehandle = null;
             isOriginalWritable = false;
@@ -1054,10 +1053,9 @@ namespace System.Windows.Media.Imaging
                 if (uri.IsAbsoluteUri)
                 {
                     // This code path executes only for pack web requests
-                    if (String.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase))
                     {
                         WebResponse response = WpfWebRequestHelper.CreateRequestAndGetResponse(uri);
-                        mimeType = response.ContentType;
                         bitmapStream = response.GetResponseStream();
                         uriStream = bitmapStream;
                     }
@@ -1140,14 +1138,22 @@ namespace System.Windows.Media.Imaging
             if (stream is System.IO.FileStream)
             {
                 System.IO.FileStream filestream = stream as System.IO.FileStream;
-
                 try
                 {
-                    safeFilehandle = filestream.SafeFileHandle;
+                    if (filestream.IsAsync is false)
+                    {
+                        safeFilehandle = filestream.SafeFileHandle;
+                    }
+                    else
+                    {
+                        // The IWICImagingFactory_CreateDecoderFromFileHandle_Proxy do not support async Filestream, so we revert to old code path.
+                        safeFilehandle = null;
+                    }
                 }
                 catch
                 {
                     // If Filestream doesn't support SafeHandle then revert to old code path.
+                    // See https://github.com/dotnet/wpf/issues/4355
                     safeFilehandle = null;
                 }
             }
@@ -1689,7 +1695,7 @@ namespace System.Windows.Media.Imaging
         internal UniqueEventHelper<ExceptionEventArgs> _failedEvent = new UniqueEventHelper<ExceptionEventArgs>();
 
         /// SyncObject
-        private object _syncObject = new Object();
+        private readonly object _syncObject = new Object();
 
         // For UnmanagedMemoryStream we want to make sure that buffer
         // its pointing to is not getting release until decoder is alive

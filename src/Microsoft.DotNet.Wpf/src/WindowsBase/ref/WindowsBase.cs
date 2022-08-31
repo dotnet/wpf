@@ -1881,7 +1881,9 @@ namespace System.Windows.Threading
         public override System.Threading.SynchronizationContext CreateCopy() { throw null; }
         public override void Post(System.Threading.SendOrPostCallback d, object state) { }
         public override void Send(System.Threading.SendOrPostCallback d, object state) { }
+        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
         [System.Runtime.ConstrainedExecution.PrePrepareMethodAttribute]
+        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported. 
         public override int Wait(System.IntPtr[] waitHandles, bool waitAll, int millisecondsTimeout) { throw null; }
     }
     public partial class DispatcherTimer

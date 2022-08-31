@@ -324,7 +324,7 @@
       </trans-unit>
       <trans-unit id="CloneBreakRecordFailure">
         <source>Text formatting engine cannot clone break record due to error: '{0}'.</source>
-        <target state="translated">テキスト形式設定エンジンは、エラー '{0}' のために中断レコードを複製できません。</target>
+        <target state="translated">テキスト形式設定エンジンは、エラー '{0}' のために中断レコードをクローンできません。</target>
         <note />
       </trans-unit>
       <trans-unit id="CloseText">
@@ -1908,8 +1908,8 @@
         <note />
       </trans-unit>
       <trans-unit id="Invalid_IInputElement">
-        <source>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</source>
-        <target state="translated">'{0}' は、IInputElement に対して有効な型ではありません。UIElement または ContentElement を使用してください。</target>
+        <source>'{0}' is not a valid type for IInputElement. UIElement, ContentElement or UIElement3D expected.</source>
+        <target state="translated">'{0}' は、IInputElement に対して有効な型ではありません。UIElement、ContentElement、または UIElement3D を使用してください。</target>
         <note />
       </trans-unit>
       <trans-unit id="Invalid_URI">
@@ -1929,7 +1929,7 @@
       </trans-unit>
       <trans-unit id="KeyGesture_Invalid">
         <source>'{0}+{1}' key and modifier combination is not supported for KeyGesture.</source>
-        <target state="translated">'{0}+{1}' キーと修飾キーの組み合わせは、KeyGesture ではサポートされていません。</target>
+        <target state="translated">'{0}+{1}' キーと修飾子キーの組み合わせは、KeyGesture ではサポートされていません。</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyboardSinkAlreadyOwned">

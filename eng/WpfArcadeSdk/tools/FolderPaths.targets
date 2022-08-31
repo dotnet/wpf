@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
     <!-- $(WpfSharedDir) is present in the current repository -->
-    <WpfSharedDir Condition="'$(WpfSharedDir)'=='' And Exists('$(WpfSourceDir)shared\')">$(WpfSourceDir)shared\</WpfSharedDir>
+    <WpfSharedDir Condition="'$(WpfSharedDir)'=='' And Exists('$(WpfSourceDir)Shared\')">$(WpfSourceDir)Shared\</WpfSharedDir>
     <!-- Consume from NuGet cache -->
     <WpfTransportedSharedDir Condition="'$(WpfTransportedSharedDir)'=='' And Exists('$(WpfArcadeSdkRoot)src\shared\')">$(WpfArcadeSdkRoot)src\shared\</WpfTransportedSharedDir>
     <!-- Consume from $(WpfTestArcadeWpfSdkPath) -->

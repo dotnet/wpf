@@ -33,7 +33,7 @@ namespace MS.Internal.Xaml
         }
 
         List<SeenCtorDirectiveFlags> _seenStack = new List<SeenCtorDirectiveFlags>();
-        int _startObjectDepth = 0;
+        int _startObjectDepth;
 
         List<int> _moveList;
 

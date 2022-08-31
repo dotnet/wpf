@@ -158,7 +158,7 @@ namespace MS.Internal.Ink.GestureRecognition
             }
 
             // Create an empty result.
-            GestureRecognitionResult[] recResults = new GestureRecognitionResult[]{};
+            GestureRecognitionResult[] recResults = Array.Empty<GestureRecognitionResult>();
 
             if ( strokes.Count == 0 )
             {
@@ -617,7 +617,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// <returns></returns>
         private GestureRecognitionResult[] InvokeGetAlternateList()
         {
-            GestureRecognitionResult[] recResults = new GestureRecognitionResult[] { };
+            GestureRecognitionResult[] recResults = Array.Empty<GestureRecognitionResult>();
             int hr = 0;
 
             MS.Win32.Recognizer.RECO_RANGE recoRange;
@@ -681,7 +681,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// <returns></returns>
         private GestureRecognitionResult[] InvokeGetLatticePtr()
         {
-            GestureRecognitionResult[] recResults = new GestureRecognitionResult[] { };
+            GestureRecognitionResult[] recResults = Array.Empty<GestureRecognitionResult>();
 
 //            int hr = 0;
             IntPtr ptr = IntPtr.Zero;
@@ -834,7 +834,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// <summary>
         /// Used to lock for instancing the native recognizer handle
         /// </summary>
-        private static object                           _syncRoot = new object();
+        private static readonly object                  _syncRoot = new object();
 
         /// <summary>
         /// All NativeRecognizer share a single handle to the recognizer

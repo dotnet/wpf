@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!--
+    Copy PropertyGroup and Import item into the csproj file.
+    Update the path, as per the path to repo.
+
+    <PropertyGroup>
+      <WpfRepoRoot>C:\wpf</WpfRepoRoot>
+    </PropertyGroup>
+    <Import Project="$(WpfRepoRoot)\eng\wpf-debug.targets" />
+    -->
+
+  <PropertyGroup>
+    <WpfConfig Condition="'$(WpfConfig)'==''">Debug</WpfConfig>
+    <RuntimeIdentifier>win-$(PlatformTarget)</RuntimeIdentifier>
+    
+    <WpfArtifactsPackagesCommonPath>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\'))\artifacts\packaging</WpfArtifactsPackagesCommonPath>
+    <WpfPlatformTargetArtifactsDirectory Condition="'$(PlatformTarget)'=='x64'">x64\</WpfPlatformTargetArtifactsDirectory>
+    <WPFArtifactsPathSuffix Condition="'$(WpfConfig)'=='Debug'">.$(WpfConfig)</WPFArtifactsPathSuffix>
+    <WPFArtifactsPath>$(WpfArtifactsPackagesCommonPath)\$(WpfConfig)\$(WpfPlatformTargetArtifactsDirectory)Microsoft.DotNet.Wpf.GitHub$(WPFArtifactsPathSuffix)</WPFArtifactsPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="$(WPFArtifactsPath)\lib\$(TargetFramework.Split('-')[0])\*.dll" />
+    <ReferenceCopyLocalPaths Include="$(WPFArtifactsPath)\runtimes\$(RuntimeIdentifier)\native\*.dll" />
+  </ItemGroup>
+</Project>

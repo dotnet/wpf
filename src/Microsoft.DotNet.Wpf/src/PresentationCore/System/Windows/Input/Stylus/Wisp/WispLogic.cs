@@ -1025,7 +1025,7 @@ namespace System.Windows.Input.StylusWisp
                         if (!_inDragDrop && !rawStylusInputReport.PenContext.Contexts.IsWindowDisabled && !stylusDevice.IgnoreStroke)
                         {
                             Point position = stylusDevice.GetRawPosition(null);
-                            position = DeviceUnitsFromMeasureUnits(position); // change back to device coords.
+                            position = DeviceUnitsFromMeasureUnits(stylusDevice.CriticalActiveSource, position); // change back to device coords.
                             IInputElement target = stylusDevice.FindTarget(stylusDevice.CriticalActiveSource, position);
                             SelectStylusDevice(stylusDevice, target, true);
                         }
@@ -1077,8 +1077,8 @@ namespace System.Windows.Input.StylusWisp
                         bBarrelPressed = true;
                     }
 
-                    Point pPixelPoint = DeviceUnitsFromMeasureUnits(ptClient);
-                    Point pLastPixelPoint = DeviceUnitsFromMeasureUnits(stylusDevice.LastTapPoint);
+                    Point pPixelPoint = DeviceUnitsFromMeasureUnits(stylusDevice.CriticalActiveSource, ptClient);
+                    Point pLastPixelPoint = DeviceUnitsFromMeasureUnits(stylusDevice.CriticalActiveSource, stylusDevice.LastTapPoint);
 
                     // How long since the last click? (deals with tickcount wrapping too)
                     //  Here's some info on how this works...
@@ -2059,51 +2059,59 @@ namespace System.Windows.Input.StylusWisp
                 if (oldCapture != null)
                 {
                     o = oldCapture as DependencyObject;
-                    if (InputElement.IsUIElement(o))
+                    if (o is UIElement uie)
                     {
-                        ((UIElement)o).IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
-                        ((UIElement)o).IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
-                        ((UIElement)o).IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
+                        uie.IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
+                        uie.IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
+                        uie.IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
                     }
-                    else if (InputElement.IsContentElement(o))
+                    else if (o is ContentElement ce)
                     {
-                        ((ContentElement)o).IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
+                        ce.IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
 
                         // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                         //
-                        // ((ContentElement)o).IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
-                        // ((ContentElement)o).IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
+                        // ce.IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
+                        // ce.IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
+                    }
+                    else if (o is UIElement3D uie3D)
+                    {
+                        uie3D.IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
+                        uie3D.IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
+                        uie3D.IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
                     }
                     else
                     {
-                        ((UIElement3D)o).IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
-                        ((UIElement3D)o).IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
-                        ((UIElement3D)o).IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
+                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, oldCapture.GetType())); 
                     }
                 }
                 if (_stylusCapture != null)
                 {
                     o = _stylusCapture as DependencyObject;
-                    if (InputElement.IsUIElement(o))
+                    if (o is UIElement uie)
                     {
-                        ((UIElement)o).IsEnabledChanged += _captureIsEnabledChangedEventHandler;
-                        ((UIElement)o).IsVisibleChanged += _captureIsVisibleChangedEventHandler;
-                        ((UIElement)o).IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
+                        uie.IsEnabledChanged += _captureIsEnabledChangedEventHandler;
+                        uie.IsVisibleChanged += _captureIsVisibleChangedEventHandler;
+                        uie.IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
                     }
-                    else if (InputElement.IsContentElement(o))
+                    else if (o is ContentElement ce)
                     {
-                        ((ContentElement)o).IsEnabledChanged += _captureIsEnabledChangedEventHandler;
+                        ce.IsEnabledChanged += _captureIsEnabledChangedEventHandler;
 
                         // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                         //
-                        // ((ContentElement)o).IsVisibleChanged += _captureIsVisibleChangedEventHandler;
-                        // ((ContentElement)o).IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
+                        // ce.IsVisibleChanged += _captureIsVisibleChangedEventHandler;
+                        // ce.IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
+                    }
+                    else if (o is UIElement3D uie3D)
+                    {
+                        uie3D.IsEnabledChanged += _captureIsEnabledChangedEventHandler;
+                        uie3D.IsVisibleChanged += _captureIsVisibleChangedEventHandler;
+                        uie3D.IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
                     }
                     else
                     {
-                        ((UIElement3D)o).IsEnabledChanged += _captureIsEnabledChangedEventHandler;
-                        ((UIElement3D)o).IsVisibleChanged += _captureIsVisibleChangedEventHandler;
-                        ((UIElement3D)o).IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
+                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, _stylusCapture.GetType())); 
                     }
                 }
 
@@ -2139,51 +2147,59 @@ namespace System.Windows.Input.StylusWisp
                 if (oldOver != null)
                 {
                     o = oldOver as DependencyObject;
-                    if (InputElement.IsUIElement(o))
+                    if (o is UIElement uie)
                     {
-                        ((UIElement)o).IsEnabledChanged -= _overIsEnabledChangedEventHandler;
-                        ((UIElement)o).IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                        ((UIElement)o).IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                        uie.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                        uie.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                        uie.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                     }
-                    else if (InputElement.IsContentElement(o))
+                    else if (o is ContentElement ce)
                     {
-                        ((ContentElement)o).IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                        ce.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
 
                         // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                         //
-                        // ((ContentElement)o).IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                        // ((ContentElement)o).IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                        // ce.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                        // ce.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                    }
+                    else if (o is UIElement3D uie3D)
+                    {
+                        uie3D.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                        uie3D.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                        uie3D.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                     }
                     else
                     {
-                        ((UIElement3D)o).IsEnabledChanged -= _overIsEnabledChangedEventHandler;
-                        ((UIElement3D)o).IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                        ((UIElement3D)o).IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, oldOver.GetType())); 
                     }
                 }
                 if (_stylusOver != null)
                 {
                     o = _stylusOver as DependencyObject;
-                    if (InputElement.IsUIElement(o))
+                    if (o is UIElement uie)
                     {
-                        ((UIElement)o).IsEnabledChanged += _overIsEnabledChangedEventHandler;
-                        ((UIElement)o).IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                        ((UIElement)o).IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                        uie.IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                        uie.IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                        uie.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                     }
-                    else if (InputElement.IsContentElement(o))
+                    else if (o is ContentElement ce)
                     {
-                        ((ContentElement)o).IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                        ce.IsEnabledChanged += _overIsEnabledChangedEventHandler;
 
                         // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                         //
-                        // ((ContentElement)o).IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                        // ((ContentElement)o).IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                        // ce.IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                        // ce.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                    }
+                    else if (o is UIElement3D uie3D)
+                    {
+                        uie3D.IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                        uie3D.IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                        uie3D.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                     }
                     else
                     {
-                        ((UIElement3D)o).IsEnabledChanged += _overIsEnabledChangedEventHandler;
-                        ((UIElement3D)o).IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                        ((UIElement3D)o).IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, _stylusOver.GetType())); 
                     }
                 }
 
@@ -2409,17 +2425,21 @@ namespace System.Windows.Input.StylusWisp
             // First, check things like IsEnabled, IsVisible, etc. on a
             // UIElement vs. ContentElement basis.
             //
-            if (InputElement.IsUIElement(dependencyObject))
+            if (dependencyObject is UIElement uie)
             {
-                killCapture = !ValidateUIElementForCapture((UIElement)_stylusCapture);
+                killCapture = !ValidateUIElementForCapture(uie);
             }
-            else if (InputElement.IsContentElement(dependencyObject))
+            else if (dependencyObject is ContentElement ce)
             {
-                killCapture = !ValidateContentElementForCapture((ContentElement)_stylusCapture);
+                killCapture = !ValidateContentElementForCapture(ce);
+            }
+            else if (dependencyObject is UIElement3D uie3D)
+            {
+                killCapture = !ValidateUIElement3DForCapture(uie3D);
             }
             else
             {
-                killCapture = !ValidateUIElement3DForCapture((UIElement3D)_stylusCapture);
+                throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, _stylusCapture.GetType())); 
             }
 
             //
@@ -2660,6 +2680,8 @@ namespace System.Windows.Input.StylusWisp
                     rawStylusInputReport.RawStylusInput = null;
                 }
 
+                WispStylusDevice stylusDevice = rawStylusInputReport.StylusDevice.As<WispStylusDevice>();
+
                 // See if we need to build up an RSI to send to the plugincollection (due to a mistarget).
                 bool sendRawStylusInput = false;
                 if (targetPIC != null && rawStylusInputReport.RawStylusInput == null)
@@ -2668,7 +2690,7 @@ namespace System.Windows.Input.StylusWisp
                     //    The transformTabletToView matrix and plugincollection rects though can change based
                     //    off of layout events which is why we need to lock this.
                     GeneralTransformGroup transformTabletToView = new GeneralTransformGroup();
-                    transformTabletToView.Children.Add(new MatrixTransform(GetTabletToViewTransform(rawStylusInputReport.StylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
+                    transformTabletToView.Children.Add(new MatrixTransform(GetTabletToViewTransform(stylusDevice.CriticalActiveSource, stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
                     transformTabletToView.Children.Add(targetPIC.ViewToElement); // Make it relative to the element.
                     transformTabletToView.Freeze();  // Must be frozen for multi-threaded access.
 
@@ -2676,8 +2698,6 @@ namespace System.Windows.Input.StylusWisp
                     rawStylusInputReport.RawStylusInput = rawStylusInput;
                     sendRawStylusInput = true;
                 }
-
-                WispStylusDevice stylusDevice = rawStylusInputReport.StylusDevice.As<WispStylusDevice>();
 
                 // Now fire the confirmed enter/leave events as necessary.
                 StylusPlugInCollection currentTarget = stylusDevice.CurrentVerifiedTarget;
@@ -2689,7 +2709,7 @@ namespace System.Windows.Input.StylusWisp
                         if (originalRSI == null)
                         {
                             GeneralTransformGroup transformTabletToView = new GeneralTransformGroup();
-                            transformTabletToView.Children.Add(new MatrixTransform(GetTabletToViewTransform(stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
+                            transformTabletToView.Children.Add(new MatrixTransform(GetTabletToViewTransform(stylusDevice.CriticalActiveSource, stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
                             transformTabletToView.Children.Add(currentTarget.ViewToElement); // Make it relative to the element.
                             transformTabletToView.Freeze();  // Must be frozen for multi-threaded access.
                             originalRSI = new RawStylusInput(rawStylusInputReport, transformTabletToView, currentTarget);
@@ -3109,16 +3129,7 @@ namespace System.Windows.Input.StylusWisp
         {
             HwndSource hwndSource = (HwndSource)inputSource;
 
-            // Query the transform from HwndTarget when the first window is created.
-            if (!_transformInitialized)
-            {
-                if (hwndSource != null && hwndSource.CompositionTarget != null)
-                {
-                    _transformToDevice = hwndSource.CompositionTarget.TransformToDevice;
-                    Debug.Assert(_transformToDevice.HasInverse);
-                    _transformInitialized = true;
-                }
-            }
+            GetAndCacheTransformToDeviceMatrix(hwndSource);
 
             // Keep track so we don't bother looking for changes if someone happened to query this before
             // an Avalon window was created where we get TabletAdd/Removed notification.
@@ -3563,14 +3574,14 @@ namespace System.Windows.Input.StylusWisp
 
         /////////////////////////////////////////////////////////////////////
 
-        internal Matrix GetTabletToViewTransform(TabletDevice tabletDevice)
+        internal Matrix GetTabletToViewTransform(PresentationSource source, TabletDevice tabletDevice)
         {
             // Inking is offset under 120 DPI
             // Changet the TabletToViewTransform matrix to take DPI into account. The default
             // value is 96 DPI in Avalon. The device DPI value is cached after the first call
             // to this function.
 
-            Matrix matrix = _transformToDevice;
+            Matrix matrix = GetAndCacheTransformToDeviceMatrix(source);
             matrix.Invert();
             return matrix * tabletDevice.As<TabletDeviceBase>().TabletToScreen;
         }
@@ -3580,9 +3591,9 @@ namespace System.Windows.Input.StylusWisp
         /// </summary>
         /// <param name="measurePoint">The point to transform, in measure units</param>
         /// <returns>The point in device coordinates</returns>
-        internal override Point DeviceUnitsFromMeasureUnits(Point measurePoint)
+        internal override Point DeviceUnitsFromMeasureUnits(PresentationSource source, Point measurePoint)
         {
-            Point pt = measurePoint * _transformToDevice;
+            Point pt = measurePoint * GetAndCacheTransformToDeviceMatrix(source);
             pt.X = (int)Math.Round(pt.X); // Make sure we return whole numbers (pixels are whole numbers)
             pt.Y = (int)Math.Round(pt.Y);
             return pt;
@@ -3593,9 +3604,9 @@ namespace System.Windows.Input.StylusWisp
         /// </summary>
         /// <param name="measurePoint">The point to transform, in measure units</param>
         /// <returns>The point in device coordinates</returns>
-        internal override Point MeasureUnitsFromDeviceUnits(Point measurePoint)
+        internal override Point MeasureUnitsFromDeviceUnits(PresentationSource source, Point measurePoint)
         {
-            Matrix matrix = _transformToDevice;
+            Matrix matrix = GetAndCacheTransformToDeviceMatrix(source);
             matrix.Invert();
             return measurePoint * matrix;
         }
@@ -3647,11 +3658,6 @@ namespace System.Windows.Input.StylusWisp
 
         /////////////////////////////////////////////////////////////////////
 
-        private Matrix _transformToDevice = Matrix.Identity;
-        private bool _transformInitialized;
-
-        /////////////////////////////////////////////////////////////////////
-        
         private SecurityCriticalData<InputManager> _inputManager;
 
         DispatcherOperationCallback _dlgInputManagerProcessInput;
@@ -3687,11 +3693,11 @@ namespace System.Windows.Input.StylusWisp
         bool _inputEnabled = false;
         bool _updatingScreenMeasurements = false;
         DispatcherOperationCallback _processDisplayChanged;
-        object __penContextsLock = new object();
+        readonly object __penContextsLock = new object();
 
         Dictionary<object, PenContexts> __penContextsMap = new Dictionary<object, PenContexts>(2);
 
-        object __stylusDeviceLock = new object();
+        readonly object __stylusDeviceLock = new object();
         Dictionary<int, StylusDevice> __stylusDeviceMap = new Dictionary<int, StylusDevice>(2);
 
         bool _inDragDrop;
@@ -3725,7 +3731,7 @@ namespace System.Windows.Input.StylusWisp
         /// Lock the access to coalesced moves as it's possible it can be accessed simultaneously from two
         /// PenThreads if the initial PenThread fills up with PenContexts.
         /// </summary>
-        object _coalesceLock = new object();
+        private readonly object _coalesceLock = new object();
 
 #if !MULTICAPTURE
         IInputElement _stylusCapture;

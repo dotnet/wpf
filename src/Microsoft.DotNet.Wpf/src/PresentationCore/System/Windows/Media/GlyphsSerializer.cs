@@ -64,6 +64,8 @@ namespace System.Windows.Media
             _advances = glyphRun.AdvanceWidths;
             _offsets = glyphRun.GlyphOffsets;
 
+            _advanceWidthRoundingError = 0.0;
+
             // "100,50,,0;".Length is a capacity estimate for an individual glyph
             _glyphStringBuider = new StringBuilder(10);
 
@@ -82,6 +84,8 @@ namespace System.Windows.Media
         /// </summary>
         public void ComputeContentStrings(out string characters, out string indices, out string caretStops)
         {
+            _advanceWidthRoundingError = 0.0;
+
             if (_clusters != null)
             {
                 // the algorithm works by finding (n:m) clusters and appending m glyphs for each cluster
@@ -184,7 +188,9 @@ namespace System.Windows.Media
             _glyphStringBuider.Append(GlyphSubEntrySeparator);
 
             // advance width
-            int normalizedAdvance = (int)Math.Round(_advances[glyph] * _milToEm);
+            double unroundedAdvance = _advances[glyph] * _milToEm;
+            int normalizedAdvance = (int)Math.Round(unroundedAdvance + _advanceWidthRoundingError);
+            _advanceWidthRoundingError += (unroundedAdvance - (double)normalizedAdvance);
             double fontAdvance = _sideways ? _glyphTypeface.AdvanceHeights[fontIndex] : _glyphTypeface.AdvanceWidths[fontIndex];
             if (normalizedAdvance != (int)Math.Round(fontAdvance * EmScaleFactor))
             {
@@ -216,7 +222,7 @@ namespace System.Windows.Media
             // remove trailing commas
             RemoveTrailingCharacters(_glyphStringBuider, GlyphSubEntrySeparator);
             _glyphStringBuider.Append(GlyphSeparator);
-            _indicesStringBuider.Append(_glyphStringBuider.ToString());
+            _indicesStringBuider.Append(_glyphStringBuider);
 
             // reset for next glyph
             _glyphStringBuider.Length = 0;
@@ -319,6 +325,8 @@ namespace System.Windows.Media
         private bool _sideways;
 
         private int _glyphClusterInitialOffset;
+
+        private double _advanceWidthRoundingError;
 
         private IList<ushort> _clusters;
 

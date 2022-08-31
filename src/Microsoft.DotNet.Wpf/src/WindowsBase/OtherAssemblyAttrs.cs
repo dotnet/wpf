@@ -85,6 +85,7 @@ using System.Windows.Markup;
 [assembly:TypeForwardedTo(typeof(System.IO.Packaging.PackageRelationshipSelector))] 
 [assembly:TypeForwardedTo(typeof(System.IO.Packaging.PackageRelationshipSelectorType))]
 
+#pragma warning disable SYSLIB0003 // Type or member is obsolete
 [assembly: TypeForwardedTo(typeof(System.Security.Permissions.MediaPermissionAudio))]
 [assembly: TypeForwardedTo(typeof(System.Security.Permissions.MediaPermissionVideo))]
 [assembly: TypeForwardedTo(typeof(System.Security.Permissions.MediaPermissionImage))]
@@ -93,6 +94,7 @@ using System.Windows.Markup;
 [assembly: TypeForwardedTo(typeof(System.Security.Permissions.WebBrowserPermissionLevel))]
 [assembly: TypeForwardedTo(typeof(System.Security.Permissions.WebBrowserPermission))]
 [assembly: TypeForwardedTo(typeof(System.Security.Permissions.WebBrowserPermissionAttribute))]
+#pragma warning restore SYSLIB0003 // Type or member is obsolete
 
 [assembly: TypeForwardedTo(typeof(System.Collections.ObjectModel.ReadOnlyObservableCollection<>))]
 [assembly: TypeForwardedTo(typeof(System.Collections.ObjectModel.ObservableCollection<>))]

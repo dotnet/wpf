@@ -97,10 +97,6 @@ namespace MS.Internal.Controls
                 return logPixelsX;
             }
         }
-        public static void ResetLogPixelsX()
-        {
-            logPixelsX = -1;
-        }
 
         //
         // We cache LOGPIXELSY for optimization
@@ -120,30 +116,5 @@ namespace MS.Internal.Controls
                 return logPixelsY;
             }
         }
-        public static void ResetLogPixelsY()
-        {
-            logPixelsY = -1;
-        }
-
-        /// <summary>
-        /// Wraps a given managed object, expected to be enabled for IDispatch interop, in a native one that 
-        /// trivially delegates the IDispatch calls. This ensures that cross-context calls on the managed object
-        /// occur on the same thread (assumed to be in an STA), not on some random RPC worker thread.
-        /// </summary>
-        /// <remarks>
-        /// CLR objects are thread-agile. But nearly all COM objects we use are STA-bound, and we also need 
-        /// our implementations of COM interfaces to be called on the thread on which their object was created,
-        /// often because of interacting with core WPF objects that also have thread affinity.
-        /// Getting a CLR object to "stick to the right thread" when called from another context (like cross-process)
-        /// turns out to be incredibly hard. WinForms has solved the problem with StandardOleMarshalObject.
-        /// Unfortunately, it wasn't designed to work in partial trust. And apart from that, it just doesn't 
-        /// seem to work cross-process, which is what we actually need for the WebOC hosting.
-        /// There's also the ContextBoundObject family. A derived object could be made thread-bound. But this 
-        /// doesn't work for us either, because we get deadlocks. COM allows re-entrancy when "blocked" on an
-        /// outgoing call from an STA, but ContextBoundObject apparently doesn't--it really blocks.
-        /// </remarks>
-        [DllImport(ExternDll.PresentationHostDll, PreserveSig = false)]
-        [return: MarshalAs(UnmanagedType.IDispatch)]
-        internal static extern object CreateIDispatchSTAForwarder([MarshalAs(UnmanagedType.IDispatch)] object pDispatchDelegate);
     }
 }

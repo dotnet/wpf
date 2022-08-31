@@ -79,7 +79,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
 
         protected:
 
-            [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
             virtual bool ReleaseHandle() override;
 
         internal:
@@ -221,7 +220,9 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
 
             virtual property bool IsInvalid
             {
+                #pragma warning (disable : 4950) // The Constrained Execution Region (CER) feature is not supported.  
                 [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
+                #pragma warning (default : 4950) // The Constrained Execution Region (CER) feature is not supported.  
                 bool get() override;
             }
     };

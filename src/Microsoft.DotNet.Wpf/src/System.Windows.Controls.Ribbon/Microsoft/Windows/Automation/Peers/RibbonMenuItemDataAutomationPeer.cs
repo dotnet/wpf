@@ -142,7 +142,7 @@ namespace Microsoft.Windows.Automation.Peers
             UIElement owner = GetWrapper();
             if (owner == null)
             {
-                throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.VirtualizedElement));
+                throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.VirtualizedElement);
             }
 
             RibbonMenuItem menuItemOwner = owner as RibbonMenuItem;
@@ -153,14 +153,14 @@ namespace Microsoft.Windows.Automation.Peers
                 if ((role != MenuItemRole.TopLevelHeader && role != MenuItemRole.SubmenuHeader)
                     || !menuItemOwner.HasItems)
                 {
-                    throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+                    throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
                 }
 
                 menuItemOwner.IsSubmenuOpen = true;
             }
             else
             {
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
         }
 
@@ -173,7 +173,7 @@ namespace Microsoft.Windows.Automation.Peers
             UIElement owner = GetWrapper();
             if (owner == null)
             {
-                throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.VirtualizedElement));
+                throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.VirtualizedElement);
             }
 
             RibbonMenuItem menuItemOwner = owner as RibbonMenuItem;
@@ -184,14 +184,14 @@ namespace Microsoft.Windows.Automation.Peers
                 if ((role != MenuItemRole.TopLevelHeader && role != MenuItemRole.SubmenuHeader)
                     || !menuItemOwner.HasItems)
                 {
-                    throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+                    throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
                 }
 
                 menuItemOwner.IsSubmenuOpen = false;
             }
             else
             {
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
         }
 
@@ -203,7 +203,7 @@ namespace Microsoft.Windows.Automation.Peers
                 UIElement owner = GetWrapper();
                 if (owner == null)
                 {
-                    throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.VirtualizedElement));
+                    throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.VirtualizedElement);
                 }
 
                 ExpandCollapseState result = ExpandCollapseState.Collapsed;
@@ -224,7 +224,7 @@ namespace Microsoft.Windows.Automation.Peers
                 }
                 else
                 {
-                    throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+                    throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
                 }
 
                 return result;
@@ -243,13 +243,13 @@ namespace Microsoft.Windows.Automation.Peers
             UIElement owner = GetWrapper();
             if (owner == null)
             {
-                throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.VirtualizedElement));
+                throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.VirtualizedElement);
             }
 
             RibbonMenuItem menuItemOwner = owner as RibbonMenuItem;
             if (menuItemOwner == null)
             {
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
 
             menuItemOwner.ClickItemInternal();
@@ -267,13 +267,13 @@ namespace Microsoft.Windows.Automation.Peers
             UIElement owner = GetWrapper();
             if (owner == null)
             {
-                throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.VirtualizedElement));
+                throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.VirtualizedElement);
             }
 
             RibbonMenuItem menuItemOwner = owner as RibbonMenuItem;
             if (menuItemOwner == null || !menuItemOwner.IsCheckable)
             {
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
 
             menuItemOwner.IsChecked = !menuItemOwner.IsChecked;
@@ -287,13 +287,13 @@ namespace Microsoft.Windows.Automation.Peers
                 UIElement owner = GetWrapper();
                 if (owner == null)
                 {
-                    throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.VirtualizedElement));
+                    throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.VirtualizedElement);
                 }
 
                 RibbonMenuItem menuItemOwner = owner as RibbonMenuItem;
                 if (menuItemOwner == null)
                 {
-                    throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+                    throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
                 }
 
                 return menuItemOwner.IsChecked ? ToggleState.On : ToggleState.Off;
@@ -330,7 +330,7 @@ namespace Microsoft.Windows.Automation.Peers
 
         void ITransformProvider.Move(double x, double y)
         {
-            throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+            throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
         }
 
         void ITransformProvider.Resize(double width, double height)
@@ -341,27 +341,27 @@ namespace Microsoft.Windows.Automation.Peers
             UIElement owner = GetWrapper();
             if (owner == null)
             {
-                throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.VirtualizedElement));
+                throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.VirtualizedElement);
             }
 
             RibbonMenuItem menuItemOwner = owner as RibbonMenuItem;
             if (menuItemOwner == null)
             {
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
 
             if (!((ITransformProvider)this).CanResize || width <= 0 || height <= 0)
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
 
             if (!menuItemOwner.ResizePopupInternal(width, height))
             {
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.ResizeParametersNotValid));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.ResizeParametersNotValid);
             }
         }
 
         void ITransformProvider.Rotate(double degrees)
         {
-            throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+            throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
         }
 
         #endregion

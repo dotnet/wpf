@@ -73,16 +73,18 @@ namespace System.Windows.Data
 
                 if (String.IsNullOrEmpty(binding.XPath))
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                         TraceData.BindingPath(
-                                            TraceData.Identify(path)));
+                                            TraceData.Identify(path)),
+                                        this);
                 }
                 else
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                         TraceData.BindingXPathAndPath(
                                             TraceData.Identify(binding.XPath),
-                                            TraceData.Identify(path)));
+                                            TraceData.Identify(path)),
+                                        this);
                 }
             }
         }
@@ -218,8 +220,6 @@ namespace System.Windows.Data
         {
             if (d == null)
                 throw new ArgumentNullException("d");
-            if (args == null)
-                throw new ArgumentNullException("args");
 
             DependencyProperty dp = args.Property;
             if (dp == null)
@@ -443,7 +443,7 @@ namespace System.Windows.Data
                 // null converter means failure to create one
                 if (converter == null && TraceData.IsEnabled)
                 {
-                     TraceData.Trace(TraceEventType.Error,
+                     TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Error,
                                     TraceData.CannotCreateDefaultValueConverter(
                                         type,
                                         TargetProperty.PropertyType,
@@ -530,10 +530,11 @@ namespace System.Windows.Data
 
                     if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Attach))
                     {
-                        TraceData.Trace(TraceEventType.Warning,
+                        TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                             TraceData.UseMentor(
                                                 TraceData.Identify(this),
-                                                TraceData.Identify(mentor)));
+                                                TraceData.Identify(mentor)),
+                                            this);
                     }
                 }
             }
@@ -555,9 +556,10 @@ namespace System.Windows.Data
 
                 if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.AttachToContext))
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                         TraceData.DeferAttachToContext(
-                                            TraceData.Identify(this)));
+                                            TraceData.Identify(this)),
+                                        this);
                 }
             }
 
@@ -625,10 +627,11 @@ namespace System.Windows.Data
                 {
                     if (isExtendedTraceEnabled)
                     {
-                        TraceData.Trace(TraceEventType.Warning,
+                        TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                             TraceData.SourceRequiresTreeContext(
                                                 TraceData.Identify(this),
-                                                or.Identify()));
+                                                or.Identify()),
+                                            this);
                     }
 
                     return;
@@ -639,10 +642,11 @@ namespace System.Windows.Data
 
             if (isExtendedTraceEnabled)
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.AttachToContext(
                                         TraceData.Identify(this),
-                                        lastChance ? " (last chance)" : String.Empty));
+                                        lastChance ? " (last chance)" : String.Empty),
+                                    this);
             }
 
             // if the path has unresolved type names, the parser needs namesapce
@@ -656,10 +660,11 @@ namespace System.Windows.Data
                 {
                     if (isExtendedTraceEnabled)
                     {
-                        TraceData.Trace(TraceEventType.Warning,
+                        TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                             TraceData.PathRequiresTreeContext(
                                                 TraceData.Identify(this),
-                                                ParentBinding.Path.Path));
+                                                ParentBinding.Path.Path),
+                                            this);
                     }
 
                     return;
@@ -672,9 +677,10 @@ namespace System.Windows.Data
             {
                 if (isExtendedTraceEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Warning,
-                                        TraceData.NoMentorExtended(
-                                            TraceData.Identify(this)));
+                    TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
+                        TraceData.NoMentorExtended(
+                            TraceData.Identify(this)),
+                        this);
                 }
 
                 if (lastChance)
@@ -682,7 +688,7 @@ namespace System.Windows.Data
                     SetStatus(BindingStatusInternal.PathError);
                     if (TraceData.IsEnabled)
                     {
-                        TraceData.Trace(TraceEventType.Error, TraceData.NoMentor, this);
+                        TraceData.TraceAndNotify(TraceEventType.Error, TraceData.NoMentor, this);
                     }
                 }
                 return;
@@ -730,11 +736,12 @@ namespace System.Windows.Data
 
             if (isExtendedTraceEnabled)
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.ContextElement(
                                         TraceData.Identify(this),
                                         TraceData.Identify(contextElement),
-                                        contextElementFound ? "OK" : "error"));
+                                        contextElementFound ? "OK" : "error"),
+                                    this);
             }
 
             // if we need a context element, check that we found it
@@ -745,7 +752,7 @@ namespace System.Windows.Data
                     SetStatus(BindingStatusInternal.PathError);
                     if (TraceData.IsEnabled)
                     {
-                        TraceData.Trace(TraceEventType.Error, TraceData.NoDataContext, this);
+                        TraceData.TraceAndNotify(TraceEventType.Error, TraceData.NoDataContext, this);
                     }
                 }
 
@@ -768,9 +775,10 @@ namespace System.Windows.Data
                 {
                     if (isExtendedTraceEnabled)
                     {
-                        TraceData.Trace(TraceEventType.Warning,
-                                            TraceData.NullDataContext(
-                                                TraceData.Identify(this)));
+                        TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
+                            TraceData.NullDataContext(
+                                TraceData.Identify(this)),
+                            this);
                     }
 
                     return;
@@ -792,7 +800,7 @@ namespace System.Windows.Data
                         SetStatus(BindingStatusInternal.PathError);
                         if (TraceData.IsEnabled)
                         {
-                            TraceData.Trace(TraceLevel, TraceData.NoSource(sourceRef), this);
+                            TraceData.TraceAndNotify(TraceLevel, TraceData.NoSource(sourceRef), this);
                         }
                     }
 
@@ -900,7 +908,7 @@ namespace System.Windows.Data
                                 SetStatus(BindingStatusInternal.PathError);
                                 if (TraceData.IsEnabled)
                                 {
-                                    TraceData.Trace(TraceEventType.Error, TraceData.NoMentor, this);
+                                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.NoMentor, this);
                                 }
                                 return;
                             }
@@ -919,7 +927,7 @@ namespace System.Windows.Data
                     SetStatus(BindingStatusInternal.PathError);
                     if (TraceData.IsEnabled)
                     {
-                        TraceData.Trace(TraceEventType.Error, TraceData.NoDataContext, this);
+                        TraceData.TraceAndNotify(TraceEventType.Error, TraceData.NoDataContext, this);
                     }
                     return;
                 }
@@ -965,10 +973,11 @@ namespace System.Windows.Data
 
                     if (isExtendedTraceEnabled)
                     {
-                        TraceData.Trace(TraceEventType.Warning,
+                        TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                             TraceData.UseCVS(
                                                 TraceData.Identify(this),
-                                                TraceData.Identify(cvs)));
+                                                TraceData.Identify(cvs)),
+                                            this);
                     }
                 }
                 else
@@ -982,10 +991,11 @@ namespace System.Windows.Data
 
             if (isExtendedTraceEnabled)
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.ActivateItem(
                                         TraceData.Identify(this),
-                                        TraceData.Identify(item)));
+                                        TraceData.Identify(item)),
+                                    this);
             }
 
             if (Worker == null)
@@ -1102,9 +1112,10 @@ namespace System.Windows.Data
 
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Activate))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.Deactivate(
-                                        TraceData.Identify(this)));
+                                        TraceData.Identify(this)),
+                                    this);
             }
 
             // stop transfers
@@ -1158,10 +1169,11 @@ namespace System.Windows.Data
 
                 if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Activate))
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                         TraceData.UseDataProvider(
                                             TraceData.Identify(this),
-                                            TraceData.Identify(newDataProvider)));
+                                            TraceData.Identify(newDataProvider)),
+                                        this);
                 }
 
                 if (newDataProvider != null)
@@ -1280,10 +1292,11 @@ namespace System.Windows.Data
 
             if (isExtendedTraceEnabled)
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.GetRawValue(
                                         TraceData.Identify(this),
-                                        TraceData.Identify(value)));
+                                        TraceData.Identify(value)),
+                                    this);
             }
 
             // apply any necessary conversions
@@ -1308,10 +1321,11 @@ namespace System.Windows.Data
 
                     if (isExtendedTraceEnabled)
                     {
-                        TraceData.Trace(TraceEventType.Warning,
+                        TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                             TraceData.UserConverter(
                                                 TraceData.Identify(this),
-                                                TraceData.Identify(value)));
+                                                TraceData.Identify(value)),
+                                            this);
                     }
 
                     // chain in a default value converter if the returned value's type is not compatible with the targetType
@@ -1352,10 +1366,11 @@ namespace System.Windows.Data
 
                         if (isExtendedTraceEnabled)
                         {
-                            TraceData.Trace(TraceEventType.Warning,
+                            TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                                 TraceData.NullConverter(
                                                     TraceData.Identify(this),
-                                                    TraceData.Identify(value)));
+                                                    TraceData.Identify(value)),
+                                                this);
                         }
                     }
                 #if !TargetNullValueBC   //BreakingChange
@@ -1377,10 +1392,11 @@ namespace System.Windows.Data
 
                         if (isExtendedTraceEnabled)
                         {
-                            TraceData.Trace(TraceEventType.Warning,
+                            TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                                 TraceData.ConvertDBNull(
                                                     TraceData.Identify(this),
-                                                    TraceData.Identify(value)));
+                                                    TraceData.Identify(value)),
+                                                this);
                         }
                     }
                 #endif
@@ -1398,10 +1414,11 @@ namespace System.Windows.Data
 
                         if (isExtendedTraceEnabled)
                         {
-                            TraceData.Trace(TraceEventType.Warning,
+                            TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                                 TraceData.DefaultConverter(
                                                     TraceData.Identify(this),
-                                                    TraceData.Identify(value)));
+                                                    TraceData.Identify(value)),
+                                                this);
                         }
                     }
                 }
@@ -1428,15 +1445,17 @@ namespace System.Windows.Data
             {
                 if (TraceData.IsEnabled && !IsInBindingExpressionCollection)
                 {
-                    TraceData.Trace(TraceLevel, TraceData.BadValueAtTransfer, value, this);
+                    TraceData.TraceAndNotify(TraceLevel, TraceData.BadValueAtTransfer, this,
+                        traceParameters: new object[] { value, this });
                 }
 
                 if (isExtendedTraceEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                         TraceData.BadValueAtTransferExtended(
                                             TraceData.Identify(this),
-                                            TraceData.Identify(value)));
+                                            TraceData.Identify(value)),
+                                        this);
                 }
 
                 value = DependencyProperty.UnsetValue;
@@ -1454,10 +1473,11 @@ namespace System.Windows.Data
 
                 if (isExtendedTraceEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                         TraceData.UseFallback(
                                             TraceData.Identify(this),
-                                            TraceData.Identify(value)));
+                                            TraceData.Identify(value)),
+                                        this);
                 }
             }
 
@@ -1470,10 +1490,11 @@ namespace System.Windows.Data
 
             if (isExtendedTraceEnabled)
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.TransferValue(
                                         TraceData.Identify(this),
-                                        TraceData.Identify(value)));
+                                        TraceData.Identify(value)),
+                                    this);
             }
 
             // if this is a re-transfer after a source update and the value
@@ -1597,10 +1618,11 @@ namespace System.Windows.Data
             {
                 if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Update))
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                         TraceData.ValidationRuleFailed(
                                             TraceData.Identify(this),
-                                            TraceData.Identify(validationRule)));
+                                            TraceData.Identify(validationRule)),
+                                        this);
                 }
 
                 error = new ValidationError(validationRule, this, validationResult.ErrorContent, null);
@@ -1649,7 +1671,7 @@ namespace System.Windows.Data
                 if (TraceData.IsEnabled)
                 {
                     string name = String.IsNullOrEmpty(stringFormat) ? converter.GetType().Name : "StringFormat";
-                    TraceData.Trace(TraceLevel,
+                    TraceData.TraceAndNotify(TraceLevel,
                             TraceData.BadConverterForTransfer(
                                 name,
                                 AvTrace.ToStringHelper(value),
@@ -1662,7 +1684,7 @@ namespace System.Windows.Data
             {
                 if (TraceData.IsEnabled)
                 {
-                    TraceData.Trace(TraceLevel,
+                    TraceData.TraceAndNotify(TraceLevel,
                             TraceData.BadConverterForTransfer(
                                 converter.GetType().Name,
                                 AvTrace.ToStringHelper(value),
@@ -1713,7 +1735,7 @@ namespace System.Windows.Data
 
                 if (TraceData.IsEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Error,
+                    TraceData.TraceAndNotify(TraceEventType.Error,
                         TraceData.BadConverterForUpdate(
                             AvTrace.ToStringHelper(Value),
                             AvTrace.TypeName(value)),
@@ -1727,7 +1749,7 @@ namespace System.Windows.Data
             {
                 if (TraceData.IsEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Error,
+                    TraceData.TraceAndNotify(TraceEventType.Error,
                         TraceData.BadConverterForUpdate(
                             AvTrace.ToStringHelper(Value),
                             AvTrace.TypeName(value)),
@@ -1830,10 +1852,11 @@ namespace System.Windows.Data
             bool isExtendedTraceEnabled = TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Update);
             if (isExtendedTraceEnabled)
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.UpdateRawValue(
                                         TraceData.Identify(this),
-                                        TraceData.Identify(value)));
+                                        TraceData.Identify(value)),
+                                    this);
             }
 
             Type sourceType = Worker.SourcePropertyType;
@@ -1858,10 +1881,11 @@ namespace System.Windows.Data
 
                     if (isExtendedTraceEnabled)
                     {
-                        TraceData.Trace(TraceEventType.Warning,
+                        TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                             TraceData.UserConvertBack(
                                                 TraceData.Identify(this),
-                                                TraceData.Identify(value)));
+                                                TraceData.Identify(value)),
+                                            this);
                     }
 
                     // chain in a default value converter if the returned value's type is not compatible with the sourceType
@@ -1906,20 +1930,22 @@ namespace System.Windows.Data
 
                     if (isExtendedTraceEnabled)
                     {
-                        TraceData.Trace(TraceEventType.Warning,
+                        TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                             TraceData.DefaultConvertBack(
                                                 TraceData.Identify(this),
-                                                TraceData.Identify(value)));
+                                                TraceData.Identify(value)),
+                                            this);
                     }
                 }
             }
 
             if (isExtendedTraceEnabled)
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.Update(
                                         TraceData.Identify(this),
-                                        TraceData.Identify(value)));
+                                        TraceData.Identify(value)),
+                                    this);
             }
 
             // if the conversion failed, signal a validation error
@@ -2003,7 +2029,7 @@ namespace System.Windows.Data
                     throw;
 
                 if (TraceData.IsEnabled)
-                    TraceData.Trace(TraceEventType.Error, TraceData.WorkerUpdateFailed, this, ex);
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.WorkerUpdateFailed, this, ex);
 
                 ProcessException(ex, (ValidatesOnExceptions || BindingGroup != null));
                 SetStatus(BindingStatusInternal.UpdateSourceError);
@@ -2012,7 +2038,7 @@ namespace System.Windows.Data
             catch // non CLS compliant exception
             {
                 if (TraceData.IsEnabled)
-                    TraceData.Trace(TraceEventType.Error, TraceData.WorkerUpdateFailed, this);
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.WorkerUpdateFailed, this);
 
                 SetStatus(BindingStatusInternal.UpdateSourceError);
                 value = DependencyProperty.UnsetValue;
@@ -2424,11 +2450,12 @@ namespace System.Windows.Data
         {
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Events))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.GotEvent(
                                         TraceData.Identify(this),
                                         "CurrentChanged",
-                                        TraceData.Identify(sender)));
+                                        TraceData.Identify(sender)),
+                                    this);
             }
 
             Worker.OnCurrentChanged(sender as ICollectionView, e);
@@ -2438,11 +2465,12 @@ namespace System.Windows.Data
         {
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Events))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.GotEvent(
                                         TraceData.Identify(this),
                                         "CurrentChanging",
-                                        TraceData.Identify(sender)));
+                                        TraceData.Identify(sender)),
+                                    this);
             }
 
             Update();
@@ -2453,11 +2481,12 @@ namespace System.Windows.Data
         {
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Events))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.GotEvent(
                                         TraceData.Identify(this),
                                         "DataChanged",
-                                        TraceData.Identify(sender)));
+                                        TraceData.Identify(sender)),
+                                    this);
             }
             Activate(sender);
         }
@@ -2466,11 +2495,12 @@ namespace System.Windows.Data
         {
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Events))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.GotEvent(
                                         TraceData.Identify(this),
                                         "InheritanceContextChanged",
-                                        TraceData.Identify(sender)));
+                                        TraceData.Identify(sender)),
+                                    this);
             }
 
             if (StatusInternal == BindingStatusInternal.Unattached)
@@ -2498,11 +2528,12 @@ namespace System.Windows.Data
         {
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Events))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.GotEvent(
                                         TraceData.Identify(this),
                                         "LostFocus",
-                                        TraceData.Identify(sender)));
+                                        TraceData.Identify(sender)),
+                                    this);
             }
 
             Update();
@@ -2628,11 +2659,12 @@ namespace System.Windows.Data
 
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Events))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.GotPropertyChanged(
                                         TraceData.Identify(this),
                                         TraceData.Identify(d),
-                                        dp.Name));
+                                        dp.Name),
+                                    this);
             }
 
             if (dp == FrameworkElement.DataContextProperty)

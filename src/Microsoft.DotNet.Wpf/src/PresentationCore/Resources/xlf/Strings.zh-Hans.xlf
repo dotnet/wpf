@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
-  <file datatype="xml" source-language="en" target-language="zh-HANS" original="../Strings.resx">
+  <file datatype="xml" source-language="en" target-language="zh-Hans" original="../Strings.resx">
     <body>
       <trans-unit id="AccessKeyManager_NotAUnicodeCharacter">
         <source>'{0}' is not a single Unicode character.</source>
@@ -234,7 +234,7 @@
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderDisposed">
         <source>Cannot access a disposed HTTP byte range downloader.</source>
-        <target state="translated">无法访问释放的 HTTP 字节范围下载程序。</target>
+        <target state="translated">无法访问释放的 HTTP 字节范围下载器。</target>
         <note />
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderErroredOut">
@@ -1809,7 +1809,7 @@
       </trans-unit>
       <trans-unit id="InvalidScheme">
         <source>HTTP byte range downloader can support only HTTP or HTTPS schemes.</source>
-        <target state="translated">HTTP 字节范围下载程序仅支持 HTTP 或 HTTPS 方案。</target>
+        <target state="translated">HTTP 字节范围下载器仅支持 HTTP 或 HTTPS 方案。</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidSiteOfOriginUri">
@@ -1908,8 +1908,8 @@
         <note />
       </trans-unit>
       <trans-unit id="Invalid_IInputElement">
-        <source>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</source>
-        <target state="translated">“{0}”不是 IInputElement 的有效类型。应为 UIElement 或 ContentElement。</target>
+        <source>'{0}' is not a valid type for IInputElement. UIElement, ContentElement or UIElement3D expected.</source>
+        <target state="translated">“{0}”不是 IInputElement 的有效类型。应为 UIElement、ContentElement 或 UIElement3D。</target>
         <note />
       </trans-unit>
       <trans-unit id="Invalid_URI">
@@ -1929,7 +1929,7 @@
       </trans-unit>
       <trans-unit id="KeyGesture_Invalid">
         <source>'{0}+{1}' key and modifier combination is not supported for KeyGesture.</source>
-        <target state="translated">KeyGesture 尚不支持“{0}+{1}”键和修改者组合。</target>
+        <target state="translated">KeyGesture 尚不支持“{0}+{1}”键和修饰符组合。</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyboardSinkAlreadyOwned">

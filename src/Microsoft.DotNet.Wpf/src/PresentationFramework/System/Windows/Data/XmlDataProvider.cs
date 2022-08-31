@@ -274,7 +274,7 @@ namespace System.Windows.Data
         {
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.ProviderQuery))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotify(TraceEventType.Warning,
                                     TraceData.BeginQuery(
                                         TraceData.Identify(this),
                                         IsAsynchronous ? "asynchronous" : "synchronous"));
@@ -480,7 +480,7 @@ namespace System.Windows.Data
                 {
                     if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.XmlProvider))
                     {
-                        TraceData.Trace(TraceEventType.Warning,
+                        TraceData.TraceAndNotify(TraceEventType.Warning,
                                             TraceData.XmlLoadInline(
                                                 TraceData.Identify(this),
                                                 Dispatcher.CheckAccess() ? "synchronous" : "asynchronous"));
@@ -492,7 +492,7 @@ namespace System.Windows.Data
                 catch (XmlException xmle)
                 {
                     if (TraceData.IsEnabled)
-                        TraceData.Trace(TraceEventType.Error, TraceData.XmlDPInlineDocError, xmle);
+                        TraceData.TraceAndNotify(TraceEventType.Error, TraceData.XmlDPInlineDocError, xmle);
                     ex = xmle;
                 }
 
@@ -520,7 +520,7 @@ namespace System.Windows.Data
                 XmlNode root = doc.DocumentElement;
                 if (root != null && root.NamespaceURI == xmlReader.LookupNamespace(String.Empty))
                 {
-                    TraceData.Trace(TraceEventType.Error, TraceData.XmlNamespaceNotSet);
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.XmlNamespaceNotSet);
                 }
             }
 
@@ -534,12 +534,13 @@ namespace System.Windows.Data
             {
                 if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.ProviderQuery))
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotify(TraceEventType.Warning,
                                         TraceData.QueryFinished(
                                             TraceData.Identify(this),
                                             Dispatcher.CheckAccess() ? "synchronous" : "asynchronous",
                                             TraceData.Identify(null),
-                                            TraceData.IdentifyException(ex)));
+                                            TraceData.IdentifyException(ex)),
+                                        ex);
                 }
 
                 // Load failed.  Report the error, and reset
@@ -567,7 +568,7 @@ namespace System.Windows.Data
             {
                 if (isExtendedTraceEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotify(TraceEventType.Warning,
                                         TraceData.XmlLoadSource(
                                             TraceData.Identify(this),
                                             Dispatcher.CheckAccess() ? "synchronous" : "asynchronous",
@@ -585,7 +586,7 @@ namespace System.Windows.Data
 
                 if (isExtendedTraceEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotify(TraceEventType.Warning,
                                         TraceData.XmlLoadDoc(
                                             TraceData.Identify(this)));
                 }
@@ -603,7 +604,9 @@ namespace System.Windows.Data
                 ex = e;
                 if (TraceData.IsEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Error, TraceData.XmlDPAsyncDocError, Source, ex);
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.XmlDPAsyncDocError, null,
+                        traceParameters: new object[] { Source, ex },
+                        eventParameters: new object[] { ex });
                 }
             }
             //FXCop Fix: CatchNonClsCompliantExceptionsInGeneralHandlers
@@ -616,12 +619,13 @@ namespace System.Windows.Data
             {
                 if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.ProviderQuery))
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotify(TraceEventType.Warning,
                                         TraceData.QueryFinished(
                                             TraceData.Identify(this),
                                             Dispatcher.CheckAccess() ? "synchronous" : "asynchronous",
                                             TraceData.Identify(null),
-                                            TraceData.IdentifyException(ex)));
+                                            TraceData.IdentifyException(ex)),
+                                        ex);
                 }
 
                 // we're done if we got an error up to this point
@@ -651,7 +655,7 @@ namespace System.Windows.Data
             {
                 if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.XmlBuildCollection))
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotify(TraceEventType.Warning,
                                         TraceData.XmlBuildCollection(
                                             TraceData.Identify(this)));
                 }
@@ -669,7 +673,7 @@ namespace System.Windows.Data
 
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.ProviderQuery))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotify(TraceEventType.Warning,
                                     TraceData.QueryFinished(
                                         TraceData.Identify(this),
                                         Dispatcher.CheckAccess() ? "synchronous" : "asynchronous",
@@ -686,7 +690,7 @@ namespace System.Windows.Data
         {
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.ProviderQuery))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotify(TraceEventType.Warning,
                                     TraceData.QueryResult(
                                         TraceData.Identify(this),
                                         TraceData.Identify(Data)));
@@ -787,7 +791,9 @@ namespace System.Windows.Data
                 catch (XPathException xe)
                 {
                     if (TraceData.IsEnabled)
-                        TraceData.Trace(TraceEventType.Error, TraceData.XmlDPSelectNodesFailed, xpath, xe);
+                        TraceData.TraceAndNotify(TraceEventType.Error, TraceData.XmlDPSelectNodesFailed, null,
+                            traceParameters: new object[] { xpath, xe },
+                            eventParameters: new object[] { xe });
                 }
             }
 

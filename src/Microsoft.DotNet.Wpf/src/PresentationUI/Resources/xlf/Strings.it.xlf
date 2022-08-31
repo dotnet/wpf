@@ -144,7 +144,7 @@
       </trans-unit>
       <trans-unit id="DigitalSignatureMessageSignPending">
         <source>You have not selected any of the pending signatures requested by the publisher of this document. Are you sure you want to continue?</source>
-        <target state="translated">Non è stata selezionata alcuna delle firme in sospeso richieste dall'autore del documento. Continuare?</target>
+        <target state="translated">Non è stata selezionata alcuna delle firme in sospeso richieste dall'editore del documento. Continuare?</target>
         <note />
       </trans-unit>
       <trans-unit id="DigitalSignatureNoFixedDocumentSequence">
@@ -604,7 +604,7 @@
       </trans-unit>
       <trans-unit id="RMEnrollmentPage1d">
         <source>Each time you set up a user account to publish or access XPS documents with restricted permissions, computers that certify user accounts and manage permissions to the document check your user name and e-mail address. Your account password is not used during this process.</source>
-        <target state="translated">Ogni volta che si configura un account utente per la pubblicazione o l'accesso a documenti XPS con autorizzazioni limitate, i computer che certificano gli account utente e gestiscono le autorizzazioni per il documento eseguono un controllo del nome utente e dell'indirizzo di posta elettronica. La password dell'account non viene utilizzata durante questo processo.</target>
+        <target state="translated">Ogni volta che si configura un account utente per la pubblicazione o l'accesso a documenti XPS con autorizzazioni limitate, i computer che certificano gli account utente e gestiscono le autorizzazioni per il documento eseguono un controllo del nome utente e dell'indirizzo di posta elettronica. La password dell'account non viene usata durante questo processo.</target>
         <note />
       </trans-unit>
       <trans-unit id="RMEnrollmentPage1e">

@@ -1144,7 +1144,7 @@
       </trans-unit>
       <trans-unit id="NoPublishLicenseStream">
         <source>File does not contain a stream to hold the publish license.</source>
-        <target state="translated">ファイルには、発行ライセンスを保持するストリームが含まれていません。</target>
+        <target state="translated">ファイルには、公開ライセンスを保持するストリームが含まれていません。</target>
         <note />
       </trans-unit>
       <trans-unit id="NoStructuredContentInsideProperties">

@@ -315,7 +315,7 @@ namespace MS.Internal.FontCache
         private const string EmptyFontFamilyReference = "#";
         private const string EmptyCanonicalName = "";
 
-        private static object _dpiLock = new object();
+        private static readonly object _dpiLock = new object();
         private static int    _dpi;
         private static bool   _dpiInitialized = false;
 
@@ -545,7 +545,7 @@ namespace MS.Internal.FontCache
             for (int i = 0; i < SupportedExtensions.Length; ++i)
             {
                 string supportedExtension = SupportedExtensions[i];
-                if (String.Compare(extension, supportedExtension, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(extension, supportedExtension, StringComparison.OrdinalIgnoreCase))
                 {
                     isComposite = (i == 0); // First array entry is *.CompositeFont
                     return true;
@@ -557,7 +557,7 @@ namespace MS.Internal.FontCache
 
         internal static bool IsCompositeFont(string extension)
         {
-            return (String.Compare(extension, CompositeFontExtension, StringComparison.OrdinalIgnoreCase) == 0);
+            return (string.Equals(extension, CompositeFontExtension, StringComparison.OrdinalIgnoreCase));
         }
 
         internal static bool IsEnumerableFontUriScheme(Uri fontLocation)
@@ -661,7 +661,7 @@ namespace MS.Internal.FontCache
             {
                 // No fragment separator. The entire string is a family name so convert to uppercase
                 // and add a fragment separator at the beginning.
-                return "#" + fontFamilyReference.Substring(startIndex, length).ToUpperInvariant();
+                return string.Concat("#", fontFamilyReference.AsSpan(startIndex, length)).ToUpperInvariant();
             }
             else if (fragmentIndex + 1 == startIndex + length)
             {

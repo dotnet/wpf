@@ -6,6 +6,10 @@
 
 #ifndef __INTEROPPRINTERHANDLER_HPP__
 #define __INTEROPPRINTERHANDLER_HPP__
+
+// Turn off CER warnings: The Constrained Execution Region (CER) feature is not supported.  
+#pragma warning (disable : 4950) 
+
 /*++
     Abstract:
 

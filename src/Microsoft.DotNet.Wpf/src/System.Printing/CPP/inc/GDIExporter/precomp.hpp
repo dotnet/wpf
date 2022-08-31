@@ -1,7 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
+
 #ifndef GDIEXPORTER
 
 #define GDIEXPORTER
@@ -98,12 +98,10 @@ public:
 
     property bool IsInvalid
     {
-        [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
         bool virtual get() override { return IsClosed || (handle == IntPtr::Zero); }
     }
 
 protected:
-    [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
     bool virtual ReleaseHandle() override
     {
         IntPtr tempHandle = handle;
@@ -137,7 +135,6 @@ public:
 #endif
 
 protected:
-    [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
     bool virtual ReleaseHandle() override
     {
         IntPtr tempHandle = handle;
@@ -165,7 +162,6 @@ public:
 
     property bool IsInvalid
     {
-        [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
         bool virtual get() override { return IsClosed || (handle == IntPtr::Zero); }
     }
 
@@ -178,7 +174,6 @@ public:
     }
 
 protected:
-    [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
     bool virtual ReleaseHandle() override
     {
         IntPtr tempHandle = handle;

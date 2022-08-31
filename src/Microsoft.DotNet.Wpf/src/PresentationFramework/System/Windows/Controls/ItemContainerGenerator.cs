@@ -596,7 +596,7 @@ namespace System.Windows.Controls
             int index;
 
             DoLinearSearch(
-                delegate(object o, DependencyObject d) { return ItemsControl.EqualsEx(o, item); },
+                static (state, o, d) => ItemsControl.EqualsEx(o, state), item,
                 out dummy, out container, out index, false);
 
             return container;
@@ -627,18 +627,17 @@ namespace System.Windows.Controls
             DependencyObject dummy;
 
             DoLinearSearch(
-                delegate(object o, DependencyObject d) { return (d == container); },
+                static (state, o, d) => d == state, container,
                 out item, out dummy, out index, returnLocalIndex);
 
             return index;
         }
 
         // expose DoLinearSearch to internal code
-        internal bool FindItem(Func<object, DependencyObject, bool> match,
+        internal bool FindItem<TState>(Func<TState, object, DependencyObject, bool> match, TState matchState,
                 out DependencyObject container, out int itemIndex)
         {
-            object item;
-            return DoLinearSearch(match, out item, out container, out itemIndex, false);
+            return DoLinearSearch(match, matchState, out _, out container, out itemIndex, false);
         }
 
         /// <summary>
@@ -685,7 +684,7 @@ namespace System.Windows.Controls
         /// <returns>
         ///     true if found, false otherwise.
         /// </returns>
-        private bool DoLinearSearch(Func<object, DependencyObject, bool> match,
+        private bool DoLinearSearch<TState>(Func<TState, object, DependencyObject, bool> match, TState matchState,
                 out object item, out DependencyObject container, out int itemIndex,
                 bool returnLocalIndex)
         {
@@ -746,7 +745,7 @@ namespace System.Windows.Controls
                     for (; offset < endOffset; ++offset)
                     {
                         CollectionViewGroup group;
-                        bool found = match(rib.ItemAt(offset), rib.ContainerAt(offset));
+                        bool found = match(matchState, rib.ItemAt(offset), rib.ContainerAt(offset));
 
                         if (found)
                         {
@@ -758,7 +757,7 @@ namespace System.Windows.Controls
                             // found a group;  see if the group contains the item
                             GroupItem groupItem = (GroupItem)rib.ContainerAt(offset);
                             int indexInGroup;
-                            found = groupItem.Generator.DoLinearSearch(match, out item, out container, out indexInGroup, false);
+                            found = groupItem.Generator.DoLinearSearch(match, matchState, out item, out container, out indexInGroup, false);
                             if (found)
                             {
                                 itemIndex = indexInGroup;
@@ -1130,9 +1129,9 @@ namespace System.Windows.Controls
                 int index = aqn.LastIndexOf(PublicKeyToken);
                 if (index >= 0)
                 {
-                    string token = aqn.Substring(index + PublicKeyToken.Length);
-                    if (String.Compare(token, MS.Internal.PresentationFramework.BuildInfo.WCP_PUBLIC_KEY_TOKEN, StringComparison.OrdinalIgnoreCase) == 0 ||
-                        String.Compare(token, MS.Internal.PresentationFramework.BuildInfo.DEVDIV_PUBLIC_KEY_TOKEN, StringComparison.OrdinalIgnoreCase) == 0)
+                    ReadOnlySpan<char> token = aqn.AsSpan(index + PublicKeyToken.Length);
+                    if (token.Equals(MS.Internal.PresentationFramework.BuildInfo.WCP_PUBLIC_KEY_TOKEN, StringComparison.OrdinalIgnoreCase) ||
+                        token.Equals(MS.Internal.PresentationFramework.BuildInfo.DEVDIV_PUBLIC_KEY_TOKEN, StringComparison.OrdinalIgnoreCase))
                     {
                         isLikely = false;
                     }

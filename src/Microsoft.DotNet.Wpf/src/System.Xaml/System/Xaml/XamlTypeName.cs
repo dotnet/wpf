@@ -66,6 +66,8 @@ namespace System.Xaml.Schema
             }
         }
 
+        internal List<XamlTypeName> TypeArgumentsList => _typeArguments;
+
         public override string ToString()
         {
             return ToString(null);
@@ -234,29 +236,29 @@ namespace System.Xaml.Schema
         {
             if (Namespace == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.XamlTypeNameNamespaceIsNull));
+                throw new InvalidOperationException(SR.XamlTypeNameNamespaceIsNull);
             }
             if (string.IsNullOrEmpty(Name))
             {
-                throw new InvalidOperationException(SR.Get(SRID.XamlTypeNameNameIsNullOrEmpty));
+                throw new InvalidOperationException(SR.XamlTypeNameNameIsNullOrEmpty);
             }
             if (prefixGenerator == null)
             {
-                result.Append("{");
+                result.Append('{');
                 result.Append(Namespace);
-                result.Append("}");
+                result.Append('}');
             }
             else
             {
                 string prefix = prefixGenerator.Invoke(Namespace);
                 if (prefix == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.XamlTypeNameCannotGetPrefix, Namespace));
+                    throw new InvalidOperationException(SR.Format(SR.XamlTypeNameCannotGetPrefix, Namespace));
                 }
                 if (prefix.Length != 0)
                 {
                     result.Append(prefix);
-                    result.Append(":");
+                    result.Append(':');
                 }
             }
             if (HasTypeArgs)
@@ -266,9 +268,9 @@ namespace System.Xaml.Schema
                 string name = GenericTypeNameScanner.StripSubscript(Name, out subscript);
                 result.Append(name);
 
-                result.Append("(");
+                result.Append('(');
                 ConvertListToStringInternal(result, TypeArguments, prefixGenerator);
-                result.Append(")");
+                result.Append(')');
 
                 result.Append(subscript);
             }

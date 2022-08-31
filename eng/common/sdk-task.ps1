@@ -34,7 +34,7 @@ function Print-Usage() {
 function Build([string]$target) {
   $logSuffix = if ($target -eq 'Execute') { '' } else { ".$target" }
   $log = Join-Path $LogDir "$task$logSuffix.binlog"
-  $outputPath = Join-Path $ToolsetDir "$task\\"
+  $outputPath = Join-Path $ToolsetDir "$task\"
 
   MSBuild $taskProject `
     /bl:$log `
@@ -42,6 +42,7 @@ function Build([string]$target) {
     /p:Configuration=$configuration `
     /p:RepoRoot=$RepoRoot `
     /p:BaseIntermediateOutputPath=$outputPath `
+    /v:$verbosity `
     @properties
 }
 
@@ -52,7 +53,7 @@ try {
   }
 
   if ($task -eq "") {
-    Write-PipelineTelemetryError -Category 'Build' -Message "Missing required parameter '-task <value>'" -ForegroundColor Red
+    Write-PipelineTelemetryError -Category 'Build' -Message "Missing required parameter '-task <value>'"
     Print-Usage
     ExitWithExitCode 1
   }
@@ -63,16 +64,21 @@ try {
       $GlobalJson.tools | Add-Member -Name "vs" -Value (ConvertFrom-Json "{ `"version`": `"16.5`" }") -MemberType NoteProperty
     }
     if( -not ($GlobalJson.tools.PSObject.Properties.Name -match "xcopy-msbuild" )) {
-      $GlobalJson.tools | Add-Member -Name "xcopy-msbuild" -Value "16.5.0-alpha" -MemberType NoteProperty
+      $GlobalJson.tools | Add-Member -Name "xcopy-msbuild" -Value "17.2.1" -MemberType NoteProperty
+    }
+    if ($GlobalJson.tools."xcopy-msbuild".Trim() -ine "none") {
+        $xcopyMSBuildToolsFolder = InitializeXCopyMSBuild $GlobalJson.tools."xcopy-msbuild" -install $true
+    }
+    if ($xcopyMSBuildToolsFolder -eq $null) {
+      throw 'Unable to get xcopy downloadable version of msbuild'
     }
 
-    $xcopyMSBuildToolsFolder = InitializeXCopyMSBuild $GlobalJson.tools."xcopy-msbuild" -install $true
     $global:_MSBuildExe = "$($xcopyMSBuildToolsFolder)\MSBuild\Current\Bin\MSBuild.exe"
   }
 
   $taskProject = GetSdkTaskProject $task
   if (!(Test-Path $taskProject)) {
-    Write-PipelineTelemetryError -Category 'Build' -Message "Unknown task: $task" -ForegroundColor Red
+    Write-PipelineTelemetryError -Category 'Build' -Message "Unknown task: $task"
     ExitWithExitCode 1
   }
 

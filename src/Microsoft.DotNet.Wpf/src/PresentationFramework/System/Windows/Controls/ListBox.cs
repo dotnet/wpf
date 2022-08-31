@@ -349,7 +349,7 @@ namespace System.Windows.Controls
                 case Key.Left:
                 case Key.Down:
                 case Key.Right:
-                    {
+                    {                   
                         KeyboardNavigation.ShowFocusVisual();
 
                         // Depend on logical orientation we decide to move focus or just scroll
@@ -484,6 +484,45 @@ namespace System.Windows.Controls
                 case Key.PageDown:
                     NavigateByPage(FocusNavigationDirection.Down, new ItemNavigateArgs(e.Device, Keyboard.Modifiers));
                     break;
+
+                case Key.System:
+                    Key skey = e.SystemKey;
+                    switch (skey)
+                    {
+                        case Key.Right:
+                        case Key.Left:
+                            const ModifierKeys ModifierMask = ModifierKeys.Alt | ModifierKeys.Control | ModifierKeys.Shift | ModifierKeys.Windows;
+                            ModifierKeys modifierKeys = Keyboard.Modifiers & ModifierMask;
+
+                            if (modifierKeys == ModifierKeys.Alt)
+                            {
+                                if (e.OriginalSource is GridViewColumnHeader gridViewColumnHeader && gridViewColumnHeader.Column != null)
+                                {
+                                    double width = 0;
+                                    if (e.SystemKey == Key.Left)
+                                    {
+                                        width = gridViewColumnHeader.Column.ActualWidth - ColumnWidthStepSize;
+                                    }
+                                    else if (e.SystemKey == Key.Right)
+                                    {
+                                        width = gridViewColumnHeader.Column.ActualWidth + ColumnWidthStepSize;
+                                    }
+
+                                    if (width > 0)
+                                    {
+                                        gridViewColumnHeader.UpdateColumnHeaderWidth(width);
+                                    }
+                                }
+                            }
+                            break;
+
+                        default:
+                            handled = false;
+                            break;
+                    }
+
+                    break;
+
 
                 default:
                     handled = false;
@@ -1011,6 +1050,8 @@ namespace System.Windows.Controls
         private WeakReference _lastActionItem;
 
         private DispatcherTimer _autoScrollTimer;
+        
+        private const double ColumnWidthStepSize = 10d;
 
         private static RoutedUICommand SelectAllCommand =
             new RoutedUICommand(SR.Get(SRID.ListBoxSelectAllText), "SelectAll", typeof(ListBox));

@@ -2,9 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Diagnostics;
-
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using MS.Internal.KnownBoxes;
 using MS.Internal.WindowsBase;  // for FriendAccessAllowed
 
 namespace System.Windows
@@ -51,14 +51,26 @@ namespace System.Windows
                 EntryIndex entryIndex = instance.LookupEntry(_globalIndex);
 
                 // Set the value if it's not the default, otherwise remove the value.
-                if (!object.ReferenceEquals(value, _defaultValue))
+                if (!EqualityComparer<T>.Default.Equals(value, _defaultValue))
                 {
-                    instance.SetEffectiveValue(entryIndex, null /* dp */, _globalIndex, null /* metadata */, value, BaseValueSourceInternal.Local);
+                    object valueObject;
+
+                    if (typeof(T) == typeof(bool))
+                    {
+                        // Use shared boxed instances rather than creating new objects for each SetValue call.
+                        valueObject = BooleanBoxes.Box(Unsafe.As<T, bool>(ref value));
+                    }
+                    else
+                    {
+                        valueObject = value;
+                    }
+
+                    instance.SetEffectiveValue(entryIndex, dp: null, _globalIndex, metadata: null, valueObject, BaseValueSourceInternal.Local);
                     _hasBeenSet = true;
                 }
                 else
                 {
-                    instance.UnsetEffectiveValue(entryIndex, null /* dp */, null /* metadata */);
+                    instance.UnsetEffectiveValue(entryIndex, dp: null, metadata: null);
                 }
             }
             else

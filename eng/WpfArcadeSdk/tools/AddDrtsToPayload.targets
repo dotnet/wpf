@@ -8,7 +8,7 @@
   -->
   <PropertyGroup>
     <!-- AnyCPU/x86 builds don't produce an output folder in artifacts. This only exists for x64 builds. -->
-    <PlatformFolder Condition="'$(Platform)'=='x64'">x64</PlatformFolder>
+    <PlatformFolder Condition="'$(Platform)'!='AnyCPU' AND '$(Platform)'!='x86'">$(Platform)</PlatformFolder>
 
     <!-- For the test payload, we default to x86 for AnyCPU platform. --> 
     <PayloadBaseLocation>$(RepoRoot)artifacts\test\$(Configuration)\$(Platform)\</PayloadBaseLocation>

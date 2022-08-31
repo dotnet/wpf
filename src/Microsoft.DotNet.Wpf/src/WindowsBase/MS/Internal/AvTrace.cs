@@ -205,17 +205,17 @@ namespace MS.Internal
             }
 
             return false;
-}
+        }
 
 
 
-       ///
-       ///  Read the registry to see if WPF tracing is allowed
-       ///
+        ///
+        ///  Read the registry to see if WPF tracing is allowed
+        ///
 
-       [FriendAccessAllowed]
-       static internal bool IsWpfTracingEnabledInRegistry()
-       {
+        [FriendAccessAllowed]
+        static internal bool IsWpfTracingEnabledInRegistry()
+        {
             // First time this is called, initialize from the registry
 
             if( _enabledInRegistry == null )
@@ -235,10 +235,10 @@ namespace MS.Internal
                 // Update the static.  Doing this last protects us from threading problems; worse case, multiple
                 // threads will set the same value into it.
                 _enabledInRegistry = enabled;
-}
+            }
 
             return (bool) _enabledInRegistry;
-}
+        }
 
 
 
@@ -258,14 +258,14 @@ namespace MS.Internal
         //  note: labels start at index 1, parameters start at index 0
         //
 
-        public void Trace( TraceEventType type, int eventId, string message, string[] labels, object[] parameters )
+        public string Trace( TraceEventType type, int eventId, string message, string[] labels, object[] parameters )
         {
             // Don't bother building the string if this trace is going to be ignored.
 
             if( _traceSource == null
                 || !_traceSource.Switch.ShouldTrace( type ))
             {
-                return;
+                return null;
             }
 
 
@@ -317,7 +317,7 @@ namespace MS.Internal
 
                     arrayList.Add( labels[i] );
                     arrayList.Add( parameters[j] );
-}
+                }
 
                 // It's OK if we terminate because we have more lables than parameters;
                 // this is used by traces to have out-values in the Stop message.
@@ -326,14 +326,16 @@ namespace MS.Internal
                 {
                     TraceExtraMessages( traceBuilder, parameters, j );
                 }
-}
+            }
 
             // Send the trace
+
+            string traceMessage = traceBuilder.ToString();
 
             _traceSource.TraceEvent(
                 type,
                 eventId,
-                traceBuilder.ToString(),
+                traceMessage,
                 arrayList.ToArray() );
 
             // When in the debugger, always flush the output, to guarantee that the
@@ -343,7 +345,9 @@ namespace MS.Internal
             {
                 _traceSource.Flush();
             }
-}
+
+            return traceMessage;
+        }
 
 
         //
@@ -465,7 +469,7 @@ namespace MS.Internal
 
                 return 0;
             }
-}
+        }
 
 
         //
@@ -513,7 +517,7 @@ namespace MS.Internal
         static Nullable<bool> _enabledInRegistry = null;
 
         static char[] FormatChars = new char[]{ '{', '}' };
-}
+    }
 
     internal delegate void AvTraceEventHandler( AvTraceBuilder traceBuilder, object[] parameters, int start );
 
@@ -571,7 +575,7 @@ namespace MS.Internal
         {
             return _sb.ToString();
         }
-}
+    }
 
     internal delegate TraceSource GetTraceSourceDelegate();
     internal delegate void ClearTraceSourceDelegate();

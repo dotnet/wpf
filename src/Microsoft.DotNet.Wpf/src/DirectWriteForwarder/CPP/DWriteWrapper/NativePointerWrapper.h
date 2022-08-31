@@ -19,8 +19,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface { n
             NativePointerCriticalHandle(void* pNativePointer);
 
             virtual property bool IsInvalid
-            {
-                [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
+            { 
                 bool get() override;
             }
 
@@ -35,7 +34,9 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface { n
     {
         protected:
 
+            #pragma warning (disable : 4950) // The Constrained Execution Region (CER) feature is not supported.  
             [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
+            #pragma warning (default : 4950) // The Constrained Execution Region (CER) feature is not supported.  
             virtual bool ReleaseHandle() override;
 
         public:
@@ -47,7 +48,9 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface { n
     {
         protected:
 
+            #pragma warning (disable : 4950) // The Constrained Execution Region (CER) feature is not supported.  
             [ReliabilityContract(Consistency::WillNotCorruptState, Cer::Success)]
+            #pragma warning (default : 4950) // The Constrained Execution Region (CER) feature is not supported.  
             virtual bool ReleaseHandle() override;
 
         public:

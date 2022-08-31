@@ -1397,7 +1397,8 @@ namespace System.Windows.Controls
                 // The ItemTemplate isn't used, which may confuse the user (bug 991101).
                 if (ItemTemplate != null || ItemTemplateSelector != null)
                 {
-                    TraceData.Trace(TraceEventType.Error, TraceData.ItemTemplateForDirectItem, AvTrace.TypeName(item));
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.ItemTemplateForDirectItem, null,
+                        traceParameters: new object[] { AvTrace.TypeName(item) });
                 }
             }
 
@@ -3078,6 +3079,38 @@ namespace System.Windows.Controls
             return ElementViewportPosition.None;
         }
 
+        // this version also returns the element's layout rectangle (in viewport's coordinates).
+        // VirtualizingStackPanel needs this, to determine the element's scroll offset.
+        internal static ElementViewportPosition GetElementViewportPosition(FrameworkElement viewPort,
+            UIElement element,
+            FocusNavigationDirection axis,
+            bool fullyVisible,
+            bool ignorePerpendicularAxis,
+            out Rect elementRect,
+            out Rect layoutRect)
+        {
+            ElementViewportPosition position = GetElementViewportPosition(
+                viewPort,
+                element,
+                axis,
+                fullyVisible,
+                false,
+                out elementRect);
+
+            if (position == ElementViewportPosition.None)
+            {
+                layoutRect = Rect.Empty;
+            }
+            else
+            {
+                Visual parent = VisualTreeHelper.GetParent(element) as Visual;
+                Debug.Assert(element != viewPort && element.IsArrangeValid && parent != null, "GetElementViewportPosition called in unsupported situation");
+                layoutRect = CorrectCatastrophicCancellation(parent.TransformToAncestor(viewPort)).TransformBounds(element.PreviousArrangeRect);
+            }
+
+            return position;
+        }
+
         // in large virtualized hierarchical lists (TreeView or grouping), the transform
         // returned by element.TransformToAncestor(viewport) is vulnerable to catastrophic
         // cancellation.  If element is at the top of the viewport, but embedded in
@@ -3657,9 +3690,8 @@ namespace System.Windows.Controls
                             // otherwise see if an unclaimed container matches the item
                             object item = info.Item;
                             ItemContainerGenerator.FindItem(
-                                delegate(object o, DependencyObject d)
-                                    { return ItemsControl.EqualsEx(o, item) &&
-                                        !claimedContainers.Contains(d); },
+                                static (state, o, d) => ItemsControl.EqualsEx(o, state.item) && !state.claimedContainers.Contains(d),
+                                (item, claimedContainers),
                                 out container, out index);
                         }
 

@@ -4,7 +4,7 @@
   "classifications": ["Common", "WPF"],
   "name": "WPF Custom Control Library",
   "generatorVersions": "[1.0.0.0-*)",
-  "description": "A project for creating a custom control library for .NET Core WPF Applications",
+  "description": "A project for creating a custom control library for .NET WPF Applications",
   "groupIdentity": "Microsoft.Common.WPF.CustomControl",
   "precedence": "3000",
   "identity": "Microsoft.Common.WPF.CustomControl.VisualBasic.5.0",
@@ -27,22 +27,34 @@
       "type": "parameter",
       "description": "The target framework for the project.",
       "datatype": "choice",
-      "choices": [
-        {
-          "choice": "netcoreapp3.0",
-          "description": "Target netcoreapp3.0"
-        },
-        {
-          "choice": "netcoreapp3.1",
-          "description": "Target netcoreapp3.1"
-        },
-        {
-          "choice": "netcoreapp5.0",
-          "description": "Target netcoreapp5.0"
-        }        
-      ],
-      "replaces": "netcoreapp5.0",
-      "defaultValue": "netcoreapp5.0"
+        "choices": [
+            {
+                "choice": "netcoreapp3.0",
+                "description": "Target netcoreapp3.0"
+            },
+            {
+                "choice": "netcoreapp3.1",
+                "description": "Target netcoreapp3.1"
+            },
+            {
+                "choice": "net5.0",
+                "description": "Target net5.0"
+            },
+            {
+                "choice": "net6.0",
+                "description": "Target net6.0"
+            },
+            {
+                "choice": "net7.0",
+                "description": "Target net7.0"
+            }
+        ],
+      "replaces": "FrameworkParameter",
+      "defaultValue": "net7.0"
+    },
+    "UseWindowsDesktopSdk": {
+      "type": "computed",
+      "value": "(Framework == \"netcoreapp3.1\" || Framework == \"netcoreapp3.0\")"
     },
     "langVersion": {
       "type": "parameter",
@@ -69,9 +81,31 @@
       "path": "CustomControl1.vb"
     }
   ],
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(UseWindowsDesktopSdk)",
+          "exclude": [
+            "Company.WpfCustomControlLibrary.vbproj"
+          ],
+          "rename": {
+            "Company.WpfCustomControlLibrary3x.vbproj": "Company.WpfCustomControlLibrary.vbproj"
+          }
+        },
+        {
+          "condition": "(!UseWindowsDesktopSdk)",
+          "exclude": [
+            "Company.WpfCustomControlLibrary3x.vbproj"
+          ]
+        }
+      ]
+    }
+  ],
   "defaultName": "WpfCustomControlLibrary1",
   "postActions": [
     {
+      "id": "restore",
       "condition": "(!skipRestore)",
       "description": "Restore NuGet packages required by this project.",
       "manualInstructions": [
@@ -81,6 +115,7 @@
       "continueOnError": true
     },
     {
+      "id": "editor",
       "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
       "description": "Opens CustomControl1.vb in the editor",
       "manualInstructions": [ ],

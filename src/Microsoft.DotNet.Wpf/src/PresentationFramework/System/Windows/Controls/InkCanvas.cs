@@ -1892,8 +1892,8 @@ namespace System.Windows.Controls
         {
             VerifyAccess();
 
-            if (DoubleUtil.IsNaN(point.X) ||
-                DoubleUtil.IsNaN(point.Y) ||
+            if (double.IsNaN(point.X) ||
+                double.IsNaN(point.Y) ||
                 Double.IsInfinity(point.X)||
                 Double.IsInfinity(point.Y) )
             {

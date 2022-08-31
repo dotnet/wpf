@@ -503,7 +503,7 @@ namespace System.Xaml.Schema
 
         protected void ThrowInvalidMetadata(CustomAttributeData cad, int expectedCount, Type expectedType)
         {
-            throw new XamlSchemaException(SR.Get(SRID.UnexpectedConstructorArg,
+            throw new XamlSchemaException(SR.Format(SR.UnexpectedConstructorArg,
                 cad.Constructor.DeclaringType, Member, expectedCount, expectedType));
         }
     }

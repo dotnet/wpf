@@ -155,42 +155,42 @@ namespace System.Windows.Input.Tracing
         /// <summary>
         /// Event name for logging datagrid usage details
         /// </summary>
-        private static readonly string StartupEventTag = "StylusStartup";
+        private const string StartupEventTag = "StylusStartup";
 
         /// <summary>
         /// Event name for logging datagrid usage details
         /// </summary>
-        private static readonly string ShutdownEventTag = "StylusShutdown";
+        private const string ShutdownEventTag = "StylusShutdown";
 
         /// <summary>
         /// Event name for logging datagrid usage details
         /// </summary>
-        private static readonly string StatisticsTag = "StylusStatistics";
+        private const string StatisticsTag = "StylusStatistics";
 
         /// <summary>
         /// Event name for a stylus error
         /// </summary>
-        private static readonly string ErrorTag = "StylusError";
+        private const string ErrorTag = "StylusError";
 
         /// <summary>
         /// Event name for a stylus connection
         /// </summary>
-        private static readonly string DeviceConnectTag = "StylusConnect";
+        private const string DeviceConnectTag = "StylusConnect";
 
         /// <summary>
         /// Event name for a stylus disconnection
         /// </summary>
-        private static readonly string DeviceDisconnectTag = "StylusDisconnect";
+        private const string DeviceDisconnectTag = "StylusDisconnect";
 
         /// <summary>
         /// Event name for a stylus disconnection
         /// </summary>
-        private static readonly string ReentrancyTag = "StylusReentrancy";
+        private const string ReentrancyTag = "StylusReentrancy";
 
         /// <summary>
         /// Event name for the retry limits on re-entrancy into the touch stack being reached
         /// </summary>
-        private static readonly string ReentrancyRetryLimitTag = "StylusReentrancyRetryLimitReached";
+        private const string ReentrancyRetryLimitTag = "StylusReentrancyRetryLimitReached";
 
         #endregion
 

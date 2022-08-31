@@ -180,6 +180,9 @@ namespace System.Windows.Input
         // Caches the pointer stack enabled state
         private static bool? _isPointerStackEnabled = null;
 
+        // Caches TransformToDevice matrices per DpiScale2
+        private readonly Dictionary<DpiScale2, Matrix> _transformToDeviceMatrices = new Dictionary<DpiScale2, Matrix>();
+
         #endregion
 
         #region Construction/Initilization
@@ -403,18 +406,47 @@ namespace System.Windows.Input
         internal abstract TabletDeviceCollection TabletDevices { get; }
 
         /// <summary>
+        /// Acquires and caches the TransformToDevice matrix from a specific HwndSource.
+        /// </summary>
+        /// <remarks>
+        /// The caching here is done at a per DPI level.  TransformToDevice only matters for a
+        /// specific DpiScale, so there is no need to spend space caching it per HwndSource.
+        /// </remarks>
+        /// <param name="source">The source of DpiScale and matrix transforms</param>
+        /// <returns>The TransformToDevice matrix corresponding to the DpiScale of the source</returns>
+        protected Matrix GetAndCacheTransformToDeviceMatrix(PresentationSource source)
+        {
+            var hwndSource = source as HwndSource;
+            Matrix toDevice = Matrix.Identity;
+
+            if (hwndSource?.CompositionTarget != null)
+            {
+                // If we have not yet seen this DPI, store the matrix for it.
+                if (!_transformToDeviceMatrices.ContainsKey(hwndSource.CompositionTarget.CurrentDpiScale))
+                {
+                    _transformToDeviceMatrices[hwndSource.CompositionTarget.CurrentDpiScale] = hwndSource.CompositionTarget.TransformToDevice;
+                    Debug.Assert(_transformToDeviceMatrices[hwndSource.CompositionTarget.CurrentDpiScale].HasInverse);
+                }
+
+                toDevice = _transformToDeviceMatrices[hwndSource.CompositionTarget.CurrentDpiScale];
+            }
+
+            return toDevice;
+        }
+
+        /// <summary>
         /// Converts measure units to tablet device coordinates
         /// </summary>
         /// <param name="measurePoint"></param>
         /// <returns></returns>
-        internal abstract Point DeviceUnitsFromMeasureUnits(Point measurePoint);
+        internal abstract Point DeviceUnitsFromMeasureUnits(PresentationSource source, Point measurePoint);
 
         /// <summary>
         /// Converts device units to measure units
         /// </summary>
         /// <param name="measurePoint"></param>
         /// <returns></returns>
-        internal abstract Point MeasureUnitsFromDeviceUnits(Point measurePoint);
+        internal abstract Point MeasureUnitsFromDeviceUnits(PresentationSource source, Point measurePoint);
 
         /// <summary>
         /// Updates the stylus capture for the particular stylus device

@@ -988,7 +988,7 @@
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeCannotRoundtrip">
-        <source>Unable to read objects of the type �{0}� because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
+        <source>Unable to read objects of the type '{0}' because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
         <target state="translated">アクセスできるコンストラクターがないため、型 '{0}' のオブジェクトを読み込むことができません。この型を XAML で使用できるようにするには、既定のコンストラクターを追加するか、ConstructorArgumentAttribute を使用するか、または InstanceDescriptor を提供してください。</target>
         <note />
       </trans-unit>
@@ -1079,7 +1079,7 @@
       </trans-unit>
       <trans-unit id="PositionalParamsWrongLength">
         <source>GetPositionalParameters returned the wrong length vector.</source>
-        <target state="translated">GetPositionalParameters から、誤った長さのベクターが返されました。</target>
+        <target state="translated">GetPositionalParameters から、誤った長さのベクトルが返されました。</target>
         <note />
       </trans-unit>
       <trans-unit id="PrefixNotFound">

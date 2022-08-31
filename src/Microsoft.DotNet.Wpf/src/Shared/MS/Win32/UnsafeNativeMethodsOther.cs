@@ -170,7 +170,7 @@ namespace MS.Win32
         /// </summary>
         /// <param name="hMem"></param>
         /// <returns></returns>
-        [DllImport(ExternDll.Kernel32, SetLastError = true), ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
+        [DllImport(ExternDll.Kernel32, SetLastError = true)]
         internal static extern IntPtr LocalFree(IntPtr hMem);
 
 #if BASE_NATIVEMETHODS
@@ -187,9 +187,11 @@ namespace MS.Win32
 
 
 #if BASE_NATIVEMETHODS
-
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
         internal static extern IntPtr GetMessageExtraInfo();
+
+        [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
+        internal static extern IntPtr SetMessageExtraInfo(IntPtr lParam);
 #endif
 
 #if BASE_NATIVEMETHODS
@@ -636,7 +638,7 @@ namespace MS.Win32
             }
         }
         [DllImport(ExternDll.User32, EntryPoint = "GetIconInfo", CharSet = CharSet.Auto, SetLastError = true)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+
         private static extern bool GetIconInfoImpl(HandleRef hIcon, [Out] ICONINFO_IMPL piconinfo);
 
         [StructLayout(LayoutKind.Sequential)]
@@ -660,7 +662,6 @@ namespace MS.Win32
             piconinfo = new NativeMethods.ICONINFO();
             ICONINFO_IMPL iconInfoImpl = new ICONINFO_IMPL();
 
-            SRCS.RuntimeHelpers.PrepareConstrainedRegions(); // Mark the following as special
             try
             {
                 // Intentionally empty

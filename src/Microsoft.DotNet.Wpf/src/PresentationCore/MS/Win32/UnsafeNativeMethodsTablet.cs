@@ -84,15 +84,13 @@ namespace MS.Win32.Recognizer
         // Do not provide a finalizer - SafeHandle's critical finalizer will
         // call ReleaseHandle for you.
         public override bool IsInvalid
-        {
-            [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
+        { 
             get
             {
                 return IsClosed || handle == IntPtr.Zero;
             }
         }
 
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         override protected bool ReleaseHandle()
         {
             Debug.Assert(handle != IntPtr.Zero);
@@ -122,15 +120,12 @@ namespace MS.Win32.Recognizer
         // call ReleaseHandle for you.
         public override bool IsInvalid
         {
-            [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
             get
             {
                 return IsClosed || handle == IntPtr.Zero;
             }
         }
-
-
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
+  
         override protected bool ReleaseHandle()
         {
             //Note: It is not an error to have already called DestroyRecognizer

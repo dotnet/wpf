@@ -160,9 +160,6 @@ namespace System.Windows.Media
         {
             Rect rect;
 
-            Debug.Assert(worldMatrix != null);
-            Debug.Assert(geometryMatrix != null);
-
             if ( (pen == null || pen.DoesNotContainGaps) &&
                 worldMatrix.IsIdentity && geometryMatrix.IsIdentity)
             {

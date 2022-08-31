@@ -441,15 +441,14 @@ namespace System.Windows.Documents
                 attrName.Equals("Fill", StringComparison.Ordinal) ||
                 attrName.Equals("Stroke", StringComparison.Ordinal))
             {
-                attrValue = attrValue.Trim();
-                if (attrValue.StartsWith(_contextColor, StringComparison.Ordinal))
+                ReadOnlySpan<char> attrValueSpan = attrValue.AsSpan().Trim();
+                if (attrValueSpan.StartsWith(_contextColor, StringComparison.Ordinal))
                 {
-                    attrValue = attrValue.Substring(_contextColor.Length);
-                    attrValue = attrValue.Trim();
-                    string[] tokens = attrValue.Split(new char[] { ' ' });
-                    if (tokens.GetLength(0) >= 1)
+                    attrValueSpan = attrValueSpan.Slice(_contextColor.Length).Trim();
+                    int spacePos = attrValueSpan.IndexOf(' ');
+                    if (spacePos >= 0)
                     {
-                        return new string[] { tokens[0] };
+                        return new string[] { attrValueSpan.Slice(0, spacePos).ToString() };
                     }
                 }
             }

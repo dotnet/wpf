@@ -118,7 +118,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             "CommandParameter",
                             typeof(object),
                             typeof(RibbonTextBox),
-                            new FrameworkPropertyMetadata(null));
+                            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnCommandParameterChanged)));
 
         /// <summary>
         ///   Gets or sets the object that the command is being executed on.
@@ -216,6 +216,12 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 CanExecute = true;
             }
+        }
+
+        private static void OnCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            RibbonTextBox textBox = (RibbonTextBox)d;
+            textBox.UpdateCanExecute();
         }
 
         /// <summary>

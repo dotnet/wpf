@@ -472,7 +472,7 @@ namespace System.Windows.Media.Imaging
         private static Thread _thread;
 
         /// lock object
-        private static object _syncLock;
+        private static readonly object _syncLock;
 
         /// Default async read size
         private const int READ_SIZE = 1024;

@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//
+//
 //
 // Description: The DWriteFactory class represents a shared DWrite factory 
 //              object.
@@ -74,7 +74,7 @@ namespace MS.Internal.FontCache
                 }
 
                 // If the directory specifed is the windows fonts directory then no need to reenumerate system fonts.
-                if (String.Compare(((localPath.Length > 0 && localPath[localPath.Length - 1] != Path.DirectorySeparatorChar) ? localPath + Path.DirectorySeparatorChar : localPath), Util.WindowsFontsUriObject.LocalPath, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals((localPath.Length > 0 && localPath[localPath.Length - 1] != Path.DirectorySeparatorChar) ? localPath + Path.DirectorySeparatorChar : localPath, Util.WindowsFontsUriObject.LocalPath, StringComparison.OrdinalIgnoreCase))
                 {
                     return SystemFontCollection;
                 }

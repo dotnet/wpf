@@ -278,7 +278,7 @@ namespace System.Windows.Controls
                     {
                         column.RefreshCellContent(this, propertyName);
                     }
-                    else if (e != null && e.Property != null)
+                    else if (e.Property != null)
                     {
                         column.RefreshCellContent(this, e.Property.Name);
                     }
@@ -964,6 +964,45 @@ namespace System.Windows.Controls
         /// </summary>
         protected override void OnKeyDown(KeyEventArgs e)
         {
+            if (!e.Handled)
+            {
+                const ModifierKeys ModifierMask = ModifierKeys.Alt | ModifierKeys.Control | ModifierKeys.Shift | ModifierKeys.Windows;
+                ModifierKeys modifierKeys = Keyboard.Modifiers & ModifierMask;
+
+                if (((e.SystemKey == Key.Right) || (e.SystemKey == Key.Left)) && (modifierKeys == ModifierKeys.Alt))
+                {
+                    DataGridLength updatedWidth = new DataGridLength();
+
+                    if (e.SystemKey == Key.Right)
+                    {
+                        updatedWidth = new DataGridLength(Column.ActualWidth + ColumnWidthStepSize);
+                    }
+                    else if (e.SystemKey == Key.Left)
+                    {
+                        updatedWidth = new DataGridLength(Column.ActualWidth - ColumnWidthStepSize);
+                    }
+
+                    if (Column != null)
+                    {
+                        if (Column.CanColumnResize(updatedWidth))
+                        {
+                            Column.SetCurrentValueInternal(DataGridColumn.WidthProperty, updatedWidth);
+                        }
+                        e.Handled = true;
+                    }
+                    return;
+                }
+                else if(e.Key == Key.F3)
+                {
+                    if (Column.CanUserSort)
+                    {
+                        Column.DataGridOwner.PerformSort(Column);
+                        e.Handled = true;
+                        return;
+                    }
+                }
+            }
+
             SendInputToColumn(e);
         }
 
@@ -1100,6 +1139,7 @@ namespace System.Windows.Controls
         private DataGridRow _owner;
         private ContainerTracking<DataGridCell> _tracker;
         private bool _syncingIsSelected;                    // Used to prevent unnecessary notifications
+        private const double ColumnWidthStepSize = 10d;
 
         #endregion
     }

@@ -41,7 +41,7 @@ namespace System.Windows.Media.TextFormatting
 
         protected TextLine()
         {
-}
+        }
 
         /// <summary>
         /// Clean up text line internal resource

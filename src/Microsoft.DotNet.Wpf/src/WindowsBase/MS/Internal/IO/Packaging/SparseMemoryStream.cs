@@ -173,7 +173,7 @@ namespace MS.Internal.IO.Packaging
 
             if (newStreamPosition  < 0)
             {
-                 throw new ArgumentException(SR.Get(SRID.SeekNegative));
+                 throw new ArgumentException(SR.SeekNegative);
             }
             _currentStreamPosition = newStreamPosition;
 
@@ -471,7 +471,7 @@ namespace MS.Internal.IO.Packaging
         {
             if (_disposedFlag)
             {
-                throw new ObjectDisposedException(SR.Get(SRID.StreamObjectDisposed));
+                throw new ObjectDisposedException(SR.StreamObjectDisposed);
             }
         }
 

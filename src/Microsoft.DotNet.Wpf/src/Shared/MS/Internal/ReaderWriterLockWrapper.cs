@@ -299,7 +299,7 @@ namespace MS.Internal
             /// <summary>
             ///     Wait for a set of handles.
             /// </summary>
-            [PrePrepareMethod]
+
             public override int Wait(IntPtr[] waitHandles, bool waitAll, int millisecondsTimeout)
             {
                 return MS.Win32.UnsafeNativeMethods.WaitForMultipleObjectsEx(waitHandles.Length, waitHandles, waitAll, millisecondsTimeout, false);

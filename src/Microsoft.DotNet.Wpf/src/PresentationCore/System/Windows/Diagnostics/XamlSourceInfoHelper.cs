@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//
+//
 //
 // Description:
 //      Helper class to expose XamlSourceInfo for objects loaded from BAML or XAML
@@ -31,12 +31,14 @@ namespace System.Windows.Diagnostics
 {
     internal static class XamlSourceInfoHelper
     {
+        public const string XamlSourceInfoEnvironmentVariable = "ENABLE_XAML_DIAGNOSTICS_SOURCE_INFO";
+
         // Weak reference storage to map objects to their markup location. It is fast enough, e.g. it takes
         // about 50ms to add 100K entries (small test app, Debug build, under debugger, dev laptop).
         private static ConditionalWeakTable<object, XamlSourceInfo> s_sourceInfoTable; // no storage by default
 
         // While ConditionalWeakTable is thread safe we need to make multiple calls in a thread safe manner.
-        private static object s_lock = new object();
+        private static readonly object s_lock = new object();
 
         private static PropertyInfo s_sourceBamlUriProperty;
         private static PropertyInfo s_elementLineNumberProperty;
@@ -56,7 +58,7 @@ namespace System.Windows.Diagnostics
         private static void InitializeEnableXamlSourceInfo(string value)
         {
             if (VisualDiagnostics.IsEnabled &&
-                VisualDiagnostics.IsEnvironmentVariableSet(value, "ENABLE_XAML_DIAGNOSTICS_SOURCE_INFO") &&
+                VisualDiagnostics.IsEnvironmentVariableSet(value, XamlSourceInfoHelper.XamlSourceInfoEnvironmentVariable) &&
                 InitializeXamlObjectEventArgs())
             {
                 s_sourceInfoTable = new ConditionalWeakTable<object, XamlSourceInfo>();

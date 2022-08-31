@@ -66,11 +66,11 @@ namespace MS.Internal.Ink.InkSerializedFormat
     /// </summary>
     internal static class DrawingAttributeSerializer
     {
-        private static readonly double      V1PenWidthWhenWidthIsMissing = 25.0f;
-        private static readonly double      V1PenHeightWhenHeightIsMissing = 25.0f;
-        private static readonly int         TransparencyDefaultV1 = 0;
-        internal static readonly uint        RasterOperationMaskPen = 9;
-        internal static readonly uint        RasterOperationDefaultV1 = 13;
+        private const double V1PenWidthWhenWidthIsMissing = 25.0f;
+        private const double V1PenHeightWhenHeightIsMissing = 25.0f;
+        private const int TransparencyDefaultV1 = 0;
+        internal const uint RasterOperationMaskPen = 9;
+        internal const uint RasterOperationDefaultV1 = 13;
 
         /// <summary>The v1 ISF version of the pen tip shape. For v2, this is represented as StylusShape</summary>
         private enum PenTip

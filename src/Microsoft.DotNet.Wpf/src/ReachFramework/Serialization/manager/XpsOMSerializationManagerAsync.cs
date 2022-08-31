@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -456,7 +456,7 @@ namespace System.Windows.Xps.Serialization
         {
             do
             {
-                _dispatcher.Invoke(DispatcherPriority.Background, (DispatcherOperationCallback)DoNothingCallback, null);
+                _dispatcher.Invoke(DispatcherPriority.Background, (DispatcherOperationCallback)(_ => null), null);
 
             }
             while (IsAsyncWorkPending());
@@ -492,15 +492,6 @@ namespace System.Windows.Xps.Serialization
             }
 
             return false;
-        }
-
-        private static
-        object
-        DoNothingCallback(
-            object notUsed
-            )
-        {
-            return null;
         }
 
         #endregion private methods

@@ -6,22 +6,9 @@ namespace System.Runtime.InteropServices
 {
     internal static class MarshalLocal
     {
-        // Temporary workaround until https://github.com/dotnet/corefx/issues/30393 is fixed
         public static bool IsTypeVisibleFromCom(Type type)
         {
-            try
-            {
-                int unused = Marshal.GetStartComSlot(type);
-            }
-            catch (ArgumentException)
-            {
-                if (type == null)
-                {
-                    throw;
-                }
-                return false;
-            }
-            return true;
+            return Marshal.IsTypeVisibleFromCom(type);
         }
     }
 }

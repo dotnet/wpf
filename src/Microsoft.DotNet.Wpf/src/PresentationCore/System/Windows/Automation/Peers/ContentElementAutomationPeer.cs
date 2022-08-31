@@ -214,6 +214,14 @@ namespace System.Windows.Automation.Peers
         }
 
         /// <summary>
+        /// <see cref="AutomationPeer.IsDialogCore"/>
+        /// </summary>
+        override protected bool IsDialogCore()
+        {
+            return AutomationProperties.GetIsDialog(_owner);
+        }
+
+        /// <summary>
         /// <see cref="AutomationPeer.IsPasswordCore"/>
         /// </summary>
         override protected bool IsPasswordCore()
@@ -285,6 +293,15 @@ namespace System.Windows.Automation.Peers
         override protected int GetSizeOfSetCore()
         {
             return AutomationProperties.GetSizeOfSet(_owner);
+        }
+
+        /// <summary>
+        /// Provides a value for UIAutomation's HeadingLevel property
+        /// Reads <see cref="AutomationProperties.HeadingLevelProperty"/> and returns the value
+        /// </summary>
+        override protected AutomationHeadingLevel GetHeadingLevelCore()
+        {
+            return AutomationProperties.GetHeadingLevel(_owner);
         }
 
         /// <summary>

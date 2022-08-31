@@ -58,7 +58,7 @@ static class WpfWebRequestHelper
         //  which is mostly for logging and config.
         // Call PackWebRequestFactory.CreateWebRequest to bypass the regression if possible
         //  by calling Create on PackWebRequest if uri is pack scheme
-        if (string.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal) == 0)
+        if (string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal))
         {
             return PackWebRequestFactory.CreateWebRequest(uri);
             // The PackWebRequest may end up creating a "real" web request as its inner request.
@@ -72,7 +72,9 @@ static class WpfWebRequestHelper
             uri = new Uri(uri.GetLeftPart(UriPartial.Path));
         }
 
+        #pragma warning disable SYSLIB0014 
         WebRequest request = WebRequest.Create(uri);
+        #pragma warning restore SYSLIB0014 
 
         // It is not clear whether WebRequest.Create() can ever return null, but v1 code make this check in
         // a couple of places, so it is still done here, just in case.
@@ -279,8 +281,8 @@ static class WpfWebRequestHelper
                     MimeTypeMapper.TextPlainMime.AreTypeAndSubTypeEqual(contentType, true))
                 {
                     string extension = MimeTypeMapper.GetFileExtension(response.ResponseUri);
-                    if ((String.Compare(extension, MimeTypeMapper.XamlExtension, StringComparison.OrdinalIgnoreCase) == 0) ||
-                            (String.Compare(extension, MimeTypeMapper.XbapExtension, StringComparison.OrdinalIgnoreCase) == 0))
+                    if (string.Equals(extension, MimeTypeMapper.XamlExtension, StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(extension, MimeTypeMapper.XbapExtension, StringComparison.OrdinalIgnoreCase))
                     {
                         contentType = ContentType.Empty;  // Will cause GetMimeTypeFromUri to be called below
                     }

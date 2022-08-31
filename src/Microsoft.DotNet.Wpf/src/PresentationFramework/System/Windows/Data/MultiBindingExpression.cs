@@ -191,17 +191,19 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         bool isExtendedTraceEnabled = TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.AttachToContext);
 
         _converter = ParentMultiBinding.Converter;
-        if (_converter == null && String.IsNullOrEmpty(EffectiveStringFormat))
+        if (_converter == null && String.IsNullOrEmpty(EffectiveStringFormat) && TraceData.IsEnabled)
         {
-            TraceData.Trace(TraceEventType.Error, TraceData.MultiBindingHasNoConverter, ParentMultiBinding);
+            TraceData.TraceAndNotify(TraceEventType.Error, TraceData.MultiBindingHasNoConverter, this,
+                traceParameters: new object[] { ParentMultiBinding });
         }
 
         if (isExtendedTraceEnabled)
         {
-            TraceData.Trace(TraceEventType.Warning,
-                                TraceData.AttachToContext(
-                                    TraceData.Identify(this),
-                                    lastChance ? " (last chance)" : String.Empty));
+            TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
+                TraceData.AttachToContext(
+                    TraceData.Identify(this),
+                    lastChance ? " (last chance)" : String.Empty),
+                this);
         }
 
         TransferIsDeferred = true;
@@ -219,9 +221,10 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         {
             if (isExtendedTraceEnabled)
             {
-                TraceData.Trace(TraceEventType.Warning,
-                                    TraceData.ChildNotAttached(
-                                        TraceData.Identify(this)));
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
+                    TraceData.ChildNotAttached(
+                        TraceData.Identify(this)),
+                    this);
             }
 
             return;
@@ -382,9 +385,10 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
 
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.AttachToContext))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.DeferAttachToContext(
-                                        TraceData.Identify(this)));
+                                        TraceData.Identify(this)),
+                                    this);
             }
         }
 
@@ -529,7 +533,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         {
             if (TraceData.IsEnabled)
             {
-                TraceData.Trace(TraceEventType.Error,
+                TraceData.TraceAndNotify(TraceEventType.Error,
                     TraceData.BadMultiConverterForUpdate(
                         Converter.GetType().Name,
                         AvTrace.ToStringHelper(value),
@@ -545,11 +549,12 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         {
             for (int i=0; i<values.Length; ++i)
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.UserConvertBackMulti(
                                         TraceData.Identify(this),
                                         i,
-                                        TraceData.Identify(values[i])));
+                                        TraceData.Identify(values[i])),
+                                    this);
             }
         }
 
@@ -557,9 +562,8 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         int count = MutableBindingExpressions.Count;
         if (values.Length != count && TraceData.IsEnabled)
         {
-            TraceData.Trace(TraceEventType.Information, TraceData.MultiValueConverterMismatch,
-                    Converter.GetType().Name, count, values.Length,
-                    TraceData.DescribeTarget(target, TargetProperty));
+            TraceData.TraceAndNotify(TraceEventType.Information, TraceData.MultiValueConverterMismatch, this,
+                traceParameters: new object[] { Converter.GetType().Name, count, values.Length, TraceData.DescribeTarget(target, TargetProperty) });
         }
 
         // use the smaller count
@@ -587,7 +591,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
             }
             else if (value == DependencyProperty.UnsetValue && TraceData.IsEnabled)
             {
-                TraceData.Trace(TraceEventType.Information,
+                TraceData.TraceAndNotify(TraceEventType.Information,
                     TraceData.UnsetValueInMultiBindingExpressionUpdate(
                         Converter.GetType().Name,
                         AvTrace.ToStringHelper(value),
@@ -616,7 +620,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         {
             if (TraceData.IsEnabled)
             {
-                TraceData.Trace(TraceEventType.Error, TraceData.MultiValueConverterMissingForUpdate, this);
+                TraceData.TraceAndNotify(TraceEventType.Error, TraceData.MultiValueConverterMissingForUpdate, this);
             }
 
             return DependencyProperty.UnsetValue;
@@ -1020,7 +1024,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
 
         if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Events))
         {
-            TraceData.Trace(TraceEventType.Warning,
+            TraceData.TraceAndNotify(TraceEventType.Warning,
                                 TraceData.GotPropertyChanged(
                                     TraceData.Identify(this),
                                     TraceData.Identify(d),
@@ -1093,7 +1097,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
     {
         if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Events))
         {
-            TraceData.Trace(TraceEventType.Warning,
+            TraceData.TraceAndNotify(TraceEventType.Warning,
                                 TraceData.GotEvent(
                                     TraceData.Identify(this),
                                     "LostFocus",
@@ -1165,11 +1169,12 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
 
             if (isExtendedTraceEnabled)
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.GetRawValueMulti(
                                         TraceData.Identify(this),
                                         i,
-                                        TraceData.Identify(_tempValues[i])));
+                                        TraceData.Identify(_tempValues[i])),
+                                    this);
             }
         }
 
@@ -1187,10 +1192,11 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
 
             if (isExtendedTraceEnabled)
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.UserConverter(
                                         TraceData.Identify(this),
-                                        TraceData.Identify(preFormattedValue)));
+                                        TraceData.Identify(preFormattedValue)),
+                                    this);
             }
         }
         else if (EffectiveStringFormat != null)
@@ -1210,7 +1216,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         {
             if (TraceData.IsEnabled)
             {
-                TraceData.Trace(TraceEventType.Error, TraceData.MultiValueConverterMissingForTransfer, this);
+                TraceData.TraceAndNotify(TraceEventType.Error, TraceData.MultiValueConverterMissingForTransfer, this);
             }
 
             goto Done;
@@ -1239,10 +1245,11 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
 
                 if (isExtendedTraceEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                         TraceData.FormattedValue(
                                             TraceData.Identify(this),
-                                            TraceData.Identify(value)));
+                                            TraceData.Identify(value)),
+                                        this);
                 }
             }
             catch (FormatException)
@@ -1252,10 +1259,11 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
 
                 if (isExtendedTraceEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Warning,
-                                        TraceData.FormattingFailed(
-                                            TraceData.Identify(this),
-                                            EffectiveStringFormat));
+                    TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
+                                    TraceData.FormattingFailed(
+                                        TraceData.Identify(this),
+                                        EffectiveStringFormat),
+                                    this);
                 }
             }
         }
@@ -1281,10 +1289,11 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
 
             if (isExtendedTraceEnabled)
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.NullConverter(
                                         TraceData.Identify(this),
-                                        TraceData.Identify(value)));
+                                        TraceData.Identify(value)),
+                                    this);
             }
         }
 
@@ -1293,15 +1302,17 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         {
             if (TraceData.IsEnabled)
             {
-                TraceData.Trace(TraceLevel, TraceData.BadValueAtTransfer, value, this);
+                TraceData.TraceAndNotify(TraceLevel, TraceData.BadValueAtTransfer, this,
+                    traceParameters: new object[] { value, this });
             }
 
             if (isExtendedTraceEnabled)
             {
-                TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.BadValueAtTransferExtended(
                                         TraceData.Identify(this),
-                                        TraceData.Identify(value)));
+                                        TraceData.Identify(value)),
+                                    this);
             }
 
             value = DependencyProperty.UnsetValue;
@@ -1314,19 +1325,21 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
 
             if (isExtendedTraceEnabled)
             {
-                TraceData.Trace(TraceEventType.Warning,
-                                    TraceData.UseFallback(
-                                        TraceData.Identify(this),
-                                        TraceData.Identify(value)));
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
+                                TraceData.UseFallback(
+                                    TraceData.Identify(this),
+                                    TraceData.Identify(value)),
+                                this);
             }
         }
 
         if (isExtendedTraceEnabled)
         {
-            TraceData.Trace(TraceEventType.Warning,
-                                TraceData.TransferValue(
-                                    TraceData.Identify(this),
-                                    TraceData.Identify(value)));
+            TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
+                            TraceData.TransferValue(
+                                TraceData.Identify(this),
+                                TraceData.Identify(value)),
+                            this);
         }
 
         // if this is a re-transfer after a source update and the value

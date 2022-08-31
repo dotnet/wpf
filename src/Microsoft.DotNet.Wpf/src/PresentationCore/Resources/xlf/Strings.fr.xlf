@@ -1908,8 +1908,8 @@
         <note />
       </trans-unit>
       <trans-unit id="Invalid_IInputElement">
-        <source>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</source>
-        <target state="translated">'{0}' n'est pas un type valide pour IInputElement. UIElement ou ContentElement attendu.</target>
+        <source>'{0}' is not a valid type for IInputElement. UIElement, ContentElement or UIElement3D expected.</source>
+        <target state="translated">'{0}' n’est pas un type valide pour IInputElement. UIElement, ContentElement ou UIElement3D attendu.</target>
         <note />
       </trans-unit>
       <trans-unit id="Invalid_URI">
@@ -2499,7 +2499,7 @@
       </trans-unit>
       <trans-unit id="OptimalParagraphMustWrap">
         <source>Paragraph must be allowed to wrap in total-fit formatting.</source>
-        <target state="translated">Le paragraphe doit être autorisé à appliquer la mise en forme complète.</target>
+        <target state="translated">Le paragraphe doit être autorisé à être enveloppé dans la mise en forme complète.</target>
         <note />
       </trans-unit>
       <trans-unit id="PackWebRequestCachePolicyIllegal">

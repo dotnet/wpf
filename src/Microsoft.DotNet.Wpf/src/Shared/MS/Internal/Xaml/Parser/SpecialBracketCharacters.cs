@@ -106,7 +106,7 @@ namespace MS.Internal.Xaml.Parser
 
         internal bool Match(char start, char end)
         {
-            return _endChars.IndexOf(end.ToString()) == _startChars.IndexOf(start.ToString());
+            return _endChars.IndexOf(end.ToString(), StringComparison.Ordinal) == _startChars.IndexOf(start.ToString(), StringComparison.Ordinal);
         }
 
         internal string StartBracketCharacters

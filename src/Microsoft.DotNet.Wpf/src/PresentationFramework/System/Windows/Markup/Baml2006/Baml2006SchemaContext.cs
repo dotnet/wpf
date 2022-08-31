@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -29,7 +29,7 @@ namespace System.Windows.Baml2006
         }
 
         internal Baml2006SchemaContext(Assembly localAssembly, XamlSchemaContext parentSchemaContext)
-            : base(new Assembly[0])
+            : base(Array.Empty<Assembly>())
         {
             _localAssembly = localAssembly;
             _parentSchemaContext = parentSchemaContext;
@@ -708,7 +708,7 @@ namespace System.Windows.Baml2006
         private static readonly Lazy<XamlType> _staticResourceExtensionType
             = new Lazy<XamlType>(() => System.Windows.Markup.XamlReader.BamlSharedSchemaContext.GetXamlType(typeof(StaticResourceExtension)));
 
-        private object _syncObject = new object();
+        private readonly object _syncObject = new object();
 
         private Assembly _localAssembly;
 

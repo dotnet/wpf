@@ -187,9 +187,9 @@ src/Microsoft.DotNet.Wpf/src/PresentationCore/System/Windows/Media/Generated/Ima
 src/Microsoft.DotNet.Wpf/src/PresentationCore/System/Windows/Media/Generated/ImageSource.cs
 src/Microsoft.DotNet.Wpf/src/PresentationCore/System/Windows/Media/Generated/Int32Collection.cs
 src/Microsoft.DotNet.Wpf/src/PresentationCore/System/Windows/Media/Generated/Int32CollectionConverter.cs
+src/Microsoft.DotNet.Wpf/src/PresentationCore/System/Windows/Media/Generated/LinearGradientBrush.cs
 src/Microsoft.DotNet.Wpf/src/PresentationCore/System/Windows/Media/Generated/LineGeometry.cs
 src/Microsoft.DotNet.Wpf/src/PresentationCore/System/Windows/Media/Generated/LineSegment.cs
-src/Microsoft.DotNet.Wpf/src/PresentationCore/System/Windows/Media/Generated/LinearGradientBrush.cs
 src/Microsoft.DotNet.Wpf/src/PresentationCore/System/Windows/Media/Generated/MatrixTransform.cs
 src/Microsoft.DotNet.Wpf/src/PresentationCore/System/Windows/Media/Generated/MediaTimeline.cs
 src/Microsoft.DotNet.Wpf/src/PresentationCore/System/Windows/Media/Generated/PathFigure.cs
@@ -345,9 +345,9 @@ src/Microsoft.DotNet.Wpf/src/Shared/MS/Internal/Generated/TextDecorationUnitVali
 src/Microsoft.DotNet.Wpf/src/Shared/MS/Internal/Generated/TextHintingModeValidation.cs
 src/Microsoft.DotNet.Wpf/src/Shared/MS/Internal/Generated/TextRenderingModeValidation.cs
 src/Microsoft.DotNet.Wpf/src/Shared/MS/Internal/Generated/TileModeValidation.cs
-src/Microsoft.DotNet.Wpf/src/System.Windows.Controls.Ribbon/MS/Internal/Generated/DoubleUtil.cs
 src/Microsoft.DotNet.Wpf/src/System.Windows.Controls.Ribbon/Microsoft/Windows/Controls/Generated/PropertyHelper.cs
 src/Microsoft.DotNet.Wpf/src/System.Windows.Controls.Ribbon/Microsoft/Windows/Controls/Generated/TreeHelper.cs
+src/Microsoft.DotNet.Wpf/src/System.Windows.Controls.Ribbon/MS/Internal/Generated/DoubleUtil.cs
 src/Microsoft.DotNet.Wpf/src/WindowsBase/System/Windows/Converters/Generated/Int32RectValueSerializer.cs
 src/Microsoft.DotNet.Wpf/src/WindowsBase/System/Windows/Converters/Generated/PointValueSerializer.cs
 src/Microsoft.DotNet.Wpf/src/WindowsBase/System/Windows/Converters/Generated/RectValueSerializer.cs

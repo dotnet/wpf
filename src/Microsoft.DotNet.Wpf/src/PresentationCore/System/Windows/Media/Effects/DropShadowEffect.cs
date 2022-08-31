@@ -22,7 +22,7 @@ namespace System.Windows.Media.Effects
         /// </summary>
         public DropShadowEffect()
         {
-}
+        }
 
         #endregion
 

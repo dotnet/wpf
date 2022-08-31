@@ -249,7 +249,7 @@ namespace System.Windows
                 {
                     // Dispatch an EventLog and error throw so we get loaded UI, then the crash.
                     // This ensures the WER dialog shows.
-                    DispatchOnError(dispatcher, SR.Get(SRID.CombinationOfAccessibilitySwitchesNotSupported));
+                    DispatchOnError(dispatcher, SR.CombinationOfAccessibilitySwitchesNotSupported);
                 }
 
                 VerifyDependencies(dispatcher);
@@ -264,11 +264,11 @@ namespace System.Windows
         {
             if (!UseLegacyToolTipDisplay && UseNetFx472CompatibleAccessibilityFeatures)
             {
-                DispatchOnError(dispatcher, String.Format(SR.Get(SRID.AccessibilitySwitchDependencyNotSatisfied), UseLegacyToolTipDisplaySwitchName, UseLegacyAccessibilityFeatures3SwitchName, 3));
+                DispatchOnError(dispatcher, String.Format(SR.AccessibilitySwitchDependencyNotSatisfied, UseLegacyToolTipDisplaySwitchName, UseLegacyAccessibilityFeatures3SwitchName, 3));
             }
             if (!ItemsControlDoesNotSupportAutomation && UseNetFx472CompatibleAccessibilityFeatures)
             {
-                DispatchOnError(dispatcher, String.Format(SR.Get(SRID.AccessibilitySwitchDependencyNotSatisfied), ItemsControlDoesNotSupportAutomationSwitchName, UseLegacyAccessibilityFeatures3SwitchName, 3));
+                DispatchOnError(dispatcher, String.Format(SR.AccessibilitySwitchDependencyNotSatisfied, ItemsControlDoesNotSupportAutomationSwitchName, UseLegacyAccessibilityFeatures3SwitchName, 3));
             }
         }
 

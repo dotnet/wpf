@@ -84,7 +84,11 @@ namespace System.Windows
                         {
                             Dispatcher.CurrentDispatcher.BeginInvoke(
                                 DispatcherPriority.Loaded,
-                                (DispatcherOperationCallback)ShowCallback,
+                                (DispatcherOperationCallback)(arg =>
+                                {
+                                    ((SplashScreen)arg).Close(TimeSpan.FromSeconds(0.3));
+                                    return null;
+                                }),
                                 this);
                         }
                         // The HWND that we just created is owned by this thread.  When we close we should ensure that it 
@@ -94,17 +98,10 @@ namespace System.Windows
                     }
                     else
                     {
-                        throw new IOException(SR.Get(SRID.UnableToLocateResource, _resourceName));
+                        throw new IOException(SR.Format(SR.UnableToLocateResource, _resourceName));
                     }
                 }
             }
-        }
-        
-        private static object ShowCallback(object arg)
-        {
-            SplashScreen splashScreen = (SplashScreen)arg;
-            splashScreen.Close(TimeSpan.FromSeconds(0.3));
-            return null;
         }
 
         // This is 200-300 ms slower than Assembly.GetManifestResourceStream() but works with localization.
@@ -148,8 +145,9 @@ namespace System.Windows
             _wndClass = MS.Win32.UnsafeNativeMethods.IntRegisterClassEx(wndClass);
             if (_wndClass == 0)
             {
-                if (Marshal.GetLastWin32Error() != 0x582) /* class already registered */
-                    throw new Win32Exception();
+                var lastWin32Error = Marshal.GetLastWin32Error();
+                if (lastWin32Error != 0x582) /* class already registered */
+                    throw new Win32Exception(lastWin32Error);
             }
 
             int screenWidth = MS.Win32.UnsafeNativeMethods.GetSystemMetrics(SM.CXSCREEN);
@@ -167,7 +165,7 @@ namespace System.Windows
             // CreateWindowEx will either succeed or throw
             IntPtr hWnd =  MS.Win32.UnsafeNativeMethods.CreateWindowEx(
                 windowCreateFlags,
-                CLASSNAME, SR.Get(SRID.SplashScreenIsLoading),
+                CLASSNAME, SR.SplashScreenIsLoading,
                 MS.Win32.NativeMethods.WS_POPUP | MS.Win32.NativeMethods.WS_VISIBLE,
                 x, y, width, height,
                 nullHandle, nullHandle, new HandleRef(null, _hInstance), IntPtr.Zero);
@@ -186,8 +184,12 @@ namespace System.Windows
             _blendFunc.SourceConstantAlpha = 255;
             _blendFunc.AlphaFormat = 1; /*AC_SRC_ALPHA*/
 
-            bool result = UnsafeNativeMethods.UpdateLayeredWindow(hWnd, hScreenDC, newLocation, newSize,
-                memDC, sourceLocation, 0, ref _blendFunc, NativeMethods.ULW_ALPHA);
+            bool result;
+            unsafe
+            {
+                result = UnsafeNativeMethods.UpdateLayeredWindow(hWnd, hScreenDC, &newLocation, &newSize,
+                    memDC, &sourceLocation, 0, ref _blendFunc, NativeMethods.ULW_ALPHA);
+            }
 
             UnsafeNativeMethods.SelectObject(new HandleRef(null, memDC), hOldBitmap);
             UnsafeNativeMethods.ReleaseDC(new HandleRef(), new HandleRef(null, memDC));
@@ -238,7 +240,7 @@ namespace System.Windows
             // In the case where the developer has specified AutoClose=True and then calls
             // Close(non_zero_timespan) before the auto close operation is dispatched we begin
             // the fadeout immidiately and ignore the later call to close.
-            if (_dt != null || _hwnd == null)
+            if (_dt != null || _hwnd == IntPtr.Zero)
             {
                 return BooleanBoxes.TrueBox;
             }
@@ -276,7 +278,10 @@ namespace System.Windows
             {
                 double progress = (_fadeoutEnd - dtNow).TotalMilliseconds / _fadeoutDuration.TotalMilliseconds;
                 _blendFunc.SourceConstantAlpha = (byte)(255 * progress);
-                UnsafeNativeMethods.UpdateLayeredWindow(_hwnd, IntPtr.Zero, null, null, IntPtr.Zero, null, 0, ref _blendFunc, NativeMethods.ULW_ALPHA);
+                unsafe
+                {
+                    UnsafeNativeMethods.UpdateLayeredWindow(_hwnd, IntPtr.Zero, null, null, IntPtr.Zero, null, 0, ref _blendFunc, NativeMethods.ULW_ALPHA);
+                }
             }
         }
 

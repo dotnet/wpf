@@ -71,7 +71,7 @@ namespace System.Windows.Media.Imaging
         {
             long estimatedSize = 0;
 
-            if (bitmapObject != null && bitmapObject != IntPtr.Zero)
+            if (bitmapObject != IntPtr.Zero)
             {
                 IntPtr wicBitmap;
 

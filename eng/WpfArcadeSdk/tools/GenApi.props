@@ -26,9 +26,9 @@
     <GlobalApiExclusionsFile Condition="'$(GlobalApiExclusionsFile)'==''">$(WpfArcadeSdkRoot)tools\GenApi\GlobalApiExclusions.txt</GlobalApiExclusionsFile>
     <GlobalAttrExclusionsFile Condition="'$(GlobalAttrExclusionsFile)'==''">$(WpfArcadeSdkRoot)tools\GenApi\GlobalAttrExclusions.txt</GlobalAttrExclusionsFile>
 
-    <GenAPIAdditionalParameters>--exclude-members</GenAPIAdditionalParameters>
-    <GenAPIAdditionalParameters Condition="'$(GlobalApiExclusionsFile)'!=''">$(GenAPIAdditionalParameters) --exclude-api-list "$(GlobalApiExclusionsFile)" </GenAPIAdditionalParameters>
-    <GenAPIAdditionalParameters Condition="'$(GlobalAttrExclusionsFile)'!=''">$(GenAPIAdditionalParameters) --exclude-attributes-list "$(GlobalAttrExclusionsFile)"</GenAPIAdditionalParameters>
+    <GenAPIExcludeMembers>true</GenAPIExcludeMembers>
+    <GenAPIExcludeApiList Condition="'$(GlobalApiExclusionsFile)'!=''">$(GlobalApiExclusionsFile)</GenAPIExcludeApiList>
+    <GenAPIExcludeAttributesList Condition="'$(GlobalAttrExclusionsFile)'!=''">$(GlobalAttrExclusionsFile)</GenAPIExcludeAttributesList>
 
     <!-- 
       GenAPI is run on demand.  Note that making a public API change without the associated reference assembly change will result in an ApiCompat error. 

@@ -92,8 +92,6 @@ namespace System.Windows.Markup
             throw GetConvertFromException(value);
         }
 
-        static List<Type> Empty = new List<Type>();
-
         /// <summary>
         /// Returns an enumeration of the types referenced by the value serializer. If the value serializer asks for
         /// a value serializer for System.Type, any types it asks to convert should be supplied in the returned
@@ -110,7 +108,7 @@ namespace System.Windows.Markup
         /// <returns>An enumeration of the types converted by this serializer</returns>
         public virtual IEnumerable<Type> TypeReferences(object value, IValueSerializerContext context)
         {
-            return Empty;
+            return Array.Empty<Type>();
         }
 
         /// <summary>
@@ -246,16 +244,19 @@ namespace System.Windows.Markup
         /// </summary>
         protected Exception GetConvertToException(object value, Type destinationType)
         {
+            if (destinationType == null)
+                throw new ArgumentNullException(nameof(destinationType));
+
             string text;
             if (value == null)
             {
-                text = SR.Get(SRID.ToStringNull);
+                text = SR.ToStringNull;
             }
             else
             {
                 text = value.GetType().FullName;
             }
-            return new NotSupportedException(SR.Get(SRID.ConvertToException, base.GetType().Name, text, destinationType.FullName));
+            return new NotSupportedException(SR.Format(SR.ConvertToException, base.GetType().Name, text, destinationType.FullName));
         }
 
         /// <summary>
@@ -266,13 +267,13 @@ namespace System.Windows.Markup
             string text;
             if (value == null)
             {
-                text = SR.Get(SRID.ToStringNull);
+                text = SR.ToStringNull;
             }
             else
             {
                 text = value.GetType().FullName;
             }
-            return new NotSupportedException(SR.Get(SRID.ConvertFromException, base.GetType().Name, text));
+            return new NotSupportedException(SR.Format(SR.ConvertFromException, base.GetType().Name, text));
         }
 
         private static void TypeDescriptorRefreshed(RefreshEventArgs args) {
@@ -283,7 +284,7 @@ namespace System.Windows.Markup
             TypeDescriptor.Refreshed += TypeDescriptorRefreshed;
         }
 
-        private static object _valueSerializersLock = new object();
+        private static readonly object _valueSerializersLock = new object();
         private static Hashtable _valueSerializers = new Hashtable();
     }
 }

@@ -48,11 +48,11 @@ namespace System.Windows
                 throw new ArgumentNullException(nameof(scopedElement));
 
             if (name.Length == 0)
-                throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
+                throw new ArgumentException(SR.NameScopeNameNotEmptyString);
 
             if (!NameValidationHelper.IsValidIdentifierName(name))
             {
-                throw new ArgumentException(SR.Get(SRID.NameScopeInvalidIdentifierName, name));
+                throw new ArgumentException(SR.Format(SR.NameScopeInvalidIdentifierName, name));
             }
 
             if (_nameMap == null)
@@ -70,7 +70,7 @@ namespace System.Windows
                 }
                 else if (scopedElement != nameContext)
                 {
-                    throw new ArgumentException(SR.Get(SRID.NameScopeDuplicateNamesNotAllowed, name));
+                    throw new ArgumentException(SR.Format(SR.NameScopeDuplicateNamesNotAllowed, name));
                 }   
             }
 
@@ -93,7 +93,7 @@ namespace System.Windows
                 throw new ArgumentNullException(nameof(name));
 
             if (name.Length == 0)
-                throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
+                throw new ArgumentException(SR.NameScopeNameNotEmptyString);
 
             if (_nameMap != null && _nameMap[name] != null)
             {
@@ -101,7 +101,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.NameScopeNameNotFound, name));
+                throw new ArgumentException(SR.Format(SR.NameScopeNameNotFound, name));
             }
 
             if (TraceNameScope.IsEnabled)
@@ -275,11 +275,11 @@ namespace System.Windows
         {
             if (item.Key == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "item.Key"), "item");
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), "item");
             }
             if (item.Value == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "item.Value"), "item");
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Value"), "item");
             }
 
             Add(item.Key, item.Value);
@@ -289,7 +289,7 @@ namespace System.Windows
         {
             if (item.Key == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "item.Key"), "item");
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), "item");
             }
             return ContainsKey(item.Key);
         }

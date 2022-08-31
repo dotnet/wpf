@@ -8,7 +8,7 @@ using System.Windows.Threading;
 namespace System.Windows.Interop
 {
     /// <summary>
-    /// Interface defines interaction between Xapplauncher and host supplied error page. 
+    /// Interface defines interaction between Xapplauncher and host supplied error page.
     /// </summary>
     public interface IErrorPage
     {
@@ -48,7 +48,7 @@ namespace System.Windows.Interop
         DispatcherOperationCallback RefreshCallback { get; set;}
 
         /// <summary>
-        /// Callback when user clicks GetWinFx button
+        /// Callback when user clicks GetWinFX button
         /// </summary>
         DispatcherOperationCallback GetWinFxCallback { get; set;}
     }

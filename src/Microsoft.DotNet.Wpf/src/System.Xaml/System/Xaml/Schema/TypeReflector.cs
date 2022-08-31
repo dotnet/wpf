@@ -13,6 +13,7 @@ using XAML3 = System.Windows.Markup;
 
 namespace System.Xaml.Schema
 {
+    [Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2002:Do not lock on objects with weak identity", Justification = "This type is internal.")]
     class TypeReflector : Reflector
     {
         private const XamlCollectionKind XamlCollectionKindInvalid = (XamlCollectionKind)byte.MaxValue;
@@ -1052,7 +1053,7 @@ namespace System.Xaml.Schema
             }
             if (objs.Length > 1)
             {
-                string message = SR.Get(SRID.TooManyAttributesOnType,
+                string message = SR.Format(SR.TooManyAttributesOnType,
                                                     reflectedType.Name, attrType.Name);
                 throw new XamlSchemaException(message);
             }

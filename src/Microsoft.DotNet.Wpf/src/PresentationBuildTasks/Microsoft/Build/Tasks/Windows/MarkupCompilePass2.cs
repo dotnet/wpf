@@ -43,7 +43,6 @@ namespace Microsoft.Build.Tasks.Windows
     /// </summary>
     public sealed class MarkupCompilePass2  : Task
     {
-
         //------------------------------------------------------
         //
         //  Constructors
@@ -58,7 +57,7 @@ namespace Microsoft.Build.Tasks.Windows
         public MarkupCompilePass2( ) : base(SR.SharedResourceManager)
         {
             // set the source directory
-            _sourceDir = Directory.GetCurrentDirectory() + "\\";
+            _sourceDir = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar;
 
             _outputType = SharedStrings.WinExe;
 
@@ -253,10 +252,10 @@ namespace Microsoft.Build.Tasks.Windows
                 // Get the relative path based on sourceDir
                 _outputPath= TaskHelper.CreateFullFilePath(filePath, SourceDir);
 
-                // Make sure OutputDir always ends with '\\'.
-                if (!_outputPath.EndsWith("\\", StringComparison.Ordinal))
+                // Make sure OutputDir always ends with Path.DirectorySeparatorChar
+                if (!_outputPath.EndsWith(string.Empty + Path.DirectorySeparatorChar, StringComparison.Ordinal))
                 {
-                    _outputPath += "\\";
+                    _outputPath += Path.DirectorySeparatorChar;
                 }
             }
         }
@@ -322,6 +321,11 @@ namespace Microsoft.Build.Tasks.Windows
             get { return _xamlDebuggingInformation; }
             set { _xamlDebuggingInformation = value; }
         }
+
+        ///<summary>
+        /// Support custom IntermediateOutputPath and BaseIntermediateOutputPath outside the project path
+        ///</summary>
+        public bool SupportCustomOutputPaths { get; set; } = false;
 
         /// <summary>
         /// Known reference paths hold referenced assemblies which are never changed during the build procedure.
@@ -480,7 +484,7 @@ namespace Microsoft.Build.Tasks.Windows
         //
         // return value:
         //
-        //    If cache doesn't exist, or both LocalAppDef and LocallXaml Pages do not exist, return false
+        //    If cache doesn't exist, or both LocalAppDef and LocalXaml Pages do not exist, return false
         //    to indicate no further work required.
         //    otherwise, return true.
         //
@@ -546,7 +550,7 @@ namespace Microsoft.Build.Tasks.Windows
                 // and put the deepest directory that file is in as the new
                 // SourceDir.
                 //
-                int pathEndIndex = fullFilePath.LastIndexOf("\\", StringComparison.Ordinal);
+                int pathEndIndex = fullFilePath.LastIndexOf(Path.DirectorySeparatorChar);
 
                 newSourceDir = fullFilePath.Substring(0, pathEndIndex + 1);
                 newRelativeFilePath = TaskHelper.GetRootRelativePath(newSourceDir, fullFilePath);
@@ -598,8 +602,8 @@ namespace Microsoft.Build.Tasks.Windows
             }
 
             //
-            // Generate the asmmebly reference list.
-            // The temporay target assembly should have been added into Reference list from target file.
+            // Generate the assembly reference list.
+            // The temporary target assembly should have been added into Reference list from target file.
             //
             if (References != null && References.Length > 0)
             {
@@ -635,7 +639,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             try
             {
-                compilerWrapper = TaskHelper.CreateCompilerWrapper(AlwaysCompileMarkupFilesInSeparateDomain, ref appDomain);
+                compilerWrapper = TaskHelper.CreateCompilerWrapper();
 
                 if (compilerWrapper != null)
                 {
@@ -645,6 +649,8 @@ namespace Microsoft.Build.Tasks.Windows
                     compilerWrapper.TaskLogger = Log;
                     compilerWrapper.UnknownErrorID = UnknownErrorID;
                     compilerWrapper.XamlDebuggingInformation = XamlDebuggingInformation;
+
+                    compilerWrapper.SupportCustomOutputPaths = SupportCustomOutputPaths;
 
                     compilerWrapper.TaskFileService = _taskFileService;
 
@@ -696,7 +702,10 @@ namespace Microsoft.Build.Tasks.Windows
 
                 if (appDomain != null)
                 {
+                    // AppDomains are not supported on .NET Core.  'AppDomain.Unload' will always throw `CannotUnloadAppDomainException`.  
+                    #pragma warning disable SYSLIB0024
                     AppDomain.Unload(appDomain);
+                    #pragma warning restore SYSLIB0024
                     compilerWrapper = null;
                 }
             }

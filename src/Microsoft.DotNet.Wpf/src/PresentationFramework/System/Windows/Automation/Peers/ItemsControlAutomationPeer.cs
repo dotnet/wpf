@@ -199,7 +199,7 @@ namespace System.Windows.Automation.Peers
 
                     // protection from indistinguishable items - for example, 2 strings with same value
                     // this scenario does not work in ItemsControl however is not checked for.
-                    if (_dataChildren[dataItem] == null)
+                    if (peer != null && _dataChildren[dataItem] == null)
                     {
                         children.Add(peer);
                         _dataChildren[dataItem] = peer;

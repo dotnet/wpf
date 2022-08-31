@@ -1,9 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.SDK">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{9AC36357-34B7-40A1-95CA-FE9F46D089A7}</ProjectGuid>
     <AssemblyName>System.Xaml</AssemblyName>
-    <TargetFramework>netcoreapp5.0</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
+    
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <NoWarn>$(NoWarn);0618;NU5125;0618</NoWarn>
     <DefineConstants>$(DefineConstants);OLDRESOURCES;SYSTEM_XAML</DefineConstants>
     <EnableAnalyzers>true</EnableAnalyzers>
@@ -100,6 +100,7 @@
     <NetCoreReference Include="System.Diagnostics.Tools" />
     <NetCoreReference Include="System.Globalization" />
     <NetCoreReference Include="System.IO" />
+    <NetCoreReference Include="System.Memory" />
     <NetCoreReference Include="System.ObjectModel" />
     <NetCoreReference Include="System.Reflection.Emit.ILGeneration" />
     <NetCoreReference Include="System.Reflection.Emit.Lightweight" />

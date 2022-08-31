@@ -66,6 +66,7 @@ namespace System.IO.Packaging
         /// <param name="cachedPackageIsThreadSafe">is the cacheEntry thread-safe?</param>
         /// <remarks>This should only be called by PackWebRequestFactory</remarks>
         /// <exception cref="ArgumentException">Will throw an ArgumentException if the given URI is not of the correct scheme</exception>
+        #pragma warning disable SYSLIB0014 
         internal PackWebRequest(Uri uri, Uri packageUri, Uri partUri, Package cacheEntry,
             bool respectCachePolicy, bool cachedPackageIsThreadSafe)
         {
@@ -85,10 +86,11 @@ namespace System.IO.Packaging
             if (PackWebRequestFactory._traceSwitch.Enabled && (cacheEntry != null))
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " + 
                         "PackWebRequest - working from Package Cache");
 #endif
         }
+        #pragma warning restore SYSLIB0014 
 
         //------------------------------------------------------
         //
@@ -156,7 +158,7 @@ namespace System.IO.Packaging
                 if (PackWebRequestFactory._traceSwitch.Enabled)
                     System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " + 
                         "PackWebRequest - Getting response from Package Cache");
 #endif
                 return new PackWebResponse(_uri, _innerUri, _partName, _cacheEntry, _cachedPackageIsThreadSafe);
@@ -172,7 +174,7 @@ namespace System.IO.Packaging
                 if (PackWebRequestFactory._traceSwitch.Enabled)
                     System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " + 
                         "PackWebRequest - Getting new response");
 #endif
                 // Create a new response for every call

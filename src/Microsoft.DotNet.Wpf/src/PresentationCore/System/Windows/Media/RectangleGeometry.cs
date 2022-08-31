@@ -190,9 +190,6 @@ namespace System.Windows.Media
         {
             Rect boundingRect;
 
-            Debug.Assert(worldMatrix != null);
-            Debug.Assert(geometryMatrix != null);
-
             if (rect.IsEmpty)
             {
                 boundingRect = Rect.Empty;
@@ -442,9 +439,9 @@ namespace System.Windows.Media
             else
             {   
                 ctx.BeginFigure(rect.TopLeft, true /* is filled */, true /* is closed */);
-                ctx.LineTo(Rect.TopRight, true /* is stroked */, false /* is smooth join */);
-                ctx.LineTo(Rect.BottomRight, true /* is stroked */, false /* is smooth join */);
-                ctx.LineTo(Rect.BottomLeft, true /* is stroked */, false /* is smooth join */);
+                ctx.LineTo(rect.TopRight, true /* is stroked */, false /* is smooth join */);
+                ctx.LineTo(rect.BottomRight, true /* is stroked */, false /* is smooth join */);
+                ctx.LineTo(rect.BottomLeft, true /* is stroked */, false /* is smooth join */);
             }
 
             ctx.Close();

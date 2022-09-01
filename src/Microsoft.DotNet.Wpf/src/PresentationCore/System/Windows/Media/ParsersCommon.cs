@@ -29,7 +29,6 @@ using System.Windows.Media.Imaging;
 using System.Windows;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using MS.Internal.Media; 
 using TypeConverterHelper = System.Windows.Markup.TypeConverterHelper;
 
@@ -149,7 +148,7 @@ namespace MS.Internal.Markup
                                 ((pathString[curIndex] != '0') &&
                                  (pathString[curIndex] != '1')))
                             {
-                                throw new FormatException(SR.Get(SRID.Parsers_IllegalToken));
+                                throw new FormatException(SR.Parsers_IllegalToken);
                             }
                             
 #if PRESENTATION_CORE
@@ -206,7 +205,7 @@ namespace MS.Internal.Markup
         /// </summary>
         private void ThrowBadToken()
         {
-            throw new System.FormatException(SR.Get(SRID.Parser_UnexpectedToken, _pathString, _curIndex - 1));
+            throw new System.FormatException(SR.Format(SR.Parser_UnexpectedToken, _pathString, _curIndex - 1));
         }
 
         bool More()
@@ -445,7 +444,7 @@ namespace MS.Internal.Markup
                 }
                 catch (FormatException except)
                 {
-                    throw new System.FormatException(SR.Get(SRID.Parser_UnexpectedToken, _pathString, start), except);
+                    throw new System.FormatException(SR.Format(SR.Parser_UnexpectedToken, _pathString, start), except);
                 }
             }
         }

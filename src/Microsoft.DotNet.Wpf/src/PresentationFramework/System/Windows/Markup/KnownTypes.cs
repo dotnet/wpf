@@ -5527,7 +5527,7 @@ namespace System.Windows.Markup
 
             if(t == null)
             {
-                MarkupCompiler.ThrowCompilerException(SRID.ParserInvalidKnownType, ((int)knownElement).ToString(CultureInfo.InvariantCulture), knownElement.ToString());
+                MarkupCompiler.ThrowCompilerException(nameof(SR.ParserInvalidKnownType), ((int)knownElement).ToString(CultureInfo.InvariantCulture), knownElement.ToString());
             }
             return t;
         }

@@ -14,27 +14,27 @@ We provide the following templates:
 
 Before submitting a change to any of the templates please make sure to test them locally.
 
-1. Install the required template with `dotnet` tool (e.g. `WinFormsApplication-CSharp`).<br />
+1. Install the required template with `dotnet` tool (e.g. `WpfApplication-CSharp`).<br />
 In the command prompt of your choice run the following command:
     ```
-    > dotnet new -i <path to the repo>\wpf\packaging\Microsoft.Dotnet.Wpf.ProjectTemplates\content\WipfApplication-CSharp
+    > dotnet new install <path to the repo>\wpf\packaging\Microsoft.Dotnet.Wpf.ProjectTemplates\content\WpfApplication-CSharp
     ```
 
 2. To confirm that the template is correctly installed run the following command and look for your template:
     ```
-    > dotnet new -u
+    > dotnet new uninstall
     ```
-    ![image]()
+    ![image](../../Documentation/images/templates-check-installed.png)
 
 3. Create an app from your template:
     ```
     > dotnet new wpf -n testapp1
     ```
 
-4. Verify the app behaves as expected. <br />
+4. Verify the app behaves as expected.    
 If necessary, tweak the template and create new apps.
 
-5. Once you are happy with the template, you can uninstall it to revert to the original by running the command given in `dotnet new -u` output; e.g.
+5. Once you are happy with the template, you can uninstall it to revert to the original by running the command given in `dotnet new uninstall` output; e.g.
     ```
-    > dotnet new -u <path to the repo>\wpf\packaging\Microsoft.Dotnet.Wpf.ProjectTemplates\content\WipfApplication-CSharp
+    > dotnet new uninstall <path to the repo>\wpf\packaging\Microsoft.Dotnet.Wpf.ProjectTemplates\content\WpfApplication-CSharp
     ````

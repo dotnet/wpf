@@ -30,7 +30,7 @@ jobs:
       binlogPath: artifacts/log/Debug/x86/Build.binlog
       pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: NetCore1ESPool-Public
+          name: NetCore-Public
           demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Open
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
           name: NetCore1ESPool-Internal
@@ -45,7 +45,7 @@ jobs:
         # Will eventually change this to two BYOC pools.
         # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: NetCore1ESPool-Public
+          name: NetCore-Public
           demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Open
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
           name: NetCore1ESPool-Internal

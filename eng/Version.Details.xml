@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="6.0.9-servicing.22419.10">
+    <Dependency Name="Microsoft.Private.Winforms" Version="6.0.9-servicing.22452.2">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-winforms</Uri>
-      <Sha>ec81900c9f76e0f25dbdcb7d7effcfb96cb6f77c</Sha>
+      <Sha>53556f9f694ff0711b6a97bc6eee7be4d7930af5</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="6.0.9-servicing.22419.10">
+    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="6.0.9-servicing.22452.2">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-winforms</Uri>
-      <Sha>ec81900c9f76e0f25dbdcb7d7effcfb96cb6f77c</Sha>
+      <Sha>53556f9f694ff0711b6a97bc6eee7be4d7930af5</Sha>
     </Dependency>
     <Dependency Name="System.CodeDom" Version="6.0.0" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
@@ -15,7 +15,7 @@
     </Dependency>
     <Dependency Name="System.Configuration.ConfigurationManager" Version="6.0.1" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>163a63591cf9e9b682063cf3995948c2b885a042</Sha>
+      <Sha>5e2d96cd9b05142c3cccc4092d6f69744a538668</Sha>
     </Dependency>
     <Dependency Name="System.Diagnostics.EventLog" Version="6.0.0" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
@@ -57,13 +57,13 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>4822e3c3aa77eb82b2fb33c9321f923cf11ddde6</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.ILDAsm" Version="6.0.9-servicing.22419.5" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="Microsoft.NETCore.ILDAsm" Version="6.0.9-servicing.22451.7" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>163a63591cf9e9b682063cf3995948c2b885a042</Sha>
+      <Sha>5e2d96cd9b05142c3cccc4092d6f69744a538668</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.ILAsm" Version="6.0.9-servicing.22419.5" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="Microsoft.NETCore.ILAsm" Version="6.0.9-servicing.22451.7" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>163a63591cf9e9b682063cf3995948c2b885a042</Sha>
+      <Sha>5e2d96cd9b05142c3cccc4092d6f69744a538668</Sha>
     </Dependency>
     <Dependency Name="System.Resources.Extensions" Version="6.0.0" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
@@ -71,15 +71,15 @@
     </Dependency>
     <Dependency Name="Microsoft.NETCore.App.Ref" Version="6.0.9" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>163a63591cf9e9b682063cf3995948c2b885a042</Sha>
+      <Sha>5e2d96cd9b05142c3cccc4092d6f69744a538668</Sha>
     </Dependency>
     <Dependency Name="Microsoft.NETCore.App.Runtime.win-x64" Version="6.0.9" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>163a63591cf9e9b682063cf3995948c2b885a042</Sha>
+      <Sha>5e2d96cd9b05142c3cccc4092d6f69744a538668</Sha>
     </Dependency>
-    <Dependency Name="VS.Redist.Common.NetCore.SharedFramework.x64.6.0" Version="6.0.9-servicing.22419.5" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="VS.Redist.Common.NetCore.SharedFramework.x64.6.0" Version="6.0.9-servicing.22451.7" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>163a63591cf9e9b682063cf3995948c2b885a042</Sha>
+      <Sha>5e2d96cd9b05142c3cccc4092d6f69744a538668</Sha>
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>

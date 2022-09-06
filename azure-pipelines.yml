@@ -9,8 +9,6 @@ variables:
     # clean the local repo on the build agents
   - name: Build.Repository.Clean
     value: true
-  - name: _PublishUsingPipelines
-    value: true
   - name: _DotNetArtifactsCategory
     value: WINDOWSDESKTOP
   - name: _DotNetValidationArtifactsCategory

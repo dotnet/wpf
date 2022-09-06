@@ -427,7 +427,7 @@ namespace System.Windows.Markup
                 StringBuilder sb = new StringBuilder(message);
                 if (innerException.Message != String.Empty)
                 {
-                    sb.Append(" ");
+                    sb.Append(' ');
                 }
 
                 sb.Append(innerException.Message);

@@ -350,7 +350,7 @@ namespace System.Windows.Xps.Serialization
                                                                        propertyValue);
 
 
-                if (typeof(Type).IsInstanceOfType(propertyValue))
+                if (propertyValue is Type)
                 {
                     int index = valueAsString.LastIndexOf('.');
                     valueAsString = string.Concat(

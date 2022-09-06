@@ -6205,7 +6205,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="UnexpectedXmlNodeInXmlFixedPageInfoConstructor">
         <source>\"{{{0}}}{1}\" element found. Expected fixed page element ({{{2}}}{3}).</source>
-        <target state="translated">"{{{0}}}{1}" 요소가 있습니다. 고정 페이지 요소({{{2}}}{3})가 필요합니다.</target>
+        <target state="translated">\"{{{0}}}{1}\" 요소가 있습니다. 고정 페이지 요소({{{2}}}{3})가 필요합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnknownBamlRecord">

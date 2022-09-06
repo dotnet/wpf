@@ -1908,8 +1908,8 @@
         <note />
       </trans-unit>
       <trans-unit id="Invalid_IInputElement">
-        <source>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</source>
-        <target state="translated">'{0}'은(는) IInputElement에 사용할 수 없습니다. UIElement 또는 ContentElement가 필요합니다.</target>
+        <source>'{0}' is not a valid type for IInputElement. UIElement, ContentElement or UIElement3D expected.</source>
+        <target state="translated">'{0}'은(는) IInputElement에 유효한 형식이 아닙니다. UIElement, ContentElement 또는 UIElement3D가 필요합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="Invalid_URI">

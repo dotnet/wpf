@@ -208,7 +208,7 @@ namespace MS.Internal.AutomationProxies
         {
             get
             {
-                return SR.Get(SRID.LocalizedNameWindowsSysHeader);
+                return SR.LocalizedNameWindowsSysHeader;
             }
         }
 
@@ -482,7 +482,7 @@ namespace MS.Internal.AutomationProxies
 
                 if (!GetInvokationPoint (out pt))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
 
                 IntPtr center = NativeMethods.Util.MAKELPARAM (pt.x, pt.y);

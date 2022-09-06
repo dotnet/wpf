@@ -1,4 +1,4 @@
-{
+﻿{
   "author": "Microsoft",
   "name": "WPF アプリケーション",
   "description": ".NET WPF アプリケーションを作成するためのプロジェクト",
@@ -8,7 +8,7 @@
   "symbols/Framework/choices/netcoreapp3.1/description": "ターゲット netcoreapp3.1",
   "symbols/Framework/choices/net5.0/description": "ターゲット net5.0",
   "symbols/Framework/choices/net6.0/description": "ターゲット net6.0",
-  "symbols/Framework/choices/net7.0/description": "Target net7.0",
+  "symbols/Framework/choices/net7.0/description": "ターゲット net7.0",
   "symbols/langVersion/description": "作成されたプロジェクト ファイルで langVersion を設定します",
   "symbols/skipRestore/description": "指定した場合、作成時にプロジェクトの自動復元がスキップされます。",
   "postActions/restore/description": "このプロジェクトに必要な NuGet パッケージを復元します。",

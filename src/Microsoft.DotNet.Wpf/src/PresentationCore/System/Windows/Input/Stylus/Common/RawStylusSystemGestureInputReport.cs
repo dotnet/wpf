@@ -101,7 +101,7 @@ namespace System.Windows.Input
             : base(mode, timestamp, inputSource,
                     RawStylusActions.SystemGesture,
                     stylusPointDescGenerator, tabletId,
-                    stylusDeviceId, new int[] { })
+                    stylusDeviceId, Array.Empty<int>())
         {
             Initialize(systemGesture, gestureX, gestureY, buttonState);
         }
@@ -151,7 +151,7 @@ namespace System.Windows.Input
             int gestureX,
             int gestureY,
             int buttonState)
-            : base(mode, timestamp, inputSource, penContext, RawStylusActions.SystemGesture, tabletId, stylusDeviceId, new int[] { })
+            : base(mode, timestamp, inputSource, penContext, RawStylusActions.SystemGesture, tabletId, stylusDeviceId, Array.Empty<int>())
         {
             Initialize(systemGesture, gestureX, gestureY, buttonState);
         }

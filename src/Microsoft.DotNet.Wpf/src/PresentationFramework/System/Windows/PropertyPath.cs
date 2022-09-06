@@ -281,7 +281,7 @@ namespace System.Windows
                     {
                         // a dot inside parens, when there's no early-bound accessor,
                         // is an unresolved PD name
-                        if (name.IndexOf('.') >= 0)
+                        if (name.Contains('.'))
                             ++ result;
                     }
                 }

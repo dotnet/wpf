@@ -754,7 +754,7 @@ namespace System.Windows.Ink
         private bool                    _drawAsHollow       = false;
         private bool                    _cloneStylusPoints  = true;
         private bool                    _delayRaiseInvalidated  = false;
-        private static readonly double  HollowLineSize      = 1.0f;
+        private const double            HollowLineSize = 1.0f;
         private Rect                    _cachedBounds       = Rect.Empty;
 
         // The private PropertyChanged event
@@ -765,7 +765,7 @@ namespace System.Windows.Ink
 
         #endregion
 
-        internal static readonly double PercentageTolerance = 0.0001d;
+        internal const double PercentageTolerance = 0.0001d;
         #endregion
     }
 }

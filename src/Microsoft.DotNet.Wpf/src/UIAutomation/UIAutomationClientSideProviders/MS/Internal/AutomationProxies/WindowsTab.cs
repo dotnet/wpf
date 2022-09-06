@@ -461,17 +461,17 @@ namespace MS.Internal.AutomationProxies
 
             if (!IsScrollable())
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             if (verticalAmount != ScrollAmount.NoAmount)
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             if (!Scroll(horizontalAmount))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
         }
 
@@ -485,12 +485,12 @@ namespace MS.Internal.AutomationProxies
 
             if (!IsScrollable())
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             if ((int)verticalPercent != (int)ScrollPattern.NoScroll)
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
             else if ((int)horizontalPercent == (int)ScrollPattern.NoScroll)
             {
@@ -498,7 +498,7 @@ namespace MS.Internal.AutomationProxies
             }
             else if (horizontalPercent < 0 || horizontalPercent > 100)
             {
-                throw new ArgumentOutOfRangeException("horizontalPercent", SR.Get(SRID.ScrollBarOutOfRange));
+                throw new ArgumentOutOfRangeException("horizontalPercent", SR.ScrollBarOutOfRange);
             }
 
             // Get up/down control's hwnd
@@ -506,7 +506,7 @@ namespace MS.Internal.AutomationProxies
 
             if (updownHwnd == IntPtr.Zero)
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             // Get available range
@@ -683,7 +683,7 @@ namespace MS.Internal.AutomationProxies
         {
             if (!IsScrollable())
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             // Get up/down control's hwnd
@@ -820,7 +820,7 @@ namespace MS.Internal.AutomationProxies
 
             if (NativeMethods.Util.HIWORD (newPos) == 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             newPos = NativeMethods.Util.LOWORD (newPos);
@@ -1070,7 +1070,7 @@ namespace MS.Internal.AutomationProxies
 
             if (!IsSelectable())
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             if (((ISelectionItemProvider)this).IsSelected == false)
@@ -1091,7 +1091,7 @@ namespace MS.Internal.AutomationProxies
             // If not selectable, can't add to selection
             if (!IsSelectable())
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             // If already selected, done
@@ -1113,12 +1113,12 @@ namespace MS.Internal.AutomationProxies
                     return;
                 }
 
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
             // else only single selection allowed
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.DoesNotSupportMultipleSelection));
+                throw new InvalidOperationException(SR.DoesNotSupportMultipleSelection);
             }
         }
 
@@ -1149,7 +1149,7 @@ namespace MS.Internal.AutomationProxies
                     return;
                 }
 
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
             // else if button style and single select, send deselectall message
             else if (Misc.IsBitSet(WindowStyle, NativeMethods.TCS_BUTTONS))
@@ -1158,7 +1158,7 @@ namespace MS.Internal.AutomationProxies
                 return;
             }
 
-            throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+            throw new InvalidOperationException(SR.OperationCannotBePerformed);
         }
 
         // True if this element is part of the the selection
@@ -1217,7 +1217,7 @@ namespace MS.Internal.AutomationProxies
 
             if (!parent.IsScrollable())
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             parent.ScrollToItem(_item);

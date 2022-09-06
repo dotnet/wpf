@@ -212,10 +212,10 @@ jobs:
         displayName: Fetch Test Binaries
         inputs:
           buildType: 'specific'
-          project: '9ee6d478-d288-47f7-aacc-f6e6d082ae6d'
-          pipeline: '1145'
+          project: 'cbb18261-c48f-4abb-8651-8cdcb5474649'
+          pipeline: '81'
           buildVersionToDownload: 'specific'
-          buildId: '1934148'
+          buildId: '410'
           downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
           checkDownloadedFiles: true
 

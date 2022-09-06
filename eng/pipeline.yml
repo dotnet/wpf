@@ -208,7 +208,7 @@ jobs:
           targetType: 'inline'
           script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
           
-      - task: DownloadBuildArtifacts@1
+      - task: DownloadBuildArtifacts@0
         displayName: Fetch Test Binaries
         inputs:
           buildType: 'specific'

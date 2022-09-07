@@ -216,6 +216,7 @@ jobs:
           pipeline: '81'
           buildVersionToDownload: 'specific'
           buildId: '6991'
+          artifactName: 'TestBinZip'
           downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
           checkDownloadedFiles: true
 

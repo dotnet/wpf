@@ -208,7 +208,7 @@ jobs:
           targetType: 'inline'
           script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
           
-      - task: DownloadBuildArtifacts@1
+      - task: DownloadBuildArtifacts@0
         displayName: Fetch Test Binaries
         inputs:
           buildType: 'specific'
@@ -216,6 +216,7 @@ jobs:
           pipeline: '81'
           buildVersionToDownload: 'specific'
           buildId: '6991'
+          artifactsName: 'Windows_NT_Windows_NT Build_Debug_x64.zip'
           downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
           checkDownloadedFiles: true
 

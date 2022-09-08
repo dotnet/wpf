@@ -218,7 +218,14 @@ jobs:
           buildId: '6988'
           downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
           checkDownloadedFiles: true
-
+          
+      - task: CmdLine@2
+        displayName: 'List files'
+        inputs:
+            script: |
+                dir /a-D /S /B
+        workingDirectory: '$(Build.ArtifactsDirectory)\testbinzip'
+        
       - task: ExtractFiles@1
         displayName: Extract Test Bins
         inputs:

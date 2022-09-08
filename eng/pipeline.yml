@@ -224,7 +224,7 @@ jobs:
         inputs:
             script: |
                 dir /a-D /S /B
-        workingDirectory: '$(Build.ArtifactsDirectory)\testbinzip'
+            workingDirectory: '$(Build.ArtifactsDirectory)\testbinzip'
         
       - task: ExtractFiles@1
         displayName: Extract Test Bins

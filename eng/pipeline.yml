@@ -30,11 +30,11 @@ jobs:
       binlogPath: artifacts/log/Debug/x86/Build.binlog
       pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: NetCore1ESPool-Svc-Public
-          demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre.Open
+          name: NetCore-Svc-Public
+          demands: ImageOverride -equals windows.vs2022preview.amd64.Open
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          name: NetCore1ESPool-Svc-Internal
-          demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre
+          name: NetCore-Svc-Internal
+          demands: ImageOverride -equals windows.vs2022preview.amd64
     helixRepo: $(repoName)
 
     jobs:
@@ -45,11 +45,11 @@ jobs:
         # Will eventually change this to two BYOC pools.
         # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: NetCore1ESPool-Svc-Public
-          demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre.Open
+          name: NetCore-Svc-Public
+          demands: ImageOverride -equals windows.vs2022preview.amd64.Open
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          name: NetCore1ESPool-Svc-Internal
-          demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre
+          name: NetCore-Svc-Internal
+          demands: ImageOverride -equals windows.vs2022preview.amd64
       variables:
         # needed for signing
         - name: _TeamName
@@ -218,14 +218,14 @@ jobs:
           buildId: '6988'
           downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
           checkDownloadedFiles: true
-
+          
       - task: ExtractFiles@1
         displayName: Extract Test Bins
         inputs:
-          archiveFilePatterns: '$(System.ArtifactsDirectory)\testbinzip\*.zip'
+          archiveFilePatterns: '$(System.ArtifactsDirectory)\testbinzip\*.zip\*.zip'
           destinationFolder: '$(System.ArtifactsDirectory)\testbins'
           cleanDestinationFolder: true
-          overwriteExistingFiles: false
+          overwriteExistingFiles: true
 
       - task: PowerShell@2
         displayName: Run Tests

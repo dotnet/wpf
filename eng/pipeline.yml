@@ -208,14 +208,14 @@ jobs:
           targetType: 'inline'
           script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
           
-      - task: DownloadBuildArtifacts@0
+      - task: DownloadPipelineArtifact@2
         displayName: Fetch Test Binaries
         inputs:
           buildType: 'specific'
-          project: '9ee6d478-d288-47f7-aacc-f6e6d082ae6d'
-          pipeline: '1145'
+          project: 'cbb18261-c48f-4abb-8651-8cdcb5474649'
+          pipeline: '81'
           buildVersionToDownload: 'specific'
-          buildId: '1934148'
+          buildId: '6988'
           downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
           checkDownloadedFiles: true
 
@@ -230,6 +230,7 @@ jobs:
       - task: PowerShell@2
         displayName: Run Tests
         inputs:
-          targetType: 'inline'
-          script: '.\CIRunDrts.cmd'
-          workingDirectory: '$(System.ArtifactsDirectory)\testbins'
+          archiveFilePatterns: '$(System.ArtifactsDirectory)\testbinzip\*.zip\*.zip'
+          destinationFolder: '$(System.ArtifactsDirectory)\testbins'
+          cleanDestinationFolder: true
+          overwriteExistingFiles: true

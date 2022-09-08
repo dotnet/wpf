@@ -232,7 +232,7 @@ jobs:
           archiveFilePatterns: '$(System.ArtifactsDirectory)\testbinzip\*.zip\*.zip'
           destinationFolder: '$(System.ArtifactsDirectory)\testbins'
           cleanDestinationFolder: true
-          overwriteExistingFiles: false
+          overwriteExistingFiles: true
 
       - task: PowerShell@2
         displayName: Run Tests

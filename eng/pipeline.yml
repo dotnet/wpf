@@ -211,8 +211,9 @@ jobs:
       - task: DownloadPipelineArtifact@2
         displayName: Fetch Test Binaries
         inputs:
-          buildType: 'current'
+          buildType: 'specific'
           project: 'cbb18261-c48f-4abb-8651-8cdcb5474649'
+          pipelineId: 81 
           downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
           checkDownloadedFiles: true
         

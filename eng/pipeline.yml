@@ -211,20 +211,10 @@ jobs:
       - task: DownloadPipelineArtifact@2
         displayName: Fetch Test Binaries
         inputs:
-          buildType: 'specific'
+          buildType: 'current'
           project: 'cbb18261-c48f-4abb-8651-8cdcb5474649'
-          pipeline: '81'
-          buildVersionToDownload: 'specific'
-          buildId: '6988'
           downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
           checkDownloadedFiles: true
-          
-      - task: CmdLine@2
-        displayName: 'List files'
-        inputs:
-            script: |
-                dir /a-D /S /B
-            workingDirectory: '$(System.ArtifactsDirectory)\testbinzip'
         
       - task: ExtractFiles@1
         displayName: Extract Test Bins

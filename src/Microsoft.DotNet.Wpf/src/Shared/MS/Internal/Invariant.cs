@@ -238,8 +238,6 @@ namespace MS.Internal
                 enabled = false;
 
                 //extracting all the data under an elevation.
-                object dbgJITDebugLaunchSettingValue;
-                string dbgManagedDebuggerValue;
                 key = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\.NETFramework");
                 //
                 // Check for the enable.

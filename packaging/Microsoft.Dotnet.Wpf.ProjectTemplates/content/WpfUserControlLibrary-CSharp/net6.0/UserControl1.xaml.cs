@@ -16,6 +16,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+#if (csharpFeature_FileScopedNamespaces)
+namespace Company.WpfControlLibrary;
+
+/// <summary>
+/// Interaction logic for UserControl1.xaml
+/// </summary>
+public partial class UserControl1 : UserControl
+{
+    public UserControl1()
+    {
+        InitializeComponent();
+    }
+}
+#else
 namespace Company.WpfControlLibrary
 {
     /// <summary>
@@ -29,3 +43,5 @@ namespace Company.WpfControlLibrary
         }
     }
 }
+#endif
+

@@ -16,6 +16,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+#if (csharpFeature_FileScopedNamespaces)
+#else
+#endif
+
 namespace Company.WpfCustomControlLibrary
 {
     /// <summary>

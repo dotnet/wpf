@@ -16,6 +16,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+#if (csharpFeature_FileScopedNamespaces)
+namespace Company.WpfApplication1;
+
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : Window
+{
+    public MainWindow()
+    {
+        InitializeComponent();
+    }
+}
+#else
 namespace Company.WpfApplication1
 {
     /// <summary>
@@ -29,3 +43,4 @@ namespace Company.WpfApplication1
         }
     }
 }
+#endif

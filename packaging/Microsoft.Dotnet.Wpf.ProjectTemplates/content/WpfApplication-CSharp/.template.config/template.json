@@ -94,18 +94,40 @@
       "description": "Whether to enable nullable reference types for this project.",
       "displayName": "Enable nullable"
     },
-    "csharp10orLater" : {
+    "csharp9orOlder": {
       "type": "generated",
       "generator": "regexMatch",
       "datatype": "bool",
       "parameters": {
-        "pattern": "^(|10\\.0|10|11.\\0|11|preview|latest|default|latestMajor)$",
+        "pattern": "^(ISO-1|ISO-2|[1-7]|[8-9]|[8-9]\\.0|7\\.[0-3])$",
         "source": "langVersion"
-      }      
+      }
+    },
+    "csharp8orOlder": {
+      "type": "generated",
+      "generator": "regexMatch",
+      "datatype": "bool",
+      "parameters": {
+        "pattern": "^(ISO-1|ISO-2|[1-7]|8|8\\.0|7\\.[0-3])$",
+        "source": "langVersion"
+      }
+    },
+    "csharp7orOlder": {
+      "type": "generated",
+      "generator": "regexMatch",
+      "datatype": "bool",
+      "parameters": {
+        "pattern": "^(ISO-1|ISO-2|[1-7]|7\\.[0-3])$",
+        "source": "langVersion"
+      }
     },
     "csharpFeature_ImplicitUsings" : {
       "type": "computed",
-      "value": "(Framework == \"net7.0\" || Framework == \"net6.0\") && csharp10orLater == \"true\""
+      "value": "(Framework == \"net7.0\" || Framework == \"net6.0\") && csharp9orOlder == \"false\""
+    },
+    "csharpFeature_FileScopedNamespaces" : {
+      "type": "computed",
+      "value": "(Framework == \"net7.0\" || Framework == \"net6.0\") && csharp9orOlder == \"false\""
     }
   },
   "primaryOutputs": [

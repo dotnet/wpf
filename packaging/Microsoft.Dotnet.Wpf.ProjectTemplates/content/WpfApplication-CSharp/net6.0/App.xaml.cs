@@ -1,12 +1,16 @@
 ﻿#if (!csharpFeature_ImplicitUsings)
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-#endif
+using System.Windows;
+#else
 using System.Configuration;
 using System.Data;
 using System.Windows;
+#endif
 
 #if (csharpFeature_FileScopedNamespaces)
 namespace Company.WpfApplication1;

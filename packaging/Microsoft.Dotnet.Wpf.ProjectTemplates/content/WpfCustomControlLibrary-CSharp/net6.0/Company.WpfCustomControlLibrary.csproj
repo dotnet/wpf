@@ -7,6 +7,7 @@
     <LangVersion Condition="'$(langVersion)' != ''">$(ProjectLanguageVersion)</LangVersion>
     <Nullable Condition="'$(Nullable)' == 'true'">enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ImplicitUsings Condition="'$(csharpFeature_ImplicitUsings)' == 'true'">enable</ImplicitUsings>
   </PropertyGroup>
 
 </Project>

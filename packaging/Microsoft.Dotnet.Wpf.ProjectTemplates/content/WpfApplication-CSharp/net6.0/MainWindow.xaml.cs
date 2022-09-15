@@ -26,8 +26,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 #endif
 
-
-
 #if (csharpFeature_FileScopedNamespaces)
 namespace Company.WpfApplication1;
 

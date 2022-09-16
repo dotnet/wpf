@@ -30,11 +30,11 @@ jobs:
       binlogPath: artifacts/log/Debug/x86/Build.binlog
       pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: NetCore1ESPool-Public
-          demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre.Open
+          name: NetCore-Public
+          demands: ImageOverride -equals windows.vs2022preview.amd64.Open
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
           name: NetCore1ESPool-Internal
-          demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre
+          demands: ImageOverride -equals windows.vs2022preview.amd64
     helixRepo: $(repoName)
 
     jobs:
@@ -45,11 +45,11 @@ jobs:
         # Will eventually change this to two BYOC pools.
         # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: NetCore1ESPool-Public
-          demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre.Open
+          name: NetCore-Public
+          demands: ImageOverride -equals windows.vs2022preview.amd64.Open
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
           name: NetCore1ESPool-Internal
-          demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre
+          demands: ImageOverride -equals windows.vs2022preview.amd64
       variables:
         # needed for signing
         - name: _TeamName
@@ -208,24 +208,31 @@ jobs:
           targetType: 'inline'
           script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
           
-      - task: DownloadBuildArtifacts@1
+      - task: DownloadPipelineArtifact@2
         displayName: Fetch Test Binaries
         inputs:
           buildType: 'specific'
-          project: '9ee6d478-d288-47f7-aacc-f6e6d082ae6d'
-          pipeline: '1145'
+          project: 'cbb18261-c48f-4abb-8651-8cdcb5474649'
+          pipeline: '81'
           buildVersionToDownload: 'specific'
-          buildId: '1934148'
+          buildId: '6988'
           downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
           checkDownloadedFiles: true
-
+          
+      - task: CmdLine@2
+        displayName: 'List files'
+        inputs:
+            script: |
+                dir /a-D /S /B
+            workingDirectory: '$(System.ArtifactsDirectory)\testbinzip'
+        
       - task: ExtractFiles@1
         displayName: Extract Test Bins
         inputs:
-          archiveFilePatterns: '$(System.ArtifactsDirectory)\testbinzip\*.zip'
+          archiveFilePatterns: '$(System.ArtifactsDirectory)\testbinzip\*.zip\*.zip'
           destinationFolder: '$(System.ArtifactsDirectory)\testbins'
           cleanDestinationFolder: true
-          overwriteExistingFiles: false
+          overwriteExistingFiles: true
 
       - task: PowerShell@2
         displayName: Run Tests

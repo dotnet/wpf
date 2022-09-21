@@ -242,9 +242,10 @@ namespace System.Windows.Xps.Serialization
                     try
                     {
                         Uri sourceUri = new Uri(decoder.ToString());
-                        Stream srcStream = MS.Internal.WpfWebRequestHelper.CreateRequestAndGetResponseStream(sourceUri);
-                        CopyImageStream(srcStream, resourceStream.Stream);
-                        srcStream.Close();
+                        using (Stream srcStream = MS.Internal.WpfWebRequestHelper.CreateRequestAndGetResponseStream(sourceUri))
+                        {
+                            CopyImageStream(srcStream, resourceStream.Stream);
+                        }
                         bCopiedStream = true;
                     }
                     catch (UriFormatException)

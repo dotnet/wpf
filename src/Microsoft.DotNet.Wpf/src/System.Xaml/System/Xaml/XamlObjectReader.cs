@@ -2250,6 +2250,7 @@ namespace System.Xaml
 
             class PropertySorterForCurlySyntax : IComparer<MarkupInfo>
             {
+                [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Justification = "Could possibly break clients that use reflection")]
                 const int Equal = 0;
                 const int XFirst = -1;
                 const int YFirst = 1;

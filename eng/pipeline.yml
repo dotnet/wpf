@@ -190,8 +190,7 @@ jobs:
           buildType: 'specific'
           project: 'cbb18261-c48f-4abb-8651-8cdcb5474649'
           pipeline: '81'
-          buildVersionToDownload: 'specific'
-          buildId: '6988'
+          buildVersionToDownload: 'latest'
           downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
           checkDownloadedFiles: true
 

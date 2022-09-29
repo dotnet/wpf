@@ -200,4 +200,43 @@ jobs:
         #
         #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
         #
-        condition: and(succeeded(), eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))
+        condition: and(succeeded(), eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))3
+      
+      - task: PowerShell@2
+        displayName: Replace WPF binaries
+        inputs:
+          targetType: 'inline'
+          script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
+
+      - task: DownloadPipelineArtifact@2
+        displayName: Fetch Test Binaries
+        inputs:
+          buildType: 'specific'
+          project: 'cbb18261-c48f-4abb-8651-8cdcb5474649'
+          pipeline: '81'
+          buildVersionToDownload: 'specific'
+          buildId: '6988'
+          downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
+          checkDownloadedFiles: true
+
+      - task: CmdLine@2
+        displayName: 'List files'
+        inputs:
+            script: |
+                dir /a-D /S /B
+            workingDirectory: '$(System.ArtifactsDirectory)\testbinzip'
+
+      - task: ExtractFiles@1
+        displayName: Extract Test Bins
+        inputs:
+          archiveFilePatterns: '$(System.ArtifactsDirectory)\testbinzip\*.zip\*.zip'
+          destinationFolder: '$(System.ArtifactsDirectory)\testbins'
+          cleanDestinationFolder: true
+          overwriteExistingFiles: true
+
+      - task: PowerShell@2
+        displayName: Run Tests
+        inputs:
+          targetType: 'inline'
+          script: '.\CIRunDrts.cmd'
+          workingDirectory: '$(System.ArtifactsDirectory)\testbins'        

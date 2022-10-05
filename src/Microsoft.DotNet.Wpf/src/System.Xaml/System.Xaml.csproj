@@ -23,9 +23,6 @@
     <Compile Include="$(WpfSharedDir)MS\Internal\SafeSecurityHelper.cs">
       <Link>Common\WPF\MS\Internal\SafeSecurityHelper.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSharedDir)MS\Internal\SecurityCriticalDataForSet.cs">
-      <Link>Common\WPF\MS\Internal\SecurityCriticalDataForSet.cs</Link>
-    </Compile>
     <Compile Include="$(WpfSharedDir)MS\Internal\CriticalExceptions.cs">
       <Link>Common\WPF\MS\Internal\CriticalExceptions.cs</Link>
     </Compile>

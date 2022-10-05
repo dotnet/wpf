@@ -120,9 +120,9 @@ namespace MS.Internal.PtsHost
 
             OnArrange();
 
-            if(_paraHandle.Value != IntPtr.Zero)
+            if(_paraHandle != IntPtr.Zero)
             {
-                PTS.Validate(PTS.FsClearUpdateInfoInSubpage(PtsContext.Context, _paraHandle.Value), PtsContext);
+                PTS.Validate(PTS.FsClearUpdateInfoInSubpage(PtsContext.Context, _paraHandle), PtsContext);
             }
         }
 
@@ -205,7 +205,7 @@ namespace MS.Internal.PtsHost
                 mcs.Dispose();
                 pmcsclientOut = IntPtr.Zero;
             }
-            _paraHandle.Value = pfspara;
+            _paraHandle = pfspara;
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace MS.Internal.PtsHost
                 pmcsclientOut = IntPtr.Zero;
             }
 
-            _paraHandle.Value = pfspara;
+            _paraHandle = pfspara;
         }
 
 
@@ -280,7 +280,7 @@ namespace MS.Internal.PtsHost
             fspap = new PTS.FSPAP();
             CellParagraph.GetParaProperties(ref fspap);
 
-            CellParagraph.UpdateBottomlessPara(_paraHandle.Value, this,
+            CellParagraph.UpdateBottomlessPara(_paraHandle, this,
                                                PTS.FromBoolean(false),
                                                fswdir, 0,
                                                TextDpi.ToTextDpi(width),

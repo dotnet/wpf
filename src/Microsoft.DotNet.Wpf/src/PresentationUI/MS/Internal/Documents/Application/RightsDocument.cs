@@ -75,9 +75,9 @@ internal class RightsDocument : StreamDocument<StreamProxy>
     /// </summary>
     internal EncryptedPackageEnvelope DestinationPackage
     {
-        get { return _destination.Value; }
+        get { return _destination; }
 
-        set { _destination.Value = value; }
+        set { _destination = value; }
     }
 
     /// <summary>
@@ -86,9 +86,9 @@ internal class RightsDocument : StreamDocument<StreamProxy>
     /// </summary>
     internal EncryptedPackageEnvelope SourcePackage
     {
-        get { return _source.Value; }
+        get { return _source; }
 
-        set { _source.Value = value; }
+        set { _source = value; }
     }
 
     /// <summary>
@@ -97,9 +97,9 @@ internal class RightsDocument : StreamDocument<StreamProxy>
     /// </summary>
     internal EncryptedPackageEnvelope WorkspacePackage
     {
-        get { return _workspace.Value; }
+        get { return _workspace; }
 
-        set { _workspace.Value = value; }
+        set { _workspace = value; }
     }
     #endregion Internal Properties
 
@@ -172,11 +172,11 @@ internal class RightsDocument : StreamDocument<StreamProxy>
     // Private Fields
     //--------------------------------------------------------------------------
 
-    private SecurityCriticalDataForSet<EncryptedPackageEnvelope> _source;
+    private EncryptedPackageEnvelope _source;
 
-    private SecurityCriticalDataForSet<EncryptedPackageEnvelope> _workspace;
+    private EncryptedPackageEnvelope _workspace;
 
-    private SecurityCriticalDataForSet<EncryptedPackageEnvelope> _destination;
+    private EncryptedPackageEnvelope _destination;
     #endregion Private Fields
 }
 }

@@ -18,7 +18,6 @@
     <Compile Include="$(WpfSharedDir)\RefAssemblyAttrs.cs" />
     <Compile Include="$(WpfSharedDir)\System\Windows\Interop\OperatingSystemVersion.cs" />
     <Compile Include="$(WpfSharedDir)\System\Windows\Interop\OSVersionHelper.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityCriticalDataForSet.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\FriendAccessAllowedAttribute.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Win32\ExternDll.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Win32\HandleCollector.cs" />

@@ -42,10 +42,10 @@ namespace System.Windows.Media.TextFormatting
     internal sealed class TextParagraphCache : IDisposable
 #endif
     {
-        private FullTextState                       _fullText;                  // full text state of the whole paragraph
-        private SecurityCriticalDataForSet<IntPtr>  _ploparabreak;              // unmanaged LS resource for parabreak session
-        private int                                 _finiteFormatWidth;         // finite formatting ideal width
-        private bool                                _penalizedAsJustified;      // flag indicating whether the paragraph should be penalized as fully-justified one
+        private FullTextState  _fullText;                  // full text state of the whole paragraph
+        private IntPtr         _ploparabreak;              // unmanaged LS resource for parabreak session
+        private int            _finiteFormatWidth;         // finite formatting ideal width
+        private bool           _penalizedAsJustified;      // flag indicating whether the paragraph should be penalized as fully-justified one
 
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace System.Windows.Media.TextFormatting
                 }
             }
 
-            _ploparabreak.Value = ploparabreakValue;
+            _ploparabreak = ploparabreakValue;
 
             // keep context alive till here
             GC.KeepAlive(context);
@@ -164,11 +164,11 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         private void Dispose(bool disposing)
         {
-            if(_ploparabreak.Value != IntPtr.Zero)
+            if(_ploparabreak != IntPtr.Zero)
             {
-                UnsafeNativeMethods.LoDisposeParaBreakingSession(_ploparabreak.Value, !disposing);
+                UnsafeNativeMethods.LoDisposeParaBreakingSession(_ploparabreak, !disposing);
 
-                _ploparabreak.Value = IntPtr.Zero;
+                _ploparabreak = IntPtr.Zero;
                 GC.KeepAlive(this);
             }
         }
@@ -208,7 +208,7 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Unmanaged LS parabreak session object
         /// </summary>
-        internal SecurityCriticalDataForSet<IntPtr> Ploparabreak
+        internal IntPtr Ploparabreak
         {
             get { return _ploparabreak; }
         }

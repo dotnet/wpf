@@ -116,7 +116,7 @@ namespace System.Windows.Interop
 
         private MatrixTransform _worldTransform;
 
-        private SecurityCriticalDataForSet<RenderMode> _renderModePreference = new SecurityCriticalDataForSet<RenderMode>(RenderMode.Default);
+        private RenderMode _renderModePreference = RenderMode.Default;
 
         private NativeMethods.HWND _hWnd;
 
@@ -652,7 +652,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                return _renderModePreference.Value;
+                return _renderModePreference;
             }
 
             // Note: We think it is safe to expose this in partial trust, but doing so would suggest
@@ -666,7 +666,7 @@ namespace System.Windows.Interop
                     throw new System.ComponentModel.InvalidEnumArgumentException("value", (int)value, typeof(RenderMode));
                 }
 
-                _renderModePreference.Value = value;
+                _renderModePreference = value;
 
                 InvalidateRenderMode();
             }

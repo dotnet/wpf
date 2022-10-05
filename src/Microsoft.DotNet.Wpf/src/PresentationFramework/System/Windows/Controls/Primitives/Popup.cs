@@ -141,9 +141,9 @@ namespace System.Windows.Controls.Primitives
             // If the Popup is open, change the PopupRoot's child to show the new content.
             // Also change if the PopupRoot has a non-null child, to enable that
             // child to participate elsewhere in the visual tree
-            if ((popup._popupRoot.Value != null) && (popup.IsOpen || popup._popupRoot.Value.Child != null))
+            if ((popup._popupRoot != null) && (popup.IsOpen || popup._popupRoot.Child != null))
             {
-                popup._popupRoot.Value.Child = newChild;
+                popup._popupRoot.Child = newChild;
             }
 
             popup.RemoveLogicalChild(oldChild);
@@ -1101,16 +1101,16 @@ namespace System.Windows.Controls.Primitives
             if (_cacheValid[(int)CacheBits.CaptureEngaged] && !StaysOpen &&
                 !_cacheValid[(int)CacheBits.IsIgnoringMouseEvents])
             {
-                Debug.Assert( Mouse.Captured == _popupRoot.Value, "_cacheValid[(int)CacheBits.CaptureEngaged] == true but Mouse.Captured != _popupRoot");
+                Debug.Assert( Mouse.Captured == _popupRoot, "_cacheValid[(int)CacheBits.CaptureEngaged] == true but Mouse.Captured != _popupRoot");
 
                 // If we got a mouse press/release and the mouse isn't on the popup (popup root), dismiss.
                 // When captured to subtree, source will be the captured element for events outside the popup.
-                if (_popupRoot.Value != null && e.OriginalSource == _popupRoot.Value)
+                if (_popupRoot != null && e.OriginalSource == _popupRoot)
                 {
                     // When we have capture we will get all mouse button up/down messages.
                     // We should close if the press was outside.  The MouseButtonEventArgs don't tell whether we get this
                     // message because we have capture or if it was legit, so we have to do a hit test.
-                    if (_popupRoot.Value.InputHitTest(e.GetPosition(_popupRoot.Value)) == null)
+                    if (_popupRoot.InputHitTest(e.GetPosition(_popupRoot)) == null)
                     {
                         // The hit test didn't find any element; that means the click happened outside the popup.
                         SetCurrentValueInternal(IsOpenProperty, BooleanBoxes.FalseBox);
@@ -1129,7 +1129,7 @@ namespace System.Windows.Controls.Primitives
 
         private void EstablishPopupCapture(bool isRestoringCapture=false)
         {
-            if (!_cacheValid[(int)CacheBits.CaptureEngaged] && (_popupRoot.Value != null) &&
+            if (!_cacheValid[(int)CacheBits.CaptureEngaged] && (_popupRoot != null) &&
                 (!StaysOpen))
             {
                 IInputElement capturedElement = Mouse.Captured;
@@ -1166,7 +1166,7 @@ namespace System.Windows.Controls.Primitives
                     // When the mouse is not already captured, we will consider the following:
                     // In all cases but Modeless, we want the popup and subtree to receive
                     // mouse events and prevent other elements from receiving those messages.
-                    Mouse.Capture(_popupRoot.Value, CaptureMode.SubTree);
+                    Mouse.Capture(_popupRoot, CaptureMode.SubTree);
                     _cacheValid[(int)CacheBits.CaptureEngaged] = true;
                 }
             }
@@ -1180,7 +1180,7 @@ namespace System.Windows.Controls.Primitives
                 ParentPopupRootField.ClearValue(this);
 
                 // Only give up capture if we have it (someone may have taken it from us).
-                if (Mouse.Captured == _popupRoot.Value)
+                if (Mouse.Captured == _popupRoot)
                 {
                     if (parentPopupRoot == null)
                     {
@@ -1216,7 +1216,7 @@ namespace System.Windows.Controls.Primitives
             //
             if (!popup.StaysOpen)
             {
-                PopupRoot root = popup._popupRoot.Value;
+                PopupRoot root = popup._popupRoot;
 
                 // Reestablish capture if an element within us lost capture
                 // (hence we receive the LostCapture routed event) and capture
@@ -1320,8 +1320,8 @@ namespace System.Windows.Controls.Primitives
         // Invalidate resources on the popup root
         internal override void OnThemeChanged()
         {
-            if (_popupRoot.Value != null)
-                TreeWalkHelper.InvalidateOnResourcesChange(_popupRoot.Value, null, ResourcesChangeInfo.ThemeChangeInfo);
+            if (_popupRoot != null)
+                TreeWalkHelper.InvalidateOnResourcesChange(_popupRoot, null, ResourcesChangeInfo.ThemeChangeInfo);
         }
 
         /// <summary>
@@ -1444,7 +1444,7 @@ namespace System.Windows.Controls.Primitives
 
         private void SetHitTestable(bool hitTestable)
         {
-            _popupRoot.Value.IsHitTestVisible = hitTestable;
+            _popupRoot.IsHitTestVisible = hitTestable;
 
             if (IsTransparent)
             {
@@ -1464,13 +1464,13 @@ namespace System.Windows.Controls.Primitives
 
         private void CreateNewPopupRoot()
         {
-            if (_popupRoot.Value == null)
+            if (_popupRoot == null)
             {
-                _popupRoot.Value = new PopupRoot();
-                AddLogicalChild(_popupRoot.Value);
+                _popupRoot = new PopupRoot();
+                AddLogicalChild(_popupRoot);
                 // Allow users to set Width/Height properties on the Popup and have them
                 // apply to the content.
-                _popupRoot.Value.SetupLayoutBindings(this);
+                _popupRoot.SetupLayoutBindings(this);
             }
         }
 
@@ -1529,9 +1529,9 @@ namespace System.Windows.Controls.Primitives
             }
 
             UIElement child = Child;
-            if (_popupRoot.Value.Child != child)
+            if (_popupRoot.Child != child)
             {
-                _popupRoot.Value.Child = child;
+                _popupRoot.Child = child;
             }
 
             // When opening, set the placement target registration
@@ -1549,7 +1549,7 @@ namespace System.Windows.Controls.Primitives
                 isWindowAlive = _secHelper.IsWindowAlive();
                 if (isWindowAlive)
                 {
-                    _secHelper.ForceMsaaToUiaBridge(_popupRoot.Value);
+                    _secHelper.ForceMsaaToUiaBridge(_popupRoot);
                 }
             }
             else
@@ -1574,10 +1574,10 @@ namespace System.Windows.Controls.Primitives
                 // Later when the window is made visible, opacity is set to 1
                 // This is to prevent the first frame of the popup animations
                 // from displaying
-                _popupRoot.Value.Opacity = 0.0;
+                _popupRoot.Opacity = 0.0;
             }
 
-            _secHelper.SetWindowRootVisual(_popupRoot.Value);
+            _secHelper.SetWindowRootVisual(_popupRoot);
         }
 
         private void BuildWindow(Visual targetVisual)
@@ -1649,7 +1649,7 @@ namespace System.Windows.Controls.Primitives
         {
             if (_secHelper.IsWindowAlive())
             {
-                _popupRoot.Value.Opacity = 1.0;
+                _popupRoot.Opacity = 1.0;
 
                 SetupAnimations(true);
 
@@ -1696,20 +1696,20 @@ namespace System.Windows.Controls.Primitives
         {
             PopupAnimation animation = PopupAnimation;
 
-            _popupRoot.Value.StopAnimations();
+            _popupRoot.StopAnimations();
 
             // Only animate if popup is transparent
             if (animation != PopupAnimation.None && IsTransparent)
             {
                 if (animation == PopupAnimation.Fade)
                 {
-                    _popupRoot.Value.SetupFadeAnimation(AnimationDelayTime, visible);
+                    _popupRoot.SetupFadeAnimation(AnimationDelayTime, visible);
                     return true;
                 }
                 else if (visible) // only translate when showing popup
                 {
                     // translate the content
-                    _popupRoot.Value.SetupTranslateAnimations(animation, AnimationDelayTime, AnimateFromRight, AnimateFromBottom);
+                    _popupRoot.SetupTranslateAnimations(animation, AnimationDelayTime, AnimateFromRight, AnimateFromBottom);
                     return true;
                 }
             }
@@ -1852,7 +1852,7 @@ namespace System.Windows.Controls.Primitives
                 popupTransform.Scale(transformedUnitX.Length, transformedUnitY.Length);
             }
 
-            _popupRoot.Value.Transform = new MatrixTransform(popupTransform);
+            _popupRoot.Transform = new MatrixTransform(popupTransform);
         }
 
         private void OnWindowResize(object sender, AutoResizedEventArgs e)
@@ -2001,7 +2001,7 @@ namespace System.Windows.Controls.Primitives
         //       the browser area for partial trust
         private void UpdatePosition()
         {
-            if (_popupRoot.Value == null)
+            if (_popupRoot == null)
                 return;
 
             PlacementMode placement = PlacementInternal;
@@ -2127,7 +2127,7 @@ namespace System.Windows.Controls.Primitives
             // Popups are not nudged if their axes do not align with the screen axes
 
             // Use the size of the popupRoot in case it is clipping the popup content
-            childBounds = new Rect((Size)_secHelper.GetTransformToDevice().Transform((Point)_popupRoot.Value.RenderSize));
+            childBounds = new Rect((Size)_secHelper.GetTransformToDevice().Transform((Point)_popupRoot.RenderSize));
 
             childBounds.Offset(bestTranslation);
             screenBounds = GetScreenBounds(targetBounds, placementTargetInterestPoints[(int)InterestPoint.TopLeft]);
@@ -2400,10 +2400,10 @@ namespace System.Windows.Controls.Primitives
             }
 
             // Use remove the render transform translation from the child
-            Vector offset = _popupRoot.Value.AnimationOffset;
+            Vector offset = _popupRoot.AnimationOffset;
 
             // Transform InterestPoints to popup's space
-            GeneralTransform childToPopupTransform = TransformToClient(child, _popupRoot.Value);
+            GeneralTransform childToPopupTransform = TransformToClient(child, _popupRoot);
 
             for (int i = 0; i < 5; i++)
             {
@@ -2912,7 +2912,7 @@ namespace System.Windows.Controls.Primitives
 
         private PositionInfo _positionInfo;
 
-        private SecurityCriticalDataForSet<PopupRoot> _popupRoot;
+        private PopupRoot _popupRoot;
         private DispatcherOperation _asyncCreate;
         private DispatcherTimer _asyncDestroy;
 

@@ -3119,11 +3119,11 @@ namespace System.Windows
             {
                 if (Manager != null)
                 {
-                    return _styleDoNotUse.Value;
+                    return _styleDoNotUse;
 }
                 else if ( IsSourceWindowNull )
                 {
-                    return _styleDoNotUse.Value;
+                    return _styleDoNotUse;
 }
                 else
                 {
@@ -3132,7 +3132,7 @@ namespace System.Windows
             }
             set
             {
-                _styleDoNotUse= new SecurityCriticalDataForSet<int>(value);
+                _styleDoNotUse = value;
                 Manager.Dirty = true;
             }
         }
@@ -3143,11 +3143,11 @@ namespace System.Windows
             {
                 if (Manager != null)
                 {
-                    return _styleExDoNotUse.Value;
+                    return _styleExDoNotUse;
 }
                 else if (IsSourceWindowNull == true  )
                 {
-                    return _styleExDoNotUse.Value;
+                    return _styleExDoNotUse;
 }
                 else
                 {
@@ -3156,7 +3156,7 @@ namespace System.Windows
                 }
             set
             {
-                _styleExDoNotUse= new SecurityCriticalDataForSet<int>((int)value);
+                _styleExDoNotUse = value;
                 Manager.Dirty = true;
             }
         }
@@ -6719,8 +6719,8 @@ namespace System.Windows
             HwndStyleManager manager = Manager;
             if (manager.Dirty && CriticalHandle != IntPtr.Zero)
             {
-                UnsafeNativeMethods.CriticalSetWindowLong(new HandleRef(this,CriticalHandle), NativeMethods.GWL_STYLE, (IntPtr)_styleDoNotUse.Value);
-                UnsafeNativeMethods.CriticalSetWindowLong(new HandleRef(this,CriticalHandle), NativeMethods.GWL_EXSTYLE, (IntPtr)_styleExDoNotUse.Value);
+                UnsafeNativeMethods.CriticalSetWindowLong(new HandleRef(this,CriticalHandle), NativeMethods.GWL_STYLE, (IntPtr)_styleDoNotUse);
+                UnsafeNativeMethods.CriticalSetWindowLong(new HandleRef(this,CriticalHandle), NativeMethods.GWL_EXSTYLE, (IntPtr)_styleExDoNotUse);
 
                 UnsafeNativeMethods.SetWindowPos(new HandleRef(this, CriticalHandle), NativeMethods.NullHandleRef, 0, 0, 0, 0,
                                                NativeMethods.SWP_NOMOVE |
@@ -7161,8 +7161,8 @@ namespace System.Windows
 
         // These should never be used directly, access only through property accessors
 
-        private SecurityCriticalDataForSet<int>                 _styleDoNotUse;
-        private SecurityCriticalDataForSet<int>                 _styleExDoNotUse;
+        private int                 _styleDoNotUse;
+        private int                 _styleExDoNotUse;
         private HwndStyleManager    _manager;
 
         // reference to Resize Grip control; this is used to find out whether

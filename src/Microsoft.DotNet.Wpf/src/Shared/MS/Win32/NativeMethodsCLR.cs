@@ -4371,9 +4371,9 @@ namespace MS.Win32 {
             [MarshalAs(UnmanagedType.I2)]
             public short reserved3;
 
-            public SecurityCriticalDataForSet<IntPtr> data1;
+            public IntPtr data1;
 
-            public SecurityCriticalDataForSet<IntPtr> data2;
+            public IntPtr data2;
 
 
             public bool Byref{
@@ -4383,15 +4383,15 @@ namespace MS.Win32 {
             }
 
             public void Clear() {
-                if ((this.vt == (int)tagVT.VT_UNKNOWN || this.vt == (int)tagVT.VT_DISPATCH) && this.data1.Value != IntPtr.Zero) {
-                    Marshal.Release(this.data1.Value);
+                if ((this.vt == (int)tagVT.VT_UNKNOWN || this.vt == (int)tagVT.VT_DISPATCH) && this.data1 != IntPtr.Zero) {
+                    Marshal.Release(this.data1);
                 }
 
-                if (this.vt == (int)tagVT.VT_BSTR && this.data1.Value != IntPtr.Zero) {
-                    SysFreeString(this.data1.Value);
+                if (this.vt == (int)tagVT.VT_BSTR && this.data1 != IntPtr.Zero) {
+                    SysFreeString(this.data1);
                 }
 
-                this.data1.Value = this.data2.Value = IntPtr.Zero;
+                this.data1 = this.data2 = IntPtr.Zero;
                 this.vt = (int)tagVT.VT_EMPTY;
             }
 
@@ -4503,8 +4503,8 @@ namespace MS.Win32 {
             [DllImport(ExternDll.Oleaut32,CharSet=CharSet.Auto)]
             private static extern void SysFreeString(IntPtr pbstr);
             public void SetLong(long lVal) {
-                data1.Value = (IntPtr)(lVal & 0xFFFFFFFF);
-                data2.Value = (IntPtr)((lVal >> 32) & 0xFFFFFFFF);
+                data1 = (IntPtr)(lVal & 0xFFFFFFFF);
+                data2 = (IntPtr)((lVal >> 32) & 0xFFFFFFFF);
             }
 
             public IntPtr ToCoTaskMemPtr() {
@@ -4513,13 +4513,13 @@ namespace MS.Win32 {
                 Marshal.WriteInt16(mem, 2, reserved1);
                 Marshal.WriteInt16(mem, 4, reserved2);
                 Marshal.WriteInt16(mem, 6, reserved3);
-                Marshal.WriteInt32(mem, 8, (int) data1.Value);
-                Marshal.WriteInt32(mem, 12, (int) data2.Value);
+                Marshal.WriteInt32(mem, 8, (int) data1);
+                Marshal.WriteInt32(mem, 12, (int) data2);
                 return mem;
             }
 
             public object ToObject() {
-                IntPtr val = data1.Value;
+                IntPtr val = data1;
                 long longVal;
 
                 int vtType = (int)(this.vt & (short)tagVT.VT_TYPEMASK);
@@ -4575,7 +4575,7 @@ namespace MS.Win32 {
                         longVal = Marshal.ReadInt64(val);
                     }
                     else {
-                        longVal = ((uint)data1.Value & 0xffffffff) | ((uint)data2.Value << 32);
+                        longVal = ((uint)data1 & 0xffffffff) | ((uint)data2 << 32);
                     }
 
                     if (vt == (int)tagVT.VT_I8) {
@@ -4599,7 +4599,7 @@ namespace MS.Win32 {
 
                 case (int)tagVT.VT_CY:
                     // internally currency is 8-byte int scaled by 10,000
-                    longVal = ((uint)data1.Value & 0xffffffff) | ((uint)data2.Value << 32);
+                    longVal = ((uint)data1 & 0xffffffff) | ((uint)data2 << 32);
                     return new Decimal(longVal);
                 case (int)tagVT.VT_DATE:
                     throw new FormatException(/*SR.GetString(SR.CannotConvertDoubleToDate)*/);
@@ -4621,7 +4621,7 @@ namespace MS.Win32 {
                     return val;
 
                 case (int)tagVT.VT_DECIMAL:
-                    longVal = ((uint)data1.Value & 0xffffffff) | ((uint)data2.Value << 32);
+                    longVal = ((uint)data1 & 0xffffffff) | ((uint)data2 << 32);
                     return new Decimal(longVal);
 
                 case (int)tagVT.VT_BOOL:
@@ -4636,7 +4636,7 @@ namespace MS.Win32 {
                     return guid;
 
                 case (int)tagVT.VT_FILETIME:
-                    longVal = ((uint)data1.Value & 0xffffffff) | ((uint)data2.Value << 32);
+                    longVal = ((uint)data1 & 0xffffffff) | ((uint)data2 << 32);
                     return new DateTime(longVal);
 
                 case (int)tagVT.VT_ARRAY:

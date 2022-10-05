@@ -51,9 +51,9 @@ internal sealed class RestrictedTransactionalPackage : TransactionalPackage
             throw new ArgumentNullException("target");
         }
 
-        if (TempPackage.Value != null)
+        if (TempPackage != null)
         {
-            foreach (PackagePart part in TempPackage.Value.GetParts())
+            foreach (PackagePart part in TempPackage.GetParts())
             {
                 // Ensure that all parts being modified are permitted.
                 if ((part != null) && (!IsValidContentType(part.ContentType)))

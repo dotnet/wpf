@@ -299,7 +299,7 @@ namespace System.Windows.Media.Imaging
                         ref lockBufferStride
                         ));
                     Invariant.Assert(lockBufferStride <= Int32.MaxValue);
-                    _backBufferStride.Value = (int)lockBufferStride;
+                    _backBufferStride = (int)lockBufferStride;
                 }
 
                 // If we were subscribed to the CommittingBatch event, unsubscribe
@@ -796,8 +796,8 @@ namespace System.Windows.Media.Imaging
                 Lock();
 
                 Int32Rect rcFull = new Int32Rect(0, 0, _pixelWidth, _pixelHeight);
-                int bufferSize = checked(_backBufferStride.Value * source.PixelHeight);
-                source.CriticalCopyPixels(rcFull, _backBuffer, bufferSize, _backBufferStride.Value);
+                int bufferSize = checked(_backBufferStride * source.PixelHeight);
+                source.CriticalCopyPixels(rcFull, _backBuffer, bufferSize, _backBufferStride);
                 AddDirtyRect(rcFull);
 
                 Unlock();
@@ -1002,7 +1002,7 @@ namespace System.Windows.Media.Imaging
                 //
                 unsafe
                 {
-                    uint destOffset = (uint)(destinationY * _backBufferStride.Value) + destXbyteOffset;
+                    uint destOffset = (uint)(destinationY * _backBufferStride) + destXbyteOffset;
                     byte* pDest = (byte*)_backBuffer.ToPointer();
                     pDest += destOffset;
                     uint outputBufferSize = _backBufferSize - destOffset;
@@ -1016,7 +1016,7 @@ namespace System.Windows.Media.Imaging
                     MILUtilities.MILCopyPixelBuffer(
                         pDest,
                         outputBufferSize,
-                        (uint) _backBufferStride.Value,
+                        (uint) _backBufferStride,
                         destBufferBitOffset,
                         pSource,
                         inputBufferSize,
@@ -1484,11 +1484,11 @@ namespace System.Windows.Media.Imaging
             {
                 ReadPreamble();
 
-                return _backBufferStride.Value;
+                return _backBufferStride;
             }
         }
 
-        private SecurityCriticalDataForSet<int> _backBufferStride;
+        private int _backBufferStride;
 
         #endregion // Properties
 

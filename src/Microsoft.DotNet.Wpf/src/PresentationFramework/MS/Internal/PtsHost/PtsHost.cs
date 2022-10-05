@@ -48,7 +48,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal PtsHost()
         {
-            _context = new SecurityCriticalDataForSet<IntPtr>(IntPtr.Zero);
+            _context = IntPtr.Zero;
         }
 
         // ------------------------------------------------------------------
@@ -75,10 +75,10 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal IntPtr Context
         {
-            get { Invariant.Assert(_context.Value != IntPtr.Zero); return _context.Value; }
-            set { Invariant.Assert(_context.Value == IntPtr.Zero); _context.Value = value; }
+            get { Invariant.Assert(_context != IntPtr.Zero); return _context; }
+            set { Invariant.Assert(_context == IntPtr.Zero); _context = value; }
         }
-        private SecurityCriticalDataForSet<IntPtr> _context;
+        private IntPtr _context;
 
         // ------------------------------------------------------------------
         //  Container paragraph id.
@@ -1575,7 +1575,7 @@ namespace MS.Internal.PtsHost
                     rgfslinevariant[breakIndex].dvrAscent    = dvrAscent;
                     rgfslinevariant[breakIndex].dvrDescent   = dvrDescent;
                     rgfslinevariant[breakIndex].fReformatNeighborsAsLastLine   = PTS.False;
-                    rgfslinevariant[breakIndex].ptsLinePenaltyInfo = textBreakpoint.GetTextPenaltyResource().Value;
+                    rgfslinevariant[breakIndex].ptsLinePenaltyInfo = textBreakpoint.GetTextPenaltyResource();
                 }
 
                 nLineVariantsActual = textBreakpoints.Count;

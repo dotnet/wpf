@@ -35,23 +35,23 @@ namespace MS.Internal.TextFormatting
     [FriendAccessAllowed]   // used by Framework
     internal sealed class TextPenaltyModule : IDisposable
     {
-        private SecurityCriticalDataForSet<IntPtr>  _ploPenaltyModule;  // Pointer to LS penalty module
-        private bool                                _isDisposed;
+        private IntPtr  _ploPenaltyModule;  // Pointer to LS penalty module
+        private bool    _isDisposed;
 
 
         /// <summary>
         /// This constructor is called by PInvoke when returning the critical handle
         /// </summary>
-        internal TextPenaltyModule(SecurityCriticalDataForSet<IntPtr> ploc)
+        internal TextPenaltyModule(IntPtr ploc)
         {
             IntPtr ploPenaltyModule;
-            LsErr lserr = UnsafeNativeMethods.LoAcquirePenaltyModule(ploc.Value, out ploPenaltyModule);
+            LsErr lserr = UnsafeNativeMethods.LoAcquirePenaltyModule(ploc, out ploPenaltyModule);
             if (lserr != LsErr.None)
             {
                 TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.AcquirePenaltyModuleFailure, lserr), lserr);
             }
 
-            _ploPenaltyModule.Value = ploPenaltyModule;
+            _ploPenaltyModule = ploPenaltyModule;
         }
 
 
@@ -76,10 +76,10 @@ namespace MS.Internal.TextFormatting
 
         private void Dispose(bool disposing)
         {
-            if (_ploPenaltyModule.Value != IntPtr.Zero)
+            if (_ploPenaltyModule != IntPtr.Zero)
             {
-                UnsafeNativeMethods.LoDisposePenaltyModule(_ploPenaltyModule.Value);
-                _ploPenaltyModule.Value = IntPtr.Zero;
+                UnsafeNativeMethods.LoDisposePenaltyModule(_ploPenaltyModule);
+                _ploPenaltyModule = IntPtr.Zero;
                 _isDisposed = true;
                 GC.KeepAlive(this);
             }
@@ -99,7 +99,7 @@ namespace MS.Internal.TextFormatting
             }
 
             IntPtr penaltyModuleInternalHandle;
-            LsErr lserr = UnsafeNativeMethods.LoGetPenaltyModuleInternalHandle(_ploPenaltyModule.Value, out penaltyModuleInternalHandle);
+            LsErr lserr = UnsafeNativeMethods.LoGetPenaltyModuleInternalHandle(_ploPenaltyModule, out penaltyModuleInternalHandle);
 
             if (lserr != LsErr.None)
                 TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.GetPenaltyModuleHandleFailure, lserr), lserr);

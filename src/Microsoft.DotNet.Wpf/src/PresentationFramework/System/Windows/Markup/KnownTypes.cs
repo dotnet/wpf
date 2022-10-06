@@ -1106,6 +1106,8 @@ namespace System.Windows.Markup
         WrapPanel_Children,
         XmlDataProvider_XmlSerializer,
         MaxProperty,
+        TextBox_IsReadOnly,
+        RichTextBox_IsReadOnly
     }
 
 #if !BAMLDASM
@@ -1862,6 +1864,8 @@ namespace System.Windows.Markup
                     return System.Windows.Controls.Primitives.Popup.PlacementProperty;
                 case KnownProperties.Popup_PopupAnimation:
                     return System.Windows.Controls.Primitives.Popup.PopupAnimationProperty;
+                case KnownProperties.RichTextBox_IsReadOnly:
+                    return System.Windows.Controls.RichTextBox.IsReadOnlyProperty;
                 case KnownProperties.RowDefinition_Height:
                     return System.Windows.Controls.RowDefinition.HeightProperty;
                 case KnownProperties.RowDefinition_MaxHeight:
@@ -1906,6 +1910,8 @@ namespace System.Windows.Markup
                     return System.Windows.Controls.TextBlock.TextWrappingProperty;
                 case KnownProperties.TextBox_Text:
                     return System.Windows.Controls.TextBox.TextProperty;
+                case KnownProperties.TextBox_IsReadOnly:
+                    return System.Windows.Controls.TextBox.IsReadOnlyProperty;
                 case KnownProperties.TextElement_Background:
                     return System.Windows.Documents.TextElement.BackgroundProperty;
                 case KnownProperties.TextElement_FontFamily:
@@ -2251,6 +2257,8 @@ namespace System.Windows.Markup
                     return KnownElements.RepeatButton;
                 case KnownProperties.RichTextBox_Document:
                     return KnownElements.RichTextBox;
+                case KnownProperties.RichTextBox_IsReadOnly:
+                    return KnownElements.RichTextBox;
                 case KnownProperties.Rotation3DAnimationUsingKeyFrames_KeyFrames:
                     return KnownElements.Rotation3DAnimationUsingKeyFrames;
                 case KnownProperties.RowDefinition_Height:
@@ -2318,6 +2326,8 @@ namespace System.Windows.Markup
                 case KnownProperties.TextBlock_TextWrapping:
                     return KnownElements.TextBlock;
                 case KnownProperties.TextBox_Text:
+                    return KnownElements.TextBox;
+                case KnownProperties.TextBox_IsReadOnly:
                     return KnownElements.TextBox;
                 case KnownProperties.TextElement_Background:
                 case KnownProperties.TextElement_FontFamily:
@@ -3379,6 +3389,8 @@ namespace System.Windows.Markup
                 case KnownElements.RichTextBox:
                     if (String.CompareOrdinal(fieldName, "Document") == 0)
                         return (short)KnownProperties.RichTextBox_Document;
+                    if (String.CompareOrdinal(fieldName, "IsReadOnly") == 0)
+                        return (short)KnownProperties.RichTextBox_IsReadOnly;
                     break;
                 case KnownElements.Rotation3DAnimationUsingKeyFrames:
                     if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
@@ -3515,6 +3527,8 @@ namespace System.Windows.Markup
                 case KnownElements.TextBox:
                     if (String.CompareOrdinal(fieldName, "Text") == 0)
                         return (short)KnownProperties.TextBox_Text;
+                    if (String.CompareOrdinal(fieldName, "IsReadOnly") == 0)
+                        return (short)KnownProperties.TextBox_IsReadOnly;
                     break;
                 case KnownElements.TextElement:
                     if (String.CompareOrdinal(fieldName, "Background") == 0)

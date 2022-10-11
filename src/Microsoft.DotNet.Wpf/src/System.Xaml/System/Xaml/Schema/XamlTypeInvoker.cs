@@ -62,10 +62,7 @@ namespace System.Xaml.Schema
 
         public virtual void AddToCollection(object instance, object item)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
+            ArgumentNullException.ThrowIfNull(instance);
             IList list = instance as IList;
             if (list != null)
             {
@@ -97,10 +94,7 @@ namespace System.Xaml.Schema
 
         public virtual void AddToDictionary(object instance, object key, object item)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
+            ArgumentNullException.ThrowIfNull(instance);
             IDictionary dictionary = instance as IDictionary;
             if (dictionary != null)
             {
@@ -146,10 +140,7 @@ namespace System.Xaml.Schema
 
         public virtual MethodInfo GetAddMethod(XamlType contentType)
         {
-            if (contentType == null)
-            {
-                throw new ArgumentNullException(nameof(contentType));
-            }
+            ArgumentNullException.ThrowIfNull(contentType);
             if (IsUnknown || _xamlType.ItemType == null)
             {
                 return null;
@@ -211,10 +202,7 @@ namespace System.Xaml.Schema
 
         public virtual IEnumerator GetItems(object instance)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
+            ArgumentNullException.ThrowIfNull(instance);
             IEnumerable enumerable = instance as IEnumerable;
             if (enumerable != null)
             {

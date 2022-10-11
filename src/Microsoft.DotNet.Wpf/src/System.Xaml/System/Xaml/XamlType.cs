@@ -46,10 +46,7 @@ namespace System.Xaml
 
         public XamlType(string unknownTypeNamespace, string unknownTypeName, IList<XamlType> typeArguments, XamlSchemaContext schemaContext)
         {
-            if (unknownTypeNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(unknownTypeNamespace));
-            }
+            ArgumentNullException.ThrowIfNull(unknownTypeNamespace);
 
             _name = unknownTypeName ?? throw new ArgumentNullException(nameof(unknownTypeName));
             _namespaces = new ReadOnlyCollection<string>(new string[] { unknownTypeNamespace });
@@ -70,10 +67,7 @@ namespace System.Xaml
 
         internal XamlType(string alias, Type underlyingType, XamlSchemaContext schemaContext, XamlTypeInvoker invoker, TypeReflector reflector)
         {
-            if (underlyingType == null)
-            {
-                throw new ArgumentNullException(nameof(underlyingType));
-            }
+            ArgumentNullException.ThrowIfNull(underlyingType);
 
             _reflector = reflector ?? new TypeReflector(underlyingType);
             _name = alias ?? GetTypeName(underlyingType);

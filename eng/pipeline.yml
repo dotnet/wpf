@@ -178,12 +178,12 @@ jobs:
       #   #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
       #   condition: or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')))
 
-      - task: PowerShell@2
-        displayName: Replace WPF binaries
-        inputs:
-          targetType: 'inline'
-          script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
-        condition: eq(variables['System.TeamProject'], 'public')
+      # - task: PowerShell@2
+      #   displayName: Replace WPF binaries
+      #   inputs:
+      #     targetType: 'inline'
+      #     script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
+      #   condition: eq(variables['System.TeamProject'], 'public')
 
       - task: DownloadPipelineArtifact@2
         displayName: Fetch Test Binaries

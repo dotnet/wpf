@@ -177,45 +177,41 @@ jobs:
       #   #   (!_HelixPipeline) ||
       #   #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
       #   condition: or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')))
-      
-      - ${{ if and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64')) }}:
-        - task: PowerShell@2
-          displayName: Replace WPF binaries
-          inputs:
-              targetType: 'inline'
-              script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
 
-        - task: DownloadPipelineArtifact@2
-          displayName: Fetch Test Binaries
-          inputs:
-            buildType: 'specific'
-            project: 'cbb18261-c48f-4abb-8651-8cdcb5474649'
-            pipeline: '81'
-            buildVersionToDownload: 'specific'
-            buildId: '34592'
-            downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
-            checkDownloadedFiles: true
-            artifactName: Tests.$(_BuildConfig).$(_Platform).zip
+      - task: PowerShell@2
+        displayName: Replace WPF binaries
+        inputs:
+          targetType: 'inline'
+          script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
+        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
 
-        - task: CmdLine@2
-          displayName: 'List files'
-          inputs:
-              script: |
-                  dir /a-D /S /B
-              workingDirectory: '$(System.ArtifactsDirectory)\testbinzip'
+      - task: DownloadPipelineArtifact@2
+        displayName: Fetch Test Binaries
+        inputs:
+          buildType: 'specific'
+          project: 'cbb18261-c48f-4abb-8651-8cdcb5474649'
+          pipeline: '81'
+          buildVersionToDownload: 'specific'
+          buildId: '34592'
+          downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
+          checkDownloadedFiles: true
+          artifactName: Tests.$(_BuildConfig).$(_Platform).zip
+        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
 
-        - task: ExtractFiles@1
-          displayName: Extract Test Bins
-          inputs:
-            archiveFilePatterns: '$(System.ArtifactsDirectory)\testbinzip\*.zip'
-            destinationFolder: '$(System.ArtifactsDirectory)\testbins'
-            cleanDestinationFolder: true
-            overwriteExistingFiles: true
+      - task: ExtractFiles@1
+        displayName: Extract Test Bins
+        inputs:
+          archiveFilePatterns: '$(System.ArtifactsDirectory)\testbinzip\*.zip'
+          destinationFolder: '$(System.ArtifactsDirectory)\testbins'
+          cleanDestinationFolder: true
+          overwriteExistingFiles: true
+        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
 
-        - task: PowerShell@2
-          displayName: Run Tests
-          inputs:
-            targetType: 'inline'
-            script: '.\CIRunDrts.cmd'
-            workingDirectory: '$(System.ArtifactsDirectory)\testbins'
+      - task: PowerShell@2
+        displayName: Run Tests
+        inputs:
+          targetType: 'inline'
+          script: '.\CIRunDrts.cmd'
+          workingDirectory: '$(System.ArtifactsDirectory)\testbins'
+        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
         

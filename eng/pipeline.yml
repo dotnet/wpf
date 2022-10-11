@@ -196,7 +196,7 @@ jobs:
           downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
           checkDownloadedFiles: true
           artifactName: Tests.$(_BuildConfig).$(_Platform).zip
-        condition: eq(variables['System.TeamProject'], 'public')
+        condition: and(eq(variables['System.TeamProject'], 'public'), ne($(_Platform), 'arm64')
 
       - task: CmdLine@2
         displayName: 'List files'
@@ -204,16 +204,16 @@ jobs:
             script: |
                 dir /a-D /S /B
             workingDirectory: '$(System.ArtifactsDirectory)\testbinzip'
-        condition: eq(variables['System.TeamProject'], 'public')
+        condition: and(eq(variables['System.TeamProject'], 'public'), ne($(_Platform), 'arm64')
 
       - task: ExtractFiles@1
         displayName: Extract Test Bins
         inputs:
-          archiveFilePatterns: '$(System.ArtifactsDirectory)\testbinzip\*.zip\*.zip'
+          archiveFilePatterns: '$(System.ArtifactsDirectory)\testbinzip\*.zip'
           destinationFolder: '$(System.ArtifactsDirectory)\testbins'
           cleanDestinationFolder: true
           overwriteExistingFiles: true
-        condition: eq(variables['System.TeamProject'], 'public')
+        condition: and(eq(variables['System.TeamProject'], 'public'), ne($(_Platform), 'arm64')
 
       - task: PowerShell@2
         displayName: Run Tests
@@ -221,5 +221,5 @@ jobs:
           targetType: 'inline'
           script: '.\CIRunDrts.cmd'
           workingDirectory: '$(System.ArtifactsDirectory)\testbins'
-        condition: eq(variables['System.TeamProject'], 'public')
+        condition: and(eq(variables['System.TeamProject'], 'public'), ne($(_Platform), 'arm64')
         

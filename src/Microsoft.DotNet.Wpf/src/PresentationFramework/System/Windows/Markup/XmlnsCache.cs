@@ -172,7 +172,7 @@ namespace System.Windows.Markup
                         // try to get the mapping from those assemblies.
                         //
 
-                        string[] asmNameList = _uriToAssemblyNameTable[xmlns] as string[];
+                        string[] asmNameList = (string[])_uriToAssemblyNameTable[xmlns];
 
                         Assembly[] asmList = new Assembly[asmNameList.Length];
                         for (int i = 0; i < asmNameList.Length; i++)
@@ -318,7 +318,7 @@ namespace System.Windows.Markup
 
                     GetNamespacesFromDefinitionAttr(attributes[attrIdx], out xmlns, out clrns);
 
-                    if (String.IsNullOrEmpty(xmlns) || String.IsNullOrEmpty(clrns) )
+                    if (string.IsNullOrEmpty(xmlns) || string.IsNullOrEmpty(clrns) )
                     {
                         throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsLow, "XmlnsDefinitionAttribute"));
                     }
@@ -327,7 +327,7 @@ namespace System.Windows.Markup
                     {
                         _cacheTable[xmlns] = new List<ClrNamespaceAssemblyPair>();
                     }
-                    pairList = _cacheTable[xmlns] as List<ClrNamespaceAssemblyPair>;
+                    pairList = (List<ClrNamespaceAssemblyPair>)_cacheTable[xmlns];
                     pairList.Add(new ClrNamespaceAssemblyPair(clrns, assemblyName));
                 }
             }
@@ -357,7 +357,7 @@ namespace System.Windows.Markup
 
                     GetNamespacesFromDefinitionAttr(attributes[attrIdx], out xmlns, out clrns);
 
-                    if (String.IsNullOrEmpty(xmlns) || String.IsNullOrEmpty(clrns) )
+                    if (string.IsNullOrEmpty(xmlns) || string.IsNullOrEmpty(clrns) )
                     {
                         throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsLow, "XmlnsDefinitionAttribute"));
                     }

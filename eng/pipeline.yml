@@ -183,7 +183,7 @@ jobs:
         inputs:
           targetType: 'inline'
           script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
-        condition: eq(variables['System.TeamProject'], 'public')
+        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
 
       - task: DownloadPipelineArtifact@2
         displayName: Fetch Test Binaries
@@ -195,24 +195,17 @@ jobs:
           buildId: '34592'
           downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
           checkDownloadedFiles: true
-        condition: eq(variables['System.TeamProject'], 'public')
-
-      - task: CmdLine@2
-        displayName: 'List files'
-        inputs:
-            script: |
-                dir /a-D /S /B
-            workingDirectory: '$(System.ArtifactsDirectory)\testbinzip'
-        condition: eq(variables['System.TeamProject'], 'public')
+          artifactName: Tests.$(_BuildConfig).$(_Platform).zip
+        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
 
       - task: ExtractFiles@1
         displayName: Extract Test Bins
         inputs:
-          archiveFilePatterns: '$(System.ArtifactsDirectory)\testbinzip\*.zip\*.zip'
+          archiveFilePatterns: '$(System.ArtifactsDirectory)\testbinzip\*.zip'
           destinationFolder: '$(System.ArtifactsDirectory)\testbins'
           cleanDestinationFolder: true
           overwriteExistingFiles: true
-        condition: eq(variables['System.TeamProject'], 'public')
+        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
 
       - task: PowerShell@2
         displayName: Run Tests
@@ -220,5 +213,5 @@ jobs:
           targetType: 'inline'
           script: '.\CIRunDrts.cmd'
           workingDirectory: '$(System.ArtifactsDirectory)\testbins'
-        condition: eq(variables['System.TeamProject'], 'public')
+        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
         

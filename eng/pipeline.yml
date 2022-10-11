@@ -221,5 +221,5 @@ jobs:
           targetType: 'inline'
           script: '.\CIRunDrts.cmd'
           workingDirectory: '$(System.ArtifactsDirectory)\testbins'
-        condition: and(eq(variables['System.TeamProject'], 'public'), ne($(_Platform), 'arm64')
+        condition: and(eq(variables['System.TeamProject'], 'public'), ne($(_Platform), 'arm64'))
         

@@ -161,22 +161,22 @@ jobs:
           env:
             Token: $(dn-bot-dnceng-artifact-feeds-rw)
 
-      # # Use utility script to run script command dependent on agent OS.
-      # - script: eng\common\cibuild.cmd
-      #     -configuration $(_BuildConfig) 
-      #     -prepareMachine
-      #     $(_PublishArgs)
-      #     $(_SignArgs)
-      #     $(_OfficialBuildIdArgs)
-      #     $(_PlatformArgs)
-      #     $(_InternalRuntimeDownloadArgs)
-      #   displayName: Windows Build / Publish
-      #   # This condition should be kept in sync with the condition for 'Run DRTs' step 
-      #   #   When building on a regular pipeline (!_HelixPipeline), build as usual 
-      #   #   When building on a Helix pipeline, only build Release configs
-      #   #   (!_HelixPipeline) ||
-      #   #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
-      #   condition: or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')))
+      # Use utility script to run script command dependent on agent OS.
+      - script: eng\common\cibuild.cmd
+          -configuration $(_BuildConfig) 
+          -prepareMachine
+          $(_PublishArgs)
+          $(_SignArgs)
+          $(_OfficialBuildIdArgs)
+          $(_PlatformArgs)
+          $(_InternalRuntimeDownloadArgs)
+        displayName: Windows Build / Publish
+        # This condition should be kept in sync with the condition for 'Run DRTs' step 
+        #   When building on a regular pipeline (!_HelixPipeline), build as usual 
+        #   When building on a Helix pipeline, only build Release configs
+        #   (!_HelixPipeline) ||
+        #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
+        condition: or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')))
 
       - task: PowerShell@2
         displayName: Replace WPF binaries

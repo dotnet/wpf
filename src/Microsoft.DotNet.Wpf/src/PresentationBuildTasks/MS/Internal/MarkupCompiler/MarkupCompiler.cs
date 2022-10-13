@@ -2552,7 +2552,15 @@ namespace MS.Internal
 
             CodeTypeDeclaration ctdClass = GenerateClass(className, ref modifier, baseClass, baseClassFullName);
             CodeContext cc = new CodeContextRoot(ctdClass, cns, baseClass, _typeArgsList, baseClassFullName);
-            cc.ElementTypeReference = new CodeTypeReference(GetFullClassName(ns, className), CodeTypeReferenceOptions.GlobalReference);
+
+            string classFullName = GetFullClassName(ns, className);
+
+            if (IsLanguageVB)
+            {
+                classFullName = GetFullClassName(DefaultNamespace, classFullName);
+            }
+
+            cc.ElementTypeReference = new CodeTypeReference(classFullName, CodeTypeReferenceOptions.GlobalReference);
 
             return cc;
         }
@@ -3124,6 +3132,11 @@ namespace MS.Internal
         {
             string appClassName = _ccRoot.SubClass.Length > 0 ? _ccRoot.SubClass
                                                : GetFullClassName(_ccRoot.CodeNS.Name, _ccRoot.CodeClass.Name);
+
+            if (IsLanguageVB)
+            {
+                appClassName = GetFullClassName(DefaultNamespace, appClassName);
+            }
 
             //  MyNS.MyApplication app = new MyNS.MyApplication();
             //

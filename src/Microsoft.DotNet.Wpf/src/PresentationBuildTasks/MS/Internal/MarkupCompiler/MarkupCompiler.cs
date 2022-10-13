@@ -901,7 +901,7 @@ namespace MS.Internal
                 _ccRoot.StyleConnectorFn = new CodeMemberMethod();
                 _ccRoot.StyleConnectorFn.Name = CONNECT;
                 _ccRoot.StyleConnectorFn.Attributes = MemberAttributes.Public | MemberAttributes.Final;
-                _ccRoot.StyleConnectorFn.PrivateImplementationType = new CodeTypeReference(KnownTypes.Types[(int)KnownElements.IStyleConnector]);
+                _ccRoot.StyleConnectorFn.PrivateImplementationType = new CodeTypeReference(KnownTypes.Types[(int)KnownElements.IStyleConnector], CodeTypeReferenceOptions.GlobalReference);
 
                 // void IStyleConnector.Connect(int connectionId, object target) {
                 //
@@ -985,7 +985,7 @@ namespace MS.Internal
 
                     // EventSetter eventSetter;
                     //
-                    CodeVariableDeclarationStatement cvdsES = new CodeVariableDeclarationStatement(KnownTypes.Types[(int)KnownElements.EventSetter], EVENTSETTER);
+                    CodeVariableDeclarationStatement cvdsES = new CodeVariableDeclarationStatement(new CodeTypeReference(KnownTypes.Types[(int)KnownElements.EventSetter], CodeTypeReferenceOptions.GlobalReference), EVENTSETTER);
                     _ccRoot.StyleConnectorFn.Statements.Insert(0, cvdsES);
                 }
 
@@ -995,7 +995,7 @@ namespace MS.Internal
                 CodeExpression[] esParams = {};
                 CodeVariableReferenceExpression cvreES = new CodeVariableReferenceExpression(EVENTSETTER);
                 CodeAssignStatement casES = new CodeAssignStatement(cvreES,
-                                                                    new CodeObjectCreateExpression(KnownTypes.Types[(int)KnownElements.EventSetter],
+                                                                    new CodeObjectCreateExpression(new CodeTypeReference(KnownTypes.Types[(int)KnownElements.EventSetter], CodeTypeReferenceOptions.GlobalReference),
                                                                                                    esParams));
 
                 // eventSetter.Event = Button.ClickEvent;
@@ -1019,7 +1019,7 @@ namespace MS.Internal
 
                 // ((Style)target).Setters.Add(eventSetter);
                 //
-                CodeCastExpression cceTarget = new CodeCastExpression(KnownTypes.Types[(int)KnownElements.Style], careTarget);
+                CodeCastExpression cceTarget = new CodeCastExpression(new CodeTypeReference(KnownTypes.Types[(int)KnownElements.Style], CodeTypeReferenceOptions.GlobalReference), careTarget);
                 CodePropertyReferenceExpression cpreSetters = new CodePropertyReferenceExpression(cceTarget, SETTERS);
                 CodeMethodInvokeExpression cmieAdd = new CodeMethodInvokeExpression(cpreSetters, ADD, cvreES);
 
@@ -1073,7 +1073,7 @@ namespace MS.Internal
 
                 // Create the type cast expression "(Foo)target"
 
-                cceTarget = new CodeCastExpression( eventTarget, careTarget);
+                cceTarget = new CodeCastExpression( new CodeTypeReference(eventTarget, CodeTypeReferenceOptions.GlobalReference), careTarget);
 
 
                 // Create the whole code statement (either in += form or in AddHandler form)
@@ -1101,7 +1101,7 @@ namespace MS.Internal
         {
             if (_ccRoot.StyleConnectorFn != null)
             {
-                _ccRoot.CodeClass.BaseTypes.Add(KnownTypes.Types[(int)KnownElements.IStyleConnector].FullName);
+                _ccRoot.CodeClass.BaseTypes.Add(new CodeTypeReference(KnownTypes.Types[(int)KnownElements.IStyleConnector].FullName, CodeTypeReferenceOptions.GlobalReference));
 
                 if (SwitchStatementSupported())
                 {
@@ -1133,7 +1133,7 @@ namespace MS.Internal
                 _ccRoot.HookupFn = new CodeMemberMethod();
                 _ccRoot.HookupFn.Name = CONNECT;
                 _ccRoot.HookupFn.Attributes = MemberAttributes.Public | MemberAttributes.Final;
-                _ccRoot.HookupFn.PrivateImplementationType = new CodeTypeReference(KnownTypes.Types[(int)KnownElements.IComponentConnector]);
+                _ccRoot.HookupFn.PrivateImplementationType = new CodeTypeReference(KnownTypes.Types[(int)KnownElements.IComponentConnector], CodeTypeReferenceOptions.GlobalReference);
 
                 // void IComponentConnector.Connect(int connectionId, object target) {
                 //
@@ -1259,7 +1259,7 @@ namespace MS.Internal
         {
             if (_ccRoot.HookupFn != null)
             {
-                var iComponentConnector = new CodeTypeReference(KnownTypes.Types[(int)KnownElements.IComponentConnector]);
+                var iComponentConnector = new CodeTypeReference(KnownTypes.Types[(int)KnownElements.IComponentConnector], CodeTypeReferenceOptions.GlobalReference);
                 _ccRoot.CodeClass.BaseTypes.Add(iComponentConnector);
 
                 // Visual Basic requires InitializeComponent to explicitly implement IComponentConnector.InitializeComponent
@@ -1486,15 +1486,15 @@ namespace MS.Internal
 
         private static void AddEditorBrowsableAttribute(CodeTypeMember ctmTarget)
         {
-            CodeFieldReferenceExpression cfre = new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(EditorBrowsableState)), "Never");
+            CodeFieldReferenceExpression cfre = new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(new CodeTypeReference(typeof(EditorBrowsableState), CodeTypeReferenceOptions.GlobalReference)), "Never");
             CodeAttributeArgument caa = new CodeAttributeArgument(cfre);
-            ctmTarget.CustomAttributes.Add(new CodeAttributeDeclaration(typeof(EditorBrowsableAttribute).FullName, caa));
+            ctmTarget.CustomAttributes.Add(new CodeAttributeDeclaration(new CodeTypeReference(typeof(EditorBrowsableAttribute).FullName, CodeTypeReferenceOptions.GlobalReference), caa));
         }
 
         private static void AddSuppressMessageAttribute(CodeTypeMember ctmTarget, string category, string rule)
         {
             CodeAttributeDeclaration cad = new CodeAttributeDeclaration(
-                         new CodeTypeReference(typeof(SuppressMessageAttribute)),
+                         new CodeTypeReference(typeof(SuppressMessageAttribute), CodeTypeReferenceOptions.GlobalReference),
                          new CodeAttributeArgument(new CodePrimitiveExpression(category)),
                          new CodeAttributeArgument(new CodePrimitiveExpression(rule)));
 
@@ -1504,7 +1504,7 @@ namespace MS.Internal
         private static void AddDebuggerNonUserCodeAttribute(CodeTypeMember ctmTarget)
         {
             CodeAttributeDeclaration cad = new CodeAttributeDeclaration(
-                         new CodeTypeReference(typeof(DebuggerNonUserCodeAttribute)));
+                         new CodeTypeReference(typeof(DebuggerNonUserCodeAttribute), CodeTypeReferenceOptions.GlobalReference));
 
             ctmTarget.CustomAttributes.Add(cad);
         }
@@ -1845,7 +1845,7 @@ namespace MS.Internal
                     // static field ref...
                     if (desc.MemberInfo is FieldInfo || desc.MemberInfo is PropertyInfo)
                     {
-                        CodeFieldReferenceExpression cfre = new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(desc.MemberInfo.DeclaringType.FullName), desc.MemberInfo.Name);
+                        CodeFieldReferenceExpression cfre = new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(new CodeTypeReference(desc.MemberInfo.DeclaringType.FullName, CodeTypeReferenceOptions.GlobalReference)), desc.MemberInfo.Name);
                         ce = cfre;
                     }
                     else  // static method invoke
@@ -1864,7 +1864,7 @@ namespace MS.Internal
                                 expressions[i] = GetPropertyValueExpression(ctx, parameters[i].ParameterType, args[i], null);
                             }
 
-                            CodeMethodInvokeExpression cmie = new CodeMethodInvokeExpression(new CodeTypeReferenceExpression(desc.MemberInfo.DeclaringType.FullName), desc.MemberInfo.Name);
+                            CodeMethodInvokeExpression cmie = new CodeMethodInvokeExpression(new CodeTypeReferenceExpression(new CodeTypeReference(desc.MemberInfo.DeclaringType.FullName, CodeTypeReferenceOptions.GlobalReference)), desc.MemberInfo.Name);
                             foreach (CodeExpression e in expressions)
                             {
                                 cmie.Parameters.Add(e);
@@ -1882,7 +1882,7 @@ namespace MS.Internal
                                 expressions[i] = GetPropertyValueExpression(ctx, parameters[i].ParameterType, args[i], null);
                             }
 
-                            CodeObjectCreateExpression coce = new CodeObjectCreateExpression(desc.MemberInfo.DeclaringType.FullName);
+                            CodeObjectCreateExpression coce = new CodeObjectCreateExpression(new CodeTypeReference(desc.MemberInfo.DeclaringType.FullName, CodeTypeReferenceOptions.GlobalReference));
                             foreach (CodeExpression e in expressions)
                             {
                                 coce.Parameters.Add(e);
@@ -1930,7 +1930,7 @@ namespace MS.Internal
                 ThrowCompilerException(SRID.RoutedEventNotRegistered, miEvent.DeclaringType.FullName, eventName, eventHandler);
             }
 
-            CodeTypeReferenceExpression ctreEvent = new CodeTypeReferenceExpression(miEvent.DeclaringType.FullName);
+            CodeTypeReferenceExpression ctreEvent = new CodeTypeReferenceExpression(new CodeTypeReference(miEvent.DeclaringType.FullName, CodeTypeReferenceOptions.GlobalReference));
             CodeFieldReferenceExpression cfreEvent = new CodeFieldReferenceExpression(ctreEvent, fiEvent.Name);
             return cfreEvent;
         }
@@ -1958,7 +1958,7 @@ namespace MS.Internal
             if (IsLanguageVB)
             {
                 CodeExpression[] delParams = { cdce };
-                CodeObjectCreateExpression coce = new CodeObjectCreateExpression(eventHandlerType, delParams);
+                CodeObjectCreateExpression coce = new CodeObjectCreateExpression(new CodeTypeReference(eventHandlerType, CodeTypeReferenceOptions.GlobalReference), delParams);
                 cDelExp = coce;
             }
 
@@ -2065,7 +2065,7 @@ namespace MS.Internal
 
             for (int i = 0; i < pars.Length; i++)
             {
-                CodeParameterDeclarationExpression param = new CodeParameterDeclarationExpression(pars[i].ParameterType, pars[i].Name);
+                CodeParameterDeclarationExpression param = new CodeParameterDeclarationExpression(new CodeTypeReference(pars[i].ParameterType, CodeTypeReferenceOptions.GlobalReference), pars[i].Name);
                 cmmEventHandler.Parameters.Add(param);
                 cmmEventHandlerHelper.Parameters.Add(param);
                 cmieOnEvent.Parameters.Add(new CodeArgumentReferenceExpression(pars[i].Name));
@@ -2233,7 +2233,7 @@ namespace MS.Internal
             field.Type = cc.ElementTypeReference;
             field.CustomAttributes.Add(
                 new CodeAttributeDeclaration(
-                         new CodeTypeReference("System.Diagnostics.CodeAnalysis.SuppressMessageAttribute"),
+                         new CodeTypeReference("System.Diagnostics.CodeAnalysis.SuppressMessageAttribute", CodeTypeReferenceOptions.GlobalReference),
                          new CodeAttributeArgument(new CodePrimitiveExpression("Microsoft.Performance")),
                          new CodeAttributeArgument(new CodePrimitiveExpression("CA1823:AvoidUnusedPrivateFields"))));
 
@@ -2303,7 +2303,7 @@ namespace MS.Internal
                     }
 
                     // construct the type args list for the base class type to be generated
-                    _ccRoot.CodeClass.BaseTypes[0].TypeArguments.Add(new CodeTypeReference(_typeArgsList[i]));
+                    _ccRoot.CodeClass.BaseTypes[0].TypeArguments.Add(new CodeTypeReference(_typeArgsList[i], CodeTypeReferenceOptions.GlobalReference));
                 }
             }
         }
@@ -2343,11 +2343,11 @@ namespace MS.Internal
 #endif
                 }
 
-                ctrConstructedType = new CodeTypeReference(genericName);
+                ctrConstructedType = new CodeTypeReference(genericName, CodeTypeReferenceOptions.GlobalReference);
             }
             else
             {
-                ctrConstructedType = new CodeTypeReference(t.FullName);
+                ctrConstructedType = new CodeTypeReference(t.FullName, CodeTypeReferenceOptions.GlobalReference);
             }
 
             return ctrConstructedType;
@@ -2372,7 +2372,7 @@ namespace MS.Internal
                     genericName = genericName.Substring(0, bang);
                 }
 
-                ctrConstructedType = new CodeTypeReference(genericName);
+                ctrConstructedType = new CodeTypeReference(genericName, CodeTypeReferenceOptions.GlobalReference);
 
                 // NOTE: For certain types like EventHandler delegate types, CodeDom seems
                 // to add bogus CodeTypeReferences as TypeArguments, so it needs to be cleared explicitly.
@@ -2411,7 +2411,7 @@ namespace MS.Internal
                                 string currTypeArg = typeArgsList[i];
 
                                 // and create a CodeTypeReference from it
-                                ctrTypeArg = new CodeTypeReference(currTypeArg);
+                                ctrTypeArg = new CodeTypeReference(currTypeArg, CodeTypeReferenceOptions.GlobalReference);
                                 break;
                             }
                         }
@@ -2428,7 +2428,7 @@ namespace MS.Internal
                     }
                     else
                     {
-                        ctrTypeArg = new CodeTypeReference(typeParam);
+                        ctrTypeArg = new CodeTypeReference(typeParam, CodeTypeReferenceOptions.GlobalReference);
                     }
 
                     // construct the type args list for the base class type to be generated
@@ -2437,7 +2437,7 @@ namespace MS.Internal
             }
             else
             {
-                ctrConstructedType = new CodeTypeReference(t.FullName);
+                ctrConstructedType = new CodeTypeReference(t.FullName, CodeTypeReferenceOptions.GlobalReference);
             }
 
             return ctrConstructedType;
@@ -2453,7 +2453,7 @@ namespace MS.Internal
             }
 
             CodeAttributeDeclaration cad = new CodeAttributeDeclaration(
-                         new CodeTypeReference(typeof(GeneratedCodeAttribute)),
+                         new CodeTypeReference(typeof(GeneratedCodeAttribute), CodeTypeReferenceOptions.GlobalReference),
                          new CodeAttributeArgument(new CodePrimitiveExpression(s_generatedCode_ToolName)),
                          new CodeAttributeArgument(new CodePrimitiveExpression(s_generatedCode_ToolVersion)));
 
@@ -2498,7 +2498,7 @@ namespace MS.Internal
             // by the user if this Attribute is set on the class.
             if (IsLanguageVB && !IsCompilingEntryPointClass)
             {
-                ctdClass.CustomAttributes.Add(new CodeAttributeDeclaration("Microsoft.VisualBasic.CompilerServices.DesignerGenerated"));
+                ctdClass.CustomAttributes.Add(new CodeAttributeDeclaration(new CodeTypeReference("Microsoft.VisualBasic.CompilerServices.DesignerGenerated", CodeTypeReferenceOptions.GlobalReference)));
             }
 
             return ctdClass;
@@ -2552,7 +2552,7 @@ namespace MS.Internal
 
             CodeTypeDeclaration ctdClass = GenerateClass(className, ref modifier, baseClass, baseClassFullName);
             CodeContext cc = new CodeContextRoot(ctdClass, cns, baseClass, _typeArgsList, baseClassFullName);
-            cc.ElementTypeReference = new CodeTypeReference(GetFullClassName(ns, className));
+            cc.ElementTypeReference = new CodeTypeReference(GetFullClassName(ns, className), CodeTypeReferenceOptions.GlobalReference);
 
             return cc;
         }
@@ -2573,18 +2573,18 @@ namespace MS.Internal
             //
             CodeMemberMethod cmmCD = new CodeMemberMethod();
             cmmCD.Name = CREATEDELEGATEHELPER;
-            cmmCD.ReturnType = new CodeTypeReference(typeof(Delegate));
+            cmmCD.ReturnType = new CodeTypeReference(typeof(Delegate), CodeTypeReferenceOptions.GlobalReference);
             cmmCD.Attributes = MemberAttributes.Assembly | MemberAttributes.Final;
             AddDebuggerNonUserCodeAttribute(cmmCD);
             AddGeneratedCodeAttribute(cmmCD);
             AddSuppressMessageAttribute(cmmCD, "Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode");
 
-            CodeParameterDeclarationExpression param1 = new CodeParameterDeclarationExpression(typeof(Type), DELEGATETYPE);
-            CodeParameterDeclarationExpression param2 = new CodeParameterDeclarationExpression(typeof(string), HANDLERARG);
+            CodeParameterDeclarationExpression param1 = new CodeParameterDeclarationExpression(new CodeTypeReference(typeof(Type), CodeTypeReferenceOptions.GlobalReference), DELEGATETYPE);
+            CodeParameterDeclarationExpression param2 = new CodeParameterDeclarationExpression(new CodeTypeReference(typeof(string), CodeTypeReferenceOptions.GlobalReference), HANDLERARG);
             cmmCD.Parameters.Add(param1);
             cmmCD.Parameters.Add(param2);
 
-            CodeMethodReferenceExpression cmreCD = new CodeMethodReferenceExpression(new CodeTypeReferenceExpression(typeof(Delegate)), "CreateDelegate");
+            CodeMethodReferenceExpression cmreCD = new CodeMethodReferenceExpression(new CodeTypeReferenceExpression(new CodeTypeReference(typeof(Delegate), CodeTypeReferenceOptions.GlobalReference)), "CreateDelegate");
             CodeMethodInvokeExpression cmieCD = new CodeMethodInvokeExpression();
             cmieCD.Method = cmreCD;
             cmieCD.Parameters.Add(new CodeArgumentReferenceExpression(DELEGATETYPE));
@@ -2607,7 +2607,7 @@ namespace MS.Internal
                 cmmLC = _ccRoot.EnsureInitializeComponentFn;
                 if (!isApp)
                 {
-                    cmmLC.ImplementationTypes.Add(new CodeTypeReference(KnownTypes.Types[(int)KnownElements.IComponentConnector]));
+                    cmmLC.ImplementationTypes.Add(new CodeTypeReference(KnownTypes.Types[(int)KnownElements.IComponentConnector], CodeTypeReferenceOptions.GlobalReference));
                 }
             }
 
@@ -2685,18 +2685,18 @@ namespace MS.Internal
             //
             string resVarname = RESOURCE_LOCATER;
 
-            CodeFieldReferenceExpression cfreRelUri = new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(System.UriKind)), "Relative");
+            CodeFieldReferenceExpression cfreRelUri = new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(new CodeTypeReference(typeof(System.UriKind), CodeTypeReferenceOptions.GlobalReference)), "Relative");
 
             CodeExpression[] uriParams = { new CodePrimitiveExpression(uriPart), cfreRelUri };
-            CodeObjectCreateExpression coceResourceLocator = new CodeObjectCreateExpression(typeof(System.Uri), uriParams);
-            CodeVariableDeclarationStatement cvdsresLocator = new CodeVariableDeclarationStatement(typeof(System.Uri), resVarname, coceResourceLocator);
+            CodeObjectCreateExpression coceResourceLocator = new CodeObjectCreateExpression(new CodeTypeReference(typeof(System.Uri), CodeTypeReferenceOptions.GlobalReference), uriParams);
+            CodeVariableDeclarationStatement cvdsresLocator = new CodeVariableDeclarationStatement(new CodeTypeReference(typeof(System.Uri), CodeTypeReferenceOptions.GlobalReference), resVarname, coceResourceLocator);
 
             cmmLC.Statements.Add(cvdsresLocator);
 
             //
             //  System.Windows.Application.LoadComponent(this, resourceLocator);
             //
-            CodeMethodReferenceExpression cmreLoadContent = new CodeMethodReferenceExpression(new CodeTypeReferenceExpression(KnownTypes.Types[(int)KnownElements.Application]), LOADCOMPONENT);
+            CodeMethodReferenceExpression cmreLoadContent = new CodeMethodReferenceExpression(new CodeTypeReferenceExpression(new CodeTypeReference(KnownTypes.Types[(int)KnownElements.Application], CodeTypeReferenceOptions.GlobalReference)), LOADCOMPONENT);
             CodeMethodInvokeExpression cmieLoadContent = new CodeMethodInvokeExpression();
 
             cmieLoadContent.Method = cmreLoadContent;
@@ -2715,7 +2715,7 @@ namespace MS.Internal
             CodeMemberField cmfCL = new CodeMemberField();
             cmfCL.Name = CONTENT_LOADED;
             cmfCL.Attributes = MemberAttributes.Private;
-            cmfCL.Type = new CodeTypeReference(typeof(bool));
+            cmfCL.Type = new CodeTypeReference(typeof(bool), CodeTypeReferenceOptions.GlobalReference);
             _ccRoot.CodeClass.Members.Add(cmfCL);
 
             if (!isApp)
@@ -3131,9 +3131,9 @@ namespace MS.Internal
             CodeVariableReferenceExpression cvre = new CodeVariableReferenceExpression(APPVAR);
             CodeExpression[] ctorParams = {};
 
-            coce = new CodeObjectCreateExpression(appClassName, ctorParams);
+            coce = new CodeObjectCreateExpression(new CodeTypeReference(appClassName, CodeTypeReferenceOptions.GlobalReference), ctorParams);
 
-            CodeVariableDeclarationStatement cvds = new CodeVariableDeclarationStatement(appClassName, APPVAR, coce);
+            CodeVariableDeclarationStatement cvds = new CodeVariableDeclarationStatement(new CodeTypeReference(appClassName, CodeTypeReferenceOptions.GlobalReference), APPVAR, coce);
 
             cmmMain.Statements.Add(cvds);
 
@@ -3185,7 +3185,7 @@ namespace MS.Internal
 
                 cmmMain = new CodeEntryPointMethod();
                 cmmMain.Attributes = MemberAttributes.Public | MemberAttributes.Static;
-                cmmMain.CustomAttributes.Add(new CodeAttributeDeclaration(typeof(STAThreadAttribute).FullName));
+                cmmMain.CustomAttributes.Add(new CodeAttributeDeclaration(new CodeTypeReference(typeof(STAThreadAttribute).FullName, CodeTypeReferenceOptions.GlobalReference)));
                 AddDebuggerNonUserCodeAttribute(cmmMain);
                 AddGeneratedCodeAttribute(cmmMain);
                 GenerateXmlComments(cmmMain, "Application Entry Point.");
@@ -3257,7 +3257,7 @@ namespace MS.Internal
 
                     string normalized = ResourceIDHelper.GetResourceIDFromRelativePath(file);
                     CodeAttributeDeclaration cad = new CodeAttributeDeclaration(
-                                 "System.Windows.Resources.AssemblyAssociatedContentFileAttribute",
+                                 new CodeTypeReference("System.Windows.Resources.AssemblyAssociatedContentFileAttribute", CodeTypeReferenceOptions.GlobalReference),
                                  new CodeAttributeArgument(new CodePrimitiveExpression(normalized)));
 
                     ccu.AssemblyCustomAttributes.Add(cad);
@@ -3289,9 +3289,9 @@ namespace MS.Internal
         private CodeVariableReferenceExpression GenerateSplashScreenInstance(CodeMemberMethod cmmMain)
         {
             // SplashScreen splashScreen = new SplashScreen(Assembly.GetExecutingAssembly(), "splash.png");
-            CodeObjectCreateExpression coceApplicationSplashScreen = new CodeObjectCreateExpression(SPLASHCLASSNAME, new CodePrimitiveExpression(GetSplashResourceId()));
+            CodeObjectCreateExpression coceApplicationSplashScreen = new CodeObjectCreateExpression(new CodeTypeReference(SPLASHCLASSFULLNAME, CodeTypeReferenceOptions.GlobalReference), new CodePrimitiveExpression(GetSplashResourceId()));
             // ApplicationSplashScreen splashScreen = ...
-            CodeVariableDeclarationStatement cvdsAppSplash = new CodeVariableDeclarationStatement(SPLASHCLASSNAME, SPLASHVAR, coceApplicationSplashScreen);
+            CodeVariableDeclarationStatement cvdsAppSplash = new CodeVariableDeclarationStatement(new CodeTypeReference(SPLASHCLASSFULLNAME, CodeTypeReferenceOptions.GlobalReference), SPLASHVAR, coceApplicationSplashScreen);
             cmmMain.Statements.Add(cvdsAppSplash);
 
             // splashScreen.Show(true);
@@ -3575,7 +3575,7 @@ namespace MS.Internal
         private const string            EVENTINFO = "eventInfo";
         private const string            APPVAR = "app";
         private const string            SPLASHVAR = "splashScreen";
-        private const string            SPLASHCLASSNAME = "SplashScreen";
+        private const string            SPLASHCLASSFULLNAME = "System.Windows.SplashScreen";
         private const string            ARGS = "args";
         private const string            INITIALIZE_COMPONENT = "InitializeComponent";
         private const string            SWITCH_STATEMENT = INDENT12 + "switch (" + CONNECTIONID + ")\r\n" + INDENT12 + "{";

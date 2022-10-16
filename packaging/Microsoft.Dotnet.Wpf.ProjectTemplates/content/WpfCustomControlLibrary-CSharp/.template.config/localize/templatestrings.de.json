@@ -1,4 +1,4 @@
-﻿{
+{
   "author": "Microsoft",
   "name": "Bibliothek benutzerdefinierter WPF-Steuerelemente",
   "description": "Ein Projekt zum Erstellen einer Bibliothek benutzerdefinierter Steuerelemente für .NET WPF-Anwendungen",
@@ -9,6 +9,7 @@
   "symbols/Framework/choices/net5.0/description": "Auf „net5.0“ abzielen",
   "symbols/Framework/choices/net6.0/description": "Auf „net6.0“ abzielen",
   "symbols/Framework/choices/net7.0/description": "Target net7.0",
+  "symbols/Framework/choices/net8.0/description": "Target net8.0",
   "symbols/langVersion/description": "Legt „langVersion“ in der erstellten Projektdatei fest",
   "symbols/skipRestore/description": "Wenn angegeben, wird die automatische Wiederherstellung des Projekts beim Erstellen übersprungen.",
   "symbols/Nullable/description": "Gibt an, ob Nullable-Verweistypen für dieses Projekt aktiviert werden sollen.",

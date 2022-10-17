@@ -6,8 +6,8 @@
   "generatorVersions": "[1.0.0.0-*)",
   "description": "A project for creating a user control library for .NET WPF Applications",
   "groupIdentity": "Microsoft.Common.WPF.Control",
-  "precedence": "3000",
-  "identity": "Microsoft.Common.WPF.Control.VisualBasic.5.0",
+  "precedence": "7000",
+  "identity": "Microsoft.Common.WPF.Control.VisualBasic.7.0",
   "shortName": "wpfusercontrollib",
   "tags": {
     "language": "VB",

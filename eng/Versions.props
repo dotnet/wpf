@@ -22,11 +22,11 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/winforms -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>7.0.0-rtm.22513.12</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>7.0.0-rtm.22517.2</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/runtime -->
   <PropertyGroup>
-    <VSRedistCommonNetCoreSharedFrameworkx6470PackageVersion>7.0.0-rtm.22513.5</VSRedistCommonNetCoreSharedFrameworkx6470PackageVersion>
+    <VSRedistCommonNetCoreSharedFrameworkx6470PackageVersion>7.0.0-rtm.22513.8</VSRedistCommonNetCoreSharedFrameworkx6470PackageVersion>
     <MicrosoftNETCoreAppRefVersion>7.0.0</MicrosoftNETCoreAppRefVersion>
     <MicrosoftNETCoreAppRuntimewinx64Version>7.0.0</MicrosoftNETCoreAppRuntimewinx64Version>
     <MicrosoftNETCorePlatformsVersion>7.0.0</MicrosoftNETCorePlatformsVersion>

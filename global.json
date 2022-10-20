@@ -1,6 +1,6 @@
 {
   "tools": {
-    "dotnet": "8.0.100-alpha.1.22423.9",
+    "dotnet": "8.0.100-alpha.1.22512.5",
     "runtimes": {
       "dotnet": [
         "2.1.7",
@@ -16,7 +16,7 @@
     "Microsoft.DotNet.Helix.Sdk": "8.0.0-beta.22513.2"
   },
   "sdk": {
-    "version": "8.0.100-alpha.1.22423.9"
+    "version": "8.0.100-alpha.1.22512.5"
   },
   "native-tools": {
     "strawberry-perl": "5.28.1.1-1",

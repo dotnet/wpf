@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="6.0.11-servicing.22519.5">
+    <Dependency Name="Microsoft.Private.Winforms" Version="6.0.11-servicing.22523.4">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-winforms</Uri>
-      <Sha>8ed3bcf52701282d7db3a99db2e7304bd4443c99</Sha>
+      <Sha>cf9269e4b3f8f3d74a59e90c19ec6f8d390bcad4</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="6.0.11-servicing.22519.5">
+    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="6.0.11-servicing.22523.4">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-winforms</Uri>
-      <Sha>8ed3bcf52701282d7db3a99db2e7304bd4443c99</Sha>
+      <Sha>cf9269e4b3f8f3d74a59e90c19ec6f8d390bcad4</Sha>
     </Dependency>
     <Dependency Name="System.CodeDom" Version="6.0.0" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
@@ -47,7 +47,7 @@
     </Dependency>
     <Dependency Name="Microsoft.NETCore.Platforms" Version="6.0.7" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>af5b37cd54cfdd15f14f854eafc34ed9c346ddde</Sha>
+      <Sha>943474ca16db7c65ba6cff4a89c3ebd219dde3e5</Sha>
     </Dependency>
     <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="6.0.0-rtm.22513.2">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</Uri>
@@ -57,13 +57,13 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>4822e3c3aa77eb82b2fb33c9321f923cf11ddde6</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.ILDAsm" Version="6.0.11-servicing.22518.9" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="Microsoft.NETCore.ILDAsm" Version="6.0.11-servicing.22523.4" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>af5b37cd54cfdd15f14f854eafc34ed9c346ddde</Sha>
+      <Sha>943474ca16db7c65ba6cff4a89c3ebd219dde3e5</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.ILAsm" Version="6.0.11-servicing.22518.9" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="Microsoft.NETCore.ILAsm" Version="6.0.11-servicing.22523.4" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>af5b37cd54cfdd15f14f854eafc34ed9c346ddde</Sha>
+      <Sha>943474ca16db7c65ba6cff4a89c3ebd219dde3e5</Sha>
     </Dependency>
     <Dependency Name="System.Resources.Extensions" Version="6.0.0" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
@@ -71,15 +71,15 @@
     </Dependency>
     <Dependency Name="Microsoft.NETCore.App.Ref" Version="6.0.11" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>af5b37cd54cfdd15f14f854eafc34ed9c346ddde</Sha>
+      <Sha>943474ca16db7c65ba6cff4a89c3ebd219dde3e5</Sha>
     </Dependency>
     <Dependency Name="Microsoft.NETCore.App.Runtime.win-x64" Version="6.0.11" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>af5b37cd54cfdd15f14f854eafc34ed9c346ddde</Sha>
+      <Sha>943474ca16db7c65ba6cff4a89c3ebd219dde3e5</Sha>
     </Dependency>
-    <Dependency Name="VS.Redist.Common.NetCore.SharedFramework.x64.6.0" Version="6.0.11-servicing.22518.9" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="VS.Redist.Common.NetCore.SharedFramework.x64.6.0" Version="6.0.11-servicing.22523.4" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>af5b37cd54cfdd15f14f854eafc34ed9c346ddde</Sha>
+      <Sha>943474ca16db7c65ba6cff4a89c3ebd219dde3e5</Sha>
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>

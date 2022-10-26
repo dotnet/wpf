@@ -54,13 +54,13 @@ namespace System.Windows.Navigation
         Automatic = 0,
 
         /// <summary>
-        /// The Frame has its own Journal which operates independent of the hosting container’s
+        /// The Frame has its own Journal which operates independent of the hosting containerâ€™s
         /// journal (if it has one).
         /// </summary>
         OwnsJournal,
 
         /// <summary>
-        /// The Frame’s journal entries are merged into the hosting container’s journal, if available.
+        /// The Frameâ€™s journal entries are merged into the hosting containerâ€™s journal, if available.
         /// Otherwise navigations in this frame are not journaled.
         /// </summary>
         UsesParentJournal
@@ -862,6 +862,17 @@ namespace System.Windows.Controls
             if (_ownJournalScope == null)
                 throw new InvalidOperationException(SR.Get(SRID.InvalidOperation_NoJournal));
             return _ownJournalScope.RemoveBackEntry();
+        }
+        
+        /// <summary>
+        /// Removes the first JournalEntry from the frame's forward stack.
+        /// </summary>
+        /// <exception cref="InvalidOperationException"> The frame doesn't own a journal. </exception>
+        public JournalEntry RemoveForwardEntry()
+        {
+            if (_ownJournalScope == null)
+                throw new InvalidOperationException(SR.Get(SRID.InvalidOperation_NoJournal));
+            return _ownJournalScope.RemoveForwardEntry();
         }
 
         /// <summary>

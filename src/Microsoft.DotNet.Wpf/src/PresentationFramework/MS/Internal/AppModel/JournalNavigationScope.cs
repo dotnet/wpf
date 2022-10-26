@@ -231,6 +231,12 @@ namespace MS.Internal.AppModel
             _host.VerifyContextAndObjectState();
             return _journal == null ? null : _journal.RemoveBackEntry();
         }
+        
+        public JournalEntry RemoveForwardEntry()
+        {
+            _host.VerifyContextAndObjectState();
+            return _journal == null ? null : _journal.RemoveForwardEntry();
+        }
 
         public System.Collections.IEnumerable BackStack
         {

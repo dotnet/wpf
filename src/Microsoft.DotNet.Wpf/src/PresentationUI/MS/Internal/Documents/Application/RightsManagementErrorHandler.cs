@@ -97,8 +97,8 @@ namespace MS.Internal.Documents.Application
                 if (!fatal || !IsCriticalOperation(operation))
                 {
                     System.Windows.MessageBox.Show(
-                        SR.Get(SRID.RightsManagementWarnErrorGenericFailure),
-                        SR.Get(SRID.RightsManagementWarnErrorTitle),
+                        SR.RightsManagementWarnErrorGenericFailure,
+                        SR.RightsManagementWarnErrorTitle,
                         System.Windows.MessageBoxButton.OK,
                         System.Windows.MessageBoxImage.Warning);
                 }
@@ -112,7 +112,7 @@ namespace MS.Internal.Documents.Application
                 System.Windows.MessageBoxResult result =
                     System.Windows.MessageBox.Show(
                         message,
-                        SR.Get(SRID.RightsManagementWarnErrorTitle),
+                        SR.RightsManagementWarnErrorTitle,
                         System.Windows.MessageBoxButton.YesNo,
                         System.Windows.MessageBoxImage.Warning);
 
@@ -127,7 +127,7 @@ namespace MS.Internal.Documents.Application
                 // Display the error message box
                 System.Windows.MessageBox.Show(
                     message,
-                    SR.Get(SRID.RightsManagementWarnErrorTitle),
+                    SR.RightsManagementWarnErrorTitle,
                     System.Windows.MessageBoxButton.OK,
                     System.Windows.MessageBoxImage.Warning);
             }
@@ -142,7 +142,7 @@ namespace MS.Internal.Documents.Application
                     "ErrorHandler: Could not handle exception. Rethrowing.");
 
                 throw new XpsViewerException(
-                    SR.Get(SRID.XpsViewerRightsManagementException),
+                    SR.XpsViewerRightsManagementException,
                     exception);
             }
 
@@ -261,7 +261,7 @@ namespace MS.Internal.Documents.Application
                 // content related.
                 (exception is System.IO.FileFormatException))
             {
-                result = SRID.RightsManagementWarnErrorInvalidTemplate;
+                result = SR.RightsManagementWarnErrorInvalidTemplate;
             }
             // These remaining exception types are related to File I/O, all of which
             // should be handled with an error message and fail the signing process.
@@ -275,7 +275,7 @@ namespace MS.Internal.Documents.Application
                      (exception is System.IO.FileNotFoundException) ||
                      (exception is System.IO.DirectoryNotFoundException))
             {
-                result = SRID.RightsManagementWarnErrorFailedToLoadTemplate;
+                result = SR.RightsManagementWarnErrorFailedToLoadTemplate;
             }
             else
             {
@@ -288,7 +288,7 @@ namespace MS.Internal.Documents.Application
             }
             else
             {
-                return SR.Get(result);
+                return result;
             }
         }
 
@@ -323,178 +323,178 @@ namespace MS.Internal.Documents.Application
                 case RightsManagementFailureCode.InvalidLicense:
                     if (operation == RightsManagementOperation.TemplateAccess)
                     {
-                        result = SRID.RightsManagementWarnErrorInvalidTemplate;
+                        result = SR.RightsManagementWarnErrorInvalidTemplate;
                     }
                     else
                     {
-                        result = SRID.RightsManagementWarnErrorConfigurationError;
+                        result = SR.RightsManagementWarnErrorConfigurationError;
                     }
                     break;
                 case RightsManagementFailureCode.InvalidLicenseSignature:
                     if (operation == RightsManagementOperation.Initialize)
                     {
-                        result = SRID.RightsManagementWarnErrorConfigurationError;
+                        result = SR.RightsManagementWarnErrorConfigurationError;
                     }
                     else
                     {
-                        result = SRID.RightsManagementWarnErrorInvalidContent;
+                        result = SR.RightsManagementWarnErrorInvalidContent;
                     }
 
                     break;
                 case RightsManagementFailureCode.RightNotGranted:
-                    result = SRID.RightsManagementWarnErrorNoPermission;
+                    result = SR.RightsManagementWarnErrorNoPermission;
                     askUser = true;
                     break;
                 case RightsManagementFailureCode.InvalidVersion:
-                    result = SRID.RightsManagementWarnErrorConfigurationError;
+                    result = SR.RightsManagementWarnErrorConfigurationError;
                     break;
                 case RightsManagementFailureCode.ClockRollbackDetected:
-                    result = SRID.RightsManagementWarnErrorClockModified;
+                    result = SR.RightsManagementWarnErrorClockModified;
                     break;
                 case RightsManagementFailureCode.BindValidityTimeViolated:
-                    result = SRID.RightsManagementWarnErrorExpiredPermission;
+                    result = SR.RightsManagementWarnErrorExpiredPermission;
                     break;
                 case RightsManagementFailureCode.BrokenCertChain:
-                    result = SRID.RightsManagementWarnErrorConfigurationError;
+                    result = SR.RightsManagementWarnErrorConfigurationError;
                     break;
                 case RightsManagementFailureCode.BindPolicyViolation:
-                    result = SRID.RightsManagementWarnErrorNoPermission;
+                    result = SR.RightsManagementWarnErrorNoPermission;
                     askUser = true;
                     break;
                 case RightsManagementFailureCode.ManifestPolicyViolation:
-                    result = SRID.RightsManagementWarnErrorConfigurationError;
+                    result = SR.RightsManagementWarnErrorConfigurationError;
                     break;
                 case RightsManagementFailureCode.BindRevokedLicense:
-                    result = SRID.RightsManagementWarnErrorNoPermission;
+                    result = SR.RightsManagementWarnErrorNoPermission;
                     askUser = true;
                     break;
                 case RightsManagementFailureCode.BindRevokedIssuer:
-                    result = SRID.RightsManagementWarnErrorNoPermission;
+                    result = SR.RightsManagementWarnErrorNoPermission;
                     askUser = true;
                     break;
                 case RightsManagementFailureCode.BindRevokedPrincipal:
-                    result = SRID.RightsManagementWarnErrorNoPermission;
+                    result = SR.RightsManagementWarnErrorNoPermission;
                     askUser = true;
                     break;
                 case RightsManagementFailureCode.BindRevokedResource:
-                    result = SRID.RightsManagementWarnErrorNoPermission;
+                    result = SR.RightsManagementWarnErrorNoPermission;
                     askUser = true;
                     break;
                 case RightsManagementFailureCode.BindRevokedModule:
-                    result = SRID.RightsManagementWarnErrorConfigurationError;
+                    result = SR.RightsManagementWarnErrorConfigurationError;
                     break;
                 case RightsManagementFailureCode.BindAccessUnsatisfied:
-                    result = SRID.RightsManagementWarnErrorNoPermission;
+                    result = SR.RightsManagementWarnErrorNoPermission;
                     askUser = true;
                     break;
                 case RightsManagementFailureCode.BindMachineNotFoundInGroupIdentity:
-                    result = SRID.RightsManagementWarnErrorConfigurationError;
+                    result = SR.RightsManagementWarnErrorConfigurationError;
                     break;
                 case RightsManagementFailureCode.BindRevocationListStale:
-                    result = SRID.RightsManagementWarnErrorNoPermission;
+                    result = SR.RightsManagementWarnErrorNoPermission;
                     askUser = true;
                     break;
                 case RightsManagementFailureCode.BindNoApplicableRevocationList:
-                    result = SRID.RightsManagementWarnErrorNoPermission;
+                    result = SR.RightsManagementWarnErrorNoPermission;
                     askUser = true;
                     break;
                 case RightsManagementFailureCode.LicenseAcquisitionFailed:
-                    result = SRID.RightsManagementWarnErrorConfigurationError;
+                    result = SR.RightsManagementWarnErrorConfigurationError;
                     break;
                 case RightsManagementFailureCode.NoDistributionPointUrlFound:
-                    result = SRID.RightsManagementWarnErrorInvalidContent;
+                    result = SR.RightsManagementWarnErrorInvalidContent;
                     break;
                 case RightsManagementFailureCode.NoConnect:
-                    result = SRID.RightsManagementWarnErrorServerError;
+                    result = SR.RightsManagementWarnErrorServerError;
                     break;
                 case RightsManagementFailureCode.ActivationFailed:
-                    result = SRID.RightsManagementWarnErrorConfigurationError;
+                    result = SR.RightsManagementWarnErrorConfigurationError;
                     break;
                 case RightsManagementFailureCode.Aborted:
                     fatal = (operation != RightsManagementOperation.PassportActivation);
                     break;
                 case RightsManagementFailureCode.OutOfQuota:
-                    result = SRID.RightsManagementWarnErrorNoPermission;
+                    result = SR.RightsManagementWarnErrorNoPermission;
                     askUser = true;
                     break;
                 case RightsManagementFailureCode.AuthenticationFailed:
                     fatal = false;
                     break;
                 case RightsManagementFailureCode.ServerError:
-                    result = SRID.RightsManagementWarnErrorServerError;
+                    result = SR.RightsManagementWarnErrorServerError;
                     break;
                 case RightsManagementFailureCode.HidCorrupted:
-                    result = SRID.RightsManagementWarnErrorConfigurationError;
+                    result = SR.RightsManagementWarnErrorConfigurationError;
                     break;
                 case RightsManagementFailureCode.InvalidServerResponse:
-                    result = SRID.RightsManagementWarnErrorServerError;
+                    result = SR.RightsManagementWarnErrorServerError;
                     break;
                 case RightsManagementFailureCode.ServiceNotFound:
-                    result = SRID.RightsManagementWarnErrorServerError;
+                    result = SR.RightsManagementWarnErrorServerError;
                     break;
                 case RightsManagementFailureCode.UseDefault:
-                    result = SRID.RightsManagementWarnErrorConfigurationError;
+                    result = SR.RightsManagementWarnErrorConfigurationError;
                     break;
                 case RightsManagementFailureCode.ServerNotFound:
-                    result = SRID.RightsManagementWarnErrorServerError;
+                    result = SR.RightsManagementWarnErrorServerError;
                     break;
                 case RightsManagementFailureCode.InvalidEmail:
                     fatal = false;
                     break;
                 case RightsManagementFailureCode.ValidityTimeViolation:
-                    result = SRID.RightsManagementWarnErrorExpiredPermission;
+                    result = SR.RightsManagementWarnErrorExpiredPermission;
                     break;
                 case RightsManagementFailureCode.OutdatedModule:
-                    result = SRID.RightsManagementWarnErrorConfigurationError;
+                    result = SR.RightsManagementWarnErrorConfigurationError;
                     break;
                 case RightsManagementFailureCode.ServiceMoved:
-                    result = SRID.RightsManagementWarnErrorServerError;
+                    result = SR.RightsManagementWarnErrorServerError;
                     break;
                 case RightsManagementFailureCode.ServiceGone:
-                    result = SRID.RightsManagementWarnErrorServerError;
+                    result = SR.RightsManagementWarnErrorServerError;
                     break;
                 case RightsManagementFailureCode.AdEntryNotFound:
                     fatal = false;
                     break;
                 case RightsManagementFailureCode.NotAChain:
-                    result = SRID.RightsManagementWarnErrorConfigurationError;
+                    result = SR.RightsManagementWarnErrorConfigurationError;
                     break;
                 case RightsManagementFailureCode.RequestDenied:
-                    result = SRID.RightsManagementWarnErrorTemporaryActivationNotSupported;
+                    result = SR.RightsManagementWarnErrorTemporaryActivationNotSupported;
                     fatal = false;
                     break;
                 case RightsManagementFailureCode.LicenseBindingToWindowsIdentityFailed:
-                    result = SRID.RightsManagementWarnErrorNoPermission;
+                    result = SR.RightsManagementWarnErrorNoPermission;
                     askUser = true;
                     break;
                 case RightsManagementFailureCode.InvalidIssuanceLicenseTemplate:
-                    result = SRID.RightsManagementWarnErrorInvalidTemplate;
+                    result = SR.RightsManagementWarnErrorInvalidTemplate;
                     fatal = false;
                     break;
                 case RightsManagementFailureCode.ExpiredOfficialIssuanceLicenseTemplate:
-                    result = SRID.RightsManagementWarnErrorInvalidTemplate;
+                    result = SR.RightsManagementWarnErrorInvalidTemplate;
                     fatal = false;
                     break;
                 case RightsManagementFailureCode.InvalidClientLicensorCertificate:
-                    result = SRID.RightsManagementWarnErrorConfigurationError;
+                    result = SR.RightsManagementWarnErrorConfigurationError;
                     break;
                 case RightsManagementFailureCode.HidInvalid:
-                    result = SRID.RightsManagementWarnErrorConfigurationError;
+                    result = SR.RightsManagementWarnErrorConfigurationError;
                     break;
                 case RightsManagementFailureCode.EmailNotVerified:
                     fatal = false;
                     break;
                 case RightsManagementFailureCode.DebuggerDetected:
-                    result = SRID.RightsManagementWarnErrorDebuggerDetected;
+                    result = SR.RightsManagementWarnErrorDebuggerDetected;
                     break;
                 case RightsManagementFailureCode.InvalidLockboxType:
-                    result = SRID.RightsManagementWarnErrorConfigurationError;
+                    result = SR.RightsManagementWarnErrorConfigurationError;
                     break;
                 case RightsManagementFailureCode.InvalidLockboxPath:
-                    result = SRID.RightsManagementWarnErrorConfigurationError;
+                    result = SR.RightsManagementWarnErrorConfigurationError;
                     break;
                 case RightsManagementFailureCode.NoAesCryptoProvider:
-                    result = SRID.RightsManagementWarnErrorConfigurationError;
+                    result = SR.RightsManagementWarnErrorConfigurationError;
                     break;
                 default:
                     return null;
@@ -506,7 +506,7 @@ namespace MS.Internal.Documents.Application
             }
             else
             {
-                return SR.Get(result);
+                return result;
             }
         }
 

@@ -473,9 +473,9 @@ namespace MS.Internal.Documents
                     System.Windows.MessageBox.Show(
                         string.Format(
                             CultureInfo.CurrentCulture,
-                            SR.Get(SRID.RightsManagementWarnErrorNoReferralAddress),
+                            SR.RightsManagementWarnErrorNoReferralAddress,
                             textBoxPermissionsContact.Text),
-                        SR.Get(SRID.RightsManagementWarnErrorTitle),
+                        SR.RightsManagementWarnErrorTitle,
                         MessageBoxButton.OK,
                         MessageBoxImage.Exclamation);
 
@@ -655,15 +655,15 @@ namespace MS.Internal.Documents
             if (string.IsNullOrEmpty(userNames))
             {
                 System.Windows.MessageBox.Show(
-                    SR.Get(SRID.RightsManagementWarnErrorNoAddress),
-                    SR.Get(SRID.RightsManagementWarnErrorTitle),
+                    SR.RightsManagementWarnErrorNoAddress,
+                    SR.RightsManagementWarnErrorTitle,
                     MessageBoxButton.OK,
                     MessageBoxImage.Exclamation);
             }
 
             userNameArray =
                 userNames.Split(
-                    SR.Get(SRID.RMPublishingUserSeparator).ToCharArray(),
+                    SR.RMPublishingUserSeparator.ToCharArray(),
                     StringSplitOptions.RemoveEmptyEntries);            
 
             foreach (string userName in userNameArray)
@@ -699,7 +699,7 @@ namespace MS.Internal.Documents
             {
                 textBoxUserName.Text =
                     string.Join(
-                        SR.Get(SRID.RMPublishingUserSeparator),
+                        SR.RMPublishingUserSeparator,
                         userNames);
             }
         }
@@ -711,7 +711,7 @@ namespace MS.Internal.Documents
         /// <param name="e">Event arguments (not used)</param>
         private void buttonEveryone_Click(object sender, EventArgs e)
         {
-            rightsTable.AddUser(new RightsTableUser(SR.Get(SRID.RMPublishingAnyoneUserDisplay)));
+            rightsTable.AddUser(new RightsTableUser(SR.RMPublishingAnyoneUserDisplay));
             UpdateAnyoneEnabled();
         }
 
@@ -907,21 +907,21 @@ namespace MS.Internal.Documents
         {
             base.ApplyResources();
 
-            Text = SR.Get(SRID.RMPublishingTitle);
+            Text = SR.RMPublishingTitle;
 
-            radioButtonUnrestricted.Text = SR.Get(SRID.RMPublishingUnrestrictedRadio);
-            radioButtonPermissions.Text = SR.Get(SRID.RMPublishingPermissionsRadio);
-            radioButtonTemplate.Text = SR.Get(SRID.RMPublishingTemplateRadio);
+            radioButtonUnrestricted.Text = SR.RMPublishingUnrestrictedRadio;
+            radioButtonPermissions.Text = SR.RMPublishingPermissionsRadio;
+            radioButtonTemplate.Text = SR.RMPublishingTemplateRadio;
 
-            groupBoxMainContent.Text = SR.Get(SRID.RMPublishingMainContentGroupLabel);
+            groupBoxMainContent.Text = SR.RMPublishingMainContentGroupLabel;
 
-            textBoxUnrestrictedText.Text = SR.Get(SRID.RMPublishingUnrestrictedText);
+            textBoxUnrestrictedText.Text = SR.RMPublishingUnrestrictedText;
 
-            labelSelectTemplate.Text = SR.Get(SRID.RMPublishingSelectTemplate);
+            labelSelectTemplate.Text = SR.RMPublishingSelectTemplate;
 
             // Set the text for the Add User button first so we can use it to
             // calculate the size of the image buttons
-            buttonAddUser.Text = SR.Get(SRID.RMPublishingAddUserButton);
+            buttonAddUser.Text = SR.RMPublishingAddUserButton;
 
             // Each of the image buttons is a square, and the height will be
             // the same as the text button
@@ -930,7 +930,7 @@ namespace MS.Internal.Documents
                 buttonAddUser.Size.Height);
 
             // Set the Add User button's tooltip
-            _toolTip.SetToolTip(buttonAddUser, SR.Get(SRID.RMPublishingAddUserButtonToolTip));
+            _toolTip.SetToolTip(buttonAddUser, SR.RMPublishingAddUserButtonToolTip);
 
             buttonPeoplePicker.Size = imageButtonSize;
             buttonEveryone.Size = imageButtonSize;
@@ -940,27 +940,27 @@ namespace MS.Internal.Documents
             SetupIconButton(
                 buttonPeoplePicker,
                 (System.Drawing.Icon)Resources.RMPublishingPeoplePicker,
-                SR.Get(SRID.RMPublishingPeoplePickerButton),
-                SR.Get(SRID.RMPublishingPeoplePickerButtonToolTip));
+                SR.RMPublishingPeoplePickerButton,
+                SR.RMPublishingPeoplePickerButtonToolTip);
             SetupIconButton(
                 buttonEveryone,
                 (System.Drawing.Icon)Resources.RMPublishingEveryone,
-                SR.Get(SRID.RMPublishingAnyoneButton),
-                SR.Get(SRID.RMPublishingAnyoneButtonToolTip));
+                SR.RMPublishingAnyoneButton,
+                SR.RMPublishingAnyoneButtonToolTip);
             SetupIconButton(
                 buttonRemoveUser,
                 (System.Drawing.Icon)Resources.RMPublishingRemove,
-                SR.Get(SRID.RMPublishingRemoveButton),
-                SR.Get(SRID.RMPublishingRemoveButtonToolTip));
+                SR.RMPublishingRemoveButton,
+                SR.RMPublishingRemoveButtonToolTip);
 
-            checkBoxValidUntil.Text = SR.Get(SRID.RMPublishingExpiresOn);
+            checkBoxValidUntil.Text = SR.RMPublishingExpiresOn;
             checkBoxPermissionsContact.Text =
-                SR.Get(SRID.RMPublishingRequestPermissionsFrom);
-            buttonSave.Text = SR.Get(SRID.RMPublishingSaveButton);
-            _toolTip.SetToolTip(buttonSave, SR.Get(SRID.RMPublishingSaveButtonToolTip));
-            buttonSaveAs.Text = SR.Get(SRID.RMPublishingSaveAsButton);
-            _toolTip.SetToolTip(buttonSaveAs, SR.Get(SRID.RMPublishingSaveAsButtonToolTip));
-            buttonCancel.Text = SR.Get(SRID.RMPublishingCancelButton);
+                SR.RMPublishingRequestPermissionsFrom;
+            buttonSave.Text = SR.RMPublishingSaveButton;
+            _toolTip.SetToolTip(buttonSave, SR.RMPublishingSaveButtonToolTip);
+            buttonSaveAs.Text = SR.RMPublishingSaveAsButton;
+            _toolTip.SetToolTip(buttonSaveAs, SR.RMPublishingSaveAsButtonToolTip);
+            buttonCancel.Text = SR.RMPublishingCancelButton;
         }
         #endregion Protected Methods
 
@@ -1007,7 +1007,7 @@ namespace MS.Internal.Documents
             {
                 if (_template == null)
                 {
-                    return SR.Get(SRID.ServerSideTemplateDisplayNone);
+                    return SR.ServerSideTemplateDisplayNone;
                 }
                 // This will remove the path and extension information to make
                 // a screen readable string.  Here we use LocalPath instead of

@@ -44,7 +44,7 @@ namespace MS.Internal.Documents
                 FixedDocumentSequence = XpsDocument.FixedDocumentSequenceReader;
                 if (FixedDocumentSequence == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.DigitalSignatureNoFixedDocumentSequence));
+                    throw new ArgumentException(SR.DigitalSignatureNoFixedDocumentSequence);
                 }
                 // We only want to save the first fixed document since all
                 // XPS Viewer signature definitions will be added to the first

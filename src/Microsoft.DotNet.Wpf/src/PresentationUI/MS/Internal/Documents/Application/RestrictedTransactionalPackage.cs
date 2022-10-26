@@ -58,7 +58,7 @@ internal sealed class RestrictedTransactionalPackage : TransactionalPackage
                 // Ensure that all parts being modified are permitted.
                 if ((part != null) && (!IsValidContentType(part.ContentType)))
                 {
-                    throw new NotSupportedException(SR.Get(SRID.PackagePartTypeNotWritable));
+                    throw new NotSupportedException(SR.PackagePartTypeNotWritable);
                 }
             }
 
@@ -92,7 +92,7 @@ internal sealed class RestrictedTransactionalPackage : TransactionalPackage
         // Ensure that modifying this contentType is permitted.
         if (!IsValidContentType(contentType))
         {
-            throw new ArgumentException(SR.Get(SRID.PackagePartTypeNotWritable), "contentType");
+            throw new ArgumentException(SR.PackagePartTypeNotWritable, "contentType");
         }
         return base.CreatePartCore(partUri, contentType, compressionOption);
     }

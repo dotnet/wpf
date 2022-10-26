@@ -92,7 +92,7 @@ internal class TransactionalPackage : Package, IDisposable
         if (!workspace.CanWrite)
         {
             throw new ArgumentException(
-                SR.Get(SRID.PackagingWriteNotSupported),
+                SR.PackagingWriteNotSupported,
                 "workspace");
         }
 
@@ -517,7 +517,7 @@ internal class TransactionalPackage : Package, IDisposable
         if (_tempPackage.Value == null)
         {
             throw new InvalidOperationException(
-                SR.Get(SRID.PackagingWriteNotSupported));
+                SR.PackagingWriteNotSupported);
         }
     }
 

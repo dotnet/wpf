@@ -50,12 +50,12 @@ namespace MS.Internal.Documents
             switch (status)
             {
                 case (RightsManagementStatus.Protected):
-                    docStatusResources.Text = SR.Get(SRID.RMProtected);
-                    docStatusResources.ToolTip = SR.Get(SRID.RMAppliedToolTip);
+                    docStatusResources.Text = SR.RMProtected;
+                    docStatusResources.ToolTip = SR.RMAppliedToolTip;
                     break;
                 default: // RightsManagementStatus.Unknown or RightsManagementStatus.Unprotected
                     docStatusResources.Text = String.Empty;
-                    docStatusResources.ToolTip = SR.Get(SRID.RMDefaultToolTip);
+                    docStatusResources.ToolTip = SR.RMDefaultToolTip;
                     break;
             }
 
@@ -82,19 +82,19 @@ namespace MS.Internal.Documents
                 case (AuthenticationType.Windows):
                     accountName = String.Format(
                                         CultureInfo.CurrentCulture,
-                                        SR.Get(SRID.RMCredManagementWindowsAccount), 
+                                        SR.RMCredManagementWindowsAccount, 
                                         user.Name);
                     break;
                 case (AuthenticationType.Passport):
                     accountName = String.Format(
                                         CultureInfo.CurrentCulture,
-                                        SR.Get(SRID.RMCredManagementPassportAccount),
+                                        SR.RMCredManagementPassportAccount,
                                         user.Name);
                     break;
                 default:
                     accountName = String.Format(
                                         CultureInfo.CurrentCulture,
-                                        SR.Get(SRID.RMCredManagementUnknownAccount),
+                                        SR.RMCredManagementUnknownAccount,
                                         user.Name);
                     break;
             }

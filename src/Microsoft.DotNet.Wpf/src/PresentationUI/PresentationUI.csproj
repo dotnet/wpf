@@ -73,7 +73,6 @@
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
       <Link>Common\System\SR.cs</Link>
     </Compile>
-    <Compile Include="SR.cs" />
     <Compile Include="$(WpfSharedDir)\RefAssemblyAttrs.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\FriendAccessAllowedAttribute.cs" />
     <Compile Include="OtherAssemblyAttrs.cs" />

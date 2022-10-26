@@ -183,7 +183,7 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
                         "Unable to reopen original file.");
 
                     throw new UnauthorizedAccessException(
-                        SR.Get(SRID.DocumentStreamCanNoLongerOpen), e);
+                        SR.DocumentStreamCanNoLongerOpen, e);
                 }
             }
             throw;
@@ -517,17 +517,17 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
         if (_original == null)
         {
             throw new InvalidOperationException(
-                SR.Get(SRID.DocumentStreamMustBeTemporary));
+                SR.DocumentStreamMustBeTemporary);
         }
         if (_original._xpsFileToken == null)
         {
             throw new InvalidOperationException(
-                SR.Get(SRID.DocumentStreamMustBeFileSource));
+                SR.DocumentStreamMustBeFileSource);
         }
         if (_xpsFileToken == null)
         {
             throw new InvalidOperationException(
-                SR.Get(SRID.DocumentStreamMustBeFileSource));
+                SR.DocumentStreamMustBeFileSource);
         }
 
         Trace.SafeWrite(
@@ -622,7 +622,7 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
                     "SwapWithOriginal has left us in an unusable state.");
 
                 throw new UnauthorizedAccessException(
-                    SR.Get(SRID.DocumentStreamCanNoLongerOpen), e);
+                    SR.DocumentStreamCanNoLongerOpen, e);
             }
 
             // CanRead will be true only if the stream was opened; Close set it
@@ -976,7 +976,7 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
             XpsFileExtension, StringComparison.OrdinalIgnoreCase))
         {
             throw new InvalidDataException(
-                SR.Get(SRID.DocumentStreamMustBeXpsFile));
+                SR.DocumentStreamMustBeXpsFile);
         }
     }
 
@@ -994,7 +994,7 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
         if (!location.IsFile)
         {
             throw new InvalidOperationException(
-                SR.Get(SRID.DocumentStreamMustBeFileSource));
+                SR.DocumentStreamMustBeFileSource);
         }
     }
     #endregion
@@ -1005,7 +1005,7 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
     //--------------------------------------------------------------------------
 
     internal static readonly string XpsFileExtension =
-        SR.Get(SRID.FileManagementSaveExt);
+        SR.FileManagementSaveExt;
 
     bool _deleteOnClose;
 

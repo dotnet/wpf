@@ -266,6 +266,12 @@ namespace MS.Internal.AppModel
         /// </summary>
         /// <returns>The JournalEntry removed</returns>
         JournalEntry RemoveBackEntry();
+        
+        /// <summary>
+        /// Remove the first JournalEntry from NavigationWindow's forward history
+        /// </summary>
+        /// <returns>The JournalEntry removed</returns>
+        JournalEntry RemoveForwardEntry();
 
         /// <summary>
         /// The back stack of the navigator, when it owns a journal (JournalNavigationScope).

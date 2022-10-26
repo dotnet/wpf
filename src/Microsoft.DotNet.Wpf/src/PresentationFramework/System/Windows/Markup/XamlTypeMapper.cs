@@ -208,12 +208,12 @@ namespace System.Windows.Markup
             if (assemblyPath == string.Empty)
             {
                 _lineNumber = 0;  // Public API, so we don't know the line number.
-                ThrowException(SRID.ParserBadAssemblyPath);
+                ThrowException(nameof(SR.ParserBadAssemblyPath));
             }
             if (assemblyName == string.Empty)
             {
                 _lineNumber = 0;  // Public API, so we don't know the line number.
-                ThrowException(SRID.ParserBadAssemblyName);
+                ThrowException(nameof(SR.ParserBadAssemblyName));
             }
 
             string asmName = assemblyName.ToUpper(CultureInfo.InvariantCulture);
@@ -618,7 +618,7 @@ namespace System.Windows.Markup
                     {
                         // <SomeElement>SomeText</SomeElement> and there's no TypeConverter
                         //  associated with the type SomeElement
-                        message = SR.Get(SRID.ParserDefaultConverterElement, propType.FullName, value);
+                        message = SR.Format(SR.ParserDefaultConverterElement, propType.FullName, value);
                     }
                     XamlParseException.ThrowException(parserContext, _lineNumber, _linePosition, message, null);
                 }
@@ -700,14 +700,14 @@ namespace System.Windows.Markup
 
             if (value == string.Empty)
             {
-                ThrowException(SRID.ParserBadName, value);
+                ThrowException(nameof(SR.ParserBadName), value);
             }
 
             if (MarkupExtensionParser.LooksLikeAMarkupExtension(value))
             {
-                string message = SR.Get(SRID.ParserBadUidOrNameME, value);
+                string message = SR.Format(SR.ParserBadUidOrNameME, value);
                 message += " ";
-                message += SR.Get(SRID.ParserLineAndOffset,
+                message += SR.Format(SR.ParserLineAndOffset,
                             lineNumber.ToString(CultureInfo.CurrentCulture),
                             linePosition.ToString(CultureInfo.CurrentCulture));
 
@@ -718,7 +718,7 @@ namespace System.Windows.Markup
 
             if (!NameValidationHelper.IsValidIdentifierName(value))
             {
-                ThrowException(SRID.ParserBadName, value);
+                ThrowException(nameof(SR.ParserBadName), value);
             }
         }
 
@@ -751,7 +751,7 @@ namespace System.Windows.Markup
                         }
                         else if (Char.IsDigit(attribValue[i]))
                         {
-                            ThrowException(SRID.ParserNoDigitEnums, propName, attribValue);
+                            ThrowException(nameof(SR.ParserNoDigitEnums), propName, attribValue);
                         }
                         else
                         {
@@ -1310,7 +1310,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                                     if (tryInternal && memberInfo != null && !IsAllowedMethod(mi, false))
                                     {
-                                        ThrowException(SRID.ParserCantSetAttribute, "bubbling event", objectType.Name + "." + localName, "Add Handler method");
+                                        ThrowException(nameof(SR.ParserCantSetAttribute), "bubbling event", objectType.Name + "." + localName, "Add Handler method");
                                     }
 #endif
                                 }
@@ -1333,7 +1333,7 @@ namespace System.Windows.Markup
                                     if (!ReflectionHelper.IsPublicType(ei.EventHandlerType))
 #endif
                                     {
-                                        ThrowException(SRID.ParserEventDelegateTypeNotAccessible, ei.EventHandlerType.FullName, objectType.Name + "." + localName);
+                                        ThrowException(nameof(SR.ParserEventDelegateTypeNotAccessible), ei.EventHandlerType.FullName, objectType.Name + "." + localName);
                                     }
 
 #if PBTCOMPILER
@@ -1344,7 +1344,7 @@ namespace System.Windows.Markup
                                         // check to make sure that the public type is accessible\allowed.
                                         if (!IsAllowedEvent(ei, false))
                                         {
-                                            ThrowException(SRID.ParserCantSetAttribute, "event", objectType.Name + "." + localName, "add");
+                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", objectType.Name + "." + localName, "add");
                                         }
                                     }
                                     else
@@ -1356,7 +1356,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                                             memberInfo = null;
 #else
-                                            ThrowException(SRID.ParserCantSetAttribute, "event", objectType.Name + "." + localName, "add");
+                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", objectType.Name + "." + localName, "add");
 #endif
                                         }
 #if PBTCOMPILER
@@ -1392,7 +1392,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                             if (tryInternal && memberInfo != null && !IsAllowedMethod(memberInfo as MethodInfo, false))
                             {
-                                ThrowException(SRID.ParserCantSetAttribute, "attached property", objectType.Name + "." + localName, "Set method");
+                                ThrowException(nameof(SR.ParserCantSetAttribute), "attached property", objectType.Name + "." + localName, "Set method");
                             }
 #endif
 
@@ -1409,7 +1409,7 @@ namespace System.Windows.Markup
                                     if (owner != null &&
                                         !objectType.IsAssignableFrom(owner))
                                     {
-                                        ThrowException(SRID.ParserAttachedPropInheritError,
+                                        ThrowException(nameof(SR.ParserAttachedPropInheritError),
                                                        String.Format(CultureInfo.CurrentCulture, "{0}.{1}", objectType.Name, localName),
                                                        owner.Name);
                                     }
@@ -1469,7 +1469,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                                     if (tryInternal && memberInfo != null && !IsAllowedMethod(mi, true))
                                     {
-                                        ThrowException(SRID.ParserCantSetAttribute, "bubbling event", owner.Name + "." + localName, "Add Handler method");
+                                        ThrowException(nameof(SR.ParserCantSetAttribute), "bubbling event", owner.Name + "." + localName, "Add Handler method");
                                     }
 #endif
                                 }
@@ -1490,7 +1490,7 @@ namespace System.Windows.Markup
                                     if (!ReflectionHelper.IsPublicType(ei.EventHandlerType))
 #endif
                                     {
-                                        ThrowException(SRID.ParserEventDelegateTypeNotAccessible, ei.EventHandlerType.FullName, owner.Name + "." + localName);
+                                        ThrowException(nameof(SR.ParserEventDelegateTypeNotAccessible), ei.EventHandlerType.FullName, owner.Name + "." + localName);
                                     }
 
 #if PBTCOMPILER
@@ -1502,7 +1502,7 @@ namespace System.Windows.Markup
                                         // since that would have all ready been done in the caller of this fucntion.
                                         if (!IsAllowedEvent(ei, true))
                                         {
-                                            ThrowException(SRID.ParserCantSetAttribute, "event", owner.Name + "." + localName, "add");
+                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", owner.Name + "." + localName, "add");
                                         }
                                     }
                                     else
@@ -1514,7 +1514,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                                             memberInfo = null;
 #else
-                                            ThrowException(SRID.ParserCantSetAttribute, "event", owner.Name + "." + localName, "add");
+                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", owner.Name + "." + localName, "add");
 #endif
                                         }
 #if PBTCOMPILER
@@ -1550,7 +1550,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                             if (tryInternal && memberInfo != null && !IsAllowedMethod(memberInfo as MethodInfo, true))
                             {
-                                ThrowException(SRID.ParserCantSetAttribute, "attached property", owner.Name + "." + localName, "Set method");
+                                ThrowException(nameof(SR.ParserCantSetAttribute), "attached property", owner.Name + "." + localName, "Set method");
                             }
 #endif
 
@@ -1790,7 +1790,7 @@ namespace System.Windows.Markup
                     GetTypeOnly(xmlNamespace, globalClassName);
                 if (typeAndSerializer == null || typeAndSerializer.ObjectType == null)
                 {
-                    ThrowException(SRID.ParserNoType, globalClassName);
+                    ThrowException(nameof(SR.ParserNoType), globalClassName);
                 }
                 ownerType = typeAndSerializer.ObjectType;
             }
@@ -1876,7 +1876,7 @@ namespace System.Windows.Markup
                             //  was no name specified at all.  (null or empty string.)
                             // The latter case may get a special meaning in the future,
                             //  but for now they're all errors.
-                            ThrowException(SRID.ParserXmlLangPropertyValueInvalid);
+                            ThrowException(nameof(SR.ParserXmlLangPropertyValueInvalid));
                         }
                     }
                 }
@@ -2279,7 +2279,7 @@ namespace System.Windows.Markup
                 }
                 if (targetType == null)
                 {
-                    ThrowException(SRID.ParserNoType, typeName);
+                    ThrowException(nameof(SR.ParserNoType), typeName);
                 }
             }
             else if (!isTypeExpected && prefix.Length == 0)
@@ -2292,7 +2292,7 @@ namespace System.Windows.Markup
             else
             {
                 // A type was expected but we didn't find one. So throw.
-                ThrowException(SRID.ParserBadMemberReference, valueParam);
+                ThrowException(nameof(SR.ParserBadMemberReference), valueParam);
             }
 
 
@@ -2312,7 +2312,7 @@ namespace System.Windows.Markup
                 if (targetType == null)
                 {
                     // if there was also no default target type then throw.
-                    ThrowException(SRID.ParserBadMemberReference, memberValue);
+                    ThrowException(nameof(SR.ParserBadMemberReference), memberValue);
                 }
             }
 
@@ -2359,14 +2359,14 @@ namespace System.Windows.Markup
 
                     if (!isAllowed)
                     {
-                        ThrowException(SRID.ParserStaticMemberNotAllowed, memberName, targetType.Name);
+                        ThrowException(nameof(SR.ParserStaticMemberNotAllowed), memberName, targetType.Name);
                     }
                 }
             }
 #endif
             if (mi == null)
             {
-                ThrowException(SRID.ParserInvalidStaticMember, memberName, targetType.Name);
+                ThrowException(nameof(SR.ParserInvalidStaticMember), memberName, targetType.Name);
             }
 
             return mi;
@@ -2563,7 +2563,7 @@ namespace System.Windows.Markup
                                 if (!IsInternalTypeAllowedInFullTrust(objectType))
 #endif
                                 {
-                                    ThrowException(SRID.ParserPublicType, objectType.Name);
+                                    ThrowException(nameof(SR.ParserPublicType), objectType.Name);
                                 }
                             }
                             // Create new data structure to store information for the current type
@@ -2868,7 +2868,7 @@ namespace System.Windows.Markup
                 xmlns = context.XmlnsDictionary[string.Empty];
                 if (xmlns == null)
                 {
-                    ThrowException(SRID.ParserUndeclaredNS, string.Empty);
+                    ThrowException(nameof(SR.ParserUndeclaredNS), string.Empty);
                 }
             }
             else
@@ -2877,7 +2877,7 @@ namespace System.Windows.Markup
                 xmlns = context.XmlnsDictionary[prefix];
                 if (xmlns == null)
                 {
-                    ThrowException(SRID.ParserUndeclaredNS, prefix);
+                    ThrowException(nameof(SR.ParserUndeclaredNS), prefix);
                 }
                 else
                 {
@@ -2920,7 +2920,7 @@ namespace System.Windows.Markup
                     _lineNumber = context != null ? context.LineNumber : 0;
                     _linePosition = context != null ? context.LinePosition : 0;
 
-                    ThrowException(SRID.ParserResourceKeyType, typeString);
+                    ThrowException(nameof(SR.ParserResourceKeyType), typeString);
                 }
             }
 
@@ -2946,7 +2946,7 @@ namespace System.Windows.Markup
                 string xmlns = context.XmlnsDictionary[string.Empty];
                 if (xmlns == null)
                 {
-                    ThrowException(SRID.ParserUndeclaredNS, string.Empty);
+                    ThrowException(nameof(SR.ParserUndeclaredNS), string.Empty);
                 }
                 else
                 {
@@ -2959,7 +2959,7 @@ namespace System.Windows.Markup
                 string xmlns = context.XmlnsDictionary[prefix];
                 if (xmlns == null)
                 {
-                    ThrowException(SRID.ParserUndeclaredNS, prefix);
+                    ThrowException(nameof(SR.ParserUndeclaredNS), prefix);
                 }
                 else
                 {
@@ -3050,7 +3050,7 @@ namespace System.Windows.Markup
             string namespaceURI = parserContext.XmlnsDictionary[nsPrefix];
             if (namespaceURI == null)
             {
-                parserContext.XamlTypeMapper.ThrowException(SRID.ParserPrefixNSProperty, nsPrefix, nameString);
+                parserContext.XamlTypeMapper.ThrowException(nameof(SR.ParserPrefixNSProperty), nsPrefix, nameString);
             }
 
             return namespaceURI;
@@ -3790,22 +3790,22 @@ namespace System.Windows.Markup
 
         private void ThrowException(string id)
         {
-            ThrowExceptionWithLine(SR.Get(id), null);
+            ThrowExceptionWithLine(SR.GetResourceString(id), null);
         }
 
         internal void ThrowException(string id, string parameter)
         {
-            ThrowExceptionWithLine(SR.Get(id, parameter), null);
+            ThrowExceptionWithLine(SR.Format(SR.GetResourceString(id), parameter), null);
         }
 
         private void ThrowException(string id, string parameter1, string parameter2)
         {
-            ThrowExceptionWithLine(SR.Get(id, parameter1, parameter2), null);
+            ThrowExceptionWithLine(SR.Format(SR.GetResourceString(id), parameter1, parameter2), null);
         }
 
         private void ThrowException(string id, string parameter1, string parameter2, string parameter3)
         {
-            ThrowExceptionWithLine(SR.Get(id, parameter1, parameter2, parameter3), null);
+            ThrowExceptionWithLine(SR.Format(SR.GetResourceString(id), parameter1, parameter2, parameter3), null);
         }
 
 

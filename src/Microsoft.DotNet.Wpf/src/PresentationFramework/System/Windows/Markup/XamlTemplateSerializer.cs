@@ -178,7 +178,7 @@ namespace System.Windows.Markup
             if (lineNumber > 0)
             {
                 message += " ";
-                message += SR.Get(SRID.ParserLineAndOffset,
+                message += SR.Format(SR.ParserLineAndOffset,
                                   lineNumber.ToString(CultureInfo.CurrentUICulture),
                                   linePosition.ToString(CultureInfo.CurrentUICulture));
                 parseException = new XamlParseException(message, lineNumber, linePosition);

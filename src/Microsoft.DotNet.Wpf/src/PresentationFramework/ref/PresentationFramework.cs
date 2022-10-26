@@ -5016,6 +5016,7 @@ namespace System.Windows.Controls
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
         public void Refresh() { }
         public System.Windows.Navigation.JournalEntry RemoveBackEntry() { throw null; }
+        public System.Windows.Navigation.JournalEntry RemoveForwardEntry() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool ShouldSerializeContent() { throw null; }
         public void StopLoading() { }
@@ -12085,6 +12086,7 @@ namespace System.Windows.Navigation
         public bool Navigate(System.Uri source, object navigationState, bool sandboxExternalContent) { throw null; }
         public void Refresh() { }
         public System.Windows.Navigation.JournalEntry RemoveBackEntry() { throw null; }
+        public System.Windows.Navigation.JournalEntry RemoveForwardEntry() { throw null; }
         public void StopLoading() { }
     }
     public delegate void NavigationStoppedEventHandler(object sender, System.Windows.Navigation.NavigationEventArgs e);
@@ -12138,6 +12140,7 @@ namespace System.Windows.Navigation
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
         public void Refresh() { }
         public System.Windows.Navigation.JournalEntry RemoveBackEntry() { throw null; }
+        public System.Windows.Navigation.JournalEntry RemoveForwardEntry() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool ShouldSerializeContent() { throw null; }
         public void StopLoading() { }

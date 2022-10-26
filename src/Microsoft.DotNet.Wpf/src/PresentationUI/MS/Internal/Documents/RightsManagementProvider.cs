@@ -17,7 +17,6 @@ using MS.Internal.PresentationUI;
 using Microsoft.Win32;
 
 using SR=System.Windows.TrustUI.SR;
-using SRID=System.Windows.TrustUI.SRID;
 
 namespace MS.Internal.Documents
 {
@@ -197,7 +196,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         if (!IsProtected)
         {
             throw new InvalidOperationException(
-                SR.Get(SRID.RMProviderExceptionNoPackageToDecrypt));
+                SR.RMProviderExceptionNoPackageToDecrypt);
         }
 
         UseLicense useLicense;
@@ -224,7 +223,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         if (!IsProtected)
         {
             throw new InvalidOperationException(
-                SR.Get(SRID.RMProviderExceptionNoPackageToDecrypt));
+                SR.RMProviderExceptionNoPackageToDecrypt);
         }
 
         UseLicense useLicense = null;
@@ -265,13 +264,13 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         if (!IsProtected)
         {
             throw new InvalidOperationException(
-                SR.Get(SRID.RMProviderExceptionNoPackageToDecrypt));
+                SR.RMProviderExceptionNoPackageToDecrypt);
         }
 
         if (_useLicense.Value == null)
         {
             throw new InvalidOperationException(
-                SR.Get(SRID.RMProviderExceptionNoUseLicense));
+                SR.RMProviderExceptionNoUseLicense);
         }
 
         if (AllowLicenseCaching)
@@ -301,13 +300,13 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         if (!IsProtected)
         {
             throw new InvalidOperationException(
-                SR.Get(SRID.RMProviderExceptionNoPackageToDecrypt));
+                SR.RMProviderExceptionNoPackageToDecrypt);
         }
 
         if (_useLicense.Value == null)
         {
             throw new InvalidOperationException(
-                SR.Get(SRID.RMProviderExceptionNoUseLicense));
+                SR.RMProviderExceptionNoUseLicense);
         }
 
         // If a CryptoProvider is already set in the EncryptedPackageEnvelope,
@@ -581,7 +580,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         if (_encryptedPackageEnvelope == null)
         {
             throw new InvalidOperationException(
-                SR.Get(SRID.RMProviderExceptionNoPackageToDecrypt));
+                SR.RMProviderExceptionNoPackageToDecrypt);
         }
 
         Stream result;
@@ -659,7 +658,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
             _rmUseLicense.Value, RightsManagementPermissions.AllowOwner))
         {
             throw new InvalidOperationException(
-                SR.Get(SRID.RMProviderExceptionNotOwnerOfDocument));
+                SR.RMProviderExceptionNotOwnerOfDocument);
         }
 
         Trace.SafeWrite(
@@ -823,7 +822,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
                            RightsManagementPermissions.AllowOwner))
         {
             throw new InvalidOperationException(
-                SR.Get(SRID.RMProviderExceptionNotOwnerOfDocument));
+                SR.RMProviderExceptionNotOwnerOfDocument);
         }
 
         UseLicense useLicense;
@@ -1290,7 +1289,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
             if (publishLicense == null)
             {
                 throw new FileFormatException(
-                    SR.Get(SRID.RMProviderExceptionNoPublishLicense));
+                    SR.RMProviderExceptionNoPublishLicense);
             }
 
             _publishLicenseFromEnvelope = publishLicense;

@@ -52,7 +52,7 @@ namespace MS.Internal.Documents
             //Show only the buttons appropriate for the current mode.
             if (_showRequestDialog == true)
             {
-                Text = SR.Get(SRID.DigSigRequestTitle);
+                Text = SR.DigSigRequestTitle;
 
                 _buttonSign.Visible = false;
                 _buttonViewCert.Visible = false;
@@ -61,7 +61,7 @@ namespace MS.Internal.Documents
             }
             else
             {
-                Text = SR.Get(SRID.DigSigSumTitle);
+                Text = SR.DigSigSumTitle;
 
                 _buttonRequestAdd.Visible = false;
                 _buttonRequestDelete.Visible = false;
@@ -199,7 +199,7 @@ namespace MS.Internal.Documents
             //Show only the buttons appropriate for the current mode.
             if (_showRequestDialog == true)
             {
-                Text = SR.Get(SRID.DigSigRequestTitle);
+                Text = SR.DigSigRequestTitle;
 
                 _buttonSign.Visible = false;
                 _buttonViewCert.Visible = false;
@@ -209,7 +209,7 @@ namespace MS.Internal.Documents
             }
             else
             {
-                Text = SR.Get(SRID.DigSigSumTitle);
+                Text = SR.DigSigSumTitle;
 
                 _buttonRequestAdd.Visible = false;
                 _buttonRequestDelete.Visible = false;
@@ -236,7 +236,7 @@ namespace MS.Internal.Documents
             {
                 Label nameHeader = new Label();
                 nameHeader.AutoSize = true;
-                nameHeader.Text = SR.Get(SRID.DigSigSumColumnHeaderName);
+                nameHeader.Text = SR.DigSigSumColumnHeaderName;
                 nameHeader.Font = columnHeaderFont;
                 nameHeader.MinimumSize = new Size(IconWidth + SummaryNameTextWidth, 0);
                 nameHeader.MaximumSize = new Size(IconWidth + SummaryNameTextWidth, 0);
@@ -245,7 +245,7 @@ namespace MS.Internal.Documents
 
                 Label intentHeader = new Label();
                 intentHeader.AutoSize = true;
-                intentHeader.Text = SR.Get(SRID.DigSigSumColumnHeaderIntent);
+                intentHeader.Text = SR.DigSigSumColumnHeaderIntent;
                 intentHeader.Font = columnHeaderFont;
                 intentHeader.MinimumSize = new Size(IntentTextWidth, 0);
                 intentHeader.MaximumSize = new Size(IntentTextWidth, 0);
@@ -254,7 +254,7 @@ namespace MS.Internal.Documents
 
                 Label locationHeader = new Label();
                 locationHeader.AutoSize = true;
-                locationHeader.Text = SR.Get(SRID.DigSigSumColumnHeaderLocale);
+                locationHeader.Text = SR.DigSigSumColumnHeaderLocale;
                 locationHeader.Font = columnHeaderFont;
                 locationHeader.MinimumSize = new Size(LocaleTextWidth, 0);
                 locationHeader.MaximumSize = new Size(LocaleTextWidth, 0);
@@ -263,7 +263,7 @@ namespace MS.Internal.Documents
 
                 Label signByHeader = new Label();
                 signByHeader.AutoSize = true;
-                signByHeader.Text = SR.Get(SRID.DigSigSumColumnHeaderSignBy);
+                signByHeader.Text = SR.DigSigSumColumnHeaderSignBy;
                 signByHeader.Font = columnHeaderFont;
                 signByHeader.MinimumSize = new Size(SignByTextWidth, 0);
                 signByHeader.MaximumSize = new Size(SignByTextWidth, 0);
@@ -280,7 +280,7 @@ namespace MS.Internal.Documents
             {
                 Label statusHeader = new Label();
                 statusHeader.AutoSize = true;
-                statusHeader.Text = SR.Get(SRID.DigSigSumColumnHeaderSignatureStatus);
+                statusHeader.Text = SR.DigSigSumColumnHeaderSignatureStatus;
                 statusHeader.Font = columnHeaderFont;
                 statusHeader.MaximumSize = new Size(IconWidth + SummaryNameTextWidth,0);
                 statusHeader.MinimumSize = new Size(IconWidth + SummaryNameTextWidth, 0);
@@ -289,7 +289,7 @@ namespace MS.Internal.Documents
 
                 Label intentHeader = new Label();
                 intentHeader.AutoSize = true;
-                intentHeader.Text = SR.Get(SRID.DigSigSumColumnHeaderIntent);
+                intentHeader.Text = SR.DigSigSumColumnHeaderIntent;
                 intentHeader.Font = columnHeaderFont;
                 intentHeader.MinimumSize = new Size(IntentTextWidth, 0);
                 intentHeader.MaximumSize = new Size(IntentTextWidth, 0);
@@ -323,8 +323,8 @@ namespace MS.Internal.Documents
             if (_showRequestDialog && _listBoxSummary.Items.Count > 0)
             {
                 if (System.Windows.MessageBox.Show(
-                                SR.Get(SRID.DigitalSignatureMessageSignNow),
-                                SR.Get(SRID.DigitalSignatureMessageSignNowTitle),
+                                SR.DigitalSignatureMessageSignNow,
+                                SR.DigitalSignatureMessageSignNowTitle,
                                 System.Windows.MessageBoxButton.YesNo,
                                 System.Windows.MessageBoxImage.Exclamation
                     ) == System.Windows.MessageBoxResult.Yes)
@@ -778,11 +778,11 @@ namespace MS.Internal.Documents
             base.ApplyResources();
 
             //Get string from stringtable.
-            _buttonDone.Text = SR.Get(SRID.DigSigSumDone);
-            _buttonSign.Text = SR.Get(SRID.DigSigSumSign);
-            _buttonViewCert.Text = SR.Get(SRID.DigSigSumViewCert);
-            _buttonRequestAdd.Text = SR.Get(SRID.DigSigSumRequestAdd);
-            _buttonRequestDelete.Text = SR.Get(SRID.DigSigSumRequestDelete);
+            _buttonDone.Text = SR.DigSigSumDone;
+            _buttonSign.Text = SR.DigSigSumSign;
+            _buttonViewCert.Text = SR.DigSigSumViewCert;
+            _buttonRequestAdd.Text = SR.DigSigSumRequestAdd;
+            _buttonRequestDelete.Text = SR.DigSigSumRequestDelete;
         }
 
         #endregion Protected Methods

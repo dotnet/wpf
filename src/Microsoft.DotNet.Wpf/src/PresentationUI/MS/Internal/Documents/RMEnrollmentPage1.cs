@@ -51,14 +51,14 @@ namespace MS.Internal.Documents
         {
             base.ApplyResources();
 
-            _label1.Text = SR.Get(SRID.RMEnrollmentPage1a);
-            _label2.Text = SR.Get(SRID.RMEnrollmentPage1b);
-            _label3.Text = SR.Get(SRID.RMEnrollmentPage1c);
-            _privacyLabel.Text = SR.Get(SRID.RMEnrollmentPage1d);
-            _instructionlabel.Text = SR.Get(SRID.RMEnrollmentPage1e);
-            _nextButton.Text = SR.Get(SRID.RMEnrollmentNext);
-            _cancelButton.Text = SR.Get(SRID.RMEnrollmentCancel);
-            Text = SR.Get(SRID.RMEnrollmentTitle);
+            _label1.Text = SR.RMEnrollmentPage1a;
+            _label2.Text = SR.RMEnrollmentPage1b;
+            _label3.Text = SR.RMEnrollmentPage1c;
+            _privacyLabel.Text = SR.RMEnrollmentPage1d;
+            _instructionlabel.Text = SR.RMEnrollmentPage1e;
+            _nextButton.Text = SR.RMEnrollmentNext;
+            _cancelButton.Text = SR.RMEnrollmentCancel;
+            Text = SR.RMEnrollmentTitle;
         }
 
         #endregion Protected Methods

@@ -27,7 +27,7 @@ namespace MS.Internal.Documents.Application
         /// culture.
         /// </summary>
         internal XpsViewerException()
-            : base(SR.Get(SRID.XpsViewerGenericException))
+            : base(SR.XpsViewerGenericException)
         {}
 
         /// <summary>

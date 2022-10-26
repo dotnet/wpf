@@ -470,7 +470,7 @@ namespace MS.Internal.Documents.Application
                 {
                     // Ensure output string is formatted to current globalization standards.
                     zoomString = String.Format(CultureInfo.CurrentCulture,
-                        SR.Get(SRID.ZoomPercentageConverterStringFormat), zoomValue);
+                        SR.ZoomPercentageConverterStringFormat, zoomValue);
                     return true;
                 }
                 // Allow empty catch statements.
@@ -493,7 +493,7 @@ namespace MS.Internal.Documents.Application
         /// </summary>
         private void SetDefaults()
         {
-            ToolTip = SR.Get(SRID.ZoomComboBoxToolTip);
+            ToolTip = SR.ZoomComboBoxToolTip;
             IsReadOnly = false;
             IsEditable = true;
             IsTabStop = false;

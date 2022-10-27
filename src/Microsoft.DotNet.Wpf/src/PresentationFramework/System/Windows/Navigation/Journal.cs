@@ -454,7 +454,7 @@ namespace System.Windows.Navigation
             int index = _journalEntryList.IndexOf(target);
 
             // When navigating back to a page which contains a previously navigated frame a 
-            // saved journal entry is replayed to restore the frames location, in many cases 
+            // saved journal entry is replayed to restore the frame's location, in many cases 
             // this entry is not in the journal.
             if (index > -1)
             {

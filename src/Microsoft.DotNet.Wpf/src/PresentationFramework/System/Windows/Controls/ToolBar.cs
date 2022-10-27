@@ -618,7 +618,7 @@ namespace System.Windows.Controls
             DependencyObject child = GetTemplateChild(ToolBarPanelTemplateName);
             ToolBarPanel toolBarPanel = child as ToolBarPanel;
             if (child != null && toolBarPanel == null)
-                throw new NotSupportedException(SR.Get(SRID.ToolBar_InvalidStyle_ToolBarPanel, child.GetType()));
+                throw new NotSupportedException(SR.Format(SR.ToolBar_InvalidStyle_ToolBarPanel, child.GetType()));
             return toolBarPanel;
         }
 
@@ -641,7 +641,7 @@ namespace System.Windows.Controls
             DependencyObject child = GetTemplateChild(ToolBarOverflowPanelTemplateName);
             ToolBarOverflowPanel toolBarOverflowPanel = child as ToolBarOverflowPanel;
             if (child != null && toolBarOverflowPanel == null)
-                throw new NotSupportedException(SR.Get(SRID.ToolBar_InvalidStyle_ToolBarOverflowPanel, child.GetType()));
+                throw new NotSupportedException(SR.Format(SR.ToolBar_InvalidStyle_ToolBarOverflowPanel, child.GetType()));
             return toolBarOverflowPanel;
         }
 

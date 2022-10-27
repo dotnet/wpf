@@ -130,7 +130,7 @@ namespace System.Windows.Markup
                             Exception ex = TemplateKey.ValidateDataType(dataType, null);
                             if (ex != null)
                             {
-                                ThrowException(SRID.TemplateBadDictionaryKey,
+                                ThrowException(nameof(SR.TemplateBadDictionaryKey),
                                                parserContext.LineNumber,
                                                parserContext.LinePosition,
                                                ex);
@@ -153,7 +153,7 @@ namespace System.Windows.Markup
 
             if (key == null)
             {
-                ThrowException(SRID.StyleNoDictionaryKey,
+                ThrowException(nameof(SR.StyleNoDictionaryKey),
                                parserContext.LineNumber,
                                parserContext.LinePosition,
                                null);
@@ -169,7 +169,7 @@ namespace System.Windows.Markup
              int  linePosition,
              Exception innerException)
         {
-            string message = SR.Get(id);
+            string message = SR.GetResourceString(id);
             XamlParseException parseException;
 
             // Throw the appropriate execption.  If we have line numbers, then we are

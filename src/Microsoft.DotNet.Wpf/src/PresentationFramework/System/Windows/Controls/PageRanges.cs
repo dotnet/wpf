@@ -143,7 +143,7 @@ namespace System.Windows.Controls
 
             if (_pageTo != _pageFrom)
             {
-                rangeText = String.Format(CultureInfo.InvariantCulture, SR.Get(SRID.PrintDialogPageRange), _pageFrom, _pageTo);
+                rangeText = String.Format(CultureInfo.InvariantCulture, SR.PrintDialogPageRange, _pageFrom, _pageTo);
             }
             else
             {

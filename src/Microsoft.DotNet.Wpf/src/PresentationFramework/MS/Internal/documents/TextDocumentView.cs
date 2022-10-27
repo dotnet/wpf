@@ -64,7 +64,7 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
 
             _owner.EnsureValidVisuals();
@@ -87,7 +87,7 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             ValidationHelper.VerifyPosition(_textContainer, position, "position");
             if (!ContainsCore(position))
@@ -114,7 +114,7 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
 
             ValidationHelper.VerifyPosition(_textContainer, startPosition, "startPosition");
@@ -231,7 +231,7 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             ValidationHelper.VerifyPosition(_textContainer, position, "position");
             if (!ContainsCore(position))
@@ -282,7 +282,7 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             ValidationHelper.VerifyPosition(_textContainer, position, "position");
             if (!ContainsCore(position))
@@ -301,7 +301,7 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             ValidationHelper.VerifyPosition(_textContainer, position, "position");
             ValidationHelper.VerifyDirection(direction, "direction");
@@ -321,7 +321,7 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             ValidationHelper.VerifyPosition(_textContainer, position, "position");
             if (!ContainsCore(position))
@@ -340,7 +340,7 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             ValidationHelper.VerifyPosition(_textContainer, position, "position");
             if (!ContainsCore(position))
@@ -361,7 +361,7 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             ValidationHelper.VerifyPosition(_textContainer, start, "start");
             ValidationHelper.VerifyPosition(_textContainer, end, "end");
@@ -388,7 +388,7 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             ValidationHelper.VerifyPosition(_textContainer, position, "position");
             return ContainsCore(position);
@@ -427,7 +427,7 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
 
             return GetCellInfoFromPoint(Columns, FloatingElements, point, tableFilter);

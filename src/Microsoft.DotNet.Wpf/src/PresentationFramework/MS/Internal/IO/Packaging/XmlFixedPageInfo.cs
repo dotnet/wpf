@@ -38,7 +38,7 @@ namespace MS.Internal.IO.Packaging
             Debug.Assert(_pageNode != null);
             if (_pageNode.LocalName != _fixedPageName || _pageNode.NamespaceURI != ElementTableKey.FixedMarkupNamespace)
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedXmlNodeInXmlFixedPageInfoConstructor, 
+                throw new ArgumentException(SR.Format(SR.UnexpectedXmlNodeInXmlFixedPageInfoConstructor, 
                     _pageNode.NamespaceURI, _pageNode.LocalName,
                     ElementTableKey.FixedMarkupNamespace, _fixedPageName));
             }

@@ -957,7 +957,7 @@ namespace System.Windows.Controls
                 ScrollViewer scrollViewer = (ScrollViewer)_passwordBoxContentHost;
                 if (scrollViewer.Content != null)
                 {
-                    throw new NotSupportedException(SR.Get(SRID.TextBoxScrollViewerMarkedAsTextBoxContentMustHaveNoContent));
+                    throw new NotSupportedException(SR.TextBoxScrollViewerMarkedAsTextBoxContentMustHaveNoContent);
                 }
                 else
                 {
@@ -969,7 +969,7 @@ namespace System.Windows.Controls
                 Decorator decorator = (Decorator)_passwordBoxContentHost;
                 if (decorator.Child != null)
                 {
-                    throw new NotSupportedException(SR.Get(SRID.TextBoxDecoratorMarkedAsTextBoxContentMustHaveNoContent));
+                    throw new NotSupportedException(SR.TextBoxDecoratorMarkedAsTextBoxContentMustHaveNoContent);
                 }
                 else
                 {
@@ -988,7 +988,7 @@ namespace System.Windows.Controls
                 {
                     _passwordBoxContentHost = null;
                     //  Remove the exception
-                    throw new NotSupportedException(SR.Get(SRID.PasswordBoxInvalidTextContainer));
+                    throw new NotSupportedException(SR.PasswordBoxInvalidTextContainer);
                 }
             }
 
@@ -1079,12 +1079,12 @@ namespace System.Windows.Controls
             //             VerifyAccess();
             if (start < 0)
             {
-                throw new ArgumentOutOfRangeException("start", SR.Get(SRID.ParameterCannotBeNegative));
+                throw new ArgumentOutOfRangeException("start", SR.ParameterCannotBeNegative);
             }
 
             if (length < 0)
             {
-                throw new ArgumentOutOfRangeException("length", SR.Get(SRID.ParameterCannotBeNegative));
+                throw new ArgumentOutOfRangeException("length", SR.ParameterCannotBeNegative);
             }
 
             // Identify new selection start position

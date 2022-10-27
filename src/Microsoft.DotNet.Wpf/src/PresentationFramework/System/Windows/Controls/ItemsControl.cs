@@ -419,7 +419,7 @@ namespace System.Windows.Controls
                     if (ReadLocalValue(ItemTemplateSelectorProperty) != DependencyProperty.UnsetValue ||
                         ReadLocalValue(DisplayMemberPathProperty) == DependencyProperty.UnsetValue)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.DisplayMemberPathAndItemTemplateSelectorDefined));
+                        throw new InvalidOperationException(SR.DisplayMemberPathAndItemTemplateSelectorDefined);
                     }
                 }
 
@@ -664,11 +664,11 @@ namespace System.Windows.Controls
             {
                 if (!(this.ItemTemplateSelector is DisplayMemberTemplateSelector))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.ItemTemplateSelectorBreaksDisplayMemberPath));
+                    throw new InvalidOperationException(SR.ItemTemplateSelectorBreaksDisplayMemberPath);
                 }
                 if (Helper.IsTemplateDefined(ItemTemplateProperty, this))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.DisplayMemberPathAndItemTemplateDefined));
+                    throw new InvalidOperationException(SR.DisplayMemberPathAndItemTemplateDefined);
                 }
             }
         }
@@ -1342,7 +1342,7 @@ namespace System.Windows.Controls
                 Visual parent = VisualTreeHelper.GetParent(visual) as Visual;
                 if (parent != null)
                 {
-                    Invariant.Assert(parent is FrameworkElement, SR.Get(SRID.ItemsControl_ParentNotFrameworkElement));
+                    Invariant.Assert(parent is FrameworkElement, SR.ItemsControl_ParentNotFrameworkElement);
                     Panel p = parent as Panel;
                     if (p != null && (visual is UIElement))
                     {
@@ -3516,7 +3516,7 @@ namespace System.Windows.Controls
             {
                 // verify style is appropriate before applying it
                 if (!style.TargetType.IsInstanceOfType(container))
-                    throw new InvalidOperationException(SR.Get(SRID.StyleForWrongType, style.TargetType.Name, container.GetType().Name));
+                    throw new InvalidOperationException(SR.Format(SR.StyleForWrongType, style.TargetType.Name, container.GetType().Name));
 
                 foContainer.Style = style;
                 foContainer.IsStyleSetFromGenerator = true;
@@ -4006,7 +4006,7 @@ namespace System.Windows.Controls
             // HasItems may be wrong when underlying collection does not notify,
             // but this function should try to return what's consistent with ItemsControl state.
             int itemsCount = HasItems ? Items.Count : 0;
-            return SR.Get(SRID.ToStringFormatString_ItemsControl, this.GetType(), itemsCount);
+            return SR.Format(SR.ToStringFormatString_ItemsControl, this.GetType(), itemsCount);
         }
 
         // This should really override OnCreateAutomationPeer, but that API addition

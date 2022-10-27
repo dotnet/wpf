@@ -166,7 +166,7 @@ namespace System.Windows.Documents
             {
                 if (!TextSchema.IsValidChildOfContainer(this.Parent.GetType(), child.GetType()))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.TextSchema_ChildTypeIsInvalid, this.Parent.GetType().Name, child.GetType().Name));
+                    throw new InvalidOperationException(SR.Format(SR.TextSchema_ChildTypeIsInvalid, this.Parent.GetType().Name, child.GetType().Name));
                 }
             }
         }

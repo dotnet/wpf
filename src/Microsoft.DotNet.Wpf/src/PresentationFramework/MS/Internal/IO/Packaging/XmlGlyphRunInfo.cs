@@ -63,7 +63,7 @@ namespace MS.Internal.IO.Packaging
         { 
             get
             {
-                throw new NotSupportedException(SR.Get(SRID.XmlGlyphRunInfoIsNonGraphic));
+                throw new NotSupportedException(SR.XmlGlyphRunInfoIsNonGraphic);
             }
         }
 
@@ -79,7 +79,7 @@ namespace MS.Internal.IO.Packaging
         { 
             get
             {
-                throw new NotSupportedException(SR.Get(SRID.XmlGlyphRunInfoIsNonGraphic));
+                throw new NotSupportedException(SR.XmlGlyphRunInfoIsNonGraphic);
             }
         }
 
@@ -100,7 +100,7 @@ namespace MS.Internal.IO.Packaging
         { 
             get
             {
-                throw new NotSupportedException(SR.Get(SRID.XmlGlyphRunInfoIsNonGraphic));
+                throw new NotSupportedException(SR.XmlGlyphRunInfoIsNonGraphic);
             }
         }
 
@@ -120,7 +120,7 @@ namespace MS.Internal.IO.Packaging
         { 
             get
             {
-                throw new NotSupportedException(SR.Get(SRID.XmlGlyphRunInfoIsNonGraphic));
+                throw new NotSupportedException(SR.XmlGlyphRunInfoIsNonGraphic);
             }
         }
 
@@ -134,7 +134,7 @@ namespace MS.Internal.IO.Packaging
         { 
             get
             {
-                throw new NotSupportedException(SR.Get(SRID.XmlGlyphRunInfoIsNonGraphic));
+                throw new NotSupportedException(SR.XmlGlyphRunInfoIsNonGraphic);
             }
         }
 
@@ -148,7 +148,7 @@ namespace MS.Internal.IO.Packaging
         { 
             get
             {
-                throw new NotSupportedException(SR.Get(SRID.XmlGlyphRunInfoIsNonGraphic));
+                throw new NotSupportedException(SR.XmlGlyphRunInfoIsNonGraphic);
             }
         }
 

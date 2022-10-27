@@ -82,7 +82,7 @@ namespace Microsoft.Win32
             // tell the user we don't have any files to open.
             if (String.IsNullOrEmpty(filename))
             {
-                throw new InvalidOperationException(SR.Get(SRID.FileNameMustNotBeNull));
+                throw new InvalidOperationException(SR.FileNameMustNotBeNull);
             }
 
             // Create a new FileStream from the file and return it.
@@ -293,16 +293,16 @@ namespace Microsoft.Win32
                 {
                     // FNERR_INVALIDFILENAME is usually triggered when an invalid initial filename is specified
                     case NativeMethods.FNERR_INVALIDFILENAME:
-                        throw new InvalidOperationException(SR.Get(SRID.FileDialogInvalidFileName, SafeFileName));
+                        throw new InvalidOperationException(SR.Format(SR.FileDialogInvalidFileName, SafeFileName));
 
                     case NativeMethods.FNERR_SUBCLASSFAILURE:
-                        throw new InvalidOperationException(SR.Get(SRID.FileDialogSubClassFailure));
+                        throw new InvalidOperationException(SR.FileDialogSubClassFailure);
 
                     // note for FNERR_BUFFERTOOSMALL:
                     // This error likely indicates a problem with our buffer size growing code;
                     // take a look at that part of HookProc if customers report this error message is occurring.
                     case NativeMethods.FNERR_BUFFERTOOSMALL:
-                        throw new InvalidOperationException(SR.Get(SRID.FileDialogBufferTooSmall));
+                        throw new InvalidOperationException(SR.FileDialogBufferTooSmall);
 
                         /* 
                          * According to MSDN, the following errors can also occur, but we do not handle them as
@@ -388,7 +388,7 @@ namespace Microsoft.Win32
         /// </summary>
         private bool PromptFileCreate(string fileName)
         {
-            return MessageBoxWithFocusRestore(SR.Get(SRID.FileDialogCreatePrompt, fileName),
+            return MessageBoxWithFocusRestore(SR.Format(SR.FileDialogCreatePrompt, fileName),
                     MessageBoxButton.YesNo, MessageBoxImage.Warning);
         }
 
@@ -400,7 +400,7 @@ namespace Microsoft.Win32
         /// </summary>
         private bool PromptFileOverwrite(string fileName)
         {
-            return MessageBoxWithFocusRestore(SR.Get(SRID.FileDialogOverwritePrompt, fileName),
+            return MessageBoxWithFocusRestore(SR.Format(SR.FileDialogOverwritePrompt, fileName),
                     MessageBoxButton.YesNo, MessageBoxImage.Warning);
         }
 

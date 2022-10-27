@@ -464,7 +464,7 @@ namespace System.Windows.Controls
                 {
                     // The popup takes capture in this case, which causes us to hit test to the wrong window.
                     // We do not support this scenario. Cleanup and then throw and exception.
-                    throw new NotSupportedException(SR.Get(SRID.ToolTipStaysOpenFalseNotAllowed));
+                    throw new NotSupportedException(SR.ToolTipStaysOpenFalseNotAllowed);
                 }
 
                 _currentToolTip.SetValue(OwnerProperty, o);

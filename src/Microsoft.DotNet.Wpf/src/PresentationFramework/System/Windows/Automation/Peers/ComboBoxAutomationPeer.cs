@@ -109,15 +109,15 @@ namespace System.Windows.Automation.Peers
                     {
                         TextBox tb = owner.EditableTextBoxSite;
                         if (tb == null || !tb.IsKeyboardFocused)
-                            throw new InvalidOperationException(SR.Get(SRID.SetFocusFailed));
+                            throw new InvalidOperationException(SR.SetFocusFailed);
                     }
                     else
-                        throw new InvalidOperationException(SR.Get(SRID.SetFocusFailed));
+                        throw new InvalidOperationException(SR.SetFocusFailed);
                 }
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.SetFocusFailed));
+                throw new InvalidOperationException(SR.SetFocusFailed);
             }
         }
 

@@ -22,7 +22,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;   
 
 using SR=System.Windows.SR;
-using SRID=System.Windows.SRID;
 
 using MS.Internal.PresentationFramework;
 
@@ -238,7 +237,7 @@ namespace System.Windows.Media.Animation
             }
             else
             {        
-                throw new ArgumentException(SR.Get(SRID.Animation_ChildMustBeKeyFrame), "child");
+                throw new ArgumentException(SR.Animation_ChildMustBeKeyFrame, "child");
             }
         }
 
@@ -291,7 +290,7 @@ namespace System.Windows.Media.Animation
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void AddText(string childText)
         {
-            throw new InvalidOperationException(SR.Get(SRID.Animation_NoTextChildren));
+            throw new InvalidOperationException(SR.Animation_NoTextChildren);
         }
 
         #endregion

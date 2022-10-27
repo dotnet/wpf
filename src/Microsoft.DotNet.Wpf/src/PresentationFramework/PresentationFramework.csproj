@@ -401,7 +401,6 @@
     <Compile Include="MS\Internal\WindowsRuntime\Windows\Data\Text\WordsSegmenter.cs" />
     <Compile Include="MS\Win32\UxThemeWrapper.cs" />
     <Compile Include="OtherAssemblyAttrs.cs" />
-    <Compile Include="SR.cs" />
     <Compile Include="System\ComponentModel\DesignerProperties.cs" />
     <Compile Include="System\Windows\Annotations\AnchorInfo.cs" />
     <Compile Include="System\Windows\Annotations\Annotation.cs" />

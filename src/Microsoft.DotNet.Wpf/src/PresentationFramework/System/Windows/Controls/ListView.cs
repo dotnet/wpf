@@ -91,7 +91,7 @@ namespace System.Windows.Controls
             {
                 if (newView.IsUsed)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.ListView_ViewCannotBeShared));
+                    throw new InvalidOperationException(SR.ListView_ViewCannotBeShared);
                 }
                 newView.IsUsed = true;
             }

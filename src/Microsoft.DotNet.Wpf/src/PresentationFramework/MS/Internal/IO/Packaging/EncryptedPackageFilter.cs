@@ -84,7 +84,7 @@ namespace MS.Internal.IO.Packaging
         /// <remarks>Not supported in indexing of core properties.</remarks>
         public void GetText(ref uint bufCharacterCount, IntPtr pBuffer)
         {
-            throw new COMException(SR.Get(SRID.FilterGetTextNotSupported),
+            throw new COMException(SR.FilterGetTextNotSupported,
                 (int)FilterErrorCode.FILTER_E_NO_TEXT);
         }
 
@@ -105,7 +105,7 @@ namespace MS.Internal.IO.Packaging
         /// <returns>Not implemented. Reserved for future use.</returns>
         public IntPtr BindRegion([In] FILTERREGION origPos, [In] ref Guid riid)
         {
-            throw new NotImplementedException(SR.Get(SRID.FilterBindRegionNotImplemented));
+            throw new NotImplementedException(SR.FilterBindRegionNotImplemented);
         }
 
         #endregion IFilter methods

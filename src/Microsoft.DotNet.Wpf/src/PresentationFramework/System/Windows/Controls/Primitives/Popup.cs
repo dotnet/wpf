@@ -356,7 +356,7 @@ namespace System.Windows.Controls.Primitives
                     // The popup wants to be visible
 
                     if (popup._cacheValid[(int)CacheBits.OnClosedHandlerReopen])
-                        throw new InvalidOperationException(SR.Get(SRID.PopupReopeningNotAllowed));
+                        throw new InvalidOperationException(SR.PopupReopeningNotAllowed);
 
                     popup.CancelAsyncDestroy();
 
@@ -901,12 +901,12 @@ namespace System.Windows.Controls.Primitives
             object currentParent = null;
             if ((currentParent = LogicalTreeHelper.GetParent(child)) != null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CreateRootPopup_ChildHasLogicalParent, child, currentParent));
+                throw new InvalidOperationException(SR.Format(SR.CreateRootPopup_ChildHasLogicalParent, child, currentParent));
             }
 
             if ((currentParent = VisualTreeHelper.GetParent(child)) != null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CreateRootPopup_ChildHasVisualParent, child, currentParent));
+                throw new InvalidOperationException(SR.Format(SR.CreateRootPopup_ChildHasVisualParent, child, currentParent));
             }
 
             // PlacementTarget must be set before hooking up the child so that resource
@@ -1293,7 +1293,7 @@ namespace System.Windows.Controls.Primitives
             UIElement element = value as UIElement;
             if (element == null && value != null)
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
             }
 
             this.Child = element;

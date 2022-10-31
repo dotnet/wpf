@@ -12,6 +12,8 @@
 
 namespace Microsoft.Win32
 {
+    using Microsoft.Win32.CommonDialogControls;
+
     using MS.Internal;
     using MS.Internal.AppModel;
     using MS.Internal.Interop;
@@ -26,6 +28,7 @@ namespace Microsoft.Win32
     using System.Windows;
 
     using HRESULT = MS.Internal.Interop.HRESULT;
+    using System.Diagnostics;
 
     /// <summary>
     ///    Provides a common base class for wrappers around both the
@@ -303,6 +306,9 @@ namespace Microsoft.Win32
         }
 
         public IList<FileDialogCustomPlace> CustomPlaces { get; set; }
+        public FileDialogCustomControls CustomControls { get; private set; }
+        public FileDialogOkButton OkButton { get; private set;  }
+        public FileDialogCancelButton CancelButton { get; private set; }
 
         #endregion Public Properties
 
@@ -357,7 +363,12 @@ namespace Microsoft.Win32
 
             PrepareDialog(dialog);
 
-            using (VistaDialogEvents events = new VistaDialogEvents(dialog, HandleFileOk))
+            IFileDialogCustomize customize = (IFileDialogCustomize)dialog;
+            OkButton.LockAndAttach(customize);
+            CancelButton.LockAndAttach(customize);
+            CustomControls.LockAndAttach(customize);
+
+            using (VistaDialogEvents events = new VistaDialogEvents(this, dialog))
             {
                 return dialog.Show(hwndOwner).Succeeded;
             }
@@ -605,6 +616,9 @@ namespace Microsoft.Win32
 
             // Set this to an empty list so callers can simply add to it.  They can also replace it wholesale.
             CustomPlaces = new List<FileDialogCustomPlace>();
+            CustomControls = new FileDialogCustomControls();
+            OkButton = new FileDialogOkButton();
+            CancelButton = new FileDialogCancelButton();
         }
 
         private bool HandleFileOk(IFileDialog dialog)
@@ -739,25 +753,30 @@ namespace Microsoft.Win32
         /// <remarks>
         /// Be sure to explictly Dispose of it, or use it in a using block.  Unadvise happens as a result of Dispose.
         /// </remarks>
-        private protected sealed class VistaDialogEvents : IFileDialogEvents, IDisposable
+        private protected sealed class VistaDialogEvents : IFileDialogEvents, IFileDialogControlEvents, IDisposable
         {
-            public delegate bool OnOkCallback(IFileDialog dialog);
-
+            private CommonItemDialog _sink;
             private IFileDialog _dialog;
-
-            private OnOkCallback _okCallback;
             uint _eventCookie;
 
-            public VistaDialogEvents(IFileDialog dialog, OnOkCallback okCallback)
+            public VistaDialogEvents(CommonItemDialog sink, IFileDialog dialog)
             {
+                _sink = sink;
                 _dialog = dialog;
                 _eventCookie = dialog.Advise(this);
-                _okCallback = okCallback;
             }
 
             HRESULT IFileDialogEvents.OnFileOk(IFileDialog pfd)
             {
-                return _okCallback(pfd) ? HRESULT.S_OK : HRESULT.S_FALSE;
+                if (_sink.HandleFileOk(pfd))
+                {
+                    _sink.OkButton.CacheState();
+                    _sink.CancelButton.CacheState();
+                    _sink.CustomControls.CacheState();
+                    return HRESULT.S_OK;
+                }
+
+                return HRESULT.S_FALSE;
             }
 
             HRESULT IFileDialogEvents.OnFolderChanging(IFileDialog pfd, IShellItem psiFolder)
@@ -792,9 +811,70 @@ namespace Microsoft.Win32
                 return HRESULT.S_OK;
             }
 
+            HRESULT IFileDialogControlEvents.OnItemSelected(IFileDialogCustomize pfdc, int dwIDCtl, int dwIDItem)
+            {
+                if (_sink.CustomControls.TryGetControl(dwIDCtl, out FileDialogControl control))
+                {
+                    if (control is FileDialogSelectorControl selector)
+                    {
+                        selector.RaiseItemSelected(dwIDItem);
+                    }
+                    else if (control is FileDialogMenu menu)
+                    {
+                        menu.RaiseItemSelected(dwIDItem);
+                    }
+                }
+
+                return HRESULT.S_OK;
+            }
+
+            HRESULT IFileDialogControlEvents.OnButtonClicked(IFileDialogCustomize pfdc, int dwIDCtl)
+            {
+                if (_sink.CustomControls.TryGetControl(dwIDCtl, out FileDialogControl control) && control is FileDialogPushButton button)
+                {
+                    button.RaiseClick();
+                }
+
+                return HRESULT.S_OK;
+            }
+
+            HRESULT IFileDialogControlEvents.OnCheckButtonToggled(IFileDialogCustomize pfdc, int dwIDCtl, bool bChecked)
+            {
+                if (_sink.CustomControls.TryGetControl(dwIDCtl, out FileDialogControl control) && control is FileDialogCheckButton button)
+                {
+                    if (bChecked)
+                    {
+                        button.RaiseChecked();
+                    }
+                    else
+                    {
+                        button.RaiseUnchecked();
+                    }
+                }
+
+                return HRESULT.S_OK;
+            }
+
+            HRESULT IFileDialogControlEvents.OnControlActivating(IFileDialogCustomize pfdc, int dwIDCtl)
+            {
+                if (_sink.CustomControls.TryGetControl(dwIDCtl, out FileDialogControl control) && control is FileDialogMenu menu)
+                {
+                    menu.RaiseActivating();
+                }
+                else if (_sink.OkButton is IFileDialogCustomizeOwner button && button.ID == dwIDCtl)
+                {
+                    _sink.OkButton.RaiseActivating();
+                }
+
+                return HRESULT.S_OK;
+            }
+
             void IDisposable.Dispose()
             {
                 _dialog.Unadvise(_eventCookie);
+                _sink.CustomControls.DetachAndUnlock();
+                _sink.CancelButton.DetachAndUnlock();
+                _sink.OkButton.DetachAndUnlock();
             }
         }
 

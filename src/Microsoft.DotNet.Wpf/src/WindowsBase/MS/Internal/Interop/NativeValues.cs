@@ -72,6 +72,16 @@ namespace MS.Internal.Interop
         FORCEPREVIEWPANEON = 0x40000000,
     }
 
+    /// <summary>IFileDialogCustomize CDCONTROLSTATE.  CDOS_*</summary>
+    [Flags]
+    internal enum CDCS : uint
+    {
+        INACTIVE        = 0x00000000,
+        ENABLED         = 0x00000001,
+        VISIBLE         = 0x00000002,
+        ENABLEDVISIBLE  = 0x00000003,
+    }
+
     /// <summary>FDE_OVERWRITE_RESPONSE.  FDEOR_*</summary>
     internal enum FDEOR 
     {

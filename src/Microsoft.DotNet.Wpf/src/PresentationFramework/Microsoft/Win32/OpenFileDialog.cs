@@ -13,16 +13,15 @@
 
 namespace Microsoft.Win32
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Security;
-    using System.Windows;
+    using Microsoft.Win32.CommonDialogControls;
 
     using MS.Internal.AppModel;
     using MS.Internal.Interop;
-    using MS.Internal.PresentationFramework;
-    using MS.Win32;
+
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Windows;
 
     /// <summary>
     ///  Represents a common dialog box that allows the user to open one or more file(s). 

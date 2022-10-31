@@ -382,6 +382,65 @@ namespace MS.Internal.AppModel
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
+        Guid(IID.FileDialogCustomize),
+    ]
+    internal interface IFileDialogCustomize
+    {
+        void EnableOpenDropDown(int dwIDCtl);
+        void AddMenu(int dwIDCtl, [MarshalAs(UnmanagedType.LPWStr)] string pszLabel);
+        void AddPushButton(int dwIDCtl, [In, MarshalAs(UnmanagedType.LPWStr)] string pszLabel);
+        void AddComboBox(int dwIDCtl);
+        void AddRadioButtonList(int dwIDCtl);
+        void AddCheckButton(int dwIDCtl, [MarshalAs(UnmanagedType.LPWStr)] string pszLabel, bool bChecked);
+        void AddEditBox(int dwIDCtl, [MarshalAs(UnmanagedType.LPWStr)] string pszText);
+        void AddSeparator(int dwIDCtl);
+        void AddText(int dwIDCtl, [MarshalAs(UnmanagedType.LPWStr)] string pszText);
+        void SetControlLabel(int dwIDCtl, [MarshalAs(UnmanagedType.LPWStr)] string pszLabel);
+        CDCS GetControlState(int dwIDCtl);
+        void SetControlState(int dwIDCtl, CDCS dwState);
+        [return:MarshalAs(UnmanagedType.LPWStr)]
+        string GetEditBoxText(int dwIDCtl);
+        void SetEditBoxText(int dwIDCtl, [MarshalAs(UnmanagedType.LPWStr)] string pszText);
+        [return:MarshalAs(UnmanagedType.Bool)]
+        bool GetCheckButtonState(int dwIDCtl);
+        void SetCheckButtonState(int dwIDCtl, bool bChecked);
+        void AddControlItem(int dwIDCtl, int dwIDItem, [MarshalAs(UnmanagedType.LPWStr)] string pszLabel);
+        void RemoveControlItem(int dwIDCtl, int dwIDItem);
+        void RemoveAllControlItems(int dwIDCtl);
+        CDCS GetControlItemState(int dwIDCtl, int dwIDItem);
+        void SetControlItemState(int dwIDCtl, int dwIDItem, CDCS dwState);
+        [PreserveSig]
+        HRESULT GetSelectedControlItem(int dwIDCtl, out int dwIDItem); 
+        void SetSelectedControlItem(int dwIDCtl, int dwIDItem);
+        void StartVisualGroup(int dwIDCtl, [MarshalAs(UnmanagedType.LPWStr)] string pszLabel);
+        void EndVisualGroup();
+        void MakeProminent(int dwIDCtl);
+        void SetControlItemText(int dwIDCtl, int dwIDItem, [MarshalAs(UnmanagedType.LPWStr)] string pszLabel);
+    }
+
+    [
+        ComImport,
+        InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
+        Guid(IID.FileDialogControlEvents),
+    ]
+    internal interface IFileDialogControlEvents
+    {
+        [PreserveSig]
+        HRESULT OnItemSelected(IFileDialogCustomize pfdc, int dwIDCtl, int dwIDItem);
+
+        [PreserveSig]
+        HRESULT OnButtonClicked(IFileDialogCustomize pfdc, int dwIDCtl);
+
+        [PreserveSig]
+        HRESULT OnCheckButtonToggled(IFileDialogCustomize pfdc, int dwIDCtl, bool bChecked);
+
+        [PreserveSig]
+        HRESULT OnControlActivating(IFileDialogCustomize pfdc, int dwIDCtl);
+    }
+
+    [
+        ComImport,
+        InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
         Guid(IID.FileDialogEvents),
     ]
     internal interface IFileDialogEvents
@@ -478,6 +537,73 @@ namespace MS.Internal.AppModel
 
         void SetFilter([MarshalAs(UnmanagedType.Interface)] object pFilter);
     }
+
+    [
+    ComImport,
+    InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
+    Guid(IID.FileDialog2),
+]
+    internal interface IFileDialog2 : IFileDialog
+    {
+        #region IFileDialog redeclarations
+        #region IModalWindow redeclarations
+        [PreserveSig]
+        new HRESULT Show(IntPtr parent);
+        #endregion
+
+        new void SetFileTypes(uint cFileTypes, [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] COMDLG_FILTERSPEC[] rgFilterSpec);
+
+        new void SetFileTypeIndex(uint iFileType);
+
+        new uint GetFileTypeIndex();
+
+        new uint Advise(IFileDialogEvents pfde);
+
+        new void Unadvise(uint dwCookie);
+
+        new void SetOptions(FOS fos);
+
+        new FOS GetOptions();
+
+        new void SetDefaultFolder(IShellItem psi);
+
+        new void SetFolder(IShellItem psi);
+
+        new IShellItem GetFolder();
+
+        new IShellItem GetCurrentSelection();
+
+        new void SetFileName([MarshalAs(UnmanagedType.LPWStr)] string pszName);
+
+        [return: MarshalAs(UnmanagedType.LPWStr)]
+        new string GetFileName();
+
+        new void SetTitle([MarshalAs(UnmanagedType.LPWStr)] string pszTitle);
+
+        new void SetOkButtonLabel([MarshalAs(UnmanagedType.LPWStr)] string pszText);
+
+        new void SetFileNameLabel([MarshalAs(UnmanagedType.LPWStr)] string pszLabel);
+
+        new IShellItem GetResult();
+
+        new void AddPlace(IShellItem psi, FDAP alignment);
+
+        new void SetDefaultExtension([MarshalAs(UnmanagedType.LPWStr)] string pszDefaultExtension);
+
+        new void Close([MarshalAs(UnmanagedType.Error)] int hr);
+
+        new void SetClientGuid([In] ref Guid guid);
+
+        new void ClearClientData();
+
+        new void SetFilter([MarshalAs(UnmanagedType.Interface)] object pFilter);
+        #endregion
+
+        void SetCancelButtonLabel([MarshalAs(UnmanagedType.LPWStr)] string pszLabel);
+
+        void SetNavigationRoot(IShellItem psi);
+    }
+
 
     [
         ComImport,

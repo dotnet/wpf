@@ -1607,11 +1607,6 @@
         <target state="translated">Impossibile convertire la risorsa in oggetto.</target>
         <note />
       </trans-unit>
-      <trans-unit id="FileDialogBufferTooSmall">
-        <source>Too many files selected. Select fewer files and try again.</source>
-        <target state="translated">Sono stati selezionati troppi file. Selezionare un numero inferiore di file e riprovare.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FileDialogCreatePrompt">
         <source>'{0}' does not exist.
 Do you want to create it?</source>
@@ -1624,11 +1619,6 @@ Crearlo?</target>
 Verify that the file name is correct.</source>
         <target state="translated">'{0}' non esiste.
 Verificare che il nome di file sia corretto.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileDialogInvalidFileName">
-        <source>'{0}' is not a valid file name.</source>
-        <target state="translated">'{0}' non è un nome di file valido.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogInvalidFilter">
@@ -1646,11 +1636,6 @@ Verificare che il nome di file sia corretto.</target>
 Do you want to replace it?</source>
         <target state="translated">'{0}' già esistente.
 Sostituirlo?</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileDialogSubClassFailure">
-        <source>Cannot subclass a file dialog because sufficient memory is not available.</source>
-        <target state="translated">Impossibile impostare una finestra di dialogo file come sottoclasse. Memoria insufficiente.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileFormatException">

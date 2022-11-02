@@ -62,7 +62,7 @@ namespace Microsoft.Win32
         ///  whether or not the Read Only checkbox is checked in the dialog.
         /// </summary>
         ///  The filename used to open the file is the first element of the
-        ///  FileNamesInternal array.
+        ///  FileNames array.
         /// <exception cref="System.InvalidOperationException">
         /// Thrown if there are no filenames stored in the OpenFileDialog.
         /// </exception>
@@ -71,29 +71,16 @@ namespace Microsoft.Win32
         /// </Remarks>
         public Stream OpenFile()
         {
-            string filename = null;
-
-            // FileNamesInternal never returns null.
-            // If the dialog hasn't yet been shown, it returns an array of 0 items.
-            string[] cachedFileNames = FileNamesInternal;
-            if (cachedFileNames.Length != 0)
-            {
-                filename = cachedFileNames[0];
-            }
+            string filename = CriticalFileName;
 
             // If we got an empty or null filename, throw an exception to
             // tell the user we don't have any files to open.
-            if (String.IsNullOrEmpty(filename))
+            if (string.IsNullOrEmpty(filename))
             {
                 throw new InvalidOperationException(SR.Get(SRID.FileNameMustNotBeNull));
             }
 
-            FileStream fileStream = null;
-
-            fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
-
-            // Create a new FileStream from the file and return it.
-            return fileStream;
+            return new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
         }
 
         /// <summary>
@@ -108,32 +95,28 @@ namespace Microsoft.Win32
         /// </Remarks>
         public Stream[] OpenFiles()
         {
-            // Cache FileNamesInternal to avoid perf issues as per
+            // Cache FileNames to avoid perf issues as per
             // FxCop #CA1817
-            String[] cachedFileNames = FileNamesInternal;
+            string[] cachedFileNames = CloneFileNames();
 
             // Create an array to hold the streams that is exactly
-            // as long as FileNamesInternal.
+            // as long as FileNames.
             Stream[] streams = new Stream[cachedFileNames.Length];
 
-            // For each element in FileNamesInternal:
+            // For each element in FileNames:
             for (int i = 0; i < cachedFileNames.Length; i++)
             {
-                // Verify that the filename at this index in the FileNamesInternal
+                // Verify that the filename at this index in the FileNames
                 // array is not null or empty.
                 string filename = cachedFileNames[i];
 
-                if (String.IsNullOrEmpty(filename))
+                if (string.IsNullOrEmpty(filename))
                 {
                     throw new InvalidOperationException(SR.Get(SRID.FileNameMustNotBeNull));
                 }
 
-                FileStream fileStream = null;
-
-                fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
-
                 // Open the file and add it to the list of streams.
-                streams[i] = fileStream;
+                streams[i] = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
             }
 
             // Return the array of open streams.
@@ -239,28 +222,6 @@ namespace Microsoft.Win32
         //
         //---------------------------------------------------
         #region Internal Methods
-
-        private protected override string[] ProcessFiles(IFileDialog dialog)
-        {
-            var openDialog = (IFileOpenDialog)dialog;
-            if (Multiselect)
-            {
-                IShellItemArray results = openDialog.GetResults();
-                uint count = results.GetCount();
-                string[] paths = new string[count];
-                for (uint i = 0; i < count; ++i)
-                {
-                    IShellItem item = results.GetItemAt(i);
-                    paths[i] = item.GetDisplayName(SIGDN.DESKTOPABSOLUTEPARSING);
-                }
-                return paths;
-            }
-            else
-            {
-                IShellItem item = openDialog.GetResult();
-                return new[] { item.GetDisplayName(SIGDN.DESKTOPABSOLUTEPARSING) };
-            }
-        }
 
         private protected override IFileDialog CreateDialog()
         {

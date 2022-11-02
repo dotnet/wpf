@@ -18,16 +18,11 @@ namespace Microsoft.Win32
     using MS.Internal;
     using MS.Internal.AppModel;
     using MS.Internal.Interop;
-    using MS.Win32;
 
     using System;
-    using System.ComponentModel;
     using System.Collections.Generic;
     using System.IO;
-    using System.Runtime.InteropServices;
-    using System.Security;
     using System.Text;
-    using System.Threading;
     using System.Windows;
 
     /// <summary>
@@ -82,20 +77,6 @@ namespace Microsoft.Win32
             Initialize();
         }
 
-        /// <summary>
-        ///  Returns a string representation of the file dialog with key information
-        ///  for debugging purposes.
-        /// </summary>
-        //   We overload ToString() so that we can provide a useful representation of
-        //   this object for users' debugging purposes.  It provides the full pathname for
-        //   any files selected.
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder(base.ToString() + ", FileName: ");
-            sb.Append(FileName);
-            return sb.ToString();
-        }
-
         #endregion Public Methods
 
         //---------------------------------------------------
@@ -129,7 +110,7 @@ namespace Microsoft.Win32
         ///  the dialog box displays a warning if the 
         ///  user specifies a file name that does not exist.
         /// </summary>
-        public virtual bool CheckFileExists
+        public bool CheckFileExists
         {
             get
             {
@@ -192,114 +173,6 @@ namespace Microsoft.Win32
                     }
                 }
                 _defaultExtension = value;
-            }
-        }
-
-        /// <summary>
-        ///  Gets a string containing the filename component of the 
-        ///  file selected in the dialog box.
-        /// 
-        ///  Example:  if FileName = "c:\windows\explorer.exe" ,
-        ///              SafeFileName = "explorer.exe"
-        /// </summary>
-        public string SafeFileName
-        {
-            get
-            {
-                // Use the FileName property to avoid directly accessing
-                // the _fileNames field, then call Path.GetFileName
-                // to do the actual work of stripping out the file name
-                // from the path.
-                string safeFN = Path.GetFileName(CriticalFileName);
-
-                // Check to make sure Path.GetFileName does not return null.
-                // If it does, set safeFN to String.Empty instead to accomodate
-                // programmers that fail to check for null when reading strings.
-                if (safeFN == null)
-                {
-                    safeFN = String.Empty;
-                }
-
-                return safeFN;
-            }
-        }
-
-        /// <summary>
-        ///  Gets a string array containing the filename of each file selected
-        ///  in the dialog box.
-        /// </summary>
-        public string[] SafeFileNames
-        {
-            get
-            {
-                // Retrieve the existing filenames into an array, then make
-                // another array of the same length to hold the safe version.
-                string[] unsafeFileNames = FileNamesInternal;
-                string[] safeFileNames = new string[unsafeFileNames.Length];
-
-                for (int i = 0; i < unsafeFileNames.Length; i++)
-                {
-                    // Call Path.GetFileName to retrieve only the filename
-                    // component of the current full path.
-                    safeFileNames[i] = Path.GetFileName(unsafeFileNames[i]);
-
-                    // Check to make sure Path.GetFileName does not return null.
-                    // If it does, set this filename to String.Empty instead to accomodate
-                    // programmers that fail to check for null when reading strings.
-                    if (safeFileNames[i] == null)
-                    {
-                        safeFileNames[i] = String.Empty;
-                    }
-                }
-
-                return safeFileNames;
-            }
-        }
-
-        //   If multiple files are selected, we only return the first filename.
-        /// <summary>
-        ///  Gets or sets a string containing the full path of the file selected in 
-        ///  the file dialog box.
-        /// </summary>
-        public string FileName
-        {
-            get
-            {
-                return CriticalFileName;
-            }
-            set
-            {
-
-                // Allow users to set a filename to stored in _fileNames.
-                // If null is passed in, we clear the entire list.
-                // If we get a string, we clear the entire list and make a new one-element
-                // array with the new string.
-                if (value == null)
-                {
-                    _fileNames = null;
-                }
-                else
-                {
-                    // UNDONE : ChrisAn:  This broke the save file dialog.
-                    //string temp = Path.GetFullPath(value); // ensure filename is valid...
-                    _fileNames = new string[] { value };
-                }
-            }
-        }
-
-
-        /// <summary>
-        ///     Gets the file names of all selected files in the dialog box.
-        /// </summary>
-        public string[] FileNames
-        {
-            get
-            {
-
-                // FileNamesInternal is a property we use to clone
-                // the string array before returning it.
-                string[] files = FileNamesInternal;
-                return files;
             }
         }
 
@@ -395,16 +268,16 @@ namespace Microsoft.Win32
         // Public Events
         //
         //---------------------------------------------------
-        #region Public Events
-        #endregion Public Events
+        // #region Public Events
+        // #endregion Public Events
 
         //---------------------------------------------------
         //
         // Protected Methods
         //
         //---------------------------------------------------
-        #region Protected Methods
-        #endregion Protected Methods
+        // #region Protected Methods
+        // #endregion Protected Methods
 
         //---------------------------------------------------
         //
@@ -466,34 +339,46 @@ namespace Microsoft.Win32
 
         #endregion Internal Methods
 
+        #region Internal and Protected Methods
+
+        private protected override void PrepareDialog(IFileDialog dialog)
+        {
+            base.PrepareDialog(dialog);
+
+            dialog.SetFileName(CriticalFileName);
+
+            dialog.SetDefaultExtension(DefaultExt);
+
+            COMDLG_FILTERSPEC[] filterItems = GetFilterItems(Filter);
+            if (filterItems.Length > 0)
+            {
+                dialog.SetFileTypes((uint)filterItems.Length, filterItems);
+                dialog.SetFileTypeIndex(unchecked((uint)FilterIndex));
+            }
+        }
+
+        private protected override bool TryHandleFileOk(IFileDialog dialog, out object restoreState)
+        {
+            restoreState = _filterIndex;
+            uint filterIndexTemp = dialog.GetFileTypeIndex();
+            _filterIndex = unchecked((int)filterIndexTemp);
+            return ProcessFileNames();
+        }
+
+        private protected override void RevertFileOk(object state)
+        {
+            _filterIndex = (int)state;
+        }
+
+        #endregion
+
         //---------------------------------------------------
         //
         // Internal Properties
         //
         //---------------------------------------------------
-        #region Internal Properties
-
-        /// <summary>
-        ///  In cases where we need to return an array of strings, we return
-        ///  a clone of the array.  We also need to make sure we return a 
-        ///  string[0] instead of a null if we don't have any filenames.
-        /// </summary>
-        internal string[] FileNamesInternal
-        {
-            get
-            {
-                if (_fileNames == null)
-                {
-                    return Array.Empty<string>();
-                }
-                else
-                {
-                    return (string[])_fileNames.Clone();
-                }
-            }
-        }
-
-        #endregion Internal Properties
+        //#region Internal Properties
+        //#endregion Internal Properties
 
         //---------------------------------------------------
         //
@@ -524,7 +409,6 @@ namespace Microsoft.Win32
             //
             // Initialize additional properties
             //
-            _fileNames = null;
             _defaultExtension = null;
             _filter = null;
             _filterIndex = 1;        // The index of the first filter entry is 1, not 0.  
@@ -552,9 +436,9 @@ namespace Microsoft.Win32
                 // For each filename:
                 //      -  Process AddExtension
                 //      -  Call PromptUserIfAppropriate to display necessary dialog boxes.
-                for (int i = 0; i < _fileNames.Length; i++)
+                for (int i = 0; i < MutableFileNames.Length; i++)
                 {
-                    string fileName = _fileNames[i];
+                    string fileName = MutableFileNames[i];
 
                     // If AddExtension is enabled and we do not already have an extension:            
                     if (AddExtension && !Path.HasExtension(fileName))
@@ -602,7 +486,7 @@ namespace Microsoft.Win32
                             }
                         }
                         // Store this filename back in the _fileNames array.
-                        _fileNames[i] = fileName;
+                        MutableFileNames[i] = fileName;
                     }
 
                     // Call PromptUserIfAppropriate to show necessary dialog boxes.
@@ -629,6 +513,31 @@ namespace Microsoft.Win32
                     System.Windows.MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
+        private static COMDLG_FILTERSPEC[] GetFilterItems(string filter)
+        {
+            // Expecting pipe delimited filter string pairs.
+            // First is the label, second is semi-colon delimited list of extensions.
+            var extensions = new List<COMDLG_FILTERSPEC>();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                string[] tokens = filter.Split('|');
+                if (0 == tokens.Length % 2)
+                {
+                    for (int i = 1; i < tokens.Length; i += 2)
+                    {
+                        extensions.Add(
+                            new COMDLG_FILTERSPEC
+                            {
+                                pszName = tokens[i - 1],
+                                pszSpec = tokens[i],
+                            });
+                    }
+                }
+            }
+            return extensions.ToArray();
+        }
+
         #endregion Private Methods
 
         //---------------------------------------------------
@@ -637,34 +546,6 @@ namespace Microsoft.Win32
         //
         //---------------------------------------------------
         #region Private Properties
-
-        //   If multiple files are selected, we only return the first filename.
-        /// <summary>
-        ///  Gets a string containing the full path of the file selected in 
-        ///  the file dialog box.
-        /// </summary>
-        private string CriticalFileName
-        {
-            get
-            {
-                if (_fileNames == null)        // No filename stored internally...
-                {
-                    return String.Empty;    // So we return String.Empty
-                }
-                else
-                {
-                    // Return the first filename in the array if it is non-empty.
-                    if (_fileNames[0].Length > 0)
-                    {
-                        return _fileNames[0];
-                    }
-                    else
-                    {
-                        return String.Empty;
-                    }
-                }
-            }
-        }
 
         /// <summary>
         /// Extracts the file extensions specified by the current file filter into
@@ -747,99 +628,6 @@ namespace Microsoft.Win32
 
         #endregion Private Properties
 
-        #region Vista COM interfaces Augmentation
-
-        #region Internal and Protected Methods
-
-        private protected abstract string[] ProcessFiles(IFileDialog dialog);
-
-        #endregion
-
-        #region Internal Methods
-
-        private protected override void PrepareDialog(IFileDialog dialog)
-        {
-            base.PrepareDialog(dialog);
-
-            dialog.SetFileName(CriticalFileName);
-
-            dialog.SetDefaultExtension(DefaultExt);
-
-            COMDLG_FILTERSPEC[] filterItems = GetFilterItems(Filter);
-            if (filterItems.Length > 0)
-            {
-                dialog.SetFileTypes((uint)filterItems.Length, filterItems);
-                dialog.SetFileTypeIndex(unchecked((uint)FilterIndex));
-            }
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        private protected override bool HandleFileOk(IFileDialog dialog)
-        {
-            if (!base.HandleFileOk(dialog))
-            {
-                return false;
-            }
-
-            int saveFilterIndex = _filterIndex;
-            string[] saveFileNames = _fileNames;
-            bool ok = false;
-
-            try
-            {
-                uint filterIndexTemp = dialog.GetFileTypeIndex();
-                _filterIndex = unchecked((int)filterIndexTemp);
-                _fileNames = ProcessFiles(dialog);
-                if (ProcessFileNames())
-                {
-                    var cancelArgs = new CancelEventArgs();
-                    OnFileOk(cancelArgs);
-                    ok = !cancelArgs.Cancel;
-                }
-            }
-            finally
-            {
-                if (!ok)
-                {
-                    _fileNames = saveFileNames;
-                    _filterIndex = saveFilterIndex;
-                }
-            }
-            return ok;
-        }
-
-        private static COMDLG_FILTERSPEC[] GetFilterItems(string filter)
-        {
-            // Expecting pipe delimited filter string pairs.
-            // First is the label, second is semi-colon delimited list of extensions.
-            var extensions = new List<COMDLG_FILTERSPEC>();
-
-            if (!string.IsNullOrEmpty(filter))
-            {
-                string[] tokens = filter.Split('|');
-                if (0 == tokens.Length % 2)
-                {
-                    for (int i = 1; i < tokens.Length; i += 2)
-                    {
-                        extensions.Add(
-                            new COMDLG_FILTERSPEC
-                            {
-                                pszName = tokens[i - 1],
-                                pszSpec = tokens[i],
-                            });
-                    }
-                }
-            }
-            return extensions.ToArray();
-        }
-
-        #endregion
-
-        #endregion
-
         //---------------------------------------------------
         //
         // Private Fields
@@ -856,11 +644,6 @@ namespace Microsoft.Win32
                                                 // the dialog is called, and the filter
                                                 // the user selected afterwards.)  This
                                                 // index is 1-based, not 0-based.
-
-        // This is the array that stores the filename(s) the user selected in the
-        // dialog box.  If Multiselect is not enabled, only the first element
-        // of this array will be used.
-        private string[] _fileNames;
 
         #endregion Private Fields
     }

@@ -43,8 +43,7 @@ namespace Microsoft.Win32
         /// <summary>
         ///  Initializes a new instance of the SaveFileDialog class.
         /// </summary>
-        public SaveFileDialog()
-            : base()
+        public SaveFileDialog() : base()
         {
             Initialize();
         }
@@ -72,14 +71,12 @@ namespace Microsoft.Win32
         public Stream OpenFile()
         {
 
-            // Extract the first filename from the FileNamesInternal list.
-            // We can do this safely because FileNamesInternal never returns
-            // null - if _fileNames is null, FileNamesInternal returns Array.Empty<string>();
-            string filename = FileNamesInternal.Length > 0 ? FileNamesInternal[0] : null;
+            // Extract the first filename from the FileNames list.
+            string filename = CriticalFileName;
 
             // If we got an empty or null filename, throw an exception to
             // tell the user we don't have any files to open.
-            if (String.IsNullOrEmpty(filename))
+            if (string.IsNullOrEmpty(filename))
             {
                 throw new InvalidOperationException(SR.Get(SRID.FileNameMustNotBeNull));
             }
@@ -203,8 +200,7 @@ namespace Microsoft.Win32
                 return false;
             }
          
-            bool fExist = File.Exists(Path.GetFullPath(fileName));
-
+            bool fExist = File.Exists(fileName);
 
             // If the file does not exist, check if CreatePrompt is
             // set.  If so, display the appropriate message box and act
@@ -232,12 +228,6 @@ namespace Microsoft.Win32
             // Since all dialog boxes we showed resulted in a positive outcome,
             // returning true allows the file dialog box to close.
             return true;
-        }
-
-        private protected override string[] ProcessFiles(IFileDialog dialog)
-        {
-            IShellItem item = dialog.GetResult();
-            return new[] { item.GetDisplayName(SIGDN.DESKTOPABSOLUTEPARSING) };
         }
 
         private protected override IFileDialog CreateDialog()

@@ -22,9 +22,7 @@ namespace Microsoft.Win32
     using System.Collections.Generic;
     using System.IO;
     using System.Runtime.InteropServices;
-    using System.Security;
     using System.Text;
-    using System.Threading;
     using System.Windows;
 
     using HRESULT = MS.Internal.Interop.HRESULT;
@@ -88,7 +86,9 @@ namespace Microsoft.Win32
         //   this object for users' debugging purposes.
         public override string ToString()
         {
-            return base.ToString() + ": Title: " + Title;
+            StringBuilder sb = new StringBuilder(base.ToString() + ": Title: " + Title + ", FileName: ");
+            sb.Append(FileName);
+            return sb.ToString();
         }
 
         #endregion Public Methods
@@ -99,6 +99,109 @@ namespace Microsoft.Win32
         //
         //---------------------------------------------------
         #region Public Properties
+
+        /// <summary>
+        ///  Gets a string containing the filename component of the 
+        ///  file selected in the dialog box.
+        /// 
+        ///  Example:  if FileName = "c:\windows\explorer.exe" ,
+        ///              SafeFileName = "explorer.exe"
+        /// </summary>
+        public string SafeFileName
+        {
+            get
+            {
+                // Use the FileName property to avoid directly accessing
+                // the _fileNames field, then call Path.GetFileName
+                // to do the actual work of stripping out the file name
+                // from the path.
+                string safeFN = Path.GetFileName(CriticalFileName);
+
+                // Check to make sure Path.GetFileName does not return null.
+                // If it does, set safeFN to String.Empty instead to accomodate
+                // programmers that fail to check for null when reading strings.
+                if (safeFN == null)
+                {
+                    safeFN = String.Empty;
+                }
+
+                return safeFN;
+            }
+        }
+
+        /// <summary>
+        ///  Gets a string array containing the filename of each file selected
+        ///  in the dialog box.
+        /// </summary>
+        public string[] SafeFileNames
+        {
+            get
+            {
+                // Retrieve the existing filenames into an array, then make
+                // another array of the same length to hold the safe version.
+                string[] unsafeFileNames = CloneFileNames();
+                string[] safeFileNames = new string[unsafeFileNames.Length];
+
+                for (int i = 0; i < unsafeFileNames.Length; i++)
+                {
+                    // Call Path.GetFileName to retrieve only the filename
+                    // component of the current full path.
+                    safeFileNames[i] = Path.GetFileName(unsafeFileNames[i]);
+
+                    // Check to make sure Path.GetFileName does not return null.
+                    // If it does, set this filename to String.Empty instead to accomodate
+                    // programmers that fail to check for null when reading strings.
+                    if (safeFileNames[i] == null)
+                    {
+                        safeFileNames[i] = String.Empty;
+                    }
+                }
+
+                return safeFileNames;
+            }
+        }
+
+        //   If multiple files are selected, we only return the first filename.
+        /// <summary>
+        ///  Gets or sets a string containing the full path of the file or folder selected in 
+        ///  the file dialog box.
+        /// </summary>
+        public string FileName
+        {
+            get
+            {
+                return CriticalFileName;
+            }
+            set
+            {
+
+                // Allow users to set a filename to stored in _fileNames.
+                // If null is passed in, we clear the entire list.
+                // If we get a string, we clear the entire list and make a new one-element
+                // array with the new string.
+                if (value == null)
+                {
+                    _fileNames = null;
+                }
+                else
+                {
+                    // UNDONE : ChrisAn:  This broke the save file dialog.
+                    //string temp = Path.GetFullPath(value); // ensure filename is valid...
+                    _fileNames = new string[] { value };
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Gets the file names of all selected files or folders in the dialog box.
+        /// </summary>
+        public string[] FileNames
+        {
+            get
+            {
+                return CloneFileNames();
+            }
+        }
 
         //   The actual flag is FOS_NODEREFERENCELINKS (set = do not dereference, unset = deref) - 
         //   while we have true = dereference and false=do not dereference.  Because we expose
@@ -198,6 +301,8 @@ namespace Microsoft.Win32
                 SetOption(FOS.NOVALIDATE, !value);
             }
         }
+
+        public IList<FileDialogCustomPlace> CustomPlaces { get; set; }
 
         #endregion Public Properties
 
@@ -337,13 +442,116 @@ namespace Microsoft.Win32
 
         #endregion Internal Methods
 
+        #region Internal and Protected Methods
+
+        private protected abstract IFileDialog CreateDialog();
+
+        private protected virtual void PrepareDialog(IFileDialog dialog)
+        {
+            if (!string.IsNullOrEmpty(InitialDirectory))
+            {
+                IShellItem initialDirectory = ShellUtil.GetShellItemForPath(InitialDirectory);
+                if (initialDirectory != null)
+                {
+                    // Setting both of these so the dialog doesn't display errors when a remembered folder is missing.
+                    dialog.SetDefaultFolder(initialDirectory);
+                    dialog.SetFolder(initialDirectory);
+                }
+            }
+
+            dialog.SetTitle(Title);
+            dialog.SetFileName(CriticalFileName);
+
+            // Only accept physically backed locations.
+            FOS options = _dialogOptions.Value | FOS.FORCEFILESYSTEM;
+            dialog.SetOptions(options);
+
+            IList<FileDialogCustomPlace> places = CustomPlaces;
+            if (places != null && places.Count != 0)
+            {
+                foreach (FileDialogCustomPlace customPlace in places)
+                {
+                    IShellItem shellItem = ResolveCustomPlace(customPlace);
+                    if (shellItem != null)
+                    {
+                        try
+                        {
+                            dialog.AddPlace(shellItem, FDAP.BOTTOM);
+                        }
+                        catch (ArgumentException)
+                        {
+                            // The dialog doesn't allow some ShellItems to be set as Places (like device ports).
+                            // Silently swallow errors here.
+                        }
+                    }
+                }
+            }
+        }
+
+        // The FileOk event expects all properties to be set, but if the event is cancelled, they need to be reverted.
+        // This method is called inside a try block, and inheritors can store any data to be reverted in the revertState.
+        private protected virtual bool TryHandleFileOk(IFileDialog dialog, out object revertState)
+        {
+            revertState = null;
+            return true;
+        }
+
+        // This method is called inside a finally block when OK event was cancelled.
+        // Inheritors should revert properties to the state before the dialog was shown, so that it can be shown again.
+        private protected virtual void RevertFileOk(object state) { }
+
+        #endregion
+
         //---------------------------------------------------
         //
         // Internal Properties
         //
         //---------------------------------------------------
-        //#region Internal Properties
-        //#endregion Internal Properties
+        #region Internal Properties
+
+        //   If multiple files are selected, we only return the first filename.
+        /// <summary>
+        ///  Gets a string containing the full path of the file selected in 
+        ///  the file dialog box.
+        /// </summary>
+        private protected string CriticalFileName
+        {
+            get
+            {
+                if (_fileNames?.Length > 0)
+                {
+                    return _fileNames[0];
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
+
+        private protected string[] MutableFileNames
+        {
+            get { return _fileNames; }
+        }
+
+        /// <summary>
+        ///  In cases where we need to return an array of strings, we return
+        ///  a clone of the array.  We also need to make sure we return a 
+        ///  string[0] instead of a null if we don't have any filenames.
+        /// </summary>
+        private protected string[] CloneFileNames()
+        {
+            if (_fileNames == null)
+            {
+                return Array.Empty<string>();
+            }
+            else
+            {
+                return (string[])_fileNames.Clone();
+            }
+        }
+
+        #endregion Internal Properties
 
         //---------------------------------------------------
         //
@@ -391,6 +599,7 @@ namespace Microsoft.Win32
             //
             // Initialize additional properties
             // 
+            _fileNames = null;
             _title.Value = null;
             _initialDirectory.Value = null;
 
@@ -398,14 +607,83 @@ namespace Microsoft.Win32
             CustomPlaces = new List<FileDialogCustomPlace>();
         }
 
-        private protected virtual bool HandleFileOk(IFileDialog dialog)
+        private bool HandleFileOk(IFileDialog dialog)
         {
             // When this callback occurs, the HWND is visible and we need to
             // grab it because it is used for various things like looking up the
             // DialogCaption.
             UnsafeNativeMethods.IOleWindow oleWindow = (UnsafeNativeMethods.IOleWindow)dialog;
             oleWindow.GetWindow(out _hwndFileDialog);
-            return true;
+
+            string[] saveFileNames = _fileNames;
+            object saveState = null;
+            bool ok = false;
+
+            try
+            {
+                IShellItem[] shellItems = ResolveResults(dialog);
+                _fileNames = GetParsingNames(shellItems);
+
+                if (TryHandleFileOk(dialog, out saveState))
+                {
+                    var cancelArgs = new CancelEventArgs();
+                    OnFileOk(cancelArgs);
+                    ok = !cancelArgs.Cancel;
+                }
+            }
+            finally
+            {
+                if (!ok)
+                {
+                    RevertFileOk(saveState);
+                    _fileNames = saveFileNames;
+                }
+            }
+            return ok;
+        }
+
+        private static string[] GetParsingNames(IShellItem[] items)
+        {
+            if (items == null)
+            {
+                return null;
+            }
+
+            string[] names = new string[items.Length];
+            for (int i = 0; i < items.Length; i++)
+            {
+                names[i] = items[i].GetDisplayName(SIGDN.DESKTOPABSOLUTEPARSING);
+            }
+            return names;
+        }
+
+        private static IShellItem[] ResolveResults(IFileDialog dialog)
+        {
+            // covers both file and folder dialogs
+            if (dialog is IFileOpenDialog openDialog)
+            {
+                IShellItemArray results = openDialog.GetResults();
+                uint count = results.GetCount();
+
+                IShellItem[] items = new IShellItem[count];
+                for (uint i = 0; i < count; ++i)
+                {
+                    items[i] = results.GetItemAt(i);
+                }
+
+                return items;
+            }
+            else
+            {
+                IShellItem item = dialog.GetResult();
+                return new[] { item };
+            }
+        }
+
+        private static IShellItem ResolveCustomPlace(FileDialogCustomPlace customPlace)
+        {
+            // Use the KnownFolder Guid if it exists.  Otherwise use the Path.
+            return ShellUtil.GetShellItemForPath(ShellUtil.GetPathForKnownFolder(customPlace.KnownFolder) ?? customPlace.Path);
         }
 
         #endregion Private Methods
@@ -454,8 +732,6 @@ namespace Microsoft.Win32
         }
 
         #endregion Private Properties
-
-        #region Vista COM interfaces Augmentation
 
         /// <summary>
         /// Events sink for IFileDialog.  MSDN says to return E_NOTIMPL for several, but not all, of these methods when we don't want to support them.
@@ -522,67 +798,6 @@ namespace Microsoft.Win32
             }
         }
 
-        public IList<FileDialogCustomPlace> CustomPlaces { get; set; }
-
-        #region Internal and Protected Methods
-
-        private protected abstract IFileDialog CreateDialog();
-
-        private protected virtual void PrepareDialog(IFileDialog dialog)
-        {
-            if (!string.IsNullOrEmpty(InitialDirectory))
-            {
-                IShellItem initialDirectory = ShellUtil.GetShellItemForPath(InitialDirectory);
-                if (initialDirectory != null)
-                {
-                    // Setting both of these so the dialog doesn't display errors when a remembered folder is missing.
-                    dialog.SetDefaultFolder(initialDirectory);
-                    dialog.SetFolder(initialDirectory);
-                }
-            }
-
-            dialog.SetTitle(Title);
-
-            // Only accept physically backed locations.
-            FOS options = _dialogOptions.Value | FOS.FORCEFILESYSTEM;
-            dialog.SetOptions(options);
-
-            IList<FileDialogCustomPlace> places = CustomPlaces;
-            if (places != null && places.Count != 0)
-            {
-                foreach (FileDialogCustomPlace customPlace in places)
-                {
-                    IShellItem shellItem = ResolveCustomPlace(customPlace);
-                    if (shellItem != null)
-                    {
-                        try
-                        {
-                            dialog.AddPlace(shellItem, FDAP.BOTTOM);
-                        }
-                        catch (ArgumentException)
-                        {
-                            // The dialog doesn't allow some ShellItems to be set as Places (like device ports).
-                            // Silently swallow errors here.
-                        }
-                    }
-                }
-            }
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        private static IShellItem ResolveCustomPlace(FileDialogCustomPlace customPlace)
-        {
-            // Use the KnownFolder Guid if it exists.  Otherwise use the Path.
-            return ShellUtil.GetShellItemForPath(ShellUtil.GetPathForKnownFolder(customPlace.KnownFolder) ?? customPlace.Path);
-        }
-
-        #endregion
-
-        #endregion
-
         //---------------------------------------------------
         //
         // Private Fields
@@ -603,6 +818,11 @@ namespace Microsoft.Win32
         // for a variety of purposes (like getting the title of the dialog
         // box when we need to show a message box with the same title bar caption)
         private IntPtr _hwndFileDialog;
+
+        // This is the array that stores the item(s) the user selected in the
+        // dialog box.  If Multiselect is not enabled, only the first element
+        // of this array will be used.
+        private string[] _fileNames;
 
         #endregion Private Fields
     }

@@ -13,20 +13,12 @@
 namespace Microsoft.Win32
 {
     using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.IO;
-    using System.Security;
-    using System.Text;
-    using System.Windows;
 
     using MS.Internal.AppModel;
     using MS.Internal.Interop;
-    using MS.Internal.PresentationFramework;
-    using MS.Win32;
 
     /// <summary>
-    ///  Represents a common dialog box that allows the user to open one or more file(s). 
+    ///  Represents a common dialog box that allows the user to open one or more folder(s). 
     ///  This class cannot be inherited.
     /// </summary>
     public sealed class OpenFolderDialog : CommonItemDialog
@@ -73,20 +65,6 @@ namespace Microsoft.Win32
             Initialize();
         }
 
-        /// <summary>
-        ///  Returns a string representation of the file dialog with key information
-        ///  for debugging purposes.
-        /// </summary>
-        //   We overload ToString() so that we can provide a useful representation of
-        //   this object for users' debugging purposes.  It provides the full pathname for
-        //   any folder selected.
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder(base.ToString() + ", FolderName: ");
-            sb.Append(FolderName);
-            return sb.ToString();
-        }
-
         #endregion Public Methods
 
         //---------------------------------------------------
@@ -96,62 +74,25 @@ namespace Microsoft.Win32
         //---------------------------------------------------
         #region Public Properties
 
+        //   FOS_ALLOWMULTISELECT
+        //   Enables the user to select multiple items in the open dialog. 
+        // 
         /// <summary>
-        ///  Gets a string containing the filename component of the 
-        ///  folder selected in the dialog box.
-        /// 
-        ///  Example:  if FolderName = "c:\windows\sytem32" ,
-        ///              SafeFolderName = "system32"
+        /// Gets or sets an option flag indicating whether the 
+        /// dialog box allows multiple folders to be selected.
         /// </summary>
-        public string SafeFolderName
+        public bool Multiselect
         {
             get
             {
-                // Use the FileName property to avoid directly accessing
-                // the _fileNames field, then call Path.GetFileName
-                // to do the actual work of stripping out the folder name
-                // from the path.
-                string safeFN = Path.GetFileName(CriticalFileName);
-
-                // Check to make sure Path.GetFileName does not return null.
-                // If it does, set safeFN to String.Empty instead to accomodate
-                // programmers that fail to check for null when reading strings.
-                if (safeFN == null)
-                {
-                    safeFN = String.Empty;
-                }
-
-                return safeFN;
-            }
-        }
-
-        /// <summary>
-        ///  Gets or sets a string containing the full path of the file selected in 
-        ///  the file dialog box.
-        /// </summary>
-        public string FolderName
-        {
-            get
-            {
-                return CriticalFileName;
+                return GetOption(FOS.ALLOWMULTISELECT);
             }
             set
             {
-                // Allow users to set a filename to stored in _fileNames.
-                // If null is passed in, we clear the entire list.
-                // If we get a string, we clear the entire list and make a new one-element
-                // array with the new string.
-                if (value == null)
-                {
-                    _fileNames = null;
-                }
-                else
-                {
-                    _fileNames = new string[] { value };
-                }
+                SetOption(FOS.ALLOWMULTISELECT, value);
             }
         }
-
+        
         #endregion Public Properties
 
         //---------------------------------------------------
@@ -177,51 +118,9 @@ namespace Microsoft.Win32
         //---------------------------------------------------
         #region Internal Methods
 
-        private string[] ProcessFolders(IFileDialog dialog)
-        {
-            var openDialog = (IFileOpenDialog)dialog;
-            IShellItem item = openDialog.GetResult();
-            return new[] { item.GetDisplayName(SIGDN.DESKTOPABSOLUTEPARSING) };
-        }
-
         private protected override IFileDialog CreateDialog()
         {
             return (IFileDialog)Activator.CreateInstance(Type.GetTypeFromCLSID(new Guid(CLSID.FileOpenDialog)));
-        }
-
-        private protected override void PrepareDialog(IFileDialog dialog)
-        {
-            base.PrepareDialog(dialog);
-
-            dialog.SetFileName(CriticalFileName);
-        }
-
-        private protected override bool HandleFileOk(IFileDialog dialog)
-        {
-            if (!base.HandleFileOk(dialog))
-            {
-                return false;
-            }
-
-            string[] saveFileNames = _fileNames;
-            bool ok = false;
-
-            try
-            {
-                _fileNames = ProcessFolders(dialog);
-
-                var cancelArgs = new CancelEventArgs();
-                OnFileOk(cancelArgs);
-                ok = !cancelArgs.Cancel;
-            }
-            finally
-            {
-                if (!ok)
-                {
-                    _fileNames = saveFileNames;
-                }
-            }
-            return ok;
         }
 
         #endregion Internal Methods
@@ -263,7 +162,7 @@ namespace Microsoft.Win32
             // FOS_FILEMUSTEXIST
             // Folder must exist. Otherwise, the folder name remaining in
             // text box might be returned as a nested folder. This flag is
-            // now enforced by FOS_PICKFOLDERS.
+            // now enforced by FOS_PICKFOLDERS in the native API.
             SetOption(FOS.FILEMUSTEXIST, true);
 
             // FOS_PICKFOLDERS
@@ -278,49 +177,15 @@ namespace Microsoft.Win32
         // Private Properties
         //
         //---------------------------------------------------
-        #region Private Properties
-
-        /// <summary>
-        ///  Gets a string containing the full path of the file selected in 
-        ///  the file dialog box.
-        /// </summary>
-        private string CriticalFileName
-        {
-            get
-            {
-                if (_fileNames == null)     // No filename stored internally...
-                {
-                    return String.Empty;    // So we return String.Empty
-                }
-                else
-                {
-                    // Return the first filename in the array if it is non-empty.
-                    if (_fileNames[0].Length > 0)
-                    {
-                        return _fileNames[0];
-                    }
-                    else
-                    {
-                        return String.Empty;
-                    }
-                }
-            }
-        }
-
-        #endregion Private Properties
+        //#region Private Properties
+        //#endregion Private Properties
 
         //---------------------------------------------------
         //
         // Private Fields
         //
         //---------------------------------------------------
-        #region Private Fields
-
-        // This is the array that stores the filename(s) the user selected in the
-        // dialog box.  If Multiselect is not enabled, only the first element
-        // of this array will be used.
-        private string[] _fileNames;
-
-        #endregion Private Fields
+        //#region Private Fields
+        //#endregion Private Fields
     }
 }

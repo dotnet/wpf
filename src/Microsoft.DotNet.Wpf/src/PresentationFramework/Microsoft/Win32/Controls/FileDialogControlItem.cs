@@ -3,7 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-namespace Microsoft.Win32.CommonDialogControls
+namespace Microsoft.Win32.Controls
 {
     using MS.Internal.AppModel;
     using MS.Internal.Interop;

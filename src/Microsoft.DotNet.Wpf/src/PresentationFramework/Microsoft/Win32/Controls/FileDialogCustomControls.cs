@@ -3,10 +3,11 @@
 // See the LICENSE file in the project root for more information.
 
 
-namespace Microsoft.Win32.CommonDialogControls
+namespace Microsoft.Win32.Controls
 {
-    using System;
     using MS.Internal.AppModel;
+
+    using System;
 
     // Not inheritable or instantiable (internal constructor).
     /// <summary>

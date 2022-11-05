@@ -14,14 +14,14 @@ namespace Microsoft.Win32
     public abstract partial class CommonItemDialog : Microsoft.Win32.CommonDialog
     {
         protected CommonItemDialog() { }
-        public Microsoft.Win32.CommonDialogControls.FileDialogCancelButton CancelButton { get { throw null; } }
-        public Microsoft.Win32.CommonDialogControls.FileDialogCustomControls CustomControls { get { throw null; } }
+        public Microsoft.Win32.Controls.FileDialogCancelButton CancelButton { get { throw null; } }
+        public Microsoft.Win32.Controls.FileDialogCustomControls CustomControls { get { throw null; } }
         public System.Collections.Generic.IList<Microsoft.Win32.FileDialogCustomPlace> CustomPlaces { get { throw null; } set { } }
         public bool DereferenceLinks { get { throw null; } set { } }
         public string InitialDirectory { get { throw null; } set { } }
         public string FileName { get { throw null; } set { } }
         public string[] FileNames { get { throw null; } }
-        public Microsoft.Win32.CommonDialogControls.FileDialogOkButton OkButton { get { throw null; } }
+        public Microsoft.Win32.Controls.FileDialogOkButton OkButton { get { throw null; } }
         public bool RestoreDirectory { get { throw null; } set { } }
         public string SafeFileName { get { throw null; } }
         public string[] SafeFileNames { get { throw null; } }
@@ -96,13 +96,13 @@ namespace Microsoft.Win32
         public override void Reset() { }
     }
 }
-namespace Microsoft.Win32.CommonDialogControls
+namespace Microsoft.Win32.Controls
 {
     public sealed partial class FileDialogCancelButton
     {
         public string CustomLabel { get { throw null; } set { } }
     }
-    public sealed partial class FileDialogCheckButton : Microsoft.Win32.CommonDialogControls.FileDialogText
+    public sealed partial class FileDialogCheckButton : Microsoft.Win32.Controls.FileDialogText
     {
         public FileDialogCheckButton() { }
         public FileDialogCheckButton(string label) { }
@@ -112,12 +112,12 @@ namespace Microsoft.Win32.CommonDialogControls
         public event System.EventHandler Unchecked { add { } remove { } }
         public override object Clone() { throw null; }
     }
-    public sealed partial class FileDialogComboBox : Microsoft.Win32.CommonDialogControls.FileDialogSelectorControl
+    public sealed partial class FileDialogComboBox : Microsoft.Win32.Controls.FileDialogSelectorControl
     {
         public FileDialogComboBox() : base(default(string[])) { }
         public FileDialogComboBox(params string[] items) : base(default(string[])) { }
     }
-    public abstract partial class FileDialogControl : Microsoft.Win32.CommonDialogControls.FileDialogControlBase, System.ICloneable
+    public abstract partial class FileDialogControl : Microsoft.Win32.Controls.FileDialogControlBase, System.ICloneable
     {
         protected FileDialogControl() { }
     }
@@ -132,49 +132,49 @@ namespace Microsoft.Win32.CommonDialogControls
         public void HideAndDisable() { }
         public virtual void ShowAndEnable() { }
     }
-    public partial class FileDialogControlCollection : System.Collections.ObjectModel.Collection<Microsoft.Win32.CommonDialogControls.FileDialogControl>
+    public partial class FileDialogControlCollection : System.Collections.ObjectModel.Collection<Microsoft.Win32.Controls.FileDialogControl>
     {
         public FileDialogControlCollection() { }
-        public FileDialogControlCollection(params Microsoft.Win32.CommonDialogControls.FileDialogControl[] controls) { }
-        public Microsoft.Win32.CommonDialogControls.FileDialogCheckButton AddCheckButton(string label, bool isChecked = false) { throw null; }
-        public Microsoft.Win32.CommonDialogControls.FileDialogComboBox AddComboBox(params string[] items) { throw null; }
-        public Microsoft.Win32.CommonDialogControls.FileDialogEditBox AddEditBox(string text) { throw null; }
-        public Microsoft.Win32.CommonDialogControls.FileDialogMenu AddMenu(string label, params string[] items) { throw null; }
-        public Microsoft.Win32.CommonDialogControls.FileDialogPushButton AddPushButton(string label) { throw null; }
-        public Microsoft.Win32.CommonDialogControls.FileDialogRadioButtonList AddRadioButtonList(params string[] items) { throw null; }
-        public Microsoft.Win32.CommonDialogControls.FileDialogSeparator AddSeparator() { throw null; }
-        public Microsoft.Win32.CommonDialogControls.FileDialogText AddText(string label) { throw null; }
+        public FileDialogControlCollection(params Microsoft.Win32.Controls.FileDialogControl[] controls) { }
+        public Microsoft.Win32.Controls.FileDialogCheckButton AddCheckButton(string label, bool isChecked = false) { throw null; }
+        public Microsoft.Win32.Controls.FileDialogComboBox AddComboBox(params string[] items) { throw null; }
+        public Microsoft.Win32.Controls.FileDialogEditBox AddEditBox(string text) { throw null; }
+        public Microsoft.Win32.Controls.FileDialogMenu AddMenu(string label, params string[] items) { throw null; }
+        public Microsoft.Win32.Controls.FileDialogPushButton AddPushButton(string label) { throw null; }
+        public Microsoft.Win32.Controls.FileDialogRadioButtonList AddRadioButtonList(params string[] items) { throw null; }
+        public Microsoft.Win32.Controls.FileDialogSeparator AddSeparator() { throw null; }
+        public Microsoft.Win32.Controls.FileDialogText AddText(string label) { throw null; }
         protected override void ClearItems() { }
-        protected override void InsertItem(int index, Microsoft.Win32.CommonDialogControls.FileDialogControl item) { }
+        protected override void InsertItem(int index, Microsoft.Win32.Controls.FileDialogControl item) { }
         protected override void RemoveItem(int index) { }
-        protected override void SetItem(int index, Microsoft.Win32.CommonDialogControls.FileDialogControl item) { }
+        protected override void SetItem(int index, Microsoft.Win32.Controls.FileDialogControl item) { }
     }
-    public sealed partial class FileDialogControlItem : Microsoft.Win32.CommonDialogControls.FileDialogControlBase
+    public sealed partial class FileDialogControlItem : Microsoft.Win32.Controls.FileDialogControlBase
     {
         public FileDialogControlItem() { }
         public FileDialogControlItem(string text) { }
         public string Text { get { throw null; } set { } }
         public override object Clone() { throw null; }
     }
-    public partial class FileDialogControlItemCollection : System.Collections.ObjectModel.Collection<Microsoft.Win32.CommonDialogControls.FileDialogControlItem>
+    public partial class FileDialogControlItemCollection : System.Collections.ObjectModel.Collection<Microsoft.Win32.Controls.FileDialogControlItem>
     {
         internal FileDialogControlItemCollection() { }
-        public Microsoft.Win32.CommonDialogControls.FileDialogControlItem Add(string itemText) { throw null; }
+        public Microsoft.Win32.Controls.FileDialogControlItem Add(string itemText) { throw null; }
         protected override void ClearItems() { }
-        protected override void InsertItem(int index, Microsoft.Win32.CommonDialogControls.FileDialogControlItem item) { }
+        protected override void InsertItem(int index, Microsoft.Win32.Controls.FileDialogControlItem item) { }
         protected override void RemoveItem(int index) { }
-        protected override void SetItem(int index, Microsoft.Win32.CommonDialogControls.FileDialogControlItem item) { }
+        protected override void SetItem(int index, Microsoft.Win32.Controls.FileDialogControlItem item) { }
     }
-    public partial class FileDialogCustomControls : Microsoft.Win32.CommonDialogControls.FileDialogControlCollection
+    public partial class FileDialogCustomControls : Microsoft.Win32.Controls.FileDialogControlCollection
     {
         internal FileDialogCustomControls() { }
-        public Microsoft.Win32.CommonDialogControls.FileDialogControl Prominent { get { throw null; } set { } }
-        public Microsoft.Win32.CommonDialogControls.FileDialogComboBox AddComboBoxWithLabel(string label, params string[] items) { throw null; }
-        public Microsoft.Win32.CommonDialogControls.FileDialogEditBox AddEditBoxWithLabel(string label, string text) { throw null; }
-        public Microsoft.Win32.CommonDialogControls.FileDialogRadioButtonList AddRadioButtonListWithLabel(string label, params string[] items) { throw null; }
-        public Microsoft.Win32.CommonDialogControls.FileDialogVisualGroup AddVisualGroup(string label, params Microsoft.Win32.CommonDialogControls.FileDialogControl[] controls) { throw null; }
+        public Microsoft.Win32.Controls.FileDialogControl Prominent { get { throw null; } set { } }
+        public Microsoft.Win32.Controls.FileDialogComboBox AddComboBoxWithLabel(string label, params string[] items) { throw null; }
+        public Microsoft.Win32.Controls.FileDialogEditBox AddEditBoxWithLabel(string label, string text) { throw null; }
+        public Microsoft.Win32.Controls.FileDialogRadioButtonList AddRadioButtonListWithLabel(string label, params string[] items) { throw null; }
+        public Microsoft.Win32.Controls.FileDialogVisualGroup AddVisualGroup(string label, params Microsoft.Win32.Controls.FileDialogControl[] controls) { throw null; }
     }
-    public sealed partial class FileDialogEditBox : Microsoft.Win32.CommonDialogControls.FileDialogControl
+    public sealed partial class FileDialogEditBox : Microsoft.Win32.Controls.FileDialogControl
     {
         public FileDialogEditBox() { }
         public FileDialogEditBox(string text) { }
@@ -183,69 +183,69 @@ namespace Microsoft.Win32.CommonDialogControls
     }
     public partial class FileDialogItemEventArgs : System.EventArgs
     {
-        public FileDialogItemEventArgs(Microsoft.Win32.CommonDialogControls.FileDialogControlItem item) { }
-        public Microsoft.Win32.CommonDialogControls.FileDialogControlItem Item { get { throw null; } }
+        public FileDialogItemEventArgs(Microsoft.Win32.Controls.FileDialogControlItem item) { }
+        public Microsoft.Win32.Controls.FileDialogControlItem Item { get { throw null; } }
     }
-    public abstract partial class FileDialogItemsControl : Microsoft.Win32.CommonDialogControls.FileDialogControl
+    public abstract partial class FileDialogItemsControl : Microsoft.Win32.Controls.FileDialogControl
     {
         protected FileDialogItemsControl() { }
         protected FileDialogItemsControl(string[] items) { }
-        public Microsoft.Win32.CommonDialogControls.FileDialogControlItemCollection Items { get { throw null; } }
+        public Microsoft.Win32.Controls.FileDialogControlItemCollection Items { get { throw null; } }
         public sealed override object Clone() { throw null; }
     }
-    public sealed partial class FileDialogMenu : Microsoft.Win32.CommonDialogControls.FileDialogItemsControl
+    public sealed partial class FileDialogMenu : Microsoft.Win32.Controls.FileDialogItemsControl
     {
         public FileDialogMenu() { }
         public FileDialogMenu(string label, params string[] items) { }
         public string Label { get { throw null; } set { } }
         public event System.EventHandler Activating { add { } remove { } }
-        public event System.EventHandler<Microsoft.Win32.CommonDialogControls.FileDialogItemEventArgs> ItemSelected { add { } remove { } }
+        public event System.EventHandler<Microsoft.Win32.Controls.FileDialogItemEventArgs> ItemSelected { add { } remove { } }
     }
     public sealed partial class FileDialogOkButton
     {
         public string CustomLabel { get { throw null; } set { } }
-        public Microsoft.Win32.CommonDialogControls.FileDialogControlItemCollection Items { get { throw null; } }
+        public Microsoft.Win32.Controls.FileDialogControlItemCollection Items { get { throw null; } }
         public int SelectedIndex { get { throw null; } }
-        public Microsoft.Win32.CommonDialogControls.FileDialogControlItem SelectedItem { get { throw null; } }
+        public Microsoft.Win32.Controls.FileDialogControlItem SelectedItem { get { throw null; } }
         public event System.EventHandler Activating { add { } remove { } }
     }
-    public sealed partial class FileDialogPushButton : Microsoft.Win32.CommonDialogControls.FileDialogText
+    public sealed partial class FileDialogPushButton : Microsoft.Win32.Controls.FileDialogText
     {
         public FileDialogPushButton() { }
         public FileDialogPushButton(string label) { }
         public event System.EventHandler Click { add { } remove { } }
         public override object Clone() { throw null; }
     }
-    public sealed partial class FileDialogRadioButtonList : Microsoft.Win32.CommonDialogControls.FileDialogSelectorControl
+    public sealed partial class FileDialogRadioButtonList : Microsoft.Win32.Controls.FileDialogSelectorControl
     {
         public FileDialogRadioButtonList() : base(default(string[])) { }
         public FileDialogRadioButtonList(params string[] items) : base(default(string[])) { }
     }
-    public abstract partial class FileDialogSelectorControl : Microsoft.Win32.CommonDialogControls.FileDialogItemsControl
+    public abstract partial class FileDialogSelectorControl : Microsoft.Win32.Controls.FileDialogItemsControl
     {
         protected FileDialogSelectorControl(params string[] items) { }
         public int SelectedIndex { get { throw null; } set { } }
-        public Microsoft.Win32.CommonDialogControls.FileDialogControlItem SelectedItem { get { throw null; } set { } }
-        public event System.EventHandler<Microsoft.Win32.CommonDialogControls.FileDialogItemEventArgs> ItemSelected { add { } remove { } }
+        public Microsoft.Win32.Controls.FileDialogControlItem SelectedItem { get { throw null; } set { } }
+        public event System.EventHandler<Microsoft.Win32.Controls.FileDialogItemEventArgs> ItemSelected { add { } remove { } }
     }
-    public sealed partial class FileDialogSeparator : Microsoft.Win32.CommonDialogControls.FileDialogControl
+    public sealed partial class FileDialogSeparator : Microsoft.Win32.Controls.FileDialogControl
     {
         public FileDialogSeparator() { }
         public override object Clone() { throw null; }
     }
-    public partial class FileDialogText : Microsoft.Win32.CommonDialogControls.FileDialogControl
+    public partial class FileDialogText : Microsoft.Win32.Controls.FileDialogControl
     {
         public FileDialogText() { }
         public FileDialogText(string label) { }
         public string Label { get { throw null; } set { } }
         public override object Clone() { throw null; }
     }
-    public sealed partial class FileDialogVisualGroup : Microsoft.Win32.CommonDialogControls.FileDialogText
+    public sealed partial class FileDialogVisualGroup : Microsoft.Win32.Controls.FileDialogText
     {
         public FileDialogVisualGroup(string label) { }
-        public FileDialogVisualGroup(string label, params Microsoft.Win32.CommonDialogControls.FileDialogControl[] controls) { }
-        public Microsoft.Win32.CommonDialogControls.FileDialogControlCollection Controls { get { throw null; } }
-        public void Add(Microsoft.Win32.CommonDialogControls.FileDialogControl control) { }
+        public FileDialogVisualGroup(string label, params Microsoft.Win32.Controls.FileDialogControl[] controls) { }
+        public Microsoft.Win32.Controls.FileDialogControlCollection Controls { get { throw null; } }
+        public void Add(Microsoft.Win32.Controls.FileDialogControl control) { }
         public override object Clone() { throw null; }
     }
 }

@@ -3,11 +3,12 @@
 // See the LICENSE file in the project root for more information.
 
 
-namespace Microsoft.Win32.CommonDialogControls
+namespace Microsoft.Win32.Controls
 {
+    using MS.Internal.Interop;
+
     using System;
     using System.Threading;
-    using MS.Internal.Interop;
 
     // Not inheritable due to internal abstract members (GetState, SetState).
     /// <summary>

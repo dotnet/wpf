@@ -15,13 +15,9 @@
 namespace Microsoft.Win32
 {
     using MS.Internal.AppModel;
-    using MS.Internal.Interop;
-    using MS.Internal.PresentationFramework;
-    using MS.Win32;
+
     using System;
-    using System.Collections.Generic;
     using System.IO;
-    using System.Security;
     using System.Windows;
 
     /// <summary>

@@ -13,7 +13,7 @@
 
 namespace Microsoft.Win32
 {
-    using Microsoft.Win32.CommonDialogControls;
+    using Microsoft.Win32.Controls;
 
     using MS.Internal.AppModel;
     using MS.Internal.Interop;

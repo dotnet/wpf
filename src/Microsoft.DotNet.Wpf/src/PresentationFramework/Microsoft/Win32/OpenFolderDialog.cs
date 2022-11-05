@@ -12,10 +12,10 @@
 
 namespace Microsoft.Win32
 {
-    using System;
-
     using MS.Internal.AppModel;
     using MS.Internal.Interop;
+
+    using System;
 
     /// <summary>
     ///  Represents a common dialog box that allows the user to open one or more folder(s). 

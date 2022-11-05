@@ -501,15 +501,14 @@ namespace Microsoft.Win32
 
         // The FileOk event expects all properties to be set, but if the event is cancelled, they need to be reverted.
         // This method is called inside a try block, and inheritors can store any data to be reverted in the revertState.
-        private protected virtual bool TryHandleFileOk(IFileDialog dialog, out object revertState)
+        private protected virtual bool TryHandleFileOk(IFileDialog dialog, Stack<object> revertState)
         {
-            revertState = null;
             return true;
         }
 
         // This method is called inside a finally block when OK event was cancelled.
         // Inheritors should revert properties to the state before the dialog was shown, so that it can be shown again.
-        private protected virtual void RevertFileOk(object state) { }
+        private protected virtual void RevertFileOk(Stack<object> revertState) { }
 
         #endregion
 
@@ -630,7 +629,7 @@ namespace Microsoft.Win32
             oleWindow.GetWindow(out _hwndFileDialog);
 
             string[] saveFileNames = _fileNames;
-            object saveState = null;
+            Stack<object> saveState = new Stack<object>(2);
             bool ok = false;
 
             try
@@ -638,7 +637,7 @@ namespace Microsoft.Win32
                 IShellItem[] shellItems = ResolveResults(dialog);
                 _fileNames = GetParsingNames(shellItems);
 
-                if (TryHandleFileOk(dialog, out saveState))
+                if (TryHandleFileOk(dialog, saveState))
                 {
                     var cancelArgs = new CancelEventArgs();
                     OnFileOk(cancelArgs);

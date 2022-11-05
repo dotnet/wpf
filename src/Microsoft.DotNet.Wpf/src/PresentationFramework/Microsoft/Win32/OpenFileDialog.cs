@@ -173,18 +173,32 @@ namespace Microsoft.Win32
             }
         }
 
-        //  OFN_HIDEREADONLY currently not supported #6346
+        // Since readonly is now a OK button drop-down menu, it can be changed only by user
+        // confirming the dialog, so no need to have a live property while dialog is shown.
         /// <summary>
         /// Gets or sets a value indicating whether the read-only 
         /// check box is selected.
         /// </summary>
-        public bool ReadOnlyChecked { get; set; }
+        public bool ReadOnlyChecked
+        {
+            get
+            {
+                return _isReadonlyChecked;
+            }
+            set
+            {
+                _isReadonlyChecked = value;
+            }
+        }
 
-        //  OFN_HIDEREADONLY currently not supported #6346
         /// <summary>
         /// Gets or sets a value indicating whether the dialog 
         /// contains a read-only check box.  
         /// </summary>
+        /// <remarks>
+        /// Read-only option is shown as a drop-down menu on the dialog's OK button.
+        /// Any custom button label will be overriden when this property is true.
+        /// </remarks>
         public bool ShowReadOnly
         {
             get
@@ -193,7 +207,7 @@ namespace Microsoft.Win32
             }
             set
             {
-                _showReadOnly = false;
+                _showReadOnly = value;
             }
         }
 
@@ -225,6 +239,53 @@ namespace Microsoft.Win32
         private protected override IFileDialog CreateDialog()
         {
             return (IFileDialog)Activator.CreateInstance(Type.GetTypeFromCLSID(new Guid(CLSID.FileOpenDialog)));
+        }
+
+        private protected override void PrepareDialog(IFileDialog dialog)
+        {
+            base.PrepareDialog(dialog);
+
+            // if the OK button already has items, do not interfere with them
+            // ShowReadOnly/ReadOnlyChecked will be ignored
+            if (_showReadOnly && OkButton.Items.Count == 0)
+            {
+                if (dialog is IFileDialogCustomize customize)
+                {
+                    OkButton.Items.Lock();
+
+                    int dropDownID = FileDialogControlBase.NextID();
+                    customize.EnableOpenDropDown(dropDownID);
+
+                    // these labels have native-style accelerators, so we add them directly
+                    GetCommonDialogLabels(_isReadonlyChecked, out string buttonLabel, out string itemLabel);
+                    // the item IDs are scoped to the control, so we pick 0 = reaad-only not checked, 1 = read-only checked
+                    customize.AddControlItem(dropDownID, _isReadonlyChecked ? 1 : 0, buttonLabel);
+                    customize.AddControlItem(dropDownID, _isReadonlyChecked ? 0 : 1, itemLabel);
+
+                    _readOnlyID = dropDownID;
+                }
+            }
+        }
+
+        private protected override bool TryHandleFileOk(IFileDialog dialog, Stack<object> revertState)
+        {
+            revertState.Push(_isReadonlyChecked);
+
+            if (_readOnlyID is int id && dialog is IFileDialogCustomize customize)
+            {
+                if (customize.GetSelectedControlItem(id, out int itemID).Succeeded)
+                {
+                    _isReadonlyChecked = itemID != 0;
+                }
+            }
+
+            return base.TryHandleFileOk(dialog, revertState);
+        }
+
+        private protected override void RevertFileOk(Stack<object> revertState)
+        {
+            base.RevertFileOk(revertState);
+            _isReadonlyChecked = (bool)revertState.Pop();
         }
 
         #endregion Internal Methods
@@ -269,6 +330,23 @@ namespace Microsoft.Win32
             // the user enters an invalid name, we display a warning in a 
             // message box.   Implies FOS_PATHMUSTEXIST.
             SetOption(FOS.FILEMUSTEXIST, true);
+
+            // reset read-only
+            _showReadOnly = false;
+            _isReadonlyChecked = false;
+            _readOnlyID = null;
+        }
+
+        private static void GetCommonDialogLabels(bool readOnly, out string button, out string item)
+        {
+            const uint openID = 0x0172;
+            const uint openReadOnlyID = 0x01AB;
+            const uint openForWriteID = 0x01AC;
+
+            IntPtr comdlg32 = Standard.NativeMethods.GetModuleHandle(MS.Win32.ExternDll.Comdlg32);
+
+            button = Standard.NativeMethods.LoadString(comdlg32, openID);
+            item = Standard.NativeMethods.LoadString(comdlg32, readOnly ? openForWriteID : openReadOnlyID);
         }
 
         #endregion Private Methods
@@ -289,6 +367,8 @@ namespace Microsoft.Win32
         //#region Private Fields
 
         private bool _showReadOnly = false;
+        private bool _isReadonlyChecked = false;
+        private int? _readOnlyID = null;
 
         //#endregion Private Fields        
     }

@@ -138,8 +138,8 @@ namespace Microsoft.Win32.CommonDialogControls
                 dialog.SetOkButtonLabel(FileDialogControlBase.ConvertAccelerators(_label));
             }
 
-            //TODO: test whether items can be introduced later
-            //if (Items.Count > 0)
+            // we do not need to lock but competing with OpenFileDialog.ShowReadOnly
+            if (!Items.IsLocked)
             {
                 owner.EnableOpenDropDown(_id);
             }
@@ -157,6 +157,7 @@ namespace Microsoft.Win32.CommonDialogControls
         /// </summary>
         internal void DetachAndUnlock()
         {
+            Items.Unlock();
             _owner = null;
         }
 

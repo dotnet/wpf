@@ -357,17 +357,17 @@ namespace Microsoft.Win32
             }
         }
 
-        private protected override bool TryHandleFileOk(IFileDialog dialog, out object restoreState)
+        private protected override bool TryHandleFileOk(IFileDialog dialog, Stack<object> revertState)
         {
-            restoreState = _filterIndex;
+            revertState.Push(_filterIndex);
             uint filterIndexTemp = dialog.GetFileTypeIndex();
             _filterIndex = unchecked((int)filterIndexTemp);
             return ProcessFileNames();
         }
 
-        private protected override void RevertFileOk(object state)
+        private protected override void RevertFileOk(Stack<object> revertState)
         {
-            _filterIndex = (int)state;
+            _filterIndex = (int)revertState.Pop();
         }
 
         #endregion

@@ -61,14 +61,9 @@ namespace Microsoft.Win32.CommonDialogControls
             return -1;
         }
 
-        internal void Lock()
-        {
-            _isLocked = true;
-        }
-        internal void Unlock()
-        {
-            _isLocked = false;
-        }
+        internal bool IsLocked => _isLocked;
+        internal void Lock() => _isLocked = true;
+        internal void Unlock() => _isLocked = false;
 
         protected override void InsertItem(int index, FileDialogControlItem item)
         {

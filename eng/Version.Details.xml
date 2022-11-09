@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="7.0.0-rtm.22513.12">
+    <Dependency Name="Microsoft.Private.Winforms" Version="7.0.1-rtm.22528.3">
       <Uri>https://github.com/dotnet/winforms</Uri>
       <Sha>672cc8c705697af4146629537abebcd483963375</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="7.0.0-rtm.22513.12">
+    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="7.0.1-rtm.22528.3">
       <Uri>https://github.com/dotnet/winforms</Uri>
       <Sha>672cc8c705697af4146629537abebcd483963375</Sha>
     </Dependency>

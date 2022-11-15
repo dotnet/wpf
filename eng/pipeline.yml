@@ -30,10 +30,10 @@ jobs:
       binlogPath: artifacts/log/Debug/x86/Build.binlog
       pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: NetCore-Public
+          name: NetCore-Svc-Public
           demands: ImageOverride -equals windows.vs2022preview.amd64.Open
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          name: NetCore1ESPool-Internal
+          name: NetCore1ESPool-Svc-Internal
           demands: ImageOverride -equals windows.vs2022preview.amd64
     helixRepo: $(repoName)
 
@@ -45,10 +45,10 @@ jobs:
         # Will eventually change this to two BYOC pools.
         # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: NetCore-Public
+          name: NetCore-Svc-Public
           demands: ImageOverride -equals windows.vs2022preview.amd64.Open
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          name: NetCore1ESPool-Internal
+          name: NetCore1ESPool-Svc-Internal
           demands: ImageOverride -equals windows.vs2022preview.amd64
       variables:
         # needed for signing
@@ -178,40 +178,26 @@ jobs:
         #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
         condition: or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')))
 
-      - task: PowerShell@2
-        displayName: Replace WPF binaries
-        inputs:
-          targetType: 'inline'
-          script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
-        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
-
-      - task: DownloadPipelineArtifact@2
-        displayName: Fetch Test Binaries
-        inputs:
-          buildType: 'specific'
-          project: 'cbb18261-c48f-4abb-8651-8cdcb5474649'
-          pipeline: '81'
-          buildVersionToDownload: 'specific'
-          buildId: '34592'
-          downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
-          checkDownloadedFiles: true
-          artifactName: Tests.$(_BuildConfig).$(_Platform).zip
-        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
-
-      - task: ExtractFiles@1
-        displayName: Extract Test Bins
-        inputs:
-          archiveFilePatterns: '$(System.ArtifactsDirectory)\testbinzip\*.zip'
-          destinationFolder: '$(System.ArtifactsDirectory)\testbins'
-          cleanDestinationFolder: true
-          overwriteExistingFiles: true
-        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
-
-      - task: PowerShell@2
-        displayName: Run Tests
-        inputs:
-          targetType: 'inline'
-          script: '.\CIRunDrts.cmd'
-          workingDirectory: '$(System.ArtifactsDirectory)\testbins'
-        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
-        
+      # Run DRTs
+      - powershell: eng\common\cibuild.cmd
+          -configuration $(_BuildConfig)
+          $(_OfficialBuildIdArgs) 
+          $(_PlatformArgs)
+          -projects $(Build.SourcesDirectory)\eng\helixpublish.proj
+          /bl:$(BUILD.SOURCESDIRECTORY)\artifacts\log\$(_BuildConfig)\HelixDrt.binlog
+        displayName: Run Developer Regression Tests on Helix Machine (Release)
+        env:
+          HelixSource: $(_HelixSource)
+          HelixType: 'tests/drt'
+          HelixBuild: $(Build.BuildNumber)
+          HelixTargetQueues: $(_TestHelixAgentPool)
+          HelixAccessToken: $(_HelixToken)              # only defined for internal CI
+          Creator: $(_HelixCreator)
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+        # This condition should be kept in sync with the condition for cibuild.cmd step with displayName: "Windows Build / Publish"
+        # Only run ...
+        # ...When building on a Helix pipeline, only build Release configs
+        #
+        #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
+        #
+        condition: and(succeeded(), eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))

@@ -69,7 +69,7 @@ stages:
         # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
         pool:
           name: NetCore1ESPool-Svc-Internal
-          demands: ImageOverride -equals Build.Windows.10.Amd64.VS2017
+          demands: ImageOverride -equals windows.vs2019.amd64
         # runAsPublic is used in expressions, which can't read from user-defined variables
         runAsPublic: false
 

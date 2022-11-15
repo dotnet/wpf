@@ -2587,6 +2587,20 @@ namespace System.Windows.Controls
                 // Note that if we return to Phase2, at least one *-def will have been
                 // resolved.  This guarantees we don't run Phase2+3 infinitely often.
                 runPhase2and3 = false;
+
+                if(takenSize < finalSize)
+                {
+                    if(DoubleUtil.AreClose(takenSize, finalSize) && minCountPhase2 > 0)
+                    {
+                        // if very small (~ 2.2204460492503131e-016) remaining size is available
+                        // adding it to size of smallest width column resolved as 'min'.
+                        DefinitionBase resolvedDef = definitions[definitionIndices[minCountPhase2 - 1]];
+                        resolvedDef.MeasureSize -= (finalSize - takenSize);
+                        takenSize = finalSize;
+                        remainingAvailableSize = 0.0;
+                    }
+                }
+
                 if (starCount == 0 && takenSize < finalSize)
                 {
                     // if no *-defs remain and we haven't allocated all the space, reconsider the defs

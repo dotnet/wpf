@@ -23,6 +23,8 @@ namespace System.Windows.Controls
     /// </summary>
     public class DataGridCell : ContentControl, IProvideDataGridColumn
     {
+        private static bool IsDataGridKeyboardSortFeatureEnabled = true;
+
         #region Constructors
 
         /// <summary>
@@ -45,6 +47,8 @@ namespace System.Windows.Controls
 
             EventManager.RegisterClassHandler(typeof(DataGridCell), LostFocusEvent, new RoutedEventHandler(OnAnyLostFocus), true);
             EventManager.RegisterClassHandler(typeof(DataGridCell), GotFocusEvent, new RoutedEventHandler(OnAnyGotFocus), true);
+            
+            AppContext.TryGetSwitch("DataGridKeyboardSortFeature", out IsDataGridKeyboardSortFeatureEnabled);
         }
 
         /// <summary>
@@ -992,7 +996,7 @@ namespace System.Windows.Controls
                     }
                     return;
                 }
-                else if(e.Key == Key.F3)
+                else if(IsDataGridKeyboardSortFeatureEnabled && e.Key == Key.F3)
                 {
                     if (Column.CanUserSort)
                     {

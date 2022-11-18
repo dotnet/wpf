@@ -321,7 +321,7 @@ namespace System.Windows
             branchNode.Node = node;
             branchNode.Source = source;
             
-            BranchNodeStack.Push(branchNode);
+            (_branchNodeStack ??= new Stack<BranchNode>(1)).Push(branchNode);
         }
 
         /// <summary>
@@ -343,12 +343,12 @@ namespace System.Windows
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Advanced)]
         public object PopBranchNode()
         {
-            if (BranchNodeStack.Count == 0)
-                return null;
-            
-            BranchNode branchNode = BranchNodeStack.Pop();
+            if (_branchNodeStack is { Count: > 0 } stack)
+            {
+                return stack.Pop().Node;
+            }
 
-            return branchNode.Node;
+            return null;
         }
 
         /// <summary>
@@ -370,12 +370,12 @@ namespace System.Windows
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Advanced)]
         public object PeekBranchNode()
         {
-            if (BranchNodeStack.Count == 0)
-                return null;
+            if (_branchNodeStack is { Count: > 0 } stack)
+            {
+                return stack.Peek().Node;
+            }
 
-            BranchNode branchNode = BranchNodeStack.Peek();
-
-            return branchNode.Node;
+            return null;
         }
 
         /// <summary>
@@ -397,12 +397,12 @@ namespace System.Windows
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Advanced)]
         public object PeekBranchSource()
         {
-            if (BranchNodeStack.Count == 0)
-                return null;
+            if (_branchNodeStack is { Count: > 0 } stack)
+            {
+                return stack.Peek().Source;
+            }
 
-            BranchNode branchNode = BranchNodeStack.Peek();
-
-            return branchNode.Source;
+            return null;
         }
         
         #endregion External API
@@ -427,20 +427,6 @@ namespace System.Windows
         {
             public object Node;
             public object Source;
-        }
-
-        // Branch nodes are stored on a stack, which we create on-demand.
-        private Stack<BranchNode> BranchNodeStack
-        {
-            get
-            {
-                if (_branchNodeStack == null)
-                {
-                    _branchNodeStack = new Stack<BranchNode>(1);
-                }
-                
-                return _branchNodeStack;
-            }
         }
 
         // Add the given source to the source item list

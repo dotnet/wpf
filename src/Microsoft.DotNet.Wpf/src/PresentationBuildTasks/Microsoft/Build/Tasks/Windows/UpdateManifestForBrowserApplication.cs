@@ -154,7 +154,7 @@ namespace Microsoft.Build.Tasks.Windows
 #pragma warning disable 6500
             catch   // Non-cls compliant errors
             {
-                Log.LogErrorWithCodeFromResources(SRID.NonClsError);
+                Log.LogErrorWithCodeFromResources(nameof(SR.NonClsError));
                 successful = false;
             }
 #pragma warning restore 6500

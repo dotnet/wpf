@@ -586,7 +586,7 @@ namespace System.Windows.Documents
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
-        public void QueryInsertEmbedded(ref Guid guidService, int formatEtc, out bool insertable)
+        public void QueryInsertEmbedded(ref Guid guidService, IntPtr formatEtc, out bool insertable)
         {
 #if true
             //
@@ -4855,7 +4855,7 @@ namespace System.Windows.Documents
                 {
                     if (needSeparator)
                     {
-                        sb.Append("/");
+                        sb.Append('/');
                     }
 
                     string name = t.ToString();
@@ -5036,9 +5036,7 @@ namespace System.Windows.Documents
                     {
                         int dotIndex = filename.LastIndexOf(".", StringComparison.Ordinal);
                         if (dotIndex < 0) dotIndex = filename.Length;
-                        filename = filename.Substring(0, dotIndex) +
-                            s_seqno.ToString() +
-                            filename.Substring(dotIndex);
+                        filename = $"{filename.AsSpan(0, dotIndex)}{s_seqno}{filename.AsSpan(dotIndex)}";
                     }
 
                     // create the TraceList

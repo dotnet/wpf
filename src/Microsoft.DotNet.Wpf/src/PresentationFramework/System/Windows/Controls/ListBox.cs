@@ -349,31 +349,7 @@ namespace System.Windows.Controls
                 case Key.Left:
                 case Key.Down:
                 case Key.Right:
-                    {
-                    if ((Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt && (e.Key == Key.Left || e.Key == Key.Right))
-                        {
-                            if(e.OriginalSource is GridViewColumnHeader gridViewColumnHeader)
-                            {
-                                if (key == Key.Left)
-                                {
-                                    if(gridViewColumnHeader.Column.ActualWidth > 0)
-                                    {
-                                        gridViewColumnHeader.Width = gridViewColumnHeader.Column.ActualWidth - ColumnWidthStepSize;
-                                        gridViewColumnHeader.UpdateColumnHeaderWidth(gridViewColumnHeader.Width);
-                                    }
-                                    
-                                    handled = true;
-                                }
-                                else if (key == Key.Right)
-                                {
-                                    gridViewColumnHeader.Width = gridViewColumnHeader.Column.ActualWidth + ColumnWidthStepSize;
-                                    gridViewColumnHeader.UpdateColumnHeaderWidth(gridViewColumnHeader.Width);
-                                    handled = true;
-                                }
-                                break;
-                            }
-                        }
-                    
+                    {                   
                         KeyboardNavigation.ShowFocusVisual();
 
                         // Depend on logical orientation we decide to move focus or just scroll
@@ -508,6 +484,45 @@ namespace System.Windows.Controls
                 case Key.PageDown:
                     NavigateByPage(FocusNavigationDirection.Down, new ItemNavigateArgs(e.Device, Keyboard.Modifiers));
                     break;
+
+                case Key.System:
+                    Key skey = e.SystemKey;
+                    switch (skey)
+                    {
+                        case Key.Right:
+                        case Key.Left:
+                            const ModifierKeys ModifierMask = ModifierKeys.Alt | ModifierKeys.Control | ModifierKeys.Shift | ModifierKeys.Windows;
+                            ModifierKeys modifierKeys = Keyboard.Modifiers & ModifierMask;
+
+                            if (modifierKeys == ModifierKeys.Alt)
+                            {
+                                if (e.OriginalSource is GridViewColumnHeader gridViewColumnHeader && gridViewColumnHeader.Column != null)
+                                {
+                                    double width = 0;
+                                    if (e.SystemKey == Key.Left)
+                                    {
+                                        width = gridViewColumnHeader.Column.ActualWidth - ColumnWidthStepSize;
+                                    }
+                                    else if (e.SystemKey == Key.Right)
+                                    {
+                                        width = gridViewColumnHeader.Column.ActualWidth + ColumnWidthStepSize;
+                                    }
+
+                                    if (width > 0)
+                                    {
+                                        gridViewColumnHeader.UpdateColumnHeaderWidth(width);
+                                    }
+                                }
+                            }
+                            break;
+
+                        default:
+                            handled = false;
+                            break;
+                    }
+
+                    break;
+
 
                 default:
                     handled = false;

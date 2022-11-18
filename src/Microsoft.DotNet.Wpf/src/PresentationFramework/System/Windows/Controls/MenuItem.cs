@@ -486,7 +486,9 @@ namespace System.Windows.Controls
         public static readonly DependencyProperty CommandParameterProperty =
                 ButtonBase.CommandParameterProperty.AddOwner(
                         typeof(MenuItem),
-                        new FrameworkPropertyMetadata((object) null));
+                        new FrameworkPropertyMetadata(
+                                (object)null,
+                                new PropertyChangedCallback(OnCommandParameterChanged)));
 
         /// <summary>
         ///     The parameter to pass to MenuItem's Command.
@@ -497,6 +499,12 @@ namespace System.Windows.Controls
         {
             get { return GetValue(CommandParameterProperty); }
             set { SetValue(CommandParameterProperty, value); }
+        }
+
+        private static void OnCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            MenuItem item = (MenuItem)d;
+            item.UpdateCanExecute();
         }
 
         /// <summary>
@@ -946,13 +954,22 @@ namespace System.Windows.Controls
         {
             MenuItem menuItem = (MenuItem) d;
 
-            if ((bool) e.NewValue)
+            bool oldValue = (bool)e.OldValue;
+            bool newValue = (bool)e.NewValue;
+
+            if (newValue)
             {
                 menuItem.OnChecked(new RoutedEventArgs(CheckedEvent));
             }
             else
             {
                 menuItem.OnUnchecked(new RoutedEventArgs(UncheckedEvent));
+            }
+            
+            MenuItemAutomationPeer peer = UIElementAutomationPeer.FromElement(menuItem) as MenuItemAutomationPeer;
+            if (peer != null)
+            {
+                peer.RaiseToggleStatePropertyChangedEvent(oldValue, newValue);
             }
         }
 

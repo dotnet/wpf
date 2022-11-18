@@ -964,28 +964,45 @@ namespace System.Windows.Controls
         /// </summary>
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if ((Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt && (e.Key == Key.Left || e.Key == Key.Right))
+            if (!e.Handled)
             {
-                DataGridLength updatedWidth = new DataGridLength();
+                const ModifierKeys ModifierMask = ModifierKeys.Alt | ModifierKeys.Control | ModifierKeys.Shift | ModifierKeys.Windows;
+                ModifierKeys modifierKeys = Keyboard.Modifiers & ModifierMask;
 
-                if (e.Key == Key.Right)
+                if (((e.SystemKey == Key.Right) || (e.SystemKey == Key.Left)) && (modifierKeys == ModifierKeys.Alt))
                 {
-                    updatedWidth = new DataGridLength(this.Column.ActualWidth + ColumnWidthStepSize);
-                }
-                else if (e.Key == Key.Left)
-                {
-                    updatedWidth = new DataGridLength(this.Column.ActualWidth - ColumnWidthStepSize);
-                }
+                    DataGridLength updatedWidth = new DataGridLength();
 
-                if (Column.CanColumnResize(updatedWidth))
-                {
-                    this.Column.SetCurrentValue(DataGridColumn.WidthProperty, updatedWidth);
-                }
+                    if (e.SystemKey == Key.Right)
+                    {
+                        updatedWidth = new DataGridLength(Column.ActualWidth + ColumnWidthStepSize);
+                    }
+                    else if (e.SystemKey == Key.Left)
+                    {
+                        updatedWidth = new DataGridLength(Column.ActualWidth - ColumnWidthStepSize);
+                    }
 
-                e.Handled = true;
-                return;
+                    if (Column != null)
+                    {
+                        if (Column.CanColumnResize(updatedWidth))
+                        {
+                            Column.SetCurrentValueInternal(DataGridColumn.WidthProperty, updatedWidth);
+                        }
+                        e.Handled = true;
+                    }
+                    return;
+                }
+                else if(e.Key == Key.F3)
+                {
+                    if (Column.CanUserSort)
+                    {
+                        Column.DataGridOwner.PerformSort(Column);
+                        e.Handled = true;
+                        return;
+                    }
+                }
             }
-            
+
             SendInputToColumn(e);
         }
 

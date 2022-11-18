@@ -1,4 +1,4 @@
-{
+﻿{
   "author": "Microsoft",
   "name": "WPF 应用程序",
   "description": "用于创建 .NET WPF 应用程序的项目",
@@ -8,7 +8,7 @@
   "symbols/Framework/choices/netcoreapp3.1/description": "目标 netcoreapp3.1",
   "symbols/Framework/choices/net5.0/description": "目标 net5.0",
   "symbols/Framework/choices/net6.0/description": "目标 net6.0",
-  "symbols/Framework/choices/net7.0/description": "Target net7.0",
+  "symbols/Framework/choices/net7.0/description": "目标 net7.0",
   "symbols/langVersion/description": "在创建的项目文件中设置 langVersion",
   "symbols/skipRestore/description": "如果指定，则在创建时跳过项目的自动还原。",
   "symbols/Nullable/description": "是否为此项目启用可为 null 的引用类型。",

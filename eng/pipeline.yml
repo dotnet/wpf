@@ -22,7 +22,7 @@ jobs:
     enablePublishBuildArtifacts: true
     enablePublishTestResults: false # tests run in helix
     enablePublishBuildAssets: true
-    enablePublishUsingPipelines: $(_PublishUsingPipelines)
+    enablePublishUsingPipelines: true
     enableTelemetry: true
     enableSourceIndex: true
     sourceIndexParams:
@@ -30,11 +30,11 @@ jobs:
       binlogPath: artifacts/log/Debug/x86/Build.binlog
       pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: NetCore1ESPool-Public
-          demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre.Open
+          name: NetCore-Public
+          demands: ImageOverride -equals windows.vs2022preview.amd64.Open
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
           name: NetCore1ESPool-Internal
-          demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre
+          demands: ImageOverride -equals windows.vs2022preview.amd64
     helixRepo: $(repoName)
 
     jobs:
@@ -45,11 +45,11 @@ jobs:
         # Will eventually change this to two BYOC pools.
         # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: NetCore1ESPool-Public
-          demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre.Open
+          name: NetCore-Public
+          demands: ImageOverride -equals windows.vs2022preview.amd64.Open
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
           name: NetCore1ESPool-Internal
-          demands: ImageOverride -equals Build.Windows.Amd64.VS2022.Pre
+          demands: ImageOverride -equals windows.vs2022preview.amd64
       variables:
         # needed for signing
         - name: _TeamName
@@ -82,12 +82,12 @@ jobs:
           - name: _InternalRuntimeDownloadArgs
             value: ''
         - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          - group: DotNet-MSRC-Storage
+          - group: DotNetBuilds storage account read tokens
           - group: AzureDevOps-Artifact-Feeds-Pats
           - name: _InternalRuntimeDownloadArgs
             value: >-
-              /p:DotNetRuntimeSourceFeed=https://dotnetclimsrc.blob.core.windows.net/dotnet
-              /p:DotNetRuntimeSourceFeedKey=$(dotnetclimsrc-read-sas-token-base64)
+              /p:DotNetRuntimeSourceFeed=https://dotnetbuilds.blob.core.windows.net/internal
+              /p:DotNetRuntimeSourceFeedKey=$(dotnetbuilds-internal-container-read-token-base64)
 
 
         # Override some values if we're building internally
@@ -95,8 +95,6 @@ jobs:
           # note: You have to use list syntax here (- name: value) or you will get errors about declaring the same variable multiple times
           - name: _SignType
             value: real
-          - group: DotNet-Blob-Feed
-          - group: DotNet-Symbol-Server-Pats
           - group: DotNet-HelixApi-Access
 
           # note: Even though they are referenced here, user defined variables (like $(_SignType)) are not resolved 
@@ -105,8 +103,7 @@ jobs:
           - name: _SignArgs
             value: /p:DotNetSignType=$(_SignType) /p:TeamName=$(_TeamName)
           - name: _PublishArgs
-            value: 
-              /p:DotNetPublishUsingPipelines=$(_PublishUsingPipelines)
+            value: /p:DotNetPublishUsingPipelines=true
           - name: _OfficialBuildIdArgs
             value: /p:OfficialBuildId=$(BUILD.BUILDNUMBER)
           - name: _PublicBuildPipeline
@@ -181,27 +178,40 @@ jobs:
         #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
         condition: or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')))
 
-      # Run DRTs
-      - powershell: eng\common\cibuild.cmd
-          -configuration $(_BuildConfig)
-          $(_OfficialBuildIdArgs) 
-          $(_PlatformArgs)
-          -projects $(Build.SourcesDirectory)\eng\helixpublish.proj
-          /bl:$(BUILD.SOURCESDIRECTORY)\artifacts\log\$(_BuildConfig)\HelixDrt.binlog
-        displayName: Run Developer Regression Tests on Helix Machine (Release)
-        env:
-          HelixSource: $(_HelixSource)
-          HelixType: 'tests/drt'
-          HelixBuild: $(Build.BuildNumber)
-          HelixTargetQueues: $(_TestHelixAgentPool)
-          HelixAccessToken: $(_HelixToken)              # only defined for internal CI
-          Creator: $(_HelixCreator)
-          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-        # This condition should be kept in sync with the condition for cibuild.cmd step with displayName: "Windows Build / Publish"
-        # Only run ...
-        # ...When building on a Helix pipeline, only build Release configs
-        #
-        #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
-        #
-        condition: and(succeeded(), eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))
+      - task: PowerShell@2
+        displayName: Replace WPF binaries
+        inputs:
+          targetType: 'inline'
+          script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
+        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
 
+      - task: DownloadPipelineArtifact@2
+        displayName: Fetch Test Binaries
+        inputs:
+          buildType: 'specific'
+          project: 'cbb18261-c48f-4abb-8651-8cdcb5474649'
+          pipeline: '81'
+          buildVersionToDownload: 'specific'
+          buildId: '34592'
+          downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
+          checkDownloadedFiles: true
+          artifactName: Tests.$(_BuildConfig).$(_Platform).zip
+        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
+
+      - task: ExtractFiles@1
+        displayName: Extract Test Bins
+        inputs:
+          archiveFilePatterns: '$(System.ArtifactsDirectory)\testbinzip\*.zip'
+          destinationFolder: '$(System.ArtifactsDirectory)\testbins'
+          cleanDestinationFolder: true
+          overwriteExistingFiles: true
+        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
+
+      - task: PowerShell@2
+        displayName: Run Tests
+        inputs:
+          targetType: 'inline'
+          script: '.\CIRunDrts.cmd'
+          workingDirectory: '$(System.ArtifactsDirectory)\testbins'
+        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
+        

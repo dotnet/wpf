@@ -22,7 +22,7 @@
     <Page Include="InstallationError.xaml" />
     <Page Include="TenFeetInstallationError.xaml" />
     <Page Include="TenFeetInstallationProgress.xaml" />
-    <Page Include="MS\Internal\Documents\FindToolbar.xaml" />
+    <Page Include="MS\Internal\Documents\FindToolBar.xaml" />
     <Page Include="themes\MediaCenterTheme.xaml" />
     <Page Include="themes\Aero.NormalColor.xaml">
       <GenerateTheme>true</GenerateTheme>
@@ -73,7 +73,6 @@
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
       <Link>Common\System\SR.cs</Link>
     </Compile>
-    <Compile Include="SR.cs" />
     <Compile Include="$(WpfSharedDir)\RefAssemblyAttrs.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\FriendAccessAllowedAttribute.cs" />
     <Compile Include="OtherAssemblyAttrs.cs" />
@@ -97,7 +96,7 @@
     <Compile Include="MS\Internal\Documents\DialogDivider.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MS\Internal\Documents\FindToolbar.xaml.cs" />
+    <Compile Include="MS\Internal\Documents\FindToolBar.xaml.cs" />
     <Compile Include="MS\Internal\Documents\IDigitalSignatureProvider.cs" />
     <Compile Include="MS\Internal\Documents\PeoplePickerWrapper.cs" />
     <Compile Include="MS\Internal\Documents\RequestedSignatureDialog.cs">
@@ -129,7 +128,7 @@
     </Compile>
     <Compile Include="MS\Internal\Documents\SignaturePolicy.cs" />
     <Compile Include="MS\Internal\Documents\SignatureResourceHelper.cs" />
-    <Compile Include="MS\Internal\Documents\signaturestatus.cs" />
+    <Compile Include="MS\Internal\Documents\SignatureStatus.cs" />
     <Compile Include="MS\Internal\Documents\SignatureSummaryDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -216,7 +215,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Private.Winforms" Version="$(MicrosoftPrivateWinformsVersion)" />
     <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" />
     <PackageReference Include="System.Drawing.Common" Version="$(SystemDrawingCommonVersion)" />
     <PackageReference Include="$(SystemDirectoryServicesPackage)" Version="$(SystemDirectoryServicesVersion)" />

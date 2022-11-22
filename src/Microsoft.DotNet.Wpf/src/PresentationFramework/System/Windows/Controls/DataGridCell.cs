@@ -23,7 +23,7 @@ namespace System.Windows.Controls
     /// </summary>
     public class DataGridCell : ContentControl, IProvideDataGridColumn
     {
-        private static bool IsDataGridKeyboardSortDisabled;
+        private static readonly bool IsDataGridKeyboardSortDisabled;
 
         #region Constructors
 

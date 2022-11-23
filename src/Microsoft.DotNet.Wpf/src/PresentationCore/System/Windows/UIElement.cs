@@ -1443,7 +1443,7 @@ namespace System.Windows
             {
                 DependencyObject parent = _parent;
 
-                if (parent is not UIElement and not UIElement3D)
+                if (!InputElement.IsUIElement(parent) && !InputElement.IsUIElement3D(parent))
                 {
                     Visual parentAsVisual = parent as Visual;
 
@@ -1490,7 +1490,7 @@ namespace System.Windows
             {
                 DependencyObject parent = oldParent;
 
-                if (parent is not UIElement and not UIElement3D)
+                if (!InputElement.IsUIElement(parent) && !InputElement.IsUIElement3D(parent))
                 {
                     // We are being unplugged from a non-UIElement visual. This
                     // means that our parent didn't play by the same rules we

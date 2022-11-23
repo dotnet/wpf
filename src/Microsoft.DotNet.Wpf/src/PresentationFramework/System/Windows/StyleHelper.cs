@@ -2327,15 +2327,15 @@ namespace System.Windows
                                     out FrameworkElement fe, out FrameworkContentElement fce,
                                     bool throwIfNeither)
         {
-            if (d is FrameworkElement frameworkElement)
+            if (FrameworkElement.DType.IsInstanceOfType(d))
             {
-                fe = frameworkElement;
+                fe = (FrameworkElement)d;
                 fce = null;
             }
-            else if (d is FrameworkContentElement frameworkContentElement)
+            else if (FrameworkContentElement.DType.IsInstanceOfType(d))
             {
                 fe = null;
-                fce = frameworkContentElement;
+                fce = (FrameworkContentElement)d;
             }
             else if (throwIfNeither && !(d is System.Windows.Media.Media3D.Visual3D) )
             {

@@ -153,7 +153,7 @@ namespace System.Windows.Controls.Primitives
         private static T ExtractTemplatePart<T>(string partName, DependencyObject obj) where T : DependencyObject
         {
             Debug.Assert(
-                obj == null || obj is T,
+                obj == null || typeof(T).IsInstanceOfType(obj),
                 string.Format(CultureInfo.InvariantCulture, SR.Get(SRID.DatePickerTextBox_TemplatePartIsOfIncorrectType), partName, typeof(T).Name));
             return obj as T;
         }

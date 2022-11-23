@@ -232,7 +232,7 @@ namespace System.Windows.Xps.Serialization
                                                                        propertyValue);
 
 
-                if (propertyValue is Type)
+                if (typeof(Type).IsInstanceOfType(propertyValue))
                 {
                     int index = valueAsString.LastIndexOf('.');
                     valueAsString = string.Concat(

@@ -942,17 +942,17 @@ namespace System.Windows.Controls
             DependencyObject sourceDO = source as DependencyObject;
             if (userInitiated && sourceDO != null)
             {
-                if (sourceDO is UIElement uiElement)
+                if (InputElement.IsUIElement(sourceDO))
                 {
-                    uiElement.RaiseEvent(args, userInitiated);
+                    ((UIElement)sourceDO).RaiseEvent(args, userInitiated);
                 }
-                else if (sourceDO is ContentElement contentElement)
+                else if (InputElement.IsContentElement(sourceDO))
                 {
-                    contentElement.RaiseEvent(args, userInitiated);
+                    ((ContentElement)sourceDO).RaiseEvent(args, userInitiated);
                 }
-                else if (sourceDO is UIElement3D uiElement3D)
+                else if (InputElement.IsUIElement3D(sourceDO))
                 {
-                    uiElement3D.RaiseEvent(args, userInitiated);
+                    ((UIElement3D)sourceDO).RaiseEvent(args, userInitiated);
                 }
                 else
                 {

@@ -530,52 +530,48 @@ namespace System.Windows.Input.StylusPointer
                 if (oldCapture != null)
                 {
                     o = oldCapture as DependencyObject;
-                    if (o is UIElement element)
+                    if (InputElement.IsUIElement(o))
                     {
+                        UIElement element = o as UIElement;
                         element.IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
                         element.IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
                         element.IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
                     }
-                    else if (o is ContentElement ce)
+                    else if (InputElement.IsContentElement(o))
                     {
                         // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
-                        ce.IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
-                    }
-                    else if (o is UIElement3D element3D)
-                    {
-                        element3D.IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
-                        element3D.IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
-                        element3D.IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
+                        ((ContentElement)o).IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, oldCapture.GetType())); 
+                        UIElement3D element = o as UIElement3D;
+                        element.IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
+                        element.IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
+                        element.IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
                     }
                 }
 
                 if (_stylusCapture != null)
                 {
                     o = _stylusCapture as DependencyObject;
-                    if (o is UIElement element)
+                    if (InputElement.IsUIElement(o))
                     {
+                        UIElement element = o as UIElement;
                         element.IsEnabledChanged += _captureIsEnabledChangedEventHandler;
                         element.IsVisibleChanged += _captureIsVisibleChangedEventHandler;
                         element.IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
                     }
-                    else if (o is ContentElement ce)
+                    else if (InputElement.IsContentElement(o))
                     {
                         // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
-                        ce.IsEnabledChanged += _captureIsEnabledChangedEventHandler;
-                    }
-                    else if (o is UIElement3D element3D)
-                    {
-                        element3D.IsEnabledChanged += _captureIsEnabledChangedEventHandler;
-                        element3D.IsVisibleChanged += _captureIsVisibleChangedEventHandler;
-                        element3D.IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
+                        ((ContentElement)o).IsEnabledChanged += _captureIsEnabledChangedEventHandler;
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, _stylusCapture.GetType())); 
+                        UIElement3D element = o as UIElement3D;
+                        element.IsEnabledChanged += _captureIsEnabledChangedEventHandler;
+                        element.IsVisibleChanged += _captureIsVisibleChangedEventHandler;
+                        element.IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
                     }
                 }
 
@@ -617,59 +613,55 @@ namespace System.Windows.Input.StylusPointer
                 if (oldOver != null)
                 {
                     o = oldOver as DependencyObject;
-                    if (o is UIElement element)
+                    if (InputElement.IsUIElement(o))
                     {
+                        UIElement element = o as UIElement;
                         element.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
                         element.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
                         element.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                     }
-                    else if (o is ContentElement ce)
+                    else if (InputElement.IsContentElement(o))
                     {
-                        ce.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                        ((ContentElement)o).IsEnabledChanged -= _overIsEnabledChangedEventHandler;
 
                         // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                         //
-                        // ce.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                        // ce.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
-                    }
-                    else if (o is UIElement3D element3D)
-                    {
-                        element3D.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
-                        element3D.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                        element3D.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                        // ((ContentElement)o).IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                        // ((ContentElement)o).IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, oldOver.GetType())); 
+                        UIElement3D element = o as UIElement3D;
+                        element.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                        element.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                        element.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                     }
                 }
                 if (_stylusOver != null)
                 {
                     o = _stylusOver as DependencyObject;
-                    if (o is UIElement element)
+                    if (InputElement.IsUIElement(o))
                     {
+                        UIElement element = o as UIElement;
                         element.IsEnabledChanged += _overIsEnabledChangedEventHandler;
                         element.IsVisibleChanged += _overIsVisibleChangedEventHandler;
                         element.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                     }
-                    else if (o is ContentElement ce)
+                    else if (InputElement.IsContentElement(o))
                     {
-                        ce.IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                        ((ContentElement)o).IsEnabledChanged += _overIsEnabledChangedEventHandler;
 
                         // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                         //
-                        // ce.IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                        // ce.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
-                    }
-                    else if (o is UIElement3D element3D)
-                    {
-                        element3D.IsEnabledChanged += _overIsEnabledChangedEventHandler;
-                        element3D.IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                        element3D.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                        // ((ContentElement)o).IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                        // ((ContentElement)o).IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, _stylusOver.GetType())); 
+                        UIElement3D element = o as UIElement3D;
+                        element.IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                        element.IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                        element.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                     }
                 }
 
@@ -791,21 +783,17 @@ namespace System.Windows.Input.StylusPointer
             // First, check things like IsEnabled, IsVisible, etc. on a
             // UIElement vs. ContentElement basis.
             //
-            if (dependencyObject is UIElement uie)
+            if (InputElement.IsUIElement(dependencyObject))
             {
-                killCapture = !ValidateUIElementForCapture(uie);
+                killCapture = !ValidateUIElementForCapture((UIElement)_stylusCapture);
             }
-            else if (dependencyObject is ContentElement ce)
+            else if (InputElement.IsContentElement(dependencyObject))
             {
-                killCapture = !ValidateContentElementForCapture(ce);
-            }
-            else if (dependencyObject is UIElement3D uie3D)
-            {
-                killCapture = !ValidateUIElement3DForCapture(uie3D);
+                killCapture = !ValidateContentElementForCapture((ContentElement)_stylusCapture);
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, _stylusCapture.GetType())); 
+                killCapture = !ValidateUIElement3DForCapture((UIElement3D)_stylusCapture);
             }
 
             //

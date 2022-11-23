@@ -25,42 +25,62 @@ namespace System.Windows.Input
 
         internal static bool IsValid(DependencyObject o)
         {
-            return o is UIElement or ContentElement or UIElement3D; 
+            return IsUIElement(o) || IsContentElement(o) || IsUIElement3D(o); 
 }
+
+        // Returns whether the given DynamicObject is a UIElement or not.
+        internal static bool IsUIElement(DependencyObject o)
+        {
+            return UIElementType.IsInstanceOfType(o);     
+        }
+
+        // Returns whether the given DynamicObject is a UIElement3D or not.
+        internal static bool IsUIElement3D(DependencyObject o)
+        {
+            return UIElement3DType.IsInstanceOfType(o);                       
+        }
+                
+        // Returns whether the given DynamicObject is a ContentElement or not.
+        internal static bool IsContentElement(DependencyObject o)
+        {
+            return ContentElementType.IsInstanceOfType(o);
+        }
 
         // Returns the containing input element of the given DynamicObject.
         // If onlyTraverse2D is set to true, then we stop once we see a 3D object and return null
         internal static DependencyObject GetContainingUIElement(DependencyObject o, bool onlyTraverse2D)
         {
             DependencyObject container = null;
+            Visual v;
+            Visual3D v3D;
 
             if(o != null)
             {
-                if(o is UIElement)
+                if(IsUIElement(o))
                 {
                     container = o;
                 }
-                else if (o is UIElement3D && !onlyTraverse2D)
+                else if (IsUIElement3D(o) && !onlyTraverse2D)
                 {
                     container = o;
                 } 
-                else if(o is ContentElement contentElement)
+                else if(IsContentElement(o))
                 {
-                    DependencyObject parent = ContentOperations.GetParent(contentElement);
+                    DependencyObject parent = ContentOperations.GetParent((ContentElement)o);
                     if(parent != null)
                     {
                         container = GetContainingUIElement(parent, onlyTraverse2D);
                     }
                     else
                     {
-                        parent = contentElement.GetUIParentCore();
+                        parent = ((ContentElement)o).GetUIParentCore();
                         if(parent != null)
                         {
                             container = GetContainingUIElement(parent, onlyTraverse2D);
                         }
                     }
                 }
-                else if (o is Visual v)
+                else if ((v = o as Visual) != null)
                 {
                     DependencyObject parent = VisualTreeHelper.GetParent(v);
                     if(parent != null)
@@ -68,7 +88,7 @@ namespace System.Windows.Input
                         container = GetContainingUIElement(parent, onlyTraverse2D);
                     }
                 }
-                else if (!onlyTraverse2D && o is Visual3D v3D)
+                else if (!onlyTraverse2D && (v3D = o as Visual3D) != null)
                 {
                     DependencyObject parent = VisualTreeHelper.GetParent(v3D);
                     if (parent != null)
@@ -93,22 +113,24 @@ namespace System.Windows.Input
         internal static IInputElement GetContainingInputElement(DependencyObject o, bool onlyTraverse2D)
         {
             IInputElement container = null;
+            Visual v;            
+            Visual3D v3D;
 
             if(o != null)
             {
-                if(o is UIElement uiElement)
+                if(IsUIElement(o))
                 {
-                    container = uiElement;
+                    container = (UIElement) o;
                 }
-                else if(o is ContentElement contentElement)
+                else if(IsContentElement(o))
                 {
-                    container = contentElement;
+                    container = (ContentElement) o;
                 }
-                else if (o is UIElement3D uIElement3D && !onlyTraverse2D)
+                else if (IsUIElement3D(o) && !onlyTraverse2D)
                 {
-                    container = uIElement3D;
+                    container = (UIElement3D)o;
                 }
-                else if(o is Visual v)
+                else if((v = o as Visual) != null)
                 {
                     DependencyObject parent = VisualTreeHelper.GetParent(v);
                     if(parent != null)
@@ -116,7 +138,7 @@ namespace System.Windows.Input
                         container = GetContainingInputElement(parent, onlyTraverse2D);
                     }
                 }
-                else if (!onlyTraverse2D && o is Visual3D v3D)
+                else if (!onlyTraverse2D && (v3D = o as Visual3D) != null)
                 {
                     DependencyObject parent = VisualTreeHelper.GetParent(v3D);
                     if (parent != null)
@@ -143,24 +165,24 @@ namespace System.Windows.Input
 
             if(o != null)
             {
-                if(o is UIElement uiElement)
+                if(IsUIElement(o))
                 {
-                    v = uiElement;
+                    v = (Visual)o;
                 }
-                else if (o is Visual3D visual3D)
+                else if (IsUIElement3D(o))
                 {
-                    v = visual3D;
+                    v = (Visual3D)o;
                 }
-                else if(o is ContentElement contentElement)
+                else if(IsContentElement(o))
                 {
-                    DependencyObject parent = ContentOperations.GetParent(contentElement);
+                    DependencyObject parent = ContentOperations.GetParent((ContentElement)o);
                     if(parent != null)
                     {
                         v = GetContainingVisual(parent);
                     }
                     else
                     {
-                        parent = contentElement.GetUIParentCore();
+                        parent = ((ContentElement)o).GetUIParentCore();
                         if(parent != null)
                         {
                             v = GetContainingVisual(parent);

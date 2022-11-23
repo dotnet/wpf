@@ -292,10 +292,12 @@ namespace System.Windows
             DependencyObject root = data.Root;
             RoutedEvent routedEvent = data.RoutedEvent;
             List<DependencyObject> eventRoute = data.EventRoute;
-
-            // If this is a FrameworkElement            
-            if (d is FrameworkElement fe)
+            
+            if (FrameworkElement.DType.IsInstanceOfType(d))
             {
+                // If this is a FrameworkElement
+                FrameworkElement fe = (FrameworkElement)d;
+
                 if (fe != root && routedEvent == FrameworkElement.LoadedEvent && fe.UnloadedPending != null)
                 {
                     // If there is a pending Unloaded event wait till we've broadcast 
@@ -420,22 +422,22 @@ namespace System.Windows
 
         private static bool SubtreeHasLoadedChangeHandlerHelper(DependencyObject d)
         {
-            if (d is FrameworkElement fe)
+            if (FrameworkElement.DType.IsInstanceOfType(d))
             {
-                return fe.SubtreeHasLoadedChangeHandler;
+                return ((FrameworkElement)d).SubtreeHasLoadedChangeHandler;
             }
-            else if (d is FrameworkContentElement fce)
+            else if (FrameworkContentElement.DType.IsInstanceOfType(d))
             {
-                return fce.SubtreeHasLoadedChangeHandler;
+                return ((FrameworkContentElement)d).SubtreeHasLoadedChangeHandler;
             }
             return false;
         }
 
         private static void FireLoadedOnDescendentsHelper(DependencyObject d)
         {
-            if (d is FrameworkElement fe)
+            if (FrameworkElement.DType.IsInstanceOfType(d))
             {
-                fe.FireLoadedOnDescendentsInternal();
+                ((FrameworkElement)d).FireLoadedOnDescendentsInternal();
             }
             else
             {
@@ -445,9 +447,9 @@ namespace System.Windows
 
         private static void FireUnloadedOnDescendentsHelper(DependencyObject d)
         {
-            if (d is FrameworkElement fe)
+            if (FrameworkElement.DType.IsInstanceOfType(d))
             {
-                fe.FireUnloadedOnDescendentsInternal();
+                ((FrameworkElement)d).FireUnloadedOnDescendentsInternal();
             }
             else
             {

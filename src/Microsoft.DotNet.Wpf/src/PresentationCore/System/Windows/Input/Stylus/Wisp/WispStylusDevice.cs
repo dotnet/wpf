@@ -418,59 +418,51 @@ namespace System.Windows.Input.StylusWisp
             if (oldOver != null)
             {
                 o = oldOver as DependencyObject;
-                if (o is UIElement uie)
+                if (InputElement.IsUIElement(o))
                 {
-                    uie.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
-                    uie.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                    uie.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                    ((UIElement)o).IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                    ((UIElement)o).IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                    ((UIElement)o).IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                 }
-                else if (o is ContentElement ce)
+                else if (InputElement.IsContentElement(o))
                 {
-                    ce.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                    ((ContentElement)o).IsEnabledChanged -= _overIsEnabledChangedEventHandler;
 
                     // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                     //
-                    // ce.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                    // ce.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
-                }
-                else if (o is UIElement3D uie3D)
-                {
-                    uie3D.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
-                    uie3D.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                    uie3D.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                    // ((ContentElement)o).IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                    // ((ContentElement)o).IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, oldOver.GetType())); 
+                    ((UIElement3D)o).IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                    ((UIElement3D)o).IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                    ((UIElement3D)o).IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                 }
             }
             if (_stylusOver != null)
             {
                 o = _stylusOver as DependencyObject;
-                if (o is UIElement uie)
+                if (InputElement.IsUIElement(o))
                 {
-                    uie.IsEnabledChanged += _overIsEnabledChangedEventHandler;
-                    uie.IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                    uie.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                    ((UIElement)o).IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                    ((UIElement)o).IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                    ((UIElement)o).IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                 }
-                else if (o is ContentElement ce)
+                else if (InputElement.IsContentElement(o))
                 {
-                    ce.IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                    ((ContentElement)o).IsEnabledChanged += _overIsEnabledChangedEventHandler;
 
                     // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                     //
-                    // ce.IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                    // ce.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
-                }
-                else if (o is UIElement3D uie3D)
-                {
-                    uie3D.IsEnabledChanged += _overIsEnabledChangedEventHandler;
-                    uie3D.IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                    uie3D.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                    // ((ContentElement)o).IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                    // ((ContentElement)o).IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, _stylusOver.GetType())); 
+                    ((UIElement3D)o).IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                    ((UIElement3D)o).IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                    ((UIElement3D)o).IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                 }
             }
 

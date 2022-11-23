@@ -297,18 +297,21 @@ namespace MS.Internal
 
         internal static void RaiseAutomationEvents()
         {
-            if (InputManager.ListeningElement is UIElement e)
+            if (InputElement.IsUIElement(InputManager.ListeningElement))
             {
+                UIElement e = (UIElement)InputManager.ListeningElement;
                 //Raise InputDiscarded automation event
                 SynchronizedInputHelper.RaiseAutomationEvent(e.GetAutomationPeer());
             }
-            else if (InputManager.ListeningElement is ContentElement ce)
+            else if (InputElement.IsContentElement(InputManager.ListeningElement))
             {
+                ContentElement ce = (ContentElement)InputManager.ListeningElement;
                 //Raise InputDiscarded automation event
                 SynchronizedInputHelper.RaiseAutomationEvent(ce.GetAutomationPeer());
             }
-            else if (InputManager.ListeningElement is UIElement3D e3D)
+            else if (InputElement.IsUIElement3D(InputManager.ListeningElement))
             {
+                UIElement3D e3D = (UIElement3D)InputManager.ListeningElement;
                 //Raise InputDiscarded automation event
                 SynchronizedInputHelper.RaiseAutomationEvent(e3D.GetAutomationPeer());
             }

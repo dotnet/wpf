@@ -2233,10 +2233,8 @@ namespace System.Windows
                                 {
                                     //let incrementally-updating FrameworkElements to mark the vicinity of the affected child
                                     //to perform partial update.
-                                    if(layoutParent is FrameworkElement fe)
-                                    {
-                                        fe.ParentLayoutInvalidated(this);
-                                    }
+                                    if(FrameworkElement.DType.IsInstanceOfType(layoutParent))
+                                        ((FrameworkElement)layoutParent).ParentLayoutInvalidated(this);
 
                                     if (affectsParentMeasure)
                                     {

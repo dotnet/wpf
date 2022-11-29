@@ -1,4 +1,4 @@
-﻿{
+{
   "author": "Microsoft",
   "name": "Knihovna uživatelských ovládacích prvků WPF",
   "description": "Projekt pro vytvoření knihovny uživatelských ovládacích prvků pro aplikace WPF .NET",
@@ -9,6 +9,7 @@
   "symbols/Framework/choices/net5.0/description": "Cílit na net5.0",
   "symbols/Framework/choices/net6.0/description": "Cílit na net6.0",
   "symbols/Framework/choices/net7.0/description": "Cílový net7.0",
+  "symbols/Framework/choices/net8.0/description": "Target net8.0",
   "symbols/langVersion/description": "Nastaví langVersion ve vytvořeném souboru projektu.",
   "symbols/skipRestore/description": "Pokud se tato možnost zadá, přeskočí automatické obnovení projektu při vytvoření.",
   "postActions/restore/description": "Obnoví balíčky NuGet vyžadované tímto projektem.",

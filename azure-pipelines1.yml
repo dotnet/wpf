@@ -73,28 +73,6 @@ stages:
         # runAsPublic is used in expressions, which can't read from user-defined variables
         runAsPublic: false
 
-- ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-  - template: eng\common\templates\post-build\post-build.yml
-    parameters:
-      publishingInfraVersion: 3
-      enableSymbolValidation: false
-      enableSigningValidation: false
-      enableNugetValidation: false
-      enableSourceLinkValidation: false
-      # This is to enable SDL runs part of Post-Build Validation Stage
-      SDLValidationParameters:
-        enable: false
-        params: ' -SourceToolsList @("policheck","credscan")
-        -TsaInstanceURL $(_TsaInstanceURL)
-        -TsaProjectName $(_TsaProjectName)
-        -TsaNotificationEmail $(_TsaNotificationEmail)
-        -TsaCodebaseAdmin $(_TsaCodebaseAdmin)
-        -TsaBugAreaPath $(_TsaBugAreaPath)
-        -TsaIterationPath $(_TsaIterationPath)
-        -TsaRepositoryName "wpf"
-        -TsaCodebaseName "wpf"
-        -TsaPublish $True'
-
 - stage: DrtTesting
   displayName: DrtTesting
   jobs:

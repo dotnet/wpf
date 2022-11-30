@@ -569,7 +569,7 @@ namespace MS.Internal.TextFormatting
                     if(context.Owner == null)
                         break;
                 }
-                else if (ploc == context.Ploc.Value)
+                else if (ploc == context.Ploc)
                 {
                     // LS requires that we use the exact same context for line
                     // destruction or hittesting (part of the reason is that LS

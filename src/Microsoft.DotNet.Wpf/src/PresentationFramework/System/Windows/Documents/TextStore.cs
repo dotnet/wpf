@@ -2822,13 +2822,13 @@ namespace System.Windows.Documents
                     case AttributeStyle.InputScope:
                         object obj = new InputScopeAttribute(inputScope);
                         attrval.val.vt = (short)NativeMethods.tagVT.VT_UNKNOWN;
-                        attrval.val.data1.Value = Marshal.GetIUnknownForObject(obj);
+                        attrval.val.data1 = Marshal.GetIUnknownForObject(obj);
                         break;
 
                     case AttributeStyle.Font_Style_Height:
                         // We always evaluate the font size and returns a value.
                         attrval.val.vt = (short)NativeMethods.tagVT.VT_I4;
-                        attrval.val.data1.Value = (IntPtr)(int)fontSize;
+                        attrval.val.data1 = (IntPtr)(int)fontSize;
                         break;
 
                     case AttributeStyle.Font_FaceName:
@@ -2837,24 +2837,24 @@ namespace System.Windows.Documents
                             if (familyName != null)
                             {
                                 attrval.val.vt = (short)NativeMethods.tagVT.VT_BSTR;
-                                attrval.val.data1.Value = Marshal.StringToBSTR(familyName);
+                                attrval.val.data1 = Marshal.StringToBSTR(familyName);
                             }
                         }
                         break;
 
                     case AttributeStyle.Font_SizePts:
                         attrval.val.vt = (short)NativeMethods.tagVT.VT_I4;
-                        attrval.val.data1.Value = (IntPtr)(int)(fontSize / 96.0 * 72.0);
+                        attrval.val.data1 = (IntPtr)(int)(fontSize / 96.0 * 72.0);
                         break;
 
                     case AttributeStyle.Text_ReadOnly:
                         attrval.val.vt = (short)NativeMethods.tagVT.VT_BOOL;
-                        attrval.val.data1.Value = IsReadOnly ? (IntPtr)1 : (IntPtr)0;
+                        attrval.val.data1 = IsReadOnly ? (IntPtr)1 : (IntPtr)0;
                         break;
 
                     case AttributeStyle.Text_Orientation:
                         attrval.val.vt = (short)NativeMethods.tagVT.VT_I4;
-                        attrval.val.data1.Value = (IntPtr)0;
+                        attrval.val.data1 = (IntPtr)0;
 
                         // Get the transformation that is relative from source.
                         PresentationSource source = null;
@@ -2889,7 +2889,7 @@ namespace System.Windows.Documents
                                         else
                                             angle = 360 - angleCos;
 
-                                        attrval.val.data1.Value = (IntPtr)((int)angle * 10);
+                                        attrval.val.data1 = (IntPtr)((int)angle * 10);
                                     }
                                 }
                             }
@@ -2901,7 +2901,7 @@ namespace System.Windows.Documents
                         //     the vertical writing is not supported yet
                         //
                         attrval.val.vt = (short)NativeMethods.tagVT.VT_BOOL;
-                        attrval.val.data1.Value = (IntPtr)0;
+                        attrval.val.data1 = (IntPtr)0;
                         break;
                 }
 

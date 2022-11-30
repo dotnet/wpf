@@ -450,12 +450,12 @@ namespace Microsoft.Win32
             get
             {
                 // Avoid returning a null string - return String.Empty instead.
-                return _initialDirectory.Value == null ? String.Empty : _initialDirectory.Value;
+                return _initialDirectory == null ? String.Empty : _initialDirectory;
             }
             set
             {
 
-                _initialDirectory.Value = value;
+                _initialDirectory = value;
             }
         }
 
@@ -489,12 +489,12 @@ namespace Microsoft.Win32
             get
             {
                 // Avoid returning a null string - return String.Empty instead.
-                return _title.Value == null ? String.Empty : _title.Value;
+                return _title == null ? String.Empty : _title;
             }
             set
             {
 
-                _title.Value = value;
+                _title = value;
             }
         }
 
@@ -907,12 +907,12 @@ namespace Microsoft.Win32
                 // A relatively complex algorithm is used to determine which directory is
                 // actually used as the initial directory - for details, see MSDN for the
                 // OPENFILENAME structure.
-                ofn.lpstrInitialDir = _initialDirectory.Value;
+                ofn.lpstrInitialDir = _initialDirectory;
 
                 // lpstrTitle
                 // Pointer to a string to be placed in the title bar of the dialog box.
                 // NULL causes the title bar to display the operating system default string.
-                ofn.lpstrTitle = _title.Value;
+                ofn.lpstrTitle = _title;
 
                 // Flags
                 // A set of bit flags you can use to initialize the dialog box.
@@ -985,7 +985,7 @@ namespace Microsoft.Win32
         /// </summary>
         internal bool GetOption(int option)
         {
-            return (_dialogOptions.Value & option) != 0;
+            return (_dialogOptions & option) != 0;
         }
 
         /// <summary>
@@ -996,13 +996,13 @@ namespace Microsoft.Win32
             if (value)
             {
                 // if value is true, bitwise OR the option with _dialogOptions
-                _dialogOptions.Value |= option;
+                _dialogOptions |= option;
             }
             else
             {
                 // if value is false, AND the bitwise complement of the 
                 // option with _dialogOptions
-                _dialogOptions.Value &= ~option;
+                _dialogOptions &= ~option;
             }
         }
 
@@ -1171,7 +1171,7 @@ namespace Microsoft.Win32
             //
             // We only assign brand new string arrays to _FileNames, so it's OK
             // to back up by reference here.
-            int saveOptions = _dialogOptions.Value;
+            int saveOptions = _dialogOptions;
             int saveFilterIndex = _filterIndex;
             string[] saveFileNames = _fileNames;
 
@@ -1184,7 +1184,7 @@ namespace Microsoft.Win32
                 // Replace the ReadOnly flag in DialogOptions with the ReadOnly flag
                 // from the OPENFILEDIALOG structure - that is, store the user's
                 // choice from the Read Only checkbox so our property is up to date.
-                _dialogOptions.Value = _dialogOptions.Value & ~NativeMethods.OFN_READONLY |
+                _dialogOptions = _dialogOptions & ~NativeMethods.OFN_READONLY |
                                  ofn.Flags & NativeMethods.OFN_READONLY;
 
                 // Similarly, update the filterIndex to reflect the selected filter.
@@ -1233,7 +1233,7 @@ namespace Microsoft.Win32
                 // if the result was not ok=true.
                 if (!ok)
                 {
-                    _dialogOptions.Value = saveOptions;
+                    _dialogOptions = saveOptions;
                     _filterIndex = saveFilterIndex;
                     _fileNames = saveFileNames;
                 }
@@ -1322,7 +1322,7 @@ namespace Microsoft.Win32
             // 
             // Initialize Options Flags
             // 
-            _dialogOptions.Value = 0;   // _dialogOptions is an int containing a set of
+            _dialogOptions = 0;   // _dialogOptions is an int containing a set of
                                         // bit flags used to initialize the dialog box.
                                         // It is placed directly into the OPENFILEDIALOG
                                         // struct used to instantiate the file dialog box.
@@ -1353,8 +1353,8 @@ namespace Microsoft.Win32
             //
             // Initialize additional properties
             // 
-            _title.Value = null;
-            _initialDirectory.Value = null;
+            _title = null;
+            _initialDirectory = null;
             _defaultExtension = null;
             _fileNames = null;
             _filter = null;
@@ -1681,7 +1681,7 @@ namespace Microsoft.Win32
         {
             get
             {
-                return _dialogOptions.Value & (NativeMethods.OFN_READONLY | NativeMethods.OFN_HIDEREADONLY |
+                return _dialogOptions & (NativeMethods.OFN_READONLY | NativeMethods.OFN_HIDEREADONLY |
                                   NativeMethods.OFN_NOCHANGEDIR | NativeMethods.OFN_NOVALIDATE |
                                   NativeMethods.OFN_ALLOWMULTISELECT | NativeMethods.OFN_PATHMUSTEXIST |
                                   NativeMethods.OFN_NODEREFERENCELINKS);
@@ -1852,7 +1852,7 @@ namespace Microsoft.Win32
             UnsafeNativeMethods.IOleWindow oleWindow = (UnsafeNativeMethods.IOleWindow)dialog;
             oleWindow.GetWindow(out _hwndFileDialog);
 
-            int saveOptions = _dialogOptions.Value;
+            int saveOptions = _dialogOptions;
             int saveFilterIndex = _filterIndex;
             string[] saveFileNames = _fileNames;
             bool ok = false;
@@ -1874,7 +1874,7 @@ namespace Microsoft.Win32
                 if (!ok)
                 {
                     _fileNames = saveFileNames;
-                    _dialogOptions.Value = saveOptions;
+                    _dialogOptions = saveOptions;
                     _filterIndex = saveFilterIndex;
                 }
                 else
@@ -1883,7 +1883,7 @@ namespace Microsoft.Win32
                     {
                         // When the dialog is dismissed OK, the Readonly bit can't be left on if ShowReadOnly was false
                         // Downlevel this happens automatically.  On Vista we need to watch out for it.
-                        _dialogOptions.Value &= ~NativeMethods.OFN_READONLY;
+                        _dialogOptions &= ~NativeMethods.OFN_READONLY;
                     }
                 }
             }
@@ -1936,7 +1936,7 @@ namespace Microsoft.Win32
 
         // _dialogOptions is a set of bit flags used to control the behavior
         // of the Win32 dialog box.
-        private SecurityCriticalDataForSet<int> _dialogOptions;
+        private int _dialogOptions;
 
         // These two flags are related to a fix for an issue where Windows
         // sends two FileOK notifications back to back after a sharing
@@ -1946,8 +1946,8 @@ namespace Microsoft.Win32
 
         // These private variables store data for the various public properties
         // that control the appearance of the file dialog box.
-        private SecurityCriticalDataForSet<string> _title;                  // Title bar of the message box
-        private SecurityCriticalDataForSet<string> _initialDirectory;       // Starting directory
+        private string _title;                  // Title bar of the message box
+        private string _initialDirectory;       // Starting directory
         private string _defaultExtension;       // Extension appended first if AddExtension
                                                 // is enabled
         private string _filter;                 // The file extension filters that display

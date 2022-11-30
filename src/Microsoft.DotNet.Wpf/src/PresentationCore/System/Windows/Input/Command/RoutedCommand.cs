@@ -451,17 +451,17 @@ namespace System.Windows.Input
         {
             if (value)
             {
-                _flags.Value |= bit;
+                _flags |= bit;
             }
             else
             {
-                _flags.Value &= ~bit;
+                _flags &= ~bit;
             }
         }
 
         private bool ReadPrivateFlag(PrivateFlags bit)
         {
-            return (_flags.Value & bit) != 0;
+            return (_flags & bit) != 0;
         }
 
         #endregion PrivateMethods
@@ -470,7 +470,7 @@ namespace System.Windows.Input
 
         private string _name;
 
-        private MS.Internal.SecurityCriticalDataForSet<PrivateFlags> _flags;
+        private PrivateFlags _flags;
 
         private enum PrivateFlags : byte
         {

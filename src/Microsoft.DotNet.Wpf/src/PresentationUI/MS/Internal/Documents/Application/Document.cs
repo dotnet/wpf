@@ -221,7 +221,7 @@ internal abstract class Document : IChainOfDependenciesNode<Document>, IDisposab
 #if DEBUG
             ThrowIfDisposed();
 #endif
-            return ChainOfDependencies<Document>.GetLast(this)._isDestinationIdenticalToSource.Value;
+            return ChainOfDependencies<Document>.GetLast(this)._isDestinationIdenticalToSource;
         }
 
         set
@@ -229,7 +229,7 @@ internal abstract class Document : IChainOfDependenciesNode<Document>, IDisposab
 #if DEBUG
             ThrowIfDisposed();
 #endif
-            ChainOfDependencies<Document>.GetLast(this)._isDestinationIdenticalToSource.Value = value;
+            ChainOfDependencies<Document>.GetLast(this)._isDestinationIdenticalToSource = value;
         }
     }
 
@@ -285,7 +285,7 @@ internal abstract class Document : IChainOfDependenciesNode<Document>, IDisposab
 #if DEBUG
             ThrowIfDisposed();
 #endif
-            return ChainOfDependencies<Document>.GetLast(this)._uri.Value;
+            return ChainOfDependencies<Document>.GetLast(this)._uri;
         }
 
         set
@@ -293,7 +293,7 @@ internal abstract class Document : IChainOfDependenciesNode<Document>, IDisposab
 #if DEBUG
             ThrowIfDisposed();
 #endif
-            ChainOfDependencies<Document>.GetLast(this)._uri = new SecurityCriticalData<Uri>(value);
+            ChainOfDependencies<Document>.GetLast(this)._uri = value;
         }
     }
 
@@ -337,11 +337,11 @@ internal abstract class Document : IChainOfDependenciesNode<Document>, IDisposab
     // Private Fields
     //--------------------------------------------------------------------------
 
-    private SecurityCriticalData<Uri> _uri;
+    private Uri _uri;
 
     private bool _isCopySafe = true;
 
-    private SecurityCriticalDataForSet<bool> _isDestinationIdenticalToSource;
+    private bool _isDestinationIdenticalToSource;
     private bool _isRebindNeeded;
     private bool _isReloadNeeded;
 

@@ -35,7 +35,7 @@ namespace MS.Internal.Documents
         /// <param name="permission">The permission to add.</param>
         internal void AddPermission(RightsManagementPermissions permission)
         {
-            _userRights.Value |= permission;
+            _userRights |= permission;
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace MS.Internal.Documents
         /// <returns>Whether or not the license grants the permission</returns>
         internal bool HasPermission(RightsManagementPermissions permission)
         {
-            return (((_userRights.Value & permission) == permission) && IsLicenseValid);
+            return (((_userRights & permission) == permission) && IsLicenseValid);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace MS.Internal.Documents
         /// <returns>The permissions granted, converted to a policy</returns>
         internal RightsManagementPolicy ConvertToPolicy()
         {
-            return (RightsManagementPolicy)(_userRights.Value);
+            return (RightsManagementPolicy)(_userRights);
         }
 
         #endregion Internal Methods
@@ -94,9 +94,9 @@ namespace MS.Internal.Documents
         /// </summary>
         internal DateTime ValidFrom
         {
-            get { return _validFrom.Value; }
+            get { return _validFrom; }
 
-            set { _validFrom.Value = value; }
+            set { _validFrom = value; }
         }
 
         /// <summary>
@@ -105,9 +105,9 @@ namespace MS.Internal.Documents
         /// </summary>
         internal DateTime ValidUntil
         {
-            get { return _validUntil.Value; }
+            get { return _validUntil; }
 
-            set { _validUntil.Value = value; }
+            set { _validUntil = value; }
         }
 
         /// <summary>
@@ -115,9 +115,9 @@ namespace MS.Internal.Documents
         /// </summary>
         internal RightsManagementUser LicensedUser
         {
-            get { return _user.Value; }
+            get { return _user; }
 
-            set { _user.Value = value; }
+            set { _user = value; }
         }
 
         /// <summary>
@@ -125,9 +125,9 @@ namespace MS.Internal.Documents
         /// </summary>
         internal RightsManagementPermissions LicensePermissions
         {
-            get { return _userRights.Value; }
+            get { return _userRights; }
 
-            set { _userRights.Value = value; }
+            set { _userRights = value; }
         }
 
         /// <summary>
@@ -160,10 +160,10 @@ namespace MS.Internal.Documents
         // Private Fields
         //------------------------------------------------------
 
-        private SecurityCriticalDataForSet<DateTime> _validFrom;
-        private SecurityCriticalDataForSet<DateTime> _validUntil;
-        private SecurityCriticalDataForSet<RightsManagementUser> _user;
-        private SecurityCriticalDataForSet<RightsManagementPermissions> _userRights;
+        private DateTime _validFrom;
+        private DateTime _validUntil;
+        private RightsManagementUser _user;
+        private RightsManagementPermissions _userRights;
 
         /// <summary>
         /// The name of the person to contact for more rights.

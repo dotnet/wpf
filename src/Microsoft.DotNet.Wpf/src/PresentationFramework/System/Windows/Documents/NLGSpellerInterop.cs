@@ -606,7 +606,7 @@ namespace System.Windows.Documents
                         // Convert the VARIANT to string, and add it to our list.
                         // There's some special magic here.  The VARIANT is VT_UI2/ByRef.
                         // But under the hood it's really a raw WCHAR *.
-                        suggestions.Add(Marshal.PtrToStringUni(variant.data1.Value));
+                        suggestions.Add(Marshal.PtrToStringUni(variant.data1));
                     }
                 }
                 finally

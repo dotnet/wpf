@@ -282,13 +282,13 @@ namespace MS.Internal.PtsHost
         /// When page is created, add it to the list.
         /// </summary>
         /// <param name="ptsPage">PTS Page object that was just created.</param>
-        internal void OnPageCreated(SecurityCriticalDataForSet<IntPtr> ptsPage)
+        internal void OnPageCreated(IntPtr ptsPage)
         {
-            Invariant.Assert(ptsPage.Value != IntPtr.Zero, "Invalid page object.");
+            Invariant.Assert(ptsPage != IntPtr.Zero, "Invalid page object.");
             Invariant.Assert(!this.Disposed, "PtsContext is already disposed.");
-            Invariant.Assert(!_pages.Contains(ptsPage.Value), "Page already exists.");
+            Invariant.Assert(!_pages.Contains(ptsPage), "Page already exists.");
 
-            _pages.Add(ptsPage.Value);
+            _pages.Add(ptsPage);
         }
 
         /// <summary>
@@ -297,9 +297,9 @@ namespace MS.Internal.PtsHost
         /// <param name="ptsPage">Pointer to PTS Page object that should be destroyed.</param>
         /// <param name="disposing">Whether dispose is caused by explicit call to Dispose.</param>
         /// <param name="enterContext">Whether needs to enter PtsContext or not (during layout it is not needed).</param>
-        internal void OnPageDisposed(SecurityCriticalDataForSet<IntPtr> ptsPage, bool disposing, bool enterContext)
+        internal void OnPageDisposed(IntPtr ptsPage, bool disposing, bool enterContext)
         {
-            Invariant.Assert(ptsPage.Value != IntPtr.Zero, "Invalid page object.");
+            Invariant.Assert(ptsPage != IntPtr.Zero, "Invalid page object.");
 
             // If explicitly disposing (not called during finalization), synchronously
             // destroy the page.
@@ -323,13 +323,13 @@ namespace MS.Internal.PtsHost
         /// When PageBreakRecord is created, add it to the list.
         /// </summary>
         /// <param name="br">PTS Page BR object that was just created.</param>
-        internal void OnPageBreakRecordCreated(SecurityCriticalDataForSet<IntPtr> br)
+        internal void OnPageBreakRecordCreated(IntPtr br)
         {
-            Invariant.Assert(br.Value != IntPtr.Zero, "Invalid break record object.");
+            Invariant.Assert(br != IntPtr.Zero, "Invalid break record object.");
             Invariant.Assert(!this.Disposed, "PtsContext is already disposed.");
-            Invariant.Assert(!_pageBreakRecords.Contains(br.Value), "Break record already exists.");
+            Invariant.Assert(!_pageBreakRecords.Contains(br), "Break record already exists.");
 
-            _pageBreakRecords.Add(br.Value);
+            _pageBreakRecords.Add(br);
         }
 
         /// <summary>
@@ -337,9 +337,9 @@ namespace MS.Internal.PtsHost
         /// </summary>
         /// <param name="br">Pointer to PTS Page BR object that should be destroyed.</param>
         /// <param name="disposing">Whether dispose is caused by explicit call to Dispose.</param>
-        internal void OnPageBreakRecordDisposed(SecurityCriticalDataForSet<IntPtr> br, bool disposing)
+        internal void OnPageBreakRecordDisposed(IntPtr br, bool disposing)
         {
-            Invariant.Assert(br.Value != IntPtr.Zero, "Invalid break record object.");
+            Invariant.Assert(br != IntPtr.Zero, "Invalid break record object.");
 
             // If explicitly disposing (not called during finalization), synchronously
             // destroy the page break record.
@@ -462,7 +462,7 @@ namespace MS.Internal.PtsHost
         /// <param name="args">Pointer to PTS Page object that should be destroyed.</param>
         private object OnDestroyPage(object args)
         {
-            SecurityCriticalDataForSet<IntPtr> ptsPage = (SecurityCriticalDataForSet<IntPtr>)args;
+            IntPtr ptsPage = (IntPtr)args;
             OnDestroyPage(ptsPage, true);
             return null;
         }
@@ -472,16 +472,16 @@ namespace MS.Internal.PtsHost
         /// </summary>
         /// <param name="ptsPage">Pointer to PTS Page object that should be destroyed.</param>
         /// <param name="enterContext">Whether needs to enter PTS Context.</param>
-        private void OnDestroyPage(SecurityCriticalDataForSet<IntPtr> ptsPage, bool enterContext)
+        private void OnDestroyPage(IntPtr ptsPage, bool enterContext)
         {
-            Invariant.Assert(ptsPage.Value != IntPtr.Zero, "Invalid page object.");
+            Invariant.Assert(ptsPage != IntPtr.Zero, "Invalid page object.");
 
             // Dispatcher may invoke this operation when PtsContext is already explicitly
             // disposed.
             if (!this.Disposed)
             {
                 Invariant.Assert(_pages != null, "Collection of pages does not exist.");
-                Invariant.Assert(_pages.Contains(ptsPage.Value), "Page does not exist.");
+                Invariant.Assert(_pages.Contains(ptsPage), "Page does not exist.");
 
                 // Destroy given page.
                 // It is necessary to enter PTS Context when executing any PTS methods.
@@ -491,7 +491,7 @@ namespace MS.Internal.PtsHost
                     {
                         Enter();
                     }
-                    PTS.Validate(PTS.FsDestroyPage(_ptsHost.Context, ptsPage.Value));
+                    PTS.Validate(PTS.FsDestroyPage(_ptsHost.Context, ptsPage));
                 }
                 finally
                 {
@@ -499,7 +499,7 @@ namespace MS.Internal.PtsHost
                     {
                         Leave();
                     }
-                    _pages.Remove(ptsPage.Value);
+                    _pages.Remove(ptsPage);
                 }
             }
         }
@@ -510,27 +510,27 @@ namespace MS.Internal.PtsHost
         /// <param name="args">Pointer to PTS Page BreakRecord object that should be destroyed.</param>
         private object OnDestroyBreakRecord(object args)
         {
-            SecurityCriticalDataForSet<IntPtr> br = (SecurityCriticalDataForSet<IntPtr>)args;
-            Invariant.Assert(br.Value != IntPtr.Zero, "Invalid break record object.");
+            IntPtr br = (IntPtr)args;
+            Invariant.Assert(br != IntPtr.Zero, "Invalid break record object.");
 
             // Dispatcher may invoke this operation when PtsContext is already explicitly
             // disposed.
             if (!this.Disposed)
             {
                 Invariant.Assert(_pageBreakRecords != null, "Collection of break records does not exist.");
-                Invariant.Assert(_pageBreakRecords.Contains(br.Value), "Break record does not exist.");
+                Invariant.Assert(_pageBreakRecords.Contains(br), "Break record does not exist.");
 
                 // Destroy given page break record.
                 // It is necessary to enter PTS Context when executing any PTS methods.
                 try
                 {
                     Enter();
-                    PTS.Validate(PTS.FsDestroyPageBreakRecord(_ptsHost.Context, br.Value));
+                    PTS.Validate(PTS.FsDestroyPageBreakRecord(_ptsHost.Context, br));
                 }
                 finally
                 {
                     Leave();
-                    _pageBreakRecords.Remove(br.Value);
+                    _pageBreakRecords.Remove(br);
                 }
             }
             return null;

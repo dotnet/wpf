@@ -103,7 +103,7 @@ namespace System.Windows.Interop
             }
             #pragma warning restore 0618
 
-            _clsid.Value = clsid;
+            _clsid = clsid;
 
             // hookup so we are notified when loading is finished.
             Initialized += new EventHandler(OnInitialized);
@@ -570,7 +570,7 @@ namespace System.Windows.Interop
                 // First, create the ActiveX control
                 Debug.Assert(_axInstance == null, "_axInstance must be null");
 
-                _axInstance = CreateActiveXObject(_clsid.Value);
+                _axInstance = CreateActiveXObject(_clsid);
                 Debug.Assert(_axInstance != null, "w/o an exception being thrown we must have an object...");
 
                 //
@@ -1051,7 +1051,7 @@ namespace System.Windows.Interop
 
         #region ActiveX Related
 
-        private SecurityCriticalDataForSet<Guid>    _clsid;
+        private Guid                        _clsid;
 
         private HandleRef                   _axWindow;
         private BitVector32                 _axHostState    = new BitVector32();

@@ -34,7 +34,7 @@ namespace MS.Internal.AppModel
 
         internal BamlStream(Stream stream, Assembly assembly)
         {
-            _assembly.Value = assembly;
+            _assembly = assembly;
             _stream = stream;
         }
         #endregion
@@ -52,7 +52,7 @@ namespace MS.Internal.AppModel
         //
         Assembly IStreamInfo.Assembly
         {
-            get { return _assembly.Value; }
+            get { return _assembly; }
         }
 
         #endregion
@@ -273,7 +273,7 @@ namespace MS.Internal.AppModel
 
         #region Private Members
 
-        private SecurityCriticalDataForSet<Assembly> _assembly;
+        private Assembly _assembly;
         private Stream _stream = null;
 
         #endregion Private Members

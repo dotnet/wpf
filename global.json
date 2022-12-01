@@ -1,6 +1,6 @@
 {
   "tools": {
-    "dotnet": "8.0.100-alpha.1.22512.5",
+    "dotnet": "8.0.100-alpha.1.22601.6",
     "runtimes": {
       "dotnet": [
         "2.1.7",

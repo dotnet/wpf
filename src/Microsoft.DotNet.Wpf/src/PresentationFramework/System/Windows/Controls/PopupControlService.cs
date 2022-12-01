@@ -468,10 +468,22 @@ namespace System.Windows.Controls
                 }
 
                 _currentToolTip.SetValue(OwnerProperty, o);
-                _currentToolTip.Opened += OnToolTipOpened;
                 _currentToolTip.Closed += OnToolTipClosed;
                 _currentToolTip.FromKeyboard = fromKeyboard;
                 _currentToolTip.IsOpen = true;
+
+                if (!_currentToolTip.IsOpen)
+                {
+                    // open the tooltip, and finish the initialization when its popup window is available.
+                    _currentToolTip.Opened += OnToolTipOpened;
+                    _currentToolTip.IsOpen = true;
+                }
+                else
+                {
+                    // If the tooltip is already open, initialize it now. This only happens when the
+                    // app manages the tooltip directly.
+                    SetSafeArea(_currentToolTip);
+                }
 
                 CurrentToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal);
                 CurrentToolTipTimer.Interval = TimeSpan.FromMilliseconds(ToolTipService.GetShowDuration(o));
@@ -632,6 +644,7 @@ namespace System.Windows.Controls
             {
                 tooltip.ClearValue(OwnerProperty);
                 tooltip.FromKeyboard = false;
+                tooltip.Closed -= OnToolTipClosed;
 
                 if ((bool)tooltip.GetValue(ServiceOwnedProperty))
                 {
@@ -727,8 +740,27 @@ namespace System.Windows.Controls
         private void OnToolTipClosed(object sender, EventArgs e)
         {
             ToolTip toolTip = (ToolTip)sender;
-            toolTip.Closed -= OnToolTipClosed;
-            ClearServiceProperties(toolTip);
+            if (toolTip != CurrentToolTip)
+            {
+                // if we manage the tooltip (the normal case), the current tooltip closes via
+                //  1. DismissCurrentToolTip sets _currentToolTip=null and calls CloseToolTip
+                //  2. CloseToolTip sets toolTip.IsOpen=false, and returns
+                //  3. Asynchronously, the tooltip raises the Closed event (after popup animations have run)
+                //  4. our event handler OnToolTipClosed gets here
+                // It's now time to do the final cleanup, which includes removing this event handler.
+                ClearServiceProperties(toolTip);
+            }
+            else
+            {
+                // we get here if the app closes the current tooltip or its popup directly.
+                // Do nothing (i.e. ignore the event).  This leaves the service properties in place -
+                // eventually DismissCurrentToolTip will call CloseToolTip, which needs them
+                // (in particular the Owner property).  When that happens, either
+                //  a. tooltip.IsOpen==false.  CloseToolTip clears the service properties immediately.
+                //  b. tooltip.IsOpen==true.  (This can happen if the app re-opens the tooltip directly.)
+                //      CloseToolTip proceeds as in step 2 of the normal case.
+                // Either way, the final cleanup happens.
+            }
         }
 
         // The previous tooltip hasn't closed and we are trying to open a new one

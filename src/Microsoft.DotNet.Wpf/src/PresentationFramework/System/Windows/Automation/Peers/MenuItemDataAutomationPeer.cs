@@ -75,8 +75,7 @@ namespace System.Windows.Automation.Peers
             MenuItemAutomationPeer wrapperPeer = GetWrapperPeer() as MenuItemAutomationPeer;
             if (wrapperPeer != null)
             {
-                IExpandCollapseProvider expandCollapseProvider = wrapperPeer as IExpandCollapseProvider;
-                expandCollapseProvider.Expand();
+                ((IExpandCollapseProvider)wrapperPeer).Expand();
             }
             ThrowElementNotAvailableException();
         }
@@ -86,8 +85,7 @@ namespace System.Windows.Automation.Peers
             MenuItemAutomationPeer wrapperPeer = GetWrapperPeer() as MenuItemAutomationPeer;
             if (wrapperPeer != null)
             {
-                IExpandCollapseProvider expandCollapseProvider = wrapperPeer as IExpandCollapseProvider;
-                expandCollapseProvider.Collapse();
+                ((IExpandCollapseProvider)wrapperPeer).Collapse();
             }
             ThrowElementNotAvailableException();
         }
@@ -99,8 +97,7 @@ namespace System.Windows.Automation.Peers
                 MenuItemAutomationPeer wrapperPeer = GetWrapperPeer() as MenuItemAutomationPeer;
                 if (wrapperPeer != null)
                 {
-                    IExpandCollapseProvider expandCollapseProvider = wrapperPeer as IExpandCollapseProvider;
-                    return expandCollapseProvider.ExpandCollapseState;
+                    return ((IExpandCollapseProvider)wrapperPeer).ExpandCollapseState;
                 }
                 ThrowElementNotAvailableException();
                 return ExpandCollapseState.LeafNode;
@@ -119,8 +116,7 @@ namespace System.Windows.Automation.Peers
             MenuItemAutomationPeer wrapperPeer = GetWrapperPeer() as MenuItemAutomationPeer;
             if (wrapperPeer != null)
             {
-                IInvokeProvider invokeProvider = wrapperPeer as IInvokeProvider;
-                invokeProvider.Invoke();
+                ((IInvokeProvider)wrapperPeer).Invoke();
             }
             else
             {
@@ -137,8 +133,7 @@ namespace System.Windows.Automation.Peers
             MenuItemAutomationPeer wrapperPeer = GetWrapperPeer() as MenuItemAutomationPeer;
             if (wrapperPeer != null)
             {
-                IToggleProvider toggleProvider = wrapperPeer as IToggleProvider;
-                toggleProvider.Toggle();
+                ((IToggleProvider)wrapperPeer).Toggle();
             }
             else
             {
@@ -153,8 +148,7 @@ namespace System.Windows.Automation.Peers
                 MenuItemAutomationPeer wrapperPeer = GetWrapperPeer() as MenuItemAutomationPeer;
                 if (wrapperPeer != null)
                 {
-                    IToggleProvider toggleProvider = wrapperPeer as IToggleProvider;
-                    return toggleProvider.ToggleState;
+                    return ((IToggleProvider)wrapperPeer).ToggleState;
                 }
                 ThrowElementNotAvailableException();
                 return ToggleState.Indeterminate;

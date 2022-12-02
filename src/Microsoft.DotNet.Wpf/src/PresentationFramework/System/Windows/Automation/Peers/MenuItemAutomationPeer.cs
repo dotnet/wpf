@@ -210,51 +210,44 @@ namespace System.Windows.Automation.Peers
         {
             List<AutomationPeer> children = null;
 
-            iterate(Owner, ref children);
+            Iterate(Owner, ref children);
             return children;
         }
 
-        private static bool AddPeerToList(AutomationPeer peer, ref List<AutomationPeer> children)
+        private static void AddPeerToList(AutomationPeer peer, ref List<AutomationPeer> children)
         {
             if (children == null)
                 children = new List<AutomationPeer>();
 
             children.Add(peer);
-            return false;
         }
 
-        private static bool iterate(DependencyObject parent, ref List<AutomationPeer> children)
+        private static void Iterate(DependencyObject parent, ref List<AutomationPeer> children)
         {
-            bool done = false;
-
             if (parent != null)
             {
                 AutomationPeer peer = null;
                 int count = VisualTreeHelper.GetChildrenCount(parent);
-                for (int i = 0; i < count && !done; i++)
+                for (int i = 0; i < count; i++)
                 {
                     DependencyObject child = VisualTreeHelper.GetChild(parent, i);
 
-                    if (child != null
-                        && child is UIElement
-                        && (peer = CreatePeerForElement((UIElement)child)) != null)
+                    if (child is UIElement uiElement
+                        && (peer = CreatePeerForElement(uiElement)) != null)
                     {
-                        done = AddPeerToList(peer, ref children);
+                        AddPeerToList(peer, ref children);
                     }
-                    else if (child != null
-                        && child is UIElement3D
-                        && (peer = UIElement3DAutomationPeer.CreatePeerForElement(((UIElement3D)child))) != null)
+                    else if (child is UIElement3D uiElemenet3D
+                        && (peer = UIElement3DAutomationPeer.CreatePeerForElement(uiElemenet3D)) != null)
                     {
-                        done = AddPeerToList(peer, ref children);
+                        AddPeerToList(peer, ref children);
                     }
                     else
                     {
-                        done = iterate(child, ref children);
+                        Iterate(child, ref children);
                     }
                 }
             }
-
-            return done;
         }
 
         ///

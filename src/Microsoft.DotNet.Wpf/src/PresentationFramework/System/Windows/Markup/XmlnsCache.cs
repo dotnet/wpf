@@ -236,13 +236,14 @@ namespace System.Windows.Markup
             return foundAttributes.ToArray();
         }
 
-        private void GetNamespacesFromDefinitionAttr(CustomAttributeData data, out string xmlns, out string clrns)
+        private void GetNamespacesFromDefinitionAttr(CustomAttributeData data, out string xmlns, out string clrns, out string assemblyName)
         {
             // typedConstructorArguments (the Attribute constructor arguments)
             // [MyAttribute("test", Name=Hello)]
             // "test" is the Constructor Argument
             xmlns = null;
             clrns = null;
+            assemblyName = null;
             IList<CustomAttributeTypedArgument> constructorArguments = data.ConstructorArguments;
             for (int i = 0; i<constructorArguments.Count; i++)
             {
@@ -253,6 +254,15 @@ namespace System.Windows.Markup
                     clrns = tca.Value as String;
                 else
                     throw new ArgumentException(SR.Format(SR.ParserAttributeArgsHigh, "XmlnsDefinitionAttribute"));
+            }
+            IList<CustomAttributeNamedArgument> namedArguments = data.NamedArguments;
+            for (int i = 0; i < namedArguments.Count; i++)
+            {
+                var namedArgument = namedArguments[i];
+                if (namedArgument.MemberName == "AssemblyName")
+                {
+                    assemblyName = namedArgument.TypedValue.Value as String;
+                }
             }
         }
 
@@ -283,11 +293,12 @@ namespace System.Windows.Markup
             return Attribute.GetCustomAttributes(asm, attrType);
         }
 
-        private void GetNamespacesFromDefinitionAttr(Attribute attr, out string xmlns, out string clrns)
+        private void GetNamespacesFromDefinitionAttr(Attribute attr, out string xmlns, out string clrns, out string assemblyName)
         {
             XmlnsDefinitionAttribute xmlnsAttr  = (XmlnsDefinitionAttribute)attr;
             xmlns = xmlnsAttr.XmlNamespace;
             clrns = xmlnsAttr.ClrNamespace;
+            assemblyName = xmlnsAttr.AssemblyName;
         }
 
         private void GetNamespacesFromCompatAttr(Attribute attr, out string oldXmlns, out string newXmlns)
@@ -315,8 +326,8 @@ namespace System.Windows.Markup
                 {
                     string xmlns = null;
                     string clrns = null;
-
-                    GetNamespacesFromDefinitionAttr(attributes[attrIdx], out xmlns, out clrns);
+                    string assemblyNameOverride = null;
+                    GetNamespacesFromDefinitionAttr(attributes[attrIdx], out xmlns, out clrns, out assemblyNameOverride);
 
                     if (String.IsNullOrEmpty(xmlns) || String.IsNullOrEmpty(clrns) )
                     {
@@ -328,7 +339,7 @@ namespace System.Windows.Markup
                         _cacheTable[xmlns] = new List<ClrNamespaceAssemblyPair>();
                     }
                     pairList = _cacheTable[xmlns] as List<ClrNamespaceAssemblyPair>;
-                    pairList.Add(new ClrNamespaceAssemblyPair(clrns, assemblyName));
+                    pairList.Add(new ClrNamespaceAssemblyPair(clrns, assemblyNameOverride ?? assemblyName));
                 }
             }
         }
@@ -354,8 +365,9 @@ namespace System.Windows.Markup
                 {
                     string xmlns = null;
                     string clrns = null;
+                    string asmname = null;
 
-                    GetNamespacesFromDefinitionAttr(attributes[attrIdx], out xmlns, out clrns);
+                    GetNamespacesFromDefinitionAttr(attributes[attrIdx], out xmlns, out clrns, out asmname);
 
                     if (String.IsNullOrEmpty(xmlns) || String.IsNullOrEmpty(clrns) )
                     {
@@ -364,7 +376,7 @@ namespace System.Windows.Markup
 
                     if (0 == String.CompareOrdinal(xmlnsRequested, xmlns))
                     {
-                        pairList.Add(new ClrNamespaceAssemblyPair(clrns, assemblyName));
+                        pairList.Add(new ClrNamespaceAssemblyPair(clrns, asmname ?? assemblyName));
                     }
                 }
             }

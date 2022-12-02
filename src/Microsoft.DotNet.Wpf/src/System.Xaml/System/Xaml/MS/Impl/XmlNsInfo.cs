@@ -175,7 +175,15 @@ namespace System.Xaml.MS.Impl
 
                     string xmlns = xmlnsDefAttr.XmlNamespace;
                     string clrns = xmlnsDefAttr.ClrNamespace;
-                    LoadNsDefHelper(result, xmlns, clrns, assembly);
+                    string assemblyName = xmlnsDefAttr.AssemblyName;
+                    if (string.IsNullOrEmpty(assemblyName))
+                    {
+                        LoadNsDefHelper(result, xmlns, clrns, assembly);
+                    }
+                    else
+                    {
+                        LoadNsDefHelper(result, xmlns, clrns, assemblyName);
+                    }
                 }
             }
             return result;
@@ -189,6 +197,16 @@ namespace System.Xaml.MS.Impl
             }
 
             result.Add(new XmlNsDefinition { ClrNamespace = clrns, XmlNamespace = xmlns });
+        }
+
+        void LoadNsDefHelper(IList<XmlNsDefinition> result, string xmlns, string clrns, string assemblyName)
+        {
+            if (String.IsNullOrEmpty(xmlns) || clrns == null)
+            {
+                throw new XamlSchemaException(SR.Format(SR.BadXmlnsDefinition, assemblyName));
+            }
+
+            result.Add(new XmlNsDefinition { ClrNamespace = clrns, XmlNamespace = xmlns, AssemblyName = assemblyName });
         }
 
         ConcurrentDictionary<string, IList<string>> LoadClrToXmlNs()
@@ -562,6 +580,7 @@ namespace System.Xaml.MS.Impl
         {
             public string ClrNamespace { get; set; }
             public string XmlNamespace { get; set; }
+            public string AssemblyName { get; set; }
         }
     }
 }

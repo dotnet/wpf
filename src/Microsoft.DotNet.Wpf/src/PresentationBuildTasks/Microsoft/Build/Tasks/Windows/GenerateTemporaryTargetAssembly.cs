@@ -179,6 +179,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                 globalProperties[assemblyNamePropertyName] = AssemblyName;
                 globalProperties[targetAssemblyProjectNamePropertyName] = currentProjectName;
+                globalProperties[targetFrameworkRootPathPropertyName] = TargetFrameworkRootPath;
 
                 Dictionary<string, ITaskItem[]> targetOutputs = new Dictionary<string, ITaskItem[]>();
                 retValue = BuildEngine.BuildProjectFile(tempProj, new string[] { CompileTargetName }, globalProperties, targetOutputs);
@@ -901,6 +902,7 @@ namespace Microsoft.Build.Tasks.Windows
         private const string intermediateOutputPathPropertyName = "IntermediateOutputPath";
         private const string assemblyNamePropertyName = "AssemblyName";
         private const string targetAssemblyProjectNamePropertyName = "_TargetAssemblyProjectName";
+        private const string targetFrameworkRootPathPropertyName = "TargetFrameworkRootPath";
 
         private const string ALIASES = "Aliases";
         private const string REFERENCETYPENAME = "Reference";

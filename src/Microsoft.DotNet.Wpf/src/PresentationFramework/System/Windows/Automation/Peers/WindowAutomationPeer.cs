@@ -44,12 +44,18 @@ namespace System.Windows.Automation.Peers
 
                 if(!window.IsSourceWindowNull)
                 {
-                    StringBuilder sb = new StringBuilder(512);
-                    UnsafeNativeMethods.GetWindowText(new HandleRef(null, window.CriticalHandle), sb, sb.Capacity);
-                    name = sb.ToString();
+                    try
+                    {
+                        StringBuilder sb = new StringBuilder(512);
+                        UnsafeNativeMethods.GetWindowText(new HandleRef(null, window.CriticalHandle), sb, sb.Capacity);
+                        name = sb.ToString();
+                    }
+                    catch (Win32Exception)
+                    {
+                        name = window.Title;
+                    }
 
-                    if (name == null)
-                        name = string.Empty;
+                    name ??= "";
                 }
             }
 

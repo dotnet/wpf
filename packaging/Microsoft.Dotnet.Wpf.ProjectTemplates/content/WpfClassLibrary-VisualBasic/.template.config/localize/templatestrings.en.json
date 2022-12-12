@@ -9,6 +9,7 @@
   "symbols/Framework/choices/net5.0/description": "Target net5.0",
   "symbols/Framework/choices/net6.0/description": "Target net6.0",
   "symbols/Framework/choices/net7.0/description": "Target net7.0",
+  "symbols/Framework/choices/net8.0/description": "Target net8.0",
   "symbols/langVersion/description": "Sets langVersion in the created project file",
   "symbols/skipRestore/description": "If specified, skips the automatic restore of the project on create.",
   "postActions/restore/description": "Restore NuGet packages required by this project.",

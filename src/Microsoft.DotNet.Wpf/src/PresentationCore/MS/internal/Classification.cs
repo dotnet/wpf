@@ -262,6 +262,18 @@ namespace MS.Internal
 
 
         /// <summary>
+        /// Lookup script ID for a Unicode scalar value
+        /// </summary>
+        static public ScriptID GetScript(int unicodeScalar)
+        {
+            unsafe
+            {
+                return (ScriptID)Classification.CharAttributeTable[GetUnicodeClass(unicodeScalar)].Script;
+            }
+        }
+
+
+        /// <summary>
         /// Compute Unicode scalar value from unicode codepoint stream
         /// </summary>
         static internal int UnicodeScalar(

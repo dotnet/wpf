@@ -136,7 +136,7 @@ namespace MS.Internal.AutomationProxies
         {
             get
             {
-                return SR.Get(_asNames[_item]);
+                return SR.GetResourceString(_asNames[_item]);
             }
         }
 
@@ -581,11 +581,11 @@ namespace MS.Internal.AutomationProxies
         private int _sbFlag;
 
         private static string [] _asNames = {
-            SRID.LocalizedNameWindowsScrollBarBitsBackBySmallAmount,
-            SRID.LocalizedNameWindowsScrollBarBitsBackByLargeAmount,
-            SRID.LocalizedNameWindowsScrollBarBitsThumb,
-            SRID.LocalizedNameWindowsScrollBarBitsForwardByLargeAmount,
-            SRID.LocalizedNameWindowsScrollBarBitsForwardBySmallAmount
+            nameof(SR.LocalizedNameWindowsScrollBarBitsBackBySmallAmount),
+            nameof(SR.LocalizedNameWindowsScrollBarBitsBackByLargeAmount),
+            nameof(SR.LocalizedNameWindowsScrollBarBitsThumb),
+            nameof(SR.LocalizedNameWindowsScrollBarBitsForwardByLargeAmount),
+            nameof(SR.LocalizedNameWindowsScrollBarBitsForwardBySmallAmount)
         };
 
         #endregion

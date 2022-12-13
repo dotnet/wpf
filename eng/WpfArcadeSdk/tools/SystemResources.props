@@ -12,8 +12,17 @@
 
     <_GenerateResourcesCodeAsConstants>true</_GenerateResourcesCodeAsConstants>
 
+    <!-- 
+         Projects that compile XAML must also check for AssemblyName because XAML compilation generates a temporary project with a different project name.
+         We use AssemblyName because AssemblyName is copied from the main project to the generated project.
+    -->
+
+    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='PresentationBuildTasks'">false</_GenerateResourcesCodeAsConstants>
+    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='PresentationUI' or '$(AssemblyName)'=='PresentationUI'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='UIAutomationClient'">false</_GenerateResourcesCodeAsConstants>
+    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='UIAutomationClientSideProviders'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='UIAutomationProvider'">false</_GenerateResourcesCodeAsConstants>
+    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='System.Windows.Controls.Ribbon' or '$(AssemblyName)'=='System.Windows.Controls.Ribbon'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='System.Xaml'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='WindowsBase'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='WindowsFormsIntegration'">false</_GenerateResourcesCodeAsConstants>
@@ -30,16 +39,17 @@
       <ManifestResourceName>FxResources.$(AssemblyName).SR</ManifestResourceName>
       <GenerateResourcesCodeAsConstants>$(_GenerateResourcesCodeAsConstants)</GenerateResourcesCodeAsConstants>
 
-      <ClassName Condition="'$(AssemblyName)'=='PresentationBuildTasks'">MS.Utility.SRID</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='PresentationBuildTasks'">MS.Utility.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='UIAutomationClient'">System.SR</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='UIAutomationClientSideProviders'">System.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='UIAutomationProvider'">MS.Internal.Automation.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='UIAutomationTypes'">System.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='WindowsBase'">MS.Internal.WindowsBase.SR</ClassName>
-      <ClassName Condition="'$(AssemblyName)'=='System.Windows.Controls.Ribbon'">Microsoft.Windows.Controls.SRID</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='System.Windows.Controls.Ribbon'">Microsoft.Windows.Controls.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='System.Windows.Input.Manipulations'">System.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='ReachFramework'">System.Windows.Xps.SRID</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='PresentationFramework'">System.Windows.SRID</ClassName>
-      <ClassName Condition="'$(AssemblyName)'=='PresentationUI'">System.Windows.TrustUI.SRID</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='PresentationUI'">System.Windows.TrustUI.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='WindowsFormsIntegration'">System.Windows.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='PresentationCore'">MS.Internal.PresentationCore.SRID </ClassName>
       <ClassName Condition="'$(AssemblyName)'=='System.Xaml'">System.SR</ClassName>

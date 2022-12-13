@@ -417,8 +417,7 @@ namespace MS.Internal.IO.Packaging
             }
 
             // Ensure uri is correct scheme (http or https) Do case-sensitive comparison since Uri.Scheme contract is to return in lower case only.
-            if (String.Compare(requestedUri.Scheme, Uri.UriSchemeHttp, StringComparison.Ordinal) != 0
-                    && String.Compare(requestedUri.Scheme, Uri.UriSchemeHttps, StringComparison.Ordinal) != 0)
+            if (!string.Equals(requestedUri.Scheme, Uri.UriSchemeHttp, StringComparison.Ordinal) && !string.Equals(requestedUri.Scheme, Uri.UriSchemeHttps, StringComparison.Ordinal))
             {
                 throw new ArgumentException(SR.Get(SRID.InvalidScheme), "requestedUri");
             }

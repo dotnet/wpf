@@ -989,7 +989,7 @@ namespace Microsoft.Windows.Controls
                     !KeyTipService.GetIsKeyTipScope(newScope) &&
                     newScope != _currentGlobalScope)
                 {
-                    throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.ElementNotKeyTipScope));
+                    throw new InvalidOperationException(Microsoft.Windows.Controls.SR.ElementNotKeyTipScope);
                 }
                 if (newScope == null &&
                     KeyTipService.GetIsKeyTipScope(exactMatchElement))
@@ -1796,7 +1796,7 @@ namespace Microsoft.Windows.Controls
         private const int ShowKeyTipsWaitTime = 500;
         private const int NonZeroDigitCount = 9;
 
-        private static String QatKeyTipCharacters = Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.QATKeyTipCharacters);
+        private static String QatKeyTipCharacters = Microsoft.Windows.Controls.SR.QATKeyTipCharacters;
 
         #endregion
     }

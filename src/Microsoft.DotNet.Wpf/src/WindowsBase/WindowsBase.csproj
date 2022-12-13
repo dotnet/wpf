@@ -65,8 +65,8 @@
     <Compile Include="$(WpfSharedDir)\MS\Win32\SafeNativeMethodsCLR.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Win32\SafeNativeMethodsOther.cs" />
     <Compile Include="$(WpfSharedDir)\System\Windows\Markup\ReflectionHelper.cs" />
-    <Compile Include="$(WpfSharedDir)\System\Windows\InterOp\OSVersionHelper.cs" />
-    <Compile Include="$(WpfSharedDir)\System\Windows\InterOp\OperatingSystemVersion.cs" />
+    <Compile Include="$(WpfSharedDir)\System\Windows\Interop\OSVersionHelper.cs" />
+    <Compile Include="$(WpfSharedDir)\System\Windows\Interop\OperatingSystemVersion.cs" />
 
     <Compile Include="MS\Internal\AssemblyHelper.cs" />
     <Compile Include="MS\Internal\AvTrace.cs" />

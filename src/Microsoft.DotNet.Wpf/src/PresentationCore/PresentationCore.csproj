@@ -36,7 +36,6 @@
     <Compile Include="$(WpfSharedDir)\RefAssemblyAttrs.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\FriendAccessAllowedAttribute.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\AppDomainShutdownMonitor.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityCriticalDataForMultipleGetAndSet.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SafeSecurityHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SafeSecurityHelperAvalon.cs" />
@@ -102,7 +101,7 @@
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TraceLoggingProvider.cs" />
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TraceLoggers\XpsOMPrintingTraceLogger.cs" />
     <Compile Include="ModuleInitializer.cs" />
-    <Compile Include="otherassemblyattrs.cs" />
+    <Compile Include="OtherAssemblyAttrs.cs" />
     <Compile Include="SR.cs" />
     <Compile Include="MS\Internal\AnimatedTypeHelpers.cs" />
     <Compile Include="MS\Internal\CheckedPointers.cs" />
@@ -661,7 +660,7 @@
     <Compile Include="System\Windows\InterOp\Imaging.cs" />
     <Compile Include="System\Windows\InterOp\IStylusInputProvider.cs" />
     <Compile Include="System\Windows\InterOp\IWin32Window.cs" />
-    <Compile Include="System\Windows\InterOp\OperatingSystemVersionCheck.cs" />
+    <Compile Include="System\Windows\Interop\OperatingSystemVersionCheck.cs" />
     <Compile Include="System\Windows\Markup\IAddChild.cs" />
     <Compile Include="System\Windows\Markup\IProvidePropertyFallback.cs" />
     <Compile Include="System\Windows\Markup\XamlSerializerUtil.cs" />
@@ -775,7 +774,7 @@
     <Compile Include="System\Windows\Media\MILUtilities.cs" />
     <!-- Empty and clashes with NativeMethods in WindowsBase, which we require <Compile Include="System\Windows\Media\NativeMethodsMilCoreApi.cs" /> -->
     <Compile Include="System\Windows\Media\Parsers.cs" />
-    <Compile Include="System\Windows\Media\parserscommon.cs" />
+    <Compile Include="System\Windows\Media\ParsersCommon.cs" />
     <Compile Include="System\Windows\Media\PathFigure.cs" />
     <Compile Include="System\Windows\Media\PathFigureCollection.cs" />
     <Compile Include="System\Windows\Media\PathGeometry.cs" />

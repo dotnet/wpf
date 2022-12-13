@@ -189,7 +189,7 @@ namespace MS.Internal.Data
             while (_index < _n && _path[_index] == '.')
                 ++_index;
 
-            while (_index < _n && (level > 0 || SpecialChars.IndexOf(_path[_index]) < 0))
+            while (_index < _n && (level > 0 || !IsSpecialChar(_path[_index])))
             {
                 if (_path[_index] == '(')
                     ++level;
@@ -386,6 +386,11 @@ namespace MS.Internal.Data
             _drillIn = DrillIn.Never;
         }
 
+        private static bool IsSpecialChar(char ch)
+        {
+            return ch == '.' || ch == '/' || ch == '[' || ch == ']';
+        }
+
         State _state;
         string _path;
         int _index;
@@ -395,7 +400,6 @@ namespace MS.Internal.Data
         const char NullChar = Char.MinValue;
         const char EscapeChar = '^';
         static SourceValueInfo[] EmptyInfo = Array.Empty<SourceValueInfo>();
-        static string SpecialChars = @"./[]";
     }
 }
 

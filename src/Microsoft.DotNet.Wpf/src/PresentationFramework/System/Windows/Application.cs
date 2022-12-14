@@ -5,20 +5,17 @@
 //
 //
 // Description:
-//              The Application object is a global object that the Avalon platform
-//              uses to identify, reference, and communicate with an Avalon application.
+//             应用程序对象是 Avalon 平台的全局对象用于识别、引用 Avalon 应用程序并与之通信
 //
-//              The application object also presents a consistent logical view of an application
-//              to an Avalon developer.
-//              An Avalon developer uses the application object to listen and respond to application-wide
-//              events (like startup, shutdown, and navigation events),
-//              to define global properties and maintain state across multiple pages of markup.
+//             应用程序对象还向 Avalon 开发人员提供一致的应用程序逻辑视图。
+//             Avalon 开发人员使用应用程序对象来侦听和响应应用程序范围的事件（如启动、关闭和导航事件），以定义全局属性并跨多个标记页维护状态。
 //
 
 
 //In order to avoid generating warnings about unknown message numbers and unknown pragmas
 //when compiling your C# source code with the actual C# compiler, you need to disable
 //warnings 1634 and 1691. (From PreSharp Documentation)
+//下面是禁用警告的语法
 #pragma warning disable 1634, 1691
 
 using System.Collections;
@@ -79,7 +76,7 @@ namespace System.Windows
     #region Application Class
 
     /// <summary>
-    /// Application base class
+    /// 应用程序基类 继承调度对象 资源对象 查询环境接口
     /// </summary>
     public class Application : DispatcherObject, IHaveResources, IQueryAmbient
     {

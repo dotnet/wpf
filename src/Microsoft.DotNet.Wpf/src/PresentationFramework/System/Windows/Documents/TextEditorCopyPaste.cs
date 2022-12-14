@@ -92,14 +92,14 @@ namespace System.Windows.Documents
                 // ConfirmDataFormatSetting rasies a public event - could throw recoverable exception.
                 if (ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.Text))
                 {
-                    dataObject.SetData(DataFormats.Text, textString, false);
+                    dataObject.SetData(DataFormats.Text, textString, true);
                 }
 
                 // Copy unicode text into data object.
                 // ConfirmDataFormatSetting rasies a public event - could throw recoverable exception.
                 if (ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.UnicodeText))
                 {
-                    dataObject.SetData(DataFormats.UnicodeText, textString, false);
+                    dataObject.SetData(DataFormats.UnicodeText, textString, true);
                 }
             }
 

@@ -1904,7 +1904,6 @@ namespace Standard
         /// A combination of flags that modify window visual style attributes.
         /// Can be a combination of the WTNCA constants.
         /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Justification = "Used by native code.")]
         [FieldOffset(0)]
         public WTNCA dwFlags;
 
@@ -1913,7 +1912,6 @@ namespace Standard
         /// If the bit corresponding to a value in dwFlags is 0, that flag will be removed.
         /// If the bit is 1, the flag will be added.
         /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Justification = "Used by native code.")]
         [FieldOffset(4)]
         public WTNCA dwMask;
     }

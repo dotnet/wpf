@@ -38,7 +38,7 @@ using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
 namespace System.Windows
 {
     /// <summary>
-    ///
+    /// 窗口基类
     /// </summary>
     [Localizability(LocalizationCategory.Ignore)]
     public class Window : ContentControl, IWindowService

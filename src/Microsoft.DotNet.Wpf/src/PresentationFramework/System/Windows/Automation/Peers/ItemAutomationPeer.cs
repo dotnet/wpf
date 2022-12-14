@@ -527,9 +527,10 @@ namespace System.Windows.Automation.Peers
             {
                 name = wrapperPeer.GetName();
             }
-            else if (item != null)
+            // see https://github.com/dotnet/wpf/issues/122
+            else if (item != null && ItemsControlAutomationPeer is { } itemsControlAutomationPeer)
             {
-                using (RecyclableWrapper recyclableWrapper = ItemsControlAutomationPeer.GetRecyclableWrapperPeer(item))
+                using (RecyclableWrapper recyclableWrapper = itemsControlAutomationPeer.GetRecyclableWrapperPeer(item))
                 {
                     name = recyclableWrapper.Peer.GetName();
                 }

@@ -41,6 +41,12 @@ namespace System.Windows
 
     internal static class StyleHelper
     {
+        static StyleHelper()
+        {
+            // Register for the "alternative Expression storage" feature, since
+            // we store Expressions in per-instance StyleData.
+            RegisterAlternateExpressionStorage();
+        }
         //  ===========================================================================
         //  These methods are invoked when a Style/Template cache needs to be updated
         //  ===========================================================================
@@ -5466,9 +5472,12 @@ namespace System.Windows
         //
         internal static void RegisterAlternateExpressionStorage()
         {
-            DependencyObject.RegisterForAlternativeExpressionStorage(
+            if(_getExpression == null)
+            {
+                DependencyObject.RegisterForAlternativeExpressionStorage(
                                 new AlternativeExpressionStorageCallback(GetExpressionCore),
                                 out _getExpression);
+            }
         }
 
         private static Expression GetExpressionCore(

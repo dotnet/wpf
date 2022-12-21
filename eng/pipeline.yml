@@ -51,6 +51,8 @@ jobs:
           name: NetCore1ESPool-Internal
           demands: ImageOverride -equals windows.vs2022preview.amd64
       variables:
+        - name: Codeql.Enabled
+          value: true
         # needed for signing
         - name: _TeamName
           value: DotNetCore

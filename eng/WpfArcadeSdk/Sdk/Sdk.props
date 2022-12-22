@@ -44,6 +44,7 @@
   <Import Project="$(WpfArcadeSdkToolsDir)ApiCompat.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)GenApi.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)Publishing.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)CodeAnalysis.props" />
   
   <PropertyGroup>
     <DebugType>full</DebugType>

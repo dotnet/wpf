@@ -297,7 +297,7 @@ dotnet_diagnostic.CA1820.severity = none
 dotnet_diagnostic.CA1821.severity = none # TODO: warning
 
 # CA1822: Mark members as static
-dotnet_diagnostic.CA1822.severity = warning
+dotnet_diagnostic.CA1822.severity = none # TODO: warning
 dotnet_code_quality.CA1822.api_surface = private, internal
 
 # CA1823: Avoid unused private fields
@@ -388,7 +388,7 @@ dotnet_diagnostic.CA1850.severity = warning
 dotnet_diagnostic.CA1851.severity = suggestion
 
 # CA1852: Seal internal types
-dotnet_diagnostic.CA1852.severity = warning
+dotnet_diagnostic.CA1852.severity = none # TODO: warning
 
 # CA1853: Unnecessary call to 'Dictionary.ContainsKey(key)'
 dotnet_diagnostic.CA1853.severity =  warning

@@ -3,7 +3,7 @@
   "name": "WPF Kullanıcı Denetimi Kitaplığı",
   "description": ".NET WPF Uygulamaları için kullanıcı kontrolü kitaplığı oluşturmaya yönelik proje",
   "symbols/TargetFrameworkOverride/description": "Hedef çerçeveyi geçersiz kılar",
-  "symbols/TargetFrameworkOverride/displayName": "Target Framework Override",
+  "symbols/TargetFrameworkOverride/displayName": "Hedef Framework Geçersiz Kılma",
   "symbols/Framework/description": "Projenin hedef çerçevesi.",
   "symbols/Framework/choices/netcoreapp3.0/description": "Hedef netcoreapp3.0",
   "symbols/Framework/choices/netcoreapp3.0/displayName": ".NET Core 3.0",

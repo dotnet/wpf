@@ -3,7 +3,7 @@
   "name": "Knihovna tříd WPF",
   "description": "Projekt pro vytvoření knihovny tříd určené pro aplikace WPF .NET",
   "symbols/TargetFrameworkOverride/description": "Přepíše cílovou architekturu.",
-  "symbols/TargetFrameworkOverride/displayName": "Target Framework Override",
+  "symbols/TargetFrameworkOverride/displayName": "Přepsání cílové architektury",
   "symbols/Framework/description": "Cílová architektura pro projekt",
   "symbols/Framework/choices/netcoreapp3.0/description": "Cílit na netcoreapp3.0",
   "symbols/Framework/choices/netcoreapp3.0/displayName": ".NET Core 3.0",

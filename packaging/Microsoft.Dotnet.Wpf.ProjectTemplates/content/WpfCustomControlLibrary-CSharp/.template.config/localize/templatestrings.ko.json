@@ -3,7 +3,7 @@
   "name": "WPF 사용자 지정 컨트롤 라이브러리",
   "description": ".NET Core WPF 애플리케이션용 사용자 지정 컨트롤 라이브러리 만들기 프로젝트",
   "symbols/TargetFrameworkOverride/description": "대상 프레임워크를 재정의합니다",
-  "symbols/TargetFrameworkOverride/displayName": "Target Framework Override",
+  "symbols/TargetFrameworkOverride/displayName": "대상 프레임워크 재정의",
   "symbols/Framework/description": "프로젝트에 대한 대상 프레임워크입니다.",
   "symbols/Framework/choices/netcoreapp3.0/description": "대상 netcoreapp3.0",
   "symbols/Framework/choices/netcoreapp3.0/displayName": ".NET Core 3.0",

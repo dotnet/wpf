@@ -3,7 +3,7 @@
   "name": "WPF-Anwendung",
   "description": "Ein Projekt zum Erstellen einer .NET WPF-Anwendung",
   "symbols/TargetFrameworkOverride/description": "Überschreibt das Zielframework",
-  "symbols/TargetFrameworkOverride/displayName": "Target Framework Override",
+  "symbols/TargetFrameworkOverride/displayName": "Zielframeworküberschreibung",
   "symbols/Framework/description": "Das Zielframework für das Projekt.",
   "symbols/Framework/choices/netcoreapp3.0/description": "Auf „netcoreapp3.0“ abzielen",
   "symbols/Framework/choices/netcoreapp3.0/displayName": ".NET Core 3.0",

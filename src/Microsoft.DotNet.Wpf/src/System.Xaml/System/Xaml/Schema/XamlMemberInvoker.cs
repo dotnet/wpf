@@ -60,18 +60,14 @@ namespace System.Xaml.Schema
             {
                 throw new NotSupportedException(SR.Format(SR.CantGetWriteonlyProperty, _member));
             }
-            return GetValueSafeCritical(instance);
-        }
 
-        private object GetValueSafeCritical(object instance)
-        {
             if (UnderlyingGetter.IsStatic)
             {
-                return SafeReflectionInvoker.InvokeMethod(UnderlyingGetter, null, new object[] { instance });
+                return UnderlyingGetter.Invoke(null, new object[] { instance });
             }
             else
             {
-                return SafeReflectionInvoker.InvokeMethod(UnderlyingGetter, instance, s_emptyObjectArray);
+                return UnderlyingGetter.Invoke(instance, s_emptyObjectArray);
             }
         }
 
@@ -86,18 +82,14 @@ namespace System.Xaml.Schema
             {
                 throw new NotSupportedException(SR.Format(SR.CantSetReadonlyProperty, _member));
             }
-            SetValueSafeCritical(instance, value);
-        }
 
-        private void SetValueSafeCritical(object instance, object value)
-        {
             if (UnderlyingSetter.IsStatic)
             {
-                SafeReflectionInvoker.InvokeMethod(UnderlyingSetter, null, new object[] { instance, value });
+                UnderlyingSetter.Invoke(null, new object[] { instance, value });
             }
             else
             {
-                SafeReflectionInvoker.InvokeMethod(UnderlyingSetter, instance, new object[] { value });
+                UnderlyingSetter.Invoke(instance, new object[] { value });
             }
         }
 
@@ -158,20 +150,6 @@ namespace System.Xaml.Schema
             }
             return ShouldSerializeResult.Default;
         }
-
-        // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Retained per servicing policy.")]
-        private static bool IsSystemXamlNonPublic(
-            ref ThreeValuedBool methodIsSystemXamlNonPublic, MethodInfo method)
-        {
-            if (methodIsSystemXamlNonPublic == ThreeValuedBool.NotSet)
-            {
-                bool result = SafeReflectionInvoker.IsSystemXamlNonPublic(method);
-                methodIsSystemXamlNonPublic = result ? ThreeValuedBool.True : ThreeValuedBool.False;
-            }
-            return methodIsSystemXamlNonPublic == ThreeValuedBool.True;
-        }
-        // ^^^^^----- End of unused members.  -----^^^^^
 
         private bool IsUnknown
         {

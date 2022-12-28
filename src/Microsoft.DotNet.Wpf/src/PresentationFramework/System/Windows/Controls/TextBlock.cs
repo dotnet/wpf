@@ -140,7 +140,7 @@ namespace System.Windows.Controls
 
             if (!(_complexContent.TextContainer is TextContainer))
             {
-                throw new ArgumentException(SR.Get(SRID.TextPanelIllegalParaTypeForIAddChild, "value", value.GetType()));
+                throw new ArgumentException(SR.Format(SR.TextPanelIllegalParaTypeForIAddChild, "value", value.GetType()));
             }
 
             // Get parent of the text container. Note that it can be not a "this" TextBlock - in case
@@ -158,7 +158,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.TextSchema_ChildTypeIsInvalid, parentType.Name, valueType.Name));
+                    throw new ArgumentException(SR.Format(SR.TextSchema_ChildTypeIsInvalid, parentType.Name, valueType.Name));
                 }
             }
 
@@ -411,7 +411,7 @@ namespace System.Windows.Controls
 
             if(CheckFlags(Flags.ContentChangeInProgress))
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextContainerChangingReentrancyInvalid));
+                throw new InvalidOperationException(SR.TextContainerChangingReentrancyInvalid);
             }
 
             EnsureComplexContent();
@@ -1943,7 +1943,7 @@ Debug.Assert(lineCount == LineCount);
                 if(CheckFlags(Flags.ContentChangeInProgress))
                 {
                     #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
-                    throw new InvalidOperationException(SR.Get(SRID.TextContainerChangingReentrancyInvalid));
+                    throw new InvalidOperationException(SR.TextContainerChangingReentrancyInvalid);
                 }
 
                 if (_complexContent == null || !(_complexContent.TextContainer is TextContainer))
@@ -3438,7 +3438,7 @@ Debug.Assert(lineCount == LineCount);
         {
             if (CheckFlags(Flags.TreeInReadOnlyMode))
             {
-                throw new InvalidOperationException(SR.Get(SRID.IllegalTreeChangeDetected));
+                throw new InvalidOperationException(SR.IllegalTreeChangeDetected);
             }
         }
 
@@ -3657,17 +3657,17 @@ Debug.Assert(lineCount == LineCount);
         {
             if(CheckFlags(Flags.MeasureInProgress))
             {
-                throw new InvalidOperationException(SR.Get(SRID.MeasureReentrancyInvalid));
+                throw new InvalidOperationException(SR.MeasureReentrancyInvalid);
             }
 
             if(CheckFlags(Flags.ArrangeInProgress))
             {
-                throw new InvalidOperationException(SR.Get(SRID.ArrangeReentrancyInvalid));
+                throw new InvalidOperationException(SR.ArrangeReentrancyInvalid);
             }
 
             if(CheckFlags(Flags.ContentChangeInProgress))
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextContainerChangingReentrancyInvalid));
+                throw new InvalidOperationException(SR.TextContainerChangingReentrancyInvalid);
             }
         }
 

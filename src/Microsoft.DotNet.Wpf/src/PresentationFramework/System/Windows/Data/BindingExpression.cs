@@ -190,7 +190,7 @@ namespace System.Windows.Data
         public override void UpdateSource()
         {
             if (IsDetached)
-                throw new InvalidOperationException(SR.Get(SRID.BindingExpressionIsDetached));
+                throw new InvalidOperationException(SR.BindingExpressionIsDetached);
 
             NeedsUpdate = true;     // force update
             Update();               // update synchronously
@@ -200,7 +200,7 @@ namespace System.Windows.Data
         public override void UpdateTarget()
         {
             if (IsDetached)
-                throw new InvalidOperationException(SR.Get(SRID.BindingExpressionIsDetached));
+                throw new InvalidOperationException(SR.BindingExpressionIsDetached);
 
             if (Worker != null)
             {
@@ -223,7 +223,7 @@ namespace System.Windows.Data
 
             DependencyProperty dp = args.Property;
             if (dp == null)
-                throw new InvalidOperationException(SR.Get(SRID.ArgumentPropertyMustNotBeNull, "Property", "args"));
+                throw new InvalidOperationException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "Property", "args"));
 
             // ignore irrelevant notifications.  This test must happen before any marshalling.
             bool relevant = !IgnoreSourcePropertyChange;
@@ -405,7 +405,7 @@ namespace System.Windows.Data
             FrameworkPropertyMetadata fwMetaData = dp.GetMetadata(d.DependencyObjectType) as FrameworkPropertyMetadata;
 
             if ((fwMetaData != null && !fwMetaData.IsDataBindingAllowed) || dp.ReadOnly)
-                throw new ArgumentException(SR.Get(SRID.PropertyNotBindable, dp.Name), "dp");
+                throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), "dp");
 
             // create the BindingExpression
             BindingExpression bindExpr = new BindingExpression(binding, parent);
@@ -415,7 +415,7 @@ namespace System.Windows.Data
             // Two-way Binding with an empty path makes no sense
             if (bindExpr.IsReflective && binding.XPath == null &&
                     (binding.Path == null || String.IsNullOrEmpty(binding.Path.Path)))
-                throw new InvalidOperationException(SR.Get(SRID.TwoWayBindingNeedsPath));
+                throw new InvalidOperationException(SR.TwoWayBindingNeedsPath);
 
             return bindExpr;
         }
@@ -836,7 +836,7 @@ namespace System.Windows.Data
 
                 if (Converter == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.MissingValueConverter)); // report instead of throw?
+                    throw new InvalidOperationException(SR.MissingValueConverter); // report instead of throw?
                 }
             }
 
@@ -1574,7 +1574,7 @@ namespace System.Windows.Data
                                 value = itemValue;
                                 break;
                             default:
-                                throw new InvalidOperationException(SR.Get(SRID.ValidationRule_UnknownStep, validationRule.ValidationStep, validationRule));
+                                throw new InvalidOperationException(SR.Format(SR.ValidationRule_UnknownStep, validationRule.ValidationStep, validationRule));
                         }
 
                         // lazy-fetch culture (avoids exception when target DP is Language)
@@ -1953,7 +1953,7 @@ namespace System.Windows.Data
             {
                 if (ValidationError == null)
                 {
-                    ValidationError validationError = new ValidationError(ConversionValidationRule.Instance, this, SR.Get(SRID.Validation_ConversionFailed, rawValue), null);
+                    ValidationError validationError = new ValidationError(ConversionValidationRule.Instance, this, SR.Format(SR.Validation_ConversionFailed, rawValue), null);
                     UpdateValidationError(validationError);
                 }
             }
@@ -2152,7 +2152,7 @@ namespace System.Windows.Data
                     value = this;
                     break;
                 default:
-                    throw new InvalidOperationException(SR.Get(SRID.ValidationRule_UnknownStep, validationStep, bindingGroup));
+                    throw new InvalidOperationException(SR.Format(SR.ValidationRule_UnknownStep, validationStep, bindingGroup));
             }
 
             return Validate(value, validationStep);

@@ -68,15 +68,15 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
                     }
                     else
                     {
-                        throw new Exception(SR.Get(SRID.PTSError, fserr));
+                        throw new Exception(SR.Format(SR.PTSError, fserr));
                     }
 
                 case tserrPageTooLong:
                 case tserrSystemRestrictionsExceeded:
-                    throw new PtsException(SR.Get(SRID.FormatRestrictionsExceeded, fserr));
+                    throw new PtsException(SR.Format(SR.FormatRestrictionsExceeded, fserr));
 
                 default:
-                    throw new PtsException(SR.Get(SRID.PTSError, fserr));
+                    throw new PtsException(SR.Format(SR.PTSError, fserr));
             }
         }
         internal static void ValidateAndTrace(int fserr, PtsContext ptsContext)
@@ -127,7 +127,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
                     }
                     else
                     {
-                        throw new Exception(SR.Get(SRID.PTSError, fserr));
+                        throw new Exception(SR.Format(SR.PTSError, fserr));
                     }
                     break;
             }
@@ -162,7 +162,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         private static void InvalidHandle()
         {
             Debug.Assert(false);
-            throw new Exception(SR.Get(SRID.PTSInvalidHandle));
+            throw new Exception(SR.PTSInvalidHandle);
         }
 
         // ------------------------------------------------------------------

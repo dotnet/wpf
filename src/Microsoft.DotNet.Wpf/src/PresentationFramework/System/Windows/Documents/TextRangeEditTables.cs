@@ -867,7 +867,7 @@ namespace System.Windows.Documents
             {
                 // This should be an Invariant.Assert
                 // This could happen only in case when unparented TextContainer contains only LineBreaks or InlineUIContainers
-                throw new InvalidOperationException(SR.Get(SRID.TextSchema_CannotInsertContentInThisPosition));
+                throw new InvalidOperationException(SR.TextSchema_CannotInsertContentInThisPosition);
             }
 
             TextPointer insertionPosition;

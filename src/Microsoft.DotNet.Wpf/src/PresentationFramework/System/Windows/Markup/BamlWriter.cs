@@ -46,7 +46,7 @@ namespace System.Windows.Markup
             }
             if (!stream.CanWrite)
             {
-                throw new ArgumentException(SR.Get(SRID.BamlWriterBadStream));
+                throw new ArgumentException(SR.BamlWriterBadStream);
             }
             
             _parserContext = new ParserContext();
@@ -160,11 +160,11 @@ namespace System.Windows.Markup
         {
             if (_closed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.BamlWriterClosed));
+                throw new InvalidOperationException(SR.BamlWriterClosed);
             }
             if (_startDocumentWritten)
             {
-                throw new InvalidOperationException(SR.Get(SRID.BamlWriterStartDoc));
+                throw new InvalidOperationException(SR.BamlWriterStartDoc);
             }
             
             XamlDocumentStartNode node = new XamlDocumentStartNode(0,0,_depth);
@@ -316,7 +316,7 @@ namespace System.Windows.Markup
             BamlRecordType parentType = PeekRecordType();
             if (parentType != BamlRecordType.ElementStart)
             {
-                throw new InvalidOperationException(SR.Get(SRID.BamlWriterNoInElement,
+                throw new InvalidOperationException(SR.Format(SR.BamlWriterNoInElement,
                                                            "WriteProperty",
                                                            parentType.ToString()));
             }
@@ -483,7 +483,7 @@ namespace System.Windows.Markup
                 parentType != BamlRecordType.PropertyIListStart &&
                 parentType != BamlRecordType.PropertyIDictionaryStart)
             {
-                throw new InvalidOperationException(SR.Get(SRID.BamlWriterBadXmlns,
+                throw new InvalidOperationException(SR.Format(SR.BamlWriterBadXmlns,
                                                            "WriteXmlnsProperty",
                                                            parentType.ToString()));
             }
@@ -517,7 +517,7 @@ namespace System.Windows.Markup
             if (parentType != BamlRecordType.ElementStart &&
                 name != "Uid" ) // Parser's supposed to ignore x:Uid everywhere
             {
-                throw new InvalidOperationException(SR.Get(SRID.BamlWriterNoInElement,
+                throw new InvalidOperationException(SR.Format(SR.BamlWriterNoInElement,
                                                            "WriteDefAttribute",
                                                            parentType.ToString()));
             }
@@ -808,7 +808,7 @@ namespace System.Windows.Markup
 
                 default:
                     throw new InvalidOperationException(
-                                    SR.Get(SRID.BamlWriterBadScope,
+                                    SR.Format(SR.BamlWriterBadScope,
                                            startTagType.ToString(),
                                            BamlRecordType.PropertyComplexEnd.ToString()));
             }                        
@@ -914,7 +914,7 @@ namespace System.Windows.Markup
                                                       handlerName);
             _bamlRecordWriter.WriteRoutedEvent(eventNode);
 #else
-            throw new NotSupportedException(SR.Get(SRID.ParserBamlEvent, eventIdName));
+            throw new NotSupportedException(SR.Format(SR.ParserBamlEvent, eventIdName));
 #endif
 
         }
@@ -943,7 +943,7 @@ namespace System.Windows.Markup
                                                   handlerName);
             _bamlRecordWriter.WriteClrEvent(eventNode);
 #else
-            throw new NotSupportedException(SR.Get(SRID.ParserBamlEvent, eventName));
+            throw new NotSupportedException(SR.Format(SR.ParserBamlEvent, eventName));
 #endif
         }
 
@@ -1010,7 +1010,7 @@ namespace System.Windows.Markup
                     _bamlRecordWriter.WriteConstructorParametersEnd((XamlConstructorParametersEndNode)node);
                     break;
                 default:
-                    throw new InvalidOperationException(SR.Get(SRID.BamlWriterUnknownMarkupExtension));
+                    throw new InvalidOperationException(SR.BamlWriterUnknownMarkupExtension);
             }
         }
         _markupExtensionNodes.Clear();
@@ -1029,11 +1029,11 @@ namespace System.Windows.Markup
     {
         if (_closed)
         {
-            throw new InvalidOperationException(SR.Get(SRID.BamlWriterClosed));
+            throw new InvalidOperationException(SR.BamlWriterClosed);
         }
         if (!_startDocumentWritten)
         {
-            throw new InvalidOperationException(SR.Get(SRID.BamlWriterStartDoc));
+            throw new InvalidOperationException(SR.BamlWriterStartDoc);
         }
     }
 
@@ -1056,7 +1056,7 @@ namespace System.Windows.Markup
         BamlRecordType startTagState = Pop();
         if (startTagState != expectedStartTag)
         {
-            throw new InvalidOperationException(SR.Get(SRID.BamlWriterBadScope,
+            throw new InvalidOperationException(SR.Format(SR.BamlWriterBadScope,
                                                        startTagState.ToString(),
                                                        endTagBeingWritten.ToString()));
         }
@@ -1081,7 +1081,7 @@ namespace System.Windows.Markup
             assy = ReflectionHelper.LoadAssembly(assemblyName, null);
             if (assy == null)
             {
-                throw new ArgumentException(SR.Get(SRID.BamlWriterBadAssembly, 
+                throw new ArgumentException(SR.Format(SR.BamlWriterBadAssembly, 
                                                    assemblyName));
             }
             else

@@ -155,7 +155,7 @@ namespace System.Windows.Annotations
                     {
                         // The ContentLocatorGroup contains a child that is not a ContentLocatorBase or 
                         // text.  This isn't valid in the schema so we throw.
-                        throw new XmlException(SR.Get(SRID.InvalidXmlContent, AnnotationXmlConstants.Elements.ContentLocatorGroup));
+                        throw new XmlException(SR.Format(SR.InvalidXmlContent, AnnotationXmlConstants.Elements.ContentLocatorGroup));
                     }
                 }
             }

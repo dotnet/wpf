@@ -209,7 +209,7 @@ namespace System.Windows
 
             if (templatedParent == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ElementMustBelongToTemplate), nameof(elementInTemplate));
+                throw new ArgumentException(SR.ElementMustBelongToTemplate, nameof(elementInTemplate));
             }
 
             int templateChildIndex = child.TemplateChildIndex;

@@ -145,7 +145,7 @@ namespace System.Windows
             if (!(value is CornerRadius))
             {
                 #pragma warning suppress 6506 // value is obviously not null
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(CornerRadius)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(CornerRadius)), "value");
             }
 
             CornerRadius cr = (CornerRadius)value;
@@ -156,7 +156,7 @@ namespace System.Windows
                 return new InstanceDescriptor(ci, new object[] { cr.TopLeft, cr.TopRight, cr.BottomRight, cr.BottomLeft });
             }
 
-            throw new ArgumentException(SR.Get(SRID.CannotConvertType, typeof(CornerRadius), destinationType.FullName));
+            throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(CornerRadius), destinationType.FullName));
         }
 
 //Workaround for PreSharp bug - it complains about value being possibly null even though there is a check above
@@ -209,7 +209,7 @@ namespace System.Windows
                     return (new CornerRadius(radii[0], radii[1], radii[2], radii[3]));
             }
 
-            throw new FormatException(SR.Get(SRID.InvalidStringCornerRadius, s));
+            throw new FormatException(SR.Format(SR.InvalidStringCornerRadius, s));
         }
         #endregion
     }

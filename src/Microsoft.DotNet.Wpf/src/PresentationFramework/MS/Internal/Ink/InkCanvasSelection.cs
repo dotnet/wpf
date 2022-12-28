@@ -929,7 +929,7 @@ namespace MS.Internal.Ink
         private static Matrix MapRectToRect(Rect target, Rect source)
         {
             if(source.IsEmpty)
-                throw new ArgumentOutOfRangeException("source", SR.Get(SRID.InvalidDiameter));
+                throw new ArgumentOutOfRangeException("source", SR.InvalidDiameter);
             /*
             In the horizontal direction:
 

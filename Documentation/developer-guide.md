@@ -212,7 +212,7 @@ Your final csproj file should look like as below:
       <OutputType>WinExe</OutputType>
       <TargetFramework>net6.0-windows</TargetFramework>
       <UseWPF>true</UseWPF>
-      <Platform>x86</Platform>
+      <PlatformTarget>x86</PlatformTarget>
     </PropertyGroup>
 
     <PropertyGroup>

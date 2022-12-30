@@ -1740,7 +1740,8 @@ namespace System.Windows.Media
                 EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientRenderHandlerBegin, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info, PerfService.GetPerfElementID(this));
             }
 
-            RenderMessageHandlerCore(resizedCompositionTarget);
+            if (resizedCompositionTarget != null)
+                RenderMessageHandlerCore(resizedCompositionTarget);
 
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Event.WClientRenderHandlerEnd);
 

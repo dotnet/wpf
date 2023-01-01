@@ -495,11 +495,6 @@ namespace System.Windows.Baml2006
                 {
                     return XamlCollectionKind.Collection;
                 }
-                // Several types in V3 implemented IAddChildInternal which allowed them to be collections
-                if (typeof(System.Windows.Documents.DocumentReferenceCollection).IsAssignableFrom(UnderlyingType))
-                {
-                    return XamlCollectionKind.Collection;
-                } 
                 // Doing a type comparison against XmlNamespaceMappingCollection will load System.Xml. We get around
                 // this by only doing the comparison if it's an ICollection<XmlNamespaceMapping>
                 if (typeof(ICollection<System.Windows.Data.XmlNamespaceMapping>).IsAssignableFrom(UnderlyingType) 

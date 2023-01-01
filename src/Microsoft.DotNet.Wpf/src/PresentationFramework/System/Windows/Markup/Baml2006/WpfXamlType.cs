@@ -496,8 +496,7 @@ namespace System.Windows.Baml2006
                     return XamlCollectionKind.Collection;
                 }
                 // Several types in V3 implemented IAddChildInternal which allowed them to be collections
-                if (typeof(System.Windows.Documents.DocumentReferenceCollection).IsAssignableFrom(UnderlyingType) || 
-                    typeof(System.Windows.Documents.PageContentCollection).IsAssignableFrom(UnderlyingType))
+                if (typeof(System.Windows.Documents.DocumentReferenceCollection).IsAssignableFrom(UnderlyingType))
                 {
                     return XamlCollectionKind.Collection;
                 } 

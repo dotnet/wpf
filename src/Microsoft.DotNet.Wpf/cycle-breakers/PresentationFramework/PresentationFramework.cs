@@ -10224,12 +10224,25 @@ namespace System.Windows.Documents
         void System.Windows.Markup.IAddChild.AddChild(object value) { }
         void System.Windows.Markup.IAddChild.AddText(string text) { }
     }
-    public sealed partial class PageContentCollection : System.Collections.Generic.IEnumerable<System.Windows.Documents.PageContent>, System.Collections.IEnumerable
+    public sealed partial class PageContentCollection : System.Collections.IList, System.Collections.Generic.IEnumerable<System.Windows.Documents.PageContent>, System.Collections.IEnumerable
     {
         internal PageContentCollection() { }
         public int Count { get { throw null; } }
         public System.Windows.Documents.PageContent this[int pageIndex] { get { throw null; } }
+        bool System.Collections.IList.IsFixedSize { get { throw null; } }
+        bool System.Collections.IList.IsReadOnly { get { throw null; } }
+        object System.Collections.IList.this[int index] { get { throw null; } set { } }
+        bool System.Collections.ICollection.IsSynchronized { get { throw null; } }
+        object System.Collections.ICollection.SyncRoot { get { throw null; } }
         public int Add(System.Windows.Documents.PageContent newPageContent) { throw null; }
+        int System.Collections.IList.Add(object value) { throw null; }
+        void System.Collections.IList.Clear() { }
+        bool System.Collections.IList.Contains(object value) { throw null; }
+        int System.Collections.IList.IndexOf(object value) { throw null; }
+        void System.Collections.IList.Insert(int index, object value) { }
+        void System.Collections.IList.Remove(object value) { }
+        void System.Collections.IList.RemoveAt(int index) { }
+        void System.Collections.ICollection.CopyTo(System.Array array, int index) { }
         public System.Collections.Generic.IEnumerator<System.Windows.Documents.PageContent> GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }

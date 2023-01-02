@@ -91,6 +91,7 @@ namespace System.Windows.Controls
             KeyboardNavigation.TabNavigationProperty.OverrideMetadata(typeof(DatePicker), new FrameworkPropertyMetadata(KeyboardNavigationMode.Once));
             KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(DatePicker), new FrameworkPropertyMetadata(false));
             IsEnabledProperty.OverrideMetadata(typeof(DatePicker), new UIPropertyMetadata(new PropertyChangedCallback(OnIsEnabledChanged)));
+            LanguageProperty.OverrideMetadata(typeof(DatePicker), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnLanguageChanged)));
 
             ControlsTraceLogger.AddControl(TelemetryControls.DatePicker);
         }
@@ -392,6 +393,17 @@ namespace System.Windows.Controls
             typeof(DatePicker));
 
         #endregion IsTodayHighlighted
+
+        #region Language
+        private static void OnLanguageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            DatePicker datePicker = (DatePicker)d;
+            if (DependencyPropertyHelper.GetValueSource(datePicker, DatePicker.FirstDayOfWeekProperty).BaseValueSource ==  BaseValueSource.Default)
+            {
+                datePicker.SetCurrentValueInternal(FirstDayOfWeekProperty, DateTimeHelper.GetDateFormat(DateTimeHelper.GetCulture(datePicker)).FirstDayOfWeek);
+            }
+        }
+        #endregion
 
         #region SelectedDate
 

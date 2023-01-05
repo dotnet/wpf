@@ -6,8 +6,8 @@
   "generatorVersions": "[1.0.0.0-*)",
   "description": "A project for creating a custom control library for .NET WPF Applications",
   "groupIdentity": "Microsoft.Common.WPF.CustomControl",
-  "precedence": "3000",
-  "identity": "Microsoft.Common.WPF.CustomControl.CSharp.5.0",
+  "precedence": "7000",
+  "identity": "Microsoft.Common.WPF.CustomControl.CSharp.7.0",
   "shortName": "wpfcustomcontrollib",
   "tags": {
     "language": "C#",

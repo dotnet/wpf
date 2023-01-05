@@ -6,8 +6,8 @@
   "generatorVersions": "[1.0.0.0-*)",
   "description": "A project for creating a .NET WPF Application",
   "groupIdentity": "Microsoft.Common.WPF",
-  "precedence": "3000",
-  "identity": "Microsoft.Common.WPF",
+  "precedence": "7000",
+  "identity": "Microsoft.Common.WPF.CSharp.7.0",
   "shortName": "wpf",
   "tags": {
     "language": "C#",

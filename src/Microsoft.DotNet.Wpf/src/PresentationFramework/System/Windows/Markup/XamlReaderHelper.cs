@@ -414,7 +414,7 @@ namespace System.Windows.Markup
             }
             catch (XamlParseException e)
             {
-                throw e;
+                throw;
             }
             catch (XmlException e)
             {

@@ -62,7 +62,7 @@ stages:
 - stage: build
   displayName: Build 
   jobs:
-  - template: /eng/pipeline.yml
+  - template: /eng/wpfautomatedtests.yml
     parameters:
       enablePublishUsingPipelines: $(_PublishUsingPipelines)
       ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:

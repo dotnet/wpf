@@ -31,6 +31,7 @@ namespace System.Windows.Controls
     public class ListBox : Selector
     {
         internal const string ListBoxSelectAllKey = "Ctrl+A";
+        private static readonly bool OptOutOfGridColumnResizeUsingKeyboard;
 
         //-------------------------------------------------------------------
         //
@@ -81,6 +82,7 @@ namespace System.Windows.Controls
             CommandHelpers.RegisterCommandHandler(typeof(ListBox), ListBox.SelectAllCommand, new ExecutedRoutedEventHandler(OnSelectAll), new CanExecuteRoutedEventHandler(OnQueryStatusSelectAll), KeyGesture.CreateFromResourceStrings(ListBoxSelectAllKey, SR.Get(SRID.ListBoxSelectAllKeyDisplayString)));
 
             ControlsTraceLogger.AddControl(TelemetryControls.ListBox);
+            AppContext.TryGetSwitch("System.Windows.Controls.OptOutOfGridColumnResizeUsingKeyboard", out OptOutOfGridColumnResizeUsingKeyboard);
         }
 
         #endregion
@@ -486,6 +488,12 @@ namespace System.Windows.Controls
                     break;
 
                 case Key.System:
+                    if (OptOutOfGridColumnResizeUsingKeyboard)
+                    {
+                        handled = false;
+                        break;
+                    }
+
                     Key skey = e.SystemKey;
                     switch (skey)
                     {
@@ -522,7 +530,6 @@ namespace System.Windows.Controls
                     }
 
                     break;
-
 
                 default:
                     handled = false;

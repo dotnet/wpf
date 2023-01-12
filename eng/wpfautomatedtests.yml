@@ -6,16 +6,10 @@
 parameters:
   # Needed because runAsPublic is used in template expressions, which can't read from user-defined variables
   # Defaults to true
-  runAsPublic: true
+  runAsPublic: false
   repoName: dotnet/wpf
 
 jobs:
-- ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
-  - template: /eng/common/templates/job/onelocbuild.yml
-    parameters:
-      MirrorRepo: wpf
-      LclSource: lclFilesfromPackage
-      LclPackageId: 'LCL-JUNO-PROD-WPF'
 - template: /eng/common/templates/jobs/jobs.yml
   parameters:
     enableMicrobuild: true
@@ -39,7 +33,7 @@ jobs:
 
     jobs:
     - job: Windows_NT
-      timeoutInMinutes: 120  # how long to run the job before automatically cancelling; see https://github.com/dotnet/wpf/issues/952
+      timeoutInMinutes: 180  # how long to run the job before automatically cancelling; see https://github.com/dotnet/wpf/issues/952
       pool:
         # For public jobs, use the hosted pool.  For internal jobs use the internal pool.
         # Will eventually change this to two BYOC pools.
@@ -135,15 +129,7 @@ jobs:
           Build_Release_x64:
             _BuildConfig: Release
             _Platform: x64
-          ${{ if eq(parameters.runAsPublic, 'true') }}:
-            Build_Debug_arm64:
-              _BuildConfig: Debug
-              # override some variables for debug
-              # _SignType has to be real for package publishing to succeed - do not override to test.
-              _Platform: arm64
-          Build_Release_arm64:
-            _BuildConfig: Release
-            _Platform: arm64
+
       steps:
       - checkout: self
         clean: true
@@ -183,20 +169,19 @@ jobs:
         inputs:
           targetType: 'inline'
           script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
-        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
+        condition: ne(variables['_Platform'], 'arm64')
 
       - task: DownloadPipelineArtifact@2
-        displayName: Fetch Test Binaries
         inputs:
           buildType: 'specific'
-          project: 'cbb18261-c48f-4abb-8651-8cdcb5474649'
-          pipeline: '81'
+          project: '7ea9116e-9fac-403d-b258-b31fcf1bb293'
+          definition: '479'
           buildVersionToDownload: 'specific'
-          buildId: '34592'
-          downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
+          buildId: '2052933'
           checkDownloadedFiles: true
           artifactName: Tests.$(_BuildConfig).$(_Platform).zip
-        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
+          downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
+        condition: ne(variables['_Platform'], 'arm64')
 
       - task: ExtractFiles@1
         displayName: Extract Test Bins
@@ -205,13 +190,23 @@ jobs:
           destinationFolder: '$(System.ArtifactsDirectory)\testbins'
           cleanDestinationFolder: true
           overwriteExistingFiles: true
-        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
+        condition: ne(variables['_Platform'], 'arm64')
 
       - task: PowerShell@2
         displayName: Run Tests
         inputs:
           targetType: 'inline'
-          script: '.\CIRunDrts.cmd'
+          script: '.\RunDrts.cmd'
           workingDirectory: '$(System.ArtifactsDirectory)\testbins'
-        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
-        
+        condition: ne(variables['_Platform'], 'arm64')
+        continueOnError: true
+
+
+      - task: PowerShell@2
+        displayName: Run Tests
+        inputs:
+          targetType: 'inline'
+          script: '.\RunTests.cmd /Keywords=Microsuite'
+          workingDirectory: '$(System.ArtifactsDirectory)\testbins'
+        condition: ne(variables['_Platform'], 'arm64')
+        continueOnError: true

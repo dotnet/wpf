@@ -53,6 +53,8 @@ namespace MS.Internal.Tasks
         internal static void DisplayLogo(TaskLoggingHelper log, string taskName)
         {
             string acPath = Assembly.GetExecutingAssembly().Location;
+            if (acPath.Length == 0) return; // ignore if loaded from a byte array
+
             FileVersionInfo acFileVersionInfo = FileVersionInfo.GetVersionInfo(acPath);
 
             string avalonFileVersion = acFileVersionInfo.FileVersion;

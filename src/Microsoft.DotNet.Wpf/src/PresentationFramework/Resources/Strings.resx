@@ -1023,9 +1023,6 @@
   <data name="FailToNavigateUsingHyperlinkTarget" xml:space="preserve">
     <value>Failed to navigate using the Hyperlink target.</value>
   </data>
-  <data name="FileDialogBufferTooSmall" xml:space="preserve">
-    <value>Too many files selected. Select fewer files and try again.</value>
-  </data>
   <data name="FileDialogCreatePrompt" xml:space="preserve">
     <value>'{0}' does not exist.
 Do you want to create it?</value>
@@ -1033,9 +1030,6 @@ Do you want to create it?</value>
   <data name="FileDialogFileNotFound" xml:space="preserve">
     <value>'{0}' does not exist.
 Verify that the file name is correct.</value>
-  </data>
-  <data name="FileDialogInvalidFileName" xml:space="preserve">
-    <value>'{0}' is not a valid file name.</value>
   </data>
   <data name="FileDialogInvalidFilter" xml:space="preserve">
     <value>Provided filter string is not valid. Filter string should contain a description of the filter, followed by a vertical bar and the filter pattern. Must also separate multiple filter description and pattern pairs by a vertical bar. Must separate multiple extensions in a filter pattern with a semicolon. Example: \"Image files (*.bmp, *.jpg)|*.bmp;*.jpg|All files (*.*)|*.*\"</value>
@@ -1046,9 +1040,6 @@ Verify that the file name is correct.</value>
   <data name="FileDialogOverwritePrompt" xml:space="preserve">
     <value>'{0}' already exists.
 Do you want to replace it?</value>
-  </data>
-  <data name="FileDialogSubClassFailure" xml:space="preserve">
-    <value>Cannot subclass a file dialog because sufficient memory is not available.</value>
   </data>
   <data name="FileNameMustNotBeNull" xml:space="preserve">
     <value>Cannot access file because file name is null or empty.</value>

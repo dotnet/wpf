@@ -1,5 +1,9 @@
 Compat issues with assembly PresentationFramework:
+CannotMakeMemberNonVirtual : Member 'public System.Boolean Microsoft.Win32.FileDialog.CheckFileExists' is non-virtual in the implementation but is virtual in the contract.
+CannotMakeMemberNonVirtual : Member 'public System.Boolean Microsoft.Win32.FileDialog.CheckFileExists.get()' is non-virtual in the implementation but is virtual in the contract.
+CannotMakeMemberNonVirtual : Member 'public void Microsoft.Win32.FileDialog.CheckFileExists.set(System.Boolean)' is non-virtual in the implementation but is virtual in the contract.
 MembersMustExist : Member 'internal MS.Internal.AppModel.IFileDialog Microsoft.Win32.FileDialog.CreateVistaDialog()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'protected System.Int32 Microsoft.Win32.FileDialog.Options.get()' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'internal System.String[] Microsoft.Win32.FileDialog.ProcessVistaFiles(MS.Internal.AppModel.IFileDialog)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'internal System.Boolean Microsoft.Win32.FileDialog.RunFileDialog(MS.Win32.NativeMethods.OPENFILENAME_I)' does not exist in the implementation but it does exist in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.AttachedPropertyBrowsableForChildrenAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.

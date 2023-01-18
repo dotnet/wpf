@@ -1607,11 +1607,6 @@
         <target state="translated">리소스를 개체로 변환하지 못했습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="FileDialogBufferTooSmall">
-        <source>Too many files selected. Select fewer files and try again.</source>
-        <target state="translated">파일을 너무 많이 선택했습니다. 현재 선택한 파일에서 몇 개를 빼고 다시 시도하십시오.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FileDialogCreatePrompt">
         <source>'{0}' does not exist.
 Do you want to create it?</source>
@@ -1624,11 +1619,6 @@ Do you want to create it?</source>
 Verify that the file name is correct.</source>
         <target state="translated">'{0}'이(가) 없습니다.
 파일 이름이 올바른지 확인하십시오.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileDialogInvalidFileName">
-        <source>'{0}' is not a valid file name.</source>
-        <target state="translated">'{0}'은(는) 잘못된 파일 이름입니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogInvalidFilter">
@@ -1646,11 +1636,6 @@ Verify that the file name is correct.</source>
 Do you want to replace it?</source>
         <target state="translated">'{0}'이(가) 이미 있습니다.
 바꾸시겠습니까?</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileDialogSubClassFailure">
-        <source>Cannot subclass a file dialog because sufficient memory is not available.</source>
-        <target state="translated">메모리가 부족하여 파일 대화 상자를 서브클래스로 확장할 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileFormatException">

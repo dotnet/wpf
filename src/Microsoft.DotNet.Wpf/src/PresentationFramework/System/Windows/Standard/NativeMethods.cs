@@ -2715,6 +2715,24 @@ namespace Standard
         public static extern bool IsThemeActive();
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("user32.dll", EntryPoint = "LoadString", CharSet = CharSet.Unicode, SetLastError = true)]
+        private static extern int _LoadString(IntPtr hInstance, uint uID, out IntPtr lpBuffer, int nBufferMax);
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static string LoadString(IntPtr hInstance, uint uID)
+        {
+            // get read-only pointer
+            int length = _LoadString(hInstance, uID, out IntPtr lpBuffer, 0);
+            if (length == 0)
+            {
+                // resource does not exist
+                return null;
+            }
+
+            return Marshal.PtrToStringUni(lpBuffer, length);
+        }
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdi32.dll")]
         public static extern int GetDeviceCaps(SafeDC hdc, DeviceCap nIndex);
 

@@ -25,6 +25,10 @@ namespace System.Xaml.Schema
 
         private ThreeValuedBool _isPublic;
 
+        // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
+        private ThreeValuedBool _isInSystemXaml;
+        // ^^^^^----- End of unused members.  -----^^^^^
+
         protected XamlTypeInvoker()
         {
         }
@@ -224,6 +228,23 @@ namespace System.Xaml.Schema
             MethodInfo getEnumMethod = GetEnumeratorMethod();
             return (IEnumerator)getEnumMethod.Invoke(instance, s_emptyObjectArray);
         }
+
+        // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
+        private bool IsInSystemXaml
+        {
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Retained per servicing policy.")]
+            get
+            {
+                if (_isInSystemXaml == ThreeValuedBool.NotSet)
+                {
+                    Type type = _xamlType.UnderlyingType.UnderlyingSystemType;
+                    bool result = SafeReflectionInvoker.IsInSystemXaml(type);
+                    _isInSystemXaml = result ? ThreeValuedBool.True : ThreeValuedBool.False;
+                }
+                return _isInSystemXaml == ThreeValuedBool.True;
+            }
+        }
+        // ^^^^^----- End of unused members.  -----^^^^^
 
         private bool IsPublic
         {

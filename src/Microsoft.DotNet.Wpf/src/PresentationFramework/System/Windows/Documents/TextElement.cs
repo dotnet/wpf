@@ -102,7 +102,7 @@ namespace System.Windows.Documents
             }
             else if (end != null)
             {
-                throw new ArgumentException(SR.Get(SRID.TextElement_UnmatchedEndPointer));
+                throw new ArgumentException(SR.TextElement_UnmatchedEndPointer);
             }
 
             if (start != null)
@@ -128,7 +128,7 @@ namespace System.Windows.Documents
 
                 if (startNode != endNode)
                 {
-                    throw new ArgumentException(SR.Get(SRID.InDifferentScope, "start", "end"));
+                    throw new ArgumentException(SR.Format(SR.InDifferentScope, "start", "end"));
                 }
             }
 
@@ -857,7 +857,7 @@ namespace System.Windows.Documents
                     {
                         if (inlineContainer.Child != null)
                         {
-                            throw new ArgumentException(SR.Get(SRID.TextSchema_ThisInlineUIContainerHasAChildUIElementAlready, this.GetType().Name, ((InlineUIContainer)this).Child.GetType().Name, value.GetType().Name));
+                            throw new ArgumentException(SR.Format(SR.TextSchema_ThisInlineUIContainerHasAChildUIElementAlready, this.GetType().Name, ((InlineUIContainer)this).Child.GetType().Name, value.GetType().Name));
                         }
 
                         inlineContainer.Child = uie;
@@ -869,7 +869,7 @@ namespace System.Windows.Documents
                         {
                             if (blockContainer.Child != null)
                             {
-                                throw new ArgumentException(SR.Get(SRID.TextSchema_ThisBlockUIContainerHasAChildUIElementAlready, this.GetType().Name, ((BlockUIContainer)this).Child.GetType().Name, value.GetType().Name));
+                                throw new ArgumentException(SR.Format(SR.TextSchema_ThisBlockUIContainerHasAChildUIElementAlready, this.GetType().Name, ((BlockUIContainer)this).Child.GetType().Name, value.GetType().Name));
                             }
 
                             blockContainer.Child = uie;
@@ -885,14 +885,14 @@ namespace System.Windows.Documents
                             }
                             else
                             {
-                                throw new ArgumentException(SR.Get(SRID.TextSchema_ChildTypeIsInvalid, this.GetType().Name, value.GetType().Name));
+                                throw new ArgumentException(SR.Format(SR.TextSchema_ChildTypeIsInvalid, this.GetType().Name, value.GetType().Name));
                             }
                         }
                     }
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.TextSchema_ChildTypeIsInvalid, this.GetType().Name, value.GetType().Name));
+                    throw new ArgumentException(SR.Format(SR.TextSchema_ChildTypeIsInvalid, this.GetType().Name, value.GetType().Name));
                 }
             }
         }
@@ -935,7 +935,7 @@ namespace System.Windows.Documents
                     // Otherwise text is not allowed. Throw if it is not a whitespace
                     if (text.Trim().Length > 0)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.TextSchema_TextIsNotAllowed, this.GetType().Name));
+                        throw new InvalidOperationException(SR.Format(SR.TextSchema_TextIsNotAllowed, this.GetType().Name));
                     }
 
                     // As to whitespace - it can be simply ignored

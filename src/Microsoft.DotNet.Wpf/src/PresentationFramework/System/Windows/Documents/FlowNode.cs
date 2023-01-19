@@ -117,7 +117,7 @@ namespace System.Windows.Documents
             FlowNode fp = o as FlowNode;
             if (fp == null)
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, o.GetType(), typeof(FlowNode)), "o");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, o.GetType(), typeof(FlowNode)), "o");
             }
 
             if (Object.ReferenceEquals(this, fp))

@@ -87,7 +87,7 @@ namespace System.Windows.Controls.Primitives
             }
             else
             {
-                throw new NotSupportedException(SR.Get(SRID.MultiSelectorSelectAll));
+                throw new NotSupportedException(SR.MultiSelectorSelectAll);
             }
         }
 

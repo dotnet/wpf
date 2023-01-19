@@ -151,7 +151,7 @@ namespace MS.Internal.AppModel
             }
             sei.lpFile = uri.ToString(); // It's safe to use Uri.ToString since there's an inheritance demand on it that prevents spoofing by subclasses.
             if (!UnsafeNativeMethods.ShellExecuteEx(sei))
-                throw new InvalidOperationException(SR.Get(SRID.FailToLaunchDefaultBrowser),
+                throw new InvalidOperationException(SR.FailToLaunchDefaultBrowser,
                     new System.ComponentModel.Win32Exception(/*uses the last Win32 error*/));
         }
 

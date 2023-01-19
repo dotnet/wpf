@@ -83,14 +83,14 @@ namespace MS.Internal.Commands
                                                     string srid1, string srid2)
         {
             PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, null,
-                                                  KeyGesture.CreateFromResourceStrings(SR.Get(srid1), SR.Get(srid2)));
+                                                  KeyGesture.CreateFromResourceStrings(SR.GetResourceString(srid1), SR.GetResourceString(srid2)));
         }
 
         internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
                                                     CanExecuteRoutedEventHandler canExecuteRoutedEventHandler, string srid1, string srid2)
         {
             PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, canExecuteRoutedEventHandler,
-                                                  KeyGesture.CreateFromResourceStrings(SR.Get(srid1), SR.Get(srid2)));
+                                                  KeyGesture.CreateFromResourceStrings(SR.GetResourceString(srid1), SR.GetResourceString(srid2)));
         }
 
         // 'params' based method is private.  Call sites that use this bloat unwittingly due to implicit construction of the params array that goes into IL.

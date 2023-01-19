@@ -223,7 +223,7 @@ namespace MS.Internal.IO.Packaging
             // If client code forgot to load the stream, throw appropriate exception.
             if (_xamlReader == null)
             {
-                throw new COMException(SR.Get(SRID.FilterGetChunkNoStream), (int)FilterErrorCode.FILTER_E_ACCESS);
+                throw new COMException(SR.FilterGetChunkNoStream, (int)FilterErrorCode.FILTER_E_ACCESS);
             }
 
             // If at end of chunks, report the condition.
@@ -783,7 +783,7 @@ namespace MS.Internal.IO.Packaging
             // XmlException gets handled inside this class (see GetChunk).
             if (_filterState == FilterState.FindNextFlowUnit)
             {
-                throw new XmlException(SR.Get(SRID.XamlFilterNestedFixedPage));
+                throw new XmlException(SR.XamlFilterNestedFixedPage);
             }
 
             // Create a DOM for the current FixedPage.

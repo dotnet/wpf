@@ -67,7 +67,7 @@ namespace MS.Internal
             if (throwIfNeither && _fe == null && _fce == null)
             {
                 object arg = (d != null) ? (object)d.GetType() : (object)"NULL";
-                throw new InvalidOperationException(SR.Get(SRID.MustBeFrameworkDerived, arg));
+                throw new InvalidOperationException(SR.Format(SR.MustBeFrameworkDerived, arg));
             }
         }
 

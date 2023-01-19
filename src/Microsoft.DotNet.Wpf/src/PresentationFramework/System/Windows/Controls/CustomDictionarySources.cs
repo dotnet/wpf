@@ -96,7 +96,7 @@ namespace System.Windows.Controls
         {
             if (_uriList.Contains(item))
             {
-                throw new ArgumentException(SR.Get(SRID.CustomDictionaryItemAlreadyExists), "item");
+                throw new ArgumentException(SR.CustomDictionaryItemAlreadyExists, "item");
             }
 
             ValidateUri(item);
@@ -360,13 +360,13 @@ namespace System.Windows.Controls
         {
             if (item == null)
             {
-                throw new ArgumentException(SR.Get(SRID.CustomDictionaryNullItem));
+                throw new ArgumentException(SR.CustomDictionaryNullItem);
             }
             if (item.IsAbsoluteUri)
             {
                 if (!(item.IsUnc || item.IsFile || MS.Internal.IO.Packaging.PackUriHelper.IsPackUri(item)))
                 {
-                    throw new NotSupportedException(SR.Get(SRID.CustomDictionarySourcesUnsupportedURI));
+                    throw new NotSupportedException(SR.CustomDictionarySourcesUnsupportedURI);
                 }
             }
         }

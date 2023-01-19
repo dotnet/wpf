@@ -80,7 +80,7 @@ namespace MS.Internal.AppModel
 
             if (stream == null)
             {
-                throw new IOException(SR.Get(SRID.UnableToLocateResource, Uri.ToString()));
+                throw new IOException(SR.Format(SR.UnableToLocateResource, Uri.ToString()));
             }
 
             return stream;

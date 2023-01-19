@@ -1015,7 +1015,7 @@ namespace MS.Internal.Documents
         {
             if (_childrenCollection == null || index < 0 || index >= _childrenCollection.Count)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
 
             return _childrenCollection[index];
@@ -1070,7 +1070,7 @@ namespace MS.Internal.Documents
 
                     if (background == null)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.DocumentGridVisualTreeContainsNonBorderAsFirstElement));
+                        throw new InvalidOperationException(SR.DocumentGridVisualTreeContainsNonBorderAsFirstElement);
                     }
 
                     //We measure this to the size of our constraint.
@@ -1085,7 +1085,7 @@ namespace MS.Internal.Documents
 
                     if (page == null)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.DocumentGridVisualTreeContainsNonDocumentGridPage));
+                        throw new InvalidOperationException(SR.DocumentGridVisualTreeContainsNonDocumentGridPage);
                     }
 
                     //Get the cached size of this page and scale it to our current scale factor.
@@ -1212,7 +1212,7 @@ namespace MS.Internal.Documents
                     //This should never, ever happen so we'll throw if it does.
                     if (visualChild > _childrenCollection.Count - 1)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.DocumentGridVisualTreeOutOfSync));
+                        throw new InvalidOperationException(SR.DocumentGridVisualTreeOutOfSync);
                     }
 
                     //Get the cached size of this page.
@@ -1240,7 +1240,7 @@ namespace MS.Internal.Documents
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.DocumentGridVisualTreeContainsNonUIElement));
+                        throw new InvalidOperationException(SR.DocumentGridVisualTreeContainsNonUIElement);
                     }
 
                     //Increment our horizontal offset to point to where the next page should go.
@@ -2488,7 +2488,7 @@ namespace MS.Internal.Documents
                     break;
 
                 default:
-                    throw new InvalidOperationException(SR.Get(SRID.DocumentGridInvalidViewMode));
+                    throw new InvalidOperationException(SR.DocumentGridInvalidViewMode);
             }
 
             return scaleFactor;

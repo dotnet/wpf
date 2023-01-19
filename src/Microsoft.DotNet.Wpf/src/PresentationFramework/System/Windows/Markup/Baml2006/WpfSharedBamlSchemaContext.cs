@@ -86,7 +86,7 @@ namespace System.Windows.Baml2006
         {
             if (assemblyId > 0)
             {
-                throw new ArgumentException(SR.Get(SRID.AssemblyIdNegative));
+                throw new ArgumentException(SR.AssemblyIdNegative);
             }
             assemblyId = (short)-assemblyId;
 
@@ -125,7 +125,7 @@ namespace System.Windows.Baml2006
 
             if (typeId >= 0)
             {
-                throw new ArgumentException(SR.Get(SRID.KnownTypeIdNegative));
+                throw new ArgumentException(SR.KnownTypeIdNegative);
             }
 
             typeId = (short)-typeId;
@@ -154,7 +154,7 @@ namespace System.Windows.Baml2006
 
             if (memberId >= 0)
             {
-                throw new ArgumentException(SR.Get(SRID.KnownTypeIdNegative));
+                throw new ArgumentException(SR.KnownTypeIdNegative);
             }
 
             memberId = (short)-memberId;

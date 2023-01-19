@@ -101,7 +101,7 @@ namespace System.Windows.Data
                 // User is only allowed to set one of ObjectType or ObjectInstance.
                 // To change "mode", the user must null the other property first.
                 if (_mode == SourceMode.FromInstance)
-                    throw new InvalidOperationException(SR.Get(SRID.ObjectDataProviderCanHaveOnlyOneSource));
+                    throw new InvalidOperationException(SR.ObjectDataProviderCanHaveOnlyOneSource);
                 _mode = (value == null) ? SourceMode.NoSource : SourceMode.FromType;
 
                 _constructorParameters.SetReadOnly(false);
@@ -154,7 +154,7 @@ namespace System.Windows.Data
                 // User is only allowed to set one of ObjectType or ObjectInstance.
                 // To change mode, the user must null the property first.
                 if (_mode == SourceMode.FromType)
-                    throw new InvalidOperationException(SR.Get(SRID.ObjectDataProviderCanHaveOnlyOneSource));
+                    throw new InvalidOperationException(SR.ObjectDataProviderCanHaveOnlyOneSource);
                 _mode = (value == null) ? SourceMode.NoSource : SourceMode.FromInstance;
 
                 if (ObjectInstance == value)   // instance or provider has not changed, do nothing
@@ -386,7 +386,7 @@ namespace System.Windows.Data
             {
                 if (TraceData.IsEnabled)
                     TraceData.TraceAndNotify(TraceEventType.Error, TraceData.ObjectDataProviderHasNoSource);
-                e = new InvalidOperationException(SR.Get(SRID.ObjectDataProviderHasNoSource));
+                e = new InvalidOperationException(SR.ObjectDataProviderHasNoSource);
             }
             else
             {
@@ -491,7 +491,7 @@ namespace System.Windows.Data
             catch // non CLS compliant exception
             {
                 error = null;   // indicate unknown error
-                e = new InvalidOperationException(SR.Get(SRID.ObjectDataProviderNonCLSException, _objectType.Name));
+                e = new InvalidOperationException(SR.Format(SR.ObjectDataProviderNonCLSException, _objectType.Name));
             }
 
             #pragma warning restore 56500
@@ -581,7 +581,7 @@ namespace System.Windows.Data
             catch   //FXCop Fix: CatchNonClsCompliantExceptionsInGeneralHandlers
             {
                 error = null;   // indicate unknown error
-                e = new InvalidOperationException(SR.Get(SRID.ObjectDataProviderNonCLSExceptionInvoke, MethodName, _objectType.Name));
+                e = new InvalidOperationException(SR.Format(SR.ObjectDataProviderNonCLSExceptionInvoke, MethodName, _objectType.Name));
             }
 
             #pragma warning restore 56500

@@ -79,7 +79,7 @@ namespace System.Windows.Controls
             if (double.IsNaN(value) || Double.IsInfinity(value))
             {
                 throw new ArgumentException(
-                    SR.Get(SRID.DataGridLength_Infinity),
+                    SR.DataGridLength_Infinity,
                     "value");
             }
 
@@ -90,21 +90,21 @@ namespace System.Windows.Controls
                 type != DataGridLengthUnitType.SizeToHeader)
             {
                 throw new ArgumentException(
-                    SR.Get(SRID.DataGridLength_InvalidType), 
+                    SR.DataGridLength_InvalidType, 
                     "type");
             }
 
             if (Double.IsInfinity(desiredValue))
             {
                 throw new ArgumentException(
-                    SR.Get(SRID.DataGridLength_Infinity), 
+                    SR.DataGridLength_Infinity, 
                     "desiredValue");
             }
 
             if (Double.IsInfinity(displayValue))
             {
                 throw new ArgumentException(
-                    SR.Get(SRID.DataGridLength_Infinity),
+                    SR.DataGridLength_Infinity,
                     "displayValue");
             }
 

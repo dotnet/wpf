@@ -22,19 +22,19 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/winforms -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>7.0.3-servicing.23061.6</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>7.0.3-servicing.23072.1</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/runtime -->
   <PropertyGroup>
-    <VSRedistCommonNetCoreSharedFrameworkx6470PackageVersion>7.0.2-servicing.22606.5</VSRedistCommonNetCoreSharedFrameworkx6470PackageVersion>
-    <MicrosoftNETCoreAppRefVersion>7.0.2</MicrosoftNETCoreAppRefVersion>
-    <MicrosoftNETCoreAppRuntimewinx64Version>7.0.2</MicrosoftNETCoreAppRuntimewinx64Version>
+    <VSRedistCommonNetCoreSharedFrameworkx6470PackageVersion>7.0.3-servicing.23069.10</VSRedistCommonNetCoreSharedFrameworkx6470PackageVersion>
+    <MicrosoftNETCoreAppRefVersion>7.0.3</MicrosoftNETCoreAppRefVersion>
+    <MicrosoftNETCoreAppRuntimewinx64Version>7.0.3</MicrosoftNETCoreAppRuntimewinx64Version>
     <MicrosoftNETCorePlatformsVersion>7.0.0</MicrosoftNETCorePlatformsVersion>
     <SystemCodeDomPackageVersion>7.0.0</SystemCodeDomPackageVersion>
     <SystemConfigurationConfigurationManagerPackageVersion>7.0.0</SystemConfigurationConfigurationManagerPackageVersion>
     <SystemDiagnosticsEventLogPackageVersion>7.0.0</SystemDiagnosticsEventLogPackageVersion>
     <SystemDrawingCommonVersion>7.0.0</SystemDrawingCommonVersion>
-    <SystemDirectoryServicesVersion>7.0.0</SystemDirectoryServicesVersion>
+    <SystemDirectoryServicesVersion>7.0.1</SystemDirectoryServicesVersion>
     <SystemIOPackagingVersion>7.0.0</SystemIOPackagingVersion>
     <SystemReflectionMetadataLoadContextVersion>7.0.0</SystemReflectionMetadataLoadContextVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>

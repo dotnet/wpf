@@ -176,8 +176,8 @@ jobs:
           buildType: 'specific'
           project: '7ea9116e-9fac-403d-b258-b31fcf1bb293'
           definition: '479'
-          buildVersionToDownload: 'specific'
-          buildId: '2052933'
+          buildVersionToDownload: latestFromBranch
+          branchName: refs/heads/master
           checkDownloadedFiles: true
           artifactName: Tests.$(_BuildConfig).$(_Platform).zip
           downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'

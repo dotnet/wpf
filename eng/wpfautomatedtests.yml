@@ -196,7 +196,7 @@ jobs:
         displayName: Set Path Vars
         inputs:
           targetType: 'inline'
-          script: $env:path = $(Build.SourcesDirectory)\.dotnet + $env:path
+          script: $env:path = '$(Build.SourcesDirectory)\.dotnet;' + $env:path
           workingDirectory: '$(System.ArtifactsDirectory)\testbins'
         condition: ne(variables['_Platform'], 'arm64')
         continueOnError: true

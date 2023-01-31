@@ -193,7 +193,16 @@ jobs:
         condition: ne(variables['_Platform'], 'arm64')
 
       - task: PowerShell@2
-        displayName: Run Tests
+        displayName: Set Path Vars
+        inputs:
+          targetType: 'inline'
+          script: $env:path = $(Build.SourcesDirectory)\.dotnet + $env:path
+          workingDirectory: '$(System.ArtifactsDirectory)\testbins'
+        condition: ne(variables['_Platform'], 'arm64')
+        continueOnError: true
+
+      - task: PowerShell@2
+        displayName: Run DRTs
         inputs:
           targetType: 'inline'
           script: '.\RunDrts.cmd'
@@ -203,7 +212,7 @@ jobs:
 
 
       - task: PowerShell@2
-        displayName: Run Tests
+        displayName: Run Microsuites
         inputs:
           targetType: 'inline'
           script: '.\RunTests.cmd /Keywords=Microsuite'

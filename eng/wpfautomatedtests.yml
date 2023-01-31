@@ -168,7 +168,7 @@ jobs:
         displayName: Replace WPF binaries
         inputs:
           targetType: 'inline'
-          script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
+          script: '.\eng\copy-wpf.ps1 -testhost -destination $(Build.SourcesDirectory)\\.dotnet\ -$(_BuildConfig) -arch $(_Platform)'
         condition: ne(variables['_Platform'], 'arm64')
 
       - task: DownloadPipelineArtifact@2
@@ -205,7 +205,7 @@ jobs:
         displayName: Echo Path Vars
         inputs:
           targetType: 'inline'
-          script: echo $env:path
+          script: echo $env
           workingDirectory: '$(System.ArtifactsDirectory)\testbins'
         condition: ne(variables['_Platform'], 'arm64')
         continueOnError: true

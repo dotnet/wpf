@@ -1917,7 +1917,7 @@ namespace System.Windows.Markup
             bool _all;
             string _namespaceName;
             XmlCompatibilityReader _reader;
-            Dictionary<string, object> _names;
+            HashSet<string> _names;
 
             public ProcessContentSet(string namespaceName, XmlCompatibilityReader reader)
             {
@@ -1927,7 +1927,7 @@ namespace System.Windows.Markup
 
             public bool ShouldProcessContent(string elementName)
             {
-                return _all || (_names != null && _names.ContainsKey(elementName));
+                return _all || (_names != null && _names.Contains(elementName));
             }
 
             public void Add(string elementName)
@@ -1959,10 +1959,10 @@ namespace System.Windows.Markup
                 {
                     if (_names == null)
                     {
-                        _names = new Dictionary<string, object>();
+                        _names = new HashSet<string>();
                     }
 
-                    _names[elementName] = null; // we don't care about value, just key
+                    _names.Add(elementName);
                 }
             }
 }

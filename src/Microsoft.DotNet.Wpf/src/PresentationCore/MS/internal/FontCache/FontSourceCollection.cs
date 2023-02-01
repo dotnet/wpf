@@ -137,7 +137,7 @@ namespace MS.Internal.FontCache
                             {
                                 // fontPaths accumulates font file paths obtained from the registry and the file system
                                 // This collection is a set, i.e. only keys matter, not values.
-                                Dictionary<string, object> fontPaths = new Dictionary<string, object>(512, StringComparer.OrdinalIgnoreCase);
+                                HashSet<string> fontPaths = new HashSet<string>(512, StringComparer.OrdinalIgnoreCase);
 
                                 using (RegistryKey fontsKey = Registry.LocalMachine.OpenSubKey(InstalledWindowsFontsRegistryKey))
                                 {
@@ -154,16 +154,16 @@ namespace MS.Internal.FontCache
                                             if (Path.GetFileName(fileName) == fileName)
                                                 fileName = Path.Combine(Util.WindowsFontsLocalPath, fileName);
 
-                                            fontPaths[fileName] = null;
+                                            fontPaths.Add(fileName);
                                         }
                                     }
                                 }
 
                                 foreach (string file in Directory.GetFiles(_uri.LocalPath))
                                 {
-                                    fontPaths[file] = null;
+                                    fontPaths.Add(file);
                                 }
-                                files = fontPaths.Keys;
+                                files = fontPaths;
                             }
 }
                         else

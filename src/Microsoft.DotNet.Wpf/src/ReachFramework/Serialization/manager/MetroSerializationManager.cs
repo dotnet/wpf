@@ -1096,7 +1096,7 @@ namespace System.Windows.Xps.Serialization
 
             if (result == null)
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_UnableToInstantiateSerializer));
+                throw new XpsSerializationException(SR.ReachSerialization_UnableToInstantiateSerializer);
             }
 
             return result;

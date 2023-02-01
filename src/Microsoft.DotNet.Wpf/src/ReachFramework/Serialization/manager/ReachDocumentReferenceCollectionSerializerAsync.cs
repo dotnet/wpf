@@ -96,7 +96,7 @@ namespace System.Windows.Xps.Serialization
 
             if (enumerableObject == null)
             {
-                throw new XpsSerializationException(SR.Get(SRID.MustBeOfType, "serializableObjectContext.TargetObject", typeof(System.Collections.Generic.IEnumerable<DocumentReference>)));
+                throw new XpsSerializationException(SR.Format(SR.MustBeOfType, "serializableObjectContext.TargetObject", typeof(System.Collections.Generic.IEnumerable<DocumentReference>)));
             }
 
             SerializeDocumentReferences(serializableObjectContext);
@@ -182,7 +182,7 @@ namespace System.Windows.Xps.Serialization
             else
             {
                 // should we throw if this is not a DocumentReference or just not do anything?
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoSerializer));
+                throw new XpsSerializationException(SR.ReachSerialization_NoSerializer);
             }
         }
     };

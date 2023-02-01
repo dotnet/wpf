@@ -1867,23 +1867,22 @@ namespace System.Windows.Xps.Packaging
             )
         {
             //Extract file extension without '.'
-            String path = imageUri.OriginalString;
-            ReadOnlySpan<char> extension = Path.GetExtension(path).ToLower(CultureInfo.InvariantCulture).AsSpan(1);
-
+            ReadOnlySpan<char> path = imageUri.OriginalString.AsSpan();
+            ReadOnlySpan<char> extension = Path.GetExtension(path).Slice(1);
             ContentType contentType;
-            if (extension.Equals(XpsS0Markup.JpgExtension, StringComparison.Ordinal))
+            if (extension.Equals(XpsS0Markup.JpgExtension, StringComparison.OrdinalIgnoreCase))
             {
-                contentType =  XpsS0Markup.JpgContentType;
+                contentType = XpsS0Markup.JpgContentType;
             }
-            else if (extension.Equals(XpsS0Markup.PngExtension, StringComparison.Ordinal))
+            else if (extension.Equals(XpsS0Markup.PngExtension, StringComparison.OrdinalIgnoreCase))
             {
                 contentType = XpsS0Markup.PngContentType;
             }
-            else if (extension.Equals(XpsS0Markup.TifExtension, StringComparison.Ordinal))
+            else if (extension.Equals(XpsS0Markup.TifExtension, StringComparison.OrdinalIgnoreCase))
             {
                 contentType = XpsS0Markup.TifContentType;
             }
-            else if (extension.Equals(XpsS0Markup.WdpExtension, StringComparison.Ordinal))
+            else if (extension.Equals(XpsS0Markup.WdpExtension, StringComparison.OrdinalIgnoreCase))
             {
                 contentType = XpsS0Markup.WdpContentType;
             }
@@ -1892,9 +1891,8 @@ namespace System.Windows.Xps.Packaging
                 //default to PNG
                 contentType = XpsS0Markup.PngContentType;
             }
-
             return contentType;
-         }
+        }
 
 
         /// <summary>

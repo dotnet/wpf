@@ -470,7 +470,6 @@ namespace System.Windows.Controls
                 _currentToolTip.SetValue(OwnerProperty, o);
                 _currentToolTip.Closed += OnToolTipClosed;
                 _currentToolTip.FromKeyboard = fromKeyboard;
-                _currentToolTip.IsOpen = true;
 
                 if (!_currentToolTip.IsOpen)
                 {

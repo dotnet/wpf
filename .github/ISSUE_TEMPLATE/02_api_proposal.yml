@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        We welcome API proposals! We have a process to evaluate the value and shape of new API. There is an overview of our process [here](https://github.com/dotnet/runtime/blob/main/docs/project/api-review-process.md). This template will help us gather the information we need to start the review process.
+        We welcome API proposals! We have a process to evaluate the value and shape of new API. There is an overview of our process [here](https://github.com/dotnet/wpf/blob/main/Documentation/project/api-review-process.md). This template will help us gather the information we need to start the review process.
   - type: textarea
     id: background
     attributes:

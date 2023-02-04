@@ -2805,875 +2805,875 @@ namespace System.Windows.Markup
             switch (typeID)
             {
                 case KnownElements.AccessText:
-                    if (String.CompareOrdinal(fieldName, "Text") == 0)
+                    if (string.Equals(fieldName, "Text", StringComparison.Ordinal))
                         return (short)KnownProperties.AccessText_Text;
                     break;
                 case KnownElements.AdornedElementPlaceholder:
-                    if (String.CompareOrdinal(fieldName, "Child") == 0)
+                    if (string.Equals(fieldName, "Child", StringComparison.Ordinal))
                         return (short)KnownProperties.AdornedElementPlaceholder_Child;
                     break;
                 case KnownElements.AdornerDecorator:
-                    if (String.CompareOrdinal(fieldName, "Child") == 0)
+                    if (string.Equals(fieldName, "Child", StringComparison.Ordinal))
                         return (short)KnownProperties.AdornerDecorator_Child;
                     break;
                 case KnownElements.AnchoredBlock:
-                    if (String.CompareOrdinal(fieldName, "Blocks") == 0)
+                    if (string.Equals(fieldName, "Blocks", StringComparison.Ordinal))
                         return (short)KnownProperties.AnchoredBlock_Blocks;
                     break;
                 case KnownElements.ArrayExtension:
-                    if (String.CompareOrdinal(fieldName, "Items") == 0)
+                    if (string.Equals(fieldName, "Items", StringComparison.Ordinal))
                         return (short)KnownProperties.ArrayExtension_Items;
                     break;
                 case KnownElements.BeginStoryboard:
-                    if (String.CompareOrdinal(fieldName, "Storyboard") == 0)
+                    if (string.Equals(fieldName, "Storyboard", StringComparison.Ordinal))
                         return (short)KnownProperties.BeginStoryboard_Storyboard;
                     break;
                 case KnownElements.BitmapEffectGroup:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.BitmapEffectGroup_Children;
                     break;
                 case KnownElements.BlockUIContainer:
-                    if (String.CompareOrdinal(fieldName, "Child") == 0)
+                    if (string.Equals(fieldName, "Child", StringComparison.Ordinal))
                         return (short)KnownProperties.BlockUIContainer_Child;
                     break;
                 case KnownElements.Bold:
-                    if (String.CompareOrdinal(fieldName, "Inlines") == 0)
+                    if (string.Equals(fieldName, "Inlines", StringComparison.Ordinal))
                         return (short)KnownProperties.Bold_Inlines;
                     break;
                 case KnownElements.BooleanAnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.BooleanAnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.Border:
-                    if (String.CompareOrdinal(fieldName, "Background") == 0)
+                    if (string.Equals(fieldName, "Background", StringComparison.Ordinal))
                         return (short)KnownProperties.Border_Background;
-                    if (String.CompareOrdinal(fieldName, "BorderBrush") == 0)
+                    if (string.Equals(fieldName, "BorderBrush", StringComparison.Ordinal))
                         return (short)KnownProperties.Border_BorderBrush;
-                    if (String.CompareOrdinal(fieldName, "BorderThickness") == 0)
+                    if (string.Equals(fieldName, "BorderThickness", StringComparison.Ordinal))
                         return (short)KnownProperties.Border_BorderThickness;
-                    if (String.CompareOrdinal(fieldName, "Child") == 0)
+                    if (string.Equals(fieldName, "Child", StringComparison.Ordinal))
                         return (short)KnownProperties.Border_Child;
                     break;
                 case KnownElements.BulletDecorator:
-                    if (String.CompareOrdinal(fieldName, "Child") == 0)
+                    if (string.Equals(fieldName, "Child", StringComparison.Ordinal))
                         return (short)KnownProperties.BulletDecorator_Child;
                     break;
                 case KnownElements.Button:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.Button_Content;
                     break;
                 case KnownElements.ButtonBase:
-                    if (String.CompareOrdinal(fieldName, "Command") == 0)
+                    if (string.Equals(fieldName, "Command", StringComparison.Ordinal))
                         return (short)KnownProperties.ButtonBase_Command;
-                    if (String.CompareOrdinal(fieldName, "CommandParameter") == 0)
+                    if (string.Equals(fieldName, "CommandParameter", StringComparison.Ordinal))
                         return (short)KnownProperties.ButtonBase_CommandParameter;
-                    if (String.CompareOrdinal(fieldName, "CommandTarget") == 0)
+                    if (string.Equals(fieldName, "CommandTarget", StringComparison.Ordinal))
                         return (short)KnownProperties.ButtonBase_CommandTarget;
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.ButtonBase_Content;
-                    if (String.CompareOrdinal(fieldName, "IsPressed") == 0)
+                    if (string.Equals(fieldName, "IsPressed", StringComparison.Ordinal))
                         return (short)KnownProperties.ButtonBase_IsPressed;
                     break;
                 case KnownElements.ByteAnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.ByteAnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.Canvas:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.Canvas_Children;
                     break;
                 case KnownElements.CharAnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.CharAnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.CheckBox:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.CheckBox_Content;
                     break;
                 case KnownElements.ColorAnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.ColorAnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.ColumnDefinition:
-                    if (String.CompareOrdinal(fieldName, "MaxWidth") == 0)
+                    if (string.Equals(fieldName, "MaxWidth", StringComparison.Ordinal))
                         return (short)KnownProperties.ColumnDefinition_MaxWidth;
-                    if (String.CompareOrdinal(fieldName, "MinWidth") == 0)
+                    if (string.Equals(fieldName, "MinWidth", StringComparison.Ordinal))
                         return (short)KnownProperties.ColumnDefinition_MinWidth;
-                    if (String.CompareOrdinal(fieldName, "Width") == 0)
+                    if (string.Equals(fieldName, "Width", StringComparison.Ordinal))
                         return (short)KnownProperties.ColumnDefinition_Width;
                     break;
                 case KnownElements.ComboBox:
-                    if (String.CompareOrdinal(fieldName, "Items") == 0)
+                    if (string.Equals(fieldName, "Items", StringComparison.Ordinal))
                         return (short)KnownProperties.ComboBox_Items;
                     break;
                 case KnownElements.ComboBoxItem:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.ComboBoxItem_Content;
                     break;
                 case KnownElements.ContentControl:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.ContentControl_Content;
-                    if (String.CompareOrdinal(fieldName, "ContentTemplate") == 0)
+                    if (string.Equals(fieldName, "ContentTemplate", StringComparison.Ordinal))
                         return (short)KnownProperties.ContentControl_ContentTemplate;
-                    if (String.CompareOrdinal(fieldName, "ContentTemplateSelector") == 0)
+                    if (string.Equals(fieldName, "ContentTemplateSelector", StringComparison.Ordinal))
                         return (short)KnownProperties.ContentControl_ContentTemplateSelector;
-                    if (String.CompareOrdinal(fieldName, "HasContent") == 0)
+                    if (string.Equals(fieldName, "HasContent", StringComparison.Ordinal))
                         return (short)KnownProperties.ContentControl_HasContent;
                     break;
                 case KnownElements.ContentElement:
-                    if (String.CompareOrdinal(fieldName, "Focusable") == 0)
+                    if (string.Equals(fieldName, "Focusable", StringComparison.Ordinal))
                         return (short)KnownProperties.ContentElement_Focusable;
                     break;
                 case KnownElements.ContentPresenter:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.ContentPresenter_Content;
-                    if (String.CompareOrdinal(fieldName, "ContentSource") == 0)
+                    if (string.Equals(fieldName, "ContentSource", StringComparison.Ordinal))
                         return (short)KnownProperties.ContentPresenter_ContentSource;
-                    if (String.CompareOrdinal(fieldName, "ContentTemplate") == 0)
+                    if (string.Equals(fieldName, "ContentTemplate", StringComparison.Ordinal))
                         return (short)KnownProperties.ContentPresenter_ContentTemplate;
-                    if (String.CompareOrdinal(fieldName, "ContentTemplateSelector") == 0)
+                    if (string.Equals(fieldName, "ContentTemplateSelector", StringComparison.Ordinal))
                         return (short)KnownProperties.ContentPresenter_ContentTemplateSelector;
-                    if (String.CompareOrdinal(fieldName, "RecognizesAccessKey") == 0)
+                    if (string.Equals(fieldName, "RecognizesAccessKey", StringComparison.Ordinal))
                         return (short)KnownProperties.ContentPresenter_RecognizesAccessKey;
                     break;
                 case KnownElements.ContextMenu:
-                    if (String.CompareOrdinal(fieldName, "Items") == 0)
+                    if (string.Equals(fieldName, "Items", StringComparison.Ordinal))
                         return (short)KnownProperties.ContextMenu_Items;
                     break;
                 case KnownElements.Control:
-                    if (String.CompareOrdinal(fieldName, "Background") == 0)
+                    if (string.Equals(fieldName, "Background", StringComparison.Ordinal))
                         return (short)KnownProperties.Control_Background;
-                    if (String.CompareOrdinal(fieldName, "BorderBrush") == 0)
+                    if (string.Equals(fieldName, "BorderBrush", StringComparison.Ordinal))
                         return (short)KnownProperties.Control_BorderBrush;
-                    if (String.CompareOrdinal(fieldName, "BorderThickness") == 0)
+                    if (string.Equals(fieldName, "BorderThickness", StringComparison.Ordinal))
                         return (short)KnownProperties.Control_BorderThickness;
-                    if (String.CompareOrdinal(fieldName, "FontFamily") == 0)
+                    if (string.Equals(fieldName, "FontFamily", StringComparison.Ordinal))
                         return (short)KnownProperties.Control_FontFamily;
-                    if (String.CompareOrdinal(fieldName, "FontSize") == 0)
+                    if (string.Equals(fieldName, "FontSize", StringComparison.Ordinal))
                         return (short)KnownProperties.Control_FontSize;
-                    if (String.CompareOrdinal(fieldName, "FontStretch") == 0)
+                    if (string.Equals(fieldName, "FontStretch", StringComparison.Ordinal))
                         return (short)KnownProperties.Control_FontStretch;
-                    if (String.CompareOrdinal(fieldName, "FontStyle") == 0)
+                    if (string.Equals(fieldName, "FontStyle", StringComparison.Ordinal))
                         return (short)KnownProperties.Control_FontStyle;
-                    if (String.CompareOrdinal(fieldName, "FontWeight") == 0)
+                    if (string.Equals(fieldName, "FontWeight", StringComparison.Ordinal))
                         return (short)KnownProperties.Control_FontWeight;
-                    if (String.CompareOrdinal(fieldName, "Foreground") == 0)
+                    if (string.Equals(fieldName, "Foreground", StringComparison.Ordinal))
                         return (short)KnownProperties.Control_Foreground;
-                    if (String.CompareOrdinal(fieldName, "HorizontalContentAlignment") == 0)
+                    if (string.Equals(fieldName, "HorizontalContentAlignment", StringComparison.Ordinal))
                         return (short)KnownProperties.Control_HorizontalContentAlignment;
-                    if (String.CompareOrdinal(fieldName, "IsTabStop") == 0)
+                    if (string.Equals(fieldName, "IsTabStop", StringComparison.Ordinal))
                         return (short)KnownProperties.Control_IsTabStop;
-                    if (String.CompareOrdinal(fieldName, "Padding") == 0)
+                    if (string.Equals(fieldName, "Padding", StringComparison.Ordinal))
                         return (short)KnownProperties.Control_Padding;
-                    if (String.CompareOrdinal(fieldName, "TabIndex") == 0)
+                    if (string.Equals(fieldName, "TabIndex", StringComparison.Ordinal))
                         return (short)KnownProperties.Control_TabIndex;
-                    if (String.CompareOrdinal(fieldName, "Template") == 0)
+                    if (string.Equals(fieldName, "Template", StringComparison.Ordinal))
                         return (short)KnownProperties.Control_Template;
-                    if (String.CompareOrdinal(fieldName, "VerticalContentAlignment") == 0)
+                    if (string.Equals(fieldName, "VerticalContentAlignment", StringComparison.Ordinal))
                         return (short)KnownProperties.Control_VerticalContentAlignment;
                     break;
                 case KnownElements.ControlTemplate:
-                    if (String.CompareOrdinal(fieldName, "VisualTree") == 0)
+                    if (string.Equals(fieldName, "VisualTree", StringComparison.Ordinal))
                         return (short)KnownProperties.ControlTemplate_VisualTree;
                     break;
                 case KnownElements.DataTemplate:
-                    if (String.CompareOrdinal(fieldName, "VisualTree") == 0)
+                    if (string.Equals(fieldName, "VisualTree", StringComparison.Ordinal))
                         return (short)KnownProperties.DataTemplate_VisualTree;
                     break;
                 case KnownElements.DataTrigger:
-                    if (String.CompareOrdinal(fieldName, "Setters") == 0)
+                    if (string.Equals(fieldName, "Setters", StringComparison.Ordinal))
                         return (short)KnownProperties.DataTrigger_Setters;
                     break;
                 case KnownElements.DecimalAnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.DecimalAnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.Decorator:
-                    if (String.CompareOrdinal(fieldName, "Child") == 0)
+                    if (string.Equals(fieldName, "Child", StringComparison.Ordinal))
                         return (short)KnownProperties.Decorator_Child;
                     break;
                 case KnownElements.DockPanel:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.DockPanel_Children;
-                    if (String.CompareOrdinal(fieldName, "Dock") == 0)
+                    if (string.Equals(fieldName, "Dock", StringComparison.Ordinal))
                         return (short)KnownProperties.DockPanel_Dock;
-                    if (String.CompareOrdinal(fieldName, "LastChildFill") == 0)
+                    if (string.Equals(fieldName, "LastChildFill", StringComparison.Ordinal))
                         return (short)KnownProperties.DockPanel_LastChildFill;
                     break;
                 case KnownElements.DocumentViewer:
-                    if (String.CompareOrdinal(fieldName, "Document") == 0)
+                    if (string.Equals(fieldName, "Document", StringComparison.Ordinal))
                         return (short)KnownProperties.DocumentViewer_Document;
                     break;
                 case KnownElements.DocumentViewerBase:
-                    if (String.CompareOrdinal(fieldName, "Document") == 0)
+                    if (string.Equals(fieldName, "Document", StringComparison.Ordinal))
                         return (short)KnownProperties.DocumentViewerBase_Document;
                     break;
                 case KnownElements.DoubleAnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.DoubleAnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.DrawingGroup:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.DrawingGroup_Children;
                     break;
                 case KnownElements.EventTrigger:
-                    if (String.CompareOrdinal(fieldName, "Actions") == 0)
+                    if (string.Equals(fieldName, "Actions", StringComparison.Ordinal))
                         return (short)KnownProperties.EventTrigger_Actions;
                     break;
                 case KnownElements.Expander:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.Expander_Content;
                     break;
                 case KnownElements.Figure:
-                    if (String.CompareOrdinal(fieldName, "Blocks") == 0)
+                    if (string.Equals(fieldName, "Blocks", StringComparison.Ordinal))
                         return (short)KnownProperties.Figure_Blocks;
                     break;
                 case KnownElements.FixedDocument:
-                    if (String.CompareOrdinal(fieldName, "Pages") == 0)
+                    if (string.Equals(fieldName, "Pages", StringComparison.Ordinal))
                         return (short)KnownProperties.FixedDocument_Pages;
                     break;
                 case KnownElements.FixedDocumentSequence:
-                    if (String.CompareOrdinal(fieldName, "References") == 0)
+                    if (string.Equals(fieldName, "References", StringComparison.Ordinal))
                         return (short)KnownProperties.FixedDocumentSequence_References;
                     break;
                 case KnownElements.FixedPage:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.FixedPage_Children;
                     break;
                 case KnownElements.Floater:
-                    if (String.CompareOrdinal(fieldName, "Blocks") == 0)
+                    if (string.Equals(fieldName, "Blocks", StringComparison.Ordinal))
                         return (short)KnownProperties.Floater_Blocks;
                     break;
                 case KnownElements.FlowDocument:
-                    if (String.CompareOrdinal(fieldName, "Blocks") == 0)
+                    if (string.Equals(fieldName, "Blocks", StringComparison.Ordinal))
                         return (short)KnownProperties.FlowDocument_Blocks;
                     break;
                 case KnownElements.FlowDocumentPageViewer:
-                    if (String.CompareOrdinal(fieldName, "Document") == 0)
+                    if (string.Equals(fieldName, "Document", StringComparison.Ordinal))
                         return (short)KnownProperties.FlowDocumentPageViewer_Document;
                     break;
                 case KnownElements.FlowDocumentReader:
-                    if (String.CompareOrdinal(fieldName, "Document") == 0)
+                    if (string.Equals(fieldName, "Document", StringComparison.Ordinal))
                         return (short)KnownProperties.FlowDocumentReader_Document;
                     break;
                 case KnownElements.FlowDocumentScrollViewer:
-                    if (String.CompareOrdinal(fieldName, "Document") == 0)
+                    if (string.Equals(fieldName, "Document", StringComparison.Ordinal))
                         return (short)KnownProperties.FlowDocumentScrollViewer_Document;
                     break;
                 case KnownElements.FrameworkContentElement:
-                    if (String.CompareOrdinal(fieldName, "Style") == 0)
+                    if (string.Equals(fieldName, "Style", StringComparison.Ordinal))
                         return (short)KnownProperties.FrameworkContentElement_Style;
                     break;
                 case KnownElements.FrameworkElement:
-                    if (String.CompareOrdinal(fieldName, "FlowDirection") == 0)
+                    if (string.Equals(fieldName, "FlowDirection", StringComparison.Ordinal))
                         return (short)KnownProperties.FrameworkElement_FlowDirection;
-                    if (String.CompareOrdinal(fieldName, "Height") == 0)
+                    if (string.Equals(fieldName, "Height", StringComparison.Ordinal))
                         return (short)KnownProperties.FrameworkElement_Height;
-                    if (String.CompareOrdinal(fieldName, "HorizontalAlignment") == 0)
+                    if (string.Equals(fieldName, "HorizontalAlignment", StringComparison.Ordinal))
                         return (short)KnownProperties.FrameworkElement_HorizontalAlignment;
-                    if (String.CompareOrdinal(fieldName, "Margin") == 0)
+                    if (string.Equals(fieldName, "Margin", StringComparison.Ordinal))
                         return (short)KnownProperties.FrameworkElement_Margin;
-                    if (String.CompareOrdinal(fieldName, "MaxHeight") == 0)
+                    if (string.Equals(fieldName, "MaxHeight", StringComparison.Ordinal))
                         return (short)KnownProperties.FrameworkElement_MaxHeight;
-                    if (String.CompareOrdinal(fieldName, "MaxWidth") == 0)
+                    if (string.Equals(fieldName, "MaxWidth", StringComparison.Ordinal))
                         return (short)KnownProperties.FrameworkElement_MaxWidth;
-                    if (String.CompareOrdinal(fieldName, "MinHeight") == 0)
+                    if (string.Equals(fieldName, "MinHeight", StringComparison.Ordinal))
                         return (short)KnownProperties.FrameworkElement_MinHeight;
-                    if (String.CompareOrdinal(fieldName, "MinWidth") == 0)
+                    if (string.Equals(fieldName, "MinWidth", StringComparison.Ordinal))
                         return (short)KnownProperties.FrameworkElement_MinWidth;
-                    if (String.CompareOrdinal(fieldName, "Name") == 0)
+                    if (string.Equals(fieldName, "Name", StringComparison.Ordinal))
                         return (short)KnownProperties.FrameworkElement_Name;
-                    if (String.CompareOrdinal(fieldName, "Style") == 0)
+                    if (string.Equals(fieldName, "Style", StringComparison.Ordinal))
                         return (short)KnownProperties.FrameworkElement_Style;
-                    if (String.CompareOrdinal(fieldName, "VerticalAlignment") == 0)
+                    if (string.Equals(fieldName, "VerticalAlignment", StringComparison.Ordinal))
                         return (short)KnownProperties.FrameworkElement_VerticalAlignment;
-                    if (String.CompareOrdinal(fieldName, "Width") == 0)
+                    if (string.Equals(fieldName, "Width", StringComparison.Ordinal))
                         return (short)KnownProperties.FrameworkElement_Width;
                     break;
                 case KnownElements.FrameworkTemplate:
-                    if (String.CompareOrdinal(fieldName, "VisualTree") == 0)
+                    if (string.Equals(fieldName, "VisualTree", StringComparison.Ordinal))
                         return (short)KnownProperties.FrameworkTemplate_VisualTree;
                     break;
                 case KnownElements.GeneralTransformGroup:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.GeneralTransformGroup_Children;
                     break;
                 case KnownElements.GeometryGroup:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.GeometryGroup_Children;
                     break;
                 case KnownElements.GradientBrush:
-                    if (String.CompareOrdinal(fieldName, "GradientStops") == 0)
+                    if (string.Equals(fieldName, "GradientStops", StringComparison.Ordinal))
                         return (short)KnownProperties.GradientBrush_GradientStops;
                     break;
                 case KnownElements.Grid:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.Grid_Children;
-                    if (String.CompareOrdinal(fieldName, "Column") == 0)
+                    if (string.Equals(fieldName, "Column", StringComparison.Ordinal))
                         return (short)KnownProperties.Grid_Column;
-                    if (String.CompareOrdinal(fieldName, "ColumnSpan") == 0)
+                    if (string.Equals(fieldName, "ColumnSpan", StringComparison.Ordinal))
                         return (short)KnownProperties.Grid_ColumnSpan;
-                    if (String.CompareOrdinal(fieldName, "Row") == 0)
+                    if (string.Equals(fieldName, "Row", StringComparison.Ordinal))
                         return (short)KnownProperties.Grid_Row;
-                    if (String.CompareOrdinal(fieldName, "RowSpan") == 0)
+                    if (string.Equals(fieldName, "RowSpan", StringComparison.Ordinal))
                         return (short)KnownProperties.Grid_RowSpan;
                     break;
                 case KnownElements.GridView:
-                    if (String.CompareOrdinal(fieldName, "Columns") == 0)
+                    if (string.Equals(fieldName, "Columns", StringComparison.Ordinal))
                         return (short)KnownProperties.GridView_Columns;
                     break;
                 case KnownElements.GridViewColumn:
-                    if (String.CompareOrdinal(fieldName, "Header") == 0)
+                    if (string.Equals(fieldName, "Header", StringComparison.Ordinal))
                         return (short)KnownProperties.GridViewColumn_Header;
                     break;
                 case KnownElements.GridViewColumnHeader:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.GridViewColumnHeader_Content;
                     break;
                 case KnownElements.GroupBox:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.GroupBox_Content;
                     break;
                 case KnownElements.GroupItem:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.GroupItem_Content;
                     break;
                 case KnownElements.HeaderedContentControl:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.HeaderedContentControl_Content;
-                    if (String.CompareOrdinal(fieldName, "HasHeader") == 0)
+                    if (string.Equals(fieldName, "HasHeader", StringComparison.Ordinal))
                         return (short)KnownProperties.HeaderedContentControl_HasHeader;
-                    if (String.CompareOrdinal(fieldName, "Header") == 0)
+                    if (string.Equals(fieldName, "Header", StringComparison.Ordinal))
                         return (short)KnownProperties.HeaderedContentControl_Header;
-                    if (String.CompareOrdinal(fieldName, "HeaderTemplate") == 0)
+                    if (string.Equals(fieldName, "HeaderTemplate", StringComparison.Ordinal))
                         return (short)KnownProperties.HeaderedContentControl_HeaderTemplate;
-                    if (String.CompareOrdinal(fieldName, "HeaderTemplateSelector") == 0)
+                    if (string.Equals(fieldName, "HeaderTemplateSelector", StringComparison.Ordinal))
                         return (short)KnownProperties.HeaderedContentControl_HeaderTemplateSelector;
                     break;
                 case KnownElements.HeaderedItemsControl:
-                    if (String.CompareOrdinal(fieldName, "HasHeader") == 0)
+                    if (string.Equals(fieldName, "HasHeader", StringComparison.Ordinal))
                         return (short)KnownProperties.HeaderedItemsControl_HasHeader;
-                    if (String.CompareOrdinal(fieldName, "Header") == 0)
+                    if (string.Equals(fieldName, "Header", StringComparison.Ordinal))
                         return (short)KnownProperties.HeaderedItemsControl_Header;
-                    if (String.CompareOrdinal(fieldName, "HeaderTemplate") == 0)
+                    if (string.Equals(fieldName, "HeaderTemplate", StringComparison.Ordinal))
                         return (short)KnownProperties.HeaderedItemsControl_HeaderTemplate;
-                    if (String.CompareOrdinal(fieldName, "HeaderTemplateSelector") == 0)
+                    if (string.Equals(fieldName, "HeaderTemplateSelector", StringComparison.Ordinal))
                         return (short)KnownProperties.HeaderedItemsControl_HeaderTemplateSelector;
-                    if (String.CompareOrdinal(fieldName, "Items") == 0)
+                    if (string.Equals(fieldName, "Items", StringComparison.Ordinal))
                         return (short)KnownProperties.HeaderedItemsControl_Items;
                     break;
                 case KnownElements.HierarchicalDataTemplate:
-                    if (String.CompareOrdinal(fieldName, "VisualTree") == 0)
+                    if (string.Equals(fieldName, "VisualTree", StringComparison.Ordinal))
                         return (short)KnownProperties.HierarchicalDataTemplate_VisualTree;
                     break;
                 case KnownElements.Hyperlink:
-                    if (String.CompareOrdinal(fieldName, "Inlines") == 0)
+                    if (string.Equals(fieldName, "Inlines", StringComparison.Ordinal))
                         return (short)KnownProperties.Hyperlink_Inlines;
-                    if (String.CompareOrdinal(fieldName, "NavigateUri") == 0)
+                    if (string.Equals(fieldName, "NavigateUri", StringComparison.Ordinal))
                         return (short)KnownProperties.Hyperlink_NavigateUri;
                     break;
                 case KnownElements.Image:
-                    if (String.CompareOrdinal(fieldName, "Source") == 0)
+                    if (string.Equals(fieldName, "Source", StringComparison.Ordinal))
                         return (short)KnownProperties.Image_Source;
-                    if (String.CompareOrdinal(fieldName, "Stretch") == 0)
+                    if (string.Equals(fieldName, "Stretch", StringComparison.Ordinal))
                         return (short)KnownProperties.Image_Stretch;
                     break;
                 case KnownElements.InkCanvas:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.InkCanvas_Children;
                     break;
                 case KnownElements.InkPresenter:
-                    if (String.CompareOrdinal(fieldName, "Child") == 0)
+                    if (string.Equals(fieldName, "Child", StringComparison.Ordinal))
                         return (short)KnownProperties.InkPresenter_Child;
                     break;
                 case KnownElements.InlineUIContainer:
-                    if (String.CompareOrdinal(fieldName, "Child") == 0)
+                    if (string.Equals(fieldName, "Child", StringComparison.Ordinal))
                         return (short)KnownProperties.InlineUIContainer_Child;
                     break;
                 case KnownElements.InputScopeName:
-                    if (String.CompareOrdinal(fieldName, "NameValue") == 0)
+                    if (string.Equals(fieldName, "NameValue", StringComparison.Ordinal))
                         return (short)KnownProperties.InputScopeName_NameValue;
                     break;
                 case KnownElements.Int16AnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.Int16AnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.Int32AnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.Int32AnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.Int64AnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.Int64AnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.Italic:
-                    if (String.CompareOrdinal(fieldName, "Inlines") == 0)
+                    if (string.Equals(fieldName, "Inlines", StringComparison.Ordinal))
                         return (short)KnownProperties.Italic_Inlines;
                     break;
                 case KnownElements.ItemsControl:
-                    if (String.CompareOrdinal(fieldName, "ItemContainerStyle") == 0)
+                    if (string.Equals(fieldName, "ItemContainerStyle", StringComparison.Ordinal))
                         return (short)KnownProperties.ItemsControl_ItemContainerStyle;
-                    if (String.CompareOrdinal(fieldName, "ItemContainerStyleSelector") == 0)
+                    if (string.Equals(fieldName, "ItemContainerStyleSelector", StringComparison.Ordinal))
                         return (short)KnownProperties.ItemsControl_ItemContainerStyleSelector;
-                    if (String.CompareOrdinal(fieldName, "ItemTemplate") == 0)
+                    if (string.Equals(fieldName, "ItemTemplate", StringComparison.Ordinal))
                         return (short)KnownProperties.ItemsControl_ItemTemplate;
-                    if (String.CompareOrdinal(fieldName, "ItemTemplateSelector") == 0)
+                    if (string.Equals(fieldName, "ItemTemplateSelector", StringComparison.Ordinal))
                         return (short)KnownProperties.ItemsControl_ItemTemplateSelector;
-                    if (String.CompareOrdinal(fieldName, "Items") == 0)
+                    if (string.Equals(fieldName, "Items", StringComparison.Ordinal))
                         return (short)KnownProperties.ItemsControl_Items;
-                    if (String.CompareOrdinal(fieldName, "ItemsPanel") == 0)
+                    if (string.Equals(fieldName, "ItemsPanel", StringComparison.Ordinal))
                         return (short)KnownProperties.ItemsControl_ItemsPanel;
-                    if (String.CompareOrdinal(fieldName, "ItemsSource") == 0)
+                    if (string.Equals(fieldName, "ItemsSource", StringComparison.Ordinal))
                         return (short)KnownProperties.ItemsControl_ItemsSource;
                     break;
                 case KnownElements.ItemsPanelTemplate:
-                    if (String.CompareOrdinal(fieldName, "VisualTree") == 0)
+                    if (string.Equals(fieldName, "VisualTree", StringComparison.Ordinal))
                         return (short)KnownProperties.ItemsPanelTemplate_VisualTree;
                     break;
                 case KnownElements.Label:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.Label_Content;
                     break;
                 case KnownElements.LinearGradientBrush:
-                    if (String.CompareOrdinal(fieldName, "GradientStops") == 0)
+                    if (string.Equals(fieldName, "GradientStops", StringComparison.Ordinal))
                         return (short)KnownProperties.LinearGradientBrush_GradientStops;
                     break;
                 case KnownElements.List:
-                    if (String.CompareOrdinal(fieldName, "ListItems") == 0)
+                    if (string.Equals(fieldName, "ListItems", StringComparison.Ordinal))
                         return (short)KnownProperties.List_ListItems;
                     break;
                 case KnownElements.ListBox:
-                    if (String.CompareOrdinal(fieldName, "Items") == 0)
+                    if (string.Equals(fieldName, "Items", StringComparison.Ordinal))
                         return (short)KnownProperties.ListBox_Items;
                     break;
                 case KnownElements.ListBoxItem:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.ListBoxItem_Content;
                     break;
                 case KnownElements.ListItem:
-                    if (String.CompareOrdinal(fieldName, "Blocks") == 0)
+                    if (string.Equals(fieldName, "Blocks", StringComparison.Ordinal))
                         return (short)KnownProperties.ListItem_Blocks;
                     break;
                 case KnownElements.ListView:
-                    if (String.CompareOrdinal(fieldName, "Items") == 0)
+                    if (string.Equals(fieldName, "Items", StringComparison.Ordinal))
                         return (short)KnownProperties.ListView_Items;
                     break;
                 case KnownElements.ListViewItem:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.ListViewItem_Content;
                     break;
                 case KnownElements.MaterialGroup:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.MaterialGroup_Children;
                     break;
                 case KnownElements.MatrixAnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.MatrixAnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.Menu:
-                    if (String.CompareOrdinal(fieldName, "Items") == 0)
+                    if (string.Equals(fieldName, "Items", StringComparison.Ordinal))
                         return (short)KnownProperties.Menu_Items;
                     break;
                 case KnownElements.MenuBase:
-                    if (String.CompareOrdinal(fieldName, "Items") == 0)
+                    if (string.Equals(fieldName, "Items", StringComparison.Ordinal))
                         return (short)KnownProperties.MenuBase_Items;
                     break;
                 case KnownElements.MenuItem:
-                    if (String.CompareOrdinal(fieldName, "Items") == 0)
+                    if (string.Equals(fieldName, "Items", StringComparison.Ordinal))
                         return (short)KnownProperties.MenuItem_Items;
                     break;
                 case KnownElements.Model3DGroup:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.Model3DGroup_Children;
                     break;
                 case KnownElements.ModelVisual3D:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.ModelVisual3D_Children;
                     break;
                 case KnownElements.MultiBinding:
-                    if (String.CompareOrdinal(fieldName, "Bindings") == 0)
+                    if (string.Equals(fieldName, "Bindings", StringComparison.Ordinal))
                         return (short)KnownProperties.MultiBinding_Bindings;
                     break;
                 case KnownElements.MultiDataTrigger:
-                    if (String.CompareOrdinal(fieldName, "Setters") == 0)
+                    if (string.Equals(fieldName, "Setters", StringComparison.Ordinal))
                         return (short)KnownProperties.MultiDataTrigger_Setters;
                     break;
                 case KnownElements.MultiTrigger:
-                    if (String.CompareOrdinal(fieldName, "Setters") == 0)
+                    if (string.Equals(fieldName, "Setters", StringComparison.Ordinal))
                         return (short)KnownProperties.MultiTrigger_Setters;
                     break;
                 case KnownElements.ObjectAnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.ObjectAnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.Page:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.Page_Content;
                     break;
                 case KnownElements.PageContent:
-                    if (String.CompareOrdinal(fieldName, "Child") == 0)
+                    if (string.Equals(fieldName, "Child", StringComparison.Ordinal))
                         return (short)KnownProperties.PageContent_Child;
                     break;
                 case KnownElements.PageFunctionBase:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.PageFunctionBase_Content;
                     break;
                 case KnownElements.Panel:
-                    if (String.CompareOrdinal(fieldName, "Background") == 0)
+                    if (string.Equals(fieldName, "Background", StringComparison.Ordinal))
                         return (short)KnownProperties.Panel_Background;
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.Panel_Children;
                     break;
                 case KnownElements.Paragraph:
-                    if (String.CompareOrdinal(fieldName, "Inlines") == 0)
+                    if (string.Equals(fieldName, "Inlines", StringComparison.Ordinal))
                         return (short)KnownProperties.Paragraph_Inlines;
                     break;
                 case KnownElements.ParallelTimeline:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.ParallelTimeline_Children;
                     break;
                 case KnownElements.Path:
-                    if (String.CompareOrdinal(fieldName, "Data") == 0)
+                    if (string.Equals(fieldName, "Data", StringComparison.Ordinal))
                         return (short)KnownProperties.Path_Data;
                     break;
                 case KnownElements.PathFigure:
-                    if (String.CompareOrdinal(fieldName, "Segments") == 0)
+                    if (string.Equals(fieldName, "Segments", StringComparison.Ordinal))
                         return (short)KnownProperties.PathFigure_Segments;
                     break;
                 case KnownElements.PathGeometry:
-                    if (String.CompareOrdinal(fieldName, "Figures") == 0)
+                    if (string.Equals(fieldName, "Figures", StringComparison.Ordinal))
                         return (short)KnownProperties.PathGeometry_Figures;
                     break;
                 case KnownElements.Point3DAnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.Point3DAnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.PointAnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.PointAnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.Popup:
-                    if (String.CompareOrdinal(fieldName, "Child") == 0)
+                    if (string.Equals(fieldName, "Child", StringComparison.Ordinal))
                         return (short)KnownProperties.Popup_Child;
-                    if (String.CompareOrdinal(fieldName, "IsOpen") == 0)
+                    if (string.Equals(fieldName, "IsOpen", StringComparison.Ordinal))
                         return (short)KnownProperties.Popup_IsOpen;
-                    if (String.CompareOrdinal(fieldName, "Placement") == 0)
+                    if (string.Equals(fieldName, "Placement", StringComparison.Ordinal))
                         return (short)KnownProperties.Popup_Placement;
-                    if (String.CompareOrdinal(fieldName, "PopupAnimation") == 0)
+                    if (string.Equals(fieldName, "PopupAnimation", StringComparison.Ordinal))
                         return (short)KnownProperties.Popup_PopupAnimation;
                     break;
                 case KnownElements.PriorityBinding:
-                    if (String.CompareOrdinal(fieldName, "Bindings") == 0)
+                    if (string.Equals(fieldName, "Bindings", StringComparison.Ordinal))
                         return (short)KnownProperties.PriorityBinding_Bindings;
                     break;
                 case KnownElements.QuaternionAnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.QuaternionAnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.RadialGradientBrush:
-                    if (String.CompareOrdinal(fieldName, "GradientStops") == 0)
+                    if (string.Equals(fieldName, "GradientStops", StringComparison.Ordinal))
                         return (short)KnownProperties.RadialGradientBrush_GradientStops;
                     break;
                 case KnownElements.RadioButton:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.RadioButton_Content;
                     break;
                 case KnownElements.RectAnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.RectAnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.RepeatButton:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.RepeatButton_Content;
                     break;
                 case KnownElements.RichTextBox:
-                    if (String.CompareOrdinal(fieldName, "Document") == 0)
+                    if (string.Equals(fieldName, "Document", StringComparison.Ordinal))
                         return (short)KnownProperties.RichTextBox_Document;
-                    if (String.CompareOrdinal(fieldName, "IsReadOnly") == 0)
+                    if (string.Equals(fieldName, "IsReadOnly", StringComparison.Ordinal))
                         return (short)KnownProperties.RichTextBox_IsReadOnly;
                     break;
                 case KnownElements.Rotation3DAnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.Rotation3DAnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.RowDefinition:
-                    if (String.CompareOrdinal(fieldName, "Height") == 0)
+                    if (string.Equals(fieldName, "Height", StringComparison.Ordinal))
                         return (short)KnownProperties.RowDefinition_Height;
-                    if (String.CompareOrdinal(fieldName, "MaxHeight") == 0)
+                    if (string.Equals(fieldName, "MaxHeight", StringComparison.Ordinal))
                         return (short)KnownProperties.RowDefinition_MaxHeight;
-                    if (String.CompareOrdinal(fieldName, "MinHeight") == 0)
+                    if (string.Equals(fieldName, "MinHeight", StringComparison.Ordinal))
                         return (short)KnownProperties.RowDefinition_MinHeight;
                     break;
                 case KnownElements.Run:
-                    if (String.CompareOrdinal(fieldName, "Text") == 0)
+                    if (string.Equals(fieldName, "Text", StringComparison.Ordinal))
                         return (short)KnownProperties.Run_Text;
                     break;
                 case KnownElements.ScrollViewer:
-                    if (String.CompareOrdinal(fieldName, "CanContentScroll") == 0)
+                    if (string.Equals(fieldName, "CanContentScroll", StringComparison.Ordinal))
                         return (short)KnownProperties.ScrollViewer_CanContentScroll;
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.ScrollViewer_Content;
-                    if (String.CompareOrdinal(fieldName, "HorizontalScrollBarVisibility") == 0)
+                    if (string.Equals(fieldName, "HorizontalScrollBarVisibility", StringComparison.Ordinal))
                         return (short)KnownProperties.ScrollViewer_HorizontalScrollBarVisibility;
-                    if (String.CompareOrdinal(fieldName, "VerticalScrollBarVisibility") == 0)
+                    if (string.Equals(fieldName, "VerticalScrollBarVisibility", StringComparison.Ordinal))
                         return (short)KnownProperties.ScrollViewer_VerticalScrollBarVisibility;
                     break;
                 case KnownElements.Section:
-                    if (String.CompareOrdinal(fieldName, "Blocks") == 0)
+                    if (string.Equals(fieldName, "Blocks", StringComparison.Ordinal))
                         return (short)KnownProperties.Section_Blocks;
                     break;
                 case KnownElements.Selector:
-                    if (String.CompareOrdinal(fieldName, "Items") == 0)
+                    if (string.Equals(fieldName, "Items", StringComparison.Ordinal))
                         return (short)KnownProperties.Selector_Items;
                     break;
                 case KnownElements.Shape:
-                    if (String.CompareOrdinal(fieldName, "Fill") == 0)
+                    if (string.Equals(fieldName, "Fill", StringComparison.Ordinal))
                         return (short)KnownProperties.Shape_Fill;
-                    if (String.CompareOrdinal(fieldName, "Stroke") == 0)
+                    if (string.Equals(fieldName, "Stroke", StringComparison.Ordinal))
                         return (short)KnownProperties.Shape_Stroke;
-                    if (String.CompareOrdinal(fieldName, "StrokeThickness") == 0)
+                    if (string.Equals(fieldName, "StrokeThickness", StringComparison.Ordinal))
                         return (short)KnownProperties.Shape_StrokeThickness;
                     break;
                 case KnownElements.SingleAnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.SingleAnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.SizeAnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.SizeAnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.Span:
-                    if (String.CompareOrdinal(fieldName, "Inlines") == 0)
+                    if (string.Equals(fieldName, "Inlines", StringComparison.Ordinal))
                         return (short)KnownProperties.Span_Inlines;
                     break;
                 case KnownElements.StackPanel:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.StackPanel_Children;
                     break;
                 case KnownElements.StatusBar:
-                    if (String.CompareOrdinal(fieldName, "Items") == 0)
+                    if (string.Equals(fieldName, "Items", StringComparison.Ordinal))
                         return (short)KnownProperties.StatusBar_Items;
                     break;
                 case KnownElements.StatusBarItem:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.StatusBarItem_Content;
                     break;
                 case KnownElements.Storyboard:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.Storyboard_Children;
                     break;
                 case KnownElements.StringAnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.StringAnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.Style:
-                    if (String.CompareOrdinal(fieldName, "Setters") == 0)
+                    if (string.Equals(fieldName, "Setters", StringComparison.Ordinal))
                         return (short)KnownProperties.Style_Setters;
                     break;
                 case KnownElements.TabControl:
-                    if (String.CompareOrdinal(fieldName, "Items") == 0)
+                    if (string.Equals(fieldName, "Items", StringComparison.Ordinal))
                         return (short)KnownProperties.TabControl_Items;
                     break;
                 case KnownElements.TabItem:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.TabItem_Content;
                     break;
                 case KnownElements.TabPanel:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.TabPanel_Children;
                     break;
                 case KnownElements.Table:
-                    if (String.CompareOrdinal(fieldName, "RowGroups") == 0)
+                    if (string.Equals(fieldName, "RowGroups", StringComparison.Ordinal))
                         return (short)KnownProperties.Table_RowGroups;
                     break;
                 case KnownElements.TableCell:
-                    if (String.CompareOrdinal(fieldName, "Blocks") == 0)
+                    if (string.Equals(fieldName, "Blocks", StringComparison.Ordinal))
                         return (short)KnownProperties.TableCell_Blocks;
                     break;
                 case KnownElements.TableRow:
-                    if (String.CompareOrdinal(fieldName, "Cells") == 0)
+                    if (string.Equals(fieldName, "Cells", StringComparison.Ordinal))
                         return (short)KnownProperties.TableRow_Cells;
                     break;
                 case KnownElements.TableRowGroup:
-                    if (String.CompareOrdinal(fieldName, "Rows") == 0)
+                    if (string.Equals(fieldName, "Rows", StringComparison.Ordinal))
                         return (short)KnownProperties.TableRowGroup_Rows;
                     break;
                 case KnownElements.TextBlock:
-                    if (String.CompareOrdinal(fieldName, "Background") == 0)
+                    if (string.Equals(fieldName, "Background", StringComparison.Ordinal))
                         return (short)KnownProperties.TextBlock_Background;
-                    if (String.CompareOrdinal(fieldName, "FontFamily") == 0)
+                    if (string.Equals(fieldName, "FontFamily", StringComparison.Ordinal))
                         return (short)KnownProperties.TextBlock_FontFamily;
-                    if (String.CompareOrdinal(fieldName, "FontSize") == 0)
+                    if (string.Equals(fieldName, "FontSize", StringComparison.Ordinal))
                         return (short)KnownProperties.TextBlock_FontSize;
-                    if (String.CompareOrdinal(fieldName, "FontStretch") == 0)
+                    if (string.Equals(fieldName, "FontStretch", StringComparison.Ordinal))
                         return (short)KnownProperties.TextBlock_FontStretch;
-                    if (String.CompareOrdinal(fieldName, "FontStyle") == 0)
+                    if (string.Equals(fieldName, "FontStyle", StringComparison.Ordinal))
                         return (short)KnownProperties.TextBlock_FontStyle;
-                    if (String.CompareOrdinal(fieldName, "FontWeight") == 0)
+                    if (string.Equals(fieldName, "FontWeight", StringComparison.Ordinal))
                         return (short)KnownProperties.TextBlock_FontWeight;
-                    if (String.CompareOrdinal(fieldName, "Foreground") == 0)
+                    if (string.Equals(fieldName, "Foreground", StringComparison.Ordinal))
                         return (short)KnownProperties.TextBlock_Foreground;
-                    if (String.CompareOrdinal(fieldName, "Inlines") == 0)
+                    if (string.Equals(fieldName, "Inlines", StringComparison.Ordinal))
                         return (short)KnownProperties.TextBlock_Inlines;
-                    if (String.CompareOrdinal(fieldName, "Text") == 0)
+                    if (string.Equals(fieldName, "Text", StringComparison.Ordinal))
                         return (short)KnownProperties.TextBlock_Text;
-                    if (String.CompareOrdinal(fieldName, "TextDecorations") == 0)
+                    if (string.Equals(fieldName, "TextDecorations", StringComparison.Ordinal))
                         return (short)KnownProperties.TextBlock_TextDecorations;
-                    if (String.CompareOrdinal(fieldName, "TextTrimming") == 0)
+                    if (string.Equals(fieldName, "TextTrimming", StringComparison.Ordinal))
                         return (short)KnownProperties.TextBlock_TextTrimming;
-                    if (String.CompareOrdinal(fieldName, "TextWrapping") == 0)
+                    if (string.Equals(fieldName, "TextWrapping", StringComparison.Ordinal))
                         return (short)KnownProperties.TextBlock_TextWrapping;
                     break;
                 case KnownElements.TextBox:
-                    if (String.CompareOrdinal(fieldName, "Text") == 0)
+                    if (string.Equals(fieldName, "Text", StringComparison.Ordinal))
                         return (short)KnownProperties.TextBox_Text;
-                    if (String.CompareOrdinal(fieldName, "IsReadOnly") == 0)
+                    if (string.Equals(fieldName, "IsReadOnly", StringComparison.Ordinal))
                         return (short)KnownProperties.TextBox_IsReadOnly;
                     break;
                 case KnownElements.TextElement:
-                    if (String.CompareOrdinal(fieldName, "Background") == 0)
+                    if (string.Equals(fieldName, "Background", StringComparison.Ordinal))
                         return (short)KnownProperties.TextElement_Background;
-                    if (String.CompareOrdinal(fieldName, "FontFamily") == 0)
+                    if (string.Equals(fieldName, "FontFamily", StringComparison.Ordinal))
                         return (short)KnownProperties.TextElement_FontFamily;
-                    if (String.CompareOrdinal(fieldName, "FontSize") == 0)
+                    if (string.Equals(fieldName, "FontSize", StringComparison.Ordinal))
                         return (short)KnownProperties.TextElement_FontSize;
-                    if (String.CompareOrdinal(fieldName, "FontStretch") == 0)
+                    if (string.Equals(fieldName, "FontStretch", StringComparison.Ordinal))
                         return (short)KnownProperties.TextElement_FontStretch;
-                    if (String.CompareOrdinal(fieldName, "FontStyle") == 0)
+                    if (string.Equals(fieldName, "FontStyle", StringComparison.Ordinal))
                         return (short)KnownProperties.TextElement_FontStyle;
-                    if (String.CompareOrdinal(fieldName, "FontWeight") == 0)
+                    if (string.Equals(fieldName, "FontWeight", StringComparison.Ordinal))
                         return (short)KnownProperties.TextElement_FontWeight;
-                    if (String.CompareOrdinal(fieldName, "Foreground") == 0)
+                    if (string.Equals(fieldName, "Foreground", StringComparison.Ordinal))
                         return (short)KnownProperties.TextElement_Foreground;
                     break;
                 case KnownElements.ThicknessAnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.ThicknessAnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.TimelineGroup:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.TimelineGroup_Children;
                     break;
                 case KnownElements.ToggleButton:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.ToggleButton_Content;
                     break;
                 case KnownElements.ToolBar:
-                    if (String.CompareOrdinal(fieldName, "Items") == 0)
+                    if (string.Equals(fieldName, "Items", StringComparison.Ordinal))
                         return (short)KnownProperties.ToolBar_Items;
                     break;
                 case KnownElements.ToolBarOverflowPanel:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.ToolBarOverflowPanel_Children;
                     break;
                 case KnownElements.ToolBarPanel:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.ToolBarPanel_Children;
                     break;
                 case KnownElements.ToolBarTray:
-                    if (String.CompareOrdinal(fieldName, "ToolBars") == 0)
+                    if (string.Equals(fieldName, "ToolBars", StringComparison.Ordinal))
                         return (short)KnownProperties.ToolBarTray_ToolBars;
                     break;
                 case KnownElements.ToolTip:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.ToolTip_Content;
                     break;
                 case KnownElements.Track:
-                    if (String.CompareOrdinal(fieldName, "IsDirectionReversed") == 0)
+                    if (string.Equals(fieldName, "IsDirectionReversed", StringComparison.Ordinal))
                         return (short)KnownProperties.Track_IsDirectionReversed;
-                    if (String.CompareOrdinal(fieldName, "Maximum") == 0)
+                    if (string.Equals(fieldName, "Maximum", StringComparison.Ordinal))
                         return (short)KnownProperties.Track_Maximum;
-                    if (String.CompareOrdinal(fieldName, "Minimum") == 0)
+                    if (string.Equals(fieldName, "Minimum", StringComparison.Ordinal))
                         return (short)KnownProperties.Track_Minimum;
-                    if (String.CompareOrdinal(fieldName, "Orientation") == 0)
+                    if (string.Equals(fieldName, "Orientation", StringComparison.Ordinal))
                         return (short)KnownProperties.Track_Orientation;
-                    if (String.CompareOrdinal(fieldName, "Value") == 0)
+                    if (string.Equals(fieldName, "Value", StringComparison.Ordinal))
                         return (short)KnownProperties.Track_Value;
-                    if (String.CompareOrdinal(fieldName, "ViewportSize") == 0)
+                    if (string.Equals(fieldName, "ViewportSize", StringComparison.Ordinal))
                         return (short)KnownProperties.Track_ViewportSize;
                     break;
                 case KnownElements.Transform3DGroup:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.Transform3DGroup_Children;
                     break;
                 case KnownElements.TransformGroup:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.TransformGroup_Children;
                     break;
                 case KnownElements.TreeView:
-                    if (String.CompareOrdinal(fieldName, "Items") == 0)
+                    if (string.Equals(fieldName, "Items", StringComparison.Ordinal))
                         return (short)KnownProperties.TreeView_Items;
                     break;
                 case KnownElements.TreeViewItem:
-                    if (String.CompareOrdinal(fieldName, "Items") == 0)
+                    if (string.Equals(fieldName, "Items", StringComparison.Ordinal))
                         return (short)KnownProperties.TreeViewItem_Items;
                     break;
                 case KnownElements.Trigger:
-                    if (String.CompareOrdinal(fieldName, "Setters") == 0)
+                    if (string.Equals(fieldName, "Setters", StringComparison.Ordinal))
                         return (short)KnownProperties.Trigger_Setters;
                     break;
                 case KnownElements.UIElement:
-                    if (String.CompareOrdinal(fieldName, "ClipToBounds") == 0)
+                    if (string.Equals(fieldName, "ClipToBounds", StringComparison.Ordinal))
                         return (short)KnownProperties.UIElement_ClipToBounds;
-                    if (String.CompareOrdinal(fieldName, "Focusable") == 0)
+                    if (string.Equals(fieldName, "Focusable", StringComparison.Ordinal))
                         return (short)KnownProperties.UIElement_Focusable;
-                    if (String.CompareOrdinal(fieldName, "IsEnabled") == 0)
+                    if (string.Equals(fieldName, "IsEnabled", StringComparison.Ordinal))
                         return (short)KnownProperties.UIElement_IsEnabled;
-                    if (String.CompareOrdinal(fieldName, "RenderTransform") == 0)
+                    if (string.Equals(fieldName, "RenderTransform", StringComparison.Ordinal))
                         return (short)KnownProperties.UIElement_RenderTransform;
-                    if (String.CompareOrdinal(fieldName, "Visibility") == 0)
+                    if (string.Equals(fieldName, "Visibility", StringComparison.Ordinal))
                         return (short)KnownProperties.UIElement_Visibility;
                     break;
                 case KnownElements.Underline:
-                    if (String.CompareOrdinal(fieldName, "Inlines") == 0)
+                    if (string.Equals(fieldName, "Inlines", StringComparison.Ordinal))
                         return (short)KnownProperties.Underline_Inlines;
                     break;
                 case KnownElements.UniformGrid:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.UniformGrid_Children;
                     break;
                 case KnownElements.UserControl:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.UserControl_Content;
                     break;
                 case KnownElements.Vector3DAnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.Vector3DAnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.VectorAnimationUsingKeyFrames:
-                    if (String.CompareOrdinal(fieldName, "KeyFrames") == 0)
+                    if (string.Equals(fieldName, "KeyFrames", StringComparison.Ordinal))
                         return (short)KnownProperties.VectorAnimationUsingKeyFrames_KeyFrames;
                     break;
                 case KnownElements.Viewbox:
-                    if (String.CompareOrdinal(fieldName, "Child") == 0)
+                    if (string.Equals(fieldName, "Child", StringComparison.Ordinal))
                         return (short)KnownProperties.Viewbox_Child;
                     break;
                 case KnownElements.Viewport3D:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.Viewport3D_Children;
                     break;
                 case KnownElements.Viewport3DVisual:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.Viewport3DVisual_Children;
                     break;
                 case KnownElements.VirtualizingPanel:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.VirtualizingPanel_Children;
                     break;
                 case KnownElements.VirtualizingStackPanel:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.VirtualizingStackPanel_Children;
                     break;
                 case KnownElements.Window:
-                    if (String.CompareOrdinal(fieldName, "Content") == 0)
+                    if (string.Equals(fieldName, "Content", StringComparison.Ordinal))
                         return (short)KnownProperties.Window_Content;
                     break;
                 case KnownElements.WrapPanel:
-                    if (String.CompareOrdinal(fieldName, "Children") == 0)
+                    if (string.Equals(fieldName, "Children", StringComparison.Ordinal))
                         return (short)KnownProperties.WrapPanel_Children;
                     break;
                 case KnownElements.XmlDataProvider:
-                    if (String.CompareOrdinal(fieldName, "XmlSerializer") == 0)
+                    if (string.Equals(fieldName, "XmlSerializer", StringComparison.Ordinal))
                         return (short)KnownProperties.XmlDataProvider_XmlSerializer;
                     break;
             }
@@ -3682,12 +3682,12 @@ namespace System.Windows.Markup
 
         private static bool IsStandardLengthProp(string propName)
         {
-            return (String.CompareOrdinal(propName, "Width") == 0 ||
-                String.CompareOrdinal(propName, "MinWidth") == 0 ||
-                String.CompareOrdinal(propName, "MaxWidth") == 0 ||
-                String.CompareOrdinal(propName, "Height") == 0 ||
-                String.CompareOrdinal(propName, "MinHeight") == 0 ||
-                String.CompareOrdinal(propName, "MaxHeight") == 0);
+            return (string.Equals(propName, "Width", StringComparison.Ordinal) ||
+                string.Equals(propName, "MinWidth", StringComparison.Ordinal) ||
+                string.Equals(propName, "MaxWidth", StringComparison.Ordinal) ||
+                string.Equals(propName, "Height", StringComparison.Ordinal) ||
+                string.Equals(propName, "MinHeight", StringComparison.Ordinal) ||
+                string.Equals(propName, "MaxHeight", StringComparison.Ordinal));
         }
 
         // Look for a converter type that is associated with a known type.

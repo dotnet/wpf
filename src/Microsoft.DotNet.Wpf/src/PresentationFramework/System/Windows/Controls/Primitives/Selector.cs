@@ -1857,7 +1857,7 @@ namespace System.Windows.Controls.Primitives
         }
 
         /// <summary>
-        /// Returns false if FrameworkElement representing this item has Selector.SelectableProperty set to false.  True otherwise.
+        /// Returns false if FrameworkElement representing this item is not selectable. True otherwise. If the FrameworkElement is Separator or null, we return False.
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>

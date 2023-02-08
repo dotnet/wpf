@@ -286,15 +286,15 @@ namespace System.Windows.Markup.Localizer
             {
                 throw new ArgumentOutOfRangeException(
                     "arrayIndex", 
-                    SR.Get(SRID.ParameterCannotBeNegative)
+                    SR.ParameterCannotBeNegative
                 );
             }
 
             if (arrayIndex >= array.Length)
             {
                 throw new ArgumentException(
-                    SR.Get(
-                        SRID.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, 
+                    SR.Format(
+                        SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, 
                         "arrayIndex", 
                         "array"
                     ),
@@ -305,8 +305,8 @@ namespace System.Windows.Markup.Localizer
             if (Count > (array.Length - arrayIndex))
             {
                 throw new ArgumentException(
-                    SR.Get(
-                        SRID.Collection_CopyTo_NumberOfElementsExceedsArrayLength, 
+                    SR.Format(
+                        SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, 
                         "arrayIndex", 
                         "array"
                     )
@@ -367,8 +367,8 @@ namespace System.Windows.Markup.Localizer
             if (array != null && array.Rank != 1)
             {
                 throw new ArgumentException(
-                    SR.Get(
-                      SRID.Collection_CopyTo_ArrayCannotBeMultidimensional
+                    SR.Format(
+                      SR.Collection_CopyTo_ArrayCannotBeMultidimensional
                     ), 
                     "array"
                 );

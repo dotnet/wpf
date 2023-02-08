@@ -1084,7 +1084,7 @@ namespace System.Windows.Controls
 
             if (isSelected && !row.IsSelectable)
             {
-                throw new InvalidOperationException(SR.Get(SRID.DataGridRow_CannotSelectRowWhenCells));
+                throw new InvalidOperationException(SR.DataGridRow_CannotSelectRowWhenCells);
             }
 
             DataGrid grid = row.DataGridOwner;

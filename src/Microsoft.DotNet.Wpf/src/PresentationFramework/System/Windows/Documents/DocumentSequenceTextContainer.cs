@@ -364,13 +364,13 @@ namespace System.Windows.Documents
 
             if (position.TextContainer != this)
             {
-                throw new ArgumentException(SR.Get(SRID.NotInAssociatedContainer, "position"));
+                throw new ArgumentException(SR.Format(SR.NotInAssociatedContainer, "position"));
             }
 
             DocumentSequenceTextPointer tp = position as DocumentSequenceTextPointer;
             if (tp == null)
             {
-                throw new ArgumentException(SR.Get(SRID.BadFixedTextPosition, "position"));
+                throw new ArgumentException(SR.Format(SR.BadFixedTextPosition, "position"));
             }
 
             return tp;
@@ -613,7 +613,7 @@ namespace System.Windows.Documents
             {
                 if (args.NewItems.Count != 1)
                 {
-                    throw new NotSupportedException(SR.Get(SRID.RangeActionsNotSupported));
+                    throw new NotSupportedException(SR.RangeActionsNotSupported);
                 }
                 else
                 {
@@ -622,7 +622,7 @@ namespace System.Windows.Documents
 
                         if (startingIndex != _parent.References.Count - 1)
                         {
-                            throw new NotSupportedException(SR.Get(SRID.UnexpectedCollectionChangeAction, args.Action));
+                            throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, args.Action));
                         }
 
                         ChildDocumentBlock newBlock = new ChildDocumentBlock(this, (DocumentReference)item);
@@ -652,7 +652,7 @@ namespace System.Windows.Documents
             }
             else
             {
-                throw new NotSupportedException(SR.Get(SRID.UnexpectedCollectionChangeAction, args.Action));
+                throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, args.Action));
             }
         }
 

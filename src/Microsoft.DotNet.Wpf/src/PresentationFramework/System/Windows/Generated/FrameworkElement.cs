@@ -24,7 +24,6 @@ using System.Windows.Media;
 using System.Windows.Markup;
 
 using SR=System.Windows.SR;
-using SRID=System.Windows.SRID;
 
 namespace System.Windows
 {
@@ -75,7 +74,7 @@ namespace System.Windows
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.NameScopeNotFound, name, "register"));
+                throw new InvalidOperationException(SR.Format(SR.NameScopeNotFound, name, "register"));
             }
         }
 
@@ -93,7 +92,7 @@ namespace System.Windows
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.NameScopeNotFound, name, "unregister"));
+                throw new InvalidOperationException(SR.Format(SR.NameScopeNotFound, name, "unregister"));
             }
         }
 
@@ -196,7 +195,7 @@ namespace System.Windows
                 // might be iterating during a property invalidation tree walk.
                 if (IsLogicalChildrenIterationInProgress)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotModifyLogicalChildrenDuringTreeWalk));
+                    throw new InvalidOperationException(SR.CannotModifyLogicalChildrenDuringTreeWalk);
                 }
 
                 // Now that the child is going to be added, the FE/FCE construction is considered finished,
@@ -244,7 +243,7 @@ namespace System.Windows
                 // might be iterating during a property invalidation tree walk.
                 if (IsLogicalChildrenIterationInProgress)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotModifyLogicalChildrenDuringTreeWalk));
+                    throw new InvalidOperationException(SR.CannotModifyLogicalChildrenDuringTreeWalk);
                 }
 
                 // Child is present
@@ -307,13 +306,13 @@ namespace System.Windows
             // This mitigates illegal tree state caused by logical child stealing as illustrated in bug 970706
             if (_parent != null && newParent != null && _parent != newParent)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.HasLogicalParent));
+                throw new System.InvalidOperationException(SR.HasLogicalParent);
             }
 
             // Trivial check to avoid loops
             if (newParent == this)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.CannotBeSelfParent));
+                throw new System.InvalidOperationException(SR.CannotBeSelfParent);
             }
 
             // invalid during a VisualTreeChanged event
@@ -632,7 +631,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CyclicStyleReferenceDetected, this));
+                    throw new InvalidOperationException(SR.Format(SR.CyclicStyleReferenceDetected, this));
                 }
             }
         }
@@ -686,7 +685,7 @@ namespace System.Windows
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.CyclicThemeStyleReferenceDetected, this));
+                throw new InvalidOperationException(SR.Format(SR.CyclicThemeStyleReferenceDetected, this));
             }
         }
 

@@ -18,7 +18,9 @@
     -->
 
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='PresentationBuildTasks'">false</_GenerateResourcesCodeAsConstants>
+    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='PresentationFramework'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='PresentationUI' or '$(AssemblyName)'=='PresentationUI'">false</_GenerateResourcesCodeAsConstants>
+    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='ReachFramework'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='UIAutomationClient'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='UIAutomationClientSideProviders'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='UIAutomationProvider'">false</_GenerateResourcesCodeAsConstants>
@@ -47,8 +49,8 @@
       <ClassName Condition="'$(AssemblyName)'=='WindowsBase'">MS.Internal.WindowsBase.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='System.Windows.Controls.Ribbon'">Microsoft.Windows.Controls.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='System.Windows.Input.Manipulations'">System.SR</ClassName>
-      <ClassName Condition="'$(AssemblyName)'=='ReachFramework'">System.Windows.Xps.SRID</ClassName>
-      <ClassName Condition="'$(AssemblyName)'=='PresentationFramework'">System.Windows.SRID</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='ReachFramework'">System.Windows.Xps.SR</ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='PresentationFramework'">System.Windows.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='PresentationUI'">System.Windows.TrustUI.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='WindowsFormsIntegration'">System.Windows.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='PresentationCore'">MS.Internal.PresentationCore.SRID </ClassName>

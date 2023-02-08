@@ -50,10 +50,7 @@ namespace System.Xaml
 
         public XamlXmlWriter(Stream stream, XamlSchemaContext schemaContext, XamlXmlWriterSettings settings)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
+            ArgumentNullException.ThrowIfNull(stream);
 
             if (settings != null && settings.CloseOutput)
             {
@@ -72,10 +69,7 @@ namespace System.Xaml
 
         public XamlXmlWriter(TextWriter textWriter, XamlSchemaContext schemaContext, XamlXmlWriterSettings settings)
         {
-            if (textWriter == null)
-            {
-                throw new ArgumentNullException(nameof(textWriter));
-            }
+            ArgumentNullException.ThrowIfNull(textWriter);
 
             if (settings != null && settings.CloseOutput)
             {
@@ -94,10 +88,7 @@ namespace System.Xaml
 
         public XamlXmlWriter(XmlWriter xmlWriter, XamlSchemaContext schemaContext, XamlXmlWriterSettings settings)
         {
-            if (xmlWriter == null)
-            {
-                throw new ArgumentNullException(nameof(xmlWriter));
-            }
+            ArgumentNullException.ThrowIfNull(xmlWriter);
 
             InitializeXamlXmlWriter(xmlWriter, schemaContext, settings);
         }
@@ -169,10 +160,7 @@ namespace System.Xaml
         {
             CheckIsDisposed();
 
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            ArgumentNullException.ThrowIfNull(type);
 
             if (!type.IsNameValid)
             {
@@ -197,10 +185,7 @@ namespace System.Xaml
         {
             CheckIsDisposed();
 
-            if (property == null)
-            {
-                throw new ArgumentNullException(nameof(property));
-            }
+            ArgumentNullException.ThrowIfNull(property);
 
             if (!property.IsNameValid)
             {
@@ -239,10 +224,7 @@ namespace System.Xaml
         {
             CheckIsDisposed();
 
-            if (namespaceDeclaration == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceDeclaration));
-            }
+            ArgumentNullException.ThrowIfNull(namespaceDeclaration);
 
             if (namespaceDeclaration.Prefix == null)
             {

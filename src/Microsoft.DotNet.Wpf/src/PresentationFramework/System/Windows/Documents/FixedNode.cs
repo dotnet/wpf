@@ -154,7 +154,7 @@ namespace System.Windows.Documents
 
             if (o.GetType() != typeof(FixedNode))
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, o.GetType(), typeof(FixedNode)), "o");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, o.GetType(), typeof(FixedNode)), "o");
             }
 
             FixedNode fixedp = (FixedNode)o;

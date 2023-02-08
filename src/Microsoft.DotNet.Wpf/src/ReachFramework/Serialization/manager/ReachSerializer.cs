@@ -89,7 +89,7 @@ namespace System.Windows.Xps.Serialization
             }
             if(SerializationManager == null)
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_MustHaveSerializationManager));
+                throw new XpsSerializationException(SR.ReachSerialization_MustHaveSerializationManager);
             }
             //
             // At this stage discover the graph of properties of the object that
@@ -152,7 +152,7 @@ namespace System.Windows.Xps.Serialization
 
             if(SerializationManager == null)
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_MustHaveSerializationManager));
+                throw new XpsSerializationException(SR.ReachSerialization_MustHaveSerializationManager);
             }
 
             //

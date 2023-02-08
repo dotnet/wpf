@@ -222,7 +222,7 @@ namespace System.Windows
             }
             catch (FormatException)
             {
-                throw new FormatException(SR.Get(SRID.LengthFormatError, valueString));
+                throw new FormatException(SR.Format(SR.LengthFormatError, valueString));
             }
         }
 

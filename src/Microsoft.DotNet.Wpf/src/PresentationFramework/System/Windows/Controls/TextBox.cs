@@ -133,7 +133,7 @@ namespace System.Windows.Controls
             }
 
             // TextBox only accepts plain text, via IAddChild.AddText.
-            throw new InvalidOperationException(SR.Get(SRID.TextBoxInvalidChild, value.ToString()));
+            throw new InvalidOperationException(SR.Format(SR.TextBoxInvalidChild, value.ToString()));
         }
 
         ///<summary>
@@ -159,12 +159,12 @@ namespace System.Windows.Controls
         {
             if (start < 0)
             {
-                throw new ArgumentOutOfRangeException("start", SR.Get(SRID.ParameterCannotBeNegative));
+                throw new ArgumentOutOfRangeException("start", SR.ParameterCannotBeNegative);
             }
 
             if (length < 0)
             {
-                throw new ArgumentOutOfRangeException("length", SR.Get(SRID.ParameterCannotBeNegative));
+                throw new ArgumentOutOfRangeException("length", SR.ParameterCannotBeNegative);
             }
 
             // Identify new position for selection Start
@@ -833,7 +833,7 @@ namespace System.Windows.Controls
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterCannotBeNegative));
+                    throw new ArgumentOutOfRangeException("value", SR.ParameterCannotBeNegative);
                 }
 
                 // Identify new position for selection end
@@ -877,7 +877,7 @@ namespace System.Windows.Controls
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterCannotBeNegative));
+                    throw new ArgumentOutOfRangeException("value", SR.ParameterCannotBeNegative);
                 }
 
                 // Store current length of the selection
@@ -1077,7 +1077,7 @@ namespace System.Windows.Controls
         {
             if (MinLines > 1 && MaxLines < MinLines)
             {
-                throw new Exception(SR.Get(SRID.TextBoxMinMaxLinesMismatch));
+                throw new Exception(SR.TextBoxMinMaxLinesMismatch);
             }
 
             Size size = base.MeasureOverride(constraint);

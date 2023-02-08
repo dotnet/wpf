@@ -72,7 +72,7 @@ namespace MS.Internal.Documents
             {
                 if (IsInParentUnitChain(newUnit))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.UndoUnitCantBeOpenedTwice));
+                    throw new InvalidOperationException(SR.UndoUnitCantBeOpenedTwice);
                 }
 
                 _openedUnit = newUnit;
@@ -126,7 +126,7 @@ namespace MS.Internal.Documents
 
             if (OpenedUnit == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoNoOpenUnit));
+                throw new InvalidOperationException(SR.UndoNoOpenUnit);
             }
 
             // find the parent of the given unit
@@ -142,7 +142,7 @@ namespace MS.Internal.Documents
 
                 if (closeParent.OpenedUnit == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.UndoUnitNotFound), "unit");
+                    throw new ArgumentException(SR.UndoUnitNotFound, "unit");
                 }
 
                 if (closeParent != this)
@@ -246,12 +246,12 @@ namespace MS.Internal.Documents
 
             if (IsInParentUnitChain(unit))
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoUnitCantBeAddedTwice));
+                throw new InvalidOperationException(SR.UndoUnitCantBeAddedTwice);
             }
 
             if (Locked)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoUnitLocked));
+                throw new InvalidOperationException(SR.UndoUnitLocked);
             }
 
             if (!Merge(unit))
@@ -276,7 +276,7 @@ namespace MS.Internal.Documents
         {
             if (Locked)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoUnitLocked));
+                throw new InvalidOperationException(SR.UndoUnitLocked);
             }
 
             _units.Clear();
@@ -458,7 +458,7 @@ namespace MS.Internal.Documents
             {
                 if (!(value is IParentUndoUnit || value is UndoManager))
                 {
-                    throw new Exception(SR.Get(SRID.UndoContainerTypeMismatch));
+                    throw new Exception(SR.UndoContainerTypeMismatch);
                 }
                 _container = value;
             }

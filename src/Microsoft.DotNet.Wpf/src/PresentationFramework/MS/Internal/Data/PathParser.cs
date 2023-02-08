@@ -61,7 +61,7 @@ namespace MS.Internal.Data
     {
         string _error;
         public String Error { get { return _error; } }
-        void SetError(string id, params object[] args) { _error = SR.Get(id, args); }
+        void SetError(string id, params object[] args) { _error = SR.Format(SR.GetResourceString(id), args); }
 
         enum State { Init, DrillIn, Prop, Done };
 
@@ -138,7 +138,7 @@ namespace MS.Internal.Data
                             case NullChar:
                                 break;
                             default:
-                                SetError(SRID.PathSyntax, _path.Substring(0, _index), _path.Substring(_index));
+                                SetError(nameof(SR.PathSyntax), _path.Substring(0, _index), _path.Substring(_index));
                                 return EmptyInfo;
                         }
                         _state = State.Prop;
@@ -201,13 +201,13 @@ namespace MS.Internal.Data
 
             if (level > 0)
             {
-                SetError(SRID.UnmatchedParen, _path.Substring(start));
+                SetError(nameof(SR.UnmatchedParen), _path.Substring(start));
                 return;
             }
 
             if (level < 0)
             {
-                SetError(SRID.UnmatchedParen, _path.Substring(0, _index));
+                SetError(nameof(SR.UnmatchedParen), _path.Substring(0, _index));
                 return;
             }
 
@@ -250,7 +250,7 @@ namespace MS.Internal.Data
             {
                 if (_index >= _n)
                 {
-                    SetError(SRID.UnmatchedBracket, _path.Substring(start - 1));
+                    SetError(nameof(SR.UnmatchedBracket), _path.Substring(start - 1));
                     return;
                 }
 

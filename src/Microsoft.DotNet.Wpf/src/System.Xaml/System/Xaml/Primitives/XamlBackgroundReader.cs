@@ -37,10 +37,7 @@ namespace System.Xaml
 
         public XamlBackgroundReader(XamlReader wrappedReader)
         {
-            if (wrappedReader == null)
-            {
-                throw new ArgumentNullException(nameof(wrappedReader));
-            }
+            ArgumentNullException.ThrowIfNull(wrappedReader);
             Initialize(wrappedReader, 64);
         }
 

@@ -292,7 +292,7 @@ namespace System.Windows
         {
             if ( _sealed )
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "TriggerActionCollection"));
+                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "TriggerActionCollection"));
             }            
         }
 
@@ -309,7 +309,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.MustBeTriggerAction));
+                    throw new ArgumentException(SR.MustBeTriggerAction);
                 }
             }
 

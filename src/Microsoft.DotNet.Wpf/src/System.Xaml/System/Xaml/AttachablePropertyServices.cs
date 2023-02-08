@@ -69,10 +69,7 @@ namespace System.Xaml
                 return;
             }
 
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            ArgumentNullException.ThrowIfNull(name);
 
             IAttachedPropertyStore ap = instance as IAttachedPropertyStore;
             if (ap != null)

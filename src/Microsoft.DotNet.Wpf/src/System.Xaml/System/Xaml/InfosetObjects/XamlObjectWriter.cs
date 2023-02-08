@@ -47,28 +47,19 @@ namespace System.Xaml
 
         public XamlObjectWriter(XamlSchemaContext schemaContext)
         {
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
+            ArgumentNullException.ThrowIfNull(schemaContext);
             Initialize(schemaContext, (XamlSavedContext)null, (XamlObjectWriterSettings)null);
         }
 
         public XamlObjectWriter(XamlSchemaContext schemaContext, XamlObjectWriterSettings settings)
         {
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
+            ArgumentNullException.ThrowIfNull(schemaContext);
             Initialize(schemaContext, (XamlSavedContext)null, settings);
         }
 
         internal XamlObjectWriter(XamlSavedContext savedContext, XamlObjectWriterSettings settings)
         {
-            if (savedContext == null)
-            {
-                throw new ArgumentNullException(nameof(savedContext));
-            }
+            ArgumentNullException.ThrowIfNull(savedContext);
             if (savedContext.SchemaContext == null)
             {
                 throw new ArgumentException(SR.SavedContextSchemaContextNull, nameof(savedContext));
@@ -81,10 +72,7 @@ namespace System.Xaml
             _inDispose = false;
             //ObjectWriter must be passed in a non-null SchemaContext.  We check that here, since the CreateContext method
             //will create one if a null SchemaContext was passed in.
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
+            ArgumentNullException.ThrowIfNull(schemaContext);
             if (savedContext != null && schemaContext != savedContext.SchemaContext)
             {
                 throw new ArgumentException(SR.SavedContextSchemaContextMismatch, nameof(schemaContext));
@@ -322,10 +310,7 @@ namespace System.Xaml
         public override void WriteStartObject(XamlType xamlType)
         {
             ThrowIfDisposed();
-            if (xamlType == null)
-            {
-                throw new ArgumentNullException(nameof(xamlType));
-            }
+            ArgumentNullException.ThrowIfNull(xamlType);
 
             // Deferring Checking
             //
@@ -576,10 +561,7 @@ namespace System.Xaml
         public override void WriteStartMember(XamlMember property)
         {
             ThrowIfDisposed();
-            if (property == null)
-            {
-                throw new ArgumentNullException(nameof(property));
-            }
+            ArgumentNullException.ThrowIfNull(property);
 
             // Deferring Checking
             //
@@ -894,10 +876,7 @@ namespace System.Xaml
         public override void WriteNamespace(NamespaceDeclaration namespaceDeclaration)
         {
             ThrowIfDisposed();
-            if (namespaceDeclaration == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceDeclaration));
-            }
+            ArgumentNullException.ThrowIfNull(namespaceDeclaration);
             if(namespaceDeclaration.Prefix == null)
             {
                 throw new ArgumentException(SR.NamespaceDeclarationPrefixCannotBeNull);

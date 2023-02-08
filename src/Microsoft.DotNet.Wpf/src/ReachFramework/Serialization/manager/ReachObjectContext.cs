@@ -146,7 +146,7 @@ namespace System.Windows.Xps.Serialization
                 if(currentObjectContext!=null &&
                    currentObjectContext.TargetObject == serializableObject)
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CycleDetectedInSerialization));
+                    throw new XpsSerializationException(SR.ReachSerialization_CycleDetectedInSerialization);
                 }
             }
 

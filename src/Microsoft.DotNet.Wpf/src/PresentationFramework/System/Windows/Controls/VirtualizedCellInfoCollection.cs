@@ -71,12 +71,12 @@ namespace System.Windows.Controls
 
             if (!IsValidPublicCell(cell))
             {
-                throw new ArgumentException(SR.Get(SRID.SelectedCellsCollection_InvalidItem), "cell");
+                throw new ArgumentException(SR.SelectedCellsCollection_InvalidItem, "cell");
             }
 
             if (Contains(cell))
             {
-                throw new ArgumentException(SR.Get(SRID.SelectedCellsCollection_DuplicateItem), "cell");
+                throw new ArgumentException(SR.SelectedCellsCollection_DuplicateItem, "cell");
             }
 
             AddValidatedCell(cell);
@@ -127,7 +127,7 @@ namespace System.Windows.Controls
         {
             if (!IsValidPublicCell(cell))
             {
-                throw new ArgumentException(SR.Get(SRID.SelectedCellsCollection_InvalidItem), "cell");
+                throw new ArgumentException(SR.SelectedCellsCollection_InvalidItem, "cell");
             }
 
             if (IsEmpty)
@@ -333,7 +333,7 @@ namespace System.Windows.Controls
         /// </summary>
         public void Insert(int index, DataGridCellInfo cell)
         {
-            throw new NotSupportedException(SR.Get(SRID.VirtualizedCellInfoCollection_DoesNotSupportIndexChanges));
+            throw new NotSupportedException(SR.VirtualizedCellInfoCollection_DoesNotSupportIndexChanges);
         }
 
         /// <summary>
@@ -371,7 +371,7 @@ namespace System.Windows.Controls
         /// <param name="index">A zero-based index into the list.</param>
         public void RemoveAt(int index)
         {
-            throw new NotSupportedException(SR.Get(SRID.VirtualizedCellInfoCollection_DoesNotSupportIndexChanges));
+            throw new NotSupportedException(SR.VirtualizedCellInfoCollection_DoesNotSupportIndexChanges);
         }
 
         /// <summary>
@@ -393,7 +393,7 @@ namespace System.Windows.Controls
 
             set
             {
-                throw new NotSupportedException(SR.Get(SRID.VirtualizedCellInfoCollection_DoesNotSupportIndexChanges));
+                throw new NotSupportedException(SR.VirtualizedCellInfoCollection_DoesNotSupportIndexChanges);
             }
         }
 
@@ -1631,7 +1631,7 @@ namespace System.Windows.Controls
         {
             if (IsReadOnly)
             {
-                throw new NotSupportedException(SR.Get(SRID.VirtualizedCellInfoCollection_IsReadOnly));
+                throw new NotSupportedException(SR.VirtualizedCellInfoCollection_IsReadOnly);
             }
         }
 

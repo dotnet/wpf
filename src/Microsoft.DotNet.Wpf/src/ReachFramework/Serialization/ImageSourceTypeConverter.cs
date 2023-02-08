@@ -121,7 +121,7 @@ namespace System.Windows.Xps.Serialization
 
             if (!IsSupportedType(value.GetType()))
             {
-                throw new NotSupportedException(SR.Get(SRID.Converter_ConvertFromNotSupported));
+                throw new NotSupportedException(SR.Converter_ConvertFromNotSupported);
             }
 
             throw new NotImplementedException();
@@ -165,7 +165,7 @@ namespace System.Windows.Xps.Serialization
             }
             if (!IsSupportedType(destinationType))
             {
-                throw new NotSupportedException(SR.Get(SRID.Converter_ConvertToNotSupported));
+                throw new NotSupportedException(SR.Converter_ConvertToNotSupported);
             }
 
             //
@@ -174,7 +174,7 @@ namespace System.Windows.Xps.Serialization
             BitmapSource bitmapSource = (BitmapSource)value;
             if (bitmapSource == null)
             {
-                throw new ArgumentException(SR.Get(SRID.MustBeOfType, "value", "BitmapSource"));
+                throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "BitmapSource"));
             }
 
             //
@@ -213,7 +213,7 @@ namespace System.Windows.Xps.Serialization
                 XpsImageSerializationService imageService = (XpsImageSerializationService)resourceServiceProvider.GetService(typeof(XpsImageSerializationService));
                 if (imageService == null)
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoImageService));
+                    throw new XpsSerializationException(SR.ReachSerialization_NoImageService);
                 }
 
                 //

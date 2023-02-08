@@ -64,8 +64,8 @@ namespace System.Windows.Xps.Packaging
         /// Gets the PrintTicket associated with this document sequence.
         /// </summary>
         /// <value>Value can be a PrintTicket or null.</value>
-        /// <exception cref="SRID.ReachPackaging_PrintTicketAlreadyCommitted">PrintTicket has already been committed.</exception>
-        /// <exception cref="SRID.ReachPackaging_NotAPrintTicket">Property is not a valid PrintTicket instance.</exception>
+        /// <exception cref="SR.ReachPackaging_PrintTicketAlreadyCommitted">PrintTicket has already been committed.</exception>
+        /// <exception cref="SR.ReachPackaging_NotAPrintTicket">Property is not a valid PrintTicket instance.</exception>
         PrintTicket PrintTicket { get; }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace System.Windows.Xps.Packaging
         /// <returns>
         /// Returns an interface to the newly created fixed document.
         /// </returns>
-        /// <exception cref="SRID.ReachPackaging_PanelOrSequenceAlreadyOpen">Current DocumentSequence not completed.</exception>
+        /// <exception cref="SR.ReachPackaging_PanelOrSequenceAlreadyOpen">Current DocumentSequence not completed.</exception>
         IXpsFixedDocumentWriter
         AddFixedDocument(
             );
@@ -150,8 +150,8 @@ namespace System.Windows.Xps.Packaging
         /// committed to the package.  The commit happens when a valid PrintTicket
         /// is set and a subsequent flush on the document occurs.
         /// </value>
-        /// <exception cref="SRID.ReachPackaging_PrintTicketAlreadyCommitted">PrintTicket has already been committed.</exception>
-        /// <exception cref="SRID.ReachPackaging_NotAPrintTicket">Property is not a valid PrintTicket instance.</exception>
+        /// <exception cref="SR.ReachPackaging_PrintTicketAlreadyCommitted">PrintTicket has already been committed.</exception>
+        /// <exception cref="SR.ReachPackaging_NotAPrintTicket">Property is not a valid PrintTicket instance.</exception>
         PrintTicket PrintTicket { set; }
 
         /// <summary>
@@ -227,8 +227,8 @@ namespace System.Windows.Xps.Packaging
         /// is set and a subsequent flush on the document occurs.
         /// </summary>
         /// <value>Value can be a PrintTicket or null.</value>
-        /// <exception cref="SRID.ReachPackaging_PrintTicketAlreadyCommitted">PrintTicket has already been committed.</exception>
-        /// <exception cref="SRID.ReachPackaging_NotAPrintTicket">Property is not a valid PrintTicket instance.</exception>
+        /// <exception cref="SR.ReachPackaging_PrintTicketAlreadyCommitted">PrintTicket has already been committed.</exception>
+        /// <exception cref="SR.ReachPackaging_NotAPrintTicket">Property is not a valid PrintTicket instance.</exception>
         public PrintTicket PrintTicket
         {
             get
@@ -245,11 +245,11 @@ namespace System.Windows.Xps.Packaging
                 {
                     if (_isPrintTicketCommitted)
                     {
-                        throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_PrintTicketAlreadyCommitted));
+                        throw new XpsPackagingException(SR.ReachPackaging_PrintTicketAlreadyCommitted);
                     }
                     if (!value.GetType().Equals(typeof(PrintTicket)))
                     {
-                        throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_NotAPrintTicket));
+                        throw new XpsPackagingException(SR.ReachPackaging_NotAPrintTicket);
                     }
                     _printTicket = value.Clone();
                 }
@@ -303,7 +303,7 @@ namespace System.Windows.Xps.Packaging
         /// <returns>
         /// Returns an interface to the newly created fixed document.
         /// </returns>
-        /// <exception cref="SRID.ReachPackaging_PanelOrSequenceAlreadyOpen">Current DocumentSequence not completed.</exception>
+        /// <exception cref="SR.ReachPackaging_PanelOrSequenceAlreadyOpen">Current DocumentSequence not completed.</exception>
         public
         IXpsFixedDocumentWriter
         AddFixedDocument(
@@ -616,7 +616,7 @@ namespace System.Windows.Xps.Packaging
             PackagePart documentPart = CurrentXpsManager.GetPart(documentUri);
             if (documentPart == null)
             {
-                 throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_PartNotFound));
+                 throw new XpsPackagingException(SR.ReachPackaging_PartNotFound);
             }
 
             //
@@ -624,7 +624,7 @@ namespace System.Windows.Xps.Packaging
             //
             if (!documentPart.ValidatedContentType().AreTypeAndSubTypeEqual(XpsS0Markup.FixedDocumentContentType))
             {
-                throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_NotAFixedDocument));
+                throw new XpsPackagingException(SR.ReachPackaging_NotAFixedDocument);
             }
 
             //

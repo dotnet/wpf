@@ -472,7 +472,7 @@ namespace System.Windows.Markup
             if (owner != null && !ReflectionHelper.IsPublicType(owner))
             {
                 _lineNumber = 0;  // Public API, so we don't know the line number.
-                ThrowException(SRID.ParserOwnerEventMustBePublic, owner.FullName );
+                ThrowException(nameof(SR.ParserOwnerEventMustBePublic), owner.FullName );
             }
 
             RoutedEvent Event = GetDependencyObject(true,owner,xmlNamespace,
@@ -531,7 +531,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    string message = SR.Get(SRID.ParserCannotConvertPropertyValueString, value, propName, propType.FullName);
+                    string message = SR.Format(SR.ParserCannotConvertPropertyValueString, value, propName, propType.FullName);
                     XamlParseException.ThrowException(parserContext, _lineNumber, _linePosition, message, null);
                 }
             }
@@ -612,7 +612,7 @@ namespace System.Windows.Markup
                         // <SomeElement SomeProp="SomeText"/> and there's no TypeConverter
                         //  to handle converting "SomeText" into an instance of something
                         //  that can be set into SomeProp.
-                        message = SR.Get(SRID.ParserDefaultConverterProperty, propType.FullName, propName, value);
+                        message = SR.Format(SR.ParserDefaultConverterProperty, propType.FullName, propName, value);
                     }
                     else
                     {
@@ -657,7 +657,7 @@ namespace System.Windows.Markup
                 //
                 // propName is 'Fill' in this case.
 
-                message = SR.Get(SRID.ParserCannotConvertPropertyValueString, value, propName, propType);
+                message = SR.Format(SR.ParserCannotConvertPropertyValueString, value, propName, propType);
             }
             else
             {
@@ -670,7 +670,7 @@ namespace System.Windows.Markup
                 // There is no associated propName available in this case, so we
                 //  give a different error message.
 
-                message = SR.Get(SRID.ParserCannotConvertInitializationText, value, propType );
+                message = SR.Format(SR.ParserCannotConvertInitializationText, value, propType );
             }
             return message;
         }
@@ -3512,7 +3512,7 @@ namespace System.Windows.Markup
 
             if (null == typeConverter)
             {
-                ThrowException(SRID.ParserNoTypeConv, type.Name);
+                ThrowException(nameof(SR.ParserNoTypeConv), type.Name);
             }
 
             return typeConverter;

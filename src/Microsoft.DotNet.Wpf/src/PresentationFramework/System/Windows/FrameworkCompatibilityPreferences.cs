@@ -82,7 +82,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.CompatibilityPreferencesSealed, "AreInactiveSelectionHighlightBrushKeysSupported", "FrameworkCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "AreInactiveSelectionHighlightBrushKeysSupported", "FrameworkCompatibilityPreferences"));
                     }
 
                     _areInactiveSelectionHighlightBrushKeysSupported = value;
@@ -156,7 +156,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.CompatibilityPreferencesSealed, "AextBoxDisplaysText", "FrameworkCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "AextBoxDisplaysText", "FrameworkCompatibilityPreferences"));
                     }
 
                     _keepTextBoxDisplaySynchronizedWithTextProperty = value;
@@ -195,7 +195,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.CompatibilityPreferencesSealed, "UseSetWindowPosForTopmostWindows", "FrameworkCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "UseSetWindowPosForTopmostWindows", "FrameworkCompatibilityPreferences"));
                     }
 
                     _useSetWindowPosForTopmostWindows = value;
@@ -245,7 +245,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.CompatibilityPreferencesSealed, "IsVirtualizingStackPanel_45Compatible", "FrameworkCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "IsVirtualizingStackPanel_45Compatible", "FrameworkCompatibilityPreferences"));
                     }
 
                     _vsp45Compat = value;
@@ -378,7 +378,7 @@ namespace System.Windows
                 if (_isSealed)
                 {
                     throw new InvalidOperationException(
-                        SR.Get(SRID.CompatibilityPreferencesSealed, 
+                        SR.Format(SR.CompatibilityPreferencesSealed, 
                         nameof(ShouldThrowOnCopyOrCutFailure), 
                         nameof(FrameworkCompatibilityPreferences)));
                 }

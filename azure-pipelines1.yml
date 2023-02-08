@@ -44,6 +44,7 @@ trigger:
     - internal/release/5.*
     - internal/release/6.*
     - experimental/*
+    - ctp
   paths:
     exclude:
     - Documentation/*
@@ -53,6 +54,7 @@ pr:
   branches:
     include:
     - drttesting
+    - ctp
   paths:
     exclude:
     - Documentation/*
@@ -62,7 +64,7 @@ stages:
 - stage: build
   displayName: Build 
   jobs:
-  - template: /eng/pipeline.yml
+  - template: /eng/wpfautomatedtests.yml
     parameters:
       enablePublishUsingPipelines: $(_PublishUsingPipelines)
       ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
@@ -72,27 +74,3 @@ stages:
           demands: ImageOverride -equals windows.vs2022preview.amd64
         # runAsPublic is used in expressions, which can't read from user-defined variables
         runAsPublic: false
-
-- stage: DrtTesting
-  displayName: DrtTesting
-  jobs:
-    - job: DownloadTestsZip
-      steps:
-      - task: DownloadPipelineArtifact@2
-        inputs:
-          buildType: 'specific'
-          project: '7ea9116e-9fac-403d-b258-b31fcf1bb293'
-          definition: '479'
-          buildVersionToDownload: 'specific'
-          pipelineId: '1702475'
-          artifactName: 'Tests.Release.x64.zip'
-          targetPath: '$(Pipeline.Workspace)\testszip\'
-      - task: DownloadPipelineArtifact@2
-        inputs:
-          buildType: 'specific'
-          project: '7ea9116e-9fac-403d-b258-b31fcf1bb293'
-          definition: '479'
-          buildVersionToDownload: 'specific'
-          pipelineId: '1702475'
-          artifactName: 'Tests.Release.x86.zip'
-          targetPath: '$(Pipeline.Workspace)\testszip\'

@@ -21,7 +21,6 @@ using System.Windows.Markup;
 using System.Windows;
 
 using SR = System.Windows.SR;
-using SRID = System.Windows.SRID;
 
 namespace MS.Internal.Markup
 {
@@ -46,7 +45,7 @@ namespace MS.Internal.Markup
         {
             if (Member == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MarkupExtensionStaticMember));
+                throw new InvalidOperationException(SR.MarkupExtensionStaticMember);
             }
 
             object value;
@@ -71,7 +70,7 @@ namespace MS.Internal.Markup
                 int dotIndex = Member.IndexOf('.');
                 if (dotIndex < 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.MarkupExtensionBadStatic, Member));
+                    throw new ArgumentException(SR.Format(SR.MarkupExtensionBadStatic, Member));
                 }
 
                 // Pull out the type substring (this will include any XML prefix, e.g. "av:Button")
@@ -79,7 +78,7 @@ namespace MS.Internal.Markup
                 string typeString = Member.Substring(0, dotIndex);
                 if (typeString == string.Empty)
                 {
-                    throw new ArgumentException(SR.Get(SRID.MarkupExtensionBadStatic, Member));
+                    throw new ArgumentException(SR.Format(SR.MarkupExtensionBadStatic, Member));
                 }
 
                 // Get the IXamlTypeResolver from the service provider
@@ -92,7 +91,7 @@ namespace MS.Internal.Markup
                 IXamlTypeResolver xamlTypeResolver = serviceProvider.GetService(typeof(IXamlTypeResolver)) as IXamlTypeResolver;
                 if (xamlTypeResolver == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.MarkupExtensionNoContext, GetType().Name, "IXamlTypeResolver"));
+                    throw new ArgumentException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, "IXamlTypeResolver"));
                 }
 
                 // Use the type resolver to get a Type instance

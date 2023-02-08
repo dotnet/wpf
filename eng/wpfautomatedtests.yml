@@ -110,7 +110,11 @@ jobs:
             value: '' #if _HelixToken is set, Creator must be empty
           - name: _TestHelixAgentPool
             value: 'Windows.10.Amd64.ClientRS5' # Preferred: 'Windows.10.Amd64%3bWindows.7.Amd64%3bWindows.10.Amd64.ClientRS5'
-
+          - name: _programfilesx86
+            value: ${Env:ProgramFiles(x86)}/dotnet          
+          - name: _programfiles
+            value:  ${Env:ProgramFiles}/dotnet
+  
       strategy:
         matrix:
           ${{ if eq(parameters.runAsPublic, 'true') }}:
@@ -164,13 +168,6 @@ jobs:
         #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
         condition: or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')))
 
-      - task: PowerShell@2
-        displayName: Replace WPF binaries
-        inputs:
-          targetType: 'inline'
-          script: '.\eng\copy-wpf.ps1 -testhost -destination $(Build.SourcesDirectory)\\.dotnet\ -$(_BuildConfig) -arch $(_Platform)'
-        condition: ne(variables['_Platform'], 'arm64')
-
       - task: DownloadPipelineArtifact@2
         inputs:
           buildType: 'specific'
@@ -181,7 +178,6 @@ jobs:
           checkDownloadedFiles: true
           artifactName: Tests.$(_BuildConfig).$(_Platform).zip
           downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
-        condition: ne(variables['_Platform'], 'arm64')
 
       - task: ExtractFiles@1
         displayName: Extract Test Bins
@@ -190,25 +186,49 @@ jobs:
           destinationFolder: '$(System.ArtifactsDirectory)\testbins'
           cleanDestinationFolder: true
           overwriteExistingFiles: true
-        condition: ne(variables['_Platform'], 'arm64')
+
 
       - task: PowerShell@2
-        displayName: Set Path Vars
+        displayName: Install .NET Core
+        inputs:
+          filePath: $(Build.SourcesDirectory)/eng/common/dotnet-test-install.ps1
+          arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime dotnet -Version 8.0.0-alpha.1.23080.2
+          condition: eq(variables['_Platform'], 'x64')
+      
+      - task: PowerShell@2
+        displayName: Install .NET Core(x86)
+        inputs:
+          filePath: $(Build.SourcesDirectory)/eng/common/dotnet-test-install.ps1
+          arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime dotnet -Version 8.0.0-alpha.1.23080.2
+        condition: eq(variables['_Platform'], 'x86')
+  
+      - task: PowerShell@2
+        displayName: Install .NET WindowsDesktop
+        inputs:
+          filePath: $(Build.SourcesDirectory)/eng/common/dotnet-test-install.ps1
+          arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime windowsdesktop -Version 8.0.0-alpha.1.23080.2
+        condition: eq(variables['_Platform'], 'x64')
+     
+      - task: PowerShell@2
+        displayName: Install .NET WindowsDesktop(x86)
+        inputs:
+          filePath: $(Build.SourcesDirectory)/eng/common/dotnet-test-install.ps1
+          arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime windowsdesktop -Version 8.0.0-alpha.1.23080.2
+        condition: eq(variables['_Platform'], 'x86')   
+      
+      - task: PowerShell@2
+        displayName: Replace WPF binaries
         inputs:
           targetType: 'inline'
-          script: $env:path = '$(Build.SourcesDirectory)\\.dotnet\;' + $env:path
-          workingDirectory: '$(System.ArtifactsDirectory)\testbins'
-        condition: ne(variables['_Platform'], 'arm64')
-        continueOnError: true
+          script: '.\eng\copy-wpf.ps1 -testhost -destination $(_programfilesx86) -$(_BuildConfig) -arch $(_Platform)' 
+        condition: eq(variables['_Platform'], 'x86')
 
       - task: PowerShell@2
-        displayName: Echo Path Vars
+        displayName: Replace WPF binaries
         inputs:
           targetType: 'inline'
-          script: echo $env
-          workingDirectory: '$(System.ArtifactsDirectory)\testbins'
-        condition: ne(variables['_Platform'], 'arm64')
-        continueOnError: true
+          script: '.\eng\copy-wpf.ps1 -testhost -destination $(_programfiles) -$(_BuildConfig) -arch $(_Platform)' 
+        condition: eq(variables['_Platform'], 'x64')      
 
       - task: PowerShell@2
         displayName: Run DRTs

@@ -21,7 +21,6 @@ using System.Runtime.InteropServices;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media 
 {

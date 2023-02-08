@@ -23,7 +23,6 @@ using System.Windows.Markup;
 using MS.Internal.FontFace;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -239,7 +238,7 @@ namespace System.Windows.Media
 
         private static void ThrowInvalidUnicodeRange()
         {
-            throw new FormatException(SR.Get(SRID.CompositeFontInvalidUnicodeRange));
+            throw new FormatException(SR.CompositeFontInvalidUnicodeRange);
         }
 
         private static Range[] ParseUnicodeRanges(string unicodeRanges)

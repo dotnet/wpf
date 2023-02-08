@@ -24,7 +24,6 @@ using MS.Win32;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods.MilCoreApi;
 using SafeNativeMethods=MS.Win32.PresentationCore.SafeNativeMethods;
 
@@ -196,7 +195,7 @@ namespace System.Windows.Media
         {
             if (IsTransportConnected)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.MediaSystem_OutOfOrderConnectOrDisconnect));
+                throw new System.InvalidOperationException(SR.MediaSystem_OutOfOrderConnectOrDisconnect);
             }
 
             //
@@ -286,7 +285,7 @@ namespace System.Windows.Media
                 other.Dispatcher != null &&
                 reference.Dispatcher != other.Dispatcher)
             {
-                throw new ArgumentException(SR.Get(SRID.MediaSystem_ApiInvalidContext));
+                throw new ArgumentException(SR.MediaSystem_ApiInvalidContext);
             }
         }
 

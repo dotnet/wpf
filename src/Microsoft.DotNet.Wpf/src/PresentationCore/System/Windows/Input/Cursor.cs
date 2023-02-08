@@ -13,7 +13,6 @@ using System.IO;
 using System.Security;
 using SecurityHelper=MS.Internal.SecurityHelper;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using MS.Internal.PresentationCore;     //  FriendAccessAllowed
 
 namespace System.Windows.Input
@@ -39,7 +38,7 @@ namespace System.Windows.Input
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidCursorType, cursorType));
+                throw new ArgumentException(SR.Format(SR.InvalidCursorType, cursorType));
             }
         }
 
@@ -71,7 +70,7 @@ namespace System.Windows.Input
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.Cursor_UnsupportedFormat , cursorFile));
+                throw new ArgumentException(SR.Format(SR.Cursor_UnsupportedFormat , cursorFile));
             }
         }
 
@@ -203,7 +202,7 @@ namespace System.Windows.Input
                 {
                     if ((errorCode == NativeMethods.ERROR_FILE_NOT_FOUND) || (errorCode == NativeMethods.ERROR_PATH_NOT_FOUND))
                     {
-                        throw new Win32Exception(errorCode, SR.Get(SRID.Cursor_LoadImageFailure, fileName));
+                        throw new Win32Exception(errorCode, SR.Format(SR.Cursor_LoadImageFailure, fileName));
                     }
                     else
                     {
@@ -212,7 +211,7 @@ namespace System.Windows.Input
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.Cursor_LoadImageFailure, fileName));
+                    throw new ArgumentException(SR.Format(SR.Cursor_LoadImageFailure, fileName));
                 }
             }
         }
@@ -266,7 +265,7 @@ namespace System.Windows.Input
                                                                     (_scaleWithDpi? NativeMethods.LR_DEFAULTSIZE : 0x0000));
                 if (_cursorHandle == null || _cursorHandle.IsInvalid)
                 {
-                     throw new ArgumentException(SR.Get(SRID.Cursor_InvalidStream));
+                     throw new ArgumentException(SR.Cursor_InvalidStream);
                 }
             }
             finally
@@ -312,7 +311,7 @@ namespace System.Windows.Input
                                                                     (_scaleWithDpi? NativeMethods.LR_DEFAULTSIZE : 0x0000));
                 if (_cursorHandle == null || _cursorHandle.IsInvalid)
                 {
-                     throw new ArgumentException(SR.Get(SRID.Cursor_InvalidStream));
+                     throw new ArgumentException(SR.Cursor_InvalidStream);
                 }
             }
             finally

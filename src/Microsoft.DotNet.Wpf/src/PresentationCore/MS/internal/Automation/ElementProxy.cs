@@ -29,7 +29,6 @@ using System.Security;
 using MS.Internal.PresentationCore;
 using MS.Win32;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Automation
 {

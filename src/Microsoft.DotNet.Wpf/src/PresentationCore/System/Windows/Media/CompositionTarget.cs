@@ -25,7 +25,6 @@ using MS.Win32;
 using MS.Utility;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -482,7 +481,7 @@ namespace System.Windows.Media
                 // If a Visual has already a parent it can not be the root in a CompositionTarget because
                 // otherwise we would have two CompositionTargets party on the same Visual tree.
                 // If want to allow this we need to explicitly add support for this.
-                throw new System.ArgumentException(SR.Get(SRID.CompositionTarget_RootVisual_HasParent));
+                throw new System.ArgumentException(SR.CompositionTarget_RootVisual_HasParent);
             }
 
             DUCE.ChannelSet channelSet = MediaContext.From(Dispatcher).GetChannels();

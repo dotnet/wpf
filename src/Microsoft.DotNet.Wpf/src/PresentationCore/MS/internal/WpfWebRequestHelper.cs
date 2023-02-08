@@ -86,7 +86,7 @@ static class WpfWebRequestHelper
             // occurred. This is the default value for Status."
             Uri requestUri = BaseUriHelper.PackAppBaseUri.MakeRelativeUri(uri);
             throw new WebException(requestUri.ToString(), WebExceptionStatus.RequestCanceled);
-            //throw new IOException(SR.Get(SRID.GetResponseFailed, requestUri.ToString()));
+            //throw new IOException(SR.Format(SR.GetResponseFailed, requestUri.ToString()));
         }
         
         HttpWebRequest httpRequest = request as HttpWebRequest;
@@ -209,7 +209,7 @@ static class WpfWebRequestHelper
         if (response == null)
         {
             Uri requestUri = BaseUriHelper.PackAppBaseUri.MakeRelativeUri(request.RequestUri);
-            throw new IOException(SR.Get(SRID.GetResponseFailed, requestUri.ToString()));
+            throw new IOException(SR.Format(SR.GetResponseFailed, requestUri.ToString()));
         }
         
         HandleWebResponse(response);
@@ -226,7 +226,7 @@ static class WpfWebRequestHelper
         if (response == null)
         {
             Uri requestUri = BaseUriHelper.PackAppBaseUri.MakeRelativeUri(request.RequestUri);
-            throw new IOException(SR.Get(SRID.GetResponseFailed, requestUri.ToString()));
+            throw new IOException(SR.Format(SR.GetResponseFailed, requestUri.ToString()));
         }
         HandleWebResponse(response);
         return response;

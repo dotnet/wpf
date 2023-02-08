@@ -145,7 +145,7 @@ namespace MS.Internal.IO.Packaging
             checked
             {
                 if (offset + count > buffer.Length)
-                    throw new ArgumentException(SR.Get(SRID.IOBufferOverflow), "buffer");
+                    throw new ArgumentException(SR.IOBufferOverflow, "buffer");
 
                 // make sure some data is in the stream - block until it is
                 int bytesAvailable = GetData(new Block(_position, count));
@@ -254,13 +254,13 @@ namespace MS.Internal.IO.Packaging
 
                     default:
                         {
-                            throw new ArgumentOutOfRangeException("origin", SR.Get(SRID.SeekOriginInvalid));
+                            throw new ArgumentOutOfRangeException("origin", SR.SeekOriginInvalid);
                         }
                 }
             }
             if (temp < 0)
             {
-                throw new ArgumentException(SR.Get(SRID.SeekNegative));
+                throw new ArgumentException(SR.SeekNegative);
             }
 
 #if DEBUG
@@ -287,7 +287,7 @@ namespace MS.Internal.IO.Packaging
                 CheckDisposed();
 
                 if (value < 0)
-                    throw new ArgumentException(SR.Get(SRID.SeekNegative));
+                    throw new ArgumentException(SR.SeekNegative);
 
 #if DEBUG
                 if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
@@ -305,7 +305,7 @@ namespace MS.Internal.IO.Packaging
         /// <exception cref="NotSupportedException">not supported</exception>
         public override void SetLength(long newLength)
         {
-            throw new NotSupportedException(SR.Get(SRID.SetLengthNotSupported));
+            throw new NotSupportedException(SR.SetLengthNotSupported);
         }
 
 
@@ -315,7 +315,7 @@ namespace MS.Internal.IO.Packaging
         /// <exception cref="NotSupportedException">not supported</exception>
         public override void Write(byte[] buf, int offset, int count)
         {
-            throw new NotSupportedException(SR.Get(SRID.WriteNotSupported));
+            throw new NotSupportedException(SR.WriteNotSupported);
         }
 
 

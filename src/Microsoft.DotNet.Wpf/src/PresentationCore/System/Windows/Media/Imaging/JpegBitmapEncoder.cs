@@ -20,7 +20,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Media.Imaging;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Imaging
 {
@@ -66,7 +65,7 @@ namespace System.Windows.Media.Imaging
             {
                 if ((value < 1) || (value > 100))
                 {
-                    throw new System.ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterMustBeBetween, 1, 100));
+                    throw new System.ArgumentOutOfRangeException("value", SR.Format(SR.ParameterMustBeBetween, 1, 100));
                 }
 
                 _qualityLevel = value;

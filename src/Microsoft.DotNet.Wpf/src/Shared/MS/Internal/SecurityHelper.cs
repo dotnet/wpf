@@ -111,7 +111,7 @@ internal static class SecurityHelper
               //
               if (targetZone < 0)
               {
-                throw new SecurityException( SR.Get(SRID.Invalid_URI) );
+                throw new SecurityException( SR.Invalid_URI );
               }
               pSec = null;
               curSecMgr = null;

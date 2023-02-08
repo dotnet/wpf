@@ -14,7 +14,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using MS.Utility;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -52,7 +51,7 @@ namespace System.Windows.Input
         {
             if (initialCapacity < 0)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidStylusPointConstructionZeroLengthCollection), "initialCapacity");
+                throw new ArgumentException(SR.InvalidStylusPointConstructionZeroLengthCollection, "initialCapacity");
             }
             ((List<StylusPoint>)this.Items).Capacity = initialCapacity;
         }
@@ -80,7 +79,7 @@ namespace System.Windows.Input
         {
             if (initialCapacity < 0)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidStylusPointConstructionZeroLengthCollection), "initialCapacity");
+                throw new ArgumentException(SR.InvalidStylusPointConstructionZeroLengthCollection, "initialCapacity");
             }
             ((List<StylusPoint>)this.Items).Capacity = initialCapacity;
         }
@@ -101,7 +100,7 @@ namespace System.Windows.Input
             List<StylusPoint> points = new List<StylusPoint>(stylusPoints);
             if (points.Count == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidStylusPointConstructionZeroLengthCollection), "stylusPoints");
+                throw new ArgumentException(SR.InvalidStylusPointConstructionZeroLengthCollection, "stylusPoints");
             }
 
             //
@@ -139,7 +138,7 @@ namespace System.Windows.Input
 
             if (stylusPoints.Count == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidStylusPointConstructionZeroLengthCollection), "points");
+                throw new ArgumentException(SR.InvalidStylusPointConstructionZeroLengthCollection, "points");
             }
 
             ((List<StylusPoint>)this.Items).Capacity = stylusPoints.Count;
@@ -226,7 +225,7 @@ namespace System.Windows.Input
             if (!StylusPointDescription.AreCompatible(stylusPoints.Description,
                                                         _stylusPointDescription))
             {
-                throw new ArgumentException(SR.Get(SRID.IncompatibleStylusPointDescriptions), "stylusPoints");
+                throw new ArgumentException(SR.IncompatibleStylusPointDescriptions, "stylusPoints");
             }
 
             // cache count outside of the loop, so if this SPC is ever passed
@@ -274,7 +273,7 @@ namespace System.Windows.Input
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.InvalidStylusPointCollectionZeroCount));
+                throw new InvalidOperationException(SR.InvalidStylusPointCollectionZeroCount);
             }
         }
 
@@ -291,7 +290,7 @@ namespace System.Windows.Input
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.InvalidStylusPointCollectionZeroCount));
+                throw new InvalidOperationException(SR.InvalidStylusPointCollectionZeroCount);
             }
 }
 
@@ -304,7 +303,7 @@ namespace System.Windows.Input
             if (!StylusPointDescription.AreCompatible(stylusPoint.Description,
                                                     _stylusPointDescription))
             {
-                throw new ArgumentException(SR.Get(SRID.IncompatibleStylusPointDescriptions), "stylusPoint");
+                throw new ArgumentException(SR.IncompatibleStylusPointDescriptions, "stylusPoint");
             }
 
             stylusPoint.Description = _stylusPointDescription;
@@ -322,7 +321,7 @@ namespace System.Windows.Input
             if (!StylusPointDescription.AreCompatible(stylusPoint.Description,
                                                     _stylusPointDescription))
             {
-                throw new ArgumentException(SR.Get(SRID.IncompatibleStylusPointDescriptions), "stylusPoint");
+                throw new ArgumentException(SR.IncompatibleStylusPointDescriptions, "stylusPoint");
             }
 
             stylusPoint.Description = _stylusPointDescription;
@@ -475,7 +474,7 @@ namespace System.Windows.Input
         {
             if (!subsetToReformatTo.IsSubsetOf(this.Description))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidStylusPointDescriptionSubset), "subsetToReformatTo");
+                throw new ArgumentException(SR.InvalidStylusPointDescriptionSubset, "subsetToReformatTo");
             }
 
             StylusPointDescription subsetToReformatToWithCurrentMetrics =

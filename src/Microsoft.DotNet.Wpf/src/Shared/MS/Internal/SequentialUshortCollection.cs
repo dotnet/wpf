@@ -24,7 +24,6 @@ using System.Text;
 using System.Runtime.InteropServices;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal
 {
@@ -61,7 +60,7 @@ namespace MS.Internal
 
             if (array.Rank != 1)
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                throw new ArgumentException(SR.Collection_BadRank);
             }
 
             // The extra "arrayIndex >= array.Length" check in because even if _collection.Count

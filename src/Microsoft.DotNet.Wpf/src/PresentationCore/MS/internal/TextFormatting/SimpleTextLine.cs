@@ -22,7 +22,6 @@ using MS.Internal.Shaping;
 using MS.Internal.FontCache;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.TextFormatting
 {
@@ -813,7 +812,7 @@ namespace MS.Internal.TextFormatting
         {
             if (textLength == 0)
             {
-                throw new ArgumentOutOfRangeException("textLength", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+                throw new ArgumentOutOfRangeException("textLength", SR.ParameterMustBeGreaterThanZero);
             }
 
             if (textLength < 0)

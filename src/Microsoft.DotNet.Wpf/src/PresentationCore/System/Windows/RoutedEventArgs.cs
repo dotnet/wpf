@@ -6,7 +6,6 @@ using System;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using MS.Internal.PresentationCore;
 using System.Collections.Specialized ;
 using System.Windows.Input;
@@ -96,7 +95,7 @@ namespace System.Windows
             set
             {
                 if (UserInitiated && InvokingHandler)
-                    throw new InvalidOperationException(SR.Get(SRID.RoutedEventCannotChangeWhileRouting));
+                    throw new InvalidOperationException(SR.RoutedEventCannotChangeWhileRouting);
 
                 _routedEvent = value;
             }
@@ -136,7 +135,7 @@ namespace System.Windows
             {
                 if (_routedEvent == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.RoutedEventArgsMustHaveRoutedEvent));
+                    throw new InvalidOperationException(SR.RoutedEventArgsMustHaveRoutedEvent);
                 }
 
 
@@ -188,11 +187,11 @@ namespace System.Windows
             set
             {
                 if (InvokingHandler && UserInitiated)
-                    throw new InvalidOperationException(SR.Get(SRID.RoutedEventCannotChangeWhileRouting));
+                    throw new InvalidOperationException(SR.RoutedEventCannotChangeWhileRouting);
 
                 if (_routedEvent == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.RoutedEventArgsMustHaveRoutedEvent));
+                    throw new InvalidOperationException(SR.RoutedEventArgsMustHaveRoutedEvent);
                 }
 
 
@@ -292,7 +291,7 @@ namespace System.Windows
 
             if (_routedEvent == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.RoutedEventArgsMustHaveRoutedEvent));
+                throw new InvalidOperationException(SR.RoutedEventArgsMustHaveRoutedEvent);
             }
 
             InvokingHandler = true;

@@ -18,7 +18,6 @@ using System.Windows.Markup;    // for XmlLanguage and XmlLanguageConverter
 
 using MS.Internal.PresentationCore;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -128,10 +127,10 @@ namespace System.Windows.Media
                 throw new ArgumentOutOfRangeException("index");
 
             if (index >= array.Length)
-                throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
 
             if (_innerDictionary.Count > array.Length - index)
-                throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
 
             _innerDictionary.CopyTo(array, index);
         }
@@ -164,10 +163,10 @@ namespace System.Windows.Media
                 throw new ArgumentOutOfRangeException("index");
 
             if (index >= array.Length)
-                throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
 
             if (_innerDictionary.Count > array.Length - index)
-                throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
 
             SC.DictionaryEntry[] typedArray = array as SC.DictionaryEntry[];
             if (typedArray != null)
@@ -182,12 +181,12 @@ namespace System.Windows.Media
             {
                 // it's an array of some other type, e.g., object[]; make sure it's one dimensional
                 if (array.Rank != 1)
-                    throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_ArrayCannotBeMultidimensional));
+                    throw new ArgumentException(SR.Collection_CopyTo_ArrayCannotBeMultidimensional);
 
                 // make sure the element type is compatible
                 Type elementType = array.GetType().GetElementType();
                 if (!elementType.IsAssignableFrom(typeof(SC.DictionaryEntry)))
-                    throw new ArgumentException(SR.Get(SRID.CannotConvertType, typeof(SC.DictionaryEntry), elementType));
+                    throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(SC.DictionaryEntry), elementType));
 
                 foreach (KeyValuePair<XmlLanguage, string> item in _innerDictionary)
                 {
@@ -331,7 +330,7 @@ namespace System.Windows.Media
                 if (value == null)
                     throw new ArgumentNullException("value");
                 else
-                    throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(string)), "value");
+                    throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(string)), "value");
             }
             return s;
         }
@@ -345,7 +344,7 @@ namespace System.Windows.Media
                 if (key == null)
                     throw new ArgumentNullException("key");
                 else
-                    throw new ArgumentException(SR.Get(SRID.CannotConvertType, key.GetType(), typeof(XmlLanguage)), "key");
+                    throw new ArgumentException(SR.Format(SR.CannotConvertType, key.GetType(), typeof(XmlLanguage)), "key");
             }
             return language;
         }
@@ -413,7 +412,7 @@ namespace System.Windows.Media
                 // but a generic IEnumerator<T> is not required to. Therefore we need to check for
                 // this case here by checking for a null Key.
                 if (entry.Key == null)
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_VerifyContext));
+                    throw new InvalidOperationException(SR.Enumerator_VerifyContext);
 
                 return entry;
             }

@@ -124,7 +124,7 @@ namespace System.Windows.Media.Imaging
         {
             if (cbFrom>cbTo)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_InsufficientBufferSize));
+                throw new InvalidOperationException(SR.Image_InsufficientBufferSize);
             }
 
             byte* pCurFrom = (byte*)pbFrom;
@@ -334,7 +334,7 @@ namespace System.Windows.Media.Imaging
                 }
                 else
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Image_PropertyNotSupported));
+                    throw new System.InvalidOperationException(SR.Image_PropertyNotSupported);
                 }
             }
             else
@@ -445,7 +445,7 @@ namespace System.Windows.Media.Imaging
                 }
                 else
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Image_PropertyNotSupported));
+                    throw new System.InvalidOperationException(SR.Image_PropertyNotSupported);
                 }
             }
        }
@@ -766,7 +766,7 @@ namespace System.Windows.Media.Imaging
                 }
             }
 
-            throw new System.NotSupportedException(SR.Get(SRID.Image_PropertyNotSupported));
+            throw new System.NotSupportedException(SR.Image_PropertyNotSupported);
        }
 
         internal bool RequiresSyncObject

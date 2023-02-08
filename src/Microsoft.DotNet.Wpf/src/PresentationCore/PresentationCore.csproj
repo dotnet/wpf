@@ -102,7 +102,6 @@
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TraceLoggers\XpsOMPrintingTraceLogger.cs" />
     <Compile Include="ModuleInitializer.cs" />
     <Compile Include="OtherAssemblyAttrs.cs" />
-    <Compile Include="SR.cs" />
     <Compile Include="MS\Internal\AnimatedTypeHelpers.cs" />
     <Compile Include="MS\Internal\CheckedPointers.cs" />
     <Compile Include="MS\Internal\Classification.cs" />

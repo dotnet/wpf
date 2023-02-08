@@ -18,6 +18,7 @@
     -->
 
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='PresentationBuildTasks'">false</_GenerateResourcesCodeAsConstants>
+    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='PresentationCore'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='PresentationFramework'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='PresentationUI' or '$(AssemblyName)'=='PresentationUI'">false</_GenerateResourcesCodeAsConstants>
     <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='ReachFramework'">false</_GenerateResourcesCodeAsConstants>
@@ -53,7 +54,7 @@
       <ClassName Condition="'$(AssemblyName)'=='PresentationFramework'">System.Windows.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='PresentationUI'">System.Windows.TrustUI.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='WindowsFormsIntegration'">System.Windows.SR</ClassName>
-      <ClassName Condition="'$(AssemblyName)'=='PresentationCore'">MS.Internal.PresentationCore.SRID </ClassName>
+      <ClassName Condition="'$(AssemblyName)'=='PresentationCore'">MS.Internal.PresentationCore.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='System.Xaml'">System.SR</ClassName>
       <Classname Condition="'%(ClassName)'==''">System.SRID</Classname>
     </EmbeddedResource>

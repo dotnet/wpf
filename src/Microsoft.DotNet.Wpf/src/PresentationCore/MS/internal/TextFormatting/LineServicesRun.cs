@@ -19,7 +19,6 @@ using MS.Internal.FontCache;
 using MS.Utility;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 using MS.Internal.Text.TextInterface;
 
@@ -931,7 +930,7 @@ namespace MS.Internal.TextFormatting
                 {
                     if (lsruns[i].RunProp.TypographyProperties != null)
                     {
-                        throw new ArgumentException(SR.Get(SRID.CompileFeatureSet_InvalidTypographyProperties));
+                        throw new ArgumentException(SR.CompileFeatureSet_InvalidTypographyProperties);
                     }
                 }
 

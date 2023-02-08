@@ -17,7 +17,7 @@ using MS.Internal.WindowsBase;  // FriendAccessAllowed
 using System.Xml;               // For XmlReader
 using System.Diagnostics;       // For Debug.Assert
 using System.Text;              // For Encoding
-using System.Windows;           // For Exception strings - SRID
+using System.Windows;           // For Exception strings - SR
 using System.Security;                  // for SecurityCritical
 using Microsoft.Win32;                  // for Registry classes
 

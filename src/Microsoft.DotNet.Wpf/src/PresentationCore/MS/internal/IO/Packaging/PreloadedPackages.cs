@@ -167,7 +167,7 @@ namespace MS.Internal.IO.Packaging
 
             if (!uri.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.Get(SRID.UriMustBeAbsolute), "uri");
+                throw new ArgumentException(SR.UriMustBeAbsolute, "uri");
             }
         }
 

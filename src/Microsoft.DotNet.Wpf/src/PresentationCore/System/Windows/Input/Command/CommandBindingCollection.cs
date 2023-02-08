@@ -21,7 +21,6 @@ using System.Windows;
 using System.Windows.Input;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -142,7 +141,7 @@ namespace System.Windows.Input
             set 
             {
                 if (value is not CommandBinding commandBinding)
-                    throw new NotSupportedException(SR.Get(SRID.CollectionOnlyAcceptsCommandBindings));
+                    throw new NotSupportedException(SR.CollectionOnlyAcceptsCommandBindings);
 
                 this[index] = commandBinding;
             }
@@ -181,7 +180,7 @@ namespace System.Windows.Input
             }
             else
             {
-                throw new NotSupportedException(SR.Get(SRID.CollectionOnlyAcceptsCommandBindings));
+                throw new NotSupportedException(SR.CollectionOnlyAcceptsCommandBindings);
             }
         }
 
@@ -208,7 +207,7 @@ namespace System.Windows.Input
                 }
                 else
                 {
-                    throw new NotSupportedException(SR.Get(SRID.CollectionOnlyAcceptsCommandBindings));
+                    throw new NotSupportedException(SR.CollectionOnlyAcceptsCommandBindings);
                 }
             }
         }
@@ -226,7 +225,7 @@ namespace System.Windows.Input
             }
             else
             {
-                throw new NotSupportedException(SR.Get(SRID.CollectionOnlyAcceptsCommandBindings));
+                throw new NotSupportedException(SR.CollectionOnlyAcceptsCommandBindings);
             }
         }
                 

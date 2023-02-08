@@ -126,7 +126,7 @@ namespace System.Windows.Media.TextFormatting
             Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
 
             if (dispatcher == null)
-                throw new ArgumentException(SR.Get(SRID.CurrentDispatcherNotFound));
+                throw new ArgumentException(SR.CurrentDispatcherNotFound);
 
             TextFormatter defaultTextFormatter;
             if (textFormattingMode == TextFormattingMode.Display)

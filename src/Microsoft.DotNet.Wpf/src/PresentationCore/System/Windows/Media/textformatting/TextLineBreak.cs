@@ -23,7 +23,6 @@ using MS.Internal;
 using MS.Internal.TextFormatting;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 
 namespace System.Windows.Media.TextFormatting
@@ -93,7 +92,7 @@ namespace System.Windows.Media.TextFormatting
 
                 if (lserr != LsErr.None)
                 {
-                    TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.CloneBreakRecordFailure, lserr), lserr);
+                    TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.CloneBreakRecordFailure, lserr), lserr);
                 }
             }
 

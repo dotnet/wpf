@@ -27,7 +27,6 @@ using System.Windows.Threading;
 using System.Windows.Media.Imaging;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Net;
 using System.Net.Cache;
 

@@ -24,7 +24,6 @@ using System.Security;
 using MS.Internal.PresentationCore;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Effects
 {
@@ -46,7 +45,7 @@ namespace System.Windows.Media.Effects
             // thread is not STA.
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new InvalidOperationException(SR.Get(SRID.RequiresSTA));
+                throw new InvalidOperationException(SR.RequiresSTA);
             }
         }
 
@@ -118,12 +117,12 @@ namespace System.Windows.Media.Effects
             // if we don't have the input set, we should not be calling the output property
             if (input.Input == null)
             {
-                throw new ArgumentException(SR.Get(SRID.Effect_No_InputSource), "input");
+                throw new ArgumentException(SR.Effect_No_InputSource, "input");
             }
 
             if (input.Input == BitmapEffectInput.ContextInputSource)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Effect_No_ContextInputSource, null));
+                throw new InvalidOperationException(SR.Format(SR.Effect_No_ContextInputSource, null));
             }
 
             return input.Input.Clone();

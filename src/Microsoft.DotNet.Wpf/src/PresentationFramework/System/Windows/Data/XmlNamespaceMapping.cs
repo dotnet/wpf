@@ -45,9 +45,9 @@ namespace System.Windows.Data
             set
             {
                 if (!_initializing)
-                    throw new InvalidOperationException(SR.Get(SRID.PropertyIsInitializeOnly, "Prefix", this.GetType().Name));
+                    throw new InvalidOperationException(SR.Format(SR.PropertyIsInitializeOnly, "Prefix", this.GetType().Name));
                 if (_prefix != null && _prefix != value)
-                    throw new InvalidOperationException(SR.Get(SRID.PropertyIsImmutable, "Prefix", this.GetType().Name));
+                    throw new InvalidOperationException(SR.Format(SR.PropertyIsImmutable, "Prefix", this.GetType().Name));
 
                 _prefix = value;
             }
@@ -64,9 +64,9 @@ namespace System.Windows.Data
             set
             {
                 if (!_initializing)
-                    throw new InvalidOperationException(SR.Get(SRID.PropertyIsInitializeOnly, "Uri", this.GetType().Name));
+                    throw new InvalidOperationException(SR.Format(SR.PropertyIsInitializeOnly, "Uri", this.GetType().Name));
                 if (_uri != null && _uri != value)
-                    throw new InvalidOperationException(SR.Get(SRID.PropertyIsImmutable, "Uri", this.GetType().Name));
+                    throw new InvalidOperationException(SR.Format(SR.PropertyIsImmutable, "Uri", this.GetType().Name));
 
                 _uri = value;
             }
@@ -142,11 +142,11 @@ namespace System.Windows.Data
         {
             if (_prefix == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.PropertyMustHaveValue, "Prefix", this.GetType().Name));
+                throw new InvalidOperationException(SR.Format(SR.PropertyMustHaveValue, "Prefix", this.GetType().Name));
             }
             if (_uri == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.PropertyMustHaveValue, "Uri", this.GetType().Name));
+                throw new InvalidOperationException(SR.Format(SR.PropertyMustHaveValue, "Uri", this.GetType().Name));
             }
 
             _initializing = false;

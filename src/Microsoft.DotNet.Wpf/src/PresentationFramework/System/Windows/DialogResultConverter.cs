@@ -60,7 +60,7 @@ namespace System.Windows
                                            CultureInfo cultureInfo, 
                                            object source)
         {
-            throw new InvalidOperationException(SR.Get(SRID.CantSetInMarkup));
+            throw new InvalidOperationException(SR.CantSetInMarkup);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace System.Windows
                                          object value,
                                          Type destinationType)
         {
-            throw new InvalidOperationException(SR.Get(SRID.CantSetInMarkup));
+            throw new InvalidOperationException(SR.CantSetInMarkup);
         }
         #endregion 
     }

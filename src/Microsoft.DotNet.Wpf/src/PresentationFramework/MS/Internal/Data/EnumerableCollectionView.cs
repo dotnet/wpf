@@ -422,13 +422,13 @@ namespace MS.Internal.Data
 
                 case NotifyCollectionChangedAction.Remove:
                     if (args.OldStartingIndex < 0)
-                        throw new InvalidOperationException(SR.Get(SRID.RemovedItemNotFound));
+                        throw new InvalidOperationException(SR.RemovedItemNotFound);
 
                     for (int i = args.OldItems.Count - 1, index = args.OldStartingIndex + i; i >= 0; --i, --index)
                     {
                         if (!System.Windows.Controls.ItemsControl.EqualsEx(args.OldItems[i], _snapshot[index]))
                             // replace error message with a better one
-                            throw new InvalidOperationException(SR.Get(SRID.AddedItemNotAtIndex, index));
+                            throw new InvalidOperationException(SR.Format(SR.AddedItemNotAtIndex, index));
                         _snapshot.RemoveAt(index);
                     }
                     break;
@@ -438,14 +438,14 @@ namespace MS.Internal.Data
                     {
                         if (!System.Windows.Controls.ItemsControl.EqualsEx(args.OldItems[i], _snapshot[index]))
                             // replace error message with a better one
-                            throw new InvalidOperationException(SR.Get(SRID.AddedItemNotAtIndex, index));
+                            throw new InvalidOperationException(SR.Format(SR.AddedItemNotAtIndex, index));
                         _snapshot[index] = args.NewItems[i];
                     }
                     break;
 
                 case NotifyCollectionChangedAction.Move:
                     if (args.NewStartingIndex < 0)
-                        throw new InvalidOperationException(SR.Get(SRID.CannotMoveToUnknownPosition));
+                        throw new InvalidOperationException(SR.CannotMoveToUnknownPosition);
 
                     if (args.OldStartingIndex < args.NewStartingIndex)
                     {
@@ -457,7 +457,7 @@ namespace MS.Internal.Data
                         {
                             if (!System.Windows.Controls.ItemsControl.EqualsEx(args.OldItems[i], _snapshot[oldIndex]))
                                 // replace error message with a better one
-                                throw new InvalidOperationException(SR.Get(SRID.AddedItemNotAtIndex, oldIndex));
+                                throw new InvalidOperationException(SR.Format(SR.AddedItemNotAtIndex, oldIndex));
                             _snapshot.Move(oldIndex, newIndex);
                         }
                     }
@@ -471,7 +471,7 @@ namespace MS.Internal.Data
                         {
                             if (!System.Windows.Controls.ItemsControl.EqualsEx(args.OldItems[i], _snapshot[oldIndex]))
                                 // replace error message with a better one
-                                throw new InvalidOperationException(SR.Get(SRID.AddedItemNotAtIndex, oldIndex));
+                                throw new InvalidOperationException(SR.Format(SR.AddedItemNotAtIndex, oldIndex));
                             _snapshot.Move(oldIndex, newIndex);
                         }
                     }

@@ -158,12 +158,12 @@ namespace System.Windows.Controls
 
             if (!(value is FlowDocument))
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(FlowDocument)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(FlowDocument)), "value");
             }
 
             if (!_implicitDocument)
             {
-                throw new ArgumentException(SR.Get(SRID.CanOnlyHaveOneChild, this.GetType(), value.GetType()));
+                throw new ArgumentException(SR.Format(SR.CanOnlyHaveOneChild, this.GetType(), value.GetType()));
             }
 
             this.Document = (FlowDocument)value;
@@ -369,12 +369,12 @@ namespace System.Windows.Controls
                     value.StructuralCache != null && value.StructuralCache.TextContainer != null && 
                     value.StructuralCache.TextContainer.TextSelection != null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.RichTextBox_DocumentBelongsToAnotherRichTextBoxAlready));
+                    throw new ArgumentException(SR.RichTextBox_DocumentBelongsToAnotherRichTextBoxAlready);
                 }
 
                 if (_document != null && this.TextSelectionInternal.ChangeBlockLevel > 0)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.RichTextBox_CantSetDocumentInsideChangeBlock));
+                    throw new InvalidOperationException(SR.RichTextBox_CantSetDocumentInsideChangeBlock);
                 }
 
                 if (value == _document)
@@ -588,7 +588,7 @@ namespace System.Windows.Controls
                 }
                 if (!Selection.Start.IsInSameDocument(value))
                 {
-                    throw new ArgumentException(SR.Get(SRID.RichTextBox_PointerNotInSameDocument), "value");
+                    throw new ArgumentException(SR.RichTextBox_PointerNotInSameDocument, "value");
                 }
                 Selection.SetCaretToPosition(value, value.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/false);
             }

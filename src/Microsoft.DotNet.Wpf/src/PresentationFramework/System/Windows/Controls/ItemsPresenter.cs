@@ -48,7 +48,7 @@ namespace System.Windows.Controls
             // verify that the template produced a panel with no children
             Panel panel = GetVisualChild(0) as Panel;
             if (panel == null || VisualTreeHelper.GetChildrenCount(panel) > 0)
-                throw new InvalidOperationException(SR.Get(SRID.ItemsPanelNotSingleNode));
+                throw new InvalidOperationException(SR.ItemsPanelNotSingleNode);
 
             OnPanelChanged(this, EventArgs.Empty);
 

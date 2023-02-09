@@ -158,12 +158,12 @@ namespace MS.Internal.Documents
         {
             base.ApplyResources();
 
-            _cancelButton.Text = SR.Get(SRID.RMCredManagementCancel);
-            _okButton.Text = SR.Get(SRID.RMCredManagementOk);
-            _addButton.Text = SR.Get(SRID.RMCredManagementAdd);
-            _removeButton.Text = SR.Get(SRID.RMCredManagementRemove);
-            _instructionLabel.Text = SR.Get(SRID.RMCredManagementInstruction);
-            Text = SR.Get(SRID.RMCredManagementDialog);
+            _cancelButton.Text = SR.RMCredManagementCancel;
+            _okButton.Text = SR.RMCredManagementOk;
+            _addButton.Text = SR.RMCredManagementAdd;
+            _removeButton.Text = SR.RMCredManagementRemove;
+            _instructionLabel.Text = SR.RMCredManagementInstruction;
+            Text = SR.RMCredManagementDialog;
 
             // Setup matching Add/Remove button widths
             int maxWidth = Math.Max(_addButton.Width, _removeButton.Width);

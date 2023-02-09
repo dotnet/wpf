@@ -77,13 +77,13 @@ namespace System.Windows
         {
             if (string.IsNullOrEmpty(AssemblyName))
             {
-                throw new InvalidOperationException(SR.Get(SRID.ThemeDictionaryExtension_Name));
+                throw new InvalidOperationException(SR.ThemeDictionaryExtension_Name);
             }
 
             IProvideValueTarget provideValueTarget = serviceProvider.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
             if( provideValueTarget == null )
             {
-                throw new InvalidOperationException(SR.Get(SRID.MarkupExtensionNoContext, GetType().Name, "IProvideValueTarget" ));
+                throw new InvalidOperationException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, "IProvideValueTarget" ));
             }
                 
             object targetObject = provideValueTarget.TargetObject;
@@ -95,7 +95,7 @@ namespace System.Windows
             // Allow targetProperty to be null or ResourceDictionary.Source
             if (dictionary == null || (targetProperty != null && propertyInfo != SourceProperty))
             {
-                throw new InvalidOperationException(SR.Get(SRID.ThemeDictionaryExtension_Source));
+                throw new InvalidOperationException(SR.ThemeDictionaryExtension_Source);
             }
 
             Register(dictionary, _assemblyName);

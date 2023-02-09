@@ -342,7 +342,7 @@ namespace System.Windows.Data
                         SourceReference = StaticSourceRef;
                     }
                     else
-                        throw new InvalidOperationException(SR.Get(SRID.BindingConflict, SourceProperties.StaticSource, _sourceInUse));
+                        throw new InvalidOperationException(SR.Format(SR.BindingConflict, SourceProperties.StaticSource, _sourceInUse));
                 }
             }
         }
@@ -541,7 +541,7 @@ namespace System.Windows.Data
                     }
                 }
                 else
-                    throw new InvalidOperationException(SR.Get(SRID.BindingConflict, SourceProperties.Source, _sourceInUse));
+                    throw new InvalidOperationException(SR.Format(SR.BindingConflict, SourceProperties.Source, _sourceInUse));
             }
         }
 
@@ -575,7 +575,7 @@ namespace System.Windows.Data
                     SourceReference = (value != null) ? new RelativeObjectRef(value) : null;
                 }
                 else
-                    throw new InvalidOperationException(SR.Get(SRID.BindingConflict, SourceProperties.RelativeSource, _sourceInUse));
+                    throw new InvalidOperationException(SR.Format(SR.BindingConflict, SourceProperties.RelativeSource, _sourceInUse));
             }
         }
 
@@ -594,7 +594,7 @@ namespace System.Windows.Data
                     SourceReference = (value != null) ? new ElementObjectRef(value) : null;
                 }
                 else
-                    throw new InvalidOperationException(SR.Get(SRID.BindingConflict, SourceProperties.ElementName, _sourceInUse));
+                    throw new InvalidOperationException(SR.Format(SR.BindingConflict, SourceProperties.ElementName, _sourceInUse));
             }
         }
 

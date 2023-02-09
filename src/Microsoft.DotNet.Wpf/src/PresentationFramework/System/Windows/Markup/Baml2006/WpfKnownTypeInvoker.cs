@@ -30,7 +30,7 @@ namespace System.Windows.Baml2006
                 Baml6ConstructorInfo ctorInfo;
                 if(!_type.Constructors.TryGetValue(arguments.Length, out ctorInfo))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.PositionalArgumentsWrongLength));
+                    throw new InvalidOperationException(SR.PositionalArgumentsWrongLength);
                 }
                 return ctorInfo.Constructor(arguments);
             }

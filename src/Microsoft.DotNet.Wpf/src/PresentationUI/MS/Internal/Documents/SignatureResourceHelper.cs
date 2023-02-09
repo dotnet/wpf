@@ -43,22 +43,22 @@ namespace MS.Internal.Documents
             switch (status)
             {
                 case SignatureStatus.Valid:
-                    docSigStatusResources.Text = SR.Get(SRID.DocumentSignatureManagerValid);
-                    docSigStatusResources.ToolTip = SR.Get(SRID.DocumentSignatureManagerAppliedToolTip);
+                    docSigStatusResources.Text = SR.DocumentSignatureManagerValid;
+                    docSigStatusResources.ToolTip = SR.DocumentSignatureManagerAppliedToolTip;
                     break;
                 case SignatureStatus.Invalid:
-                    docSigStatusResources.Text = SR.Get(SRID.DocumentSignatureManagerInvalid);
-                    docSigStatusResources.ToolTip = SR.Get(SRID.DocumentSignatureManagerAppliedToolTip);
+                    docSigStatusResources.Text = SR.DocumentSignatureManagerInvalid;
+                    docSigStatusResources.ToolTip = SR.DocumentSignatureManagerAppliedToolTip;
                     break;
                 case SignatureStatus.NotSigned:
                     docSigStatusResources.Text = String.Empty;
-                    docSigStatusResources.ToolTip = SR.Get(SRID.DocumentSignatureManagerDefaultToolTip);
+                    docSigStatusResources.ToolTip = SR.DocumentSignatureManagerDefaultToolTip;
                     break;                
                 default: // SignatureStatus.Unknown or SignatureStatus.Undetermined
                          // In this case signatures have been applied to the document, but
                          // the validity of the signatures is not yet known.
-                    docSigStatusResources.Text = SR.Get(SRID.DocumentSignatureManagerUndetermined);
-                    docSigStatusResources.ToolTip = SR.Get(SRID.DocumentSignatureManagerAppliedToolTip);
+                    docSigStatusResources.Text = SR.DocumentSignatureManagerUndetermined;
+                    docSigStatusResources.ToolTip = SR.DocumentSignatureManagerAppliedToolTip;
                     break;
             }
 
@@ -109,7 +109,7 @@ namespace MS.Internal.Documents
             const int defaultWidth = 35;
 
             SignatureResources resources = new SignatureResources();
-            string none = SR.Get(SRID.SignatureResourceHelperNone);
+            string none = SR.SignatureResourceHelperNone;
 
             resources._displayImage = GetImageFromStatus(
                 defaultHeight, defaultWidth, signature.SignatureState, certStatus);
@@ -196,7 +196,7 @@ namespace MS.Internal.Documents
             // Setup the location text.  If not currently set, replace with the
             // string "<none>" to denote that no value was set.
             string location = (String.IsNullOrEmpty(signature.Location)) ?
-                SR.Get(SRID.SignatureResourceHelperNone) : signature.Location;
+                SR.SignatureResourceHelperNone : signature.Location;
 
             string result = String.Empty;
 
@@ -208,11 +208,11 @@ namespace MS.Internal.Documents
                     // Verify that if the signature is valid, it has a certificate
                     Invariant.Assert(
                         !(signature.SignatureState == SignatureStatus.Valid && signature.Certificate == null),
-                        SR.Get(SRID.SignatureResourceHelperMissingCertificate));
+                        SR.SignatureResourceHelperMissingCertificate);
 
                     // Create the signature status message
                     string sigSummary = string.Format(CultureInfo.CurrentCulture,
-                        SR.Get(SRID.SignatureResourceHelperSummaryBreakLine),
+                        SR.SignatureResourceHelperSummaryBreakLine,
                         GetSignatureSummaryMessage(signature.SignatureState, certStatus));
 
                     // Create the certificate status message (if required)
@@ -220,14 +220,14 @@ namespace MS.Internal.Documents
                     if (certStatus != CertificatePriorityStatus.Ok)
                     {
                         certSummary = string.Format(CultureInfo.CurrentCulture,
-                            SR.Get(SRID.SignatureResourceHelperSummaryBreakLine),
+                            SR.SignatureResourceHelperSummaryBreakLine,
                             GetCertificateSummaryMessage(certStatus));
                     }
 
                     // Create the summary message using the signature and certificate messages
                     // along with details from the current signature.
                     result = string.Format(CultureInfo.CurrentCulture,
-                        SR.Get(SRID.SignatureResourceHelperSummaryFormat),
+                        SR.SignatureResourceHelperSummaryFormat,
                         sigSummary,
                         certSummary,
                         signature.SubjectName,
@@ -239,7 +239,7 @@ namespace MS.Internal.Documents
                 case SignatureStatus.NotSigned:
                     // Create the summary message using signature information
                     result = string.Format(CultureInfo.CurrentCulture,
-                        SR.Get(SRID.SignatureResourceHelperValidSigSummaryPending),
+                        SR.SignatureResourceHelperValidSigSummaryPending,
                         signature.SubjectName,
                         GetFormattedDate(signature.SignedOn),
                         location);
@@ -260,28 +260,28 @@ namespace MS.Internal.Documents
             switch (certStatus)
             {
                 case CertificatePriorityStatus.Ok :
-                    message = SR.Get(SRID.SignatureResourceHelperCertificateStatusOk);
+                    message = SR.SignatureResourceHelperCertificateStatusOk;
                     break;
                 case CertificatePriorityStatus.Corrupted :
-                    message = SR.Get(SRID.SignatureResourceHelperCertificateStatusCorrupted);
+                    message = SR.SignatureResourceHelperCertificateStatusCorrupted;
                     break;
                 case CertificatePriorityStatus.CannotBeVerified :
-                    message = SR.Get(SRID.SignatureResourceHelperCertificateStatusCannotBeVerified);
+                    message = SR.SignatureResourceHelperCertificateStatusCannotBeVerified;
                     break;
                 case CertificatePriorityStatus.IssuerNotTrusted :
-                    message = SR.Get(SRID.SignatureResourceHelperCertificateStatusIssuerNotTrusted);
+                    message = SR.SignatureResourceHelperCertificateStatusIssuerNotTrusted;
                     break;
                 case CertificatePriorityStatus.Revoked :
-                    message = SR.Get(SRID.SignatureResourceHelperCertificateStatusRevoked);
+                    message = SR.SignatureResourceHelperCertificateStatusRevoked;
                     break;
                 case CertificatePriorityStatus.Expired :
-                    message = SR.Get(SRID.SignatureResourceHelperCertificateStatusExpired);
+                    message = SR.SignatureResourceHelperCertificateStatusExpired;
                     break;
                 case CertificatePriorityStatus.NoCertificate :
-                    message = SR.Get(SRID.SignatureResourceHelperCertificateStatusNoCertificate);
+                    message = SR.SignatureResourceHelperCertificateStatusNoCertificate;
                     break;
                 case CertificatePriorityStatus.Verifying :
-                    message = SR.Get(SRID.SignatureResourceHelperCertificateStatusVerifying);
+                    message = SR.SignatureResourceHelperCertificateStatusVerifying;
                     break;
             }
 
@@ -301,16 +301,16 @@ namespace MS.Internal.Documents
             if (sigStatus == SignatureStatus.Valid)
             {
                 message = (certStatus == CertificatePriorityStatus.Ok) ?
-                    SR.Get(SRID.SignatureResourceHelperSignatureStatusValid) : // Cert valid
-                    SR.Get(SRID.SignatureResourceHelperSignatureStatusValidCertInvalid); // Cert invalid
+                    SR.SignatureResourceHelperSignatureStatusValid : // Cert valid
+                    SR.SignatureResourceHelperSignatureStatusValidCertInvalid; // Cert invalid
             }
             else if (sigStatus == SignatureStatus.Unverifiable)
             {
-                message = SR.Get(SRID.SignatureResourceHelperSignatureStatusUnverifiable);
+                message = SR.SignatureResourceHelperSignatureStatusUnverifiable;
             }   
             else
             {
-                message = SR.Get(SRID.SignatureResourceHelperSignatureStatusInvalid);
+                message = SR.SignatureResourceHelperSignatureStatusInvalid;
             }
 
             return message;
@@ -323,7 +323,7 @@ namespace MS.Internal.Documents
         /// <returns>The short date or 'none' if the value was null.</returns>
         private static string GetFormattedDate(Nullable<DateTime> date)
         {
-            string none = SR.Get(SRID.SignatureResourceHelperNone);
+            string none = SR.SignatureResourceHelperNone;
 
             return date == null ? 
                 none : 
@@ -367,7 +367,7 @@ namespace MS.Internal.Documents
         {
             return String.Format(
                 CultureInfo.CurrentCulture,
-                SR.Get(SRID.SignatureResourcesFormatForAccessibility), 
+                SR.SignatureResourcesFormatForAccessibility, 
                 _summaryMessage, 
                 _subjectName, 
                 _reason, 

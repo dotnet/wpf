@@ -130,7 +130,7 @@ namespace System.Windows.Markup
                 case XamlNodeType.PropertyArrayStart:
                 case XamlNodeType.PropertyArrayEnd:
                 case XamlNodeType.DefTag:
-                    ThrowException(SRID.StyleTagNotSupported, xamlNode.TokenType.ToString(),
+                    ThrowException(nameof(SR.StyleTagNotSupported), xamlNode.TokenType.ToString(),
                                    xamlNode.LineNumber, xamlNode.LinePosition);
                     break;
 
@@ -182,7 +182,7 @@ namespace System.Windows.Markup
                 if (xamlUnknownTagStartNode.Value == XamlStyleSerializer.VisualTriggersFullPropertyName ||
                     xamlUnknownTagStartNode.Value == XamlStyleSerializer.SettersFullPropertyName)
                 {
-                    ThrowException(SRID.StyleKnownTagWrongLocation,
+                    ThrowException(nameof(SR.StyleKnownTagWrongLocation),
                                    xamlUnknownTagStartNode.Value,
                                    xamlUnknownTagStartNode.LineNumber,
                                    xamlUnknownTagStartNode.LinePosition);
@@ -452,7 +452,7 @@ namespace System.Windows.Markup
                         {
                             if (!XamlTypeMapper.IsAllowedPropertyGet(pi))
                             {
-                                ThrowException(SRID.ParserCantSetTriggerCondition,
+                                ThrowException(nameof(SR.ParserCantSetTriggerCondition),
                                                pi.Name,
                                                xamlNode.LineNumber,
                                                xamlNode.LinePosition);
@@ -462,7 +462,7 @@ namespace System.Windows.Markup
                         {
                             if (!XamlTypeMapper.IsAllowedPropertySet(pi))
                             {
-                                ThrowException(SRID.ParserCantSetAttribute,
+                                ThrowException(nameof(SR.ParserCantSetAttribute),
                                                "Property Setter",
                                                pi.Name,
                                                "set",
@@ -482,7 +482,7 @@ namespace System.Windows.Markup
             {
                 if (targetType != null)
                 {
-                    ThrowException(SRID.StyleNoPropOrEvent,
+                    ThrowException(nameof(SR.StyleNoPropOrEvent),
                                    (_inEventSetter ? "Event" : "Property"),
                                    member,
                                    targetType.FullName,
@@ -491,7 +491,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    ThrowException(SRID.StyleNoTarget,
+                    ThrowException(nameof(SR.StyleNoTarget),
                                    (_inEventSetter ? "Event" : "Property"),
                                    member,
                                    xamlNode.LineNumber,
@@ -645,7 +645,7 @@ namespace System.Windows.Markup
                 {
                     if (_setterPropertyEncountered)
                     {
-                        ThrowException(SRID.StyleImpliedAndComplexChildren,
+                        ThrowException(nameof(SR.StyleImpliedAndComplexChildren),
                                    xamlElementStartNode.ElementType.Name,
                                    XamlStyleSerializer.SettersPropertyName,
                                    xamlElementStartNode.LineNumber,
@@ -656,7 +656,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    ThrowException(SRID.StyleNoTopLevelElement,
+                    ThrowException(nameof(SR.StyleNoTopLevelElement),
                                    xamlElementStartNode.ElementType.Name,
                                    xamlElementStartNode.LineNumber,
                                    xamlElementStartNode.LinePosition);
@@ -705,7 +705,7 @@ namespace System.Windows.Markup
                 if (xamlElementStartNode.ElementType == KnownTypes.Types[(int)KnownElements.EventSetter])
                 {
 #if !PBTCOMPILER
-                    ThrowException(SRID.StyleNoEventSetters,
+                    ThrowException(nameof(SR.StyleNoEventSetters),
                         xamlElementStartNode.LineNumber,
                         xamlElementStartNode.LinePosition);
 #else
@@ -715,7 +715,7 @@ namespace System.Windows.Markup
                 else if ((depth == 2 && _setterElementEncountered) ||
                          (depth == 3 && _setterPropertyEncountered))
                 {
-                    ThrowException(SRID.ParserNoSetterChild,
+                    ThrowException(nameof(SR.ParserNoSetterChild),
                                    xamlElementStartNode.TypeFullName,
                                    xamlElementStartNode.LineNumber,
                                    xamlElementStartNode.LinePosition);
@@ -751,7 +751,7 @@ namespace System.Windows.Markup
                  }
                  if (serializer == null)
                  {
-                     ThrowException(SRID.ParserNoSerializer,
+                     ThrowException(nameof(SR.ParserNoSerializer),
                                    xamlElementStartNode.TypeFullName,
                                    xamlElementStartNode.LineNumber,
                                    xamlElementStartNode.LinePosition);
@@ -959,7 +959,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    ThrowException(SRID.StyleUnknownProp, xamlNode.PropName,
+                    ThrowException(nameof(SR.StyleUnknownProp), xamlNode.PropName,
                                    xamlNode.LineNumber, xamlNode.LinePosition);
                 }
             }
@@ -1039,7 +1039,7 @@ namespace System.Windows.Markup
                 {
                     if (_setterElementEncountered)
                     {
-                        ThrowException(SRID.StyleImpliedAndComplexChildren,
+                        ThrowException(nameof(SR.StyleImpliedAndComplexChildren),
                                    XamlStyleSerializer.SetterTagName,
                                    xamlNode.PropName,
                                    xamlNode.LineNumber, xamlNode.LinePosition);
@@ -1049,7 +1049,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    ThrowException(SRID.StyleUnknownProp, xamlNode.PropName,
+                    ThrowException(nameof(SR.StyleUnknownProp), xamlNode.PropName,
                                    xamlNode.LineNumber, xamlNode.LinePosition);
                 }
             }
@@ -1126,7 +1126,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    ThrowException(SRID.StyleUnknownProp, xamlPropertyIDictionaryStartNode.PropName,
+                    ThrowException(nameof(SR.StyleUnknownProp), xamlPropertyIDictionaryStartNode.PropName,
                                    xamlPropertyIDictionaryStartNode.LineNumber, xamlPropertyIDictionaryStartNode.LinePosition);
                 }
             }
@@ -1191,7 +1191,7 @@ namespace System.Windows.Markup
                 {
                     if (!XamlReaderHelper.IsWhiteSpace(xamlTextNode.Text[i]))
                     {
-                        ThrowException(SRID.StyleTextNotSupported, xamlTextNode.Text,
+                        ThrowException(nameof(SR.StyleTextNotSupported), xamlTextNode.Text,
                                xamlTextNode.LineNumber, xamlTextNode.LinePosition);
                     }
                 }
@@ -1208,7 +1208,7 @@ namespace System.Windows.Markup
             {
                 if (_styleModeStack.Mode != StyleMode.Setters)
                 {
-                    ThrowException(SRID.StyleTargetNoEvents,
+                    ThrowException(nameof(SR.StyleTargetNoEvents),
                         xamlClrEventNode.EventName,
                         xamlClrEventNode.LineNumber,
                         xamlClrEventNode.LinePosition);
@@ -1343,7 +1343,7 @@ namespace System.Windows.Markup
                     }
                     else if (xamlPropertyNode.PropName == XamlTemplateSerializer.SetterTargetAttributeName)
                     {
-                        ThrowException(SRID.TargetNameNotSupportedForStyleSetters,
+                        ThrowException(nameof(SR.TargetNameNotSupportedForStyleSetters),
                                        xamlPropertyNode.LineNumber,
                                        xamlPropertyNode.LinePosition);
                     }
@@ -1374,13 +1374,13 @@ namespace System.Windows.Markup
                     }
                     else if (xamlPropertyNode.PropName == XamlStyleSerializer.PropertyTriggerSourceName)
                     {
-                        ThrowException(SRID.SourceNameNotSupportedForStyleTriggers,
+                        ThrowException(nameof(SR.SourceNameNotSupportedForStyleTriggers),
                                         xamlPropertyNode.LineNumber,
                                         xamlPropertyNode.LinePosition);
                     }
                     else if (xamlPropertyNode.PropName == XamlTemplateSerializer.SetterTargetAttributeName)
                     {
-                        ThrowException(SRID.TargetNameNotSupportedForStyleSetters,
+                        ThrowException(nameof(SR.TargetNameNotSupportedForStyleSetters),
                                        xamlPropertyNode.LineNumber,
                                        xamlPropertyNode.LinePosition);
                     }
@@ -1431,7 +1431,7 @@ namespace System.Windows.Markup
                 {
                     if (BamlRecordWriter != null && xamlPropertyNode.ValueElementType == null)
                     {
-                        ThrowException(SRID.ParserNoType, 
+                        ThrowException(nameof(SR.ParserNoType), 
                                        xamlPropertyNode.ValueTypeFullName,
                                        xamlPropertyNode.LineNumber,
                                        xamlPropertyNode.LinePosition);

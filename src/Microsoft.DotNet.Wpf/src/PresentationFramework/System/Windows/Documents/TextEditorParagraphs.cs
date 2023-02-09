@@ -51,13 +51,13 @@ namespace System.Windows.Documents
             {
                 // Editing Commands: Paragraph Editing
                 // -----------------------------------
-                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.AlignLeft, new ExecutedRoutedEventHandler(OnAlignLeft), onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyAlignLeft, SRID.KeyAlignLeftDisplayString));
-                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.AlignCenter, new ExecutedRoutedEventHandler(OnAlignCenter), onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyAlignCenter, SRID.KeyAlignCenterDisplayString));
-                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.AlignRight, new ExecutedRoutedEventHandler(OnAlignRight), onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyAlignRight, SRID.KeyAlignRightDisplayString));
-                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.AlignJustify, new ExecutedRoutedEventHandler(OnAlignJustify), onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyAlignJustify, SRID.KeyAlignJustifyDisplayString));
-                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ApplySingleSpace, new ExecutedRoutedEventHandler(OnApplySingleSpace), onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyApplySingleSpace, SRID.KeyApplySingleSpaceDisplayString));
-                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ApplyOneAndAHalfSpace, new ExecutedRoutedEventHandler(OnApplyOneAndAHalfSpace), onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyApplyOneAndAHalfSpace, SRID.KeyApplyOneAndAHalfSpaceDisplayString));
-                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ApplyDoubleSpace, new ExecutedRoutedEventHandler(OnApplyDoubleSpace), onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyApplyDoubleSpace, SRID.KeyApplyDoubleSpaceDisplayString));
+                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.AlignLeft, new ExecutedRoutedEventHandler(OnAlignLeft), onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyAlignLeft, nameof(SR.KeyAlignLeftDisplayString)));
+                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.AlignCenter, new ExecutedRoutedEventHandler(OnAlignCenter), onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyAlignCenter, nameof(SR.KeyAlignCenterDisplayString)));
+                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.AlignRight, new ExecutedRoutedEventHandler(OnAlignRight), onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyAlignRight, nameof(SR.KeyAlignRightDisplayString)));
+                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.AlignJustify, new ExecutedRoutedEventHandler(OnAlignJustify), onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyAlignJustify, nameof(SR.KeyAlignJustifyDisplayString)));
+                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ApplySingleSpace, new ExecutedRoutedEventHandler(OnApplySingleSpace), onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyApplySingleSpace, nameof(SR.KeyApplySingleSpaceDisplayString)));
+                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ApplyOneAndAHalfSpace, new ExecutedRoutedEventHandler(OnApplyOneAndAHalfSpace), onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyApplyOneAndAHalfSpace, nameof(SR.KeyApplyOneAndAHalfSpaceDisplayString)));
+                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ApplyDoubleSpace, new ExecutedRoutedEventHandler(OnApplyDoubleSpace), onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyApplyDoubleSpace, nameof(SR.KeyApplyDoubleSpaceDisplayString)));
             }
 
             CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ApplyParagraphFlowDirectionLTR, new ExecutedRoutedEventHandler(OnApplyParagraphFlowDirectionLTR), onQueryStatusNYI);

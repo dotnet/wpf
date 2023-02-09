@@ -17,5 +17,14 @@ namespace MS.Internal.PresentationCore
         {
             return Format(GetResourceString(name, null), args);
         }
+
+        // Remove properties below when this project uses properties for resources.
+
+        /// <summary>MC3098: Unexpected token '{0}' at position '{1}'.</summary>
+        internal static string @Parser_UnexpectedToken => GetResourceString("Parser_UnexpectedToken");
+        /// <summary>MC3096: Token is not valid.</summary>
+        internal static string @Parsers_IllegalToken => GetResourceString("Parsers_IllegalToken");
+        /// <summary>Unknown path operation attempted.</summary>
+        internal static string @UnknownPathOperationType => GetResourceString("UnknownPathOperationType");
     }
 }

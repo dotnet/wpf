@@ -63,7 +63,7 @@ namespace System.Windows.Markup
             XamlNode            xamlNode,
             BamlRecordWriter    bamlWriter)
         {
-            throw new InvalidOperationException(SR.Get(SRID.InvalidDeSerialize));
+            throw new InvalidOperationException(SR.InvalidDeSerialize);
         }
 
 #if !PBTCOMPILER
@@ -79,7 +79,7 @@ namespace System.Windows.Markup
             XamlNode               xamlNode,
             BamlRecordReader       reader)
         {
-            throw new InvalidOperationException(SR.Get(SRID.InvalidDeSerialize));
+            throw new InvalidOperationException(SR.InvalidDeSerialize);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace System.Windows.Markup
             BamlRecord          bamlRecord,   // Record read in that triggered serializer
             ParserContext       context)      // Context
         {
-            throw new InvalidOperationException(SR.Get(SRID.InvalidDeSerialize));
+            throw new InvalidOperationException(SR.InvalidDeSerialize);
         }
 
 #endif
@@ -105,7 +105,7 @@ namespace System.Windows.Markup
             BinaryWriter   writer,           // Writer into the baml stream
             string         stringValue)      // String to convert
         {
-            throw new InvalidOperationException(SR.Get(SRID.InvalidCustomSerialize));
+            throw new InvalidOperationException(SR.InvalidCustomSerialize);
         }
         
         /// <summary>
@@ -116,7 +116,7 @@ namespace System.Windows.Markup
         public virtual object ConvertCustomBinaryToObject(
             BinaryReader reader)
         {
-            throw new InvalidOperationException(SR.Get(SRID.InvalidCustomSerialize));
+            throw new InvalidOperationException(SR.InvalidCustomSerialize);
         }            
 
         /// <summary>

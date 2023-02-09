@@ -57,7 +57,7 @@ namespace MS.Internal.Globalization
 
             if (_reader.NodeType != BamlNodeType.StartDocument)
             {
-                throw new XamlParseException(SR.Get(SRID.InvalidStartOfBaml));
+                throw new XamlParseException(SR.InvalidStartOfBaml);
             }
 
             // create root element.
@@ -175,7 +175,7 @@ namespace MS.Internal.Globalization
                         }
                     default:
                         {
-                            throw new XamlParseException(SR.Get(SRID.UnRecognizedBamlNodeType, _reader.NodeType));
+                            throw new XamlParseException(SR.Format(SR.UnRecognizedBamlNodeType, _reader.NodeType));
                         }
                 }
 
@@ -290,7 +290,7 @@ namespace MS.Internal.Globalization
                                 }
                             default:
                                 {
-                                    throw new XamlParseException(SR.Get(SRID.UnRecognizedBamlNodeType, _reader.NodeType));
+                                    throw new XamlParseException(SR.Format(SR.UnRecognizedBamlNodeType, _reader.NodeType));
                                 }
                         }
                     } while (_reader.MoveToNextProperty());
@@ -300,7 +300,7 @@ namespace MS.Internal.Globalization
             // At this point, the baml tree stack should be completely unwinded and also nothing more to read.
             if (_reader.Read() || _bamlTreeStack.Count > 0)
             {
-                throw new XamlParseException(SR.Get(SRID.InvalidEndOfBaml));
+                throw new XamlParseException(SR.InvalidEndOfBaml);
             }
 
             return new BamlTree(_root, _nodeCount);
@@ -321,7 +321,7 @@ namespace MS.Internal.Globalization
         {
             if (_currentParent == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NullParentNode));
+                throw new InvalidOperationException(SR.NullParentNode);
             }
 
             _currentParent.AddChild(node);

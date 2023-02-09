@@ -99,7 +99,7 @@ namespace System.Windows.Interop
             // What if the control is marked as free-threaded?
             if (Thread.CurrentThread.ApartmentState != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.AxRequiresApartmentThread, clsid.ToString()));
+                throw new ThreadStateException(SR.Format(SR.AxRequiresApartmentThread, clsid.ToString()));
             }
             #pragma warning restore 0618
 
@@ -677,7 +677,7 @@ namespace System.Windows.Interop
                     }
                     else
                     {
-                        throw new TargetInvocationException(SR.Get(SRID.AXNohWnd, GetType().Name), e);
+                        throw new TargetInvocationException(SR.Format(SR.AXNohWnd, GetType().Name), e);
                     }
                 }
 

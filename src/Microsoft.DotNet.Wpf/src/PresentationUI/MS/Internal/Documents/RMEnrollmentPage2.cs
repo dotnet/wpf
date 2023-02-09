@@ -86,13 +86,13 @@ namespace MS.Internal.Documents
         {
             base.ApplyResources();
 
-            this._nextButton.Text = SR.Get(SRID.RMEnrollmentNext);
-            this._cancelButton.Text = SR.Get(SRID.RMEnrollmentCancel);
-            this._label1.Text = SR.Get(SRID.RMEnrollmentPage2a);
-            this._label2.Text = SR.Get(SRID.RMEnrollmentPage2b);
-            this._networkRadioButton.Text = SR.Get(SRID.RMEnrollmentPage2c);
-            this._passportRadioButton.Text = SR.Get(SRID.RMEnrollmentPage2e);
-            this.Text = SR.Get(SRID.RMEnrollmentTitle);
+            this._nextButton.Text = SR.RMEnrollmentNext;
+            this._cancelButton.Text = SR.RMEnrollmentCancel;
+            this._label1.Text = SR.RMEnrollmentPage2a;
+            this._label2.Text = SR.RMEnrollmentPage2b;
+            this._networkRadioButton.Text = SR.RMEnrollmentPage2c;
+            this._passportRadioButton.Text = SR.RMEnrollmentPage2e;
+            this.Text = SR.RMEnrollmentTitle;
         }
 
         #endregion Protected Methods

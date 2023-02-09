@@ -73,7 +73,7 @@ namespace System.Windows.Documents
                     // Disable presharp 6503: Property get methods should not throw exceptions.
                     // We must throw here -- it's part of the IEnumerator contract.
                     #pragma warning suppress 6503
-                    throw new InvalidOperationException(SR.Get(SRID.EnumeratorNotStarted));
+                    throw new InvalidOperationException(SR.EnumeratorNotStarted);
                 }
 
                 // Check _currentCache before looking at _navigator.  For the
@@ -88,7 +88,7 @@ namespace System.Windows.Documents
                 if (_navigator.CompareTo(_end) >= 0)
                 {
                     #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
-                    throw new InvalidOperationException(SR.Get(SRID.EnumeratorReachedEnd));
+                    throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                 }
 
                 // Throw if the tree has been modified since this enumerator was created unless a tree walk
@@ -98,7 +98,7 @@ namespace System.Windows.Documents
                 if (_generation != _start.TextContainer.Generation && !IsLogicalChildrenIterationInProgress)
                 {
                     #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
-                    throw new InvalidOperationException(SR.Get(SRID.EnumeratorVersionChanged));
+                    throw new InvalidOperationException(SR.EnumeratorVersionChanged);
                 }
 
                 switch (_navigator.GetPointerContext(LogicalDirection.Forward))
@@ -160,7 +160,7 @@ namespace System.Windows.Documents
             // which in turn can modify the TextContainer.
             if (_start != null && _generation != _start.TextContainer.Generation && !IsLogicalChildrenIterationInProgress)
             {
-                throw new InvalidOperationException(SR.Get(SRID.EnumeratorVersionChanged));
+                throw new InvalidOperationException(SR.EnumeratorVersionChanged);
             }
 
             if (_start == null || _start.CompareTo(_end) == 0)
@@ -219,7 +219,7 @@ namespace System.Windows.Documents
             // Throw if the tree has been modified since this enumerator was created.
             if (_start != null && _generation != _start.TextContainer.Generation)
             {
-                throw new InvalidOperationException(SR.Get(SRID.EnumeratorVersionChanged));
+                throw new InvalidOperationException(SR.EnumeratorVersionChanged);
             }
 
             _navigator = null;

@@ -101,7 +101,7 @@ namespace System.Windows.Controls
             {
                 if (_contentHost.Child != null)
                 {
-                    throw new NotSupportedException(SR.Get(SRID.FlowDocumentReaderDecoratorMarkedAsContentHostMustHaveNoContent));
+                    throw new NotSupportedException(SR.FlowDocumentReaderDecoratorMarkedAsContentHostMustHaveNoContent);
                 }
 
                 SwitchViewingModeCore(ViewingMode);
@@ -756,7 +756,7 @@ namespace System.Windows.Controls
             // Otherwise <FlowDocumentReader IsPageViewEnabled="false" ViewingMode="TwoPage"/> won't work.
             if (IsInitialized && !CanSwitchToViewingMode(ViewingMode))
             {
-                throw new ArgumentException(SR.Get(SRID.FlowDocumentReaderViewingModeEnabledConflict));
+                throw new ArgumentException(SR.FlowDocumentReaderViewingModeEnabledConflict);
             }
         }
 
@@ -1334,7 +1334,7 @@ namespace System.Windows.Controls
 
             // Command: SwitchViewingMode
             CommandHelpers.RegisterCommandHandler(typeof(FlowDocumentReader), FlowDocumentReader.SwitchViewingModeCommand,
-                executedHandler, canExecuteHandler, KeyGesture.CreateFromResourceStrings(KeySwitchViewingMode, SRID.KeySwitchViewingModeDisplayString));
+                executedHandler, canExecuteHandler, KeyGesture.CreateFromResourceStrings(KeySwitchViewingMode, nameof(SR.KeySwitchViewingModeDisplayString)));
 
             // Command: ApplicationCommands.Find
             CommandHelpers.RegisterCommandHandler(typeof(FlowDocumentReader), ApplicationCommands.Find,
@@ -1645,7 +1645,7 @@ namespace System.Windows.Controls
             }
             else if (viewer.IsInitialized)
             {
-                throw new ArgumentException(SR.Get(SRID.FlowDocumentReaderViewingModeEnabledConflict));
+                throw new ArgumentException(SR.FlowDocumentReaderViewingModeEnabledConflict);
             }
 
             // Fire automation events if automation is active.
@@ -1680,13 +1680,13 @@ namespace System.Windows.Controls
                 !viewer.IsTwoPageViewEnabled &&
                 !viewer.IsScrollViewEnabled)
             {
-                throw new ArgumentException(SR.Get(SRID.FlowDocumentReaderCannotDisableAllViewingModes));
+                throw new ArgumentException(SR.FlowDocumentReaderCannotDisableAllViewingModes);
             }
 
             // Cannot disable the current viewing mode.
             if (viewer.IsInitialized && !viewer.CanSwitchToViewingMode(viewer.ViewingMode))
             {
-                throw new ArgumentException(SR.Get(SRID.FlowDocumentReaderViewingModeEnabledConflict));
+                throw new ArgumentException(SR.FlowDocumentReaderViewingModeEnabledConflict);
             }
 
             // Fire automation events if automation is active.
@@ -1958,11 +1958,11 @@ namespace System.Windows.Controls
             // Check if Content has already been set.
             if (this.Document != null)
             {
-                throw new ArgumentException(SR.Get(SRID.FlowDocumentReaderCanHaveOnlyOneChild));
+                throw new ArgumentException(SR.FlowDocumentReaderCanHaveOnlyOneChild);
             }
             if (!(value is FlowDocument))
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(FlowDocument)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(FlowDocument)), "value");
             }
             Document = value as FlowDocument;
         }

@@ -22,19 +22,13 @@ namespace System.Xaml
 
         public XamlNodeList(XamlSchemaContext schemaContext)
         {
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
+            ArgumentNullException.ThrowIfNull(schemaContext);
             Initialize(schemaContext, 0);
         }
 
         public XamlNodeList(XamlSchemaContext schemaContext, int size)
         {
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
+            ArgumentNullException.ThrowIfNull(schemaContext);
             Initialize(schemaContext, size);
         }
 

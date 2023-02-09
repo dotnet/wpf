@@ -97,7 +97,7 @@ namespace System.Windows.Xps.Packaging
             }
             else if (_objDict[serviceType] != service)
             {
-                throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_ServiceTypeAlreadyAdded, serviceType));
+                throw new XpsPackagingException(SR.Format(SR.ReachPackaging_ServiceTypeAlreadyAdded, serviceType));
             }
         }
         

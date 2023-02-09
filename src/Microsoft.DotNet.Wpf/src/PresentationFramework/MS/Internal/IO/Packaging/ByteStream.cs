@@ -144,7 +144,7 @@ namespace MS.Internal.IO.Packaging
 
                 if (!CanSeek)
                 {
-                    throw new NotSupportedException(SR.Get(SRID.SetPositionNotSupported));
+                    throw new NotSupportedException(SR.SetPositionNotSupported);
                 }
                 
                 long seekPos = 0;
@@ -155,7 +155,7 @@ namespace MS.Internal.IO.Packaging
 
                 if (value != seekPos)
                 {
-                    throw new IOException(SR.Get(SRID.SeekFailed));
+                    throw new IOException(SR.SeekFailed);
                 }
             }
         }
@@ -192,7 +192,7 @@ namespace MS.Internal.IO.Packaging
 
             if (!CanSeek)
             {
-                throw new NotSupportedException(SR.Get(SRID.SeekNotSupported));
+                throw new NotSupportedException(SR.SeekNotSupported);
             }
 
             long seekPos = 0;
@@ -205,7 +205,7 @@ namespace MS.Internal.IO.Packaging
                     if (0 > offset)
                     {
                         throw new ArgumentOutOfRangeException("offset",
-                                                              SR.Get(SRID.SeekNegative));
+                                                              SR.SeekNegative);
                     }
                     break;
 
@@ -235,7 +235,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="newLength">New length</param>
         public override void SetLength(long newLength)
         {
-            throw new NotSupportedException(SR.Get(SRID.SetLengthNotSupported));
+            throw new NotSupportedException(SR.SetLengthNotSupported);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace MS.Internal.IO.Packaging
 
             if (!CanRead)
             {
-                throw new NotSupportedException(SR.Get(SRID.ReadNotSupported));
+                throw new NotSupportedException(SR.ReadNotSupported);
             }
             
             int read = 0;
@@ -267,21 +267,21 @@ namespace MS.Internal.IO.Packaging
             if (0 > count)
             {
                 throw new ArgumentOutOfRangeException("count",
-                                                      SR.Get(SRID.ReadCountNegative));
+                                                      SR.ReadCountNegative);
             }
 
             // offset has to be a positive number
             if (0 > offset)
             {
                 throw new ArgumentOutOfRangeException("offset",
-                                                      SR.Get(SRID.BufferOffsetNegative));
+                                                      SR.BufferOffsetNegative);
             }
 
             // make sure that we have a buffer that matches number of bytes we need to read 
             // since all values are > 0, there is no chance of overflow
             if (!((buffer.Length > 0) && ((buffer.Length - offset) >= count)))
             {
-                throw new ArgumentException(SR.Get(SRID.BufferTooSmall), "buffer");
+                throw new ArgumentException(SR.BufferTooSmall, "buffer");
             }
             
             // offset == 0 is the normal case
@@ -319,7 +319,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="count">Number of bytes to write</param>
         public override void Write(byte[] buffer, int offset, int count)
         {
-            throw new NotSupportedException(SR.Get(SRID.WriteNotSupported));
+            throw new NotSupportedException(SR.WriteNotSupported);
         }
 
         /// <summary>
@@ -348,7 +348,7 @@ namespace MS.Internal.IO.Packaging
         internal void CheckDisposedStatus()
         {
             if (StreamDisposed)
-                throw new ObjectDisposedException(null, SR.Get(SRID.StreamObjectDisposed));
+                throw new ObjectDisposedException(null, SR.StreamObjectDisposed);
         }
 
         #endregion Internal Methods

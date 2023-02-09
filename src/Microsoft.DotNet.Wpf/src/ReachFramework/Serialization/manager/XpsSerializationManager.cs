@@ -111,7 +111,7 @@ namespace System.Windows.Xps.Serialization
 
             if(!IsSerializedObjectTypeSupported(serializedObject))
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NotSupported));
+                throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
             }
 
             if( serializedObject is DocumentPaginator )
@@ -172,7 +172,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoSerializer));
+                throw new XpsSerializationException(SR.ReachSerialization_NoSerializer);
             }
 
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXSaveXpsEnd);
@@ -469,7 +469,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NotSupported));
+                    throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
                 }
             }
 
@@ -497,7 +497,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NotSupported));
+                throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
             }
             return refCnt;
         }
@@ -523,7 +523,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NotSupported));
+                throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
             }
             return refCnt;
         }
@@ -579,7 +579,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NotSupported));
+                    throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
                 }
             }
 
@@ -628,7 +628,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NotSupported));
+                    throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
                 }
             }
 
@@ -665,7 +665,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NotSupported));
+                    throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
                 }
             }
 
@@ -699,7 +699,7 @@ namespace System.Windows.Xps.Serialization
                }
                else
                {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NotSupported));
+                    throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
                }
             }
         }
@@ -732,7 +732,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NotSupported));
+                    throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
                 }
             }
         }
@@ -864,11 +864,11 @@ namespace System.Windows.Xps.Serialization
         {
             if( _documentStartState )
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_FixedDocumentInDocument));
+                throw new XpsSerializationException(SR.ReachSerialization_FixedDocumentInDocument);
             }
             if( _pageStartState)
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_FixedDocumentInPage));
+                throw new XpsSerializationException(SR.ReachSerialization_FixedDocumentInPage);
             }
             //
             // Entering Document  Started state
@@ -895,7 +895,7 @@ namespace System.Windows.Xps.Serialization
             //
             if( _pageNumber <= 0 )
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoFixedPages));
+                throw new XpsSerializationException(SR.ReachSerialization_NoFixedPages);
             }
             //
             // Exiting Document  Started state
@@ -908,7 +908,7 @@ namespace System.Windows.Xps.Serialization
         {
             if( _pageStartState )
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_FixedPageInPage));
+                throw new XpsSerializationException(SR.ReachSerialization_FixedPageInPage);
             }
             //
             // Entering Page  Started state
@@ -948,7 +948,7 @@ namespace System.Windows.Xps.Serialization
             //
             if( _pageNumber <= 0 )
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoFixedDocuments));
+                throw new XpsSerializationException(SR.ReachSerialization_NoFixedDocuments);
             }
         }
 

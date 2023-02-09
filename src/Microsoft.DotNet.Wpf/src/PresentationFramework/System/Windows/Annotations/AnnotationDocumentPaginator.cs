@@ -74,7 +74,7 @@ namespace System.Windows.Annotations
             _isFixedContent = originalPaginator is FixedDocumentPaginator || originalPaginator is FixedDocumentSequencePaginator;
 
             if (!_isFixedContent && !(originalPaginator is FlowDocumentPaginator))
-                throw new ArgumentException(SR.Get(SRID.OnlyFlowAndFixedSupported));
+                throw new ArgumentException(SR.OnlyFlowAndFixedSupported);
 
             _originalPaginator = originalPaginator;
             _annotationStore = annotationStore;

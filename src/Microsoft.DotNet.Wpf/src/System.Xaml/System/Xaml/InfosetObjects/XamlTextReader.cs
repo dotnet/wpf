@@ -49,16 +49,14 @@ namespace System.Xaml
 
         public XamlTextReader(XmlReader xmlReader, XamlSchemaContext schemaContext)
         {
-            if (schemaContext == null)
-                throw new ArgumentNullException("schemaContext");
+            ArgumentNullException.ThrowIfNull(schemaContext);
 
             Initialize(xmlReader, schemaContext, null);
         }
 
         public XamlTextReader(XmlReader xmlReader, XamlSchemaContext schemaContext, XamlTextReaderSettings settings)
         {
-            if (schemaContext == null)
-                throw new ArgumentNullException("schemaContext");
+            ArgumentNullException.ThrowIfNull(schemaContext);
 
             Initialize(xmlReader, schemaContext, settings);
         }

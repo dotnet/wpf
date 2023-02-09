@@ -92,7 +92,7 @@ namespace System.Windows.Controls
              }
              else
              {
-                 throw new InvalidOperationException(SR.Get(SRID.PageCannotHaveMultipleContent));
+                 throw new InvalidOperationException(SR.PageCannotHaveMultipleContent);
              }             
         }
 
@@ -169,7 +169,7 @@ namespace System.Windows.Controls
                 if (WindowService == null)
                 {
 #pragma warning disable 6503
-                    throw new InvalidOperationException(SR.Get(SRID.CannotQueryPropertiesWhenPageNotInTreeWithWindow));
+                    throw new InvalidOperationException(SR.CannotQueryPropertiesWhenPageNotInTreeWithWindow);
 #pragma warning restore 6503
                 }
                 return WindowService.Title;
@@ -226,7 +226,7 @@ namespace System.Windows.Controls
                 if (WindowService == null)
                 {
 #pragma warning disable 6503
-                    throw new InvalidOperationException(SR.Get(SRID.CannotQueryPropertiesWhenPageNotInTreeWithWindow));
+                    throw new InvalidOperationException(SR.CannotQueryPropertiesWhenPageNotInTreeWithWindow);
 #pragma warning restore 6503
                 }                
                 return WindowService.Height;
@@ -280,7 +280,7 @@ namespace System.Windows.Controls
                 if (WindowService == null)
                 {
 #pragma warning disable 6503
-                    throw new InvalidOperationException(SR.Get(SRID.CannotQueryPropertiesWhenPageNotInTreeWithWindow));
+                    throw new InvalidOperationException(SR.CannotQueryPropertiesWhenPageNotInTreeWithWindow);
 #pragma warning restore 6503
                 }                
                 return WindowService.Width;
@@ -378,7 +378,7 @@ namespace System.Windows.Controls
                 if (WindowService == null)
                 {
 #pragma warning disable 6503
-                    throw new InvalidOperationException(SR.Get(SRID.CannotQueryPropertiesWhenPageNotInTreeWithWindow));
+                    throw new InvalidOperationException(SR.CannotQueryPropertiesWhenPageNotInTreeWithWindow);
 #pragma warning restore 6503
                 }
 
@@ -718,7 +718,7 @@ namespace System.Windows.Controls
 
             if (isParentValid == false)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ParentOfPageMustBeWindowOrFrame));
+                throw new InvalidOperationException(SR.ParentOfPageMustBeWindowOrFrame);
             }
         }
 

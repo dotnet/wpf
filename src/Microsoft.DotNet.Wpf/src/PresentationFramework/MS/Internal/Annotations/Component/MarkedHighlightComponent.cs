@@ -194,7 +194,7 @@ namespace MS.Internal.Annotations.Component
             //according to their current positions in the TextView
             //after the content reflow
             if (_attachedAnnotation == null)
-                throw new InvalidOperationException(SR.Get(SRID.InvalidAttachedAnnotation));
+                throw new InvalidOperationException(SR.InvalidAttachedAnnotation);
 
             HighlightAnchor.GetDesiredTransform(transform);
 
@@ -210,7 +210,7 @@ namespace MS.Internal.Annotations.Component
         {
             if (_attachedAnnotation != null)
             {
-                throw new ArgumentException(SR.Get(SRID.MoreThanOneAttachedAnnotation));
+                throw new ArgumentException(SR.MoreThanOneAttachedAnnotation);
             }
 
             //fire trace event
@@ -245,7 +245,7 @@ namespace MS.Internal.Annotations.Component
 
             if (attachedAnnotation != _attachedAnnotation)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidAttachedAnnotation), "attachedAnnotation");
+                throw new ArgumentException(SR.InvalidAttachedAnnotation, "attachedAnnotation");
             }
 
             //fire trace event
@@ -268,7 +268,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="previousAttachmentLevel">The previous attachment level of the attached annotation.</param>
         public void ModifyAttachedAnnotation(IAttachedAnnotation attachedAnnotation, object previousAttachedAnchor, AttachmentLevel previousAttachmentLevel)
         {
-            throw new NotSupportedException(SR.Get(SRID.NotSupported));
+            throw new NotSupportedException(SR.NotSupported);
         }
 
         #endregion Public Methods
@@ -484,7 +484,7 @@ namespace MS.Internal.Annotations.Component
             TextAnchor anchor = _attachedAnnotation.AttachedAnchor as TextAnchor;
             if (anchor == null)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidAttachedAnchor));
+                throw new ArgumentException(SR.InvalidAttachedAnchor);
             }
 
             ITextContainer textContainer = anchor.Start.TextContainer;
@@ -497,7 +497,7 @@ namespace MS.Internal.Annotations.Component
 
             //host in the appropriate adorner layer
             AdornerLayer layer = AdornerLayer.GetAdornerLayer(AnnotatedElement); // note, GetAdornerLayer requires UIElement
-            if (layer == null) throw new InvalidOperationException(SR.Get(SRID.NoPresentationContextForGivenElement, AnnotatedElement));
+            if (layer == null) throw new InvalidOperationException(SR.Format(SR.NoPresentationContextForGivenElement, AnnotatedElement));
 
             AdornerPresentationContext.HostComponent(layer, this, AnnotatedElement, false);
 
@@ -658,7 +658,7 @@ namespace MS.Internal.Annotations.Component
         {
             if ((HighlightAnchor == null) || !(HighlightAnchor is IHighlightRange))
             {
-                throw new Exception(SR.Get(SRID.UndefinedHighlightAnchor));
+                throw new Exception(SR.UndefinedHighlightAnchor);
             }
 
             TextAnchor anchor = ((IHighlightRange)HighlightAnchor).Range;

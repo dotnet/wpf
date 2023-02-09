@@ -388,7 +388,7 @@ namespace System.Windows.Interop
                             if (!MarshalLocal.IsTypeVisibleFromCom(argType) && 
                                 !argType.IsCOMObject && argType != typeof(DateTime))
                             {
-                                throw new ArgumentException(SR.Get(SRID.NeedToBeComVisible));
+                                throw new ArgumentException(SR.NeedToBeComVisible);
                             }
                         }
                     }

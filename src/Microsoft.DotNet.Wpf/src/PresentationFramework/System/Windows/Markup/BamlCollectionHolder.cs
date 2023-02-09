@@ -130,7 +130,7 @@ namespace System.Windows.Markup
                     DependencyObject dpParent = Parent as DependencyObject;
                     if (dpParent == null)
                     {
-                        _reader.ThrowException(SRID.ParserParentDO, Parent.ToString());
+                        _reader.ThrowException(nameof(SR.ParserParentDO), Parent.ToString());
                     }
                     _reader.SetDependencyValue(dpParent, PropertyDefinition.DependencyProperty, Collection);
                 }
@@ -147,7 +147,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    _reader.ThrowException(SRID.ParserCantGetDPOrPi, AttributeName);
+                    _reader.ThrowException(nameof(SR.ParserCantGetDPOrPi), AttributeName);
                 }
             }
         }
@@ -184,7 +184,7 @@ namespace System.Windows.Markup
                     
                     if (_defaultCollection == null)
                     {
-                        _reader.ThrowException(SRID.ParserCantGetProperty, PropertyDefinition.Name);
+                        _reader.ThrowException(nameof(SR.ParserCantGetProperty), PropertyDefinition.Name);
                     }
                 }
                 else
@@ -197,7 +197,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                _reader.ThrowException(SRID.ParserCantGetDPOrPi, AttributeName);
+                _reader.ThrowException(nameof(SR.ParserCantGetDPOrPi), AttributeName);
             }
         }
 
@@ -211,7 +211,7 @@ namespace System.Windows.Markup
                 if (DefaultCollection == null)
                 {
                     // if the property is read-only and has a null default value, throw an exception
-                    _reader.ThrowException(SRID.ParserReadOnlyNullProperty, PropertyDefinition.Name);
+                    _reader.ThrowException(nameof(SR.ParserReadOnlyNullProperty), PropertyDefinition.Name);
                 }
 
                 // the property is read-only, so we have to use its default value as the dictionary

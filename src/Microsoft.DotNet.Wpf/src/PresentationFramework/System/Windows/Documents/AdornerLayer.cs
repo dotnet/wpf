@@ -240,7 +240,7 @@ namespace System.Windows.Documents
             ArrayList adornerInfos = ElementMap[element] as ArrayList;
 
             if (adornerInfos == null)
-                throw new InvalidOperationException(SR.Get(SRID.AdornedElementNotFound));
+                throw new InvalidOperationException(SR.AdornedElementNotFound);
 
             int i = 0;
 
@@ -568,12 +568,12 @@ namespace System.Windows.Documents
             ArrayList adornerInfos = ElementMap[adorner.AdornedElement] as ArrayList;
             if (adornerInfos == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.AdornedElementNotFound));
+                throw new InvalidOperationException(SR.AdornedElementNotFound);
             }
             AdornerInfo adornerInfo = GetAdornerInfo(adornerInfos, adorner);
             if (adornerInfo == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.AdornerNotFound));
+                throw new InvalidOperationException(SR.AdornerNotFound);
             }
 
             RemoveAdornerInfo(_zOrderMap, adorner, adornerInfo.ZOrder);
@@ -594,12 +594,12 @@ namespace System.Windows.Documents
             ArrayList adornerInfos = ElementMap[adorner.AdornedElement] as ArrayList;
             if (adornerInfos == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.AdornedElementNotFound));
+                throw new InvalidOperationException(SR.AdornedElementNotFound);
             }
             AdornerInfo adornerInfo = GetAdornerInfo(adornerInfos, adorner);
             if (adornerInfo == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.AdornerNotFound));
+                throw new InvalidOperationException(SR.AdornerNotFound);
             }
 
             return adornerInfo.ZOrder;
@@ -689,7 +689,7 @@ namespace System.Windows.Documents
             ArrayList adornerInfos = ElementMap[element] as ArrayList;
 
             if (adornerInfos == null)
-                throw new InvalidOperationException(SR.Get(SRID.AdornedElementNotFound));
+                throw new InvalidOperationException(SR.AdornedElementNotFound);
 
             while (adornerInfos.Count > 0)
             {

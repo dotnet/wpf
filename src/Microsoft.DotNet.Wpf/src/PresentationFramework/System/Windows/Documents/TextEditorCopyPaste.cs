@@ -47,22 +47,22 @@ namespace System.Windows.Documents
         // Registers all text editing command handlers for a given control type
         internal static void _RegisterClassHandlers(Type controlType, bool acceptsRichContent, bool readOnly, bool registerEventListeners)
         {
-            CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Copy, new ExecutedRoutedEventHandler(OnCopy), new CanExecuteRoutedEventHandler(OnQueryStatusCopy), KeyGesture.CreateFromResourceStrings(KeyCopy, SR.Get(SRID.KeyCopyDisplayString)), KeyGesture.CreateFromResourceStrings(KeyCtrlInsert, SR.Get(SRID.KeyCtrlInsertDisplayString)));
+            CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Copy, new ExecutedRoutedEventHandler(OnCopy), new CanExecuteRoutedEventHandler(OnQueryStatusCopy), KeyGesture.CreateFromResourceStrings(KeyCopy, SR.KeyCopyDisplayString), KeyGesture.CreateFromResourceStrings(KeyCtrlInsert, SR.KeyCtrlInsertDisplayString));
             if (acceptsRichContent)
             {
-                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.CopyFormat, new ExecutedRoutedEventHandler(OnCopyFormat), new CanExecuteRoutedEventHandler(OnQueryStatusCopyFormat), KeyGesture.CreateFromResourceStrings(KeyCopyFormat, SRID.KeyCopyFormatDisplayString));
+                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.CopyFormat, new ExecutedRoutedEventHandler(OnCopyFormat), new CanExecuteRoutedEventHandler(OnQueryStatusCopyFormat), KeyGesture.CreateFromResourceStrings(KeyCopyFormat, nameof(SR.KeyCopyFormatDisplayString)));
             }
             if (!readOnly)
             {
-                CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Cut, new ExecutedRoutedEventHandler(OnCut), new CanExecuteRoutedEventHandler(OnQueryStatusCut), KeyGesture.CreateFromResourceStrings(KeyCut, SR.Get(SRID.KeyCutDisplayString)), KeyGesture.CreateFromResourceStrings(KeyShiftDelete, SR.Get(SRID.KeyShiftDeleteDisplayString)));
+                CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Cut, new ExecutedRoutedEventHandler(OnCut), new CanExecuteRoutedEventHandler(OnQueryStatusCut), KeyGesture.CreateFromResourceStrings(KeyCut, SR.KeyCutDisplayString), KeyGesture.CreateFromResourceStrings(KeyShiftDelete, SR.KeyShiftDeleteDisplayString));
                 // temp vars to reduce code under elevation
                 ExecutedRoutedEventHandler ExecutedRoutedEventHandler = new ExecutedRoutedEventHandler(OnPaste);
                 CanExecuteRoutedEventHandler CanExecuteRoutedEventHandler = new CanExecuteRoutedEventHandler(OnQueryStatusPaste);
-                InputGesture inputGesture = KeyGesture.CreateFromResourceStrings(KeyShiftInsert, SR.Get(SRID.KeyShiftInsertDisplayString));
+                InputGesture inputGesture = KeyGesture.CreateFromResourceStrings(KeyShiftInsert, SR.KeyShiftInsertDisplayString);
                 CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Paste, ExecutedRoutedEventHandler, CanExecuteRoutedEventHandler, inputGesture);
                 if (acceptsRichContent)
                 {
-                    CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.PasteFormat, new ExecutedRoutedEventHandler(OnPasteFormat), new CanExecuteRoutedEventHandler(OnQueryStatusPasteFormat), KeyPasteFormat, SRID.KeyPasteFormatDisplayString);
+                    CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.PasteFormat, new ExecutedRoutedEventHandler(OnPasteFormat), new CanExecuteRoutedEventHandler(OnQueryStatusPasteFormat), KeyPasteFormat, nameof(SR.KeyPasteFormatDisplayString));
                 }
             }
         }
@@ -92,14 +92,14 @@ namespace System.Windows.Documents
                 // ConfirmDataFormatSetting rasies a public event - could throw recoverable exception.
                 if (ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.Text))
                 {
-                    dataObject.SetData(DataFormats.Text, textString, false);
+                    dataObject.SetData(DataFormats.Text, textString, true);
                 }
 
                 // Copy unicode text into data object.
                 // ConfirmDataFormatSetting rasies a public event - could throw recoverable exception.
                 if (ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.UnicodeText))
                 {
-                    dataObject.SetData(DataFormats.UnicodeText, textString, false);
+                    dataObject.SetData(DataFormats.UnicodeText, textString, true);
                 }
             }
 

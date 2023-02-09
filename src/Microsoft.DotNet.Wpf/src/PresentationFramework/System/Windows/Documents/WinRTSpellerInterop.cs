@@ -116,7 +116,7 @@ namespace System.Windows.Documents
         {
             if (_isDisposed)
             {
-                throw new ObjectDisposedException(SR.Get(SRID.TextEditorSpellerInteropHasBeenDisposed));
+                throw new ObjectDisposedException(SR.TextEditorSpellerInteropHasBeenDisposed);
             }
 
             try
@@ -436,7 +436,7 @@ namespace System.Windows.Documents
 
             if (!File.Exists(lexiconFilePath))
             {
-                throw new ArgumentException(SR.Get(SRID.CustomDictionaryFailedToLoadDictionaryUri, lexiconFilePath));
+                throw new ArgumentException(SR.Format(SR.CustomDictionaryFailedToLoadDictionaryUri, lexiconFilePath));
             }
 
             bool fileCopied = false;
@@ -494,7 +494,7 @@ namespace System.Windows.Documents
                     FileHelper.DeleteTemporaryFile(lexiconPrivateCopyPath);
                 }
 
-                throw new ArgumentException(SR.Get(SRID.CustomDictionaryFailedToLoadDictionaryUri, lexiconFilePath), e);
+                throw new ArgumentException(SR.Format(SR.CustomDictionaryFailedToLoadDictionaryUri, lexiconFilePath), e);
             }
         }
 

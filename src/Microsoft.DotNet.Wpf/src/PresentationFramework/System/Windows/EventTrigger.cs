@@ -58,7 +58,7 @@ namespace System.Windows
             TriggerAction action = value as TriggerAction;
             if (action == null)
             {
-                throw new ArgumentException(SR.Get(SRID.EventTriggerBadAction, value.GetType().Name));
+                throw new ArgumentException(SR.Format(SR.EventTriggerBadAction, value.GetType().Name));
             }
             Actions.Add(action);
         }
@@ -100,7 +100,7 @@ namespace System.Windows
 
                 if( IsSealed )
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "EventTrigger"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "EventTrigger"));
                 }
 
                 // When used as an element trigger, we don't actually need to seal
@@ -109,7 +109,7 @@ namespace System.Windows
                 if( _routedEventHandler != null )
                 {
                     // Recycle the Seal error message.
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "EventTrigger"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "EventTrigger"));
                 }
 
                 _routedEvent = value;
@@ -132,7 +132,7 @@ namespace System.Windows
             {
                 if( IsSealed )
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "EventTrigger"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "EventTrigger"));
                 }
 
                 _sourceName = value;
@@ -216,13 +216,13 @@ namespace System.Windows
         {
             if( PropertyValues.Count > 0 )
             {
-                throw new InvalidOperationException(SR.Get(SRID.EventTriggerDoNotSetProperties));
+                throw new InvalidOperationException(SR.EventTriggerDoNotSetProperties);
             }
 
             // EnterActions/ExitActions aren't meaningful on event triggers.
             if( HasEnterActions || HasExitActions )
             {
-                throw new InvalidOperationException(SR.Get(SRID.EventTriggerDoesNotEnterExit));
+                throw new InvalidOperationException(SR.EventTriggerDoesNotEnterExit);
             }
 
             if (_routedEvent != null && _actions != null && _actions.Count > 0)
@@ -324,7 +324,7 @@ namespace System.Windows
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.TriggersSupportsEventTriggersOnly));
+                throw new InvalidOperationException(SR.TriggersSupportsEventTriggersOnly);
             }
         }
 
@@ -366,7 +366,7 @@ namespace System.Windows
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.TriggersSupportsEventTriggersOnly));
+                throw new InvalidOperationException(SR.TriggersSupportsEventTriggersOnly);
             }
         }
 

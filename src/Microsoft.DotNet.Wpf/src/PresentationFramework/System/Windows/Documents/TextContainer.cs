@@ -178,7 +178,7 @@ namespace System.Windows.Documents
         // that also creates TextEditors and want undo.
         internal void EnableUndo(FrameworkElement uiScope)
         {
-            Invariant.Assert(_undoManager == null, SR.Get(SRID.TextContainer_UndoManagerCreatedMoreThanOnce));
+            Invariant.Assert(_undoManager == null, SR.TextContainer_UndoManagerCreatedMoreThanOnce);
 
             _undoManager = new UndoManager();
             MS.Internal.Documents.UndoManager.AttachUndoManager(uiScope, _undoManager);
@@ -3266,7 +3266,7 @@ namespace System.Windows.Documents
 
             if (position.TextContainer != this)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NotInThisTree, "position"));
+                throw new InvalidOperationException(SR.Format(SR.NotInThisTree, "position"));
             }
 
             position.SyncToTreeGeneration();
@@ -3274,7 +3274,7 @@ namespace System.Windows.Documents
             element = position.Parent as TextElement;
             if (element == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NoElement));
+                throw new InvalidOperationException(SR.NoElement);
             }
         }
 

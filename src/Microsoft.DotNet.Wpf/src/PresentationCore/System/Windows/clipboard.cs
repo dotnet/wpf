@@ -93,7 +93,7 @@ namespace System.Windows
                 throw new ArgumentNullException(nameof(format));
             }
 
-            if (format == string.Empty)
+            if (format.Length == 0)
             {
                 throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
             }

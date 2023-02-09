@@ -140,7 +140,7 @@ namespace System.Windows.Documents
             }
             if (count < 0)
             {
-                throw new ArgumentException(SR.Get(SRID.NegativeValue, "count"));
+                throw new ArgumentException(SR.Format(SR.NegativeValue, "count"));
             }
 
             if (_flowPosition.GetPointerContext(direction) != TextPointerContext.Text)
@@ -227,7 +227,7 @@ namespace System.Windows.Documents
             FixedElement e = _flowPosition.GetScopingElement();
             if (!e.IsTextElement)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NoElementObject));
+                throw new InvalidOperationException(SR.NoElementObject);
             }
 
             return e.ReadLocalValue(property);
@@ -293,7 +293,7 @@ namespace System.Windows.Documents
             FlowPosition fp = (FlowPosition)_flowPosition.Clone();
             if (!fp.Move(distance))
             {
-                throw new ArgumentException(SR.Get(SRID.BadDistance), "distance");
+                throw new ArgumentException(SR.BadDistance, "distance");
             }
 
             return new FixedTextPointer(true, gravity, fp);
@@ -409,11 +409,11 @@ namespace System.Windows.Documents
         /// </summary>
         int ITextPointer.MoveByOffset(int offset)
         {
-            if (_isFrozen) throw new InvalidOperationException(SR.Get(SRID.TextPositionIsFrozen));
+            if (_isFrozen) throw new InvalidOperationException(SR.TextPositionIsFrozen);
     
             if (!_flowPosition.Move(offset))
             {
-                throw new ArgumentException(SR.Get(SRID.BadDistance), "offset");
+                throw new ArgumentException(SR.BadDistance, "offset");
             }
             else
             {
@@ -444,7 +444,7 @@ namespace System.Windows.Documents
             FixedElement e = _flowPosition.GetScopingElement();
             if (!e.IsTextElement)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NoElementObject));
+                throw new InvalidOperationException(SR.NoElementObject);
             }
 
             switch (edge)
@@ -516,7 +516,7 @@ namespace System.Windows.Documents
                 throw new ArgumentNullException("textData");
             }
 
-            throw new InvalidOperationException(SR.Get(SRID.FixedDocumentReadonly));
+            throw new InvalidOperationException(SR.FixedDocumentReadonly);
         }
 
         /// <summary>
@@ -524,7 +524,7 @@ namespace System.Windows.Documents
         /// </summary>
         void ITextPointer.DeleteContentToPosition(ITextPointer limit)
         {
-            throw new InvalidOperationException(SR.Get(SRID.FixedDocumentReadonly));
+            throw new InvalidOperationException(SR.FixedDocumentReadonly);
         }
 
         /// <summary>

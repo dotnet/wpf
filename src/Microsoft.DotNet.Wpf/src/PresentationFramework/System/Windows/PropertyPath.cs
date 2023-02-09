@@ -376,7 +376,7 @@ namespace System.Windows
                 string detail = parser.Error;
                 if (detail == null)
                     detail = Path;
-                throw new InvalidOperationException(SR.Get(SRID.PropertyPathSyntaxError, detail));
+                throw new InvalidOperationException(SR.Format(SR.PropertyPathSyntaxError, detail));
             }
 
             ResolvePathParts(typeDescriptorContext);
@@ -561,13 +561,13 @@ namespace System.Windows
                     // always throw if the accessor isn't valid - this error cannot
                     // be corrected later on.
                     if (!IsValidAccessor(accessor))
-                        throw new InvalidOperationException(SR.Get(SRID.PropertyPathInvalidAccessor,
+                        throw new InvalidOperationException(SR.Format(SR.PropertyPathInvalidAccessor,
                                     (accessor != null) ? accessor.GetType().FullName : "null"));
 
                     return accessor;
                 }
                 else if (throwOnError)
-                    throw new InvalidOperationException(SR.Get(SRID.PathParametersIndexOutOfRange, index, PathParameters.Count));
+                    throw new InvalidOperationException(SR.Format(SR.PathParametersIndexOutOfRange, index, PathParameters.Count));
                 else return null;
             }
 
@@ -584,7 +584,7 @@ namespace System.Windows
                     string ownerName = name.Substring(0, lastIndex).Trim();
                     ownerType = GetTypeFromName(ownerName, context);
                     if (ownerType == null && throwOnError)
-                        throw new InvalidOperationException(SR.Get(SRID.PropertyPathNoOwnerType, ownerName));
+                        throw new InvalidOperationException(SR.Format(SR.PropertyPathNoOwnerType, ownerName));
                 }
                 else
                 {
@@ -644,7 +644,7 @@ namespace System.Windows
                 }
 
                 if (accessor == null && throwOnError)
-                    throw new InvalidOperationException(SR.Get(SRID.PropertyPathNoProperty, ownerType.Name, propertyName));
+                    throw new InvalidOperationException(SR.Format(SR.PropertyPathNoProperty, ownerType.Name, propertyName));
 
                 return accessor;
             }
@@ -733,11 +733,11 @@ namespace System.Windows
                             else if (throwOnError)
                             {
                                 // info.value will still be "(n)"
-                                throw new InvalidOperationException(SR.Get(SRID.PathParameterIsNull, index));
+                                throw new InvalidOperationException(SR.Format(SR.PathParameterIsNull, index));
                             }
                         }
                         else if (throwOnError)
-                            throw new InvalidOperationException(SR.Get(SRID.PathParametersIndexOutOfRange, index, PathParameters.Count));
+                            throw new InvalidOperationException(SR.Format(SR.PathParametersIndexOutOfRange, index, PathParameters.Count));
                     }
                     else
                     {
@@ -761,7 +761,7 @@ namespace System.Windows
                         else
                         {
                             if (throwOnError)
-                                throw new InvalidOperationException(SR.Get(SRID.PropertyPathIndexWrongType, paramList[i].parenString, paramList[i].valueString));
+                                throw new InvalidOperationException(SR.Format(SR.PropertyPathIndexWrongType, paramList[i].parenString, paramList[i].valueString));
                             args[i].type = null;
                         }
                     }
@@ -857,7 +857,7 @@ namespace System.Windows
                 string namespaceURI = parserContext.XmlnsDictionary[nsPrefix];
                 if (namespaceURI == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.ParserPrefixNSProperty, nsPrefix, name));
+                    throw new ArgumentException(SR.Format(SR.ParserPrefixNSProperty, nsPrefix, name));
                 }
 
                 TypeAndSerializer typeAndSerializer = parserContext.XamlTypeMapper.GetTypeOnly(namespaceURI, name);

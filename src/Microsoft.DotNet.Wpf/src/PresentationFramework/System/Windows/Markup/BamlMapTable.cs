@@ -424,7 +424,7 @@ namespace System.Windows.Markup
 
                     if (null == type)
                     {
-                        ThrowException(SRID.ParserFailFindType, typeInfo.TypeFullName);
+                        ThrowException(nameof(SR.ParserFailFindType), typeInfo.TypeFullName);
                     }
                 }
             }
@@ -598,7 +598,7 @@ namespace System.Windows.Markup
 
                     if (tc == null)
                     {
-                        ThrowException(SRID.ParserNoTypeConv, propType.Name);
+                        ThrowException(nameof(SR.ParserNoTypeConv), propType.Name);
                     }
                     else
                     {
@@ -842,7 +842,7 @@ namespace System.Windows.Markup
                     propName = attributeInfo.OwnerType.FullName + "." + attributeInfo.Name;
                 }
 
-                ThrowException(SRID.ParserNoPropType, propName);
+                ThrowException(nameof(SR.ParserNoPropType), propName);
             }
             else
             {
@@ -1633,7 +1633,7 @@ namespace System.Windows.Markup
         void ThrowException(string id, string parameter)
         {
             ApplicationException bamlException = new ApplicationException(
-                                                     SR.Get(id, parameter));
+                                                     SR.Format(SR.GetResourceString(id), parameter));
             throw bamlException;
         }
 

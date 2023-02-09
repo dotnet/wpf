@@ -125,7 +125,7 @@ namespace MS.Internal.IO.Packaging
 
             if (_progress == Progress.FilteringCompleted)
             {
-                throw new COMException(SR.Get(SRID.FilterEndOfChunks), 
+                throw new COMException(SR.FilterEndOfChunks, 
                     (int)FilterErrorCode.FILTER_E_END_OF_CHUNKS);
             }
                 
@@ -218,7 +218,7 @@ namespace MS.Internal.IO.Packaging
                     // Throw FILTER_E_END_OF_CHUNKS exception.
                     //
 
-                    throw new COMException(SR.Get(SRID.FilterEndOfChunks),
+                    throw new COMException(SR.FilterEndOfChunks,
                         (int)FilterErrorCode.FILTER_E_END_OF_CHUNKS);
                 }
             } 
@@ -231,7 +231,7 @@ namespace MS.Internal.IO.Packaging
         {
             if (_progress != Progress.FilteringContent)
             {
-                throw new COMException(SR.Get(SRID.FilterGetTextNotSupported), 
+                throw new COMException(SR.FilterGetTextNotSupported, 
                     (int)FilterErrorCode.FILTER_E_NO_TEXT);
             }
 
@@ -246,7 +246,7 @@ namespace MS.Internal.IO.Packaging
         {
             if (_progress != Progress.FilteringCoreProperties)
             {
-                throw new COMException(SR.Get(SRID.FilterGetValueNotSupported),
+                throw new COMException(SR.FilterGetValueNotSupported,
                     (int)FilterErrorCode.FILTER_E_NO_VALUES);
             }
 
@@ -263,7 +263,7 @@ namespace MS.Internal.IO.Packaging
         /// </remarks>
         public IntPtr BindRegion(FILTERREGION origPos, ref Guid riid)
         {
-            throw new NotImplementedException(SR.Get(SRID.FilterBindRegionNotImplemented));
+            throw new NotImplementedException(SR.FilterBindRegionNotImplemented);
         }
         
         #endregion IFilter methods

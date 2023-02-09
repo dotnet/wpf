@@ -156,7 +156,7 @@ namespace MS.Internal.Annotations.Anchoring
                 if (processor != null)
                     return processor;
                 else
-                    throw new ArgumentException(SR.Get(SRID.InvalidSubTreeProcessor, processorString));
+                    throw new ArgumentException(SR.Format(SR.InvalidSubTreeProcessor, processorString));
             }
             else
             {
@@ -306,7 +306,7 @@ namespace MS.Internal.Annotations.Anchoring
                     AnnotationService service = AnnotationService.GetService(node);
                     if (service == null || !service.IsEnabled)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.AnnotationServiceNotEnabled));
+                        throw new InvalidOperationException(SR.AnnotationServiceNotEnabled);
                     }
                     store = service.Store;
                 }

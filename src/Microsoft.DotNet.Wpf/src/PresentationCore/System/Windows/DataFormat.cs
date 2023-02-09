@@ -39,7 +39,7 @@ namespace System.Windows
                 throw new ArgumentNullException("name");
             }
 
-            if (name == string.Empty)
+            if (name.Length == 0)
             {
                 throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed)); 
             }

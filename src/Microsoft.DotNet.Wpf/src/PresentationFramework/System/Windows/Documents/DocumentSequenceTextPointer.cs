@@ -232,7 +232,7 @@ namespace System.Windows.Documents
         /// </param>
         void ITextPointer.InsertTextInRun(string textData)
         {
-            throw new InvalidOperationException(SR.Get(SRID.DocumentReadOnly));
+            throw new InvalidOperationException(SR.DocumentReadOnly);
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace System.Windows.Documents
         /// </param>
         void ITextPointer.DeleteContentToPosition(ITextPointer limit)
         {
-            throw new InvalidOperationException(SR.Get(SRID.DocumentReadOnly));
+            throw new InvalidOperationException(SR.DocumentReadOnly);
         }
 
         // Candidate for replacing MoveToNextContextPosition for immutable TextPointer model
@@ -460,7 +460,7 @@ namespace System.Windows.Documents
         /// </summary>
         int ITextPointer.MoveByOffset(int offset)
         {
-            if (_isFrozen) throw new InvalidOperationException(SR.Get(SRID.TextPositionIsFrozen));
+            if (_isFrozen) throw new InvalidOperationException(SR.TextPositionIsFrozen);
             
             if (DocumentSequenceTextPointer.iScan(this, offset))
             {
@@ -668,19 +668,19 @@ namespace System.Windows.Documents
             }
             if (startIndex < 0)
             {
-                throw new ArgumentException(SR.Get(SRID.NegativeValue, "startIndex"));
+                throw new ArgumentException(SR.Format(SR.NegativeValue, "startIndex"));
             }
             if (startIndex > textBuffer.Length)
             {
-                throw new ArgumentException(SR.Get(SRID.StartIndexExceedsBufferSize, startIndex, textBuffer.Length));
+                throw new ArgumentException(SR.Format(SR.StartIndexExceedsBufferSize, startIndex, textBuffer.Length));
             }
             if (count < 0)
             {
-                throw new ArgumentException(SR.Get(SRID.NegativeValue, "count"));
+                throw new ArgumentException(SR.Format(SR.NegativeValue, "count"));
             }
             if (count > textBuffer.Length - startIndex)
             {
-                throw new ArgumentException(SR.Get(SRID.MaxLengthExceedsBufferSize, count, textBuffer.Length, startIndex));
+                throw new ArgumentException(SR.Format(SR.MaxLengthExceedsBufferSize, count, textBuffer.Length, startIndex));
             }
 
             return thisTp.ChildPointer.GetTextInRun(direction, textBuffer, startIndex, count);
@@ -801,7 +801,7 @@ namespace System.Windows.Documents
             {
                 if (!xGapAwareScan(newTp, distance))
                 {
-                    throw new ArgumentException(SR.Get(SRID.BadDistance), "distance");
+                    throw new ArgumentException(SR.BadDistance, "distance");
                 }
             }
             return newTp;

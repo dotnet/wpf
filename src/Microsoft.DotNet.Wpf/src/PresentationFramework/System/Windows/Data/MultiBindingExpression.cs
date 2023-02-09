@@ -120,7 +120,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         // in the first place.  Added to which, there should be distinct error
         // messages for both of these error conditions.
         if (MutableBindingExpressions.Count == 0)
-            throw new InvalidOperationException(SR.Get(SRID.BindingExpressionIsDetached));
+            throw new InvalidOperationException(SR.BindingExpressionIsDetached);
 
         NeedsUpdate = true;     // force update
         Update();               // update synchronously
@@ -136,7 +136,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         // in the first place.  Added to which, there should be distinct error
         // messages for both of these error conditions.
         if (MutableBindingExpressions.Count == 0)
-            throw new InvalidOperationException(SR.Get(SRID.BindingExpressionIsDetached));
+            throw new InvalidOperationException(SR.BindingExpressionIsDetached);
 
         UpdateTarget(true);
     }
@@ -168,7 +168,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         FrameworkPropertyMetadata fwMetaData = dp.GetMetadata(d.DependencyObjectType) as FrameworkPropertyMetadata;
 
         if ((fwMetaData != null && !fwMetaData.IsDataBindingAllowed) || dp.ReadOnly)
-            throw new ArgumentException(SR.Get(SRID.PropertyNotBindable, dp.Name), "dp");
+            throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), "dp");
 
         // create the BindingExpression
         MultiBindingExpression bindExpr = new MultiBindingExpression(binding, owner);
@@ -498,7 +498,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         if (!success)
         {
             result = DependencyProperty.UnsetValue;
-            ValidationError validationError = new ValidationError(ConversionValidationRule.Instance, this, SR.Get(SRID.Validation_ConversionFailed, value), null);
+            ValidationError validationError = new ValidationError(ConversionValidationRule.Instance, this, SR.Format(SR.Validation_ConversionFailed, value), null);
             UpdateValidationError(validationError);
         }
 
@@ -858,7 +858,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
                 value = bindingGroup.GetValue(this);
                 break;
             default:
-                throw new InvalidOperationException(SR.Get(SRID.ValidationRule_UnknownStep, validationStep, bindingGroup));
+                throw new InvalidOperationException(SR.Format(SR.ValidationRule_UnknownStep, validationStep, bindingGroup));
         }
 
         bool result = Validate(value, validationStep);

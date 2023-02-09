@@ -85,7 +85,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            throw (new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(TableRowGroup)), "value"));
+            throw (new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableRowGroup)), "value"));
         }
 
         /// <summary>
@@ -449,7 +449,7 @@ namespace System.Windows.Documents
             {
                 if (_version != _table._version)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.EnumeratorVersionChanged));
+                    throw new InvalidOperationException(SR.EnumeratorVersionChanged);
                 }
 
                 // Strange design, but iterator must spin on contained column iterator
@@ -496,12 +496,12 @@ namespace System.Windows.Documents
                     if (_currentChildType == ChildrenTypes.BeforeFirst)
                     {
                         #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
-                        throw new InvalidOperationException(SR.Get(SRID.EnumeratorNotStarted));
+                        throw new InvalidOperationException(SR.EnumeratorNotStarted);
                     }
                     if (_currentChildType == ChildrenTypes.AfterLast)
                     {
                         #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
-                        throw new InvalidOperationException(SR.Get(SRID.EnumeratorReachedEnd));
+                        throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                     }
 
                     return (_currentChild);
@@ -512,7 +512,7 @@ namespace System.Windows.Documents
             {
                 if (_version != _table._version)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.EnumeratorVersionChanged));
+                    throw new InvalidOperationException(SR.EnumeratorVersionChanged);
                 }
 
                 _columns.Reset();

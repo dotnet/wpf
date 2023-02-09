@@ -122,7 +122,7 @@ namespace System.Windows.Markup
             ResourceReferenceExpression expr = value as ResourceReferenceExpression;
             if (expr == null)
             {
-                throw new ArgumentException(SR.Get(SRID.MustBeOfType, "value", "ResourceReferenceExpression"));
+                throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "ResourceReferenceExpression"));
             }
             if (destinationType == null)
             {

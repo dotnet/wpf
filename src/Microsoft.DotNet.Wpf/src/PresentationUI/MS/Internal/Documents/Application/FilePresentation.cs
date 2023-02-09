@@ -35,7 +35,7 @@ internal static class FilePresentation
     /// <returns></returns>
     internal static bool ShowSaveFileDialog(ref CriticalFileToken fileToken)
     {
-        string extension = SR.Get(SRID.FileManagementSaveExt);
+        string extension = SR.FileManagementSaveExt;
 
         Trace.SafeWrite(Trace.File, "Showing SafeFileDialog.");
         
@@ -48,7 +48,7 @@ internal static class FilePresentation
             save.FileName = fileToken.Location.LocalPath;
         }
 
-        save.Filter = SR.Get(SRID.FileManagementSaveFilter);
+        save.Filter = SR.FileManagementSaveFilter;
         save.DefaultExt = extension;
 
         DialogResult dialogResult;
@@ -110,8 +110,8 @@ internal static class FilePresentation
     internal static void ShowDestinationIsReadOnly()
     {
         System.Windows.MessageBox.Show(
-            SR.Get(SRID.FileManagementDestinationIsReadOnly),
-            SR.Get(SRID.FileManagementTitleError),
+            SR.FileManagementDestinationIsReadOnly,
+            SR.FileManagementTitleError,
             System.Windows.MessageBoxButton.OK,
             System.Windows.MessageBoxImage.Exclamation
             );
@@ -124,8 +124,8 @@ internal static class FilePresentation
     internal static void ShowNoTemporaryFileAccess()
     {
         System.Windows.MessageBox.Show(
-            SR.Get(SRID.FileManagementNoTemporaryFileAccess),
-            SR.Get(SRID.FileManagementTitleError),
+            SR.FileManagementNoTemporaryFileAccess,
+            SR.FileManagementTitleError,
             System.Windows.MessageBoxButton.OK,
             System.Windows.MessageBoxImage.Exclamation
             );
@@ -137,8 +137,8 @@ internal static class FilePresentation
     internal static void ShowNoAccessToSource()
     {
         System.Windows.MessageBox.Show(
-            SR.Get(SRID.FileManagementNoAccessToSource),
-            SR.Get(SRID.FileManagementTitleError),
+            SR.FileManagementNoAccessToSource,
+            SR.FileManagementTitleError,
             System.Windows.MessageBoxButton.OK,
             System.Windows.MessageBoxImage.Exclamation
             );
@@ -150,8 +150,8 @@ internal static class FilePresentation
     internal static void ShowNoAccessToDestination()
     {
         System.Windows.MessageBox.Show(
-            SR.Get(SRID.FileManagementNoAccessToDestination),
-            SR.Get(SRID.FileManagementTitleError),
+            SR.FileManagementNoAccessToDestination,
+            SR.FileManagementTitleError,
             System.Windows.MessageBoxButton.OK,
             System.Windows.MessageBoxImage.Exclamation
             );

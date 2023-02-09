@@ -209,7 +209,7 @@ namespace System.Windows.Documents
         {
             if (base.Child == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             else
             {
@@ -222,7 +222,7 @@ namespace System.Windows.Documents
                         return _adornerLayer;
 
                     default:
-                        throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                        throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
                 }
             }
         }

@@ -69,7 +69,7 @@ namespace System.Windows.Shell
                 || (reasons == null && rejectedItems != null)
                 || (rejectedItems != null && reasons != null && rejectedItems.Count != reasons.Count))
             {
-                throw new ArgumentException(SR.Get(SRID.JumpItemsRejectedEventArgs_CountMismatch));
+                throw new ArgumentException(SR.JumpItemsRejectedEventArgs_CountMismatch);
             }
 
             // We don't want the contents of the list getting modified in the event handler,
@@ -365,7 +365,7 @@ namespace System.Windows.Shell
         {
             if (!IsUnmodified)
             {
-                throw new InvalidOperationException(SR.Get(SRID.JumpList_CantNestBeginInitCalls));
+                throw new InvalidOperationException(SR.JumpList_CantNestBeginInitCalls);
             }
 
             _initializing = true;
@@ -381,7 +381,7 @@ namespace System.Windows.Shell
         {
             if (_initializing != true)
             {
-                throw new NotSupportedException(SR.Get(SRID.JumpList_CantCallUnbalancedEndInit));
+                throw new NotSupportedException(SR.JumpList_CantCallUnbalancedEndInit);
             }
 
             _initializing = false;
@@ -429,7 +429,7 @@ namespace System.Windows.Shell
         {
             if (_initializing == true)
             {
-                throw new InvalidOperationException(SR.Get(SRID.JumpList_CantApplyUntilEndInit));
+                throw new InvalidOperationException(SR.JumpList_CantApplyUntilEndInit);
             }
 
             // After this attempting to use ISupportInitialize is invalid.

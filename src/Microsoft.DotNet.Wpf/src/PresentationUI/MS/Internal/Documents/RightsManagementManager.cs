@@ -218,7 +218,7 @@ namespace MS.Internal.Documents
                 // On an exception here we can't continue; rethrow it in an
                 // XPSViewer exception
                 throw new XpsViewerException(
-                    SR.Get(SRID.XpsViewerRightsManagementException),
+                    SR.XpsViewerRightsManagementException,
                     exception);
             }
 
@@ -231,7 +231,7 @@ namespace MS.Internal.Documents
                     !license.HasPermission(RightsManagementPermissions.AllowView))
                 {
                     throw new XpsViewerException(
-                        SR.Get(SRID.RMProviderExceptionNoRightsToDocument));
+                        SR.RMProviderExceptionNoRightsToDocument);
                 }
             }
 
@@ -439,7 +439,7 @@ namespace MS.Internal.Documents
                     !(license.HasPermission(RightsManagementPermissions.AllowOwner)))
                 {
                     throw new InvalidOperationException(
-                        SR.Get(SRID.RMProviderExceptionNotOwnerOfDocument));
+                        SR.RMProviderExceptionNotOwnerOfDocument);
                 }
             }
 
@@ -617,8 +617,8 @@ namespace MS.Internal.Documents
             else
             {
                 System.Windows.MessageBox.Show(
-                    SR.Get(SRID.RightsManagementWarnErrorFailedToRemoveUser),
-                    SR.Get(SRID.RightsManagementWarnErrorTitle),
+                    SR.RightsManagementWarnErrorFailedToRemoveUser,
+                    SR.RightsManagementWarnErrorTitle,
                     System.Windows.MessageBoxButton.OK,
                     System.Windows.MessageBoxImage.Exclamation
                     );
@@ -651,8 +651,8 @@ namespace MS.Internal.Documents
             // Notify the user that RM is not installed, and ask
             // if they would like to install it now.
             System.Windows.MessageBoxResult dialogResult = System.Windows.MessageBox.Show(
-                                SR.Get(SRID.RightsManagementWarnErrorRMNotInstalled),
-                                SR.Get(SRID.RightsManagementWarnErrorTitle),
+                                SR.RightsManagementWarnErrorRMNotInstalled,
+                                SR.RightsManagementWarnErrorTitle,
                                 System.Windows.MessageBoxButton.YesNo,
                                 System.Windows.MessageBoxImage.Warning);
 
@@ -986,8 +986,8 @@ namespace MS.Internal.Documents
 
                         System.Windows.MessageBoxResult result =
                             System.Windows.MessageBox.Show(
-                                SR.Get(SRID.RightsManagementWarnErrorNoPermission),
-                                SR.Get(SRID.RightsManagementWarnErrorTitle),
+                                SR.RightsManagementWarnErrorNoPermission,
+                                SR.RightsManagementWarnErrorTitle,
                                 System.Windows.MessageBoxButton.YesNo,
                                 System.Windows.MessageBoxImage.Exclamation
                                 );

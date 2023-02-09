@@ -36,7 +36,7 @@ public sealed class SetStoryboardSpeedRatio : ControllableStoryboardAction
         {
             if (IsSealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "SetStoryboardSpeedRatio"));
+                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "SetStoryboardSpeedRatio"));
             }
 
             _speedRatio = value;

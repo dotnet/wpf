@@ -75,8 +75,8 @@ namespace MS.Internal.Documents
             else
             {
                 System.Windows.MessageBox.Show(
-                                    SR.Get(SRID.DigitalSignatureWarnErrorReadOnlyInputError),
-                                    SR.Get(SRID.DigitalSignatureWarnErrorSigningErrorTitle),
+                                    SR.DigitalSignatureWarnErrorReadOnlyInputError,
+                                    SR.DigitalSignatureWarnErrorSigningErrorTitle,
                                     System.Windows.MessageBoxButton.OK, 
                                     System.Windows.MessageBoxImage.Exclamation
                                     );
@@ -132,21 +132,21 @@ namespace MS.Internal.Documents
             base.ApplyResources();
 
             //Get localized strings.
-            _addButton.Text = SR.Get(SRID.RequestSignatureDialogAdd);
-            _cancelButton.Text = SR.Get(SRID.RequestSignatureDialogCancel);            
-            _requestSignerNameLabel.Text = SR.Get(SRID.RequestSignatureDialogRequestSignerNameLabel);
-            _intentLabel.Text = SR.Get(SRID.RequestSignatureDialogIntentLabel);
-            _requestLocationLabel.Text = SR.Get(SRID.RequestSignatureDialogLocationLabel);
-            _signatureAppliedByDateLabel.Text = SR.Get(SRID.RequestSignatureDialogSignatureAppliedByDateLabel);
-            Text = SR.Get(SRID.RequestSignatureDialogTitle);
+            _addButton.Text = SR.RequestSignatureDialogAdd;
+            _cancelButton.Text = SR.RequestSignatureDialogCancel;            
+            _requestSignerNameLabel.Text = SR.RequestSignatureDialogRequestSignerNameLabel;
+            _intentLabel.Text = SR.RequestSignatureDialogIntentLabel;
+            _requestLocationLabel.Text = SR.RequestSignatureDialogLocationLabel;
+            _signatureAppliedByDateLabel.Text = SR.RequestSignatureDialogSignatureAppliedByDateLabel;
+            Text = SR.RequestSignatureDialogTitle;
 
             //Load the Intent/Reason combo
-            _intentComboBox.Items.Add(SR.Get(SRID.DigSigIntentString1));
-            _intentComboBox.Items.Add(SR.Get(SRID.DigSigIntentString2));
-            _intentComboBox.Items.Add(SR.Get(SRID.DigSigIntentString3));
-            _intentComboBox.Items.Add(SR.Get(SRID.DigSigIntentString4));
-            _intentComboBox.Items.Add(SR.Get(SRID.DigSigIntentString5));
-            _intentComboBox.Items.Add(SR.Get(SRID.DigSigIntentString6));
+            _intentComboBox.Items.Add(SR.DigSigIntentString1);
+            _intentComboBox.Items.Add(SR.DigSigIntentString2);
+            _intentComboBox.Items.Add(SR.DigSigIntentString3);
+            _intentComboBox.Items.Add(SR.DigSigIntentString4);
+            _intentComboBox.Items.Add(SR.DigSigIntentString5);
+            _intentComboBox.Items.Add(SR.DigSigIntentString6);
         }
 
         #endregion Protected Methods

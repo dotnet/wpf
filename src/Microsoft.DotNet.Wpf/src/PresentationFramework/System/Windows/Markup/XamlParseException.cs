@@ -362,31 +362,31 @@ namespace System.Windows.Markup
                     break;
 
                 case ContextBits.Type:
-                    message = SR.Get(SRID.ParserErrorContext_Type, simpleObjectId);
+                    message = SR.Format(SR.ParserErrorContext_Type, simpleObjectId);
                     break;
 
                 case ContextBits.File:
-                    message = SR.Get(SRID.ParserErrorContext_File, xamlFile);
+                    message = SR.Format(SR.ParserErrorContext_File, xamlFile);
                     break;
 
                 case ContextBits.Type | ContextBits.File:
-                    message = SR.Get(SRID.ParserErrorContext_Type_File, simpleObjectId, xamlFile);
+                    message = SR.Format(SR.ParserErrorContext_Type_File, simpleObjectId, xamlFile);
                     break;
 
                 case ContextBits.Line:
-                    message = SR.Get(SRID.ParserErrorContext_Line, lineNumber, linePosition);
+                    message = SR.Format(SR.ParserErrorContext_Line, lineNumber, linePosition);
                     break;
 
                 case ContextBits.Type | ContextBits.Line:
-                    message = SR.Get(SRID.ParserErrorContext_Type_Line, simpleObjectId, lineNumber, linePosition);
+                    message = SR.Format(SR.ParserErrorContext_Type_Line, simpleObjectId, lineNumber, linePosition);
                     break;
 
                 case ContextBits.File | ContextBits.Line:
-                    message = SR.Get(SRID.ParserErrorContext_File_Line, xamlFile, lineNumber, linePosition);
+                    message = SR.Format(SR.ParserErrorContext_File_Line, xamlFile, lineNumber, linePosition);
                     break;
 
                 case ContextBits.Type | ContextBits.File | ContextBits.Line:
-                    message = SR.Get(SRID.ParserErrorContext_Type_File_Line, simpleObjectId, xamlFile, lineNumber, linePosition);
+                    message = SR.Format(SR.ParserErrorContext_Type_File_Line, simpleObjectId, xamlFile, lineNumber, linePosition);
                     break;
             }
 

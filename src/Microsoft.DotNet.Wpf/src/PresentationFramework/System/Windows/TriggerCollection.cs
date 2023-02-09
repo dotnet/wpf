@@ -131,7 +131,7 @@ namespace System.Windows
         {
             if (_sealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "TriggerCollection"));
+                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "TriggerCollection"));
             }
         }
 

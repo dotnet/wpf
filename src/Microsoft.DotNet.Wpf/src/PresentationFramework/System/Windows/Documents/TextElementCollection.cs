@@ -257,12 +257,12 @@ namespace System.Windows.Documents
 
             if (previousSibling.Parent != this.Parent)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextElementCollection_PreviousSiblingDoesNotBelongToThisCollection, previousSibling.GetType().Name));
+                throw new InvalidOperationException(SR.Format(SR.TextElementCollection_PreviousSiblingDoesNotBelongToThisCollection, previousSibling.GetType().Name));
             }
 
             if (newItem.Parent != null)
             {
-                throw new ArgumentException(SR.Get(SRID.TextSchema_TheChildElementBelongsToAnotherTreeAlready, this.GetType().Name));
+                throw new ArgumentException(SR.Format(SR.TextSchema_TheChildElementBelongsToAnotherTreeAlready, this.GetType().Name));
             }
 
             ValidateChild(newItem);
@@ -302,12 +302,12 @@ namespace System.Windows.Documents
 
             if (nextSibling.Parent != this.Parent)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextElementCollection_NextSiblingDoesNotBelongToThisCollection, nextSibling.GetType().Name));
+                throw new InvalidOperationException(SR.Format(SR.TextElementCollection_NextSiblingDoesNotBelongToThisCollection, nextSibling.GetType().Name));
             }
 
             if (newItem.Parent != null)
             {
-                throw new ArgumentException(SR.Get(SRID.TextSchema_TheChildElementBelongsToAnotherTreeAlready, this.GetType().Name));
+                throw new ArgumentException(SR.Format(SR.TextSchema_TheChildElementBelongsToAnotherTreeAlready, this.GetType().Name));
             }
 
             ValidateChild(newItem);
@@ -339,7 +339,7 @@ namespace System.Windows.Documents
             IEnumerator enumerator = range.GetEnumerator();
             if (enumerator == null)
             {
-                throw new ArgumentException(SR.Get(SRID.TextElementCollection_NoEnumerator), "range");
+                throw new ArgumentException(SR.TextElementCollection_NoEnumerator, "range");
             }
 
             this.TextContainer.BeginChange();
@@ -353,7 +353,7 @@ namespace System.Windows.Documents
                     {
                         // REVIEW: It would be better design if we reviewed all elements in the range before starting an insert.
                         // Otherwise, we might insert half the elements and then throw.
-                        throw new ArgumentException(SR.Get(SRID.TextElementCollection_ItemHasUnexpectedType, "range", typeof(TextElementType).Name, typeof(TextElementType).Name), "value");
+                        throw new ArgumentException(SR.Format(SR.TextElementCollection_ItemHasUnexpectedType, "range", typeof(TextElementType).Name, typeof(TextElementType).Name), "value");
                     }
 
                     Add(element);
@@ -419,7 +419,7 @@ namespace System.Windows.Documents
 
             if (!(value is TextElementType))
             {
-                throw new ArgumentException(SR.Get(SRID.TextElementCollection_TextElementTypeExpected, typeof(TextElementType).Name), "value");
+                throw new ArgumentException(SR.Format(SR.TextElementCollection_TextElementTypeExpected, typeof(TextElementType).Name), "value");
             }
 
             ValidateChild((TextElementType)value);
@@ -477,17 +477,17 @@ namespace System.Windows.Documents
 
             if (newItem == null)
             {
-                throw new ArgumentException(SR.Get(SRID.TextElementCollection_TextElementTypeExpected, typeof(TextElementType).Name), "value");
+                throw new ArgumentException(SR.Format(SR.TextElementCollection_TextElementTypeExpected, typeof(TextElementType).Name), "value");
             }
 
             if (index < 0)
             {
-                throw new IndexOutOfRangeException(SR.Get(SRID.TextElementCollection_IndexOutOfRange));
+                throw new IndexOutOfRangeException(SR.TextElementCollection_IndexOutOfRange);
             }
 
             if (newItem.Parent != null)
             {
-                throw new ArgumentException(SR.Get(SRID.TextSchema_TheChildElementBelongsToAnotherTreeAlready, this.GetType().Name));
+                throw new ArgumentException(SR.Format(SR.TextSchema_TheChildElementBelongsToAnotherTreeAlready, this.GetType().Name));
             }
 
             ValidateChild(newItem);
@@ -501,7 +501,7 @@ namespace System.Windows.Documents
                 {
                     if (index != 0)
                     {
-                        throw new IndexOutOfRangeException(SR.Get(SRID.TextElementCollection_IndexOutOfRange));
+                        throw new IndexOutOfRangeException(SR.TextElementCollection_IndexOutOfRange);
                     }
                     position = this.ContentStart;
                 }
@@ -512,7 +512,7 @@ namespace System.Windows.Documents
 
                     if (!atCollectionEnd && element == null)
                     {
-                        throw new IndexOutOfRangeException(SR.Get(SRID.TextElementCollection_IndexOutOfRange));
+                        throw new IndexOutOfRangeException(SR.TextElementCollection_IndexOutOfRange);
                     }
 
                     position = atCollectionEnd ? this.ContentEnd : element.ElementStart;
@@ -567,14 +567,14 @@ namespace System.Windows.Documents
             {
                 if (index < 0)
                 {
-                    throw new IndexOutOfRangeException(SR.Get(SRID.TextElementCollection_IndexOutOfRange));
+                    throw new IndexOutOfRangeException(SR.TextElementCollection_IndexOutOfRange);
                 }
 
                 TextElementType element = GetElementAtIndex(index);
 
                 if (element == null)
                 {
-                    throw new IndexOutOfRangeException(SR.Get(SRID.TextElementCollection_IndexOutOfRange));
+                    throw new IndexOutOfRangeException(SR.TextElementCollection_IndexOutOfRange);
                 }
 
                 SetCache(index, element);
@@ -591,7 +591,7 @@ namespace System.Windows.Documents
 
                 if (!(value is TextElementType))
                 {
-                    throw new ArgumentException(SR.Get(SRID.TextElementCollection_TextElementTypeExpected, typeof(TextElementType).Name), "value");
+                    throw new ArgumentException(SR.Format(SR.TextElementCollection_TextElementTypeExpected, typeof(TextElementType).Name), "value");
                 }
 
                 ValidateChild((TextElementType)value);
@@ -647,7 +647,7 @@ namespace System.Windows.Documents
 
             if (array.Length < arrayIndex + count)
             {
-                throw new ArgumentException(SR.Get(SRID.TextElementCollection_CannotCopyToArrayNotSufficientMemory, count, arrayIndex, array.Length));
+                throw new ArgumentException(SR.Format(SR.TextElementCollection_CannotCopyToArrayNotSufficientMemory, count, arrayIndex, array.Length));
             }
 
             for (TextElementType element = (TextElementType)this.FirstChild; element != null; element = (TextElementType)element.NextElement)
@@ -801,14 +801,14 @@ namespace System.Windows.Documents
         {
             if (index < 0)
             {
-                throw new IndexOutOfRangeException(SR.Get(SRID.TextElementCollection_IndexOutOfRange));
+                throw new IndexOutOfRangeException(SR.TextElementCollection_IndexOutOfRange);
             }
 
             TextElementType element = GetElementAtIndex(index);
 
             if (element == null)
             {
-                throw new IndexOutOfRangeException(SR.Get(SRID.TextElementCollection_IndexOutOfRange));
+                throw new IndexOutOfRangeException(SR.TextElementCollection_IndexOutOfRange);
             }
 
             TextElementType nextElement = (TextElementType)element.NextElement;

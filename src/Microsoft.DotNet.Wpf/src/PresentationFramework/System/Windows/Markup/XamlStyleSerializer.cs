@@ -135,7 +135,7 @@ namespace System.Windows.Markup
             {
                 if (!styleTargetTypeSet)
                 {
-                    ThrowException(SRID.StyleNoDictionaryKey,
+                    ThrowException(nameof(SR.StyleNoDictionaryKey),
                                    parserContext.LineNumber,
                                    parserContext.LinePosition);
                 }
@@ -151,7 +151,7 @@ namespace System.Windows.Markup
              int  lineNumber,
              int  linePosition)
         {
-            string message = SR.Get(id);
+            string message = SR.GetResourceString(id);
             XamlParseException parseException;
 
             // Throw the appropriate execption.  If we have line numbers, then we are
@@ -160,7 +160,7 @@ namespace System.Windows.Markup
             if (lineNumber > 0)
             {
                 message += " ";
-                message += SR.Get(SRID.ParserLineAndOffset,
+                message += SR.Format(SR.ParserLineAndOffset,
                                   lineNumber.ToString(CultureInfo.CurrentCulture),
                                   linePosition.ToString(CultureInfo.CurrentCulture));
                 parseException = new XamlParseException(message, lineNumber, linePosition);

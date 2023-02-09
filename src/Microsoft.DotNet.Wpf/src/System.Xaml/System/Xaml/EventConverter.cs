@@ -36,7 +36,7 @@ namespace System.Xaml
 
                 if (rootObject != null && delegateType != null)
                 {
-                    return SafeReflectionInvoker.CreateDelegate(delegateType, rootObject, valueString);
+                    return Delegate.CreateDelegate(delegateType, rootObject, valueString);
                 }
             }
             return base.ConvertFrom(context, culture, value);

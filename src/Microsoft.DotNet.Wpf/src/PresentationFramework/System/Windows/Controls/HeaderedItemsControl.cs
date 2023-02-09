@@ -366,7 +366,7 @@ namespace System.Windows.Controls
             // If header and items count are defined
             if (valuesDefined)
             {
-                return SR.Get(SRID.ToStringFormatString_HeaderedItemsControl, typeText, headerText, itemCount);
+                return SR.Format(SR.ToStringFormatString_HeaderedItemsControl, typeText, headerText, itemCount);
             }
 
             // Not able to access the dispatcher

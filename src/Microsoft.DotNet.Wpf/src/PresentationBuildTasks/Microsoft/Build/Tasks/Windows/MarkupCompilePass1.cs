@@ -133,14 +133,14 @@ namespace Microsoft.Build.Tasks.Windows
 
                 VerifyInputs();
 
-                Log.LogMessageFromResources(MessageImportance.Low, SRID.CurrentDirectory, SourceDir);
+                Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.CurrentDirectory), SourceDir);
 
                 // If wrong files are set to some properties, the task
                 // should stop here immediatelly.
 
                 if (_nErrors > 0)
                 {
-                    Log.LogErrorWithCodeFromResources(SRID.WrongPropertySetting);
+                    Log.LogErrorWithCodeFromResources(nameof(SR.WrongPropertySetting));
                 }
                 else
                 {
@@ -154,7 +154,7 @@ namespace Microsoft.Build.Tasks.Windows
                     // Analyze project inputs to detect which xaml files require to recompile.
                     AnalyzeInputsAndSetting();
 
-                    Log.LogMessageFromResources(MessageImportance.Low, SRID.AnalysisResult, CompilerAnalyzer.AnalyzeResult);
+                    Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.AnalysisResult), CompilerAnalyzer.AnalyzeResult);
 
                     if (!SkipMarkupCompilation)
                     {
@@ -164,7 +164,7 @@ namespace Microsoft.Build.Tasks.Windows
                             for (int i = 0; i < CompilerAnalyzer.RecompileMarkupPages.Length; i++)
                             {
 
-                                Log.LogMessageFromResources(MessageImportance.Low, SRID.RecompiledXaml, CompilerAnalyzer.RecompileMarkupPages[i]);
+                                Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.RecompiledXaml), CompilerAnalyzer.RecompileMarkupPages[i]);
                             }
                         }
 
@@ -184,7 +184,7 @@ namespace Microsoft.Build.Tasks.Windows
                     // Generate the required output items.
                     GenerateOutputItems();
 
-                    Log.LogMessageFromResources(MessageImportance.Low, SRID.CompilationDone);
+                    Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.CompilationDone));
                 }
 
             }
@@ -199,7 +199,7 @@ namespace Microsoft.Build.Tasks.Windows
                 if (String.IsNullOrEmpty(errorId))
                 {
                     errorId = UnknownErrorID;
-                    message = SR.Get(SRID.UnknownBuildError, message);
+                    message = SR.Format(SR.UnknownBuildError, message);
                 }
 
                 Log.LogError(null, errorId, null, null, 0, 0, 0, 0, message, null);
@@ -208,7 +208,7 @@ namespace Microsoft.Build.Tasks.Windows
             }
             catch // Non-CLS compliant errors
             {
-                Log.LogErrorWithCodeFromResources(SRID.NonClsError);
+                Log.LogErrorWithCodeFromResources(nameof(SR.NonClsError));
                 _nErrors++;
             }
 #pragma warning restore 6500
@@ -222,7 +222,7 @@ namespace Microsoft.Build.Tasks.Windows
             }
             else
             {
-                Log.LogMessageFromResources(MessageImportance.Low, SRID.CompileSucceed_Pass1);
+                Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.CompileSucceed_Pass1));
             }
 
             return bSuccess;
@@ -906,7 +906,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             if (SplashScreen != null && SplashScreen.Length > 1)
             {
-                Log.LogErrorWithCodeFromResources(SRID.MultipleSplashScreenImages);
+                Log.LogErrorWithCodeFromResources(nameof(SR.MultipleSplashScreenImages));
                 _nErrors++;
             }
         }
@@ -927,7 +927,7 @@ namespace Microsoft.Build.Tasks.Windows
                     //
                     // For non-Application target type, Application definition should not be set.
                     //
-                    Log.LogErrorWithCodeFromResources(SRID.AppDefIsNotRequired);
+                    Log.LogErrorWithCodeFromResources(nameof(SR.AppDefIsNotRequired));
                     _nErrors++;
 
                 }
@@ -942,16 +942,16 @@ namespace Microsoft.Build.Tasks.Windows
                 {
                     if (ApplicationMarkup.Length > 1)
                     {
-                        Log.LogErrorWithCodeFromResources(SRID.MutlipleApplicationFiles);
+                        Log.LogErrorWithCodeFromResources(nameof(SR.MutlipleApplicationFiles));
                         _nErrors++;
                     }
 
                     _applicationFile = TaskHelper.CreateFullFilePath(ApplicationMarkup[0].ItemSpec, SourceDir);
-                    Log.LogMessageFromResources(MessageImportance.Low, SRID.ApplicationDefinitionFile, ApplicationFile);
+                    Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.ApplicationDefinitionFile), ApplicationFile);
 
                     if (!TaskFileService.Exists(ApplicationFile))
                     {
-                        Log.LogErrorWithCodeFromResources(SRID.FileNotFound, ApplicationFile);
+                        Log.LogErrorWithCodeFromResources(nameof(SR.FileNotFound), ApplicationFile);
                         _nErrors++;
                     }
 
@@ -986,7 +986,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             if (isSupported == false)
             {
-                Log.LogErrorWithCodeFromResources(SRID.TargetIsNotSupported, outputType);
+                Log.LogErrorWithCodeFromResources(nameof(SR.TargetIsNotSupported), outputType);
 
                 // Keep the error numbers so that the task can stop immediatelly
                 // later when Execute( ) is called.
@@ -1004,7 +1004,7 @@ namespace Microsoft.Build.Tasks.Windows
             {
                 bValid = false;
 
-                Log.LogErrorWithCodeFromResources(SRID.WrongLocalizationPropertySetting_Pass1);
+                Log.LogErrorWithCodeFromResources(nameof(SR.WrongLocalizationPropertySetting_Pass1));
 
                 // Keep the error numbers so that the task can stop immediatelly
                 // later when Execute( ) is called.
@@ -1046,7 +1046,7 @@ namespace Microsoft.Build.Tasks.Windows
             if (!TaskFileService.Exists(TaskHelper.CreateFullFilePath(filePath, SourceDir)))
             {
                 bValid = false;
-                Log.LogErrorWithCodeFromResources(SRID.FileNotFound, filePath);
+                Log.LogErrorWithCodeFromResources(nameof(SR.FileNotFound), filePath);
 
                 // Keep the error numbers so that the task can stop immediatelly
                 // later when Execute( ) is called.
@@ -1138,7 +1138,7 @@ namespace Microsoft.Build.Tasks.Windows
                     asmReference = new ReferenceAssembly(refpath, asmname);
                     referenceList.Add(asmReference);
 
-                    Log.LogMessageFromResources(MessageImportance.Low, SRID.ReferenceFile, refpath);
+                    Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.ReferenceFile), refpath);
                 }
             }
 
@@ -1208,8 +1208,8 @@ namespace Microsoft.Build.Tasks.Windows
         //
         private void DoMarkupCompilation()
         {
-            Log.LogMessageFromResources(MessageImportance.Low, SRID.DoCompilation);
-            Log.LogMessageFromResources(MessageImportance.Low, SRID.OutputType, OutputType);
+            Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.DoCompilation));
+            Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.OutputType), OutputType);
 
 
             // When code goes here, the MarkupCompilation is really required, so don't need
@@ -1480,7 +1480,7 @@ namespace Microsoft.Build.Tasks.Windows
                     
                     outputCodeFileList.Add(codeItem);
 
-                    Log.LogMessageFromResources(MessageImportance.Low, SRID.GeneratedCodeFile, codeItem.ItemSpec);
+                    Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.GeneratedCodeFile), codeItem.ItemSpec);
                 }
 
                 if (!String.IsNullOrEmpty(bamlFile))
@@ -1489,7 +1489,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                     // Add bamlItem to the output Baml List
                     outputBamlFileList.Add(bamlItem);
-                    Log.LogMessageFromResources(MessageImportance.Low, SRID.GeneratedBamlFile, bamlItem.ItemSpec);
+                    Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.GeneratedBamlFile), bamlItem.ItemSpec);
                 }
 
             }  // End of for {  } loop.

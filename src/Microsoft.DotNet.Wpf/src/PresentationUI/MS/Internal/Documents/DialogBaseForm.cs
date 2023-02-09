@@ -144,7 +144,7 @@ namespace MS.Internal.Documents
         private void ApplyRTL()
         {
             // Get the UI Language from the string table
-            string uiLanguage = SR.Get(SRID.WPF_UILanguage);
+            string uiLanguage = SR.WPF_UILanguage;
             Invariant.Assert(!string.IsNullOrEmpty(uiLanguage), "No UILanguage was specified in stringtable.");
 
             // Set this dialog's RTL property based on the RTL property for the 

@@ -53,7 +53,7 @@ namespace System.Windows.Baml2006
             Type runtimeType = typeof(object).GetType();
             if (!runtimeType.IsAssignableFrom(type.GetType()))
             {
-                throw new ArgumentException(SR.Get(SRID.RuntimeTypeRequired, type), "type");
+                throw new ArgumentException(SR.Format(SR.RuntimeTypeRequired, type), "type");
             }
         }
 

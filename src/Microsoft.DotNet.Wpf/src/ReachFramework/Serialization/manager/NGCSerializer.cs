@@ -103,7 +103,7 @@ namespace System.Windows.Xps.Serialization
             if( fd == null )
             {
 
-               throw new ArgumentException(SR.Get(SRID.ReachSerialization_ExpectedFixedDocument));
+               throw new ArgumentException(SR.ReachSerialization_ExpectedFixedDocument);
             }
             NgcSerializationManager ngcManager = SerializationManager as NgcSerializationManager;
 
@@ -178,7 +178,7 @@ namespace System.Windows.Xps.Serialization
             if( fp == null )
             {
 
-               throw new ArgumentException(SR.Get(SRID.ReachSerialization_ExpectedFixedPage));
+               throw new ArgumentException(SR.ReachSerialization_ExpectedFixedPage);
             }
 
             bool bManualStartDoc = ngcManager.StartPage();
@@ -504,7 +504,7 @@ namespace System.Windows.Xps.Serialization
             if( fds == null )
             {
 
-               throw new ArgumentException(SR.Get(SRID.ReachSerialization_ExpectedFixedDocumentSequence));
+               throw new ArgumentException(SR.ReachSerialization_ExpectedFixedDocumentSequence);
             }
 
             NgcSerializationManager ngcManager = SerializationManager as NgcSerializationManager;
@@ -716,7 +716,7 @@ namespace System.Windows.Xps.Serialization
 
             if (enumerableObject == null)
             {
-                throw new XpsSerializationException(SR.Get(SRID.MustBeOfType, "serializableObjectContext.TargetObject", typeof(IEnumerable)));
+                throw new XpsSerializationException(SR.Format(SR.MustBeOfType, "serializableObjectContext.TargetObject", typeof(IEnumerable)));
             }
 
             //
@@ -776,7 +776,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoSerializer));
+                throw new XpsSerializationException(SR.ReachSerialization_NoSerializer);
             }
 
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXSavePageEnd);
@@ -862,7 +862,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoSerializer));
+                    throw new XpsSerializationException(SR.ReachSerialization_NoSerializer);
                 }
             }
         }
@@ -935,7 +935,7 @@ namespace System.Windows.Xps.Serialization
 
             if (enumerableObject == null)
             {
-                throw new XpsSerializationException(SR.Get(SRID.MustBeOfType, "serializableObjectContext.TargetObject", typeof(IEnumerable)));
+                throw new XpsSerializationException(SR.Format(SR.MustBeOfType, "serializableObjectContext.TargetObject", typeof(IEnumerable)));
             }
 
             //
@@ -995,7 +995,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoSerializer));
+                    throw new XpsSerializationException(SR.ReachSerialization_NoSerializer);
                 }
             }
         }

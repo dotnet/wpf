@@ -1491,7 +1491,7 @@ namespace System.Windows.Controls
                 column.DataGridOwner,
                 DataGrid.CanUserResizeColumnsProperty);
         }
-        
+
         internal bool CanColumnResize(DataGridLength width)
         {
             if (!CanUserResize)
@@ -1501,7 +1501,7 @@ namespace System.Windows.Controls
 
             return width.DisplayValue >= this.MinWidth && width.DisplayValue <= this.MaxWidth;
         }
-        
+
         #endregion
 
         #region Hidden Columns

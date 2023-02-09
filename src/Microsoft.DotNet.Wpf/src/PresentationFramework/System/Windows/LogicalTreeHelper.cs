@@ -14,7 +14,7 @@
 using System;
 using System.Collections;   // In order to use IEnumerator
 using System.Diagnostics;
-using MS.Utility;           // In order to use SR.Get and SRID
+using MS.Utility;           // In order to use SR
 
 namespace System.Windows
 {
@@ -75,7 +75,7 @@ public static class LogicalTreeHelper
         }
         if( elementName == String.Empty )
         {
-            throw new ArgumentException(SR.Get(SRID.StringEmpty), "elementName");
+            throw new ArgumentException(SR.StringEmpty, "elementName");
         }
 
         DependencyObject namedElement = null;

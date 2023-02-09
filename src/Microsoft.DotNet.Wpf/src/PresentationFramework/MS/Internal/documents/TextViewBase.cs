@@ -109,7 +109,7 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             return new ReadOnlyCollection<GlyphRun>(new List<GlyphRun>());
         }
@@ -180,7 +180,7 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             OnBringPositionIntoViewCompleted(new BringPositionIntoViewCompletedEventArgs(position, Contains(position), null, false, userState));
         }
@@ -195,7 +195,7 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             position = GetTextPositionFromPoint(point, true);
             OnBringPointIntoViewCompleted(new BringPointIntoViewCompletedEventArgs(point, position, position != null, null, false, userState));
@@ -213,7 +213,7 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             newPosition = GetPositionAtNextLine(position, suggestedX, count, out newSuggestedX, out linesMoved);
             OnBringLineIntoViewCompleted(new BringLineIntoViewCompletedEventArgs(position, suggestedX, count, newPosition, newSuggestedX, linesMoved, linesMoved == count, null, false, userState));
@@ -231,7 +231,7 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             newPosition = GetPositionAtNextPage(position, suggestedOffset, count, out newSuggestedOffset, out pagesMoved);
             OnBringPageIntoViewCompleted(new BringPageIntoViewCompletedEventArgs(position, suggestedOffset, count, newPosition, newSuggestedOffset, pagesMoved, pagesMoved == count, null, false, userState));

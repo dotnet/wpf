@@ -38,7 +38,7 @@ namespace System.Windows.Controls
         {
             if (visualParent == null)
             {
-                throw new ArgumentNullException(SR.Get(SRID.Panel_NoNullVisualParent, "visualParent", this.GetType()));
+                throw new ArgumentNullException(SR.Format(SR.Panel_NoNullVisualParent, "visualParent", this.GetType()));
             }
 
             _visualChildren = new VisualCollection(visualParent);
@@ -388,12 +388,12 @@ namespace System.Windows.Controls
         private UIElement Cast(object value)
         {
             if (value == null)
-                throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull, "UIElementCollection"));
+                throw new System.ArgumentException(SR.Format(SR.Collection_NoNull, "UIElementCollection"));
 
             UIElement element = value as UIElement;
 
             if (element == null)
-                throw new System.ArgumentException(SR.Get(SRID.Collection_BadType, "UIElementCollection", value.GetType().Name, "UIElement"));
+                throw new System.ArgumentException(SR.Format(SR.Collection_BadType, "UIElementCollection", value.GetType().Name, "UIElement"));
 
             return element;
         }
@@ -523,7 +523,7 @@ namespace System.Windows.Controls
         {
             if (element == null)
             {
-                throw new ArgumentNullException(SR.Get(SRID.Panel_NoNullChildren, this.GetType()));
+                throw new ArgumentNullException(SR.Format(SR.Panel_NoNullChildren, this.GetType()));
             }
         }
 
@@ -532,7 +532,7 @@ namespace System.Windows.Controls
             Panel p = _visualParent as Panel;
             if (p != null && p.IsDataBound)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Panel_BoundPanel_NoChildren));
+                throw new InvalidOperationException(SR.Panel_BoundPanel_NoChildren);
             }
         }
 

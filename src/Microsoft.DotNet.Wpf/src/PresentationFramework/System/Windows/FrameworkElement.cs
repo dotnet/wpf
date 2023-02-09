@@ -496,7 +496,7 @@ namespace System.Windows
 
                 if( targetObject == null )
                 {
-                    throw new ArgumentException( SR.Get(SRID.TargetNameNotFound, targetName));
+                    throw new ArgumentException( SR.Format(SR.TargetNameNotFound, targetName));
                 }
 
                 FrameworkObject fo = new FrameworkObject(targetObject);
@@ -506,7 +506,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.NamedObjectMustBeFrameworkElement, targetName));
+                    throw new InvalidOperationException(SR.Format(SR.NamedObjectMustBeFrameworkElement, targetName));
                 }
             }
 
@@ -655,11 +655,11 @@ namespace System.Windows
         {
             if (_templateChild == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             if (index != 0)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             return _templateChild;
         }
@@ -1194,7 +1194,7 @@ namespace System.Windows
                 {
                     // We suspect a loop here because the loop count
                     // has exceeded the MAX_TREE_DEPTH expected
-                    throw new InvalidOperationException(SR.Get(SRID.LogicalTreeLoop));
+                    throw new InvalidOperationException(SR.LogicalTreeLoop);
                 }
                 else
                 {
@@ -1894,7 +1894,7 @@ namespace System.Windows
                     // Commented this because the implicit fetch could also return a DeferredDictionaryReference
                     // if (!(implicitValue is Style))
                     // {
-                    //     throw new InvalidOperationException(SR.Get(SRID.InvalidImplicitStyleResource, this.GetType().Name, implicitValue));
+                    //     throw new InvalidOperationException(SR.Format(SR.InvalidImplicitStyleResource, this.GetType().Name, implicitValue));
                     // }
 
                     // This style has been fetched from resources
@@ -2669,7 +2669,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Illegal_InheritanceBehaviorSettor));
+                    throw new InvalidOperationException(SR.Illegal_InheritanceBehaviorSettor);
                 }
             }
         }
@@ -5416,7 +5416,7 @@ namespace System.Windows
             // Nested BeginInits on the same instance aren't permitted
             if (ReadInternalFlag(InternalFlags.InitPending))
             {
-                throw new InvalidOperationException(SR.Get(SRID.NestedBeginInitNotSupported));
+                throw new InvalidOperationException(SR.NestedBeginInitNotSupported);
             }
 
             // Mark the element as pending initialization
@@ -5431,7 +5431,7 @@ namespace System.Windows
             // Every EndInit must be preceeded by a BeginInit
             if (!ReadInternalFlag(InternalFlags.InitPending))
             {
-                throw new InvalidOperationException(SR.Get(SRID.EndInitWithoutBeginInitNotSupported));
+                throw new InvalidOperationException(SR.EndInitWithoutBeginInitNotSupported);
             }
 
             // Reset the pending flag
@@ -6262,7 +6262,7 @@ namespace System.Windows
                 // Thus we support any indices in the range [-1, 65535).
                 if (value < -1 || value >= 0xFFFF)
                 {
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.TemplateChildIndexOutOfRange));
+                    throw new ArgumentOutOfRangeException("value", SR.TemplateChildIndexOutOfRange);
                 }
 
                 uint childIndex = (value == -1) ? 0xFFFF : (uint)value;

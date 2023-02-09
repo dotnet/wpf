@@ -389,7 +389,7 @@ namespace System.Windows
             {
                 // We suspect a loop here because the recursion
                 // depth has exceeded the MAX_TREE_DEPTH expected
-                throw new InvalidOperationException(SR.Get(SRID.LogicalTreeLoop));
+                throw new InvalidOperationException(SR.LogicalTreeLoop);
             }
         }
             
@@ -415,7 +415,7 @@ namespace System.Windows
             {
                 // We suspect a loop here because the recursion
                 // depth has exceeded the MAX_TREE_DEPTH expected
-                throw new InvalidOperationException(SR.Get(SRID.LogicalTreeLoop));
+                throw new InvalidOperationException(SR.LogicalTreeLoop);
             }
 
         }

@@ -10,7 +10,6 @@ using System.Security;
 using System.Windows.TrustUI;
 
 using SR=System.Windows.TrustUI.SR;
-using SRID=System.Windows.TrustUI.SRID;
 
 namespace MS.Internal.Documents.Application
 {
@@ -164,7 +163,7 @@ internal sealed class RightsManagementSuppressedStream : StreamProxy
         if (!AllowWrite)
         {
             throw new InvalidOperationException(
-                SR.Get(SRID.RightsManagementExceptionNoRightsForOperation));
+                SR.RightsManagementExceptionNoRightsForOperation);
         }
     }
 

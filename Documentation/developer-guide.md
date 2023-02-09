@@ -199,6 +199,28 @@ Follow the steps defined [here](https://github.com/dotnet/arcade/blob/main/Docum
 ### Testing PresentationBuildTasks
 -- add more content here --
 
+## Commonly Encountered Errors
+
+#### The specified RuntimeIdentifier `win-` is not recognized (Code: NETSDK1083)
+If you are seeing this error it means you are possibly missing `<PlatformTarget>` tag from your `.csproj` file. Please add the tag with apropriate value.
+
+For example:- if your wpf binaries are build for platform `x86` you should add `<PlatformTarget>x86</PlatformTarget>` to your `.csproj` file.
+Your final csproj file should look like as below:
+
+```xml
+    <PropertyGroup>
+      <OutputType>WinExe</OutputType>
+      <TargetFramework>net6.0-windows</TargetFramework>
+      <UseWPF>true</UseWPF>
+      <PlatformTarget>x86</PlatformTarget>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <WpfRepoRoot>C:\wpf</WpfRepoRoot>
+    </PropertyGroup>
+    <Import Project="$(WpfRepoRoot)\eng\wpf-debug.targets" />
+```
+
 ## More Information
 
 * [git commands and workflow](https://github.com/dotnet/corefx/wiki/git-reference)

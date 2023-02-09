@@ -282,7 +282,7 @@ namespace System.Windows.Markup
 
             if ( count < 0 ) 
             {
-                throw new ArgumentException(SR.Get(SRID.IntegerCollectionLengthLessThanZero)); 
+                throw new ArgumentException(SR.IntegerCollectionLengthLessThanZero); 
             }                
                     
             theCollection = new Int32Collection( count ); 
@@ -331,7 +331,7 @@ namespace System.Windows.Markup
                     break; 
                     
                     default:
-                        throw new ArgumentException(SR.Get(SRID.UnknownIndexType)); 
+                        throw new ArgumentException(SR.UnknownIndexType); 
                 }
             }
 

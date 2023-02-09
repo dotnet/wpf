@@ -238,16 +238,15 @@ namespace MS.Internal
                 enabled = false;
 
                 //extracting all the data under an elevation.
-                object dbgJITDebugLaunchSettingValue;
-                string dbgManagedDebuggerValue;
                 key = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\.NETFramework");
-                dbgJITDebugLaunchSettingValue = key.GetValue("DbgJITDebugLaunchSetting");
-                dbgManagedDebuggerValue = key.GetValue("DbgManagedDebugger") as string;
                 //
                 // Check for the enable.
                 //
                 if (key != null)
                 {
+                    object dbgJITDebugLaunchSettingValue = key.GetValue("DbgJITDebugLaunchSetting");
+                    string dbgManagedDebuggerValue = key.GetValue("DbgManagedDebugger") as string;
+
                     //
                     // Only count the enable if there's a JIT debugger to launch.
                     //

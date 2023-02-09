@@ -990,7 +990,7 @@ namespace System.Windows.Xps.Serialization
                     XpsOMPackagingPolicy omPolicy = SerializationManager.PackagingPolicy as XpsOMPackagingPolicy;
                     if (policy == null && omPolicy == null)
                     {
-                        throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_WrongPackagingPolicy));
+                        throw new XpsSerializationException(SR.ReachSerialization_WrongPackagingPolicy);
                     }
 
                     Uri documentUri = SerializationManager.PackagingPolicy.CurrentFixedDocumentUri;

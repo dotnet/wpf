@@ -36,7 +36,7 @@ namespace MS.Internal.Documents.Application
         {
             if (DocumentProperties.Current == null)
             {
-                throw new NotSupportedException(SR.Get(SRID.DocumentPropertiesDialogDocumentPropertiesMustExist));
+                throw new NotSupportedException(SR.DocumentPropertiesDialogDocumentPropertiesMustExist);
             }
 
             PopulateDataFields();
@@ -58,32 +58,32 @@ namespace MS.Internal.Documents.Application
             base.ApplyResources();
 
             // Get strings from the string table.
-            this.Text = SR.Get(SRID.DocumentPropertiesDialogTitle);
-            SetTextProperty(_summaryTab, SR.Get(SRID.DocumentPropertiesDialogSummaryLabel));
-            SetTextProperty(_titleLabel, SR.Get(SRID.DocumentPropertiesDialogTitleLabel));
-            SetTextProperty(_authorLabel, SR.Get(SRID.DocumentPropertiesDialogAuthorLabel));
-            SetTextProperty(_subjectLabel, SR.Get(SRID.DocumentPropertiesDialogSubjectLabel));
-            SetTextProperty(_descriptionLabel, SR.Get(SRID.DocumentPropertiesDialogDescriptionLabel));
-            SetTextProperty(_keywordsLabel, SR.Get(SRID.DocumentPropertiesDialogKeywordsLabel));
-            SetTextProperty(_categoryLabel, SR.Get(SRID.DocumentPropertiesDialogCategoryLabel));
-            SetTextProperty(_languageLabel, SR.Get(SRID.DocumentPropertiesDialogLanguageLabel));
-            SetTextProperty(_contentLabel, SR.Get(SRID.DocumentPropertiesDialogContentLabel));
-            SetTextProperty(_statusLabel, SR.Get(SRID.DocumentPropertiesDialogStatusLabel));
-            SetTextProperty(_versionLabel, SR.Get(SRID.DocumentPropertiesDialogVersionLabel));
-            SetTextProperty(_identifierLabel, SR.Get(SRID.DocumentPropertiesDialogIdentifierLabel));
-            SetTextProperty(_okButton, SR.Get(SRID.DocumentPropertiesDialogOkButtonLabel));
-            SetTextProperty(_infoTab, SR.Get(SRID.DocumentPropertiesDialogInfoLabel));
-            SetTextProperty(_sizeLabel, SR.Get(SRID.DocumentPropertiesDialogSizeLabel));
-            SetTextProperty(_documentDetailBox, SR.Get(SRID.DocumentPropertiesDialogDocumentDetailBoxLabel));
-            SetTextProperty(_lastSavedLabel, SR.Get(SRID.DocumentPropertiesDialogLastSavedByLabel));
-            SetTextProperty(_revisionLabel, SR.Get(SRID.DocumentPropertiesDialogRevisionLabel));
-            SetTextProperty(_documentCreatedLabel, SR.Get(SRID.DocumentPropertiesDialogDocumentCreatedLabel));
-            SetTextProperty(_documentModifiedLabel, SR.Get(SRID.DocumentPropertiesDialogDocumentModifiedLabel));
-            SetTextProperty(_documentPrintedLabel, SR.Get(SRID.DocumentPropertiesDialogDocumentPrintedLabel));
-            SetTextProperty(_fileSystemBox, SR.Get(SRID.DocumentPropertiesDialogFileSystemBoxLabel));
-            SetTextProperty(_fileCreatedLabel, SR.Get(SRID.DocumentPropertiesDialogFileCreatedLabel));
-            SetTextProperty(_fileModifiedLabel, SR.Get(SRID.DocumentPropertiesDialogFileModifiedLabel));
-            SetTextProperty(_fileAccessedLabel, SR.Get(SRID.DocumentPropertiesDialogFileAccessedLabel));
+            this.Text = SR.DocumentPropertiesDialogTitle;
+            SetTextProperty(_summaryTab, SR.DocumentPropertiesDialogSummaryLabel);
+            SetTextProperty(_titleLabel, SR.DocumentPropertiesDialogTitleLabel);
+            SetTextProperty(_authorLabel, SR.DocumentPropertiesDialogAuthorLabel);
+            SetTextProperty(_subjectLabel, SR.DocumentPropertiesDialogSubjectLabel);
+            SetTextProperty(_descriptionLabel, SR.DocumentPropertiesDialogDescriptionLabel);
+            SetTextProperty(_keywordsLabel, SR.DocumentPropertiesDialogKeywordsLabel);
+            SetTextProperty(_categoryLabel, SR.DocumentPropertiesDialogCategoryLabel);
+            SetTextProperty(_languageLabel, SR.DocumentPropertiesDialogLanguageLabel);
+            SetTextProperty(_contentLabel, SR.DocumentPropertiesDialogContentLabel);
+            SetTextProperty(_statusLabel, SR.DocumentPropertiesDialogStatusLabel);
+            SetTextProperty(_versionLabel, SR.DocumentPropertiesDialogVersionLabel);
+            SetTextProperty(_identifierLabel, SR.DocumentPropertiesDialogIdentifierLabel);
+            SetTextProperty(_okButton, SR.DocumentPropertiesDialogOkButtonLabel);
+            SetTextProperty(_infoTab, SR.DocumentPropertiesDialogInfoLabel);
+            SetTextProperty(_sizeLabel, SR.DocumentPropertiesDialogSizeLabel);
+            SetTextProperty(_documentDetailBox, SR.DocumentPropertiesDialogDocumentDetailBoxLabel);
+            SetTextProperty(_lastSavedLabel, SR.DocumentPropertiesDialogLastSavedByLabel);
+            SetTextProperty(_revisionLabel, SR.DocumentPropertiesDialogRevisionLabel);
+            SetTextProperty(_documentCreatedLabel, SR.DocumentPropertiesDialogDocumentCreatedLabel);
+            SetTextProperty(_documentModifiedLabel, SR.DocumentPropertiesDialogDocumentModifiedLabel);
+            SetTextProperty(_documentPrintedLabel, SR.DocumentPropertiesDialogDocumentPrintedLabel);
+            SetTextProperty(_fileSystemBox, SR.DocumentPropertiesDialogFileSystemBoxLabel);
+            SetTextProperty(_fileCreatedLabel, SR.DocumentPropertiesDialogFileCreatedLabel);
+            SetTextProperty(_fileModifiedLabel, SR.DocumentPropertiesDialogFileModifiedLabel);
+            SetTextProperty(_fileAccessedLabel, SR.DocumentPropertiesDialogFileAccessedLabel);
         }
         #endregion Protected Methods
 
@@ -168,10 +168,10 @@ namespace MS.Internal.Documents.Application
             {
                 // Check if date is valid, and format string.
                 control.Text = (!date.HasValue) ? 
-                    SR.Get(SRID.DocumentPropertiesDialogNotAvailable) : 
+                    SR.DocumentPropertiesDialogNotAvailable : 
                     String.Format(
                         CultureInfo.CurrentCulture,
-                        SR.Get(SRID.DocumentPropertiesDialogDateFormat),
+                        SR.DocumentPropertiesDialogDateFormat,
                         date.Value);
             }
         }
@@ -211,12 +211,12 @@ namespace MS.Internal.Documents.Application
                     // Since the number is larger than 1 meg, select MB and compute the value
                     // relative to megabytes.
                     size /= 1024;
-                    unitString = SR.Get(SRID.DocumentPropertiesDialogFileSizeMBUnit);
+                    unitString = SR.DocumentPropertiesDialogFileSizeMBUnit;
                 }
                 else
                 {
                     // Select KB since the value is less than a meg, but greater than 1 KB.
-                    unitString = SR.Get(SRID.DocumentPropertiesDialogFileSizeKBUnit);
+                    unitString = SR.DocumentPropertiesDialogFileSizeKBUnit;
                 }
             }
 
@@ -234,7 +234,7 @@ namespace MS.Internal.Documents.Application
             // Adjust the string format to represent the appropriate number of decimal places.
             string format = String.Format(
                 CultureInfo.CurrentCulture,
-                SR.Get(SRID.DocumentPropertiesDialogFileSizeFormat),
+                SR.DocumentPropertiesDialogFileSizeFormat,
                 new String('#', decimalPlaces));
 
             // Format the resulting string.
@@ -244,7 +244,7 @@ namespace MS.Internal.Documents.Application
                 size,
                 unitString,
                 fileSize,
-                SR.Get(SRID.DocumentPropertiesDialogFileSizeBytesUnit));
+                SR.DocumentPropertiesDialogFileSizeBytesUnit);
         }
 
         /// <summary>

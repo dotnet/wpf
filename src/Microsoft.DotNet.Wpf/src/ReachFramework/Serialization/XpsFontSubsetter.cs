@@ -356,7 +356,7 @@ namespace System.Windows.Xps.Serialization
            if( policy == FontSubsetterCommitPolicies.CommitEntireSequence &&
                 _commitCountPolicy != 1 )
             {
-                throw new ArgumentOutOfRangeException(SR.Get(SRID.ReachPackaging_SequenceCntMustBe1));
+                throw new ArgumentOutOfRangeException(SR.ReachPackaging_SequenceCntMustBe1);
             }
           _commitPolicy = policy;
         }
@@ -371,12 +371,12 @@ namespace System.Windows.Xps.Serialization
             if( _commitPolicy == FontSubsetterCommitPolicies.CommitEntireSequence &&
                 commitCount != 1 )
             {
-                throw new ArgumentOutOfRangeException(SR.Get(SRID.ReachPackaging_SequenceCntMustBe1));
+                throw new ArgumentOutOfRangeException(SR.ReachPackaging_SequenceCntMustBe1);
             }
             else
             if( commitCount < 1 )
             {
-                throw new ArgumentOutOfRangeException(SR.Get(SRID.ReachPackaging_CommitCountPolicyLessThan1));
+                throw new ArgumentOutOfRangeException(SR.ReachPackaging_CommitCountPolicyLessThan1);
             }
             _commitCountPolicy = commitCount;
         }

@@ -2286,7 +2286,7 @@ namespace System.Windows.Documents
 
             if (property != null && parent != commonAncestor)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextRangeEdit_InvalidStructuralPropertyApply, property, nonMergeableAncestor));
+                throw new InvalidOperationException(SR.Format(SR.TextRangeEdit_InvalidStructuralPropertyApply, property, nonMergeableAncestor));
             }
 
             return (parent == commonAncestor);

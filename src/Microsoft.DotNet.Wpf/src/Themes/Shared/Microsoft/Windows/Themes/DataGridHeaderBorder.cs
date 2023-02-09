@@ -158,7 +158,7 @@ namespace Microsoft.Windows.Themes
         /// </summary>
         public static readonly DependencyProperty SeparatorVisibilityProperty =
             DependencyProperty.Register("SeparatorVisibility", typeof(Visibility), typeof(DataGridHeaderBorder), new FrameworkPropertyMetadata(Visibility.Visible));
-        
+
         #endregion
 
         #region Layout
@@ -305,18 +305,18 @@ namespace Microsoft.Windows.Themes
         #region Freezable Cache
 
         /// <summary>
-        ///     Creates a cache of frozen Freezable resources for use 
+        ///     Creates a cache of frozen Freezable resources for use
         ///     across all instances of the border.
         /// </summary>
         private static void EnsureCache(int size)
         {
             // Quick check to avoid locking
-            if (_freezableCache == null) 
+            if (_freezableCache == null)
             {
                 lock (_cacheAccess)
                 {
                     // Re-check in case another thread created the cache
-                    if (_freezableCache == null) 
+                    if (_freezableCache == null)
                     {
                         _freezableCache = new List<Freezable>(size);
                         for (int i = 0; i < size; i++)
@@ -336,7 +336,7 @@ namespace Microsoft.Windows.Themes
         private static void ReleaseCache()
         {
             // Avoid locking if necessary
-            if (_freezableCache != null) 
+            if (_freezableCache != null)
             {
                 lock (_cacheAccess)
                 {
@@ -368,7 +368,7 @@ namespace Microsoft.Windows.Themes
 
             lock (_cacheAccess)
             {
-                if (_freezableCache[index] != null)
+                if (_freezableCache[index] == null)
                 {
                     _freezableCache[index] = freezable;
                 }

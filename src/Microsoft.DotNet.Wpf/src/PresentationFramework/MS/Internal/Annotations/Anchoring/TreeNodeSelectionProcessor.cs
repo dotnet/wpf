@@ -106,7 +106,7 @@ namespace MS.Internal.Annotations.Anchoring
             UIElement element = selection as UIElement;
             if (element == null)
             {
-                throw new ArgumentException(SR.Get(SRID.WrongSelectionType), nameof(selection));
+                throw new ArgumentException(SR.WrongSelectionType, nameof(selection));
             }
 
             return element;
@@ -127,7 +127,7 @@ namespace MS.Internal.Annotations.Anchoring
             Visual element = selection as Visual;
 
             if (element == null)
-                throw new ArgumentException(SR.Get(SRID.WrongSelectionType), nameof(selection));
+                throw new ArgumentException(SR.WrongSelectionType, nameof(selection));
 
             // get the Visual's bounding rectangle's let, top and store them in a point
             Rect rect = element.VisualContentBounds;

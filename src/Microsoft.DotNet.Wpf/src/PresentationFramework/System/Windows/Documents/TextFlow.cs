@@ -816,7 +816,7 @@ namespace System.Windows.Documents
         {                    
             if(index != 0)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
 
             return _child;
@@ -1507,17 +1507,17 @@ namespace System.Windows.Documents
         {
             if(CheckFlags(Flags.MeasureInProgress))
             {
-                throw new InvalidOperationException(SR.Get(SRID.MeasureReentrancyInvalid));
+                throw new InvalidOperationException(SR.MeasureReentrancyInvalid);
             }
 
             if(CheckFlags(Flags.ArrangeInProgress))
             {
-                throw new InvalidOperationException(SR.Get(SRID.ArrangeReentrancyInvalid));
+                throw new InvalidOperationException(SR.ArrangeReentrancyInvalid);
             }
 
             if(CheckFlags(Flags.ContentChangeInProgress))
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextContainerChangingReentrancyInvalid));
+                throw new InvalidOperationException(SR.TextContainerChangingReentrancyInvalid);
             }
         }
 

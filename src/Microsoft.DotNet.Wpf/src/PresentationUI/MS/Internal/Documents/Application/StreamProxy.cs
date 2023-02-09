@@ -260,7 +260,7 @@ internal class StreamProxy : Stream
             else
             {
                 throw new InvalidOperationException(
-                    SR.Get(SRID.FileManagementStreamProxyIsReadOnly));
+                    SR.FileManagementStreamProxyIsReadOnly);
             }
         }
     }

@@ -97,7 +97,7 @@ namespace System.Windows.Automation.Peers
             TabItem tabItem = GetWrapper() as TabItem;
             if ((tabItem != null) && tabItem.IsSelected)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
         }
         

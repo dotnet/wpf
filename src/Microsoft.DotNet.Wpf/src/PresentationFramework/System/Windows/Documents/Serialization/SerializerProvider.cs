@@ -94,7 +94,7 @@ namespace System.Windows.Documents.Serialization
 
             if (!overwrite && plugIns.OpenSubKey(serializerKey) != null)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderAlreadyRegistered), serializerKey);
+                throw new ArgumentException(SR.SerializerProviderAlreadyRegistered, serializerKey);
             }
 
             RegistryKey newPlugIn = plugIns.CreateSubKey(serializerKey);
@@ -123,7 +123,7 @@ namespace System.Windows.Documents.Serialization
 
             if (plugIns.OpenSubKey(serializerKey) == null)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderNotRegistered), serializerKey);
+                throw new ArgumentException(SR.SerializerProviderNotRegistered, serializerKey);
             }
 
             plugIns.DeleteSubKeyTree(serializerKey);
@@ -152,7 +152,7 @@ namespace System.Windows.Documents.Serialization
 
             if (!serializerDescriptor.IsLoadable)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderWrongVersion), serializerKey);
+                throw new ArgumentException(SR.SerializerProviderWrongVersion, serializerKey);
             }
             if (stream == null)
             {
@@ -171,7 +171,7 @@ namespace System.Windows.Documents.Serialization
 
             if (!found)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderUnknownSerializer), serializerKey);
+                throw new ArgumentException(SR.SerializerProviderUnknownSerializer, serializerKey);
             }
 
             try
@@ -182,19 +182,19 @@ namespace System.Windows.Documents.Serialization
             }
             catch (FileNotFoundException)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderCannotLoad), serializerDescriptor.DisplayName);
+                throw new ArgumentException(SR.SerializerProviderCannotLoad, serializerDescriptor.DisplayName);
             }
             catch (FileLoadException)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderCannotLoad), serializerDescriptor.DisplayName);
+                throw new ArgumentException(SR.SerializerProviderCannotLoad, serializerDescriptor.DisplayName);
             }
             catch (BadImageFormatException)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderCannotLoad), serializerDescriptor.DisplayName);
+                throw new ArgumentException(SR.SerializerProviderCannotLoad, serializerDescriptor.DisplayName);
             }
             catch (MissingMethodException)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderCannotLoad), serializerDescriptor.DisplayName);
+                throw new ArgumentException(SR.SerializerProviderCannotLoad, serializerDescriptor.DisplayName);
             }
 
             return serializerWriter;

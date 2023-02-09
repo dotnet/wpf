@@ -29,11 +29,11 @@ namespace System.Windows
         {
             // Return a localized version of the custom category
             if (String.Compare(value, "Content", StringComparison.Ordinal) == 0)
-                return SR.Get(SRID.DesignerMetadata_CustomCategory_Content);
+                return SR.DesignerMetadata_CustomCategory_Content;
             else if(String.Compare(value, "Accessibility", StringComparison.Ordinal) == 0)
-                return SR.Get(SRID.DesignerMetadata_CustomCategory_Accessibility);
+                return SR.DesignerMetadata_CustomCategory_Accessibility;
             else /*if(String.Compare(value, "Navigation", StringComparison.Ordinal) == 0)*/
-                return SR.Get(SRID.DesignerMetadata_CustomCategory_Navigation);
+                return SR.DesignerMetadata_CustomCategory_Navigation;
         }
     }
 }

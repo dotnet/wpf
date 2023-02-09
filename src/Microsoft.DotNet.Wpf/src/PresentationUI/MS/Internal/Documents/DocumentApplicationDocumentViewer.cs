@@ -310,7 +310,7 @@ namespace MS.Internal.Documents
             else
             {
                 throw new InvalidOperationException(
-                    SR.Get(SRID.RightsManagementExceptionNoRightsForOperation));
+                    SR.RightsManagementExceptionNoRightsForOperation);
             }
         }
         
@@ -1788,43 +1788,43 @@ namespace MS.Internal.Documents
             AddZoomComboBoxItem(
                 new ZoomComboBoxItem(
                     ZoomComboBoxItemType.Zoom,
-                    SR.Get(SRID.ZoomComboBoxItem400),
+                    SR.ZoomComboBoxItem400,
                     400.0),
                 "Zoom400");
             AddZoomComboBoxItem(
                 new ZoomComboBoxItem(
                     ZoomComboBoxItemType.Zoom,
-                    SR.Get(SRID.ZoomComboBoxItem250),
+                    SR.ZoomComboBoxItem250,
                     250.0),
                 "Zoom250");
             AddZoomComboBoxItem(
                 new ZoomComboBoxItem(
                     ZoomComboBoxItemType.Zoom,
-                    SR.Get(SRID.ZoomComboBoxItem150),
+                    SR.ZoomComboBoxItem150,
                     150.0),
                 "Zoom150");
             AddZoomComboBoxItem(
                 new ZoomComboBoxItem(
                     ZoomComboBoxItemType.Zoom,
-                    SR.Get(SRID.ZoomComboBoxItem100),
+                    SR.ZoomComboBoxItem100,
                     100.0),
                 "Zoom100");
             AddZoomComboBoxItem(
                 new ZoomComboBoxItem(
                     ZoomComboBoxItemType.Zoom,
-                    SR.Get(SRID.ZoomComboBoxItem75),
+                    SR.ZoomComboBoxItem75,
                     75.0),
                 "Zoom75");
             AddZoomComboBoxItem(
                 new ZoomComboBoxItem(
                     ZoomComboBoxItemType.Zoom,
-                    SR.Get(SRID.ZoomComboBoxItem50),
+                    SR.ZoomComboBoxItem50,
                     50.0),
                 "Zoom50");
             AddZoomComboBoxItem(
                 new ZoomComboBoxItem(
                     ZoomComboBoxItemType.Zoom,
-                    SR.Get(SRID.ZoomComboBoxItem25),
+                    SR.ZoomComboBoxItem25,
                     25.0),
                 "Zoom25");
         }
@@ -2027,21 +2027,21 @@ namespace MS.Internal.Documents
             // Command: Sign
             //          Tells DocumentApplicationDocumentViewer to fire the Sign DigSig operation
             _signCommand = CreateAndBindCommand("Sign",
-                SR.Get(SRID.DocumentApplicationDocumentViewerSignCommand), null,
+                SR.DocumentApplicationDocumentViewerSignCommand, null,
                 executeHandler, queryEnabledHandler);
 
             //
             // Command: RequestSigners
             //          Tells DocumentApplicationDocumentViewer to fire the RequestSigners DigSig operation
             _requestSignersCommand = CreateAndBindCommand("RequestSigners",
-                SR.Get(SRID.DocumentApplicationDocumentViewerRequestSignersCommand), null,
+                SR.DocumentApplicationDocumentViewerRequestSignersCommand, null,
                 executeHandler, queryEnabledHandler);
 
             //
             // Command: ShowSignatureSummary
             //          Tells DocumentApplicationDocumentViewer to fire the ShowSignatureSummary DigSig operation
             _showSignatureSummaryCommand = CreateAndBindCommand("ShowSignatureSummary",
-                SR.Get(SRID.DocumentApplicationDocumentViewerShowSignatureSummaryCommand), null,
+                SR.DocumentApplicationDocumentViewerShowSignatureSummaryCommand, null,
                 executeHandler, queryEnabledHandler);
 
             // Setup the RM command bindings.
@@ -2052,21 +2052,21 @@ namespace MS.Internal.Documents
             // Command: ShowRMPermissionsSummary
             //          Tells DocumentApplicationDocumentViewer to fire the ShowRMPermissions operation
             _showRMPermissionsCommand = CreateAndBindCommand("ShowRMPermissions",
-                SR.Get(SRID.DocumentApplicationDocumentViewerShowRMPermissionsCommand), null,
+                SR.DocumentApplicationDocumentViewerShowRMPermissionsCommand, null,
                 executeHandler, queryEnabledHandler);
 
             //
             // Command: ShowRMCredentialManager
             //          Tells DocumentApplicationDocumentViewer to fire the ShowRMCredentialManager operation
             _showRMCredentialManagerCommand = CreateAndBindCommand("ShowRMCredentialManager",
-                SR.Get(SRID.DocumentApplicationDocumentViewerShowRMCredentialManagerCommand), null,
+                SR.DocumentApplicationDocumentViewerShowRMCredentialManagerCommand, null,
                 executeHandler, queryEnabledHandler);
 
             //
             // Command: ShowRMPublishingUI
             //          Tells DocumentApplicationDocumentViewer to fire the ShowRMPublishingUI operation
             _showRMPublishingUICommand = CreateAndBindCommand("ShowRMPublishingUI",
-                SR.Get(SRID.DocumentApplicationDocumentViewerShowRMPublishingUICommand), null,
+                SR.DocumentApplicationDocumentViewerShowRMPublishingUICommand, null,
                 executeHandler, queryEnabledHandler);
 
             // Setup the Save bindings.
@@ -2095,7 +2095,7 @@ namespace MS.Internal.Documents
             InputGestureCollection input = new InputGestureCollection();
             input.Add(new KeyGesture(Key.F6, ModifierKeys.Control));
             _focusToolBarCommand = CreateAndBindCommand("FocusToolBar",
-                SR.Get(SRID.DocumentApplicationDocumentViewerFocusToolBarCommand), input,
+                SR.DocumentApplicationDocumentViewerFocusToolBarCommand, input,
                 executeHandler, queryEnabledHandler);
 
             //

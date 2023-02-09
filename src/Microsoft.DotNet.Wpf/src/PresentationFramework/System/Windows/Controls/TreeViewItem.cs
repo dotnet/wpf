@@ -362,7 +362,7 @@ namespace System.Windows.Controls
             {
                 if (value.CacheLengthUnit == VirtualizationCacheLengthUnit.Page)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.PageCacheSizeNotAllowed));
+                    throw new InvalidOperationException(SR.PageCacheSizeNotAllowed);
                 }
                 GroupItem.HierarchicalVirtualizationConstraintsField.SetValue(this, value);
             }
@@ -998,7 +998,7 @@ namespace System.Windows.Controls
                     break;
 
                 default:
-                    throw new NotSupportedException(SR.Get(SRID.UnexpectedCollectionChangeAction, e.Action));
+                    throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, e.Action));
             }
         }
 

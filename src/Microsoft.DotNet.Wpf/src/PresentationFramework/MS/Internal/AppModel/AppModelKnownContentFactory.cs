@@ -39,7 +39,7 @@ namespace MS.Internal.AppModel
             //
             if (!BaseUriHelper.IsPackApplicationUri(baseUri))
             {
-                throw new InvalidOperationException(SR.Get(SRID.BamlIsNotSupportedOutsideOfApplicationResources));
+                throw new InvalidOperationException(SR.BamlIsNotSupportedOutsideOfApplicationResources);
             }
 
             // If this stream comes from a content file also throw
@@ -48,7 +48,7 @@ namespace MS.Internal.AppModel
             BaseUriHelper.GetAssemblyNameAndPart(partUri, out partName, out assemblyName, out assemblyVersion, out assemblyKey);
             if (ContentFileHelper.IsContentFile(partName))
             {
-                throw new InvalidOperationException(SR.Get(SRID.BamlIsNotSupportedOutsideOfApplicationResources));
+                throw new InvalidOperationException(SR.BamlIsNotSupportedOutsideOfApplicationResources);
             }
 
             ParserContext pc = new ParserContext();

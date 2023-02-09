@@ -143,7 +143,7 @@ namespace System.Windows
             if (!(value is Thickness))
             {
                 #pragma warning suppress 6506 // value is obviously not null
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(Thickness)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(Thickness)), "value");
             }
 
             Thickness th = (Thickness)value;
@@ -154,7 +154,7 @@ namespace System.Windows
                 return new InstanceDescriptor(ci, new object[] { th.Left, th.Top, th.Right, th.Bottom });
             }
 
-            throw new ArgumentException(SR.Get(SRID.CannotConvertType, typeof(Thickness), destinationType.FullName));
+            throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(Thickness), destinationType.FullName));
 
         }
 
@@ -222,7 +222,7 @@ namespace System.Windows
                     return new Thickness(lengths[0], lengths[1], lengths[2], lengths[3]);
             }
 
-            throw new FormatException(SR.Get(SRID.InvalidStringThickness, s));
+            throw new FormatException(SR.Format(SR.InvalidStringThickness, s));
         }
 
     #endregion

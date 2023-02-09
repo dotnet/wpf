@@ -91,17 +91,17 @@ namespace System.Windows
         {
             if (double.IsNaN(value))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidCtorParameterNoNaN, "value"));
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoNaN, "value"));
             }
             if (double.IsInfinity(value))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidCtorParameterNoInfinity, "value"));
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoInfinity, "value"));
             }
             if (    type != GridUnitType.Auto
                 &&  type != GridUnitType.Pixel
                 &&  type != GridUnitType.Star   )
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidCtorParameterUnknownGridUnitType, "type"));
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterUnknownGridUnitType, "type"));
             }
 
             _unitValue = (type == GridUnitType.Auto) ? 0.0 : value;

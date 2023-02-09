@@ -64,10 +64,10 @@ namespace System.Windows.Controls
                 return;
 
             if (!(value is UIElement))
-                throw new ArgumentException (SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
+                throw new ArgumentException (SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
 
             if (this.Child != null)
-                throw new ArgumentException(SR.Get(SRID.CanOnlyHaveOneChild, this.GetType(), value.GetType()));
+                throw new ArgumentException(SR.Format(SR.CanOnlyHaveOneChild, this.GetType(), value.GetType()));
 
             this.Child = (UIElement)value;
         }
@@ -147,7 +147,7 @@ namespace System.Windows.Controls
         {
             if (_child == null || index != 0)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             return _child;
         }        
@@ -170,7 +170,7 @@ namespace System.Windows.Controls
         protected override void OnInitialized(EventArgs e)
         {
             if (TemplatedParent == null)
-                throw new InvalidOperationException(SR.Get(SRID.AdornedElementPlaceholderMustBeInTemplate));
+                throw new InvalidOperationException(SR.AdornedElementPlaceholderMustBeInTemplate);
 
             base.OnInitialized(e);
         }
@@ -188,7 +188,7 @@ namespace System.Windows.Controls
         protected override Size MeasureOverride(Size constraint)
         {
             if (TemplatedParent == null)
-                throw new InvalidOperationException(SR.Get(SRID.AdornedElementPlaceholderMustBeInTemplate));
+                throw new InvalidOperationException(SR.AdornedElementPlaceholderMustBeInTemplate);
 
             if (AdornedElement == null)
                 return new Size(0,0);

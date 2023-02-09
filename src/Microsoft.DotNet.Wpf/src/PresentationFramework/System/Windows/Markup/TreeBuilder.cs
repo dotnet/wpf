@@ -215,7 +215,7 @@ namespace System.Windows.Markup
 
             if (root != null && roots.Count > 1)
             {
-                throw new XamlParseException(SR.Get(SRID.ParserMultiRoot));
+                throw new XamlParseException(SR.ParserMultiRoot);
             }
             
             return root; 

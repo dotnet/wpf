@@ -510,7 +510,7 @@ namespace MS.Internal.Automation
             TextRangeAdaptor rangeAdaptor = range as TextRangeAdaptor;
             if (rangeAdaptor == null || rangeAdaptor._start.TextContainer != _start.TextContainer)
             {
-                throw new ArgumentException(SR.Get(SRID.TextRangeProvider_WrongTextRange));
+                throw new ArgumentException(SR.TextRangeProvider_WrongTextRange);
             }
             return rangeAdaptor;
         }
@@ -1763,7 +1763,7 @@ namespace MS.Internal.Automation
             }
             if (text.Length == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.TextRangeProvider_EmptyStringParameter, "text"));
+                throw new ArgumentException(SR.Format(SR.TextRangeProvider_EmptyStringParameter, "text"));
             }
 
             Normalize();
@@ -1866,7 +1866,7 @@ namespace MS.Internal.Automation
         {
             if (maxLength < 0 && maxLength != -1)
             {
-                throw new ArgumentException(SR.Get(SRID.TextRangeProvider_InvalidParameterValue, maxLength, "maxLength"));
+                throw new ArgumentException(SR.Format(SR.TextRangeProvider_InvalidParameterValue, maxLength, "maxLength"));
             }
 
             Normalize();
@@ -2051,7 +2051,7 @@ namespace MS.Internal.Automation
         {
             if (((ITextProvider)_textAdaptor).SupportedTextSelection == SupportedTextSelection.None)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextProvider_TextSelectionNotSupported));
+                throw new InvalidOperationException(SR.TextProvider_TextSelectionNotSupported);
             }
 
             Normalize();

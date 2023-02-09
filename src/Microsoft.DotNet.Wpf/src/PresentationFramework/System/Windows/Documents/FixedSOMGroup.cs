@@ -41,7 +41,7 @@ namespace System.Windows.Documents
             
             if (compared == null)
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, comparedObj.GetType(), typeof(FixedSOMGroup)), "comparedObj");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, comparedObj.GetType(), typeof(FixedSOMGroup)), "comparedObj");
             }
 
             bool RTL = this.IsRTL && compared.IsRTL;

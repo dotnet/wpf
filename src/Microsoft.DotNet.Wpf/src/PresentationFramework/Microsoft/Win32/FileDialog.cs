@@ -403,7 +403,7 @@ namespace Microsoft.Win32
 
                         if (formats.Length % 2 != 0)
                         {
-                            throw new ArgumentException(SR.Get(SRID.FileDialogInvalidFilter));
+                            throw new ArgumentException(SR.FileDialogInvalidFilter);
                         }
                     }
                     else
@@ -1508,7 +1508,7 @@ namespace Microsoft.Win32
         /// </summary>
         private void PromptFileNotFound(string fileName)
         {
-            MessageBoxWithFocusRestore(SR.Get(SRID.FileDialogFileNotFound, fileName),
+            MessageBoxWithFocusRestore(SR.Format(SR.FileDialogFileNotFound, fileName),
                     System.Windows.MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
@@ -1631,7 +1631,7 @@ namespace Microsoft.Win32
                 // tokens.length is actually twice the number of filters we have.
                 if (indexOfExtension >= tokens.Length)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.FileDialogInvalidFilterIndex));
+                    throw new InvalidOperationException(SR.FileDialogInvalidFilterIndex);
                 }
 
                 // If our filter index is valid (0 is reserved by Windows for custom

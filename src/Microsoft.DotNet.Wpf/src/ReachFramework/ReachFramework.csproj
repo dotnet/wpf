@@ -55,7 +55,6 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\UriComparer.cs " />
     <Compile Include="$(WpfSharedDir)\MS\Utility\BindUriHelper.cs" />
-    <Compile Include="SR.cs" />
     <Compile Include="Serialization\Manager\IXpsSerializationManager.cs" />
     <Compile Include="Serialization\Manager\IXpsSerializationManagerAsync.cs" />
     <Compile Include="Serialization\Manager\XpsOMHierarchySimulator.cs" />

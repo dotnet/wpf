@@ -221,7 +221,7 @@ namespace System.Windows.Controls.Primitives
         {
             if (index < 0 || index > VisualChildrenCount-1)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
 
             if (index == 0 && _bullet != null)

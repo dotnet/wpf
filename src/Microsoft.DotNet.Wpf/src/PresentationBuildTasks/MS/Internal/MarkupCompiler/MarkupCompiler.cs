@@ -241,7 +241,7 @@ namespace MS.Internal
 
                 if (!IsLanguageSupported(cu.Language))
                 {
-                    OnError(new Exception(SR.Get(SRID.UnknownLanguage, cu.Language)));
+                    OnError(new Exception(SR.Format(SR.UnknownLanguage, cu.Language)));
                     return;
                 }
 
@@ -474,12 +474,12 @@ namespace MS.Internal
                 // Process the input file
                 if (sourceFile.Path == null || !SourceFileInfo.IsXamlFile)
                 {
-                    ThrowCompilerException(SRID.InvalidMarkupFile);
+                    ThrowCompilerException(nameof(SR.InvalidMarkupFile));
                 }
 
                 if (!TaskFileService.Exists(sourceFile.Path))
                 {
-                    ThrowCompilerException(SRID.FileNotFound, sourceFile.Path);
+                    ThrowCompilerException(nameof(SR.FileNotFound), sourceFile.Path);
                 }
 
                 // Prime the output directory
@@ -731,31 +731,31 @@ namespace MS.Internal
 
         static void ThrowCompilerException(string id)
         {
-            string message = SR.Get(id);
+            string message = SR.GetResourceString(id);
             ThrowCompilerExceptionImpl(message);
         }
 
         internal static void ThrowCompilerException(string id, string value)
         {
-            string message = SR.Get(id, value);
+            string message = SR.Format(SR.GetResourceString(id), value);
             ThrowCompilerExceptionImpl(message);
         }
 
         internal static void ThrowCompilerException(string id, string value1, string value2)
         {
-            string message = SR.Get(id, value1, value2);
+            string message = SR.Format(SR.GetResourceString(id), value1, value2);
             ThrowCompilerExceptionImpl(message);
         }
 
         internal static void ThrowCompilerException(string id, string value1, string value2, string value3)
         {
-            string message = SR.Get(id, value1, value2, value3);
+            string message = SR.Format(SR.GetResourceString(id), value1, value2, value3);
             ThrowCompilerExceptionImpl(message);
         }
 
         static void ThrowCompilerException(string id, string value1, string value2, string value3, string value4)
         {
-            string message = SR.Get(id, value1, value2, value3, value4);
+            string message = SR.Format(SR.GetResourceString(id), value1, value2, value3, value4);
             ThrowCompilerExceptionImpl(message);
         }
 
@@ -807,7 +807,7 @@ namespace MS.Internal
                     {
                         if (isProcessingCodeTag)
                         {
-                            ThrowCompilerException(SRID.DefnTagsCannotBeNested, DefinitionNSPrefix, LocalName, xmlReader.LocalName);
+                            ThrowCompilerException(nameof(SR.DefnTagsCannotBeNested), DefinitionNSPrefix, LocalName, xmlReader.LocalName);
                         }
 
                         switch (LocalName)
@@ -816,7 +816,7 @@ namespace MS.Internal
                                 isProcessingCodeTag = true;
                                 if (!IsCodeNeeded)
                                 {
-                                    ThrowCompilerException(SRID.MissingClassDefinitionForCodeTag,
+                                    ThrowCompilerException(nameof(SR.MissingClassDefinitionForCodeTag),
                                                            _ccRoot.ElementName,
                                                            DefinitionNSPrefix,
                                                            SourceFileInfo.RelativeSourceFilePath + XAML);
@@ -829,7 +829,7 @@ namespace MS.Internal
                                     if (!attributeNamespaceUri.Equals(XamlReaderHelper.DefinitionNamespaceURI) ||
                                         !xmlReader.LocalName.Equals(XamlReaderHelper.DefinitionUid))
                                     {
-                                        ThrowCompilerException(SRID.AttributeNotAllowedOnCodeTag,
+                                        ThrowCompilerException(nameof(SR.AttributeNotAllowedOnCodeTag),
                                                                xmlReader.Name,
                                                                DefinitionNSPrefix,
                                                                CODETAG);
@@ -841,7 +841,7 @@ namespace MS.Internal
                                 break;
 
                             default:
-                                ThrowCompilerException(SRID.UnknownDefinitionTag, DefinitionNSPrefix, LocalName);
+                                ThrowCompilerException(nameof(SR.UnknownDefinitionTag), DefinitionNSPrefix, LocalName);
                                 break;
                         }
 
@@ -880,7 +880,7 @@ namespace MS.Internal
                         }
                         else
                         {
-                            ThrowCompilerException(SRID.IllegalCDataTextScoping, DefinitionNSPrefix, LocalName, (currNodeType == XmlNodeType.CDATA ? "a CDATA section" : "text content"));
+                            ThrowCompilerException(nameof(SR.IllegalCDataTextScoping), DefinitionNSPrefix, LocalName, (currNodeType == XmlNodeType.CDATA ? "a CDATA section" : "text content"));
                         }
 
                         break;
@@ -1366,7 +1366,7 @@ namespace MS.Internal
 
             if (asmMissing.Length > 0)
             {
-                string message = SR.Get(SRID.WinFXAssemblyMissing, asmMissing);
+                string message = SR.Format(SR.WinFXAssemblyMissing, asmMissing);
                 ApplicationException aeAssemblyMissing = new ApplicationException(message);
                 throw aeAssemblyMissing;
             }
@@ -1468,7 +1468,7 @@ namespace MS.Internal
         {
             if (typeArgs.Length == 0)
             {
-                ThrowCompilerException(SRID.UnknownGenericType,
+                ThrowCompilerException(nameof(SR.UnknownGenericType),
                                        DefinitionNSPrefix,
                                        typeArgs,
                                        typeName);
@@ -1545,7 +1545,7 @@ namespace MS.Internal
                     {
                         if (shouldThrow)
                         {
-                            ThrowCompilerException(SRID.InvalidDefaultCLRNamespace, nsPart, ns);
+                            ThrowCompilerException(nameof(SR.InvalidDefaultCLRNamespace), nsPart, ns);
                         }
                         else
                         {
@@ -1562,17 +1562,17 @@ namespace MS.Internal
         {
             if (!IsCodeNeeded)
             {
-                ThrowCompilerException(SRID.MissingClassDefinitionForEvent, _ccRoot.ElementName, DefinitionNSPrefix, eventName);
+                ThrowCompilerException(nameof(SR.MissingClassDefinitionForEvent), _ccRoot.ElementName, DefinitionNSPrefix, eventName);
             }
 
             string handler = handlerName.Trim();
             if (handler.Length == 0)
             {
-                ThrowCompilerException(SRID.EmptyEventStringNotAllowed, eventName, handlerName);
+                ThrowCompilerException(nameof(SR.EmptyEventStringNotAllowed), eventName, handlerName);
             }
             else if (!NameValidationHelper.IsValidIdentifierName(handler))
             {
-                ThrowCompilerException(SRID.InvalidEventHandlerName, eventName, handlerName);
+                ThrowCompilerException(nameof(SR.InvalidEventHandlerName), eventName, handlerName);
             }
         }
 
@@ -1657,7 +1657,7 @@ namespace MS.Internal
         {
             if (!IsCodeNeeded)
             {
-                ThrowCompilerException(SRID.MissingClassWithFieldModifier, DefinitionNSPrefix);
+                ThrowCompilerException(nameof(SR.MissingClassWithFieldModifier), DefinitionNSPrefix);
             }
 
             if (_private.Length == 0)
@@ -1686,7 +1686,7 @@ namespace MS.Internal
 
                 if (!converted)
                 {
-                    ThrowCompilerException(SRID.UnknownFieldModifier, MarkupCompiler.DefinitionNSPrefix, modifier, _language);
+                    ThrowCompilerException(nameof(SR.UnknownFieldModifier), MarkupCompiler.DefinitionNSPrefix, modifier, _language);
                 }
             }
 
@@ -1718,7 +1718,7 @@ namespace MS.Internal
             }
             else
             {
-                ThrowCompilerException(SRID.UnknownFieldModifier, MarkupCompiler.DefinitionNSPrefix, modifier, _language);
+                ThrowCompilerException(nameof(SR.UnknownFieldModifier), MarkupCompiler.DefinitionNSPrefix, modifier, _language);
             }
 
             return MemberAttributes.Assembly;
@@ -1751,7 +1751,7 @@ namespace MS.Internal
 
                     if (!converted)
                     {
-                        ThrowCompilerException(SRID.UnknownClassModifier, MarkupCompiler.DefinitionNSPrefix, modifier, _language);
+                        ThrowCompilerException(nameof(SR.UnknownClassModifier), MarkupCompiler.DefinitionNSPrefix, modifier, _language);
                     }
                 }
 
@@ -1927,7 +1927,7 @@ namespace MS.Internal
             FieldInfo fiEvent = miEvent.DeclaringType.GetField(eventName + EVENT, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
             if (fiEvent == null || fiEvent.FieldType != KnownTypes.Types[(int)KnownElements.RoutedEvent])
             {
-                ThrowCompilerException(SRID.RoutedEventNotRegistered, miEvent.DeclaringType.FullName, eventName, eventHandler);
+                ThrowCompilerException(nameof(SR.RoutedEventNotRegistered), miEvent.DeclaringType.FullName, eventName, eventHandler);
             }
 
             CodeTypeReferenceExpression ctreEvent = new CodeTypeReferenceExpression(miEvent.DeclaringType.FullName);
@@ -2008,7 +2008,7 @@ namespace MS.Internal
             else
             {
                 string eventTargetName = eventTarget != null ? eventTarget.FullName : cc.LocalElementFullName;
-                ThrowCompilerException(SRID.UnknownEventAttribute, mei.eventName, mei.eventHandler, eventTargetName);
+                ThrowCompilerException(nameof(SR.UnknownEventAttribute), mei.eventName, mei.eventHandler, eventTargetName);
             }
 
             // When x:SubClass is used, event handlers can be specified in a code-behind file, under this sub class.
@@ -2212,7 +2212,7 @@ namespace MS.Internal
                             linePosition,
                             0,
                             0,
-                            SRID.NamedResDictItemWarning,
+                            nameof(SR.NamedResDictItemWarning),
                             ((CodeContext)_codeContexts.Peek()).ElementType.FullName,
                             name
                         );
@@ -2286,7 +2286,7 @@ namespace MS.Internal
 
                         if (error)
                         {
-                            ThrowCompilerException(SRID.InvalidTypeName,
+                            ThrowCompilerException(nameof(SR.InvalidTypeName),
                                                    MarkupCompiler.DefinitionNSPrefix,
                                                    typeArgs,
                                                    _typeArgsList[i].Trim(),
@@ -2389,7 +2389,7 @@ namespace MS.Internal
                         {
                             if (refType == null || !refType.IsGenericType || !refType.IsGenericTypeDefinition || typeArgsList == null)
                             {
-                                ThrowCompilerException(SRID.ContainingTagNotGeneric, eventName, ctrConstructedType.BaseType, refTypeFullName);
+                                ThrowCompilerException(nameof(SR.ContainingTagNotGeneric), eventName, ctrConstructedType.BaseType, refTypeFullName);
                             }
 
                             refTypeParams = refType.GetGenericArguments();
@@ -2419,7 +2419,7 @@ namespace MS.Internal
                         // no match!
                         if (ctrTypeArg == null)
                         {
-                            ThrowCompilerException(SRID.MatchingTypeArgsNotFoundInRefType,
+                            ThrowCompilerException(nameof(SR.MatchingTypeArgsNotFoundInRefType),
                                                    eventName,
                                                    ctrConstructedType.BaseType,
                                                    typeParam.FullName,
@@ -2518,12 +2518,12 @@ namespace MS.Internal
                     baseClassName = baseClassFullName.Substring(dotIndex + 1);
                     if (!IsValidClassName(baseClassName))
                     {
-                        ThrowCompilerException(SRID.InvalidBaseClassName, baseClassName);
+                        ThrowCompilerException(nameof(SR.InvalidBaseClassName), baseClassName);
                     }
                     string bns = baseClassFullName.Substring(0, dotIndex);
                     if (!IsValidCLRNamespace(bns, false))
                     {
-                        ThrowCompilerException(SRID.InvalidBaseClassNamespace, bns, baseClassName);
+                        ThrowCompilerException(nameof(SR.InvalidBaseClassNamespace), bns, baseClassName);
                     }
                 }
             }
@@ -2658,7 +2658,7 @@ namespace MS.Internal
             if (!VersionHelper.TryParseAssemblyVersion(AssemblyVersion, allowWildcard: true, version: out _, out bool hasWildcard)
                 && !string.IsNullOrWhiteSpace(AssemblyVersion))
             {
-                throw new AssemblyVersionParseException(SR.Get(SRID.InvalidAssemblyVersion, AssemblyVersion));
+                throw new AssemblyVersionParseException(SR.Format(SR.InvalidAssemblyVersion, AssemblyVersion));
             }
 
             // In .NET Framework (non-SDK-style projects), the process to use a wildcard AssemblyVersion is to do the following:
@@ -2989,22 +2989,22 @@ namespace MS.Internal
                 }
                 else if (subClassFullName.Length > 0)
                 {
-                    ThrowCompilerException(SRID.MissingClassWithSubClass, DefinitionNSPrefix);
+                    ThrowCompilerException(nameof(SR.MissingClassWithSubClass), DefinitionNSPrefix);
                 }
                 else if (modifier.Length > 0)
                 {
-                    ThrowCompilerException(SRID.MissingClassWithModifier, DefinitionNSPrefix);
+                    ThrowCompilerException(nameof(SR.MissingClassWithModifier), DefinitionNSPrefix);
                 }
                 else if (_typeArgsList != null)
                 {
                     string rootClassName = elementType != null ? elementType.Name : baseClassFullName.Substring(baseClassFullName.LastIndexOf(DOT, StringComparison.Ordinal)+1);
-                    ThrowCompilerException(SRID.MissingClassDefinitionForTypeArgs, rootClassName, DefinitionNSPrefix);
+                    ThrowCompilerException(nameof(SR.MissingClassDefinitionForTypeArgs), rootClassName, DefinitionNSPrefix);
                 }
 
                 // Don't allow subclassing further from markup-subclasses with content
                 if (elementType != null && KnownTypes.Types[(int)KnownElements.IComponentConnector].IsAssignableFrom(elementType))
                 {
-                    ThrowCompilerException(SRID.SubSubClassingNotAllowed, elementType.FullName);
+                    ThrowCompilerException(nameof(SR.SubSubClassingNotAllowed), elementType.FullName);
                 }
 
                 cc = GenerateSubClass(ref className, ref modifier, elementType, baseClassFullName);

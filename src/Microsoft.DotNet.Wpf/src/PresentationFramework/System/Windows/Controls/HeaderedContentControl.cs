@@ -415,7 +415,7 @@ namespace System.Windows.Controls
             // If header and content text are defined
             if (valuesDefined)
             {
-                return SR.Get(SRID.ToStringFormatString_HeaderedContentControl, typeText, headerText, contentText);
+                return SR.Format(SR.ToStringFormatString_HeaderedContentControl, typeText, headerText, contentText);
             }
 
             // Not able to access the dispatcher

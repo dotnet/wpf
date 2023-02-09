@@ -73,7 +73,7 @@ namespace System.Windows.Markup
         Uri IUriContext.BaseUri
         {
             get { return _context.BaseUri; }
-            set { throw new NotSupportedException(SR.Get(SRID.ParserProvideValueCantSetUri)); }
+            set { throw new NotSupportedException(SR.ParserProvideValueCantSetUri); }
         }
 
         bool IFreezeFreezables.FreezeFreezables

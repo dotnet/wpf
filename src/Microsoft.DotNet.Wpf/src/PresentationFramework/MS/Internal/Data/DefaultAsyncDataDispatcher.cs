@@ -88,7 +88,7 @@ namespace MS.Internal.Data
             }
             catch // non CLS compliant exception
             {
-                request.Fail(new InvalidOperationException(SR.Get(SRID.NonCLSException, "processing an async data request")));
+                request.Fail(new InvalidOperationException(SR.Format(SR.NonCLSException, "processing an async data request")));
             }
 
 #pragma warning restore 56500

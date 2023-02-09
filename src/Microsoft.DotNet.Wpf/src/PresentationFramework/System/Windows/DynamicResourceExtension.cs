@@ -59,7 +59,7 @@ namespace System.Windows
         {
             if (ResourceKey == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MarkupExtensionResourceKey));
+                throw new InvalidOperationException(SR.MarkupExtensionResourceKey);
             }
 
             if (serviceProvider != null)

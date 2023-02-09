@@ -1016,7 +1016,7 @@ namespace System.Windows
             else
             {
                 // Should never happen
-                throw new System.Windows.Markup.XamlParseException(SR.Get(SRID.ParserUnexpectedEndEle));
+                throw new System.Windows.Markup.XamlParseException(SR.ParserUnexpectedEndEle);
             }
         }
 
@@ -1241,7 +1241,7 @@ namespace System.Windows
 
                 if (dpContent == null && isContentSourceSet)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.MissingContentSource, contentSource, targetType));
+                    throw new InvalidOperationException(SR.Format(SR.MissingContentSource, contentSource, targetType));
                 }
 
                 if (dpContent != null)

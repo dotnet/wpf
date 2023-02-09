@@ -322,7 +322,7 @@ namespace System.Windows.Markup
             if (_readState == ReadState.EndOfFile ||
                 _readState == ReadState.Closed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.BamlReaderClosed));
+                throw new InvalidOperationException(SR.BamlReaderClosed);
             }
 
             ReadNextRecord();
@@ -663,7 +663,7 @@ namespace System.Windows.Markup
 
                     default:
                         // Can't have any other type of record at this point.
-                        throw new InvalidOperationException(SR.Get(SRID.ParserUnknownBaml,
+                        throw new InvalidOperationException(SR.Format(SR.ParserUnknownBaml,
                                          ((int)_currentBamlRecord.RecordType).ToString(CultureInfo.CurrentCulture)));
                 }
             }
@@ -994,7 +994,7 @@ namespace System.Windows.Markup
 
                 if (attrInfo.OwnerType == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.BamlReaderNoOwnerType, attrInfo.Name, AssemblyName));
+                    throw new InvalidOperationException(SR.Format(SR.BamlReaderNoOwnerType, attrInfo.Name, AssemblyName));
                 }
                 if (attrInfo.DP == null)
                 {
@@ -1030,7 +1030,7 @@ namespace System.Windows.Markup
 
                     if (attrInfo.PropInfo == null)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.ParserCantGetDPOrPi, info.Name));
+                        throw new InvalidOperationException(SR.Format(SR.ParserCantGetDPOrPi, info.Name));
                     }
                 }
             }
@@ -1673,7 +1673,7 @@ namespace System.Windows.Markup
 
                     default:
                         // Can't have any other type of record at this point.
-                        throw new InvalidOperationException(SR.Get(SRID.ParserUnknownBaml,
+                        throw new InvalidOperationException(SR.Format(SR.ParserUnknownBaml,
                                          ((int)_currentBamlRecord.RecordType).ToString(CultureInfo.CurrentCulture)));
                 }
             }
@@ -1789,7 +1789,7 @@ namespace System.Windows.Markup
 
         private void ReadRoutedEventRecord()
         {
-            throw new InvalidOperationException(SR.Get(SRID.ParserBamlEvent, string.Empty));
+            throw new InvalidOperationException(SR.Format(SR.ParserBamlEvent, string.Empty));
         }
 
         /***************************************************************************\
@@ -1803,7 +1803,7 @@ namespace System.Windows.Markup
 
         private void ReadClrEventRecord()
         {
-            throw new InvalidOperationException(SR.Get(SRID.ParserBamlEvent, string.Empty));
+            throw new InvalidOperationException(SR.Format(SR.ParserBamlEvent, string.Empty));
         }
 
         /***************************************************************************\
@@ -1845,7 +1845,7 @@ namespace System.Windows.Markup
             BamlNodeInfo nodeInfo = (BamlNodeInfo)_nodeStack.Pop();
             if (nodeInfo.RecordType != BamlRecordType.DocumentStart)
             {
-                throw new InvalidOperationException(SR.Get(SRID.BamlScopeError,
+                throw new InvalidOperationException(SR.Format(SR.BamlScopeError,
                                                     nodeInfo.RecordType.ToString(),
                                                     "DocumentEnd"));
             }
@@ -1883,7 +1883,7 @@ namespace System.Windows.Markup
                                                                   piMappingRecord.AssemblyId);
             if (assemblyInfo == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ParserMapPIMissingAssembly));
+                throw new InvalidOperationException(SR.ParserMapPIMissingAssembly);
             }
 
             // If this mapping has not already been set up, then set it now
@@ -2028,7 +2028,7 @@ namespace System.Windows.Markup
             BamlNodeInfo nodeInfo = (BamlNodeInfo)_nodeStack.Pop();
             if (nodeInfo.RecordType != BamlRecordType.ElementStart)
             {
-                throw new InvalidOperationException(SR.Get(SRID.BamlScopeError,
+                throw new InvalidOperationException(SR.Format(SR.BamlScopeError,
                                                  _currentBamlRecord.RecordType.ToString(),
                                                  BamlRecordType.ElementEnd.ToString()));
             }
@@ -2135,7 +2135,7 @@ namespace System.Windows.Markup
 
             if (_currentBamlRecord.RecordType != expectedType)
             {
-                throw new InvalidOperationException(SR.Get(SRID.BamlScopeError,
+                throw new InvalidOperationException(SR.Format(SR.BamlScopeError,
                                           _currentBamlRecord.RecordType.ToString(),
                                           expectedType.ToString()));
             }
@@ -2243,7 +2243,7 @@ namespace System.Windows.Markup
             BamlNodeInfo nodeInfo = (BamlNodeInfo)_nodeStack.Pop();
             if (nodeInfo.RecordType != BamlRecordType.ConstructorParametersStart)
             {
-                throw new InvalidOperationException(SR.Get(SRID.BamlScopeError,
+                throw new InvalidOperationException(SR.Format(SR.BamlScopeError,
                                                  _currentBamlRecord.RecordType.ToString(),
                                                  BamlRecordType.ConstructorParametersEnd.ToString()));
             }
@@ -2382,7 +2382,7 @@ namespace System.Windows.Markup
 
                 if (dp == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.BamlBadExtensionValue));
+                    throw new InvalidOperationException(SR.BamlBadExtensionValue);
                 }
                 else
                 {
@@ -2462,7 +2462,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.BamlBadExtensionValue));
+                    throw new InvalidOperationException(SR.BamlBadExtensionValue);
                 }
 
                 object prefixObject = _prefixDictionary[XamlReaderHelper.DefaultNamespaceURI];

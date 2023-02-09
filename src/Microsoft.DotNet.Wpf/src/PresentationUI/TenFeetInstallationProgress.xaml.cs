@@ -124,14 +124,14 @@ namespace Microsoft.Internal.DeploymentUI
 
         public void UpdateProgress(long bytesDownloaded, long bytesTotal)
         {
-            CurrentBytesText.Text = String.Format(CultureInfo.CurrentCulture, SR.Get(SRID.ProgressBarKiloBytesStringFormat), (bytesDownloaded / 1024));
-            TotalBytesText.Text = String.Format(CultureInfo.CurrentCulture, SR.Get(SRID.ProgressBarKiloBytesStringFormat), (bytesTotal / 1024));
+            CurrentBytesText.Text = String.Format(CultureInfo.CurrentCulture, SR.ProgressBarKiloBytesStringFormat, (bytesDownloaded / 1024));
+            TotalBytesText.Text = String.Format(CultureInfo.CurrentCulture, SR.ProgressBarKiloBytesStringFormat, (bytesTotal / 1024));
             double percentDone = Math.Floor((double)bytesDownloaded / (double)bytesTotal * 100.0);
             if (double.IsNaN(percentDone))
             {
                 percentDone = 0.0;
             }
-            ProgressBarStatusText.Text = String.Format(CultureInfo.CurrentCulture, SR.Get(SRID.ProgressBarPercentageStringFormat), percentDone);
+            ProgressBarStatusText.Text = String.Format(CultureInfo.CurrentCulture, SR.ProgressBarPercentageStringFormat, percentDone);
             ProgressBar_1.Value = percentDone;
         }
 

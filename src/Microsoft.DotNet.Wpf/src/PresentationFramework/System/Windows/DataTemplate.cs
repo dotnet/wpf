@@ -140,7 +140,7 @@ namespace System.Windows
         // target type.  For DataTemplate, this is not allowed.
         internal override void SetTargetTypeInternal(Type targetType)
         {
-            throw new InvalidOperationException(SR.Get(SRID.TemplateNotTargetType));
+            throw new InvalidOperationException(SR.TemplateNotTargetType);
         }
 
         //
@@ -193,7 +193,7 @@ namespace System.Windows
             // A DataTemplate must be applied to a ContentPresenter
             if (!(templatedParent is ContentPresenter))
             {
-                throw new ArgumentException(SR.Get(SRID.TemplateTargetTypeMismatch, "ContentPresenter", templatedParent.GetType().Name));
+                throw new ArgumentException(SR.Format(SR.TemplateTargetTypeMismatch, "ContentPresenter", templatedParent.GetType().Name));
             }
         }
 

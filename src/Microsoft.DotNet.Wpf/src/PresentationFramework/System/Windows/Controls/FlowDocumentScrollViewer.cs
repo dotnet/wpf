@@ -128,7 +128,7 @@ namespace System.Windows.Controls
             {
                 if (_contentHost.Content != null)
                 {
-                    throw new NotSupportedException(SR.Get(SRID.FlowDocumentScrollViewerMarkedAsContentHostMustHaveNoContent));
+                    throw new NotSupportedException(SR.FlowDocumentScrollViewerMarkedAsContentHostMustHaveNoContent);
                 }
                 _contentHost.ScrollChanged += new ScrollChangedEventHandler(OnScrollChanged);
                 CreateTwoWayBinding(_contentHost, HorizontalScrollBarVisibilityProperty, "HorizontalScrollBarVisibility");
@@ -1199,7 +1199,7 @@ namespace System.Windows.Controls
                 newDocument.StructuralCache.TextContainer != null &&
                 newDocument.StructuralCache.TextContainer.TextSelection != null)
             {
-                throw new ArgumentException(SR.Get(SRID.FlowDocumentScrollViewerDocumentBelongsToAnotherFlowDocumentScrollViewerAlready));
+                throw new ArgumentException(SR.FlowDocumentScrollViewerDocumentBelongsToAnotherFlowDocumentScrollViewerAlready);
             }
 
             // Cleanup state associated with the old document.
@@ -1855,11 +1855,11 @@ namespace System.Windows.Controls
             // Check if Content has already been set.
             if (this.Document != null)
             {
-                throw new ArgumentException(SR.Get(SRID.FlowDocumentScrollViewerCanHaveOnlyOneChild));
+                throw new ArgumentException(SR.FlowDocumentScrollViewerCanHaveOnlyOneChild);
             }
             if (!(value is FlowDocument))
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(FlowDocument)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(FlowDocument)), "value");
             }
             Document = value as FlowDocument;
         }

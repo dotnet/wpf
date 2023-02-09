@@ -331,7 +331,7 @@ namespace MS.Internal.Documents.Application
         /// </summary>
         private void SetDefaults()
         {
-            ToolTip = SR.Get(SRID.PageTextBoxToolTip);
+            ToolTip = SR.PageTextBoxToolTip;
             IsReadOnly = false;
             VerticalAlignment = VerticalAlignment.Center;
             HorizontalAlignment = HorizontalAlignment.Center;

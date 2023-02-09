@@ -116,7 +116,7 @@ namespace System.Windows.Documents
 
             if (docRef == null)
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(DocumentReference)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(DocumentReference)), "value");
             }
 
             if (docRef.IsInitialized)
@@ -133,7 +133,7 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.PrevoiusUninitializedDocumentReferenceOutstanding));
+                    throw new InvalidOperationException(SR.PrevoiusUninitializedDocumentReferenceOutstanding);
                 }
             }
         }
@@ -256,7 +256,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.Get(SRID.IDPNegativePageNumber));
+                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
             }
 
             DocumentPage innerDP = null;
@@ -281,7 +281,7 @@ namespace System.Windows.Documents
         {
             if (fixedDocPageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("fixedDocPageNumber", SR.Get(SRID.IDPNegativePageNumber));
+                throw new ArgumentOutOfRangeException("fixedDocPageNumber", SR.IDPNegativePageNumber);
             }
 
             if (document == null)
@@ -309,7 +309,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.Get(SRID.IDPNegativePageNumber));
+                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
             }
 
             if (userState == null)
@@ -350,7 +350,7 @@ namespace System.Windows.Documents
 
             if (childContentPosition == null)
             {
-                throw new ArgumentException(SR.Get(SRID.IDPInvalidContentPosition));
+                throw new ArgumentException(SR.IDPInvalidContentPosition);
             }
 
             int childPageNumber = childPaginator.GetPageNumber(childContentPosition);
@@ -752,7 +752,7 @@ namespace System.Windows.Documents
             {
                 if (args.NewItems.Count != 1)
                 {
-                    throw new NotSupportedException(SR.Get(SRID.RangeActionsNotSupported));
+                    throw new NotSupportedException(SR.RangeActionsNotSupported);
                 }
                 else
                 {
@@ -766,7 +766,7 @@ namespace System.Windows.Documents
                     DynamicDocumentPaginator paginator = GetPaginator((DocumentReference)item);
                     if (paginator == null)
                     {
-                        throw new ApplicationException(SR.Get(SRID.DocumentReferenceHasInvalidDocument));
+                        throw new ApplicationException(SR.DocumentReferenceHasInvalidDocument);
                     }
 
                     int addedPages = paginator.PageCount;
@@ -782,7 +782,7 @@ namespace System.Windows.Documents
             }
             else
             {
-                throw new NotSupportedException(SR.Get(SRID.UnexpectedCollectionChangeAction, args.Action));
+                throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, args.Action));
             }
         }
 

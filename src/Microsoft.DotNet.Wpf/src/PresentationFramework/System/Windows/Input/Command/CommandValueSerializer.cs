@@ -77,14 +77,14 @@ namespace System.Windows.Input
 
                         if (context == null)
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.ValueSerializerContextUnavailable, this.GetType().Name ));
+                            throw new InvalidOperationException(SR.Format(SR.ValueSerializerContextUnavailable, this.GetType().Name ));
                         }
 
                         // Get the ValueSerializer for the System.Type type
                         typeSerializer = context.GetValueSerializerFor(typeof(Type));
                         if (typeSerializer == null)
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.TypeValueSerializerUnavailable, this.GetType().Name ));
+                            throw new InvalidOperationException(SR.Format(SR.TypeValueSerializerUnavailable, this.GetType().Name ));
                         }
 
                         return typeSerializer.ConvertToString(command.OwnerType, context) + "." + command.Name + "Command";
@@ -117,7 +117,7 @@ namespace System.Windows.Input
         {
             if (value != null)
             {
-                if (value != String.Empty)
+                if (value.Length != 0)
                 {
                     Type declaringType = null;
                     String commandName;
@@ -134,14 +134,14 @@ namespace System.Windows.Input
 
                         if (context == null)
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.ValueSerializerContextUnavailable, this.GetType().Name ));
+                            throw new InvalidOperationException(SR.Format(SR.ValueSerializerContextUnavailable, this.GetType().Name ));
                         }
 
                         // Get the ValueSerializer for the System.Type type
                         ValueSerializer typeSerializer = context.GetValueSerializerFor(typeof(Type));
                         if (typeSerializer == null)
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.TypeValueSerializerUnavailable, this.GetType().Name ));
+                            throw new InvalidOperationException(SR.Format(SR.TypeValueSerializerUnavailable, this.GetType().Name ));
                         }
 
 

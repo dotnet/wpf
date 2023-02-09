@@ -290,7 +290,7 @@ namespace MS.Internal.Ink
                                 clipboardData = new TextClipboardData();
                                 break;
                             default:
-                                throw new ArgumentException(SR.Get(SRID.InvalidClipboardFormat), "value");
+                                throw new ArgumentException(SR.InvalidClipboardFormat, "value");
                         }
 
                         preferredData.Add(format, clipboardData);

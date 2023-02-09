@@ -16,7 +16,9 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;                // IBindingList
+using System.Diagnostics;
 using System.Reflection;                    // TypeDescriptor
 using System.Windows;                       // SR
 using System.Windows.Threading;             // Dispatcher
@@ -39,10 +41,10 @@ namespace MS.Internal.Data
 
         internal int Generation { get { return _generation; } set { _generation = value; } }
 
-        object _accessor;          // DP, PD, or PI
-        Type _propertyType;      // type of the property
-        object[] _args;              // args for indexed property
-        int _generation;        // used for discarding aged entries
+        private readonly object _accessor;   // DP, PD, or PI
+        private readonly Type _propertyType; // type of the property
+        private readonly object[] _args;     // args for indexed property
+        private int _generation;             // used for discarding aged entries
     }
 
 
@@ -60,9 +62,7 @@ namespace MS.Internal.Data
                 if (type == null || name == null)
                     return null;
 
-                AccessorInfo info = (AccessorInfo)_table[new AccessorTableKey(sourceValueType, type, name)];
-
-                if (info != null)
+                if (_table.TryGetValue(new AccessorTableKey(sourceValueType, type, name), out AccessorInfo info))
                 {
 #if DEBUG
                     // record the age of cache hits
@@ -111,33 +111,26 @@ namespace MS.Internal.Data
         // run a cleanup pass
         private object CleanupOperation(object arg)
         {
-            // find entries that are sufficiently old
-            object[] keysToRemove = new object[_table.Count];
-            int n = 0;
-            IDictionaryEnumerator ide = _table.GetEnumerator();
-            while (ide.MoveNext())
+#if DEBUG
+            int originalCount = _table.Count;
+#endif
+
+            // Remove entries that are sufficiently old
+            foreach (KeyValuePair<AccessorTableKey, AccessorInfo> entry in _table)
             {
-                AccessorInfo info = (AccessorInfo)ide.Value;
-                int age = _generation - info.Generation;
+                int age = _generation - entry.Value.Generation;
                 if (age >= AgeLimit)
                 {
-                    keysToRemove[n++] = ide.Key;
+                    _table.Remove(entry.Key);
                 }
             }
 
 #if DEBUG
             if (_traceSize)
             {
-                Console.WriteLine("After generation {0}, removing {1} of {2} entries from AccessorTable, new count is {3}",
-                    _generation, n, _table.Count, _table.Count - n);
+                Console.WriteLine($"After generation {_generation}, removed {originalCount - _table.Count} of {originalCount} entries from AccessorTable, new count is {_table.Count}");
             }
 #endif
-
-            // remove those entries
-            for (int i = 0; i < n; ++i)
-            {
-                _table.Remove(keysToRemove[i]);
-            }
 
             ++_generation;
 
@@ -146,6 +139,7 @@ namespace MS.Internal.Data
         }
 
         // print data about how the cache behaved
+        [Conditional("DEBUG")]
         internal void PrintStats()
         {
 #if DEBUG
@@ -179,7 +173,7 @@ namespace MS.Internal.Data
 
         private const int AgeLimit = 10;      // entries older than this get removed.
 
-        private Hashtable _table = new Hashtable();
+        private readonly Dictionary<AccessorTableKey, AccessorInfo> _table = new Dictionary<AccessorTableKey, AccessorInfo>();
         private int _generation;
         private bool _cleanupRequested;
         bool _traceSize;
@@ -188,46 +182,33 @@ namespace MS.Internal.Data
         private int         _hits, _misses;
 #endif
 
-        private struct AccessorTableKey
+        private readonly struct AccessorTableKey : IEquatable<AccessorTableKey>
         {
             public AccessorTableKey(SourceValueType sourceValueType, Type type, string name)
             {
-                Invariant.Assert(type != null && type != null);
+                Invariant.Assert(type != null);
 
                 _sourceValueType = sourceValueType;
                 _type = type;
                 _name = name;
             }
 
-            public override bool Equals(object o)
-            {
-                if (o is AccessorTableKey)
-                    return this == (AccessorTableKey)o;
-                else
-                    return false;
-            }
+            public override bool Equals(object o) => o is AccessorTableKey other && Equals(other);
 
-            public static bool operator ==(AccessorTableKey k1, AccessorTableKey k2)
-            {
-                return k1._sourceValueType == k2._sourceValueType
-                    && k1._type == k2._type
-                    && k1._name == k2._name;
-            }
+            public bool Equals(AccessorTableKey other) =>
+                _sourceValueType == other._sourceValueType
+                && _type == other._type
+                && _name == other._name;
 
-            public static bool operator !=(AccessorTableKey k1, AccessorTableKey k2)
-            {
-                return !(k1 == k2);
-            }
+            public static bool operator ==(AccessorTableKey k1, AccessorTableKey k2) => k1.Equals(k2);
 
-            public override int GetHashCode()
-            {
-                return unchecked(_type.GetHashCode() + _name.GetHashCode());
-            }
+            public static bool operator !=(AccessorTableKey k1, AccessorTableKey k2) => !k1.Equals(k2);
 
-            SourceValueType _sourceValueType;
-            Type _type;
-            string _name;
+            public override int GetHashCode() => unchecked(_type.GetHashCode() + _name.GetHashCode());
+
+            private readonly SourceValueType _sourceValueType;
+            private readonly Type _type;
+            private readonly string _name;
         }
     }
 }
-

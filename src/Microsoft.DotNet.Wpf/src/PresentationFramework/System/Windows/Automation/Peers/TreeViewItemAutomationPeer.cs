@@ -281,7 +281,7 @@ namespace System.Windows.Automation.Peers
 
             if (!treeViewItem.HasItems)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
 
             treeViewItem.IsExpanded = true;
@@ -297,7 +297,7 @@ namespace System.Windows.Automation.Peers
 
             if (!treeViewItem.HasItems)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
 
             treeViewItem.IsExpanded = false;
@@ -349,7 +349,7 @@ namespace System.Windows.Automation.Peers
             // If TreeView already has a selected item different from current - we cannot add to selection and throw
             if (treeView == null || (treeView.SelectedItem != null && treeView.SelectedContainer != Owner))
             {
-                throw new InvalidOperationException(SR.Get(SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
             ((TreeViewItem)Owner).IsSelected = true;
         }

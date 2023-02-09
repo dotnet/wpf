@@ -118,8 +118,7 @@ namespace System.Windows.Markup
         /// <returns>The value serializer associated with the given type</returns>
         public static ValueSerializer GetSerializerFor(Type type)
         {
-            if (type == null)
-                throw new ArgumentNullException(nameof(type));
+            ArgumentNullException.ThrowIfNull(type);
 
             object value = _valueSerializers[type];
             if (value != null)
@@ -176,10 +175,7 @@ namespace System.Windows.Markup
         public static ValueSerializer GetSerializerFor(PropertyDescriptor descriptor)
         {
             ValueSerializer result;
-            if (descriptor == null)
-            {
-                throw new ArgumentNullException(nameof(descriptor));
-            }
+            ArgumentNullException.ThrowIfNull(descriptor);
             
             #pragma warning suppress 6506 // descriptor is obviously not null
             ValueSerializerAttribute serializerAttribute = descriptor.Attributes[typeof(ValueSerializerAttribute)] as ValueSerializerAttribute;
@@ -244,8 +240,7 @@ namespace System.Windows.Markup
         /// </summary>
         protected Exception GetConvertToException(object value, Type destinationType)
         {
-            if (destinationType == null)
-                throw new ArgumentNullException(nameof(destinationType));
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             string text;
             if (value == null)

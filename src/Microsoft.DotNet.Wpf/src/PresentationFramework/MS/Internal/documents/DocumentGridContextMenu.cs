@@ -161,29 +161,29 @@ namespace MS.Internal.Documents
                     new MenuItem(),
                     dg,
                     NavigationCommands.PreviousPage,
-                    SR.Get(SRID.DocumentApplicationContextMenuPreviousPageHeader),
-                    SR.Get(SRID.DocumentApplicationContextMenuPreviousPageInputGesture));
+                    SR.DocumentApplicationContextMenuPreviousPageHeader,
+                    SR.DocumentApplicationContextMenuPreviousPageInputGesture);
 
                 SetMenuProperties(
                     new MenuItem(),
                     dg,
                     NavigationCommands.NextPage,
-                    SR.Get(SRID.DocumentApplicationContextMenuNextPageHeader),
-                    SR.Get(SRID.DocumentApplicationContextMenuNextPageInputGesture));
+                    SR.DocumentApplicationContextMenuNextPageHeader,
+                    SR.DocumentApplicationContextMenuNextPageInputGesture);
 
                 SetMenuProperties(
                     new MenuItem(),
                     dg,
                     NavigationCommands.FirstPage,
                     null, //menu header
-                    SR.Get(SRID.DocumentApplicationContextMenuFirstPageInputGesture));
+                    SR.DocumentApplicationContextMenuFirstPageInputGesture);
 
                 SetMenuProperties(
                     new MenuItem(),
                     dg,
                     NavigationCommands.LastPage,
                     null, //menu header
-                    SR.Get(SRID.DocumentApplicationContextMenuLastPageInputGesture));
+                    SR.DocumentApplicationContextMenuLastPageInputGesture);
 
                 AddSeparator();
 

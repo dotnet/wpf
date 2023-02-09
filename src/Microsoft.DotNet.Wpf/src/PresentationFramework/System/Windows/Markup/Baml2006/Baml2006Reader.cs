@@ -698,7 +698,7 @@ namespace System.Windows.Baml2006
 
                 case Baml2006RecordType.Unknown:
                 default:
-                    throw new XamlParseException(string.Format(CultureInfo.CurrentCulture, SR.Get(SRID.UnknownBamlRecord, recordType)));
+                    throw new XamlParseException(string.Format(CultureInfo.CurrentCulture, SR.Format(SR.UnknownBamlRecord, recordType)));
             }
 
             return true;
@@ -1434,13 +1434,13 @@ namespace System.Windows.Baml2006
             // baml property start is only valid betweeen ElementStart and ElementEnd
             if (_context.CurrentFrame.XamlType == null)
             {
-                throw new XamlParseException(SR.Get(SRID.PropertyFoundOutsideStartElement));
+                throw new XamlParseException(SR.PropertyFoundOutsideStartElement);
             }
 
             // new start properties not appear without having ended an old property
             if (_context.CurrentFrame.Member != null)
             {
-                throw new XamlParseException(SR.Get(SRID.PropertyOutOfOrder, _context.CurrentFrame.Member));
+                throw new XamlParseException(SR.Format(SR.PropertyOutOfOrder, _context.CurrentFrame.Member));
             }
 
             // Emit NS nodes for xmlns records encountered between ElementStart and Property
@@ -1456,7 +1456,7 @@ namespace System.Windows.Baml2006
             int capacity = reader.ReadInt32();
             if (capacity < 0)
             {
-                throw new ArgumentException(SR.Get(SRID.IntegerCollectionLengthLessThanZero, Array.Empty<object>()));
+                throw new ArgumentException(SR.Format(SR.IntegerCollectionLengthLessThanZero, Array.Empty<object>()));
             }
             System.Windows.Media.Int32Collection ints = new System.Windows.Media.Int32Collection(capacity);
             switch (type)
@@ -1494,7 +1494,7 @@ namespace System.Windows.Baml2006
                     }
             }
 
-            throw new InvalidOperationException(SR.Get(SRID.UnableToConvertInt32));
+            throw new InvalidOperationException(SR.UnableToConvertInt32);
         }
 
         private XamlMember GetProperty(Int16 propertyId, XamlType parentType)
@@ -2102,12 +2102,12 @@ namespace System.Windows.Baml2006
                         int equalIdx = uriInput.IndexOf('=');
                         if (-1 == equalIdx)
                         {
-                            throw new ArgumentException(SR.Get(SRID.MissingTagInNamespace, "=", uriInput));
+                            throw new ArgumentException(SR.Format(SR.MissingTagInNamespace, "=", uriInput));
                         }
                         ReadOnlySpan<char> keyword = uriInput.AsSpan(assemblyKeywordStartIdx, equalIdx - assemblyKeywordStartIdx);
                         if (!keyword.Equals("assembly", StringComparison.Ordinal))
                         {
-                            throw new ArgumentException(SR.Get(SRID.AssemblyTagMissing, "assembly", uriInput));
+                            throw new ArgumentException(SR.Format(SR.AssemblyTagMissing, "assembly", uriInput));
                         }
                         ReadOnlySpan<char> assemblyName = uriInput.AsSpan(equalIdx + 1);
                         if (assemblyName.TrimStart().IsEmpty)
@@ -2405,7 +2405,7 @@ namespace System.Windows.Baml2006
                         }
                         else
                         {
-                            throw new XamlParseException(SR.Get(SRID.RecordOutOfOrder, parentType.Name));
+                            throw new XamlParseException(SR.Format(SR.RecordOutOfOrder, parentType.Name));
                         }
                     }
                     _context.CurrentFrame.Flags = Baml2006ReaderFrameFlags.HasImplicitProperty;
@@ -2685,7 +2685,7 @@ namespace System.Windows.Baml2006
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.BamlBadExtensionValue));
+                    throw new InvalidOperationException(SR.BamlBadExtensionValue);
                 }
             }
             else

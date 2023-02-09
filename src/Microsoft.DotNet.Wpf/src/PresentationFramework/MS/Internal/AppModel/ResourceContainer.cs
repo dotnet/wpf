@@ -374,7 +374,7 @@ namespace MS.Internal.AppModel
                 else
                 {
                     // Throw when Application.ResourceAssembly is null. 
-                    throw new IOException(SR.Get(SRID.EntryAssemblyIsNull));
+                    throw new IOException(SR.EntryAssemblyIsNull);
                 }
             }
 

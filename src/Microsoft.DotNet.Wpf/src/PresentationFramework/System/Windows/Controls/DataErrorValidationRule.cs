@@ -117,7 +117,7 @@ namespace System.Windows.Controls
                 }
             }
             else
-                throw new InvalidOperationException(SR.Get(SRID.ValidationRule_UnexpectedValue, this, value));
+                throw new InvalidOperationException(SR.Format(SR.ValidationRule_UnexpectedValue, this, value));
 
             return ValidationResult.ValidResult;
         }

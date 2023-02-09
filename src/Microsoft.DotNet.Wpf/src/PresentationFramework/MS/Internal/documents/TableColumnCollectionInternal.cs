@@ -105,7 +105,7 @@ namespace MS.Internal.Documents
 
             if (index < 0 || index > Size)
             {
-                throw new ArgumentOutOfRangeException(SR.Get(SRID.TableCollectionOutOfRange));
+                throw new ArgumentOutOfRangeException(SR.TableCollectionOutOfRange);
             }
             if (item == null)
             {
@@ -152,14 +152,14 @@ namespace MS.Internal.Documents
             {
                 if (LogicalTreeHelper.GetParent(item.Parent) != Owner)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.TableCollectionWrongProxyParent));
+                    throw new System.ArgumentException(SR.TableCollectionWrongProxyParent);
                 }
             }
             else
             {
                 if (item.Parent != null)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.TableCollectionInOtherCollection));
+                    throw new System.ArgumentException(SR.TableCollectionInOtherCollection);
                 }
 
                 Owner.AddLogicalChild(item);
@@ -251,7 +251,7 @@ namespace MS.Internal.Documents
 
             if (index < 0 || index >= Size)
             {
-                throw new ArgumentOutOfRangeException(SR.Get(SRID.TableCollectionOutOfRange));
+                throw new ArgumentOutOfRangeException(SR.TableCollectionOutOfRange);
             }
 
             PrivateRemove(Items[index]);
@@ -283,15 +283,15 @@ namespace MS.Internal.Documents
 
             if (index < 0 || index >= Size)
             {
-                throw new ArgumentOutOfRangeException(SR.Get(SRID.TableCollectionOutOfRange));
+                throw new ArgumentOutOfRangeException(SR.TableCollectionOutOfRange);
             }
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException(SR.Get(SRID.TableCollectionCountNeedNonNegNum));
+                throw new ArgumentOutOfRangeException(SR.TableCollectionCountNeedNonNegNum);
             }
             if (Size - index < count)
             {
-                throw new ArgumentException(SR.Get(SRID.TableCollectionRangeOutOfRange));
+                throw new ArgumentException(SR.TableCollectionRangeOutOfRange);
             }
 
             if (count > 0)
@@ -330,7 +330,7 @@ namespace MS.Internal.Documents
             {
                 if (index < 0 || index >= Size)
                 {
-                    throw new ArgumentOutOfRangeException(SR.Get(SRID.TableCollectionOutOfRange));
+                    throw new ArgumentOutOfRangeException(SR.TableCollectionOutOfRange);
                 }
                 return (Items[index]);
             }
@@ -338,7 +338,7 @@ namespace MS.Internal.Documents
             {
                 if (index < 0 || index >= Size)
                 {
-                    throw new ArgumentOutOfRangeException(SR.Get(SRID.TableCollectionOutOfRange));
+                    throw new ArgumentOutOfRangeException(SR.TableCollectionOutOfRange);
                 }
 
                 if (value == null)

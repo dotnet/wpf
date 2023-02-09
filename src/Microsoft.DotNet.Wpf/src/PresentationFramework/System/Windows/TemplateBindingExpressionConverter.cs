@@ -46,7 +46,7 @@ namespace System.Windows
             {
                 TemplateBindingExpression templateBindingExpression = value as TemplateBindingExpression;
                 if (templateBindingExpression == null)
-                    throw new ArgumentException(SR.Get(SRID.MustBeOfType, "value", "TemplateBindingExpression"));
+                    throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "TemplateBindingExpression"));
                 return templateBindingExpression.TemplateBindingExtension;
             }
             return base.ConvertTo(context, culture, value, destinationType);

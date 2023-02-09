@@ -41,9 +41,9 @@ namespace MS.Internal.Documents
         {
             base.ApplyResources();
             
-            this.label2.Text = SR.Get(SRID.RMEnrollmentPage3b);
-            this.label3.Text = SR.Get(SRID.RMEnrollmentPage3c);
-            this.Text = SR.Get(SRID.RMEnrollmentTitle);
+            this.label2.Text = SR.RMEnrollmentPage3b;
+            this.label3.Text = SR.RMEnrollmentPage3c;
+            this.Text = SR.RMEnrollmentTitle;
         }
 
         #endregion Protected Methods

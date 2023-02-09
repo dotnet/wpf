@@ -297,7 +297,7 @@ namespace MS.Internal.Documents
 
             //We didn't find it.  Something is very likely wrong with our layout.
             //We'll throw, as this is an indicator that our layout cannot be trusted.
-            throw new InvalidOperationException(SR.Get(SRID.RowCachePageNotFound));
+            throw new InvalidOperationException(SR.RowCachePageNotFound);
         }
 
         /// <summary>
@@ -455,7 +455,7 @@ namespace MS.Internal.Documents
             //Throw execption if we have no PageCache
             if (PageCache == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.RowCacheRecalcWithNoPageCache));
+                throw new InvalidOperationException(SR.RowCacheRecalcWithNoPageCache);
             }
 
             //Reset the extents
@@ -510,7 +510,7 @@ namespace MS.Internal.Documents
             //Throw execption if we have no PageCache
             if (PageCache == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.RowCacheRecalcWithNoPageCache));
+                throw new InvalidOperationException(SR.RowCacheRecalcWithNoPageCache);
             }
 
             //Throw exception for illegal values
@@ -903,7 +903,7 @@ namespace MS.Internal.Documents
         {
             if (!_isLayoutCompleted)
             {
-                throw new InvalidOperationException(SR.Get(SRID.RowCacheCannotModifyNonExistentLayout));
+                throw new InvalidOperationException(SR.RowCacheCannotModifyNonExistentLayout);
             }
 
             int currentPage = startPage;
@@ -1033,7 +1033,7 @@ namespace MS.Internal.Documents
         {
             if (!_isLayoutCompleted)
             {
-                throw new InvalidOperationException(SR.Get(SRID.RowCacheCannotModifyNonExistentLayout));
+                throw new InvalidOperationException(SR.RowCacheCannotModifyNonExistentLayout);
             }
 
             //Get the row that contains the first page
@@ -1087,7 +1087,7 @@ namespace MS.Internal.Documents
         {
             if (!_isLayoutCompleted)
             {
-                throw new InvalidOperationException(SR.Get(SRID.RowCacheCannotModifyNonExistentLayout));
+                throw new InvalidOperationException(SR.RowCacheCannotModifyNonExistentLayout);
             }
 
             //Check for invalid indices.  If it's out of range then we just return.

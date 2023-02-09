@@ -103,33 +103,33 @@ namespace MS.Internal.Documents
 
             if (license.HasPermission(RightsManagementPermissions.AllowOwner))
             {
-                rightsStrings.Add(SR.Get(SRID.RMPermissionsOwnerPermission));
+                rightsStrings.Add(SR.RMPermissionsOwnerPermission);
             }
             else
             {
                 if (license.HasPermission(RightsManagementPermissions.AllowView))
                 {
-                    rightsStrings.Add(SR.Get(SRID.RMPermissionsViewPermission));
+                    rightsStrings.Add(SR.RMPermissionsViewPermission);
                 }
 
                 if (license.HasPermission(RightsManagementPermissions.AllowPrint))
                 {
-                    rightsStrings.Add(SR.Get(SRID.RMPermissionsPrintPermission));
+                    rightsStrings.Add(SR.RMPermissionsPrintPermission);
                 }
 
                 if (license.HasPermission(RightsManagementPermissions.AllowCopy))
                 {
-                    rightsStrings.Add(SR.Get(SRID.RMPermissionsCopyPermission));
+                    rightsStrings.Add(SR.RMPermissionsCopyPermission);
                 }
 
                 if (license.HasPermission(RightsManagementPermissions.AllowSign))
                 {
-                    rightsStrings.Add(SR.Get(SRID.RMPermissionsSignPermission));
+                    rightsStrings.Add(SR.RMPermissionsSignPermission);
                 }
 
                 if (license.HasPermission(RightsManagementPermissions.AllowAnnotate))
                 {
-                    rightsStrings.Add(SR.Get(SRID.RMPermissionsAnnotatePermission));
+                    rightsStrings.Add(SR.RMPermissionsAnnotatePermission);
                 }
             }
 
@@ -150,7 +150,7 @@ namespace MS.Internal.Documents
             if (!date.HasValue ||
                 date.Value.Equals(DateTime.MaxValue))
             {
-                return SR.Get(SRID.RMPermissionsNoExpiration);
+                return SR.RMPermissionsNoExpiration;
             }
             else
             {
@@ -219,14 +219,14 @@ namespace MS.Internal.Documents
         {
             base.ApplyResources();
 
-            Text = SR.Get(SRID.RMPermissionsTitle);
+            Text = SR.RMPermissionsTitle;
 
-            authenticatedAsTextLabel.Text = SR.Get(SRID.RMPermissionsAuthenticatedAs);
-            permissionsHeldLabel.Text = SR.Get(SRID.RMPermissionsHavePermissions);
-            requestFromTextLabel.Text = SR.Get(SRID.RMPermissionsRequestFrom);
-            requestFromLabel.Text = SR.Get(SRID.RMPermissionsUnknownOwner);
-            expiresOnTextLabel.Text = SR.Get(SRID.RMPermissionsExpiresOn);
-            closeButton.Text = SR.Get(SRID.RMPermissionsCloseButton);
+            authenticatedAsTextLabel.Text = SR.RMPermissionsAuthenticatedAs;
+            permissionsHeldLabel.Text = SR.RMPermissionsHavePermissions;
+            requestFromTextLabel.Text = SR.RMPermissionsRequestFrom;
+            requestFromLabel.Text = SR.RMPermissionsUnknownOwner;
+            expiresOnTextLabel.Text = SR.RMPermissionsExpiresOn;
+            closeButton.Text = SR.RMPermissionsCloseButton;
         }
 
         #endregion Protected Methods

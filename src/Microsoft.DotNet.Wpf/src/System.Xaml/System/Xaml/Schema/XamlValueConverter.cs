@@ -80,7 +80,7 @@ namespace System.Xaml.Schema
                     throw new XamlSchemaException(SR.Format(SR.ConverterMustDeriveFromBase,
                        ConverterType, typeof(TConverterBase)));
                 }
-                return (TConverterBase)SafeReflectionInvoker.CreateInstance(ConverterType, null);
+                return (TConverterBase)Activator.CreateInstance(ConverterType, null);
             }
             return null;
         }

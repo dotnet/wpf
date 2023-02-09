@@ -99,16 +99,16 @@
         <Event Name="DragDrop.PreviewDrop" HandlerType="DragEventHandler" Comment="the preview drop is going to happen" />
         <Event Name="DragDrop.Drop" HandlerType="DragEventHandler" Comment="the drag enter is going to happen" />
 
-        <Event Name="Touch.PreviewTouchDown" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="SRID.Touch_Category" Comment="a finger touched the screen"/>
-        <Event Name="Touch.TouchDown" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="SRID.Touch_Category" Comment="a finger touched the screen"/>
-        <Event Name="Touch.PreviewTouchMove" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="SRID.Touch_Category" Comment="a finger moved across the screen"/>
-        <Event Name="Touch.TouchMove" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="SRID.Touch_Category" Comment="a finger moved across the screen"/>
-        <Event Name="Touch.PreviewTouchUp" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="SRID.Touch_Category" Comment="a finger lifted off the screen"/>
-        <Event Name="Touch.TouchUp" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="SRID.Touch_Category" Comment="a finger lifted off the screen"/>
-        <Event Name="Touch.GotTouchCapture" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="SRID.Touch_Category" Comment="a finger was captured to an element"/>
-        <Event Name="Touch.LostTouchCapture" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="SRID.Touch_Category" Comment="a finger is no longer captured to an element"/>
-        <Event Name="Touch.TouchEnter" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="SRID.Touch_Category" Comment="the mouse entered this element" />
-        <Event Name="Touch.TouchLeave" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="SRID.Touch_Category" Comment="the mouse left this element" />
+        <Event Name="Touch.PreviewTouchDown" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="nameof(SR.Touch_Category)" Comment="a finger touched the screen"/>
+        <Event Name="Touch.TouchDown" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="nameof(SR.Touch_Category)" Comment="a finger touched the screen"/>
+        <Event Name="Touch.PreviewTouchMove" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="nameof(SR.Touch_Category)" Comment="a finger moved across the screen"/>
+        <Event Name="Touch.TouchMove" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="nameof(SR.Touch_Category)" Comment="a finger moved across the screen"/>
+        <Event Name="Touch.PreviewTouchUp" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="nameof(SR.Touch_Category)" Comment="a finger lifted off the screen"/>
+        <Event Name="Touch.TouchUp" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="nameof(SR.Touch_Category)" Comment="a finger lifted off the screen"/>
+        <Event Name="Touch.GotTouchCapture" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="nameof(SR.Touch_Category)" Comment="a finger was captured to an element"/>
+        <Event Name="Touch.LostTouchCapture" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="nameof(SR.Touch_Category)" Comment="a finger is no longer captured to an element"/>
+        <Event Name="Touch.TouchEnter" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="nameof(SR.Touch_Category)" Comment="the mouse entered this element" />
+        <Event Name="Touch.TouchLeave" HandlerType="EventHandler&lt;TouchEventArgs&gt;" CategoryID="nameof(SR.Touch_Category)" Comment="the mouse left this element" />
     </Events>
 
     <Properties>

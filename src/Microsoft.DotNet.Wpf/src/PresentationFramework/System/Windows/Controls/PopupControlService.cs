@@ -741,7 +741,7 @@ namespace System.Windows.Controls
             ToolTip toolTip = (ToolTip)sender;
             if (toolTip != CurrentToolTip)
             {
-                // if we manage the tooltip (the normal case), the current tooltip closes via
+                // If we manage the tooltip (the normal case), the current tooltip closes via
                 //  1. DismissCurrentToolTip sets _currentToolTip=null and calls CloseToolTip
                 //  2. CloseToolTip sets toolTip.IsOpen=false, and returns
                 //  3. Asynchronously, the tooltip raises the Closed event (after popup animations have run)
@@ -751,7 +751,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                // we get here if the app closes the current tooltip or its popup directly.
+                // We get here if the app closes the current tooltip or its popup directly.
                 // Do nothing (i.e. ignore the event).  This leaves the service properties in place -
                 // eventually DismissCurrentToolTip will call CloseToolTip, which needs them
                 // (in particular the Owner property).  When that happens, either

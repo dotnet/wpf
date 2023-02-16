@@ -45,6 +45,7 @@ trigger:
     - internal/release/6.*
     - experimental/*
     - ctp
+    - feature/*
   paths:
     exclude:
     - Documentation/*
@@ -53,8 +54,7 @@ pr:
   autoCancel: true
   branches:
     include:
-    - drttesting
-    - ctp
+    - main
   paths:
     exclude:
     - Documentation/*

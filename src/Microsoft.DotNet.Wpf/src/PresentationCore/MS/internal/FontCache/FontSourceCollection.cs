@@ -159,10 +159,8 @@ namespace MS.Internal.FontCache
                                     }
                                 }
 
-                                foreach (string file in Directory.GetFiles(_uri.LocalPath))
-                                {
-                                    fontPaths.Add(file);
-                                }
+                                fontPaths.UnionWith(Directory.EnumerateFiles(_uri.LocalPath));
+
                                 files = fontPaths;
                             }
 }

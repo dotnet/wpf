@@ -1,0 +1,20 @@
+name: Test Label PR
+
+on:
+  pull_request:
+    types: [labeled]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    if: github.event.label.name == 'test')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create new branch
+        run: |
+          git checkout -b test-${{ github.event.number }}
+          git push origin test-${{ github.event.number }}
+
+      # Add additional steps to run tests, linting, or other validation tasks

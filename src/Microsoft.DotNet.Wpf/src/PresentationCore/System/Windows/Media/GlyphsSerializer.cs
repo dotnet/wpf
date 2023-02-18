@@ -64,8 +64,8 @@ namespace System.Windows.Media
             _advances = glyphRun.AdvanceWidths;
             _offsets = glyphRun.GlyphOffsets;
 
-            _currentAdvanceTotal = 0;
-            _idealAdvanceTotal = 0;
+            _currentAdvanceTotal = 0.0;
+            _idealAdvanceTotal = 0.0;
 
             // "100,50,,0;".Length is a capacity estimate for an individual glyph
             _glyphStringBuider = new StringBuilder(10);
@@ -85,8 +85,8 @@ namespace System.Windows.Media
         /// </summary>
         public void ComputeContentStrings(out string characters, out string indices, out string caretStops)
         {
-            _currentAdvanceTotal = 0;
-            _idealAdvanceTotal = 0;
+            _currentAdvanceTotal = 0.0;
+            _idealAdvanceTotal = 0.0;
 
             if (_clusters != null)
             {

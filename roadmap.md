@@ -27,12 +27,12 @@ The look and feel of WPF controls has not changed in years. We believe that upda
 
 | Goal | Description | Rationale |
 | ------------- |:--------------|:-------------|
-| Windows 11 Theming | Bringing Windows 11 look and feel for majority of WPF controls. <br/> Support for Win11 features such as snap layout, rounded corners for controls and newer colour schemes would bring enhanced experience for WPF applications. <br/> We will iterate on full scope of the work with WPF community. | For all consumer applications that are built on WPF running on Win11, this feature would ensure that applications can take advantage of modern design elements and behaviours. | 
+| Windows 11 Theming | Bringing Windows 11 look and feel for majority of WPF controls. <br/> Support for Win11 features such as snap layout, rounded corners for controls and newer color schemes would bring enhanced experience for WPF applications. <br/> We will iterate on full scope of the work with WPF community. | For all consumer applications that are built on WPF running on Win11, this feature would ensure that applications can take advantage of modern design elements and behaviors. | 
 | Newer controls | [WPF FolderBrowserDialog](https://github.com/dotnet/wpf/issues/438) - Introducing native support for FolderBrowserDialog for WPF | This has been a top ask from the community since .NET Core 3. This feature would reduce dependency on WinForms and other third-party alternatives. |
 | Nullability annotations | Enable nullability annotations in WPF | This increases the quality of the code base, as well as the quality for all WPF apps consuming it and reduces time spent debugging `ArgumentNullException`s and `NullReferenceException`s. <br/>Rest of the dotnet (eg. winforms) repo is already moving in the direction and this goal would bring WPF to latest standards as well. <br/> We welcome any community contributions in this area.  |
 
 
-We do not believe we will be able to deliver all 3 items above. Therefore we want to ask community to help us prioritize these items for .NET 8.0 timeframe -- please go vote HERE _(voting link will be shared shortly)_.
+We do not believe we will be able to deliver all 3 items above. Therefore we want to ask community to help us prioritize these items for .NET 8.0 timeframe -- please go vote [HERE](https://github.com/dotnet/wpf/discussions/7555).
 
 ---
 

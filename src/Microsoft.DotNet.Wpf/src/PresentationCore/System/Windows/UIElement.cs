@@ -16,6 +16,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Security;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
@@ -258,29 +260,24 @@ namespace System.Windows
         /// </summary>
         public void InvalidateMeasure()
         {
-            if(     !MeasureDirty
-                &&  !MeasureInProgress )
+            if (MeasureDirty || MeasureInProgress) return;
+            Debug.Assert(MeasureRequest is null, "can't be clean and still have MeasureRequest");
+
+            if(!NeverMeasured) // only measured once elements are allowed in *update* queue
             {
-                Debug.Assert(MeasureRequest == null, "can't be clean and still have MeasureRequest");
-
-//                 VerifyAccess();
-
-                if(!NeverMeasured) //only measured once elements are allowed in *update* queue
+                ContextLayoutManager contextLayoutManager = ContextLayoutManager.From(Dispatcher);
+                if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose))
                 {
-                    ContextLayoutManager ContextLayoutManager = ContextLayoutManager.From(Dispatcher);
-                    if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose))
+                    // Knowing when the layout queue goes from clean to dirty is interesting.
+                    if (contextLayoutManager.MeasureQueue.IsEmpty)
                     {
-                        // Knowing when the layout queue goes from clean to dirty is interesting.
-                        if (ContextLayoutManager.MeasureQueue.IsEmpty)
-                        {
-                            EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientLayoutInvalidated, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, PerfService.GetPerfElementID(this));
-                        }
+                        EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientLayoutInvalidated, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, PerfService.GetPerfElementID(this));
                     }
-
-                    ContextLayoutManager.MeasureQueue.Add(this);
                 }
-                MeasureDirty = true;
+
+                contextLayoutManager.MeasureQueue.Add(this);
             }
+            MeasureDirty = true;
         }
 
         /// <summary>
@@ -291,22 +288,17 @@ namespace System.Windows
         /// </summary>
         public void InvalidateArrange()
         {
-            if(   !ArrangeDirty
-               && !ArrangeInProgress)
+            if (ArrangeDirty || ArrangeInProgress) return;
+            Debug.Assert(ArrangeRequest == null, "can't be clean and still have MeasureRequest");
+
+            if(!NeverArranged)
             {
-                Debug.Assert(ArrangeRequest == null, "can't be clean and still have MeasureRequest");
-
-//                 VerifyAccess();
-
-                if(!NeverArranged)
-                {
-                    ContextLayoutManager ContextLayoutManager = ContextLayoutManager.From(Dispatcher);
-                    ContextLayoutManager.ArrangeQueue.Add(this);
-                }
-
-
-                ArrangeDirty = true;
+                ContextLayoutManager contextLayoutManager = ContextLayoutManager.From(Dispatcher);
+                contextLayoutManager.ArrangeQueue.Add(this);
             }
+
+
+            ArrangeDirty = true;
         }
 
         /// <summary>
@@ -562,73 +554,71 @@ namespace System.Windows
         public void Measure(Size availableSize)
         {
             bool etwTracingEnabled = false;
-            long perfElementID = 0;
-            ContextLayoutManager ContextLayoutManager = ContextLayoutManager.From(Dispatcher);
-            if (ContextLayoutManager.AutomationEvents.Count != 0)
+            long perfElementId = 0;
+            ContextLayoutManager contextLayoutManager = ContextLayoutManager.From(Dispatcher);
+            if (contextLayoutManager.AutomationEvents.Count != 0)
                 UIElementHelper.InvalidateAutomationAncestors(this);
 
             if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose))
             {
-                perfElementID = PerfService.GetPerfElementID(this);
+                perfElementId = PerfService.GetPerfElementID(this);
 
                 etwTracingEnabled = true;
-                EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientMeasureElementBegin, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementID, availableSize.Width, availableSize.Height);
+                EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientMeasureElementBegin, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementId, availableSize.Width, availableSize.Height);
             }
             try
             {
-                //             VerifyAccess();
-
                 // Disable reentrancy during the measure pass.  This is because much work is done
                 // during measure - such as inflating templates, formatting PTS stuff, creating
                 // fonts, etc.  Generally speaking, we cannot survive reentrancy in these code
                 // paths.
                 using (Dispatcher.DisableProcessing())
                 {
-                    //enforce that Measure can not receive NaN size .
+                    // Enforce that Measure can not receive NaN size .
                     if (double.IsNaN(availableSize.Width) || double.IsNaN(availableSize.Height))
-                        throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_NaNMeasure));
+                        ThrowInvalidOperationLayoutNaNMeasure();
 
                     bool neverMeasured = NeverMeasured;
 
                     if (neverMeasured)
                     {
-                        switchVisibilityIfNeeded(this.Visibility);
-                        //to make sure effects are set correctly - otherwise it's not used
-                        //simply because it is never pulled by anybody
-                        pushVisualEffects();
+                        SwitchVisibilityIfNeeded(Visibility);
+
+                        // To make sure effects are set correctly - otherwise it's not used
+                        // simply because it is never pulled by anybody
+                        PushVisualEffects();
                     }
 
                     bool isCloseToPreviousMeasure = DoubleUtil.AreClose(availableSize, _previousAvailableSize);
 
 
                     //if Collapsed, we should not Measure, keep dirty bit but remove request
-                    if (this.Visibility == Visibility.Collapsed
-                        || ((Visual)this).CheckFlagsAnd(VisualFlags.IsLayoutSuspended))
+                    if (Visibility == Visibility.Collapsed
+                        || CheckFlagsAnd(VisualFlags.IsLayoutSuspended))
                     {
                         //reset measure request.
-                        if (MeasureRequest != null)
+                        if (MeasureRequest is not null)
                             ContextLayoutManager.From(Dispatcher).MeasureQueue.Remove(this);
 
-                        //  remember though that parent tried to measure at this size
-                        //  in case when later this element is called to measure incrementally
-                        //  it has up-to-date information stored in _previousAvailableSize
-                        if (!isCloseToPreviousMeasure)
-                        {
-                            //this will ensure that element will be actually re-measured at the new available size
-                            //later when it becomes visible.
-                            InvalidateMeasureInternal();
+                        // Remember though that parent tried to measure at this size
+                        // in case when later this element is called to measure incrementally
+                        // it has up-to-date information stored in _previousAvailableSize
+                        if (isCloseToPreviousMeasure) return;
 
-                            _previousAvailableSize = availableSize;
-                        }
+                        // This will ensure that element will be actually re-measured at the new available size
+                        // later when it becomes visible.
+                        InvalidateMeasureInternal();
+
+                        _previousAvailableSize = availableSize;
 
                         return;
                     }
 
 
-                    //your basic bypass. No reason to calc the same thing.
-                    if (IsMeasureValid                       //element is clean
-                        && !neverMeasured                       //previously measured
-                        && isCloseToPreviousMeasure) //and contraint matches
+                    // Your basic bypass. No reason to calc the same thing.
+                    if (IsMeasureValid               // element is clean
+                        && !neverMeasured            // previously measured
+                        && isCloseToPreviousMeasure) // and constraint matches
                     {
                         return;
                     }
@@ -636,15 +626,15 @@ namespace System.Windows
                     NeverMeasured = false;
                     Size prevSize = _desiredSize;
 
-                    //we always want to be arranged, ensure arrange request
-                    //doing it before OnMeasure prevents unneeded requests from children in the queue
+                    // We always want to be arranged, ensure arrange request
+                    // doing it before OnMeasure prevents unneeded requests from children in the queue
                     InvalidateArrange();
-                    //_measureInProgress prevents OnChildDesiredSizeChange to cause the elements be put
-                    //into the queue.
+                    // _measureInProgress prevents OnChildDesiredSizeChange to cause the elements be put
+                    // into the queue.
 
                     MeasureInProgress = true;
 
-                    Size desiredSize = new Size(0, 0);
+                    Size desiredSize;
 
                     ContextLayoutManager layoutManager = ContextLayoutManager.From(Dispatcher);
 
@@ -676,46 +666,65 @@ namespace System.Windows
                         }
                     }
 
-                    //enforce that MeasureCore can not return PositiveInfinity size even if given Infinte availabel size.
+                    //enforce that MeasureCore can not return PositiveInfinity size even if given Infinite available size.
                     //Note: NegativeInfinity can not be returned by definition of Size structure.
                     if (double.IsPositiveInfinity(desiredSize.Width) || double.IsPositiveInfinity(desiredSize.Height))
-                        throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_PositiveInfinityReturned, this.GetType().FullName));
+                        ThrowInvalidOperationLayoutPositiveInfinityReturned();
 
                     //enforce that MeasureCore can not return NaN size .
                     if (double.IsNaN(desiredSize.Width) || double.IsNaN(desiredSize.Height))
-                        throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_NaNReturned, this.GetType().FullName));
+                        ThrowInvalidOperationLayoutNaNReturned();
 
                     //reset measure dirtiness
 
                     MeasureDirty = false;
                     //reset measure request.
-                    if (MeasureRequest != null)
+                    if (MeasureRequest is not null)
                         ContextLayoutManager.From(Dispatcher).MeasureQueue.Remove(this);
 
                     //cache desired size
                     _desiredSize = desiredSize;
 
-                    //notify parent if our desired size changed (watefall effect)
-                    if (!MeasureDuringArrange
-                       && !DoubleUtil.AreClose(prevSize, desiredSize))
+                    //notify parent if our desired size changed (waterfall effect)
+                    if (MeasureDuringArrange || DoubleUtil.AreClose(prevSize, desiredSize)) return;
+
+                    GetUIParentOrICH(out UIElement p, out IContentHost ich); // only one will be returned
+                    if (p is { MeasureInProgress: false })                   // this is what differs this code from signalDesiredSizeChange()
+                        p.OnChildDesiredSizeChanged(this);
+                    else
                     {
-                        UIElement p;
-                        IContentHost ich;
-                        GetUIParentOrICH(out p, out ich); //only one will be returned
-                        if (p != null && !p.MeasureInProgress) //this is what differs this code from signalDesiredSizeChange()
-                            p.OnChildDesiredSizeChanged(this);
-                        else if (ich != null)
-                            ich.OnChildDesiredSizeChanged(this);
+                        ich?.OnChildDesiredSizeChanged(this);
                     }
                 }
             }
             finally
             {
-                if (etwTracingEnabled == true)
+                if (etwTracingEnabled)
                 {
-                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientMeasureElementEnd, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementID, _desiredSize.Width, _desiredSize.Height);
+                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientMeasureElementEnd, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementId, _desiredSize.Width, _desiredSize.Height);
                 }
             }
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        [DoesNotReturn]
+        private void ThrowInvalidOperationLayoutPositiveInfinityReturned()
+        {
+            throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_PositiveInfinityReturned, GetType().FullName));
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        [DoesNotReturn]
+        private void ThrowInvalidOperationLayoutNaNReturned()
+        {
+            throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_NaNReturned, GetType().FullName));
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        [DoesNotReturn]
+        private static void ThrowInvalidOperationLayoutNaNMeasure()
+        {
+            throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_NaNMeasure));
         }
 
          //only one will be returned, whichever found first
@@ -729,11 +738,9 @@ namespace System.Windows
                 ich = v as IContentHost;
                 if (ich != null) break;
 
-                if(v.CheckFlagsAnd(VisualFlags.IsUIElement))
-                {
-                    uiParent = (UIElement)v;
-                    break;
-                }
+                if (!v.CheckFlagsAnd(VisualFlags.IsUIElement)) continue;
+                uiParent = (UIElement)v;
+                break;
             }
         }
 
@@ -774,55 +781,48 @@ namespace System.Windows
         public void Arrange(Rect finalRect)
         {
             bool etwTracingEnabled = false;
-            long perfElementID = 0;
+            long perfElementId = 0;
 
-            ContextLayoutManager ContextLayoutManager = ContextLayoutManager.From(Dispatcher);
-            if (ContextLayoutManager.AutomationEvents.Count != 0)
+            ContextLayoutManager contextLayoutManager = ContextLayoutManager.From(Dispatcher);
+            if (contextLayoutManager.AutomationEvents.Count != 0)
                 UIElementHelper.InvalidateAutomationAncestors(this);
 
             if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose))
             {
-                perfElementID = PerfService.GetPerfElementID(this);
+                perfElementId = PerfService.GetPerfElementID(this);
 
                 etwTracingEnabled = true;
-                EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientArrangeElementBegin, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementID, finalRect.Top, finalRect.Left, finalRect.Width, finalRect.Height);
+                EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientArrangeElementBegin, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementId, finalRect.Top, finalRect.Left, finalRect.Width, finalRect.Height);
             }
 
             try
             {
-                //             VerifyAccess();
-
                 // Disable reentrancy during the arrange pass.  This is because much work is done
                 // during arrange - such as formatting PTS stuff, creating
                 // fonts, etc.  Generally speaking, we cannot survive reentrancy in these code
                 // paths.
                 using (Dispatcher.DisableProcessing())
                 {
-                    //enforce that Arrange can not come with Infinity size or NaN
+                    // Enforce that Arrange can not come with Infinity size or NaN
                     if (double.IsPositiveInfinity(finalRect.Width)
                         || double.IsPositiveInfinity(finalRect.Height)
                         || double.IsNaN(finalRect.Width)
                         || double.IsNaN(finalRect.Height)
                       )
                     {
-                        DependencyObject parent = GetUIParent() as UIElement;
-                        throw new InvalidOperationException(
-                            SR.Get(
-                                SRID.UIElement_Layout_InfinityArrange,
-                                    (parent == null ? "" : parent.GetType().FullName),
-                                    this.GetType().FullName));
+                        ThrowInvalidOperationExceptionForParent();
                     }
 
 
-                    //if Collapsed, we should not Arrange, keep dirty bit but remove request
-                    if (this.Visibility == Visibility.Collapsed
-                        || ((Visual)this).CheckFlagsAnd(VisualFlags.IsLayoutSuspended))
+                    // If Collapsed, we should not Arrange, keep dirty bit but remove request
+                    if (Visibility == Visibility.Collapsed
+                        || CheckFlagsAnd(VisualFlags.IsLayoutSuspended))
                     {
-                        //reset arrange request.
-                        if (ArrangeRequest != null)
+                        // Reset arrange request.
+                        if (ArrangeRequest is not null)
                             ContextLayoutManager.From(Dispatcher).ArrangeQueue.Remove(this);
 
-                        //  remember though that parent tried to arrange at this rect
+                        //  Remember though that parent tried to arrange at this rect
                         //  in case when later this element is called to arrange incrementally
                         //  it has up-to-date information stored in _finalRect
                         _finalRect = finalRect;
@@ -830,30 +830,26 @@ namespace System.Windows
                         return;
                     }
 
-                    //in case parent did not call Measure on a child, we call it now.
-                    //parent can skip calling Measure on a child if it does not care about child's size
-                    //passing finalSize practically means "set size" because that's what Measure(sz)/Arrange(same_sz) means
-                    //Note that in case of IsLayoutSuspended (temporarily out of the tree) the MeasureDirty can be true
-                    //while it does not indicate that we should re-measure - we just came of Measure that did nothing
-                    //because of suspension
+                    // In case parent did not call Measure on a child, we call it now.
+                    // parent can skip calling Measure on a child if it does not care about child's size
+                    // passing finalSize practically means "set size" because that's what Measure(sz)/Arrange(same_sz) means
+                    // Note that in case of IsLayoutSuspended (temporarily out of the tree) the MeasureDirty can be true
+                    // while it does not indicate that we should re-measure - we just came of Measure that did nothing
+                    // because of suspension
                     if (MeasureDirty
                        || NeverMeasured)
                     {
                         try
                         {
                             MeasureDuringArrange = true;
-                            //If never measured - that means "set size", arrange-only scenario
-                            //Otherwise - the parent previosuly measured the element at constriant
-                            //and the fact that we are arranging the measure-dirty element now means
-                            //we are not in the UpdateLayout loop but rather in manual sequence of Measure/Arrange
-                            //(like in HwndSource when new RootVisual is attached) so there are no loops and there could be
-                            //measure-dirty elements left after previosu single Measure pass) - so need to use cached constraint
-                            if (NeverMeasured)
-                                Measure(finalRect.Size);
-                            else
-                            {
-                                Measure(PreviousConstraint);
-                            }
+
+                            // If never measured - that means "set size", arrange-only scenario
+                            // Otherwise - the parent previously measured the element at constraint
+                            // and the fact that we are arranging the measure-dirty element now means
+                            // we are not in the UpdateLayout loop but rather in manual sequence of Measure/Arrange
+                            // (like in HwndSource when new RootVisual is attached) so there are no loops and there could be
+                            // measure-dirty elements left after previous single Measure pass) - so need to use cached constraint
+                            Measure(NeverMeasured ? finalRect.Size : PreviousConstraint);
                         }
                         finally
                         {
@@ -861,113 +857,121 @@ namespace System.Windows
                         }
                     }
 
-                    //bypass - if clean and rect is the same, no need to re-arrange
-                    if (!IsArrangeValid
-                        || NeverArranged
-                        || !DoubleUtil.AreClose(finalRect, _finalRect))
+                    // Bypass - if clean and rect is the same, no need to re-arrange
+                    if (IsArrangeValid && !NeverArranged && DoubleUtil.AreClose(finalRect, _finalRect)) return;
+
+                    bool firstArrange = NeverArranged;
+                    NeverArranged = false;
+                    ArrangeInProgress = true;
+
+                    ContextLayoutManager layoutManager = ContextLayoutManager.From(Dispatcher);
+
+                    Size oldSize = RenderSize;
+                    bool sizeChanged;
+                    bool gotException = true;
+
+                    // If using layout rounding, round final size before calling ArrangeCore.
+                    if (CheckFlagsAnd(VisualFlags.UseLayoutRounding))
                     {
-                        bool firstArrange = NeverArranged;
-                        NeverArranged = false;
-                        ArrangeInProgress = true;
+                        DpiScale dpi = GetDpi();
+                        finalRect = RoundLayoutRect(finalRect, dpi.DpiScaleX, dpi.DpiScaleY);
+                    }
 
-                        ContextLayoutManager layoutManager = ContextLayoutManager.From(Dispatcher);
+                    try
+                    {
+                        layoutManager.EnterArrange();
 
-                        Size oldSize = RenderSize;
-                        bool sizeChanged = false;
-                        bool gotException = true;
+                        // This has to update RenderSize
+                        ArrangeCore(finalRect);
 
-                        // If using layout rounding, round final size before calling ArrangeCore.
-                        if (CheckFlagsAnd(VisualFlags.UseLayoutRounding))
+                        // to make sure Clip is transferred to Visual
+                        EnsureClip(finalRect.Size);
+
+                        // See if we need to call OnRenderSizeChanged on this element
+                        sizeChanged = MarkForSizeChangedIfNeeded(oldSize, RenderSize);
+
+                        gotException = false;
+                    }
+                    finally
+                    {
+                        ArrangeInProgress = false;
+                        layoutManager.ExitArrange();
+
+                        if (gotException)
                         {
-                            DpiScale dpi = GetDpi();
-                            finalRect = RoundLayoutRect(finalRect, dpi.DpiScaleX, dpi.DpiScaleY);
+                            // We don't want to reset last exception element on layoutManager if it's been already set.
+                            if (layoutManager.GetLastExceptionElement() is null)
+                            {
+                                layoutManager.SetLastExceptionElement(this);
+                            }
                         }
 
+                    }
+
+                    _finalRect = finalRect;
+
+                    ArrangeDirty = false;
+
+                    // Reset request.
+                    if (ArrangeRequest is not null)
+                        ContextLayoutManager.From(Dispatcher).ArrangeQueue.Remove(this);
+
+                    if ((sizeChanged || RenderingInvalidated || firstArrange) && IsRenderable())
+                    {
+                        DrawingContext dc = RenderOpen();
                         try
                         {
-                            layoutManager.EnterArrange();
-
-                            //This has to update RenderSize
-                            ArrangeCore(finalRect);
-
-                            //to make sure Clip is tranferred to Visual
-                            ensureClip(finalRect.Size);
-
-                            //  see if we need to call OnRenderSizeChanged on this element
-                            sizeChanged = markForSizeChangedIfNeeded(oldSize, RenderSize);
-
-                            gotException = false;
-                        }
-                        finally
-                        {
-                            ArrangeInProgress = false;
-                            layoutManager.ExitArrange();
-
-                            if (gotException)
+                            bool etwGeneralEnabled = EventTrace.IsEnabled(EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose);
+                            if (etwGeneralEnabled)
                             {
-                                // we don't want to reset last exception element on layoutManager if it's been already set.
-                                if (layoutManager.GetLastExceptionElement() == null)
-                                {
-                                    layoutManager.SetLastExceptionElement(this);
-                                }
+                                EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientOnRenderBegin, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, perfElementId);
                             }
 
-                        }
-
-                        _finalRect = finalRect;
-
-                        ArrangeDirty = false;
-
-                        //reset request.
-                        if (ArrangeRequest != null)
-                            ContextLayoutManager.From(Dispatcher).ArrangeQueue.Remove(this);
-
-                        if ((sizeChanged || RenderingInvalidated || firstArrange) && IsRenderable())
-                        {
-                            DrawingContext dc = RenderOpen();
                             try
                             {
-                                bool etwGeneralEnabled = EventTrace.IsEnabled(EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose);
-                                if (etwGeneralEnabled == true)
-                                {
-                                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientOnRenderBegin, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, perfElementID);
-                                }
-
-                                try
-                                {
-                                    OnRender(dc);
-                                }
-                                finally
-                                {
-                                    if (etwGeneralEnabled == true)
-                                    {
-                                        EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientOnRenderEnd, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, perfElementID);
-                                    }
-                                }
+                                OnRender(dc);
                             }
                             finally
                             {
-                                dc.Close();
-                                RenderingInvalidated = false;
+                                if (etwGeneralEnabled)
+                                {
+                                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientOnRenderEnd, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, perfElementId);
+                                }
                             }
-
-                            updatePixelSnappingGuidelines();
                         }
-
-                        if (firstArrange)
+                        finally
                         {
-                            EndPropertyInitialization();
+                            dc.Close();
+                            RenderingInvalidated = false;
                         }
+
+                        UpdatePixelSnappingGuidelines();
+                    }
+
+                    if (firstArrange)
+                    {
+                        EndPropertyInitialization();
                     }
                 }
             }
             finally
             {
-                if (etwTracingEnabled == true)
+                if (etwTracingEnabled)
                 {
-                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientArrangeElementEnd, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementID, finalRect.Top, finalRect.Left, finalRect.Width, finalRect.Height);
+                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientArrangeElementEnd, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementId, finalRect.Top, finalRect.Left, finalRect.Width, finalRect.Height);
                 }
             }
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        [DoesNotReturn]
+        private void ThrowInvalidOperationExceptionForParent()
+        {
+            throw new InvalidOperationException(
+                SR.Get(
+                    SRID.UIElement_Layout_InfinityArrange,
+                    GetUIParent() is UIElement uiElement ? uiElement.GetType().FullName : string.Empty,
+                    GetType().FullName));
         }
 
         /// <summary>
@@ -980,52 +984,72 @@ namespace System.Windows
         {
         }
 
-        private void updatePixelSnappingGuidelines()
+        private void UpdatePixelSnappingGuidelines()
         {
-            if((!SnapsToDevicePixels) || (_drawingContent == null))
+            if(!SnapsToDevicePixels || _drawingContent is null)
             {
-                this.VisualXSnappingGuidelines = this.VisualYSnappingGuidelines = null;
+                VisualXSnappingGuidelines = null;
+                VisualYSnappingGuidelines = null;
             }
             else
             {
-                DoubleCollection xLines = this.VisualXSnappingGuidelines;
+                DoubleCollection xLines = VisualXSnappingGuidelines;
 
-                if(xLines == null)
+                Span<double> xLinesData;
+                if (xLines is null)
                 {
-                    xLines = new DoubleCollection();
-                    xLines.Add(0d);
-                    xLines.Add(this.RenderSize.Width);
-                    this.VisualXSnappingGuidelines = xLines;
+                    unsafe
+                    {
+                        var xLinesStackData = stackalloc double[2];
+                        xLinesData = new Span<double>(xLinesStackData, 2);
+                    }
+
+                    xLinesData[0] = 0d;
+                    xLinesData[1] = RenderSize.Width;
+
                 }
                 else
                 {
-                // xLines[0] = 0d;  - this already should be so
-                // check to avoid potential dirtiness in renderer
-                    int lastGuideline = xLines.Count - 1;
-                    if(!DoubleUtil.AreClose(xLines[lastGuideline], this.RenderSize.Width))
-                        xLines[lastGuideline] = this.RenderSize.Width;
+                    xLinesData = xLines.ToSpan();
+
+                    // xLines[0] = 0d;  - this already should be so
+                    // check to avoid potential dirtiness in renderer
+                    int lastGuideline = xLinesData.Length - 1;
+                    if(!DoubleUtil.AreClose(xLinesData[lastGuideline], RenderSize.Width))
+                        xLinesData[lastGuideline] = RenderSize.Width;
                 }
 
-                DoubleCollection yLines = this.VisualYSnappingGuidelines;
-                if(yLines == null)
+                VisualXSnappingGuidelines = new DoubleCollection(xLinesData);
+
+                DoubleCollection yLines = VisualYSnappingGuidelines;
+                Span<double> yLinesData;
+                if (yLines == null)
                 {
-                    yLines = new DoubleCollection();
-                    yLines.Add(0d);
-                    yLines.Add(this.RenderSize.Height);
-                    this.VisualYSnappingGuidelines = yLines;
+                    unsafe
+                    {
+                        var yLinesStackData = stackalloc double[2];
+                        yLinesData = new Span<double>(yLinesStackData, 2);
+                    }
+
+                    yLinesData[0] = 0d;
+                    yLinesData[1] = RenderSize.Height;
                 }
                 else
                 {
-                // yLines[0] = 0d;  - this already should be so
-                // check to avoid potential dirtiness in renderer
-                    int lastGuideline = yLines.Count - 1;
-                    if(!DoubleUtil.AreClose(yLines[lastGuideline], this.RenderSize.Height))
-                        yLines[lastGuideline] = this.RenderSize.Height;
+                    yLinesData = yLines.ToSpan();
+
+                    // yLines[0] = 0d;  - this already should be so
+                    // check to avoid potential dirtiness in renderer
+                    int lastGuideline = yLinesData.Length - 1;
+                    if(!DoubleUtil.AreClose(yLinesData[lastGuideline], RenderSize.Height))
+                        yLinesData[lastGuideline] = RenderSize.Height;
                 }
+
+                VisualYSnappingGuidelines = new DoubleCollection(yLinesData);
             }
         }
 
-        private bool markForSizeChangedIfNeeded(Size oldSize, Size newSize)
+        private bool MarkForSizeChangedIfNeeded(Size oldSize, Size newSize)
         {
             //already marked for SizeChanged, simply update the newSize
             bool widthChanged = !DoubleUtil.AreClose(oldSize.Width, newSize.Width);
@@ -1033,33 +1057,31 @@ namespace System.Windows
 
             SizeChangedInfo info = sizeChangedInfo;
 
-            if(info != null)
+            if(info is not null)
             {
                 info.Update(widthChanged, heightChanged);
                 return true;
             }
-            else if(widthChanged || heightChanged)
-            {
-                info = new SizeChangedInfo(this, oldSize, widthChanged, heightChanged);
-                sizeChangedInfo = info;
-                ContextLayoutManager.From(Dispatcher).AddToSizeChangedChain(info);
 
-                //
-                // This notifies Visual layer that hittest boundary potentially changed
-                //
 
-                PropagateFlags(
-                    this,
-                    VisualFlags.IsSubtreeDirtyForPrecompute,
-                    VisualProxyFlags.IsSubtreeDirtyForRender);
+            // This result is used to determine if we need to call OnRender after Arrange
+            // OnRender is called for 2 reasons - someone called InvalidateVisual - then OnRender is called
+            // on next Arrange, or the size changed.
+            if (!widthChanged && !heightChanged) return false;
 
-                return true;
-            }
+            info = new SizeChangedInfo(this, oldSize, widthChanged, heightChanged);
+            sizeChangedInfo = info;
+            ContextLayoutManager.From(Dispatcher).AddToSizeChangedChain(info);
 
-            //this result is used to determine if we need to call OnRender after Arrange
-            //OnRender is called for 2 reasons - someone called InvalidateVisual - then OnRender is called
-            //on next Arrange, or the size changed.
-            return false;
+            //
+            // This notifies Visual layer that hittest boundary potentially changed
+            //
+            PropagateFlags(
+                this,
+                VisualFlags.IsSubtreeDirtyForPrecompute,
+                VisualProxyFlags.IsSubtreeDirtyForRender);
+
+            return true;
         }
 
         /// <summary>
@@ -1225,8 +1247,8 @@ namespace System.Windows
         /// <returns>Desired Size of the control, given available size passed as parameter.</returns>
         protected virtual Size MeasureCore(Size availableSize)
         {
-            //can not return availableSize here - this is too "greedy" and can cause the Infinity to be
-            //returned. So the next "reasonable" choice is (0,0).
+            // Can not return availableSize here - this is too "greedy" and can cause the Infinity to be
+            // returned. So the next "reasonable" choice is (0,0).
             return new Size(0,0);
         }
 
@@ -1275,10 +1297,10 @@ namespace System.Windows
                 VisualOffset = new Vector(finalRect.X, finalRect.Y);
             }
 
-            if (renderTransform != null)
+            if (renderTransform is not null)
             {
                 //render transform + layout offset, create a collection
-                TransformGroup t = new TransformGroup();
+                TransformGroup t = new();
 
                 Point origin = RenderTransformOrigin;
                 bool hasOrigin = (origin.X != 0d || origin.Y != 0d);
@@ -2699,7 +2721,7 @@ namespace System.Windows
         private static void Opacity_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = (UIElement) d;
-            uie.pushOpacity();
+            uie.PushOpacity();
         }
 
         /// <summary>
@@ -2713,11 +2735,11 @@ namespace System.Windows
             set { SetValue(OpacityProperty, value); }
         }
 
-        private void pushOpacity()
+        private void PushOpacity()
         {
-            if(this.Visibility == Visibility.Visible)
+            if(Visibility == Visibility.Visible)
             {
-                base.VisualOpacity = Opacity;
+                VisualOpacity = Opacity;
             }
         }
 
@@ -2731,7 +2753,7 @@ namespace System.Windows
         private static void OpacityMask_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = (UIElement) d;
-            uie.pushOpacityMask();
+            uie.PushOpacityMask();
         }
 
         /// <summary>
@@ -2745,9 +2767,9 @@ namespace System.Windows
             set { SetValue(OpacityMaskProperty, value); }
         }
 
-        private void pushOpacityMask()
+        private void PushOpacityMask()
         {
-            base.VisualOpacityMask = OpacityMask;
+            VisualOpacityMask = OpacityMask;
         }
 
         /// <summary>
@@ -2763,7 +2785,7 @@ namespace System.Windows
         private static void OnBitmapEffectChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = (UIElement)d;
-            uie.pushBitmapEffect();
+            uie.PushBitmapEffect();
         }
 
         /// <summary>
@@ -2776,7 +2798,7 @@ namespace System.Windows
             set { SetValue(BitmapEffectProperty, value); }
         }
 
-        private void pushBitmapEffect()
+        private void PushBitmapEffect()
         {
 #pragma warning disable 0618
             base.VisualBitmapEffect = BitmapEffect;
@@ -2850,45 +2872,45 @@ namespace System.Windows
         private static void EdgeMode_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = (UIElement) d;
-            uie.pushEdgeMode();
+            uie.PushEdgeMode();
         }
 
-        private void pushEdgeMode()
+        private void PushEdgeMode()
         {
-            base.VisualEdgeMode = RenderOptions.GetEdgeMode(this);
+            VisualEdgeMode = RenderOptions.GetEdgeMode(this);
         }
 
         private static void BitmapScalingMode_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = (UIElement) d;
-            uie.pushBitmapScalingMode();
+            uie.PushBitmapScalingMode();
         }
 
-        private void pushBitmapScalingMode()
+        private void PushBitmapScalingMode()
         {
-            base.VisualBitmapScalingMode = RenderOptions.GetBitmapScalingMode(this);
+            VisualBitmapScalingMode = RenderOptions.GetBitmapScalingMode(this);
         }
 
         private static void ClearTypeHint_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = (UIElement) d;
-            uie.pushClearTypeHint();
+            uie.PushClearTypeHint();
         }
 
-        private void pushClearTypeHint()
+        private void PushClearTypeHint()
         {
-            base.VisualClearTypeHint = RenderOptions.GetClearTypeHint(this);
+            VisualClearTypeHint = RenderOptions.GetClearTypeHint(this);
         }
 
         private static void TextHintingMode_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = (UIElement) d;
-            uie.pushTextHintingMode();
+            uie.PushTextHintingMode();
         }
 
-        private void pushTextHintingMode()
+        private void PushTextHintingMode()
         {
-            base.VisualTextHintingMode = TextOptionsInternal.GetTextHintingMode(this);
+            VisualTextHintingMode = TextOptionsInternal.GetTextHintingMode(this);
         }
 
         /// <summary>
@@ -2904,7 +2926,7 @@ namespace System.Windows
         private static void OnCacheModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = (UIElement)d;
-            uie.pushCacheMode();
+            uie.PushCacheMode();
         }
 
         /// <summary>
@@ -2917,24 +2939,24 @@ namespace System.Windows
             set { SetValue(CacheModeProperty, value); }
         }
 
-        private void pushCacheMode()
+        private void PushCacheMode()
         {
-            base.VisualCacheMode = CacheMode;
+            VisualCacheMode = CacheMode;
         }
 
         /// <summary>
-        /// pushVisualEffects - helper to propagate cacheMode, Opacity, OpacityMask, BitmapEffect, BitmapScalingMode and EdgeMode
+        /// PushVisualEffects - helper to propagate cacheMode, Opacity, OpacityMask, BitmapEffect, BitmapScalingMode and EdgeMode
         /// </summary>
-        private void pushVisualEffects()
+        private void PushVisualEffects()
         {
-            pushCacheMode();
-            pushOpacity();
-            pushOpacityMask();
-            pushBitmapEffect();
-            pushEdgeMode();
-            pushBitmapScalingMode();
-            pushClearTypeHint();
-            pushTextHintingMode();
+            PushCacheMode();
+            PushOpacity();
+            PushOpacityMask();
+            PushBitmapEffect();
+            PushEdgeMode();
+            PushBitmapScalingMode();
+            PushClearTypeHint();
+            PushTextHintingMode();
         }
 
         #region Uid
@@ -2980,7 +3002,7 @@ namespace System.Windows
 
             Visibility newVisibility = (Visibility) e.NewValue;
             uie.VisibilityCache = newVisibility;
-            uie.switchVisibilityIfNeeded(newVisibility);
+            uie.SwitchVisibilityIfNeeded(newVisibility);
 
             // The IsVisible property depends on this property.
             uie.UpdateIsVisibleCache();
@@ -3002,7 +3024,7 @@ namespace System.Windows
             set { SetValue(VisibilityProperty, VisibilityBoxes.Box(value)); }
         }
 
-        private void switchVisibilityIfNeeded(Visibility visibility)
+        private void SwitchVisibilityIfNeeded(Visibility visibility)
         {
             switch(visibility)
             {
@@ -3082,17 +3104,17 @@ namespace System.Windows
                 ich.OnChildDesiredSizeChanged(this);
         }
 
-        private void ensureClip(Size layoutSlotSize)
+        private void EnsureClip(Size layoutSlotSize)
         {
             Geometry clipGeometry = GetLayoutClip(layoutSlotSize);
 
-            if(Clip != null)
+            if(Clip is not null)
             {
-                if(clipGeometry == null)
+                if(clipGeometry is null)
                     clipGeometry = Clip;
                 else
                 {
-                    CombinedGeometry cg = new CombinedGeometry(
+                    CombinedGeometry cg = new(
                         GeometryCombineMode.Intersect,
                         clipGeometry,
                         Clip);

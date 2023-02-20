@@ -630,13 +630,13 @@ namespace System.Windows.Media
 
         #region Internal Methods
 
+        internal Span<double> ToSpan()
+        {
+            if (_collection.ToArray() is not { } array) return Span<double>.Empty;
 
-
-
-
-
-
-
+            ref double reference = ref MemoryMarshal.GetArrayDataReference(array);
+            return MemoryMarshal.CreateSpan(ref reference, array.Length);
+        }
 
         #endregion Internal Methods
 
@@ -933,6 +933,16 @@ namespace System.Windows.Media
         public DoubleCollection(int capacity)
         {
             _collection = new FrugalStructList<double>(capacity);
+        }
+
+        internal DoubleCollection(ReadOnlySpan<double> data)
+        {
+            var dataLength = data.Length;
+            _collection = new FrugalStructList<double>(dataLength);
+            for (int i = 0; i < dataLength; i++)
+            {
+                _collection[i] = data[i];
+            }
         }
 
         /// <summary>

@@ -1360,6 +1360,7 @@
     <Compile Include="System\Windows\Media3D\Generated\Visual3D.cs" />
     <Compile Include="System\Windows\Navigation\BaseUriHelper.cs" />
     <Compile Include="System\Windows\Resources\AssemblyAssociatedContentFileAttribute.cs" />
+    <Compile Include="ThrowHelper.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -147,36 +147,32 @@ namespace MS.Internal
         [FriendAccessAllowed]
         internal static void InvalidateAutomationAncestors(DependencyObject o)
         {
-            UIElement e = null;
-            UIElement3D e3d = null;
-            ContentElement ce = null;
-
-            Stack<DependencyObject> branchNodeStack = new Stack<DependencyObject>();
+            Stack<DependencyObject> branchNodeStack = new();
             bool continueInvalidation = true;
 
             while (o != null && continueInvalidation)
             {
-                continueInvalidation &= InvalidateAutomationPeer(o, out e, out ce, out e3d);
+                continueInvalidation &= InvalidateAutomationPeer(o, out UIElement e, out ContentElement ce, out UIElement3D e3d);
 
                 //
                 // Invoke InvalidateAutomationAncestorsCore
                 //
-                bool continuePastVisualTree = false;
-                if (e != null)
+                bool continuePastVisualTree;
+                if (e is not null)
                 {
                     continueInvalidation &= e.InvalidateAutomationAncestorsCore(branchNodeStack, out continuePastVisualTree);
 
                     // Get element's visual parent
                     o = e.GetUIParent(continuePastVisualTree);
                 }
-                else if (ce != null)
+                else if (ce is not null)
                 {
                     continueInvalidation &= ce.InvalidateAutomationAncestorsCore(branchNodeStack, out continuePastVisualTree);
 
                     // Get element's visual parent
-                    o = (DependencyObject)ce.GetUIParent(continuePastVisualTree);
+                    o = ce.GetUIParent(continuePastVisualTree);
                 }
-                else if (e3d != null)
+                else if (e3d is not null)
                 {
                     continueInvalidation &= e3d.InvalidateAutomationAncestorsCore(branchNodeStack, out continuePastVisualTree);
 
@@ -192,49 +188,39 @@ namespace MS.Internal
             out ContentElement ce,
             out UIElement3D e3d)
         {
-            e = null;
             ce = null;
             e3d = null;
 
             AutomationPeer ap = null;
 
             e = o as UIElement;
-            if (e != null)
+            if (e is not null)
             {
-                if (e.HasAutomationPeer == true)
+                if (e.HasAutomationPeer)
                     ap = e.GetAutomationPeer();
             }
             else
             {
                 ce = o as ContentElement;
-                if (ce != null)
+                if (ce is not null)
                 {
-                    if (ce.HasAutomationPeer == true)
+                    if (ce.HasAutomationPeer)
                         ap = ce.GetAutomationPeer();
                 }
                 else
                 {
                     e3d = o as UIElement3D;
-                    if (e3d != null)
-                    {
-                        if (e3d.HasAutomationPeer == true)
-                            ap = e3d.GetAutomationPeer();
-                    }
+                    if (e3d is { HasAutomationPeer: true }) ap = e3d.GetAutomationPeer();
                 }
             }
 
-            if (ap != null)
-            {
-                ap.InvalidateAncestorsRecursive();
+            if (ap is null) return true;
+            ap.InvalidateAncestorsRecursive();
 
-                // Check for parent being non-null while stopping as we don't want to stop in between due to peers not connected to AT
-                // those peers sometimes gets created to serve for various patterns.
-                // e.g: ScrollViewAutomationPeer for Scroll Pattern in case of ListBox.
-                if (ap.GetParent() != null)
-                    return false;
-            }
-
-            return true;
+            // Check for parent being non-null while stopping as we don't want to stop in between due to peers not connected to AT
+            // those peers sometimes gets created to serve for various patterns.
+            // e.g: ScrollViewAutomationPeer for Scroll Pattern in case of ListBox.
+            return ap.GetParent() == null;
         }
     }
 }

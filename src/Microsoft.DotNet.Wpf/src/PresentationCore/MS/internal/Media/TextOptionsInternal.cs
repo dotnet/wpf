@@ -10,9 +10,12 @@
 //
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using MS.Internal.PresentationCore;
+using PresentationCore;
 
 namespace MS.Internal.Media
 {
@@ -43,9 +46,9 @@ namespace MS.Internal.Media
         [FriendAccessAllowed]   // used by Framework
         public static void SetTextHintingMode(DependencyObject element, TextHintingMode value)
         {
-            if (element == null)
+            if (element is null)
             {
-                throw new ArgumentNullException("element");
+                ThrowHelper.ThrowArgumentNullException(nameof(element));
             }
 
             element.SetValue(TextHintingModeProperty, value);
@@ -54,9 +57,9 @@ namespace MS.Internal.Media
         [FriendAccessAllowed]   // used by Framework
         public static TextHintingMode GetTextHintingMode(DependencyObject element)
         {
-            if (element == null)
+            if (element is null)
             {
-                throw new ArgumentNullException("element");
+                ThrowHelper.ThrowArgumentNullException(nameof(element));
             }
 
             return (TextHintingMode)element.GetValue(TextHintingModeProperty);

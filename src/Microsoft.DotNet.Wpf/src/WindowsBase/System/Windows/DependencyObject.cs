@@ -2918,23 +2918,18 @@ namespace System.Windows
         {
             IsInPropertyInitialization = false;
 
-            if (_effectiveValues != null)
-            {
-                uint effectiveValuesCount = EffectiveValuesCount;
-                if (effectiveValuesCount != 0)
-                {
-                    uint endLength = effectiveValuesCount;
-                    if (((float) endLength / (float) _effectiveValues.Length) < 0.8)
-                    {
-                        // For thread-safety, sealed DOs can't modify _effectiveValues.
-                        Debug.Assert(!DO_Sealed, "A Sealed DO cannot be modified");
+            if (_effectiveValues is null) return;
+            uint effectiveValuesCount = EffectiveValuesCount;
+            if (effectiveValuesCount == 0) return;
 
-                        EffectiveValueEntry[] destEntries = new EffectiveValueEntry[endLength];
-                        Array.Copy(_effectiveValues, 0, destEntries, 0, effectiveValuesCount);
-                        _effectiveValues = destEntries;
-                    }
-                }
-            }
+            if (!(effectiveValuesCount / (float)_effectiveValues.Length < 0.8)) return;
+
+            // For thread-safety, sealed DOs can't modify _effectiveValues.
+            Debug.Assert(!DO_Sealed, "A Sealed DO cannot be modified");
+
+            EffectiveValueEntry[] destEntries = new EffectiveValueEntry[effectiveValuesCount];
+            Array.Copy(_effectiveValues, 0, destEntries, 0, effectiveValuesCount);
+            _effectiveValues = destEntries;
         }
 
 

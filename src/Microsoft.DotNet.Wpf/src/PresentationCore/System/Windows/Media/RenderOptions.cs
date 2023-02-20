@@ -13,8 +13,11 @@ using MS.Win32.PresentationCore;
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Security;
 using System.Windows.Interop;
+using PresentationCore;
 
 namespace System.Windows.Media
 {
@@ -45,7 +48,10 @@ namespace System.Windows.Media
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static EdgeMode GetEdgeMode(DependencyObject target)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            if (target is null)
+            {
+                ThrowHelper.ThrowArgumentNullException(nameof(target));
+            }
             return (EdgeMode)target.GetValue(EdgeModeProperty);
         }
 
@@ -54,7 +60,10 @@ namespace System.Windows.Media
         /// </summary>
         public static void SetEdgeMode(DependencyObject target, EdgeMode edgeMode)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            if (target is null)
+            {
+                ThrowHelper.ThrowArgumentNullException(nameof(target));
+            }
             target.SetValue(EdgeModeProperty, edgeMode);
         }
 
@@ -78,7 +87,10 @@ namespace System.Windows.Media
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static BitmapScalingMode GetBitmapScalingMode(DependencyObject target)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            if (target is null)
+            {
+                ThrowHelper.ThrowArgumentNullException(nameof(target));
+            }
             return (BitmapScalingMode)target.GetValue(BitmapScalingModeProperty);
         }
 
@@ -111,7 +123,10 @@ namespace System.Windows.Media
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static ClearTypeHint GetClearTypeHint(DependencyObject target)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            if (target is null)
+            {
+                ThrowHelper.ThrowArgumentNullException(nameof(target));
+            }
             return (ClearTypeHint)target.GetValue(ClearTypeHintProperty);
         }
 

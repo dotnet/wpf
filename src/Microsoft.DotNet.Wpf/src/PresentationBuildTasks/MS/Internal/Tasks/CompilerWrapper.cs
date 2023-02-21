@@ -128,6 +128,14 @@ namespace MS.Internal
             set { _mc.XamlDebuggingInformation = value; }
         }
 
+        /// <summary>
+        /// Sets the checksum algorithm used in code-behind.
+        /// </summary>
+        internal string ChecksumAlgorithm
+        {
+            set => _mc.ChecksumAlgorithm = value;
+        }
+
         // <summary>
         // Controls how to generate localization information for each xaml file.
         // Valid values: None, CommentsOnly, All.

@@ -440,6 +440,11 @@ namespace Microsoft.Build.Tasks.Windows
         }
 
         /// <summary>
+        /// Gets or sets the checksum algorithm used in code-behind.
+        /// </summary>
+        public string ChecksumAlgorithm { get; set; }
+
+        /// <summary>
         /// Keep a list of Build control files.
         /// If one of them is changed since last build, it would trigger recompilation of all the xaml files.
         /// Such as WinFX target file change could require a rebuild etc.
@@ -1234,6 +1239,7 @@ namespace Microsoft.Build.Tasks.Windows
                     compilerWrapper.TaskLogger = Log;
                     compilerWrapper.UnknownErrorID = UnknownErrorID;
                     compilerWrapper.XamlDebuggingInformation = XamlDebuggingInformation;
+                    compilerWrapper.ChecksumAlgorithm = ChecksumAlgorithm;
 
                     compilerWrapper.TaskFileService = TaskFileService;
 

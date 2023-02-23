@@ -343,7 +343,7 @@ namespace System.Windows.Documents
             Debug.Assert(translatedPageNo >= 0 && translatedPageNo < doc.PageCount);
             
             PageContent pageContent = doc.Pages[translatedPageNo];
-            Stream pageStream = pageContent.GetPageStream();
+            using Stream pageStream = pageContent.GetPageStream();
             bool reverseRTL = true;
             if (doc.HasExplicitStructure)
             {

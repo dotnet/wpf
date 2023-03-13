@@ -193,7 +193,7 @@ namespace MS.Internal.Controls
         {
             //
             // Set to null no matter what we return, to prevent the marshaller
-            // from going crazy if the pointer points to random stuff.
+            // from behaving erroneously if the pointer points to random stuff.
             pstrUrlOut = null;
             return NativeMethods.E_NOTIMPL;
         }
@@ -202,7 +202,7 @@ namespace MS.Internal.Controls
         {
             //
             // Set to null no matter what we return, to prevent the marshaller
-            // from going crazy if the pointer points to random stuff.
+            // from behaving erroneously if the pointer points to random stuff.
             ppDORet = null;
             return NativeMethods.E_NOTIMPL;
         }

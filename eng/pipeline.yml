@@ -224,7 +224,7 @@ jobs:
           TargetFolder: '$(System.DefaultWorkingDirectory)\Results\'
           CleanTargetFolder: true
           OverWrite: true
-        condition: eq(variables['_Platform'], 'x64')
+        condition: and(eq(variables['_Platform'], 'x64'), eq(variables['_BuildConfig'], 'Release'))
         
       - task: CopyFiles@2
         inputs:
@@ -233,19 +233,19 @@ jobs:
           TargetFolder: '$(System.DefaultWorkingDirectory)\ResultsX86\'
           CleanTargetFolder: true
           OverWrite: true
-        condition: eq(variables['_Platform'], 'x86')
+        condition: and(eq(variables['_Platform'], 'x86'), eq(variables['_BuildConfig'], 'Release'))
 
       - task: PublishPipelineArtifact@1
         inputs:
           artifactName: 'TestResultsX64'
           targetPath: '$(System.DefaultWorkingDirectory)\Results\'      
-        condition: eq(variables['_Platform'], 'x64')
+        condition: and(eq(variables['_Platform'], 'x64'), eq(variables['_BuildConfig'], 'Release'))
 
       - task: PublishPipelineArtifact@1
         inputs:
           artifactName: 'TestResultsX86'
           targetPath: '$(System.DefaultWorkingDirectory)\ResultsX86\'
-        condition: eq(variables['_Platform'], 'x86')
+        condition: and(eq(variables['_Platform'], 'x86'), eq(variables['_BuildConfig'], 'Release'))
           
       - task: PublishTestResults@2
         inputs:

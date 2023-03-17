@@ -224,7 +224,7 @@ jobs:
           TargetFolder: '$(System.DefaultWorkingDirectory)\Results\'
           CleanTargetFolder: true
           OverWrite: true
-        condition: and(eq(variables['_Platform'], 'x64'), eq(variables['_BuildConfig'], 'Release'))
+        condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x64'), eq(variables['_BuildConfig'], 'Release'))
         
       - task: CopyFiles@2
         inputs:
@@ -233,19 +233,19 @@ jobs:
           TargetFolder: '$(System.DefaultWorkingDirectory)\ResultsX86\'
           CleanTargetFolder: true
           OverWrite: true
-        condition: and(eq(variables['_Platform'], 'x86'), eq(variables['_BuildConfig'], 'Release'))
+        condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x86'), eq(variables['_BuildConfig'], 'Release'))
 
       - task: PublishPipelineArtifact@1
         inputs:
           artifactName: 'TestResultsX64'
           targetPath: '$(System.DefaultWorkingDirectory)\Results\'      
-        condition: and(eq(variables['_Platform'], 'x64'), eq(variables['_BuildConfig'], 'Release'))
+        condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x64'), eq(variables['_BuildConfig'], 'Release'))
 
       - task: PublishPipelineArtifact@1
         inputs:
           artifactName: 'TestResultsX86'
           targetPath: '$(System.DefaultWorkingDirectory)\ResultsX86\'
-        condition: and(eq(variables['_Platform'], 'x86'), eq(variables['_BuildConfig'], 'Release'))
+        condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x86'), eq(variables['_BuildConfig'], 'Release'))
           
       - task: PublishTestResults@2
         inputs:
@@ -253,3 +253,4 @@ jobs:
           testResultsFiles: 'testResults.xml'
           searchFolder: '$(System.DefaultWorkingDirectory)\Results\'
           testRunTitle: 'CTP results'
+          condition: eq(variables['System.TeamProject'], 'public')

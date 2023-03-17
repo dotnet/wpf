@@ -25,7 +25,7 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>2bacbca96ddcf7ae809a0e32a0d5dbffd6354199</Sha>
     </Dependency>
-    <Dependency Name="System.Drawing.Common" Version="8.0.0-preview.3.23161.1" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="System.Drawing.Common" Version="8.0.0-preview.3.23161.1">
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>2bacbca96ddcf7ae809a0e32a0d5dbffd6354199</Sha>
     </Dependency>

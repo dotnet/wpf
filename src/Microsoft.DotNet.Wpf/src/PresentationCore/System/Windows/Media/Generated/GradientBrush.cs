@@ -43,6 +43,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media
 {
+
+
+
     abstract partial class GradientBrush : Brush
     {
         //------------------------------------------------------
@@ -105,6 +108,10 @@ namespace System.Windows.Media
         }
         private static void GradientStopsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             GradientBrush target = ((GradientBrush) d);
 
 
@@ -297,8 +304,9 @@ namespace System.Windows.Media
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app.
+            //
             Debug.Assert(s_GradientStops == null || s_GradientStops.IsFrozen,
-                "Detected context bound default value GradientBrush.s_GradientStops (See OS Bug #947272).");
+                "Detected context bound default value GradientBrush.s_GradientStops.");
 
 
             // Initializations
@@ -341,6 +349,9 @@ namespace System.Windows.Media
                                    /* coerceValueCallback */ null);
         }
 
+
+
         #endregion Constructors
+
     }
 }

@@ -11,7 +11,7 @@ if "%HostArch%"=="x86" set HostArch=i386
 set HostArch=i386
 
 set CspSrcPath=%_NtBinDir%\wpf\src\Graphics\tools\csp
-set CspExePath=%_NTTREE%\wpf
+if "%CspExePath%" == "" set CspExePath=%_NTTREE%\wpf
 @echo %CspExePath%
 
 if not exist %CspExePath%\csp.exe echo GenerateFiles.cmd(0) : error : csp.exe not found (need to build in %CspSrcPath%)& goto :eof
@@ -21,17 +21,8 @@ pushd %~dp0\..
 
 call %~dp0\SetClrPath.cmd
 
-copy %CspExePath%\csp.exe %clrpath%
-copy csp.exe.config %clrpath%
-copy csp.exe.manifest %clrpath%
-
-:: Register for skipping strong-name validation for CSP
-:: We don't unregister at the end in case somebody is using CSP separately and
-:: has registered separately.
-%clrpath%\sn.exe -Vr %clrpath%\csp.exe
-
 :: Execute the MilCodeGen project
-%DebuggerHook% %clrpath%\csp.exe %*
+%DebuggerHook% "%CspExePath%\csp.exe" %*
 
 :: It's really annoying when csp.exe fails, but doesn't emit an error message.
 :: This line ensures that an error message will be emitted when csp.exe fails.

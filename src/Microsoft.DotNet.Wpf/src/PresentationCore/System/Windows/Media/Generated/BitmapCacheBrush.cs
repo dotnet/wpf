@@ -43,6 +43,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media
 {
+
+
+
     sealed partial class BitmapCacheBrush : Brush
     {
         //------------------------------------------------------
@@ -91,6 +94,10 @@ namespace System.Windows.Media
         }
         private static void BitmapCachePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -387,6 +394,7 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
+
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_BITMAPCACHEBRUSH))
                 {
                     Transform vTransform = Transform;
@@ -404,9 +412,11 @@ namespace System.Windows.Media
                 }
 
                 return _duceResource.GetHandle(channel);
-}
+
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
+
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -420,8 +430,10 @@ namespace System.Windows.Media
                     Visual vInternalTarget = InternalTarget;
                     if (vInternalTarget != null) vInternalTarget.ReleaseOnChannelForCyclicBrush(this, channel);
                     ReleaseOnChannelAnimations(channel);
-}
-}
+
+                }
+
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.
@@ -531,8 +543,8 @@ namespace System.Windows.Media
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app.  (Windows OS 
-
+            // of your app.
+            //
 
 
             // Initializations
@@ -585,6 +597,9 @@ namespace System.Windows.Media
                                    /* coerceValueCallback */ null);
         }
 
+
+
         #endregion Constructors
+
     }
 }

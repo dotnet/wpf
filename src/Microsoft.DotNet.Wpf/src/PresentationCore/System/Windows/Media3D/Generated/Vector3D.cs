@@ -39,6 +39,8 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Media3D
 {
+
+
     [Serializable]
     [TypeConverter(typeof(Vector3DConverter))]
     [ValueSerializer(typeof(Vector3DValueSerializer))] // Used by MarkupWriter
@@ -211,7 +213,8 @@ namespace System.Windows.Media.Media3D
             {
                 _x = value;
             }
-}
+
+        }
 
         /// <summary>
         ///     Y - double.  Default value is 0.
@@ -227,7 +230,8 @@ namespace System.Windows.Media.Media3D
             {
                 _y = value;
             }
-}
+
+        }
 
         /// <summary>
         ///     Z - double.  Default value is 0.
@@ -243,7 +247,8 @@ namespace System.Windows.Media.Media3D
             {
                 _z = value;
             }
-}
+
+        }
 
         #endregion Public Properties
 
@@ -296,6 +301,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         public override string ToString()
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, null /* format provider */);
         }
@@ -309,6 +315,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         public string ToString(IFormatProvider provider)
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, provider);
         }
@@ -324,6 +331,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         string IFormattable.ToString(string format, IFormatProvider provider)
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(format, provider);
         }
@@ -378,6 +386,9 @@ namespace System.Windows.Media.Media3D
         internal double _y;
         internal double _z;
 
+
+
+
         #endregion Internal Fields
 
 
@@ -394,5 +405,6 @@ namespace System.Windows.Media.Media3D
 
 
         #endregion Constructors
+
     }
 }

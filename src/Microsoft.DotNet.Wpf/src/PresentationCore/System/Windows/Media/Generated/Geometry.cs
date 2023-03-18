@@ -43,6 +43,8 @@ using Float = System.Single;
 
 namespace System.Windows.Media
 {
+
+
     [TypeConverter(typeof(GeometryConverter))]
     [ValueSerializer(typeof(GeometryValueSerializer))] // Used by MarkupWriter
     abstract partial class Geometry : Animatable, IFormattable, DUCE.IResource
@@ -86,6 +88,7 @@ namespace System.Windows.Media
 
         private static void TransformPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
             Geometry target = ((Geometry) d);
 
 
@@ -368,10 +371,10 @@ namespace System.Windows.Media
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app.  
-
+            // of your app.
+            //
             Debug.Assert(s_Transform == null || s_Transform.IsFrozen,
-                "Detected context bound default value Geometry.s_Transform (See OS Bug #947272).");
+                "Detected context bound default value Geometry.s_Transform.");
 
 
             // Initializations
@@ -387,6 +390,9 @@ namespace System.Windows.Media
                                    /* coerceValueCallback */ null);
         }
 
+
+
         #endregion Constructors
+
     }
 }

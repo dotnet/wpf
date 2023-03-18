@@ -424,7 +424,8 @@ namespace System.Windows
                     EventHandlersStoreField.ClearValue(this);
                     WriteFlag(CoreFlags.ExistsEventHandlersStore, false);
                 }
-}
+
+            }
         }
 
         /// <summary>

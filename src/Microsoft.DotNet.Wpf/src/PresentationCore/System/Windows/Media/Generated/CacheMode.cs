@@ -43,6 +43,8 @@ using Float = System.Single;
 
 namespace System.Windows.Media
 {
+
+
     [TypeConverter(typeof(CacheModeConverter))]
     [ValueSerializer(typeof(CacheModeValueSerializer))] // Used by MarkupWriter
     abstract partial class CacheMode : Animatable, DUCE.IResource
@@ -179,6 +181,7 @@ namespace System.Windows.Media
             return GetChannelCore(index);
         }
 
+
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -237,5 +240,6 @@ namespace System.Windows.Media
 
 
         #endregion Constructors
+
     }
 }

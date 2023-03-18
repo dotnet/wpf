@@ -29,6 +29,8 @@ using Float = System.Single;
 
 namespace System.Windows
 {
+
+
     [Serializable]
     [TypeConverter(typeof(RectConverter))]
     [ValueSerializer(typeof(RectValueSerializer))] // Used by MarkupWriter
@@ -267,6 +269,7 @@ namespace System.Windows
         /// </returns>
         public override string ToString()
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, null /* format provider */);
         }
@@ -280,6 +283,7 @@ namespace System.Windows
         /// </returns>
         public string ToString(IFormatProvider provider)
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, provider);
         }
@@ -295,6 +299,7 @@ namespace System.Windows
         /// </returns>
         string IFormattable.ToString(string format, IFormatProvider provider)
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(format, provider);
         }
@@ -356,6 +361,9 @@ namespace System.Windows
         internal double _width;
         internal double _height;
 
+
+
+
         #endregion Internal Fields
 
 
@@ -372,5 +380,6 @@ namespace System.Windows
 
 
         #endregion Constructors
+
     }
 }

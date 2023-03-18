@@ -42,6 +42,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Animation
 {
+
+
+
     abstract partial class Timeline : Animatable
     {
         //------------------------------------------------------
@@ -69,6 +72,9 @@ namespace System.Windows.Media.Animation
         {
             return (Timeline)base.CloneCurrentValue();
         }
+
+
+
 
         #endregion Public Methods
 
@@ -175,5 +181,6 @@ namespace System.Windows.Media.Animation
 
 
         #endregion Constructors
+
     }
 }

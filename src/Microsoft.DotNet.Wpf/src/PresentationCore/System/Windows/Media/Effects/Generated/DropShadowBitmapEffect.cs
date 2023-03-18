@@ -41,6 +41,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Effects
 {
+
+
+
     sealed partial class DropShadowBitmapEffect : BitmapEffect
     {
         //------------------------------------------------------
@@ -343,7 +346,7 @@ namespace System.Windows.Media.Effects
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app.
-
+            //
 
 
             // Initializations
@@ -404,6 +407,9 @@ namespace System.Windows.Media.Effects
                                    /* coerceValueCallback */ null);
         }
 
+
+
         #endregion Constructors
+
     }
 }

@@ -43,6 +43,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media
 {
+
+
+
     sealed partial class DrawingGroup : Drawing
     {
         //------------------------------------------------------
@@ -84,6 +87,10 @@ namespace System.Windows.Media
 
         private static void ChildrenPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -171,6 +178,10 @@ namespace System.Windows.Media
         }
         private static void ClipGeometryPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -222,6 +233,10 @@ namespace System.Windows.Media
         }
         private static void OpacityMaskPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -266,6 +281,10 @@ namespace System.Windows.Media
         }
         private static void TransformPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -310,6 +329,10 @@ namespace System.Windows.Media
         }
         private static void GuidelineSetPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -361,6 +384,10 @@ namespace System.Windows.Media
         }
         private static void BitmapEffectPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             DrawingGroup target = ((DrawingGroup) d);
 
 
@@ -368,6 +395,10 @@ namespace System.Windows.Media
         }
         private static void BitmapEffectInputPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             DrawingGroup target = ((DrawingGroup) d);
 
 
@@ -623,6 +654,7 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
+
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_DRAWINGGROUP))
                 {
                     Geometry vClipGeometry = ClipGeometry;
@@ -651,9 +683,11 @@ namespace System.Windows.Media
                 }
 
                 return _duceResource.GetHandle(channel);
-}
+
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
+
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -678,8 +712,10 @@ namespace System.Windows.Media
                         }
                     }
                     ReleaseOnChannelAnimations(channel);
-}
-}
+
+                }
+
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.
@@ -846,10 +882,10 @@ namespace System.Windows.Media
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app.  (Windows OS 
-
+            // of your app.
+            //
             Debug.Assert(s_Children == null || s_Children.IsFrozen,
-                "Detected context bound default value DrawingGroup.s_Children (See OS Bug #947272).");
+                "Detected context bound default value DrawingGroup.s_Children.");
 
 
             RenderOptions.EdgeModeProperty.OverrideMetadata(
@@ -943,6 +979,9 @@ namespace System.Windows.Media
                                    /* coerceValueCallback */ null);
         }
 
+
+
         #endregion Constructors
+
     }
 }

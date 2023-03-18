@@ -41,6 +41,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Effects
 {
+
+
+
     sealed partial class EmbossBitmapEffect : BitmapEffect
     {
         //------------------------------------------------------
@@ -234,8 +237,8 @@ namespace System.Windows.Media.Effects
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app
-
+            // of your app.
+            //
 
 
             // Initializations
@@ -260,6 +263,9 @@ namespace System.Windows.Media.Effects
                                    /* coerceValueCallback */ null);
         }
 
+
+
         #endregion Constructors
+
     }
 }

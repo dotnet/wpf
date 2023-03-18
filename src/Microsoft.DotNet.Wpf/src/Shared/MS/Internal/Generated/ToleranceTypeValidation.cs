@@ -34,14 +34,12 @@ namespace System.Windows.Media
         ///     Enumeration value to validate.
         /// </param>    
         /// <returns> 'true' if the enumeration contains a valid value, 'false' otherwise. </returns>
-        public static bool IsStretchValid(object valueObject)
+        public static bool IsToleranceTypeValid(object valueObject)
         {
-            Stretch value = (Stretch) valueObject;
+            ToleranceType value = (ToleranceType) valueObject;
 
-            return (value == Stretch.None) || 
-                   (value == Stretch.Fill) || 
-                   (value == Stretch.Uniform) || 
-                   (value == Stretch.UniformToFill);
+            return (value == ToleranceType.Absolute) || 
+                   (value == ToleranceType.Relative);
         }                                
     }
 }

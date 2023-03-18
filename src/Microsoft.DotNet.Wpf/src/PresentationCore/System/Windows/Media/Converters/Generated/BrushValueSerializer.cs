@@ -36,7 +36,6 @@ using System.Windows.Media.Converters;
 using System.Security;
 using SR=MS.Internal.PresentationCore.SR;
 using SRID=MS.Internal.PresentationCore.SRID;
-
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Media.Converters
@@ -60,6 +59,7 @@ namespace System.Windows.Media.Converters
         /// </summary>
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
+
             // When invoked by the serialization engine we can convert to string only for some instances
             if (!(value is Brush))
             {
@@ -70,7 +70,9 @@ namespace System.Windows.Media.Converters
 
             #pragma warning suppress 6506 // instance is obviously not null
             return instance.CanSerializeToString();
-}
+
+
+        }
 
         /// <summary>
         /// Converts a string into a Brush.
@@ -85,7 +87,8 @@ namespace System.Windows.Media.Converters
             {
                 return base.ConvertFromString( value, context );
             }
-}
+
+        }
 
         /// <summary>
         /// Converts the value into a string.
@@ -111,4 +114,8 @@ namespace System.Windows.Media.Converters
             return base.ConvertToString(value, context);
         }
     }
+
+
+
+
 }

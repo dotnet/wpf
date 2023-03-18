@@ -39,6 +39,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Media3D
 {
+
+
+
     abstract partial class Rotation3D : Animatable, IFormattable, DUCE.IResource
     {
         //------------------------------------------------------
@@ -242,6 +245,7 @@ namespace System.Windows.Media.Media3D
             return base.ToString();
         }
 
+
         #endregion Internal Properties
 
         //------------------------------------------------------
@@ -286,5 +290,6 @@ namespace System.Windows.Media.Media3D
 
 
         #endregion Constructors
+
     }
 }

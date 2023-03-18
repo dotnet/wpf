@@ -43,6 +43,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media
 {
+
+
+
     abstract partial class Drawing : Animatable, DUCE.IResource
     {
         //------------------------------------------------------
@@ -177,6 +180,7 @@ namespace System.Windows.Media
             return GetChannelCore(index);
         }
 
+
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -235,5 +239,6 @@ namespace System.Windows.Media
 
 
         #endregion Constructors
+
     }
 }

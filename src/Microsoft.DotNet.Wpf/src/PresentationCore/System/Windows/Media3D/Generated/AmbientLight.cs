@@ -39,6 +39,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Media3D
 {
+
+
+
     sealed partial class AmbientLight : Light
     {
         //------------------------------------------------------
@@ -166,6 +169,7 @@ namespace System.Windows.Media.Media3D
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
+
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_AMBIENTLIGHT))
                 {
                     Transform3D vTransform = Transform;
@@ -178,9 +182,11 @@ namespace System.Windows.Media.Media3D
                 }
 
                 return _duceResource.GetHandle(channel);
-}
+
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
+
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -189,8 +195,10 @@ namespace System.Windows.Media.Media3D
                     if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
-}
-}
+
+                }
+
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.
@@ -261,6 +269,8 @@ namespace System.Windows.Media.Media3D
 
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
 
+
+
         #endregion Internal Fields
 
 
@@ -277,5 +287,6 @@ namespace System.Windows.Media.Media3D
 
 
         #endregion Constructors
+
     }
 }

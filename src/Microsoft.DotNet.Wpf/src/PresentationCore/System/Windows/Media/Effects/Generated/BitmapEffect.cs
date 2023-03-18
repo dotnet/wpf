@@ -41,6 +41,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Effects
 {
+
+
+
     abstract partial class BitmapEffect : Animatable
     {
         //------------------------------------------------------
@@ -68,6 +71,9 @@ namespace System.Windows.Media.Effects
         {
             return (BitmapEffect)base.CloneCurrentValue();
         }
+
+
+
 
         #endregion Public Methods
 
@@ -174,5 +180,6 @@ namespace System.Windows.Media.Effects
 
 
         #endregion Constructors
+
     }
 }

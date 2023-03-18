@@ -36,7 +36,6 @@ using System.Windows.Media.Converters;
 using System.Security;
 using SR=MS.Internal.PresentationCore.SR;
 using SRID=MS.Internal.PresentationCore.SRID;
-
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Media
@@ -145,4 +144,5 @@ namespace System.Windows.Media
             return base.ConvertTo(context, culture, value, destinationType);
         }
     }
+
 }

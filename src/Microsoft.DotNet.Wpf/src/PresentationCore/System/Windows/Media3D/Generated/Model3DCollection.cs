@@ -179,7 +179,7 @@ namespace System.Windows.Media.Media3D
             // not in the collection.  Therefore we need to first verify the old value exists
             // before calling OnFreezablePropertyChanged.  Since we already need to locate
             // the item in the collection we keep the index and use RemoveAt(...) to do
-            // the work.#1016178)
+            // the work.  (Windows OS #1016178)
 
             // We use the public IndexOf to guard our UIContext since OnFreezablePropertyChanged
             // is only called conditionally.  IList.IndexOf returns -1 if the value is not found.
@@ -268,6 +268,7 @@ namespace System.Windows.Media.Media3D
 
                 if (!Object.ReferenceEquals(_collection[ index ], value))
                 {
+
                     Model3D oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
@@ -657,7 +658,8 @@ namespace System.Windows.Media.Media3D
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
@@ -678,7 +680,8 @@ namespace System.Windows.Media.Media3D
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
@@ -699,7 +702,8 @@ namespace System.Windows.Media.Media3D
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
@@ -720,7 +724,8 @@ namespace System.Windows.Media.Media3D
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
         /// </summary>
@@ -824,6 +829,7 @@ namespace System.Windows.Media.Media3D
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>
@@ -1022,5 +1028,6 @@ namespace System.Windows.Media.Media3D
         }
 
         #endregion Constructors
+
     }
 }

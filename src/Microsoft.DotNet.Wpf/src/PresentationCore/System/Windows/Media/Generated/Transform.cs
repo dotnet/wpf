@@ -43,6 +43,8 @@ using Float = System.Single;
 
 namespace System.Windows.Media
 {
+
+
     [TypeConverter(typeof(TransformConverter))]
     [ValueSerializer(typeof(TransformValueSerializer))] // Used by MarkupWriter
     abstract partial class Transform : GeneralTransform, DUCE.IResource
@@ -248,5 +250,6 @@ namespace System.Windows.Media
 
 
         #endregion Constructors
+
     }
 }

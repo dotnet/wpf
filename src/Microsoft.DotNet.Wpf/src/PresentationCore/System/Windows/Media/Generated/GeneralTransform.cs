@@ -43,6 +43,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media
 {
+
+
+
     abstract partial class GeneralTransform : Animatable, IFormattable
     {
         //------------------------------------------------------
@@ -189,6 +192,7 @@ namespace System.Windows.Media
             return base.ToString();
         }
 
+
         #endregion Internal Properties
 
         //------------------------------------------------------
@@ -233,5 +237,6 @@ namespace System.Windows.Media
 
 
         #endregion Constructors
+
     }
 }

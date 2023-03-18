@@ -120,5 +120,3 @@ enum MIL_RESOURCE_TYPE
     /* 0x62 */ TYPE_LAST = 98,
     /* ---- */ TYPE_FORCE_DWORD = 0xFFFFFFFF
 };
-
-

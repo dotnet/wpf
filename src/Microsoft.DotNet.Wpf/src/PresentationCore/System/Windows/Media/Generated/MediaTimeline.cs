@@ -43,6 +43,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media
 {
+
+
+
     partial class MediaTimeline : Timeline
     {
         //------------------------------------------------------
@@ -217,7 +220,7 @@ namespace System.Windows.Media
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app.
-
+            //
 
 
             // Initializations
@@ -233,6 +236,9 @@ namespace System.Windows.Media
                                    /* coerceValueCallback */ null);
         }
 
+
+
         #endregion Constructors
+
     }
 }

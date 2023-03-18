@@ -39,6 +39,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Media3D
 {
+
+
+
     sealed partial class GeneralTransform3DGroup : GeneralTransform3D
     {
         //------------------------------------------------------
@@ -200,9 +203,9 @@ namespace System.Windows.Media.Media3D
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app.
-
+            //
             Debug.Assert(s_Children == null || s_Children.IsFrozen,
-                "Detected context bound default value GeneralTransform3DGroup.s_Children (See OS Bug #947272).");
+                "Detected context bound default value GeneralTransform3DGroup.s_Children.");
 
 
             // Initializations
@@ -218,6 +221,9 @@ namespace System.Windows.Media.Media3D
                                    /* coerceValueCallback */ null);
         }
 
+
+
         #endregion Constructors
+
     }
 }

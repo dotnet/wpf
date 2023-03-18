@@ -39,6 +39,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Media3D
 {
+
+
+
     abstract partial class Transform3D : GeneralTransform3D, DUCE.IResource
     {
         //------------------------------------------------------
@@ -173,6 +176,7 @@ namespace System.Windows.Media.Media3D
             return GetChannelCore(index);
         }
 
+
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -231,5 +235,6 @@ namespace System.Windows.Media.Media3D
 
 
         #endregion Constructors
+
     }
 }

@@ -42,6 +42,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Animation
 {
+
+
+
     partial class ParallelTimeline : TimelineGroup
     {
         //------------------------------------------------------
@@ -106,6 +109,8 @@ namespace System.Windows.Media.Animation
         {
             return new ParallelTimeline();
         }
+
+
 
         #endregion ProtectedMethods
 
@@ -183,5 +188,6 @@ namespace System.Windows.Media.Animation
 
 
         #endregion Constructors
+
     }
 }

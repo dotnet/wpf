@@ -514,5 +514,6 @@ namespace System.Windows.Media
         {
             Debug.Assert(false);
         }
-}
+
+    }
 }

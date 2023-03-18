@@ -133,6 +133,8 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public void Insert(int index, Point3D value)
         {
+
+
             WritePreamble();
             _collection.Insert(index, value);
 
@@ -210,6 +212,8 @@ namespace System.Windows.Media.Media3D
             }
             set
             {
+
+
                 WritePreamble();
                 _collection[ index ] = value;
 
@@ -559,7 +563,8 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourcePoint3DCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
@@ -577,7 +582,8 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourcePoint3DCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
@@ -595,7 +601,8 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourcePoint3DCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
@@ -613,7 +620,8 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourcePoint3DCollection._collection[i]);
             }
-}
+
+        }
 
 
         #endregion ProtectedMethods
@@ -699,6 +707,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         internal string ConvertToString(string format, IFormatProvider provider)
         {
+
             if (_collection.Count == 0)
             {
                 return String.Empty;
@@ -807,6 +816,7 @@ namespace System.Windows.Media.Media3D
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>
@@ -947,6 +957,7 @@ namespace System.Windows.Media.Media3D
 
             if (collection != null)
             {
+
                 ICollection<Point3D> icollectionOfT = collection as ICollection<Point3D>;
 
                 if (icollectionOfT != null)
@@ -967,9 +978,12 @@ namespace System.Windows.Media.Media3D
 
                         foreach (Point3D item in collection)
                         {
+
                             _collection.Add(item);
                         }
-}
+
+
+                    }
                 }
 
 
@@ -987,5 +1001,6 @@ namespace System.Windows.Media.Media3D
         }
 
         #endregion Constructors
+
     }
 }

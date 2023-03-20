@@ -291,7 +291,7 @@ namespace System.Windows.Navigation
 
                 if ((count > 4) || (count < 2))
                 {
-                    throw new UriFormatException(SR.Get(SRID.WrongFirstSegment));
+                    throw new UriFormatException(SR.WrongFirstSegment);
                 }
 
                 //
@@ -312,7 +312,7 @@ namespace System.Windows.Navigation
                         }
                         else
                         {
-                            throw new UriFormatException(SR.Get(SRID.WrongFirstSegment));
+                            throw new UriFormatException(SR.WrongFirstSegment);
                         }
                     }
                     else
@@ -323,7 +323,7 @@ namespace System.Windows.Navigation
                         }
                         else
                         {
-                            throw new UriFormatException(SR.Get(SRID.WrongFirstSegment));
+                            throw new UriFormatException(SR.WrongFirstSegment);
                         }
                     }
                 } // end of for loop
@@ -392,7 +392,7 @@ namespace System.Windows.Navigation
             }
             else
             {
-               throw new InvalidOperationException(SR.Get(SRID.CannotNavigateToApplicationResourcesInWebBrowser, packUri));
+               throw new InvalidOperationException(SR.Format(SR.CannotNavigateToApplicationResourcesInWebBrowser, packUri));
             }
         }
 

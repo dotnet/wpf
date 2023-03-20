@@ -24,7 +24,6 @@ using System.Windows.Media.Media3D;
 using MS.Internal.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Animation
 {       
@@ -161,8 +160,8 @@ namespace System.Windows.Media.Animation
             if (!AnimatedTypeHelpers.IsValidAnimationValueRotation3D(defaultDestinationValue))
             {
                 throw new ArgumentException(
-                    SR.Get(
-                        SRID.Animation_InvalidBaseValue,
+                    SR.Format(
+                        SR.Animation_InvalidBaseValue,
                         defaultDestinationValue, 
                         defaultDestinationValue.GetType(), 
                         GetType()),

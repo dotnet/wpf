@@ -35,7 +35,6 @@ using System.Windows.Markup;
 using System.Windows.Media.Converters;
 using System.Security;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -81,7 +80,7 @@ namespace System.Windows.Media
                 {
                     if (!(context.Instance is PathFigureCollection))
                     {
-                        throw new ArgumentException(SR.Get(SRID.General_Expected_Type, "PathFigureCollection"), "context");
+                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "PathFigureCollection"), "context");
                     }
 
                     PathFigureCollection value = (PathFigureCollection)context.Instance;
@@ -154,7 +153,7 @@ namespace System.Windows.Media
                         #pragma warning suppress 6506 // instance is obviously not null
                         if (!instance.CanSerializeToString())
                         {
-                            throw new NotSupportedException(SR.Get(SRID.Converter_ConvertToNotSupported));
+                            throw new NotSupportedException(SR.Converter_ConvertToNotSupported);
                         }
                     }
 

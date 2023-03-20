@@ -31,7 +31,6 @@ using MS.Win32;
 using Microsoft.Win32.SafeHandles;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods.MilCoreApi;
 

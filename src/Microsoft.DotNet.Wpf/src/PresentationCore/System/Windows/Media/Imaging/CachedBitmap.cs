@@ -25,7 +25,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Imaging
 {
@@ -142,7 +141,7 @@ namespace System.Windows.Media.Imaging
                 throw new System.ArgumentNullException ("pixels");
 
             if (pixels.Rank != 1)
-                throw new ArgumentException (SR.Get (SRID.Collection_BadRank), "pixels");
+                throw new ArgumentException(SR.Collection_BadRank, "pixels");
 
             int elementSize = -1;
 
@@ -156,7 +155,7 @@ namespace System.Windows.Media.Imaging
                 elementSize = 8;
 
             if (elementSize == -1)
-                throw new ArgumentException(SR.Get(SRID.Image_InvalidArrayForPixel));
+                throw new ArgumentException(SR.Image_InvalidArrayForPixel);
 
             int destBufferSize = elementSize * pixels.Length;
 
@@ -417,12 +416,12 @@ namespace System.Windows.Media.Imaging
                     )
         {
             if (pixelFormat.Palettized == true && palette == null)
-                throw new InvalidOperationException(SR.Get(SRID.Image_IndexedPixelFormatRequiresPalette));
+                throw new InvalidOperationException(SR.Image_IndexedPixelFormatRequiresPalette);
 
             if (pixelFormat.Format == PixelFormatEnum.Default && pixelFormat.Guid == WICPixelFormatGUIDs.WICPixelFormatDontCare)
             {
                 throw new System.ArgumentException(
-                        SR.Get(SRID.Effect_PixelFormat, pixelFormat),
+                        SR.Format(SR.Effect_PixelFormat, pixelFormat),
                         "pixelFormat"
                         );
             }

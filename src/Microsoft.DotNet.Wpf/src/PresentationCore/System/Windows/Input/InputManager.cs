@@ -16,7 +16,6 @@ using System.Diagnostics;
 using System.Windows.Automation;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -154,7 +153,7 @@ namespace System.Windows.Input
             // thread is not STA.
             if(Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new InvalidOperationException(SR.Get(SRID.RequiresSTA));
+                throw new InvalidOperationException(SR.RequiresSTA);
             }
 
             _stagingArea = new Stack();

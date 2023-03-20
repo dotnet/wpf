@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -111,7 +110,7 @@ namespace System.Windows
             {
                 if (Sealed)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.TypeMetadataCannotChangeAfterUse));
+                    throw new InvalidOperationException(SR.TypeMetadataCannotChangeAfterUse);
                 }
 
                 WriteFlag(MetadataFlags.UI_IsAnimationProhibitedID, value);

@@ -18,7 +18,6 @@ using System.Diagnostics;
 using System.Windows.Media.TextFormatting;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.TextFormatting
 {
@@ -121,7 +120,7 @@ namespace MS.Internal.TextFormatting
 
                 if (textRun.Length < 1)
                 {
-                    throw new ArgumentOutOfRangeException("textRun.Length", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+                    throw new ArgumentOutOfRangeException("textRun.Length", SR.ParameterMustBeGreaterThanZero);
                 }
 
                 Plsrun plsrun = TextRunInfo.GetRunType(textRun);
@@ -131,23 +130,23 @@ namespace MS.Internal.TextFormatting
                     TextRunProperties properties = textRun.Properties;
 
                     if (properties == null)
-                        throw new ArgumentException(SR.Get(SRID.TextRunPropertiesCannotBeNull));
+                        throw new ArgumentException(SR.TextRunPropertiesCannotBeNull);
 
                     if (properties.FontRenderingEmSize <= 0)
-                        throw new ArgumentException(SR.Get(SRID.PropertyOfClassMustBeGreaterThanZero, "FontRenderingEmSize", "TextRunProperties"));
+                        throw new ArgumentException(SR.Format(SR.PropertyOfClassMustBeGreaterThanZero, "FontRenderingEmSize", "TextRunProperties"));
 
                     double realMaxFontRenderingEmSize = Constants.RealInfiniteWidth / Constants.GreatestMutiplierOfEm;
 
                     if (properties.FontRenderingEmSize > realMaxFontRenderingEmSize)
-                        throw new ArgumentException(SR.Get(SRID.PropertyOfClassCannotBeGreaterThan, "FontRenderingEmSize", "TextRunProperties", realMaxFontRenderingEmSize));
+                        throw new ArgumentException(SR.Format(SR.PropertyOfClassCannotBeGreaterThan, "FontRenderingEmSize", "TextRunProperties", realMaxFontRenderingEmSize));
 
                     CultureInfo culture = CultureMapper.GetSpecificCulture(properties.CultureInfo);
 
                     if (culture == null)
-                        throw new ArgumentException(SR.Get(SRID.PropertyOfClassCannotBeNull, "CultureInfo", "TextRunProperties"));
+                        throw new ArgumentException(SR.Format(SR.PropertyOfClassCannotBeNull, "CultureInfo", "TextRunProperties"));
 
                     if (properties.Typeface == null)
-                        throw new ArgumentException(SR.Get(SRID.PropertyOfClassCannotBeNull, "Typeface", "TextRunProperties"));
+                        throw new ArgumentException(SR.Format(SR.PropertyOfClassCannotBeNull, "Typeface", "TextRunProperties"));
                 }
 
 

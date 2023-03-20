@@ -354,7 +354,7 @@ namespace MS.Internal.Media
                     return reader.ReadDouble(); 
 
                 default: 
-                    throw new ArgumentException(SR.Get(SRID.FloatUnknownBamlType));                 
+                    throw new ArgumentException(SR.FloatUnknownBamlType);                 
             }
 }
 

@@ -24,7 +24,6 @@ using System.Windows.Media.TextFormatting;
 
 using MS.Internal.PresentationCore;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 
 namespace MS.Internal.TextFormatting
@@ -118,7 +117,7 @@ namespace MS.Internal.TextFormatting
                 else
                 {
                     // throw with LS error codes
-                    TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.CreateBreaksFailure, lserr), lserr);
+                    TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.CreateBreaksFailure, lserr), lserr);
                 }
             }
 
@@ -236,7 +235,7 @@ namespace MS.Internal.TextFormatting
         {
             if (_isDisposed)
             {
-                throw new ObjectDisposedException(SR.Get(SRID.TextBreakpointHasBeenDisposed));
+                throw new ObjectDisposedException(SR.TextBreakpointHasBeenDisposed);
             }
             return _metrics.GetTextLineBreak(_ploline.Value);
         }
@@ -254,13 +253,13 @@ namespace MS.Internal.TextFormatting
         {
             if (_isDisposed)
             {
-                throw new ObjectDisposedException(SR.Get(SRID.TextBreakpointHasBeenDisposed));
+                throw new ObjectDisposedException(SR.TextBreakpointHasBeenDisposed);
             }
 
             LsErr lserr = UnsafeNativeMethods.LoRelievePenaltyResource(_ploline.Value);
             if (lserr != LsErr.None)
             {
-                TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.RelievePenaltyResourceFailure, lserr), lserr);
+                TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.RelievePenaltyResourceFailure, lserr), lserr);
             }
 
             return _penaltyResource;

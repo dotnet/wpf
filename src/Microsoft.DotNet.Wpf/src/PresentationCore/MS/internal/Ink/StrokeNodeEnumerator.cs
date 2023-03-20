@@ -13,7 +13,6 @@ using System.Windows.Input;
 using MS.Internal.Ink;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Ink
 {

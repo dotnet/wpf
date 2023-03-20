@@ -12,7 +12,6 @@ using System.Collections.ObjectModel;
 using MS.Utility;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Ink
 {

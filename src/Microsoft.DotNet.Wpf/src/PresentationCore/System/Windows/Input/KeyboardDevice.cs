@@ -14,7 +14,6 @@ using MS.Win32; // VK translation.
 using System.Windows.Automation.Peers;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -145,7 +144,7 @@ namespace System.Windows.Input
                 if(!InputElement.IsValid(element))
                 {
                     #pragma warning suppress 6506 // element is obviously not null
-                    throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, element.GetType()));
+                    throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, element.GetType()));
                 }
 
                 oFocus = (DependencyObject) element;
@@ -440,7 +439,7 @@ namespace System.Windows.Input
                         }
                         else
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, o.GetType())); 
+                            throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, o.GetType())); 
                         }
                     }
                     if(_focus != null)
@@ -466,7 +465,7 @@ namespace System.Windows.Input
                         }
                         else
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, o.GetType())); 
+                            throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, o.GetType())); 
                         }
                     }
                 }

@@ -18,7 +18,6 @@ using System.Windows;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -145,7 +144,7 @@ namespace System.Windows.Input
 
             if (key != firstCharacter)
             {
-                throw new ArgumentException(SR.Get(SRID.AccessKeyManager_NotAUnicodeCharacter, "key"));
+                throw new ArgumentException(SR.Format(SR.AccessKeyManager_NotAUnicodeCharacter, "key"));
             }
 
             return firstCharacter.ToUpperInvariant();

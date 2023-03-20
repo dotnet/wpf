@@ -19,7 +19,6 @@ using MS.Internal;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -132,7 +131,7 @@ namespace System.Windows
             // Either UIElement, ContentElement or UIElement3D.
             if (!InputElement.IsValid(element))
             {
-                throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, element.GetType()), nameof(element));
+                throw new ArgumentException(SR.Format(SR.Invalid_IInputElement, element.GetType()), nameof(element));
             }
             DependencyObject o = (DependencyObject)element;
 
@@ -176,7 +175,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, o.GetType())); 
+                    throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, o.GetType())); 
                 }
             }
         }
@@ -201,7 +200,7 @@ namespace System.Windows
             // Either UIElement, ContentElement or UIElement3D.
             if (!InputElement.IsValid(e))
             {
-                throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, e.GetType()), nameof(e));
+                throw new ArgumentException(SR.Format(SR.Invalid_IInputElement, e.GetType()), nameof(e));
             }
             DependencyObject o = (DependencyObject)e;
 
@@ -260,7 +259,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, o.GetType())); 
+                    throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, o.GetType())); 
                 }
             }
         }
@@ -743,7 +742,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, doTarget.GetType())); 
+                    throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, doTarget.GetType())); 
                 }
 
                 calledOut = true;

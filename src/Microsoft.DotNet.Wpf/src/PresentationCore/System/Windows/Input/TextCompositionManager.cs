@@ -23,7 +23,6 @@ using MS.Internal ;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -357,12 +356,12 @@ namespace System.Windows.Input
 
             if (composition._InputManager == null)
             {
-                throw new ArgumentException(SR.Get(SRID.TextCompositionManager_NoInputManager, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_NoInputManager, "composition"));
             }
 
             if (composition.Stage != TextCompositionStage.None)
             {
-                throw new ArgumentException(SR.Get(SRID.TextCompositionManager_TextCompositionHasStarted, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionHasStarted, "composition"));
             }
 
             composition.Stage = TextCompositionStage.Started;
@@ -381,17 +380,17 @@ namespace System.Windows.Input
 
             if (composition._InputManager == null)
             {
-                throw new ArgumentException(SR.Get(SRID.TextCompositionManager_NoInputManager, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_NoInputManager, "composition"));
             }
 
             if (composition.Stage == TextCompositionStage.None)
             {
-                throw new ArgumentException(SR.Get(SRID.TextCompositionManager_TextCompositionNotStarted, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionNotStarted, "composition"));
             }
 
             if (composition.Stage == TextCompositionStage.Done)
             {
-                throw new ArgumentException(SR.Get(SRID.TextCompositionManager_TextCompositionHasDone, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionHasDone, "composition"));
             }
 
             TextCompositionEventArgs textargs = new TextCompositionEventArgs(composition._InputDevice, composition);
@@ -409,17 +408,17 @@ namespace System.Windows.Input
 
             if (composition._InputManager == null)
             {
-                throw new ArgumentException(SR.Get(SRID.TextCompositionManager_NoInputManager, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_NoInputManager, "composition"));
             }
 
             if (composition.Stage == TextCompositionStage.None)
             {
-                throw new ArgumentException(SR.Get(SRID.TextCompositionManager_TextCompositionNotStarted, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionNotStarted, "composition"));
             }
 
             if (composition.Stage == TextCompositionStage.Done)
             {
-                throw new ArgumentException(SR.Get(SRID.TextCompositionManager_TextCompositionHasDone, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionHasDone, "composition"));
             }
 
             composition.Stage = TextCompositionStage.Done;

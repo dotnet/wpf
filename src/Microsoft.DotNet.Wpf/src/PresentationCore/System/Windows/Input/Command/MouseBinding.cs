@@ -19,7 +19,6 @@ using System.Windows.Markup;
 using System.ComponentModel;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -112,7 +111,7 @@ namespace System.Windows.Input
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.InputBinding_ExpectedInputGesture, typeof(MouseGesture)));
+                    throw new ArgumentException(SR.Format(SR.InputBinding_ExpectedInputGesture, typeof(MouseGesture)));
                 }
              }
         }

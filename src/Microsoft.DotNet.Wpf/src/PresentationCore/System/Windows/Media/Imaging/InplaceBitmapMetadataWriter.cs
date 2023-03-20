@@ -146,7 +146,7 @@ namespace System.Windows.Media.Imaging
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            throw new InvalidOperationException(SR.Get(SRID.Image_InplaceMetadataNoCopy));
+            throw new InvalidOperationException(SR.Image_InplaceMetadataNoCopy);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCore(Freezable sourceFreezable)
         {
-            throw new InvalidOperationException(SR.Get(SRID.Image_InplaceMetadataNoCopy));
+            throw new InvalidOperationException(SR.Image_InplaceMetadataNoCopy);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
-            throw new InvalidOperationException(SR.Get(SRID.Image_InplaceMetadataNoCopy));
+            throw new InvalidOperationException(SR.Image_InplaceMetadataNoCopy);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void GetAsFrozenCore(Freezable sourceFreezable)
         {
-            throw new InvalidOperationException(SR.Get(SRID.Image_InplaceMetadataNoCopy));
+            throw new InvalidOperationException(SR.Image_InplaceMetadataNoCopy);
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable sourceFreezable)
         {
-            throw new InvalidOperationException(SR.Get(SRID.Image_InplaceMetadataNoCopy));
+            throw new InvalidOperationException(SR.Image_InplaceMetadataNoCopy);
         }
         #endregion
 

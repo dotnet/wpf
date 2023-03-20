@@ -17,7 +17,6 @@ using System.Windows.Media.Media3D;
 using System.Security;
 using System.Runtime.InteropServices;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Effects
 {
@@ -56,7 +55,7 @@ namespace System.Windows.Media.Effects
                 WritePreamble();
                 if (value < 0.0)
                 {
-                    throw new ArgumentOutOfRangeException("value", value, SR.Get(SRID.Effect_ShaderEffectPadding));
+                    throw new ArgumentOutOfRangeException("value", value, SR.Effect_ShaderEffectPadding);
                 }
                 else
                 {
@@ -83,7 +82,7 @@ namespace System.Windows.Media.Effects
                 WritePreamble();
                 if (value < 0.0)
                 {
-                    throw new ArgumentOutOfRangeException("value", value, SR.Get(SRID.Effect_ShaderEffectPadding));
+                    throw new ArgumentOutOfRangeException("value", value, SR.Effect_ShaderEffectPadding);
                 }
                 else
                 {
@@ -110,7 +109,7 @@ namespace System.Windows.Media.Effects
                 WritePreamble();
                 if (value < 0.0)
                 {
-                    throw new ArgumentOutOfRangeException("value", value, SR.Get(SRID.Effect_ShaderEffectPadding));
+                    throw new ArgumentOutOfRangeException("value", value, SR.Effect_ShaderEffectPadding);
                 }
                 else
                 {
@@ -137,7 +136,7 @@ namespace System.Windows.Media.Effects
                 WritePreamble();
                 if (value < 0.0)
                 {
-                    throw new ArgumentOutOfRangeException("value", value, SR.Get(SRID.Effect_ShaderEffectPadding));
+                    throw new ArgumentOutOfRangeException("value", value, SR.Effect_ShaderEffectPadding);
                 }
                 else
                 {
@@ -204,7 +203,7 @@ namespace System.Windows.Media.Effects
                 pixelShader.ShaderMinorVersion == 0 &&
                 UsesPS30OnlyRegisters())
             {
-                throw new InvalidOperationException(SR.Get(SRID.Effect_20ShaderUsing30Registers));
+                throw new InvalidOperationException(SR.Effect_20ShaderUsing30Registers);
             }
         }
 
@@ -359,7 +358,7 @@ namespace System.Windows.Media.Effects
 
             if (t == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Effect_ShaderConstantType, dp.PropertyType.Name));
+                throw new InvalidOperationException(SR.Format(SR.Effect_ShaderConstantType, dp.PropertyType.Name));
             }
             else
             {
@@ -367,7 +366,7 @@ namespace System.Windows.Media.Effects
                 // Treat as a float constant in ps_2_0 by default
                 //
                 int registerMax = PS_2_0_FLOAT_REGISTER_LIMIT;
-                string srid = SRID.Effect_Shader20ConstantRegisterLimit;
+                string srid = nameof(SR.Effect_Shader20ConstantRegisterLimit);
 
                 if (PixelShader != null && PixelShader.ShaderMajorVersion >= 3)
                 {
@@ -377,23 +376,23 @@ namespace System.Windows.Media.Effects
                     if (t == typeof(float))
                     {
                         registerMax = PS_3_0_FLOAT_REGISTER_LIMIT;
-                        srid = SRID.Effect_Shader30FloatConstantRegisterLimit;
+                        srid = nameof(SR.Effect_Shader30FloatConstantRegisterLimit);
                     }
                     else if (t == typeof(int))
                     {
                         registerMax = PS_3_0_INT_REGISTER_LIMIT;
-                        srid = SRID.Effect_Shader30IntConstantRegisterLimit;
+                        srid = nameof(SR.Effect_Shader30IntConstantRegisterLimit);
                     }
                     else if (t == typeof(bool))
                     {
                         registerMax = PS_3_0_BOOL_REGISTER_LIMIT;
-                        srid = SRID.Effect_Shader30BoolConstantRegisterLimit;
+                        srid = nameof(SR.Effect_Shader30BoolConstantRegisterLimit);
                     }
                 }
 
                 if (registerIndex >= registerMax || registerIndex < 0)
                 {
-                    throw new ArgumentException(SR.Get(srid), "dp");
+                    throw new ArgumentException(SR.GetResourceString(srid), "dp");
                 }
 
                 if (t == typeof(float))
@@ -444,7 +443,7 @@ namespace System.Windows.Media.Effects
                     // Note that if the type of the brush is ImplicitInputBrush and the value is non null, the value is actually
                     // Effect.ImplicitInput. This is because ImplicitInputBrush is internal and the user can only get to the singleton
                     // Effect.ImplicitInput.
-                    throw new ArgumentException(SR.Get(SRID.Effect_ShaderSamplerType), "dp");
+                    throw new ArgumentException(SR.Effect_ShaderSamplerType, "dp");
                 }
             }
 
@@ -452,17 +451,17 @@ namespace System.Windows.Media.Effects
             // Treat as ps_2_0 by default
             //
             int registerMax = PS_2_0_SAMPLER_LIMIT;
-            string srid = SRID.Effect_Shader20SamplerRegisterLimit;
+            string srid = nameof(SR.Effect_Shader20SamplerRegisterLimit);
 
             if (PixelShader != null && PixelShader.ShaderMajorVersion >= 3)
             {
                 registerMax = PS_3_0_SAMPLER_LIMIT;
-                srid = SRID.Effect_Shader30SamplerRegisterLimit;
+                srid = nameof(SR.Effect_Shader30SamplerRegisterLimit);
             }
 
             if (registerIndex >= registerMax || registerIndex < 0)
             {
-                throw new ArgumentException(SR.Get(srid));
+                throw new ArgumentException(SR.GetResourceString(srid));
             }
 
             SamplerData sd = new SamplerData()
@@ -575,7 +574,7 @@ namespace System.Windows.Media.Effects
             {
                 if (PixelShader == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Effect_ShaderPixelShaderSet));
+                    throw new InvalidOperationException(SR.Effect_ShaderPixelShaderSet);
                 }
 
                 checked

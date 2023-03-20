@@ -21,7 +21,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input.StylusWisp
 {
@@ -2082,7 +2081,7 @@ namespace System.Windows.Input.StylusWisp
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, oldCapture.GetType())); 
+                        throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, oldCapture.GetType())); 
                     }
                 }
                 if (_stylusCapture != null)
@@ -2111,7 +2110,7 @@ namespace System.Windows.Input.StylusWisp
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, _stylusCapture.GetType())); 
+                        throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, _stylusCapture.GetType())); 
                     }
                 }
 
@@ -2170,7 +2169,7 @@ namespace System.Windows.Input.StylusWisp
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, oldOver.GetType())); 
+                        throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, oldOver.GetType())); 
                     }
                 }
                 if (_stylusOver != null)
@@ -2199,7 +2198,7 @@ namespace System.Windows.Input.StylusWisp
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, _stylusOver.GetType())); 
+                        throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, _stylusOver.GetType())); 
                     }
                 }
 
@@ -2439,7 +2438,7 @@ namespace System.Windows.Input.StylusWisp
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, _stylusCapture.GetType())); 
+                throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, _stylusCapture.GetType())); 
             }
 
             //
@@ -3142,7 +3141,7 @@ namespace System.Windows.Input.StylusWisp
             {
                 if (__penContextsMap.ContainsKey(inputSource))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.PenService_WindowAlreadyRegistered));
+                    throw new InvalidOperationException(SR.PenService_WindowAlreadyRegistered);
                 }
 
                 PenContexts penContexts = new PenContexts(StylusLogic.GetCurrentStylusLogicAs<WispLogic>(), inputSource);
@@ -3211,7 +3210,7 @@ namespace System.Windows.Input.StylusWisp
                 // If we failed to find penContexts for this window above then throw an error now.
                 if (penContexts == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.PenService_WindowNotRegistered));
+                    throw new InvalidOperationException(SR.PenService_WindowNotRegistered);
                 }
             }
         }

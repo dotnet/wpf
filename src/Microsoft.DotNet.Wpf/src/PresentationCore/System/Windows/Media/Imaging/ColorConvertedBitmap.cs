@@ -24,7 +24,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Imaging
 {
@@ -165,7 +164,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (throwIfInvalid)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Image_NoArgument, "Source"));
+                    throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, "Source"));
                 }
                 return false;
             }
@@ -174,7 +173,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (throwIfInvalid)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Color_NullColorContext));
+                    throw new InvalidOperationException(SR.Color_NullColorContext);
                 }
                 return false;
             }
@@ -183,7 +182,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (throwIfInvalid)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Image_NoArgument, "DestinationColorContext"));
+                    throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, "DestinationColorContext"));
                 }
                 return false;
             }

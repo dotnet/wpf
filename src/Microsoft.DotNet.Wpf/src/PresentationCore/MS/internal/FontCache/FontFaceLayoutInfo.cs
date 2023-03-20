@@ -734,7 +734,7 @@ namespace MS.Internal.FontCache
 
                 if (array.Rank != 1)
                 {
-                    throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                    throw new ArgumentException(SR.Collection_BadRank);
                 }
 
                 // The extra "arrayIndex >= array.Length" check in because even if _collection.Count

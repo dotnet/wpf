@@ -24,7 +24,6 @@ using MS.Internal.Shaping;
 using MS.Internal.TextFormatting;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.TextFormatting
 {
@@ -119,7 +118,7 @@ namespace System.Windows.Media.TextFormatting
         {        
             if (length <= 0)
             {
-                throw new ArgumentOutOfRangeException("length", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+                throw new ArgumentOutOfRangeException("length", SR.ParameterMustBeGreaterThanZero);
             }
 
             if (textRunProperties == null)
@@ -139,7 +138,7 @@ namespace System.Windows.Media.TextFormatting
 
             if (textRunProperties.FontRenderingEmSize <= 0)
             {
-                throw new ArgumentOutOfRangeException("textRunProperties.FontRenderingEmSize", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+                throw new ArgumentOutOfRangeException("textRunProperties.FontRenderingEmSize", SR.ParameterMustBeGreaterThanZero);
             }
 
             _characterBufferReference = characterBufferReference;

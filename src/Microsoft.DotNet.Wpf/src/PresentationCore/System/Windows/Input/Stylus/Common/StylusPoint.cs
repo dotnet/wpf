@@ -13,7 +13,6 @@ using System.Collections.ObjectModel;
 using MS.Utility;
 using MS.Internal;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -81,11 +80,11 @@ namespace System.Windows.Input
         {
             if (Double.IsNaN(x))
             {
-                throw new ArgumentOutOfRangeException("x", SR.Get(SRID.InvalidStylusPointXYNaN));
+                throw new ArgumentOutOfRangeException("x", SR.InvalidStylusPointXYNaN);
             }
             if (Double.IsNaN(y))
             {
-                throw new ArgumentOutOfRangeException("y", SR.Get(SRID.InvalidStylusPointXYNaN));
+                throw new ArgumentOutOfRangeException("y", SR.InvalidStylusPointXYNaN);
             }
 
 
@@ -93,7 +92,7 @@ namespace System.Windows.Input
             if (validatePressureFactor &&
                 (pressureFactor == Single.NaN || pressureFactor < 0.0f || pressureFactor > 1.0f))
             {
-                throw new ArgumentOutOfRangeException("pressureFactor", SR.Get(SRID.InvalidPressureValue));
+                throw new ArgumentOutOfRangeException("pressureFactor", SR.InvalidPressureValue);
             }
             //
             // only accept values between MaxXY and MinXY
@@ -133,7 +132,7 @@ namespace System.Windows.Input
                     int expectedAdditionalValues = properties.Count - StylusPointDescription.RequiredCountOfProperties; //for x, y, pressure
                     if (additionalValues.Length != expectedAdditionalValues)
                     {
-                        throw new ArgumentException(SR.Get(SRID.InvalidAdditionalDataForStylusPoint), "additionalValues");
+                        throw new ArgumentException(SR.InvalidAdditionalDataForStylusPoint, "additionalValues");
                     }
 
                     //
@@ -180,7 +179,7 @@ namespace System.Windows.Input
             {
                 if (Double.IsNaN(value))
                 {
-                    throw new ArgumentOutOfRangeException("X", SR.Get(SRID.InvalidStylusPointXYNaN));
+                    throw new ArgumentOutOfRangeException("X", SR.InvalidStylusPointXYNaN);
                 }
                 //
                 // only accept values between MaxXY and MinXY
@@ -200,7 +199,7 @@ namespace System.Windows.Input
             {
                 if (Double.IsNaN(value))
                 {
-                    throw new ArgumentOutOfRangeException("Y", SR.Get(SRID.InvalidStylusPointXYNaN));
+                    throw new ArgumentOutOfRangeException("Y", SR.InvalidStylusPointXYNaN);
                 }
                 //
                 // only accept values between MaxXY and MinXY
@@ -235,7 +234,7 @@ namespace System.Windows.Input
             {
                 if (value < 0.0f || value > 1.0f)
                 {
-                    throw new ArgumentOutOfRangeException("PressureFactor", SR.Get(SRID.InvalidPressureValue));
+                    throw new ArgumentOutOfRangeException("PressureFactor", SR.InvalidPressureValue);
                 }
                 _pressureFactor = value; 
             }
@@ -309,7 +308,7 @@ namespace System.Windows.Input
                 int propertyIndex = this.Description.GetPropertyIndex(stylusPointProperty.Id);
                 if (-1 == propertyIndex)
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidStylusPointProperty), "stylusPointProperty");
+                    throw new ArgumentException(SR.InvalidStylusPointProperty, "stylusPointProperty");
                 }
                 if (stylusPointProperty.IsButton)
                 {
@@ -395,13 +394,13 @@ namespace System.Windows.Input
                 int propertyIndex = this.Description.GetPropertyIndex(stylusPointProperty.Id);
                 if (-1 == propertyIndex)
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidStylusPointProperty), "propertyId");
+                    throw new ArgumentException(SR.InvalidStylusPointProperty, "propertyId");
                 }
                 if (stylusPointProperty.IsButton)
                 {
                     if (value < 0 || value > 1)
                     {
-                        throw new ArgumentOutOfRangeException("value", SR.Get(SRID.InvalidMinMaxForButton));
+                        throw new ArgumentOutOfRangeException("value", SR.InvalidMinMaxForButton);
                     }
 
                     if (copyBeforeWrite)

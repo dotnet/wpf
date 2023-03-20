@@ -28,8 +28,8 @@ namespace MS.Internal.FontCache
                 new FontSourceCollectionFactory(),
                 new FontSourceFactory());
 
-            Text.TextInterface.LocalizedErrorMsgs.EnumeratorNotStarted = SR.Get(SRID.Enumerator_NotStarted);
-            Text.TextInterface.LocalizedErrorMsgs.EnumeratorReachedEnd = SR.Get(SRID.Enumerator_ReachedEnd);
+            Text.TextInterface.LocalizedErrorMsgs.EnumeratorNotStarted = SR.Enumerator_NotStarted;
+            Text.TextInterface.LocalizedErrorMsgs.EnumeratorReachedEnd = SR.Enumerator_ReachedEnd;
         }
 
         internal static Text.TextInterface.Factory Instance

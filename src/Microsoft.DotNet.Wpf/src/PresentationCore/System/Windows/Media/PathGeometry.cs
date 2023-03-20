@@ -30,7 +30,6 @@ using System.Security;
 using MS.Win32;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
@@ -496,7 +495,7 @@ namespace System.Windows.Media
                         {
                             if (pointIndex+sameSegCount > pointCount)
                             {
-                                throw new System.InvalidOperationException(SR.Get(SRID.PathGeometry_InternalReadBackError));
+                                throw new System.InvalidOperationException(SR.PathGeometry_InternalReadBackError);
                             }
 
                             if (sameSegCount>1)
@@ -527,7 +526,7 @@ namespace System.Windows.Media
 
                             if (pointIndex+pointBezierCount > pointCount)
                             {
-                                throw new System.InvalidOperationException(SR.Get(SRID.PathGeometry_InternalReadBackError));
+                                throw new System.InvalidOperationException(SR.PathGeometry_InternalReadBackError);
                             }
 
                             if (sameSegCount>1)
@@ -560,7 +559,7 @@ namespace System.Windows.Media
                         }
                         else
                         {
-                            throw new System.InvalidOperationException(SR.Get(SRID.PathGeometry_InternalReadBackError));
+                            throw new System.InvalidOperationException(SR.PathGeometry_InternalReadBackError);
                         }
                     }
 

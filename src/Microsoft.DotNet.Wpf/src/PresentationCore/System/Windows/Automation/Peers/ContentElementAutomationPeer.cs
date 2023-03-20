@@ -318,7 +318,7 @@ namespace System.Windows.Automation.Peers
         override protected void SetFocusCore()
         {
             if (!_owner.Focus())
-                throw new InvalidOperationException(SR.Get(SRID.SetFocusFailed));
+                throw new InvalidOperationException(SR.SetFocusFailed);
         }
 
         ///

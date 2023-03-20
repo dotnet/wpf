@@ -30,7 +30,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using System.Security;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Windows.Media.Imaging;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings

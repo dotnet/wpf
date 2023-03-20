@@ -7,8 +7,8 @@
     <NoWarn>$(NoWarn);0618</NoWarn>
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
     <ProjectGuid>{FA69991B-9696-42D0-A5C7-F5E73F0DEE9E}</ProjectGuid>
-    <TargetFramework>netcoreapp5.0</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
+    
+    <Platforms>AnyCPU;x64;arm64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -65,8 +65,8 @@
     <Compile Include="$(WpfSharedDir)\MS\Win32\SafeNativeMethodsCLR.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Win32\SafeNativeMethodsOther.cs" />
     <Compile Include="$(WpfSharedDir)\System\Windows\Markup\ReflectionHelper.cs" />
-    <Compile Include="$(WpfSharedDir)\System\Windows\InterOp\OSVersionHelper.cs" />
-    <Compile Include="$(WpfSharedDir)\System\Windows\InterOp\OperatingSystemVersion.cs" />
+    <Compile Include="$(WpfSharedDir)\System\Windows\Interop\OSVersionHelper.cs" />
+    <Compile Include="$(WpfSharedDir)\System\Windows\Interop\OperatingSystemVersion.cs" />
 
     <Compile Include="MS\Internal\AssemblyHelper.cs" />
     <Compile Include="MS\Internal\AvTrace.cs" />
@@ -379,6 +379,7 @@
   <ItemGroup>
     <NetCoreReference Include="netstandard" />
     <NetCoreReference Include="Microsoft.Win32.Primitives" />
+    <NetCoreReference Include="Microsoft.Win32.Registry" />
     <NetCoreReference Include="System" />
     <NetCoreReference Include="System.Collections" />
     <NetCoreReference Include="System.Collections.NonGeneric" />
@@ -386,30 +387,33 @@
     <NetCoreReference Include="System.ComponentModel" />
     <NetCoreReference Include="System.ComponentModel.Primitives" />
     <NetCoreReference Include="System.ComponentModel.TypeConverter" />
+    <NetCoreReference Include="System.Diagnostics.Debug" />
     <NetCoreReference Include="System.Diagnostics.Process" />
     <NetCoreReference Include="System.Diagnostics.Tools" />
     <NetCoreReference Include="System.Diagnostics.TraceSource" />
-    <NetCoreReference Include="System.Diagnostics.Debug" />
-    <NetCoreReference Include="System.IO.FileSystem" />
     <NetCoreReference Include="System.IO.Compression" />
+    <NetCoreReference Include="System.IO.FileSystem" />
     <NetCoreReference Include="System.IO.IsolatedStorage" />
     <NetCoreReference Include="System.Linq" />
     <NetCoreReference Include="System.ObjectModel" />
-    <NetCoreReference Include="System.Runtime" />
     <NetCoreReference Include="System.Resources.ResourceManager" />
-    <NetCoreReference Include="System.Runtime.InteropServices" />
-    <NetCoreReference Include="System.Threading" />
-    <NetCoreReference Include="System.Threading.Tasks" />
-    <NetCoreReference Include="System.Threading.Thread" />
-    <NetCoreReference Include="System.Threading.ThreadPool" />
-    <NetCoreReference Include="System.Threading.Timer" />
+    <NetCoreReference Include="System.Memory" />
+    <NetCoreReference Include="System.Runtime" />
     <NetCoreReference Include="System.Runtime.Extensions" />
+    <NetCoreReference Include="System.Runtime.InteropServices" />
+    <NetCoreReference Include="System.Security.AccessControl" />
     <NetCoreReference Include="System.Security.Claims" />
     <NetCoreReference Include="System.Security.Cryptography" />
     <NetCoreReference Include="System.Security.Cryptography.Algorithms" />
     <NetCoreReference Include="System.Security.Cryptography.Primitives" />
     <NetCoreReference Include="System.Security.Cryptography.X509Certificates" />
+    <NetCoreReference Include="System.Security.Principal.Windows" />
     <NetCoreReference Include="System.Text.Encoding.Extensions" />
+    <NetCoreReference Include="System.Threading" />
+    <NetCoreReference Include="System.Threading.Tasks" />
+    <NetCoreReference Include="System.Threading.Thread" />
+    <NetCoreReference Include="System.Threading.ThreadPool" />
+    <NetCoreReference Include="System.Threading.Timer" />
     <NetCoreReference Include="System.Xml" />
     <NetCoreReference Include="System.Xml.Document" />
     <NetCoreReference Include="System.Xml.ReaderWriter" />
@@ -419,12 +423,10 @@
   <ItemGroup>
     <PackageReference Include="System.Diagnostics.EventLog" Version="$(SystemDiagnosticsEventLogPackageVersion)" />
     <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" />
-    <PackageReference Include="Microsoft.Win32.Registry" Version="$(MicrosoftWin32RegistryPackageVersion)" />
     <PackageReference Include="System.Security.Cryptography.Xml" Version="$(SystemSecurityCryptographyXmlPackageVersion)" />
-    <PackageReference Include="System.Security.AccessControl" Version="$(SystemSecurityAccessControlPackageVersion)" />
-    <PackageReference Include="System.Security.Principal.Windows" Version="$(SystemSecurityPrincipalWindowsPackageVersion)" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />
     <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
+    <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)" />
   </ItemGroup>
 
   <ItemGroup>

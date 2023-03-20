@@ -235,7 +235,7 @@ namespace System.Windows.Input
             localName = ((string)source).Trim();
 
             // split CommandName from its TypeName (e.g. ScrollViewer.PageDownCommand to Scrollviewerand PageDownCommand)
-            int Offset = localName.LastIndexOf(".", StringComparison.Ordinal);
+            int Offset = localName.LastIndexOf('.');
             if (Offset >= 0)
             {
                 typeName = localName.Substring(0, Offset);

@@ -1,0 +1,68 @@
+# This is a simple wrapper for eng/pipeline.yml to get around the limitation of
+# user-defined variables not being available in yaml template expressions.
+
+# Parameters ARE available in template expressions, and parameters can have default values,
+# so they can be used to control yaml flow.
+#
+
+variables:
+    # clean the local repo on the build agents
+  - name: Build.Repository.Clean
+    value: true
+  - name: _PublishUsingPipelines
+    value: true
+  - name: _DotNetArtifactsCategory
+    value: WINDOWSDESKTOP
+  - name: _DotNetValidationArtifactsCategory
+    value: WINDOWSDESKTOP
+  - name: PostBuildSign
+    value: true
+  
+  - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
+    - group: DotNet-Wpf-SDLValidation-Params
+
+
+# This is set in the pipeline directly 
+# When set to false, CI tests will not be enabled in builds. 
+#
+# _ContinuousIntegrationTestsEnabled: false
+
+# Setting batch to true, triggers one build at a time.
+# if there is a push while a build in progress, it will wait,
+# until the running build finishes, and produce a build with all the changes
+#
+# only trigger ci builds for the master and release branches
+trigger:
+  batch: true 
+  branches:
+    include: 
+    - ctp
+    - feature/*
+  paths:
+    exclude:
+    - Documentation/*
+
+pr:
+  autoCancel: true
+  branches:
+    include:
+    - ctp
+  paths:
+    exclude:
+    - Documentation/*
+
+# Call the pipeline.yml template, which does the real work
+stages:
+- stage: build
+  displayName: Build 
+  jobs:
+  - template: /eng/wpfautomatedtests.yml
+    parameters:
+      enablePublishUsingPipelines: $(_PublishUsingPipelines)
+      ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
+        # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
+        pool:
+          name: NetCore1ESPool-Internal
+          demands: ImageOverride -equals windows.vs2022preview.amd64
+        # runAsPublic is used in expressions, which can't read from user-defined variables
+        runAsPublic: false

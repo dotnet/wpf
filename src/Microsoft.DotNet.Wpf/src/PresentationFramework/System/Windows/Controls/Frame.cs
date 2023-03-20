@@ -548,7 +548,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override void AddChild(object value)
         {
-            throw new InvalidOperationException(SR.Get(SRID.FrameNoAddChild));
+            throw new InvalidOperationException(SR.FrameNoAddChild);
         }
 
         /// <summary>
@@ -615,10 +615,11 @@ namespace System.Windows.Controls
                 _contentRenderedCallback.Abort();
             }
             _contentRenderedCallback = Dispatcher.BeginInvoke(DispatcherPriority.Input,
-                                   (DispatcherOperationCallback) delegate (object unused)
+                                   (DispatcherOperationCallback) delegate (object arg)
                                    {
-                                       _contentRenderedCallback = null;
-                                       OnContentRendered(EventArgs.Empty);
+                                       Frame thisRef = (Frame)arg;
+                                       thisRef._contentRenderedCallback = null;
+                                       thisRef.OnContentRendered(EventArgs.Empty);
                                        return null;
                                    },
                                    this);
@@ -859,7 +860,7 @@ namespace System.Windows.Controls
         public JournalEntry RemoveBackEntry()
         {
             if (_ownJournalScope == null)
-                throw new InvalidOperationException(SR.Get(SRID.InvalidOperation_NoJournal));
+                throw new InvalidOperationException(SR.InvalidOperation_NoJournal);
             return _ownJournalScope.RemoveBackEntry();
         }
 
@@ -933,7 +934,7 @@ namespace System.Windows.Controls
         public void GoForward()
         {
             if (_ownJournalScope == null)
-                throw new InvalidOperationException(SR.Get(SRID.InvalidOperation_NoJournal));
+                throw new InvalidOperationException(SR.InvalidOperation_NoJournal);
             _ownJournalScope.GoForward();
         }
 
@@ -947,7 +948,7 @@ namespace System.Windows.Controls
         public void GoBack()
         {
             if(_ownJournalScope == null)
-                throw new InvalidOperationException(SR.Get(SRID.InvalidOperation_NoJournal));
+                throw new InvalidOperationException(SR.InvalidOperation_NoJournal);
             _ownJournalScope.GoBack();
         }
 

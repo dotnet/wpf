@@ -614,7 +614,7 @@ namespace MS.Internal.AutomationProxies
             {
                 // Cancel the edit.
                 Misc.ProxySendMessage(hwnd, NativeMethods.TVM_ENDEDITLABELNOW, (IntPtr)1, IntPtr.Zero);
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             // TVM_ENDEDITLABELNOW ends the editing of a tree-view item's label.
@@ -638,7 +638,7 @@ namespace MS.Internal.AutomationProxies
             }
             if (!wasTextSet)
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             return true;
@@ -983,7 +983,7 @@ namespace MS.Internal.AutomationProxies
                     // try to select an item, hence unselecting everything else
                     if (!WindowsTreeView.SelectItem(_hwnd, _hItem))
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
                 }
             }
@@ -1013,13 +1013,13 @@ namespace MS.Internal.AutomationProxies
                 if (selectionRequired || WindowsTreeView.GetSelection(_hwnd) != IntPtr.Zero)
                 {
                     // NOTE: TreeView do not natively support multiple selection
-                    throw new InvalidOperationException(SR.Get(SRID.DoesNotSupportMultipleSelection));
+                    throw new InvalidOperationException(SR.DoesNotSupportMultipleSelection);
                 }
 
                 // Since nothing is selected try to select the item
                 if (!WindowsTreeView.SelectItem(_hwnd, _hItem))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
             }
 
@@ -1037,7 +1037,7 @@ namespace MS.Internal.AutomationProxies
                 if (IsItemSelected())
                 {
                     // NOTE: TreeView do not natively support multiple selection
-                    throw new InvalidOperationException(SR.Get(SRID.SelectionRequired));
+                    throw new InvalidOperationException(SR.SelectionRequired);
                 }
             }
 
@@ -1089,7 +1089,7 @@ namespace MS.Internal.AutomationProxies
                 {
                     default:
                     case ExpandCollapseState.LeafNode :
-                        throw new InvalidOperationException (SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException (SR.OperationCannotBePerformed);
 
                     case ExpandCollapseState.Expanded :
                         // Simple case, already done.
@@ -1118,7 +1118,7 @@ namespace MS.Internal.AutomationProxies
                 {
                     default:
                     case ExpandCollapseState.LeafNode :
-                        throw new InvalidOperationException (SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException (SR.OperationCannotBePerformed);
 
                     case ExpandCollapseState.Expanded :
                         // Do the action.
@@ -1157,7 +1157,7 @@ namespace MS.Internal.AutomationProxies
 
                 if (!WindowsTreeView.SetItemText(_hwnd, _hItem, val))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
             }
 
@@ -1225,7 +1225,7 @@ namespace MS.Internal.AutomationProxies
 
                 if (!WindowScroll.IsScrollable(_hwnd))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
 
                 Misc.SetFocus(_hwnd);
@@ -1415,7 +1415,7 @@ namespace MS.Internal.AutomationProxies
                     case WindowsTreeView.CheckState.NoCheckbox :
                         {
                             // we should not call this method on the non-checkboxed treeview items
-                            throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                            throw new InvalidOperationException(SR.OperationCannotBePerformed);
                         }
 
                     case WindowsTreeView.CheckState.Checked :
@@ -1462,7 +1462,7 @@ namespace MS.Internal.AutomationProxies
 
                 if (rectItem.IsEmpty)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
 
                 // get control coordinates at which we will "click"

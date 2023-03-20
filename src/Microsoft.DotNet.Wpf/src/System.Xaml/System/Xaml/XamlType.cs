@@ -46,10 +46,7 @@ namespace System.Xaml
 
         public XamlType(string unknownTypeNamespace, string unknownTypeName, IList<XamlType> typeArguments, XamlSchemaContext schemaContext)
         {
-            if (unknownTypeNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(unknownTypeNamespace));
-            }
+            ArgumentNullException.ThrowIfNull(unknownTypeNamespace);
 
             _name = unknownTypeName ?? throw new ArgumentNullException(nameof(unknownTypeName));
             _namespaces = new ReadOnlyCollection<string>(new string[] { unknownTypeNamespace });
@@ -70,10 +67,7 @@ namespace System.Xaml
 
         internal XamlType(string alias, Type underlyingType, XamlSchemaContext schemaContext, XamlTypeInvoker invoker, TypeReflector reflector)
         {
-            if (underlyingType == null)
-            {
-                throw new ArgumentNullException(nameof(underlyingType));
-            }
+            ArgumentNullException.ThrowIfNull(underlyingType);
 
             _reflector = reflector ?? new TypeReflector(underlyingType);
             _name = alias ?? GetTypeName(underlyingType);
@@ -1282,7 +1276,7 @@ namespace System.Xaml
                     {
                         return null;
                     }
-                    return (EventHandler<XamlSetMarkupExtensionEventArgs>)SafeReflectionInvoker.CreateDelegate(
+                    return (EventHandler<XamlSetMarkupExtensionEventArgs>)Delegate.CreateDelegate(
                         typeof(EventHandler<XamlSetMarkupExtensionEventArgs>), UnderlyingType, methodName);
                 }
             }
@@ -1304,7 +1298,7 @@ namespace System.Xaml
                     {
                         return null;
                     }
-                    return (EventHandler<XamlSetTypeConverterEventArgs>)SafeReflectionInvoker.CreateDelegate(
+                    return (EventHandler<XamlSetTypeConverterEventArgs>)Delegate.CreateDelegate(
                         typeof(EventHandler<XamlSetTypeConverterEventArgs>), UnderlyingType, methodName);
                 }
             }
@@ -1361,19 +1355,19 @@ namespace System.Xaml
             }
             if (!string.IsNullOrEmpty(ns))
             {
-                sb.Append("{");
+                sb.Append('{');
                 sb.Append(PreferredXamlNamespace);
-                sb.Append("}");
+                sb.Append('}');
             }
             else if (UnderlyingTypeInternal.Value != null)
             {
                 sb.Append(UnderlyingTypeInternal.Value.Namespace);
-                sb.Append(".");
+                sb.Append('.');
             }
             sb.Append(Name);
             if (IsGeneric)
             {
-                sb.Append("(");
+                sb.Append('(');
                 for (int i = 0; i < TypeArguments.Count; i++)
                 {
                     TypeArguments[i].AppendTypeName(sb, forceNsInitialization);
@@ -1382,7 +1376,7 @@ namespace System.Xaml
                         sb.Append(", ");
                     }
                 }
-                sb.Append(")");
+                sb.Append(')');
             }
         }
 
@@ -1481,7 +1475,7 @@ namespace System.Xaml
             {
                 if (typeArg == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.CollectionCannotContainNulls, "typeArguments"));
+                    throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "typeArguments"));
                 }
             }
             return new List<XamlType>(typeArguments).AsReadOnly();
@@ -1597,7 +1591,7 @@ namespace System.Xaml
                 {
                     if (!SchemaContext.SupportMarkupExtensionsWithDuplicateArity)
                     {
-                        throw new XamlSchemaException(SR.Get(SRID.MarkupExtensionWithDuplicateArity, UnderlyingType, typeVector.Length));
+                        throw new XamlSchemaException(SR.Format(SR.MarkupExtensionWithDuplicateArity, UnderlyingType, typeVector.Length));
                     }
                     // Otherwise we just ignore the dupe
                 }
@@ -1647,7 +1641,7 @@ namespace System.Xaml
                     if (bit && IsMarkupExtension)
                     {
                         // MarkupExtension cannot be used during initialization.
-                        string err = SR.Get(SRID.UsableDuringInitializationOnME, this);
+                        string err = SR.Format(SR.UsableDuringInitializationOnME, this);
                         throw new XamlSchemaException(err);
                     }
                     break;

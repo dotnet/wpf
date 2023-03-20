@@ -63,7 +63,7 @@ namespace MS.Internal.AutomationProxies
                     // Microsoft - We may want to consider raising the event here
                     // The M7 work on checking if LE is valid however is the better way of going
                     // WindowsListView.RemoveGroupAndRaiseLogicalChangedEvent(_hwnd);
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
 
                 // The group may have been discarded by the reorder winevent.
@@ -77,7 +77,7 @@ namespace MS.Internal.AutomationProxies
                     // Microsoft- We may want to consider raising the event here
                     // The M7 work on checking if LE is valid however is the better way of going
                     // WindowsListView.RaiseLogicalChangedEvent(hwnd);
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
                 return manager;
             }

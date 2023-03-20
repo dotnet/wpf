@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.Windows.Media;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -39,7 +38,7 @@ namespace System.Windows.Input
         {
             if (!RawStylusSystemGestureInputReport.IsValidSystemGesture(systemGesture, false, false))
             {
-                throw new InvalidEnumArgumentException(SR.Get(SRID.Enum_Invalid, "systemGesture"));
+                throw new InvalidEnumArgumentException(SR.Format(SR.Enum_Invalid, "systemGesture"));
             }
             
             _id        = systemGesture;
@@ -81,7 +80,7 @@ namespace System.Windows.Input
         {
             if (!RawStylusSystemGestureInputReport.IsValidSystemGesture(systemGesture, true, false))
             {
-                throw new InvalidEnumArgumentException(SR.Get(SRID.Enum_Invalid, "systemGesture"));
+                throw new InvalidEnumArgumentException(SR.Format(SR.Enum_Invalid, "systemGesture"));
             }
 
             _id          = systemGesture;

@@ -869,7 +869,7 @@
       </trans-unit>
       <trans-unit id="InvalidPublishLicense">
         <source>Signed Publish License is not valid.</source>
-        <target state="translated">Licença Pública Assinada inválida.</target>
+        <target state="translated">Licença de Publicação Assinada inválida.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidRelationshipType">
@@ -2099,7 +2099,7 @@
       </trans-unit>
       <trans-unit id="SignatureOriginNotFound">
         <source>Relationship was found to the signature origin but the part is missing. Package signature structures are corrupted.</source>
-        <target state="translated">Foi encontrada uma relação com a origem da assinatura, mas a parte está faltando. Estruturas de assinatura do pacote estão corrompidas.</target>
+        <target state="translated">Foi encontrada uma relação com a origem da assinatura, mas a parte está faltando. As estruturas de assinatura de pacote estão corrompidas.</target>
         <note />
       </trans-unit>
       <trans-unit id="SignaturePackageObjectTagMustBeUnique">

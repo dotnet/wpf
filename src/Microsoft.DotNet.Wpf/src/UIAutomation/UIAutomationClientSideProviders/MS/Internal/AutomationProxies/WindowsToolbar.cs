@@ -656,7 +656,7 @@ namespace MS.Internal.AutomationProxies
             // This state could change anytime so success is not guaranteed
             if (Misc.ProxySendMessageInt(_hwnd, NativeMethods.TB_ISBUTTONHIDDEN, new IntPtr(_idCommand), IntPtr.Zero) != 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             // Click the center of the button
@@ -666,7 +666,7 @@ namespace MS.Internal.AutomationProxies
 
             if (boundingRectangle.IsEmpty)
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             // make sure this item is active

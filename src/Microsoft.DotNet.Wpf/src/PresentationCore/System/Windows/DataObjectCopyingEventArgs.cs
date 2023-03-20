@@ -17,7 +17,7 @@ namespace System.Windows
     /// The DataObject.Copying event is raised when an editor
     /// has converted a content of selection into all appropriate
     /// clipboard data formats, collected them all in DataObject
-    /// and is ready to put the objet onto the Clipboard.
+    /// and is ready to put the object onto the Clipboard.
     /// An application can inspect DataObject, change, remove or
     /// add some data formats into it and decide whether to proceed
     /// with the copying or cancel it.

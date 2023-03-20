@@ -15,7 +15,6 @@ using MS.Win32;
 using MS.Internal.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Interop
 {
@@ -710,7 +709,7 @@ namespace System.Windows.Interop
                 return RawKeyboardActions.KeyDown;
             if(  msg == WindowMessage.WM_KEYUP || msg == WindowMessage.WM_SYSKEYUP )
                 return RawKeyboardActions.KeyUp;
-            throw new ArgumentException(SR.Get(SRID.OnlyAcceptsKeyMessages));
+            throw new ArgumentException(SR.OnlyAcceptsKeyMessages);
         }
 
         private void PossiblyDeactivate(IntPtr hwndFocus)

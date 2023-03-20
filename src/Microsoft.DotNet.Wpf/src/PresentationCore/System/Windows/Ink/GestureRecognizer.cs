@@ -17,7 +17,6 @@ using System;
 using System.Security;
 using SecurityHelper=MS.Internal.SecurityHelper;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Ink
 {
@@ -131,7 +130,7 @@ namespace System.Windows.Ink
             //can be null if the call to SetEnabledGestures failed
             if (_enabledGestures == null)
             {
-                _enabledGestures = new ApplicationGesture[] { };
+                _enabledGestures = Array.Empty<ApplicationGesture>();
             }
             return new ReadOnlyCollection<ApplicationGesture>(_enabledGestures);
         }
@@ -179,7 +178,7 @@ namespace System.Windows.Ink
             }
             if (strokes.Count > 2)
             {
-                throw new ArgumentException(SR.Get(SRID.StrokeCollectionCountTooBig), "strokes");
+                throw new ArgumentException(SR.StrokeCollectionCountTooBig, "strokes");
             }
             VerifyAccess();
             VerifyDisposed();
@@ -268,7 +267,7 @@ namespace System.Windows.Ink
         {
             if (_nativeRecognizer == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.GestureRecognizerNotAvailable));
+                throw new InvalidOperationException(SR.GestureRecognizerNotAvailable);
             }
         }
         

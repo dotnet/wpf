@@ -117,7 +117,7 @@ namespace System.Windows.Markup
                 case XamlNodeType.PropertyArrayStart:
                 case XamlNodeType.PropertyArrayEnd:
                 case XamlNodeType.DefTag:
-                    ThrowException(SRID.TemplateTagNotSupported, xamlNode.TokenType.ToString(),
+                    ThrowException(nameof(SR.TemplateTagNotSupported), xamlNode.TokenType.ToString(),
                                    xamlNode.LineNumber, xamlNode.LinePosition);
                     break;
 
@@ -206,7 +206,7 @@ namespace System.Windows.Markup
                     xamlUnknownTagStartNode.Value == XamlTemplateSerializer.HierarchicalDataTemplateAlternationCountFullPropertyName
                     )
                 {
-                    ThrowException(SRID.TemplateKnownTagWrongLocation,
+                    ThrowException(nameof(SR.TemplateKnownTagWrongLocation),
                                    xamlUnknownTagStartNode.Value,
                                    xamlUnknownTagStartNode.LineNumber,
                                    xamlUnknownTagStartNode.LinePosition);
@@ -474,7 +474,7 @@ namespace System.Windows.Markup
 #endif
                    )
                 {
-                    ThrowException(SRID.TemplateNoTriggerTarget,
+                    ThrowException(nameof(SR.TemplateNoTriggerTarget),
                                    _setterTargetNameOrConditionSourceName,
                                    xamlPropertyNode.LineNumber,
                                    xamlPropertyNode.LinePosition);
@@ -509,7 +509,7 @@ namespace System.Windows.Markup
                     {
                         if (!XamlTypeMapper.IsAllowedPropertyGet(pi))
                         {
-                            ThrowException(SRID.ParserCantSetTriggerCondition,
+                            ThrowException(nameof(SR.ParserCantSetTriggerCondition),
                                            pi.Name,
                                            xamlPropertyNode.LineNumber,
                                            xamlPropertyNode.LinePosition);
@@ -519,7 +519,7 @@ namespace System.Windows.Markup
                     {
                         if (!XamlTypeMapper.IsAllowedPropertySet(pi))
                         {
-                            ThrowException(SRID.ParserCantSetAttribute,
+                            ThrowException(nameof(SR.ParserCantSetAttribute),
                                            "Property Setter",
                                            pi.Name,
                                            "set",
@@ -538,7 +538,7 @@ namespace System.Windows.Markup
             {
                 if (targetType != null)
                 {
-                    ThrowException(SRID.TemplateNoProp,
+                    ThrowException(nameof(SR.TemplateNoProp),
                                    member,
                                    targetType.FullName,
                                    xamlPropertyNode.LineNumber,
@@ -546,7 +546,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    ThrowException(SRID.TemplateNoTarget,
+                    ThrowException(nameof(SR.TemplateNoTarget),
                                    member,
                                    xamlPropertyNode.LineNumber,
                                    xamlPropertyNode.LinePosition);
@@ -753,7 +753,7 @@ namespace System.Windows.Markup
                                                           as XamlSerializer;
                  if (serializer == null)
                  {
-                     ThrowException(SRID.ParserNoSerializer,
+                     ThrowException(nameof(SR.ParserNoSerializer),
                                    xamlElementStartNode.TypeFullName,
                                    xamlElementStartNode.LineNumber,
                                    xamlElementStartNode.LinePosition);
@@ -837,7 +837,7 @@ namespace System.Windows.Markup
             {
                 if (_templateRootCount++ > 0)
                 {
-                    ThrowException(SRID.TemplateNoMultipleRoots,
+                    ThrowException(nameof(SR.TemplateNoMultipleRoots),
                                    (elementType == null ? "Unknown tag" : elementType.Name),
                                    xamlNode.LineNumber,
                                    xamlNode.LinePosition);
@@ -852,7 +852,7 @@ namespace System.Windows.Markup
                     &&
                     !KnownTypes.Types[(int)KnownElements.FrameworkContentElement].IsAssignableFrom(elementType))
                 {
-                    ThrowException(SRID.TemplateInvalidRootElementTag,
+                    ThrowException(nameof(SR.TemplateInvalidRootElementTag),
                                    elementType.ToString(),
                                    xamlNode.LineNumber,
                                    xamlNode.LinePosition);
@@ -1037,7 +1037,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    ThrowException(SRID.TemplateUnknownProp, xamlNode.PropName,
+                    ThrowException(nameof(SR.TemplateUnknownProp), xamlNode.PropName,
                                    xamlNode.LineNumber, xamlNode.LinePosition);
                 }
             }
@@ -1128,7 +1128,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    ThrowException(SRID.TemplateUnknownProp, xamlNode.PropName,
+                    ThrowException(nameof(SR.TemplateUnknownProp), xamlNode.PropName,
                                    xamlNode.LineNumber, xamlNode.LinePosition);
                 }
             }
@@ -1238,7 +1238,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    ThrowException(SRID.TemplateUnknownProp, xamlPropertyIDictionaryStartNode.PropName,
+                    ThrowException(nameof(SR.TemplateUnknownProp), xamlPropertyIDictionaryStartNode.PropName,
                                    xamlPropertyIDictionaryStartNode.LineNumber, xamlPropertyIDictionaryStartNode.LinePosition);
                 }
             }
@@ -1322,7 +1322,7 @@ namespace System.Windows.Markup
                 {
                     if (!XamlReaderHelper.IsWhiteSpace(xamlTextNode.Text[i]))
                     {
-                        ThrowException(SRID.TemplateTextNotSupported, xamlTextNode.Text,
+                        ThrowException(nameof(SR.TemplateTextNotSupported), xamlTextNode.Text,
                                xamlTextNode.LineNumber, xamlTextNode.LinePosition);
                     }
                 }
@@ -1486,7 +1486,7 @@ namespace System.Windows.Markup
             {
                 if (_IDTypes.ContainsKey(xamlPropertyNode.Value))
                 {
-                    ThrowException(SRID.TemplateDupName, xamlPropertyNode.Value,
+                    ThrowException(nameof(SR.TemplateDupName), xamlPropertyNode.Value,
                                   xamlPropertyNode.LineNumber, xamlPropertyNode.LinePosition);
                 }
                 else

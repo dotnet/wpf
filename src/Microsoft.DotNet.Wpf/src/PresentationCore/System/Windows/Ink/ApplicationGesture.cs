@@ -200,7 +200,7 @@ namespace System.Windows.Ink
     {
         // the number of enums defined, used by NativeRecognizer
         // to limit input
-        internal static readonly int CountOfValues = 44;
+        internal const int CountOfValues = 44;
 
         // Helper like Enum.IsDefined,  for ApplicationGesture.  It is an fxcop violation
         // to use Enum.IsDefined (for perf reasons)

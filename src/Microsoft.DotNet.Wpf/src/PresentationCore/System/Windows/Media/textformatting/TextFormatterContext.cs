@@ -28,7 +28,6 @@ using MS.Internal.TextFormatting;
 
 using IndexedGlyphRun = System.Windows.Media.TextFormatting.IndexedGlyphRun;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 
 namespace System.Windows.Media.TextFormatting
@@ -146,7 +145,7 @@ namespace System.Windows.Media.TextFormatting
 
                 if (lserr != LsErr.None)
                 {
-                    ThrowExceptionFromLsError(SR.Get(SRID.CreateContextFailure, lserr), lserr);
+                    ThrowExceptionFromLsError(SR.Format(SR.CreateContextFailure, lserr), lserr);
                 }
 
                 if (_specialCharacters == null)
@@ -286,7 +285,7 @@ namespace System.Windows.Media.TextFormatting
 
                 if (lserr != LsErr.None)
                 {
-                    ThrowExceptionFromLsError(SR.Get(SRID.SetBreakingFailure, lserr), lserr);
+                    ThrowExceptionFromLsError(SR.Format(SR.SetBreakingFailure, lserr), lserr);
                 }
 
                 _breaking = breaking;
@@ -388,7 +387,7 @@ namespace System.Windows.Media.TextFormatting
 
             if(lserr != LsErr.None)
             {
-                ThrowExceptionFromLsError(SR.Get(SRID.SetDocFailure, lserr), lserr);
+                ThrowExceptionFromLsError(SR.Format(SR.SetDocFailure, lserr), lserr);
             }
         }
 
@@ -408,7 +407,7 @@ namespace System.Windows.Media.TextFormatting
 
             if(lserr != LsErr.None)
             {
-                ThrowExceptionFromLsError(SR.Get(SRID.SetTabsFailure, lserr), lserr);
+                ThrowExceptionFromLsError(SR.Format(SR.SetTabsFailure, lserr), lserr);
             }
         }
 

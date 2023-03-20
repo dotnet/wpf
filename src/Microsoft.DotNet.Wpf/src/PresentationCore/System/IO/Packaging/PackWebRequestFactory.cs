@@ -57,18 +57,18 @@ namespace System.IO.Packaging
             // Ensure uri is absolute - if we don't check now, the get_Scheme property will throw 
             // InvalidOperationException which would be misleading to the caller.
             if (!uri.IsAbsoluteUri)
-                throw new ArgumentException(SR.Get(SRID.UriMustBeAbsolute), "uri");
+                throw new ArgumentException(SR.UriMustBeAbsolute, "uri");
 
             // Ensure uri is correct scheme because we can be called directly.  Case sensitive
             // is fine because Uri.Scheme contract is to return in lower case only.
-            if (String.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal) != 0)
-                throw new ArgumentException(SR.Get(SRID.UriSchemeMismatch, PackUriHelper.UriSchemePack), "uri");
+            if (!string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal))
+                throw new ArgumentException(SR.Format(SR.UriSchemeMismatch, PackUriHelper.UriSchemePack), "uri");
 
 #if DEBUG
             if (_traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " + 
                         "PackWebRequestFactory - responding to uri: " + uri);
 #endif
             // only inspect cache if part name is present because cache only contains an object, not
@@ -107,7 +107,7 @@ namespace System.IO.Packaging
                     if (_traceSwitch.Enabled)
                         System.Diagnostics.Trace.TraceInformation(
                                 DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + 
+                                Environment.CurrentManagedThreadId + ": " + 
                                 "PackWebRequestFactory - cache hit - returning CachedPackWebRequest");
 #endif
                     // use the cached object
@@ -120,7 +120,7 @@ namespace System.IO.Packaging
             if (_traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " + 
                         "PackWebRequestFactory - spawning regular PackWebRequest");
 #endif
             return new PackWebRequest(uri, packageUri, partUri);
@@ -140,7 +140,7 @@ namespace System.IO.Packaging
         [FriendAccessAllowed]
         internal static WebRequest CreateWebRequest(Uri uri)
         {
-            if (String.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal) == 0)
+            if (string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal))
             {
                 return ((IWebRequestCreate) _factorySingleton).Create(uri);
             }

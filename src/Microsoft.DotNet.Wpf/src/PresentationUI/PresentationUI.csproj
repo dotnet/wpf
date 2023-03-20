@@ -2,16 +2,16 @@
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
   <PropertyGroup>
 
-    <TargetFramework>netcoreapp5.0</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
+    
+    <Platforms>AnyCPU;x64;arm64</Platforms>
 
     <EnableDefaultItems>false</EnableDefaultItems>
-    
+
     <DefineConstants>$(DefineConstants);PRESENTATIONUI</DefineConstants>
     <NoWarn>$(NoWarn);0618</NoWarn>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
 
-    <!-- Enable Markup compilation using our own internally build PresentationBuildTasks.dll --> 
+    <!-- Enable Markup compilation using our own internally build PresentationBuildTasks.dll -->
     <InternalMarkupCompilation>true</InternalMarkupCompilation>
     <NoInternalTypeHelper>true</NoInternalTypeHelper>
     <GenerateDependencyFile>false</GenerateDependencyFile>
@@ -22,7 +22,7 @@
     <Page Include="InstallationError.xaml" />
     <Page Include="TenFeetInstallationError.xaml" />
     <Page Include="TenFeetInstallationProgress.xaml" />
-    <Page Include="MS\Internal\Documents\FindToolbar.xaml" />
+    <Page Include="MS\Internal\Documents\FindToolBar.xaml" />
     <Page Include="themes\MediaCenterTheme.xaml" />
     <Page Include="themes\Aero.NormalColor.xaml">
       <GenerateTheme>true</GenerateTheme>
@@ -49,13 +49,13 @@
       <GenerateTheme>true</GenerateTheme>
     </Page>
   </ItemGroup>
-  
+
   <ItemGroup>
-    <!-- 
+    <!--
       When InternalMarkupCompilation=true, always use @(EmbeddedResource) instead of
-      @(Resource) - @(Resource) gets stripped out by PresentationBuildTasks during 
-      _CompileTemporaryAssembly, and leads to build failures. 
-    --> 
+      @(Resource) - @(Resource) gets stripped out by PresentationBuildTasks during
+      _CompileTemporaryAssembly, and leads to build failures.
+    -->
     <EmbeddedResource Include="Resources\Documents.resx">
       <XlfInput>false</XlfInput>
       <GenerateSource>false</GenerateSource>
@@ -68,12 +68,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Strings.resx" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
       <Link>Common\System\SR.cs</Link>
     </Compile>
-    <Compile Include="SR.cs" />
     <Compile Include="$(WpfSharedDir)\RefAssemblyAttrs.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\FriendAccessAllowedAttribute.cs" />
     <Compile Include="OtherAssemblyAttrs.cs" />
@@ -97,7 +96,7 @@
     <Compile Include="MS\Internal\Documents\DialogDivider.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MS\Internal\Documents\FindToolbar.xaml.cs" />
+    <Compile Include="MS\Internal\Documents\FindToolBar.xaml.cs" />
     <Compile Include="MS\Internal\Documents\IDigitalSignatureProvider.cs" />
     <Compile Include="MS\Internal\Documents\PeoplePickerWrapper.cs" />
     <Compile Include="MS\Internal\Documents\RequestedSignatureDialog.cs">
@@ -129,7 +128,7 @@
     </Compile>
     <Compile Include="MS\Internal\Documents\SignaturePolicy.cs" />
     <Compile Include="MS\Internal\Documents\SignatureResourceHelper.cs" />
-    <Compile Include="MS\Internal\Documents\signaturestatus.cs" />
+    <Compile Include="MS\Internal\Documents\SignatureStatus.cs" />
     <Compile Include="MS\Internal\Documents\SignatureSummaryDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -216,20 +215,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Private.Winforms" Version="$(MicrosoftPrivateWinformsVersion)" />
     <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" />
-    <PackageReference Include="Microsoft.Win32.Registry" Version="$(MicrosoftWin32RegistryPackageVersion)" />
     <PackageReference Include="System.Drawing.Common" Version="$(SystemDrawingCommonVersion)" />
     <PackageReference Include="$(SystemDirectoryServicesPackage)" Version="$(SystemDirectoryServicesVersion)" />
     <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
     <PackageReference Include="System.Resources.Extensions" Version="$(SystemResourcesExtensionsVersion)" />
   </ItemGroup>
 
-  <!-- 
+  <!--
     Minimal set of references needed to build PresentationUI
   -->
   <ItemGroup>
     <NetCoreReference Include="netstandard" />
+    <NetCoreReference Include="Microsoft.Win32.Registry" />
     <NetCoreReference Include="System.Collections" />
     <NetCoreReference Include="System.Collections.Generic" />
     <NetCoreReference Include="System.Collections.NonGeneric" />
@@ -243,12 +241,16 @@
     <NetCoreReference Include="System.Drawing.Primitives" />
     <NetCoreReference Include="System.IO" />
     <NetCoreReference Include="System.IO.FileSystem" />
+    <NetCoreReference Include="System.IO.FileSystem.AccessControl" />
+    <NetCoreReference Include="System.Memory" />
     <NetCoreReference Include="System.ObjectModel" />
     <NetCoreReference Include="System.Resources.ResourceManager" />
     <NetCoreReference Include="System.Runtime.Extensions" />
     <NetCoreReference Include="System.Runtime.InteropServices" />
+    <NetCoreReference Include="System.Runtime.Loader" />
+    <NetCoreReference Include="System.Security.AccessControl" />
+    <NetCoreReference Include="System.Security.Cryptography" />
     <NetCoreReference Include="System.Security.Cryptography.Algorithms" />
-    <NetCoreReference Include="System.Security.Cryptography.Primitives" />
     <NetCoreReference Include="System.Security.Cryptography.X509Certificates" />
     <NetCoreReference Include="System.Threading" />
     <NetCoreReference Include="System.Threading.Thread" />
@@ -259,7 +261,7 @@
   </ItemGroup>
 
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
-  
+
   <Target Name="AfterBuild" Inputs="@(Page)" Outputs="$(OutputPath)sdk\PUI.%(Page.Filename)%(Page.Extension)">
     <Exec Command="$(PerlCommand) ThemeGenerator.pl %(Page.Identity) @(Page -> '$(IntermediateOutputPath)PUI.%(Filename)%(Extension)')" Condition="'%(Page.GenerateTheme)' == 'true'" StandardOutputImportance="normal" />
     <ItemGroup>
@@ -268,7 +270,7 @@
       </DataFile>
     </ItemGroup>
   </Target>
-  
+
   <PropertyGroup>
     <!-- We don't use the designer for creating the strongly-typed resource class so we must ensure that ResGen runs before MarkupCompile -->
     <PrepareResourcesDependsOn>

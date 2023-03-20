@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//
+//
 // Description:  
 //      InternalDispatchObject facilitates implementing a COM dispinterface using a non-public 
 //      corresponding managed interface definition (of type ComInterfaceType.InterfaceIsIDispatch). 

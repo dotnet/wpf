@@ -42,12 +42,12 @@ namespace System.Windows.Controls
         {
             if (item == null)
             {
-                throw new ArgumentNullException("item", SR.Get(SRID.DataGrid_NullColumn));
+                throw new ArgumentNullException("item", SR.DataGrid_NullColumn);
             }
 
             if (item.DataGridOwner != null)
             {
-                throw new ArgumentException(SR.Get(SRID.DataGrid_InvalidColumnReuse, item.Header), "item");
+                throw new ArgumentException(SR.Format(SR.DataGrid_InvalidColumnReuse, item.Header), "item");
             }
 
             if (DisplayIndexMapInitialized)
@@ -63,17 +63,17 @@ namespace System.Windows.Controls
         {
             if (item == null)
             {
-                throw new ArgumentNullException("item", SR.Get(SRID.DataGrid_NullColumn));
+                throw new ArgumentNullException("item", SR.DataGrid_NullColumn);
             }
 
             if (index >= Count || index < 0)
             {
-                throw new ArgumentOutOfRangeException("index", SR.Get(SRID.DataGrid_ColumnIndexOutOfRange, item.Header));
+                throw new ArgumentOutOfRangeException("index", SR.Format(SR.DataGrid_ColumnIndexOutOfRange, item.Header));
             }
 
             if (item.DataGridOwner != null && this[index] != item)
             {
-                throw new ArgumentException(SR.Get(SRID.DataGrid_InvalidColumnReuse, item.Header), "item");
+                throw new ArgumentException(SR.Format(SR.DataGrid_InvalidColumnReuse, item.Header), "item");
             }
 
             if (DisplayIndexMapInitialized)
@@ -478,7 +478,7 @@ namespace System.Windows.Controls
 
             if (changingColumn != null && oldDisplayIndex >= columnCount)
             {
-                throw new ArgumentOutOfRangeException("displayIndex", oldDisplayIndex, SR.Get(SRID.DataGrid_ColumnDisplayIndexOutOfRange, changingColumn.Header));
+                throw new ArgumentOutOfRangeException("displayIndex", oldDisplayIndex, SR.Format(SR.DataGrid_ColumnDisplayIndexOutOfRange, changingColumn.Header));
             }
 
             // First loop:
@@ -500,7 +500,7 @@ namespace System.Windows.Controls
                 {
                     if (assignedDisplayIndexMap.ContainsKey(currentColumnDisplayIndex))
                     {
-                        throw new ArgumentException(SR.Get(SRID.DataGrid_DuplicateDisplayIndex));
+                        throw new ArgumentException(SR.DataGrid_DuplicateDisplayIndex);
                     }
 
                     assignedDisplayIndexMap.Add(currentColumnDisplayIndex, columnIndex);
@@ -721,7 +721,7 @@ namespace System.Windows.Controls
         {
             if (!IsDisplayIndexValid(column, displayIndex, isAdding))
             {
-                throw new ArgumentOutOfRangeException("displayIndex", displayIndex, SR.Get(SRID.DataGrid_ColumnDisplayIndexOutOfRange, column.Header));
+                throw new ArgumentOutOfRangeException("displayIndex", displayIndex, SR.Format(SR.DataGrid_ColumnDisplayIndexOutOfRange, column.Header));
             }
         }
 
@@ -886,7 +886,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            if (DoubleUtil.IsNaN(nonStarSpace))
+            if (double.IsNaN(nonStarSpace))
             {
                 return;
             }
@@ -900,7 +900,7 @@ namespace System.Windows.Controls
         private double ComputeStarColumnWidths(double availableStarSpace)
         {
             Debug.Assert(
-                !DoubleUtil.IsNaN(availableStarSpace) && !Double.IsNegativeInfinity(availableStarSpace),
+                !double.IsNaN(availableStarSpace) && !Double.IsNegativeInfinity(availableStarSpace),
                 "availableStarSpace is not valid");
 
             List<DataGridColumn> unResolvedColumns = new List<DataGridColumn>();
@@ -1089,7 +1089,7 @@ namespace System.Windows.Controls
             foreach (DataGridColumn column in this)
             {
                 DataGridLength width = column.Width;
-                if (column.IsVisible && !DoubleUtil.IsNaN(width.DisplayValue))
+                if (column.IsVisible && !double.IsNaN(width.DisplayValue))
                 {
                     eligibleDisplayValue += width.DisplayValue;
                     totalFactors++;
@@ -1192,7 +1192,7 @@ namespace System.Windows.Controls
                 if (!width.IsStar)
                 {
                     double minWidth = column.MinWidth;
-                    double displayValue = DataGridHelper.CoerceToMinMax(DoubleUtil.IsNaN(width.DesiredValue) ? minWidth : width.DesiredValue, minWidth, column.MaxWidth);
+                    double displayValue = DataGridHelper.CoerceToMinMax(double.IsNaN(width.DesiredValue) ? minWidth : width.DesiredValue, minWidth, column.MaxWidth);
                     if (!DoubleUtil.AreClose(width.DisplayValue, displayValue))
                     {
                         column.SetWidthInternal(new DataGridLength(width.Value, width.UnitType, width.DesiredValue, displayValue));

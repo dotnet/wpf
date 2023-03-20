@@ -717,7 +717,7 @@ namespace MS.Internal.Media
 
             if (packedByte >= 16)
             {
-                throw new ArgumentException(SR.Get(SRID.UnknownPathOperationType));
+                throw new ArgumentException(SR.UnknownPathOperationType);
             }
 
             if (bool1)

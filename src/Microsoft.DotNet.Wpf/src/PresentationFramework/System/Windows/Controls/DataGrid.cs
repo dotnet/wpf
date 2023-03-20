@@ -206,7 +206,7 @@ namespace System.Windows.Controls
         private static bool ValidateMinColumnWidth(object v)
         {
             double value = (double)v;
-            return !(value < 0d || DoubleUtil.IsNaN(value) || Double.IsPositiveInfinity(value));
+            return !(value < 0d || double.IsNaN(value) || Double.IsPositiveInfinity(value));
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace System.Windows.Controls
         private static bool ValidateMaxColumnWidth(object v)
         {
             double value = (double)v;
-            return !(value < 0d || DoubleUtil.IsNaN(value));
+            return !(value < 0d || double.IsNaN(value));
         }
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace System.Windows.Controls
         {
             if (displayIndex < 0 || displayIndex >= Columns.Count)
             {
-                throw new ArgumentOutOfRangeException("displayIndex", displayIndex, SR.Get(SRID.DataGrid_DisplayIndexOutOfRange));
+                throw new ArgumentOutOfRangeException("displayIndex", displayIndex, SR.DataGrid_DisplayIndexOutOfRange);
             }
 
             return InternalColumns.ColumnFromDisplayIndex(displayIndex);
@@ -1262,7 +1262,7 @@ namespace System.Windows.Controls
             var dataGrid = ((DataGrid)d);
             var newValue = (double)e.NewValue;
 
-            if (!DoubleUtil.IsNaN(newValue))
+            if (!double.IsNaN(newValue))
             {
                 dataGrid.RowHeaderActualWidth = newValue;
             }
@@ -1281,7 +1281,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void ResetRowHeaderActualWidth()
         {
-            if (DoubleUtil.IsNaN(RowHeaderWidth))
+            if (double.IsNaN(RowHeaderWidth))
             {
                 RowHeaderActualWidth = 0.0;
             }
@@ -4154,7 +4154,7 @@ namespace System.Windows.Controls
             DataGridSelectionUnit selectionUnit = SelectionUnit;
             if (!IsUpdatingSelectedCells && (selectionUnit == DataGridSelectionUnit.FullRow))
             {
-                throw new InvalidOperationException(SR.Get(SRID.DataGrid_CannotSelectCell));
+                throw new InvalidOperationException(SR.DataGrid_CannotSelectCell);
             }
 
             // Update the pending list of changes
@@ -7156,7 +7156,7 @@ namespace System.Windows.Controls
                     catch (InvalidOperationException invalidOperationException)
                     {
                         Items.SortDescriptions.Clear();
-                        throw new InvalidOperationException(SR.Get(SRID.DataGrid_ProbableInvalidSortDescription), invalidOperationException);
+                        throw new InvalidOperationException(SR.DataGrid_ProbableInvalidSortDescription, invalidOperationException);
                     }
                 }
             }
@@ -8275,7 +8275,7 @@ namespace System.Windows.Controls
         {
             if (ClipboardCopyMode == DataGridClipboardCopyMode.None)
             {
-                throw new NotSupportedException(SR.Get(SRID.ClipboardCopyMode_Disabled));
+                throw new NotSupportedException(SR.ClipboardCopyMode_Disabled);
             }
 
             args.Handled = true;

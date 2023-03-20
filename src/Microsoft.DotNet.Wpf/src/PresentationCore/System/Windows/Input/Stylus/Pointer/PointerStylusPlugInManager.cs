@@ -19,7 +19,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input.StylusPointer
 {

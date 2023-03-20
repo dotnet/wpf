@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -188,7 +188,7 @@ namespace System.Windows.Controls.Primitives
                 // this text is not shown on the UI, just used for Accessibility purposes
                 if (this._previousButton.Content == null)
                 {
-                    this._previousButton.Content = SR.Get(SRID.Calendar_PreviousButtonName);
+                    this._previousButton.Content = SR.Calendar_PreviousButtonName;
                 }
 
                 this._previousButton.Click += new RoutedEventHandler(PreviousButton_Click);
@@ -200,7 +200,7 @@ namespace System.Windows.Controls.Primitives
                 // this text is not shown on the UI, just used for Accessibility purposes
                 if (this._nextButton.Content == null)
                 {
-                    this._nextButton.Content = SR.Get(SRID.Calendar_NextButtonName);
+                    this._nextButton.Content = SR.Calendar_NextButtonName;
                 }
 
                 this._nextButton.Click += new RoutedEventHandler(NextButton_Click);

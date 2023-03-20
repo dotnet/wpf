@@ -47,6 +47,24 @@ If there were any failures, you can cd into $(RepoRoot)\artifacts\test\$(Configu
 
 *NOTE: This requires being run from an admin window at the moment. Removing this restriction is tracked by https://github.com/dotnet/wpf/issues/816.*
 
+### Debugging locally built WPF assemblies with WPF Application
+This section is intended to simplify the steps needed to be able to debug the locally built WPF Assemblies, with any sample app. 
+Configure the project to build x86 or x64, as per the platform architecture you have selected while performing the build for WPF assemblies.
+Go to the csproj file and append this line at the bottom of it. `<Import Project="$(WpfRepoRoot)\eng\wpf-debug.targets" />`. The resultant csproj will look like this:
+```xml
+    <PropertyGroup>
+      <OutputType>WinExe</OutputType>
+      <TargetFramework>net6.0-windows</TargetFramework>
+      <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <WpfRepoRoot>C:\wpf</WpfRepoRoot>
+    </PropertyGroup>
+    <Import Project="$(WpfRepoRoot)\eng\wpf-debug.targets" />
+```
+
+
 ### Testing Locally built WPF assemblies (excluding PresentationBuildTasks)
 This section of guide is intended to discuss the different approaches for ad-hoc testing of WPF assemblies,
 and not automated testing. For automated testing, see the [Running DRTs locally](#Running-DRTs-locally) section above. There are a few different ways this can be done, and for the most part, it depends on what you are trying to accomplish. This section tries to lay out which scenarios require which workflow.
@@ -98,18 +116,20 @@ installed, we can then simply reference those local binaries directly from the p
 
 ```xml
   <PropertyGroup>
-     <!-- Change this value based on where your local repo is located -->
-     <WpfRepoRoot>d:\dev\src\dotnet\wpf</WpfRepoRoot>
-     <!-- Change based on which assemblies you build (Release/Debug) -->
-     <WpfConfig>Debug</WpfConfig>
-     <!-- Publishing a self-contained app ensures our binaries are used. -->
-     <SelfContained>true</SelfContained>
+    <!-- Change this value based on where your local repo is located -->
+    <WpfRepoRoot>d:\dev\src\dotnet\wpf</WpfRepoRoot>
+    <!-- Change based on which assemblies you build (Release/Debug) -->
+    <WpfConfig>Debug</WpfConfig>
+    <WpfOuputFolder>Microsoft.DotNet.Wpf.GitHub.Debug</WpfOuputFolder>
+    <!-- Publishing a self-contained app ensures our binaries are used. -->
+    <SelfContained>true</SelfContained>
     <!-- The runtime identifier needs to match the architecture you built WPF assemblies for. -->
     <RuntimeIdentifier>win-x86</RuntimeIdentifier>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="$(WpfRepoRoot)\artifacts\packaging\$(WpfConfig)\Microsoft.DotNet.Wpf.GitHub\lib\netcoreapp3.0\*.dll" />
-    <ReferenceCopyLocalPaths Include="$(WpfRepoRoot)\artifacts\packaging\$(WpfConfig)\Microsoft.DotNet.Wpf.GitHub\lib\$(RuntimeIdentifier)\*.dll" />
+    <Reference Include="$(WpfRepoRoot)\artifacts\packaging\$(WpfConfig)\$(WpfOuputFolder)\lib\net6.0\*.dll" />
+    <ReferenceCopyLocalPaths Include="$(WpfRepoRoot)\artifacts\packaging\$(WpfConfig)\$(WpfOuputFolder)\lib\$(RuntimeIdentifier)\*.dll" />
+    <ReferenceCopyLocalPaths Include="$(WpfRepoRoot)\artifacts\packaging\$(WpfConfig)\$(WpfOuputFolder)\runtimes\$(RuntimeIdentifier)\native\*.dll" />
   </ItemGroup>
 ```
 
@@ -174,10 +194,32 @@ If you don't have the ability to build from source, you can update the *.runtime
 ```
 
 #### Finding a specific version of Microsoft.WindowsDesktop.App that interests you
-Follow the steps defined [here](https://github.com/dotnet/arcade/blob/master/Documentation/SeePackagesLatestVersion.md) to get setup for [swagger API](https://maestro-prod.westus2.cloudapp.azure.com/swagger/ui/index.html). Note that you need to authorize each time you login, so keep note of your token or you'll have to generate a new one. Assuming you have a commit (and therefore an Azure DevOps build id) that you are interested in, you can enter the build id into your query.
+Follow the steps defined [here](https://github.com/dotnet/arcade/blob/main/Documentation/SeePackagesLatestVersion.md) to get setup for [swagger API](https://maestro-prod.westus2.cloudapp.azure.com/swagger/ui/index.html). Note that you need to authorize each time you login, so keep note of your token or you'll have to generate a new one. Assuming you have a commit (and therefore an Azure DevOps build id) that you are interested in, you can enter the build id into your query.
 
 ### Testing PresentationBuildTasks
 -- add more content here --
+
+## Commonly Encountered Errors
+
+#### The specified RuntimeIdentifier `win-` is not recognized (Code: NETSDK1083)
+If you are seeing this error it means you are possibly missing `<PlatformTarget>` tag from your `.csproj` file. Please add the tag with apropriate value.
+
+For example:- if your wpf binaries are build for platform `x86` you should add `<PlatformTarget>x86</PlatformTarget>` to your `.csproj` file.
+Your final csproj file should look like as below:
+
+```xml
+    <PropertyGroup>
+      <OutputType>WinExe</OutputType>
+      <TargetFramework>net6.0-windows</TargetFramework>
+      <UseWPF>true</UseWPF>
+      <PlatformTarget>x86</PlatformTarget>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <WpfRepoRoot>C:\wpf</WpfRepoRoot>
+    </PropertyGroup>
+    <Import Project="$(WpfRepoRoot)\eng\wpf-debug.targets" />
+```
 
 ## More Information
 

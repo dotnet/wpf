@@ -151,7 +151,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
         FrameworkPropertyMetadata fwMetaData = dp.GetMetadata(d.DependencyObjectType) as FrameworkPropertyMetadata;
 
         if ((fwMetaData != null && !fwMetaData.IsDataBindingAllowed) || dp.ReadOnly)
-            throw new ArgumentException(SR.Get(SRID.PropertyNotBindable, dp.Name), "dp");
+            throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), "dp");
 
         // create the BindingExpression
         PriorityBindingExpression bindExpr = new PriorityBindingExpression(binding, owner);

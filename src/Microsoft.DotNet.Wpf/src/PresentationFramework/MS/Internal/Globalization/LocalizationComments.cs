@@ -103,7 +103,7 @@ namespace MS.Internal.Globalization
                         {
                             // terminate the PropertyName by an unesacped whitespace
                             currentPair.PropertyName = tokenBuffer.ToString();
-                            tokenBuffer = new StringBuilder();
+                            tokenBuffer.Clear();
                         }
 
                         // else ignore whitespace at the beginning of the PropertyName name
@@ -116,13 +116,13 @@ namespace MS.Internal.Globalization
                             {
                                 // terminate the PropertyName by an unescaped CommentStart char
                                 currentPair.PropertyName = tokenBuffer.ToString();
-                                tokenBuffer = new StringBuilder();
+                                tokenBuffer.Clear();
                                 i--; // put back this char and continue
                             }
                             else
                             {
                                 // can't begin with unescaped comment start char.
-                                throw new FormatException(SR.Get(SRID.InvalidLocCommentTarget, input));
+                                throw new FormatException(SR.Format(SR.InvalidLocCommentTarget, input));
                             }
                         }
                         else if (input[i] == EscapeChar && !escaped)
@@ -150,7 +150,7 @@ namespace MS.Internal.Globalization
                         else if (!Char.IsWhiteSpace(input[i]))
                         {
                             // else, only white space is allows before an unescaped comment start char
-                            throw new FormatException(SR.Get(SRID.InvalidLocCommentValue, currentPair.PropertyName, input));
+                            throw new FormatException(SR.Format(SR.InvalidLocCommentValue, currentPair.PropertyName, input));
                         }
                     }
                     else
@@ -161,9 +161,9 @@ namespace MS.Internal.Globalization
                             if (!escaped)
                             {
                                 // terminated by unescaped Comment
-                                currentPair.Value = tokenBuffer.ToString().Substring(1);
+                                currentPair.Value = tokenBuffer.ToString(1, tokenBuffer.Length - 1);
                                 tokens.Add(currentPair);
-                                tokenBuffer = new StringBuilder();
+                                tokenBuffer.Clear();
                                 currentPair = new PropertyComment();
                             }
                             else
@@ -176,7 +176,7 @@ namespace MS.Internal.Globalization
                         else if (input[i] == CommentStart && !escaped)
                         {
                             // throw if there is unescape start in comment
-                            throw new FormatException(SR.Get(SRID.InvalidLocCommentValue, currentPair.PropertyName, input));
+                            throw new FormatException(SR.Format(SR.InvalidLocCommentValue, currentPair.PropertyName, input));
                         }
                         else
                         {
@@ -198,7 +198,7 @@ namespace MS.Internal.Globalization
             if (currentPair.PropertyName != null || tokenBuffer.Length != 0)
             {
                 // unmatched PropertyName and Value pair
-                throw new FormatException(SR.Get(SRID.UnmatchedLocComment, input));
+                throw new FormatException(SR.Format(SR.UnmatchedLocComment, input));
             }
 
             return tokens.ToArray();
@@ -228,7 +228,7 @@ namespace MS.Internal.Globalization
                             attributeGroup
                             );
 
-                        builder = new StringBuilder();
+                        builder.Clear();
                     }
                 }
                 else
@@ -272,7 +272,7 @@ namespace MS.Internal.Globalization
                 return;
             }
 
-            throw new FormatException(SR.Get(SRID.InvalidLocalizabilityValue, value));
+            throw new FormatException(SR.Format(SR.InvalidLocalizabilityValue, value));
         }
 
 

@@ -206,7 +206,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new System.Windows.Markup.XamlParseException(SR.Get(SRID.TemplateContentSetTwice));
+                    throw new System.Windows.Markup.XamlParseException(SR.TemplateContentSetTwice);
                 }
             }
         }
@@ -246,7 +246,7 @@ namespace System.Windows
 
                 if ( IsSealed )
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "Template"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Template"));
                 }
 
                 _resources = value;
@@ -316,7 +316,7 @@ namespace System.Windows
 
             if (this != templatedParent.TemplateInternal)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TemplateFindNameInInvalidElement));
+                throw new InvalidOperationException(SR.TemplateFindNameInInvalidElement);
             }
 
             return StyleHelper.FindNameInTemplateContent(templatedParent, name, this);
@@ -386,7 +386,7 @@ namespace System.Windows
             if (templateRoot != null &&
                 typeof(FrameworkContentElement).IsAssignableFrom(templateRoot.Type))
             {
-                throw new ArgumentException(SR.Get(SRID.VisualTreeRootIsFrameworkElement,
+                throw new ArgumentException(SR.Format(SR.VisualTreeRootIsFrameworkElement,
                     typeof(FrameworkElement).Name, templateRoot.Type.Name));
             }
         }
@@ -441,7 +441,7 @@ namespace System.Windows
         {
             if (_sealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "Template"));
+                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Template"));
             }
         }
 
@@ -849,7 +849,7 @@ namespace System.Windows
             {
                 if (!isMarkupExtension && !(value is DeferredReference))
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidPropertyValue, value, dependencyProperty.Name));
+                    throw new ArgumentException(SR.Format(SR.InvalidPropertyValue, value, dependencyProperty.Name));
                 }
             }
 
@@ -1140,7 +1140,7 @@ namespace System.Windows
                     UIElement rootElement = rootObject as UIElement;
                     if (rootElement == null)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.TemplateMustBeFE, new object[] { rootObject.GetType().FullName }));
+                        throw new InvalidOperationException(SR.Format(SR.TemplateMustBeFE, new object[] { rootObject.GetType().FullName }));
                     }
                     feContainer.TemplateChild = rootElement;
 

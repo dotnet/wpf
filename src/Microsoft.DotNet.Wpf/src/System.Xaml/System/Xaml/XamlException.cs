@@ -43,9 +43,9 @@ namespace System.Xaml
                 {
                     if (LinePosition != 0)
                     {
-                        return SR.Get(SRID.LineNumberAndPosition, base.Message, LineNumber, LinePosition);
+                        return SR.Format(SR.LineNumberAndPosition, base.Message, LineNumber, LinePosition);
                     }
-                    return SR.Get(SRID.LineNumberOnly, base.Message, LineNumber);
+                    return SR.Format(SR.LineNumberOnly, base.Message, LineNumber);
                 }
                 return base.Message;
             }
@@ -64,10 +64,7 @@ namespace System.Xaml
         protected XamlException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            ArgumentNullException.ThrowIfNull(info);
             LineNumber = info.GetInt32("Line");
             LinePosition = info.GetInt32("Offset");
         }
@@ -77,10 +74,7 @@ namespace System.Xaml
 #endif
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            ArgumentNullException.ThrowIfNull(info);
 
             info.AddValue("Line", LineNumber);
             info.AddValue("Offset", LinePosition);
@@ -145,7 +139,7 @@ namespace System.Xaml
         public XamlDuplicateMemberException() { }
 
         public XamlDuplicateMemberException(XamlMember member, XamlType type)
-            : base(SR.Get(SRID.DuplicateMemberSet, (member != null) ? member.Name : null, (type != null) ? type.Name : null))
+            : base(SR.Format(SR.DuplicateMemberSet, (member != null) ? member.Name : null, (type != null) ? type.Name : null))
         {
             DuplicateMember = member;
             ParentType = type;
@@ -160,10 +154,7 @@ namespace System.Xaml
         protected XamlDuplicateMemberException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            ArgumentNullException.ThrowIfNull(info);
             DuplicateMember = (XamlMember)info.GetValue("DuplicateMember", typeof(XamlMember));
             ParentType = (XamlType)info.GetValue("ParentType", typeof(XamlType));
         }
@@ -173,10 +164,7 @@ namespace System.Xaml
 #endif
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            ArgumentNullException.ThrowIfNull(info);
             info.AddValue("DuplicateMember", DuplicateMember);
             info.AddValue("ParentType", ParentType);
             base.GetObjectData(info, context);

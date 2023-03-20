@@ -9,7 +9,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Windows.Media.Animation;
 
-using MS.Internal.PresentationCore;     // SR, SRID
+using MS.Internal.PresentationCore;     // SR
 
 namespace System.Windows.Media.Animation
 {

@@ -13,7 +13,6 @@ using MS.Win32;
 using System.Windows.Media.Composition;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
@@ -139,7 +138,7 @@ namespace System.Windows.Media
         /// "FactoryMaker" is free threaded. This lock is used to synchronize
         /// access to the FactoryMaker.
         /// </summary>
-        private static object s_factoryMakerLock = new object();
+        private static readonly object s_factoryMakerLock = new object();
         private bool _fValidObject;
     }
 }

@@ -136,10 +136,7 @@ namespace System.Xaml
 
         public virtual string GetPreferredPrefix(string xmlns)
         {
-            if (xmlns == null)
-            {
-                throw new ArgumentNullException(nameof(xmlns));
-            }
+            ArgumentNullException.ThrowIfNull(xmlns);
             UpdateXmlNsInfo();
             if (_preferredPrefixes == null)
             {
@@ -250,14 +247,8 @@ namespace System.Xaml
 
         public virtual XamlDirective GetXamlDirective(string xamlNamespace, string name)
         {
-            if (xamlNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(xamlNamespace));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            ArgumentNullException.ThrowIfNull(xamlNamespace);
+            ArgumentNullException.ThrowIfNull(name);
 
             if (XamlLanguage.XamlNamespaces.Contains(xamlNamespace))
             {
@@ -272,17 +263,14 @@ namespace System.Xaml
 
         public XamlType GetXamlType(XamlTypeName xamlTypeName)
         {
-            if (xamlTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(xamlTypeName));
-            }
+            ArgumentNullException.ThrowIfNull(xamlTypeName);
             if (xamlTypeName.Name == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "xamlTypeName.Name"), nameof(xamlTypeName));
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "xamlTypeName.Name"), nameof(xamlTypeName));
             }
             if (xamlTypeName.Namespace == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "xamlTypeName.Namespace"), nameof(xamlTypeName));
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "xamlTypeName.Namespace"), nameof(xamlTypeName));
             }
 
             XamlType[] typeArgs = null;
@@ -293,7 +281,7 @@ namespace System.Xaml
                 {
                     if (xamlTypeName.TypeArguments[i] == null)
                     {
-                        throw new ArgumentException(SR.Get(SRID.CollectionCannotContainNulls, "xamlTypeName.TypeArguments"));
+                        throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "xamlTypeName.TypeArguments"));
                     }
                     typeArgs[i] = GetXamlType(xamlTypeName.TypeArguments[i]);
                     if (typeArgs[i] == null)
@@ -307,21 +295,15 @@ namespace System.Xaml
 
         protected internal virtual XamlType GetXamlType(string xamlNamespace, string name, params XamlType[] typeArguments)
         {
-            if (xamlNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(xamlNamespace));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            ArgumentNullException.ThrowIfNull(xamlNamespace);
+            ArgumentNullException.ThrowIfNull(name);
             if (typeArguments != null)
             {
                 foreach (XamlType typeArg in typeArguments)
                 {
                     if (typeArg == null)
                     {
-                        throw new ArgumentException(SR.Get(SRID.CollectionCannotContainNulls, "typeArguments"));
+                        throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "typeArguments"));
                     }
                     if (typeArg.UnderlyingType == null)
                     {
@@ -382,10 +364,7 @@ namespace System.Xaml
         // Note: this method doesn't apply transitive subsuming, the caller is responsible for doing that.
         public virtual bool TryGetCompatibleXamlNamespace(string xamlNamespace, out string compatibleNamespace)
         {
-            if (xamlNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(xamlNamespace));
-            }
+            ArgumentNullException.ThrowIfNull(xamlNamespace);
 
             // Note: this method has order-dependent behavior for backcompat.
             // When we look up a namespace, we throw if it has conflicting XmlnsCompatAttributes.
@@ -469,7 +448,7 @@ namespace System.Xaml
                     {
                         if (result != null && result != newNs)
                         {
-                            throw new XamlSchemaException(SR.Get(SRID.DuplicateXmlnsCompatAcrossAssemblies,
+                            throw new XamlSchemaException(SR.Format(SR.DuplicateXmlnsCompatAcrossAssemblies,
                                 resultAssembly.FullName, curAssembly.FullName, oldNs));
                         }
                         result = newNs;
@@ -542,15 +521,14 @@ namespace System.Xaml
 
         public virtual XamlType GetXamlType(Type type)
         {
+            ArgumentNullException.ThrowIfNull(type);
+
             return GetXamlType(type, XamlLanguage.TypeAlias(type));
         }
 
         internal XamlType GetXamlType(Type type, string alias)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            ArgumentNullException.ThrowIfNull(type);
             XamlType xamlType = null;
             if (!MasterTypeList.TryGetValue(type, out xamlType))
             {
@@ -567,10 +545,7 @@ namespace System.Xaml
         /// </summary>
         internal Dictionary<string, SpecialBracketCharacters> InitBracketCharacterCacheForType(XamlType type)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            ArgumentNullException.ThrowIfNull(type);
 
             Dictionary<string, SpecialBracketCharacters> bracketCharacterCache = null;
             if (type.IsMarkupExtension)
@@ -683,7 +658,7 @@ namespace System.Xaml
         #region Settings
 
         // Unchanging, initialized in ctor
-        private readonly XamlSchemaContextSettings _settings = null;
+        private readonly XamlSchemaContextSettings _settings;
 
         public bool SupportMarkupExtensionsWithDuplicateArity
         {
@@ -1174,8 +1149,10 @@ namespace System.Xaml
         {
             bool foundNew = false;
             IList<XmlNsInfo.XmlNsDefinition> xmlnsDefs = nsInfo.NsDefs;
-            foreach (XmlNsInfo.XmlNsDefinition xmlnsDef in xmlnsDefs)
+            int xmlnsDefsCount = xmlnsDefs.Count;
+            for (int i = 0; i < xmlnsDefsCount; i++)
             {
+                XmlNsInfo.XmlNsDefinition xmlnsDef = xmlnsDefs[i];
                 AssemblyNamespacePair pair = new AssemblyNamespacePair(nsInfo.Assembly, xmlnsDef.ClrNamespace);
                 XamlNamespace ns = GetXamlNamespace(xmlnsDef.XmlNamespace);
                 ns.AddAssemblyNamespacePair(pair);

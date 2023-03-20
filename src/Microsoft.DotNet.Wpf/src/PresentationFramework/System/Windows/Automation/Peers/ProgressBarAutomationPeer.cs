@@ -52,7 +52,7 @@ namespace System.Windows.Automation.Peers
         //[CodeAnalysis("AptcaMethodsShouldOnlyCallAptcaMethods")] //Tracking Bug: 29647
         void IRangeValueProvider.SetValue(double val)
         {
-            throw new InvalidOperationException(SR.Get(SRID.ProgressBarReadOnly));
+            throw new InvalidOperationException(SR.ProgressBarReadOnly);
         }
 
         ///<summary>Indicates that the value can only be read, not modified.

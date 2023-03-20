@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net472;netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks>net472;net8.0</TargetFrameworks>
     <EnableDefaultItems>false</EnableDefaultItems>
     <EnablePInvokeAnalyzer>true</EnablePInvokeAnalyzer>
 
@@ -26,7 +26,7 @@
     <BinPlaceRuntime>false</BinPlaceRuntime>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
@@ -60,7 +60,7 @@
     <PackagingAssemblyContent Include="System.Reflection.MetadataLoadContext.dll" />
     <PackagingAssemblyContent Include="System.Runtime.CompilerServices.Unsafe.dll" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp2.1'">
+  <ItemGroup Condition="'$(TargetFramework)'=='net8.0'">
     <PackagingAssemblyContent Include="PresentationBuildTasks.dll" />
     <PackagingAssemblyContent Include="System.Reflection.MetadataLoadContext.dll" />
   </ItemGroup>
@@ -124,20 +124,20 @@
     <Compile Include="$(WpfSharedDir)\System\Windows\Markup\XmlWrappingReader.cs">
       <Link>Shared\System\Windows\Markup\XmlWrappingReader.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\WindowsBase\System\IO\Packaging\Compoundfile\FormatVersion.cs">
-      <Link>WindowsBase\System\IO\Packaging\Compoundfile\FormatVersion.cs</Link>
+    <Compile Include="$(WpfSourceDir)\WindowsBase\System\IO\Packaging\CompoundFile\FormatVersion.cs">
+      <Link>WindowsBase\System\IO\Packaging\CompoundFile\FormatVersion.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\WindowsBase\System\IO\Packaging\Compoundfile\versionPair.cs">
-      <Link>WindowsBase\System\IO\Packaging\Compoundfile\versionPair.cs</Link>
+    <Compile Include="$(WpfSourceDir)\WindowsBase\System\IO\Packaging\CompoundFile\VersionPair.cs">
+      <Link>WindowsBase\System\IO\Packaging\CompoundFile\VersionPair.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\WindowsBase\MS\Internal\IO\Packaging\Compoundfile\ContainerUtilities.cs">
-      <Link>WindowsBase\MS\Internal\IO\Packaging\Compoundfile\ContainerUtilities.cs</Link>
+    <Compile Include="$(WpfSourceDir)\WindowsBase\MS\Internal\IO\Packaging\CompoundFile\ContainerUtilities.cs">
+      <Link>WindowsBase\MS\Internal\IO\Packaging\CompoundFile\ContainerUtilities.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\internal\Media\XamlSerializationHelper.cs">
-      <Link>PresentationCore\MS\internal\Media\XamlSerializationHelper.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\Internal\Media\XamlSerializationHelper.cs">
+      <Link>PresentationCore\MS\Internal\Media\XamlSerializationHelper.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\internal\Media\ParserStreamGeometryContext.cs">
-      <Link>PresentationCore\MS\internal\Media\ParserStreamGeometryContext.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\Internal\Media\ParserStreamGeometryContext.cs">
+      <Link>PresentationCore\MS\Internal\Media\ParserStreamGeometryContext.cs</Link>
     </Compile>
     <Compile Include="$(WpfSourceDir)\PresentationCore\System\Windows\Media\StreamGeometryContext.cs">
       <Link>PresentationCore\System\Windows\Media\StreamGeometryContext.cs</Link>
@@ -236,8 +236,8 @@
     <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlNodes.cs">
       <Link>PresentationFramework\System\Windows\Markup\XamlNodes.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XAMLParseException.cs">
-      <Link>PresentationFramework\System\Windows\Markup\XAMLParseException.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlParseException.cs">
+      <Link>PresentationFramework\System\Windows\Markup\XamlParseException.cs</Link>
     </Compile>
     <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\XamlParser.cs">
       <Link>PresentationFramework\System\Windows\Markup\XamlParser.cs</Link>
@@ -300,8 +300,6 @@
     <Compile Include="Microsoft\Build\Tasks\Windows\UpdateManifestForBrowserApplication.cs" />
     <Compile Include="Microsoft\Build\Tasks\Windows\ResourcesGenerator.cs" />
     <Compile Include="Microsoft\Build\Tasks\Windows\GenerateTemporaryTargetAssembly.cs" />
-    <Compile Include="Microsoft\Build\Tasks\Windows\GenerateTemporaryTargetAssembly2.cs" />
-    <Compile Include="Microsoft\Build\Tasks\Windows\CreateTemporaryTargetAssemblyProject.cs" />
   </ItemGroup>
 
   <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">

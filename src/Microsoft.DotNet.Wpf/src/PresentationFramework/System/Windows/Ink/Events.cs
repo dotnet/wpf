@@ -337,7 +337,7 @@ namespace System.Windows.Controls
             }
             if (strokes.Count < 1)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidEmptyStrokeCollection), "strokes");
+                throw new ArgumentException(SR.InvalidEmptyStrokeCollection, "strokes");
             }
             if (gestureRecognitionResults == null)
             {
@@ -347,7 +347,7 @@ namespace System.Windows.Controls
                 new List<GestureRecognitionResult>(gestureRecognitionResults);
             if (results.Count == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidEmptyArray), "gestureRecognitionResults");
+                throw new ArgumentException(SR.InvalidEmptyArray, "gestureRecognitionResults");
             }
             _strokes = strokes;
             _gestureRecognitionResults = results;

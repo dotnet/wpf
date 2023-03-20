@@ -256,7 +256,7 @@ namespace WinRT
                 }
                 catch (Exception) { }
 
-                var lastSegment = moduleName.LastIndexOf(".");
+                var lastSegment = moduleName.LastIndexOf('.');
                 if (lastSegment <= 0)
                 {
                     Marshal.ThrowExceptionForHR(hr);

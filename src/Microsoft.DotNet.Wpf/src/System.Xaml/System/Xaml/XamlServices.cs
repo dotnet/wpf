@@ -8,6 +8,7 @@ using System.Xml;
 
 namespace System.Xaml
 {
+    [Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "The IDisposable types in this class don't require dispose.")]
     public static class XamlServices
     {
         // The main function is Load(XamlReader)
@@ -17,10 +18,7 @@ namespace System.Xaml
 
         public static object Parse(string xaml)
         {
-            if (xaml == null)
-            {
-                throw new ArgumentNullException(nameof(xaml));
-            }
+            ArgumentNullException.ThrowIfNull(xaml);
 
             StringReader stringReader = new StringReader(xaml);
             using (XmlReader xmlReader = XmlReader.Create(stringReader))
@@ -32,10 +30,7 @@ namespace System.Xaml
 
         public static object Load(string fileName)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
+            ArgumentNullException.ThrowIfNull(fileName);
 
             using (XmlReader xmlReader = XmlReader.Create(fileName))
             {
@@ -46,10 +41,7 @@ namespace System.Xaml
 
         public static object Load(Stream stream)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
+            ArgumentNullException.ThrowIfNull(stream);
 
             using (XmlReader xmlReader = XmlReader.Create(stream))
             {
@@ -60,10 +52,7 @@ namespace System.Xaml
 
         public static object Load(TextReader textReader)
         {
-            if (textReader == null)
-            {
-                throw new ArgumentNullException(nameof(textReader));
-            }
+            ArgumentNullException.ThrowIfNull(textReader);
 
             using (XmlReader xmlReader = XmlReader.Create(textReader))
             {
@@ -74,10 +63,7 @@ namespace System.Xaml
 
         public static object Load(XmlReader xmlReader)
         {
-            if (xmlReader == null)
-            {
-                throw new ArgumentNullException(nameof(xmlReader));
-            }
+            ArgumentNullException.ThrowIfNull(xmlReader);
 
             using (XamlXmlReader xamlReader = new XamlXmlReader(xmlReader))
             {
@@ -89,10 +75,7 @@ namespace System.Xaml
 
         public static object Load(XamlReader xamlReader)
         {
-            if (xamlReader == null)
-            {
-                throw new ArgumentNullException(nameof(xamlReader));
-            }
+            ArgumentNullException.ThrowIfNull(xamlReader);
 
             XamlObjectWriter objectWriter = new XamlObjectWriter(xamlReader.SchemaContext);
 
@@ -109,15 +92,9 @@ namespace System.Xaml
 
         public static void Transform(XamlReader xamlReader, XamlWriter xamlWriter, bool closeWriter)
         {
-            if (xamlReader == null)
-            {
-                throw new ArgumentNullException(nameof(xamlReader));
-            }
+            ArgumentNullException.ThrowIfNull(xamlReader);
 
-            if (xamlWriter == null)
-            {
-                throw new ArgumentNullException(nameof(xamlWriter));
-            }
+            ArgumentNullException.ThrowIfNull(xamlWriter);
 
             IXamlLineInfo xamlLineInfo = xamlReader as IXamlLineInfo;
             IXamlLineInfoConsumer xamlLineInfoConsumer = xamlWriter as IXamlLineInfoConsumer;
@@ -159,15 +136,12 @@ namespace System.Xaml
 
         public static void Save(String fileName, object instance)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
+            ArgumentNullException.ThrowIfNull(fileName);
             //
             // At this point it can only be empty
             if (string.IsNullOrEmpty(fileName))
             {
-                throw new ArgumentException(SR.Get(SRID.StringIsNullOrEmpty), nameof(fileName));
+                throw new ArgumentException(SR.StringIsNullOrEmpty, nameof(fileName));
             }
             using (var writer = XmlWriter.Create(fileName, new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true }))
             {
@@ -178,10 +152,7 @@ namespace System.Xaml
 
         public static void Save(Stream stream, object instance)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
+            ArgumentNullException.ThrowIfNull(stream);
             using (var writer = XmlWriter.Create(stream, new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true }))
             {
                 Save(writer, instance);
@@ -191,10 +162,7 @@ namespace System.Xaml
 
         public static void Save(TextWriter writer, object instance)
         {
-            if (writer == null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
+            ArgumentNullException.ThrowIfNull(writer);
             using (var xmlWriter = XmlWriter.Create(writer, new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true }))
             {
                 Save(xmlWriter, instance);
@@ -204,10 +172,7 @@ namespace System.Xaml
 
         public static void Save(XmlWriter writer, object instance)
         {
-            if (writer == null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
+            ArgumentNullException.ThrowIfNull(writer);
             using (XamlXmlWriter xamlWriter = new XamlXmlWriter(writer, new XamlSchemaContext()))
             {
                 Save(xamlWriter, instance);
@@ -216,10 +181,7 @@ namespace System.Xaml
 
         public static void Save(XamlWriter writer, object instance)
         {
-            if (writer == null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
+            ArgumentNullException.ThrowIfNull(writer);
 
             XamlObjectReader objectReader = new XamlObjectReader(instance, writer.SchemaContext);
 

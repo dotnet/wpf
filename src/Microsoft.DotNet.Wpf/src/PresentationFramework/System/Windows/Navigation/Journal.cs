@@ -339,7 +339,7 @@ namespace System.Windows.Navigation
                 return false; // nothing to do
 
             if(_uncommittedCurrentIndex > _currentEntryIndex)
-                throw new InvalidOperationException(SR.Get(SRID.InvalidOperation_CannotClearFwdStack));
+                throw new InvalidOperationException(SR.InvalidOperation_CannotClearFwdStack);
 
             _journalEntryList.RemoveRange(_currentEntryIndex, _journalEntryList.Count - _currentEntryIndex);
             UpdateView();
@@ -368,7 +368,7 @@ namespace System.Windows.Navigation
             int index;
             JournalEntry journalEntry = GetGoBackEntry(out index);
             if (journalEntry == null)
-                throw new InvalidOperationException(SR.Get(SRID.NoBackEntry));
+                throw new InvalidOperationException(SR.NoBackEntry);
             _uncommittedCurrentIndex = index;
             UpdateView();
             if (_uncommittedCurrentIndex == _currentEntryIndex)
@@ -384,7 +384,7 @@ namespace System.Windows.Navigation
 
             GetGoForwardEntryIndex(out fwdEntryIndex);
             if (fwdEntryIndex == -1)
-                throw new InvalidOperationException(SR.Get(SRID.NoForwardEntry));
+                throw new InvalidOperationException(SR.NoForwardEntry);
 
             _uncommittedCurrentIndex = fwdEntryIndex;
             UpdateView();

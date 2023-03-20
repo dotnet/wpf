@@ -174,7 +174,7 @@ namespace MS.Internal.FontFace
             else
             {
                 if (faceIndex != 0)
-                    throw new ArgumentOutOfRangeException("faceIndex", SR.Get(SRID.FaceIndexValidOnlyForTTC));
+                    throw new ArgumentOutOfRangeException("faceIndex", SR.FaceIndexValidOnlyForTTC);
             }
 
             try

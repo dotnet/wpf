@@ -21,7 +21,6 @@ using System.Runtime.InteropServices;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media 
 {
@@ -439,9 +438,9 @@ namespace System.Windows.Media
             else
             {   
                 ctx.BeginFigure(rect.TopLeft, true /* is filled */, true /* is closed */);
-                ctx.LineTo(Rect.TopRight, true /* is stroked */, false /* is smooth join */);
-                ctx.LineTo(Rect.BottomRight, true /* is stroked */, false /* is smooth join */);
-                ctx.LineTo(Rect.BottomLeft, true /* is stroked */, false /* is smooth join */);
+                ctx.LineTo(rect.TopRight, true /* is stroked */, false /* is smooth join */);
+                ctx.LineTo(rect.BottomRight, true /* is stroked */, false /* is smooth join */);
+                ctx.LineTo(rect.BottomLeft, true /* is stroked */, false /* is smooth join */);
             }
 
             ctx.Close();

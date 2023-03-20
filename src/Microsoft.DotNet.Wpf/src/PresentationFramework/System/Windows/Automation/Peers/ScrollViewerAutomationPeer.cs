@@ -91,7 +91,7 @@ namespace System.Windows.Automation.Peers
 
             if (scrollHorizontally && !HorizontallyScrollable || scrollVertically && !VerticallyScrollable)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
 
             switch (horizontalAmount)
@@ -111,7 +111,7 @@ namespace System.Windows.Automation.Peers
                 case ScrollAmount.NoAmount:
                     break;
                 default:
-                    throw new InvalidOperationException(SR.Get(SRID.UIA_OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
 
             switch (verticalAmount)
@@ -131,7 +131,7 @@ namespace System.Windows.Automation.Peers
                 case ScrollAmount.NoAmount:
                     break;
                 default:
-                    throw new InvalidOperationException(SR.Get(SRID.UIA_OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
         }
 
@@ -154,16 +154,16 @@ namespace System.Windows.Automation.Peers
 
             if (scrollHorizontally && !HorizontallyScrollable || scrollVertically && !VerticallyScrollable)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
 
             if (scrollHorizontally && (horizontalPercent < 0.0) || (horizontalPercent > 100.0))
             {
-                throw new ArgumentOutOfRangeException("horizontalPercent", SR.Get(SRID.ScrollViewer_OutOfRange, "horizontalPercent", horizontalPercent.ToString(CultureInfo.InvariantCulture), "0", "100"));
+                throw new ArgumentOutOfRangeException("horizontalPercent", SR.Format(SR.ScrollViewer_OutOfRange, "horizontalPercent", horizontalPercent.ToString(CultureInfo.InvariantCulture), "0", "100"));
             }
             if (scrollVertically && (verticalPercent < 0.0) || (verticalPercent > 100.0))
             {
-                throw new ArgumentOutOfRangeException("verticalPercent", SR.Get(SRID.ScrollViewer_OutOfRange, "verticalPercent", verticalPercent.ToString(CultureInfo.InvariantCulture), "0", "100"));
+                throw new ArgumentOutOfRangeException("verticalPercent", SR.Format(SR.ScrollViewer_OutOfRange, "verticalPercent", verticalPercent.ToString(CultureInfo.InvariantCulture), "0", "100"));
             }
 
             if (scrollHorizontally)

@@ -224,7 +224,7 @@
       </trans-unit>
       <trans-unit id="InvalidXml">
         <source>MC3000: '{0}' XML is not valid.</source>
-        <target state="translated">MC3000:  '{0}' XML が無効です。</target>
+        <target state="translated">MC3000: '{0}' XML が無効です。</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalNamePropertyNotAllowed">

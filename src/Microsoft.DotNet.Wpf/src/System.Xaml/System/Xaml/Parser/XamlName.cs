@@ -30,14 +30,14 @@ namespace MS.Internal.Xaml.Parser
         public abstract string ScopedName { get; }
 
         protected string _prefix;
-        protected string _namespace = null;
+        protected string _namespace;
 
         public string Prefix { get { return _prefix; } }
         public string Namespace { get { return _namespace; } }
 
         public static bool ContainsDot(string name)
         {
-            return name.Contains(".");
+            return name.Contains(Dot);
         }
 
         public static bool IsValidXamlName(string name)

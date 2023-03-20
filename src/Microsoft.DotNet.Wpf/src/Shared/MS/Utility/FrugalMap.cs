@@ -5,10 +5,11 @@
 using System;
 using System.Diagnostics;
 using System.Collections;
+using System.Collections.Generic;
 using System.Windows;
 
 #if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
+using MS.Internal.WindowsBase;
 #elif PRESENTATION_CORE
     using MS.Internal.PresentationCore;
 #elif PRESENTATIONFRAMEWORK
@@ -191,7 +192,7 @@ namespace MS.Utility
             else
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Get(SRID.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
         }
 
@@ -501,17 +502,17 @@ namespace MS.Utility
             if (FrugalMapStoreState.Success != newMap.InsertEntry(_entry0.Key, _entry0.Value))
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Get(SRID.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
             if (FrugalMapStoreState.Success != newMap.InsertEntry(_entry1.Key, _entry1.Value))
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Get(SRID.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
             if (FrugalMapStoreState.Success != newMap.InsertEntry(_entry2.Key, _entry2.Value))
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Get(SRID.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
         }
 
@@ -1065,32 +1066,32 @@ namespace MS.Utility
             if (FrugalMapStoreState.Success != newMap.InsertEntry(_entry0.Key, _entry0.Value))
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Get(SRID.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
             if (FrugalMapStoreState.Success != newMap.InsertEntry(_entry1.Key, _entry1.Value))
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Get(SRID.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
             if (FrugalMapStoreState.Success != newMap.InsertEntry(_entry2.Key, _entry2.Value))
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Get(SRID.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
             if (FrugalMapStoreState.Success != newMap.InsertEntry(_entry3.Key, _entry3.Value))
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Get(SRID.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
             if (FrugalMapStoreState.Success != newMap.InsertEntry(_entry4.Key, _entry4.Value))
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Get(SRID.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
             if (FrugalMapStoreState.Success != newMap.InsertEntry(_entry5.Key, _entry5.Value))
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Get(SRID.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
         }
 
@@ -1262,7 +1263,7 @@ namespace MS.Utility
                     continue;
                 }
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Get(SRID.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
         }
 
@@ -1498,7 +1499,7 @@ namespace MS.Utility
                     continue;
                 }
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Get(SRID.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
         }
 
@@ -1575,7 +1576,7 @@ namespace MS.Utility
             }
             else
             {
-                _entries = new Hashtable(MINSIZE);
+                _entries = new Dictionary<int, object>(MINSIZE);
             }
 
             _entries[key] = ((value != NullValue) && (value != null)) ? value : NullValue;
@@ -1589,9 +1590,9 @@ namespace MS.Utility
 
         public override Object Search(int key)
         {
-            object value = _entries[key];
-
-            return ((value != NullValue) && (value != null)) ? value : DependencyProperty.UnsetValue;
+            return _entries.TryGetValue(key, out object value) && (value != NullValue) ?
+                value :
+                DependencyProperty.UnsetValue;
         }
 
         public override void Sort()
@@ -1603,7 +1604,7 @@ namespace MS.Utility
         {
             if (index < _entries.Count)
             {
-                IDictionaryEnumerator myEnumerator = _entries.GetEnumerator();
+                Dictionary<int, object>.Enumerator myEnumerator = _entries.GetEnumerator();
 
                 // Move to first valid value
                 myEnumerator.MoveNext();
@@ -1612,15 +1613,12 @@ namespace MS.Utility
                 {
                     myEnumerator.MoveNext();
                 }
-                key = (int)myEnumerator.Key;
-                if ((myEnumerator.Value != NullValue) && (myEnumerator.Value != null))
-                {
-                    value = myEnumerator.Value;
-                }
-                else
-                {
-                    value = DependencyProperty.UnsetValue;
-                }
+
+                KeyValuePair<int, object> current = myEnumerator.Current;
+                key = current.Key;
+                value = (current.Value != NullValue) ?
+                    current.Value :
+                    DependencyProperty.UnsetValue;
             }
             else
             {
@@ -1632,29 +1630,20 @@ namespace MS.Utility
 
         public override void Iterate(ArrayList list, FrugalMapIterationCallback callback)
         {
-            IDictionaryEnumerator myEnumerator = _entries.GetEnumerator();
-            
-            while (myEnumerator.MoveNext())
+            foreach (KeyValuePair<int, object> entry in _entries)
             {
-                int key = (int)myEnumerator.Key;
-                object value;
-                if ((myEnumerator.Value != NullValue) && (myEnumerator.Value != null))
-                {
-                    value = myEnumerator.Value;
-                }
-                else
-                {
-                    value = DependencyProperty.UnsetValue;
-                }
+                object value = (entry.Value != NullValue) ?
+                    entry.Value :
+                    DependencyProperty.UnsetValue;
             
-                callback(list, key, value);
+                callback(list, entry.Key, value);
             }
         }
 
         public override void Promote(FrugalMapBase newMap)
         {
             // Should never get here
-            throw new InvalidOperationException(SR.Get(SRID.FrugalMap_CannotPromoteBeyondHashtable));
+            throw new InvalidOperationException(SR.Format(SR.FrugalMap_CannotPromoteBeyondHashtable));
         }
 
         // Size of this data store
@@ -1674,7 +1663,7 @@ namespace MS.Utility
         // two cases we insert NullValue instead of null.
         private static object NullValue = new object();
 
-        internal Hashtable _entries;
+        internal Dictionary<int, object> _entries;
     }
 
     [FriendAccessAllowed]
@@ -1741,7 +1730,7 @@ namespace MS.Utility
                         }
                         else
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.FrugalMap_CannotPromoteBeyondHashtable));
+                            throw new InvalidOperationException(SR.Format(SR.FrugalMap_CannotPromoteBeyondHashtable));
                         }
 
                         // Extract the values from the old store and insert them into the new store
@@ -1979,7 +1968,7 @@ namespace MS.Utility
                     continue;
                 }
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Get(SRID.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
         }
 
@@ -2090,7 +2079,7 @@ namespace MS.Utility
                         }
                         else
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.FrugalMap_CannotPromoteBeyondHashtable));
+                            throw new InvalidOperationException(SR.Format(SR.FrugalMap_CannotPromoteBeyondHashtable));
                         }
 
                         // Extract the values from the old store and insert them into the new store

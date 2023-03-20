@@ -22,21 +22,18 @@ namespace System.Windows.Markup
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
+            ArgumentNullException.ThrowIfNull(context);
             
             var nameResolver = (IXamlNameResolver)context.GetService(typeof(IXamlNameResolver));
             if (nameResolver == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MissingNameResolver));
+                throw new InvalidOperationException(SR.MissingNameResolver);
             }
 
             string name = value as string;
             if (String.IsNullOrEmpty(name))
             {
-                throw new InvalidOperationException(SR.Get(SRID.MustHaveName));
+                throw new InvalidOperationException(SR.MustHaveName);
             }
             object obj = nameResolver.Resolve(name);
             if (obj == null)
@@ -65,15 +62,12 @@ namespace System.Windows.Markup
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
+            ArgumentNullException.ThrowIfNull(context);
 
             var nameProvider = (IXamlNameProvider)context.GetService(typeof(IXamlNameProvider));
             if (nameProvider == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MissingNameProvider));
+                throw new InvalidOperationException(SR.MissingNameProvider);
             }
 
             return nameProvider.GetName(value);            

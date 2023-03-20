@@ -181,7 +181,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_WrongPropertyTypeForFixedDocument));
+                    throw new XpsSerializationException(SR.ReachSerialization_WrongPropertyTypeForFixedDocument);
                 }
             }
 
@@ -277,16 +277,13 @@ namespace System.Windows.Xps.Serialization
                                                                        propertyValue);
 
 
-                if (typeof(Type).IsInstanceOfType(propertyValue))
+                if (propertyValue is Type)
                 {
                     int index = valueAsString.LastIndexOf('.');
-
-                    if (index > 0)
-                    {
-                        valueAsString = valueAsString.Substring(index + 1);
-                    }
-
-                    valueAsString = XpsSerializationManager.TypeOfString + valueAsString + "}";
+                    valueAsString = string.Concat(
+                        XpsSerializationManager.TypeOfString,
+                        index > 0 ? valueAsString.AsSpan(index + 1) : valueAsString,
+                        "}");
                 }
             }
             else

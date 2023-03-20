@@ -23,6 +23,9 @@ namespace System.Windows.Controls
     /// </summary>
     public class DataGridCell : ContentControl, IProvideDataGridColumn
     {
+        private static readonly bool IsDataGridKeyboardSortDisabled;
+        private static readonly bool OptOutOfGridColumnResizeUsingKeyboard;
+
         #region Constructors
 
         /// <summary>
@@ -45,6 +48,9 @@ namespace System.Windows.Controls
 
             EventManager.RegisterClassHandler(typeof(DataGridCell), LostFocusEvent, new RoutedEventHandler(OnAnyLostFocus), true);
             EventManager.RegisterClassHandler(typeof(DataGridCell), GotFocusEvent, new RoutedEventHandler(OnAnyGotFocus), true);
+
+            AppContext.TryGetSwitch("System.Windows.Controls.DisableDataGridKeyboardSort", out IsDataGridKeyboardSortDisabled);
+            AppContext.TryGetSwitch("System.Windows.Controls.OptOutOfGridColumnResizeUsingKeyboard", out OptOutOfGridColumnResizeUsingKeyboard);
         }
 
         /// <summary>
@@ -964,6 +970,46 @@ namespace System.Windows.Controls
         /// </summary>
         protected override void OnKeyDown(KeyEventArgs e)
         {
+            if (!e.Handled)
+            {
+                if (!OptOutOfGridColumnResizeUsingKeyboard)
+                {
+                    ModifierKeys modifierKeys = Keyboard.Modifiers & ModifierMask;
+                    if (((e.SystemKey == Key.Right) || (e.SystemKey == Key.Left)) && (modifierKeys == ModifierKeys.Alt))
+                    {
+                        DataGridLength updatedWidth;
+
+                        if (e.SystemKey == Key.Right)
+                        {
+                            updatedWidth = new DataGridLength(Column.ActualWidth + ColumnWidthStepSize);
+                        }
+                        else
+                        {
+                            updatedWidth = new DataGridLength(Column.ActualWidth - ColumnWidthStepSize);
+                        }
+
+                        if (Column != null)
+                        {
+                            if (Column.CanColumnResize(updatedWidth))
+                            {
+                                Column.SetCurrentValueInternal(DataGridColumn.WidthProperty, updatedWidth);
+                            }
+                            e.Handled = true;
+                        }
+                        return;
+                    }
+                }
+
+                if (!OptOutOfGridColumnResizeUsingKeyboard)
+                {
+                    if (e.Key == Key.F3 && Column != null && Column.CanUserSort)
+                    {
+                        Column.DataGridOwner.PerformSort(Column);
+                        e.Handled = true;
+                        return;
+                    }
+                }
+            }
             SendInputToColumn(e);
         }
 
@@ -1100,6 +1146,8 @@ namespace System.Windows.Controls
         private DataGridRow _owner;
         private ContainerTracking<DataGridCell> _tracker;
         private bool _syncingIsSelected;                    // Used to prevent unnecessary notifications
+        private const double ColumnWidthStepSize = 10d;
+        private const ModifierKeys ModifierMask = ModifierKeys.Alt | ModifierKeys.Control | ModifierKeys.Shift | ModifierKeys.Windows;
 
         #endregion
     }

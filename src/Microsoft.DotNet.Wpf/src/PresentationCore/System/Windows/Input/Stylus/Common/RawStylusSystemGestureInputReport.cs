@@ -7,7 +7,6 @@ using System.ComponentModel;
 using System.Security;
 using System.Windows.Input.StylusWisp;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -101,7 +100,7 @@ namespace System.Windows.Input
             : base(mode, timestamp, inputSource,
                     RawStylusActions.SystemGesture,
                     stylusPointDescGenerator, tabletId,
-                    stylusDeviceId, new int[] { })
+                    stylusDeviceId, Array.Empty<int>())
         {
             Initialize(systemGesture, gestureX, gestureY, buttonState);
         }
@@ -151,7 +150,7 @@ namespace System.Windows.Input
             int gestureX,
             int gestureY,
             int buttonState)
-            : base(mode, timestamp, inputSource, penContext, RawStylusActions.SystemGesture, tabletId, stylusDeviceId, new int[] { })
+            : base(mode, timestamp, inputSource, penContext, RawStylusActions.SystemGesture, tabletId, stylusDeviceId, Array.Empty<int>())
         {
             Initialize(systemGesture, gestureX, gestureY, buttonState);
         }
@@ -160,7 +159,7 @@ namespace System.Windows.Input
         {
             if (!RawStylusSystemGestureInputReport.IsValidSystemGesture(systemGesture, true, true))
             {
-                throw new InvalidEnumArgumentException(SR.Get(SRID.Enum_Invalid, nameof(systemGesture)));
+                throw new InvalidEnumArgumentException(SR.Format(SR.Enum_Invalid, nameof(systemGesture)));
             }
 
             _id = systemGesture;

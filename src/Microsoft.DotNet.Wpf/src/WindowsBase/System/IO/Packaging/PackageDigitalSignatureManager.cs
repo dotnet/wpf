@@ -16,7 +16,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Windows;                                   // For Exception strings - SRID
+using System.Windows;                                   // For Exception strings - SR
 using System.Text;                                      // for StringBuilder
 using System.Diagnostics;                               // for Assert
 using System.Security;                                  // for SecurityCritical tag
@@ -221,8 +221,8 @@ namespace System.IO.Packaging
                 if (value == null)
                     throw new ArgumentNullException("value");
 
-                if (value == String.Empty)
-                    throw new ArgumentException(SR.Get(SRID.UnsupportedHashAlgorithm), "value");
+                if (value.Length == 0)
+                    throw new ArgumentException(SR.UnsupportedHashAlgorithm, "value");
 
                 _hashAlgorithmString = value;
             }
@@ -279,7 +279,7 @@ namespace System.IO.Packaging
                 if (XmlSignatureProperties.LegalFormat(value))
                     _signatureTimeFormat = value;
                 else
-                    throw new FormatException(SR.Get(SRID.BadSignatureTimeFormatString));
+                    throw new FormatException(SR.BadSignatureTimeFormatString);
             }
         }
 
@@ -416,7 +416,7 @@ namespace System.IO.Packaging
             // distinguish to this level.
             if (parts == null && relationshipSelectors == null)
             {
-                throw new ArgumentException(SR.Get(SRID.NothingToSign));
+                throw new ArgumentException(SR.NothingToSign);
             }
 
             return Sign(parts, certificate, relationshipSelectors, signatureId, null, null);
@@ -465,12 +465,12 @@ namespace System.IO.Packaging
             IEnumerable<System.Security.Cryptography.Xml.Reference> objectReferences)
         {
             if (ReadOnly)
-                throw new InvalidOperationException(SR.Get(SRID.CannotSignReadOnlyFile));
+                throw new InvalidOperationException(SR.CannotSignReadOnlyFile);
 
             VerifySignArguments(parts, certificate, relationshipSelectors, signatureId, signatureObjects, objectReferences);
 
             // substitute default id if none given
-            if ((signatureId == null) || (signatureId == String.Empty))
+            if (string.IsNullOrEmpty(signatureId))
             {
                 signatureId = "packageSignature";   // default
             }
@@ -483,7 +483,7 @@ namespace System.IO.Packaging
 
             Uri newSignaturePartName = GenerateSignaturePartName();
             if (_container.PartExists(newSignaturePartName))
-                throw new ArgumentException(SR.Get(SRID.DuplicateSignature));
+                throw new ArgumentException(SR.DuplicateSignature);
 
             // Pre-create origin part if it does not already exist.
             // Do this before signing to allow for signing the package relationship part (because a Relationship
@@ -600,7 +600,7 @@ namespace System.IO.Packaging
             // Counter-sign makes no sense if we are not already signed
             // Check before asking for certificate
             if (!IsSigned)
-                throw new InvalidOperationException(SR.Get(SRID.NoCounterSignUnsignedContainer));
+                throw new InvalidOperationException(SR.NoCounterSignUnsignedContainer);
 
             // prompt for certificate
             X509Certificate certificate = PromptForSigningCertificate(ParentWindow);
@@ -626,7 +626,7 @@ namespace System.IO.Packaging
             // Counter-sign makes no sense if we are not already signed
             // Check before asking for certificate
             if (!IsSigned)
-                throw new InvalidOperationException(SR.Get(SRID.NoCounterSignUnsignedContainer));
+                throw new InvalidOperationException(SR.NoCounterSignUnsignedContainer);
 
             // sign all existing signatures
             List<Uri> signatures = new List<Uri>(_signatures.Count);
@@ -659,14 +659,14 @@ namespace System.IO.Packaging
 
             // Counter-sign makes no sense if we are not already signed
             if (!IsSigned)
-                throw new InvalidOperationException(SR.Get(SRID.NoCounterSignUnsignedContainer));
+                throw new InvalidOperationException(SR.NoCounterSignUnsignedContainer);
 
             // Restrict signatures to be actual signature part references
             foreach (Uri uri in signatures)
             {
                 PackagePart part = _container.GetPart(uri);
                 if (!part.ValidatedContentType().AreTypeAndSubTypeEqual(XmlDigitalSignatureProcessor.ContentType))
-                    throw new ArgumentException(SR.Get(SRID.CanOnlyCounterSignSignatureParts, signatures));
+                    throw new ArgumentException(SR.Format(SR.CanOnlyCounterSignSignatureParts, signatures));
             }
 
             return Sign(signatures, certificate);
@@ -718,7 +718,7 @@ namespace System.IO.Packaging
         public void RemoveSignature(Uri signatureUri)
         {
             if (ReadOnly)
-                throw new InvalidOperationException(SR.Get(SRID.CannotRemoveSignatureFromReadOnlyFile));
+                throw new InvalidOperationException(SR.CannotRemoveSignatureFromReadOnlyFile);
 
             if (signatureUri == null)
                 throw new ArgumentNullException("signatureUri");
@@ -757,7 +757,7 @@ namespace System.IO.Packaging
         public void RemoveAllSignatures()
         {
             if (ReadOnly)
-                throw new InvalidOperationException(SR.Get(SRID.CannotRemoveSignatureFromReadOnlyFile));
+                throw new InvalidOperationException(SR.CannotRemoveSignatureFromReadOnlyFile);
 
             EnsureSignatures();
 
@@ -903,7 +903,7 @@ namespace System.IO.Packaging
             if (collection.Count > 0)
             {
                 // ask user to select
-                collection = X509Certificate2UI.SelectFromCollection(collection, SR.Get(SRID.CertSelectionDialogTitle), SR.Get(SRID.CertSelectionDialogMessage), X509SelectionFlag.SingleSelection, hwndParent);
+                collection = X509Certificate2UI.SelectFromCollection(collection, SR.CertSelectionDialogTitle, SR.CertSelectionDialogMessage, X509SelectionFlag.SingleSelection, hwndParent);
                 if (collection.Count > 0)
                 {
                     X509cert = collection[0];   // return the first one
@@ -956,7 +956,7 @@ namespace System.IO.Packaging
                         if (_signatures.Count == 0)
                             DeleteOriginPart();
 
-                        throw new ArgumentException(SR.Get(SRID.PartToSignMissing), "parts");
+                        throw new ArgumentException(SR.PartToSignMissing, "parts");
                     }
                 }
             }
@@ -984,7 +984,7 @@ namespace System.IO.Packaging
             // Check for empty collections in order to provide negative feedback as soon as possible.
             if (EnumeratorEmptyCheck(parts) && EnumeratorEmptyCheck(relationshipSelectors)
                 && EnumeratorEmptyCheck(signatureObjects) && EnumeratorEmptyCheck(objectReferences))
-                throw new ArgumentException(SR.Get(SRID.NothingToSign));
+                throw new ArgumentException(SR.NothingToSign);
 
             // check for illegal and/or duplicate id's in signatureObjects
             if (signatureObjects != null)
@@ -994,19 +994,19 @@ namespace System.IO.Packaging
                 {
                     // ensure they don't duplicate the reserved one
                     if (String.CompareOrdinal(obj.Id, XTable.Get(XTable.ID.OpcAttrValue)) == 0)
-                        throw new ArgumentException(SR.Get(SRID.SignaturePackageObjectTagMustBeUnique), "signatureObjects");
+                        throw new ArgumentException(SR.SignaturePackageObjectTagMustBeUnique, "signatureObjects");
 
                     // check for duplicates
                     //if (ids.Contains(obj.Id))
                     if (ids.Exists(new StringMatchPredicate(obj.Id).Match))
-                        throw new ArgumentException(SR.Get(SRID.SignatureObjectIdMustBeUnique), "signatureObjects");
+                        throw new ArgumentException(SR.SignatureObjectIdMustBeUnique, "signatureObjects");
                     else
                         ids.Add(obj.Id);
                 }
             }
 
             // ensure id is legal Xml id
-            if ((signatureId != null) && (signatureId != String.Empty))
+            if (!string.IsNullOrEmpty(signatureId))
             {
                 try
                 {
@@ -1015,7 +1015,7 @@ namespace System.IO.Packaging
                 }
                 catch (System.Xml.XmlException xmlException)
                 {
-                    throw new ArgumentException(SR.Get(SRID.NotAValidXmlIdString, signatureId), "signatureId", xmlException);
+                    throw new ArgumentException(SR.Format(SR.NotAValidXmlIdString, signatureId), "signatureId", xmlException);
                 }
             }
         }
@@ -1124,7 +1124,7 @@ namespace System.IO.Packaging
         {
             // don't resolve if external
             if (r.TargetMode != TargetMode.Internal)
-                throw new FileFormatException(SR.Get(SRID.PackageSignatureCorruption));
+                throw new FileFormatException(SR.PackageSignatureCorruption);
             
             Uri certificatePartName = PackUriHelper.ResolvePartUri(r.SourceUri, r.TargetUri);
             if (CertificatePartReferenceCount(certificatePartName) == 1)    // we are part of the calculation so one is the magic number
@@ -1150,7 +1150,7 @@ namespace System.IO.Packaging
 
             // don't resolve if external
             if (r.TargetMode != TargetMode.Internal)
-                throw new FileFormatException(SR.Get(SRID.PackageSignatureCorruption));
+                throw new FileFormatException(SR.PackageSignatureCorruption);
 
             Uri targetUri = PackUriHelper.ResolvePartUri(r.SourceUri, r.TargetUri);
             if (PackUriHelper.ComparePartUri(targetUri, _originPartName) == 0)
@@ -1172,7 +1172,7 @@ namespace System.IO.Packaging
 
             // don't resolve if external
             if (r.TargetMode != TargetMode.Internal)
-                throw new FileFormatException(SR.Get(SRID.PackageSignatureCorruption));
+                throw new FileFormatException(SR.PackageSignatureCorruption);
 
             if (PackUriHelper.ComparePartUri(PackUriHelper.ResolvePartUri(r.SourceUri, r.TargetUri), uri) == 0)
             {
@@ -1268,13 +1268,13 @@ namespace System.IO.Packaging
                     {
                         // don't resolve if external
                         if (r.TargetMode != TargetMode.Internal)
-                            throw new FileFormatException(SR.Get(SRID.PackageSignatureCorruption));
+                            throw new FileFormatException(SR.PackageSignatureCorruption);
 
                         Uri signaturePartName = PackUriHelper.ResolvePartUri(_originPart.Uri, r.TargetUri);
 
                         // throw if part does not exist
                         if (!_container.PartExists(signaturePartName))
-                            throw new FileFormatException(SR.Get(SRID.PackageSignatureCorruption));
+                            throw new FileFormatException(SR.PackageSignatureCorruption);
 
                         PackagePart signaturePart = _container.GetPart(signaturePartName);
 
@@ -1311,14 +1311,14 @@ namespace System.IO.Packaging
                     {
                         // don't resolve if external
                         if (r.TargetMode != TargetMode.Internal)
-                            throw new FileFormatException(SR.Get(SRID.PackageSignatureCorruption));
+                            throw new FileFormatException(SR.PackageSignatureCorruption);
 
                         // resolve target (may be relative)
                         Uri targetUri = PackUriHelper.ResolvePartUri(r.SourceUri, r.TargetUri);
 
                         // if part does not exist - we throw
                         if (!_container.PartExists(targetUri))
-                            throw new FileFormatException(SR.Get(SRID.SignatureOriginNotFound));
+                            throw new FileFormatException(SR.SignatureOriginNotFound);
 
                         PackagePart p = _container.GetPart(targetUri);
 
@@ -1327,7 +1327,7 @@ namespace System.IO.Packaging
                         {
                             // throw if more than one relationship to an origin part that we recognize
                             if (_originPartExists)
-                                throw new FileFormatException(SR.Get(SRID.MultipleSignatureOrigins));
+                                throw new FileFormatException(SR.MultipleSignatureOrigins);
 
                             // overwrite default if some container is using some other name
                             _originPartName = targetUri;
@@ -1405,4 +1405,3 @@ namespace System.IO.Packaging
         #endregion Private Members
     }
 }
-

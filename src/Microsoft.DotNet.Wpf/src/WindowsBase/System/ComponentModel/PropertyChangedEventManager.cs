@@ -158,7 +158,7 @@ namespace System.ComponentModel
                         }
 
                         // for each key, remove dead entries in its list
-                        bool removeList = purgeAll || source == null;
+                        bool removeList = /*purgeAll || purgeAll is always false*/ source == null;
 
                         if (!removeList)
                         {
@@ -211,7 +211,7 @@ namespace System.ComponentModel
                         }
 
                         // for each key, remove dead entries in its list
-                        bool removeList = purgeAll || source == null;
+                        bool removeList = /*purgeAll || purgeAll is always false*/ source == null;
 
                         if (!removeList)
                         {
@@ -229,7 +229,7 @@ namespace System.ComponentModel
                             // if a cloned list changed, remember the details
                             // so that the clone can be installed back into the
                             // dictionary outside the iteration
-                            if (!removeList && inUse && isChanged)
+                            if (/*!removeList && !removeList is always true*/ inUse && isChanged)
                             {
                                 if (toInstall == null)
                                 {

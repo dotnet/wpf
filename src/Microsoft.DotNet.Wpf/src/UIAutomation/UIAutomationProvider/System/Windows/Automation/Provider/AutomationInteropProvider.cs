@@ -61,7 +61,7 @@ namespace System.Windows.Automation.Provider
         /// <returns>base raw element for specified window</returns>
         public static IRawElementProviderSimple HostProviderFromHandle ( IntPtr hwnd )
         {
-            ValidateArgument(hwnd != IntPtr.Zero, nameof(SRID.HwndMustBeNonNULL));
+            ValidateArgument(hwnd != IntPtr.Zero, nameof(SR.HwndMustBeNonNULL));
             return UiaCoreProviderApi.UiaHostProviderFromHwnd(hwnd);
         }
     
@@ -75,7 +75,7 @@ namespace System.Windows.Automation.Provider
         /// <returns>Server should return the return value as the lresult return value to the WM_GETOBJECT windows message</returns>
         public static IntPtr ReturnRawElementProvider (IntPtr hwnd, IntPtr wParam, IntPtr lParam, IRawElementProviderSimple el )
         {
-            ValidateArgument( hwnd != IntPtr.Zero, nameof(SRID.HwndMustBeNonNULL));
+            ValidateArgument( hwnd != IntPtr.Zero, nameof(SR.HwndMustBeNonNULL));
             ValidateArgumentNonNull(el, "el" );
             
             return UiaCoreProviderApi.UiaReturnRawElementProvider(hwnd, wParam, lParam, el);
@@ -133,6 +133,37 @@ namespace System.Windows.Automation.Provider
                 UiaCoreProviderApi.UiaRaiseAsyncContentLoadedEvent(provider, asyncArgs.AsyncContentLoadedState, asyncArgs.PercentComplete);
                 return;
             }
+
+            // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
+            // False positive, e is checked, see above
+#pragma warning suppress 6506
+            if (e.EventId == AutomationElementIdentifiers.NotificationEvent)
+            {
+                NotificationEventArgs notificationArgs = e as NotificationEventArgs;
+                if (notificationArgs == null)
+                    ThrowInvalidArgument("e");
+
+                UiaCoreProviderApi.UiaRaiseNotificationEvent(provider,
+                    notificationArgs.NotificationKind,
+                    notificationArgs.NotificationProcessing,
+                    notificationArgs.DisplayString,
+                    notificationArgs.ActivityId);
+                return;
+            }
+
+            // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
+            // False positive, e is checked, see above
+#pragma warning suppress 6506
+            if (e.EventId == AutomationElementIdentifiers.ActiveTextPositionChangedEvent)
+            {
+                ActiveTextPositionChangedEventArgs activeTextPositionChangedArgs = e as ActiveTextPositionChangedEventArgs;
+                if (activeTextPositionChangedArgs == null)
+                    ThrowInvalidArgument("e");
+
+                UiaCoreProviderApi.UiaRaiseActiveTextPositionChangedEvent(provider, activeTextPositionChangedArgs.TextRange);
+                return;
+            }
+
             // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
             // False positive, e is checked, see above
 #pragma warning suppress 6506
@@ -184,7 +215,7 @@ namespace System.Windows.Automation.Provider
         // Throw an argument Exception with a generic error
         private static void ThrowInvalidArgument(string argName)
         {
-            throw new ArgumentException(SR.Format(SRID.GenericInvalidArgument, argName));
+            throw new ArgumentException(SR.Format(SR.GenericInvalidArgument, argName));
         }
 
         // Check that specified condition is true; if not, throw exception

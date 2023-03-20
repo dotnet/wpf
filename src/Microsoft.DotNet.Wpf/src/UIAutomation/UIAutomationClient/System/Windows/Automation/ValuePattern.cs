@@ -85,7 +85,7 @@ namespace System.Windows.Automation
             object readOnly = _el.GetCurrentPropertyValue(IsReadOnlyProperty);
             if (readOnly is bool && (bool)readOnly)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ValueReadonly));
+                throw new InvalidOperationException(SR.ValueReadonly);
             }
 
             UiaCoreApi.ValuePattern_SetValue(_hPattern,  value);

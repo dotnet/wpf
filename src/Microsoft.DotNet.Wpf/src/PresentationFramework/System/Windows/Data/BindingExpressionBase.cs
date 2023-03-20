@@ -1174,7 +1174,7 @@ namespace System.Windows.Data
             ValidationError oldValidationError = GetValidationErrors(validationStep);
 
             // ignore an error from the implicit DataError rule - this is checked
-            // separately (in BindingExpression.Validate). 
+            // separately (in BindingExpression.Validate).
             if (oldValidationError != null &&
                 oldValidationError.RuleInError == DataErrorValidationRule.Instance)
             {
@@ -1286,7 +1286,7 @@ namespace System.Windows.Data
                                     traceParameters: new object[] { TargetProperty.Name, this });
                             }
 
-                            throw new InvalidOperationException(SR.Get(SRID.RequiresExplicitCulture, TargetProperty.Name));
+                            throw new InvalidOperationException(SR.Format(SR.RequiresExplicitCulture, TargetProperty.Name));
                         }
 
                         // cache CultureInfo since requerying an inheritable property on every Transfer/Update can be quite expensive
@@ -1484,6 +1484,15 @@ namespace System.Windows.Data
         {
             if (IsUpdateOnPropertyChanged)
             {
+                // cancel a pending UpdateTarget, so that it doesn't negate
+                // the effect of this change to the target value
+                DispatcherOperation op = (DispatcherOperation)GetValue(Feature.UpdateTargetOperation, null);
+                if (op != null)
+                {
+                    ClearValue(Feature.UpdateTargetOperation);
+                    op.Abort();
+                }
+
                 if (Helper.IsComposing(Target, TargetProperty))
                 {
                     // wait for the IME composition to complete
@@ -1843,7 +1852,7 @@ namespace System.Windows.Data
             else
             {
                 if (root.BindingGroup != bg)
-                    throw new InvalidOperationException(SR.Get(SRID.BindingGroup_CannotChangeGroups));
+                    throw new InvalidOperationException(SR.BindingGroup_CannotChangeGroups);
             }
         }
 
@@ -2116,7 +2125,7 @@ namespace System.Windows.Data
         {
             if (IsDetached && status != _status)
             {
-                throw new InvalidOperationException(SR.Get(SRID.BindingExpressionStatusChanged, _status, status));
+                throw new InvalidOperationException(SR.Format(SR.BindingExpressionStatusChanged, _status, status));
             }
 
             _status = status;
@@ -2455,7 +2464,7 @@ namespace System.Windows.Data
                 count++;
             }
 
-            Collection<WeakDependencySource> tempList = new Collection<WeakDependencySource>();
+            var tempList = new List<WeakDependencySource>();
 
             if (commonSources != null)
             {
@@ -2493,19 +2502,9 @@ namespace System.Windows.Data
                 }
             }
 
-            WeakDependencySource[] result;
-            if (tempList.Count > 0)
-            {
-                result = new WeakDependencySource[tempList.Count];
-                tempList.CopyTo(result, 0);
-                tempList.Clear();
-            }
-            else
-            {
-                result = null;
-            }
-
-            return result;
+            return tempList.Count > 0 ?
+                tempList.ToArray() :
+                null;
         }
 
         internal void ResolvePropertyDefaultSettings(BindingMode mode, UpdateSourceTrigger updateTrigger, FrameworkPropertyMetadata fwMetaData)

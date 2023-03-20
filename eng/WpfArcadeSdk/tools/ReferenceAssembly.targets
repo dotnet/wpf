@@ -1,5 +1,12 @@
 <Project>
-  
+   <PropertyGroup>
+    <_DotnetApiDocsFilesRoot>$([MSBuild]::NormalizeDirectory('$(NuGetPackageRoot)', '$(_DotnetApiDocsPackageName.ToLower())', '$(MicrosoftPrivateIntellisenseVersion)', 'IntellisenseFiles', 'windowsdesktop', '1033'))</_DotnetApiDocsFilesRoot>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageDownload Include="Microsoft.Private.Intellisense" Version="[$(MicrosoftPrivateIntellisenseVersion)]" />
+  </ItemGroup>
+
   <PropertyGroup>
     <EnsureReferenceAssemblyPrerequisitesDependsOn>
       $(EnsureReferenceAssemblyPrerequisitesDependsOn);
@@ -45,19 +52,14 @@
           Condition="'$(ReferenceProjectRepoLocation)'=='External' and '$(RepositoryName)'=='wpf'"
           Outputs="$(IntellisenseXmlDir)$(AssemblyName).xml">
     <PropertyGroup>
-      <!-- Also in global.json -->
-      <DotNetApiDocsNet50>0.0.0.3</DotNetApiDocsNet50>
-
-      <!-- 
-        This blob lives in Azure storage at https://netcorenativeassets.blob.core.windows.net/resource-packages/external/windows/dotnet-api-docs_net5.0/
-        Instructions for updating these artifacts are at https://github.com/dotnet/wpf/blob/master/docs/intellisense.md
-      -->
-      <IntellisenseXmlDir>$(CommonLibrary_NativeInstallDir)\bin\dotnet-api-docs_net5.0\$(DotNetApiDocsNet50)\_intellisense\net-5.0\</IntellisenseXmlDir>
+      <!-- The intellisense provided by the Docs system -->
+      <IntellisenseXmlFileSource>$([MSBuild]::NormalizePath('$(_DotnetApiDocsFilesRoot)', '$(AssemblyName).xml'))</IntellisenseXmlFileSource>
+      
+      <!-- Set the xml destination (for a later step that copies files from the dotnet-api-docs to local build artifacts) -->
+      <IntellisenseXmlDest Condition="'$(ProduceReferenceAssembly)' == 'true' And '$(PackageAsRefAndLib)' != 'true'" >$([System.IO.Path]::ChangeExtension('$(TargetRefPath)', '.xml'))</IntellisenseXmlDest>
+      <IntellisenseXmlDest Condition="'$(PackageAsRefAndLib)' == 'true'" >$([System.IO.Path]::ChangeExtension('$(TargetPath)', '.xml'))</IntellisenseXmlDest>
+      <IntellisenseXmlDestDir Condition="'$(IntellisenseXmlDest)' != ''">$([System.IO.Path]::GetDirectoryName('$(IntellisenseXmlDest)'))</IntellisenseXmlDestDir>
     </PropertyGroup>
-    
-    <Error Condition="!Exists('$(IntellisenseXmlDir)')"
-           Text="Intellisense Xml sources not found: IntellisenseXmlDir=$(IntellisenseXmlDir)" />
-
     <!-- 
       EnsureReferenceDestination guarantees that there is exactly 1 ref assembly 
     -->

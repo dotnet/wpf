@@ -308,7 +308,7 @@ namespace System.Windows.Ink
                     if (visual == alreadyAttachedVisual)
                     {
                         exceptionRaised = true;
-                        throw new System.InvalidOperationException(SR.Get(SRID.CannotAttachVisualTwice));
+                        throw new System.InvalidOperationException(SR.CannotAttachVisualTwice);
                     }
                 }
             }
@@ -347,7 +347,7 @@ namespace System.Windows.Ink
             // Remove the visual in the list of attached via AttachIncrementalRendering
             if ((_attachedVisuals == null) || (_attachedVisuals.Remove(visual) == false))
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.VisualCannotBeDetached));
+                throw new System.InvalidOperationException(SR.VisualCannotBeDetached);
             }
 
             // Detach it from the tree
@@ -458,7 +458,7 @@ namespace System.Windows.Ink
                 // Verify that it's not a dupe
                 if (_visuals.ContainsKey(stroke))
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.DuplicateStrokeAdded));
+                    throw new System.ArgumentException(SR.DuplicateStrokeAdded);
                 }
 
                 // Create a visual for the new stroke and add it to the dictionary
@@ -486,7 +486,7 @@ namespace System.Windows.Ink
                 }
                 else
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.UnknownStroke3));
+                    throw new System.ArgumentException(SR.UnknownStroke3);
                 }
             }
         }
@@ -503,7 +503,7 @@ namespace System.Windows.Ink
             Stroke stroke = (Stroke)sender;
             if (_visuals.TryGetValue(stroke, out visual) == false)
             {
-                throw new System.ArgumentException(SR.Get(SRID.UnknownStroke1));
+                throw new System.ArgumentException(SR.UnknownStroke1);
             }
 
             // The original value of IsHighligher and Color are cached in StrokeVisual.

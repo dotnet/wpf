@@ -71,7 +71,7 @@ namespace MS.Internal.AutomationProxies
             if (idChild != 0)
             {
                 System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.Get(SRID.ShouldBeZero));
+                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
             }
 
             return new WindowsScrollBar(hwnd, null, idChild, NativeMethods.SB_CTL);
@@ -270,10 +270,9 @@ namespace MS.Internal.AutomationProxies
                     return null;
                 }
 
-                return SR.Get(
-                    IsScrollBarVertical(_hwnd, _sbFlag)
-                        ? SRID.LocalizedNameWindowsVerticalScrollBar
-                        : SRID.LocalizedNameWindowsHorizontalScrollBar);
+                return IsScrollBarVertical(_hwnd, _sbFlag)
+                    ? SR.LocalizedNameWindowsVerticalScrollBar
+                    : SR.LocalizedNameWindowsHorizontalScrollBar;
             }
         }
 
@@ -634,7 +633,7 @@ namespace MS.Internal.AutomationProxies
 
             if (!Misc.GetScrollInfo(_hwnd, _sbFlag, ref si))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             // No move, exit
@@ -684,11 +683,11 @@ namespace MS.Internal.AutomationProxies
             // so that we dont miss out the fractions
             if (val > max )
             {
-                throw new ArgumentOutOfRangeException("value", val, SR.Get(SRID.RangeValueMax));
+                throw new ArgumentOutOfRangeException("value", val, SR.RangeValueMax);
             }
             else if (val < si.nMin)
             {
-                throw new ArgumentOutOfRangeException("value", val, SR.Get(SRID.RangeValueMin));
+                throw new ArgumentOutOfRangeException("value", val, SR.RangeValueMin);
             }
 
             if (_sbFlag == NativeMethods.SB_CTL)

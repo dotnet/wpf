@@ -33,7 +33,7 @@ namespace MS.Internal.AutomationProxies
         {
             if (!IsScrollable(hwnd))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             bool resultsNoCheck;
@@ -58,7 +58,7 @@ namespace MS.Internal.AutomationProxies
                 return;
             }
 
-            throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+            throw new InvalidOperationException(SR.OperationCannotBePerformed);
         }
 
         // Request to scroll horizontally and vertically by the specified scrolling amount
@@ -66,7 +66,7 @@ namespace MS.Internal.AutomationProxies
         {
             if (!IsScrollable(hwnd))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             bool fHz = ScrollCursor(hwnd, HorizontalAmount, NativeMethods.SB_HORZ, fForceResults);
@@ -75,7 +75,7 @@ namespace MS.Internal.AutomationProxies
             if ( fHz && fVt )
                 return;
 
-            throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+            throw new InvalidOperationException(SR.OperationCannotBePerformed);
         }
 
         // Process the Scroll Properties
@@ -284,7 +284,7 @@ namespace MS.Internal.AutomationProxies
 
             if (fScrollPos < 0 || fScrollPos > 100)
             {
-                throw new ArgumentOutOfRangeException(sbFlag == NativeMethods.SB_HORZ ? "horizontalPercent" : "verticalPercent", SR.Get(SRID.ScrollBarOutOfRange));
+                throw new ArgumentOutOfRangeException(sbFlag == NativeMethods.SB_HORZ ? "horizontalPercent" : "verticalPercent", SR.ScrollBarOutOfRange);
             }
 
             // Get Max & min                    

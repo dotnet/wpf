@@ -36,7 +36,6 @@ using System.Windows.Threading;
 using System.Collections.Generic;
 using System.Threading;
 using System.Diagnostics;
-using System.Drawing.Printing;
 using MS.Internal.PrintWin32Thunk; 
 
 namespace MS.Internal.Printing.Configuration
@@ -572,7 +571,7 @@ namespace MS.Internal.Printing.Configuration
 
             if(_thread != Thread.CurrentThread)
             {
-                throw new InvalidOperationException(SR.Get(SRID.PTProvider_VerifyAccess));
+                throw new InvalidOperationException(SR.PTProvider_VerifyAccess);
             }
         }
         

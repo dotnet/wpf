@@ -65,14 +65,14 @@ namespace System.Windows.Controls
 
         public VirtualizationCacheLength(double cacheBeforeViewport, double cacheAfterViewport)
         {
-            if (DoubleUtil.IsNaN(cacheBeforeViewport))
+            if (double.IsNaN(cacheBeforeViewport))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidCtorParameterNoNaN, "cacheBeforeViewport"));
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoNaN, "cacheBeforeViewport"));
             }
 
-            if (DoubleUtil.IsNaN(cacheAfterViewport))
+            if (double.IsNaN(cacheAfterViewport))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidCtorParameterNoNaN, "cacheAfterViewport"));
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoNaN, "cacheAfterViewport"));
             }
 
             _cacheBeforeViewport = cacheBeforeViewport;

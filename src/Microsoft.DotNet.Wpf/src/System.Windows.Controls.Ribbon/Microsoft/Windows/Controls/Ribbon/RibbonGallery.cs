@@ -2828,7 +2828,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             "CommandParameter",
                             typeof(object),
                             typeof(RibbonGallery),
-                            new FrameworkPropertyMetadata(null));
+                            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnCommandParameterChanged)));
 
         /// <summary>
         ///   Gets or sets a user defined data value that can be passed to the command when it is previewed.
@@ -2926,6 +2926,12 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 CanExecute = true;
             }
+        }
+
+        private static void OnCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            RibbonGallery gallery = (RibbonGallery)d;
+            gallery.UpdateCanExecute();
         }
 
         /// <summary>
@@ -3219,7 +3225,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         // Filtering
         private ObservableCollection<object> _categoryFilters = new ObservableCollection<object>();
-        private static object _allFilter = Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.RibbonGallery_AllFilter);
+        private static object _allFilter = Microsoft.Windows.Controls.SR.RibbonGallery_AllFilter;
         private const string _filterMenuButtonTemplatePartName = "PART_FilterMenuButton";
         private const string FilterContentPaneTemplatePartName = "PART_FilterContentPane";
         private const string ScrollViewerTemplatePartName = "PART_ScrollViewer";

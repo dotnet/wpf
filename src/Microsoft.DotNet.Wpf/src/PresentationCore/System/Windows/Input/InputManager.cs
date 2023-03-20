@@ -16,7 +16,6 @@ using System.Diagnostics;
 using System.Windows.Automation;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -154,7 +153,7 @@ namespace System.Windows.Input
             // thread is not STA.
             if(Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new InvalidOperationException(SR.Get(SRID.RequiresSTA));
+                throw new InvalidOperationException(SR.RequiresSTA);
             }
 
             _stagingArea = new Stack();
@@ -179,49 +178,26 @@ namespace System.Windows.Input
 
         public event PreProcessInputEventHandler PreProcessInput
         {
-            add
-            {
-                _preProcessInput += value;
-            }
-            remove
-            {
-                _preProcessInput -= value;
-            }
+            add => EventHelper.AddHandler(ref _preProcessInput, value);
+            remove => EventHelper.RemoveHandler(ref _preProcessInput, value);
         }
 
         public event NotifyInputEventHandler PreNotifyInput
         {
-            add
-            {
-                _preNotifyInput += value;
-            }
-            remove
-            {
-                _preNotifyInput -= value;
-            }
-}
+            add => EventHelper.AddHandler(ref _preNotifyInput, value);
+            remove => EventHelper.RemoveHandler(ref _preNotifyInput, value);
+        }
+
         public event NotifyInputEventHandler PostNotifyInput
         {
-            add
-            {
-                _postNotifyInput += value;
-            }
-            remove
-            {
-                _postNotifyInput -= value;
-}
+            add => EventHelper.AddHandler(ref _postNotifyInput, value);
+            remove => EventHelper.RemoveHandler(ref _postNotifyInput, value);
         }
 
         public event ProcessInputEventHandler PostProcessInput
         {
-            add
-            {
-                _postProcessInput += value;
-            }
-            remove
-            {
-                _postProcessInput -= value;
-            }
+            add => EventHelper.AddHandler(ref _postProcessInput, value);
+            remove => EventHelper.RemoveHandler(ref _postProcessInput, value);
         }
 
         /// <summary>
@@ -749,7 +725,7 @@ namespace System.Windows.Input
 
                     // Invoke the handlers in reverse order so that handlers that
                     // users add are invoked before handlers in the system.
-                    Delegate[] handlers = _preProcessInput.GetInvocationList();
+                    Delegate[] handlers = _preProcessInput.Item2;
                     for(int i = (handlers.Length - 1); i >= 0; i--)
                     {
                         PreProcessInputEventHandler handler = (PreProcessInputEventHandler) handlers[i];
@@ -772,7 +748,7 @@ namespace System.Windows.Input
 
                         // Invoke the handlers in reverse order so that handlers that
                         // users add are invoked before handlers in the system.
-                        Delegate[] handlers = _preNotifyInput.GetInvocationList();
+                        Delegate[] handlers = _preNotifyInput.Item2;
                         for(int i = (handlers.Length - 1); i >= 0; i--)
                         {
                             NotifyInputEventHandler handler = (NotifyInputEventHandler) handlers[i];
@@ -824,22 +800,16 @@ namespace System.Windows.Input
                     {
                         if (eventSource != null)
                         {
-                            if (InputElement.IsUIElement(eventSource))
+                            if (eventSource is UIElement e)
                             {
-                                UIElement e = (UIElement)eventSource;
-
                                 e.RaiseEvent(input, true); // Call the "trusted" flavor of RaiseEvent. 
                             }
-                            else if (InputElement.IsContentElement(eventSource))
+                            else if (eventSource is ContentElement ce)
                             {
-                                ContentElement ce = (ContentElement)eventSource;
-
                                 ce.RaiseEvent(input, true);// Call the "trusted" flavor of RaiseEvent.
                             }
-                            else if (InputElement.IsUIElement3D(eventSource))
+                            else if (eventSource is UIElement3D e3D)
                             {
-                                UIElement3D e3D = (UIElement3D)eventSource;
-
                                 e3D.RaiseEvent(input, true); // Call the "trusted" flavor of RaiseEvent
                             }
 
@@ -878,7 +848,7 @@ namespace System.Windows.Input
 
                         // Invoke the handlers in reverse order so that handlers that
                         // users add are invoked before handlers in the system.
-                        Delegate[] handlers = _postNotifyInput.GetInvocationList();
+                        Delegate[] handlers = _postNotifyInput.Item2;
                         for(int i = (handlers.Length - 1); i >= 0; i--)
                         {
                             NotifyInputEventHandler handler = (NotifyInputEventHandler) handlers[i];
@@ -898,7 +868,7 @@ namespace System.Windows.Input
                     {
                         processInputEventArgs.Reset(item, this);
 
-                        RaiseProcessInputEventHandlers(_postProcessInput, processInputEventArgs); 
+                        RaiseProcessInputEventHandlers(_postProcessInput, processInputEventArgs);
 
                         // PreviewInputReport --> InputReport
                         if(item.Input.RoutedEvent == InputManager.PreviewInputReportEvent)
@@ -936,7 +906,7 @@ namespace System.Windows.Input
             return handled;
         }
 
-        private void RaiseProcessInputEventHandlers(ProcessInputEventHandler postProcessInput, ProcessInputEventArgs processInputEventArgs)
+        private void RaiseProcessInputEventHandlers(Tuple<ProcessInputEventHandler, Delegate[]> postProcessInput, ProcessInputEventArgs processInputEventArgs)
         {
             processInputEventArgs.StagingItem.Input.MarkAsUserInitiated();
 
@@ -944,7 +914,7 @@ namespace System.Windows.Input
             {
                 // Invoke the handlers in reverse order so that handlers that
                 // users add are invoked before handlers in the system.
-                Delegate[] handlers = postProcessInput.GetInvocationList();
+                Delegate[] handlers = postProcessInput.Item2;
                 for(int i = (handlers.Length - 1); i >= 0; i--)
                 {
                     ProcessInputEventHandler handler = (ProcessInputEventHandler) handlers[i];
@@ -974,14 +944,14 @@ namespace System.Windows.Input
         private ProcessInputEventArgs _processInputEventArgs;
         private PreProcessInputEventArgs _preProcessInputEventArgs;
 
-        //these four events introduced for secutiy purposes
-        private event PreProcessInputEventHandler _preProcessInput;
-
-        private event NotifyInputEventHandler _preNotifyInput;
-
-        private event NotifyInputEventHandler _postNotifyInput;
-
-        private event ProcessInputEventHandler _postProcessInput;
+        // These four events introduced for security purposes. Rather than just store the multicast delegate
+        // and have to do GetInvocationList on each invocation (in order to invoke delegates in reverse-registered
+        // order), we get the invocation list when the events are updated, and then use that cached list
+        // on every invocation.
+        private Tuple<PreProcessInputEventHandler, Delegate[]> _preProcessInput;
+        private Tuple<NotifyInputEventHandler, Delegate[]> _preNotifyInput;
+        private Tuple<NotifyInputEventHandler, Delegate[]> _postNotifyInput;
+        private Tuple<ProcessInputEventHandler, Delegate[]> _postProcessInput;
 
         private event KeyEventHandler _translateAccelerator;
 
@@ -1028,7 +998,7 @@ namespace System.Windows.Input
         private static DispatcherOperation _synchronizedInputAsyncClearOperation;
 
         // Lock used to serialize access to synchronized input related static fields.
-        private static object _synchronizedInputLock = new object();
+        private static readonly object _synchronizedInputLock = new object();
 }
 }
 

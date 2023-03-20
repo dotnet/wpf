@@ -58,8 +58,8 @@ namespace MS.Internal.Tasks
             string avalonFileVersion = acFileVersionInfo.FileVersion;
 
             log.LogMessage(MessageImportance.Low,Environment.NewLine);
-            log.LogMessageFromResources(MessageImportance.Low, SRID.TaskLogo, taskName, avalonFileVersion);
-            log.LogMessageFromResources(MessageImportance.Low, SRID.TaskRight);
+            log.LogMessageFromResources(MessageImportance.Low, nameof(SR.TaskLogo), taskName, avalonFileVersion);
+            log.LogMessageFromResources(MessageImportance.Low, nameof(SR.TaskRight));
             log.LogMessage(MessageImportance.Low, Environment.NewLine);
         }
 
@@ -223,7 +223,7 @@ namespace MS.Internal.Tasks
         //
         // Helper to create CompilerWrapper.
         //
-        internal static CompilerWrapper CreateCompilerWrapper(bool fInSeparateDomain, ref AppDomain  appDomain)
+        internal static CompilerWrapper CreateCompilerWrapper()
         {
             return new CompilerWrapper();
         }

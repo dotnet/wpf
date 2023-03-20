@@ -10,7 +10,6 @@
 using System.ComponentModel;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -32,7 +31,7 @@ namespace System.Windows
         {
             if (timeSpan < TimeSpan.Zero)
             {
-                throw new ArgumentException(SR.Get(SRID.Timing_InvalidArgNonNegative), "timeSpan");
+                throw new ArgumentException(SR.Timing_InvalidArgNonNegative, "timeSpan");
             }
             _durationType = DurationType.TimeSpan;
             _timeSpan = timeSpan;
@@ -58,7 +57,7 @@ namespace System.Windows
         {
             if (timeSpan < TimeSpan.Zero)
             {
-                throw new ArgumentException(SR.Get(SRID.Timing_InvalidArgNonNegative), "timeSpan");
+                throw new ArgumentException(SR.Timing_InvalidArgNonNegative, "timeSpan");
             }
             return new Duration(timeSpan);
         }
@@ -404,7 +403,7 @@ namespace System.Windows
                 else
                 {
 #pragma warning suppress 56503 // Suppress presharp warning: Follows a pattern similar to Nullable.
-                    throw new InvalidOperationException(SR.Get(SRID.Timing_NotTimeSpan, this));
+                    throw new InvalidOperationException(SR.Format(SR.Timing_NotTimeSpan, this));
                 }
             }
         }

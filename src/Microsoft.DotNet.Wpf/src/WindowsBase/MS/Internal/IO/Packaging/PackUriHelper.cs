@@ -19,7 +19,7 @@ using System;
 using System.IO;                        // for Path class
 using System.Security;
 using System.Diagnostics;
-using System.Windows;                   // For Exception strings - SRID
+using System.Windows;                   // For Exception strings - SR
 using System.Collections.Generic;       // For IEqualityComparer<>
 using MS.Internal.WindowsBase;
 
@@ -160,11 +160,11 @@ namespace MS.Internal.IO.Packaging
 
             //We need to make sure that the URI passed to us is not just "/"
             //"/" is a valid relative uri, but is not a valid partname
-            if (partName == String.Empty)
-                return new ArgumentException(SR.Get(SRID.PartUriIsEmpty));
+            if (partName.Length == 0)
+                return new ArgumentException(SR.PartUriIsEmpty);
 
             if (partName[0] != '/')
-                return new ArgumentException(SR.Get(SRID.PartUriShouldStartWithForwardSlash));
+                return new ArgumentException(SR.PartUriShouldStartWithForwardSlash);
 
             argumentException = GetExceptionIfPartNameStartsWithTwoSlashes(partName);
             if (argumentException != null)
@@ -196,7 +196,7 @@ namespace MS.Internal.IO.Packaging
             //We perform the comparison in a case-insensitive manner, as at this point,
             //only escaped hex digits (A-F) might vary in casing.
             if (String.CompareOrdinal(partUri.OriginalString.ToUpperInvariant(), wellFormedPartName.ToUpperInvariant()) != 0)
-                return new ArgumentException(SR.Get(SRID.InvalidPartUri));
+                return new ArgumentException(SR.InvalidPartUri);
 
             //if we get here, the partUri is valid and so we return null, as there is no exception.
             partUriString = partName;
@@ -206,15 +206,15 @@ namespace MS.Internal.IO.Packaging
         private static ArgumentException GetExceptionIfAbsoluteUri(Uri uri)
         {
             if (uri.IsAbsoluteUri)
-                return new ArgumentException(SR.Get(SRID.URIShouldNotBeAbsolute));
+                return new ArgumentException(SR.URIShouldNotBeAbsolute);
             else
                 return null;
         }
 
         private static ArgumentException GetExceptionIfFragmentPresent(string partName)
         {
-            if (partName.Contains("#"))
-                return new ArgumentException(SR.Get(SRID.PartUriCannotHaveAFragment));
+            if (partName.Contains('#'))
+                return new ArgumentException(SR.PartUriCannotHaveAFragment);
             else
                 return null;
         }
@@ -224,7 +224,7 @@ namespace MS.Internal.IO.Packaging
             if (partName.Length > 0)
             {
                 if (partName[partName.Length - 1] == '/')
-                    return new ArgumentException(SR.Get(SRID.PartUriShouldNotEndWithForwardSlash));
+                    return new ArgumentException(SR.PartUriShouldNotEndWithForwardSlash);
             }
             return null;
         }
@@ -240,7 +240,7 @@ namespace MS.Internal.IO.Packaging
             if (partName.Length > 1)
             {
                 if (partName[0] == '/' && partName[1] == '/')
-                    return new ArgumentException(SR.Get(SRID.PartUriShouldNotStartWithTwoForwardSlashes));
+                    return new ArgumentException(SR.PartUriShouldNotStartWithTwoForwardSlashes);
             }
             return null;
         }
@@ -524,7 +524,7 @@ namespace MS.Internal.IO.Packaging
                     {
                         // look for "_rels" segment in the third last segment
                         if(String.CompareOrdinal(segments[segments.Length - 3], _relationshipPartUpperCaseSegmentName) == 0)
-                            throw new ArgumentException(SR.Get(SRID.NotAValidRelationshipPartUri));
+                            throw new ArgumentException(SR.NotAValidRelationshipPartUri);
                     }
                 }
 

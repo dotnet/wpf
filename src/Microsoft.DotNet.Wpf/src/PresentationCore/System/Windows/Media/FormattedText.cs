@@ -24,7 +24,6 @@ using MS.Internal.TextFormatting;
 using MS.Internal.FontFace;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 #pragma warning disable 1634, 1691
 //Allow suppression of Presharp warnings
@@ -295,13 +294,13 @@ namespace System.Windows.Media
         private static void ValidateFontSize(double emSize)
         {
             if (emSize <= 0)
-                throw new ArgumentOutOfRangeException("emSize", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+                throw new ArgumentOutOfRangeException("emSize", SR.ParameterMustBeGreaterThanZero);
 
             if (emSize > MaxFontEmSize)
-                throw new ArgumentOutOfRangeException("emSize", SR.Get(SRID.ParameterCannotBeGreaterThan, MaxFontEmSize));
+                throw new ArgumentOutOfRangeException("emSize", SR.Format(SR.ParameterCannotBeGreaterThan, MaxFontEmSize));
 
-            if (DoubleUtil.IsNaN(emSize))
-                throw new ArgumentOutOfRangeException("emSize", SR.Get(SRID.ParameterValueCannotBeNaN));
+            if (double.IsNaN(emSize))
+                throw new ArgumentOutOfRangeException("emSize", SR.ParameterValueCannotBeNaN);
         }
 
         private static void ValidateFlowDirection(FlowDirection flowDirection, string parameterName)
@@ -1283,7 +1282,7 @@ namespace System.Windows.Media
             set
             {
                 if (value < 0)
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterCannotBeNegative));
+                    throw new ArgumentOutOfRangeException("value", SR.ParameterCannotBeNegative);
 
                 _defaultParaProps.SetLineHeight(value);
                 InvalidateMetrics();
@@ -1307,7 +1306,7 @@ namespace System.Windows.Media
             set
             {
                 if (value < 0)
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterCannotBeNegative));
+                    throw new ArgumentOutOfRangeException("value", SR.ParameterCannotBeNegative);
                 _maxTextWidth = value;
                 InvalidateMetrics();
             }
@@ -1357,10 +1356,10 @@ namespace System.Windows.Media
             set
             {
                 if (value <= 0)
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.PropertyMustBeGreaterThanZero, "MaxTextHeight"));
+                    throw new ArgumentOutOfRangeException("value", SR.Format(SR.PropertyMustBeGreaterThanZero, "MaxTextHeight"));
 
-                if (DoubleUtil.IsNaN(value))
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.PropertyValueCannotBeNaN, "MaxTextHeight"));
+                if (double.IsNaN(value))
+                    throw new ArgumentOutOfRangeException("value", SR.Format(SR.PropertyValueCannotBeNaN, "MaxTextHeight"));
 
                 _maxTextHeight = value;
                 InvalidateMetrics();
@@ -1383,7 +1382,7 @@ namespace System.Windows.Media
             set
             {
                 if (value <= 0)
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+                    throw new ArgumentOutOfRangeException("value", SR.ParameterMustBeGreaterThanZero);
                 _maxLineCount = value;
                 InvalidateMetrics();
             }

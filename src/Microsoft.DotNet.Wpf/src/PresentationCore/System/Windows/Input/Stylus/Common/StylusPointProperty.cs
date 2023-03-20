@@ -10,7 +10,6 @@ using System.Globalization;
 using System.Windows.Media;
 using System.Collections.Generic;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -64,7 +63,7 @@ namespace System.Windows.Input
                 if (!isButton)
                 {
                     //error, this is a known button
-                    throw new ArgumentException(SR.Get(SRID.InvalidIsButtonForId), "isButton");
+                    throw new ArgumentException(SR.InvalidIsButtonForId, "isButton");
                 }
             }
             else
@@ -72,7 +71,7 @@ namespace System.Windows.Input
                 if (StylusPointPropertyIds.IsKnownId(identifier) && isButton)
                 {
                     //error, this is a known guid that is NOT a button
-                    throw new ArgumentException(SR.Get(SRID.InvalidIsButtonForId2), "isButton");
+                    throw new ArgumentException(SR.InvalidIsButtonForId2, "isButton");
                 }
             }
 

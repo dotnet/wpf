@@ -127,7 +127,7 @@ namespace System.Windows.Xps.Serialization
 
             if (enumerableObject == null)
             {
-                throw new XpsSerializationException(SR.Get(SRID.MustBeOfType, "serializableObjectContext.TargetObject", typeof(IEnumerable)));
+                throw new XpsSerializationException(SR.Format(SR.MustBeOfType, "serializableObjectContext.TargetObject", typeof(IEnumerable)));
             }
 
             //
@@ -224,7 +224,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoSerializer));
+                throw new XpsSerializationException(SR.ReachSerialization_NoSerializer);
             }
         }
 

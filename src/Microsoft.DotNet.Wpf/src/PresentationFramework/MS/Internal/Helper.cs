@@ -54,7 +54,7 @@ namespace MS.Internal
 
             private object DoTryCatchWhen(object arg)
             {
-                throw new ResourceReferenceKeyNotFoundException(SR.Get(SRID.MarkupExtensionResourceNotFound, _name), _name);
+                throw new ResourceReferenceKeyNotFoundException(SR.Format(SR.MarkupExtensionResourceNotFound, _name), _name);
             }
 
             private object CatchHandler(object arg)
@@ -286,19 +286,19 @@ namespace MS.Internal
                                     out FrameworkElement fe, out FrameworkContentElement fce,
                                     bool throwIfNeither)
         {
-            if (FrameworkElement.DType.IsInstanceOfType(d))
+            if (d is FrameworkElement frameworkElement)
             {
-                fe = (FrameworkElement)d;
+                fe = frameworkElement;
                 fce = null;
             }
-            else if (FrameworkContentElement.DType.IsInstanceOfType(d))
+            else if (d is FrameworkContentElement frameworkContentElement)
             {
                 fe = null;
-                fce = (FrameworkContentElement)d;
+                fce = frameworkContentElement;
             }
             else if (throwIfNeither)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MustBeFrameworkDerived, d.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.MustBeFrameworkDerived, d.GetType()));
             }
             else
             {
@@ -674,7 +674,7 @@ namespace MS.Internal
                         if (!typeof(MarkupExtension).IsAssignableFrom(memberType) ||
                              !memberType.IsAssignableFrom(markupExtension.GetType()))
                         {
-                            throw new XamlParseException(SR.Get(SRID.MarkupExtensionDynamicOrBindingOnClrProp,
+                            throw new XamlParseException(SR.Format(SR.MarkupExtensionDynamicOrBindingOnClrProp,
                                                                 markupExtension.GetType().Name,
                                                                 targetMember.Name,
                                                                 targetType.Name));
@@ -695,7 +695,7 @@ namespace MS.Internal
                         if (!typeof(BindingBase).IsAssignableFrom(markupExtension.GetType()) ||
                             !typeof(Collection<BindingBase>).IsAssignableFrom(targetProperty.GetType()))
                         {
-                            throw new XamlParseException(SR.Get(SRID.MarkupExtensionDynamicOrBindingInCollection,
+                            throw new XamlParseException(SR.Format(SR.MarkupExtensionDynamicOrBindingInCollection,
                                                                 markupExtension.GetType().Name,
                                                                 targetProperty.GetType().Name));
                         }
@@ -719,7 +719,7 @@ namespace MS.Internal
                 if (!typeof(BindingBase).IsAssignableFrom(markupExtension.GetType()) ||
                     !typeof(Collection<BindingBase>).IsAssignableFrom(targetType))
                 {
-                    throw new XamlParseException(SR.Get(SRID.MarkupExtensionDynamicOrBindingInCollection,
+                    throw new XamlParseException(SR.Format(SR.MarkupExtensionDynamicOrBindingInCollection,
                                                         markupExtension.GetType().Name,
                                                         targetType.Name));
                 }

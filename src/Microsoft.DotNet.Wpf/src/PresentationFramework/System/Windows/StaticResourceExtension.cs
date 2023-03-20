@@ -101,7 +101,7 @@ namespace System.Windows
 
             if (value == DependencyProperty.UnsetValue)
             {
-                throw new Exception(SR.Get(SRID.ParserNoResource, ResourceKey.ToString()));
+                throw new Exception(SR.Format(SR.ParserNoResource, ResourceKey.ToString()));
             }
             return value;
         }
@@ -210,13 +210,13 @@ namespace System.Windows
             var schemaContextProvider = serviceProvider.GetService(typeof(IXamlSchemaContextProvider)) as IXamlSchemaContextProvider;
             if (schemaContextProvider == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MarkupExtensionNoContext, GetType().Name, "IXamlSchemaContextProvider"));
+                throw new InvalidOperationException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, "IXamlSchemaContextProvider"));
             }
 
             var ambientProvider = serviceProvider.GetService(typeof(IAmbientProvider)) as IAmbientProvider;
             if (ambientProvider == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MarkupExtensionNoContext, GetType().Name, "IAmbientProvider"));
+                throw new InvalidOperationException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, "IAmbientProvider"));
             }
 
             XamlSchemaContext schemaContext = schemaContextProvider.SchemaContext;

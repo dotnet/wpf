@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -29,7 +29,7 @@ namespace System.Windows.Baml2006
         }
 
         internal Baml2006SchemaContext(Assembly localAssembly, XamlSchemaContext parentSchemaContext)
-            : base(new Assembly[0])
+            : base(Array.Empty<Assembly>())
         {
             _localAssembly = localAssembly;
             _parentSchemaContext = parentSchemaContext;
@@ -150,7 +150,7 @@ namespace System.Windows.Baml2006
                 return bamlAssembly.Name;
             }
 
-            throw new KeyNotFoundException(SR.Get(SRID.BamlAssemblyIdNotFound, assemblyId.ToString(System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS)));
+            throw new KeyNotFoundException(SR.Format(SR.BamlAssemblyIdNotFound, assemblyId.ToString(System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS)));
         }
 
         internal Type GetClrType(Int16 typeId)
@@ -167,7 +167,7 @@ namespace System.Windows.Baml2006
                 return ResolveBamlTypeToType(bamlType);
             }
 
-            throw new KeyNotFoundException(SR.Get(SRID.BamlTypeIdNotFound, typeId.ToString(System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS)));
+            throw new KeyNotFoundException(SR.Format(SR.BamlTypeIdNotFound, typeId.ToString(System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS)));
         }
 
         internal XamlType GetXamlType(Int16 typeId)
@@ -184,7 +184,7 @@ namespace System.Windows.Baml2006
                 return ResolveBamlType(bamlType, typeId);
             }
 
-            throw new KeyNotFoundException(SR.Get(SRID.BamlTypeIdNotFound, typeId.ToString(System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS)));
+            throw new KeyNotFoundException(SR.Format(SR.BamlTypeIdNotFound, typeId.ToString(System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS)));
         }
 
         internal DependencyProperty GetDependencyProperty(Int16 propertyId)
@@ -364,7 +364,7 @@ namespace System.Windows.Baml2006
                 }
                 else if (assemblyId > _bamlAssembly.Count)
                 {
-                    throw new ArgumentOutOfRangeException("assemblyId", SR.Get(SRID.AssemblyIdOutOfSequence, assemblyId));
+                    throw new ArgumentOutOfRangeException("assemblyId", SR.Format(SR.AssemblyIdOutOfSequence, assemblyId));
                 }
             }
             // Duplicate IDs (assemblyId < _bamlAssembly.Count) are ignored
@@ -392,7 +392,7 @@ namespace System.Windows.Baml2006
                 }
                 else if (typeId > _bamlType.Count)
                 {
-                    throw new ArgumentOutOfRangeException("typeId", SR.Get(SRID.TypeIdOutOfSequence, typeId));
+                    throw new ArgumentOutOfRangeException("typeId", SR.Format(SR.TypeIdOutOfSequence, typeId));
                 }
             }
             // Duplicate IDs (typeID < _bamlType.Count) are ignored
@@ -419,7 +419,7 @@ namespace System.Windows.Baml2006
                 }
                 else if (propertyId > _bamlProperty.Count)
                 {
-                    throw new ArgumentOutOfRangeException("propertyId", SR.Get(SRID.PropertyIdOutOfSequence, propertyId));
+                    throw new ArgumentOutOfRangeException("propertyId", SR.Format(SR.PropertyIdOutOfSequence, propertyId));
                 }
             }
             // Duplicate IDs (propertyId < _bamlProperty.Count) are ignored
@@ -440,7 +440,7 @@ namespace System.Windows.Baml2006
                 }
                 else if (stringId > _bamlString.Count)
                 {
-                    throw new ArgumentOutOfRangeException("stringId", SR.Get(SRID.StringIdOutOfSequence, stringId));
+                    throw new ArgumentOutOfRangeException("stringId", SR.Format(SR.StringIdOutOfSequence, stringId));
                 }
             }
             // Duplicate IDs (stringId < _bamlString.Count) are ignored
@@ -708,7 +708,7 @@ namespace System.Windows.Baml2006
         private static readonly Lazy<XamlType> _staticResourceExtensionType
             = new Lazy<XamlType>(() => System.Windows.Markup.XamlReader.BamlSharedSchemaContext.GetXamlType(typeof(StaticResourceExtension)));
 
-        private object _syncObject = new object();
+        private readonly object _syncObject = new object();
 
         private Assembly _localAssembly;
 

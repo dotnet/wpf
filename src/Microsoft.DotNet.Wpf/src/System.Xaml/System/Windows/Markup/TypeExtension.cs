@@ -69,20 +69,17 @@ namespace System.Windows.Markup
             
             if (_typeName == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MarkupExtensionTypeName));
+                throw new InvalidOperationException(SR.MarkupExtensionTypeName);
             }
 
             // Get the IXamlTypeResolver from the service provider
 
-            if (serviceProvider == null)
-            {
-                throw new ArgumentNullException(nameof(serviceProvider));
-            }            
+            ArgumentNullException.ThrowIfNull(serviceProvider);            
 
             IXamlTypeResolver xamlTypeResolver = serviceProvider.GetService(typeof(IXamlTypeResolver)) as IXamlTypeResolver;
             if( xamlTypeResolver == null )
             {
-                throw new InvalidOperationException( SR.Get(SRID.MarkupExtensionNoContext, GetType().Name, "IXamlTypeResolver" ));
+                throw new InvalidOperationException( SR.Format(SR.MarkupExtensionNoContext, GetType().Name, "IXamlTypeResolver" ));
             }
 
             // Get the type
@@ -91,7 +88,7 @@ namespace System.Windows.Markup
 
             if (_type == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MarkupExtensionTypeNameBad, _typeName));
+                throw new InvalidOperationException(SR.Format(SR.MarkupExtensionTypeNameBad, _typeName));
             }
             
             return _type;

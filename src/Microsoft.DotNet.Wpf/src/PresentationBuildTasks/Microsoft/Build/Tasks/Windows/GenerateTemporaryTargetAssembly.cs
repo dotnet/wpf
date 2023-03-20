@@ -20,6 +20,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 using System.Globalization;
 using System.Diagnostics;
@@ -179,7 +180,18 @@ namespace Microsoft.Build.Tasks.Windows
                 globalProperties[assemblyNamePropertyName] = AssemblyName;
                 globalProperties[targetAssemblyProjectNamePropertyName] = currentProjectName;
 
-                retValue = BuildEngine.BuildProjectFile(tempProj, new string[] { CompileTargetName }, globalProperties, null);
+                Dictionary<string, ITaskItem[]> targetOutputs = new Dictionary<string, ITaskItem[]>();
+                retValue = BuildEngine.BuildProjectFile(tempProj, new string[] { CompileTargetName }, globalProperties, targetOutputs);
+
+                // If the inner build succeeds, retrieve the path to the local type assembly from the task's TargetOutputs.
+                if (retValue)
+                {
+                    // See Microsoft.WinFX.targets: TargetOutputs from '_CompileTemporaryAssembly' will always contain one item.
+                    // <Target Name="_CompileTemporaryAssembly"  DependsOnTargets="$(_CompileTemporaryAssemblyDependsOn)" Returns="$(IntermediateOutputPath)$(TargetFileName)"/>
+                    Debug.Assert(targetOutputs.ContainsKey(CompileTargetName));
+                    Debug.Assert(targetOutputs[CompileTargetName].Length == 1);
+                    TemporaryAssemblyForLocalTypeReference = targetOutputs[CompileTargetName][0].ItemSpec;
+                }
 
                 // Delete the temporary project file and generated files unless diagnostic mode has been requested
                 if (!GenerateTemporaryTargetAssemblyDebuggingInformation)
@@ -251,6 +263,9 @@ namespace Microsoft.Build.Tasks.Windows
                 // Add GeneratedCodeFiles to Compile item list.
                 AddNewItems(xmlProjectDoc, CompileTypeName, GeneratedCodeFiles);
 
+                // Add Analyzers to Analyzer item list.
+                AddNewItems(xmlProjectDoc, AnalyzerTypeName, Analyzers);
+
                 // Replace implicit SDK imports with explicit SDK imports
                 ReplaceImplicitImports(xmlProjectDoc); 
 
@@ -260,8 +275,8 @@ namespace Microsoft.Build.Tasks.Windows
                     ( nameof(AssemblyName), AssemblyName ),
                     ( nameof(IntermediateOutputPath), IntermediateOutputPath ),
                     ( nameof(BaseIntermediateOutputPath), BaseIntermediateOutputPath ),
-                    ( "_TargetAssemblyProjectName", Path.GetFileNameWithoutExtension(CurrentProject)),
-                    ( nameof(Analyzers), Analyzers )
+                    ( nameof(MSBuildProjectExtensionsPath), MSBuildProjectExtensionsPath ),
+                    ( "_TargetAssemblyProjectName", Path.GetFileNameWithoutExtension(CurrentProject) ),
                 };
 
                 AddNewProperties(xmlProjectDoc, properties);
@@ -269,14 +284,21 @@ namespace Microsoft.Build.Tasks.Windows
                 // Save the xmlDocument content into the temporary project file.
                 xmlProjectDoc.Save(TemporaryTargetAssemblyProjectName);
 
-                // Disable conflicting Arcade SDK workaround that imports NuGet props/targets
-                Hashtable globalProperties = new Hashtable(1);
-                globalProperties["_WpfTempProjectNuGetFilePathNoExt"] = "";
-
                 //
                 //  Compile the temporary target assembly project
                 //
-                retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, globalProperties, null);
+                Dictionary<string, ITaskItem[]> targetOutputs = new Dictionary<string, ITaskItem[]>();
+                retValue = BuildEngine.BuildProjectFile(TemporaryTargetAssemblyProjectName, new string[] { CompileTargetName }, null, targetOutputs);
+
+                // If the inner build succeeds, retrieve the path to the local type assembly from the task's TargetOutputs.
+                if (retValue)
+                {
+                    // See Microsoft.WinFX.targets: TargetOutputs from '_CompileTemporaryAssembly' will always contain one item.
+                    // <Target Name="_CompileTemporaryAssembly"  DependsOnTargets="$(_CompileTemporaryAssemblyDependsOn)" Returns="$(IntermediateOutputPath)$(TargetFileName)"/>
+                    Debug.Assert(targetOutputs.ContainsKey(CompileTargetName));
+                    Debug.Assert(targetOutputs[CompileTargetName].Length == 1);
+                    TemporaryAssemblyForLocalTypeReference = targetOutputs[CompileTargetName][0].ItemSpec;
+                }
 
                 // Delete the temporary project file and generated files unless diagnostic mode has been requested
                 if (!GenerateTemporaryTargetAssemblyDebuggingInformation)
@@ -461,8 +483,19 @@ namespace Microsoft.Build.Tasks.Windows
         /// Required for Source Generator support. May be null.
         /// 
         /// </summary>
-        public string Analyzers 
+        public ITaskItem[] Analyzers 
         { get; set; }
+
+        /// <summary>
+        /// AnalyzerTypeName
+        ///   The appropriate item name which can be accepted by managed compiler task.
+        ///   It is "Analyzer" for now.
+        ///   
+        ///   Adding this property is to make the type name configurable, if it is changed, 
+        ///   No code is required to change in this task, but set a new type name in project file.
+        /// </summary>
+        [Required]
+        public string AnalyzerTypeName { get; set; }
 
         /// <summary>
         /// BaseIntermediateOutputPath
@@ -497,6 +530,31 @@ namespace Microsoft.Build.Tasks.Windows
         ///
         /// </summary>
         public string TemporaryTargetAssemblyProjectName 
+        { get; set; }
+
+        /// <summary>
+        ///
+        /// MSBuildProjectExtensionsPath
+        ///
+        /// Required for PackageReference support.
+        ///
+        /// MSBuildProjectExtensionsPath may be overridden and must be passed into the temporary project.
+        ///
+        /// This is required for some VS publishing scenarios.
+        ///
+        /// </summary>
+        public string MSBuildProjectExtensionsPath 
+        { get; set; }
+
+        /// <summary>
+        ///
+        /// TemporaryAssemblyForLocalTypeReference
+        ///
+        /// The path of the generated temporary local type assembly.  
+        ///
+        /// </summary>
+        [Output]
+        public string TemporaryAssemblyForLocalTypeReference 
         { get; set; }
 
         #endregion Public Properties
@@ -650,10 +708,11 @@ namespace Microsoft.Build.Tasks.Windows
                 // Add the attribute to current item node.
                 nodeItem.SetAttributeNode(attrInclude);
 
-                if (TRUE == pItem.GetMetadata(EMBEDINTEROPTYPES))
+                string embedInteropTypesMetadata = pItem.GetMetadata(EMBEDINTEROPTYPES);
+                if (!String.IsNullOrEmpty(embedInteropTypesMetadata))
                 {
                     embedItem = xmlProjectDoc.CreateElement(EMBEDINTEROPTYPES, root.NamespaceURI);
-                    embedItem.InnerText = TRUE;
+                    embedItem.InnerText = embedInteropTypesMetadata; 
                     nodeItem.AppendChild(embedItem);
                 }
 
@@ -703,7 +762,7 @@ namespace Microsoft.Build.Tasks.Windows
         //
         // Replace implicit SDK imports with explicit imports 
         //
-        static private void ReplaceImplicitImports(XmlDocument xmlProjectDoc)
+        private static void ReplaceImplicitImports(XmlDocument xmlProjectDoc)
         {
             if (xmlProjectDoc == null)
             {
@@ -712,50 +771,105 @@ namespace Microsoft.Build.Tasks.Windows
             }
 
             XmlNode root = xmlProjectDoc.DocumentElement;
-          
+
             for (int i = 0; i < root.Attributes.Count; i++)
             {
-                XmlAttribute xmlAttribute = root.Attributes[i] as XmlAttribute;
+                XmlAttribute xmlAttribute = root.Attributes[i];
 
                 if (xmlAttribute.Name.Equals("Sdk", StringComparison.OrdinalIgnoreCase))
                 {
-                    // <Project Sdk="Microsoft.NET.Sdk">
+                    string sdks = xmlAttribute.Value;
 
-                    // Remove Sdk attribute
-                    var sdkValue = xmlAttribute.Value;
-                    root.Attributes.Remove(xmlAttribute);
+                    bool removedSdkAttribute = false;
+                    XmlNode previousNodeImportProps = null;
+                    XmlNode previousNodeImportTargets = null;
 
-                    //
-                    // Add explicit top import
-                    //
-                    //  <Import Project = "Sdk.props" Sdk="Microsoft.NET.Sdk" />
-                    //
-                    XmlNode nodeImportProps = xmlProjectDoc.CreateElement("Import", root.NamespaceURI);
-                    XmlAttribute projectAttribute = xmlProjectDoc.CreateAttribute("Project", root.NamespaceURI);
-                    projectAttribute.Value = "Sdk.props";
-                    nodeImportProps.Attributes.Append(projectAttribute);
-                    nodeImportProps.Attributes.Append(xmlAttribute);
+                    foreach (string sdk in sdks.Split(_semicolonChar).Select(i => i.Trim()))
+                    {
+                        //  <Project Sdk="Microsoft.NET.Sdk">
+                        //  <Project Sdk="My.Custom.Sdk/1.0.0">
+                        //  <Project Sdk="My.Custom.Sdk/min=1.0.0">
+                        if (!SdkReference.TryParse(sdk, out SdkReference sdkReference))
+                            break;
 
-                    // Prepend this Import to the root of the XML document
-                    root.PrependChild(nodeImportProps);
+                        // Remove Sdk attribute
+                        if (!removedSdkAttribute)
+                        {
+                            root.Attributes.Remove(xmlAttribute);
 
-                    //
-                    // Add explicit bottom import
-                    //
-                    //  <Import Project = "Sdk.targets" Sdk="Microsoft.NET.Sdk" 
-                    //                
-                    XmlNode nodeImportTargets = xmlProjectDoc.CreateElement("Import", root.NamespaceURI);
-                    XmlAttribute projectAttribute2 = xmlProjectDoc.CreateAttribute("Project", root.NamespaceURI);
-                    projectAttribute2.Value = "Sdk.targets";
-                    XmlAttribute projectAttribute3 = xmlProjectDoc.CreateAttribute("Sdk", root.NamespaceURI);
-                    projectAttribute3.Value = sdkValue;
-                    nodeImportTargets.Attributes.Append(projectAttribute2);
-                    nodeImportTargets.Attributes.Append(projectAttribute3);
+                            removedSdkAttribute = true;
+                        }
 
-                    // Append this Import to the end of the XML document
-                    root.AppendChild(nodeImportTargets);
+                        //
+                        // Add explicit top import
+                        //
+                        //  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+                        //  <Import Project="Sdk.props" Sdk="My.Custom.Sdk" Version="1.0.0" />
+                        //  <Import Project="Sdk.props" Sdk="My.Custom.Sdk" MinimumVersion="1.0.0" />
+                        //
+                        XmlNode nodeImportProps = CreateImportProjectSdkNode(xmlProjectDoc, "Sdk.props", sdkReference);
+
+                        // Prepend this Import to the root of the XML document
+                        if (previousNodeImportProps == null)
+                        {
+                            previousNodeImportProps = root.PrependChild(nodeImportProps);
+                        }
+                        else
+                        {
+                            previousNodeImportProps = root.InsertAfter(nodeImportProps, previousNodeImportProps);
+                        }
+
+                        //
+                        // Add explicit bottom import
+                        //
+                        //  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+                        //  <Import Project="Sdk.targets" Sdk="My.Custom.Sdk" Version="1.0.0" />
+                        //  <Import Project="Sdk.targets" Sdk="My.Custom.Sdk" MinimumVersion="1.0.0" />
+                        //
+                        XmlNode nodeImportTargets = CreateImportProjectSdkNode(xmlProjectDoc, "Sdk.targets", sdkReference);
+
+                        // Append this Import to the end of the XML document
+                        if (previousNodeImportTargets == null)
+                        {
+                            previousNodeImportTargets = root.AppendChild(nodeImportTargets);
+                        }
+                        else
+                        {
+                            previousNodeImportTargets = root.InsertAfter(nodeImportTargets, previousNodeImportTargets);
+                        }
+                    }
                 }
             }
+        }
+
+        // Creates an XmlNode that contains an Import Project element
+        //
+        //  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+        static XmlNode CreateImportProjectSdkNode(XmlDocument xmlProjectDoc, string projectAttributeValue, SdkReference sdkReference)
+        {
+            XmlNode nodeImport = xmlProjectDoc.CreateElement("Import", xmlProjectDoc.DocumentElement.NamespaceURI);
+            XmlAttribute projectAttribute = xmlProjectDoc.CreateAttribute("Project");
+            projectAttribute.Value = projectAttributeValue;
+            XmlAttribute sdkAttributeProps = xmlProjectDoc.CreateAttribute("Sdk");
+            sdkAttributeProps.Value = sdkReference.Name;
+            nodeImport.Attributes.Append(projectAttribute);
+            nodeImport.Attributes.Append(sdkAttributeProps);
+
+            if (!string.IsNullOrEmpty(sdkReference.Version))
+            {
+                XmlAttribute sdkVersionAttributeProps = xmlProjectDoc.CreateAttribute("Version");
+                sdkVersionAttributeProps.Value = sdkReference.Version;
+                nodeImport.Attributes.Append(sdkVersionAttributeProps);
+            }
+
+            if (!string.IsNullOrEmpty(sdkReference.MinimumVersion))
+            {
+                XmlAttribute sdkVersionAttributeProps = xmlProjectDoc.CreateAttribute("MinimumVersion");
+                sdkVersionAttributeProps.Value = sdkReference.MinimumVersion;
+                nodeImport.Attributes.Append(sdkVersionAttributeProps);
+            }
+
+            return nodeImport;
         }
 
         #endregion Private Methods
@@ -799,8 +913,9 @@ namespace Microsoft.Build.Tasks.Windows
         private const string ITEMGROUP_NAME = "ItemGroup";
         private const string INCLUDE_ATTR_NAME = "Include";
 
-        private const string TRUE = "True";
         private const string WPFTMP = "wpftmp";
+
+        private static readonly char[] _semicolonChar = new char[] { ';' };
 
         #endregion Private Fields
 
@@ -808,4 +923,5 @@ namespace Microsoft.Build.Tasks.Windows
     
     #endregion GenerateProjectForLocalTypeReference Task class
 }
+
 

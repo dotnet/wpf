@@ -470,7 +470,7 @@ namespace MS.Internal.IO.Packaging
                     if (transform == null)
                     {
                         // throw XmlException so the outer loop knows the signature is invalid
-                        throw new XmlException(SR.Get(SRID.UnsupportedTransformAlgorithm));
+                        throw new XmlException(SR.UnsupportedTransformAlgorithm);
                     }
 
                     transformStream = TransformXml(transform, transformStream);
@@ -636,14 +636,14 @@ namespace MS.Internal.IO.Packaging
                         // This is common for XAdES signatures and must be explicitly allowed.
                         XmlNodeList nodeList = xmlDocument.ChildNodes;
                         if (nodeList == null || nodeList.Count == 0 || nodeList.Count > 2)
-                            throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                            throw new XmlException(SR.PackageSignatureCorruption);
 
                         XmlNode node = nodeList[0];
                         if (nodeList.Count == 2)
                         {
                             // First node must be the XmlDeclaration <?xml...>
                             if (nodeList[0].NodeType != XmlNodeType.XmlDeclaration)
-                                throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                                throw new XmlException(SR.PackageSignatureCorruption);
 
                             // Second node must be in the w3c namespace, and must be the <Signature> tag
                             node = nodeList[1];
@@ -653,7 +653,7 @@ namespace MS.Internal.IO.Packaging
                            (String.CompareOrdinal(node.NamespaceURI, SignedXml.XmlDsigNamespaceUrl) != 0) ||
                            (String.CompareOrdinal(node.LocalName, XTable.Get(XTable.ID.SignatureTagName)) != 0))
                         {
-                            throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                            throw new XmlException(SR.PackageSignatureCorruption);
                         }
 
                         // instantiate the SignedXml from the xmlDoc
@@ -664,7 +664,7 @@ namespace MS.Internal.IO.Packaging
 
             // As per the OPC spec, only two Canonicalization methods can be specified            
             if (!IsValidXmlCanonicalizationTransform(_signedXml.SignedInfo.CanonicalizationMethod))
-                throw new XmlException(SR.Get(SRID.UnsupportedCanonicalizationMethod));
+                throw new XmlException(SR.UnsupportedCanonicalizationMethod);
 
             // As per OPC spec, signature ID must be NCName
             if (_signedXml.Signature.Id != null)
@@ -675,7 +675,7 @@ namespace MS.Internal.IO.Packaging
                 }
                 catch (System.Xml.XmlException)
                 {
-                    throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                    throw new XmlException(SR.PackageSignatureCorruption);
                 }
             }
 
@@ -782,7 +782,7 @@ namespace MS.Internal.IO.Packaging
                 {
                     // inform caller if hash algorithm is unknown
                     if (hashAlgorithm == null)
-                        throw new InvalidOperationException(SR.Get(SRID.UnsupportedHashAlgorithm));
+                        throw new InvalidOperationException(SR.UnsupportedHashAlgorithm);
 
                     _signedXml.AddObject(GenerateObjectTag(hashAlgorithm, parts, relationshipSelectors, signatureId));
                 }
@@ -874,7 +874,9 @@ namespace MS.Internal.IO.Packaging
             // Get[Algorithm]PrivateKey methods would always have returned the private key if the PrivateKey property would
             // But Get[Algorithm]PrivateKey methods never throw but returns null in case of error during cryptographic operations
             // But we want exception to be thrown when an error occurs during a cryptographic operation so that we can revert the changes
+            #pragma warning disable SYSLIB0028
             return cert.PrivateKey;
+            #pragma warning restore SYSLIB0028
         }
 
         /// <summary>
@@ -984,7 +986,7 @@ namespace MS.Internal.IO.Packaging
                 // The legal parent is a "Package" Object tag with 2 children
                 // <Manifest> and <SignatureProperties>
                 if (nodeList.Count != 2)
-                    throw new XmlException(SR.Get(SRID.XmlSignatureParseError));
+                    throw new XmlException(SR.XmlSignatureParseError);
 
                 // get a NodeReader that allows us to easily and correctly skip comments
                 XmlReader reader = new XmlNodeReader(nodeList[0].ParentNode);
@@ -992,7 +994,7 @@ namespace MS.Internal.IO.Packaging
                 // parse the <Object> tag - ensure that it is in the correct namespace
                 reader.Read();  // enter the Object tag
                 if (String.CompareOrdinal(reader.NamespaceURI, SignedXml.XmlDsigNamespaceUrl) != 0)
-                    throw new XmlException(SR.Get(SRID.XmlSignatureParseError));
+                    throw new XmlException(SR.XmlSignatureParseError);
 
                 string signaturePropertiesTagName = XTable.Get(XTable.ID.SignaturePropertiesTagName);
                 string manifestTagName = XTable.Get(XTable.ID.ManifestTagName);
@@ -1026,12 +1028,12 @@ namespace MS.Internal.IO.Packaging
                         }
                     }
 
-                    throw new XmlException(SR.Get(SRID.XmlSignatureParseError));
+                    throw new XmlException(SR.XmlSignatureParseError);
                 }
 
                 // these must both exist on exit
                 if (!(signaturePropertiesTagFound && manifestTagFound))
-                    throw new XmlException(SR.Get(SRID.XmlSignatureParseError));
+                    throw new XmlException(SR.XmlSignatureParseError);
 
                 _dataObjectParsed = true;
             }
@@ -1054,7 +1056,7 @@ namespace MS.Internal.IO.Packaging
                 {
                     // duplicates not allowed
                     if (returnValue != null)
-                        throw new XmlException(SR.Get(SRID.SignatureObjectIdMustBeUnique));
+                        throw new XmlException(SR.SignatureObjectIdMustBeUnique);
 
                     returnValue = dataObject;
                 }
@@ -1064,7 +1066,7 @@ namespace MS.Internal.IO.Packaging
             if (returnValue != null)
                 return returnValue;
             else
-                throw new XmlException(SR.Get(SRID.PackageSignatureObjectTagRequired));
+                throw new XmlException(SR.PackageSignatureObjectTagRequired);
         }
 
         private KeyInfo GenerateKeyInfo(AsymmetricAlgorithm key, X509Certificate2 signer)
@@ -1083,7 +1085,7 @@ namespace MS.Internal.IO.Packaging
                 if (key is DSA)
                     keyInfo.AddClause(new DSAKeyValue((DSA)key));    // DSA
                 else
-                    throw new ArgumentException(SR.Get(SRID.CertificateKeyTypeNotSupported), "signer");
+                    throw new ArgumentException(SR.CertificateKeyTypeNotSupported, "signer");
             }
 
             // the actual X509 cert
@@ -1133,12 +1135,12 @@ namespace MS.Internal.IO.Packaging
                 if (collection.Count > 0)
                 {
                     if (collection.Count > 1)
-                        throw new CryptographicException(SR.Get(SRID.DigSigDuplicateCertificate));
+                        throw new CryptographicException(SR.DigSigDuplicateCertificate);
 
                     signer = collection[0];
                 }
                 else
-                    throw new CryptographicException(SR.Get(SRID.DigSigCannotLocateCertificate));
+                    throw new CryptographicException(SR.DigSigCannotLocateCertificate);
             }
             finally
             {
@@ -1180,11 +1182,11 @@ namespace MS.Internal.IO.Packaging
                     if (String.CompareOrdinal(currentReference.Uri, XTable.Get(XTable.ID.OpcLinkAttrValue)) == 0)
                     {
                         if (!allowPackageSpecificReferences)
-                            throw new ArgumentException(SR.Get(SRID.PackageSpecificReferenceTagMustBeUnique));
+                            throw new ArgumentException(SR.PackageSpecificReferenceTagMustBeUnique);
 
                         //If there are more than one package specific tags
                         if (packageReferenceFound == true)
-                            throw new XmlException(SR.Get(SRID.MoreThanOnePackageSpecificReference));
+                            throw new XmlException(SR.MoreThanOnePackageSpecificReference);
                         else
                             packageReferenceFound = true;
                     }
@@ -1195,16 +1197,16 @@ namespace MS.Internal.IO.Packaging
                     {
                         //As per the OPC spec, only two transforms are supported for the reference tags
                         if (!IsValidXmlCanonicalizationTransform(currentTransformChain[j].Algorithm))
-                            throw new XmlException(SR.Get(SRID.UnsupportedTransformAlgorithm));
+                            throw new XmlException(SR.UnsupportedTransformAlgorithm);
                     }
                 }
                 else
-                    throw new XmlException(SR.Get(SRID.InvalidUriAttribute));
+                    throw new XmlException(SR.InvalidUriAttribute);
             }
 
             // If there are zero reference tags or if there wasn't any package specific reference tag            
             if (allowPackageSpecificReferences && !packageReferenceFound)
-                throw new XmlException(SR.Get(SRID.PackageSignatureReferenceTagRequired));
+                throw new XmlException(SR.PackageSignatureReferenceTagRequired);
         }
 
 

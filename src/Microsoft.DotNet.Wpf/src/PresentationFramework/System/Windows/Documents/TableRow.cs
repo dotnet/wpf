@@ -81,7 +81,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            throw (new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(TableCell)), "value"));
+            throw (new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableCell)), "value"));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace System.Windows.Documents
 
             if (newParent != null && !(newParent is TableRowGroup))
             {
-                throw new InvalidOperationException(SR.Get(SRID.TableInvalidParentNodeType, newParent.GetType().ToString()));
+                throw new InvalidOperationException(SR.Format(SR.TableInvalidParentNodeType, newParent.GetType().ToString()));
             }
 
             if (oldParent != null)

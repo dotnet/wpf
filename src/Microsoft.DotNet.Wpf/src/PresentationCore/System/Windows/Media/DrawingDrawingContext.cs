@@ -23,7 +23,6 @@ using System.Windows.Media.Media3D;
 using System.Windows.Threading;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -1064,7 +1063,7 @@ namespace System.Windows.Media
             if ( (_previousDrawingGroupStack == null) ||
                  (_previousDrawingGroupStack.Count == 0))
             {
-                throw new InvalidOperationException(SR.Get(SRID.DrawingContext_TooManyPops));
+                throw new InvalidOperationException(SR.DrawingContext_TooManyPops);
             }
 
             // Restore the previous value of the current drawing group

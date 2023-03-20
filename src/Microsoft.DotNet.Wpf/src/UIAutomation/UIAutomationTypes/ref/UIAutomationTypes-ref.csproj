@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>UIAutomationTypes</AssemblyName>
     <PackageId>UIAutomationTypes-ref</PackageId>
@@ -7,8 +7,8 @@
     <DefineConstants>$(DefineConstants);UIAUTOMATIONTYPES</DefineConstants>
     <NoWarn>$(NoWarn);0618</NoWarn>
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
-    <TargetFramework>netcoreapp5.0</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
+    
+    <Platforms>AnyCPU;x64;arm64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

@@ -441,7 +441,7 @@ namespace System.Windows.Data
                 if (AllowsCrossThreadChanges)
                     VerifyAccess();
                 if (IsAddingNew || IsEditingItem)
-                    throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedDuringAddOrEdit, "Filter"));
+                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "Filter"));
 
                 base.Filter = value;
             }
@@ -465,7 +465,7 @@ namespace System.Windows.Data
                 if (AllowsCrossThreadChanges)
                     VerifyAccess();
                 if (IsAddingNew || IsEditingItem)
-                    throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedDuringAddOrEdit, "CustomSort"));
+                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "CustomSort"));
                 _customSort = value;
 
                 SetSortDescriptions(null);
@@ -487,7 +487,7 @@ namespace System.Windows.Data
                 if (!CanGroup)
                     throw new NotSupportedException();
                 if (IsAddingNew || IsEditingItem)
-                    throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedDuringAddOrEdit, "Grouping"));
+                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "Grouping"));
 
                 _group.GroupBySelector = value;
 
@@ -546,7 +546,7 @@ namespace System.Windows.Data
                 VerifyRefreshNotDeferred();
 
                 if (value != _newItemPlaceholderPosition && IsAddingNew)
-                    throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedDuringTransaction, "NewItemPlaceholderPosition", "AddNew"));
+                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringTransaction, "NewItemPlaceholderPosition", "AddNew"));
 
                 if (value != _newItemPlaceholderPosition && _isRemoving)
                 {
@@ -720,7 +720,7 @@ namespace System.Windows.Data
             CommitNew();        // implicitly close a previous AddNew
 
             if (!CanAddNew)
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedForView, "AddNew"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedForView, "AddNew"));
 
             return AddNewCommon(_itemConstructor.Invoke(null));
         }
@@ -743,7 +743,7 @@ namespace System.Windows.Data
             CommitNew();        // implicitly close a previous AddNew
 
             if (!CanAddNewItem)
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedForView, "AddNewItem"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedForView, "AddNewItem"));
 
             return AddNewCommon(newItem);
         }
@@ -835,7 +835,7 @@ namespace System.Windows.Data
         public void CommitNew()
         {
             if (IsEditingItem)
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedDuringTransaction, "CommitNew", "EditItem"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringTransaction, "CommitNew", "EditItem"));
             VerifyRefreshNotDeferred();
 
             if (_newItem == NoNewItem)
@@ -951,7 +951,7 @@ namespace System.Windows.Data
         public void CancelNew()
         {
             if (IsEditingItem)
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedDuringTransaction, "CancelNew", "EditItem"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringTransaction, "CancelNew", "EditItem"));
             VerifyRefreshNotDeferred();
 
             if (_newItem == NoNewItem)
@@ -1063,7 +1063,7 @@ namespace System.Windows.Data
         public void RemoveAt(int index)
         {
             if (IsEditingItem || IsAddingNew)
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedDuringAddOrEdit, "RemoveAt"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "RemoveAt"));
             VerifyRefreshNotDeferred();
 
             RemoveImpl(GetItemAt(index), index);
@@ -1075,7 +1075,7 @@ namespace System.Windows.Data
         public void Remove(object item)
         {
             if (IsEditingItem || IsAddingNew)
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedDuringAddOrEdit, "Remove"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "Remove"));
             VerifyRefreshNotDeferred();
 
             int index = InternalIndexOf(item);
@@ -1088,7 +1088,7 @@ namespace System.Windows.Data
         void RemoveImpl(object item, int index)
         {
             if (item == CollectionView.NewItemPlaceholder)
-                throw new InvalidOperationException(SR.Get(SRID.RemovingPlaceholder));
+                throw new InvalidOperationException(SR.RemovingPlaceholder);
 
             BindingOperations.AccessCollection(SourceList,
                 () =>
@@ -1165,7 +1165,7 @@ namespace System.Windows.Data
             VerifyRefreshNotDeferred();
 
             if (item == NewItemPlaceholder)
-                throw new ArgumentException(SR.Get(SRID.CannotEditPlaceholder), "item");
+                throw new ArgumentException(SR.CannotEditPlaceholder, "item");
 
             if (IsAddingNew)
             {
@@ -1193,7 +1193,7 @@ namespace System.Windows.Data
         public void CommitEdit()
         {
             if (IsAddingNew)
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedDuringTransaction, "CommitEdit", "AddNew"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringTransaction, "CommitEdit", "AddNew"));
             VerifyRefreshNotDeferred();
 
             if (_editItem == null)
@@ -1304,7 +1304,7 @@ namespace System.Windows.Data
         public void CancelEdit()
         {
             if (IsAddingNew)
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedDuringTransaction, "CancelEdit", "AddNew"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringTransaction, "CancelEdit", "AddNew"));
             VerifyRefreshNotDeferred();
 
             if (_editItem == null)
@@ -1318,7 +1318,7 @@ namespace System.Windows.Data
                 ieo.CancelEdit();
             }
             else
-                throw new InvalidOperationException(SR.Get(SRID.CancelEditNotSupported));
+                throw new InvalidOperationException(SR.CancelEditNotSupported);
         }
 
         private void ImplicitlyCancelEdit()
@@ -2084,7 +2084,7 @@ namespace System.Windows.Data
                     }
                     break;
                 default:
-                    Invariant.Assert(false, SR.Get(SRID.UnexpectedCollectionChangeAction, effectiveAction));
+                    Invariant.Assert(false, SR.Format(SR.UnexpectedCollectionChangeAction, effectiveAction));
                     break;
             }
 
@@ -2434,7 +2434,7 @@ namespace System.Windows.Data
                     break;
 
                 default:
-                    throw new NotSupportedException(SR.Get(SRID.UnexpectedCollectionChangeAction, e.Action));
+                    throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, e.Action));
             }
         }
 
@@ -2447,7 +2447,7 @@ namespace System.Windows.Data
 
         // return an appropriate comparer.   Common logic used by ListCollectionView
         // and by CollectionViewGroupInternal.
-        internal static IComparer PrepareComparer(IComparer customSort, SortDescriptionCollection sort, Func<CollectionView> lazyGetCollectionView)
+        internal static IComparer PrepareComparer(IComparer customSort, SortDescriptionCollection sort, Func<object, CollectionView> lazyGetCollectionView, object state)
         {
             if (customSort != null)
             {
@@ -2456,7 +2456,7 @@ namespace System.Windows.Data
 
             if (sort != null && sort.Count > 0)
             {
-                CollectionView view = lazyGetCollectionView();
+                CollectionView view = lazyGetCollectionView(state);
                 Debug.Assert(view != null, "lazyGetCollectionView should not return null");
 
                 if (view.SourceCollection != null)
@@ -2524,31 +2524,31 @@ namespace System.Windows.Data
             {
                 case NotifyCollectionChangedAction.Add:
                     if (e.NewItems.Count != 1)
-                        throw new NotSupportedException(SR.Get(SRID.RangeActionsNotSupported));
+                        throw new NotSupportedException(SR.RangeActionsNotSupported);
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
                     if (e.OldItems.Count != 1)
-                        throw new NotSupportedException(SR.Get(SRID.RangeActionsNotSupported));
+                        throw new NotSupportedException(SR.RangeActionsNotSupported);
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
                     if (e.NewItems.Count != 1 || e.OldItems.Count != 1)
-                        throw new NotSupportedException(SR.Get(SRID.RangeActionsNotSupported));
+                        throw new NotSupportedException(SR.RangeActionsNotSupported);
                     break;
 
                 case NotifyCollectionChangedAction.Move:
                     if (e.NewItems.Count != 1)
-                        throw new NotSupportedException(SR.Get(SRID.RangeActionsNotSupported));
+                        throw new NotSupportedException(SR.RangeActionsNotSupported);
                     if (e.NewStartingIndex < 0)
-                        throw new InvalidOperationException(SR.Get(SRID.CannotMoveToUnknownPosition));
+                        throw new InvalidOperationException(SR.CannotMoveToUnknownPosition);
                     break;
 
                 case NotifyCollectionChangedAction.Reset:
                     break;
 
                 default:
-                    throw new NotSupportedException(SR.Get(SRID.UnexpectedCollectionChangeAction, e.Action));
+                    throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, e.Action));
             }
         }
 
@@ -2692,21 +2692,21 @@ namespace System.Windows.Data
 
             // validate input
             if (index < -1 || index > ilFull.Count)
-                throw new InvalidOperationException(SR.Get(SRID.CollectionChangeIndexOutOfRange, index, ilFull.Count));
+                throw new InvalidOperationException(SR.Format(SR.CollectionChangeIndexOutOfRange, index, ilFull.Count));
 
             if (action == NotifyCollectionChangedAction.Add)
             {
                 if (index >= 0)
                 {
                     if (!System.Windows.Controls.ItemsControl.EqualsEx(item, ilFull[index]))
-                        throw new InvalidOperationException(SR.Get(SRID.AddedItemNotAtIndex, index));
+                        throw new InvalidOperationException(SR.Format(SR.AddedItemNotAtIndex, index));
                 }
                 else
                 {
                     // event didn't specify index - determine it the hard way
                     index = ilFull.IndexOf(item);
                     if (index < 0)
-                        throw new InvalidOperationException(SR.Get(SRID.AddedItemNotInCollection));
+                        throw new InvalidOperationException(SR.AddedItemNotInCollection);
                 }
             }
 
@@ -2895,7 +2895,7 @@ namespace System.Windows.Data
         private void PrepareShaping()
         {
             // sort:  prepare the comparer
-            ActiveComparer = ListCollectionView.PrepareComparer(_customSort, _sort, () => { return this; });
+            ActiveComparer = PrepareComparer(_customSort, _sort, static state => (ListCollectionView)state, this);
 
             // filter:  prepare the Predicate<object> filter
             ActiveFilter = Filter;
@@ -2932,7 +2932,7 @@ namespace System.Windows.Data
         private void SortDescriptionsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (IsAddingNew || IsEditingItem)
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedDuringAddOrEdit, "Sorting"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "Sorting"));
 
             // adding to SortDescriptions overrides custom sort
             if (_sort.Count > 0)
@@ -3025,7 +3025,7 @@ namespace System.Windows.Data
         void OnGroupByChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (IsAddingNew || IsEditingItem)
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedDuringAddOrEdit, "Grouping"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "Grouping"));
 
             // This is a huge change.  Just refresh the view.
             RefreshOrDefer();
@@ -3035,7 +3035,7 @@ namespace System.Windows.Data
         void OnGroupDescriptionChanged(object sender, EventArgs e)
         {
             if (IsAddingNew || IsEditingItem)
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedDuringAddOrEdit, "Grouping"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "Grouping"));
 
             // This is a huge change.  Just refresh the view.
             RefreshOrDefer();

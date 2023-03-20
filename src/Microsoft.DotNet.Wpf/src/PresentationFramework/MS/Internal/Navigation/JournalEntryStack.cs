@@ -145,7 +145,7 @@ namespace System.Windows.Navigation
         {
             if (_version != _journal.Version)
             {
-                throw new InvalidOperationException(SR.Get(SRID.EnumeratorVersionChanged));
+                throw new InvalidOperationException(SR.EnumeratorVersionChanged);
             }
         }
 

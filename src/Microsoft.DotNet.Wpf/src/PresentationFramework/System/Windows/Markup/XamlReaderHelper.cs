@@ -412,9 +412,9 @@ namespace System.Windows.Markup
                 }
 #if PBTCOMPILER || !STRESS
             }
-            catch (XamlParseException e)
+            catch (XamlParseException)
             {
-                throw e;
+                throw;
             }
             catch (XmlException e)
             {
@@ -1110,11 +1110,11 @@ namespace System.Windows.Markup
                     XamlPropertyFullName oldUsageProp = (XamlPropertyFullName)properties[declaringProp];
                     if (usageProp.Equals(oldUsageProp))
                     {
-                        ThrowException(SRID.ParserDuplicateProperty1, usageProp.FullName);
+                        ThrowException(nameof(SR.ParserDuplicateProperty1), usageProp.FullName);
                     }
                     else
                     {
-                        ThrowException(SRID.ParserDuplicateProperty2,
+                        ThrowException(nameof(SR.ParserDuplicateProperty2),
                                     usageProp.FullName, oldUsageProp.FullName);
                     }
                 }
@@ -1229,7 +1229,7 @@ namespace System.Windows.Markup
             {
                 // An Empty Element is not allowed if this
                 // looks at all like a complex property, so complain
-                ThrowException(SRID.ParserEmptyComplexProp, XmlReader.Name);
+                ThrowException(nameof(SR.ParserEmptyComplexProp), XmlReader.Name);
             }
 
             // see if XmlSpace is set in the context for whitespace
@@ -1276,7 +1276,7 @@ namespace System.Windows.Markup
                         {
                             if (!IsWhiteSpace(textValueStringBuilder[i]))
                             {
-                                ThrowException(SRID.ParserTextInComplexProp,
+                                ThrowException(nameof(SR.ParserTextInComplexProp),
                                                textValueStringBuilder.ToString(),
                                                XmlReader.LocalName);
                             }
@@ -1326,7 +1326,7 @@ namespace System.Windows.Markup
                         break;
 
                     default:
-                        ThrowException(SRID.ParserUnknownXmlType,
+                        ThrowException(nameof(SR.ParserUnknownXmlType),
                                        XmlReader.NodeType.ToString());
                         break;
                 }
@@ -1357,26 +1357,26 @@ namespace System.Windows.Markup
         /// </summary>
         void ThrowException(string id)
         {
-            string message = SR.Get(id);
+            string message = SR.GetResourceString(id);
             ThrowExceptionWithLine(message);
         }
 
 
         void ThrowException(string id, string parameter)
         {
-            string message = SR.Get(id, parameter);
+            string message = SR.Format(SR.GetResourceString(id), parameter);
             ThrowExceptionWithLine(message);
         }
 
         void ThrowException(string id, string parameter1, string parameter2)
         {
-            string message = SR.Get(id, parameter1, parameter2);
+            string message = SR.Format(SR.GetResourceString(id), parameter1, parameter2);
             ThrowExceptionWithLine(message);
         }
 
         void ThrowException(string id, string parameter1, string parameter2, string parameter3)
         {
-            string message = SR.Get(id, parameter1, parameter2, parameter3);
+            string message = SR.Format(SR.GetResourceString(id), parameter1, parameter2, parameter3);
             ThrowExceptionWithLine(message);
         }
 
@@ -1393,7 +1393,7 @@ namespace System.Windows.Markup
                 !typeof(System.Xml.XmlException).IsAssignableFrom(innerException.GetType()))
             {
                 messageWithLineNumber += " ";
-                messageWithLineNumber += SR.Get(SRID.ParserLineAndOffset,
+                messageWithLineNumber += SR.Format(SR.ParserLineAndOffset,
                                                 lineNumber.ToString(CultureInfo.CurrentCulture),
                                                 linePosition.ToString(CultureInfo.CurrentCulture));
             }
@@ -1417,7 +1417,7 @@ namespace System.Windows.Markup
         void ThrowExceptionWithLine(string message)
         {
             message += " ";
-            message += SR.Get(SRID.ParserLineAndOffset,
+            message += SR.Format(SR.ParserLineAndOffset,
                                                  LineNumber.ToString(CultureInfo.CurrentCulture),
                                                  LinePosition.ToString(CultureInfo.CurrentCulture));
 
@@ -1739,7 +1739,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    ThrowException(SRID.ParserMetroUnknownAttribute,
+                    ThrowException(nameof(SR.ParserMetroUnknownAttribute),
                                    attributeLocalName,
                                    DefinitionMetroNamespaceURI);
                 }
@@ -1860,7 +1860,7 @@ namespace System.Windows.Markup
                         attributeNamespaceUri != elementBaseTypeNamespaceUri &&
                         attributeNamespaceUri != XmlReader.LookupNamespace(""))
                     {
-                        ThrowException(SRID.ParserAttributeNamespaceMisMatch,
+                        ThrowException(nameof(SR.ParserAttributeNamespaceMisMatch),
                                        propName,
                                        elementBaseTypeNamespaceUri);
                     }
@@ -2106,7 +2106,7 @@ namespace System.Windows.Markup
 
                     // Custom entity references are not currently supported.
                     case XmlNodeType.EntityReference:
-                        ThrowException(SRID.ParserEntityReference, XmlReader.Name);
+                        ThrowException(nameof(SR.ParserEntityReference), XmlReader.Name);
                         break;
 
                     default:
@@ -2351,7 +2351,7 @@ namespace System.Windows.Markup
 
                     if (String.IsNullOrEmpty(attribValue))
                     {
-                        ThrowException(SRID.ParserUndeclaredNS, String.Empty);
+                        ThrowException(nameof(SR.ParserUndeclaredNS), String.Empty);
                     }
 
                     if (attribValue.StartsWith(MappingProtocol, StringComparison.Ordinal))
@@ -2370,7 +2370,7 @@ namespace System.Windows.Markup
         {
             MappingParser parser = new MappingParser(mappingUri, MappingProtocol.Length);
             if (!parser.Parse())
-                ThrowException(SRID.ParserMappingUriInvalid, mappingUri);
+                ThrowException(nameof(SR.ParserMappingUriInvalid), mappingUri);
 
             // Always set up the mapping for this in the XamlTypeMapper immediately upon seeing the
             // mapping URI, since it can be needed in the very next read operation and must be in place.
@@ -2746,7 +2746,7 @@ namespace System.Windows.Markup
             }
             if (String.IsNullOrEmpty(attribNamespaceURI))
             {
-               ThrowException(SRID.ParserPrefixNSProperty, prefix, name);
+               ThrowException(nameof(SR.ParserPrefixNSProperty), prefix, name);
             }
             return attribNamespaceURI;
         }
@@ -2921,7 +2921,7 @@ namespace System.Windows.Markup
 
                             default:
                                 ThrowExceptionWithLine(
-                                    SR.Get(SRID.ParserUnknownAttribute,
+                                    SR.Format(SR.ParserUnknownAttribute,
                                         attribLocalName,
                                         attribNamespaceURI));
                                 break;
@@ -2990,7 +2990,7 @@ namespace System.Windows.Markup
             {
                 if (0 != depth)
                 {
-                    ThrowException(SRID.ParserSyncOnRoot);
+                    ThrowException(nameof(SR.ParserSyncOnRoot));
                 }
 
                 WriteDefAttribute(attribLocalName, attribValue);
@@ -3000,7 +3000,7 @@ namespace System.Windows.Markup
             {
                 if (0 != depth)
                 {
-                    ThrowException(SRID.ParserAsyncOnRoot);
+                    ThrowException(nameof(SR.ParserAsyncOnRoot));
                 }
 
                 WriteDefAttribute(attribLocalName, attribValue);
@@ -3014,7 +3014,7 @@ namespace System.Windows.Markup
                      parentType.GetConstructor(Type.EmptyTypes) == null ||
                      parentType.IsValueType))
                 {
-                    ThrowException(SRID.ParserNoNameOnType, parentType.Name);
+                    ThrowException(nameof(SR.ParserNoNameOnType), parentType.Name);
                 }
 
                 //Write the matching property record if needed
@@ -3090,7 +3090,7 @@ namespace System.Windows.Markup
                             }
                             else
                             {
-                                ThrowException(SRID.ParserNoType, typeName);
+                                ThrowException(nameof(SR.ParserNoType), typeName);
                             }
                         }
                     }
@@ -3114,7 +3114,7 @@ namespace System.Windows.Markup
             {
                 if (ParentContext == null)
                 {
-                    ThrowException(SRID.ParserNoDictionaryName);
+                    ThrowException(nameof(SR.ParserNoDictionaryName));
                 }
                 ElementContextType pct = ParentContext.ContextType;
                 Type pType = ParentContext.ContextData as Type;
@@ -3128,7 +3128,7 @@ namespace System.Windows.Markup
                     && !typeof(IDictionary).IsAssignableFrom(pType))
 #endif
                 {
-                    ThrowException(SRID.ParserNoDictionaryName);
+                    ThrowException(nameof(SR.ParserNoDictionaryName));
                 }
 
                 DictionaryContextData dictionaryData = ParentContext.ContextData as DictionaryContextData;
@@ -3155,7 +3155,7 @@ namespace System.Windows.Markup
 
                     if (dictionaryData.ContainsKey(key))
                     {
-                        ThrowException(SRID.ParserDupDictionaryKey, attribValue);
+                        ThrowException(nameof(SR.ParserDupDictionaryKey), attribValue);
                     }
                     else
                     {
@@ -3227,13 +3227,13 @@ namespace System.Windows.Markup
 
                 if (!propertyCanWrite)
                 {
-                    ThrowExceptionWithLine(SR.Get(SRID.ParserReadOnlyProp, attribLocalName));
+                    ThrowExceptionWithLine(SR.Format(SR.ParserReadOnlyProp, attribLocalName));
                 }
             }
 
             if (propInfo != null && !XamlTypeMapper.IsAllowedPropertySet(propInfo))
             {
-                ThrowException(SRID.ParserCantSetAttribute, "property", declaringType.Name + "." + attribLocalName, "set");
+                ThrowException(nameof(SR.ParserCantSetAttribute), "property", declaringType.Name + "." + attribLocalName, "set");
             }
 
             string parentName = parentType != null ? parentType.Name : string.Empty;
@@ -3293,7 +3293,7 @@ namespace System.Windows.Markup
                          parentType.GetConstructor(Type.EmptyTypes) == null ||
                          parentType.IsValueType))
                     {
-                        ThrowException(SRID.ParserNoNameOnType, parentType.Name);
+                        ThrowException(nameof(SR.ParserNoNameOnType), parentType.Name);
                     }
                     attributeUsage = BamlAttributeUsage.RuntimeName;
                 }
@@ -3476,7 +3476,7 @@ namespace System.Windows.Markup
 
             if (isName && _definitionScopeType != null)
             {
-                ThrowException(SRID.ParserNoNameUnderDefinitionScopeType, attributeValue, elementName, _definitionScopeType.Name);
+                ThrowException(nameof(SR.ParserNoNameUnderDefinitionScopeType), attributeValue, elementName, _definitionScopeType.Name);
             }
 
             return isName;
@@ -3608,7 +3608,7 @@ namespace System.Windows.Markup
                             {
                                 if(_xmlDataIslandDepth != -1)
                                 {
-                                    ThrowException(SRID.ParserNoNestedXmlDataIslands);
+                                    ThrowException(nameof(SR.ParserNoNestedXmlDataIslands));
                                 }
                                 _xmlDataIslandDepth = depth;
 
@@ -3626,14 +3626,14 @@ namespace System.Windows.Markup
                                 // check if namespace-less tag could be part of a xml island that the parent element/property is expecting
                                 // usually indicates the author missed to wrap the data island with <x:XData>
                                 if (IsXmlIslandExpected())
-                                    ThrowException(SRID.ParserXmlIslandMissing, GrandParentContext.ChildTagLocalName);
+                                    ThrowException(nameof(SR.ParserXmlIslandMissing), GrandParentContext.ChildTagLocalName);
                                 if (null == prefix)
                                 {
-                                    ThrowException(SRID.ParserNoNamespace, localName);
+                                    ThrowException(nameof(SR.ParserNoNamespace), localName);
                                 }
                                 else
                                 {
-                                    ThrowException(SRID.ParserPrefixNSElement, prefix, localName);
+                                    ThrowException(nameof(SR.ParserPrefixNSElement), prefix, localName);
                                 }
                             }
 
@@ -3688,7 +3688,7 @@ namespace System.Windows.Markup
 
                                         if (KnownTypes.Types[(int)KnownElements.RoutedEvent].IsAssignableFrom(elementBaseType))
                                         {
-                                            ThrowException(SRID.ParserNoEventTag, localName);
+                                            ThrowException(nameof(SR.ParserNoEventTag), localName);
                                         }
                                         else   // Its not an event, so it must be a property of some kind.
                                         {
@@ -3737,7 +3737,7 @@ namespace System.Windows.Markup
                                 // check if unknown tag could be part of a xml island that the parent element/property is expecting
                                 // usually indicates the author missed to wrap the data island with <x:XData>
                                 if (IsXmlIslandExpected())
-                                    ThrowException(SRID.ParserXmlIslandMissing, GrandParentContext.ChildTagLocalName);
+                                    ThrowException(nameof(SR.ParserXmlIslandMissing), GrandParentContext.ChildTagLocalName);
                                 CurrentContext.ContextType = ElementContextType.Unknown;
                                 CurrentContext.ContextData = new UnknownData(localName, namespaceURI);
                                 WriteUnknownTagStart(namespaceURI, localName, depth);
@@ -3825,7 +3825,7 @@ namespace System.Windows.Markup
 
                     // Custom entity references are not currently supported.
                     case XmlNodeType.EntityReference:
-                        ThrowException(SRID.ParserEntityReference, localName);
+                        ThrowException(nameof(SR.ParserEntityReference), localName);
                         break;
 
                     default:
@@ -3861,7 +3861,7 @@ namespace System.Windows.Markup
                     namespaceUri == DefinitionNamespaceURI)
                 {
                     if (!IsXmlIslandExpected())
-                        ThrowException(SRID.ParserXmlIslandUnexpected, GrandParentContext.ChildTagLocalName);
+                        ThrowException(nameof(SR.ParserXmlIslandUnexpected), GrandParentContext.ChildTagLocalName);
                     return true;
                 }
             }
@@ -3913,13 +3913,13 @@ namespace System.Windows.Markup
                 {
                     if (!XamlTypeMapper.IsAllowedPropertySet(pi))
                     {
-                        ThrowException(SRID.ParserCantSetAttribute, "property", propName, "set");
+                        ThrowException(nameof(SR.ParserCantSetAttribute), "property", propName, "set");
                     }
                 }
 
                 if (!XamlTypeMapper.IsAllowedPropertyGet(pi))
                 {
-                    ThrowException(SRID.ParserCantGetProperty, propName);
+                    ThrowException(nameof(SR.ParserCantGetProperty), propName);
                 }
             }
         }
@@ -3966,7 +3966,7 @@ namespace System.Windows.Markup
                      parentTag.ContextType == ElementContextType.PropertyIList ||
                      parentTag.ContextType == ElementContextType.PropertyIDictionary )
                 {
-                    ThrowException(SRID.ParserNestedComplexProp, complexPropName);
+                    ThrowException(nameof(SR.ParserNestedComplexProp), complexPropName);
                 }
             }
 
@@ -3984,7 +3984,7 @@ namespace System.Windows.Markup
 
                 if( attributeCount > attributesToIgnore )
                 {
-                    ThrowException(SRID.ParserNoPropOnComplexProp);
+                    ThrowException(nameof(SR.ParserNoPropOnComplexProp));
                 }
             }
 
@@ -4020,13 +4020,13 @@ namespace System.Windows.Markup
                     if (ControllingXamlParser != null &&
                         !propertyCanWrite)
                     {
-                        ThrowExceptionWithLine(SR.Get(SRID.ParserReadOnlyProp,
+                        ThrowExceptionWithLine(SR.Format(SR.ParserReadOnlyProp,
                                                dynamicObjectName));
                     }
 
                     if (pi != null && !XamlTypeMapper.IsAllowedPropertySet(pi))
                     {
-                        ThrowException(SRID.ParserCantSetAttribute, "property", complexPropName, "set");
+                        ThrowException(nameof(SR.ParserCantSetAttribute), "property", complexPropName, "set");
                     }
 
                     CompileComplexPropertyArray(
@@ -4062,18 +4062,18 @@ namespace System.Windows.Markup
                         !isList &&
                         !IsAssignableToIXmlSerializable(propertyType))
                     {
-                        ThrowExceptionWithLine(SR.Get(SRID.ParserReadOnlyProp,
+                        ThrowExceptionWithLine(SR.Format(SR.ParserReadOnlyProp,
                                                dynamicObjectName));
                     }
 
                     // make sure a settable property is actually allowed to be set
                     if (pi != null && !propertyCanWrite && !XamlTypeMapper.IsAllowedPropertyGet(pi))
                     {
-                        ThrowException(SRID.ParserCantGetProperty, complexPropName);
+                        ThrowException(nameof(SR.ParserCantGetProperty), complexPropName);
                     }
                     if (pi != null && propertyCanWrite && !XamlTypeMapper.IsAllowedPropertySet(pi))
                     {
-                        ThrowException(SRID.ParserCantSetAttribute, "property", complexPropName, "set");
+                        ThrowException(nameof(SR.ParserCantSetAttribute), "property", complexPropName, "set");
                     }
 
                     string textValue = null;
@@ -4121,7 +4121,7 @@ namespace System.Windows.Markup
                         {
                            // If the end tag has been reached, but there is no text, then this
                            // is an empty complex property tag.  Complain about that.
-                           ThrowException(SRID.ParserEmptyComplexProp, complexPropName);
+                           ThrowException(nameof(SR.ParserEmptyComplexProp), complexPropName);
                         }
 
                         // If property is complex, then might have gotten here if either we had
@@ -4137,7 +4137,7 @@ namespace System.Windows.Markup
 
                         if (null == textValue)
                         {
-                            ThrowException(SRID.ParserPropNoValue, dynamicObjectName);
+                            ThrowException(nameof(SR.ParserPropNoValue), dynamicObjectName);
                         }
 
                         Debug.Assert(null != assemblyName, "property without an AssemblyName");
@@ -4211,7 +4211,7 @@ namespace System.Windows.Markup
                  ParentContext.ContextType != ElementContextType.Default ||
                  !BamlRecordManager.TreatAsIAddChild(ParentContext.ContextDataType)))
             {
-                ThrowException(SRID.ParserIEnumerableIAddChild,
+                ThrowException(nameof(SR.ParserIEnumerableIAddChild),
                                dynamicObjectName,
                                ParentContext.ContextData.ToString());
             }
@@ -4303,7 +4303,7 @@ namespace System.Windows.Markup
 
                 if (invalidAttributeFound)
                 {
-                    ThrowException(SRID.ParserNoAttrArray);
+                    ThrowException(nameof(SR.ParserNoAttrArray));
                 }
             }
             // if this is an Array change the context to ClrArray.
@@ -4362,7 +4362,7 @@ namespace System.Windows.Markup
                         FirstTagName = ParentContext.ContextDataType.Name;
                     }
 
-                    throw new InvalidOperationException(SR.Get(SRID.ParserCanOnlyHaveOneChild,
+                    throw new InvalidOperationException(SR.Format(SR.ParserCanOnlyHaveOneChild,
                         FirstTagName /* Parent or PropertyElement*/,
                         CurrentContext.ContextDataType.Name /* Child */));
                 }
@@ -4415,7 +4415,7 @@ namespace System.Windows.Markup
                         (ParentContext.ContextDataType.IsAbstract ||
                          ParentContext.ContextDataType.GetConstructor(Type.EmptyTypes) == null))
                     {
-                        ThrowException(SRID.ParserBadChild, ParentContext.ChildTagLocalName,
+                        ThrowException(nameof(SR.ParserBadChild), ParentContext.ChildTagLocalName,
                                        GrandParentContext.ChildTagLocalName);
                     }
                 }
@@ -4463,7 +4463,7 @@ namespace System.Windows.Markup
             // if we are done added content then adding content is now an error.
             else  // if (context.ContentParserState == ParsingContent.During)
             {
-                ThrowException(SRID.ParserContentMustBeContiguous);
+                ThrowException(nameof(SR.ParserContentMustBeContiguous));
                 return false;  // compiler demands this.
             }
         }
@@ -4589,7 +4589,7 @@ namespace System.Windows.Markup
                 ||
                 pi == null /* resolved object is not a PropertyInfo */)
             {
-                ThrowException(SRID.ParserInvalidContentPropertyAttribute, elementType.FullName,
+                ThrowException(nameof(SR.ParserInvalidContentPropertyAttribute), elementType.FullName,
                     contentPropertyName);
             }
 
@@ -4618,7 +4618,7 @@ namespace System.Windows.Markup
             // content property anyway.
             if (!allowed && !BamlRecordManager.TreatAsIAddChild(elementType))
             {
-                ThrowException(SRID.ParserCantSetContentProperty, contentPropertyName, elementType.Name);
+                ThrowException(nameof(SR.ParserCantSetContentProperty), contentPropertyName, elementType.Name);
             }
         }
 
@@ -4663,7 +4663,7 @@ namespace System.Windows.Markup
                             !typeof(IDictionary).IsAssignableFrom(parentType))
 #endif
                         {
-                            ThrowException(SRID.ParserCannotAddAnyChildren, parentType.FullName);
+                            ThrowException(nameof(SR.ParserCannotAddAnyChildren), parentType.FullName);
                         }
 
                         break;
@@ -4676,7 +4676,7 @@ namespace System.Windows.Markup
                         if (!(objectType == KnownTypes.Types[(int)KnownElements.ArrayExtension])
                             && !arrayType.IsAssignableFrom(objectType))
                         {
-                            ThrowException(SRID.ParserBadTypeInArrayProperty,
+                            ThrowException(nameof(SR.ParserBadTypeInArrayProperty),
                                            arrayType.FullName,
                                            objectType.FullName);
                         }
@@ -4690,7 +4690,7 @@ namespace System.Windows.Markup
 
                 default:
                     // Other context types can't have objects as children
-                    ThrowException(SRID.ParserNoChildrenTag, ParentContext.ContextData.ToString());
+                    ThrowException(nameof(SR.ParserNoChildrenTag), ParentContext.ContextData.ToString());
                     break;
             }
         }
@@ -4780,7 +4780,7 @@ namespace System.Windows.Markup
                     Type converterType = XamlTypeMapper.GetTypeConverterType(elementType);
                     if (converterType == null)
                     {
-                        ThrowException(SRID.ParserDefaultConverterElement, elementType.FullName, textValue);
+                        ThrowException(nameof(SR.ParserDefaultConverterElement), elementType.FullName, textValue);
                     }
 
                     TokenReaderNodeCollection.WritingTypeConverterText(textValue);
@@ -4798,7 +4798,7 @@ namespace System.Windows.Markup
                 Type converterType = XamlTypeMapper.GetTypeConverterType(elementType);
                 if (converterType == null)
                 {
-                    ThrowException(SRID.ParserDefaultConverterElement, elementType.FullName, textValue);
+                    ThrowException(nameof(SR.ParserDefaultConverterElement), elementType.FullName, textValue);
                 }
 
                 TokenReaderNodeCollection.WritingTypeConverterText(textValue);
@@ -5036,7 +5036,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    ThrowException(SRID.ParserTextInComplexProp,
+                    ThrowException(nameof(SR.ParserTextInComplexProp),
                                    textValue,
                                    CurrentContext.ChildTagLocalName);
                 }
@@ -5130,7 +5130,7 @@ namespace System.Windows.Markup
                 }
 
                 // Non-whitespace text is forbidden.
-                ThrowException(SRID.ParserTextInvalidInArrayOrDictionary,
+                ThrowException(nameof(SR.ParserTextInvalidInArrayOrDictionary),
                                CurrentContext.ContextData == null ? "?" : CurrentContext.ContextData.ToString(),
                                string.Empty);
             }
@@ -5250,7 +5250,7 @@ namespace System.Windows.Markup
                     // and for tracking the exact position of the reader in Xml.
                     if (_xmlLineInfo == null)
                     {
-                        ThrowException(SRID.ParserXmlReaderNoLineInfo,
+                        ThrowException(nameof(SR.ParserXmlReaderNoLineInfo),
                                        _xmlReader.GetType().FullName);
                     }
                 }
@@ -6033,7 +6033,7 @@ namespace System.Windows.Markup
 
                     // Example that would trip this error:
                     //  <FontFamily>Symbol<FontFamily.Baseline>12.345</FontFamily.Baseline></FontFamily>
-                    throw new InvalidOperationException(SR.Get(SRID.ParserAbandonedTypeConverterText,_typeConverterTextWrittenAndNotProcessed));
+                    throw new InvalidOperationException(SR.Format(SR.ParserAbandonedTypeConverterText,_typeConverterTextWrittenAndNotProcessed));
                 }
                 _typeConverterDecisionState = TypeConverterDecisionState.Uninitialized;
                 _typeConverterCandidateIndex = 0;
@@ -6049,7 +6049,7 @@ namespace System.Windows.Markup
                 {
                     // Example that would trip this error:
                     //  <FontFamily Baseline="12.345">Symbol</FontFamily>
-                    throw new InvalidOperationException(SR.Get(SRID.ParserTypeConverterTextUnusable,initializationText));
+                    throw new InvalidOperationException(SR.Format(SR.ParserTypeConverterTextUnusable,initializationText));
                 }
 
                 _typeConverterTextWrittenAndNotProcessed = initializationText;
@@ -6175,7 +6175,7 @@ namespace System.Windows.Markup
                     {
                         // Example that would trip this error:
                         //  <FontFamily>Symbol<Button/></FontFamily>
-                        throw new InvalidOperationException(SR.Get(SRID.ParserTypeConverterTextNeedsEndElement, _typeConverterTextWrittenAndNotProcessed));
+                        throw new InvalidOperationException(SR.Format(SR.ParserTypeConverterTextNeedsEndElement, _typeConverterTextWrittenAndNotProcessed));
                     }
 
                     // One set of XamlNodes for TypeConverter done, start watching for another.
@@ -6629,7 +6629,7 @@ namespace System.Windows.Markup
                     {
                         //only allow the 2nd (thru Nth) add if ContentPropertyInfo is a Collection (IList, etc...)
                         //Would be nicer to get real string here, but that would require more caching during the non-error cases.
-                        throw new InvalidOperationException(SR.Get(SRID.ParserCanOnlyHaveOneChild,
+                        throw new InvalidOperationException(SR.Format(SR.ParserCanOnlyHaveOneChild,
                             textContext.ContextDataType.Name /* Parent */,
                             (textFlowData.TextNode == null ? "" : textFlowData.TextNode.Text) /* Child */));
                     }

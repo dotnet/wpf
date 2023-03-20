@@ -2099,7 +2099,7 @@
       </trans-unit>
       <trans-unit id="SignatureOriginNotFound">
         <source>Relationship was found to the signature origin but the part is missing. Package signature structures are corrupted.</source>
-        <target state="translated">Se encontró una relación con el origen de la firma pero falta la parte. Las estructuras de firma del paquete están dañadas.</target>
+        <target state="translated">Se encontró una relación con el origen de la firma pero falta esa parte. La estructura de la firma del paquete está dañada.</target>
         <note />
       </trans-unit>
       <trans-unit id="SignaturePackageObjectTagMustBeUnique">

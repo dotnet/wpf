@@ -284,7 +284,7 @@
       </trans-unit>
       <trans-unit id="CannotNavigateToApplicationResourcesInWebBrowser">
         <source>Cannot navigate to application resource '{0}' by using a WebBrowser control. For URI navigation, the resource must be at the application's site of origin. Use the pack://siteoforigin:,,,/ prefix to avoid hard-coding the URI.</source>
-        <target state="translated">Zur Anwendungsressource "{0}" kann nicht mit einem WebBrowser-Steuerelement navigiert werden. Für die URI-Navigation muss sich die Ressource auf der ursprünglichen Website der Anwendung befinden. Verwenden Sie das Präfix "pack://sitepack://siteoforigin:,,,/", damit Sie den URI nicht fest programmieren müssen.</target>
+        <target state="translated">Zur Anwendungsressource "{0}" kann nicht mit einem WebBrowser-Steuerelement navigiert werden. Für die URI-Navigation muss sich die Ressource auf der ursprünglichen Website der Anwendung befinden. Verwenden Sie das Präfix "pack://siteoforigin:,,,/", damit Sie den URI nicht fest programmieren müssen.</target>
         <note />
       </trans-unit>
       <trans-unit id="CannotRetrievePartsOfWriteOnlyContainer">
@@ -1908,8 +1908,8 @@
         <note />
       </trans-unit>
       <trans-unit id="Invalid_IInputElement">
-        <source>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</source>
-        <target state="translated">"{0}" ist ein ungültiger Typ für "IInputElement". Erwartet wird "UIElement" oder "ContentElement".</target>
+        <source>'{0}' is not a valid type for IInputElement. UIElement, ContentElement or UIElement3D expected.</source>
+        <target state="translated">'{0}' ist kein gültiger Typ für IInputElement. UIElement, ContentElement oder UIElement3D erwartet.</target>
         <note />
       </trans-unit>
       <trans-unit id="Invalid_URI">

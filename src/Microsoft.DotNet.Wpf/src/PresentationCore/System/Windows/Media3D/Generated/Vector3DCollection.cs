@@ -30,7 +30,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using System.Security;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Windows.Media.Imaging;
 // These types are aliased to match the unamanaged names used in interop
 using BOOL = System.UInt32;
@@ -386,7 +385,7 @@ namespace System.Windows.Media.Media3D
 
             if (array.Rank != 1)
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                throw new ArgumentException(SR.Collection_BadRank);
             }
 
             // Elsewhere in the collection we throw an AE when the type is
@@ -401,7 +400,7 @@ namespace System.Windows.Media.Media3D
             }
             catch (InvalidCastException e)
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadDestArray, this.GetType().Name), e);
+                throw new ArgumentException(SR.Format(SR.Collection_BadDestArray, this.GetType().Name), e);
             }
         }
 
@@ -477,7 +476,7 @@ namespace System.Windows.Media.Media3D
 
             if (!(value is Vector3D))
             {
-                throw new System.ArgumentException(SR.Get(SRID.Collection_BadType, this.GetType().Name, value.GetType().Name, "Vector3D"));
+                throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, "Vector3D"));
             }
 
             return (Vector3D) value;
@@ -719,7 +718,7 @@ namespace System.Windows.Media.Media3D
 
                 if (i != _collection.Count-1)
                 {
-                    str.Append(" ");
+                    str.Append(' ');
                 }
             }
 
@@ -835,7 +834,7 @@ namespace System.Windows.Media.Media3D
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                    throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                 }
             }
 
@@ -853,7 +852,7 @@ namespace System.Windows.Media.Media3D
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                    throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                 }
             }
 
@@ -887,12 +886,12 @@ namespace System.Windows.Media.Media3D
                     }
                     else if (_index == -1)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_NotStarted));
+                        throw new InvalidOperationException(SR.Enumerator_NotStarted);
                     }
                     else
                     {
                         Debug.Assert(_index == -2, "expected -2, got " + _index + "\n");
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_ReachedEnd));
+                        throw new InvalidOperationException(SR.Enumerator_ReachedEnd);
                     }
                 }
             }

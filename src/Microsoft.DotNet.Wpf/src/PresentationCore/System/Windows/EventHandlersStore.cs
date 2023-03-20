@@ -11,7 +11,6 @@ using MS.Utility;
 using MS.Internal.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -176,7 +175,7 @@ namespace System.Windows
             }
             if (!routedEvent.IsLegalHandler(handler))
             {
-                throw new ArgumentException(SR.Get(SRID.HandlerTypeIllegal));
+                throw new ArgumentException(SR.HandlerTypeIllegal);
             }
             
             // Create a new RoutedEventHandler
@@ -216,7 +215,7 @@ namespace System.Windows
             }
             if (!routedEvent.IsLegalHandler(handler))
             {
-                throw new ArgumentException(SR.Get(SRID.HandlerTypeIllegal));
+                throw new ArgumentException(SR.HandlerTypeIllegal);
             }
             
             // Get the entry corresponding to the given RoutedEvent
@@ -264,17 +263,6 @@ namespace System.Windows
             FrugalObjectList<RoutedEventHandlerInfo> handlers = (FrugalObjectList<RoutedEventHandlerInfo>)this[routedEvent];
 
             return handlers != null && handlers.Count != 0;
-        }
-
-
-        
-        private static void OnEventHandlersIterationCallback(ArrayList list, int key, object value)
-        {
-            RoutedEvent routedEvent = GlobalEventManager.EventFromGlobalIndex(key) as RoutedEvent;
-            if (routedEvent != null && ((FrugalObjectList<RoutedEventHandlerInfo>)value).Count > 0)
-            {
-                list.Add(routedEvent);
-            }
         }
 
         /// <summary>
@@ -347,8 +335,6 @@ namespace System.Windows
 
         // Map of EventPrivateKey/RoutedEvent to Delegate/FrugalObjectList<RoutedEventHandlerInfo> (respectively)
         private FrugalMap _entries;
-
-        private static FrugalMapIterationCallback _iterationCallback = new FrugalMapIterationCallback(OnEventHandlersIterationCallback);
         
         #endregion Data
     }

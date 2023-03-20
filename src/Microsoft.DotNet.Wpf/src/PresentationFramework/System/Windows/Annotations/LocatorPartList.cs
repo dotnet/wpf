@@ -235,7 +235,7 @@ namespace System.Windows.Annotations
                 {
                     if (XmlNodeType.Element != reader.NodeType)
                     {
-                        throw new XmlException(SR.Get(SRID.InvalidXmlContent, AnnotationXmlConstants.Elements.ContentLocator));
+                        throw new XmlException(SR.Format(SR.InvalidXmlContent, AnnotationXmlConstants.Elements.ContentLocator));
                     }
 
                     ContentLocatorPart part = new ContentLocatorPart(new XmlQualifiedName(reader.LocalName, reader.NamespaceURI));
@@ -268,18 +268,18 @@ namespace System.Windows.Annotations
                                             break;
                                         default:
                                             if (!Annotation.IsNamespaceDeclaration(reader))
-                                                throw new XmlException(SR.Get(SRID.UnexpectedAttribute, reader.LocalName, AnnotationXmlConstants.Elements.Item));
+                                                throw new XmlException(SR.Format(SR.UnexpectedAttribute, reader.LocalName, AnnotationXmlConstants.Elements.Item));
                                             break;
                                     }
                                 }
 
                                 if (name == null)
                                 {
-                                    throw new XmlException(SR.Get(SRID.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.ItemName, AnnotationXmlConstants.Elements.Item));
+                                    throw new XmlException(SR.Format(SR.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.ItemName, AnnotationXmlConstants.Elements.Item));
                                 }
                                 if (value == null)
                                 {
-                                    throw new XmlException(SR.Get(SRID.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.ItemValue, AnnotationXmlConstants.Elements.Item));
+                                    throw new XmlException(SR.Format(SR.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.ItemValue, AnnotationXmlConstants.Elements.Item));
                                 }
 
                                 reader.MoveToContent();
@@ -295,7 +295,7 @@ namespace System.Windows.Annotations
                                     if (!(XmlNodeType.EndElement == reader.NodeType && AnnotationXmlConstants.Elements.Item == reader.LocalName))
                                     {
                                         // Should not contain any content, only attributes
-                                        throw new XmlException(SR.Get(SRID.InvalidXmlContent, AnnotationXmlConstants.Elements.Item));
+                                        throw new XmlException(SR.Format(SR.InvalidXmlContent, AnnotationXmlConstants.Elements.Item));
                                     }
                                     else
                                     {
@@ -306,7 +306,7 @@ namespace System.Windows.Annotations
                             else
                             {
                                 // The locator part contains data other than just "Item" tags
-                                throw new XmlException(SR.Get(SRID.InvalidXmlContent, part.PartType.Name));
+                                throw new XmlException(SR.Format(SR.InvalidXmlContent, part.PartType.Name));
                             }
                         }
                     }

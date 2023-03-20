@@ -20,7 +20,6 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Markup;
 using System.Printing;
-using System.Drawing.Printing;
 using MS.Utility;
 
 using Microsoft.Internal.AlphaFlattener;
@@ -83,7 +82,7 @@ namespace System.Windows.Xps.Serialization
 
             if(!IsSerializedObjectTypeSupported(serializedObject))
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NotSupported));
+                throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
             }
 
             if(_isBatchMode && !_isSimulating)
@@ -132,7 +131,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoSerializer));
+                throw new XpsSerializationException(SR.ReachSerialization_NoSerializer);
             }
 
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXSaveXpsEnd);

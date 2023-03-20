@@ -38,7 +38,7 @@ namespace System.Windows.Automation.Peers
         {
             string name = base.GetNameCore();
 
-            if(name == string.Empty)
+            if(name.Length == 0)
             {
                 Window window = (Window)Owner;
 
@@ -88,7 +88,19 @@ namespace System.Windows.Automation.Peers
 
             return bounds;
         }
+
+        protected override bool IsDialogCore()
+        {
+            Window window = (Window)Owner;
+            if (MS.Internal.Helper.IsDefaultValue(AutomationProperties.IsDialogProperty, window))
+            {
+                return window.IsShowingAsDialog;
+            }
+            else
+            {
+                return AutomationProperties.GetIsDialog(window);
+            }
+        }
     }
 }
-
 

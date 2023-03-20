@@ -24,7 +24,6 @@ using MS.Win32;
 using System.IO.Packaging;
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 
 namespace System.Windows.Media.Imaging
@@ -659,7 +658,7 @@ namespace System.Windows.Media.Imaging
                 throw new System.ArgumentNullException("pixels");
 
             if (pixels.Rank != 1)
-                throw new ArgumentException(SR.Get(SRID.Collection_BadRank), "pixels");
+                throw new ArgumentException(SR.Collection_BadRank, "pixels");
 
             if (offset < 0)
             {
@@ -678,7 +677,7 @@ namespace System.Windows.Media.Imaging
                 elementSize = 8;
 
             if (elementSize == -1)
-                throw new ArgumentException(SR.Get(SRID.Image_InvalidArrayForPixel));
+                throw new ArgumentException(SR.Image_InvalidArrayForPixel);
 
             int destBufferSize = checked(elementSize * (pixels.Length - offset));
 
@@ -733,7 +732,7 @@ namespace System.Windows.Media.Imaging
                 throw new ArgumentNullException("buffer");
 
             if (stride <= 0)
-                throw new ArgumentOutOfRangeException("stride", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+                throw new ArgumentOutOfRangeException("stride", SR.ParameterMustBeGreaterThanZero);
 
             if (sourceRect.Width <= 0)
                 sourceRect.Width = PixelWidth;
@@ -742,18 +741,18 @@ namespace System.Windows.Media.Imaging
                 sourceRect.Height = PixelHeight;
 
             if (sourceRect.Width > PixelWidth)
-                throw new ArgumentOutOfRangeException("sourceRect.Width", SR.Get(SRID.ParameterCannotBeGreaterThan, PixelWidth));
+                throw new ArgumentOutOfRangeException("sourceRect.Width", SR.Format(SR.ParameterCannotBeGreaterThan, PixelWidth));
 
             if (sourceRect.Height > PixelHeight)
-                throw new ArgumentOutOfRangeException("sourceRect.Height", SR.Get(SRID.ParameterCannotBeGreaterThan, PixelHeight));
+                throw new ArgumentOutOfRangeException("sourceRect.Height", SR.Format(SR.ParameterCannotBeGreaterThan, PixelHeight));
 
             int minStride = checked(((sourceRect.Width * Format.BitsPerPixel) + 7) / 8);
             if (stride < minStride)
-                throw new ArgumentOutOfRangeException("stride", SR.Get(SRID.ParameterCannotBeLessThan, minStride));
+                throw new ArgumentOutOfRangeException("stride", SR.Format(SR.ParameterCannotBeLessThan, minStride));
 
             int minRequiredDestSize = checked((stride * (sourceRect.Height - 1)) + minStride);
             if (bufferSize < minRequiredDestSize)
-                throw new ArgumentOutOfRangeException("buffer", SR.Get(SRID.ParameterCannotBeLessThan, minRequiredDestSize));
+                throw new ArgumentOutOfRangeException("buffer", SR.Format(SR.ParameterCannotBeLessThan, minRequiredDestSize));
 
             lock (_syncObject)
             {
@@ -1847,7 +1846,7 @@ namespace System.Windows.Media.Imaging
                     }
                     else
                     {
-                        rc = (Int32Rect)Marshal.PtrToStructure(prc, typeof(Int32Rect));
+                        rc = Marshal.PtrToStructure<Int32Rect>(prc);
                     }
                     
                     int rectHeight, rectWidth;

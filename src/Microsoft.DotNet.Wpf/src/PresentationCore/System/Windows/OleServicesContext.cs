@@ -18,7 +18,6 @@ using System.Windows.Threading;
 using System.Windows.Input;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace System.Windows
@@ -112,7 +111,7 @@ namespace System.Windows
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.OleServicesContext_ThreadMustBeSTA));
+                throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
             }
 
             return UnsafeNativeMethods.OleSetClipboard(dataObject);
@@ -125,7 +124,7 @@ namespace System.Windows
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.OleServicesContext_ThreadMustBeSTA));
+                throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
             }
 
             return UnsafeNativeMethods.OleGetClipboard(ref dataObject);
@@ -138,7 +137,7 @@ namespace System.Windows
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.OleServicesContext_ThreadMustBeSTA));
+                throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
             }
 
             return UnsafeNativeMethods.OleFlushClipboard();
@@ -154,7 +153,7 @@ namespace System.Windows
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.OleServicesContext_ThreadMustBeSTA));
+                throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
             }
 
             return UnsafeNativeMethods.OleIsCurrentClipboard(dataObject);
@@ -168,7 +167,7 @@ namespace System.Windows
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.OleServicesContext_ThreadMustBeSTA));
+                throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
             }
 
             InputManager inputManager = (InputManager)Dispatcher.CurrentDispatcher.InputManager;
@@ -196,7 +195,7 @@ namespace System.Windows
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.OleServicesContext_ThreadMustBeSTA));
+                throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
             }
 
             return UnsafeNativeMethods.RegisterDragDrop(windowHandle, dropTarget);
@@ -209,7 +208,7 @@ namespace System.Windows
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.OleServicesContext_ThreadMustBeSTA));
+                throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
             }
 
             return UnsafeNativeMethods.RevokeDragDrop(windowHandle);
@@ -235,7 +234,7 @@ namespace System.Windows
 
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.OleServicesContext_ThreadMustBeSTA));
+                throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
             }
 
             // Initialize Ole services.
@@ -244,7 +243,7 @@ namespace System.Windows
 
             if (!NativeMethods.Succeeded(hr))
             {
-                throw new SystemException(SR.Get(SRID.OleServicesContext_oleInitializeFailure, hr));
+                throw new SystemException(SR.Format(SR.OleServicesContext_oleInitializeFailure, hr));
             }
 
             // Add Dispatcher.Shutdown event handler. 
@@ -265,7 +264,7 @@ namespace System.Windows
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.OleServicesContext_ThreadMustBeSTA));
+                throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
             }
 
             // Uninitialize Ole services.

@@ -31,7 +31,6 @@ using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 using SafeNativeMethods=MS.Win32.PresentationCore.SafeNativeMethods;
 using HRESULT=MS.Internal.HRESULT;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using DllImport=MS.Internal.PresentationCore.DllImport;
 
 /*
@@ -245,7 +244,7 @@ namespace System.Windows.Media.Composition
                 IntPtr pChannel,
                 DUCE.ResourceHandle hResource,
                 out uint refCount
-                );                
+                );
         }
 
         /// <summary>
@@ -489,7 +488,7 @@ namespace System.Windows.Media.Composition
 
                 if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.PERF_LOW))
                 {
-                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.CreateOrAddResourceOnChannel, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.PERF_LOW, PerfService.GetPerfElementID(instance), _hChannel, (uint) handle, (uint) resourceType); 
+                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.CreateOrAddResourceOnChannel, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.PERF_LOW, PerfService.GetPerfElementID(instance), _hChannel, (uint) handle, (uint) resourceType);
                 }
 
                 return handleNeedsCreation;
@@ -553,14 +552,14 @@ namespace System.Windows.Media.Composition
 
                 if ((releasedOnChannel != 0) && EventTrace.IsEnabled(EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.PERF_LOW))
                 {
-                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.ReleaseOnChannel, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.PERF_LOW, _hChannel, (uint) handle); 
+                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.ReleaseOnChannel, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.PERF_LOW, _hChannel, (uint) handle);
                 }
 
                 return (releasedOnChannel != 0);
             }
 
             /// <summary>
-            /// Internal only: GetRefCount returns the reference count of a resource 
+            /// Internal only: GetRefCount returns the reference count of a resource
             /// corresponding to the specified handle on the channel.
             /// </summary>
             /// <return>
@@ -972,7 +971,7 @@ namespace System.Windows.Media.Composition
 
 
             /// <summary>
-            /// Returns the real UInt32 handle. 
+            /// Returns the real UInt32 handle.
             /// </summary>
             /// <remarks>
             /// Consider moving to an abstract handle type in the future.
@@ -1522,7 +1521,7 @@ namespace System.Windows.Media.Composition
                 bool inmap = _map.Get(channel, out handle);
 
                 bool created = channel.CreateOrAddRefOnChannel(instance, ref handle, type);
-                
+
                 if (!inmap)
                 {
                     _map.Set(channel, handle);
@@ -1690,7 +1689,7 @@ namespace System.Windows.Media.Composition
                 DUCE.ResourceHandle hEffect,
                 Channel channel)
             {
-                DUCE.MILCMD_VISUAL_SETEFFECT command;               
+                DUCE.MILCMD_VISUAL_SETEFFECT command;
 
                 command.Type = MILCMD.MilCmdVisualSetEffect;
                 command.Handle = hCompositionNode;
@@ -1704,14 +1703,14 @@ namespace System.Windows.Media.Composition
                         );
                 }
             }
-            
+
 
             internal static void SetCacheMode(
                 DUCE.ResourceHandle hCompositionNode,
                 DUCE.ResourceHandle hCacheMode,
                 Channel channel)
             {
-                DUCE.MILCMD_VISUAL_SETCACHEMODE command;               
+                DUCE.MILCMD_VISUAL_SETCACHEMODE command;
 
                 command.Type = MILCMD.MilCmdVisualSetCacheMode;
                 command.Handle = hCompositionNode;
@@ -1834,7 +1833,7 @@ namespace System.Windows.Media.Composition
                         sizeof(DUCE.MILCMD_VISUAL_SETSCROLLABLEAREACLIP)
                         );
                 }
-            }            
+            }
 
             internal static void SetClip(
                 DUCE.ResourceHandle hCompositionNode,
@@ -2239,7 +2238,7 @@ namespace System.Windows.Media.Composition
                     command.flags |= (UInt32)MILRTInitializationFlags.MIL_RT_SOFTWARE_ONLY;
                 }
 
-                bool? enableMultiMonitorDisplayClipping = 
+                bool? enableMultiMonitorDisplayClipping =
                     System.Windows.CoreCompatibilityPreferences.EnableMultiMonitorDisplayClipping;
 
                 if (enableMultiMonitorDisplayClipping != null)
@@ -2251,6 +2250,11 @@ namespace System.Windows.Media.Composition
                     {
                         command.flags |= (UInt32) MILRTInitializationFlags.MIL_RT_DISABLE_MULTIMON_DISPLAY_CLIPPING;
                     }
+                }
+
+                if (CoreAppContextSwitches.DisableDirtyRectangles)
+                {
+                    command.flags |= (UInt32)MILRTInitializationFlags.MIL_RT_DISABLE_DIRTY_RECTANGLES;
                 }
 
                 command.hBitmap = DUCE.ResourceHandle.Null;
@@ -2465,11 +2469,11 @@ namespace System.Windows.Media.Composition
         }
 
         /// <summary>
-        /// See <see cref="MediaContext.ShouldRenderEvenWhenNoDisplayDevicesAreAvailable"/> for 
+        /// See <see cref="MediaContext.ShouldRenderEvenWhenNoDisplayDevicesAreAvailable"/> for
         /// details.
         /// </summary>
         internal static void NotifyPolicyChangeForNonInteractiveMode(
-            bool forceRender, 
+            bool forceRender,
             Channel channel
             )
         {
@@ -2482,8 +2486,8 @@ namespace System.Windows.Media.Composition
             unsafe
             {
                 channel.SendCommand(
-                    (byte*)&command, 
-                    sizeof(DUCE.MILCMD_PARTITION_NOTIFYPOLICYCHANGEFORNONINTERACTIVEMODE), 
+                    (byte*)&command,
+                    sizeof(DUCE.MILCMD_PARTITION_NOTIFYPOLICYCHANGEFORNONINTERACTIVEMODE),
                     sendInSeparateBatch: false
                     );
             }

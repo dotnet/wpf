@@ -10,7 +10,6 @@ All rights reserved.
 namespace MS.Internal.Printing.Configuration
 {
     using System;
-    using System.Drawing.Printing;
     using System.Printing;
     using System.Runtime.ConstrainedExecution;
     using System.Runtime.InteropServices;
@@ -76,9 +75,7 @@ namespace MS.Internal.Printing.Configuration
         /// <param name="handle">device handle proxy has been bound to</param>
         /// <returns>HRESULT code</returns>
         [DllImport(DllImport.PrntvPt, EntryPoint = "PTCloseProvider", CharSet = CharSet.Unicode, ExactSpelling = true)]
-        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
-        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
+  
         public static extern uint PTCloseProviderImpl(IntPtr handle);
 
         /// <summary>

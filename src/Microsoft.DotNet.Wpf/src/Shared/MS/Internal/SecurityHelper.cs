@@ -111,7 +111,7 @@ internal static class SecurityHelper
               //
               if (targetZone < 0)
               {
-                throw new SecurityException( SR.Get(SRID.Invalid_URI) );
+                throw new SecurityException( SR.Invalid_URI );
               }
               pSec = null;
               curSecMgr = null;
@@ -228,7 +228,7 @@ internal static class SecurityHelper
 
         internal static bool AreStringTypesEqual(string m1, string m2)
         {
-            return (String.Compare(m1, m2, StringComparison.OrdinalIgnoreCase) == 0);
+            return (string.Equals(m1, m2, StringComparison.OrdinalIgnoreCase));
         }
 
 #endif //PRESENTATION_CORE || PRESENTATIONFRAMEWORK || WINDOWS_BASE

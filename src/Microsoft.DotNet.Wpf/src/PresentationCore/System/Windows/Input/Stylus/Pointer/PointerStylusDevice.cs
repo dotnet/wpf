@@ -15,7 +15,6 @@ using System.Windows.Input.StylusPlugIns;
 using System.Windows.Interop;
 using System.Windows.Media;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input.StylusPointer
 {
@@ -570,12 +569,12 @@ namespace System.Windows.Input.StylusPointer
                 element = null;
             }
 
-            // Validate that element is either a UIElement or a ContentElement
+            // Validate that element is either a UIElement, a ContentElement or a UIElement3D.
             DependencyObject doStylusCapture = element as DependencyObject;
 
             if (doStylusCapture != null && !InputElement.IsValid(element))
             {
-                throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, doStylusCapture.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, doStylusCapture.GetType()));
             }
 
             doStylusCapture?.VerifyAccess();
@@ -730,7 +729,7 @@ namespace System.Windows.Input.StylusPointer
         {
             VerifyAccess();
 
-            // Validate that relativeTo is either a UIElement or a ContentElement
+            // Validate that relativeTo is either a UIElement, a ContentElement or a UIElement3D.
             if (relativeTo != null && !InputElement.IsValid(relativeTo))
             {
                 throw new InvalidOperationException();

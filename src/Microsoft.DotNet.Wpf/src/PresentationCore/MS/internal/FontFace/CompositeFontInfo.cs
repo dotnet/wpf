@@ -20,7 +20,6 @@ using System.Windows.Markup;
 using System.Windows.Media;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.FontFace
 {
@@ -62,7 +61,7 @@ namespace MS.Internal.FontFace
                 throw new ArgumentNullException("familyMap");
 
             if (string.IsNullOrEmpty(familyMap.Target))
-                throw new ArgumentException(SR.Get(SRID.FamilyMap_TargetNotSet));
+                throw new ArgumentException(SR.FamilyMap_TargetNotSet);
 
             // If it's culture-specific make sure it's in the hash table.
             if (familyMap.Language != null)

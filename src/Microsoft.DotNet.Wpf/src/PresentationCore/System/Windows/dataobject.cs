@@ -33,7 +33,6 @@ namespace System.Windows
     using MS.Internal.PresentationCore;                        // SecurityHelper
 
     using SR=MS.Internal.PresentationCore.SR;
-    using SRID=MS.Internal.PresentationCore.SRID;
     using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 // PreSharp uses message numbers that the C# compiler doesn't know about.
@@ -108,7 +107,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             if (data == null)
@@ -151,7 +150,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             if (data == null)
@@ -213,7 +212,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             return _innerData.GetData(format, autoConvert);
@@ -232,7 +231,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             return GetData(format, true);
@@ -283,7 +282,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             dataPresent = _innerData.GetDataPresent(format, autoConvert);
@@ -304,7 +303,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             return GetDataPresent(format, true);
@@ -357,7 +356,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             if (data == null)
@@ -405,7 +404,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             _innerData.SetData(format, data, autoConvert);
@@ -560,7 +559,7 @@ namespace System.Windows
 
             if (fileDropList.Count == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_FileDropListIsEmpty, fileDropList));
+                throw new ArgumentException(SR.Format(SR.DataObject_FileDropListIsEmpty, fileDropList));
             }
 
             foreach (string fileDrop in fileDropList)
@@ -571,7 +570,7 @@ namespace System.Windows
                 }
                 catch (ArgumentException e)
                 {
-                    throw new ArgumentException(SR.Get(SRID.DataObject_FileDropListHasInvalidFileDropPath, e));
+                    throw new ArgumentException(SR.Format(SR.DataObject_FileDropListHasInvalidFileDropPath, e));
                 }
             }
 
@@ -688,7 +687,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ExternalException(SR.Get(SRID.DataObject_NotImplementedEnumFormatEtc, dwDirection), NativeMethods.E_NOTIMPL);
+                throw new ExternalException(SR.Format(SR.DataObject_NotImplementedEnumFormatEtc, dwDirection), NativeMethods.E_NOTIMPL);
             }
         }
 
@@ -910,7 +909,7 @@ namespace System.Windows
         /// <param name="handler">
         /// An event handler for a DataObject.Pasting event.
         /// It is called when ah editor already made a decision
-        /// what format (from available on the Cliipboard)
+        /// what format (from available on the Clipboard)
         /// to apply to selection. With this handler an application
         /// has a chance to inspect a content of DataObject extracted
         /// from the Clipboard and decide what format to use instead.
@@ -1939,7 +1938,10 @@ namespace System.Windows
                     currentPtr = (IntPtr)((long)currentPtr + (files[i].Length * 2));
 
                     // Terminate the each of file string.
-                    Marshal.Copy(new char[] { '\0' }, 0, currentPtr, 1);
+                    unsafe
+                    {
+                        *(char*)currentPtr = '\0';
+                    }
 
                     // Increase the current pointer by 2 since it is a unicode.
                     currentPtr = (IntPtr)((long)currentPtr + 2);
@@ -1948,7 +1950,10 @@ namespace System.Windows
 #pragma warning restore 6523
 
                 // Terminate the string and add 2bytes since it is a unicode.
-                Marshal.Copy(new char[] { '\0' }, 0, currentPtr, 1);
+                unsafe
+                {
+                    *(char*)currentPtr = '\0';
+                }
             }
             finally
             {
@@ -2000,7 +2005,10 @@ namespace System.Windows
                     // Terminate the string becasue of GlobalReAlloc GMEM_ZEROINIT will zero
                     // out only the bytes it adds to the memory object. It doesn't initialize
                     // any of the memory that existed before the call.
-                    Marshal.Copy(new char[] { '\0' }, 0, (IntPtr)((ulong)ptr + (ulong)chars.Length * 2), 1);
+                    unsafe
+                    {
+                        *(char*)(IntPtr)((ulong)ptr + (ulong)chars.Length * 2) = '\0';
+                    }
                 }
                 finally
                 {
@@ -2741,7 +2749,7 @@ namespace System.Windows
             {
                 // If we want to support setting data into an OLE data Object,
                 // the code should be here.
-                throw new InvalidOperationException(SR.Get(SRID.DataObject_CannotSetDataOnAFozenOLEDataDbject));
+                throw new InvalidOperationException(SR.DataObject_CannotSetDataOnAFozenOLEDataDbject);
             }
 
             /// <summary>

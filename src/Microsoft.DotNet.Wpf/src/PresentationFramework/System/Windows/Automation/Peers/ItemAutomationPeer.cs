@@ -136,7 +136,7 @@ namespace System.Windows.Automation.Peers
             // To avoid the situation on legacy systems which may not have new unmanaged core. this check with old unmanaged core
             // avoids throwing exception and provide older behavior returning default values for items which are virtualized rather than throwing exception.
             if (VirtualizedItemPatternIdentifiers.Pattern != null && !(this is GridViewItemAutomationPeer) && !IsItemInAutomationTree())
-                throw new ElementNotAvailableException(SR.Get(SRID.VirtualizedElement));
+                throw new ElementNotAvailableException(SR.VirtualizedElement);
         }
 
         private bool IsItemInAutomationTree()
@@ -147,6 +147,22 @@ namespace System.Windows.Automation.Peers
             else return false;
         }
 
+
+        ///
+        override internal bool IgnoreUpdatePeer()
+        {
+            // Ignore UpdatePeer if the we're no longer in the automation tree.
+            // There's no need to update such a peer, as it no longer
+            // participates in automation.  And UpdatePeer actually throws exceptions
+            // in some cases.
+
+            if (!IsItemInAutomationTree())
+            {
+                return true;
+            }
+
+            return base.IgnoreUpdatePeer();
+        }
 
         override internal bool IsDataItemAutomationPeer()
         {
@@ -230,6 +246,24 @@ namespace System.Windows.Automation.Peers
                 ThrowElementNotAvailableException();
 
             return AutomationOrientation.None;
+        }
+
+        ///
+        override protected AutomationHeadingLevel GetHeadingLevelCore()
+        {
+            AutomationPeer wrapperPeer = GetWrapperPeer();
+            AutomationHeadingLevel headingLevel = AutomationHeadingLevel.None;
+
+            if(wrapperPeer != null)
+            {
+                headingLevel = wrapperPeer.GetHeadingLevel();
+            }
+            else
+            {
+                ThrowElementNotAvailableException();
+            }
+
+            return headingLevel;
         }
 
         /// <summary>
@@ -437,6 +471,18 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
+        protected override bool IsDialogCore()
+        {
+            AutomationPeer wrapperPeer = GetWrapperPeer();
+            if (wrapperPeer != null)
+                return wrapperPeer.IsDialog();
+            else
+                ThrowElementNotAvailableException();
+
+            return false;
+        }
+
+        ///
         protected override bool IsPasswordCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
@@ -481,9 +527,10 @@ namespace System.Windows.Automation.Peers
             {
                 name = wrapperPeer.GetName();
             }
-            else if (item != null)
+            // see https://github.com/dotnet/wpf/issues/122
+            else if (item != null && ItemsControlAutomationPeer is { } itemsControlAutomationPeer)
             {
-                using (RecyclableWrapper recyclableWrapper = ItemsControlAutomationPeer.GetRecyclableWrapperPeer(item))
+                using (RecyclableWrapper recyclableWrapper = itemsControlAutomationPeer.GetRecyclableWrapperPeer(item))
                 {
                     name = recyclableWrapper.Peer.GetName();
                 }

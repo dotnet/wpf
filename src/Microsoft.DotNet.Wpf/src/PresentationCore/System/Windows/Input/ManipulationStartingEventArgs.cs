@@ -36,7 +36,7 @@ namespace System.Windows.Input
             {
                 if ((value & ~ManipulationModes.All) != 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.Manipulation_InvalidManipulationMode), "value");
+                    throw new ArgumentException(SR.Manipulation_InvalidManipulationMode, "value");
                 }
 
                 _mode = value;

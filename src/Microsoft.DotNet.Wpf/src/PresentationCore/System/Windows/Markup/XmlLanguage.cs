@@ -203,7 +203,7 @@ namespace System.Windows.Markup
                 catch (ArgumentException e)
                 {
                     _equivalentCultureFailed = true;
-                    throw new InvalidOperationException(SR.Get(SRID.XmlLangGetCultureFailure, lowerCaseTag), e);
+                    throw new InvalidOperationException(SR.Format(SR.XmlLangGetCultureFailure, lowerCaseTag), e);
                 }
             }
 
@@ -239,7 +239,7 @@ namespace System.Windows.Markup
 
                     if (culture.IetfLanguageTag.Length == 0)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.XmlLangGetSpecificCulture, _lowerCaseTag));
+                        throw new InvalidOperationException(SR.Format(SR.XmlLangGetSpecificCulture, _lowerCaseTag));
                     }
 
                     if (!culture.IsNeutralCulture)
@@ -256,7 +256,7 @@ namespace System.Windows.Markup
                         }
                         catch (ArgumentException e)
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.XmlLangGetSpecificCulture, _lowerCaseTag), e);
+                            throw new InvalidOperationException(SR.Format(SR.XmlLangGetSpecificCulture, _lowerCaseTag), e);
                         }
                     }
                 }
@@ -529,11 +529,11 @@ namespace System.Windows.Markup
                 {
                     if (_atStart)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_NotStarted));
+                        throw new InvalidOperationException(SR.Enumerator_NotStarted);
                     }
                     if (_pastEnd)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_ReachedEnd));
+                        throw new InvalidOperationException(SR.Enumerator_ReachedEnd);
                     }
  
                     return _current;
@@ -805,7 +805,7 @@ namespace System.Windows.Markup
 
         static private void ThrowParseException(string ietfLanguageTag)
         {
-             throw new ArgumentException(SR.Get(SRID.XmlLangMalformed, ietfLanguageTag), "ietfLanguageTag");
+             throw new ArgumentException(SR.Format(SR.XmlLangMalformed, ietfLanguageTag), "ietfLanguageTag");
         }
 
         // throws if there is a non-7-bit ascii character

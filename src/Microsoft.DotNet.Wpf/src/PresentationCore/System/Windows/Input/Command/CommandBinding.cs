@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Markup;
 using MS.Internal; 
@@ -60,18 +61,13 @@ namespace System.Windows.Input
         /// <param name="canExecute">Handler associated with determining if the command can execute.</param>
         public CommandBinding(ICommand command, ExecutedRoutedEventHandler executed, CanExecuteRoutedEventHandler canExecute)
         {
-            if (command == null)
-            {
-                throw new ArgumentNullException("command");
-            }
+            _command = command ?? throw new ArgumentNullException(nameof(command));
 
-            _command = command;
-
-            if (executed != null)
+            if (executed is not null)
             {
                 Executed += executed;
             }
-            if (canExecute != null)
+            if (canExecute is not null)
             {
                 CanExecute += canExecute;
             }
@@ -87,20 +83,8 @@ namespace System.Windows.Input
         [Localizability(LocalizationCategory.NeverLocalize)] // cannot be localized        
         public ICommand Command
         {
-            get     
-            { 
-                return _command;
-            }
-
-            set     
-            {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
-
-                _command = value; 
-            }
+            get => _command;
+            set => _command = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         #endregion
@@ -138,49 +122,46 @@ namespace System.Windows.Input
         /// <param name="e">Event arguments.</param>
         internal void OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            if (!e.Handled)
+            if (e.Handled) return;
+            if (e.RoutedEvent == CommandManager.CanExecuteEvent)
             {
-                if (e.RoutedEvent == CommandManager.CanExecuteEvent)
+                if (CanExecute is null)
                 {
-                    if (CanExecute != null)
+                    if (e.CanExecute) return;
+                    // If there is an Executed handler, then the command can be executed.
+                    if (Executed is null) return;
+                    e.CanExecute = true;
+                    e.Handled = true;
+                }
+                else
+                {
+                    CanExecute(sender, e);
+                    if (e.CanExecute)
                     {
-                        CanExecute(sender, e);
-                        if (e.CanExecute)
-                        {
-                            e.Handled = true;
-                        }
-                    }
-                    else if (!e.CanExecute)
-                    {
-                        // If there is an Executed handler, then the command can be executed.
-                        if (Executed != null)
-                        {
-                            e.CanExecute = true;
-                            e.Handled = true;
-                        }
+                        e.Handled = true;
                     }
                 }
-                else // e.RoutedEvent == CommandManager.PreviewCanExecuteEvent
+            }
+            else // e.RoutedEvent == CommandManager.PreviewCanExecuteEvent
+            {
+                if (PreviewCanExecute is null) return;
+                PreviewCanExecute(sender, e);
+                if (e.CanExecute)
                 {
-                    if (PreviewCanExecute != null)
-                    {
-                        PreviewCanExecute(sender, e);
-                        if (e.CanExecute)
-                        {
-                            e.Handled = true;
-                        }
-                    }
+                    e.Handled = true;
                 }
             }
         }
 
         private bool CheckCanExecute(object sender, ExecutedRoutedEventArgs e)
         {
-            CanExecuteRoutedEventArgs canExecuteArgs = new CanExecuteRoutedEventArgs(e.Command, e.Parameter);
-            canExecuteArgs.RoutedEvent = CommandManager.CanExecuteEvent;
+            CanExecuteRoutedEventArgs canExecuteArgs = new(e.Command, e.Parameter)
+            {
+                RoutedEvent = CommandManager.CanExecuteEvent,
+                // Since we don't actually raise this event, we have to explicitly set the source.
+                Source = e.OriginalSource
+            };
 
-            // Since we don't actually raise this event, we have to explicitly set the source.
-            canExecuteArgs.Source = e.OriginalSource;
             canExecuteArgs.OverrideSource(e.Source);
             
             OnCanExecute(sender, canExecuteArgs);
@@ -195,30 +176,22 @@ namespace System.Windows.Input
         /// <param name="e">Event arguments.</param>
         internal void OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            if (!e.Handled)
+            if (e.Handled) return;
+            if (e.RoutedEvent == CommandManager.ExecutedEvent)
             {
-                if (e.RoutedEvent == CommandManager.ExecutedEvent)
-                {
-                    if (Executed != null)
-                    {
-                        if (CheckCanExecute(sender, e))
-                        {
-                            Executed(sender, e);
-                            e.Handled = true;
-                        }
-                    }
-                }
-                else // e.RoutedEvent == CommandManager.PreviewExecutedEvent
-                {
-                    if (PreviewExecuted != null)
-                    {
-                        if (CheckCanExecute(sender, e))
-                        {
-                            PreviewExecuted(sender, e);
-                            e.Handled = true;
-                        }
-                    }
-                }
+                if (Executed is null) return;
+                if (!CheckCanExecute(sender, e)) return;
+                Debug.Assert(Executed != null, nameof(Executed) + " != null");
+                Executed(sender, e);
+                e.Handled = true;
+            }
+            else // e.RoutedEvent == CommandManager.PreviewExecutedEvent
+            {
+                if (PreviewExecuted is null) return;
+                if (!CheckCanExecute(sender, e)) return;
+                Debug.Assert(PreviewExecuted != null, nameof(PreviewExecuted) + " != null");
+                PreviewExecuted(sender, e);
+                e.Handled = true;
             }
         }
 

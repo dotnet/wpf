@@ -78,7 +78,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             if (MarkupFiles == null || MarkupFiles.Length == 0)
             {
-                Log.LogErrorWithCodeFromResources(SRID.SourceFileNameNeeded);
+                Log.LogErrorWithCodeFromResources(nameof(SR.SourceFileNameNeeded));
                 return false;
             }
 
@@ -88,7 +88,7 @@ namespace Microsoft.Build.Tasks.Windows
             }
             catch (ArgumentException)
             {
-                Log.LogErrorWithCodeFromResources(SRID.BadUidTask, _taskAsString);
+                Log.LogErrorWithCodeFromResources(nameof(SR.BadUidTask), _taskAsString);
                 return false;
             }
 
@@ -115,7 +115,7 @@ namespace Microsoft.Build.Tasks.Windows
                     if (String.IsNullOrEmpty(errorId))
                     {
                         errorId = UnknownErrorID;
-                        message = SR.Get(SRID.UnknownBuildError, message);
+                        message = SR.Format(SR.UnknownBuildError, message);
                     }
 
                     Log.LogError(null, errorId, null, null, 0, 0, 0, 0, message, null);
@@ -126,7 +126,7 @@ namespace Microsoft.Build.Tasks.Windows
 #pragma warning disable 6500
             catch // Non-CLS compliant errors
             {
-                Log.LogErrorWithCodeFromResources(SRID.NonClsError);
+                Log.LogErrorWithCodeFromResources(nameof(SR.NonClsError));
                 allFilesOk = false;
             }
 #pragma warning restore 6500
@@ -215,7 +215,7 @@ namespace Microsoft.Build.Tasks.Windows
             // enumerate through each file
             foreach (ITaskItem inputFile in _markupFiles)
             {
-                Log.LogMessageFromResources(SRID.CheckingUids, inputFile.ItemSpec);
+                Log.LogMessageFromResources(nameof(SR.CheckingUids), inputFile.ItemSpec);
                 switch (_task)
                 {
                     case UidTask.Check:
@@ -343,19 +343,19 @@ namespace Microsoft.Build.Tasks.Windows
             switch (_task)
             {
                 case UidTask.Remove:
-                    Log.LogMessageFromResources(SRID.FilesRemovedUid, countGoodFiles);
+                    Log.LogMessageFromResources(nameof(SR.FilesRemovedUid), countGoodFiles);
                     break;
 
                 case UidTask.Update:
-                    Log.LogMessageFromResources(SRID.FilesUpdatedUid, countGoodFiles);
+                    Log.LogMessageFromResources(nameof(SR.FilesUpdatedUid), countGoodFiles);
                     break;
 
                 case UidTask.Check:
-                    Log.LogMessageFromResources(SRID.FilesPassedUidCheck, countGoodFiles);
+                    Log.LogMessageFromResources(nameof(SR.FilesPassedUidCheck), countGoodFiles);
 
                     if (_markupFiles.Length > countGoodFiles)
                     {
-                        Log.LogErrorWithCodeFromResources(SRID.FilesFailedUidCheck, _markupFiles.Length - countGoodFiles);
+                        Log.LogErrorWithCodeFromResources(nameof(SR.FilesFailedUidCheck), _markupFiles.Length - countGoodFiles);
                     }
                     break;
             }
@@ -408,14 +408,14 @@ namespace Microsoft.Build.Tasks.Windows
                 }
                 else
                 {
-                    Log.LogErrorWithCodeFromResources(SRID.IntermediateDirectoryError, _backupPath);
+                    Log.LogErrorWithCodeFromResources(nameof(SR.IntermediateDirectoryError), _backupPath);
                     return false;
                 }
             }
 #pragma warning disable 6500
             catch   // Non-cls compliant errors
             {
-                Log.LogErrorWithCodeFromResources(SRID.IntermediateDirectoryError, _backupPath);
+                Log.LogErrorWithCodeFromResources(nameof(SR.IntermediateDirectoryError), _backupPath);
                 return false;
             }
 #pragma warning restore 6500
@@ -451,7 +451,7 @@ namespace Microsoft.Build.Tasks.Windows
                              currentUid.LineNumber,
                              currentUid.LinePosition,
                              0, 0,
-                             SRID.UidMissing, currentUid.ElementName
+                             nameof(SR.UidMissing), currentUid.ElementName
                          );
                     }
 
@@ -468,7 +468,7 @@ namespace Microsoft.Build.Tasks.Windows
                               currentUid.LineNumber,
                               currentUid.LinePosition,
                               0, 0,
-                              SRID.MultipleUidUse, currentUid.Value, currentUid.ElementName
+                              nameof(SR.MultipleUidUse), currentUid.Value, currentUid.ElementName
                          );
 
                     }

@@ -879,7 +879,7 @@ namespace System.Windows.Controls
             if (!(Document is FixedDocument) && !(Document is FixedDocumentSequence)
                 && !(Document == null))
             {
-                throw new NotSupportedException(SR.Get(SRID.DocumentViewerOnlySupportsFixedDocumentSequence));
+                throw new NotSupportedException(SR.DocumentViewerOnlySupportsFixedDocumentSequence);
             }
 
             //Call the base so that TextEditors are attached.
@@ -1488,7 +1488,7 @@ namespace System.Windows.Controls
             //
             // Command: ViewThumbnails
             //          Tells DocumentViewer to display thumbnails.
-            _viewThumbnailsCommand = new RoutedUICommand(SR.Get(SRID.DocumentViewerViewThumbnailsCommandText),
+            _viewThumbnailsCommand = new RoutedUICommand(SR.DocumentViewerViewThumbnailsCommandText,
                 "ViewThumbnailsCommand",
                 typeof(DocumentViewer),
                 null);
@@ -1503,7 +1503,7 @@ namespace System.Windows.Controls
             // Command: FitToWidth
             //          Tells DocumentViewer to zoom to the document width.
             _fitToWidthCommand = new RoutedUICommand(
-                SR.Get(SRID.DocumentViewerViewFitToWidthCommandText),
+                SR.DocumentViewerViewFitToWidthCommandText,
                 "FitToWidthCommand",
                 typeof(DocumentViewer),
                 null);
@@ -1518,7 +1518,7 @@ namespace System.Windows.Controls
             // Command: FitToHeight
             //          Tells DocumentViewer to zoom to the document height.
             _fitToHeightCommand = new RoutedUICommand(
-                SR.Get(SRID.DocumentViewerViewFitToHeightCommandText),
+                SR.DocumentViewerViewFitToHeightCommandText,
                 "FitToHeightCommand",
                 typeof(DocumentViewer),
                 null);
@@ -1533,7 +1533,7 @@ namespace System.Windows.Controls
             // Command: MaxPagesAcross
             //          Sets the MaxPagesAcross to the value provided.
             _fitToMaxPagesAcrossCommand = new RoutedUICommand(
-                SR.Get(SRID.DocumentViewerViewFitToMaxPagesAcrossCommandText),
+                SR.DocumentViewerViewFitToMaxPagesAcrossCommandText,
                 "FitToMaxPagesAcrossCommand",
                 typeof(DocumentViewer),
                 null);
@@ -1988,7 +1988,7 @@ namespace System.Windows.Controls
                 // Argument wasn't a valid int, throw an exception.
                 if (!isValidArg)
                 {
-                    throw new ArgumentException(SR.Get(SRID.DocumentViewerArgumentMustBeInteger), "data");
+                    throw new ArgumentException(SR.DocumentViewerArgumentMustBeInteger, "data");
                 }
 
                 dv.OnFitToMaxPagesAcrossCommand(columnValue);
@@ -2026,7 +2026,7 @@ namespace System.Windows.Controls
                 // Argument wasn't a valid percent, throw an exception.
                 if (zoomValue == DependencyProperty.UnsetValue)
                 {
-                    throw new ArgumentException(SR.Get(SRID.DocumentViewerArgumentMustBePercentage), "data");
+                    throw new ArgumentException(SR.DocumentViewerArgumentMustBePercentage, "data");
                 }
                 dv.Zoom = (double)zoomValue;
             }
@@ -2128,7 +2128,7 @@ namespace System.Windows.Controls
             // Throw an exception if it doesn't exist.
             if (contentHost == null)
             {
-                throw new NotSupportedException(SR.Get(SRID.DocumentViewerStyleMustIncludeContentHost));
+                throw new NotSupportedException(SR.DocumentViewerStyleMustIncludeContentHost);
             }
 
             _scrollViewer = contentHost;
@@ -2219,8 +2219,8 @@ namespace System.Windows.Controls
 
                         // build our message string.
                         string messageString = _findToolbar.SearchUp ?
-                            SR.Get(SRID.DocumentViewerSearchUpCompleteLabel) :
-                            SR.Get(SRID.DocumentViewerSearchDownCompleteLabel);
+                            SR.DocumentViewerSearchUpCompleteLabel :
+                            SR.DocumentViewerSearchDownCompleteLabel;
 
                         messageString = String.Format(
                             CultureInfo.CurrentCulture,
@@ -2236,7 +2236,7 @@ namespace System.Windows.Controls
                         MS.Internal.PresentationFramework.SecurityHelper.ShowMessageBoxHelper(
                             wnd,
                             messageString,
-                            SR.Get(SRID.DocumentViewerSearchCompleteTitle),
+                            SR.DocumentViewerSearchCompleteTitle,
                             MessageBoxButton.OK,
                             MessageBoxImage.Asterisk);
                     }

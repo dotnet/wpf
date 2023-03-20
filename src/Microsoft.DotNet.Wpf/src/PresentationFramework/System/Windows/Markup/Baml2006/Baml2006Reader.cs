@@ -2,7 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Xaml;
@@ -697,7 +698,7 @@ namespace System.Windows.Baml2006
 
                 case Baml2006RecordType.Unknown:
                 default:
-                    throw new XamlParseException(string.Format(CultureInfo.CurrentCulture, SR.Get(SRID.UnknownBamlRecord, recordType)));
+                    throw new XamlParseException(string.Format(CultureInfo.CurrentCulture, SR.Format(SR.UnknownBamlRecord, recordType)));
             }
 
             return true;
@@ -1122,13 +1123,27 @@ namespace System.Windows.Baml2006
 
         private void Process_Header()
         {
-            Int32 stringLength = _binaryReader.ReadInt32();
+            int stringLength = _binaryReader.ReadInt32();
+            int toRead = stringLength + (3 * sizeof(int)); // stringLength bytes + readerVersion, updateVersion, and writerVersion Int32s.
 
-            byte[] headerString = _binaryReader.ReadBytes(stringLength);
-
-            Int32 readerVersion = _binaryReader.ReadInt32();
-            Int32 updateVersion = _binaryReader.ReadInt32();
-            Int32 writerVersion = _binaryReader.ReadInt32();
+            // Ignore toRead bytes.
+            Stream s = _binaryReader.BaseStream;
+            if (s.CanSeek)
+            {
+                // If the stream underlying the reader is seekable, we can just skip past the bytes.
+                s.Position += toRead;
+            }
+            else
+            {
+                // In the less common case where it's not seekable, we need to actually read.
+                byte[] pooledArray = ArrayPool<byte>.Shared.Rent(toRead);
+                int totalRead = 0, bytesRead;
+                while (totalRead < toRead && (bytesRead = s.Read(pooledArray, 0, toRead - totalRead)) > 0)
+                {
+                    totalRead += bytesRead;
+                }
+                ArrayPool<byte>.Shared.Return(pooledArray);
+            }
         }
 
         private void Process_ElementStart()
@@ -1419,13 +1434,13 @@ namespace System.Windows.Baml2006
             // baml property start is only valid betweeen ElementStart and ElementEnd
             if (_context.CurrentFrame.XamlType == null)
             {
-                throw new XamlParseException(SR.Get(SRID.PropertyFoundOutsideStartElement));
+                throw new XamlParseException(SR.PropertyFoundOutsideStartElement);
             }
 
             // new start properties not appear without having ended an old property
             if (_context.CurrentFrame.Member != null)
             {
-                throw new XamlParseException(SR.Get(SRID.PropertyOutOfOrder, _context.CurrentFrame.Member));
+                throw new XamlParseException(SR.Format(SR.PropertyOutOfOrder, _context.CurrentFrame.Member));
             }
 
             // Emit NS nodes for xmlns records encountered between ElementStart and Property
@@ -1441,7 +1456,7 @@ namespace System.Windows.Baml2006
             int capacity = reader.ReadInt32();
             if (capacity < 0)
             {
-                throw new ArgumentException(SR.Get(SRID.IntegerCollectionLengthLessThanZero, new object[0]));
+                throw new ArgumentException(SR.Format(SR.IntegerCollectionLengthLessThanZero, Array.Empty<object>()));
             }
             System.Windows.Media.Int32Collection ints = new System.Windows.Media.Int32Collection(capacity);
             switch (type)
@@ -1479,7 +1494,7 @@ namespace System.Windows.Baml2006
                     }
             }
 
-            throw new InvalidOperationException(SR.Get(SRID.UnableToConvertInt32));
+            throw new InvalidOperationException(SR.UnableToConvertInt32);
         }
 
         private XamlMember GetProperty(Int16 propertyId, XamlType parentType)
@@ -2068,18 +2083,17 @@ namespace System.Windows.Baml2006
             int colonIdx = uriInput.IndexOf(':');
             if (colonIdx != -1)
             {
-                string uriTypePrefix = uriInput.Substring(0, colonIdx);
-                if (String.Equals(uriTypePrefix, "clr-namespace"))
+                ReadOnlySpan<char> uriTypePrefix = uriInput.AsSpan(0, colonIdx);
+                if (uriTypePrefix.Equals("clr-namespace", StringComparison.Ordinal))
                 {
                     //We have a clr-namespace so do special processing
-                    int clrNsStartIdx = colonIdx + 1;
                     int semicolonIdx = uriInput.IndexOf(';');
                     if (-1 == semicolonIdx)
                     {
                         // We need to append local assembly
 
                         return uriInput + ((_settings.LocalAssembly != null)
-                                                ? ";assembly=" + GetAssemblyNameForNamespace(_settings.LocalAssembly)
+                                                ? string.Concat(";assembly=", GetAssemblyNameForNamespace(_settings.LocalAssembly))
                                                 : String.Empty);
                     }
                     else
@@ -2088,17 +2102,17 @@ namespace System.Windows.Baml2006
                         int equalIdx = uriInput.IndexOf('=');
                         if (-1 == equalIdx)
                         {
-                            throw new ArgumentException(SR.Get(SRID.MissingTagInNamespace, "=", uriInput));
+                            throw new ArgumentException(SR.Format(SR.MissingTagInNamespace, "=", uriInput));
                         }
-                        string keyword = uriInput.Substring(assemblyKeywordStartIdx, equalIdx - assemblyKeywordStartIdx);
-                        if (!String.Equals(keyword, "assembly"))
+                        ReadOnlySpan<char> keyword = uriInput.AsSpan(assemblyKeywordStartIdx, equalIdx - assemblyKeywordStartIdx);
+                        if (!keyword.Equals("assembly", StringComparison.Ordinal))
                         {
-                            throw new ArgumentException(SR.Get(SRID.AssemblyTagMissing, "assembly", uriInput));
+                            throw new ArgumentException(SR.Format(SR.AssemblyTagMissing, "assembly", uriInput));
                         }
-                        string assemblyName = uriInput.Substring(equalIdx + 1);
-                        if (String.IsNullOrEmpty(assemblyName))
+                        ReadOnlySpan<char> assemblyName = uriInput.AsSpan(equalIdx + 1);
+                        if (assemblyName.TrimStart().IsEmpty)
                         {
-                            return uriInput + GetAssemblyNameForNamespace(_settings.LocalAssembly);
+                            return string.Concat(uriInput, GetAssemblyNameForNamespace(_settings.LocalAssembly));
                         }
                     }
                 }
@@ -2107,14 +2121,13 @@ namespace System.Windows.Baml2006
             return uriInput;
         }
 
-        //  Providing the assembly short name may lead to ambiguity between two versions of the same assembly, but we need to
+        // Providing the assembly short name may lead to ambiguity between two versions of the same assembly, but we need to
         // keep it this way since it is exposed publicly via the Namespace property, Baml2006ReaderInternal provides the full Assembly name.
         // We need to avoid Assembly.GetName() so we run in PartialTrust without asserting.
-        internal virtual string GetAssemblyNameForNamespace(Assembly assembly)
+        internal virtual ReadOnlySpan<char> GetAssemblyNameForNamespace(Assembly assembly)
         {
             string assemblyLongName = assembly.FullName;
-            string assemblyShortName = assemblyLongName.Substring(0, assemblyLongName.IndexOf(','));
-            return assemblyShortName;
+            return assemblyLongName.AsSpan(0, assemblyLongName.IndexOf(','));
         }
 
         // (prefix, namespaceUri)
@@ -2392,7 +2405,7 @@ namespace System.Windows.Baml2006
                         }
                         else
                         {
-                            throw new XamlParseException(SR.Get(SRID.RecordOutOfOrder, parentType.Name));
+                            throw new XamlParseException(SR.Format(SR.RecordOutOfOrder, parentType.Name));
                         }
                     }
                     _context.CurrentFrame.Flags = Baml2006ReaderFrameFlags.HasImplicitProperty;
@@ -2672,7 +2685,7 @@ namespace System.Windows.Baml2006
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.BamlBadExtensionValue));
+                    throw new InvalidOperationException(SR.BamlBadExtensionValue);
                 }
             }
             else

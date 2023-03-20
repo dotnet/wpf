@@ -107,7 +107,7 @@ MILInterlockedCompareExchange64(
 #pragma warning( pop )
 
 
-#elif defined(_IA64_) || defined(_AMD64_) || defined(_AXP64_)
+#elif defined(_IA64_) || defined(_AMD64_) || defined(_AXP64_) 
 
 //
 // 64 bit Implementation- uses InterlockedCompareExchangePointer
@@ -157,7 +157,7 @@ MILInterlockedCompareExchange64(
         ));
 }
 
-#elif defined(_ARM_)
+#elif defined(_ARM_) || defined(_ARM64_)
 
 //+----------------------------------------------------------------------------
 //

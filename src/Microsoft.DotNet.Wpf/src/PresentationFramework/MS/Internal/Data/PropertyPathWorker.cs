@@ -305,7 +305,7 @@ namespace MS.Internal.Data
                     }
                     else
                     {
-                        throw new NotSupportedException(SR.Get(SRID.IndexedPropDescNotImplemented));
+                        throw new NotSupportedException(SR.IndexedPropDescNotImplemented);
                     }
                     break;
 
@@ -392,7 +392,7 @@ namespace MS.Internal.Data
                     }
                     else
                     {
-                        throw new NotSupportedException(SR.Get(SRID.IndexedPropDescNotImplemented));
+                        throw new NotSupportedException(SR.IndexedPropDescNotImplemented);
                     }
                     break;
             }
@@ -1468,13 +1468,13 @@ namespace MS.Internal.Data
                 {
                     // We can't recognize such properties in general, but we can
                     // recognize the most common cases - properties declared by .Net
-                    // types on a whitelist.
+                    // types on an allowlist.
                     Type type = pi.DeclaringType;
                     if (type.IsGenericType)
                     {
                         type = type.GetGenericTypeDefinition();
                     }
-                    shouldWrap = IListIndexerWhitelist.Contains(type);
+                    shouldWrap = IListIndexerAllowlist.Contains(type);
                 }
 
                 if (shouldWrap)
@@ -1573,7 +1573,7 @@ namespace MS.Internal.Data
                 catch // non CLS compliant exception
                 {
                     if (_host != null)
-                        _host.ReportGetValueError(k, item, new InvalidOperationException(SR.Get(SRID.NonCLSException, "GetValue")));
+                        _host.ReportGetValueError(k, item, new InvalidOperationException(SR.Format(SR.NonCLSException, "GetValue")));
                 }
 
                 // catch the pseudo-exception as well
@@ -1629,22 +1629,22 @@ namespace MS.Internal.Data
             if (pi != null)
             {
                 if (IsPropertyReadOnly(item, pi))
-                    throw new InvalidOperationException(SR.Get(SRID.CannotWriteToReadOnly, item.GetType(), pi.Name));
+                    throw new InvalidOperationException(SR.Format(SR.CannotWriteToReadOnly, item.GetType(), pi.Name));
             }
             else if (pd != null)
             {
                 if (pd.IsReadOnly)
-                    throw new InvalidOperationException(SR.Get(SRID.CannotWriteToReadOnly, item.GetType(), pd.Name));
+                    throw new InvalidOperationException(SR.Format(SR.CannotWriteToReadOnly, item.GetType(), pd.Name));
             }
             else if (dp != null)
             {
                 if (dp.ReadOnly)
-                    throw new InvalidOperationException(SR.Get(SRID.CannotWriteToReadOnly, item.GetType(), dp.Name));
+                    throw new InvalidOperationException(SR.Format(SR.CannotWriteToReadOnly, item.GetType(), dp.Name));
             }
             else if (dpa != null)
             {
                 if (dpa.IsReadOnly)
-                    throw new InvalidOperationException(SR.Get(SRID.CannotWriteToReadOnly, item.GetType(), dpa.PropertyName));
+                    throw new InvalidOperationException(SR.Format(SR.CannotWriteToReadOnly, item.GetType(), dpa.PropertyName));
             }
         }
 
@@ -1874,7 +1874,7 @@ namespace MS.Internal.Data
         // a list of types that declare indexers known to be consistent
         // with IList.Item[int index].  It is safe to replace these indexers
         // with the IList one.
-        static readonly IList<Type> IListIndexerWhitelist = new Type[]
+        static readonly IList<Type> IListIndexerAllowlist = new Type[]
         {
             typeof(System.Collections.ArrayList),
             typeof(System.Collections.IList),

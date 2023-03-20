@@ -697,7 +697,8 @@ namespace MS.Internal.AppModel
         /// <summary>
         /// This function must be called first to validate use of other members.
         /// </summary>
-        void HrInit();
+        [PreserveSig]
+        HRESULT HrInit();
 
         /// <summary>
         /// This function adds a tab for hwnd to the taskbar.

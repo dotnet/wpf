@@ -98,13 +98,13 @@ namespace MS.Internal.IO.Packaging
                     }
                 default:
                     {
-                        throw new ArgumentOutOfRangeException("origin", SR.Get(SRID.SeekOriginInvalid));
+                        throw new ArgumentOutOfRangeException("origin", SR.SeekOriginInvalid);
                     }
             }
 
             if (temp < 0)
             {
-                throw new ArgumentException(SR.Get(SRID.SeekNegative));
+                throw new ArgumentException(SR.SeekNegative);
             }
 
             return _tempStream.Seek(offset, origin);
@@ -186,7 +186,7 @@ namespace MS.Internal.IO.Packaging
                 CheckDisposed();
 
                 if (value < 0)
-                    throw new ArgumentException(SR.Get(SRID.SeekNegative));
+                    throw new ArgumentException(SR.SeekNegative);
 
                 _tempStream.Position = value;
             }
@@ -267,10 +267,10 @@ namespace MS.Internal.IO.Packaging
 
             // seek and read required for emulation
             if (!baseStream.CanSeek)
-                throw new InvalidOperationException(SR.Get(SRID.SeekNotSupported));
+                throw new InvalidOperationException(SR.SeekNotSupported);
 
             if (!baseStream.CanRead)
-                throw new InvalidOperationException(SR.Get(SRID.ReadNotSupported));
+                throw new InvalidOperationException(SR.ReadNotSupported);
 
             if (tempStream == null)
                 throw new ArgumentNullException("tempStream");
@@ -337,7 +337,7 @@ namespace MS.Internal.IO.Packaging
         protected void CheckDisposed()
         {
             if (_disposed)
-                throw new ObjectDisposedException(null, SR.Get(SRID.StreamObjectDisposed));
+                throw new ObjectDisposedException(null, SR.StreamObjectDisposed);
         }
 
         #region Private

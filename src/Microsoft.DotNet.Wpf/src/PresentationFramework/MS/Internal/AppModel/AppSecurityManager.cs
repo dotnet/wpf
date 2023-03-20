@@ -151,7 +151,7 @@ namespace MS.Internal.AppModel
             }
             sei.lpFile = uri.ToString(); // It's safe to use Uri.ToString since there's an inheritance demand on it that prevents spoofing by subclasses.
             if (!UnsafeNativeMethods.ShellExecuteEx(sei))
-                throw new InvalidOperationException(SR.Get(SRID.FailToLaunchDefaultBrowser),
+                throw new InvalidOperationException(SR.FailToLaunchDefaultBrowser,
                     new System.ComponentModel.Win32Exception(/*uses the last Win32 error*/));
         }
 
@@ -427,7 +427,7 @@ namespace MS.Internal.AppModel
 
         // Object to be used for locking.  Using typeof(Util) causes an FxCop
         // violation DoNotLockOnObjectsWithWeakIdentity
-        private static object _lockObj = new object();
+        private static readonly object _lockObj = new object();
 
         private static UnsafeNativeMethods.IInternetSecurityManager _secMgr;
 

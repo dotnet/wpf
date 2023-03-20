@@ -20,7 +20,6 @@ using System.Security;
 using MS.Utility;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {

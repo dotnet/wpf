@@ -13,7 +13,6 @@ using System.Security;
 using System.Windows.Input.StylusWisp;
 using System.Windows.Input.Tracing;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input.StylusWisp
 {

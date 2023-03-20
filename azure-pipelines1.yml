@@ -36,14 +36,6 @@ trigger:
   batch: true 
   branches:
     include: 
-    - main
-    - release/3.*
-    - release/5.*
-    - release/6.*
-    - release/7.*
-    - internal/release/5.*
-    - internal/release/6.*
-    - experimental/*
     - ctp
     - feature/*
   paths:
@@ -54,7 +46,7 @@ pr:
   autoCancel: true
   branches:
     include:
-    - main
+    - ctp
   paths:
     exclude:
     - Documentation/*

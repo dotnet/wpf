@@ -48,6 +48,9 @@
     <Page Include="themes\Luna.NormalColor.xaml">
       <GenerateTheme>true</GenerateTheme>
     </Page>
+    <Page Include="themes\Win11.Light.xaml">
+      <GenerateTheme>true</GenerateTheme>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>

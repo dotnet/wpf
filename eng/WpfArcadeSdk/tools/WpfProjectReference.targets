@@ -47,6 +47,7 @@
     <WpfProjectPath Include="PresentationFramework.Classic" ProjectPath="$(WpfSourceDir)Themes\PresentationFramework.Classic\PresentationFramework.Classic.csproj" />
     <WpfProjectPath Include="PresentationFramework.Luna" ProjectPath="$(WpfSourceDir)Themes\PresentationFramework.Luna\PresentationFramework.Luna.csproj" />
     <WpfProjectPath Include="PresentationFramework.Royale" ProjectPath="$(WpfSourceDir)Themes\PresentationFramework.Royale\PresentationFramework.Royale.csproj" />
+    <WpfProjectPath Include="PresentationFramework.Win11" ProjectPath="$(WpfSourceDir)Themes\PresentationFramework.Win11\PresentationFramework.Win11.csproj" />
 
     <WpfProjectPath Include="UIAutomationTypes" ProjectPath="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
     <WpfProjectPath Include="UIAutomationProvider" ProjectPath="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />

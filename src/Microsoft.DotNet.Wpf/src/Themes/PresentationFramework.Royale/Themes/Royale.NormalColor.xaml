@@ -7391,6 +7391,7 @@ TODO:
         </Style.Triggers>
     </Style>
 
+
     <JournalEntryListConverter x:Key="&#200;"/>
 
     <!-- Browser Window back/fwd button Drop Down style-->

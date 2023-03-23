@@ -25,14 +25,14 @@ namespace Microsoft.Windows.Themes
             switch(name)
             {
 
-#if (THEME_AERO || THEME_AERO2)
+#if (THEME_WIN11 || THEME_AERO || THEME_AERO2)
                 case "ListBoxChrome": return Create_BamlType_ListBoxChrome();
 #endif
-#if (THEME_AERO || THEME_AERO2 || THEME_LUNA || THEME_ROYALE)
+#if (THEME_WIN11 || THEME_AERO || THEME_AERO2 || THEME_LUNA || THEME_ROYALE)
                 case "BulletChrome": return Create_BamlType_BulletChrome();
                 case "ButtonChrome": return Create_BamlType_ButtonChrome();
 #endif
-#if (THEME_AERO || THEME_AERO2 || THEME_AEROLITE || THEME_LUNA || THEME_ROYALE)
+#if (THEME_WIN11 || THEME_AERO || THEME_AERO2 || THEME_AEROLITE || THEME_LUNA || THEME_ROYALE)
                 case "ScrollChrome": return Create_BamlType_ScrollChrome();
                 case "ScrollGlyph": return Create_BamlType_ScrollGlyph();
 #endif                
@@ -92,7 +92,7 @@ namespace Microsoft.Windows.Themes
         }
 #endif
 
-#if (THEME_AERO || THEME_AERO2 || THEME_LUNA || THEME_ROYALE)
+#if (THEME_WIN11 || THEME_AERO || THEME_AERO2 || THEME_LUNA || THEME_ROYALE)
 
         private static WpfKnownType Create_BamlType_ButtonChrome()
         {
@@ -127,7 +127,7 @@ namespace Microsoft.Windows.Themes
 
 #endif
 
-#if (THEME_AERO || THEME_AERO2 || THEME_AEROLITE || THEME_LUNA || THEME_ROYALE)
+#if (THEME_WIN11 || THEME_AERO || THEME_AERO2 || THEME_AEROLITE || THEME_LUNA || THEME_ROYALE)
 
         private static WpfKnownMember Create_BamlProperty_ScrollChrome_ScrollGlyph()
         {
@@ -175,7 +175,7 @@ namespace Microsoft.Windows.Themes
 
 #endif
 
-#if (THEME_AERO || THEME_AERO2)
+#if (THEME_WIN11 || THEME_AERO || THEME_AERO2)
 
         private static WpfKnownType Create_BamlType_ListBoxChrome()
         {
@@ -247,7 +247,7 @@ namespace Microsoft.Windows.Themes
                 {
                     return member;
                 }
-#if (THEME_AERO || THEME_AERO2 || THEME_AEROLITE || THEME_LUNA || THEME_ROYALE)
+#if (THEME_WIN11 || THEME_AERO || THEME_AERO2 || THEME_AEROLITE || THEME_LUNA || THEME_ROYALE)
                 if (UnderlyingType == typeof(ScrollChrome) && name == "ScrollGlyph")
                 {
                     member = Create_BamlProperty_ScrollChrome_ScrollGlyph();

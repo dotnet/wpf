@@ -6699,6 +6699,7 @@ To automatically copy the files, set the environment variable
     </Style>
 
 
+
 <!--=================================================================
         Thumb
     ==================================================================-->
@@ -7139,6 +7140,8 @@ TODO:
             </Trigger>
         </Style.Triggers>
     </Style>
+
+
 
     <JournalEntryListConverter x:Key="&#200;"/>
 

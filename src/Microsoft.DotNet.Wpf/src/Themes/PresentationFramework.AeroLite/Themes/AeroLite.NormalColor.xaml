@@ -4763,6 +4763,7 @@ To automatically copy the files, set the environment variable
 
 
 
+
     <!--=================================================================
         TreeView
     ==================================================================-->
@@ -5101,6 +5102,8 @@ To automatically copy the files, set the environment variable
             </Trigger>
         </Style.Triggers>
     </Style>
+
+
 
     <JournalEntryListConverter x:Key="&#200;"/>
 

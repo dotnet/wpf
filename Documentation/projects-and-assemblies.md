@@ -121,8 +121,6 @@ The following assemblies are being produced today:
     |   PresentationFramework.pdb
     |   PresentationFramework.Royale.dll
     |   PresentationFramework.Royale.pdb
-    |   PresentationFramework.Win11.dll
-    |   PresentationFramework.Win11.pdb
     |   PresentationUI.dll
     |   PresentationUI.pdb
     |   ReachFramework.dll
@@ -454,8 +452,6 @@ src\Themes\PresentationFramework.Luna\PresentationFramework.Luna.csproj
 src\Themes\PresentationFramework.Luna\ref\PresentationFramework.Luna-ref.csproj
 src\Themes\PresentationFramework.Royale\PresentationFramework.Royale.csproj
 src\Themes\PresentationFramework.Royale\ref\PresentationFramework.Royale-ref.csproj
-src\Themes\PresentationFramework.Win11\PresentationFramework.Win11.csproj
-src\Themes\PresentationFramework.Win11\ref\PresentationFramework.Win11-ref.csproj
 
 src\UIAutomation\UIAutomationClient\UIAutomationClient.csproj
 src\UIAutomation\UIAutomationClient\ref\UIAutomationClient-ref.csproj

@@ -36,7 +36,7 @@
     </Setter>
 </Style>
 
-<!-- [[Classic, Win11.Light]] -->
+<!-- [[Classic]] -->
 
 <Style x:Key="ButtonFocusVisual">
     <Setter Property="Control.Template">

@@ -3,7 +3,6 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props'))" />
 
   <ItemGroup>
-    <ThemeXaml Include="..\PresentationFramework.Win11\Themes\Win11.Light.xaml" />
     <ThemeXaml Include="..\PresentationFramework.Aero\Themes\Aero.NormalColor.xaml" />
     <ThemeXaml Include="..\PresentationFramework.Aero2\Themes\Aero2.NormalColor.xaml" />
     <ThemeXaml Include="..\PresentationFramework.AeroLite\Themes\AeroLite.NormalColor.xaml" />

@@ -25,7 +25,7 @@ namespace Microsoft.Windows.Themes
             switch(name)
             {
 
-#if (THEME_WIN11 || THEME_AERO || THEME_AERO2)
+#if (THEME_AERO || THEME_AERO2)
                 case "ListBoxChrome": return Create_BamlType_ListBoxChrome();
 #endif
 #if (THEME_WIN11 || THEME_AERO || THEME_AERO2 || THEME_LUNA || THEME_ROYALE)

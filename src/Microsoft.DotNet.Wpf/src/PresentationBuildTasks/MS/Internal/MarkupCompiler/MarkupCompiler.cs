@@ -631,7 +631,8 @@ namespace MS.Internal
                     CodeCompileUnit ccu = new CodeCompileUnit();
 
                     // generate pragma checksum data
-                    Guid hashGuid = ChecksumAlgorithm.Equals("SHA256", StringComparison.OrdinalIgnoreCase)
+                    
+                    Guid hashGuid = ChecksumAlgorithm != null && ChecksumAlgorithm.Equals("SHA256", StringComparison.OrdinalIgnoreCase)
                         ? s_hashSHA256Guid
                         : s_hashSHA1Guid;
 

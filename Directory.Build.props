@@ -5,6 +5,12 @@
     <TargetFramework>net8.0</TargetFramework>
     <TargetFrameworkVersion>8.0</TargetFrameworkVersion>
   </PropertyGroup>
+
+  <PropertyGroup>
+   <!-- Set OutDirName to change the BaseOutputPath and BaseIntermediateOutputPath properties to include the ref subfolder. -->
+    <_projectDirName>$([System.IO.Path]::GetFileName('$(MSBuildProjectDirectory)'))</_projectDirName>
+    <IsReferenceAssemblyProject Condition="'$(_projectDirName)' == 'ref'">true</IsReferenceAssemblyProject>
+  </PropertyGroup>
   <!-- Normalize $(TestWpfArcadeSdkPath) by appending a '\' to it if one is missing -->
   <PropertyGroup Condition="'$(TestWpfArcadeSdkPath)'!=''">
     <WpfArcadeSdkPath>$(TestWpfArcadeSdkPath)</WpfArcadeSdkPath>
@@ -28,4 +34,10 @@
   <Import Sdk="Microsoft.DotNet.Arcade.Wpf.Sdk"
           Project="Sdk.props"
           Condition="!Exists('$(WpfArcadeSdkProps)') Or !Exists('$(WpfArcadeSdkTargets)')"/>
+
+  <PropertyGroup Condition="'$(IsReferenceAssemblyProject)' == 'true'">
+    <!-- disable CS8597 because we throw null on reference assemblies. -->
+    <NoWarn>$(NoWarn);CS8597</NoWarn>
+  </PropertyGroup>
+
 </Project>

@@ -22,3 +22,4 @@ To automatically copy the files, set the environment variable
                     xmlns:ui="clr-namespace:System.Windows.Documents;assembly=PresentationUI"
                     xmlns:framework="clr-namespace:MS.Internal;assembly=PresentationFramework"
                     xmlns:base="clr-namespace:System.Windows;assembly=WindowsBase">
+</ResourceDictionary>

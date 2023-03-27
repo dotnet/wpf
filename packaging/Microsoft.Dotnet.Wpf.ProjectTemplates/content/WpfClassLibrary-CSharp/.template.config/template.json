@@ -6,8 +6,8 @@
   "generatorVersions": "[1.0.0.0-*)",
   "description": "A project for creating a class library that targets a .NET WPF Application",
   "groupIdentity": "Microsoft.Common.WPF.Library",
-  "precedence": "7000",
-  "identity": "Microsoft.Common.WPF.Library.CSharp.7.0",
+  "precedence": "8000",
+  "identity": "Microsoft.Common.WPF.Library.CSharp.8.0",
   "shortName": "wpflib",
   "tags": {
     "language": "C#",

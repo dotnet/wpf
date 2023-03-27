@@ -6,7 +6,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -76,7 +75,7 @@ namespace System.Windows.Input
             get
             {
                 if (index >= Count || index < 0)
-                    throw new ArgumentException(SR.Get(SRID.Stylus_IndexOutOfRange, index.ToString(System.Globalization.CultureInfo.InvariantCulture)), "index");
+                    throw new ArgumentException(SR.Format(SR.Stylus_IndexOutOfRange, index.ToString(System.Globalization.CultureInfo.InvariantCulture)), "index");
 
                 return TabletDevices[index];
             }

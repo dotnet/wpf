@@ -142,10 +142,8 @@ namespace MS.Internal.MilCodeGen.Generators
                 [[inline]]
                     #if PRESENTATION_CORE
                     using SR=MS.Internal.PresentationCore.SR;
-                    using SRID=MS.Internal.PresentationCore.SRID;
                     #else
                     using SR=System.Windows.SR;
-                    using SRID=System.Windows.SRID;
                     #endif
                 [[/inline]]
             ); 

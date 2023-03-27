@@ -20,7 +20,6 @@ using System.Diagnostics;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media 
 {
@@ -113,7 +112,7 @@ namespace System.Windows.Media
 
             if (!(value is PixelFormat))
             {
-                throw new ArgumentException(SR.Get(SRID.General_Expected_Type,"PixelFormat"));
+                throw new ArgumentException(SR.Format(SR.General_Expected_Type,"PixelFormat"));
             }
 
             if (destinationType == typeof(InstanceDescriptor))

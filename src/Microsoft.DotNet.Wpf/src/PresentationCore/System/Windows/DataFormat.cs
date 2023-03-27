@@ -41,7 +41,7 @@ namespace System.Windows
 
             if (name.Length == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed)); 
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed); 
             }
 
             this._name = name;

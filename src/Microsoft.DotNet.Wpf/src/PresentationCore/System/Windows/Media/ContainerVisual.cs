@@ -17,7 +17,6 @@ using MS.Internal;
 using System.Resources;
 using System.Runtime.InteropServices;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {

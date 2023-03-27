@@ -24,7 +24,6 @@ using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
 using System.Windows.Markup;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Windows.Navigation;
 using System.IO.Packaging;
 using MS.Internal.PresentationCore; 
@@ -111,7 +110,7 @@ namespace System.Windows.Media.Effects
                     if (!newUri.IsFile && 
                         !MS.Internal.IO.Packaging.PackUriHelper.IsPackUri(newUri))
                     {
-                        throw new ArgumentException(SR.Get(SRID.Effect_SourceUriMustBeFileOrPack));
+                        throw new ArgumentException(SR.Effect_SourceUriMustBeFileOrPack);
                     }
 
                     stream = WpfWebRequestHelper.CreateRequestAndGetResponseStream(newUri);
@@ -141,14 +140,14 @@ namespace System.Windows.Media.Effects
             {
                 if (!source.CanSeek)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Effect_ShaderSeekableStream));
+                    throw new InvalidOperationException(SR.Effect_ShaderSeekableStream);
                 }
 
                 int len = (int)source.Length;  // only works on seekable streams.
 
                 if (len % sizeof(int) != 0)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Effect_ShaderBytecodeSize));
+                    throw new InvalidOperationException(SR.Effect_ShaderBytecodeSize);
                 }
                 
                 BinaryReader br = new BinaryReader(source);

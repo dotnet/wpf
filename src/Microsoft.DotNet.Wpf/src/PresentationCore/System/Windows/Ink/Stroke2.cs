@@ -17,7 +17,6 @@ using MS.Internal;
 using MS.Internal.Ink;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using MS.Internal.PresentationCore;
 
 // Primary root namespace for TabletPC/Ink/Handwriting/Recognition in .NET
@@ -140,7 +139,7 @@ namespace System.Windows.Ink
 
             if (IEnumerablePointHelper.GetCount(lassoPoints) == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.EmptyArray));
+                throw new ArgumentException(SR.EmptyArray);
             }
 
             Lasso lasso = new SingleLoopLasso();
@@ -174,7 +173,7 @@ namespace System.Windows.Ink
 
             if (IEnumerablePointHelper.GetCount(lassoPoints) == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.EmptyArray));
+                throw new ArgumentException(SR.EmptyArray);
             }
 
             Lasso lasso = new SingleLoopLasso();
@@ -224,7 +223,7 @@ namespace System.Windows.Ink
         {
             if (Double.IsNaN(diameter) || diameter < DrawingAttributes.MinWidth || diameter > DrawingAttributes.MaxWidth)
             {
-                throw new ArgumentOutOfRangeException("diameter", SR.Get(SRID.InvalidDiameter));
+                throw new ArgumentOutOfRangeException("diameter", SR.InvalidDiameter);
             }
             return HitTest(new Point[]{point}, new EllipseStylusShape(diameter, diameter, TapHitRotation));
         }

@@ -22,7 +22,6 @@ using System.Windows.Media.TextFormatting;
 using MS.Internal;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.TextFormatting
 {

@@ -40,7 +40,6 @@ using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 using SafeNativeMethods=MS.Win32.PresentationCore.SafeNativeMethods;
 using HRESULT=MS.Internal.HRESULT;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using DllImport=MS.Internal.PresentationCore.DllImport;
 
 /*

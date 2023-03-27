@@ -25,7 +25,6 @@ using System.Security;
 using System.IO;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -682,7 +681,7 @@ namespace System.Windows.Interop
         {
             if (hwnd == IntPtr.Zero)
             {
-                throw new ArgumentException(SR.Get(SRID.NullHwnd));
+                throw new ArgumentException(SR.NullHwnd);
             }
             HwndSource hwndSource = null;
             foreach (PresentationSource source in PresentationSource.CriticalCurrentSources)
@@ -1935,7 +1934,7 @@ namespace System.Windows.Interop
 
             if (sink.KeyboardInputSite != null)
             {
-                throw new ArgumentException(SR.Get(SRID.KeyboardSinkAlreadyOwned));
+                throw new ArgumentException(SR.KeyboardSinkAlreadyOwned);
             }
 
             HwndSourceKeyboardInputSite site = new HwndSourceKeyboardInputSite(this, sink);
@@ -2120,7 +2119,7 @@ namespace System.Windows.Interop
                     break;
 
                 default:
-                    throw new ArgumentException(SR.Get(SRID.OnlyAcceptsKeyMessages));
+                    throw new ArgumentException(SR.OnlyAcceptsKeyMessages);
             }
 
             // We record the last message that was processed by us.
@@ -2266,7 +2265,7 @@ namespace System.Windows.Interop
             {
                 if (!_keyboardInputSinkChildren.Remove(site))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.KeyboardSinkNotAChild));
+                    throw new InvalidOperationException(SR.KeyboardSinkNotAChild);
                 }
             }
         }
@@ -2308,7 +2307,7 @@ namespace System.Windows.Interop
                     break;
 
                 default:
-                    throw new ArgumentException(SR.Get(SRID.OnlyAcceptsKeyMessages));
+                    throw new ArgumentException(SR.OnlyAcceptsKeyMessages);
             }
 
             if (_keyboard == null)
@@ -2674,7 +2673,7 @@ namespace System.Windows.Interop
 
             if(_isDisposed)
             {
-                throw new ObjectDisposedException(null, SR.Get(SRID.HwndSourceDisposed));
+                throw new ObjectDisposedException(null, SR.HwndSourceDisposed);
             }
         }
 

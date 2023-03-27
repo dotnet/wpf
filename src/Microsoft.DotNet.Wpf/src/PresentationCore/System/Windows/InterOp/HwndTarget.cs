@@ -29,7 +29,6 @@ using MS.Win32;
 using MS.Internal.PresentationCore;             // SecurityHelper
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using HRESULT = MS.Internal.HRESULT;
 using NativeMethodsSetLastError = MS.Internal.WindowsBase.NativeMethodsSetLastError;
 using PROCESS_DPI_AWARENESS = MS.Win32.NativeMethods.PROCESS_DPI_AWARENESS;
@@ -530,21 +529,21 @@ namespace System.Windows.Interop
             if (!UnsafeNativeMethods.IsWindow(new HandleRef(this, hwnd)))
             {
                 throw new ArgumentException(
-                    SR.Get(SRID.HwndTarget_InvalidWindowHandle),
+                    SR.HwndTarget_InvalidWindowHandle,
                     "hwnd"
                     );
             }
             else if (processId != SafeNativeMethods.GetCurrentProcessId())
             {
                 throw new ArgumentException(
-                    SR.Get(SRID.HwndTarget_InvalidWindowProcess),
+                    SR.HwndTarget_InvalidWindowProcess,
                     "hwnd"
                     );
             }
             else if (threadId != SafeNativeMethods.GetCurrentThreadId())
             {
                 throw new ArgumentException(
-                    SR.Get(SRID.HwndTarget_InvalidWindowThread),
+                    SR.HwndTarget_InvalidWindowThread,
                     "hwnd"
                     );
             }
@@ -556,7 +555,7 @@ namespace System.Windows.Interop
                 if (hr == unchecked((int)0x80070005)) // E_ACCESSDENIED
                 {
                     throw new InvalidOperationException(
-                        SR.Get(SRID.HwndTarget_WindowAlreadyHasContent)
+                        SR.HwndTarget_WindowAlreadyHasContent
                         );
                 }
                 else
@@ -596,7 +595,7 @@ namespace System.Windows.Interop
                 if (mode == RenderingMode.Hardware ||
                     mode == RenderingMode.HardwareReference)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.HwndTarget_HardwareNotSupportDueToProtocolMismatch));
+                    throw new InvalidOperationException(SR.HwndTarget_HardwareNotSupportDueToProtocolMismatch);
                 }
                 else
                 {

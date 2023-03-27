@@ -16,7 +16,6 @@ using System.Collections.Generic;
 using MS.Internal.FontFace;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -89,10 +88,10 @@ namespace System.Windows.Media
                 throw new ArgumentNullException("array");
 
             if (index >= array.Length)
-                throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
 
             if (_count > array.Length - index)
-                throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
 
             if (_count != 0)
                 Array.Copy(_items, 0, array, index, _count);
@@ -104,17 +103,17 @@ namespace System.Windows.Media
                 throw new ArgumentNullException("array");
 
             if (array.Rank != 1)
-                throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_ArrayCannotBeMultidimensional));
+                throw new ArgumentException(SR.Collection_CopyTo_ArrayCannotBeMultidimensional);
 
             Type elementType = array.GetType().GetElementType();
             if (!elementType.IsAssignableFrom(typeof(FamilyTypeface)))
-                throw new ArgumentException(SR.Get(SRID.CannotConvertType, typeof(FamilyTypeface), elementType));
+                throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(FamilyTypeface), elementType));
 
             if (index >= array.Length)
-                throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
 
             if (_count > array.Length - index)
-                throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
 
             if (_count != 0)
                 Array.Copy(_items, 0, array, index, _count);
@@ -269,7 +268,7 @@ namespace System.Windows.Media
             // every Unicode value, in which case (since we search sequentially) performance
             // would become a problem.
             if (_count + 1 >= ushort.MaxValue)
-                throw new InvalidOperationException(SR.Get(SRID.CompositeFont_TooManyFamilyMaps));
+                throw new InvalidOperationException(SR.CompositeFont_TooManyFamilyMaps);
 
             // Validate the index.
             if (index < 0 || index > Count)
@@ -373,7 +372,7 @@ namespace System.Windows.Media
         private void VerifyChangeable()
         {
             if (_fontInfo == null)
-                throw new NotSupportedException(SR.Get(SRID.General_ObjectIsReadOnly));
+                throw new NotSupportedException(SR.General_ObjectIsReadOnly);
         }
 
         private FontFamilyMap ConvertValue(object obj)
@@ -383,7 +382,7 @@ namespace System.Windows.Media
 
             FontFamilyMap familyMap = obj as FontFamilyMap;
             if (familyMap == null)
-                throw new ArgumentException(SR.Get(SRID.CannotConvertType, obj.GetType(), typeof(FontFamilyMap)));
+                throw new ArgumentException(SR.Format(SR.CannotConvertType, obj.GetType(), typeof(FontFamilyMap)));
 
             return familyMap;
         }
@@ -435,7 +434,7 @@ namespace System.Windows.Media
                     // If there is no current item a non-generic IEnumerator should throw an exception,
                     // but a generic IEnumerator<T> is not required to.
                     if (_current == null)
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_VerifyContext));
+                        throw new InvalidOperationException(SR.Enumerator_VerifyContext);
 
                     return _current; 
                 }

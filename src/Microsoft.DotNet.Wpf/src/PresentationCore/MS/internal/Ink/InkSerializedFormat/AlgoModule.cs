@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Ink.InkSerializedFormat
 {

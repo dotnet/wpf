@@ -24,7 +24,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Diagnostics;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Security;
 
 namespace System.Windows.Media

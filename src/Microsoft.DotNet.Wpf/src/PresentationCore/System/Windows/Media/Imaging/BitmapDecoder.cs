@@ -30,7 +30,6 @@ using System.Windows.Threading;
 using System.Windows.Media.Imaging;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Net;
 using System.Net.Cache;
 using System.Text;
@@ -115,7 +114,7 @@ namespace System.Windows.Media.Imaging
 
             if (clsId != expectedClsId)
             {
-                throw new FileFormatException(bitmapUri, SR.Get(SRID.Image_CantDealWithUri));
+                throw new FileFormatException(bitmapUri, SR.Image_CantDealWithUri);
             }
 
             _uri = bitmapUri;
@@ -162,7 +161,7 @@ namespace System.Windows.Media.Imaging
 
             if (clsId != Guid.Empty && clsId != expectedClsId)
             {
-                throw new FileFormatException(null, SR.Get(SRID.Image_CantDealWithStream));
+                throw new FileFormatException(null, SR.Image_CantDealWithStream);
             }
 
             _stream = bitmapStream;
@@ -1013,7 +1012,7 @@ namespace System.Windows.Media.Imaging
         {
             if (!_isOriginalWritable)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.Image_OriginalStreamReadOnly));
+                throw new System.InvalidOperationException(SR.Image_OriginalStreamReadOnly);
             }
         }
 
@@ -1563,7 +1562,7 @@ namespace System.Windows.Media.Imaging
                 if (comStream == IntPtr.Zero)
                 {
                     throw new System.InvalidOperationException(
-                        SR.Get(SRID.Image_CantDealWithStream));
+                        SR.Image_CantDealWithStream);
                 }
 
                 // If the stream is not seekable, we must create a
@@ -1582,7 +1581,7 @@ namespace System.Windows.Media.Imaging
                     else if (!seekable)
                     {
                         throw new System.InvalidOperationException(
-                                SR.Get(SRID.Image_CantDealWithStream));
+                                SR.Image_CantDealWithStream);
                     }
                 }
 }
@@ -1590,7 +1589,7 @@ namespace System.Windows.Media.Imaging
             if (comStream == IntPtr.Zero)
             {
                 throw new System.InvalidOperationException(
-                SR.Get(SRID.Image_CantDealWithStream));
+                SR.Image_CantDealWithStream);
             }
 
             return comStream;

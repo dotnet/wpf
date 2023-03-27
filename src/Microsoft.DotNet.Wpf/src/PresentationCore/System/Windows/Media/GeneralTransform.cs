@@ -57,7 +57,7 @@ namespace System.Windows.Media
 
             if (!TryTransform(point, out transformedPoint))
             {
-                throw new InvalidOperationException(SR.Get(SRID.GeneralTransform_TransformFailed, null));
+                throw new InvalidOperationException(SR.Format(SR.GeneralTransform_TransformFailed, null));
             }
 
             return transformedPoint;

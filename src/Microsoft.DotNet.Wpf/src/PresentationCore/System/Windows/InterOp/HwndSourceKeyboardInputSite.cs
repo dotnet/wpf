@@ -10,7 +10,6 @@ using System.Windows.Media;
 using System.Windows.Threading;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Security ; 
 using MS.Internal.PresentationCore; 
 
@@ -30,7 +29,7 @@ namespace System.Windows.Interop
             }
             if(!(sink is UIElement))
             {
-                throw new ArgumentException(SR.Get(SRID.KeyboardSinkMustBeAnElement), "sink");
+                throw new ArgumentException(SR.KeyboardSinkMustBeAnElement, "sink");
             }
             
             _source = source;

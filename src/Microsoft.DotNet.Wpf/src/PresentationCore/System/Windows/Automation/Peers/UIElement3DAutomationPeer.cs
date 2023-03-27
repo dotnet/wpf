@@ -12,7 +12,6 @@ using System.Collections.Generic;
 
 using MS.Internal;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using MS.Internal.Automation;
@@ -425,7 +424,7 @@ namespace System.Windows.Automation.Peers
         override protected void SetFocusCore() 
         { 
             if (!_owner.Focus())
-                throw new InvalidOperationException(SR.Get(SRID.SetFocusFailed));
+                throw new InvalidOperationException(SR.SetFocusFailed);
         }
 
         ///

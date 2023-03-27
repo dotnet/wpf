@@ -25,7 +25,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace System.Windows
@@ -405,7 +404,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "dragSource");
+                throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "dragSource");
             }
 
             dataObject = data as DataObject;
@@ -436,7 +435,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "dragSource");
+                throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "dragSource");
             }
 
             return ret;
@@ -721,7 +720,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "scope");
+                throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "scope");
             }
 
             // Set QueryContinueDrag(Bubble).
@@ -744,7 +743,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "scope");
+                    throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "scope");
                 }
             }
 
@@ -778,7 +777,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "scope");
+                throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "scope");
             }
 
             // Set GiveFeedback event ID(Bubble).
@@ -801,7 +800,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "scope");
+                    throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "scope");
                 }
             }
 
@@ -1180,7 +1179,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "scope");
+                throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "scope");
             }
 
             // Raise the bubble DragEvent event if the preview DragEvent isn't handled.
@@ -1204,7 +1203,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "scope");
+                    throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "scope");
                 }
             }
 

@@ -123,7 +123,7 @@ namespace System.Windows.Media
                 throw new ArgumentNullException("typefaceSource");
 
             if (!typefaceSource.IsAbsoluteUri)
-                throw new ArgumentException(SR.Get(SRID.UriNotAbsolute), "typefaceSource");
+                throw new ArgumentException(SR.UriNotAbsolute, "typefaceSource");
 
             // remember the original Uri that contains face index
             _originalUri = new SecurityCriticalDataClass<Uri>(typefaceSource);
@@ -237,10 +237,10 @@ namespace System.Windows.Media
                 throw new ArgumentNullException("glyphs");
 
             if (glyphs.Count <= 0)
-                throw new ArgumentException(SR.Get(SRID.CollectionNumberOfElementsMustBeGreaterThanZero), "glyphs");
+                throw new ArgumentException(SR.CollectionNumberOfElementsMustBeGreaterThanZero, "glyphs");
 
             if (glyphs.Count > ushort.MaxValue)
-                throw new ArgumentException(SR.Get(SRID.CollectionNumberOfElementsMustBeLessOrEqualTo, ushort.MaxValue), "glyphs");
+                throw new ArgumentException(SR.Format(SR.CollectionNumberOfElementsMustBeLessOrEqualTo, ushort.MaxValue), "glyphs");
 
             UnmanagedMemoryStream pinnedFontSource = FontSource.GetUnmanagedStream();
 
@@ -303,7 +303,7 @@ namespace System.Windows.Media
                     throw new ArgumentNullException("value");
 
                 if (!value.IsAbsoluteUri)
-                    throw new ArgumentException(SR.Get(SRID.UriNotAbsolute), "value");
+                    throw new ArgumentException(SR.UriNotAbsolute, "value");
 
                 _originalUri = new SecurityCriticalDataClass<Uri>(value);
             }
@@ -1071,7 +1071,7 @@ namespace System.Windows.Media
             try
             {
                 if (glyphIndex >= fontFaceDWrite.GlyphCount)
-                    throw new ArgumentOutOfRangeException("glyphIndex", SR.Get(SRID.GlyphIndexOutOfRange, glyphIndex));
+                    throw new ArgumentOutOfRangeException("glyphIndex", SR.Format(SR.GlyphIndexOutOfRange, glyphIndex));
 
                 glyphMetrics = new MS.Internal.Text.TextInterface.GlyphMetrics();
 
@@ -1660,13 +1660,13 @@ namespace System.Windows.Media
             if (_initializationState == InitializationState.IsInitialized)
             {
                 // Cannot initialize a GlyphRun this is completely initialized.
-                throw new InvalidOperationException(SR.Get(SRID.OnlyOneInitialization));
+                throw new InvalidOperationException(SR.OnlyOneInitialization);
             }
 
             if (_initializationState == InitializationState.IsInitializing)
             {
                 // Cannot initialize a GlyphRun this already being initialized.
-                throw new InvalidOperationException(SR.Get(SRID.InInitialization));
+                throw new InvalidOperationException(SR.InInitialization);
             }
 
             _initializationState = InitializationState.IsInitializing;
@@ -1677,7 +1677,7 @@ namespace System.Windows.Media
             if (_initializationState != InitializationState.IsInitializing)
             {
                 // Cannot EndInit a GlyphRun that is not being initialized.
-                throw new InvalidOperationException(SR.Get(SRID.NotInInitialization));
+                throw new InvalidOperationException(SR.NotInInitialization);
             }
 
             Initialize(
@@ -1690,7 +1690,7 @@ namespace System.Windows.Media
         {
             if (_initializationState != InitializationState.IsInitialized)
             {
-                throw new InvalidOperationException(SR.Get(SRID.InitializationIncomplete));
+                throw new InvalidOperationException(SR.InitializationIncomplete);
             }
         }
 
@@ -1698,7 +1698,7 @@ namespace System.Windows.Media
         {
             if (_initializationState != InitializationState.IsInitializing)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NotInInitialization));
+                throw new InvalidOperationException(SR.NotInInitialization);
             }
         }
 
@@ -1829,7 +1829,7 @@ namespace System.Windows.Media
 
                 if (array.Rank != 1)
                 {
-                    throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                    throw new ArgumentException(SR.Collection_BadRank);
                 }
 
                 // The extra "arrayIndex >= array.Length" check in because even if _collection.Count
@@ -1918,7 +1918,7 @@ namespace System.Windows.Media
 
                     if (array.Rank != 1)
                     {
-                        throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                        throw new ArgumentException(SR.Collection_BadRank);
                     }
 
                     // The extra "arrayIndex >= array.Length" check in because even if _collection.Count

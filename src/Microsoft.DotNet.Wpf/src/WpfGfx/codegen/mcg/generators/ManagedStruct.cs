@@ -732,7 +732,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                 {
                                     if (!(context.Instance is [[resource.Name]]))
                                     {
-                                        throw new ArgumentException(SR.Get(SRID.General_Expected_Type, "[[resource.Name]]"), "context");
+                                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "[[resource.Name]]"), "context");
                                     }
 
                                     [[resource.Name]] value = ([[resource.Name]])context.Instance;
@@ -754,7 +754,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                     #pragma warning suppress 6506 // instance is obviously not null
                                     if (!instance.CanSerializeToString())
                                     {
-                                        throw new NotSupportedException(SR.Get(SRID.Converter_ConvertToNotSupported));
+                                        throw new NotSupportedException(SR.Converter_ConvertToNotSupported);
                                     }
                                 }
 

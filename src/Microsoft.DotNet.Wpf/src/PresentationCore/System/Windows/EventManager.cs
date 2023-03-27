@@ -7,7 +7,6 @@ using System.Diagnostics;
 using MS.Internal.PresentationCore;
 using MS.Utility;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -84,7 +83,7 @@ namespace System.Windows
 
             if (GlobalEventManager.GetRoutedEventFromName(name, ownerType, false) != null)
             {
-                throw new ArgumentException(SR.Get(SRID.DuplicateEventName, name, ownerType)); 
+                throw new ArgumentException(SR.Format(SR.DuplicateEventName, name, ownerType)); 
             }
 
             return GlobalEventManager.RegisterRoutedEvent(name, routingStrategy, handlerType, ownerType);
@@ -182,12 +181,12 @@ namespace System.Windows
                 !typeof(ContentElement).IsAssignableFrom(classType) &&
                 !typeof(UIElement3D).IsAssignableFrom(classType))
             {
-                throw new ArgumentException(SR.Get(SRID.ClassTypeIllegal));
+                throw new ArgumentException(SR.ClassTypeIllegal);
             }
             
             if (!routedEvent.IsLegalHandler(handler))
             {
-                throw new ArgumentException(SR.Get(SRID.HandlerTypeIllegal));
+                throw new ArgumentException(SR.HandlerTypeIllegal);
             }
             
             GlobalEventManager.RegisterClassHandler(classType, routedEvent, handler, handledEventsToo);

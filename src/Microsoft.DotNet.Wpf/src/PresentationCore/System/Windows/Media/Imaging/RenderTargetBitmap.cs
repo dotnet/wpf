@@ -24,7 +24,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Imaging
 {
@@ -57,19 +56,19 @@ namespace System.Windows.Media.Imaging
             else if (pixelFormat.Format != PixelFormatEnum.Pbgra32)
             {
                 throw new System.ArgumentException(
-                        SR.Get(SRID.Effect_PixelFormat, pixelFormat),
+                        SR.Format(SR.Effect_PixelFormat, pixelFormat),
                         "pixelFormat"
                         );
             }
 
             if (pixelWidth <= 0)
             {
-                throw new ArgumentOutOfRangeException("pixelWidth", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+                throw new ArgumentOutOfRangeException("pixelWidth", SR.ParameterMustBeGreaterThanZero);
             }
 
             if (pixelHeight <= 0)
             {
-                throw new ArgumentOutOfRangeException("pixelHeight", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+                throw new ArgumentOutOfRangeException("pixelHeight", SR.ParameterMustBeGreaterThanZero);
             }
 
             if (dpiX < DoubleUtil.DBL_EPSILON)

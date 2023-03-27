@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Markup;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Animation
 {
@@ -153,7 +152,7 @@ namespace System.Windows.Media.Animation
 
             if (timelineChild == null)
             {
-                throw new ArgumentException(SR.Get(SRID.Timing_ChildMustBeTimeline), nameof(child));
+                throw new ArgumentException(SR.Timing_ChildMustBeTimeline, nameof(child));
             }
             else
             {
@@ -214,7 +213,7 @@ namespace System.Windows.Media.Animation
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void AddText(string childText)
         {
-            throw new InvalidOperationException(SR.Get(SRID.Timing_NoTextChildren));
+            throw new InvalidOperationException(SR.Timing_NoTextChildren);
         }
 
         #endregion // IAddChild interface

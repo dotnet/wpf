@@ -24,7 +24,6 @@ using MS.Internal.Shaping;
 using MS.Internal.Generic;
 using System.Security;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.TextFormatting
 {
@@ -2376,7 +2375,7 @@ namespace MS.Internal.TextFormatting
                 else if (metrics.Width > _settings.Formatter.IdealToReal((Constants.IdealInfiniteWidth - currentPosition), _settings.TextSource.PixelsPerDip))
                 {
                     // LS cannot compute value greater than its maximum computable value
-                    throw new ArgumentException(SR.Get(SRID.TextObjectMetrics_WidthOutOfRange));
+                    throw new ArgumentException(SR.TextObjectMetrics_WidthOutOfRange);
                 }
 
                 _textObjectMetricsVector.SetReference(cpFirst, textObject.Length, metrics);

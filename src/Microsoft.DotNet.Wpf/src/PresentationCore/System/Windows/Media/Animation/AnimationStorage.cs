@@ -11,7 +11,7 @@ using System.Windows.Threading;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Media3D;
 
-using MS.Internal.PresentationCore;     // SR, SRID, FriendAccessAllowed
+using MS.Internal.PresentationCore;     // SR, FriendAccessAllowed
 
 namespace System.Windows.Media.Animation
 {
@@ -344,8 +344,8 @@ namespace System.Windows.Media.Animation
                 // If the animation(s) applied to the property have calculated an
                 // invalid value for the property then raise an exception.
                 throw new InvalidOperationException(
-                    SR.Get(
-                        SRID.Animation_CalculatedValueIsInvalidForProperty,
+                    SR.Format(
+                        SR.Animation_CalculatedValueIsInvalidForProperty,
                         _dependencyProperty.Name,
                         null));
             }
@@ -494,8 +494,8 @@ namespace System.Windows.Media.Animation
                         (AnimationClock)sender,
                         _dependencyProperty,
                         (IAnimatable)target,
-                        SR.Get(
-                            SRID.Animation_Exception,
+                        SR.Format(
+                            SR.Animation_Exception,
                             _dependencyProperty.Name,
                             target.GetType().FullName,
                             ((AnimationClock)sender).Timeline.GetType().FullName),
@@ -992,8 +992,8 @@ namespace System.Windows.Media.Animation
                         // current value.
                         if (currentLayerValue == DependencyProperty.UnsetValue)
                         {
-                            throw new InvalidOperationException(SR.Get(
-                                SRID.Animation_ReturnedUnsetValueInstance,
+                            throw new InvalidOperationException(SR.Format(
+                                SR.Animation_ReturnedUnsetValueInstance,
                                 clocks[i].Timeline.GetType().FullName,
                                 dp.Name,
                                 d.GetType().FullName));
@@ -1019,8 +1019,8 @@ namespace System.Windows.Media.Animation
                 // If the animation(s) applied to the property have calculated an
                 // invalid value for the property then raise an exception.
                 throw new InvalidOperationException(
-                    SR.Get(
-                        SRID.Animation_CalculatedValueIsInvalidForProperty,
+                    SR.Format(
+                        SR.Animation_CalculatedValueIsInvalidForProperty,
                         dp.Name,
                         (currentPropertyValue == null ? "null" : currentPropertyValue.ToString())));
             }

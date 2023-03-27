@@ -72,7 +72,7 @@ namespace MS.Internal.IO.Packaging
         {
             CheckDisposed();
 
-            throw new NotSupportedException(SR.Get(SRID.WriteNotSupported));
+            throw new NotSupportedException(SR.WriteNotSupported);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace MS.Internal.IO.Packaging
         {
             CheckDisposed();
 
-            throw new NotSupportedException(SR.Get(SRID.SetLengthNotSupported));
+            throw new NotSupportedException(SR.SetLengthNotSupported);
        }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace MS.Internal.IO.Packaging
             Uri partUri = System.IO.Packaging.PackUriHelper.GetPartUri(streamUri);
             if (partUri == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.InvalidPartName));
+                throw new InvalidOperationException(SR.InvalidPartName);
             }
 
             // Normally we should use PackUriHelper.GetStringForPartUri to get the string representation of part Uri
@@ -272,7 +272,7 @@ namespace MS.Internal.IO.Packaging
         private void CheckDisposed()
         {
             if (_obfuscatedStream == null)
-                throw new ObjectDisposedException(null, SR.Get(SRID.Media_StreamClosed));
+                throw new ObjectDisposedException(null, SR.Media_StreamClosed);
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace MS.Internal.IO.Packaging
             //  while XPS spec requires dash'ed format of GUID
             if (!guidString.Contains('-'))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidPartName));
+                throw new ArgumentException(SR.InvalidPartName);
             }
             
             // Use Guid constructor to do error checking in parsing

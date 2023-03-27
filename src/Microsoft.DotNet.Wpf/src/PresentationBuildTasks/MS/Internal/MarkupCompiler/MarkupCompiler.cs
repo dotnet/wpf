@@ -136,6 +136,9 @@ namespace MS.Internal
             set { _xamlDebuggingInformation = value; }
         }
 
+        ///<summary>Gets or sets the checksum algorithm used in code-behind.</summary>
+        public string ChecksumAlgorithm { get; set; }
+
         /// <summary>
         /// Get/Sets the TaskFileService which is used for abstracting simple
         /// files services provided by CLR and the HostObject (IVsMsBuildTaskFileManager)
@@ -231,90 +234,78 @@ namespace MS.Internal
 
         private void CompileCore(CompilationUnit cu)
         {
-            try
+            AssemblyName = cu.AssemblyName;
+            InitCompilerState();
+
+            DefaultNamespace = cu.DefaultNamespace;
+            _compilationUnitSourcePath = cu.SourcePath;
+
+            if (!IsLanguageSupported(cu.Language))
             {
-                AssemblyName = cu.AssemblyName;
-                InitCompilerState();
+                OnError(new Exception(SR.Format(SR.UnknownLanguage, cu.Language)));
+                return;
+            }
 
-                DefaultNamespace = cu.DefaultNamespace;
-                _compilationUnitSourcePath = cu.SourcePath;
+            if (!cu.Pass2)
+            {
+                EnsureLanguageSourceExtension();
+            }
 
-                if (!IsLanguageSupported(cu.Language))
+            if (cu.ApplicationFile.Path != null && cu.ApplicationFile.Path.Length > 0)
+            {
+                Initialize(cu.ApplicationFile);
+                ApplicationFile = SourceFileInfo.RelativeSourceFilePath;
+
+                if (ApplicationFile.Length > 0)
                 {
-                    OnError(new Exception(SR.Format(SR.UnknownLanguage, cu.Language)));
-                    return;
-                }
+                    IsCompilingEntryPointClass = true;
+                    _Compile(cu.ApplicationFile.Path, cu.Pass2);
+                    IsCompilingEntryPointClass = false;
 
-                if (!cu.Pass2)
-                {
-                    EnsureLanguageSourceExtension();
-                }
-
-                if (cu.ApplicationFile.Path != null && cu.ApplicationFile.Path.Length > 0)
-                {
-                    Initialize(cu.ApplicationFile);
-                    ApplicationFile = SourceFileInfo.RelativeSourceFilePath;
-
-                    if (ApplicationFile.Length > 0)
-                    {
-                        IsCompilingEntryPointClass = true;
-                        _Compile(cu.ApplicationFile.Path, cu.Pass2);
-                        IsCompilingEntryPointClass = false;
-
-                        if (_pendingLocalFiles != null && _pendingLocalFiles.Count == 1)
-                        {
-                            Debug.Assert(!cu.Pass2);
-                            _localXamlApplication = (string)_pendingLocalFiles[0];
-                            _pendingLocalFiles.Clear();
-                        }
-                    }
-                }
-
-                if (cu.FileList != null)
-                {
-                    for (int i = 0; i < cu.FileList.Length; i++)
-                    {
-                        FileUnit sourceFile = cu.FileList[i];
-
-                        Initialize(sourceFile);
-                        if (SourceFileInfo.RelativeSourceFilePath.Length > 0)
-                        {
-                            _Compile(sourceFile.Path, cu.Pass2);
-                        }
-                    }
-
-                    if (_pendingLocalFiles != null && _pendingLocalFiles.Count > 0)
+                    if (_pendingLocalFiles != null && _pendingLocalFiles.Count == 1)
                     {
                         Debug.Assert(!cu.Pass2);
-                        _localXamlPages = (string[])_pendingLocalFiles.ToArray(typeof(string));
+                        _localXamlApplication = (string)_pendingLocalFiles[0];
                         _pendingLocalFiles.Clear();
                     }
                 }
+            }
 
-                if (!cu.Pass2 && ContentList != null && ContentList.Length > 0)
+            if (cu.FileList != null)
+            {
+                for (int i = 0; i < cu.FileList.Length; i++)
                 {
-                    GenerateLooseContentAttributes();
+                    FileUnit sourceFile = cu.FileList[i];
+
+                    Initialize(sourceFile);
+                    if (SourceFileInfo.RelativeSourceFilePath.Length > 0)
+                    {
+                        _Compile(sourceFile.Path, cu.Pass2);
+                    }
                 }
 
-                Debug.Assert(!cu.Pass2 || _pendingLocalFiles == null);
-                Debug.Assert(_pendingLocalFiles == null || _pendingLocalFiles.Count == 0);
-                _pendingLocalFiles = null;
-
-                if (cu.Pass2)
+                if (_pendingLocalFiles != null && _pendingLocalFiles.Count > 0)
                 {
-                    _localAssembly = null;
-                    _localXamlApplication = null;
-                    _localXamlPages = null;
+                    Debug.Assert(!cu.Pass2);
+                    _localXamlPages = (string[])_pendingLocalFiles.ToArray(typeof(string));
+                    _pendingLocalFiles.Clear();
                 }
             }
-            finally
-            {
 
-                if (s_hashAlgorithm != null)
-                {
-                    s_hashAlgorithm.Clear();
-                    s_hashAlgorithm = null;
-                }
+            if (!cu.Pass2 && ContentList != null && ContentList.Length > 0)
+            {
+                GenerateLooseContentAttributes();
+            }
+
+            Debug.Assert(!cu.Pass2 || _pendingLocalFiles == null);
+            Debug.Assert(_pendingLocalFiles == null || _pendingLocalFiles.Count == 0);
+            _pendingLocalFiles = null;
+
+            if (cu.Pass2)
+            {
+                _localAssembly = null;
+                _localXamlApplication = null;
+                _localXamlPages = null;
             }
         }
 
@@ -639,18 +630,15 @@ namespace MS.Internal
                     // } end namespace
                     CodeCompileUnit ccu = new CodeCompileUnit();
 
-                    // Use SHA1 if compat flag is set
-                    // generate pragma checksum data
-                    if (s_hashAlgorithm == null)
-                    {
-                        s_hashAlgorithm = SHA1.Create();
-                        s_hashGuid = s_hashSHA1Guid;
-                    }
+                    // generate pragma checksum data  
+                    Guid hashGuid = !string.IsNullOrEmpty(ChecksumAlgorithm) && ChecksumAlgorithm.Equals("SHA256", StringComparison.OrdinalIgnoreCase)
+                        ? s_hashSHA256Guid
+                        : s_hashSHA1Guid;
 
                     CodeChecksumPragma csPragma = new CodeChecksumPragma();
                     csPragma.FileName = ParentFolderPrefix + SourceFileInfo.RelativeSourceFilePath + XAML;
-                    csPragma.ChecksumAlgorithmId = s_hashGuid;
-                    csPragma.ChecksumData = TaskFileService.GetChecksum(SourceFileInfo.OriginalFilePath, s_hashGuid);
+                    csPragma.ChecksumAlgorithmId = hashGuid;
+                    csPragma.ChecksumData = TaskFileService.GetChecksum(SourceFileInfo.OriginalFilePath, hashGuid);
                     ccu.StartDirectives.Add(csPragma);
 
                     if (cnsImports != _ccRoot.CodeNS)
@@ -3600,9 +3588,6 @@ namespace MS.Internal
         private const string            PARENTFOLDER = @"..\";
 
         // For generating pragma checksum data
-        private static HashAlgorithm s_hashAlgorithm;
-        private static Guid s_hashGuid;
-
         private static readonly Guid s_hashSHA256Guid = new Guid(0x8829d00f, 0x11b8, 0x4213, 0x87, 0x8b, 0x77, 0x0e, 0x85, 0x97, 0xac, 0x16);
         private static readonly Guid s_hashSHA1Guid = new Guid(0xff1816ec, 0xaa5e, 0x4d10, 0x87, 0xf7, 0x6f, 0x49, 0x63, 0x83, 0x34, 0x60);
 

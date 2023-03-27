@@ -23,7 +23,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Markup;
 using System.Security;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -97,7 +96,7 @@ namespace System.Windows.Media
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.PathGeometry_InternalReadBackError));
+                throw new InvalidOperationException(SR.PathGeometry_InternalReadBackError);
             }
         }
 

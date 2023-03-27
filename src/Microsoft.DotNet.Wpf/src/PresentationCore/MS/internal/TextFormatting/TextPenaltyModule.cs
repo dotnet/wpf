@@ -21,7 +21,6 @@ using System.Runtime.InteropServices;
 using MS.Internal.PresentationCore;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 
 namespace MS.Internal.TextFormatting
@@ -48,7 +47,7 @@ namespace MS.Internal.TextFormatting
             LsErr lserr = UnsafeNativeMethods.LoAcquirePenaltyModule(ploc.Value, out ploPenaltyModule);
             if (lserr != LsErr.None)
             {
-                TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.AcquirePenaltyModuleFailure, lserr), lserr);
+                TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.AcquirePenaltyModuleFailure, lserr), lserr);
             }
 
             _ploPenaltyModule.Value = ploPenaltyModule;
@@ -95,14 +94,14 @@ namespace MS.Internal.TextFormatting
         {
             if (_isDisposed)
             {
-                throw new ObjectDisposedException(SR.Get(SRID.TextPenaltyModuleHasBeenDisposed));
+                throw new ObjectDisposedException(SR.TextPenaltyModuleHasBeenDisposed);
             }
 
             IntPtr penaltyModuleInternalHandle;
             LsErr lserr = UnsafeNativeMethods.LoGetPenaltyModuleInternalHandle(_ploPenaltyModule.Value, out penaltyModuleInternalHandle);
 
             if (lserr != LsErr.None)
-                TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.GetPenaltyModuleHandleFailure, lserr), lserr);
+                TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.GetPenaltyModuleHandleFailure, lserr), lserr);
 
             GC.KeepAlive(this);
             return penaltyModuleInternalHandle;

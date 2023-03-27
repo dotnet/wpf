@@ -102,7 +102,7 @@ namespace System.Windows.Input
 
             if(validateGesture && !IsValid(key, modifiers))
             {
-                throw new NotSupportedException(SR.Get(SRID.KeyGesture_Invalid, modifiers, key));
+                throw new NotSupportedException(SR.Format(SR.KeyGesture_Invalid, modifiers, key));
             }
 
             _modifiers = modifiers;

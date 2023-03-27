@@ -23,7 +23,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input.StylusPointer
 {
@@ -549,7 +548,7 @@ namespace System.Windows.Input.StylusPointer
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, oldCapture.GetType())); 
+                        throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, oldCapture.GetType())); 
                     }
                 }
 
@@ -575,7 +574,7 @@ namespace System.Windows.Input.StylusPointer
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, _stylusCapture.GetType())); 
+                        throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, _stylusCapture.GetType())); 
                     }
                 }
 
@@ -640,7 +639,7 @@ namespace System.Windows.Input.StylusPointer
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, oldOver.GetType())); 
+                        throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, oldOver.GetType())); 
                     }
                 }
                 if (_stylusOver != null)
@@ -669,7 +668,7 @@ namespace System.Windows.Input.StylusPointer
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, _stylusOver.GetType())); 
+                        throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, _stylusOver.GetType())); 
                     }
                 }
 
@@ -805,7 +804,7 @@ namespace System.Windows.Input.StylusPointer
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, _stylusCapture.GetType())); 
+                throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, _stylusCapture.GetType())); 
             }
 
             //

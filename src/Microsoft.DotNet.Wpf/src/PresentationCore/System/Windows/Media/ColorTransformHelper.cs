@@ -20,7 +20,6 @@ using System.Diagnostics;
 using System.Globalization;
 using Microsoft.Win32.SafeHandles;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
@@ -123,7 +122,7 @@ namespace System.Windows.Media
         {
             if (_transformHandle == null || _transformHandle.IsInvalid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_ColorTransformInvalid));
+                throw new InvalidOperationException(SR.Image_ColorTransformInvalid);
             }
 
             HRESULT.Check(UnsafeNativeMethods.Mscms.TranslateColors(

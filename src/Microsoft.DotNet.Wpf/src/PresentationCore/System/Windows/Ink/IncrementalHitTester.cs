@@ -16,7 +16,6 @@ using MS.Internal;
 using System.Diagnostics;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Ink
 {
@@ -52,12 +51,12 @@ namespace System.Windows.Ink
 
             if (IEnumerablePointHelper.GetCount(points) == 0)
             {
-                throw new System.ArgumentException(SR.Get(SRID.EmptyArrayNotAllowedAsArgument), "points");
+                throw new System.ArgumentException(SR.EmptyArrayNotAllowedAsArgument, "points");
             }
 
             if (false == _fValid)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.EndHitTestingCalled));
+                throw new System.InvalidOperationException(SR.EndHitTestingCalled);
             }
 
             System.Diagnostics.Debug.Assert(_strokes != null);
@@ -78,12 +77,12 @@ namespace System.Windows.Ink
 
             if (stylusPoints.Count == 0)
             {
-                throw new System.ArgumentException(SR.Get(SRID.EmptyArrayNotAllowedAsArgument), "stylusPoints");
+                throw new System.ArgumentException(SR.EmptyArrayNotAllowedAsArgument, "stylusPoints");
             }
 
             if (false == _fValid)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.EndHitTestingCalled));
+                throw new System.InvalidOperationException(SR.EndHitTestingCalled);
             }
 
             System.Diagnostics.Debug.Assert(_strokes != null);

@@ -23,7 +23,6 @@ using System.Windows.Documents;
 using System.Collections;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Media3D
 {
@@ -378,7 +377,7 @@ namespace System.Windows.Media.Media3D
 
             if (child._parent != null)
             {
-                throw new ArgumentException(SR.Get(SRID.Visual_HasParent));
+                throw new ArgumentException(SR.Visual_HasParent);
             }
 
             // Set the parent pointer.
@@ -409,7 +408,7 @@ namespace System.Windows.Media.Media3D
 
             if (child._parent != this)
             {
-                throw new ArgumentException(SR.Get(SRID.Visual_NotChild));
+                throw new ArgumentException(SR.Visual_NotChild);
             }
 
             // NOTE: We'll let the VisualBrush handle final cleanup from the channel
@@ -520,7 +519,7 @@ namespace System.Windows.Media.Media3D
                     // the IsVisualHostMaterialProperty should not be set on a MaterialGroup - verify that
                     if ((Boolean)matGroup.GetValue(Viewport2DVisual3D.IsVisualHostMaterialProperty))
                     {
-                        throw new ArgumentException(SR.Get(SRID.Viewport2DVisual3D_MaterialGroupIsInteractiveMaterial), "material");
+                        throw new ArgumentException(SR.Viewport2DVisual3D_MaterialGroupIsInteractiveMaterial, "material");
                     }
 
                     // iterate over the children and put them on the stack of materials to modify
@@ -544,7 +543,7 @@ namespace System.Windows.Media.Media3D
             // throw if there is more than 1 interactive material
             if (numMaterialsSwapped > 1)
             {
-                throw new ArgumentException(SR.Get(SRID.Viewport2DVisual3D_MultipleInteractiveMaterials), "material");
+                throw new ArgumentException(SR.Viewport2DVisual3D_MultipleInteractiveMaterials, "material");
             }
         }
        
@@ -845,7 +844,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override Visual3D GetVisual3DChild(int index)
         {
-           throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+           throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
         }
 
         /// <summary>
@@ -877,7 +876,7 @@ namespace System.Windows.Media.Media3D
 
             if (index != 0 || visualChild == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             
             return visualChild;

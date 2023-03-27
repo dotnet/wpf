@@ -10,7 +10,6 @@ using MS.Win32;
 using System.Windows.Threading;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -93,7 +92,7 @@ namespace System.Windows.Input
         {
             if(IsDisposed)
             {
-                throw new ObjectDisposedException(SR.Get(SRID.InputProviderSiteDisposed));
+                throw new ObjectDisposedException(SR.InputProviderSiteDisposed);
             }
 
             bool handled = false;

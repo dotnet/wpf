@@ -191,28 +191,28 @@ jobs:
       - task: PowerShell@2
         displayName: Install .NET Core
         inputs:
-          filePath: $(Build.SourcesDirectory)/eng/common/dotnet-test-install.ps1
+          filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
           arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime dotnet -Version 8.0.0-alpha.1.23080.2
           condition: eq(variables['_Platform'], 'x64')
       
       - task: PowerShell@2
         displayName: Install .NET Core(x86)
         inputs:
-          filePath: $(Build.SourcesDirectory)/eng/common/dotnet-test-install.ps1
+          filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
           arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime dotnet -Version 8.0.0-alpha.1.23080.2
         condition: eq(variables['_Platform'], 'x86')
   
       - task: PowerShell@2
         displayName: Install .NET WindowsDesktop
         inputs:
-          filePath: $(Build.SourcesDirectory)/eng/common/dotnet-test-install.ps1
+          filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
           arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime windowsdesktop -Version 8.0.0-alpha.1.23080.2
         condition: eq(variables['_Platform'], 'x64')
      
       - task: PowerShell@2
         displayName: Install .NET WindowsDesktop(x86)
         inputs:
-          filePath: $(Build.SourcesDirectory)/eng/common/dotnet-test-install.ps1
+          filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
           arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime windowsdesktop -Version 8.0.0-alpha.1.23080.2
         condition: eq(variables['_Platform'], 'x86')   
       
@@ -236,9 +236,7 @@ jobs:
           targetType: 'inline'
           script: '.\RunDrts.cmd'
           workingDirectory: '$(System.ArtifactsDirectory)\testbins'
-        condition: ne(variables['_Platform'], 'arm64')
         continueOnError: true
-
 
       - task: PowerShell@2
         displayName: Run Microsuites
@@ -246,5 +244,59 @@ jobs:
           targetType: 'inline'
           script: '.\RunTests.cmd /Keywords=Microsuite'
           workingDirectory: '$(System.ArtifactsDirectory)\testbins'
-        condition: ne(variables['_Platform'], 'arm64')
         continueOnError: true
+
+      - task: PowerShell@2
+        displayName: Run Feature Suites
+        inputs:
+          targetType: 'inline'
+          script: '.\RunTests.cmd /Area=$(areas)'
+          workingDirectory: '$(System.ArtifactsDirectory)\testbins'
+        continueOnError: true
+        condition: ne(variables['areas'], '')
+
+      - task: PowerShell@2
+        displayName: Run Full Suites
+        inputs:
+          targetType: 'inline'
+          script: '.\RunTests.cmd'
+          workingDirectory: '$(System.ArtifactsDirectory)\testbins'
+        continueOnError: true
+        condition: eq(variables['fulltest'], 'fulltest')
+
+      - task: CopyFiles@2
+        inputs:
+          SourceFolder: 'C:\Users\cloudtest\AppData\Roaming\QualityVault\Run\Report\'
+          Contents: '**'
+          TargetFolder: '$(System.DefaultWorkingDirectory)\Results\'
+          CleanTargetFolder: true
+          OverWrite: true
+        condition: eq(variables['_Platform'], 'x64')
+        
+      - task: CopyFiles@2
+        inputs:
+          SourceFolder: 'C:\Users\cloudtest\AppData\Roaming\QualityVault\Run\Report\'
+          Contents: '**'
+          TargetFolder: '$(System.DefaultWorkingDirectory)\ResultsX86\'
+          CleanTargetFolder: true
+          OverWrite: true
+        condition: eq(variables['_Platform'], 'x86')
+
+      - task: PublishPipelineArtifact@1
+        inputs:
+          artifactName: 'TestResultsX64'
+          targetPath: '$(System.DefaultWorkingDirectory)\Results\'      
+        condition: eq(variables['_Platform'], 'x64')
+
+      - task: PublishPipelineArtifact@1
+        inputs:
+          artifactName: 'TestResultsX86'
+          targetPath: '$(System.DefaultWorkingDirectory)\ResultsX86\'
+        condition: eq(variables['_Platform'], 'x86')
+          
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: 'XUnit'
+          testResultsFiles: 'testResults.xml'
+          searchFolder: '$(System.DefaultWorkingDirectory)\Results\'
+          testRunTitle: 'CTP results'

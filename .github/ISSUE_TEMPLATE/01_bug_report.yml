@@ -6,6 +6,8 @@ body:
     attributes:
       value: |
         We welcome bug reports! This template will help us gather the information we need to start the triage process.
+        Note - If the bug related specifically to tooling in Visual Studio (e.g. XAML Designer, Code editing, etc...), please file the issue via the instructions [here](https://docs.microsoft.com/visualstudio/ide/how-to-report-a-problem-with-visual-studio?view=vs-2019).
+
   - type: textarea
     id: background
     attributes:

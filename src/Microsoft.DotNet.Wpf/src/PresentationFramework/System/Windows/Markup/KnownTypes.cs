@@ -3826,15 +3826,15 @@ namespace System.Windows.Markup
             switch (id)
             {
                 case KnownElements.ColumnDefinition:
-                    if (String.CompareOrdinal(propName, "MinWidth") == 0)
+                    if (string.Equals(propName, "MinWidth", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "MaxWidth") == 0)
+                    else if (string.Equals(propName, "MaxWidth", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.RowDefinition:
-                    if (String.CompareOrdinal(propName, "MinHeight") == 0)
+                    if (string.Equals(propName, "MinHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "MaxHeight") == 0)
+                    else if (string.Equals(propName, "MaxHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.FrameworkElement:
@@ -3848,7 +3848,7 @@ namespace System.Windows.Markup
                 case KnownElements.Shape:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "StrokeThickness") == 0)
+                    else if (string.Equals(propName, "StrokeThickness", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.Panel:
@@ -3858,119 +3858,119 @@ namespace System.Windows.Markup
                 case KnownElements.Canvas:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "Left") == 0)
+                    else if (string.Equals(propName, "Left", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "Top") == 0)
+                    else if (string.Equals(propName, "Top", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "Right") == 0)
+                    else if (string.Equals(propName, "Right", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "Bottom") == 0)
+                    else if (string.Equals(propName, "Bottom", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.Control:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.ContentControl:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Window:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "Top") == 0)
+                    else if (string.Equals(propName, "Top", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "Left") == 0)
+                    else if (string.Equals(propName, "Left", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "DialogResult") == 0)
+                    else if (string.Equals(propName, "DialogResult", StringComparison.Ordinal))
                         converterId = KnownElements.DialogResultConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.NavigationWindow:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "Top") == 0)
+                    else if (string.Equals(propName, "Top", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "Left") == 0)
+                    else if (string.Equals(propName, "Left", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "DialogResult") == 0)
+                    else if (string.Equals(propName, "DialogResult", StringComparison.Ordinal))
                         converterId = KnownElements.DialogResultConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.CollectionView:
-                    if (String.CompareOrdinal(propName, "Culture") == 0)
+                    if (string.Equals(propName, "Culture", StringComparison.Ordinal))
                         converterId = KnownElements.CultureInfoIetfLanguageTagConverter;
                     break;
                 case KnownElements.StickyNoteControl:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.ItemsControl:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.MenuBase:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.ContextMenu:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "HorizontalOffset") == 0)
+                    else if (string.Equals(propName, "HorizontalOffset", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "VerticalOffset") == 0)
+                    else if (string.Equals(propName, "VerticalOffset", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.HeaderedItemsControl:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.MenuItem:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.FlowDocumentScrollViewer:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.DocumentViewerBase:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.FlowDocumentPageViewer:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.AccessText:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
-                    else if (String.CompareOrdinal(propName, "LineHeight") == 0)
+                    else if (string.Equals(propName, "LineHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.AdornedElementPlaceholder:
@@ -3988,59 +3988,59 @@ namespace System.Windows.Markup
                 case KnownElements.ButtonBase:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Button:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.ToggleButton:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "IsChecked") == 0)
+                    else if (string.Equals(propName, "IsChecked", StringComparison.Ordinal))
                         converterId = KnownElements.NullableBoolConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.CheckBox:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "IsChecked") == 0)
+                    else if (string.Equals(propName, "IsChecked", StringComparison.Ordinal))
                         converterId = KnownElements.NullableBoolConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Selector:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "IsSynchronizedWithCurrentItem") == 0)
+                    else if (string.Equals(propName, "IsSynchronizedWithCurrentItem", StringComparison.Ordinal))
                         converterId = KnownElements.NullableBoolConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.ComboBox:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "MaxDropDownHeight") == 0)
+                    else if (string.Equals(propName, "MaxDropDownHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "IsSynchronizedWithCurrentItem") == 0)
+                    else if (string.Equals(propName, "IsSynchronizedWithCurrentItem", StringComparison.Ordinal))
                         converterId = KnownElements.NullableBoolConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.ListBoxItem:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.ComboBoxItem:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.ContentPresenter:
@@ -4048,9 +4048,9 @@ namespace System.Windows.Markup
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.ContextMenuService:
-                    if (String.CompareOrdinal(propName, "HorizontalOffset") == 0)
+                    if (string.Equals(propName, "HorizontalOffset", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "VerticalOffset") == 0)
+                    else if (string.Equals(propName, "VerticalOffset", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.DockPanel:
@@ -4060,31 +4060,31 @@ namespace System.Windows.Markup
                 case KnownElements.DocumentViewer:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.HeaderedContentControl:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Expander:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.FlowDocumentReader:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Frame:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Grid:
@@ -4092,13 +4092,13 @@ namespace System.Windows.Markup
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.GridViewColumn:
-                    if (String.CompareOrdinal(propName, "Width") == 0)
+                    if (string.Equals(propName, "Width", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.GridViewColumnHeader:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.GridViewRowPresenterBase:
@@ -4116,25 +4116,25 @@ namespace System.Windows.Markup
                 case KnownElements.Thumb:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.GridSplitter:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.GroupBox:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.GroupItem:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Image:
@@ -4144,13 +4144,13 @@ namespace System.Windows.Markup
                 case KnownElements.InkCanvas:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "Top") == 0)
+                    else if (string.Equals(propName, "Top", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "Bottom") == 0)
+                    else if (string.Equals(propName, "Bottom", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "Left") == 0)
+                    else if (string.Equals(propName, "Left", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "Right") == 0)
+                    else if (string.Equals(propName, "Right", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.InkPresenter:
@@ -4158,7 +4158,7 @@ namespace System.Windows.Markup
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.ItemCollection:
-                    if (String.CompareOrdinal(propName, "Culture") == 0)
+                    if (string.Equals(propName, "Culture", StringComparison.Ordinal))
                         converterId = KnownElements.CultureInfoIetfLanguageTagConverter;
                     break;
                 case KnownElements.ItemsPresenter:
@@ -4168,29 +4168,29 @@ namespace System.Windows.Markup
                 case KnownElements.Label:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.ListBox:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "IsSynchronizedWithCurrentItem") == 0)
+                    else if (string.Equals(propName, "IsSynchronizedWithCurrentItem", StringComparison.Ordinal))
                         converterId = KnownElements.NullableBoolConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.ListView:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "IsSynchronizedWithCurrentItem") == 0)
+                    else if (string.Equals(propName, "IsSynchronizedWithCurrentItem", StringComparison.Ordinal))
                         converterId = KnownElements.NullableBoolConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.ListViewItem:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.MediaElement:
@@ -4200,19 +4200,19 @@ namespace System.Windows.Markup
                 case KnownElements.Menu:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Page:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.PasswordBox:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.BulletDecorator:
@@ -4226,33 +4226,33 @@ namespace System.Windows.Markup
                 case KnownElements.Popup:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "HorizontalOffset") == 0)
+                    else if (string.Equals(propName, "HorizontalOffset", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "VerticalOffset") == 0)
+                    else if (string.Equals(propName, "VerticalOffset", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.RangeBase:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.RepeatButton:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.ResizeGrip:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.ScrollBar:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.ScrollContentPresenter:
@@ -4262,13 +4262,13 @@ namespace System.Windows.Markup
                 case KnownElements.StatusBar:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.StatusBarItem:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.TabPanel:
@@ -4278,7 +4278,7 @@ namespace System.Windows.Markup
                 case KnownElements.TextBoxBase:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.TickBar:
@@ -4308,73 +4308,73 @@ namespace System.Windows.Markup
                 case KnownElements.ProgressBar:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.RadioButton:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "IsChecked") == 0)
+                    else if (string.Equals(propName, "IsChecked", StringComparison.Ordinal))
                         converterId = KnownElements.NullableBoolConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.RichTextBox:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.ScrollViewer:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Separator:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Slider:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.TabControl:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "IsSynchronizedWithCurrentItem") == 0)
+                    else if (string.Equals(propName, "IsSynchronizedWithCurrentItem", StringComparison.Ordinal))
                         converterId = KnownElements.NullableBoolConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.TabItem:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.TextBlock:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
-                    else if (String.CompareOrdinal(propName, "LineHeight") == 0)
+                    else if (string.Equals(propName, "LineHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.TextBox:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.ToolBar:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.ToolBarTray:
@@ -4384,35 +4384,35 @@ namespace System.Windows.Markup
                 case KnownElements.ToolTip:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "HorizontalOffset") == 0)
+                    else if (string.Equals(propName, "HorizontalOffset", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "VerticalOffset") == 0)
+                    else if (string.Equals(propName, "VerticalOffset", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.ToolTipService:
-                    if (String.CompareOrdinal(propName, "HorizontalOffset") == 0)
+                    if (string.Equals(propName, "HorizontalOffset", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "VerticalOffset") == 0)
+                    else if (string.Equals(propName, "VerticalOffset", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.TreeView:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.TreeViewItem:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.UserControl:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Viewbox:
@@ -4434,29 +4434,29 @@ namespace System.Windows.Markup
                 case KnownElements.WrapPanel:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "ItemWidth") == 0)
+                    else if (string.Equals(propName, "ItemWidth", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "ItemHeight") == 0)
+                    else if (string.Equals(propName, "ItemHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.Binding:
-                    if (String.CompareOrdinal(propName, "ConverterCulture") == 0)
+                    if (string.Equals(propName, "ConverterCulture", StringComparison.Ordinal))
                         converterId = KnownElements.CultureInfoIetfLanguageTagConverter;
                     break;
                 case KnownElements.BindingListCollectionView:
-                    if (String.CompareOrdinal(propName, "Culture") == 0)
+                    if (string.Equals(propName, "Culture", StringComparison.Ordinal))
                         converterId = KnownElements.CultureInfoIetfLanguageTagConverter;
                     break;
                 case KnownElements.CollectionViewSource:
-                    if (String.CompareOrdinal(propName, "Culture") == 0)
+                    if (string.Equals(propName, "Culture", StringComparison.Ordinal))
                         converterId = KnownElements.CultureInfoIetfLanguageTagConverter;
                     break;
                 case KnownElements.ListCollectionView:
-                    if (String.CompareOrdinal(propName, "Culture") == 0)
+                    if (string.Equals(propName, "Culture", StringComparison.Ordinal))
                         converterId = KnownElements.CultureInfoIetfLanguageTagConverter;
                     break;
                 case KnownElements.MultiBinding:
-                    if (String.CompareOrdinal(propName, "ConverterCulture") == 0)
+                    if (string.Equals(propName, "ConverterCulture", StringComparison.Ordinal))
                         converterId = KnownElements.CultureInfoIetfLanguageTagConverter;
                     break;
                 case KnownElements.AdornerDecorator:
@@ -4468,37 +4468,37 @@ namespace System.Windows.Markup
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.TextElement:
-                    if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Inline:
-                    if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.AnchoredBlock:
-                    if (String.CompareOrdinal(propName, "LineHeight") == 0)
+                    if (string.Equals(propName, "LineHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Block:
-                    if (String.CompareOrdinal(propName, "LineHeight") == 0)
+                    if (string.Equals(propName, "LineHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.BlockUIContainer:
-                    if (String.CompareOrdinal(propName, "LineHeight") == 0)
+                    if (string.Equals(propName, "LineHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Span:
-                    if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Bold:
-                    if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.DocumentReference:
@@ -4506,97 +4506,97 @@ namespace System.Windows.Markup
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.Figure:
-                    if (String.CompareOrdinal(propName, "HorizontalOffset") == 0)
+                    if (string.Equals(propName, "HorizontalOffset", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "VerticalOffset") == 0)
+                    else if (string.Equals(propName, "VerticalOffset", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "LineHeight") == 0)
+                    else if (string.Equals(propName, "LineHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.FixedPage:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "Left") == 0)
+                    else if (string.Equals(propName, "Left", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "Top") == 0)
+                    else if (string.Equals(propName, "Top", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "Right") == 0)
+                    else if (string.Equals(propName, "Right", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "Bottom") == 0)
+                    else if (string.Equals(propName, "Bottom", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.Floater:
-                    if (String.CompareOrdinal(propName, "Width") == 0)
+                    if (string.Equals(propName, "Width", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "LineHeight") == 0)
+                    else if (string.Equals(propName, "LineHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.FlowDocument:
-                    if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
-                    else if (String.CompareOrdinal(propName, "LineHeight") == 0)
+                    else if (string.Equals(propName, "LineHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "ColumnWidth") == 0)
+                    else if (string.Equals(propName, "ColumnWidth", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "ColumnGap") == 0)
+                    else if (string.Equals(propName, "ColumnGap", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "ColumnRuleWidth") == 0)
+                    else if (string.Equals(propName, "ColumnRuleWidth", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "PageWidth") == 0)
+                    else if (string.Equals(propName, "PageWidth", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "MinPageWidth") == 0)
+                    else if (string.Equals(propName, "MinPageWidth", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "MaxPageWidth") == 0)
+                    else if (string.Equals(propName, "MaxPageWidth", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "PageHeight") == 0)
+                    else if (string.Equals(propName, "PageHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "MinPageHeight") == 0)
+                    else if (string.Equals(propName, "MinPageHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "MaxPageHeight") == 0)
+                    else if (string.Equals(propName, "MaxPageHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.Glyphs:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontRenderingEmSize") == 0)
+                    else if (string.Equals(propName, "FontRenderingEmSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
-                    else if (String.CompareOrdinal(propName, "OriginX") == 0)
+                    else if (string.Equals(propName, "OriginX", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "OriginY") == 0)
+                    else if (string.Equals(propName, "OriginY", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.Hyperlink:
-                    if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.InlineUIContainer:
-                    if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Italic:
-                    if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.LineBreak:
-                    if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.List:
-                    if (String.CompareOrdinal(propName, "MarkerOffset") == 0)
+                    if (string.Equals(propName, "MarkerOffset", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "LineHeight") == 0)
+                    else if (string.Equals(propName, "LineHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.ListItem:
-                    if (String.CompareOrdinal(propName, "LineHeight") == 0)
+                    if (string.Equals(propName, "LineHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.PageContent:
@@ -4604,141 +4604,141 @@ namespace System.Windows.Markup
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.Paragraph:
-                    if (String.CompareOrdinal(propName, "TextIndent") == 0)
+                    if (string.Equals(propName, "TextIndent", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "LineHeight") == 0)
+                    else if (string.Equals(propName, "LineHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Run:
-                    if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Section:
-                    if (String.CompareOrdinal(propName, "LineHeight") == 0)
+                    if (string.Equals(propName, "LineHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Table:
-                    if (String.CompareOrdinal(propName, "CellSpacing") == 0)
+                    if (string.Equals(propName, "CellSpacing", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "LineHeight") == 0)
+                    else if (string.Equals(propName, "LineHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.TableCell:
-                    if (String.CompareOrdinal(propName, "LineHeight") == 0)
+                    if (string.Equals(propName, "LineHeight", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.TableRow:
-                    if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.TableRowGroup:
-                    if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Underline:
-                    if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.PageFunctionBase:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "FontSize") == 0)
+                    else if (string.Equals(propName, "FontSize", StringComparison.Ordinal))
                         converterId = KnownElements.FontSizeConverter;
                     break;
                 case KnownElements.Ellipse:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "StrokeThickness") == 0)
+                    else if (string.Equals(propName, "StrokeThickness", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.Line:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "X1") == 0)
+                    else if (string.Equals(propName, "X1", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "Y1") == 0)
+                    else if (string.Equals(propName, "Y1", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "X2") == 0)
+                    else if (string.Equals(propName, "X2", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "Y2") == 0)
+                    else if (string.Equals(propName, "Y2", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "StrokeThickness") == 0)
+                    else if (string.Equals(propName, "StrokeThickness", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.Path:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "StrokeThickness") == 0)
+                    else if (string.Equals(propName, "StrokeThickness", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.Polygon:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "StrokeThickness") == 0)
+                    else if (string.Equals(propName, "StrokeThickness", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.Polyline:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "StrokeThickness") == 0)
+                    else if (string.Equals(propName, "StrokeThickness", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.Rectangle:
                     if (IsStandardLengthProp(propName))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "RadiusX") == 0)
+                    else if (string.Equals(propName, "RadiusX", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "RadiusY") == 0)
+                    else if (string.Equals(propName, "RadiusY", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
-                    else if (String.CompareOrdinal(propName, "StrokeThickness") == 0)
+                    else if (string.Equals(propName, "StrokeThickness", StringComparison.Ordinal))
                         converterId = KnownElements.LengthConverter;
                     break;
                 case KnownElements.InputBinding:
-                    if (String.CompareOrdinal(propName, "Command") == 0)
+                    if (string.Equals(propName, "Command", StringComparison.Ordinal))
                         converterId = KnownElements.CommandConverter;
                     break;
                 case KnownElements.KeyBinding:
-                    if (String.CompareOrdinal(propName, "Gesture") == 0)
+                    if (string.Equals(propName, "Gesture", StringComparison.Ordinal))
                         converterId = KnownElements.KeyGestureConverter;
-                    else if (String.CompareOrdinal(propName, "Command") == 0)
+                    else if (string.Equals(propName, "Command", StringComparison.Ordinal))
                         converterId = KnownElements.CommandConverter;
                     break;
                 case KnownElements.MouseBinding:
-                    if (String.CompareOrdinal(propName, "Gesture") == 0)
+                    if (string.Equals(propName, "Gesture", StringComparison.Ordinal))
                         converterId = KnownElements.MouseGestureConverter;
-                    else if (String.CompareOrdinal(propName, "Command") == 0)
+                    else if (string.Equals(propName, "Command", StringComparison.Ordinal))
                         converterId = KnownElements.CommandConverter;
                     break;
                 case KnownElements.InputLanguageManager:
-                    if (String.CompareOrdinal(propName, "CurrentInputLanguage") == 0)
+                    if (string.Equals(propName, "CurrentInputLanguage", StringComparison.Ordinal))
                         converterId = KnownElements.CultureInfoIetfLanguageTagConverter;
-                    else if (String.CompareOrdinal(propName, "InputLanguage") == 0)
+                    else if (string.Equals(propName, "InputLanguage", StringComparison.Ordinal))
                         converterId = KnownElements.CultureInfoIetfLanguageTagConverter;
                     break;
                 case KnownElements.GlyphRun:
-                    if (String.CompareOrdinal(propName, "CaretStops") == 0)
+                    if (string.Equals(propName, "CaretStops", StringComparison.Ordinal))
                         converterId = KnownElements.BoolIListConverter;
-                    else if (String.CompareOrdinal(propName, "ClusterMap") == 0)
+                    else if (string.Equals(propName, "ClusterMap", StringComparison.Ordinal))
                         converterId = KnownElements.UShortIListConverter;
-                    else if (String.CompareOrdinal(propName, "Characters") == 0)
+                    else if (string.Equals(propName, "Characters", StringComparison.Ordinal))
                         converterId = KnownElements.CharIListConverter;
-                    else if (String.CompareOrdinal(propName, "GlyphIndices") == 0)
+                    else if (string.Equals(propName, "GlyphIndices", StringComparison.Ordinal))
                         converterId = KnownElements.UShortIListConverter;
-                    else if (String.CompareOrdinal(propName, "AdvanceWidths") == 0)
+                    else if (string.Equals(propName, "AdvanceWidths", StringComparison.Ordinal))
                         converterId = KnownElements.DoubleIListConverter;
-                    else if (String.CompareOrdinal(propName, "GlyphOffsets") == 0)
+                    else if (string.Equals(propName, "GlyphOffsets", StringComparison.Ordinal))
                         converterId = KnownElements.PointIListConverter;
                     break;
                 case KnownElements.NumberSubstitution:
-                    if (String.CompareOrdinal(propName, "CultureOverride") == 0)
+                    if (string.Equals(propName, "CultureOverride", StringComparison.Ordinal))
                         converterId = KnownElements.CultureInfoIetfLanguageTagConverter;
                     break;
             }

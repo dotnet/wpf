@@ -10,37 +10,14 @@
     -->
     <GenerateResxSource>true</GenerateResxSource>
 
-    <_GenerateResourcesCodeAsConstants>true</_GenerateResourcesCodeAsConstants>
-
-    <!-- 
-         Projects that compile XAML must also check for AssemblyName because XAML compilation generates a temporary project with a different project name.
-         We use AssemblyName because AssemblyName is copied from the main project to the generated project.
-    -->
-
-    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='PresentationBuildTasks'">false</_GenerateResourcesCodeAsConstants>
-    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='PresentationCore'">false</_GenerateResourcesCodeAsConstants>
-    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='PresentationFramework'">false</_GenerateResourcesCodeAsConstants>
-    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='PresentationUI' or '$(AssemblyName)'=='PresentationUI'">false</_GenerateResourcesCodeAsConstants>
-    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='ReachFramework'">false</_GenerateResourcesCodeAsConstants>
-    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='UIAutomationClient'">false</_GenerateResourcesCodeAsConstants>
-    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='UIAutomationClientSideProviders'">false</_GenerateResourcesCodeAsConstants>
-    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='UIAutomationProvider'">false</_GenerateResourcesCodeAsConstants>
-    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='System.Windows.Controls.Ribbon' or '$(AssemblyName)'=='System.Windows.Controls.Ribbon'">false</_GenerateResourcesCodeAsConstants>
-    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='System.Xaml'">false</_GenerateResourcesCodeAsConstants>
-    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='WindowsBase'">false</_GenerateResourcesCodeAsConstants>
-    <_GenerateResourcesCodeAsConstants Condition="'$(MSBuildProjectName)'=='WindowsFormsIntegration'">false</_GenerateResourcesCodeAsConstants>
-
-    <DefineConstants Condition="'$(_GenerateResourcesCodeAsConstants)'=='true'">$(DefineConstants);GENERATE_RESOURCES_CODE_AS_CONSTANTS</DefineConstants>
-
     <!-- We define our own implementation of GetResourceString -->
-    <GenerateResxSourceOmitGetResourceString Condition="'$(_GenerateResourcesCodeAsConstants)'!='true'">true</GenerateResxSourceOmitGetResourceString>
+    <GenerateResxSourceOmitGetResourceString>true</GenerateResxSourceOmitGetResourceString>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
     <EmbeddedResource>
       <GenerateSource>true</GenerateSource>
       <ManifestResourceName>FxResources.$(AssemblyName).SR</ManifestResourceName>
-      <GenerateResourcesCodeAsConstants>$(_GenerateResourcesCodeAsConstants)</GenerateResourcesCodeAsConstants>
 
       <ClassName Condition="'$(AssemblyName)'=='PresentationBuildTasks'">MS.Utility.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='UIAutomationClient'">System.SR</ClassName>
@@ -56,7 +33,7 @@
       <ClassName Condition="'$(AssemblyName)'=='WindowsFormsIntegration'">System.Windows.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='PresentationCore'">MS.Internal.PresentationCore.SR</ClassName>
       <ClassName Condition="'$(AssemblyName)'=='System.Xaml'">System.SR</ClassName>
-      <Classname Condition="'%(ClassName)'==''">System.SRID</Classname>
+      <Classname Condition="'%(ClassName)'==''">System.SR</Classname>
     </EmbeddedResource>
   </ItemDefinitionGroup>
 </Project>

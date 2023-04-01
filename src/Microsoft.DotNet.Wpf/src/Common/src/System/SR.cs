@@ -30,10 +30,6 @@ namespace System
 {
     internal partial class SR
     {
-#if GENERATE_RESOURCES_CODE_AS_CONSTANTS
-        private static ResourceManager ResourceManager => SRID.ResourceManager;
-#endif
-
         // This method is used to decide if we need to append the exception message parameters to the message when calling SR.Format.
         // by default it returns false.
         [MethodImpl(MethodImplOptions.NoInlining)]

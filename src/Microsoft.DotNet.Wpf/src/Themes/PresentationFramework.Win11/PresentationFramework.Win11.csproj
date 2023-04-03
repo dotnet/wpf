@@ -30,6 +30,7 @@
     <Compile Include="$(WpfSourceDir)\Themes\Shared\Microsoft\Windows\Themes\PlatformCulture.cs" />
     <Compile Include="$(WpfSourceDir)\Themes\Shared\Microsoft\Windows\Themes\SystemDropShadowChrome.cs" />
     <Compile Include="$(WpfSourceDir)\Themes\Shared\Microsoft\Windows\Themes\KnownTypeHelper.cs" />
+    <Compile Include="Microsoft\Windows\Themes\DataGridHeaderBorder.cs" />
   </ItemGroup>
 
   <!-- Project References -->

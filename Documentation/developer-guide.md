@@ -221,6 +221,26 @@ Your final csproj file should look like as below:
     <Import Project="$(WpfRepoRoot)\eng\wpf-debug.targets" />
 ```
 
+## Debugging Presentation Build Task
+Debugging Presentation Build Task(hereafter called PBT)  can be required for various reasons. One of them can be if there is something you wanted to know about markup compilation. In this section you will learn how to debug PBT.
+
+For the sake of explaining the debugging steps, we will try to stop the debugger at execute (public function) of markupCompilatonPass2.
+
+Follow the following steps sequentially.
+1.  Replace the`PresentationBuildTasks.dll` located at `C:\Program Files\dotnet\sdk\<your sdk version>\Sdks\Microsoft.NET.Sdk.WindowsDesktop\tools\net472` with your binaries (`<wpf clone directory>\artifacts\packaging\Debug\Microsoft.NET.Sdk.WindowsDesktop.Debug\tools\net472`).
+2. Launch Visual Studio and open the `Msbuild.exe` (generally located at `C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Current\Bin\MSBuild.exe`)
+3. Go to Debug->Options->Symbols
+4. Check option - `Load only specified modules` and click on `Specify included modules`
+5. Symbols to Load automatically dialog box will pop up
+6. Click on `+` button on top right and add `PresentationBuildTasks.dll`.
+7. Click OK.
+8. Right click on `MsBuild.exe` in solution explorer and select Properties.
+9. In the Parameters textbox enter the fullpath to a solution file (.sln ||.csproj) of a test repo.
+10. Click Save.
+11. Open "`<wpf clone directory>\src\Microsoft.DotNet.Wpf\src\PresentationBuildTasks\Microsoft\Build\Tasks\Windows\MarkupCompilePass2.cs`" (File -> Open -> File) in editor
+12. Insert a breakpoint at start of `execute` function.
+13. Hit F5 to start debugging.
+
 ## More Information
 
 * [git commands and workflow](https://github.com/dotnet/corefx/wiki/git-reference)

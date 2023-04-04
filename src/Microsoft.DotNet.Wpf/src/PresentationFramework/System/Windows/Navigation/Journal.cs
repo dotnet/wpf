@@ -271,6 +271,27 @@ namespace System.Windows.Navigation
             UpdateView();
             return removedEntry;
         }
+        
+        /// <summary>
+        /// Remove the top JournalEntry from forward entry
+        /// </summary>
+        // Not a true "remove" 
+        internal JournalEntry RemoveForwardEntry()
+        {
+            Debug.Assert(ValidateIndexes());
+            int index = _currentEntryIndex; // start from current but do not change it
+            do
+            {
+                if (++index >= TotalCount)
+                {
+                    return null;
+                }
+            } while (IsNavigable(_journalEntryList[index]) == false);
+            JournalEntry removedEntry = RemoveEntryInternal(index);
+            Debug.Assert(ValidateIndexes());
+            UpdateView();
+            return removedEntry;
+        }
 
         /// <summary>
         /// Ensures current data about the current page is stored in the journal.
@@ -433,7 +454,7 @@ namespace System.Windows.Navigation
             int index = _journalEntryList.IndexOf(target);
 
             // When navigating back to a page which contains a previously navigated frame a 
-            // saved journal entry is replayed to restore the frame’s location, in many cases 
+            // saved journal entry is replayed to restore the frame's location, in many cases 
             // this entry is not in the journal.
             if (index > -1)
             {

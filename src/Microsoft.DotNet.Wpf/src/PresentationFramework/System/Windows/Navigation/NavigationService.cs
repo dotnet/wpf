@@ -1477,6 +1477,20 @@ namespace System.Windows.Navigation
                 return null; //(Normally, no exception is thrown if there is no back entry.)
             return JournalScope.RemoveBackEntry();
         }
+        
+        /// <summary>
+        /// Remove the first JournalEntry from NavigationWindow's forward history
+        /// </summary>
+        public JournalEntry RemoveForwardEntry()
+        {
+            if (IsDisposed)
+            {
+                return null;
+            }
+            if (JournalScope == null)
+                return null; //(Normally, no exception is thrown if there is no forward entry.)
+            return JournalScope.RemoveForwardEntry();
+        }
 
         //
         // bool INavigator.Navigate(Uri source)

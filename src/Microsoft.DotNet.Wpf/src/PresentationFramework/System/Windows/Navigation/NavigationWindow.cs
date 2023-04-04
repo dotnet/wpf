@@ -397,6 +397,14 @@ namespace System.Windows.Navigation
         {
             return _JNS.RemoveBackEntry();
         }
+        
+        /// <summary>
+        /// Remove the first JournalEntry from NavigationWindow's forward history
+        /// </summary>
+        public JournalEntry RemoveForwardEntry()
+        {
+            return _JNS.RemoveForwardEntry();
+        }
         #endregion INavigator Methods
 
         #region IUriContext Members

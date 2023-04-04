@@ -227,21 +227,19 @@ Debugging Presentation Build Task(hereafter called PBT)  can be required for var
 For the sake of explaining the debugging steps, we will try to stop the debugger at execute (public function) of markupCompilatonPass2.
 
 Follow the following steps sequentially.
-1.  Replace the PBT dll located at `C:\Program Files\dotnet\sdk\<your sdk version>\Sdks\Microsoft.NET.Sdk.WindowsDesktop\tools\net472` with your binaries(`<wpf clone directory>\artifacts\packaging\Debug\Microsoft.NET.Sdk.WindowsDesktop.Debug\tools\net472`).
+1.  Replace the`PresentationBuildTasks.dll` located at `C:\Program Files\dotnet\sdk\<your sdk version>\Sdks\Microsoft.NET.Sdk.WindowsDesktop\tools\net472` with your binaries (`<wpf clone directory>\artifacts\packaging\Debug\Microsoft.NET.Sdk.WindowsDesktop.Debug\tools\net472`).
 2. Launch Visual Studio and open the `Msbuild.exe` (generally located at `C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Current\Bin\MSBuild.exe`)
-3. Go to menu Debug->Options->Symbols
-4. Check radio button `Load only specified modules` and thereafter click on `Specify included modules`
+3. Go to Debug->Options->Symbols
+4. Check option - `Load only specified modules` and click on `Specify included modules`
 5. Symbols to Load automatically dialog box will pop up
-6. Click on + button on top right and add `PresentationBuildTasks.dll`.
-7. Click okay.
-8. Right click on MSBuild in solution explorer and select Properties.
-9. In the Parameters textbox enter the fullpath to a solution file(.sln ||.csproj) of a test repo.
-10. Click save and close properties.
-11. Go to menu File->open->file
-12. And Open "`<wpf clone directory>\src\Microsoft.DotNet.Wpf\src\PresentationBuildTasks\Microsoft\Build\Tasks\Windows\MarkupCompilePass2.cs`"
-13. Put a debug point at start of `execute` function.
-14. Hit F5 for starting the debugger.
-
+6. Click on `+` button on top right and add `PresentationBuildTasks.dll`.
+7. Click OK.
+8. Right click on `MsBuild.exe` in solution explorer and select Properties.
+9. In the Parameters textbox enter the fullpath to a solution file (.sln ||.csproj) of a test repo.
+10. Click Save.
+11. Open "`<wpf clone directory>\src\Microsoft.DotNet.Wpf\src\PresentationBuildTasks\Microsoft\Build\Tasks\Windows\MarkupCompilePass2.cs`" (File -> Open -> File) in editor
+12. Insert a breakpoint at start of `execute` function.
+13. Hit F5 to start debugging.
 
 ## More Information
 

@@ -9,7 +9,7 @@
 
 using System;
 using System.IO;
-using System.Security;
+using System.Security; 
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
@@ -33,8 +33,16 @@ namespace MS.Internal.AppModel
         // </summary>
         internal static object BamlConverter(Stream stream, Uri baseUri, bool canUseTopLevelBrowser, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter)
         {
-            asyncObjectConverter = null;
+            return BamlConverterCore(stream, baseUri, canUseTopLevelBrowser, sandboxExternalContent, allowAsync, isJournalNavigation, out asyncObjectConverter, false);
+        }
 
+        internal static object BamlConverterCore(Stream stream, Uri baseUri, bool canUseTopLevelBrowser, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter, bool isUnsafe)
+        {
+            asyncObjectConverter = null;
+            if (isUnsafe)
+            {
+                throw new InvalidOperationException(SR.Get(SRID.BamlIsNotSupportedOutsideOfApplicationResources));
+            }
             // If this stream comes from outside the application throw
             //
             if (!BaseUriHelper.IsPackApplicationUri(baseUri))
@@ -64,6 +72,11 @@ namespace MS.Internal.AppModel
         // </summary>
         internal static object XamlConverter(Stream stream, Uri baseUri, bool canUseTopLevelBrowser, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter)
         {
+            return XamlConverterCore(stream, baseUri, canUseTopLevelBrowser, sandboxExternalContent, allowAsync, isJournalNavigation, out asyncObjectConverter, false);
+        }
+
+        internal static object XamlConverterCore(Stream stream, Uri baseUri, bool canUseTopLevelBrowser, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter, bool isUnsafe)
+        {
             asyncObjectConverter = null;
 
             if (sandboxExternalContent)
@@ -91,18 +104,22 @@ namespace MS.Internal.AppModel
                     XamlReader xr = new XamlReader();
                     asyncObjectConverter = xr;
                     xr.LoadCompleted += new AsyncCompletedEventHandler(OnParserComplete);
+                    if(isUnsafe)
+                    {
+                        pc.FromRestrictiveReader = true;
+                    }
                     // XamlReader.Load will close the stream.
                     return xr.LoadAsync(stream, pc);
                 }
                 else
                 {
                     // XamlReader.Load will close the stream.
-                    return XamlReader.Load(stream, pc);
+                    return XamlReader.Load(stream, pc, isUnsafe);
                 }
             }
         }
 
-        private static void OnParserComplete(object sender, AsyncCompletedEventArgs args)
+	    private static void OnParserComplete(object sender, AsyncCompletedEventArgs args)
         {
             // We can get this event from cancellation. We do not care about the error if there is any
             // that happened as a result of cancellation.
@@ -114,13 +131,21 @@ namespace MS.Internal.AppModel
 
         internal static object HtmlXappConverter(Stream stream, Uri baseUri, bool canUseTopLevelBrowser, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter)
         {
-            asyncObjectConverter = null;
+            return HtmlXappConverterCore(stream, baseUri, canUseTopLevelBrowser, sandboxExternalContent, allowAsync, isJournalNavigation, out asyncObjectConverter, false);
+        }
 
+        internal static object HtmlXappConverterCore(Stream stream, Uri baseUri, bool canUseTopLevelBrowser, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter, bool isUnsafe)
+        {
+            asyncObjectConverter = null;
+            if (isUnsafe)
+            {
+                throw new InvalidOperationException(SR.Get(SRID.BamlIsNotSupportedOutsideOfApplicationResources));
+            }
             if (canUseTopLevelBrowser)
             {
                 return null;
             }
-
+            
             if (SecurityHelper.AreStringTypesEqual(baseUri.Scheme, BaseUriHelper.PackAppBaseUri.Scheme))
             {
                 baseUri = BaseUriHelper.ConvertPackUriToAbsoluteExternallyVisibleUri(baseUri);

@@ -1979,20 +1979,22 @@ namespace System.Windows
             // and mark it as thread-safe so PackWebResponse won't protect returned streams with a synchronizing wrapper
             PreloadedPackages.AddPackage(PackUriHelper.GetPackageUri(BaseUriHelper.PackAppBaseUri), new ResourceContainer(), true);
 
-            MimeObjectFactory.Register(MimeTypeMapper.BamlMime, new StreamToObjectFactoryDelegate(AppModelKnownContentFactory.BamlConverter));
 
-            StreamToObjectFactoryDelegate xamlFactoryDelegate = new StreamToObjectFactoryDelegate(AppModelKnownContentFactory.XamlConverter);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.BamlMime, new StreamToObjectFactoryDelegateCore(AppModelKnownContentFactory.BamlConverterCore));
 
-            MimeObjectFactory.Register(MimeTypeMapper.XamlMime, xamlFactoryDelegate);
-            MimeObjectFactory.Register(MimeTypeMapper.FixedDocumentMime, xamlFactoryDelegate);
-            MimeObjectFactory.Register(MimeTypeMapper.FixedDocumentSequenceMime, xamlFactoryDelegate);
-            MimeObjectFactory.Register(MimeTypeMapper.FixedPageMime, xamlFactoryDelegate);
-            MimeObjectFactory.Register(MimeTypeMapper.ResourceDictionaryMime, xamlFactoryDelegate);
+            StreamToObjectFactoryDelegateCore xamlFactoryDelegate = new StreamToObjectFactoryDelegateCore(AppModelKnownContentFactory.XamlConverterCore);
 
-            StreamToObjectFactoryDelegate htmlxappFactoryDelegate = new StreamToObjectFactoryDelegate(AppModelKnownContentFactory.HtmlXappConverter);
-            MimeObjectFactory.Register(MimeTypeMapper.HtmMime, htmlxappFactoryDelegate);
-            MimeObjectFactory.Register(MimeTypeMapper.HtmlMime, htmlxappFactoryDelegate);
-            MimeObjectFactory.Register(MimeTypeMapper.XbapMime, htmlxappFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.XamlMime, xamlFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.FixedDocumentMime, xamlFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.FixedDocumentSequenceMime, xamlFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.FixedPageMime, xamlFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.ResourceDictionaryMime, xamlFactoryDelegate);
+
+            StreamToObjectFactoryDelegateCore htmlxappFactoryDelegate = new StreamToObjectFactoryDelegateCore(AppModelKnownContentFactory.HtmlXappConverterCore);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.HtmMime, htmlxappFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.HtmlMime, htmlxappFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.XbapMime, htmlxappFactoryDelegate);
+ 
         }
 
         // This function returns the resource stream including resource and content file.

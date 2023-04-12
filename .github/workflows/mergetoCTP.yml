@@ -1,22 +1,21 @@
-name: Merge PR to ctp branch
+name: Merge PR to CTP
 
 on:
   pull_request:
-    types: [closed]
+    branches:
+      - main
 
 jobs:
-  merge_to_ctp:
+  merge-to-ctp:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          ref: ${{ github.head_ref }}
-      - name: Merge to ctp branch
-        run: git merge origin/ctp
-      - name: Push changes to ctp branch
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          branch: ctp
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          force: true
+
+      - name: Merge PR into CTP
+        run: |
+          git fetch origin pull/${{ github.event.pull_request.number }}/head:pr-branch
+          git checkout ctp
+          git merge pr-branch --no-ff --no-edit
+          git push origin ctp
+

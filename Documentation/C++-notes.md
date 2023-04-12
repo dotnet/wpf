@@ -17,3 +17,4 @@
 - /nowarn:D9035 is now being passed to build.ps1 in order to suppress the following C++ compiler warnings:
   - cl : Command line error D9035: option 'clr:pure' has been deprecated and will be removed in a future release
   - cl : Command line error D9035: option 'Zc:forScope-' has been deprecated and will be removed in a future release
+a

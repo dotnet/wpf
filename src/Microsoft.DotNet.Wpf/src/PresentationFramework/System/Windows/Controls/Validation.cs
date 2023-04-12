@@ -345,7 +345,6 @@ namespace System.Windows.Controls
             }
         }
 
-
         internal static void ShowValidationAdorner(DependencyObject targetElement, bool show)
         {
             // If the element has a VisualStateGroup for validation, then dont show the Adorner
@@ -362,7 +361,6 @@ namespace System.Windows.Controls
                 ShowValidationAdornerHelper(targetElement, adornerSite, show);
             }
         }
-
 
         private static bool HasValidationGroup(FrameworkElement fe)
         {
@@ -415,59 +413,85 @@ namespace System.Windows.Controls
             DependencyObject adornerSite = (DependencyObject)args[1];
             bool show = (bool)args[2];
 
-            ShowValidationAdornerHelper(targetElement, adornerSite, show, false);
+            // Check if the element is visible, if not try to show the adorner again once it gets visible.
+            // This is needed because controls hosted in Expander or TabControl don't have a parent/AdornerLayer till the Expander is expanded or the TabItem is selected.
+            if (adornerSite is UIElement { IsVisible: false } siteUIElement)
+            {
+                siteUIElement.IsVisibleChanged += ShowValidationAdornerWhenAdornerSiteGetsVisible;
+            }
+            else
+            {
+                ShowValidationAdornerHelper(targetElement, adornerSite, show, false);
+            }
 
             return null;
         }
 
-        private static void ShowValidationAdornerHelper(DependencyObject targetElement, DependencyObject adornerSite, bool show, bool tryAgain)
+        private static void ShowValidationAdornerWhenAdornerSiteGetsVisible(object sender, DependencyPropertyChangedEventArgs e)
         {
-            UIElement siteUIElement = adornerSite as UIElement;
-
-            if (siteUIElement != null)
+            if (sender is not UIElement adornerSite)
             {
-                AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(siteUIElement);
-
-                if (adornerLayer == null)
-                {
-                    if (tryAgain)
-                    {
-                        // try again later, perhaps giving layout a chance to create the adorner layer
-                        adornerSite.Dispatcher.BeginInvoke(DispatcherPriority.Loaded,
-                                    new DispatcherOperationCallback(ShowValidationAdornerOperation),
-                                    new object[]{targetElement, adornerSite, show});
-                    }
-                    return;
-                }
-
-                TemplatedAdorner validationAdorner = siteUIElement.ReadLocalValue(ValidationAdornerProperty) as TemplatedAdorner;
-
-                if (show && validationAdorner == null)
-                {
-                    // get the template from the site, or from the target element
-                    ControlTemplate validationTemplate = GetErrorTemplate(siteUIElement);
-                    if (validationTemplate == null)
-                    {
-                        validationTemplate = GetErrorTemplate(targetElement);
-                    }
-
-                    if (validationTemplate != null)
-                    {
-                        validationAdorner = new TemplatedAdorner(siteUIElement, validationTemplate);
-                        adornerLayer.Add(validationAdorner);
-
-                        siteUIElement.SetValue(ValidationAdornerProperty, validationAdorner);
-                    }
-                }
-                else if (!show && validationAdorner != null)
-                {
-                    validationAdorner.ClearChild();
-                    adornerLayer.Remove(validationAdorner);
-                    siteUIElement.ClearValue(ValidationAdornerProperty);
-                }
+                return;
             }
+
+            adornerSite.IsVisibleChanged -= ShowValidationAdornerWhenAdornerSiteGetsVisible;
+
+            DependencyObject targetElement = GetValidationAdornerSiteFor(adornerSite);
+            if (targetElement == null)
+            {
+                targetElement = adornerSite;
+            }
+
+            ShowValidationAdornerHelper(targetElement, adornerSite, (bool)e.NewValue && GetHasError(targetElement), false);
         }
 
+        private static void ShowValidationAdornerHelper(DependencyObject targetElement, DependencyObject adornerSite, bool show, bool tryAgain)
+        {
+            if (adornerSite is not UIElement siteUIElement)
+            {
+                return;
+            }
+
+            AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(siteUIElement);
+
+            if (adornerLayer is null)
+            {
+                if (tryAgain)
+                {
+                    // try again later, perhaps giving layout a chance to create the adorner layer
+                    adornerSite.Dispatcher.BeginInvoke(DispatcherPriority.Loaded,
+                        new DispatcherOperationCallback(ShowValidationAdornerOperation),
+                        new object[] { targetElement, adornerSite, BooleanBoxes.Box(show) });
+                }
+                return;
+            }
+
+            TemplatedAdorner validationAdorner = siteUIElement.ReadLocalValue(ValidationAdornerProperty) as TemplatedAdorner;
+
+            if (show && validationAdorner is null)
+            {
+                // get the template from the site, or from the target element
+                ControlTemplate validationTemplate = GetErrorTemplate(siteUIElement);
+                if (validationTemplate is null)
+                {
+                    validationTemplate = GetErrorTemplate(targetElement);
+                }
+
+                if (validationTemplate is not null)
+                {
+                    validationAdorner = new TemplatedAdorner(siteUIElement, validationTemplate);
+                    adornerLayer.Add(validationAdorner);
+
+                    siteUIElement.SetValue(ValidationAdornerProperty, validationAdorner);
+                }
+            }
+            else if (!show && validationAdorner is not null)
+            {
+                validationAdorner.ClearChild();
+                adornerLayer.Remove(validationAdorner);
+                siteUIElement.ClearValue(ValidationAdornerProperty);
+            }
+        }
 
         /// <summary>
         /// Mark this BindingExpression as invalid.  If the BindingExpression has been

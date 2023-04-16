@@ -1,0 +1,18 @@
+name: .NET Core
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Nuget
+      uses: nuget/setup-nuget@v1
+      with:
+        nuget-version: '5.x'
+      
+    - name: Build
+      run: .\build.cmd -pack -ci -configuration Release -prepareMachine /p:Platform=x86

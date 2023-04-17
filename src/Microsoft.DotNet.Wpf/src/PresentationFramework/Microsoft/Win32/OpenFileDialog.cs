@@ -77,7 +77,7 @@ namespace Microsoft.Win32
             // tell the user we don't have any files to open.
             if (string.IsNullOrEmpty(filename))
             {
-                throw new InvalidOperationException(SR.Get(SRID.FileNameMustNotBeNull));
+                throw new InvalidOperationException(SR.FileNameMustNotBeNull);
             }
 
             return new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -112,7 +112,7 @@ namespace Microsoft.Win32
 
                 if (string.IsNullOrEmpty(filename))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.FileNameMustNotBeNull));
+                    throw new InvalidOperationException(SR.FileNameMustNotBeNull);
                 }
 
                 // Open the file and add it to the list of streams.

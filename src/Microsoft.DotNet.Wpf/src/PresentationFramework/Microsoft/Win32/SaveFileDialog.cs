@@ -78,7 +78,7 @@ namespace Microsoft.Win32
             // tell the user we don't have any files to open.
             if (string.IsNullOrEmpty(filename))
             {
-                throw new InvalidOperationException(SR.Get(SRID.FileNameMustNotBeNull));
+                throw new InvalidOperationException(SR.FileNameMustNotBeNull);
             }
 
             // Create a new FileStream from the file and return it.
@@ -284,7 +284,7 @@ namespace Microsoft.Win32
         /// </summary>
         private bool PromptFileCreate(string fileName)
         {
-            return MessageBoxWithFocusRestore(SR.Get(SRID.FileDialogCreatePrompt, fileName),
+            return MessageBoxWithFocusRestore(SR.Format(SR.FileDialogCreatePrompt, fileName),
                     MessageBoxButton.YesNo, MessageBoxImage.Warning);
         }
 
@@ -296,7 +296,7 @@ namespace Microsoft.Win32
         /// </summary>
         private bool PromptFileOverwrite(string fileName)
         {
-            return MessageBoxWithFocusRestore(SR.Get(SRID.FileDialogOverwritePrompt, fileName),
+            return MessageBoxWithFocusRestore(SR.Format(SR.FileDialogOverwritePrompt, fileName),
                     MessageBoxButton.YesNo, MessageBoxImage.Warning);
         }
 

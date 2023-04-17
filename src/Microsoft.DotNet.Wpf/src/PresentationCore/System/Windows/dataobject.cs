@@ -1620,12 +1620,14 @@ namespace System.Windows
                 // since we directly support TYMED.TYMED_ENHMF.
                 hr = DV_E_TYMED;
             }
+#pragma warning disable SYSLIB0050
             else if (IsFormatEqual(format, DataFormats.Serializable)
                 || data is ISerializable
                 || (data != null && data.GetType().IsSerializable))
             {
                 hr = SaveObjectToHandle(medium.unionmember, data, doNotReallocate);
             }
+#pragma warning restore SYSLIB0050
             else
             {
                 // Couldn't find the proper data for the current TYMED_HGLOBAL
@@ -1752,7 +1754,7 @@ namespace System.Windows
 
             return hr;
         }
-
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
         private int SaveObjectToHandle(IntPtr handle, Object data, bool doNotReallocate)
         {
             Stream stream;
@@ -1774,6 +1776,7 @@ namespace System.Windows
                 }
             }
         }
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
 
         /// <summary>
         /// Saves stream out to handle.
@@ -2159,6 +2162,7 @@ namespace System.Windows
         /// true if the data is likely to be serializated
         /// through CLR serialization
         /// </returns>
+#pragma warning disable SYSLIB0050
         private static bool IsFormatAndDataSerializable(string format, object data)
         {
             return
@@ -2166,7 +2170,7 @@ namespace System.Windows
                   || data is ISerializable
                   || (data != null && data.GetType().IsSerializable);
         }
-
+#pragma warning restore SYSLIB0050
 
         /// <summary>
         /// Return true if the format string are equal(Case-senstive).
@@ -3111,6 +3115,7 @@ namespace System.Windows
             /// Creates a new instance of the Object that has been persisted into the
             /// handle.
             /// </summary>
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
             private Object ReadObjectFromHandle(IntPtr handle, bool restrictDeserialization)
             {
                 object value;
@@ -3148,7 +3153,7 @@ namespace System.Windows
 
                 return value;
             }
-
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
             /// <summary>
             /// Creates a new instance of BitmapSource that has been saved to the
             /// handle as the memory stream of BitmapSource.

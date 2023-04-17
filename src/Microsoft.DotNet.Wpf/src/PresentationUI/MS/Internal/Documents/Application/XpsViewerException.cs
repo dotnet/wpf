@@ -57,6 +57,7 @@ namespace MS.Internal.Documents.Application
         internal XpsViewerException(string message, Exception innerException)
             : base(message, innerException)
         {}
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         /// <summary>
         /// Initializes a new instance of the XpsViewerException class with serialized data.
         /// </summary>
@@ -65,7 +66,7 @@ namespace MS.Internal.Documents.Application
         protected XpsViewerException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         { }
-
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
     }
 }
 

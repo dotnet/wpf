@@ -380,7 +380,9 @@ namespace System.Printing
         public System.Collections.ObjectModel.Collection<string> CommittedAttributesCollection { get { throw null; } }
         public System.Collections.ObjectModel.Collection<string> FailedAttributesCollection { get { throw null; } }
         public string PrintObjectName { get { throw null; } }
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class PrintingCanceledException : System.Printing.PrintJobException
     {
@@ -399,7 +401,9 @@ namespace System.Printing
         protected PrintingNotSupportedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public PrintingNotSupportedException(string message) { }
         public PrintingNotSupportedException(string message, System.Exception innerException) { }
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class PrintJobException : System.Printing.PrintSystemException
     {
@@ -414,7 +418,9 @@ namespace System.Printing
         public int JobId { get { throw null; } }
         public string JobName { get { throw null; } }
         public string PrintQueueName { get { throw null; } }
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class PrintQueueException : System.Printing.PrintSystemException
     {
@@ -426,7 +432,9 @@ namespace System.Printing
         public PrintQueueException(string message) { }
         public PrintQueueException(string message, System.Exception innerException) { }
         public string PrinterName { get { throw null; } }
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class PrintServerException : System.Printing.PrintSystemException
     {
@@ -437,7 +445,9 @@ namespace System.Printing
         public PrintServerException(string message) { }
         public PrintServerException(string message, System.Exception innerException) { }
         public string ServerName { get { throw null; } }
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class PrintSystemException : System.SystemException
     {
@@ -448,7 +458,9 @@ namespace System.Printing
         protected PrintSystemException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public PrintSystemException(string message) { }
         public PrintSystemException(string message, System.Exception innerException) { }
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public sealed partial class PrintTicket : System.ComponentModel.INotifyPropertyChanged
     {

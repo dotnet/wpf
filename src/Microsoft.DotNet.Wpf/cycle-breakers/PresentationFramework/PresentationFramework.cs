@@ -1114,7 +1114,9 @@ namespace System.Windows
         protected ResourceReferenceKeyNotFoundException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public ResourceReferenceKeyNotFoundException(string message, object resourceKey) { }
         public object Key { get { throw null; } }
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class RoutedPropertyChangedEventArgs<T> : System.Windows.RoutedEventArgs
     {
@@ -11397,7 +11399,9 @@ namespace System.Windows.Markup
         public int LinePosition { get { throw null; } }
         public string NameContext { get { throw null; } }
         public string UidContext { get { throw null; } }
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class XamlReader
     {

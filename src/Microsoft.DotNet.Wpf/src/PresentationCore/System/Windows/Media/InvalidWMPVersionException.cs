@@ -39,8 +39,10 @@ namespace System.Windows.Media
         /// <param name="context">
         /// The contextual information about the source or destination.
         /// </param>
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         protected InvalidWmpVersionException(SerializationInfo info, StreamingContext context) : base(info, context)
         {}
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
 
         ///<summary>
         /// Constructor

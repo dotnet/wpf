@@ -353,7 +353,7 @@ namespace MS.Internal.AppModel
             _subStreams = null;
             _customJournaledObjects = null; 
         }
-
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
         #region Private and internal fields and properties
         private BinaryFormatter Formatter
         {
@@ -382,4 +382,5 @@ namespace MS.Internal.AppModel
         #endregion Private and internal fields and properties
     }
     #endregion DataStreams class
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
 }

@@ -493,7 +493,9 @@ namespace System.Security.RightsManagement
         public RightsManagementException(string message) { }
         public RightsManagementException(string message, System.Exception innerException) { }
         public System.Security.RightsManagement.RightsManagementFailureCode FailureCode { get { throw null; } }
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public enum RightsManagementFailureCode
     {

@@ -1104,7 +1104,9 @@ namespace System.Windows
         protected ResourceReferenceKeyNotFoundException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public ResourceReferenceKeyNotFoundException(string message, object resourceKey) { }
         public object Key { get { throw null; } }
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class RoutedPropertyChangedEventArgs<T> : System.Windows.RoutedEventArgs
     {
@@ -11409,7 +11411,9 @@ namespace System.Windows.Markup
         public int LinePosition { get { throw null; } }
         public string NameContext { get { throw null; } }
         public string UidContext { get { throw null; } }
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class XamlReader
     {
@@ -11974,7 +11978,9 @@ namespace System.Windows.Navigation
         public System.Uri Source { get { throw null; } set { } }
         public static bool GetKeepAlive(System.Windows.DependencyObject dependencyObject) { throw null; }
         public static string GetName(System.Windows.DependencyObject dependencyObject) { throw null; }
+#pragma warning disable CS0672 // Member overrides obsolete member
         public virtual void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+#pragma warning restore CS0672 // Member overrides obsolete member
         public static void SetKeepAlive(System.Windows.DependencyObject dependencyObject, bool keepAlive) { }
         public static void SetName(System.Windows.DependencyObject dependencyObject, string name) { }
     }

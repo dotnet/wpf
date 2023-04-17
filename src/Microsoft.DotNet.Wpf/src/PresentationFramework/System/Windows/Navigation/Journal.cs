@@ -433,7 +433,7 @@ namespace System.Windows.Navigation
             int index = _journalEntryList.IndexOf(target);
 
             // When navigating back to a page which contains a previously navigated frame a 
-            // saved journal entry is replayed to restore the frame’s location, in many cases 
+            // saved journal entry is replayed to restore the frameï¿½s location, in many cases 
             // this entry is not in the journal.
             if (index > -1)
             {
@@ -464,6 +464,7 @@ namespace System.Windows.Navigation
         //  What happens to a bunch of PageFunctions, some of which are KeepAlive
         // and some of which are not? We'll get "holes" in the "call stack" when we go
         // back.
+#pragma warning disable SYSLIB0050
         internal void PruneKeepAliveEntries()
         {
             for (int i = TotalCount - 1; i >= 0; --i)
@@ -490,6 +491,7 @@ namespace System.Windows.Navigation
                 }
             }
         }
+#pragma warning restore SYSLIB0050
 
         /// <remarks> The caller is responsible for calling UpdateView(). </remarks>
         internal JournalEntry RemoveEntryInternal(int index)

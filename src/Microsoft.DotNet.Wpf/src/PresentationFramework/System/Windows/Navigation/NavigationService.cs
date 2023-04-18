@@ -3189,6 +3189,7 @@ namespace System.Windows.Navigation
         /// Makes the appropriate kind of journal entry for the current Content and its state.
         /// For certain types of content, no journal entry is created (null is returned).
         /// </summary>
+#pragma warning disable SYSLIB0050
         internal JournalEntry MakeJournalEntry(JournalReason journalReason)
         {
             if (_bp == null)
@@ -3387,7 +3388,7 @@ namespace System.Windows.Navigation
 
             return journalEntry;
         }
-
+#pragma warning restore SYSLIB0050
         /// <summary>
         /// Called by ApplicationProxyInternal when a XAML Browser Application is about to be shut down
         /// and the entire journal needs to be serialized.

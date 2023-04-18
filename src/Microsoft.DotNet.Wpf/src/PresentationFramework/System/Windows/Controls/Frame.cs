@@ -54,13 +54,13 @@ namespace System.Windows.Navigation
         Automatic = 0,
 
         /// <summary>
-        /// The Frame has its own Journal which operates independent of the hosting container’s
+        /// The Frame has its own Journal which operates independent of the hosting container's
         /// journal (if it has one).
         /// </summary>
         OwnsJournal,
 
         /// <summary>
-        /// The Frame’s journal entries are merged into the hosting container’s journal, if available.
+        /// The Frame's journal entries are merged into the hosting container's journal, if available.
         /// Otherwise navigations in this frame are not journaled.
         /// </summary>
         UsesParentJournal
@@ -1191,6 +1191,7 @@ namespace System.Windows.Controls
         /// state. It will become part of the journal entry created for the navigation in the parent
         /// container (stored within a DataStreams instance).
         /// </summary>
+#pragma warning disable SYSLIB0050
         [Serializable]
         private class FramePersistState : CustomJournalStateInternal
         {
@@ -1220,7 +1221,7 @@ namespace System.Windows.Controls
                 }
             }
         };
-
+#pragma warning restore SYSLIB0050
         CustomJournalStateInternal IJournalState.GetJournalState(JournalReason journalReason)
         {
             if (journalReason != JournalReason.NewContentNavigation)

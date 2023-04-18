@@ -130,6 +130,7 @@ namespace System.Security.RightsManagement
         /// </summary>
         /// <param name="info">The object that holds the serialized object data.</param>
         /// <param name="context">The contextual information about the source or destination.</param>
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         protected RightsManagementException(SerializationInfo info, StreamingContext context) : 
                                                     base(info, context)
         {
@@ -137,12 +138,14 @@ namespace System.Security.RightsManagement
                                                          // we do not check the validity of the failureCode range , as it might contain a generic 
                                                          //  HR code, not covered by the RightsManagementFailureCode enumeration 
         }
-
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
         /// <summary>
         /// Sets the SerializationInfo object with the Failure Code and additional exception information. 
         /// </summary>
         /// <param name="info">The object that holds the serialized object data.</param>
         /// <param name="context">The contextual information about the source or destination.</param>
+#pragma warning disable CS0672 // Member overrides obsolete member
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             if (info == null)
@@ -151,6 +154,8 @@ namespace System.Security.RightsManagement
             base.GetObjectData(info, context);
             info.AddValue(_serializationFailureCodeAttributeName, (Int32)_failureCode);
         }
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
+#pragma warning restore CS0672 // Member overrides obsolete member
 
         /// <summary>
         /// Returns the specific error code that can be used to indetify and mitigate the reason which caused the exception.

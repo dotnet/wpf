@@ -265,6 +265,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         // ------------------------------------------------------------------
         // SecondaryException.
         // ------------------------------------------------------------------
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         [Serializable]
         private class SecondaryException : Exception
         {
@@ -297,7 +298,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
                 get { return InnerException.StackTrace; }
             }
         }
-
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
         // ------------------------------------------------------------------
         // PTS Exceptions with no inner exception
         // ------------------------------------------------------------------

@@ -19,10 +19,11 @@ namespace MS.Internal.Xaml.Parser
                 : base(message)
             {
             }
-
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
             protected TypeNameParserException(SerializationInfo si, StreamingContext sc) : base(si, sc)
             {
             }
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
         }
 
         private GenericTypeNameScanner _scanner;

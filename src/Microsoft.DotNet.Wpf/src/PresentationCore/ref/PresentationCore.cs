@@ -471,7 +471,7 @@ namespace System.Windows
         public static System.Windows.DataFormat GetDataFormat(int id) { throw null; }
         public static System.Windows.DataFormat GetDataFormat(string format) { throw null; }
     }
-    public sealed partial class DataObject : System.Runtime.InteropServices.ComTypes.IDataObject, System.Windows.IDataObject
+    public sealed partial class DataObject : System.Runtime.InteropServices.ComTypes.IDataObject, System.Windows.IDataObjectWithIndex, System.Windows.IDataObject
     {
         public static readonly System.Windows.RoutedEvent CopyingEvent;
         public static readonly System.Windows.RoutedEvent PastingEvent;
@@ -492,9 +492,11 @@ namespace System.Windows
         public System.IO.Stream GetAudioStream() { throw null; }
         public object GetData(string format) { throw null; }
         public object GetData(string format, bool autoConvert) { throw null; }
+        public object GetData(string format, bool autoConvert, int index) { throw null; }
         public object GetData(System.Type format) { throw null; }
         public bool GetDataPresent(string format) { throw null; }
         public bool GetDataPresent(string format, bool autoConvert) { throw null; }
+        public bool GetDataPresent(string format, bool autoConvert, int index) { throw null; }
         public bool GetDataPresent(System.Type format) { throw null; }
         public System.Collections.Specialized.StringCollection GetFileDropList() { throw null; }
         public string[] GetFormats() { throw null; }
@@ -510,6 +512,7 @@ namespace System.Windows
         public void SetData(object data) { }
         public void SetData(string format, object data) { }
         public void SetData(string format, object data, bool autoConvert) { }
+        public void SetData(string format, object data, bool autoConvert, int index) { }
         public void SetData(System.Type format, object data) { }
         public void SetFileDropList(System.Collections.Specialized.StringCollection fileDropList) { }
         public void SetImage(System.Windows.Media.Imaging.BitmapSource image) { }
@@ -974,6 +977,12 @@ namespace System.Windows
         void SetData(string format, object data);
         void SetData(string format, object data, bool autoConvert);
         void SetData(System.Type format, object data);
+    }
+    public partial interface IDataObjectWithIndex : System.Windows.IDataObject
+    {
+        object GetData(string format, bool autoConvert, int index);
+        bool GetDataPresent(string format, bool autoConvert, int index);
+        void SetData(string format, object data, bool autoConvert, int index);
     }
     public partial interface IInputElement
     {

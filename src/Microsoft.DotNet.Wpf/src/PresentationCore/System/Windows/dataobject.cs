@@ -43,7 +43,7 @@ namespace System.Windows
     /// <summary>
     /// Implements a basic data transfer mechanism.
     /// </summary>
-    public sealed class DataObject : IDataObject, IComDataObject
+    public sealed class DataObject : IDataObjectWithIndex, IDataObject, IComDataObject
     {
         //------------------------------------------------------
         //
@@ -203,6 +203,36 @@ namespace System.Windows
         /// format, using an automated conversion parameter to determine whether to convert
         /// the data to the format.
         /// </summary>
+        public object GetData(string format, bool autoConvert, int index)
+        {
+            if (format == null)
+            {
+                throw new ArgumentNullException("format");
+            }
+
+            if (format == string.Empty)
+            {
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
+            }
+
+            if (_innerData is IDataObjectWithIndex innerData)
+            {
+                return innerData.GetData(format, autoConvert, index);
+            }
+
+            if (index != -1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
+            return _innerData.GetData(format, autoConvert);
+        }
+
+        /// <summary>
+        /// Retrieves the data associated with the specified data
+        /// format, using an automated conversion parameter to determine whether to convert
+        /// the data to the format.
+        /// </summary>
         public object GetData(string format, bool autoConvert)
         {
             if (format == null)
@@ -271,7 +301,7 @@ namespace System.Windows
         /// associated with the specified format, using an automatic conversion
         /// parameter to determine whether to convert the data to the format.
         /// </summary>
-        public bool GetDataPresent(string format, bool autoConvert)
+        public bool GetDataPresent(string format, bool autoConvert, int index)
         {
             bool dataPresent;
 
@@ -285,8 +315,38 @@ namespace System.Windows
                 throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
+            if (_innerData is IDataObjectWithIndex innerData)
+            {
+                return innerData.GetDataPresent(format, autoConvert, index);
+            }
+
+            if (index != -1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
             dataPresent = _innerData.GetDataPresent(format, autoConvert);
             return dataPresent;
+        }
+
+        /// <summary>
+        /// Determines whether data stored in this instance is
+        /// associated with the specified format, using an automatic conversion
+        /// parameter to determine whether to convert the data to the format.
+        /// </summary>
+        public bool GetDataPresent(string format, bool autoConvert)
+        {
+            if (format == null)
+            {
+                throw new ArgumentNullException("format");
+            }
+
+            if (format == string.Empty)
+            {
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
+            }
+
+            return GetDataPresent(format, autoConvert, -1);
         }
 
         /// <summary>
@@ -306,7 +366,7 @@ namespace System.Windows
                 throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
-            return GetDataPresent(format, true);
+            return GetDataPresent(format, true, -1);
         }
 
         /// <summary>
@@ -410,6 +470,41 @@ namespace System.Windows
             _innerData.SetData(format, data, autoConvert);
         }
 
+        /// <summary>
+        /// Stores the specified data and its associated format in
+        /// this instance, using the automatic conversion parameter
+        /// to specify whether the
+        /// data can be converted to another format.
+        /// </summary>
+        /// <remarks>
+        ///     Callers must have UIPermission(UIPermissionClipboard.AllClipboard) to call this API.
+        /// </remarks>
+        [FriendAccessAllowed]
+        public void SetData(string format, Object data, bool autoConvert, int index)
+        {
+            if (format == null)
+            {
+                throw new ArgumentNullException("format");
+            }
+
+            if (format == string.Empty)
+            {
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
+            }
+
+            if (_innerData is IDataObjectWithIndex innerData)
+            {
+                innerData.SetData(format, data, autoConvert, index);
+                return;
+            }
+
+            if (index != 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
+            _innerData.SetData(format, data, autoConvert);
+        }
 
         /// <summary>
         /// Return true if DataObject contains the audio data. Otherwise, return false.
@@ -1518,7 +1613,7 @@ namespace System.Windows
                 {
                     object data;
 
-                    data = GetData(format);
+                    data = GetData(format, true, formatetc.lindex);
 
                     // set the default result with DV_E_TYMED.
                     hr = DV_E_TYMED;
@@ -2468,7 +2563,7 @@ namespace System.Windows
         /// OLE Converter.  This class embodies the nastiness required to convert from our
         /// managed types to standard OLE clipboard formats.
         /// </summary>
-        private class OleConverter : IDataObject
+        private class OleConverter : IDataObjectWithIndex
         {
             //------------------------------------------------------
             //
@@ -2508,7 +2603,12 @@ namespace System.Windows
 
             public Object GetData(string format, bool autoConvert)
             {
-                return GetData(format, autoConvert, DVASPECT.DVASPECT_CONTENT, -1);
+                return GetData(format, autoConvert, -1);
+            }
+
+            public Object GetData(string format, bool autoConvert, int index)
+            {
+                return GetData(format, autoConvert, DVASPECT.DVASPECT_CONTENT, index);
             }
 
             public bool GetDataPresent(string format)
@@ -2523,7 +2623,12 @@ namespace System.Windows
 
             public bool GetDataPresent(string format, bool autoConvert)
             {
-                return GetDataPresent(format, autoConvert, DVASPECT.DVASPECT_CONTENT, -1);
+                return GetDataPresent(format, autoConvert, -1);
+            }
+
+            public bool GetDataPresent(string format, bool autoConvert, int index)
+            {
+                return GetDataPresent(format, autoConvert, DVASPECT.DVASPECT_CONTENT, index);
             }
 
             public string[] GetFormats()
@@ -2620,7 +2725,12 @@ namespace System.Windows
 
             public void SetData(string format, Object data, bool autoConvert)
             {
-                SetData(format, data, true, DVASPECT.DVASPECT_CONTENT, 0);
+                SetData(format, data, true, 0);
+            }
+
+            public void SetData(string format, Object data, bool autoConvert, int index)
+            {
+                SetData(format, data, true, DVASPECT.DVASPECT_CONTENT, index);
             }
 
             #endregion Public Methods
@@ -2764,13 +2874,14 @@ namespace System.Windows
 
                 formatetc.cfFormat = (short)DataFormats.GetDataFormat(format).Id;
                 formatetc.dwAspect = aspect;
-                formatetc.lindex = index;
+                formatetc.lindex = -1; // Clipboard's QueryGetData supports -1 only
                 formatetc.tymed = TYMED.TYMED_ISTREAM;
 
                 object outData = null;
 
                 if (NativeMethods.S_OK == QueryGetDataInner(ref formatetc))
                 {
+                    formatetc.lindex = index;
                     GetDataInner(ref formatetc, out medium);
                     try
                     {
@@ -3371,7 +3482,7 @@ namespace System.Windows
         /// <summary>
         /// DataStore
         /// </summary>
-        private class DataStore : IDataObject
+        private class DataStore : IDataObjectWithIndex
         {
             //------------------------------------------------------
             //
@@ -3407,7 +3518,12 @@ namespace System.Windows
 
             public Object GetData(string format, bool autoConvert)
             {
-                return GetData(format, autoConvert, DVASPECT.DVASPECT_CONTENT, -1);
+                return GetData(format, autoConvert, -1);
+            }
+
+            public Object GetData(string format, bool autoConvert, int index)
+            {
+                return GetData(format, autoConvert, DVASPECT.DVASPECT_CONTENT, index);
             }
 
             public bool GetDataPresent(string format)
@@ -3422,7 +3538,12 @@ namespace System.Windows
 
             public bool GetDataPresent(string format, bool autoConvert)
             {
-                return GetDataPresent(format, autoConvert, DVASPECT.DVASPECT_CONTENT, -1);
+                return GetDataPresent(format, autoConvert, -1);
+            }
+
+            public bool GetDataPresent(string format, bool autoConvert, int index)
+            {
+                return GetDataPresent(format, autoConvert, DVASPECT.DVASPECT_CONTENT, index);
             }
 
             public string[] GetFormats()
@@ -3538,6 +3659,11 @@ namespace System.Windows
 
             public void SetData(string format, Object data, bool autoConvert)
             {
+                SetData(format, data, autoConvert, 0);
+            }
+
+            public void SetData(string format, Object data, bool autoConvert, int index)
+            {
                 // We do not have proper support for Dibs, so if the user explicitly asked
                 // for Dib and provided a Bitmap object we can't convert.  Instead, publish as an HBITMAP
                 // and let the system provide the conversion for us.
@@ -3550,7 +3676,7 @@ namespace System.Windows
                     }
                 }
 
-                SetData(format, data, autoConvert, DVASPECT.DVASPECT_CONTENT, 0);
+                SetData(format, data, autoConvert, DVASPECT.DVASPECT_CONTENT, index);
             }
 
             #endregion Public Methods

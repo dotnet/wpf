@@ -17,6 +17,7 @@ namespace System.Windows
     using System;
     using MS.Win32;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Diagnostics;
@@ -523,6 +524,14 @@ namespace System.Windows
         }
 
         /// <summary>
+        /// Return tru if DataObject contains the file descriptor. Otherwise, return false.
+        /// </summary>
+        public bool ContainsFileGroup()
+        {
+            return GetDataPresent(DataFormats.FileGroupDescriptor, /*autoConvert*/false);
+        }
+
+        /// <summary>
         /// Return true if DataObject contains the image data. Otherwise, return false.
         /// </summary>
         public bool ContainsImage()
@@ -576,6 +585,20 @@ namespace System.Windows
             }
 
             return fileDropListCollection;
+        }
+
+        /// <summary>
+        /// Gets file descriptor list.
+        /// </summary>
+        public FileGroup GetFileGroup()
+        {
+            IEnumerable<FileDescriptor> descriptor = GetData(DataFormats.FileGroupDescriptor, /*autoConvert*/false) as IEnumerable<FileDescriptor>;
+            if (descriptor != null)
+            {
+                return new FileGroup(this, descriptor);
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -675,6 +698,28 @@ namespace System.Windows
             fileDropList.CopyTo(fileDropListStrings, 0);
 
             SetData(DataFormats.FileDrop, fileDropListStrings, /*audoConvert*/true);
+        }
+
+        /// <summary>
+        /// Set the file group data.
+        /// </summary>
+        public void SetFileGroup(FileGroup group)
+        {
+            if (group == null)
+            {
+                throw new ArgumentNullException(nameof(group));
+            }
+
+            if (group.Count == 0)
+            {
+                throw new ArgumentException(); // TODO: SR
+            }
+
+            for (int i = 0; i < group.Count; i++)
+            {
+                SetData(DataFormats.FileContents, group.GetFileContents(i), /*autoConvert*/false, i);
+            }
+            SetData(DataFormats.FileGroupDescriptor, group.FileDescriptors, /*autoConvert*/false);
         }
 
         /// <summary>
@@ -1675,6 +1720,17 @@ namespace System.Windows
             {
                 hr = SaveFileListToHandle(medium.unionmember, (string[])data, doNotReallocate);
             }
+            else if (IsFormatEqual(format, DataFormats.FileGroupDescriptor))
+            {
+                if (data is FileGroup group)
+                {
+                    hr = SaveFileGroupDescriptorToHandle(medium.unionmember, group.FileDescriptors, doNotReallocate);
+                }
+                else if (data is IReadOnlyCollection<FileDescriptor> descriptors)
+                {
+                    hr = SaveFileGroupDescriptorToHandle(medium.unionmember, descriptors, doNotReallocate);
+                }
+            }
             else if (IsFormatEqual(format, DataFormats.FileName))
             {
                 string[] filelist;
@@ -2057,6 +2113,81 @@ namespace System.Windows
             return NativeMethods.S_OK;
         }
 
+        private int SaveFileGroupDescriptorToHandle(IntPtr handle, IReadOnlyCollection<FileDescriptor> descriptors, bool doNotReallocate)
+        {
+            IntPtr currentPtr;
+            IntPtr basePtr;
+            Int32 sizeInBytes;
+            Int32 entrySize;
+
+            if (descriptors == null || descriptors.Count < 1)
+            {
+                return NativeMethods.S_OK;
+            }
+
+            if (handle == IntPtr.Zero)
+            {
+                return (NativeMethods.E_INVALIDARG);
+            }
+
+            if (Marshal.SystemDefaultCharSize == 1)
+            {
+                Invariant.Assert(false, "Expected the system default char size to be 2 for Unicode systems.");
+                return (NativeMethods.E_INVALIDARG);
+            }
+
+            entrySize = Marshal.SizeOf<NativeMethods.FILEDESCRIPTOR>();
+            sizeInBytes = FILEGROUPDESCRIPTORBASESIZE + entrySize * descriptors.Count;
+
+            int hr = EnsureMemoryCapacity(ref handle, sizeInBytes, doNotReallocate);
+            if (NativeMethods.Failed(hr))
+            {
+                return hr;
+            }
+
+            basePtr = Win32GlobalLock(new HandleRef(this, handle));
+
+            try
+            {
+                currentPtr = basePtr;
+                Marshal.WriteInt32(currentPtr, descriptors.Count);
+
+                currentPtr += sizeof(Int32);
+
+                foreach (FileDescriptor descriptor in descriptors)
+                {
+                    NativeMethods.FILEDESCRIPTOR fd = new NativeMethods.FILEDESCRIPTOR();
+                    fd.cFileName = descriptor.FileName;
+                    if (descriptor.Clsid is Guid clsid) { fd.clsid = clsid; fd.dwFlags |= NativeMethods.FD_CLSID; }
+                    if (descriptor.Icon is Int32Rect rect)
+                    {
+                        fd.sizel.cx = rect.Width; fd.sizel.cy = rect.Height;
+                        fd.pointl.x = rect.X; fd.pointl.y = rect.Y;
+                        fd.dwFlags |= NativeMethods.FD_CLSID;
+                    }
+                    if (descriptor.FileAttributes is FileAttributes attribs) { fd.dwFileAttributes = attribs; fd.dwFlags |= NativeMethods.FD_ATTRIBUTES; }
+                    if (descriptor.CreationTime is DateTime creation) { fd.ftCreationTime = creation.ToFileTime(); fd.dwFlags |= NativeMethods.FD_CREATETIME; }
+                    if (descriptor.LastAccessTime is DateTime access) { fd.ftLastAccessTime = access.ToFileTime(); fd.dwFlags |= NativeMethods.FD_ACCESSTIME; }
+                    if (descriptor.LastWriteTime is DateTime write) { fd.ftLastWriteTime = write.ToFileTime(); fd.dwFlags |= NativeMethods.FD_WRITESTIME; }
+                    if (descriptor.FileSize is long size)
+                    {
+                        fd.nFileSizeHigh = (int)(size >> 32);
+                        fd.nFileSizeLow = (int)size;
+                        fd.dwFlags |= NativeMethods.FD_FILESIZE;
+                    }
+
+                    Marshal.StructureToPtr(fd, currentPtr, /*fDeleteOld*/false);
+                    currentPtr += entrySize;
+                }
+            }
+            finally
+            {
+                Win32GlobalUnlock(new HandleRef(this, handle));
+            }
+
+            return NativeMethods.S_OK;
+        }
+
         /// <summary>
         /// Save string to handle. If unicode is set to true
         /// then the string is saved as unicode, else it is saves as DBCS.
@@ -2389,6 +2520,9 @@ namespace System.Windows
 
         // Const integer base size of the file drop list: "4 + 8 + 4 + 4"
         private const int FILEDROPBASESIZE   = 20;
+
+        // Const integer base size of the file group descriptor
+        private const int FILEGROUPDESCRIPTORBASESIZE = 4;
 
         // The largest multiple of 4096 that is still smaller than the large object heap threshold (85K).
         private const int MaxBufferSize = 81920;
@@ -2982,6 +3116,10 @@ namespace System.Windows
                     {
                         data = new string[] { ReadStringFromHandle(hglobal, true) };
                     }
+                    else if (IsFormatEqual(format, DataFormats.FileGroupDescriptor))
+                    {
+                        data = ReadFileGroupDescriptorFromHandle(hglobal);
+                    }
                     else if (IsFormatEqual(format, typeof(BitmapSource).FullName))
                     {
                         data = ReadBitmapSourceFromHandle(hglobal);
@@ -3314,6 +3452,44 @@ namespace System.Windows
                 }
 
                 return files;
+            }
+
+            private FileDescriptor[] ReadFileGroupDescriptorFromHandle(IntPtr handle)
+            {
+                IntPtr ptr;
+
+                FileDescriptor[] descriptors = null;
+
+                ptr = Win32GlobalLock(new HandleRef(this, handle));
+                try
+                {
+                    int count = Marshal.ReadInt32(ptr);
+                    ptr += sizeof(int);
+                    int entrySize = Marshal.SizeOf(typeof(NativeMethods.FILEDESCRIPTOR));
+
+                    descriptors = new FileDescriptor[count];
+                    for (int i = 0; i < count; i++)
+                    {
+                        NativeMethods.FILEDESCRIPTOR fd = Marshal.PtrToStructure<NativeMethods.FILEDESCRIPTOR>(ptr + i * entrySize);
+
+                        FileDescriptor descriptor = new FileDescriptor(fd.cFileName);
+                        if ((fd.dwFlags & NativeMethods.FD_CLSID) != 0) descriptor.Clsid = fd.clsid;
+                        if ((fd.dwFlags & NativeMethods.FD_SIZEPOINT) != 0) descriptor.Icon = new Int32Rect(fd.pointl.x, fd.pointl.y, fd.sizel.cx, fd.sizel.cy);
+                        if ((fd.dwFlags & NativeMethods.FD_ATTRIBUTES) != 0) descriptor.FileAttributes = fd.dwFileAttributes;
+                        if ((fd.dwFlags & NativeMethods.FD_CREATETIME) != 0) descriptor.CreationTime = DateTime.FromFileTime(fd.ftCreationTime);
+                        if ((fd.dwFlags & NativeMethods.FD_ACCESSTIME) != 0) descriptor.LastAccessTime = DateTime.FromFileTime(fd.ftLastAccessTime);
+                        if ((fd.dwFlags & NativeMethods.FD_WRITESTIME) != 0) descriptor.LastWriteTime = DateTime.FromFileTime(fd.ftLastWriteTime);
+                        if ((fd.dwFlags & NativeMethods.FD_FILESIZE) != 0) descriptor.FileSize = fd.nFileSizeHigh << 32 | fd.nFileSizeLow;
+
+                        descriptors[i] = descriptor;
+                    }
+                }
+                finally
+                {
+                    Win32GlobalUnlock(new HandleRef(this, handle));
+                }
+
+                return descriptors;
             }
 
             /// <summary>

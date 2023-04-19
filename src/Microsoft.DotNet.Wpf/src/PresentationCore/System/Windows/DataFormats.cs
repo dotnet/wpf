@@ -259,6 +259,18 @@ namespace System.Windows
         /// Specifies a data format as Xaml Package. This field is read-only.
         /// </summary>
         public static readonly string XamlPackage = "XamlPackage";
+
+        /// <summary>
+        /// Specifies a data format to transfer data as if it were a file,
+        /// regardless of how it is actually stored. This field is read-only.
+        /// </summary>
+        public static readonly string FileContents = "FileContents";
+
+        /// <summary>
+        /// Specifies a data format to transfer data as group of files.
+        /// Used together with <see cref="FileContents"/>. This field is read-only.
+        /// </summary>
+        public static readonly string FileGroupDescriptor = "FileGroupDescriptorW";
         #endregion Public Fields
 
         //------------------------------------------------------
@@ -452,7 +464,19 @@ namespace System.Windows
                         _formatList.Add(new DataFormat(System.Windows.Ink.StrokeCollection.InkSerializedFormat,
                                                         inkServicesFrameworkFormatId));
                     }
-}
+
+                    int fileContentsId = UnsafeNativeMethods.RegisterClipboardFormat(DataFormats.FileContents);
+                    if (fileContentsId != 0)
+                    {
+                        _formatList.Add(new DataFormat(FileContents, fileContentsId));
+                    }
+                    int fileDescriptorId = UnsafeNativeMethods.RegisterClipboardFormat(DataFormats.FileGroupDescriptor);
+                    if (applicationTrustFormatId != 0)
+                    {
+                        _formatList.Add(new DataFormat(FileGroupDescriptor, fileDescriptorId));
+                    }
+
+                }
             }
         }
 

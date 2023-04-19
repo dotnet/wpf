@@ -1750,22 +1750,21 @@ namespace System.Windows
 
             try
             {
-                // If the format is ISF, we should copy the data from the managed stream to the COM IStream object.
-                if ( format == System.Windows.Ink.StrokeCollection.InkSerializedFormat )
+                if (data is byte[] buffer)
                 {
-                    Stream inkStream = data as Stream;
-
-                    if ( inkStream != null )
+                    istream.Write(buffer, buffer.Length, IntPtr.Zero);
+                    hr = NativeMethods.S_OK;
+                }
+                else if (data is Stream stream)
+                {
+                    stream.Position = 0;
+                    buffer = new byte[MaxBufferSize];
+                    int read;
+                    while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
                     {
-                        IntPtr size = (IntPtr)inkStream.Length;
-
-                        byte[] buffer = new byte[NativeMethods.IntPtrToInt32(size)];
-                        inkStream.Position = 0;
-                        inkStream.Read(buffer, 0, NativeMethods.IntPtrToInt32(size));
-
-                        istream.Write(buffer, NativeMethods.IntPtrToInt32(size), IntPtr.Zero);
-                        hr = NativeMethods.S_OK;
+                        istream.Write(buffer, read, IntPtr.Zero);
                     }
+                    hr = NativeMethods.S_OK;
                 }
             }
             finally
@@ -2390,6 +2389,9 @@ namespace System.Windows
 
         // Const integer base size of the file drop list: "4 + 8 + 4 + 4"
         private const int FILEDROPBASESIZE   = 20;
+
+        // The largest multiple of 4096 that is still smaller than the large object heap threshold (85K).
+        private const int MaxBufferSize = 81920;
 
         // Allowed type medium.
         private static readonly TYMED[] ALLOWED_TYMEDS = new TYMED[]

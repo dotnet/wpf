@@ -48,7 +48,7 @@ namespace Microsoft.Win32
         /// In an inherited class, initializes a new instance of 
         /// the System.Windows.CommonItemDialog class.
         /// </summary>
-        protected CommonItemDialog()
+        private protected CommonItemDialog()
         {
             // Call Initialize to set defaults for fields
             // and to set defaults for some option flags.

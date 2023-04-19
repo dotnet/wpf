@@ -46,7 +46,7 @@ namespace Microsoft.Win32
         /// In an inherited class, initializes a new instance of 
         /// the System.Windows.FileDialog class.
         /// </summary>
-        protected FileDialog()
+        private protected FileDialog()
         {
             // Call Initialize to set defaults for fields
             // and to set defaults for some option flags.

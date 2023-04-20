@@ -363,20 +363,20 @@ namespace System.Windows
         /// <summary>
         /// Set the file group data to Clipboard.
         /// </summary>
-        public static void SetFileGroup(FileGroup group)
+        public static void SetFileGroup(FileGroup fileGroup)
         {
-            if (group == null)
+            if (fileGroup == null)
             {
-                throw new ArgumentNullException(nameof(group));
+                throw new ArgumentNullException(nameof(fileGroup));
             }
 
-            if (group.Count == 0)
+            if (fileGroup.Count == 0)
             {
-                throw new ArgumentException(); // TODO: SR
+                throw new ArgumentException(SR.Format(SR.DataObject_FileGroupIsEmpty, fileGroup));
             }
 
             DataObject dataObject = new DataObject();
-            dataObject.SetFileGroup(group);
+            dataObject.SetFileGroup(fileGroup);
             CriticalSetDataObject(dataObject, /*copy*/false);
         }
 

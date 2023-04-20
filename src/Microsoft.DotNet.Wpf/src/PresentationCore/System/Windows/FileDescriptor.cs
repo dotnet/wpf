@@ -6,6 +6,8 @@ using System.IO;
 using System.Collections.Generic;
 using System.Collections;
 
+using SR = MS.Internal.PresentationCore.SR;
+
 namespace System.Windows
 {
     public class FileGroup : IReadOnlyList<KeyValuePair<FileDescriptor, Stream>>
@@ -78,7 +80,7 @@ namespace System.Windows
 
             if (IsReadOnly)
             {
-                throw new InvalidOperationException(); // TODO: SR
+                throw new InvalidOperationException(SR.FileGroup_ReadOnly);
             }
 
             _fileDescriptors.Add(descriptor);
@@ -90,7 +92,7 @@ namespace System.Windows
             int index = _fileDescriptors.IndexOf(descriptor);
             if (index < 0)
             {
-                throw new KeyNotFoundException();
+                throw new KeyNotFoundException(SR.FileGroup_DescriptorNotFound);
             }
 
             return GetFileContents(index);

@@ -703,23 +703,23 @@ namespace System.Windows
         /// <summary>
         /// Set the file group data.
         /// </summary>
-        public void SetFileGroup(FileGroup group)
+        public void SetFileGroup(FileGroup fileGroup)
         {
-            if (group == null)
+            if (fileGroup == null)
             {
-                throw new ArgumentNullException(nameof(group));
+                throw new ArgumentNullException(nameof(fileGroup));
             }
 
-            if (group.Count == 0)
+            if (fileGroup.Count == 0)
             {
-                throw new ArgumentException(); // TODO: SR
+                throw new ArgumentException(SR.Format(SR.DataObject_FileGroupIsEmpty, fileGroup));
             }
 
-            for (int i = 0; i < group.Count; i++)
+            for (int i = 0; i < fileGroup.Count; i++)
             {
-                SetData(DataFormats.FileContents, group.GetFileContents(i), /*autoConvert*/false, i);
+                SetData(DataFormats.FileContents, fileGroup.GetFileContents(i), /*autoConvert*/false, i);
             }
-            SetData(DataFormats.FileGroupDescriptor, group.FileDescriptors, /*autoConvert*/false);
+            SetData(DataFormats.FileGroupDescriptor, fileGroup.FileDescriptors, /*autoConvert*/false);
         }
 
         /// <summary>

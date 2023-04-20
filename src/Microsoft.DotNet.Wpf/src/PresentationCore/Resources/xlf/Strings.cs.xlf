@@ -682,6 +682,11 @@
         <target state="translated">Soubor {0} musí obsahovat alespoň jednu cestu pro přetažení souboru.</target>
         <note />
       </trans-unit>
+      <trans-unit id="DataObject_FileGroupIsEmpty">
+        <source>'{0}' must contain at least one file.</source>
+        <target state="new">Skupina {0} musí obsahovat alespoň jeden soubor.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="DataObject_NotImplementedEnumFormatEtc">
         <source>'{0}' dwDirection parameter value is not supported.</source>
         <target state="translated">Hodnota parametru {0} dwDirection není podporována.</target>
@@ -1025,6 +1030,16 @@
       <trans-unit id="FileFormatExceptionWithFileName">
         <source>'{0}' file does not conform to the expected file format specification.</source>
         <target state="translated">Soubor {0} neodpovídá očekávané specifikaci formátu souboru.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileGroup_DescriptorNotFound">
+        <source>The given file descriptor is not present in the file group.</source>
+        <target state="new">Požadovaný soubor není ve skupině souborů přítomen.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileGroup_ReadOnly">
+        <source>A received FileGroup object cannot be modified.</source>
+        <target state="new">Obdržený objekt FileGroup nelze měnit.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileNotFoundExceptionWithFileName">

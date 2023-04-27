@@ -80,6 +80,10 @@ jobs:
           value: ''
         - name: _HelixCreator
           value: ${{ parameters.repoName }}
+        - name: _programfilesx86
+          value: ${Env:ProgramFiles(x86)}/dotnet          
+        - name: _programfiles
+          value:  ${Env:ProgramFiles}/dotnet
         - ${{ if ne(variables['System.TeamProject'], 'internal') }}:
           - name: _InternalRuntimeDownloadArgs
             value: ''

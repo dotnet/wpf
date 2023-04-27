@@ -6886,17 +6886,20 @@ namespace System.Windows.Controls
                     if (AutomationPeer.ListenerExists(AutomationEvents.PropertyChanged))
                     {
                         DataGridColumn column = (_cell != null) ? _cell.Column : _column;
-                        DataGridAutomationPeer peer = DataGridAutomationPeer.FromElement(column.DataGridOwner) as DataGridAutomationPeer;
-                        if (peer != null)
+                        if (column.DataGridOwner != null)
                         {
-                            object item = (_cell != null) ? _cell.DataContext : _item;
-                            DataGridItemAutomationPeer dataGridItemAutomationPeer = peer.FindOrCreateItemAutomationPeer(item) as DataGridItemAutomationPeer;
-                            if (dataGridItemAutomationPeer != null)
+                            DataGridAutomationPeer peer = DataGridAutomationPeer.FromElement(column.DataGridOwner) as DataGridAutomationPeer;
+                            if (peer != null)
                             {
-                                DataGridCellItemAutomationPeer cellPeer = dataGridItemAutomationPeer.GetOrCreateCellItemPeer(column);
-                                if (cellPeer != null)
+                                object item = (_cell != null) ? _cell.DataContext : _item;
+                                DataGridItemAutomationPeer dataGridItemAutomationPeer = peer.FindOrCreateItemAutomationPeer(item) as DataGridItemAutomationPeer;
+                                if (dataGridItemAutomationPeer != null)
                                 {
-                                    cellPeer.RaisePropertyChangedEvent(ValuePatternIdentifiers.ValueProperty, _value, newValue);
+                                    DataGridCellItemAutomationPeer cellPeer = dataGridItemAutomationPeer.GetOrCreateCellItemPeer(column);
+                                    if (cellPeer != null)
+                                    {
+                                        cellPeer.RaisePropertyChangedEvent(ValuePatternIdentifiers.ValueProperty, _value, newValue);
+                                    }
                                 }
                             }
                         }

@@ -215,7 +215,9 @@ namespace System.Windows.Automation
         protected ElementNotAvailableException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public ElementNotAvailableException(string message) { }
         public ElementNotAvailableException(string message, System.Exception innerException) { }
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class ElementNotEnabledException : System.InvalidOperationException
     {
@@ -223,7 +225,9 @@ namespace System.Windows.Automation
         protected ElementNotEnabledException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public ElementNotEnabledException(string message) { }
         public ElementNotEnabledException(string message, System.Exception innerException) { }
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public static partial class ExpandCollapsePatternIdentifiers
     {
@@ -273,7 +277,9 @@ namespace System.Windows.Automation
         protected NoClickablePointException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public NoClickablePointException(string message) { }
         public NoClickablePointException(string message, System.Exception innerException) { }
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public sealed partial class NotificationEventArgs : System.Windows.Automation.AutomationEventArgs
     {
@@ -295,7 +301,9 @@ namespace System.Windows.Automation
         protected ProxyAssemblyNotLoadedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public ProxyAssemblyNotLoadedException(string message) { }
         public ProxyAssemblyNotLoadedException(string message, System.Exception innerException) { }
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public static partial class RangeValuePatternIdentifiers
     {

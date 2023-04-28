@@ -276,14 +276,14 @@ namespace System.Xaml.Schema
                 object inst = CallCtorDelegate(type);
                 return inst;
             }
-
+#pragma warning disable SYSLIB0050
             private static object CallCtorDelegate(XamlTypeInvoker type)
             {
                 object inst = FormatterServices.GetUninitializedObject(type._xamlType.UnderlyingType);
                 InvokeDelegate(type._constructorDelegate, inst);
                 return inst;
             }
-
+#pragma warning restore SYSLIB0050
             private static void InvokeDelegate(Action<object> action, object argument)
             {
                 action.Invoke(argument);

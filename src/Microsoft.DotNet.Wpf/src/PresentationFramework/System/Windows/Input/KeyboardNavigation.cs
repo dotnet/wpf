@@ -1947,16 +1947,18 @@ namespace System.Windows.Input
 
         private bool IsTabStop(DependencyObject e)
         {
+            // todo: cann be simplified to: return IsFocusableInternal(e) && (bool)e.GetValue(IsTabStopProperty);
             FrameworkElement fe = e as FrameworkElement;
             if (fe != null)
-                return
-                    (fe.Focusable
-                    && (bool)fe.GetValue(IsTabStopProperty))
-                    && fe.IsEnabled
-                    && fe.IsVisible;
+            {
+                return fe.Focusable
+                       && (bool)fe.GetValue(IsTabStopProperty)
+                       && fe.IsVisible
+                       && (fe.IsEnabled || fe.FocusableWhenNotEnabled);
+            }
 
             FrameworkContentElement fce = e as FrameworkContentElement;
-            return fce != null && fce.Focusable && (bool)fce.GetValue(IsTabStopProperty) && fce.IsEnabled;
+            return fce != null && fce.Focusable && (bool)fce.GetValue(IsTabStopProperty) && (fce.IsEnabled || fce.FocusableWhenNotEnabled);
         }
 
         private bool IsGroup(DependencyObject e)
@@ -1969,13 +1971,13 @@ namespace System.Windows.Input
             UIElement uie = element as UIElement;
             if (uie != null)
             {
-                return (uie.Focusable && uie.IsEnabled && uie.IsVisible);
+                return uie.Focusable && uie.IsVisible && (uie.IsEnabled || uie.FocusableWhenNotEnabled);
             }
 
             ContentElement ce = element as ContentElement;
             if (ce != null)
             {
-                return (ce != null && ce.Focusable && ce.IsEnabled);
+                return ce.Focusable && (ce.IsEnabled || ce.FocusableWhenNotEnabled);
             }
 
             return false;

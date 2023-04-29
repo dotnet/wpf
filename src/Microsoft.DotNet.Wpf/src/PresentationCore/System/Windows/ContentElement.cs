@@ -750,6 +750,51 @@ namespace System.Windows
         #endregion Focusable Property
         //*********************************************************************
 
+                //*********************************************************************
+        #region FocusableWhenNotEnabled Property
+        //*********************************************************************
+
+        /// <summary>
+        ///     The DependencyProperty for the FocusableWhenNotEnabled property.
+        /// </summary>
+        [CommonDependencyProperty]
+        public static readonly DependencyProperty FocusableWhenNotEnabledProperty =
+            UIElement.FocusableWhenNotEnabledProperty.AddOwner(
+                typeof(UIElement3D),
+                new UIPropertyMetadata(
+                    BooleanBoxes.FalseBox, // default value
+                    new PropertyChangedCallback(OnFocusableWhenNotEnabledChanged)));
+
+        /// <summary>
+        ///     Gettor and Settor for FocusableWhenNotEnabled Property
+        /// </summary>
+        public bool FocusableWhenNotEnabled
+        {
+            get { return (bool)GetValue(FocusableWhenNotEnabledProperty); }
+            set { SetValue(FocusableWhenNotEnabledProperty, BooleanBoxes.Box(value)); }
+        }
+
+        /// <summary>
+        ///     FocusableWhenNotEnabledChanged event
+        /// </summary>
+        public event DependencyPropertyChangedEventHandler FocusableWhenNotEnabledChanged
+        {
+            add { EventHandlersStoreAdd(UIElement.FocusableWhenNotEnabledChangedKey, value); }
+            remove { EventHandlersStoreRemove(UIElement.FocusableWhenNotEnabledChangedKey, value); }
+        }
+
+        private static void OnFocusableWhenNotEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ContentElement ce = (ContentElement) d;
+
+            // Raise the public changed event.
+            ce.RaiseDependencyPropertyChanged(UIElement.FocusableWhenNotEnabledChangedKey, e);
+        }
+
+        //*********************************************************************
+        #endregion FocusableWhenNotEnabled Property
+        //*********************************************************************
+
         /// <summary>
         ///     A property indicating if the inptu method is enabled.
         /// </summary>

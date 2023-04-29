@@ -300,6 +300,7 @@
     <Compile Include="System\IO\Packaging\PackWebRequest.cs" />
     <Compile Include="System\IO\Packaging\PackWebRequestFactory.cs" />
     <Compile Include="System\IO\Packaging\PackWebResponse.cs" />
+    <Compile Include="System\Windows\FocusExtensions.cs" />
     <Compile Include="System\Windows\Generated\ContentElement.cs" />
     <Compile Include="System\Windows\Generated\TextDecoration.cs" />
     <Compile Include="System\Windows\Generated\TextDecorationCollection.cs" />

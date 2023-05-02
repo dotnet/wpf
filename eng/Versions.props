@@ -77,6 +77,16 @@
     <StrawberryPerlVersion>5.28.1.1-1</StrawberryPerlVersion>
     <NetFramework48RefAssembliesVersion>0.0.0.1</NetFramework48RefAssembliesVersion>
   </PropertyGroup>
+  <!-- Test related -->
+  <PropertyGroup>
+    <MoqPackageVersion>4.10.0</MoqPackageVersion>
+  </PropertyGroup>
+  <!-- Code Coverage -->
+  <PropertyGroup>
+    <CoverletMSBuildPackageVersion>3.1.2</CoverletMSBuildPackageVersion>
+    <CodecovVersion>1.9.0</CodecovVersion>
+    <ReportGeneratorVersion>4.0.9</ReportGeneratorVersion>
+  </PropertyGroup>
   <!--Package names-->
   <PropertyGroup>
     <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>

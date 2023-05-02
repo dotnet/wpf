@@ -1112,11 +1112,6 @@
         <target state="translated">Impossibile chiamare MarkupExtension.ProvideValue a causa di una dipendenza ciclica. Le proprietà all'interno di MarkupExtension non possono fare riferimento a oggetti che fanno riferimento al risultato di MarkupExtension. MarkupExtensions interessate:</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Il nome di tipo '{0}' non è specificato nel formato previsto 'nomeClasse, assembly'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="QuoteCharactersOutOfPlace">
         <source>Quote characters ' or " are only allowed at the start of values.</source>
         <target state="translated">Le virgolette ' o " sono consentite solo all'inizio di valori.</target>

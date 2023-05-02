@@ -1491,9 +1491,6 @@
   <data name="ServiceTypeAlreadyAdded" xml:space="preserve">
     <value>This serviceType is already registered to another service.</value>
   </data>
-  <data name="QualifiedNameHasWrongFormat" xml:space="preserve">
-    <value>'{0}' type name does not have the expected format 'className, assembly'.</value>
-  </data>
   <data name="ParserAttributeArgsHigh" xml:space="preserve">
     <value>Too many attributes are specified for '{0}'.</value>
   </data>

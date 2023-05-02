@@ -1112,11 +1112,6 @@
         <target state="translated">無法呼叫 MarkupExtension.ProvideValue，因為有循環相依性。MarkupExtension 內部的屬性不可參考會參考 MarkupExtension 結果的物件。受影響的 MarkupExtensions 為:</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">'{0}' 型別名稱不是預期的格式 'className, assembly'。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="QuoteCharactersOutOfPlace">
         <source>Quote characters ' or " are only allowed at the start of values.</source>
         <target state="translated">引號字元 ' 或 " 只能使用在值的開頭。</target>

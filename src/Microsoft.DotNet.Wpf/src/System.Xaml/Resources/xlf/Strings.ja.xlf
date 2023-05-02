@@ -1112,11 +1112,6 @@
         <target state="translated">循環する依存関係があるため、MarkupExtension.ProvideValue を呼び出すことができません。MarkupExtension 内のプロパティから、MarkupExtension の結果を参照するオブジェクトを参照することはできません。影響を受ける MarkupExtension は次のとおりです。</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">'{0}' 型名には、必要な形式 'className, assembly' がありません。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="QuoteCharactersOutOfPlace">
         <source>Quote characters ' or " are only allowed at the start of values.</source>
         <target state="translated">引用符 ' または " は、値の始めにしか使用できません。</target>

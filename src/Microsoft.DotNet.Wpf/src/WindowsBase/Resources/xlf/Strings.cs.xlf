@@ -1417,11 +1417,6 @@
         <target state="translated">Hlavička proměnné délky ve streamu publikační licence má {0} bajtů, což je více než maximální délka {1} bajtů.</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Název typu {0} nemá očekávaný formát className, assembly.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReachOutOfRange">
         <source>'{0}' index is beyond maximum '{1}'.</source>
         <target state="translated">Index {0} přesahuje maximum {1}.</target>

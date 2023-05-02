@@ -1417,11 +1417,6 @@
         <target state="translated">게시 라이선스 스트림의 가변 길이 헤더가 {0}바이트로, 최대 길이인 {1}바이트를 초과합니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">'{0}' 형식 이름에 'className, assembly' 형식이 없습니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReachOutOfRange">
         <source>'{0}' index is beyond maximum '{1}'.</source>
         <target state="translated">'{0}' 인덱스는 최댓값 '{1}'을(를) 초과합니다.</target>

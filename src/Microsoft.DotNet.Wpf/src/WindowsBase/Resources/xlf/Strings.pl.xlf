@@ -1417,11 +1417,6 @@
         <target state="translated">Nagłówek o zmiennej długości strumienia licencji publikowania ma bajtów: {0}, co przekracza maksymalną liczbę bajtów wynoszącą {1}.</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Nazwa typu „{0}” nie ma oczekiwanego formatu „nazwaKlasy, zestaw”.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReachOutOfRange">
         <source>'{0}' index is beyond maximum '{1}'.</source>
         <target state="translated">Indeks „{0}” przekroczył maksimum: „{1}”.</target>

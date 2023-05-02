@@ -1417,11 +1417,6 @@
         <target state="translated">Yayımlama lisansı akışındaki değişken uzunluklu üst bilgi {0} bayt boyutunda ve {1} bayt olan en fazla uzunluk sınırını aşıyor.</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">'{0}' tür adı beklenen 'className, assembly' biçiminde değil.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReachOutOfRange">
         <source>'{0}' index is beyond maximum '{1}'.</source>
         <target state="translated">'{0}' dizini '{1}' üst sınırın üzerinde.</target>

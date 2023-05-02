@@ -86,6 +86,16 @@
   <PropertyGroup>
     <MicrosoftCodeAnalysisNetAnalyzersVersion>7.0.0</MicrosoftCodeAnalysisNetAnalyzersVersion>
   </PropertyGroup>
+  <!-- Test related -->
+  <PropertyGroup>
+    <MoqPackageVersion>4.10.0</MoqPackageVersion>
+  </PropertyGroup>
+  <!-- Code Coverage -->
+  <PropertyGroup>
+    <CoverletMSBuildPackageVersion>3.1.2</CoverletMSBuildPackageVersion>
+    <CodecovVersion>1.9.0</CodecovVersion>
+    <ReportGeneratorVersion>4.0.9</ReportGeneratorVersion>
+  </PropertyGroup>
   <!--Package names-->
   <PropertyGroup>
     <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>

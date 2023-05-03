@@ -249,7 +249,6 @@
     <Compile Include="System\Windows\WeakEventManagerT.cs" />
     <Compile Include="System\Windows\Data\DataSourceProvider.cs " />
     <Compile Include="System\Windows\Markup\DateTimeConverter2.cs" />
-    <Compile Include="System\Windows\Markup\DateTimeValueSerializerContext.cs" />
     <Compile Include="System\Windows\Markup\InternalTypeHelper.cs" />
     <Compile Include="System\Windows\Markup\IReceiveMarkupExtension.cs" />
     <Compile Include="System\Windows\Markup\ServiceProviders.cs" />

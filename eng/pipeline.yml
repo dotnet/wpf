@@ -80,6 +80,10 @@ jobs:
           value: ''
         - name: _HelixCreator
           value: ${{ parameters.repoName }}
+        - name: _programfilesx86
+          value: ${Env:ProgramFiles(x86)}/dotnet          
+        - name: _programfiles
+          value:  ${Env:ProgramFiles}/dotnet
         - ${{ if ne(variables['System.TeamProject'], 'internal') }}:
           - name: _InternalRuntimeDownloadArgs
             value: ''
@@ -179,6 +183,34 @@ jobs:
         #   (!_HelixPipeline) ||
         #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
         condition: or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')))
+
+      - task: PowerShell@2
+        displayName: Install .NET Core
+        inputs:
+          filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
+          arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime dotnet -Version 8.0.0-preview.3.23174.8
+          condition: eq(variables['_Platform'], 'x64')
+      
+      - task: PowerShell@2
+        displayName: Install .NET Core(x86)
+        inputs:
+          filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
+          arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime dotnet -Version 8.0.0-preview.3.23174.8
+        condition: eq(variables['_Platform'], 'x86')
+  
+      - task: PowerShell@2
+        displayName: Install .NET WindowsDesktop
+        inputs:
+          filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
+          arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime windowsdesktop -Version 8.0.0-preview.3.23178.1
+        condition: eq(variables['_Platform'], 'x64')
+     
+      - task: PowerShell@2
+        displayName: Install .NET WindowsDesktop(x86)
+        inputs:
+          filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
+          arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime windowsdesktop -Version 8.0.0-preview.3.23178.1
+        condition: eq(variables['_Platform'], 'x86')  
 
       - task: PowerShell@2
         displayName: Replace WPF binaries

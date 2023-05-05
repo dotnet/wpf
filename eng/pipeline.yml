@@ -188,28 +188,28 @@ jobs:
         displayName: Install .NET Core
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
-          arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime dotnet -Version 8.0.0-preview.3.23178.1
+          arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime dotnet -Version 8.0.0-preview.3.23174.8
           condition: eq(variables['_Platform'], 'x64')
       
       - task: PowerShell@2
         displayName: Install .NET Core(x86)
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
-          arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime dotnet -Version 8.0.0-preview.3.23178.1
+          arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime dotnet -Version 8.0.0-preview.3.23174.8
         condition: eq(variables['_Platform'], 'x86')
   
       - task: PowerShell@2
         displayName: Install .NET WindowsDesktop
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
-          arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime windowsdesktop -Version 8.0.0-preview.3.23178.1
+          arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime windowsdesktop -Version 8.0.0-preview.3.23174.8
         condition: eq(variables['_Platform'], 'x64')
      
       - task: PowerShell@2
         displayName: Install .NET WindowsDesktop(x86)
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
-          arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime windowsdesktop -Version 8.0.0-preview.3.23178.1
+          arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime windowsdesktop -Version 8.0.0-preview.3.23174.8
         condition: eq(variables['_Platform'], 'x86')  
 
       - task: PowerShell@2

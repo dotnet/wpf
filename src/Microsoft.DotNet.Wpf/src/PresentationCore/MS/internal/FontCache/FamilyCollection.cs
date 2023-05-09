@@ -413,7 +413,7 @@ namespace MS.Internal.FontCache
                 {
                     // To obtain the face name, we remove the family name and the next char (A space) from the original family name.
                     int faceNameIndex = familyName.Length + 1;
-                    ReadOnlySpan<char> faceName = originalFamilyName.AsSpan(faceNameIndex, originalFamilyName.Length - faceNameIndex);
+                    ReadOnlySpan<char> faceName = originalFamilyName.AsSpan(faceNameIndex);
                     Text.TextInterface.Font font = GetFontFromFamily(fontFamilyDWrite, faceName);
 
                     if (font != null)

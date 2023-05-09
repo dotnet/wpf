@@ -64,7 +64,8 @@ namespace System.Windows.Media
             _advances = glyphRun.AdvanceWidths;
             _offsets = glyphRun.GlyphOffsets;
 
-            _advanceWidthRoundingError = 0.0;
+            _currentAdvanceTotal = 0.0;
+            _idealAdvanceTotal = 0.0;
 
             // "100,50,,0;".Length is a capacity estimate for an individual glyph
             _glyphStringBuider = new StringBuilder(10);
@@ -84,7 +85,8 @@ namespace System.Windows.Media
         /// </summary>
         public void ComputeContentStrings(out string characters, out string indices, out string caretStops)
         {
-            _advanceWidthRoundingError = 0.0;
+            _currentAdvanceTotal = 0.0;
+            _idealAdvanceTotal = 0.0;
 
             if (_clusters != null)
             {
@@ -188,13 +190,28 @@ namespace System.Windows.Media
             _glyphStringBuider.Append(GlyphSubEntrySeparator);
 
             // advance width
-            double unroundedAdvance = _advances[glyph] * _milToEm;
-            int normalizedAdvance = (int)Math.Round(unroundedAdvance + _advanceWidthRoundingError);
-            _advanceWidthRoundingError += (unroundedAdvance - (double)normalizedAdvance);
+            // #7499 Advance width needs to be specified if it differs from what is in the font tables. [ECMA-388 O5.5]
+            // Most commonly it differs after shaping, e.g. when kerning is applied. (Ex. 12-15)
+            // XPS supports floating point values, but in the interest of file size, we want to specify integers.
+
+            double shapingAdvance = _advances[glyph] * _milToEm;
             double fontAdvance = _sideways ? _glyphTypeface.AdvanceHeights[fontIndex] : _glyphTypeface.AdvanceWidths[fontIndex];
-            if (normalizedAdvance != (int)Math.Round(fontAdvance * EmScaleFactor))
+
+            // To minimize rounding errors, we keep track of the unrounded advance total as required by [M5.6].
+            int roundedShapingAdvance = (int)Math.Round(_idealAdvanceTotal + shapingAdvance - _currentAdvanceTotal);
+            int roundedFontAdvance = (int)Math.Round(fontAdvance);
+
+            if (roundedShapingAdvance != roundedFontAdvance)
             {
-                _glyphStringBuider.Append(normalizedAdvance.ToString(CultureInfo.InvariantCulture));
+                _glyphStringBuider.Append(roundedShapingAdvance.ToString(CultureInfo.InvariantCulture));
+                _currentAdvanceTotal += roundedShapingAdvance;
+                _idealAdvanceTotal += shapingAdvance;
+            }
+            else
+            {
+                // when the value comes from the font tables, the specification does not mandate clients to do any rounding
+                _currentAdvanceTotal += fontAdvance;
+                _idealAdvanceTotal += fontAdvance;
             }
 
             _glyphStringBuider.Append(GlyphSubEntrySeparator);
@@ -326,7 +343,9 @@ namespace System.Windows.Media
 
         private int _glyphClusterInitialOffset;
 
-        private double _advanceWidthRoundingError;
+        private double _currentAdvanceTotal;
+
+        private double _idealAdvanceTotal;
 
         private IList<ushort> _clusters;
 

@@ -57,33 +57,7 @@ namespace MS.Internal.Text.TextInterface
 
         private static IntPtr LoadDWriteLibraryAndGetProcAddress(out delegate* unmanaged<int, void*, void*, int> DWriteCreateFactory)
         {
-            IntPtr hDWriteLibrary = IntPtr.Zero;
-
-            // KB2533623 introduced the LOAD_LIBRARY_SEARCH_SYSTEM32 flag. It also introduced
-            // the AddDllDirectory function. We test for presence of AddDllDirectory as an 
-            // indirect evidence for the support of LOAD_LIBRARY_SEARCH_SYSTEM32 flag. 
-            IntPtr hKernel32 = Kernel32.GetModuleHandleW(Libraries.Kernel32);
-
-            if (hKernel32 != IntPtr.Zero)
-            {
-                if (Kernel32.GetProcAddress(hKernel32, "AddDllDirectory") != IntPtr.Zero)
-                {
-                    // All supported platforms newer than Vista SP2 shipped with dwrite.dll.
-                    // On Vista SP2, the .NET servicing process will ensure that a MSU containing 
-                    // dwrite.dll will be delivered as a prerequisite - effectively guaranteeing that 
-                    // this following call to LoadLibraryEx(dwrite.dll) will succeed, and that it will 
-                    // not be susceptible to typical DLL planting vulnerability vectors.
-                    hDWriteLibrary = Kernel32.LoadLibraryExW("dwrite.dll", IntPtr.Zero, Kernel32.LOAD_LIBRARY_SEARCH_SYSTEM32);
-                }
-                else
-                {
-                    // LOAD_LIBRARY_SEARCH_SYSTEM32 is not supported on this OS. 
-                    // Fall back to using plain ol' LoadLibrary
-                    // There is risk that this call might fail, or that it might be
-                    // susceptible to DLL hijacking. 
-                    hDWriteLibrary = Kernel32.LoadLibraryW("dwrite.dll");
-                }
-            }
+            IntPtr hDWriteLibrary = Kernel32.LoadLibraryExW("dwrite.dll", IntPtr.Zero, Kernel32.LOAD_LIBRARY_SEARCH_SYSTEM32);
 
             if (hDWriteLibrary != IntPtr.Zero)
             {

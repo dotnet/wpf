@@ -25,20 +25,6 @@
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
         <Link>Common\System\SR.cs</Link>
     </Compile>
-    <Compile Include="$(WpfCommonDir)\src\Interop\Windows\Interop.HRESULT_FROM_WIN32.cs"
-             Link="Common\Interop\Windows\Interop.HRESULT_FROM_WIN32.cs" />
-    <Compile Include="$(WpfCommonDir)\src\Interop\Windows\Interop.Libraries.cs"
-             Link="Common\Interop\Windows\Interop.Libraries.cs" />
-    <Compile Include="$(WpfCommonDir)\src\Interop\Windows\Kernel32\Interop.FreeLibrary.cs"
-             Link="Common\Interop\Windows\Kernel32\Interop.FreeLibrary.cs" />
-    <Compile Include="$(WpfCommonDir)\src\Interop\Windows\Kernel32\Interop.GetModuleHandle.cs"
-             Link="Common\Interop\Windows\Kernel32\Interop.GetModuleHandle.cs" />
-    <Compile Include="$(WpfCommonDir)\src\Interop\Windows\Kernel32\Interop.GetProcAddress.cs"
-             Link="Common\Interop\Windows\Kernel32\Interop.GetProcAddress.cs" />
-    <Compile Include="$(WpfCommonDir)\src\Interop\Windows\Kernel32\Interop.LoadLibrary.cs"
-             Link="Common\Interop\Windows\Kernel32\Interop.LoadLibrary.cs" />
-    <Compile Include="$(WpfCommonDir)\src\Interop\Windows\Kernel32\Interop.LoadLibraryEx.cs"
-             Link="Common\Interop\Windows\Kernel32\Interop.LoadLibraryEx.cs" />
     <Compile Include="$(WpfCommonDir)\Graphics\wgx_error.cs" />
     <Compile Include="$(WpfCommonDir)\Graphics\wgx_render.cs" />
     <Compile Include="$(WpfCommonDir)\Graphics\wgx_exports.cs" />

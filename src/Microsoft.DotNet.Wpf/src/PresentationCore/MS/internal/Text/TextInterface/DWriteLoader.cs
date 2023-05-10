@@ -5,8 +5,6 @@ using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 
-using static Interop;
-
 namespace MS.Internal.Text.TextInterface
 {
     internal static unsafe class DWriteLoader
@@ -35,11 +33,7 @@ namespace MS.Internal.Text.TextInterface
         
             if (_dwrite != IntPtr.Zero)
             {
-                if (Kernel32.FreeLibrary(_dwrite) != 0)
-                {
-                    int lastError = Marshal.GetLastPInvokeError();
-                    Marshal.ThrowExceptionForHR(HRESULT_FROM_WIN32(lastError));
-                }
+                NativeLibrary.Free(_dwrite);
 
                 _dwrite = IntPtr.Zero;
             }
@@ -57,11 +51,11 @@ namespace MS.Internal.Text.TextInterface
 
         private static IntPtr LoadDWriteLibraryAndGetProcAddress(out delegate* unmanaged<int, void*, void*, int> DWriteCreateFactory)
         {
-            IntPtr hDWriteLibrary = Kernel32.LoadLibraryExW("dwrite.dll", IntPtr.Zero, Kernel32.LOAD_LIBRARY_SEARCH_SYSTEM32);
+            IntPtr hDWriteLibrary = NativeLibrary.Load("dwrite.dll", typeof(DWriteLoader).Assembly, DllImportSearchPath.System32);
 
             if (hDWriteLibrary != IntPtr.Zero)
             {
-                DWriteCreateFactory = (delegate* unmanaged<int, void*, void*, int>)Kernel32.GetProcAddress(hDWriteLibrary, "DWriteCreateFactory");
+                DWriteCreateFactory = (delegate* unmanaged<int, void*, void*, int>)NativeLibrary.GetExport(hDWriteLibrary, "DWriteCreateFactory");
             }
             else
             {

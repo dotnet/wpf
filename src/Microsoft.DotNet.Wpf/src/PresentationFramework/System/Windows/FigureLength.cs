@@ -102,15 +102,15 @@ namespace System.Windows
 
             if (double.IsNaN(value))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidCtorParameterNoNaN, "value"));
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoNaN, "value"));
             }
             if (double.IsInfinity(value))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidCtorParameterNoInfinity, "value"));
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoInfinity, "value"));
             }
             if (value < 0.0)
             {
-                throw new ArgumentOutOfRangeException(SR.Get(SRID.InvalidCtorParameterNoNegative, "value"));
+                throw new ArgumentOutOfRangeException(SR.Format(SR.InvalidCtorParameterNoNegative, "value"));
             }
             if (    type != FigureUnitType.Auto
                 &&  type != FigureUnitType.Pixel
@@ -118,7 +118,7 @@ namespace System.Windows
                 &&  type != FigureUnitType.Content
                 &&  type != FigureUnitType.Page   )
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidCtorParameterUnknownFigureUnitType, "type"));
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterUnknownFigureUnitType, "type"));
             }
             if(value > 1.0 && (type == FigureUnitType.Content || type == FigureUnitType.Page))
             {

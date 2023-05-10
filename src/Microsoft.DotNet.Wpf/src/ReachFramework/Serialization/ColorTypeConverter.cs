@@ -114,7 +114,7 @@ namespace System.Windows.Xps.Serialization
             }
             if (!IsSupportedType(value.GetType()))
             {
-                throw new NotSupportedException(SR.Get(SRID.Converter_ConvertFromNotSupported));
+                throw new NotSupportedException(SR.Converter_ConvertFromNotSupported);
             }
 
             throw new NotImplementedException();
@@ -152,7 +152,7 @@ namespace System.Windows.Xps.Serialization
         {
             if (!IsSupportedType(destinationType))
             {
-                throw new NotSupportedException(SR.Get(SRID.Converter_ConvertToNotSupported));
+                throw new NotSupportedException(SR.Converter_ConvertToNotSupported);
             }
 
             Color color = (Color)value;

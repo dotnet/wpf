@@ -20,7 +20,7 @@ using System.Runtime.Serialization;
 using System.Diagnostics;               // For Assert
 using MS.Utility;                       // for EventTrace
 using MS.Internal.IO.Packaging;         // for PackageCacheEntry
-using MS.Internal.PresentationCore;     // for SRID exception strings
+using MS.Internal.PresentationCore;     // for SR exception strings
 using System.Security;                  // for SecurityCritical
 using MS.Internal;
 
@@ -137,7 +137,7 @@ namespace System.IO.Packaging
                         {
                             // only use cached value
                             if (!cachedPackageAvailable)
-                                throw new WebException(SR.Get(SRID.ResourceNotFoundUnderCacheOnlyPolicy));
+                                throw new WebException(SR.ResourceNotFoundUnderCacheOnlyPolicy);
                         } break;
 
                     case RequestCacheLevel.CacheIfAvailable:
@@ -147,7 +147,7 @@ namespace System.IO.Packaging
 
                     default:
                         {
-                            throw new WebException(SR.Get(SRID.PackWebRequestCachePolicyIllegal));
+                            throw new WebException(SR.PackWebRequestCachePolicyIllegal);
                         }
                 }
             }
@@ -168,7 +168,7 @@ namespace System.IO.Packaging
                 // only return a real WebRequest instance - throw on a PseudoWebRequest
                 WebRequest request = GetRequest(false);
                 if (_webRequest == null || _webRequest is PseudoWebRequest)
-                    throw new InvalidOperationException(SR.Get(SRID.SchemaInvalidForTransport));
+                    throw new InvalidOperationException(SR.SchemaInvalidForTransport);
 
 #if DEBUG
                 if (PackWebRequestFactory._traceSwitch.Enabled)
@@ -213,7 +213,7 @@ namespace System.IO.Packaging
                         case RequestCacheLevel.CacheOnly: break;
                         case RequestCacheLevel.CacheIfAvailable: break;
                         default:
-                            throw new WebException(SR.Get(SRID.PackWebRequestCachePolicyIllegal));
+                            throw new WebException(SR.PackWebRequestCachePolicyIllegal);
                     }
 
                     _cachePolicy = value;

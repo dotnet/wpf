@@ -24,7 +24,6 @@ namespace System.Windows.Media
     using System.Threading;
 
     using SR=MS.Internal.PresentationCore.SR;
-    using SRID=MS.Internal.PresentationCore.SRID;
 
     /// <summary>
     /// Host visual.
@@ -161,7 +160,7 @@ namespace System.Windows.Media
                 if (_target != null)
                 {
                     throw new InvalidOperationException(
-                        SR.Get(SRID.VisualTarget_AnotherTargetAlreadyConnected)
+                        SR.VisualTarget_AnotherTargetAlreadyConnected
                         );
                 }
 

@@ -531,7 +531,7 @@ namespace System.Windows.Xps.Packaging
                 }
                 if( !n.Commited )
                 {
-                    throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_DependantsNotCommitted));
+                    throw new XpsPackagingException(SR.ReachPackaging_DependantsNotCommitted);
                 }
             }
         }

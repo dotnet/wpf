@@ -21,7 +21,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Markup;
 using MMCF = System.IO.Packaging;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Windows.Media.Imaging;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
@@ -69,7 +68,7 @@ namespace System.Windows.Media
                 {
                     if (!(context.Instance is ImageSource))
                     {
-                        throw new ArgumentException(SR.Get(SRID.General_Expected_Type, "ImageSource"), "context");
+                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "ImageSource"), "context");
                     }
 
                     #pragma warning suppress 6506 // context is obviously not null
@@ -218,7 +217,7 @@ namespace System.Windows.Media
                         #pragma warning disable 6506
                         if (!instance.CanSerializeToString())
                         {
-                            throw new NotSupportedException(SR.Get(SRID.Converter_ConvertToNotSupported));
+                            throw new NotSupportedException(SR.Converter_ConvertToNotSupported);
                         }
                         #pragma warning restore 6506
                     }

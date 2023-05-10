@@ -33,7 +33,6 @@ using MS.Win32;
 using Microsoft.Win32.SafeHandles;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -427,7 +426,7 @@ namespace System.Windows.Media
                 // It's never correct to not have an event handler hooked up in
                 // the case when an invalid shader is encountered.  Raise an
                 // exception directing the app to hook up an event handler.
-                throw new InvalidOperationException(SR.Get(SRID.MediaContext_NoBadShaderHandler));
+                throw new InvalidOperationException(SR.MediaContext_NoBadShaderHandler);
             }
         }
 
@@ -450,9 +449,9 @@ namespace System.Windows.Media
             case HRESULT.E_OUTOFMEMORY:
                 throw new System.OutOfMemoryException();
             case HRESULT.D3DERR_OUTOFVIDEOMEMORY:
-                throw new System.OutOfMemoryException(SR.Get(SRID.MediaContext_OutOfVideoMemory));
+                throw new System.OutOfMemoryException(SR.MediaContext_OutOfVideoMemory);
             default:
-                throw new System.InvalidOperationException(SR.Get(SRID.MediaContext_RenderThreadError));
+                throw new System.InvalidOperationException(SR.MediaContext_RenderThreadError);
             }
         }
 
@@ -1821,7 +1820,7 @@ namespace System.Windows.Media
                     tickLoopCount++;
                     if (tickLoopCount > 153)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.MediaContext_InfiniteTickLoop));
+                        throw new InvalidOperationException(SR.MediaContext_InfiniteTickLoop);
                     }
 
                     _timeManager.Tick();
@@ -1960,7 +1959,7 @@ namespace System.Windows.Media
                     callbackLoopCount++;
                     if (callbackLoopCount > 153)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.MediaContext_InfiniteLayoutLoop));
+                        throw new InvalidOperationException(SR.MediaContext_InfiniteLayoutLoop);
                     }
 
                     FrugalObjectList<InvokeOnRenderCallback> callbacks = _invokeOnRenderCallbacks;
@@ -2333,7 +2332,7 @@ namespace System.Windows.Media
         {
             if (!WriteAccessEnabled)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MediaContext_APINotAllowed));
+                throw new InvalidOperationException(SR.MediaContext_APINotAllowed);
             }
         }
 

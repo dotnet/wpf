@@ -130,10 +130,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
                                                     IEnumerable<XamlType> ceilingTypes,
                                                     params XamlMember[] properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            ArgumentNullException.ThrowIfNull(properties);
 
             foreach (var property in properties)
             {
@@ -149,10 +146,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
 
         object IAmbientProvider.GetFirstAmbientValue(params XamlType[] types)
         {
-            if (types == null)
-            {
-                throw new ArgumentNullException(nameof(types));
-            }
+            ArgumentNullException.ThrowIfNull(types);
 
             foreach (var type in types)
             {
@@ -170,10 +164,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
                                                     IEnumerable<XamlType> ceilingTypes,
                                                     params XamlMember[] properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            ArgumentNullException.ThrowIfNull(properties);
 
             foreach (var property in properties)
             {
@@ -189,10 +180,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
 
         IEnumerable<object> IAmbientProvider.GetAllAmbientValues(params XamlType[] types)
         {
-            if (types == null)
-            {
-                throw new ArgumentNullException(nameof(types));
-            }
+            ArgumentNullException.ThrowIfNull(types);
 
             foreach (var type in types)
             {
@@ -212,10 +200,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
                                                     IEnumerable<XamlType> types,
                                                     params XamlMember[] properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            ArgumentNullException.ThrowIfNull(properties);
 
             foreach (var property in properties)
             {

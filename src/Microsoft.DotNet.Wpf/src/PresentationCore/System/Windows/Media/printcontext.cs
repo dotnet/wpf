@@ -492,7 +492,7 @@ namespace System.Windows.Media
         {
             if (val <= 0)
             {
-                throw new ArgumentOutOfRangeException(name, SR.Get(SRID.ParameterMustBeGreaterThanZero));
+                throw new ArgumentOutOfRangeException(name, SR.ParameterMustBeGreaterThanZero);
             }
         }
 

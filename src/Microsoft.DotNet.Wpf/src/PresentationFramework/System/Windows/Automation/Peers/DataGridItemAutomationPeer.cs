@@ -145,7 +145,7 @@ namespace System.Windows.Automation.Peers
             {
                 if (!SelectorAutomationPeer.IsPropertySupportedByControlForFindItemInternal(propertyId))
                 {
-                    throw new ArgumentException(SR.Get(SRID.PropertyNotSupported));
+                    throw new ArgumentException(SR.PropertyNotSupported);
                 }
             }
 
@@ -167,7 +167,7 @@ namespace System.Windows.Automation.Peers
                 {
                     if (startAfterItem.Column == null)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.InavalidStartItem));
+                        throw new InvalidOperationException(SR.InavalidStartItem);
                     }
 
                     // To find the index of the item in items collection which occurs
@@ -261,7 +261,7 @@ namespace System.Windows.Automation.Peers
             // BeginEdit on a NewItemPlaceholder row returns false.
             if (!success && !IsNewItemPlaceholder)
             {
-                throw new InvalidOperationException(SR.Get(SRID.DataGrid_AutomationInvokeFailed));
+                throw new InvalidOperationException(SR.DataGrid_AutomationInvokeFailed);
             }
         }
 
@@ -298,7 +298,7 @@ namespace System.Windows.Automation.Peers
         {
             if (!IsRowSelectionUnit)
             {
-                throw new InvalidOperationException(SR.Get(SRID.DataGridRow_CannotSelectRowWhenCells));
+                throw new InvalidOperationException(SR.DataGridRow_CannotSelectRowWhenCells);
             }
 
             // If item is already selected - do nothing
@@ -326,7 +326,7 @@ namespace System.Windows.Automation.Peers
         {
             if (!IsRowSelectionUnit)
             {
-                throw new InvalidOperationException(SR.Get(SRID.DataGridRow_CannotSelectRowWhenCells));
+                throw new InvalidOperationException(SR.DataGridRow_CannotSelectRowWhenCells);
             }
 
             EnsureEnabled();
@@ -342,7 +342,7 @@ namespace System.Windows.Automation.Peers
         {
             if (!IsRowSelectionUnit)
             {
-                throw new InvalidOperationException(SR.Get(SRID.DataGridRow_CannotSelectRowWhenCells));
+                throw new InvalidOperationException(SR.DataGridRow_CannotSelectRowWhenCells);
             }
 
             EnsureEnabled();

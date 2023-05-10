@@ -7,6 +7,9 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.resx"/>
+    <Compile Include="$(WpfCommonDir)src\System\SR.cs">
+        <Link>Common\System\SR.cs</Link>
+    </Compile>
     <Compile Include="System\Windows\Input\Manipulations\DoubleUtil.cs" />
     <Compile Include="System\Windows\Input\Manipulations\Exceptions.cs" />
     <Compile Include="System\Windows\Input\Manipulations\GlobalSuppressions.cs" />

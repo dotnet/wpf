@@ -13,7 +13,6 @@ using System.Windows.Input;
 using System.Diagnostics;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using MS.Internal;
 using MS.Internal.PresentationCore;
 

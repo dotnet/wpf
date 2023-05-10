@@ -28,7 +28,6 @@ using MS.Win32.PresentationCore;
 using MS.Internal.AppModel;
 using MS.Internal.PresentationCore;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Net;
 using System.Net.Cache;
 using System.Text;
@@ -171,7 +170,7 @@ namespace System.Windows.Media.Imaging
 
             if (!passed)
             {
-                throw new IOException(SR.Get(SRID.Image_CannotCreateTempFile));
+                throw new IOException(SR.Image_CannotCreateTempFile);
             }
 
             entry.readBuffer  = new byte[READ_SIZE];

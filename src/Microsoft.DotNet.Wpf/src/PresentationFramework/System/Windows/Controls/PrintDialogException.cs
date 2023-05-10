@@ -51,7 +51,7 @@ namespace System.Windows.Controls
             : base(message, innerException)
         {
         }
-
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         /// <summary>
         /// 
         /// </summary>
@@ -65,7 +65,7 @@ namespace System.Windows.Controls
             : base(info, context)
         {
         }
-
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
         #endregion Constructors
     }
 }

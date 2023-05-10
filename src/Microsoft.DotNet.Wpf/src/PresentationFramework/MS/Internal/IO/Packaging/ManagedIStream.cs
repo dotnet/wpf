@@ -139,7 +139,7 @@ namespace MS.Internal.IO.Packaging
                 // A stream that is neither readable nor writable is a closed stream.
                 // Note the use of an exception that is known to the interop marshaller
                 // (unlike ObjectDisposedException).
-                throw new IOException(SR.Get(SRID.StreamObjectDisposed));
+                throw new IOException(SR.StreamObjectDisposed);
             }
         }
 

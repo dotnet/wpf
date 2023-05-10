@@ -467,7 +467,7 @@ namespace System.Windows.Controls
 
             if (!Popup.IsRootedInPopup(_parentPopup, this))
             {
-                throw new InvalidOperationException(SR.Get(SRID.ElementMustBeInPopup, "ToolTip"));
+                throw new InvalidOperationException(SR.Format(SR.ElementMustBeInPopup, "ToolTip"));
             }
         }
 
@@ -477,7 +477,7 @@ namespace System.Windows.Controls
 
             if (!Popup.IsRootedInPopup(_parentPopup, this))
             {
-                throw new InvalidOperationException(SR.Get(SRID.ElementMustBeInPopup, "ToolTip"));
+                throw new InvalidOperationException(SR.Format(SR.ElementMustBeInPopup, "ToolTip"));
             }
         }
 

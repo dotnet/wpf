@@ -76,7 +76,6 @@ namespace MS.Internal.Xaml.Runtime
             {
                 throw CreateException((SR.Format(SR.CannotResolveTypeForFactoryMethod, xamlType, methodName)));
             }
-            string qMethodName = type.ToString() + "." + methodName;
             object instance = null;
             try
             {
@@ -88,10 +87,14 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
+                string qMethodName = type.ToString() + "." + methodName;
                 throw CreateException(SR.Format(SR.MethodInvocation, qMethodName), UnwrapTargetInvocationException(e));
             }
+
             if (instance == null)
             {
+                string qMethodName = type.ToString() + "." + methodName;
                 throw CreateException(SR.Format(SR.FactoryReturnedNull, qMethodName));
             }
             return instance;
@@ -100,7 +103,7 @@ namespace MS.Internal.Xaml.Runtime
         protected virtual object InvokeFactoryMethod(Type type, string methodName, object[] args)
         {
             MethodInfo method = GetFactoryMethod(type, methodName, args, BindingFlags.Public | BindingFlags.Static);
-            return SafeReflectionInvoker.InvokeMethod(method, null, args);
+            return method.Invoke(null, args);
         }
 
         protected MethodInfo GetFactoryMethod(Type type, string methodName, object[] args, BindingFlags flags)
@@ -655,7 +658,7 @@ namespace MS.Internal.Xaml.Runtime
 
         protected virtual Delegate CreateDelegate(Type delegateType, object target, string methodName)
         {
-            return SafeReflectionInvoker.CreateDelegate(delegateType, target, methodName);
+            return Delegate.CreateDelegate(delegateType, target, methodName);
         }
 
         internal XamlRuntimeSettings GetSettings()

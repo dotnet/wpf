@@ -13,7 +13,7 @@
 
 using System.ComponentModel;        // AsyncCompletedEventArgs
 using System.Windows.Media;         // Visual
-using MS.Internal.PresentationCore; // SR, SRID
+using MS.Internal.PresentationCore; // SR
 
 namespace System.Windows.Documents 
 {
@@ -76,7 +76,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.Get(SRID.PaginatorNegativePageNumber));
+                throw new ArgumentOutOfRangeException("pageNumber", SR.PaginatorNegativePageNumber);
             }
 
             page = GetPage(pageNumber);

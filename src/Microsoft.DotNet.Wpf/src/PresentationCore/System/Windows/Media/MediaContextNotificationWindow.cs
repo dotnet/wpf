@@ -28,7 +28,6 @@ using MS.Win32;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using DllImport=MS.Internal.PresentationCore.DllImport;
 
 namespace System.Windows.Media

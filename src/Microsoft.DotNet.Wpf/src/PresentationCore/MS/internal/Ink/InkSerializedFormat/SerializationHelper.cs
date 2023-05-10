@@ -9,7 +9,6 @@ using System.Runtime.InteropServices;
 using System.Windows;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Ink.InkSerializedFormat
 {
@@ -326,7 +325,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             {
                 if (throwOnError)
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidDataTypeForExtendedProperty));
+                    throw new ArgumentException(SR.InvalidDataTypeForExtendedProperty);
                 }
                 else
                 {

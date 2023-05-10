@@ -102,7 +102,7 @@ namespace System.Windows.Xps.Packaging
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CannotReleaseXmlWriter));
+                throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
             }
         }
 
@@ -303,7 +303,7 @@ namespace System.Windows.Xps.Packaging
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CannotReleaseXmlWriter));
+                throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
             }
         }
 
@@ -488,7 +488,7 @@ namespace System.Windows.Xps.Packaging
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoFixedPageWriter));
+                    throw new XpsSerializationException(SR.ReachSerialization_NoFixedPageWriter);
                 }
             }
             else
@@ -532,7 +532,7 @@ namespace System.Windows.Xps.Packaging
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CannotReleaseXmlWriter));
+                throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
             }
         }
 
@@ -554,7 +554,7 @@ namespace System.Windows.Xps.Packaging
 
             if (ContentType.Empty.AreTypeAndSubTypeEqual(contentType))
             {
-                throw new ArgumentException(SR.Get(SRID.ReachPackaging_InvalidContentType,contentType.ToString()));
+                throw new ArgumentException(SR.Format(SR.ReachPackaging_InvalidContentType, contentType.ToString()));
             }
 
             if (_currentXpsImageRef == 0)
@@ -849,7 +849,7 @@ namespace System.Windows.Xps.Packaging
             }
             else
             {
-                throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_UnsupportedImageType));
+                throw new XpsPackagingException(SR.ReachPackaging_UnsupportedImageType);
             }
         }
 

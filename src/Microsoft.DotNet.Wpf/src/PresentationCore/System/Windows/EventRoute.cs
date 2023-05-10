@@ -9,7 +9,6 @@ using System.Diagnostics;
 using MS.Utility;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using MS.Internal;
 
 namespace System.Windows
@@ -147,12 +146,12 @@ namespace System.Windows
 
             if (args.Source == null)
             {
-                throw new ArgumentException(SR.Get(SRID.SourceNotSet)); 
+                throw new ArgumentException(SR.SourceNotSet); 
             }
 
             if (args.RoutedEvent != _routedEvent)
             {
-                throw new ArgumentException(SR.Get(SRID.Mismatched_RoutedEvent));
+                throw new ArgumentException(SR.Mismatched_RoutedEvent);
             }
 
             // Check RoutingStrategy to know the order of invocation

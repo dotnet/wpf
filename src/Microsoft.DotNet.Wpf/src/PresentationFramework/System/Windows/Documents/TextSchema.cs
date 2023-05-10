@@ -112,7 +112,7 @@ namespace System.Windows.Documents
 
             if (!isValidChild && throwIfIllegalChild)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextSchema_ChildTypeIsInvalid, parent.GetType().Name, child.GetType().Name));
+                throw new InvalidOperationException(SR.Format(SR.TextSchema_ChildTypeIsInvalid, parent.GetType().Name, child.GetType().Name));
             }
 
             return isValidChild;
@@ -133,7 +133,7 @@ namespace System.Windows.Documents
                 {
                     if (throwIfIllegalHyperlinkDescendent)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.TextSchema_IllegalHyperlinkChild, childType));
+                        throw new InvalidOperationException(SR.Format(SR.TextSchema_IllegalHyperlinkChild, childType));
                     }
                     return false;
                 }
@@ -143,7 +143,7 @@ namespace System.Windows.Documents
 
             if (!isValidChild && throwIfIllegalChild)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextSchema_ChildTypeIsInvalid, parent.GetType().Name, childType.Name));
+                throw new InvalidOperationException(SR.Format(SR.TextSchema_ChildTypeIsInvalid, parent.GetType().Name, childType.Name));
             }
 
             return isValidChild;
@@ -175,7 +175,7 @@ namespace System.Windows.Documents
 
             if (!isValidChild && throwIfIllegalChild)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextSchema_ChildTypeIsInvalid, parent.GetType().Name, childType.Name));
+                throw new InvalidOperationException(SR.Format(SR.TextSchema_ChildTypeIsInvalid, parent.GetType().Name, childType.Name));
             }
 
             return isValidChild;
@@ -901,7 +901,7 @@ namespace System.Windows.Documents
                     {
                         if (throwIfIllegalDescendent)
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.TextSchema_IllegalHyperlinkChild, nextElement.GetType()));
+                            throw new InvalidOperationException(SR.Format(SR.TextSchema_IllegalHyperlinkChild, nextElement.GetType()));
                         }
                         return true;
                     }

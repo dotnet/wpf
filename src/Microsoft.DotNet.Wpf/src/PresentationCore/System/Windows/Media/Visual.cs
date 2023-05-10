@@ -31,7 +31,6 @@ using System.Runtime.InteropServices;
 using MS.Internal.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 //------------------------------------------------------------------------------
 // This section lists various things that we could improve on the Visual class.
@@ -2546,7 +2545,7 @@ namespace System.Windows.Media
         /// </summary>
         protected virtual Visual GetVisualChild(int index)
         {
-           throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+           throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
         }
 
         /// <summary>
@@ -2611,7 +2610,7 @@ namespace System.Windows.Media
 
             if (child._parent != null)
             {
-                throw new ArgumentException(SR.Get(SRID.Visual_HasParent));
+                throw new ArgumentException(SR.Visual_HasParent);
             }
 
             // invalid during a VisualTreeChanged event
@@ -2680,7 +2679,7 @@ namespace System.Windows.Media
 
             if (child._parent != this)
             {
-                throw new ArgumentException(SR.Get(SRID.Visual_NotChild));
+                throw new ArgumentException(SR.Visual_NotChild);
             }
 
             // invalid during a VisualTreeChanged event
@@ -2766,7 +2765,7 @@ namespace System.Windows.Media
             {
                 if(value > TreeLevelLimit)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.LayoutManager_DeepRecursion, TreeLevelLimit));
+                    throw new InvalidOperationException(SR.Format(SR.LayoutManager_DeepRecursion, TreeLevelLimit));
                 }
 
                 _flags = (VisualFlags)(((uint)_flags & 0x001FFFFF) | (value << 21));
@@ -2913,7 +2912,7 @@ namespace System.Windows.Media
                     {
                         // If a BitmapEffect is set, the user cannot set an Effect, since
                         // mixing of legacy BitmapEffects is not allowed with Effects.
-                        throw new Exception(SR.Get(SRID.Effect_CombinedLegacyAndNew));
+                        throw new Exception(SR.Effect_CombinedLegacyAndNew);
                     }
                     else
                     {
@@ -3045,7 +3044,7 @@ namespace System.Windows.Media
                         // If no BitmapEffect is set and an Effect is set, the Effect has been
                         // provided by the user and not by emulation. Since mixing of legacy
                         // BitmapEffects is not allowed with Effects, setting a BitmapEffect is illegal.
-                        throw new Exception(SR.Get(SRID.Effect_CombinedLegacyAndNew));
+                        throw new Exception(SR.Effect_CombinedLegacyAndNew);
                     }
                     else
                     {
@@ -3142,7 +3141,7 @@ namespace System.Windows.Media
                         // If no BitmapEffect is set and an Effect is set, the Effect has been
                         // provided by the user. Since mixing of legacy BitmapEffects is not allowed with
                         // Effects, setting a BitmapEffect is illegal.
-                        throw new Exception(SR.Get(SRID.Effect_CombinedLegacyAndNew));
+                        throw new Exception(SR.Effect_CombinedLegacyAndNew);
                     }
                     else
                     {
@@ -4414,7 +4413,7 @@ namespace System.Windows.Media
 
             if (ancestorAsVisual == null)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.Visual_NoCommonAncestor));
+                throw new System.InvalidOperationException(SR.Visual_NoCommonAncestor);
             }
 
             GeneralTransform g0;
@@ -4623,7 +4622,7 @@ namespace System.Windows.Media
 
             if (g != ancestor)
             {
-                throw new System.InvalidOperationException(SR.Get(inverse ? SRID.Visual_NotADescendant : SRID.Visual_NotAnAncestor));
+                throw new System.InvalidOperationException(inverse ? SR.Visual_NotADescendant : SR.Visual_NotAnAncestor);
             }
 
             // At this point, we will have 0 or more transforms in the GeneralTransformGroup
@@ -4719,7 +4718,7 @@ namespace System.Windows.Media
             // if containingVisual3D is null then ancestor is not the ancestor
             if (containingVisual3D == null)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.Visual_NotAnAncestor));
+                throw new System.InvalidOperationException(SR.Visual_NotAnAncestor);
             }
 
             GeneralTransform transform2D = this.TransformToAncestor(containingVisual3D.Visual);
@@ -4776,14 +4775,14 @@ namespace System.Windows.Media
 
             if (inputSource == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Visual_NoPresentationSource));
+                throw new InvalidOperationException(SR.Visual_NoPresentationSource);
             }
 
             // Translate the point from the visual to the root.
             GeneralTransform gUp = this.TransformToAncestor(inputSource.RootVisual);
             if (gUp == null || !gUp.TryTransform(point, out point))
             {
-                throw new InvalidOperationException(SR.Get(SRID.Visual_CannotTransformPoint));
+                throw new InvalidOperationException(SR.Visual_CannotTransformPoint);
             }
 
             // Translate the point from the root to the screen
@@ -4805,7 +4804,7 @@ namespace System.Windows.Media
 
             if (inputSource == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Visual_NoPresentationSource));
+                throw new InvalidOperationException(SR.Visual_NoPresentationSource);
             }
 
             // Translate the point from the screen to the root
@@ -4816,7 +4815,7 @@ namespace System.Windows.Media
             GeneralTransform gDown = inputSource.RootVisual.TransformToDescendant(this);
             if (gDown == null || !gDown.TryTransform(point, out point))
             {
-                throw new InvalidOperationException(SR.Get(SRID.Visual_CannotTransformPoint));
+                throw new InvalidOperationException(SR.Visual_CannotTransformPoint);
             }
 
             return point;

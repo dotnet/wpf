@@ -23,7 +23,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;   
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 using MS.Internal.PresentationCore;
 
@@ -239,7 +238,7 @@ namespace System.Windows.Media.Animation
             }
             else
             {        
-                throw new ArgumentException(SR.Get(SRID.Animation_ChildMustBeKeyFrame), "child");
+                throw new ArgumentException(SR.Animation_ChildMustBeKeyFrame, "child");
             }
         }
 
@@ -292,7 +291,7 @@ namespace System.Windows.Media.Animation
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void AddText(string childText)
         {
-            throw new InvalidOperationException(SR.Get(SRID.Animation_NoTextChildren));
+            throw new InvalidOperationException(SR.Animation_NoTextChildren);
         }
 
         #endregion
@@ -745,7 +744,7 @@ namespace System.Windows.Media.Animation
             }
 
             int maxKeyFrameIndex = keyFrameCount - 1;
-            ArrayList unspecifiedBlocks = new ArrayList();
+            List<KeyTimeBlock> unspecifiedBlocks = new List<KeyTimeBlock>();
             bool hasPacedKeyTimes = false;
 
             //
@@ -857,7 +856,7 @@ namespace System.Windows.Media.Animation
 
             for (int j = 0; j < unspecifiedBlocks.Count; j++)
             {
-                KeyTimeBlock block = (KeyTimeBlock)unspecifiedBlocks[j];
+                KeyTimeBlock block = unspecifiedBlocks[j];
 
                 TimeSpan blockBeginTime = TimeSpan.Zero;
 

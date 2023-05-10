@@ -16,7 +16,6 @@ using MS.Internal.Ink.InkSerializedFormat;
 
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Ink.InkSerializedFormat
 {
@@ -47,7 +46,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 //we don't raise any information that could be used to attack our ISF code
                 //a simple 'ISF Operation Failed' is sufficient since the user can't do 
                 //anything to fix bogus ISF
-                throw new InvalidOperationException(StrokeCollectionSerializer.ISFDebugMessage(SR.Get(SRID.InitializingCompressorFailed)));
+                throw new InvalidOperationException(StrokeCollectionSerializer.ISFDebugMessage(SR.InitializingCompressorFailed));
             }
             
             _compressorHandle = MS.Win32.Penimc.UnsafeNativeMethods.IsfLoadCompressor(data, ref size);
@@ -56,7 +55,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 //we don't raise any information that could be used to attack our ISF code
                 //a simple 'ISF Operation Failed' is sufficient since the user can't do 
                 //anything to fix bogus ISF
-                throw new InvalidOperationException(StrokeCollectionSerializer.ISFDebugMessage(SR.Get(SRID.InitializingCompressorFailed)));
+                throw new InvalidOperationException(StrokeCollectionSerializer.ISFDebugMessage(SR.InitializingCompressorFailed));
             }
         }
         /// <summary>
@@ -101,7 +100,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     //we don't raise any information that could be used to attack our ISF code
                     //a simple 'ISF Operation Failed' is sufficient since the user can't do 
                     //anything to fix bogus ISF
-                    throw new InvalidOperationException(StrokeCollectionSerializer.ISFDebugMessage(SR.Get(SRID.DecompressPacketDataFailed)));
+                    throw new InvalidOperationException(StrokeCollectionSerializer.ISFDebugMessage(SR.DecompressPacketDataFailed));
                 }
 #if OLD_ISF
                 uint size2 = size;
@@ -170,7 +169,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     //we don't raise any information that could be used to attack our ISF code
                     //a simple 'ISF Operation Failed' is sufficient since the user can't do 
                     //anything to fix bogus ISF
-                    throw new InvalidOperationException(StrokeCollectionSerializer.ISFDebugMessage(SR.Get(SRID.DecompressPropertyFailed)));
+                    throw new InvalidOperationException(StrokeCollectionSerializer.ISFDebugMessage(SR.DecompressPropertyFailed));
                 }
 
                 byte[] data = AlgoModule.DecompressPropertyData(input);
@@ -238,7 +237,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     //we don't raise any information that could be used to attack our ISF code
                     //a simple 'ISF Operation Failed' is sufficient since the user can't do 
                     //anything to fix bogus ISF
-                    throw new InvalidOperationException(SR.Get(SRID.IsfOperationFailed));
+                    throw new InvalidOperationException(SR.IsfOperationFailed);
                 }
                 int hr = MS.Win32.Penimc.UnsafeNativeMethods.IsfCompressPropertyData(data, (uint)data.Length, ref algorithm, ref outputSize, output);
                 if (0 != hr)
@@ -306,7 +305,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     //we don't raise any information that could be used to attack our ISF code
                     //a simple 'ISF Operation Failed' is sufficient since the user can't do 
                     //anything to fix bogus ISF
-                    throw new InvalidOperationException(SR.Get(SRID.IsfOperationFailed));
+                    throw new InvalidOperationException(SR.IsfOperationFailed);
                 }
 
                 byte[] data = AlgoModule.CompressPacketData(input, algorithm);

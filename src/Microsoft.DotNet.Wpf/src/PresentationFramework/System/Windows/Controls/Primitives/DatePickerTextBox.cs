@@ -47,7 +47,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public DatePickerTextBox()
         {
-            this.SetCurrentValue(WatermarkProperty, SR.Get(SRID.DatePickerTextBox_DefaultWatermarkText));
+            this.SetCurrentValue(WatermarkProperty, SR.DatePickerTextBox_DefaultWatermarkText);
             this.Loaded += OnLoaded;
             this.IsEnabledChanged += new DependencyPropertyChangedEventHandler(OnDatePickerTextBoxIsEnabledChanged);
         }
@@ -154,7 +154,7 @@ namespace System.Windows.Controls.Primitives
         {
             Debug.Assert(
                 obj == null || obj is T,
-                string.Format(CultureInfo.InvariantCulture, SR.Get(SRID.DatePickerTextBox_TemplatePartIsOfIncorrectType), partName, typeof(T).Name));
+                string.Format(CultureInfo.InvariantCulture, SR.DatePickerTextBox_TemplatePartIsOfIncorrectType, partName, typeof(T).Name));
             return obj as T;
         }
 

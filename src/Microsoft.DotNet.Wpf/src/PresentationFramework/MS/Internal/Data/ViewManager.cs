@@ -396,7 +396,7 @@ namespace MS.Internal.Data
                 // make sure the callback's target is still available
                 object target = _callbackTarget.Target;
                 if (target == null)
-                    throw new InvalidOperationException(SR.Get(SRID.CollectionView_MissingSynchronizationCallback, collection));
+                    throw new InvalidOperationException(SR.Format(SR.CollectionView_MissingSynchronizationCallback, collection));
 
                 // invoke the callback
                 if (_callbackTarget == ViewManager.StaticWeakRef)
@@ -582,7 +582,7 @@ namespace MS.Internal.Data
             {
                 // caller specified a type for the view.  Try to honor it.
                 if (!typeof(ICollectionView).IsAssignableFrom(collectionViewType))
-                    throw new ArgumentException(SR.Get(SRID.CollectionView_WrongType, collectionViewType.Name));
+                    throw new ArgumentException(SR.Format(SR.CollectionView_WrongType, collectionViewType.Name));
 
                 // if collection is IListSource, get its list first (bug 1023903)
                 object arg = (ilsList != null) ? ilsList : collection;
@@ -595,7 +595,7 @@ namespace MS.Internal.Data
                 }
                 catch (MissingMethodException e)
                 {
-                    throw new ArgumentException(SR.Get(SRID.CollectionView_ViewTypeInsufficient,
+                    throw new ArgumentException(SR.Format(SR.CollectionView_ViewTypeInsufficient,
                                     collectionViewType.Name, collection.GetType()), e);
                 }
             }
@@ -843,7 +843,7 @@ namespace MS.Internal.Data
                 Type cachedViewType = (cvp == null) ? cv.GetType() : cvp.ProxiedView.GetType();
 
                 if (cachedViewType != collectionViewType)
-                    throw new ArgumentException(SR.Get(SRID.CollectionView_NameTypeDuplicity, collectionViewType, cachedViewType));
+                    throw new ArgumentException(SR.Format(SR.CollectionView_NameTypeDuplicity, collectionViewType, cachedViewType));
             }
         }
 

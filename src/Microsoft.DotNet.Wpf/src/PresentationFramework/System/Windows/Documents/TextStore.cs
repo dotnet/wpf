@@ -87,13 +87,13 @@ namespace System.Windows.Documents
 
             if (riid != UnsafeNativeMethods.IID_ITextStoreACPSink)
             {
-                throw new COMException(SR.Get(SRID.TextStore_CONNECT_E_CANNOTCONNECT), unchecked((int)0x80040202));
+                throw new COMException(SR.TextStore_CONNECT_E_CANNOTCONNECT, unchecked((int)0x80040202));
             }
 
             sink = obj as UnsafeNativeMethods.ITextStoreACPSink;
             if (sink == null)
             {
-                throw new COMException(SR.Get(SRID.TextStore_E_NOINTERFACE), unchecked((int)0x80004002));
+                throw new COMException(SR.TextStore_E_NOINTERFACE, unchecked((int)0x80004002));
             }
 
             // It's legal to replace existing sink.
@@ -115,7 +115,7 @@ namespace System.Windows.Documents
         {
             if (obj != _sink)
             {
-                throw new COMException(SR.Get(SRID.TextStore_CONNECT_E_NOCONNECTION), unchecked((int)0x80040200));
+                throw new COMException(SR.TextStore_CONNECT_E_NOCONNECTION, unchecked((int)0x80040200));
             }
 
             Marshal.ReleaseComObject(_sink);
@@ -130,10 +130,10 @@ namespace System.Windows.Documents
         public void RequestLock(UnsafeNativeMethods.LockFlags flags, out int hrSession)
         {
             if (!HasSink)
-                throw new COMException(SR.Get(SRID.TextStore_NoSink));
+                throw new COMException(SR.TextStore_NoSink);
 
             if (flags == 0)
-                throw new COMException(SR.Get(SRID.TextStore_BadLockFlags));
+                throw new COMException(SR.TextStore_BadLockFlags);
 
             bool isReplayingIMEChanges =  (_replayingIMEChangeReentrancyCount > 0);
 
@@ -163,7 +163,7 @@ namespace System.Windows.Documents
                     ((flags & UnsafeNativeMethods.LockFlags.TS_LF_WRITE) == 0) ||
                     ((flags & UnsafeNativeMethods.LockFlags.TS_LF_SYNC) == UnsafeNativeMethods.LockFlags.TS_LF_SYNC))
                 {
-                    throw new COMException(SR.Get(SRID.TextStore_ReentrantRequestLock));
+                    throw new COMException(SR.TextStore_ReentrantRequestLock);
                 }
 
                 if (!isReplayingIMEChanges)
@@ -483,7 +483,7 @@ namespace System.Windows.Documents
         {
             if (this.IsReadOnly)
             {
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_READONLY), UnsafeNativeMethods.TS_E_READONLY);
+                throw new COMException(SR.TextStore_TS_E_READONLY, UnsafeNativeMethods.TS_E_READONLY);
             }
 
             if (IsTracing)
@@ -504,7 +504,7 @@ namespace System.Windows.Documents
 
             if (start == null)
             {
-                throw new COMException(SR.Get(SRID.TextStore_CompositionRejected), NativeMethods.E_FAIL);
+                throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
             }
 
             if (start.CompareTo(end) > 0)
@@ -515,7 +515,7 @@ namespace System.Windows.Documents
             string filteredText = FilterCompositionString(new string(text), start.GetOffsetToPosition(end)); // does NOT filter MaxLength.
             if (filteredText == null)
             {
-                throw new COMException(SR.Get(SRID.TextStore_CompositionRejected), NativeMethods.E_FAIL);
+                throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
             }
 
             // Openes a composition undo unit for the composition undo.
@@ -554,7 +554,7 @@ namespace System.Windows.Documents
         public void GetFormattedText(int startIndex, int endIndex, out object obj)
         {
             obj = null;
-            throw new COMException(SR.Get(SRID.TextStore_E_NOTIMPL), unchecked((int)0x80004001));
+            throw new COMException(SR.TextStore_E_NOTIMPL, unchecked((int)0x80004001));
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
@@ -615,14 +615,14 @@ namespace System.Windows.Documents
         {
             if (IsReadOnly)
             {
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_READONLY), UnsafeNativeMethods.TS_E_READONLY);
+                throw new COMException(SR.TextStore_TS_E_READONLY, UnsafeNativeMethods.TS_E_READONLY);
             }
 
             // Disable embedded object temporarily.
 #if ENABLE_INK_EMBEDDING
             if (!TextSelection.HasConcreteTextContainer)
             {
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_FORMAT), UnsafeNativeMethods.TS_E_FORMAT);
+                throw new COMException(SR.TextStore_TS_E_FORMAT, UnsafeNativeMethods.TS_E_FORMAT);
             }
 
             TextContainer container;
@@ -635,7 +635,7 @@ namespace System.Windows.Documents
             data = obj as IComDataObject;
             if (data == null)
             {
-                throw new COMException(SR.Get(SRID.TextStore_BadObject), NativeMethods.E_INVALIDARG);
+                throw new COMException(SR.TextStore_BadObject, NativeMethods.E_INVALIDARG);
             }
 
             container = (TextContainer)this.TextContainer;
@@ -645,7 +645,7 @@ namespace System.Windows.Documents
 
             InsertEmbeddedAtRange(startPosition, endPosition, data, out change);
 #else
-            throw new COMException(SR.Get(SRID.TextStore_TS_E_FORMAT), UnsafeNativeMethods.TS_E_FORMAT);
+            throw new COMException(SR.TextStore_TS_E_FORMAT, UnsafeNativeMethods.TS_E_FORMAT);
 #endif
         }
 
@@ -666,7 +666,7 @@ namespace System.Windows.Documents
 
             if (IsReadOnly)
             {
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_READONLY), UnsafeNativeMethods.TS_E_READONLY);
+                throw new COMException(SR.TextStore_TS_E_READONLY, UnsafeNativeMethods.TS_E_READONLY);
             }
 
             if (IsTracing)
@@ -716,7 +716,7 @@ namespace System.Windows.Documents
                     string filteredText = FilterCompositionString(new string(text), range.Start.GetOffsetToPosition(range.End)); // does NOT filter MaxLength.
                     if (filteredText == null)
                     {
-                        throw new COMException(SR.Get(SRID.TextStore_CompositionRejected), NativeMethods.E_FAIL);
+                        throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
                     }
 
                     // We still need to call ApplyTypingHeuristics, even though
@@ -811,7 +811,7 @@ namespace System.Windows.Documents
 
             if (IsReadOnly)
             {
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_READONLY), UnsafeNativeMethods.TS_E_READONLY);
+                throw new COMException(SR.TextStore_TS_E_READONLY, UnsafeNativeMethods.TS_E_READONLY);
             }
 
 #if ENABLE_INK_EMBEDDING
@@ -819,12 +819,12 @@ namespace System.Windows.Documents
 
             if (IsReadOnly)
             {
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_READONLY), UnsafeNativeMethods.TS_E_READONLY);
+                throw new COMException(SR.TextStore_TS_E_READONLY, UnsafeNativeMethods.TS_E_READONLY);
             }
 
             if (!TextSelection.HasConcreteTextContainer)
             {
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_FORMAT), UnsafeNativeMethods.TS_E_FORMAT);
+                throw new COMException(SR.TextStore_TS_E_FORMAT, UnsafeNativeMethods.TS_E_FORMAT);
             }
 
             // The object must have IOldDataObject internface.
@@ -832,7 +832,7 @@ namespace System.Windows.Documents
             data = obj as IComDataObject;
             if (data == null)
             {
-                throw new COMException(SR.Get(SRID.TextStore_BadObject), NativeMethods.E_INVALIDARG);
+                throw new COMException(SR.TextStore_BadObject, NativeMethods.E_INVALIDARG);
             }
 
             // Do the insert.
@@ -847,7 +847,7 @@ namespace System.Windows.Documents
                 endIndex = this.TextSelection.End.Offset;
             }
 #else
-            throw new COMException(SR.Get(SRID.TextStore_TS_E_FORMAT), UnsafeNativeMethods.TS_E_FORMAT);
+            throw new COMException(SR.TextStore_TS_E_FORMAT, UnsafeNativeMethods.TS_E_FORMAT);
 #endif
         }
 
@@ -892,7 +892,7 @@ namespace System.Windows.Documents
         // See msdn's ITextStoreACP documentation for a full description.
         public void RequestAttrsTransitioningAtPosition(int position, int count, Guid[] filterAttributes, UnsafeNativeMethods.AttributeFlags flags)
         {
-            throw new COMException(SR.Get(SRID.TextStore_E_NOTIMPL), unchecked((int)0x80004001));
+            throw new COMException(SR.TextStore_E_NOTIMPL, unchecked((int)0x80004001));
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
@@ -969,7 +969,7 @@ namespace System.Windows.Documents
             // Validate layout information on TextView
             if (!view.Validate(milPoint))
             {
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_NOLAYOUT), UnsafeNativeMethods.TS_E_NOLAYOUT);
+                throw new COMException(SR.TextStore_TS_E_NOLAYOUT, UnsafeNativeMethods.TS_E_NOLAYOUT);
             }
 
             // Do the hittest.
@@ -977,7 +977,7 @@ namespace System.Windows.Documents
             if (position == null)
             {
                 // GXFPF_ROUND_NEAREST was clear and we didn't hit a char.
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_INVALIDPOINT), UnsafeNativeMethods.TS_E_INVALIDPOINT);
+                throw new COMException(SR.TextStore_TS_E_INVALIDPOINT, UnsafeNativeMethods.TS_E_INVALIDPOINT);
             }
 
             positionCP = position.CharOffset;
@@ -1049,7 +1049,7 @@ namespace System.Windows.Documents
                 }
 
                 _netCharCount = this.TextContainer.IMECharCount;
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_NOLAYOUT), UnsafeNativeMethods.TS_E_NOLAYOUT);
+                throw new COMException(SR.TextStore_TS_E_NOLAYOUT, UnsafeNativeMethods.TS_E_NOLAYOUT);
             }
 
             rect = new UnsafeNativeMethods.RECT();
@@ -1064,7 +1064,7 @@ namespace System.Windows.Documents
             if (!this.TextView.IsValid)
             {
                 // We can not get the visual. Return TS_R_NOLAYOUT to the caller.
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_NOLAYOUT), UnsafeNativeMethods.TS_E_NOLAYOUT);
+                throw new COMException(SR.TextStore_TS_E_NOLAYOUT, UnsafeNativeMethods.TS_E_NOLAYOUT);
             }
 
             if (startIndex == endIndex)
@@ -1520,7 +1520,7 @@ namespace System.Windows.Documents
                     string filteredText = FilterCompositionString(result, TextSelection.Start.GetOffsetToPosition(TextSelection.End)); // does NOT filter MaxLength.
                     if (filteredText == null)
                     {
-                        throw new COMException(SR.Get(SRID.TextStore_CompositionRejected), NativeMethods.E_FAIL);
+                        throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
                     }
 
                     this.TextEditor.SetText(TextSelection, filteredText, InputLanguageManager.Current.CurrentInputLanguage);
@@ -2630,7 +2630,7 @@ namespace System.Windows.Documents
 
             if (win32Window == null)
             {
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_NOLAYOUT), UnsafeNativeMethods.TS_E_NOLAYOUT);
+                throw new COMException(SR.TextStore_TS_E_NOLAYOUT, UnsafeNativeMethods.TS_E_NOLAYOUT);
             }
 
             view = this.TextView;
@@ -2684,7 +2684,7 @@ namespace System.Windows.Documents
 
             if (stgmedium.unionmember == IntPtr.Zero)
             {
-                throw new COMException(SR.Get(SRID.TextStore_BadObjectData), NativeMethods.E_INVALIDARG);
+                throw new COMException(SR.TextStore_BadObjectData, NativeMethods.E_INVALIDARG);
             }
 
             IntPtr hbitmap = SystemDrawingHelper.ConvertMetafileToHBitmap(stgmedium.unionmember);
@@ -3363,7 +3363,7 @@ namespace System.Windows.Documents
         {
             if (offset < 0 || offset > this.TextContainer.IMECharCount)
             {
-                throw new ArgumentException(SR.Get(SRID.TextStore_BadIMECharOffset, offset, this.TextContainer.IMECharCount));
+                throw new ArgumentException(SR.Format(SR.TextStore_BadIMECharOffset, offset, this.TextContainer.IMECharCount));
             }
         }
 
@@ -3457,7 +3457,7 @@ namespace System.Windows.Documents
             // If we have non-canonical format, give up.
             if (start == null || start.IsAtRowEnd || TextPointerBase.IsInBlockUIContainer(start))
             {
-                throw new COMException(SR.Get(SRID.TextStore_CompositionRejected), NativeMethods.E_FAIL);
+                throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
             }
 
             startOut = start;

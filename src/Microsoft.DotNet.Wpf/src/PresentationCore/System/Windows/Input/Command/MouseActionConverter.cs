@@ -19,7 +19,6 @@ using System.Windows.Input;
 using MS.Utility;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -95,7 +94,7 @@ namespace System.Windows.Input
                     case "RIGHTDOUBLECLICK" : mouseAction = MouseAction.RightDoubleClick; break;
                     case "MIDDLEDOUBLECLICK": mouseAction = MouseAction.MiddleDoubleClick; break;
                     default :
-                        throw new NotSupportedException(SR.Get(SRID.Unsupported_MouseAction, mouseActionToken));
+                        throw new NotSupportedException(SR.Format(SR.Unsupported_MouseAction, mouseActionToken));
                 }
                 return mouseAction;
             }

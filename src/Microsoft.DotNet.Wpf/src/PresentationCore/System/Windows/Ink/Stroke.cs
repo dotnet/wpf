@@ -23,7 +23,6 @@ using System.Reflection;
 using System.Windows.Input;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 // Primary root namespace for TabletPC/Ink/Handwriting/Recognition in .NET
 
@@ -67,7 +66,7 @@ namespace System.Windows.Ink
             }
             if (stylusPoints.Count == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidStylusPointCollectionZeroCount), "stylusPoints");
+                throw new ArgumentException(SR.InvalidStylusPointCollectionZeroCount, "stylusPoints");
             }
             if (drawingAttributes == null)
             {
@@ -164,15 +163,15 @@ namespace System.Windows.Ink
 
             if (!transformMatrix.HasInverse)
             {
-                throw new ArgumentException(SR.Get(SRID.MatrixNotInvertible), "transformMatrix");
+                throw new ArgumentException(SR.MatrixNotInvertible, "transformMatrix");
             }
             else if ( MatrixHelper.ContainsNaN(transformMatrix))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidMatrixContainsNaN), "transformMatrix");
+                throw new ArgumentException(SR.InvalidMatrixContainsNaN, "transformMatrix");
             }
             else if ( MatrixHelper.ContainsInfinity(transformMatrix))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidMatrixContainsInfinity), "transformMatrix");
+                throw new ArgumentException(SR.InvalidMatrixContainsInfinity, "transformMatrix");
             }
             else
             {
@@ -532,7 +531,7 @@ namespace System.Windows.Ink
                 if (value.Count == 0)
                 {
                     //we don't allow this
-                    throw new ArgumentException(SR.Get(SRID.InvalidStylusPointCollectionZeroCount));
+                    throw new ArgumentException(SR.InvalidStylusPointCollectionZeroCount);
                 }
 
                 // Force a recaculation of the cached path geometry
@@ -612,7 +611,7 @@ namespace System.Windows.Ink
         {
             if (null == e)
             {
-                throw new ArgumentNullException("e", SR.Get(SRID.EventArgIsNull));
+                throw new ArgumentNullException("e", SR.EventArgIsNull);
             }
 
             if (DrawingAttributesChanged != null)
@@ -646,7 +645,7 @@ namespace System.Windows.Ink
         {
             if (null == e)
             {
-                throw new ArgumentNullException("e", SR.Get(SRID.EventArgIsNull));
+                throw new ArgumentNullException("e", SR.EventArgIsNull);
             }
 
             if (StylusPointsReplaced != null)
@@ -661,7 +660,7 @@ namespace System.Windows.Ink
         {
             if (null == e)
             {
-                throw new ArgumentNullException("e", SR.Get(SRID.EventArgIsNull));
+                throw new ArgumentNullException("e", SR.EventArgIsNull);
             }
 
             if (StylusPointsChanged != null)
@@ -678,7 +677,7 @@ namespace System.Windows.Ink
         {
             if (null == e)
             {
-                throw new ArgumentNullException("e", SR.Get(SRID.EventArgIsNull));
+                throw new ArgumentNullException("e", SR.EventArgIsNull);
             }
 
             if (PropertyDataChanged != null)
@@ -696,7 +695,7 @@ namespace System.Windows.Ink
         {
             if (null == e)
             {
-                throw new ArgumentNullException("e", SR.Get(SRID.EventArgIsNull));
+                throw new ArgumentNullException("e", SR.EventArgIsNull);
             }
 
             if (Invalidated != null)

@@ -22,7 +22,6 @@ using System.Windows.Input.StylusPlugIns;
 using System.Windows.Interop;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 using MS.Internal.PresentationCore;                        // SecurityHelper
 
@@ -39,7 +38,7 @@ namespace System.Windows.Input
             HwndSource hwndSource = inputSource as HwndSource;
             if(hwndSource == null || IntPtr.Zero == (hwndSource).CriticalHandle)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Stylus_PenContextFailure));
+                throw new InvalidOperationException(SR.Stylus_PenContextFailure);
             }
 
             _stylusLogic  = stylusLogic;

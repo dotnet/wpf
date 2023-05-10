@@ -25,7 +25,6 @@ using MS.Internal.PresentationCore;                        // SecurityHelper
 using System;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input 
 {
@@ -860,7 +859,7 @@ namespace System.Windows.Input
             {
                 if (!IsValidConversionMode(value))
                 {
-                    throw new ArgumentException(SR.Get(SRID.InputMethod_InvalidConversionMode, value));
+                    throw new ArgumentException(SR.Format(SR.InputMethod_InvalidConversionMode, value));
                 }
 
                 Debug.Assert((value & ImeConversionModeValues.DoNotCare) == 0);
@@ -1111,7 +1110,7 @@ namespace System.Windows.Input
             {
                 if (!IsValidSentenceMode(value))
                 {
-                    throw new ArgumentException(SR.Get(SRID.InputMethod_InvalidSentenceMode, value));
+                    throw new ArgumentException(SR.Format(SR.InputMethod_InvalidSentenceMode, value));
                 }
 
                 Debug.Assert((value & ImeSentenceModeValues.DoNotCare) == 0);

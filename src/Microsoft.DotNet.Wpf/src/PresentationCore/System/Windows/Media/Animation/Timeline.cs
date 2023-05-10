@@ -20,7 +20,6 @@ using System.Windows;
 using System.Windows.Markup;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Animation
 {
@@ -221,7 +220,7 @@ namespace System.Windows.Media.Animation
 
             if (newValue < 0 || newValue > 1 || double.IsNaN(newValue))
             {
-                throw new ArgumentException(SR.Get(SRID.Timing_InvalidArgAccelAndDecel), "value");
+                throw new ArgumentException(SR.Timing_InvalidArgAccelAndDecel, "value");
             }
 
             return true;
@@ -610,7 +609,7 @@ namespace System.Windows.Media.Animation
 
             if (newValue <= 0 || newValue > double.MaxValue || double.IsNaN(newValue))
             {
-                throw new ArgumentException(SR.Get(SRID.Timing_InvalidArgFinitePositive), "value");
+                throw new ArgumentException(SR.Timing_InvalidArgFinitePositive, "value");
             }
 
             return true;
@@ -729,7 +728,7 @@ namespace System.Windows.Media.Animation
         {
             if (AccelerationRatio + DecelerationRatio > 1)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Timing_AccelAndDecelGreaterThanOne));
+                throw new InvalidOperationException(SR.Timing_AccelAndDecelGreaterThanOne);
             }
         }
 

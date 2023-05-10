@@ -526,7 +526,7 @@ namespace System.Windows.Controls
 
         /// <summary>
         /// Returns the current position of the media. This is only valid
-        /// adter the MediaOpened event has fired.
+        /// after the MediaOpened event has fired.
         /// </summary>
         public TimeSpan Position
         {

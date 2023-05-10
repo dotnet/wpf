@@ -136,7 +136,7 @@ namespace System.Windows.Automation.Peers
             // To avoid the situation on legacy systems which may not have new unmanaged core. this check with old unmanaged core
             // avoids throwing exception and provide older behavior returning default values for items which are virtualized rather than throwing exception.
             if (VirtualizedItemPatternIdentifiers.Pattern != null && !(this is GridViewItemAutomationPeer) && !IsItemInAutomationTree())
-                throw new ElementNotAvailableException(SR.Get(SRID.VirtualizedElement));
+                throw new ElementNotAvailableException(SR.VirtualizedElement);
         }
 
         private bool IsItemInAutomationTree()
@@ -527,9 +527,10 @@ namespace System.Windows.Automation.Peers
             {
                 name = wrapperPeer.GetName();
             }
-            else if (item != null)
+            // see https://github.com/dotnet/wpf/issues/122
+            else if (item != null && ItemsControlAutomationPeer is { } itemsControlAutomationPeer)
             {
-                using (RecyclableWrapper recyclableWrapper = ItemsControlAutomationPeer.GetRecyclableWrapperPeer(item))
+                using (RecyclableWrapper recyclableWrapper = itemsControlAutomationPeer.GetRecyclableWrapperPeer(item))
                 {
                     name = recyclableWrapper.Peer.GetName();
                 }

@@ -18,7 +18,6 @@ using System.Runtime.InteropServices;
 using System;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -332,7 +331,7 @@ namespace System.Windows.Input
             DependencyObject eltDO = element as DependencyObject;
             if (eltDO != null && !InputElement.IsValid(element))
             {
-                throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, eltDO.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, eltDO.GetType()));
             }
 
             bool success = false;
@@ -582,7 +581,7 @@ namespace System.Windows.Input
             // Validate that relativeTo is either a UIElement, a ContentElement or a UIElement3D.
             if (relativeTo != null && !InputElement.IsValid(relativeTo))
             {
-                throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, relativeTo.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, relativeTo.GetType()));
             }
 
             PresentationSource relativePresentationSource = null;

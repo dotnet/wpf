@@ -67,7 +67,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.CompatibilityPreferencesSealed, "IsAltKeyRequiredInAccessKeyDefaultScope", "CoreCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "IsAltKeyRequiredInAccessKeyDefaultScope", "CoreCompatibilityPreferences"));
                     }
 
                     _isAltKeyRequiredInAccessKeyDefaultScope = value;
@@ -107,7 +107,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.CompatibilityPreferencesSealed, "IncludeAllInkInBoundingBox", "CoreCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "IncludeAllInkInBoundingBox", "CoreCompatibilityPreferences"));
                     }
 
                     _includeAllInkInBoundingBox = value;
@@ -148,7 +148,7 @@ namespace System.Windows
                 {
                     if(_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.CompatibilityPreferencesSealed, "DisableMultimonDisplayClipping", "CoreCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "DisableMultimonDisplayClipping", "CoreCompatibilityPreferences"));
                     }
 
                     _enableMultiMonitorDisplayClipping = value; 

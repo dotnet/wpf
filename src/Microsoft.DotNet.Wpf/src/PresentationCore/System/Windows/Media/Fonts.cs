@@ -97,7 +97,7 @@ namespace System.Windows.Media
         {
             // Both Uri parameters are optional but neither can be relative.
             if (baseUri != null && !baseUri.IsAbsoluteUri)
-                throw new ArgumentException(SR.Get(SRID.UriNotAbsolute), "baseUri");
+                throw new ArgumentException(SR.UriNotAbsolute, "baseUri");
 
             // Determine the font location from the base URI and location string.
             Uri fontLocation;
@@ -105,7 +105,7 @@ namespace System.Windows.Media
             {
                 // absolute location; make sure we support absolute font family references for this scheme
                 if (!Util.IsSupportedSchemeForAbsoluteFontFamilyUri(fontLocation))
-                    throw new ArgumentException(SR.Get(SRID.InvalidAbsoluteUriInFontFamilyName), "location");
+                    throw new ArgumentException(SR.InvalidAbsoluteUriInFontFamilyName, "location");
 
                 // make sure the absolute location is a valid URI reference rather than a Win32 path as
                 // we don't support the latter in a font family reference
@@ -115,7 +115,7 @@ namespace System.Windows.Media
             {
                 // relative location; we need a base URI
                 if (baseUri == null)
-                    throw new ArgumentNullException("baseUri", SR.Get(SRID.NullBaseUriParam, "baseUri", "location"));
+                    throw new ArgumentNullException("baseUri", SR.Format(SR.NullBaseUriParam, "baseUri", "location"));
 
                 // the location part must include a path component, otherwise we'll look in windows fonts and ignore the base URI
                 if (string.IsNullOrEmpty(location))
@@ -333,7 +333,7 @@ namespace System.Windows.Media
 
                 if (array.Rank != 1)
                 {
-                    throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                    throw new ArgumentException(SR.Collection_BadRank);
                 }
 
                 // The extra "arrayIndex >= array.Length" check in because even if _collection.Count

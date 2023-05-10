@@ -14,7 +14,6 @@ using MS.Internal;
 using MS.Internal.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -78,12 +77,12 @@ namespace System.Windows.Media
 
             if (values == null)
             {
-                throw new ArgumentException(SR.Get(SRID.Color_DimensionMismatch, null));
+                throw new ArgumentException(SR.Format(SR.Color_DimensionMismatch, null));
             }
 
             if (values.GetLength(0) != c1.nativeColorValue.GetLength(0))
             {
-                throw new ArgumentException(SR.Get(SRID.Color_DimensionMismatch, null));
+                throw new ArgumentException(SR.Format(SR.Color_DimensionMismatch, null));
             }
 
             for (int numChannels = 0; numChannels < values.GetLength(0); numChannels++)
@@ -388,7 +387,7 @@ namespace System.Windows.Media
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.Color_NullColorContext, null));
+                throw new InvalidOperationException(SR.Format(SR.Color_NullColorContext, null));
             }
         }
         #endregion Public Methods
@@ -498,7 +497,7 @@ namespace System.Windows.Media
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.Color_ColorContextTypeMismatch, null));
+                throw new ArgumentException(SR.Format(SR.Color_ColorContextTypeMismatch, null));
             }
         }
 
@@ -532,7 +531,7 @@ namespace System.Windows.Media
             }
             else if (color1.context == null || color2.context == null)
             {
-                throw new ArgumentException(SR.Get(SRID.Color_ColorContextTypeMismatch, null));
+                throw new ArgumentException(SR.Format(SR.Color_ColorContextTypeMismatch, null));
             }
             else if (color1.context == color2.context)
             {
@@ -617,7 +616,7 @@ namespace System.Windows.Media
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.Color_ColorContextTypeMismatch, null));
+                throw new ArgumentException(SR.Format(SR.Color_ColorContextTypeMismatch, null));
             }
         }
 
@@ -839,7 +838,7 @@ namespace System.Windows.Media
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Color_ColorContextNotsRGB_or_scRGB, null));
+                    throw new InvalidOperationException(SR.Format(SR.Color_ColorContextNotsRGB_or_scRGB, null));
                 }
             }
         }
@@ -863,7 +862,7 @@ namespace System.Windows.Media
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Color_ColorContextNotsRGB_or_scRGB, null));
+                    throw new InvalidOperationException(SR.Format(SR.Color_ColorContextNotsRGB_or_scRGB, null));
                 }
             }
         }
@@ -887,7 +886,7 @@ namespace System.Windows.Media
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Color_ColorContextNotsRGB_or_scRGB, null));
+                    throw new InvalidOperationException(SR.Format(SR.Color_ColorContextNotsRGB_or_scRGB, null));
                 }
             }
         }
@@ -930,7 +929,7 @@ namespace System.Windows.Media
             get
             {
                 return scRgbColor.r;
-                // throw new ArgumentException(SR.Get(SRID.Color_ColorContextNotsRgb_or_ScRgb, null));
+                // throw new ArgumentException(SR.Format(SR.Color_ColorContextNotsRgb_or_ScRgb, null));
             }
             set
             {
@@ -941,7 +940,7 @@ namespace System.Windows.Media
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Color_ColorContextNotsRGB_or_scRGB, null));
+                    throw new InvalidOperationException(SR.Format(SR.Color_ColorContextNotsRGB_or_scRGB, null));
                 }
             }
         }
@@ -955,7 +954,7 @@ namespace System.Windows.Media
             get
             {
                 return scRgbColor.g;
-                // throw new ArgumentException(SR.Get(SRID.Color_ColorContextNotsRgb_or_ScRgb, null));
+                // throw new ArgumentException(SR.Format(SR.Color_ColorContextNotsRgb_or_ScRgb, null));
             }
             set
             {
@@ -966,7 +965,7 @@ namespace System.Windows.Media
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Color_ColorContextNotsRGB_or_scRGB, null));
+                    throw new InvalidOperationException(SR.Format(SR.Color_ColorContextNotsRGB_or_scRGB, null));
                 }
             }
         }
@@ -980,7 +979,7 @@ namespace System.Windows.Media
             get
             {
                 return scRgbColor.b;
-                // throw new ArgumentException(SR.Get(SRID.Color_ColorContextNotsRgb_or_ScRgb, null));
+                // throw new ArgumentException(SR.Format(SR.Color_ColorContextNotsRgb_or_ScRgb, null));
             }
             set
             {
@@ -991,7 +990,7 @@ namespace System.Windows.Media
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Color_ColorContextNotsRGB_or_scRGB, null));
+                    throw new InvalidOperationException(SR.Format(SR.Color_ColorContextNotsRGB_or_scRGB, null));
                 }
             }
         }

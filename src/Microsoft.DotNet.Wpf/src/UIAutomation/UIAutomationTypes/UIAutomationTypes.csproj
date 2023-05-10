@@ -15,6 +15,9 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.resx" />
+    <Compile Include="$(WpfCommonDir)src\System\SR.cs">
+        <Link>Common\System\SR.cs</Link>
+    </Compile>
     <Compile Include="$(WpfSharedDir)\RefAssemblyAttrs.cs" />
     <Compile Include="$(WpfSharedDir)\System\Windows\Interop\OperatingSystemVersion.cs" />
     <Compile Include="$(WpfSharedDir)\System\Windows\Interop\OSVersionHelper.cs" />

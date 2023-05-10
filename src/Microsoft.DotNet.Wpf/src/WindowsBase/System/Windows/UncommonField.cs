@@ -2,7 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections.Generic;
+using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using MS.Internal.KnownBoxes;
 using MS.Internal.WindowsBase;  // for FriendAccessAllowed
@@ -51,7 +52,7 @@ namespace System.Windows
                 EntryIndex entryIndex = instance.LookupEntry(_globalIndex);
 
                 // Set the value if it's not the default, otherwise remove the value.
-                if (!EqualityComparer<T>.Default.Equals(value, _defaultValue))
+                if (!object.ReferenceEquals(value, _defaultValue))
                 {
                     object valueObject;
 

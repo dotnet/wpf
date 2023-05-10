@@ -14,7 +14,6 @@ using System.Windows.Markup;
 using CultureInfo = System.Globalization.CultureInfo;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Media3D
 {
@@ -113,7 +112,7 @@ namespace System.Windows.Media.Media3D
                 //   singular matrices.
 
                 // Need to handle singular matrix cameras
-                throw new NotSupportedException(SR.Get(SRID.HitTest_Singular));
+                throw new NotSupportedException(SR.HitTest_Singular);
             }
             
             cameraToWorld.Invert();

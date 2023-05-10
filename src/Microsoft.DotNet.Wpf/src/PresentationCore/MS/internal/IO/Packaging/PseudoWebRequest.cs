@@ -23,7 +23,7 @@ using System.Runtime.Serialization;
 using System.Diagnostics;               // For Assert
 using MS.Utility;                       // for EventTrace
 using MS.Internal.IO.Packaging;         // for PackageCacheEntry
-using MS.Internal.PresentationCore;     // for SRID exception strings
+using MS.Internal.PresentationCore;     // for SR exception strings
 using MS.Internal;
 
 namespace MS.Internal.IO.Packaging

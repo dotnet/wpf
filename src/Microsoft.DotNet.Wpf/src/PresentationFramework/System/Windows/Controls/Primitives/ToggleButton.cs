@@ -321,7 +321,7 @@ namespace System.Windows.Controls.Primitives
             // If Content and isChecked are defined
             if (valuesDefined)
             {
-                return SR.Get(SRID.ToStringFormatString_ToggleButton, typeText, contentText, isChecked.HasValue ? isChecked.Value.ToString() : "null");
+                return SR.Format(SR.ToStringFormatString_ToggleButton, typeText, contentText, isChecked.HasValue ? isChecked.Value.ToString() : "null");
             }
 
             // Not able to access the dispatcher

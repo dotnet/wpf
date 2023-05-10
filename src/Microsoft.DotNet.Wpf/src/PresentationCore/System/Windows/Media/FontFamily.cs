@@ -28,7 +28,6 @@ using MS.Internal.Shaping;
 using System.Security;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 // Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
 #pragma warning disable 1634, 1691
@@ -93,7 +92,7 @@ namespace System.Windows.Media
                 throw new ArgumentNullException("familyName");
 
             if (baseUri != null && !baseUri.IsAbsoluteUri)
-                throw new ArgumentException(SR.Get(SRID.UriNotAbsolute), "baseUri");
+                throw new ArgumentException(SR.UriNotAbsolute, "baseUri");
 
             _familyIdentifier = new FontFamilyIdentifier(familyName, baseUri);
         }
@@ -323,7 +322,7 @@ namespace System.Windows.Media
 
             if (mutableFamily == null)
             {
-                throw new NotSupportedException(SR.Get(SRID.FontFamily_ReadOnly));
+                throw new NotSupportedException(SR.FontFamily_ReadOnly);
             }
 
             return mutableFamily;

@@ -229,6 +229,7 @@ namespace System.Windows.Markup
         /// as well as a means for serialization to retain that context and an
         /// additional caller-defined context.
         /// </param>
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         protected XamlParseException(
             SerializationInfo info,
             StreamingContext context
@@ -238,7 +239,7 @@ namespace System.Windows.Markup
             _lineNumber = info.GetInt32("Line");
             _linePosition = info.GetInt32("Position");
         }
-
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
         /// <summary>
         /// Populates a SerializationInfo with the data needed to serialize the target object.
         /// </summary>
@@ -253,13 +254,16 @@ namespace System.Windows.Markup
 #if ! PBTCOMPILER
 #else
 #endif
+#pragma warning disable CS0672 // Member overrides obsolete member
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
             info.AddValue("Line", (Int32)_lineNumber);
             info.AddValue("Position", (Int32)_linePosition);
         }
-
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
+#pragma warning restore CS0672 // Member overrides obsolete member
         #endregion Serialization
 
         #region internal helper methods
@@ -362,31 +366,31 @@ namespace System.Windows.Markup
                     break;
 
                 case ContextBits.Type:
-                    message = SR.Get(SRID.ParserErrorContext_Type, simpleObjectId);
+                    message = SR.Format(SR.ParserErrorContext_Type, simpleObjectId);
                     break;
 
                 case ContextBits.File:
-                    message = SR.Get(SRID.ParserErrorContext_File, xamlFile);
+                    message = SR.Format(SR.ParserErrorContext_File, xamlFile);
                     break;
 
                 case ContextBits.Type | ContextBits.File:
-                    message = SR.Get(SRID.ParserErrorContext_Type_File, simpleObjectId, xamlFile);
+                    message = SR.Format(SR.ParserErrorContext_Type_File, simpleObjectId, xamlFile);
                     break;
 
                 case ContextBits.Line:
-                    message = SR.Get(SRID.ParserErrorContext_Line, lineNumber, linePosition);
+                    message = SR.Format(SR.ParserErrorContext_Line, lineNumber, linePosition);
                     break;
 
                 case ContextBits.Type | ContextBits.Line:
-                    message = SR.Get(SRID.ParserErrorContext_Type_Line, simpleObjectId, lineNumber, linePosition);
+                    message = SR.Format(SR.ParserErrorContext_Type_Line, simpleObjectId, lineNumber, linePosition);
                     break;
 
                 case ContextBits.File | ContextBits.Line:
-                    message = SR.Get(SRID.ParserErrorContext_File_Line, xamlFile, lineNumber, linePosition);
+                    message = SR.Format(SR.ParserErrorContext_File_Line, xamlFile, lineNumber, linePosition);
                     break;
 
                 case ContextBits.Type | ContextBits.File | ContextBits.Line:
-                    message = SR.Get(SRID.ParserErrorContext_Type_File_Line, simpleObjectId, xamlFile, lineNumber, linePosition);
+                    message = SR.Format(SR.ParserErrorContext_Type_File_Line, simpleObjectId, xamlFile, lineNumber, linePosition);
                     break;
             }
 

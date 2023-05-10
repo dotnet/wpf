@@ -20,7 +20,6 @@ using System.Collections.ObjectModel;
 using MS.Win32.Penimc;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -520,7 +519,7 @@ namespace System.Windows.Input
         {
             if (__disposed)
             {
-                throw new ObjectDisposedException(null, SR.Get(SRID.Penservice_Disposed));
+                throw new ObjectDisposedException(null, SR.Penservice_Disposed);
             }
 
             Debug.Assert(penContext != null);
@@ -792,7 +791,7 @@ namespace System.Windows.Input
             // marshal the data to our cache
             if (cbPacket % 4 != 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.PenService_InvalidPacketData));
+                throw new InvalidOperationException(SR.PenService_InvalidPacketData);
             }
 
             int cItems = cPackets * (cbPacket / 4);

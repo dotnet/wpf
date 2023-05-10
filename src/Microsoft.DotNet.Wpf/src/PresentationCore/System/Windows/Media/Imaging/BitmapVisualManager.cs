@@ -18,7 +18,6 @@ using System.Security;
 using System.Windows.Media;
 using System.Windows.Media.Composition;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using MS.Win32.PresentationCore;
 
 namespace System.Windows.Media.Imaging
@@ -47,7 +46,7 @@ namespace System.Windows.Media.Imaging
 
             if (bitmapTarget.IsFrozen)
             {
-                throw new ArgumentException(SR.Get(SRID.Image_CantBeFrozen, null));
+                throw new ArgumentException(SR.Format(SR.Image_CantBeFrozen, null));
             }
 
             _bitmapTarget = bitmapTarget;
@@ -87,7 +86,7 @@ namespace System.Windows.Media.Imaging
             // they subsequently try to render to the BitmapImage.
             if (_bitmapTarget.IsFrozen)
             {
-                throw new ArgumentException(SR.Get(SRID.Image_CantBeFrozen));
+                throw new ArgumentException(SR.Image_CantBeFrozen);
             }
 
             int sizeX = _bitmapTarget.PixelWidth;

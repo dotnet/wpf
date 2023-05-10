@@ -21,7 +21,6 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media 
 {
@@ -46,7 +45,7 @@ namespace System.Windows.Media
         {
             if (rect.IsEmpty) 
             {
-                throw new System.ArgumentException(SR.Get(SRID.Rect_Empty, "rect"));
+                throw new System.ArgumentException(SR.Format(SR.Rect_Empty, "rect"));
             }
 
             RadiusX = (rect.Right - rect.X) * (1.0 / 2.0);

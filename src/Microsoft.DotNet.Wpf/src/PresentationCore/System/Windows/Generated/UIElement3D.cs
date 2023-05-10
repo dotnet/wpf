@@ -347,7 +347,7 @@ namespace System.Windows
 
             if (!routedEvent.IsLegalHandler(handler))
             {
-                throw new ArgumentException(SR.Get(SRID.HandlerTypeIllegal));
+                throw new ArgumentException(SR.HandlerTypeIllegal);
             }
 
             EnsureEventHandlersStore();
@@ -408,7 +408,7 @@ namespace System.Windows
 
             if (!routedEvent.IsLegalHandler(handler))
             {
-                throw new ArgumentException(SR.Get(SRID.HandlerTypeIllegal));
+                throw new ArgumentException(SR.HandlerTypeIllegal);
             }
 
             EventHandlersStore store = EventHandlersStore;
@@ -1807,7 +1807,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting a finger touched the screen
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> PreviewTouchDown
         {
             add { AddHandler(Touch.PreviewTouchDownEvent, value, false); }
@@ -1827,7 +1827,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting a finger touched the screen
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> TouchDown
         {
             add { AddHandler(Touch.TouchDownEvent, value, false); }
@@ -1847,7 +1847,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting a finger moved across the screen
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> PreviewTouchMove
         {
             add { AddHandler(Touch.PreviewTouchMoveEvent, value, false); }
@@ -1867,7 +1867,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting a finger moved across the screen
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> TouchMove
         {
             add { AddHandler(Touch.TouchMoveEvent, value, false); }
@@ -1887,7 +1887,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting a finger lifted off the screen
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> PreviewTouchUp
         {
             add { AddHandler(Touch.PreviewTouchUpEvent, value, false); }
@@ -1907,7 +1907,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting a finger lifted off the screen
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> TouchUp
         {
             add { AddHandler(Touch.TouchUpEvent, value, false); }
@@ -1927,7 +1927,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting a finger was captured to an element
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> GotTouchCapture
         {
             add { AddHandler(Touch.GotTouchCaptureEvent, value, false); }
@@ -1947,7 +1947,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting a finger is no longer captured to an element
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> LostTouchCapture
         {
             add { AddHandler(Touch.LostTouchCaptureEvent, value, false); }
@@ -1967,7 +1967,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting the mouse entered this element
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> TouchEnter
         {
             add { AddHandler(Touch.TouchEnterEvent, value, false); }
@@ -1987,7 +1987,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting the mouse left this element
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> TouchLeave
         {
             add { AddHandler(Touch.TouchLeaveEvent, value, false); }

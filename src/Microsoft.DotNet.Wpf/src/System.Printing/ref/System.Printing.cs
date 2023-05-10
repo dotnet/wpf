@@ -616,7 +616,9 @@ namespace System.Printing.IndexedProperties
         public void Add(System.Printing.IndexedProperties.PrintProperty attributeValue) { }
         public void Dispose() { }
         protected virtual void Dispose(bool A_0) { }
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+#pragma warning restore CS0672 // Member overrides obsolete member
         public System.Printing.IndexedProperties.PrintProperty GetProperty(string attribName) { throw null; }
         public override void OnDeserialization(object sender) { }
         public void SetProperty(string attribName, System.Printing.IndexedProperties.PrintProperty attribValue) { }

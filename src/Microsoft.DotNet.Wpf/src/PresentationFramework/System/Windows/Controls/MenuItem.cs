@@ -1521,8 +1521,8 @@ namespace System.Windows.Controls
                         }
                         else
                         {
-                            // This is the case where the mouse down happend on a different element
-                            // but the moust up is happening on the menuitem. this is to prevent spoofing
+                            // This is the case where the mouse down happened on a different element
+                            // but the mouse up is happening on the menuitem. this is to prevent spoofing
                             // attacks where someone substitutes an element with a menu item
                             ClickItem(false);
                         }
@@ -2116,7 +2116,7 @@ namespace System.Windows.Controls
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.InvalidItemContainer, this.GetType().Name, typeof(MenuItem).Name, typeof(Separator).Name, itemContainer));
+                        throw new InvalidOperationException(SR.Format(SR.InvalidItemContainer, this.GetType().Name, typeof(MenuItem).Name, typeof(Separator).Name, itemContainer));
                     }
                 }
             }

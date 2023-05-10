@@ -2326,7 +2326,6 @@
             <Namespace Name="System.Security" />
             <Namespace Name="System.Security.Permissions" />
             <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
-            <Namespace Name="SRID=MS.Internal.PresentationCore.SRID" />
             <Namespace Name="System.Windows.Media.Imaging"/>
         </Namespaces>
 
@@ -2730,7 +2729,6 @@
             <Namespace Name="System.Security" />
             <Namespace Name="System.Security.Permissions" />
             <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
-            <Namespace Name="SRID=MS.Internal.PresentationCore.SRID" />
         </Namespaces>
 
         <Resource Name="PixelShader" SkipToString="true" SkipUpdate="true" CanIntroduceCycles="false" >
@@ -2893,7 +2891,6 @@
             <Namespace Name="System.Security" />
             <Namespace Name="System.Security.Permissions" />
             <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
-            <Namespace Name="SRID=MS.Internal.PresentationCore.SRID" />
         </Namespaces>
 
         <!--
@@ -3510,7 +3507,6 @@
             <Namespace Name="System.Security" />
             <Namespace Name="System.Security.Permissions" />
             <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
-            <Namespace Name="SRID=MS.Internal.PresentationCore.SRID" />
         </Namespaces>
 
         <Resource Name="Timeline" IsAbstract="true" IsAnimatable="true" HasUnmanagedResource="false" SkipToString="true" />
@@ -3551,7 +3547,6 @@
             <Namespace Name="MS.Internal.Collections" />
             <Namespace Name="MS.Utility"/>
             <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
-            <Namespace Name="SRID=MS.Internal.PresentationCore.SRID" />
         </Namespaces>
 
         <Resource Name="TextDecoration" IsAnimatable="true" IsAbstract="false" SkipToString="true" HasUnmanagedResource="false" >
@@ -3721,7 +3716,6 @@
             <Namespace Name="System.Windows.Media.Media3D"/>
             <Namespace Name="System.Diagnostics"/>
             <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
-            <Namespace Name="SRID=MS.Internal.PresentationCore.SRID" />
             <Namespace Name="System.Security" />
             <Namespace Name="System.Security.Permissions" />
         </Namespaces>

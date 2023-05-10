@@ -19,7 +19,6 @@ using System.Windows;
 using MS.Internal.FontCache; // for HashFn
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 // Allow suppression of presharp warnings
 #pragma warning disable 1634, 1691
@@ -99,7 +98,7 @@ namespace System.Windows.Media
         {
             if (!IsValidCultureOverride(culture))
             {
-                throw new ArgumentException(SR.Get(SRID.SpecificNumberCultureRequired));
+                throw new ArgumentException(SR.SpecificNumberCultureRequired);
             }
             return culture;
         }

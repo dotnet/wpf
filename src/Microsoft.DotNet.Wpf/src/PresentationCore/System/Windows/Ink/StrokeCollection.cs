@@ -21,7 +21,6 @@ using MS.Internal.Ink.InkSerializedFormat;
 using MS.Internal.Ink;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 // Primary root namespace for TabletPC/Ink/Handwriting/Recognition in .NET
 
@@ -61,7 +60,7 @@ namespace System.Windows.Ink
                 {
                     //clear and throw
                     items.Clear();
-                    throw new ArgumentException(SR.Get(SRID.StrokeIsDuplicated), "strokes");
+                    throw new ArgumentException(SR.StrokeIsDuplicated, "strokes");
                 }
                 items.Add(stroke);
             }
@@ -77,13 +76,13 @@ namespace System.Windows.Ink
             }
             if ( !stream.CanRead )
             {
-                throw new ArgumentException(SR.Get(SRID.Image_StreamRead), "stream");
+                throw new ArgumentException(SR.Image_StreamRead, "stream");
             }
 
             Stream seekableStream = GetSeekableStream(stream);
             if (seekableStream == null)
             {
-                throw new ArgumentException(SR.Get(SRID.Invalid_isfData_Length), "stream");
+                throw new ArgumentException(SR.Invalid_isfData_Length, "stream");
             }
 
             //this will init our stroke collection
@@ -104,7 +103,7 @@ namespace System.Windows.Ink
             }
             if ( !stream.CanWrite )
             {
-                throw new ArgumentException(SR.Get(SRID.Image_StreamWrite), "stream");
+                throw new ArgumentException(SR.Image_StreamWrite, "stream");
             }
             SaveIsf(stream, compress);
         }
@@ -205,7 +204,7 @@ namespace System.Windows.Ink
         {
             if ( propertyDataId == Guid.Empty )
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidGuid), "propertyDataId");
+                throw new ArgumentException(SR.InvalidGuid, "propertyDataId");
             }
 
             return this.ExtendedProperties[propertyDataId];
@@ -243,7 +242,7 @@ namespace System.Windows.Ink
         {
             // Ensure that the transformMatrix is invertible.
             if ( false == transformMatrix.HasInverse )
-                throw new ArgumentException(SR.Get(SRID.MatrixNotInvertible), "transformMatrix");
+                throw new ArgumentException(SR.MatrixNotInvertible, "transformMatrix");
 
             // if transformMatrix is identity or the StrokeCollection is empty
             //      then no change will occur anyway
@@ -338,7 +337,7 @@ namespace System.Windows.Ink
             }
             if ( this.IndexOf(stroke) != -1 )
             {
-                throw new ArgumentException(SR.Get(SRID.StrokeIsDuplicated), "stroke");
+                throw new ArgumentException(SR.StrokeIsDuplicated, "stroke");
             }
 
             base.InsertItem(index, stroke);
@@ -359,7 +358,7 @@ namespace System.Windows.Ink
             }
             if ( IndexOf(stroke) != -1 )
             {
-                throw new ArgumentException(SR.Get(SRID.StrokeIsDuplicated), "stroke");
+                throw new ArgumentException(SR.StrokeIsDuplicated, "stroke");
             }
 
             Stroke removedStroke = this[index];
@@ -418,7 +417,7 @@ namespace System.Windows.Ink
             if ( indexes == null )
             {
                 // At least one stroke doesn't exist in our collection. We throw.
-                ArgumentException ae = new ArgumentException(SR.Get(SRID.InvalidRemovedStroke), "strokes");
+                ArgumentException ae = new ArgumentException(SR.InvalidRemovedStroke, "strokes");
                 //
                 // we add a tag here so we can check for this in EraserBehavior.OnPointEraseResultChanged
                 // to determine if this method is the origin of an ArgumentException we harden against
@@ -465,7 +464,7 @@ namespace System.Windows.Ink
                 Stroke stroke = strokes[x];
                 if ( this.IndexOf(stroke) != -1 )
                 {
-                    throw new ArgumentException(SR.Get(SRID.StrokeIsDuplicated), "strokes");
+                    throw new ArgumentException(SR.StrokeIsDuplicated, "strokes");
                 }
             }
 
@@ -486,7 +485,7 @@ namespace System.Windows.Ink
         {
             if ( strokeToReplace == null )
             {
-                throw new ArgumentNullException(SR.Get(SRID.EmptyScToReplace));
+                throw new ArgumentNullException(SR.EmptyScToReplace);
             }
 
             StrokeCollection strokesToReplace = new StrokeCollection();
@@ -503,17 +502,17 @@ namespace System.Windows.Ink
         {
             if ( strokesToReplace == null )
             {
-                throw new ArgumentNullException(SR.Get(SRID.EmptyScToReplace));
+                throw new ArgumentNullException(SR.EmptyScToReplace);
             }
             if ( strokesToReplaceWith == null )
             {
-                throw new ArgumentNullException(SR.Get(SRID.EmptyScToReplaceWith));
+                throw new ArgumentNullException(SR.EmptyScToReplaceWith);
             }
 
             int replaceCount = strokesToReplace.Count;
             if ( replaceCount == 0 )
             {
-                ArgumentException ae = new ArgumentException(SR.Get(SRID.EmptyScToReplace), "strokesToReplace");
+                ArgumentException ae = new ArgumentException(SR.EmptyScToReplace, "strokesToReplace");
                 //
                 // we add a tag here so we can check for this in EraserBehavior.OnPointEraseResultChanged
                 // to determine if this method is the origin of an ArgumentException we harden against
@@ -526,7 +525,7 @@ namespace System.Windows.Ink
             if ( indexes == null )
             {
                 // At least one stroke doesn't exist in our collection. We throw.
-                ArgumentException ae = new ArgumentException(SR.Get(SRID.InvalidRemovedStroke), "strokesToReplace");
+                ArgumentException ae = new ArgumentException(SR.InvalidRemovedStroke, "strokesToReplace");
                 //
                 // we add a tag here so we can check for this in EraserBehavior.OnPointEraseResultChanged
                 // to determine if this method is the origin of an ArgumentException we harden against
@@ -542,7 +541,7 @@ namespace System.Windows.Ink
                 Stroke stroke = strokesToReplaceWith[x];
                 if ( this.IndexOf(stroke) != -1 )
                 {
-                    throw new ArgumentException(SR.Get(SRID.StrokeIsDuplicated), "strokesToReplaceWith");
+                    throw new ArgumentException(SR.StrokeIsDuplicated, "strokesToReplaceWith");
                 }
             }
 
@@ -655,7 +654,7 @@ namespace System.Windows.Ink
         {
             if ( null == e )
             {
-                throw new ArgumentNullException("e", SR.Get(SRID.EventArgIsNull));
+                throw new ArgumentNullException("e", SR.EventArgIsNull);
             }
 
             //raise our internal event first.  This is used by
@@ -712,7 +711,7 @@ namespace System.Windows.Ink
         {
             if ( null == e )
             {
-                throw new ArgumentNullException("e", SR.Get(SRID.EventArgIsNull));
+                throw new ArgumentNullException("e", SR.EventArgIsNull);
             }
 
             if ( this.PropertyDataChanged != null )
@@ -896,7 +895,7 @@ namespace System.Windows.Ink
             /// <param name="e"></param>
             protected override void OnStrokesChanged(StrokeCollectionChangedEventArgs e)
             {
-                throw new NotSupportedException(SR.Get(SRID.StrokeCollectionIsReadOnly));
+                throw new NotSupportedException(SR.StrokeCollectionIsReadOnly);
             }
 
             /// <summary>

@@ -20,7 +20,6 @@ using System.Runtime.InteropServices;
 using System.ComponentModel;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input 
 {
@@ -513,7 +512,7 @@ namespace System.Windows.Input
         {
             if (_source == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.InputLanguageManager_NotReadyToChangeCurrentLanguage));
+                throw new InvalidOperationException(SR.InputLanguageManager_NotReadyToChangeCurrentLanguage);
             }
 
             _source.CurrentInputLanguage = languageId;

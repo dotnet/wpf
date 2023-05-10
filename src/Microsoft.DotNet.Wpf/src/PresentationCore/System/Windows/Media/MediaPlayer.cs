@@ -24,7 +24,6 @@ using System.Security.AccessControl;//for semaphore access permissions
 using System.Net;
 using Microsoft.Win32;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 //
@@ -828,7 +827,7 @@ namespace System.Windows.Media
                     break;
 
                 default:
-                    throw new System.NotSupportedException(SR.Get(SRID.Media_UnknownChannelType));
+                    throw new System.NotSupportedException(SR.Media_UnknownChannelType);
             }
 
             //

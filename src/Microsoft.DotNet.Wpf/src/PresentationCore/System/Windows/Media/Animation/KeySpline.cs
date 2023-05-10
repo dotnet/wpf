@@ -14,7 +14,6 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Animation
 {
@@ -67,16 +66,16 @@ namespace System.Windows.Media.Animation
         {
             if (!IsValidControlPoint(controlPoint1))
             {
-                throw new ArgumentException(SR.Get(
-                    SRID.Animation_KeySpline_InvalidValue,
+                throw new ArgumentException(SR.Format(
+                    SR.Animation_KeySpline_InvalidValue,
                     "controlPoint1",
                     controlPoint1));
             }
 
             if (!IsValidControlPoint(controlPoint2))
             {
-                throw new ArgumentException(SR.Get(
-                    SRID.Animation_KeySpline_InvalidValue,
+                throw new ArgumentException(SR.Format(
+                    SR.Animation_KeySpline_InvalidValue,
                     "controlPoint2",
                     controlPoint2));
             }
@@ -177,8 +176,8 @@ namespace System.Windows.Media.Animation
                 {
                     if (!IsValidControlPoint(value))
                     {
-                        throw new ArgumentException(SR.Get(
-                            SRID.Animation_KeySpline_InvalidValue,
+                        throw new ArgumentException(SR.Format(
+                            SR.Animation_KeySpline_InvalidValue,
                             "ControlPoint1",
                             value));
                     }
@@ -209,8 +208,8 @@ namespace System.Windows.Media.Animation
                 {
                     if (!IsValidControlPoint(value))
                     {
-                        throw new ArgumentException(SR.Get(
-                            SRID.Animation_KeySpline_InvalidValue,
+                        throw new ArgumentException(SR.Format(
+                            SR.Animation_KeySpline_InvalidValue,
                             "ControlPoint2",
                             value));
                     }

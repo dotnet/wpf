@@ -57,12 +57,12 @@ namespace System.IO.Packaging
             // Ensure uri is absolute - if we don't check now, the get_Scheme property will throw 
             // InvalidOperationException which would be misleading to the caller.
             if (!uri.IsAbsoluteUri)
-                throw new ArgumentException(SR.Get(SRID.UriMustBeAbsolute), "uri");
+                throw new ArgumentException(SR.UriMustBeAbsolute, "uri");
 
             // Ensure uri is correct scheme because we can be called directly.  Case sensitive
             // is fine because Uri.Scheme contract is to return in lower case only.
             if (!string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal))
-                throw new ArgumentException(SR.Get(SRID.UriSchemeMismatch, PackUriHelper.UriSchemePack), "uri");
+                throw new ArgumentException(SR.Format(SR.UriSchemeMismatch, PackUriHelper.UriSchemePack), "uri");
 
 #if DEBUG
             if (_traceSwitch.Enabled)

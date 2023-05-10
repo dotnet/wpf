@@ -112,7 +112,7 @@ namespace MS.Win32.Penimc
                 // succeeds, or IntPtr.Zero if SxS registration fails.
                 if ((_pimcActCtxCookie = RegisterDllForSxSCOM()) == IntPtr.Zero)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.PenImcSxSRegistrationFailed, ExternDll.Penimc));
+                    throw new InvalidOperationException(SR.Format(SR.PenImcSxSRegistrationFailed, ExternDll.Penimc));
                 }
             }
         }

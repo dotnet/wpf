@@ -28,7 +28,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media 
 {
@@ -184,7 +183,7 @@ namespace System.Windows.Media
             }
             else
             {
-                throw new Exception(SR.Get(SRID.BrushUnknownBamlType));
+                throw new Exception(SR.BrushUnknownBamlType);
             }
         }
 

@@ -17,7 +17,6 @@ using System.Diagnostics;
 using System.Security;
 using MS.Internal;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 
 namespace System.Windows.Media.TextFormatting
@@ -98,7 +97,7 @@ namespace System.Windows.Media.TextFormatting
         {
             if (characterLength < 0)
             {
-                throw new ArgumentOutOfRangeException("characterLength", SR.Get(SRID.ParameterCannotBeNegative));
+                throw new ArgumentOutOfRangeException("characterLength", SR.ParameterCannotBeNegative);
             }
 
             int maxLength = (characterBufferReference.CharacterBuffer != null) ?
@@ -107,7 +106,7 @@ namespace System.Windows.Media.TextFormatting
 
             if (characterLength > maxLength)
             {
-                throw new ArgumentOutOfRangeException("characterLength", SR.Get(SRID.ParameterCannotBeGreaterThan, maxLength));
+                throw new ArgumentOutOfRangeException("characterLength", SR.Format(SR.ParameterCannotBeGreaterThan, maxLength));
             }
 
             _charBufferRef = characterBufferReference;

@@ -20,7 +20,6 @@ using System.Windows.Media.Imaging;
 using System.Windows;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal
 {
@@ -48,7 +47,7 @@ namespace MS.Internal
             {
                 return (intChar-s_aUpper + 10);
             }
-            throw new FormatException(SR.Get(SRID.Parsers_IllegalToken));
+            throw new FormatException(SR.Parsers_IllegalToken);
         }
 
         static private Color ParseHexColor(string trimmedColor)
@@ -100,7 +99,7 @@ namespace MS.Internal
         {
             if (!trimmedColor.StartsWith(s_ContextColor, StringComparison.OrdinalIgnoreCase))
             {
-                throw new FormatException(SR.Get(SRID.Parsers_IllegalToken));
+                throw new FormatException(SR.Parsers_IllegalToken);
             }
 
             string tokens = trimmedColor.Substring(s_ContextColor.Length);
@@ -108,7 +107,7 @@ namespace MS.Internal
             string[] preSplit = tokens.Split(' ');
             if (preSplit.GetLength(0)< 2)
             {
-                throw new FormatException(SR.Get(SRID.Parsers_IllegalToken));
+                throw new FormatException(SR.Parsers_IllegalToken);
             }
 
             tokens = tokens.Substring(preSplit[0].Length);
@@ -146,7 +145,7 @@ namespace MS.Internal
             // If the number of color values found does not match the number of channels in the profile, we must throw
             if (result.ColorContext.NumChannels != values.Length)
             {
-                throw new FormatException(SR.Get(SRID.Parsers_IllegalToken));
+                throw new FormatException(SR.Parsers_IllegalToken);
             }
 
             return result;
@@ -156,7 +155,7 @@ namespace MS.Internal
         {
             if (!trimmedColor.StartsWith("sc#", StringComparison.Ordinal))
             {
-                throw new FormatException(SR.Get(SRID.Parsers_IllegalToken));
+                throw new FormatException(SR.Parsers_IllegalToken);
             }
 
             string tokens = trimmedColor.Substring(3, trimmedColor.Length - 3);
@@ -177,7 +176,7 @@ namespace MS.Internal
                 // We should be out of tokens at this point
                 if (th.NextToken())
                 {
-                    throw new FormatException(SR.Get(SRID.Parsers_IllegalToken));
+                    throw new FormatException(SR.Parsers_IllegalToken);
                 }
 
                 return Color.FromScRgb(values[0], values[1], values[2], values[3]);
@@ -217,7 +216,7 @@ namespace MS.Internal
                 (isScRgbColor == false) &&
                 (isContextColor== false))
             {
-                throw new FormatException(SR.Get(SRID.Parsers_IllegalToken));
+                throw new FormatException(SR.Parsers_IllegalToken);
             }
 
             //Is it a number?
@@ -239,7 +238,7 @@ namespace MS.Internal
 
                 if (kc == KnownColor.UnknownColor)
                 {
-                    throw new FormatException(SR.Get(SRID.Parsers_IllegalToken));
+                    throw new FormatException(SR.Parsers_IllegalToken);
                 }
 
                 return Color.FromUInt32((uint)kc);
@@ -262,7 +261,7 @@ namespace MS.Internal
 
             if (trimmedColor.Length == 0)
             {
-                throw new FormatException(SR.Get(SRID.Parser_Empty));
+                throw new FormatException(SR.Parser_Empty);
             }
 
             // Note that because trimmedColor is exactly brush.Trim() we don't have to worry about
@@ -295,7 +294,7 @@ namespace MS.Internal
             }
 
             // If it's not a color, so the content is illegal.
-            throw new FormatException(SR.Get(SRID.Parsers_IllegalToken));
+            throw new FormatException(SR.Parsers_IllegalToken);
         }
 
 

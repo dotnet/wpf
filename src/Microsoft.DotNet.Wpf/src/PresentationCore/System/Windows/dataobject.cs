@@ -33,7 +33,6 @@ namespace System.Windows
     using MS.Internal.PresentationCore;                        // SecurityHelper
 
     using SR=MS.Internal.PresentationCore.SR;
-    using SRID=MS.Internal.PresentationCore.SRID;
     using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 // PreSharp uses message numbers that the C# compiler doesn't know about.
@@ -108,7 +107,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             if (data == null)
@@ -151,7 +150,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             if (data == null)
@@ -213,7 +212,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             return _innerData.GetData(format, autoConvert);
@@ -232,7 +231,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             return GetData(format, true);
@@ -283,7 +282,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             dataPresent = _innerData.GetDataPresent(format, autoConvert);
@@ -304,7 +303,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             return GetDataPresent(format, true);
@@ -357,7 +356,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             if (data == null)
@@ -405,7 +404,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             _innerData.SetData(format, data, autoConvert);
@@ -560,7 +559,7 @@ namespace System.Windows
 
             if (fileDropList.Count == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_FileDropListIsEmpty, fileDropList));
+                throw new ArgumentException(SR.Format(SR.DataObject_FileDropListIsEmpty, fileDropList));
             }
 
             foreach (string fileDrop in fileDropList)
@@ -571,7 +570,7 @@ namespace System.Windows
                 }
                 catch (ArgumentException e)
                 {
-                    throw new ArgumentException(SR.Get(SRID.DataObject_FileDropListHasInvalidFileDropPath, e));
+                    throw new ArgumentException(SR.Format(SR.DataObject_FileDropListHasInvalidFileDropPath, e));
                 }
             }
 
@@ -688,7 +687,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ExternalException(SR.Get(SRID.DataObject_NotImplementedEnumFormatEtc, dwDirection), NativeMethods.E_NOTIMPL);
+                throw new ExternalException(SR.Format(SR.DataObject_NotImplementedEnumFormatEtc, dwDirection), NativeMethods.E_NOTIMPL);
             }
         }
 
@@ -1621,12 +1620,14 @@ namespace System.Windows
                 // since we directly support TYMED.TYMED_ENHMF.
                 hr = DV_E_TYMED;
             }
+#pragma warning disable SYSLIB0050
             else if (IsFormatEqual(format, DataFormats.Serializable)
                 || data is ISerializable
                 || (data != null && data.GetType().IsSerializable))
             {
                 hr = SaveObjectToHandle(medium.unionmember, data, doNotReallocate);
             }
+#pragma warning restore SYSLIB0050
             else
             {
                 // Couldn't find the proper data for the current TYMED_HGLOBAL
@@ -1753,7 +1754,7 @@ namespace System.Windows
 
             return hr;
         }
-
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
         private int SaveObjectToHandle(IntPtr handle, Object data, bool doNotReallocate)
         {
             Stream stream;
@@ -1775,6 +1776,7 @@ namespace System.Windows
                 }
             }
         }
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
 
         /// <summary>
         /// Saves stream out to handle.
@@ -2160,6 +2162,7 @@ namespace System.Windows
         /// true if the data is likely to be serializated
         /// through CLR serialization
         /// </returns>
+#pragma warning disable SYSLIB0050
         private static bool IsFormatAndDataSerializable(string format, object data)
         {
             return
@@ -2167,7 +2170,7 @@ namespace System.Windows
                   || data is ISerializable
                   || (data != null && data.GetType().IsSerializable);
         }
-
+#pragma warning restore SYSLIB0050
 
         /// <summary>
         /// Return true if the format string are equal(Case-senstive).
@@ -2750,7 +2753,7 @@ namespace System.Windows
             {
                 // If we want to support setting data into an OLE data Object,
                 // the code should be here.
-                throw new InvalidOperationException(SR.Get(SRID.DataObject_CannotSetDataOnAFozenOLEDataDbject));
+                throw new InvalidOperationException(SR.DataObject_CannotSetDataOnAFozenOLEDataDbject);
             }
 
             /// <summary>
@@ -3112,6 +3115,7 @@ namespace System.Windows
             /// Creates a new instance of the Object that has been persisted into the
             /// handle.
             /// </summary>
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
             private Object ReadObjectFromHandle(IntPtr handle, bool restrictDeserialization)
             {
                 object value;
@@ -3149,7 +3153,7 @@ namespace System.Windows
 
                 return value;
             }
-
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
             /// <summary>
             /// Creates a new instance of BitmapSource that has been saved to the
             /// handle as the memory stream of BitmapSource.

@@ -19,7 +19,6 @@ using System.Windows.Automation.Peers;
 using System.Windows.Threading;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Automation
 {
@@ -122,7 +121,7 @@ namespace MS.Internal.Automation
                 case AutomationEvents.ActiveTextPositionChanged:                            eventObject = AutomationElementIdentifiers.ActiveTextPositionChangedEvent; break;
 
                 default:
-                    throw new ArgumentException(SR.Get(SRID.Automation_InvalidEventId), "eventId");
+                    throw new ArgumentException(SR.Automation_InvalidEventId, "eventId");
             }
 
             if ((eventObject != null) && (!_eventsTable.ContainsKey(eventObject.Id)))

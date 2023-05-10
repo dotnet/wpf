@@ -89,7 +89,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            throw (new ArgumentException(SR.Get(SRID.Grid_UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value"));
+            throw (new ArgumentException(SR.Format(SR.Grid_UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value"));
         }
 
         /// <summary>
@@ -359,7 +359,7 @@ namespace System.Windows.Controls
             {
                 if (_gridLinesRenderer == null)
                 {
-                    throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                    throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
                 }
                 return _gridLinesRenderer;
             }
@@ -2587,6 +2587,20 @@ namespace System.Windows.Controls
                 // Note that if we return to Phase2, at least one *-def will have been
                 // resolved.  This guarantees we don't run Phase2+3 infinitely often.
                 runPhase2and3 = false;
+
+                if(takenSize < finalSize)
+                {
+                    if(DoubleUtil.AreClose(takenSize, finalSize) && minCountPhase2 > 0)
+                    {
+                        // if very small (~ 2.2204460492503131e-016) remaining size is available
+                        // adding it to size of smallest width column resolved as 'min'.
+                        DefinitionBase resolvedDef = definitions[definitionIndices[minCountPhase2 - 1]];
+                        resolvedDef.MeasureSize -= (finalSize - takenSize);
+                        takenSize = finalSize;
+                        remainingAvailableSize = 0.0;
+                    }
+                }
+
                 if (starCount == 0 && takenSize < finalSize)
                 {
                     // if no *-defs remain and we haven't allocated all the space, reconsider the defs
@@ -3950,12 +3964,12 @@ namespace System.Windows.Controls
                     if (_currentEnumerator == -1)
                     {
                         #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
-                        throw new InvalidOperationException(SR.Get(SRID.EnumeratorNotStarted));
+                        throw new InvalidOperationException(SR.EnumeratorNotStarted);
                     }
                     if (_currentEnumerator >= 3)
                     {
                         #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
-                        throw new InvalidOperationException(SR.Get(SRID.EnumeratorReachedEnd));
+                        throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                     }
 
                     //  assert below is not true anymore since UIElementCollection allowes for null children

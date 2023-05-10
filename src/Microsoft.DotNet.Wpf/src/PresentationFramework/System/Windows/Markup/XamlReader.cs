@@ -226,7 +226,7 @@ namespace System.Windows.Markup
             if (_objectWriter != null)
             {
                 // A XamlReader instance cannot be shared across two load operations
-                throw new InvalidOperationException(SR.Get(SRID.ParserCannotReuseXamlReader));
+                throw new InvalidOperationException(SR.ParserCannotReuseXamlReader);
             }
 
             return LoadAsync(stream, null, useRestrictiveXamlReader);
@@ -311,7 +311,7 @@ namespace System.Windows.Markup
             if (_objectWriter != null)
             {
                 // A XamlReader instance cannot be shared across two load operations
-                throw new InvalidOperationException(SR.Get(SRID.ParserCannotReuseXamlReader));
+                throw new InvalidOperationException(SR.ParserCannotReuseXamlReader);
             }
 
             if (parserContext == null)

@@ -86,7 +86,7 @@ namespace System.Windows.Input
             }
             if (!TryCompleteManipulation(element))
             {
-                throw new InvalidOperationException(SR.Get(SRID.Manipulation_ManipulationNotActive));
+                throw new InvalidOperationException(SR.Manipulation_ManipulationNotActive);
             }
         }
 
@@ -121,7 +121,7 @@ namespace System.Windows.Input
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.Manipulation_ManipulationNotActive));
+                throw new InvalidOperationException(SR.Manipulation_ManipulationNotActive);
             }
         }
 
@@ -168,7 +168,7 @@ namespace System.Windows.Input
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.Manipulation_ManipulationNotActive));
+                throw new InvalidOperationException(SR.Manipulation_ManipulationNotActive);
             }
         }
 
@@ -213,7 +213,7 @@ namespace System.Windows.Input
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.Manipulation_ManipulationNotActive));
+                throw new InvalidOperationException(SR.Manipulation_ManipulationNotActive);
             }
         }
 
@@ -256,7 +256,7 @@ namespace System.Windows.Input
             }
             if (!element.IsManipulationEnabled)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Manipulation_ManipulationNotEnabled));
+                throw new InvalidOperationException(SR.Manipulation_ManipulationNotEnabled);
             }
 
             ManipulationDevice device = ManipulationDevice.AddManipulationDevice(element);
@@ -282,7 +282,7 @@ namespace System.Windows.Input
 
             if (!TryRemoveManipulator(element, manipulator))
             {
-                throw new InvalidOperationException(SR.Get(SRID.Manipulation_ManipulationNotActive));
+                throw new InvalidOperationException(SR.Manipulation_ManipulationNotActive);
             }
         }
 
@@ -322,7 +322,7 @@ namespace System.Windows.Input
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.Manipulation_ManipulationNotActive));
+                throw new InvalidOperationException(SR.Manipulation_ManipulationNotActive);
             }
         }
 

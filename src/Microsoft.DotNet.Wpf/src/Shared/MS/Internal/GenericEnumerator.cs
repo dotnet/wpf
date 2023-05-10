@@ -17,10 +17,8 @@ using MS.Utility;
 
 #if PRESENTATION_CORE
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 #else
 using SR=System.Windows.SR;
-using SRID=System.Windows.SRID;
 #endif
 
 namespace MS.Internal
@@ -60,7 +58,7 @@ namespace MS.Internal
             if (   (-1 == _position)
                 || (_position >= _count))
             {
-                throw new InvalidOperationException(SR.Get(SRID.Enumerator_VerifyContext));
+                throw new InvalidOperationException(SR.Enumerator_VerifyContext);
             }
         }
 
@@ -91,7 +89,7 @@ namespace MS.Internal
         {
             if (_getGenerationID() != _originalGenerationID)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
             }
 
             _position++;
@@ -119,7 +117,7 @@ namespace MS.Internal
         {
             if (_getGenerationID() != _originalGenerationID)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
             }
             else
             {

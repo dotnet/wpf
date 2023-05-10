@@ -12,7 +12,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input.StylusWisp
 {
@@ -277,7 +276,7 @@ namespace System.Windows.Input.StylusWisp
             DependencyObject doStylusCapture = element as DependencyObject;
             if (doStylusCapture != null && !InputElement.IsValid(element))
             {
-                throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, doStylusCapture.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, doStylusCapture.GetType()));
             }
 
             if (doStylusCapture != null)
@@ -441,7 +440,7 @@ namespace System.Windows.Input.StylusWisp
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, oldOver.GetType())); 
+                    throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, oldOver.GetType())); 
                 }
             }
             if (_stylusOver != null)
@@ -470,7 +469,7 @@ namespace System.Windows.Input.StylusWisp
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, _stylusOver.GetType())); 
+                    throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, _stylusOver.GetType())); 
                 }
             }
 
@@ -1195,7 +1194,7 @@ namespace System.Windows.Input.StylusWisp
             // Validate that relativeTo is either a UIElement, a ContentElement or a UIElement3D.
             if (relativeTo != null && !InputElement.IsValid(relativeTo))
             {
-                throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, relativeTo.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, relativeTo.GetType()));
             }
 
             PresentationSource relativePresentationSource = null;

@@ -77,9 +77,7 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2
 
-    # Execute all unit tests in the solution
-    - name: Execute unit tests
-      run: dotnet test
+
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application

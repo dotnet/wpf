@@ -86,9 +86,9 @@ namespace MS.Internal
             if (contentType == null)
                 throw new ArgumentNullException("contentType");
 
-            if (string.IsNullOrEmpty(contentType))
+            if (contentType.Length == 0)
             {
-                _contentType = String.Empty;             
+                _contentType = String.Empty;
             }
             else
             {

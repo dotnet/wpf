@@ -60,11 +60,11 @@ The current backlog of issues and PRs in WPF stands in higher numbers and we int
 
 # Others/Fundamentals
 
-With increasing numbers of ARM64 devices, we believe that enhancing the performance of WPF apps and fixing issues related to WPF rendering on ARM64 devices will deliver great customer value. Also, accessibility is one of our primary pillars where we would like to deliver improved support for our differently abled users. 
+With increasing numbers of ARM64 devices, we believe that enhancing the performance of WPF apps and fixing issues related to WPF rendering on ARM64 devices will deliver great customer value. Also, accessibility is one of our primary pillars where we would like to deliver improved support for our specially abled users. 
 
 | Goal | Description | Rationale |
 | ------------- |:--------------|:-------------|
-| Accessibility Improvements | Improving accessibility support for WPF controls | This enables WPF applications be more accessibility compliant & would be able to better serve needs for differently abled users. This involves addressing high priority accessibility bugs. |
+| Accessibility Improvements | Improving accessibility support for WPF controls | This enables WPF applications to be more inclusive & would be able to better serve needs of specially abled users. This involves addressing high priority accessibility bugs. |
 | ARM64 Performance | Benchmarking and optimizing WPF for better support on ARM64 devices | WPF on ARM64 requires more investment on product and tests. Currently, WPF on ARM64 relies on emulation techniques. We intend to bridge the gap between performance of WPF controls as compared to that of other frameworks. 
 
 Note - Some servicing issues (eg. Security issues) and high priority issues are not tracked in GitHub.

@@ -762,8 +762,8 @@ namespace System.Windows
         {
             bool autoConvert;
 
-            if (String.CompareOrdinal(format, DataFormats.FileDrop) == 0 ||
-                String.CompareOrdinal(format, DataFormats.Bitmap) == 0)
+            if (string.Equals(format, DataFormats.FileDrop, StringComparison.Ordinal) ||
+                string.Equals(format, DataFormats.Bitmap, StringComparison.Ordinal))
             {
                 autoConvert = true;
             }

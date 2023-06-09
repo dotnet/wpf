@@ -2887,7 +2887,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
             // Optimize for SystemMetric types that are very frequently used.
-            if (string.CompareOrdinal(xmlns, XamlReaderHelper.DefaultNamespaceURI) == 0)
+            if (string.Equals(xmlns, XamlReaderHelper.DefaultNamespaceURI, StringComparison.Ordinal))
             {
                 switch (typeString)
                 {

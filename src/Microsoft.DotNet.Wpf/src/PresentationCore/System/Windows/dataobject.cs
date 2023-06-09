@@ -2177,7 +2177,7 @@ namespace System.Windows
         /// </summary>
         private static bool IsFormatEqual(string format1, string format2)
         {
-            return (String.CompareOrdinal(format1, format2) == 0);
+            return (string.Equals(format1, format2, StringComparison.Ordinal));
         }
 
         /// <summary>

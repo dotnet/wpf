@@ -49,8 +49,8 @@ namespace MS.Internal.IO.Packaging
             // Note that because of the GetType() checking above, the casting must be valid.
             ElementTableKey otherElement = (ElementTableKey)other;
 
-            return (   String.CompareOrdinal(BaseName,otherElement.BaseName) == 0
-                && String.CompareOrdinal(XmlNamespace,otherElement.XmlNamespace) == 0 );
+            return (   string.Equals(BaseName, otherElement.BaseName, StringComparison.Ordinal)
+                && string.Equals(XmlNamespace, otherElement.XmlNamespace, StringComparison.Ordinal) );
         }
             
         /// <summary>

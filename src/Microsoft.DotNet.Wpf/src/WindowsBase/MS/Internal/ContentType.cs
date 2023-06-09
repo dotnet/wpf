@@ -85,10 +85,10 @@ namespace MS.Internal
         {
             if (contentType == null)
                 throw new ArgumentNullException("contentType");
-                       
-            if (String.CompareOrdinal(contentType, String.Empty) == 0)
+
+            if (contentType.Length == 0)
             {
-                _contentType = String.Empty;             
+                _contentType = String.Empty;
             }
             else
             {
@@ -278,8 +278,8 @@ namespace MS.Internal
                 if (!_isInitialized)
                     return String.Empty;
 
-                Debug.Assert(String.CompareOrdinal(_type, String.Empty) != 0
-                   || String.CompareOrdinal(_subType, String.Empty) != 0);
+                Debug.Assert(!string.IsNullOrEmpty(_type)
+                             || !string.IsNullOrEmpty(_subType));
             
                 StringBuilder stringBuilder = new StringBuilder(_type);
                 stringBuilder.Append('/');
@@ -553,7 +553,7 @@ namespace MS.Internal
         /// <exception cref="ArgumentException">If the token is Empty</exception>
         private static string ValidateToken(string token)
         {
-            if (String.CompareOrdinal(token, String.Empty)==0)
+            if (string.IsNullOrEmpty(token))
                 throw new ArgumentException(SR.InvalidToken);
 
             for (int i = 0; i < token.Length; i++)
@@ -579,7 +579,7 @@ namespace MS.Internal
         /// <exception cref="ArgumentException">If the paramter value is empty</exception>
         private static string ValidateQuotedStringOrToken(string parameterValue)
         {
-            if (String.CompareOrdinal(parameterValue, String.Empty) == 0)
+            if (string.IsNullOrEmpty(parameterValue))
                 throw new ArgumentException(SR.InvalidParameterValue);
 
             if (parameterValue.Length >= 2 && 

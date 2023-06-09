@@ -1680,10 +1680,13 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    if (!snapToText &&
-                        (point.X < 0 || point.X >= record.Width))
+                    if (!snapToText)
                     {
-                        index = -1;
+                        double alignmentOffset = GetContentOffset(record.Width, CalculatedTextAlignment);
+                        if (point.X < alignmentOffset || point.X >= record.Width + alignmentOffset)
+                        {
+                            index = -1;
+                        }
                     }
                     break;
                 }

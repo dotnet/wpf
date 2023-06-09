@@ -312,10 +312,12 @@ namespace System.Windows.Markup
             {
                 typeConverter = new System.ComponentModel.GuidConverter();
             }
+#if !SYSTEM_XAML
             else if (type == typeof(String))
             {
                 typeConverter = new System.ComponentModel.StringConverter();
             }
+#endif
             else if (type == typeof(CultureInfo))
             {
                 typeConverter = new System.ComponentModel.CultureInfoConverter();

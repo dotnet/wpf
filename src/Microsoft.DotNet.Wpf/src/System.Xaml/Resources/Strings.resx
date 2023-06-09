@@ -783,9 +783,6 @@
   <data name="ProvideValueCycle" space_="preserve">
     <value>Cannot call MarkupExtension.ProvideValue because of a cyclical dependency. Properties inside a MarkupExtension cannot reference objects that reference the result of the MarkupExtension. The affected MarkupExtensions are:</value>
   </data>
-  <data name="QualifiedNameHasWrongFormat" space_="preserve">
-    <value>'{0}' type name does not have the expected format 'className, assembly'.</value>
-  </data>
   <data name="QuoteCharactersOutOfPlace" space_="preserve">
     <value>Quote characters ' or " are only allowed at the start of values.</value>
   </data>

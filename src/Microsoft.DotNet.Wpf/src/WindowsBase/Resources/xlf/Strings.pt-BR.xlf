@@ -1417,11 +1417,6 @@
         <target state="translated">O cabeçalho de comprimento variável no fluxo de licença de publicação tem {0} bytes, o que ultrapassa o comprimento máximo de {1} bytes.</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">O nome de tipo '{0}' não tem o formato esperado 'nomeDaClasse, assembly'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReachOutOfRange">
         <source>'{0}' index is beyond maximum '{1}'.</source>
         <target state="translated">O índice '{0}' está além do valor máximo de '{1}'.</target>

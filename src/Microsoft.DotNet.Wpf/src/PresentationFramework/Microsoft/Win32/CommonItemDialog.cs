@@ -78,19 +78,6 @@ namespace Microsoft.Win32
             Initialize();
         }
 
-        /// <summary>
-        ///  Returns a string representation of the file dialog with key information
-        ///  for debugging purposes.
-        /// </summary>
-        //   We overload ToString() so that we can provide a useful representation of
-        //   this object for users' debugging purposes.
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder(base.ToString() + ": Title: " + Title + ", FileName: ");
-            sb.Append(FileName);
-            return sb.ToString();
-        }
-
         #endregion Public Methods
 
         //---------------------------------------------------
@@ -99,109 +86,6 @@ namespace Microsoft.Win32
         //
         //---------------------------------------------------
         #region Public Properties
-
-        /// <summary>
-        ///  Gets a string containing the filename component of the 
-        ///  file selected in the dialog box.
-        /// 
-        ///  Example:  if FileName = "c:\windows\explorer.exe" ,
-        ///              SafeFileName = "explorer.exe"
-        /// </summary>
-        public string SafeFileName
-        {
-            get
-            {
-                // Use the FileName property to avoid directly accessing
-                // the _fileNames field, then call Path.GetFileName
-                // to do the actual work of stripping out the file name
-                // from the path.
-                string safeFN = Path.GetFileName(CriticalFileName);
-
-                // Check to make sure Path.GetFileName does not return null.
-                // If it does, set safeFN to String.Empty instead to accomodate
-                // programmers that fail to check for null when reading strings.
-                if (safeFN == null)
-                {
-                    safeFN = String.Empty;
-                }
-
-                return safeFN;
-            }
-        }
-
-        /// <summary>
-        ///  Gets a string array containing the filename of each file selected
-        ///  in the dialog box.
-        /// </summary>
-        public string[] SafeFileNames
-        {
-            get
-            {
-                // Retrieve the existing filenames into an array, then make
-                // another array of the same length to hold the safe version.
-                string[] unsafeFileNames = CloneFileNames();
-                string[] safeFileNames = new string[unsafeFileNames.Length];
-
-                for (int i = 0; i < unsafeFileNames.Length; i++)
-                {
-                    // Call Path.GetFileName to retrieve only the filename
-                    // component of the current full path.
-                    safeFileNames[i] = Path.GetFileName(unsafeFileNames[i]);
-
-                    // Check to make sure Path.GetFileName does not return null.
-                    // If it does, set this filename to String.Empty instead to accomodate
-                    // programmers that fail to check for null when reading strings.
-                    if (safeFileNames[i] == null)
-                    {
-                        safeFileNames[i] = String.Empty;
-                    }
-                }
-
-                return safeFileNames;
-            }
-        }
-
-        //   If multiple files are selected, we only return the first filename.
-        /// <summary>
-        ///  Gets or sets a string containing the full path of the file or folder selected in 
-        ///  the file dialog box.
-        /// </summary>
-        public string FileName
-        {
-            get
-            {
-                return CriticalFileName;
-            }
-            set
-            {
-
-                // Allow users to set a filename to stored in _fileNames.
-                // If null is passed in, we clear the entire list.
-                // If we get a string, we clear the entire list and make a new one-element
-                // array with the new string.
-                if (value == null)
-                {
-                    _fileNames = null;
-                }
-                else
-                {
-                    // UNDONE : ChrisAn:  This broke the save file dialog.
-                    //string temp = Path.GetFullPath(value); // ensure filename is valid...
-                    _fileNames = new string[] { value };
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Gets the file names of all selected files or folders in the dialog box.
-        /// </summary>
-        public string[] FileNames
-        {
-            get
-            {
-                return CloneFileNames();
-            }
-        }
 
         //   The actual flag is FOS_NODEREFERENCELINKS (set = do not dereference, unset = deref) - 
         //   while we have true = dereference and false=do not dereference.  Because we expose
@@ -532,6 +416,7 @@ namespace Microsoft.Win32
         private protected string[] MutableFileNames
         {
             get { return _fileNames; }
+            set { _fileNames = value; }
         }
 
         /// <summary>

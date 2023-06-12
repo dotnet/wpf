@@ -118,6 +118,11 @@ namespace Microsoft.Win32
             }
         }
 
+        /// <summary>
+        ///  Gets or sets a Guid to associate with the dialog's persisted state.
+        /// </summary>
+        public Guid? ClientGuid { get; set; }
+
         //   The actual flag is FOS_NODEREFERENCELINKS (set = do not dereference, unset = deref) - 
         //   while we have true = dereference and false=do not dereference.  Because we expose
         //   the opposite of the Windows flag as a property to be clearer, we need to negate 
@@ -339,6 +344,11 @@ namespace Microsoft.Win32
 
         private protected virtual void PrepareDialog(IFileDialog dialog)
         {
+            if (ClientGuid is Guid guid)
+            {
+                dialog.SetClientGuid(ref guid);
+            }
+
             if (!string.IsNullOrEmpty(InitialDirectory))
             {
                 IShellItem initialDirectory = ShellUtil.GetShellItemForPath(InitialDirectory);

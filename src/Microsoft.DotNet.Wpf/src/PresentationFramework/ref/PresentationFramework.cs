@@ -21,6 +21,7 @@ namespace Microsoft.Win32
         public bool DereferenceLinks { get { throw null; } set { } }
         public string InitialDirectory { get { throw null; } set { } }
         public bool RestoreDirectory { get { throw null; } set { } }
+        public string RootDirectory { get { throw null; } set { } }
         public bool ShowHiddenItems { get; set; }
         public string Title { get { throw null; } set { } }
         public bool ValidateNames { get { throw null; } set { } }

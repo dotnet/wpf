@@ -180,6 +180,23 @@ namespace Microsoft.Win32
             }
         }
 
+        /// <summary>
+        ///  Gets or sets the initial directory displayed by the file dialog box.
+        /// </summary>
+        public string RootDirectory
+        {
+            get
+            {
+                // Avoid returning a null string - return String.Empty instead.
+                return _rootDirectory.Value == null ? String.Empty : _rootDirectory.Value;
+            }
+            set
+            {
+
+                _rootDirectory.Value = value;
+            }
+        }
+
         //   FOS_FORCESHOWHIDDEN
         //   Include hidden and system items.
         //
@@ -387,6 +404,15 @@ namespace Microsoft.Win32
                         dialog.SetDefaultFolder(initialDirectory);
                     }
                     dialog.SetFolder(initialDirectory);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(RootDirectory))
+            {
+                IShellItem rootDirectory = ShellUtil.GetShellItemForPath(RootDirectory);
+                if (rootDirectory != null && dialog is IFileDialog2 dialog2)
+                {
+                    dialog2.SetNavigationRoot(rootDirectory);
                 }
             }
 
@@ -748,6 +774,7 @@ namespace Microsoft.Win32
         private SecurityCriticalDataForSet<string> _title;                  // Title bar of the message box
         private SecurityCriticalDataForSet<string> _initialDirectory;       // Starting directory
         private SecurityCriticalDataForSet<string> _defaultDirectory;       // Starting directory if no recent
+        private SecurityCriticalDataForSet<string> _rootDirectory;          // Topmost directory
 
         // We store the handle of the file dialog inside our class 
         // for a variety of purposes (like getting the title of the dialog

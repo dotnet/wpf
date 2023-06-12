@@ -73,6 +73,7 @@ namespace Microsoft.Win32
     public sealed partial class OpenFileDialog : Microsoft.Win32.FileDialog
     {
         public OpenFileDialog() { }
+        public bool ForcePreviewPane { get; set; }
         public bool Multiselect { get { throw null; } set { } }
         public System.IO.Stream OpenFile() { throw null; }
         public System.IO.Stream[] OpenFiles() { throw null; }

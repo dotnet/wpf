@@ -155,6 +155,25 @@ namespace Microsoft.Win32
         //---------------------------------------------------
         #region Public Properties
 
+        //   FOS_FORCEPREVIEWPANEON
+        //   Indicates to the Open dialog box that the preview pane should always be displayed.
+        //
+        /// <summary>
+        /// Gets or sets an option flag indicating whether the
+        /// dialog box forces the preview pane on.
+        /// </summary>
+        public bool ForcePreviewPane
+        {
+            get
+            {
+                return GetOption(FOS.FORCEPREVIEWPANEON);
+            }
+            set
+            {
+                SetOption(FOS.FORCEPREVIEWPANEON, value);
+            }
+        }
+
         //   FOS_ALLOWMULTISELECT
         //   Enables the user to select multiple items in the open dialog. 
         // 

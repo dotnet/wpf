@@ -95,6 +95,7 @@ namespace Microsoft.Win32
     {
         public SaveFileDialog() { }
         public bool CreatePrompt { get { throw null; } set { } }
+        public bool CreateTestFile { get { throw null; } set { } }
         public bool OverwritePrompt { get { throw null; } set { } }
         public System.IO.Stream OpenFile() { throw null; }
         public override void Reset() { }

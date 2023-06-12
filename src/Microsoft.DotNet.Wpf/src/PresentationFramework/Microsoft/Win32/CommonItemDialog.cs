@@ -157,6 +157,26 @@ namespace Microsoft.Win32
             }
         }
 
+        //   FOS_FORCESHOWHIDDEN
+        //   Include hidden and system items.
+        //
+        /// <summary>
+        ///  Gets or sets a value indicating whether the dialog box will show
+        ///  Include hidden items regardless of user preferences.
+        /// </summary>
+        public bool ShowHiddenItems
+        {
+            get
+            {
+                return GetOption(FOS.FORCESHOWHIDDEN);
+            }
+            set
+            {
+
+                SetOption(FOS.FORCESHOWHIDDEN, value);
+            }
+        }
+
         /// <summary>
         ///       Gets or sets a string shown in the title bar of the file dialog.
         ///       If this property is null, a localized default from the operating

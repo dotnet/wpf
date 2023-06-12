@@ -98,6 +98,26 @@ namespace Microsoft.Win32
         //---------------------------------------------------
         #region Public Properties
 
+        //   FOS_DONTADDTORECENT
+        //   Do not add the item being opened or saved to the recent documents list (SHAddToRecentDocs).
+        //
+        /// <summary>
+        ///  Gets or sets a value indicating whether the dialog box will add the item
+        ///  being opened or saved to the recent documents list.
+        /// </summary>
+        public bool AddToRecent
+        {
+            get
+            {
+                return !GetOption(FOS.DONTADDTORECENT);
+            }
+            set
+            {
+
+                SetOption(FOS.DONTADDTORECENT, !value);
+            }
+        }
+
         //   The actual flag is FOS_NODEREFERENCELINKS (set = do not dereference, unset = deref) - 
         //   while we have true = dereference and false=do not dereference.  Because we expose
         //   the opposite of the Windows flag as a property to be clearer, we need to negate 

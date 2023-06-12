@@ -14,6 +14,7 @@ namespace Microsoft.Win32
     public abstract partial class CommonItemDialog : Microsoft.Win32.CommonDialog
     {
         protected CommonItemDialog() { }
+        public bool AddToRecent { get { throw null; } set { } }
         public System.Collections.Generic.IList<Microsoft.Win32.FileDialogCustomPlace> CustomPlaces { get { throw null; } set { } }
         public bool DereferenceLinks { get { throw null; } set { } }
         public string InitialDirectory { get { throw null; } set { } }

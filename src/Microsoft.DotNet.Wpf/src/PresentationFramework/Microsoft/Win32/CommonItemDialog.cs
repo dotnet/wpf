@@ -192,36 +192,15 @@ namespace Microsoft.Win32
 
         //---------------------------------------------------
         //
-        // Public Events
-        //
-        //---------------------------------------------------
-        #region Public Events
-
-        /// <summary>
-        ///  Occurs when the user clicks on the Open or Save button on a file dialog
-        ///  box.  
-        /// </summary>
-        public event CancelEventHandler FileOk;
-
-        #endregion Public Events
-
-        //---------------------------------------------------
-        //
         // Protected Methods
         //
         //---------------------------------------------------
         #region Protected Methods
 
         /// <summary>
-        /// Raises the System.Windows.FileDialog.FileOk event.
+        /// Handles the IFileDialogEvents.OnFileOk callback.
         /// </summary>
-        protected void OnFileOk(CancelEventArgs e)
-        {
-            if (FileOk != null)
-            {
-                FileOk(this, e);
-            }
-        }
+        protected virtual void OnItemOk(CancelEventArgs e) { }
 
         //  Because this class, FileDialog, is the parent class for both OpenFileDialog
         //  and SaveFileDialog, this function will perform the common setup tasks
@@ -241,7 +220,7 @@ namespace Microsoft.Win32
 
             PrepareDialog(dialog);
 
-            using (VistaDialogEvents events = new VistaDialogEvents(dialog, HandleFileOk))
+            using (VistaDialogEvents events = new VistaDialogEvents(dialog, HandleItemOk))
             {
                 return dialog.Show(hwndOwner).Succeeded;
             }
@@ -374,7 +353,7 @@ namespace Microsoft.Win32
 
         // The FileOk event expects all properties to be set, but if the event is cancelled, they need to be reverted.
         // This method is called inside a try block, and inheritors can store any data to be reverted in the revertState.
-        private protected virtual bool TryHandleFileOk(IFileDialog dialog, out object revertState)
+        private protected virtual bool TryHandleItemOk(IFileDialog dialog, out object revertState)
         {
             revertState = null;
             return true;
@@ -382,7 +361,7 @@ namespace Microsoft.Win32
 
         // This method is called inside a finally block when OK event was cancelled.
         // Inheritors should revert properties to the state before the dialog was shown, so that it can be shown again.
-        private protected virtual void RevertFileOk(object state) { }
+        private protected virtual void RevertItemOk(object state) { }
 
         #endregion
 
@@ -492,7 +471,7 @@ namespace Microsoft.Win32
             CustomPlaces = new List<FileDialogCustomPlace>();
         }
 
-        private bool HandleFileOk(IFileDialog dialog)
+        private bool HandleItemOk(IFileDialog dialog)
         {
             // When this callback occurs, the HWND is visible and we need to
             // grab it because it is used for various things like looking up the
@@ -509,10 +488,10 @@ namespace Microsoft.Win32
                 IShellItem[] shellItems = ResolveResults(dialog);
                 _fileNames = GetParsingNames(shellItems);
 
-                if (TryHandleFileOk(dialog, out saveState))
+                if (TryHandleItemOk(dialog, out saveState))
                 {
                     var cancelArgs = new CancelEventArgs();
-                    OnFileOk(cancelArgs);
+                    OnItemOk(cancelArgs);
                     ok = !cancelArgs.Cancel;
                 }
             }
@@ -520,7 +499,7 @@ namespace Microsoft.Win32
             {
                 if (!ok)
                 {
-                    RevertFileOk(saveState);
+                    RevertItemOk(saveState);
                     _fileNames = saveFileNames;
                 }
             }

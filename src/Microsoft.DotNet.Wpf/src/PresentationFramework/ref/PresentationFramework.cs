@@ -20,8 +20,7 @@ namespace Microsoft.Win32
         public bool RestoreDirectory { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
         public bool ValidateNames { get { throw null; } set { } }
-        public event System.ComponentModel.CancelEventHandler FileOk { add { } remove { } }
-        protected void OnFileOk(System.ComponentModel.CancelEventArgs e) { }
+        protected void OnItemOk(System.ComponentModel.CancelEventArgs e) { }
         protected override bool RunDialog(System.IntPtr hwndOwner) { throw null; }
         public override void Reset() { }
         public override string ToString() { throw null; }
@@ -36,6 +35,7 @@ namespace Microsoft.Win32
         public string DefaultExt { get { throw null; } set { } }
         public string FileName { get { throw null; } set { } }
         public string[] FileNames { get { throw null; } }
+        public event System.ComponentModel.CancelEventHandler FileOk { add { } remove { } }
         public string Filter { get { throw null; } set { } }
         public int FilterIndex { get { throw null; } set { } }
         public override void Reset() { }
@@ -74,17 +74,18 @@ namespace Microsoft.Win32
     {
         public OpenFileDialog() { }
         public bool Multiselect { get { throw null; } set { } }
-        public bool ReadOnlyChecked { get { throw null; } set { } }
-        public bool ShowReadOnly { get { throw null; } set { } }
         public System.IO.Stream OpenFile() { throw null; }
         public System.IO.Stream[] OpenFiles() { throw null; }
+        public bool ReadOnlyChecked { get { throw null; } set { } }
         public override void Reset() { }
+        public bool ShowReadOnly { get { throw null; } set { } }
     }
     public sealed partial class OpenFolderDialog : Microsoft.Win32.CommonItemDialog
     {
         public OpenFolderDialog() { }
         public string FolderName { get { throw null; } set { } }
         public string[] FolderNames { get { throw null; } }
+        public event System.ComponentModel.CancelEventHandler FolderOk { add { } remove { } }
         public bool Multiselect { get { throw null; } set { } }
         public override void Reset() { }
         public string SafeFolderName { get { throw null; } }

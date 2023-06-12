@@ -21,6 +21,7 @@ namespace Microsoft.Win32
 
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.IO;
     using System.Text;
     using System.Windows;
@@ -384,6 +385,21 @@ namespace Microsoft.Win32
         // Public Events
         //
         //---------------------------------------------------
+        #region Public Events
+
+        /// <summary>
+        ///  Occurs when the user clicks on the Open or Save button on a file dialog
+        ///  box.  
+        /// </summary>
+        public event CancelEventHandler FileOk;
+
+        #endregion Public Events
+
+        //---------------------------------------------------
+        //
+        // Public Events
+        //
+        //---------------------------------------------------
         // #region Public Events
         // #endregion Public Events
 
@@ -392,8 +408,20 @@ namespace Microsoft.Win32
         // Protected Methods
         //
         //---------------------------------------------------
-        // #region Protected Methods
-        // #endregion Protected Methods
+        #region Protected Methods
+
+        /// <summary>
+        /// Raises the System.Windows.FileDialog.FileOk event.
+        /// </summary>
+        protected override void OnItemOk(CancelEventArgs e)
+        {
+            if (FileOk != null)
+            {
+                FileOk(this, e);
+            }
+        }
+
+        #endregion Protected Methods
 
         //---------------------------------------------------
         //
@@ -473,7 +501,7 @@ namespace Microsoft.Win32
             }
         }
 
-        private protected override bool TryHandleFileOk(IFileDialog dialog, out object restoreState)
+        private protected override bool TryHandleItemOk(IFileDialog dialog, out object restoreState)
         {
             restoreState = _filterIndex;
             uint filterIndexTemp = dialog.GetFileTypeIndex();
@@ -481,7 +509,7 @@ namespace Microsoft.Win32
             return ProcessFileNames();
         }
 
-        private protected override void RevertFileOk(object state)
+        private protected override void RevertItemOk(object state)
         {
             _filterIndex = (int)state;
         }

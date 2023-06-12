@@ -123,6 +123,24 @@ namespace Microsoft.Win32
         /// </summary>
         public Guid? ClientGuid { get; set; }
 
+        /// <summary>
+        ///  Gets or sets the initial directory displayed by the file dialog box
+        ///  if there is not a recently used directory value available.
+        /// </summary>
+        public string DefaultDirectory
+        {
+            get
+            {
+                // Avoid returning a null string - return String.Empty instead.
+                return _defaultDirectory.Value == null ? String.Empty : _defaultDirectory.Value;
+            }
+            set
+            {
+
+                _defaultDirectory.Value = value;
+            }
+        }
+
         //   The actual flag is FOS_NODEREFERENCELINKS (set = do not dereference, unset = deref) - 
         //   while we have true = dereference and false=do not dereference.  Because we expose
         //   the opposite of the Windows flag as a property to be clearer, we need to negate 
@@ -349,13 +367,25 @@ namespace Microsoft.Win32
                 dialog.SetClientGuid(ref guid);
             }
 
+            if (!string.IsNullOrEmpty(DefaultDirectory))
+            {
+                IShellItem defaultDirectory = ShellUtil.GetShellItemForPath(DefaultDirectory);
+                if (defaultDirectory != null)
+                {
+                    dialog.SetDefaultFolder(defaultDirectory);
+                }
+            }
+
             if (!string.IsNullOrEmpty(InitialDirectory))
             {
                 IShellItem initialDirectory = ShellUtil.GetShellItemForPath(InitialDirectory);
                 if (initialDirectory != null)
                 {
                     // Setting both of these so the dialog doesn't display errors when a remembered folder is missing.
-                    dialog.SetDefaultFolder(initialDirectory);
+                    if (string.IsNullOrEmpty(DefaultDirectory))
+                    {
+                        dialog.SetDefaultFolder(initialDirectory);
+                    }
                     dialog.SetFolder(initialDirectory);
                 }
             }
@@ -717,6 +747,7 @@ namespace Microsoft.Win32
         // that control the appearance of the file dialog box.
         private SecurityCriticalDataForSet<string> _title;                  // Title bar of the message box
         private SecurityCriticalDataForSet<string> _initialDirectory;       // Starting directory
+        private SecurityCriticalDataForSet<string> _defaultDirectory;       // Starting directory if no recent
 
         // We store the handle of the file dialog inside our class 
         // for a variety of purposes (like getting the title of the dialog

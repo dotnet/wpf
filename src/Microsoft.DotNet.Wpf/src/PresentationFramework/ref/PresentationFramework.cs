@@ -17,6 +17,7 @@ namespace Microsoft.Win32
         public bool AddToRecent { get { throw null; } set { } }
         public System.Guid? ClientGuid { get; set; }
         public System.Collections.Generic.IList<Microsoft.Win32.FileDialogCustomPlace> CustomPlaces { get { throw null; } set { } }
+        public string DefaultDirectory { get { throw null; } set { } }
         public bool DereferenceLinks { get { throw null; } set { } }
         public string InitialDirectory { get { throw null; } set { } }
         public bool RestoreDirectory { get { throw null; } set { } }

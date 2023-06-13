@@ -475,6 +475,7 @@ namespace System.Windows.Markup
 
 #region Internal
 
+        internal bool FromRestrictiveReader { get; set; }
 
         // Reset stack to default state
         private void EndRepeat()

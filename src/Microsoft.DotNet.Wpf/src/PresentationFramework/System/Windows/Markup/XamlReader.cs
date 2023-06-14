@@ -183,7 +183,7 @@ namespace System.Windows.Markup
             }
 
             XmlReader reader = XmlReader.Create(stream, null, parserContext);
-            object tree = Load(reader, parserContext, XamlParseMode.Synchronous, useRestrictiveXamlReader);
+            object tree = Load(reader, parserContext, XamlParseMode.Synchronous, useRestrictiveXamlReader || parserContext.FromRestrictiveReader);
             stream.Close();
             return tree;
         }
@@ -378,8 +378,8 @@ namespace System.Windows.Markup
 
             try
             {
-                _textReader = (useRestrictiveXamlReader) ? new RestrictiveXamlXmlReader(reader, schemaContext, settings) :
-                                                           new System.Xaml.XamlXmlReader(reader, schemaContext, settings);
+                _textReader = (useRestrictiveXamlReader || parserContext.FromRestrictiveReader) ? new RestrictiveXamlXmlReader(reader, schemaContext, settings) :
+                                                                 new System.Xaml.XamlXmlReader(reader, schemaContext, settings);
 
                 _stack = new XamlContextStack<WpfXamlFrame>(() => new WpfXamlFrame());
 
@@ -917,7 +917,7 @@ namespace System.Windows.Markup
 
                 XamlSchemaContext schemaContext = parserContext.XamlTypeMapper != null ?
                     parserContext.XamlTypeMapper.SchemaContext : GetWpfSchemaContext();
-                System.Xaml.XamlXmlReader xamlXmlReader = (useRestrictiveXamlReader) ? new RestrictiveXamlXmlReader(reader, schemaContext, settings, safeTypes) :
+                System.Xaml.XamlXmlReader xamlXmlReader = (useRestrictiveXamlReader || parserContext.FromRestrictiveReader) ? new RestrictiveXamlXmlReader(reader, schemaContext, settings, safeTypes) :
                                                                                        new System.Xaml.XamlXmlReader(reader, schemaContext, settings);
                 root = Load(xamlXmlReader, parserContext);
                 reader.Close();

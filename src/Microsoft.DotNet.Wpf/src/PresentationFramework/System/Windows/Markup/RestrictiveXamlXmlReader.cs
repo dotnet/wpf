@@ -167,7 +167,8 @@ namespace System.Windows.Markup
             // The following is an exhaustive list of all allowed XAML directives.
             if (directive.Name == XamlLanguage.Items.Name ||
                 directive.Name == XamlLanguage.Key.Name ||
-                directive.Name == XamlLanguage.Name.Name)
+                directive.Name == XamlLanguage.Name.Name ||
+                Member == XamlLanguage.PositionalParameters)
             {
                 return true;
             }
@@ -193,7 +194,7 @@ namespace System.Windows.Markup
             // - primitives (int, etc.); and
             // - any DependencyObject-derived type which exists in the System.Windows.* namespace.
 
-            bool isValidNamespace = type.Namespace != null && type.Namespace.StartsWith("System.Windows.", StringComparison.Ordinal);
+            bool isValidNamespace = type.Namespace != null && (type.Namespace.Equals("System.Windows", StringComparison.Ordinal) || type.Namespace.StartsWith("System.Windows.", StringComparison.Ordinal));
             bool isValidSubClass = type.IsSubclassOf(DependencyObjectType);
             bool isValidPrimitive = type.IsPrimitive;
 
@@ -211,6 +212,23 @@ namespace System.Windows.Markup
         /// <summary>
         /// Per instance set of allow-listed types, may grow at runtime to encompass implicit allow list.
         /// </summary>
-        HashSet<Type> _safeTypesSet = new HashSet<Type>();
+        HashSet<Type> _safeTypesSet = new HashSet<Type>() { 
+            typeof(System.Windows.ResourceDictionary),
+            typeof(System.Windows.StaticResourceExtension),
+            typeof(System.Windows.Documents.DocumentStructures.FigureStructure),
+            typeof(System.Windows.Documents.DocumentStructures.ListItemStructure),
+            typeof(System.Windows.Documents.DocumentStructures.ListStructure),
+            typeof(System.Windows.Documents.DocumentStructures.NamedElement),
+            typeof(System.Windows.Documents.DocumentStructures.ParagraphStructure),
+            typeof(System.Windows.Documents.DocumentStructures.SectionStructure),
+            typeof(System.Windows.Documents.DocumentStructures.StoryBreak),
+            typeof(System.Windows.Documents.DocumentStructures.StoryFragment),
+            typeof(System.Windows.Documents.DocumentStructures.StoryFragments),
+            typeof(System.Windows.Documents.DocumentStructures.TableCellStructure),
+            typeof(System.Windows.Documents.DocumentStructures.TableRowGroupStructure),
+            typeof(System.Windows.Documents.DocumentStructures.TableRowStructure),
+            typeof(System.Windows.Documents.DocumentStructures.TableStructure),
+            typeof(System.Windows.Documents.LinkTarget)          
+            };  
     }
 }

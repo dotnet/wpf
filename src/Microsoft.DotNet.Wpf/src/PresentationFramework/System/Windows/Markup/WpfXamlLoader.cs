@@ -116,6 +116,23 @@ namespace System.Windows.Markup
                 }
 
                 stack.CurrentFrame.Instance = args.Instance;
+                
+                if (xamlReader is RestrictiveXamlXmlReader && args != null)
+                {
+                    if (args.Instance is System.Windows.ResourceDictionary rd)
+                    {
+                        rd.IsUnsafe = true;
+                    }
+                    else if (args.Instance is System.Windows.Controls.Frame frame)
+                    {
+                        frame.NavigationService.IsUnsafe = true;
+                    }
+                    else if (args.Instance is System.Windows.Navigation.NavigationWindow nw)
+                    {
+                        nw.NavigationService.IsUnsafe = true;
+                    }
+                }
+
             };
             if (writerFactory != null)
             {

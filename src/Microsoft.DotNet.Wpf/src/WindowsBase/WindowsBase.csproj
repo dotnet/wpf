@@ -278,7 +278,6 @@
     <Compile Include="MS\Internal\PriorityChain.cs" />
     <Compile Include="MS\Internal\PriorityItem.cs" />
     <Compile Include="MS\Internal\PriorityQueue.cs" />
-    <Compile Include="MS\Internal\SplashScreenNativeMethods.cs" />
     <Compile Include="MS\Internal\Threading\ExceptionWrapper.cs" />
     <Compile Include="System\Windows\Input\ModifierKeys.cs" />
     <Compile Include="System\Windows\Input\ModifierKeysConverter.cs" />
@@ -391,6 +390,7 @@
     <NetCoreReference Include="System.Diagnostics.Process" />
     <NetCoreReference Include="System.Diagnostics.Tools" />
     <NetCoreReference Include="System.Diagnostics.TraceSource" />
+    <NetCoreReference Include="System.Drawing.Primitives" />
     <NetCoreReference Include="System.IO.Compression" />
     <NetCoreReference Include="System.IO.FileSystem" />
     <NetCoreReference Include="System.IO.IsolatedStorage" />
@@ -433,6 +433,9 @@
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\ref\WindowsBase-ref.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Windows.Primitives\System.Windows.Primitives.csproj">
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
 

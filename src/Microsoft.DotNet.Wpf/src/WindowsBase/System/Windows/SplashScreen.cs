@@ -8,32 +8,35 @@ using System.IO;
 using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows.Threading;
 using MS.Internal;
-using MS.Internal.Interop;
 using MS.Internal.KnownBoxes;
 using MS.Internal.WindowsBase;
-using MS.Utility;
 using MS.Win32;
 
 namespace System.Windows
 {
+    using System.Runtime.CompilerServices;
+    using global::Windows.Win32;
+    using global::Windows.Win32.Foundation;
+    using global::Windows.Win32.Graphics.Gdi;
+    using global::Windows.Win32.Graphics.Imaging;
+    using global::Windows.Win32.System.Com;
+    using global::Windows.Win32.UI.WindowsAndMessaging;
+
     public class SplashScreen
     {
-        private IntPtr _hwnd = IntPtr.Zero;
-        private string _resourceName;
-        private IntPtr _hInstance;
-        private NativeMethods.BitmapHandle _hBitmap;
+        private HWND _hwnd = HWND.Null;
+        private readonly string _resourceName;
+        private readonly HINSTANCE _hInstance;
+        private HBITMAP _hBitmap;
         private ushort _wndClass;
         private DispatcherTimer _dt;
         private TimeSpan _fadeoutDuration;
         private DateTime _fadeoutEnd;
         NativeMethods.BLENDFUNCTION _blendFunc;
-        private ResourceManager _resourceManager;
+        private readonly ResourceManager _resourceManager;
         private Dispatcher _dispatcher;
-        // keep this delegate alive as long as the window class is registered
-        private static NativeMethods.WndProc _defWndProc;
 
         private const string CLASSNAME = "SplashScreen";
 
@@ -43,16 +46,13 @@ namespace System.Windows
 
         public SplashScreen(Assembly resourceAssembly, string resourceName)
         {
-            if (resourceAssembly == null)
+            ArgumentNullException.ThrowIfNull(resourceAssembly);
+            if (string.IsNullOrEmpty(resourceName))
             {
-                throw new ArgumentNullException("resourceAssembly");
-            }
-            if (String.IsNullOrEmpty(resourceName))
-            {
-                throw new ArgumentNullException("resourceName");
+                throw new ArgumentNullException(nameof(resourceName));
             }
             _resourceName = resourceName.ToLowerInvariant();
-            _hInstance = Marshal.GetHINSTANCE(resourceAssembly.ManifestModule);
+            _hInstance = (HINSTANCE)Marshal.GetHINSTANCE(resourceAssembly.ManifestModule);
             AssemblyName name = new AssemblyName(resourceAssembly.FullName);
             _resourceManager = new ResourceManager(name.Name + ".g", resourceAssembly);
         }
@@ -62,11 +62,11 @@ namespace System.Windows
             Show(autoClose, false);
         }
 
-        public void Show(bool autoClose, bool topMost)
+        public unsafe void Show(bool autoClose, bool topMost)
         {
             // If we've already been shown it isn't an error to call show
             // again (maybe you forgot) since you will still be shown state.
-            if (_hwnd == IntPtr.Zero)
+            if (_hwnd.IsNull)
             {
                 UnmanagedMemoryStream umemStream;
                 using (umemStream = GetResourceStream())
@@ -74,13 +74,8 @@ namespace System.Windows
                     if (umemStream != null)
                     {
                         umemStream.Seek(0, SeekOrigin.Begin); // ensure stream position
-                        IntPtr pImageSrcBuffer;
-                        unsafe
-                        {
-                            pImageSrcBuffer = new IntPtr(umemStream.PositionPointer);
-                        }
 
-                        if (CreateLayeredWindowFromImgBuffer(pImageSrcBuffer, umemStream.Length, topMost) && autoClose == true)
+                        if (CreateLayeredWindowFromImgBuffer(new(umemStream.PositionPointer, (int)umemStream.Length), topMost) && autoClose == true)
                         {
                             Dispatcher.CurrentDispatcher.BeginInvoke(
                                 DispatcherPriority.Loaded,
@@ -91,10 +86,11 @@ namespace System.Windows
                                 }),
                                 this);
                         }
+
                         // The HWND that we just created is owned by this thread.  When we close we should ensure that it 
                         // does not get accessed from a different thread.  We don't want to reference the .CurrentDispatcher
                         // property before the window is created due to cold start performance concerns.
-                        _dispatcher = Dispatcher.CurrentDispatcher;                        
+                        _dispatcher = Dispatcher.CurrentDispatcher;
                     }
                     else
                     {
@@ -123,81 +119,93 @@ namespace System.Windows
             return _resourceManager.GetStream(resourceName, System.Globalization.CultureInfo.CurrentUICulture);
         }
 
-        private IntPtr CreateWindow(NativeMethods.BitmapHandle hBitmap, int width, int height, bool topMost)
+#pragma warning disable CS3016 // Arrays as attribute arguments is not CLS-compliant
+        [UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#pragma warning restore CS3016
+        private static LRESULT WndProc(HWND hWnd, uint Msg, WPARAM wParam, LPARAM lParam)
         {
-            if (_defWndProc == null)
+            return PInvoke.DefWindowProc(hWnd, Msg, wParam, lParam);
+        }
+
+        private unsafe HWND CreateWindow(HBITMAP hBitmap, int width, int height, bool topMost)
+        {
+            fixed (char* c = CLASSNAME)
             {
-                _defWndProc = new MS.Win32.NativeMethods.WndProc(UnsafeNativeMethods.DefWindowProc);
+                WNDCLASSEXW wndClass = new()
+                {
+                    cbSize = (uint)sizeof(WNDCLASSEXW),
+                    style = WNDCLASS_STYLES.CS_HREDRAW | WNDCLASS_STYLES.CS_VREDRAW,
+                    lpszClassName = c,
+                    lpfnWndProc = &WndProc
+                };
+
+
+                // We chose to ignore re-registration errors in RegisterClassEx on the off chance that the user
+                // wants to open multiple splash screens.
+                _wndClass = PInvoke.RegisterClassEx(wndClass);
             }
 
-            MS.Win32.NativeMethods.WNDCLASSEX_D wndClass = new MS.Win32.NativeMethods.WNDCLASSEX_D();
-            wndClass.cbSize = Marshal.SizeOf(typeof(MS.Win32.NativeMethods.WNDCLASSEX_D));
-            wndClass.style = 3; /* CS_HREDRAW | CS_VREDRAW */
-            wndClass.lpfnWndProc = null;
-            wndClass.hInstance = _hInstance;
-            wndClass.hCursor = IntPtr.Zero;
-            wndClass.lpszClassName = CLASSNAME;
-            wndClass.lpszMenuName = string.Empty;
-            wndClass.lpfnWndProc = _defWndProc;
-
-            // We chose to ignore re-registration errors in RegisterClassEx on the off chance that the user
-            // wants to open multiple splash screens.
-            _wndClass = MS.Win32.UnsafeNativeMethods.IntRegisterClassEx(wndClass);
             if (_wndClass == 0)
             {
-                var lastWin32Error = Marshal.GetLastWin32Error();
-                if (lastWin32Error != 0x582) /* class already registered */
+                int lastWin32Error = Marshal.GetLastWin32Error();
+                if (lastWin32Error != (int)WIN32_ERROR.ERROR_CLASS_ALREADY_EXISTS) /* class already registered */
                     throw new Win32Exception(lastWin32Error);
             }
 
-            int screenWidth = MS.Win32.UnsafeNativeMethods.GetSystemMetrics(SM.CXSCREEN);
-            int screenHeight = MS.Win32.UnsafeNativeMethods.GetSystemMetrics(SM.CYSCREEN);
+            int screenWidth = PInvoke.GetSystemMetrics(SYSTEM_METRICS_INDEX.SM_CXSCREEN);
+            int screenHeight = PInvoke.GetSystemMetrics(SYSTEM_METRICS_INDEX.SM_CYSCREEN);
             int x = (screenWidth - width) / 2;
             int y = (screenHeight - height) / 2;
 
-            HandleRef nullHandle = new HandleRef(null, IntPtr.Zero);
-            int windowCreateFlags =
-                (int) NativeMethods.WS_EX_WINDOWEDGE |
-                      NativeMethods.WS_EX_TOOLWINDOW |
-                      NativeMethods.WS_EX_LAYERED |
-                      (topMost ? NativeMethods.WS_EX_TOPMOST : 0);
+            //HandleRef nullHandle = new HandleRef(null, IntPtr.Zero);
+            WINDOW_EX_STYLE windowCreateFlags =
+                WINDOW_EX_STYLE.WS_EX_WINDOWEDGE |
+                WINDOW_EX_STYLE.WS_EX_TOOLWINDOW |
+                WINDOW_EX_STYLE.WS_EX_LAYERED |
+                (topMost ? WINDOW_EX_STYLE.WS_EX_TOPMOST : 0);
 
             // CreateWindowEx will either succeed or throw
-            IntPtr hWnd =  MS.Win32.UnsafeNativeMethods.CreateWindowEx(
+            HWND hWnd =  PInvoke.CreateWindowEx(
                 windowCreateFlags,
-                CLASSNAME, SR.SplashScreenIsLoading,
-                MS.Win32.NativeMethods.WS_POPUP | MS.Win32.NativeMethods.WS_VISIBLE,
+                CLASSNAME,
+                SR.SplashScreenIsLoading,
+                WINDOW_STYLE.WS_POPUP | WINDOW_STYLE.WS_VISIBLE,
                 x, y, width, height,
-                nullHandle, nullHandle, new HandleRef(null, _hInstance), IntPtr.Zero);
+                HWND.Null,
+                HMENU.Null,
+                _hInstance,
+                null);
 
             // Display the image on the window
-            IntPtr hScreenDC = UnsafeNativeMethods.GetDC(new HandleRef());
-            IntPtr memDC = UnsafeNativeMethods.CreateCompatibleDC(new HandleRef(null, hScreenDC));
-            IntPtr hOldBitmap = UnsafeNativeMethods.SelectObject(new HandleRef(null, memDC), hBitmap.MakeHandleRef(null).Handle);
+            HDC hScreenDC = PInvoke.GetDC(HWND.Null);
+            HDC memDC = PInvoke.CreateCompatibleDC(hScreenDC);
+            HGDIOBJ hOldBitmap = PInvoke.SelectObject(memDC, hBitmap);
 
-            NativeMethods.POINT newSize = new NativeMethods.POINT(width, height);
-            NativeMethods.POINT newLocation = new NativeMethods.POINT(x, y);
-            NativeMethods.POINT sourceLocation = new NativeMethods.POINT(0, 0);
-            _blendFunc = new NativeMethods.BLENDFUNCTION();
-            _blendFunc.BlendOp = NativeMethods.AC_SRC_OVER;
-            _blendFunc.BlendFlags = 0;
-            _blendFunc.SourceConstantAlpha = 255;
-            _blendFunc.AlphaFormat = 1; /*AC_SRC_ALPHA*/
-
-            bool result;
-            unsafe
+            BLENDFUNCTION blendFunction = new()
             {
-                result = UnsafeNativeMethods.UpdateLayeredWindow(hWnd, hScreenDC, &newLocation, &newSize,
-                    memDC, &sourceLocation, 0, ref _blendFunc, NativeMethods.ULW_ALPHA);
-            }
+                BlendOp = (byte)PInvoke.AC_SRC_OVER,
+                SourceConstantAlpha = 255,
+                AlphaFormat = (byte)PInvoke.AC_SRC_ALPHA
+            };
 
-            UnsafeNativeMethods.SelectObject(new HandleRef(null, memDC), hOldBitmap);
-            UnsafeNativeMethods.ReleaseDC(new HandleRef(), new HandleRef(null, memDC));
-            UnsafeNativeMethods.ReleaseDC(new HandleRef(), new HandleRef(null, hScreenDC));
+            bool result = PInvoke.UpdateLayeredWindow(
+                hWnd,
+                hScreenDC,
+                new(x, y),
+                new(width, height),
+                memDC,
+                default,
+                default,
+                blendFunction,
+                UPDATE_LAYERED_WINDOW_FLAGS.ULW_ALPHA);
+
+            PInvoke.SelectObject(memDC, hOldBitmap);
+            PInvoke.ReleaseDC(HWND.Null, memDC);
+            PInvoke.ReleaseDC(HWND.Null, hScreenDC);
 
             if (result == false)
             {
-                UnsafeNativeMethods.HRESULT.Check(Marshal.GetHRForLastWin32Error());
+                ((HRESULT)Marshal.GetHRForLastWin32Error()).ThrowOnFailure();
             }
 
             return hWnd;
@@ -222,13 +230,13 @@ namespace System.Windows
             {
                 // If all else fails try to destroy the resources on this thread
                 // this will probably end up throwing but it will be the same 
-                // exception as the previous version.                
+                // exception as the previous version.
                 DestroyResources();
             }
         }
 
 
-        private object CloseInternal(Object fadeOutArg)
+        private object CloseInternal(object fadeOutArg)
         {
             TimeSpan fadeoutDuration = (TimeSpan) fadeOutArg;
             if (fadeoutDuration <= TimeSpan.Zero)
@@ -285,144 +293,145 @@ namespace System.Windows
             }
         }
 
-        private void DestroyResources()
+        ~SplashScreen() => DestroyResources(finalizer: true);
+
+        private unsafe void DestroyResources(bool finalizer = false)
         {
-            if (_dt != null)
+            if (!finalizer)
             {
-                _dt.Stop();
+                _dt?.Stop();
                 _dt = null;
             }
-            if (_hwnd != IntPtr.Zero)
+
+            if (!_hwnd.IsNull)
             {
-                HandleRef hwnd = new HandleRef(null, _hwnd);
-                if (UnsafeNativeMethods.IsWindow(hwnd))
+                if (PInvoke.IsWindow(_hwnd))
                 {
-                    UnsafeNativeMethods.IntDestroyWindow(hwnd);
+                    PInvoke.DestroyWindow(_hwnd);
                 }
-                _hwnd = IntPtr.Zero;
+
+                _hwnd = HWND.Null;
             }
-            if (_hBitmap != null && !_hBitmap.IsClosed)
+
+            if (!_hBitmap.IsNull)
             {
-                UnsafeNativeMethods.DeleteObject(_hBitmap.MakeHandleRef(null).Handle);
-                _hBitmap.Close();
-                _hBitmap = null;
+                PInvoke.DeleteObject(_hBitmap);
+                _hBitmap = HBITMAP.Null;
             }
+
             if (_wndClass != 0)
             {
                 // Attempt to unregister the window class.  If the application has a second
                 // splash screen which is still open this call will fail.  That's OK.
-                if (UnsafeNativeMethods.IntUnregisterClass(new IntPtr(_wndClass), _hInstance) != 0)
-                {
-                    _defWndProc = null; // Can safely release the wndproc delegate when there are no more splash screen instances
-                }
+                PInvoke.UnregisterClass((PCWSTR)(char*)(nint)_wndClass, _hInstance);
                 _wndClass = 0;
             }
-            if (_resourceManager != null)
+
+            if (!finalizer)
             {
-                _resourceManager.ReleaseAllResources();
+                _resourceManager?.ReleaseAllResources();
             }
+
+            GC.SuppressFinalize(this);
         }
 
-        private bool CreateLayeredWindowFromImgBuffer(IntPtr pImgBuffer, long cImgBufferLen, bool topMost)
+        private unsafe bool CreateLayeredWindowFromImgBuffer(Span<byte> pImgBuffer, bool topMost)
         {
             bool bSuccess = false;
-            IntPtr pImagingFactory = IntPtr.Zero;
-            IntPtr pDecoder = IntPtr.Zero;
-            IntPtr pIStream = IntPtr.Zero;
-            IntPtr pDecodedFrame = IntPtr.Zero;
-            IntPtr pBitmapSourceFormatConverter = IntPtr.Zero;
-            IntPtr pBitmapFlipRotator = IntPtr.Zero;
 
             try
             {
-                UnsafeNativeMethods.HRESULT.Check(
-                    UnsafeNativeMethods.WIC.CreateImagingFactory(UnsafeNativeMethods.WIC.WINCODEC_SDK_VERSION, out pImagingFactory));
+                PInvoke.CoInitialize().ThrowOnFailure();
+                PInvoke.CoCreateInstance(
+                    // This is WINCODEC_SDK_VERSION1 or 0x0236. CLSID_WICImagingFactory2 is version 2.
+                    PInvoke.CLSID_WICImagingFactory,
+                    null,
+                    CLSCTX.CLSCTX_INPROC_SERVER,
+                    out IWICImagingFactory* pImagingFactory).ThrowOnFailure();
+
+                using ComScope<IWICImagingFactory> scope = new(pImagingFactory);
 
                 // Use the WIC stream class to wrap the unmanaged pointer
-                UnsafeNativeMethods.HRESULT.Check(
-                    UnsafeNativeMethods.WIC.CreateStream(pImagingFactory, out pIStream));
-
-                UnsafeNativeMethods.HRESULT.Check(
-                    UnsafeNativeMethods.WIC.InitializeStreamFromMemory(pIStream, pImgBuffer, (uint)cImgBufferLen));
+                using ComScope<IWICStream> pIStream = new(null);
+                pImagingFactory->CreateStream(pIStream).ThrowOnFailure();
+                pIStream.Value->InitializeFromMemory(pImgBuffer).ThrowOnFailure();
 
                 // Create an object that will decode the encoded image
-                Guid vendor = Guid.Empty;
-                UnsafeNativeMethods.HRESULT.Check(
-                    UnsafeNativeMethods.WIC.CreateDecoderFromStream(pImagingFactory, pIStream,
-                                                                    ref vendor, 0, out pDecoder));
+                using ComScope<IWICBitmapDecoder> pDecoder = new(null);
+                pImagingFactory->CreateDecoderFromStream(
+                    (IStream*)(void*)pIStream,
+                    IID.NULL(),
+                    WICDecodeOptions.WICDecodeMetadataCacheOnDemand,
+                    pDecoder).ThrowOnFailure();
 
                 // Get the frame from the decoder. Most image formats have only a single frame, in the case
                 // of animated gifs we are ok with only displaying the first frame of the animation.
-                UnsafeNativeMethods.HRESULT.Check(
-                    UnsafeNativeMethods.WIC.GetFrame(pDecoder, 0, out pDecodedFrame));
+                using ComScope<IWICBitmapFrameDecode> pDecodedFrame = new(null);
+                pDecoder.Value->GetFrame(0, pDecodedFrame).ThrowOnFailure();
 
-                UnsafeNativeMethods.HRESULT.Check(
-                    UnsafeNativeMethods.WIC.CreateFormatConverter(pImagingFactory, out pBitmapSourceFormatConverter));
+                using ComScope<IWICFormatConverter> pBitmapSourceFormatConverter = new(null);
+                pImagingFactory->CreateFormatConverter(pBitmapSourceFormatConverter).ThrowOnFailure();
 
                 // Convert the image from whatever format it is in to 32bpp premultiplied alpha BGRA
-                Guid pixelFormat = UnsafeNativeMethods.WIC.WICPixelFormat32bppPBGRA;
-                UnsafeNativeMethods.HRESULT.Check(
-                    UnsafeNativeMethods.WIC.InitializeFormatConverter(pBitmapSourceFormatConverter, pDecodedFrame,
-                                                                      ref pixelFormat, 0 /*DitherTypeNone*/, IntPtr.Zero,
-                                                                      0, UnsafeNativeMethods.WIC.WICPaletteType.WICPaletteTypeCustom));
+                pBitmapSourceFormatConverter.Value->Initialize(
+                    (IWICBitmapSource*)(void*)pDecodedFrame,
+                    PInvoke.GUID_WICPixelFormat32bppPBGRA,
+                    WICBitmapDitherType.WICBitmapDitherTypeNone,
+                    null,
+                    0,
+                    WICBitmapPaletteType.WICBitmapPaletteTypeCustom).ThrowOnFailure();
+
                 // Reorient the image
-                UnsafeNativeMethods.HRESULT.Check(
-                    UnsafeNativeMethods.WIC.CreateBitmapFlipRotator(pImagingFactory, out pBitmapFlipRotator));
+                using ComScope<IWICBitmapFlipRotator> pBitmapFlipRotator = new(null);
+                pImagingFactory->CreateBitmapFlipRotator(pBitmapFlipRotator).ThrowOnFailure();
 
-                UnsafeNativeMethods.HRESULT.Check(
-                    UnsafeNativeMethods.WIC.InitializeBitmapFlipRotator(pBitmapFlipRotator, pBitmapSourceFormatConverter,
-                                                                        UnsafeNativeMethods.WIC.WICBitmapTransformOptions.WICBitmapTransformFlipVertical));
-                Int32 width, height;
-                UnsafeNativeMethods.HRESULT.Check(
-                    UnsafeNativeMethods.WIC.GetBitmapSize(pBitmapFlipRotator, out width, out height));
+                pBitmapFlipRotator.Value->Initialize(
+                    (IWICBitmapSource*)(void*)pBitmapSourceFormatConverter,
+                    WICBitmapTransformOptions.WICBitmapTransformFlipVertical).ThrowOnFailure();
 
-                Int32 stride = width * 4;
+                pBitmapFlipRotator.Value->GetSize(out uint width, out uint height).ThrowOnFailure();
 
-                // initialize the bitmap header
-                MS.Win32.NativeMethods.BITMAPINFO bmInfo = new MS.Win32.NativeMethods.BITMAPINFO(width, height, 32 /*bpp*/);
-                bmInfo.bmiHeader_biCompression = MS.Win32.NativeMethods.BI_RGB;
-                bmInfo.bmiHeader_biSizeImage = (int)(stride * height);
+                uint stride = width * 4;
+
+                // Initialize the bitmap header
+                BITMAPINFOHEADER bmInfo = new()
+                {
+                    biSize = (uint)sizeof(BITMAPINFOHEADER),
+                    biWidth = (int)width,
+                    biHeight = (int)height,
+                    biBitCount = 32,
+                    biPlanes = 1,
+                    biCompression = (uint)BI_COMPRESSION.BI_RGB,
+                    biSizeImage = stride * height
+                };
 
                 // Create a 32bpp DIB.  This DIB must have an alpha channel for UpdateLayeredWindow to succeed.
-                IntPtr pBitmapBits = IntPtr.Zero;
-                _hBitmap = UnsafeNativeMethods.CreateDIBSection(new HandleRef(), ref bmInfo, 0 /* DIB_RGB_COLORS*/, ref pBitmapBits, null, 0);
+                void* pBitmapBits = null;
+
+                _hBitmap = PInvoke.CreateDIBSection(default, (BITMAPINFO*)&bmInfo, DIB_USAGE.DIB_RGB_COLORS, &pBitmapBits, HANDLE.Null, 0);
+
+                if (_hBitmap.IsNull)
+                {
+                    throw new Win32Exception();
+                }
 
                 // Copy the decoded image to the new buffer which backs the HBITMAP
-                Int32Rect rect = new Int32Rect(0, 0, width, height);
-                UnsafeNativeMethods.HRESULT.Check(
-                    UnsafeNativeMethods.WIC.CopyPixels(pBitmapFlipRotator, ref rect, stride, stride * height, pBitmapBits));
+                WICRect rect = new()
+                {
+                    X = 0,
+                    Y = 0,
+                    Width = (int)width,
+                    Height = (int)height
+                };
 
-                _hwnd = CreateWindow(_hBitmap, width, height, topMost);
+                pBitmapFlipRotator.Value->CopyPixels(&rect, stride, stride * height, (byte*)pBitmapBits).ThrowOnFailure();
+
+                _hwnd = CreateWindow(_hBitmap, (int)width, (int)height, topMost);
 
                 bSuccess = true;
             }
             finally
             {
-                if (pImagingFactory != IntPtr.Zero)
-                {
-                    Marshal.Release(pImagingFactory);
-                }
-                if (pDecoder != IntPtr.Zero)
-                {
-                    Marshal.Release(pDecoder);
-                }
-                if (pIStream != IntPtr.Zero)
-                {
-                    Marshal.Release(pIStream);
-                }
-                if (pDecodedFrame != IntPtr.Zero)
-                {
-                    Marshal.Release(pDecodedFrame);
-                }
-                if (pBitmapSourceFormatConverter != IntPtr.Zero)
-                {
-                    Marshal.Release(pBitmapSourceFormatConverter);
-                }
-                if (pBitmapFlipRotator != IntPtr.Zero)
-                {
-                    Marshal.Release(pBitmapFlipRotator);
-                }
-
                 if (bSuccess == false)
                 {
                     DestroyResources(); // cleans up _hwnd and _hBitmap

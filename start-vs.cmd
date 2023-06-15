@@ -20,6 +20,7 @@ if not exist "%DOTNET_ROOT%\dotnet.exe" (
     exit /b 1
 )
 
+:: These tasks aren't running successfully when launching VS, skipping when launching via this batch file
 set RunNetFrameworkApiCompat=false
 set RunRefApiCompat=false
 

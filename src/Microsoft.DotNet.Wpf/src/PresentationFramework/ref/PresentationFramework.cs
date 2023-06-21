@@ -2920,7 +2920,6 @@ namespace System.Windows.Automation.Peers
         protected override bool IsContentElementCore() { throw null; }
         override protected System.Windows.Automation.Peers.ItemAutomationPeer CreateItemAutomationPeer(object item) { throw null; }
     }
-
     public partial class MenuItemDataAutomationPeer : System.Windows.Automation.Peers.ItemAutomationPeer, System.Windows.Automation.Provider.IExpandCollapseProvider, System.Windows.Automation.Provider.IInvokeProvider, System.Windows.Automation.Provider.IToggleProvider
     {
         public MenuItemDataAutomationPeer(object item, ItemsControlAutomationPeer itemsControlPeer) : base(default(object), default(System.Windows.Automation.Peers.ItemsControlAutomationPeer)) { }
@@ -2933,7 +2932,6 @@ namespace System.Windows.Automation.Peers
         void System.Windows.Automation.Provider.IInvokeProvider.Invoke() { throw null; }
         void System.Windows.Automation.Provider.IToggleProvider.Toggle() { throw null; }
     }
-
     public partial class MenuItemAutomationPeer : System.Windows.Automation.Peers.ItemsControlAutomationPeer, System.Windows.Automation.Provider.IExpandCollapseProvider, System.Windows.Automation.Provider.IInvokeProvider, System.Windows.Automation.Provider.IToggleProvider
     {
         public MenuItemAutomationPeer(System.Windows.Controls.MenuItem owner) : base (default(System.Windows.Controls.ItemsControl)) { }
@@ -2953,7 +2951,7 @@ namespace System.Windows.Automation.Peers
         void System.Windows.Automation.Provider.IInvokeProvider.Invoke() { }
         void System.Windows.Automation.Provider.IToggleProvider.Toggle() { }
     }
-        public partial class NavigationWindowAutomationPeer : System.Windows.Automation.Peers.WindowAutomationPeer
+    public partial class NavigationWindowAutomationPeer : System.Windows.Automation.Peers.WindowAutomationPeer
     {
         public NavigationWindowAutomationPeer(System.Windows.Navigation.NavigationWindow owner) : base (default(System.Windows.Window)) { }
         protected override string GetClassNameCore() { throw null; }

@@ -1,4 +1,4 @@
-<Project>
+﻿<Project>
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);CORE_NATIVEMETHODS;PRESENTATION_CORE;COMMONDPS</DefineConstants>
@@ -554,6 +554,7 @@
     <Compile Include="System\Windows\Input\Command\InputGesture.cs" />
     <Compile Include="System\Windows\Input\Command\InputGestureCollection.cs" />
     <Compile Include="System\Windows\Input\Command\ISecureCommand.cs" />
+    <Compile Include="System\Windows\Input\Command\ItemsCommands.cs" />
     <Compile Include="System\Windows\Input\Command\KeyBinding.cs" />
     <Compile Include="System\Windows\Input\Command\KeyGesture.cs" />
     <Compile Include="System\Windows\Input\Command\KeyGestureConverter.cs" />

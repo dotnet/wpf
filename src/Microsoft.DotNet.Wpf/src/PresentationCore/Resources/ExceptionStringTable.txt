@@ -277,6 +277,18 @@ MoveFocusForwardKeyDisplayString=Ctrl+Right
 MoveFocusPageUpKeyDisplayString=Ctrl+PageUp
 MoveFocusPageDownKeyDisplayString=Ctrl+PageDown
 
+;ItemsCommands Text
+Sort=Sort
+Group=Group
+
+;ItemsCommands Keys
+Sort=
+Group=
+
+;ItemsCommands Key display strings
+Sort=
+Group=
+
 ; MediaCommands Text
 MediaPlayText=Play
 MediaPauseText=Pause

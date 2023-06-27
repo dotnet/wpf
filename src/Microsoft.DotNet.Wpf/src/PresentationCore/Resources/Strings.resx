@@ -1303,6 +1303,24 @@
   <data name="IsfOperationFailed" xml:space="preserve">
     <value>InkSerializedFormat operation failed.</value>
   </data>
+  <data name="ItemsSortKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ItemsSortKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ItemsSortText" xml:space="preserve">
+    <value>Sort</value>
+  </data>
+  <data name="ItemsGroupKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ItemsGroupKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ItemsGroupText" xml:space="preserve">
+    <value>Group</value>
+  </data>
   <data name="KeyboardSinkAlreadyOwned" xml:space="preserve">
     <value>The specified keyboard sink is already owned by a site.</value>
   </data>

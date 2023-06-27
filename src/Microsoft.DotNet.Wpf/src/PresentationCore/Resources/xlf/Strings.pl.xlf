@@ -1927,6 +1927,16 @@
         <target state="translated">Operacja InkSerializedFormat nie powiodła się.</target>
         <note />
       </trans-unit>
+      <trans-unit id="ItemsGroupText">
+        <source>Group</source>
+        <target state="translated">Grupuj</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ItemsSortText">
+        <source>Sort</source>
+        <target state="translated">Sortuj</target>
+        <note />
+      </trans-unit>
       <trans-unit id="KeyGesture_Invalid">
         <source>'{0}+{1}' key and modifier combination is not supported for KeyGesture.</source>
         <target state="translated">Kombinacja „{0}+{1}” klucza i modyfikatora nie jest obsługiwana dla elementu KeyGesture.</target>

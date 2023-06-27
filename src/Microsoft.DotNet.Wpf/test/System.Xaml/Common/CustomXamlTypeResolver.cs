@@ -9,14 +9,16 @@ namespace System.Xaml.Tests.Common
 {
     public class CustomXamlTypeResolver : IXamlTypeResolver
     {
-        public Optional<string> ExpectedQualifiedTypeName { get; set; }
+        #nullable enable
+        public string? ExpectedQualifiedTypeName { get; set; }
+        #nullable disable
         public Type ResolveResult { get; set; }
         
         public Type Resolve(string qualifiedTypeName)
         {
-            if (ExpectedQualifiedTypeName.HasValue)
+            if (ExpectedQualifiedTypeName != null)
             {
-                Assert.Equal(ExpectedQualifiedTypeName.Value, qualifiedTypeName);
+                Assert.Equal(ExpectedQualifiedTypeName, qualifiedTypeName);
             }
 
             return ResolveResult;

@@ -9,7 +9,9 @@ namespace System.Xaml.Tests.Common
 {
     public class CustomTypeDescriptorContext : ITypeDescriptorContext
     {
-        public Optional<Type[]> ExpectedServiceTypes { get; set; }
+        #nullable enable
+        public Type[]? ExpectedServiceTypes { get; set; }
+        #nullable disable
 
         public object[] Services { get; set; }
 
@@ -23,9 +25,16 @@ namespace System.Xaml.Tests.Common
 
         public object GetService(Type serviceType)
         {
-            if (ExpectedServiceTypes.HasValue)
+            if (ExpectedServiceTypes != null)
             {
-                Assert.Equal(ExpectedServiceTypes.Value[CurrentIndex], serviceType);
+                try
+                {
+                    Assert.Equal(ExpectedServiceTypes[CurrentIndex], serviceType);
+                }
+                catch
+                {
+                    Assert.Equal(0,1);
+                }
             }
 
             return Services[CurrentIndex++];

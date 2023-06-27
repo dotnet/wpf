@@ -8,16 +8,18 @@ namespace System.Xaml.Tests.Common
 {
     public class CustomNamespacePrefixLookup : INamespacePrefixLookup
     {
-        public Optional<string[]> ExpectedNamespaces { get; set; }
+        #nullable enable
+        public string[]? ExpectedNamespaces { get; set; }
+        #nullable disable
         public string[] Prefixes { get; set; }
 
         private int CurrentIndex { get; set; }
 
         public string LookupPrefix(string ns)
         {
-            if (ExpectedNamespaces.HasValue)
+            if (ExpectedNamespaces != null)
             {
-                Assert.Equal(ExpectedNamespaces.Value[CurrentIndex], ns);
+                Assert.Equal(ExpectedNamespaces[CurrentIndex], ns);
             }
 
             return Prefixes[CurrentIndex++];

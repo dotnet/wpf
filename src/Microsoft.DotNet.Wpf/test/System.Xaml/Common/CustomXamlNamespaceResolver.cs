@@ -9,13 +9,15 @@ namespace System.Xaml.Tests.Common
 {
     public class CustomXamlNamespaceResolver : IXamlNamespaceResolver
     {
-        public Optional<string> ExpectedPrefix { get; set; }
+        #nullable enable
+        public string? ExpectedPrefix { get; set; }
+        #nullable disable
         public string GetNamespaceResult { get; set; }
         private int CurrentIndex { get; set; }
 
         public string GetNamespace(string prefix)
         {
-            if (ExpectedPrefix.HasValue)
+            if (ExpectedPrefix != null)
             {
                 Assert.Equal(ExpectedPrefix, prefix);
             }

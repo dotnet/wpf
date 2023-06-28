@@ -298,8 +298,8 @@ namespace System.Windows.Controls
                     Helper.ApplyCorrectionFactorToPixelHeaderSize(ParentItemsControl, this, _itemsHost, ref pixelHeaderSize);
                 }
 
-                Size logicalHeaderSize = new Size(DoubleUtil.GreaterThan(pixelHeaderSize.Width, 0) ? 1 : 0,
-                                DoubleUtil.GreaterThan(pixelHeaderSize.Height, 0) ? 1 : 0);
+                Size logicalHeaderSize = new Size(DoubleUtil.GreaterThanZero(pixelHeaderSize.Width) ? 1 : 0,
+                                DoubleUtil.GreaterThanZero(pixelHeaderSize.Height) ? 1 : 0);
 
                 return new HierarchicalVirtualizationHeaderDesiredSizes(logicalHeaderSize, pixelHeaderSize);
             }

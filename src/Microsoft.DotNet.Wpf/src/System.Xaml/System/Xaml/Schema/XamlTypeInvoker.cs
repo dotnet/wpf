@@ -342,28 +342,5 @@ namespace System.Xaml.Schema
                 return true;
             }
         }
-
-        private class UnknownTypeInvoker : XamlTypeInvoker
-        {
-            public override void AddToCollection(object instance, object item)
-            {
-                throw new NotSupportedException(SR.NotSupportedOnUnknownType);
-            }
-
-            public override void AddToDictionary(object instance, object key, object item)
-            {
-                throw new NotSupportedException(SR.NotSupportedOnUnknownType);
-            }
-
-            public override object CreateInstance(object[] arguments)
-            {
-                throw new NotSupportedException(SR.NotSupportedOnUnknownType);
-            }
-
-            public override IEnumerator GetItems(object instance)
-            {
-                throw new NotSupportedException(SR.NotSupportedOnUnknownType);
-            }
-        }
     }
 }

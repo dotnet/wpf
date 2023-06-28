@@ -319,7 +319,7 @@ namespace System.Windows.Controls
                 case Key.Divide:
                 case Key.Oem2:
                     // Ctrl-Fowardslash = Select All
-                    if (((Keyboard.Modifiers & ModifierKeys.Control) == (ModifierKeys.Control)) && (SelectionMode == SelectionMode.Extended))
+                    if (((Keyboard.Modifiers) == (ModifierKeys.Control)) && (SelectionMode == SelectionMode.Extended))
                     {
                         SelectAll();
                     }
@@ -332,7 +332,7 @@ namespace System.Windows.Controls
 
                 case Key.Oem5:
                     // Ctrl-Backslash = Select the item with focus.
-                    if (((Keyboard.Modifiers & ModifierKeys.Control) == (ModifierKeys.Control)) && (SelectionMode == SelectionMode.Extended))
+                    if (((Keyboard.Modifiers) == (ModifierKeys.Control)) && (SelectionMode == SelectionMode.Extended))
                     {
                         ListBoxItem focusedItemUI = (FocusedInfo != null) ? FocusedInfo.Container as ListBoxItem : null;
                         if (focusedItemUI != null)

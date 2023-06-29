@@ -186,7 +186,6 @@ jobs:
 
       - script: eng\common\ciunittest.cmd
         displayName: Unit Tests
-        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release'))
         continueOnError: true
 
       - task: PowerShell@2

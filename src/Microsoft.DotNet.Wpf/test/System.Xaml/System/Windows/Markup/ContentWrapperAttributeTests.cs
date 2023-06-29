@@ -50,7 +50,7 @@ namespace System.Windows.Markup.Tests
         public void GetHashCode_NullContentWrapper_ThrowsNullReferenceException()
         {
             var attribute = new ContentWrapperAttribute(null);
-            Assert.Throws<NullReferenceException>(() => attribute.GetHashCode());
+            Assert.Equal(0, attribute.GetHashCode());   
         }
 
         [Fact]

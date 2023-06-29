@@ -187,7 +187,7 @@ jobs:
         displayName: Publish XUnit Test Results
         inputs:
           testResultsFormat: 'xUnit'
-          testResultsFiles: '*.html' 
+          testResultsFiles: '*.xml' 
           searchFolder: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)'
           mergeTestResults: true
         continueOnError: true

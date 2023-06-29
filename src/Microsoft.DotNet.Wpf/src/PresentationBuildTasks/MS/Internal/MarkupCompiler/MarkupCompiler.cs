@@ -225,8 +225,7 @@ namespace MS.Internal
             {
                 // Don't rely on next compilation to reset as that would unnecessarily delay
                 // garbage collection of this static data that cannot be reused by the next compilation.
-                // Also, the ReflectionHelper must be disposed now to release file locks on assemblies.
-                XamlTypeMapper.Clear();
+                // Also, the ReflectionHelper must be disposed now to release file locks on assemblies
                 KnownTypes.Clear();
                 ReflectionHelper.Dispose();
             }

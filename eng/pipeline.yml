@@ -184,6 +184,11 @@ jobs:
         #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
         condition: or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')))
 
+      - script: eng\common\ciunittest.cmd
+        displayName: Unit Tests
+        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release'))
+        continueOnError: true
+
       - task: PowerShell@2
         displayName: Install .NET Core
         inputs:
@@ -284,5 +289,16 @@ jobs:
           testResultsFormat: 'XUnit'
           testResultsFiles: 'testResults.xml'
           searchFolder: '$(System.DefaultWorkingDirectory)\Results\'
-          testRunTitle: 'CTP results'
-          condition: eq(variables['System.TeamProject'], 'public')
+          testRunTitle: 'Test results'
+          mergeTestResults: true
+        condition: eq(variables['System.TeamProject'], 'public')
+
+      - task: PublishTestResults@2
+        displayName: Publish XUnit Test Results
+        inputs:
+          testResultsFormat: 'xUnit'
+          testResultsFiles: '*.html' 
+          searchFolder: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)'
+          mergeTestResults: true
+        continueOnError: true
+        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release'))

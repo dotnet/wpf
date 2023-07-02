@@ -205,17 +205,7 @@ namespace Microsoft.Win32
         /// Gets or sets a value indicating whether the dialog 
         /// contains a read-only check box.  
         /// </summary>
-        public bool ShowReadOnly
-        {
-            get
-            {
-                return _showReadOnly;
-            }
-            set
-            {
-                _showReadOnly = false;
-            }
-        }
+        public bool ShowReadOnly { get; set; }
 
         #endregion Public Properties
 
@@ -307,9 +297,6 @@ namespace Microsoft.Win32
         //
         //---------------------------------------------------
         //#region Private Fields
-
-        private bool _showReadOnly = false;
-
         //#endregion Private Fields        
     }
 }

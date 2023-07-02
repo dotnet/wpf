@@ -562,9 +562,12 @@ namespace Microsoft.Win32
             _itemNames = null;
             _title.Value = null;
             _initialDirectory.Value = null;
+            _defaultDirectory.Value = null;
+            _rootDirectory.Value = null;
 
             // Set this to an empty list so callers can simply add to it.  They can also replace it wholesale.
             CustomPlaces = new List<FileDialogCustomPlace>();
+            ClientGuid = null;
         }
 
         private bool HandleItemOk(IFileDialog dialog)

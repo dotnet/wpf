@@ -489,8 +489,6 @@ namespace Microsoft.Win32
         {
             base.PrepareDialog(dialog);
 
-            dialog.SetFileName(CriticalItemName);
-
             dialog.SetDefaultExtension(DefaultExt);
 
             COMDLG_FILTERSPEC[] filterItems = GetFilterItems(Filter);

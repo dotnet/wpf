@@ -112,10 +112,10 @@ namespace Microsoft.Win32
             get
             {
                 // Use the FileName property to avoid directly accessing
-                // the _fileNames field, then call Path.GetFileName
+                // the _itemNames field, then call Path.GetFileName
                 // to do the actual work of stripping out the file name
                 // from the path.
-                string safeFN = Path.GetFileName(CriticalFileName);
+                string safeFN = Path.GetFileName(CriticalItemName);
 
                 // Check to make sure Path.GetFileName does not return null.
                 // If it does, set safeFN to String.Empty instead to accomodate
@@ -139,7 +139,7 @@ namespace Microsoft.Win32
             {
                 // Retrieve the existing filenames into an array, then make
                 // another array of the same length to hold the safe version.
-                string[] unsafeFileNames = CloneFileNames();
+                string[] unsafeFileNames = CloneItemNames();
                 string[] safeFileNames = new string[unsafeFileNames.Length];
 
                 for (int i = 0; i < unsafeFileNames.Length; i++)
@@ -170,24 +170,24 @@ namespace Microsoft.Win32
         {
             get
             {
-                return CriticalFileName;
+                return CriticalItemName;
             }
             set
             {
 
-                // Allow users to set a filename to stored in _fileNames.
+                // Allow users to set a filename to stored in _itemNames.
                 // If null is passed in, we clear the entire list.
                 // If we get a string, we clear the entire list and make a new one-element
                 // array with the new string.
                 if (value == null)
                 {
-                    MutableFileNames = null;
+                    MutableItemNames = null;
                 }
                 else
                 {
                     // UNDONE : ChrisAn:  This broke the save file dialog.
                     //string temp = Path.GetFullPath(value); // ensure filename is valid...
-                    MutableFileNames = new string[] { value };
+                    MutableItemNames = new string[] { value };
                 }
             }
         }
@@ -199,7 +199,7 @@ namespace Microsoft.Win32
         {
             get
             {
-                return CloneFileNames();
+                return CloneItemNames();
             }
         }
 
@@ -489,7 +489,7 @@ namespace Microsoft.Win32
         {
             base.PrepareDialog(dialog);
 
-            dialog.SetFileName(CriticalFileName);
+            dialog.SetFileName(CriticalItemName);
 
             dialog.SetDefaultExtension(DefaultExt);
 
@@ -580,9 +580,9 @@ namespace Microsoft.Win32
                 // For each filename:
                 //      -  Process AddExtension
                 //      -  Call PromptUserIfAppropriate to display necessary dialog boxes.
-                for (int i = 0; i < MutableFileNames.Length; i++)
+                for (int i = 0; i < MutableItemNames.Length; i++)
                 {
-                    string fileName = MutableFileNames[i];
+                    string fileName = MutableItemNames[i];
 
                     // If AddExtension is enabled and we do not already have an extension:            
                     if (AddExtension && !Path.HasExtension(fileName))
@@ -629,8 +629,8 @@ namespace Microsoft.Win32
                                 break;
                             }
                         }
-                        // Store this filename back in the _fileNames array.
-                        MutableFileNames[i] = fileName;
+                        // Store this filename back in the _itemNames array.
+                        MutableItemNames[i] = fileName;
                     }
 
                     // Call PromptUserIfAppropriate to show necessary dialog boxes.

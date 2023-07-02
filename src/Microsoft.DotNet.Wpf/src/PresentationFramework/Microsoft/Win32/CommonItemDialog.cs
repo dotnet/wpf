@@ -320,7 +320,7 @@ namespace Microsoft.Win32
             }
 
             dialog.SetTitle(Title);
-            dialog.SetFileName(CriticalFileName);
+            dialog.SetFileName(CriticalItemName);
 
             // Only accept physically backed locations.
             FOS options = _dialogOptions.Value | FOS.FORCEFILESYSTEM;
@@ -374,13 +374,13 @@ namespace Microsoft.Win32
         ///  Gets a string containing the full path of the file selected in 
         ///  the file dialog box.
         /// </summary>
-        private protected string CriticalFileName
+        private protected string CriticalItemName
         {
             get
             {
-                if (_fileNames?.Length > 0)
+                if (_itemNames?.Length > 0)
                 {
-                    return _fileNames[0];
+                    return _itemNames[0];
                 }
                 else
                 {
@@ -389,10 +389,10 @@ namespace Microsoft.Win32
             }
         }
 
-        private protected string[] MutableFileNames
+        private protected string[] MutableItemNames
         {
-            get { return _fileNames; }
-            set { _fileNames = value; }
+            get { return _itemNames; }
+            set { _itemNames = value; }
         }
 
         /// <summary>
@@ -400,15 +400,15 @@ namespace Microsoft.Win32
         ///  a clone of the array.  We also need to make sure we return a 
         ///  string[0] instead of a null if we don't have any filenames.
         /// </summary>
-        private protected string[] CloneFileNames()
+        private protected string[] CloneItemNames()
         {
-            if (_fileNames == null)
+            if (_itemNames == null)
             {
                 return Array.Empty<string>();
             }
             else
             {
-                return (string[])_fileNames.Clone();
+                return (string[])_itemNames.Clone();
             }
         }
 
@@ -460,7 +460,7 @@ namespace Microsoft.Win32
             //
             // Initialize additional properties
             // 
-            _fileNames = null;
+            _itemNames = null;
             _title.Value = null;
             _initialDirectory.Value = null;
 
@@ -476,14 +476,14 @@ namespace Microsoft.Win32
             UnsafeNativeMethods.IOleWindow oleWindow = (UnsafeNativeMethods.IOleWindow)dialog;
             oleWindow.GetWindow(out _hwndFileDialog);
 
-            string[] saveFileNames = _fileNames;
+            string[] saveItemNames = _itemNames;
             object saveState = null;
             bool ok = false;
 
             try
             {
                 IShellItem[] shellItems = ResolveResults(dialog);
-                _fileNames = GetParsingNames(shellItems);
+                _itemNames = GetParsingNames(shellItems);
 
                 if (TryHandleItemOk(dialog, out saveState))
                 {
@@ -497,7 +497,7 @@ namespace Microsoft.Win32
                 if (!ok)
                 {
                     RevertItemOk(saveState);
-                    _fileNames = saveFileNames;
+                    _itemNames = saveItemNames;
                 }
             }
             return ok;
@@ -683,7 +683,7 @@ namespace Microsoft.Win32
         // This is the array that stores the item(s) the user selected in the
         // dialog box.  If Multiselect is not enabled, only the first element
         // of this array will be used.
-        private string[] _fileNames;
+        private string[] _itemNames;
 
         #endregion Private Fields
     }

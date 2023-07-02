@@ -101,8 +101,8 @@ namespace Microsoft.Win32
         {
             get
             {
-                // Use the FileName property to avoid directly accessing
-                // the _fileNames field, then call Path.GetFileName
+                // Use the ItemName property to avoid directly accessing
+                // the _itemNames field, then call Path.GetFileName
                 // to do the actual work of stripping out the file name
                 // from the path.
                 string safeFN = Path.GetFileName(CriticalItemName);
@@ -127,27 +127,27 @@ namespace Microsoft.Win32
         {
             get
             {
-                // Retrieve the existing filenames into an array, then make
+                // Retrieve the existing folder names into an array, then make
                 // another array of the same length to hold the safe version.
-                string[] unsafeFileNames = CloneFileNames();
-                string[] safeFileNames = new string[unsafeFileNames.Length];
+                string[] unsafeFolderNames = CloneItemNames();
+                string[] safeFolderNames = new string[unsafeFolderNames.Length];
 
-                for (int i = 0; i < unsafeFileNames.Length; i++)
+                for (int i = 0; i < unsafeFolderNames.Length; i++)
                 {
                     // Call Path.GetFileName to retrieve only the filename
                     // component of the current full path.
-                    safeFileNames[i] = Path.GetFileName(unsafeFileNames[i]);
+                    safeFolderNames[i] = Path.GetFileName(unsafeFolderNames[i]);
 
                     // Check to make sure Path.GetFileName does not return null.
                     // If it does, set this filename to String.Empty instead to accomodate
                     // programmers that fail to check for null when reading strings.
-                    if (safeFileNames[i] == null)
+                    if (safeFolderNames[i] == null)
                     {
-                        safeFileNames[i] = String.Empty;
+                        safeFolderNames[i] = String.Empty;
                     }
                 }
 
-                return safeFileNames;
+                return safeFolderNames;
             }
         }
 
@@ -160,24 +160,24 @@ namespace Microsoft.Win32
         {
             get
             {
-                return CriticalFileName;
+                return CriticalItemName;
             }
             set
             {
 
-                // Allow users to set a filename to stored in _fileNames.
+                // Allow users to set a filename to stored in _itemNames.
                 // If null is passed in, we clear the entire list.
                 // If we get a string, we clear the entire list and make a new one-element
                 // array with the new string.
                 if (value == null)
                 {
-                    MutableFileNames = null;
+                    MutableItemNames = null;
                 }
                 else
                 {
                     // UNDONE : ChrisAn:  This broke the save file dialog.
                     //string temp = Path.GetFullPath(value); // ensure filename is valid...
-                    MutableFileNames = new string[] { value };
+                    MutableItemNames = new string[] { value };
                 }
             }
         }
@@ -189,7 +189,7 @@ namespace Microsoft.Win32
         {
             get
             {
-                return CloneFileNames();
+                return CloneItemNames();
             }
         }
 

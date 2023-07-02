@@ -71,7 +71,7 @@ namespace Microsoft.Win32
         /// </Remarks>
         public Stream OpenFile()
         {
-            string filename = CriticalFileName;
+            string filename = CriticalItemName;
 
             // If we got an empty or null filename, throw an exception to
             // tell the user we don't have any files to open.
@@ -95,9 +95,9 @@ namespace Microsoft.Win32
         /// </Remarks>
         public Stream[] OpenFiles()
         {
-            // Cache FileNames to avoid perf issues as per
+            // Cache ItemNames to avoid perf issues as per
             // FxCop #CA1817
-            string[] cachedFileNames = CloneFileNames();
+            string[] cachedFileNames = CloneItemNames();
 
             // Create an array to hold the streams that is exactly
             // as long as FileNames.

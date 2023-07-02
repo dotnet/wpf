@@ -71,8 +71,8 @@ namespace Microsoft.Win32
         public Stream OpenFile()
         {
 
-            // Extract the first filename from the FileNames list.
-            string filename = CriticalFileName;
+            // Extract the first filename from the ItemNames list.
+            string filename = CriticalItemName;
 
             // If we got an empty or null filename, throw an exception to
             // tell the user we don't have any files to open.

@@ -94,7 +94,7 @@ namespace Microsoft.Win32
         /// <summary>
         ///  Gets or sets a value indicating whether the dialog box returns the location 
         ///  of the file referenced by the shortcut or whether it returns the location 
-        ///  of the shortcut (.lnk).
+        ///  of the shortcut (.lnk). Not all dialogs allow users to select shortcuts.
         /// </summary>
         public bool DereferenceLinks
         {
@@ -202,13 +202,10 @@ namespace Microsoft.Win32
         /// </summary>
         protected virtual void OnItemOk(CancelEventArgs e) { }
 
-        //  Because this class, FileDialog, is the parent class for both OpenFileDialog
-        //  and SaveFileDialog, this function will perform the common setup tasks
-        //  shared between Open and Save, and will then call RunFileDialog, which is
-        //  overridden in both of the derived classes to show the correct dialog.
-        //  Both derived classes know about the COM IFileDialog interfaces and can 
-        //  display those if they're available and there aren't any properties set
-        //  that should cause us not to.
+        //  Because this class, CommonItemDialog, is the parent class for OpenFileDialog
+        //  SaveFileDialog and OpenFolderDialog, this function will perform the common setup tasks
+        //  shared between the dialogs, and will then call RunFileDialog, which is
+        //  overridden in the derived classes to show the correct dialog.
         //
         /// <summary>
         /// Performs initialization work in preparation for calling RunFileDialog

@@ -221,7 +221,7 @@ namespace Microsoft.Win32
         //---------------------------------------------------
         #region Protected Methods
 
-        // This method is not used by IFileDialog API. Keeping for API compatibility with .NET Framework.
+        // This method is not used by IFileDialog API. Kept for compatibility as CommonDialog can be derived from.
         /// <summary>
         ///  Defines the common dialog box hook procedure that is overridden to 
         ///  add specific functionality to a common dialog box.
@@ -247,7 +247,6 @@ namespace Microsoft.Win32
             return IntPtr.Zero;
         }
 
-        /// <summary>
         /// <summary>
         ///  When overridden in a derived class, displays a particular type of common dialog box.
         /// </summary>
@@ -276,12 +275,10 @@ namespace Microsoft.Win32
         //---------------------------------------------------
         #region Internal Methods
 
-        // This method is not used by IFileDialog API. Keeping for API compatibility with .NET Framework.
+        // This method is not used by IFileDialog API. Kept for compatibility (see HookProc).
         /// <summary>
         ///  Centers the given window on the screen. This method is used by HookProc
-        ///  to center the dialog on the screen before it is shown.  We can't mark it
-        ///  private because we need to call it from our derived classes like
-        ///  FileDialog.
+        ///  to center the dialog on the screen before it is shown.
         /// </summary>
         private void MoveToScreenCenter(HandleRef hWnd)
         {

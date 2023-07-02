@@ -163,7 +163,7 @@ namespace Microsoft.Win32
 
         //   If multiple files are selected, we only return the first filename.
         /// <summary>
-        ///  Gets or sets a string containing the full path of the file or folder selected in 
+        ///  Gets or sets a string containing the full path of the file selected in 
         ///  the file dialog box.
         /// </summary>
         public string FileName
@@ -193,7 +193,7 @@ namespace Microsoft.Win32
         }
 
         /// <summary>
-        ///     Gets the file names of all selected files or folders in the dialog box.
+        ///     Gets the file names of all selected files in the dialog box.
         /// </summary>
         public string[] FileNames
         {

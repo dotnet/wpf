@@ -105,7 +105,7 @@ namespace Microsoft.Win32
                 // the _fileNames field, then call Path.GetFileName
                 // to do the actual work of stripping out the file name
                 // from the path.
-                string safeFN = Path.GetFileName(CriticalFileName);
+                string safeFN = Path.GetFileName(CriticalItemName);
 
                 // Check to make sure Path.GetFileName does not return null.
                 // If it does, set safeFN to String.Empty instead to accomodate

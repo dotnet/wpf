@@ -174,14 +174,14 @@ namespace Microsoft.Win32
             }
         }
 
-        //  OFN_HIDEREADONLY currently not supported #6346
+        //  ShowReadOnly currently not supported #6346
         /// <summary>
         /// Gets or sets a value indicating whether the read-only 
         /// check box is selected.
         /// </summary>
         public bool ReadOnlyChecked { get; set; }
 
-        //  OFN_HIDEREADONLY currently not supported #6346
+        //  ShowReadOnly currently not supported #6346
         /// <summary>
         /// Gets or sets a value indicating whether the dialog 
         /// contains a read-only check box.  

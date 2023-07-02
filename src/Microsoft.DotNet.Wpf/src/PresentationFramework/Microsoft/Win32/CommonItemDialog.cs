@@ -322,8 +322,7 @@ namespace Microsoft.Win32
             dialog.SetTitle(Title);
             dialog.SetFileName(CriticalItemName);
 
-            // Only accept physically backed locations.
-            FOS options = _dialogOptions.Value | FOS.FORCEFILESYSTEM;
+            FOS options = _dialogOptions.Value;
             dialog.SetOptions(options);
 
             IList<FileDialogCustomPlace> places = CustomPlaces;
@@ -456,6 +455,9 @@ namespace Microsoft.Win32
 
             // - Force no mini mode for the SaveFileDialog.
             SetOption(FOS.DEFAULTNOMINIMODE, true);
+
+            // Only accept physically backed locations.
+            SetOption(FOS.FORCEFILESYSTEM, true);
 
             //
             // Initialize additional properties

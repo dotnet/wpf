@@ -378,6 +378,26 @@ namespace Microsoft.Win32
             }
         }
 
+        /// <summary>
+        ///  Restores the current directory to its original value if the user
+        ///  changed the directory while searching for files.
+        ///
+        ///  This property is only valid for SaveFileDialog;  it has no effect
+        ///  when set on an OpenFileDialog.
+        /// </summary>
+        public bool RestoreDirectory
+        {
+            get
+            {
+                return GetOption(FOS.NOCHANGEDIR);
+            }
+            set
+            {
+
+                SetOption(FOS.NOCHANGEDIR, value);
+            }
+        }
+
         #endregion Public Properties
 
         //---------------------------------------------------

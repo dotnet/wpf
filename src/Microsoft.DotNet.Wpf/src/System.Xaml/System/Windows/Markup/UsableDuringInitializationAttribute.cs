@@ -7,13 +7,11 @@ namespace System.Windows.Markup
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public sealed class UsableDuringInitializationAttribute : Attribute
     {
-        bool _usable;
-
         public UsableDuringInitializationAttribute(bool usable)
         {
-            _usable = usable;
+            Usable = usable;
         }
 
-        public bool Usable { get { return _usable; } }
+        public bool Usable { get; }
     }
 }

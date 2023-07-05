@@ -2,16 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//  Microsoft Windows Client Platform
-//
-//
-//  Contents:  Service for providing and finding custom serialization for
-//             value and value like types.
-//
-//  Created:   04/28/2005 Microsoft
-//
-
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,10 +9,6 @@ using System.Runtime.CompilerServices;
 using System.Xaml;
 using System.Xaml.Replacements;
 using MS.Internal.Serialization;
-
-//DateTimeConverter2
-
-//SRID
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -37,10 +23,12 @@ namespace System.Windows.Markup
     /// ValueSerializer with the type to indicate the type converter should be ignored. Implementation of ValueSerializer 
     /// should avoid throwing exceptions. Any exceptions thrown could possibly terminate serialization.
     /// </summary>
-    /// 
     [TypeForwardedFrom("WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")]
     public abstract class ValueSerializer
     {
+        private static readonly object s_valueSerializersLock = new object();
+        private static Hashtable s_valueSerializers = new Hashtable();
+
         /// <summary>
         /// Constructor for a ValueSerializer
         /// </summary>
@@ -120,17 +108,21 @@ namespace System.Windows.Markup
         {
             ArgumentNullException.ThrowIfNull(type);
 
-            object value = _valueSerializers[type];
+            object value = s_valueSerializers[type];
             if (value != null)
-                // This uses _valueSerializersLock's instance as a sentinal for null  (as opposed to not attempted yet).
-                return value == _valueSerializersLock ? null : value as ValueSerializer;
+            {
+                // This uses s_valueSerializersLock's instance as a sentinal for null  (as opposed to not attempted yet).
+                return value == s_valueSerializersLock ? null : value as ValueSerializer;
+            }
 
             AttributeCollection attributes = TypeDescriptor.GetAttributes(type);
             ValueSerializerAttribute attribute = attributes[typeof(ValueSerializerAttribute)] as ValueSerializerAttribute;
             ValueSerializer result = null;
 
             if (attribute != null)
+            {
                 result = (ValueSerializer)Activator.CreateInstance(attribute.ValueSerializerType);
+            }
 
             if (result == null)
             {
@@ -143,7 +135,7 @@ namespace System.Windows.Markup
                     // Try to use the type converter
                     TypeConverter converter = TypeConverterHelper.GetTypeConverter(type);
 
-                    // DateTime is a special-case.  We can't use the DateTimeConverter, because it doesn't
+                    // DateTime is a special-case. We can't use the DateTimeConverter, because it doesn't
                     // support anything other than user culture and invariant culture, and we need to specify
                     // en-us culture.
                     if (converter.GetType() == typeof(DateTimeConverter2))
@@ -157,10 +149,10 @@ namespace System.Windows.Markup
                     }
                 }
             }
-            lock (_valueSerializersLock)
+            lock (s_valueSerializersLock)
             {
-                // This uses _valueSerializersLock's instance as a sentinal for null (as opposed to not attempted yet).
-                _valueSerializers[type] = result == null ? _valueSerializersLock : result;
+                // This uses s_valueSerializersLock's instance as a sentinal for null (as opposed to not attempted yet).
+                s_valueSerializers[type] = result ?? s_valueSerializersLock;
             }
 
             return result;
@@ -174,26 +166,25 @@ namespace System.Windows.Markup
         /// <returns>A value serializer associated with the given property</returns>
         public static ValueSerializer GetSerializerFor(PropertyDescriptor descriptor)
         {
-            ValueSerializer result;
             ArgumentNullException.ThrowIfNull(descriptor);
             
-            #pragma warning suppress 6506 // descriptor is obviously not null
             ValueSerializerAttribute serializerAttribute = descriptor.Attributes[typeof(ValueSerializerAttribute)] as ValueSerializerAttribute;
             if (serializerAttribute != null)
             {
-                result = (ValueSerializer)Activator.CreateInstance(serializerAttribute.ValueSerializerType);
+                return (ValueSerializer)Activator.CreateInstance(serializerAttribute.ValueSerializerType);
             }
-            else
+
+            ValueSerializer result = GetSerializerFor(descriptor.PropertyType);
+            if (result == null || result is TypeConverterValueSerializer)
             {
-                result = GetSerializerFor(descriptor.PropertyType);
-                if (result == null || result is TypeConverterValueSerializer)
+                TypeConverter converter = descriptor.Converter;
+                if (converter != null && converter.CanConvertTo(typeof(string)) && converter.CanConvertFrom(typeof(string)) &&
+                    !(converter is ReferenceConverter))
                 {
-                    TypeConverter converter = descriptor.Converter;
-                    if (converter!=null && converter.CanConvertTo(typeof(string)) && converter.CanConvertFrom(typeof(string)) &&
-                        !(converter is ReferenceConverter))
-                        result = new TypeConverterValueSerializer(converter);
+                    result = new TypeConverterValueSerializer(converter);
                 }
             }
+
             return result;
         }
 
@@ -211,8 +202,11 @@ namespace System.Windows.Markup
             {
                 ValueSerializer result = context.GetValueSerializerFor(type);
                 if (result != null)
+                {
                     return result;
+                }
             }
+
             return GetSerializerFor(type);
         }
 
@@ -230,8 +224,11 @@ namespace System.Windows.Markup
             {
                 ValueSerializer result = context.GetValueSerializerFor(descriptor);
                 if (result != null)
+                {
                     return result;
+                }
             }
+
             return GetSerializerFor(descriptor);
         }
 
@@ -271,15 +268,14 @@ namespace System.Windows.Markup
             return new NotSupportedException(SR.Format(SR.ConvertFromException, base.GetType().Name, text));
         }
 
-        private static void TypeDescriptorRefreshed(RefreshEventArgs args) {
-            _valueSerializers = new Hashtable();
+        private static void TypeDescriptorRefreshed(RefreshEventArgs args)
+        {
+            s_valueSerializers = new Hashtable();
         }
 
-        static ValueSerializer() {
+        static ValueSerializer()
+        {
             TypeDescriptor.Refreshed += TypeDescriptorRefreshed;
         }
-
-        private static readonly object _valueSerializersLock = new object();
-        private static Hashtable _valueSerializers = new Hashtable();
     }
 }

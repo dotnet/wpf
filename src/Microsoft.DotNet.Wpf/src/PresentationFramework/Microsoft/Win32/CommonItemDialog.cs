@@ -78,6 +78,17 @@ namespace Microsoft.Win32
             Initialize();
         }
 
+        /// <summary>
+        ///  Returns a string representation of the dialog with key information
+        ///  for debugging purposes.
+        /// </summary>
+        //   We overload ToString() so that we can provide a useful representation of
+        //   this object for users' debugging purposes.
+        public override string ToString()
+        {
+            return base.ToString() + ": Title: " + Title;
+        }
+
         #endregion Public Methods
 
         //---------------------------------------------------

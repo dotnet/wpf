@@ -76,9 +76,7 @@ namespace Microsoft.Win32
         //   this object for users' debugging purposes.
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder(base.ToString() + ": Title: " + Title + ", FolderName: ");
-            sb.Append(FolderName);
-            return sb.ToString();
+            return base.ToString() + ", FolderName: " + FolderName;
         }
 
         #endregion Public Methods

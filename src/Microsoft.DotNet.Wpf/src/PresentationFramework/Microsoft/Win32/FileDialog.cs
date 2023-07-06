@@ -86,9 +86,7 @@ namespace Microsoft.Win32
         //   this object for users' debugging purposes.
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder(base.ToString() + ": Title: " + Title + ", FileName: ");
-            sb.Append(FileName);
-            return sb.ToString();
+            return base.ToString() + ", FileName: " + FileName;
         }
 
         #endregion Public Methods

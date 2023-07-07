@@ -297,9 +297,6 @@ namespace Microsoft.Win32
         //
         //---------------------------------------------------
         //#region Private Fields
-
-        private bool _showReadOnly = false;
-
         //#endregion Private Fields        
     }
 }

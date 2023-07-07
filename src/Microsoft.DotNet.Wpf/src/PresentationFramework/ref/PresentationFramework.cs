@@ -24,7 +24,7 @@ namespace Microsoft.Win32
         public bool ShowHiddenItems { get; set; }
         public string Title { get { throw null; } set { } }
         public bool ValidateNames { get { throw null; } set { } }
-        protected void OnItemOk(System.ComponentModel.CancelEventArgs e) { }
+        protected virtual void OnItemOk(System.ComponentModel.CancelEventArgs e) { }
         protected override bool RunDialog(System.IntPtr hwndOwner) { throw null; }
         public override void Reset() { }
         public override string ToString() { throw null; }

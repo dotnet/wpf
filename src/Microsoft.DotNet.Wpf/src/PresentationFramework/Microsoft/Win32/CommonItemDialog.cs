@@ -568,6 +568,7 @@ namespace Microsoft.Win32
             // Set this to an empty list so callers can simply add to it.  They can also replace it wholesale.
             CustomPlaces = new List<FileDialogCustomPlace>();
             ClientGuid = null;
+
         }
 
         private bool HandleItemOk(IFileDialog dialog)

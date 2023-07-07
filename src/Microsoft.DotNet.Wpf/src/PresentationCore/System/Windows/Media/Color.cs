@@ -286,7 +286,7 @@ namespace System.Windows.Media
                     // Helper to get the numeric list separator for a given culture.
                     char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
                     return string.Format(provider,
-                        $"sc#{{1:{format}}}{{0}} {{{format}}}{{0}} {{3:{format}}}{{0}} {{4:{format}}}",
+                        $"sc#{{1:{format}}}{{0}} {{2:{format}}}{{0}} {{3:{format}}}{{0}} {{4:{format}}}",
                         separator, scRgbColor.a, scRgbColor.r, scRgbColor.g, scRgbColor.b);
                 }
             }

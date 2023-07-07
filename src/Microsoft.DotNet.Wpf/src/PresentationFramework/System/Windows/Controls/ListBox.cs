@@ -319,7 +319,7 @@ namespace System.Windows.Controls
                 case Key.Divide:
                 case Key.Oem2:
                     // Ctrl-Fowardslash = Select All
-                    if (((Keyboard.Modifiers & ModifierKeys.Control) == (ModifierKeys.Control)) && (SelectionMode == SelectionMode.Extended))
+                    if (((Keyboard.Modifiers) == (ModifierKeys.Control)) && (SelectionMode == SelectionMode.Extended))
                     {
                         SelectAll();
                     }
@@ -332,7 +332,7 @@ namespace System.Windows.Controls
 
                 case Key.Oem5:
                     // Ctrl-Backslash = Select the item with focus.
-                    if (((Keyboard.Modifiers & ModifierKeys.Control) == (ModifierKeys.Control)) && (SelectionMode == SelectionMode.Extended))
+                    if (((Keyboard.Modifiers) == (ModifierKeys.Control)) && (SelectionMode == SelectionMode.Extended))
                     {
                         ListBoxItem focusedItemUI = (FocusedInfo != null) ? FocusedInfo.Container as ListBoxItem : null;
                         if (focusedItemUI != null)
@@ -361,9 +361,9 @@ namespace System.Windows.Controls
                         {
                             shouldScroll =
                                 ((key == Key.Down && IsLogicalHorizontal && DoubleUtil.GreaterThan(ScrollHost.ScrollableHeight, ScrollHost.VerticalOffset))) ||
-                                ((key == Key.Up   && IsLogicalHorizontal && DoubleUtil.GreaterThan(ScrollHost.VerticalOffset, 0d))) ||
+                                ((key == Key.Up   && IsLogicalHorizontal && DoubleUtil.GreaterThanZero(ScrollHost.VerticalOffset))) ||
                                 ((key == Key.Right&& IsLogicalVertical && DoubleUtil.GreaterThan(ScrollHost.ScrollableWidth, ScrollHost.HorizontalOffset))) ||
-                                ((key == Key.Left && IsLogicalVertical && DoubleUtil.GreaterThan(ScrollHost.HorizontalOffset, 0d)));
+                                ((key == Key.Left && IsLogicalVertical && DoubleUtil.GreaterThanZero(ScrollHost.HorizontalOffset)));
                         }
 
                         if (shouldScroll)

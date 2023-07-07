@@ -18,7 +18,9 @@ using System.Security;
 
 namespace System.Windows.Markup
 {
+#pragma warning disable CA1812 // This type is used inside a TypeConverterAttribute which creates instances of this class.
     class StaticExtensionConverter : TypeConverter
+#pragma warning restore CA1812
     {
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {

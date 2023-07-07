@@ -13,22 +13,20 @@ namespace Microsoft.Win32
     }
     public abstract partial class CommonItemDialog : Microsoft.Win32.CommonDialog
     {
-        protected CommonItemDialog() { }
+        private protected CommonItemDialog() { }
         public System.Collections.Generic.IList<Microsoft.Win32.FileDialogCustomPlace> CustomPlaces { get { throw null; } set { } }
         public bool DereferenceLinks { get { throw null; } set { } }
         public string InitialDirectory { get { throw null; } set { } }
-        public bool RestoreDirectory { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
         public bool ValidateNames { get { throw null; } set { } }
-        protected void OnItemOk(System.ComponentModel.CancelEventArgs e) { }
+        protected virtual void OnItemOk(System.ComponentModel.CancelEventArgs e) { }
         protected override bool RunDialog(System.IntPtr hwndOwner) { throw null; }
         public override void Reset() { }
         public override string ToString() { throw null; }
-
     }
     public abstract partial class FileDialog : Microsoft.Win32.CommonItemDialog
     {
-        protected FileDialog() { }
+        private protected FileDialog() { }
         public bool AddExtension { get { throw null; } set { } }
         public bool CheckFileExists { get { throw null; } set { } }
         public bool CheckPathExists { get { throw null; } set { } }
@@ -38,7 +36,9 @@ namespace Microsoft.Win32
         public event System.ComponentModel.CancelEventHandler FileOk { add { } remove { } }
         public string Filter { get { throw null; } set { } }
         public int FilterIndex { get { throw null; } set { } }
+        protected override void OnItemOk(System.ComponentModel.CancelEventArgs e) { }
         public override void Reset() { }
+        public bool RestoreDirectory { get { throw null; } set { } }
         public string SafeFileName { get { throw null; } }
         public string[] SafeFileNames { get { throw null; } }
         public override string ToString() { throw null; }
@@ -87,9 +87,11 @@ namespace Microsoft.Win32
         public string[] FolderNames { get { throw null; } }
         public event System.ComponentModel.CancelEventHandler FolderOk { add { } remove { } }
         public bool Multiselect { get { throw null; } set { } }
+        protected override void OnItemOk(System.ComponentModel.CancelEventArgs e) { }
         public override void Reset() { }
         public string SafeFolderName { get { throw null; } }
         public string[] SafeFolderNames { get { throw null; } }
+        public override string ToString() { throw null; }
     }
     public sealed partial class SaveFileDialog : Microsoft.Win32.FileDialog
     {

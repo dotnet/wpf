@@ -1607,11 +1607,6 @@
         <target state="translated">無法將資源轉換為物件。</target>
         <note />
       </trans-unit>
-      <trans-unit id="FileDialogBufferTooSmall">
-        <source>Too many files selected. Select fewer files and try again.</source>
-        <target state="translated">選取太多檔案。請少選一點檔案再試一次。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FileDialogCreatePrompt">
         <source>'{0}' does not exist.
 Do you want to create it?</source>
@@ -1624,11 +1619,6 @@ Do you want to create it?</source>
 Verify that the file name is correct.</source>
         <target state="translated">'{0}' 不存在。
 請確認檔案名稱是正確的。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileDialogInvalidFileName">
-        <source>'{0}' is not a valid file name.</source>
-        <target state="translated">'{0}' 不是有效的檔案名稱。</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogInvalidFilter">
@@ -1646,11 +1636,6 @@ Verify that the file name is correct.</source>
 Do you want to replace it?</source>
         <target state="translated">'{0}' 已存在。
 您想要取代它嗎?</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileDialogSubClassFailure">
-        <source>Cannot subclass a file dialog because sufficient memory is not available.</source>
-        <target state="translated">因為記憶體不足，無法將檔案對話方塊設定為子類別。</target>
         <note />
       </trans-unit>
       <trans-unit id="FileFormatException">

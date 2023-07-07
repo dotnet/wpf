@@ -98,6 +98,49 @@ namespace Microsoft.Win32
         //---------------------------------------------------
         #region Public Properties
 
+        //   FOS_DONTADDTORECENT
+        //   Do not add the item being opened or saved to the recent documents list (SHAddToRecentDocs).
+        //
+        /// <summary>
+        ///  Gets or sets a value indicating whether the dialog box will add the item
+        ///  being opened or saved to the recent documents list.
+        /// </summary>
+        public bool AddToRecent
+        {
+            get
+            {
+                return !GetOption(FOS.DONTADDTORECENT);
+            }
+            set
+            {
+
+                SetOption(FOS.DONTADDTORECENT, !value);
+            }
+        }
+
+        /// <summary>
+        ///  Gets or sets a Guid to associate with the dialog's persisted state.
+        /// </summary>
+        public Guid? ClientGuid { get; set; }
+
+        /// <summary>
+        ///  Gets or sets the initial directory displayed by the file dialog box
+        ///  if there is not a recently used directory value available.
+        /// </summary>
+        public string DefaultDirectory
+        {
+            get
+            {
+                // Avoid returning a null string - return String.Empty instead.
+                return _defaultDirectory.Value == null ? String.Empty : _defaultDirectory.Value;
+            }
+            set
+            {
+
+                _defaultDirectory.Value = value;
+            }
+        }
+
         //   The actual flag is FOS_NODEREFERENCELINKS (set = do not dereference, unset = deref) - 
         //   while we have true = dereference and false=do not dereference.  Because we expose
         //   the opposite of the Windows flag as a property to be clearer, we need to negate 
@@ -134,6 +177,43 @@ namespace Microsoft.Win32
             {
 
                 _initialDirectory.Value = value;
+            }
+        }
+
+        /// <summary>
+        ///  Gets or sets the initial directory displayed by the file dialog box.
+        /// </summary>
+        public string RootDirectory
+        {
+            get
+            {
+                // Avoid returning a null string - return String.Empty instead.
+                return _rootDirectory.Value == null ? String.Empty : _rootDirectory.Value;
+            }
+            set
+            {
+
+                _rootDirectory.Value = value;
+            }
+        }
+
+        //   FOS_FORCESHOWHIDDEN
+        //   Include hidden and system items.
+        //
+        /// <summary>
+        ///  Gets or sets a value indicating whether the dialog box will show
+        ///  Include hidden items regardless of user preferences.
+        /// </summary>
+        public bool ShowHiddenItems
+        {
+            get
+            {
+                return GetOption(FOS.FORCESHOWHIDDEN);
+            }
+            set
+            {
+
+                SetOption(FOS.FORCESHOWHIDDEN, value);
             }
         }
 
@@ -299,14 +379,40 @@ namespace Microsoft.Win32
 
         private protected virtual void PrepareDialog(IFileDialog dialog)
         {
+            if (ClientGuid is Guid guid)
+            {
+                dialog.SetClientGuid(ref guid);
+            }
+
+            if (!string.IsNullOrEmpty(DefaultDirectory))
+            {
+                IShellItem defaultDirectory = ShellUtil.GetShellItemForPath(DefaultDirectory);
+                if (defaultDirectory != null)
+                {
+                    dialog.SetDefaultFolder(defaultDirectory);
+                }
+            }
+
             if (!string.IsNullOrEmpty(InitialDirectory))
             {
                 IShellItem initialDirectory = ShellUtil.GetShellItemForPath(InitialDirectory);
                 if (initialDirectory != null)
                 {
                     // Setting both of these so the dialog doesn't display errors when a remembered folder is missing.
-                    dialog.SetDefaultFolder(initialDirectory);
+                    if (string.IsNullOrEmpty(DefaultDirectory))
+                    {
+                        dialog.SetDefaultFolder(initialDirectory);
+                    }
                     dialog.SetFolder(initialDirectory);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(RootDirectory))
+            {
+                IShellItem rootDirectory = ShellUtil.GetShellItemForPath(RootDirectory);
+                if (rootDirectory != null && dialog is IFileDialog2 dialog2)
+                {
+                    dialog2.SetNavigationRoot(rootDirectory);
                 }
             }
 
@@ -456,9 +562,13 @@ namespace Microsoft.Win32
             _itemNames = null;
             _title.Value = null;
             _initialDirectory.Value = null;
+            _defaultDirectory.Value = null;
+            _rootDirectory.Value = null;
 
             // Set this to an empty list so callers can simply add to it.  They can also replace it wholesale.
             CustomPlaces = new List<FileDialogCustomPlace>();
+            ClientGuid = null;
+
         }
 
         private bool HandleItemOk(IFileDialog dialog)
@@ -667,6 +777,8 @@ namespace Microsoft.Win32
         // that control the appearance of the file dialog box.
         private SecurityCriticalDataForSet<string> _title;                  // Title bar of the message box
         private SecurityCriticalDataForSet<string> _initialDirectory;       // Starting directory
+        private SecurityCriticalDataForSet<string> _defaultDirectory;       // Starting directory if no recent
+        private SecurityCriticalDataForSet<string> _rootDirectory;          // Topmost directory
 
         // We store the handle of the file dialog inside our class 
         // for a variety of purposes (like getting the title of the dialog

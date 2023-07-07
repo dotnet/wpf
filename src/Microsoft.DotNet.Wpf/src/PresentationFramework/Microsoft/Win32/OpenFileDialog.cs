@@ -155,6 +155,25 @@ namespace Microsoft.Win32
         //---------------------------------------------------
         #region Public Properties
 
+        //   FOS_FORCEPREVIEWPANEON
+        //   Indicates to the Open dialog box that the preview pane should always be displayed.
+        //
+        /// <summary>
+        /// Gets or sets an option flag indicating whether the
+        /// dialog box forces the preview pane on.
+        /// </summary>
+        public bool ForcePreviewPane
+        {
+            get
+            {
+                return GetOption(FOS.FORCEPREVIEWPANEON);
+            }
+            set
+            {
+                SetOption(FOS.FORCEPREVIEWPANEON, value);
+            }
+        }
+
         //   FOS_ALLOWMULTISELECT
         //   Enables the user to select multiple items in the open dialog. 
         // 
@@ -186,17 +205,7 @@ namespace Microsoft.Win32
         /// Gets or sets a value indicating whether the dialog 
         /// contains a read-only check box.  
         /// </summary>
-        public bool ShowReadOnly
-        {
-            get
-            {
-                return _showReadOnly;
-            }
-            set
-            {
-                _showReadOnly = false;
-            }
-        }
+        public bool ShowReadOnly { get; set; }
 
         #endregion Public Properties
 
@@ -288,9 +297,6 @@ namespace Microsoft.Win32
         //
         //---------------------------------------------------
         //#region Private Fields
-
-        private bool _showReadOnly = false;
-
         //#endregion Private Fields        
     }
 }

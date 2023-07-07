@@ -14,9 +14,14 @@ namespace Microsoft.Win32
     public abstract partial class CommonItemDialog : Microsoft.Win32.CommonDialog
     {
         private protected CommonItemDialog() { }
+        public bool AddToRecent { get { throw null; } set { } }
+        public System.Guid? ClientGuid { get; set; }
         public System.Collections.Generic.IList<Microsoft.Win32.FileDialogCustomPlace> CustomPlaces { get { throw null; } set { } }
+        public string DefaultDirectory { get { throw null; } set { } }
         public bool DereferenceLinks { get { throw null; } set { } }
         public string InitialDirectory { get { throw null; } set { } }
+        public string RootDirectory { get { throw null; } set { } }
+        public bool ShowHiddenItems { get; set; }
         public string Title { get { throw null; } set { } }
         public bool ValidateNames { get { throw null; } set { } }
         protected virtual void OnItemOk(System.ComponentModel.CancelEventArgs e) { }
@@ -73,6 +78,7 @@ namespace Microsoft.Win32
     public sealed partial class OpenFileDialog : Microsoft.Win32.FileDialog
     {
         public OpenFileDialog() { }
+        public bool ForcePreviewPane { get; set; }
         public bool Multiselect { get { throw null; } set { } }
         public System.IO.Stream OpenFile() { throw null; }
         public System.IO.Stream[] OpenFiles() { throw null; }
@@ -97,6 +103,7 @@ namespace Microsoft.Win32
     {
         public SaveFileDialog() { }
         public bool CreatePrompt { get { throw null; } set { } }
+        public bool CreateTestFile { get { throw null; } set { } }
         public bool OverwritePrompt { get { throw null; } set { } }
         public System.IO.Stream OpenFile() { throw null; }
         public override void Reset() { }

@@ -134,6 +134,24 @@ namespace Microsoft.Win32
         /// </Remarks>
         public bool CreatePrompt { get; set; }
 
+        /// <summary>
+        ///  Gets or sets a value indicating whether the dialog box will attempt to create
+        ///  a test file at the selected path (default is true). If this flag is not set,
+        ///  the calling application must handle errors, such as denial of access,
+        ///  discovered when the item is created.
+        /// </summary>
+        public bool CreateTestFile
+        {
+            get
+            {
+                return !GetOption(FOS.NOTESTFILECREATE);
+            }
+            set
+            {
+                SetOption(FOS.NOTESTFILECREATE, !value);
+            }
+        }
+
         //   Causes our code to generate a message box if the selected file already 
         //   exists. The user must confirm whether to overwrite the file.
         //  

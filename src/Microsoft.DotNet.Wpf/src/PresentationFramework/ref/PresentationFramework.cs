@@ -6308,7 +6308,7 @@ namespace System.Windows.Controls
         VerticalFirst = 5,
     }
     [System.Windows.TemplatePartAttribute(Name="PART_ContentHost", Type=typeof(System.Windows.FrameworkElement))]
-    public sealed partial class PasswordBox : System.Windows.Controls.Control
+    public partial class PasswordBox : System.Windows.Controls.Control
     {
         public static readonly System.Windows.DependencyProperty CaretBrushProperty;
         public static readonly System.Windows.DependencyProperty IsInactiveSelectionHighlightEnabledProperty;

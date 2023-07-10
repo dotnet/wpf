@@ -89,7 +89,7 @@ namespace Microsoft.Win32
         #region Public Properties
 
         /// <summary>
-        ///  Gets a string containing the filename component of the 
+        ///  Gets a string containing the folder name component of the 
         ///  folder selected in the dialog box.
         /// 
         ///  Example:  if FolderName = "c:\windows" ,
@@ -101,7 +101,7 @@ namespace Microsoft.Win32
             {
                 // Use the ItemName property to avoid directly accessing
                 // the _itemNames field, then call Path.GetFileName
-                // to do the actual work of stripping out the file name
+                // to do the actual work of stripping out the folder name
                 // from the path.
                 string safeFN = Path.GetFileName(CriticalItemName);
 
@@ -151,8 +151,8 @@ namespace Microsoft.Win32
 
         //   If multiple folders are selected, we only return the first folder name.
         /// <summary>
-        ///  Gets or sets a string containing the full path of the file or folder selected in 
-        ///  the file dialog box.
+        ///  Gets or sets a string containing the full path of the folder selected in 
+        ///  the folder dialog box.
         /// </summary>
         public string FolderName
         {
@@ -181,7 +181,7 @@ namespace Microsoft.Win32
         }
 
         /// <summary>
-        ///     Gets the file names of all selected files or folders in the dialog box.
+        ///     Gets the folder names of all selected folders in the dialog box.
         /// </summary>
         public string[] FolderNames
         {
@@ -220,7 +220,7 @@ namespace Microsoft.Win32
         #region Public Events
 
         /// <summary>
-        ///  Occurs when the user clicks on the Open or Save button on a file dialog
+        ///  Occurs when the user clicks on the Open button on a folder dialog
         ///  box.  
         /// </summary>
         public event CancelEventHandler FolderOk;
@@ -243,7 +243,7 @@ namespace Microsoft.Win32
         #region Protected Methods
 
         /// <summary>
-        /// Raises the System.Windows.FileDialog.FileOk event.
+        /// Raises the System.Windows.OpenFolderDialog.FolderOk event.
         /// </summary>
         protected override void OnItemOk(CancelEventArgs e)
         {
@@ -300,7 +300,6 @@ namespace Microsoft.Win32
         //  We only perform OpenFolderDialog() specific reset tasks here;
         //  it's the calling code's responsibility to ensure that the
         //  base is initialized first.
-        //
         private void Initialize()
         {
             // FOS_FILEMUSTEXIST

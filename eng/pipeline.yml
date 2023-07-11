@@ -184,6 +184,27 @@ jobs:
         #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
         condition: or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')))
 
+      - script: eng\common\ciunittest.cmd
+          -configuration $(_BuildConfig) 
+          -prepareMachine
+          $(_PublishArgs)
+          $(_SignArgs)
+          $(_OfficialBuildIdArgs)
+          $(_PlatformArgs)
+          $(_InternalRuntimeDownloadArgs)
+        displayName: Windows Build / Publish
+        condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), ne(variables['_Platform'], 'arm64'))
+
+      - task: PublishTestResults@2
+        displayName: Publish XUnit Test Results
+        inputs:
+          testResultsFormat: 'xUnit'
+          testResultsFiles: '*.xml' 
+          searchFolder: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)'
+          mergeTestResults: true
+        continueOnError: true
+        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))     
+
       - task: PowerShell@2
         displayName: Install .NET Core
         inputs:
@@ -284,5 +305,6 @@ jobs:
           testResultsFormat: 'XUnit'
           testResultsFiles: 'testResults.xml'
           searchFolder: '$(System.DefaultWorkingDirectory)\Results\'
-          testRunTitle: 'CTP results'
-          condition: eq(variables['System.TeamProject'], 'public')
+          testRunTitle: 'Test results'
+          mergeTestResults: true
+        condition: eq(variables['System.TeamProject'], 'public')

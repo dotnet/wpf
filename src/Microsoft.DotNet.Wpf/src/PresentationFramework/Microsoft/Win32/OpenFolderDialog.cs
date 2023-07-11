@@ -69,7 +69,7 @@ namespace Microsoft.Win32
         }
 
         /// <summary>
-        ///  Returns a string representation of the file dialog with key information
+        ///  Returns a string representation of the folder dialog with key information
         ///  for debugging purposes.
         /// </summary>
         //   We overload ToString() so that we can provide a useful representation of
@@ -209,7 +209,7 @@ namespace Microsoft.Win32
                 SetOption(FOS.ALLOWMULTISELECT, value);
             }
         }
-        
+
         #endregion Public Properties
 
         //---------------------------------------------------

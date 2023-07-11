@@ -1,12 +1,9 @@
 <Project>
-  <PropertyGroup>
-    <CodeAnalysisRuleSet Condition="'$(IsTestProject)'!='true' AND '$(EnableAnalyzers)'=='true'">$(MSBuildThisFileDirectory)CodeAnalysis\WpfCodeAnalysis.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-
   <ItemGroup Condition="'$(IsTestProject)'!='true' AND '$(EnableAnalyzers)'=='true'">
+    <EditorConfigFiles Include="$(MSBuildThisFileDirectory)CodeAnalysis\CodeAnalysis.src.globalconfig" />
     <!-- Managed Code Reference analyzers -->
     <PackageReference Include="Microsoft.DotNet.CodeAnalysis" Version="$(MicrosoftDotNetCodeAnalysisPackageVersion)" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="$(MicrosoftCodeAnalysisNetAnalyzersVersion)" PrivateAssets="all" />
     <PackageReference Include="System.Runtime.Analyzers" Version="1.1.0" />
     <PackageReference Include="System.Runtime.InteropServices.Analyzers" Version="1.1.0" />
   </ItemGroup>

@@ -9,6 +9,8 @@ WPF supports a broad set of application development features, including an appli
 
 WPF's rendering is vector-based, which enables applications to look great on high DPI monitors, as they can be infinitely scaled. WPF also includes a flexible hosting model, which makes it straightforward to host a video in a button, for example.
 
+Visual Studio's designer, as well as Visual Studio Blend, make it easy to build WPF applications, with drag-and-drop and/or direct editing of XAML markup.
+
 As of .NET 6.0, WPF supports ARM64. 
 
 See the [WPF Roadmap](roadmap.md) to learn about project priorities, status and ship dates.

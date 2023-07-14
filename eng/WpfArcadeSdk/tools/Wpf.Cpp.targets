@@ -93,7 +93,7 @@
   <Target Name="CreateNativeResourceFileWithVersionInformation"
           AfterTargets="CreateNativeVersionFile"
           BeforeTargets="ResourceCompile"
-          DependsOnTargets="_InitializeAssemblyVersion;InitializeSourceControlInformationFromSourceControlManager"
+          DependsOnTargets="_InitializeAssemblyVersion;InitializeSourceControlInformation"
           Outputs="$(NativeResourceFileWithVersionInformation)"
           Returns="@(ResourceCompile)"
           Condition="('$(ConfigurationType)' == 'DynamicLibrary' Or '$(ConfigurationType)' == 'Application') And '$(IsRedistProject)' != 'true'">

@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace ModernWpf.Markup
+namespace PresentationFramework.Win11.Markup
 {
     [TypeConverter(typeof(ThemeResouceExtensionConverter))]
     public class ThemeResourceExtension : DynamicResourceExtension

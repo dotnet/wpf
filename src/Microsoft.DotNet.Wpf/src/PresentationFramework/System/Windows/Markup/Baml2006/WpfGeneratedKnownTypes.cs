@@ -11532,6 +11532,7 @@ namespace System.Windows.Baml2006
             return bamlType;
         }
 
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         private WpfKnownType Create_BamlType_BackEase(bool isBamlType, bool useV3Rules)
         {
             var bamlType = new WpfKnownType(this, // SchemaContext

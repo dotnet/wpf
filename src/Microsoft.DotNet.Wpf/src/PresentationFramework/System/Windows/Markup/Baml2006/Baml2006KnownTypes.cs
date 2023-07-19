@@ -45,7 +45,7 @@ namespace System.Windows.Baml2006
             public const Int16 XamlPointCollectionSerializer = 748;
             public const Int16 XamlVector3DCollectionSerializer = 752;
 
-            public const Int16 MaxKnownType = 759;
+            public const Int16 MaxKnownType = 760;
             public const Int16 MaxKnownProperty = 268;
             public const Int16 MinKnownProperty = -268;
 
@@ -853,6 +853,7 @@ namespace System.Windows.Baml2006
                     case 757: t = () => typeof(XmlLanguageConverter); break;
                     case 758: t = () => typeof(XmlNamespaceMapping); break;
                     case 759: t = () => typeof(ZoomPercentageConverter); break;
+                    case 760: t = () => typeof(System.Windows.Media.Animation.BackEase); break;
                     default: t = () => null; break;
                 }
 

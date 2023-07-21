@@ -195,7 +195,7 @@ namespace MS.Internal.IO.Packaging
             //to verify the uri correctly.
             //We perform the comparison in a case-insensitive manner, as at this point,
             //only escaped hex digits (A-F) might vary in casing.
-            if (String.CompareOrdinal(partUri.OriginalString.ToUpperInvariant(), wellFormedPartName.ToUpperInvariant()) != 0)
+            if (!string.Equals(partUri.OriginalString, wellFormedPartName, StringComparison.OrdinalIgnoreCase))
                 return new ArgumentException(SR.InvalidPartUri);
 
             //if we get here, the partUri is valid and so we return null, as there is no exception.

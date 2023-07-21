@@ -228,7 +228,7 @@ namespace System.Windows.Markup
                 // get the Constructor info
                 CustomAttributeData data = allAttributes[i];
                 ConstructorInfo cinfo = data.Constructor;
-                if(0 == String.CompareOrdinal(cinfo.ReflectedType.FullName, fullClrName))
+                if(string.Equals(cinfo.ReflectedType.FullName, fullClrName, StringComparison.Ordinal))
                 {
                     foundAttributes.Add(allAttributes[i]);
                 }
@@ -362,7 +362,7 @@ namespace System.Windows.Markup
                         throw new ArgumentException(SR.Format(SR.ParserAttributeArgsLow, "XmlnsDefinitionAttribute"));
                     }
 
-                    if (0 == String.CompareOrdinal(xmlnsRequested, xmlns))
+                    if (string.Equals(xmlnsRequested, xmlns, StringComparison.Ordinal))
                     {
                         pairList.Add(new ClrNamespaceAssemblyPair(clrns, assemblyName));
                     }

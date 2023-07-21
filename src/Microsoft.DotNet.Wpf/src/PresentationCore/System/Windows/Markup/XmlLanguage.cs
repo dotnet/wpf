@@ -189,7 +189,7 @@ namespace System.Windows.Markup
                 // see http://www.w3.org/International/questions/qa-no-language
                 //
                 // Just treat it the same as xml:lang=""
-                if(String.CompareOrdinal(lowerCaseTag, "und") == 0)
+                if(string.Equals(lowerCaseTag, "und", StringComparison.Ordinal))
                 {
                     lowerCaseTag = String.Empty;
                 }            
@@ -229,7 +229,7 @@ namespace System.Windows.Markup
         {
             if (_specificCulture == null)
             {
-                if (_lowerCaseTag.Length == 0 || String.CompareOrdinal(_lowerCaseTag, "und") == 0)
+                if (_lowerCaseTag.Length == 0 || string.Equals(_lowerCaseTag, "und", StringComparison.Ordinal))
                 {
                     _specificCulture = GetEquivalentCulture();
                 }

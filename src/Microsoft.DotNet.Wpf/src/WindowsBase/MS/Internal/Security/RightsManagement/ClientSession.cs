@@ -663,7 +663,7 @@ namespace MS.Internal.Security.RightsManagement
 
                 foreach (string oldElement in oldList)
                 {
-                    if (String.CompareOrdinal(newElement, oldElement) == 0)
+                    if (string.Equals(newElement, oldElement, StringComparison.Ordinal))
                     {
                         matchFound = true;
                         break;
@@ -1853,7 +1853,7 @@ namespace MS.Internal.Security.RightsManagement
                                                 distributionPointQueryHandle,
                                                 NativeConstants.QUERY_OBJECTTYPE,
                                                 0);
-                        if (String.CompareOrdinal(addressType, distributionPointType) == 0)
+                        if (string.Equals(addressType, distributionPointType, StringComparison.Ordinal))
                         {
                             nameAttributeValue = GetUnboundLicenseStringAttribute(
                                                 distributionPointQueryHandle,
@@ -1936,7 +1936,7 @@ namespace MS.Internal.Security.RightsManagement
 
             for (int i = 0; i < _rightEnums.Length; i++)
             {
-                if (String.CompareOrdinal(_rightNames[i], rightName) == 0)
+                if (string.Equals(_rightNames[i], rightName, StringComparison.Ordinal))
                 {
                     return _rightEnums[i];
                 }

@@ -231,7 +231,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             //    Parameter 'v' to this public method must be validated:  A null-dereference can occur here. 
             //This is a false positive as the checks above can gurantee no null dereference will occur  
 #pragma warning disable 6506
-            if (String.CompareOrdinal(_featureIdentifier.ToUpperInvariant(), v.FeatureIdentifier.ToUpperInvariant()) != 0
+            if (!string.Equals(_featureIdentifier, v.FeatureIdentifier, StringComparison.OrdinalIgnoreCase)
                 || _reader != v.ReaderVersion
                 || _writer != v.WriterVersion
                 || _updater != v.UpdaterVersion)

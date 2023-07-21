@@ -931,7 +931,7 @@ namespace System.IO.Packaging
 
             public bool Match(String id)
             {
-                return (String.CompareOrdinal(_id, id) == 0);
+                return (string.Equals(_id, id, StringComparison.Ordinal));
             }
 
             private string _id;
@@ -993,7 +993,7 @@ namespace System.IO.Packaging
                 foreach (DataObject obj in signatureObjects)
                 {
                     // ensure they don't duplicate the reserved one
-                    if (String.CompareOrdinal(obj.Id, XTable.Get(XTable.ID.OpcAttrValue)) == 0)
+                    if (string.Equals(obj.Id, XTable.Get(XTable.ID.OpcAttrValue), StringComparison.Ordinal))
                         throw new ArgumentException(SR.SignaturePackageObjectTagMustBeUnique, "signatureObjects");
 
                     // check for duplicates

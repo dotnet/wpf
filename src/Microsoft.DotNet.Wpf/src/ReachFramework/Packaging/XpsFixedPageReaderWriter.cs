@@ -1917,7 +1917,7 @@ namespace System.Windows.Xps.Packaging
             String fileName = Path.GetFileNameWithoutExtension(path);
 
             ContentType contentType = null;
-            if (String.CompareOrdinal(extension, XpsS0Markup.ObfuscatedFontExt.ToLower(CultureInfo.InvariantCulture)) == 0)
+            if (string.Equals(extension, XpsS0Markup.ObfuscatedFontExt, StringComparison.OrdinalIgnoreCase))
             {
                 // Verify that the filename is a valid GUID string
                 // Until Guid has a TryParse method we will have to depend on an exception being thrown

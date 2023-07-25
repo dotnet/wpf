@@ -408,9 +408,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 // Ensure that the feature name is as expected.
                 //
                 // NOTE: We preserve case, but do case-insensitive comparison.
-                if (String.CompareOrdinal(
-                                _fileVersion.FeatureIdentifier.ToUpper(CultureInfo.InvariantCulture),
-                                _codeVersion.FeatureIdentifier.ToUpper(CultureInfo.InvariantCulture)) != 0)
+                if (!string.Equals(_fileVersion.FeatureIdentifier, _codeVersion.FeatureIdentifier, StringComparison.OrdinalIgnoreCase))
                 {
                     throw new FileFormatException(
                                     SR.Format(

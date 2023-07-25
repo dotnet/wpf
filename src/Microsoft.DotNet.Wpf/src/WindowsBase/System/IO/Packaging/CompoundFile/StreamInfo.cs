@@ -831,19 +831,15 @@ namespace System.IO.Packaging
                     string id = dataTransform.TransformIdentifier as string;
                     if (id != null)
                     {
-                        id = id.ToUpperInvariant();
-
-                        if (String.CompareOrdinal(id,
-                            RightsManagementEncryptionTransform.ClassTransformIdentifier.ToUpperInvariant()) == 0
+                        if (string.Equals(id, RightsManagementEncryptionTransform.ClassTransformIdentifier, StringComparison.OrdinalIgnoreCase)
                             &&
                             (dataTransform as RightsManagementEncryptionTransform) != null)
                         {
                             _encryptionOption = EncryptionOption.RightsManagement;
                         }
-                        else if (String.CompareOrdinal(id,
-                            CompressionTransform.ClassTransformIdentifier.ToUpperInvariant()) == 0
-                            &&
-                            (dataTransform as CompressionTransform) != null)
+                        else if (string.Equals(id, CompressionTransform.ClassTransformIdentifier, StringComparison.OrdinalIgnoreCase)
+                                 &&
+                                 (dataTransform as CompressionTransform) != null)
                         {
                             // We don't persist the compression level used during compression process
                             // When we access the stream, all we can determine is whether it is compressed or not

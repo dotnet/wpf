@@ -513,7 +513,7 @@ namespace MS.Internal.IO.Packaging
                     (segments[segments.Length - 1].Length > _relationshipPartExtensionName.Length))
                 {
                     // look for "_RELS" segment which must be second last segment
-                    result = (String.CompareOrdinal(segments[segments.Length - 2], _relationshipPartUpperCaseSegmentName) == 0);
+                    result = string.Equals(segments[segments.Length - 2], _relationshipPartUpperCaseSegmentName, StringComparison.Ordinal);
                 }
 
                 // In addition we need to make sure that the relationship is not created by taking another relationship

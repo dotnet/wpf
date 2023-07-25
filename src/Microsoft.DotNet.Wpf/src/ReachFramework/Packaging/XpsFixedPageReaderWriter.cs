@@ -1913,7 +1913,7 @@ namespace System.Windows.Xps.Packaging
         {
             //Extract file extension
             String path = fontUri.OriginalString;
-            String extension = Path.GetExtension(path).ToLower(CultureInfo.InvariantCulture);
+            String extension = Path.GetExtension(path);
             String fileName = Path.GetFileNameWithoutExtension(path);
 
             ContentType contentType = null;

@@ -937,8 +937,7 @@ namespace System.IO.Packaging
             {
                 string id = dataTransform.TransformIdentifier as string;
                 if (id != null &&
-                        String.CompareOrdinal(id.ToUpperInvariant(),
-                            RightsManagementEncryptionTransform.ClassTransformIdentifier.ToUpperInvariant()) == 0)
+                    string.Equals(id, RightsManagementEncryptionTransform.ClassTransformIdentifier, StringComparison.OrdinalIgnoreCase))
                 {
                     // Do not allow more than one RM Transform
                     if (rmet != null)

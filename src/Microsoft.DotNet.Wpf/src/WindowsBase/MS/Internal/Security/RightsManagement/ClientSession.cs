@@ -1331,9 +1331,7 @@ namespace MS.Internal.Security.RightsManagement
                         0);
 
                     // We recognise authentication type Windows everything else is assumed to be Passport 
-                    if (String.CompareOrdinal(
-                        AuthenticationType.Windows.ToString().ToUpper(CultureInfo.InvariantCulture),
-                        authenticationType.ToUpper(CultureInfo.InvariantCulture)) == 0)
+                    if (string.Equals(AuthenticationType.Windows.ToString(), authenticationType, StringComparison.OrdinalIgnoreCase))
                     {
                         return new ContentUser(name, AuthenticationType.Windows);
                     }

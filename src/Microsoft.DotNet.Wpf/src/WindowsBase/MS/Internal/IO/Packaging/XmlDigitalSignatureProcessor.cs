@@ -150,9 +150,7 @@ namespace MS.Internal.IO.Packaging
                             // Compare ordinal case-sensitive which is more strict than normal ContentType
                             // comparision because this is manadated by the OPC specification.
                             PackagePart part = _manager.Package.GetPart(partEntry.Uri);
-                            if (String.CompareOrdinal(
-                                partEntry.ContentType.OriginalString,
-                                part.ValidatedContentType().OriginalString) != 0)
+                            if (!string.Equals(partEntry.ContentType.OriginalString, part.ValidatedContentType().OriginalString, StringComparison.Ordinal))
                             {
                                 result = false;     // content type mismatch
                                 break;

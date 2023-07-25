@@ -441,7 +441,7 @@ namespace MS.Internal.IO.Packaging
                 {
                     //If the Target attribute has a non-empty string then
                     //it must match the <Signature> tag Id attribute value
-                    if (signatureId != null && String.CompareOrdinal(idTargetValue, "#" + signatureId) == 0)
+                    if (signatureId != null && string.Equals(idTargetValue, "#" + signatureId, StringComparison.Ordinal))
                         return true;
                     else
                         return false;

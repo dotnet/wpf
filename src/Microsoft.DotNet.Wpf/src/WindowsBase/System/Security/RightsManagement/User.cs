@@ -135,7 +135,7 @@ namespace System.Security.RightsManagement
 
             ContentUser userObj = (ContentUser)obj;
 
-            return (string.Equals(_name.ToUpperInvariant(), userObj._name.ToUpperInvariant(), StringComparison.Ordinal))
+            return (string.Equals(_name, userObj._name, StringComparison.OrdinalIgnoreCase))
                         &&
                             _authenticationType.Equals(userObj._authenticationType);
         }
@@ -228,7 +228,7 @@ namespace System.Security.RightsManagement
             }
             else
             {
-                return (string.Equals(_name.ToUpperInvariant(), userObj._name.ToUpperInvariant(), StringComparison.Ordinal))
+                return (string.Equals(_name, userObj._name, StringComparison.OrdinalIgnoreCase))
                             &&
                                 _authenticationType.Equals(userObj._authenticationType);
             }

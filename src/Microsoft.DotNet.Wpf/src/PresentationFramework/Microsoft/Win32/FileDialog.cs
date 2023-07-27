@@ -29,7 +29,7 @@ namespace Microsoft.Win32
     /// <summary>
     ///    Provides a common base class for wrappers around both the
     ///    File Open and File Save common dialog boxes.  Derives from
-    ///    CommonDialog.
+    ///    CommonItemDialog.
     ///
     ///    This class is not intended to be derived from except by
     ///    the OpenFileDialog and SaveFileDialog classes.
@@ -183,7 +183,7 @@ namespace Microsoft.Win32
                 }
                 else
                 {
-                    // UNDONE : ChrisAn:  This broke the save file dialog.
+                    // UNDONE : This broke the save file dialog.
                     //string temp = Path.GetFullPath(value); // ensure filename is valid...
                     MutableItemNames = new string[] { value };
                 }
@@ -201,7 +201,6 @@ namespace Microsoft.Win32
             }
         }
 
-        //
         //   The behavior governed by this property depends
         //   on whether CheckFileExists is set and whether the
         //   filter contains a valid extension to use.  For
@@ -213,8 +212,6 @@ namespace Microsoft.Win32
         /// </summary>
         public bool AddExtension { get; set; }
 
-
-        //
         //   FOS_FILEMUSTEXIST is only used for Open dialog
         //   boxes, according to MSDN.  It implies 
         //   FOS_PATHMUSTEXIST and "cannot be used" with a

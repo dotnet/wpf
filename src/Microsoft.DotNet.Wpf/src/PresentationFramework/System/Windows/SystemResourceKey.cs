@@ -364,6 +364,7 @@ namespace System.Windows
             short memberId = 0;
             string srkField = null;
             bool isKey = false;
+            bool found = true;
 
             if (memberName.EndsWith("Key", false, TypeConverterHelper.InvariantEnglishUS))
             {
@@ -382,9 +383,14 @@ namespace System.Windows
             {
                 srkField = memberName;
             }
+#if PBTCOMPILER
+            
+            found &= targetType.Assembly == XamlTypeMapper.AssemblyPF &&
+                targetType.FullName == "System.Windows.SystemParameters";
+                
+#endif
 
-            if (targetType.Assembly == XamlTypeMapper.AssemblyPF &&
-                targetType.FullName == "System.Windows.SystemParameters" &&
+            if (found &&
                 Enum.TryParse(srkField, out SystemResourceKeyID srkId))
             {
                 bool isExtended = ((short)srkId > SystemResourceKeyIDExtendedStart &&

@@ -481,7 +481,7 @@ namespace MS.Internal.Xaml.Runtime
             }
         }
 
-        public override object CallProvideValue(XAML3.MarkupExtension me, IServiceProvider serviceProvider)
+        public override object CallProvideValue(XAML3.IMarkupExtension me, IServiceProvider serviceProvider)
         {
             try
             {

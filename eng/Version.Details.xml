@@ -176,5 +176,13 @@
       <Uri>https://github.com/dotnet/arcade</Uri>
       <Sha>bebd2de1988036b47ecefc7e72b66ce2f403e43d</Sha>
     </Dependency>
+    <Dependency Name="Microsoft.SourceLink.AzureRepos.Git" Version="8.0.0-beta.23409.2">
+      <Uri>https://github.com/dotnet/sourcelink</Uri>
+      <Sha>df0a52402aaf54eae5b1c0f848c8d3e7f788116f</Sha>
+    </Dependency>
+    <Dependency Name="Microsoft.SourceLink.GitHub" Version="8.0.0-beta.23409.2">
+      <Uri>https://github.com/dotnet/sourcelink</Uri>
+      <Sha>df0a52402aaf54eae5b1c0f848c8d3e7f788116f</Sha>
+    </Dependency>
   </ToolsetDependencies>
 </Dependencies>

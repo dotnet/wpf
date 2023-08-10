@@ -1,6 +1,7 @@
 <Project>
   <!-- Import Signing.targets before Microsoft.DotNet.Arcade.Sdk -->
   <Import Project="$(WpfArcadeSdkToolsDir)Signing.targets" />
+  <Import Project="$(WpfArcadeSdkToolsDir)SourceLink.targets" Condition="'$(MSBuildProjectExtension)'=='.vcxproj'" />
 
   <Import Project="Sdk.targets" Sdk="Microsoft.DotNet.Arcade.Sdk" />
   <Import Project="$(WpfArcadeSdkToolsDir)ApiCompat.targets"/>

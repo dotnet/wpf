@@ -156,25 +156,33 @@
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>
-    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="8.0.0-beta.23361.1">
+    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="8.0.0-beta.23409.5">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>2d2482f9b6ccaaac02ef39adc06b3e30b29a5c13</Sha>
+      <Sha>bebd2de1988036b47ecefc7e72b66ce2f403e43d</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="8.0.0-beta.23361.1">
+    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="8.0.0-beta.23409.5">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>2d2482f9b6ccaaac02ef39adc06b3e30b29a5c13</Sha>
+      <Sha>bebd2de1988036b47ecefc7e72b66ce2f403e43d</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="8.0.0-beta.23361.1">
+    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="8.0.0-beta.23409.5">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>2d2482f9b6ccaaac02ef39adc06b3e30b29a5c13</Sha>
+      <Sha>bebd2de1988036b47ecefc7e72b66ce2f403e43d</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.ApiCompat" Version="8.0.0-beta.23361.1">
+    <Dependency Name="Microsoft.DotNet.ApiCompat" Version="8.0.0-beta.23409.5">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>2d2482f9b6ccaaac02ef39adc06b3e30b29a5c13</Sha>
+      <Sha>bebd2de1988036b47ecefc7e72b66ce2f403e43d</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.GenAPI" Version="8.0.0-beta.23361.1">
+    <Dependency Name="Microsoft.DotNet.GenAPI" Version="8.0.0-beta.23409.5">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>2d2482f9b6ccaaac02ef39adc06b3e30b29a5c13</Sha>
+      <Sha>bebd2de1988036b47ecefc7e72b66ce2f403e43d</Sha>
+    </Dependency>
+    <Dependency Name="Microsoft.SourceLink.AzureRepos.Git" Version="8.0.0-beta.23409.2">
+      <Uri>https://github.com/dotnet/sourcelink</Uri>
+      <Sha>df0a52402aaf54eae5b1c0f848c8d3e7f788116f</Sha>
+    </Dependency>
+    <Dependency Name="Microsoft.SourceLink.GitHub" Version="8.0.0-beta.23409.2">
+      <Uri>https://github.com/dotnet/sourcelink</Uri>
+      <Sha>df0a52402aaf54eae5b1c0f848c8d3e7f788116f</Sha>
     </Dependency>
   </ToolsetDependencies>
 </Dependencies>

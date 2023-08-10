@@ -1086,7 +1086,8 @@ namespace System.Windows.Controls
 
                 if (offsetTransform != null)
                     transformations.Children.Add(offsetTransform);
-                transformations.Children.Add(transform);
+                if (transform != null)
+                    transformations.Children.Add(transform);                
                 return transformations;
             }
 

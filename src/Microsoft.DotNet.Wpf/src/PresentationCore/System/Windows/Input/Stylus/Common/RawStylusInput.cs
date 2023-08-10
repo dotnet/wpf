@@ -88,7 +88,10 @@ namespace System.Windows.Input.StylusPlugIns
                     group.Children.Add(new MatrixTransform(_report.InputSource.CompositionTarget.TransformFromDevice));
                 }
                 group.Children.Add(_tabletToElementTransform);
-                group.Children.Add(transform);
+                if(transform != null)
+                {
+                    group.Children.Add(transform);
+                }
                 return new StylusPointCollection(_report.StylusPointDescription, _report.GetRawPacketData(), group, Matrix.Identity);
             }
             else

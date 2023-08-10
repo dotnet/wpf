@@ -68,7 +68,7 @@ namespace Microsoft.Win32
 
         /// <summary>
         ///  Resets all properties to their default values.
-        ///  Classes derived from FileDialog are expected to 
+        ///  Classes derived from CommonItemDialog are expected to 
         ///  call Base.Reset() at the beginning of their
         ///  implementation of Reset() if they choose to
         ///  override this function.
@@ -124,7 +124,7 @@ namespace Microsoft.Win32
         public Guid? ClientGuid { get; set; }
 
         /// <summary>
-        ///  Gets or sets the initial directory displayed by the file dialog box
+        ///  Gets or sets the directory displayed by the file dialog box
         ///  if there is not a recently used directory value available.
         /// </summary>
         public string DefaultDirectory
@@ -181,7 +181,9 @@ namespace Microsoft.Win32
         }
 
         /// <summary>
-        ///  Gets or sets the initial directory displayed by the file dialog box.
+        ///  Gets or sets the directory displayed as the navigation root for the dialog.
+        ///  Items in the navigation pane are replaced with the specified item, to guide the user
+        ///  from navigating outside of the namespace.
         /// </summary>
         public string RootDirectory
         {
@@ -202,7 +204,7 @@ namespace Microsoft.Win32
         //
         /// <summary>
         ///  Gets or sets a value indicating whether the dialog box will show
-        ///  Include hidden items regardless of user preferences.
+        ///  hidden and system items regardless of user preferences.
         /// </summary>
         public bool ShowHiddenItems
         {
@@ -275,12 +277,11 @@ namespace Microsoft.Win32
 
         //  Because this class, CommonItemDialog, is the parent class for OpenFileDialog
         //  SaveFileDialog and OpenFolderDialog, this function will perform the common setup tasks
-        //  shared between the dialogs, and will then call RunFileDialog, which is
-        //  overridden in the derived classes to show the correct dialog.
+        //  shared between the dialogs.
         //
         /// <summary>
-        /// Performs initialization work in preparation for calling RunFileDialog
-        /// to show a file open or save dialog box.
+        /// Performs initialization work in preparation
+        /// to show a file open, file save or folder open dialog box.
         /// </summary>
         protected override bool RunDialog(IntPtr hwndOwner)
         {
@@ -467,8 +468,8 @@ namespace Microsoft.Win32
 
         //   If multiple files are selected, we only return the first filename.
         /// <summary>
-        ///  Gets a string containing the full path of the file selected in 
-        ///  the file dialog box.
+        ///  Gets a string containing the full path of the file or folder selected in 
+        ///  the dialog box.
         /// </summary>
         private protected string CriticalItemName
         {

@@ -7,7 +7,7 @@
 // Description:
 //              OpenFileDialog is a sealed class derived from FileDialog that
 //              implements File Open dialog-specific functions.  It contains
-//              additional properties relevant only to save dialogs.
+//              additional properties relevant only to open dialogs.
 //
 
 

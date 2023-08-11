@@ -76,7 +76,10 @@ namespace MS.Internal.Controls
                 return transform;
 
             GeneralTransformGroup group = new GeneralTransformGroup();
-            group.Children.Add(transform);
+            if(transform != null)
+            {
+                group.Children.Add(transform);
+            }
 
             GeneralTransform t = this.TransformToDescendant(ReferenceElement);
             if (t != null)

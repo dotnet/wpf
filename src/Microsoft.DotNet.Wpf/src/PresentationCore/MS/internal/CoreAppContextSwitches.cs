@@ -380,6 +380,21 @@ namespace MS.Internal
 
         #endregion
 
+        #region EnableHardwareAccelerationInRdp
+
+        internal const string EnableHardwareAccelerationInRdpSwitchName = "Switch.System.Windows.Media.EnableHardwareAccelerationInRdp";
+        private static int _enableHardwareAccelerationInRdp;
+        public static bool EnableHardwareAccelerationInRdp
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(EnableHardwareAccelerationInRdpSwitchName, ref _enableHardwareAccelerationInRdp);
+            }
+        }
+
+        #endregion
+
     }
 #pragma warning restore 436
 }

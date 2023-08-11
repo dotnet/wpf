@@ -211,7 +211,7 @@ namespace MS.Win32.PresentationCore
             internal unsafe static extern bool RenderOptions_IsSoftwareRenderingForcedForProcess();
 
             [DllImport(DllImport.MilCore, EntryPoint = "RenderOptions_EnableHardwareAccelerationInRdp")]
-            internal unsafe static extern bool RenderOptions_EnableHardwareAccelerationInRdp(bool value);                 
+            internal unsafe static extern void RenderOptions_EnableHardwareAccelerationInRdp(bool value);                 
 
             [DllImport(DllImport.MilCore, EntryPoint = "MilResource_CreateCWICWrapperBitmap")]
             internal unsafe static extern int /* HRESULT */ CreateCWICWrapperBitmap(

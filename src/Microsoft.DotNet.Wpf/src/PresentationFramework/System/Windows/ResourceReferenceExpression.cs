@@ -51,14 +51,8 @@ namespace System.Windows
         /// <returns>Computed value. Unset if unavailable.</returns>
         internal override object GetValue(DependencyObject d, DependencyProperty dp)
         {
-            if (d == null)
-            {
-                throw new ArgumentNullException("d");
-            }
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(d);
+            ArgumentNullException.ThrowIfNull(dp);
 
             // If the cached value is valid then return it
             if (ReadInternalState(InternalState.HasCachedResourceValue) == true)

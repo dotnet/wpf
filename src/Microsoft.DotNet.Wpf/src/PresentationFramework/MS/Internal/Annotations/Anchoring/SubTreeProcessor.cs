@@ -49,8 +49,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">manager is null</exception>
         protected SubTreeProcessor(LocatorManager manager)
         {
-            if (manager == null)
-                throw new ArgumentNullException(nameof(manager));
+            ArgumentNullException.ThrowIfNull(manager);
 
             _manager = manager;
         }
@@ -95,8 +94,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">node is null</exception>
         public virtual IList<IAttachedAnnotation> PostProcessNode(DependencyObject node, bool childrenCalledProcessAnnotations, out bool calledProcessAnnotations)
         {
-            if (node == null)
-                throw new ArgumentNullException(nameof(node));
+            ArgumentNullException.ThrowIfNull(node);
 
             calledProcessAnnotations = false;
 

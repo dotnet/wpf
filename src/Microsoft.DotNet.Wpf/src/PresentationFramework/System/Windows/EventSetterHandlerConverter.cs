@@ -51,14 +51,8 @@ namespace System.Windows.Markup
                                            CultureInfo cultureInfo,
                                            object source)
         {
-            if (typeDescriptorContext == null)
-            {
-                throw new ArgumentNullException("typeDescriptorContext");
-            }
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
+            ArgumentNullException.ThrowIfNull(typeDescriptorContext);
+            ArgumentNullException.ThrowIfNull(source);
             if (s_ServiceProviderContextType == null)
             {
                 // get typeof(MS.Internal.Xaml.ServiceProviderContext) via reflection

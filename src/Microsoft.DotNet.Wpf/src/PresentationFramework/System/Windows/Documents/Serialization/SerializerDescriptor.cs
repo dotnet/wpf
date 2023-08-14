@@ -66,10 +66,7 @@ namespace System.Windows.Documents.Serialization
             )
         {
 
-            if (factoryInstance == null)
-            {
-                throw new ArgumentNullException("factoryInstance");
-            }
+            ArgumentNullException.ThrowIfNull(factoryInstance);
             if (factoryInstance.DisplayName == null)
             {
                 throw new ArgumentException(SR.SerializerProviderDisplayNameNull);

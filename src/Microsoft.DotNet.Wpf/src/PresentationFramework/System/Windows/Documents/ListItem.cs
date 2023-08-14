@@ -48,10 +48,7 @@ namespace System.Windows.Documents
         public ListItem(Paragraph paragraph)
             : base()
         {
-            if (paragraph == null)
-            {
-                throw new ArgumentNullException("paragraph");
-            }
+            ArgumentNullException.ThrowIfNull(paragraph);
 
             this.Blocks.Add(paragraph);
         }

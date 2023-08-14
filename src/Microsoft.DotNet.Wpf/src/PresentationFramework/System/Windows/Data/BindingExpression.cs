@@ -218,8 +218,7 @@ namespace System.Windows.Data
         /// <param name="args">Changed event args for the property that was invalidated</param>
         internal override void OnPropertyInvalidation(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
-            if (d == null)
-                throw new ArgumentNullException("d");
+            ArgumentNullException.ThrowIfNull(d);
 
             DependencyProperty dp = args.Property;
             if (dp == null)

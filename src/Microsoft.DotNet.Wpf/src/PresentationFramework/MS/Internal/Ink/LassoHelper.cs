@@ -69,8 +69,7 @@ namespace MS.Internal.Ink
         /// <summary>TBS</summary>
         public Point[] AddPoints(List<Point> points)
         {
-            if (null == points)
-                throw new ArgumentNullException("points");
+            ArgumentNullException.ThrowIfNull(points);
 
             // Lazy initialization.
             EnsureReady();

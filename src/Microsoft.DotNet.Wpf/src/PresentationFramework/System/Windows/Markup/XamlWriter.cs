@@ -50,12 +50,9 @@ namespace System.Windows.Markup
         ///     This API requires unmanaged code permission 
         /// </remarks>
         public static string Save(object obj)
-        {            
+        {
             // Validate input arguments
-            if (obj == null)
-            {
-                throw new ArgumentNullException(nameof(obj));
-            }
+            ArgumentNullException.ThrowIfNull(obj);
 
             // Create TextWriter
             StringBuilder sb = new StringBuilder();
@@ -88,16 +85,10 @@ namespace System.Windows.Markup
         ///     This API requires unmanaged code permission 
         /// </remarks>
         public static void Save(object obj, TextWriter writer)
-        {            
+        {
             // Validate input arguments
-            if (obj == null)
-            {
-                throw new ArgumentNullException(nameof(obj));
-            }
-            if (writer == null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
+            ArgumentNullException.ThrowIfNull(obj);
+            ArgumentNullException.ThrowIfNull(writer);
 
             // Create XmlTextWriter
             XmlTextWriter xmlWriter = new XmlTextWriter(writer);
@@ -119,16 +110,10 @@ namespace System.Windows.Markup
         ///     This API requires unmanaged code permission 
         /// </remarks>
         public static void Save(object obj, Stream stream)
-        {            
+        {
             // Validate input arguments
-            if (obj == null)
-            {
-                throw new ArgumentNullException(nameof(obj));
-            }
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
+            ArgumentNullException.ThrowIfNull(obj);
+            ArgumentNullException.ThrowIfNull(stream);
 
             // Create XmlTextWriter
             XmlTextWriter xmlWriter = new XmlTextWriter(stream, null);
@@ -152,16 +137,10 @@ namespace System.Windows.Markup
         ///     This API requires unmanaged code permission 
         /// </remarks>
         public static void Save(object obj, XmlWriter xmlWriter)
-        {            
+        {
             // Validate input arguments
-            if (obj == null)
-            {
-                throw new ArgumentNullException(nameof(obj));
-            }
-            if (xmlWriter == null)
-            {
-                throw new ArgumentNullException(nameof(xmlWriter));
-            }
+            ArgumentNullException.ThrowIfNull(obj);
+            ArgumentNullException.ThrowIfNull(xmlWriter);
 
             try
             {
@@ -188,16 +167,10 @@ namespace System.Windows.Markup
         ///     This API requires unmanaged code permission 
         /// </remarks>
         public static void Save(object obj, XamlDesignerSerializationManager manager)
-        {            
+        {
             // Validate input arguments
-            if (obj == null)
-            {
-                throw new ArgumentNullException(nameof(obj));
-            }
-            if (manager == null)
-            {
-                throw new ArgumentNullException(nameof(manager));
-            }
+            ArgumentNullException.ThrowIfNull(obj);
+            ArgumentNullException.ThrowIfNull(manager);
 
             MarkupWriter.SaveAsXml(manager.XmlWriter, obj, manager);
         }

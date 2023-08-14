@@ -182,10 +182,7 @@ namespace System.Windows.Documents
         {
 //             VerifyAccess();
 
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
 
             FixedPage fp = value as FixedPage;
@@ -285,10 +282,7 @@ namespace System.Windows.Documents
             }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (_child != null)
                 {
@@ -364,10 +358,7 @@ namespace System.Windows.Documents
         internal bool IsOwnerOf(FixedPage pageVisual)
         {
 //             VerifyAccess();
-            if (pageVisual == null)
-            {
-                throw new ArgumentNullException("pageVisual");
-            }
+            ArgumentNullException.ThrowIfNull(pageVisual);
 
             if (_child == pageVisual)
             {

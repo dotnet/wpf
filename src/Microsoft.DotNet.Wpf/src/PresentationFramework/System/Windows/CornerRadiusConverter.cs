@@ -132,15 +132,9 @@ namespace System.Windows
         /// <param name="destinationType">The type to which to convert the CornerRadius instance. </param>
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value, Type destinationType)
         {
-            if (null == value)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
-            if (null == destinationType)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             if (!(value is CornerRadius))
             {

@@ -50,10 +50,7 @@ namespace MS.Internal.Ink
         internal InkCanvasSelection(InkCanvas inkCanvas)
         {
             //validate
-            if (inkCanvas == null)
-            {
-                throw new ArgumentNullException("inkCanvas");
-            }
+            ArgumentNullException.ThrowIfNull(inkCanvas);
             _inkCanvas = inkCanvas;
 
             _inkCanvas.FeedbackAdorner.UpdateBounds(Rect.Empty);

@@ -111,8 +111,7 @@ namespace MS.Internal.Annotations.Storage
         /// </returns>
         public Dictionary<Guid, Annotation> FindAnnotations(ContentLocator anchorLocator)
         {
-            if (anchorLocator == null)
-                throw new ArgumentNullException("locator");
+            ArgumentNullException.ThrowIfNull(anchorLocator);
 
             Dictionary<Guid, Annotation> annotations = new Dictionary<Guid, Annotation>();
 

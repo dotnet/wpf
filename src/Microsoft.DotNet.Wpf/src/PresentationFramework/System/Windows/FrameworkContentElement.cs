@@ -361,10 +361,7 @@ namespace System.Windows
             // Verify Context Access
             //             VerifyAccess();
 
-            if (resourceKey == null)
-            {
-                throw new ArgumentNullException("resourceKey");
-            }
+            ArgumentNullException.ThrowIfNull(resourceKey);
 
             object resource = FrameworkElement.FindResourceInternal(null /* fe */, this, resourceKey);
 
@@ -391,10 +388,7 @@ namespace System.Windows
             // Verify Context Access
 //             VerifyAccess();
 
-            if (resourceKey == null)
-            {
-                throw new ArgumentNullException("resourceKey");
-            }
+            ArgumentNullException.ThrowIfNull(resourceKey);
 
             object resource = FrameworkElement.FindResourceInternal(null /* fe */, this, resourceKey);
 
@@ -451,10 +445,7 @@ namespace System.Windows
         /// </summary>
         public void BeginStoryboard(Storyboard storyboard, HandoffBehavior handoffBehavior, bool isControllable)
         {
-            if( storyboard == null )
-            {
-                throw new ArgumentNullException("storyboard");
-            }
+            ArgumentNullException.ThrowIfNull(storyboard);
 
             // Storyboard.Begin is a public API and needs to be validating handoffBehavior anyway.
 
@@ -1014,10 +1005,7 @@ namespace System.Windows
         /// <returns> Returns true if focus is moved successfully. Returns false if there is no next element</returns>
         public sealed override bool MoveFocus(TraversalRequest request)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException("request");
-            }
+            ArgumentNullException.ThrowIfNull(request);
 
             return KeyboardNavigation.Current.Navigate(this, request);
         }

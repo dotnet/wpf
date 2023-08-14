@@ -83,10 +83,7 @@ namespace MS.Internal.Markup
 
                 // Get the IXamlTypeResolver from the service provider
 
-                if (serviceProvider == null)
-                {
-                    throw new ArgumentNullException("serviceProvider");
-                }
+                ArgumentNullException.ThrowIfNull(serviceProvider);
 
                 IXamlTypeResolver xamlTypeResolver = serviceProvider.GetService(typeof(IXamlTypeResolver)) as IXamlTypeResolver;
                 if (xamlTypeResolver == null)

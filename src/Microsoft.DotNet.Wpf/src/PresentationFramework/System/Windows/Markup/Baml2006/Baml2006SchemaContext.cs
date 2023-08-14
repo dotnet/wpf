@@ -350,10 +350,7 @@ namespace System.Windows.Baml2006
                 throw new ArgumentOutOfRangeException("assemblyId");
             }
 
-            if (assemblyName == null)
-            {
-                throw new ArgumentNullException("assemblyName");
-            }
+            ArgumentNullException.ThrowIfNull(assemblyName);
 
             lock (_bamlAssembly)
             {
@@ -377,10 +374,7 @@ namespace System.Windows.Baml2006
                 throw new ArgumentOutOfRangeException("typeId");
             }
 
-            if (typeName == null)
-            {
-                throw new ArgumentNullException("typeName");
-            }
+            ArgumentNullException.ThrowIfNull(typeName);
 
             lock (_syncObject)
             {
@@ -405,10 +399,7 @@ namespace System.Windows.Baml2006
                 throw new ArgumentOutOfRangeException("propertyId");
             }
 
-            if (propertyName == null)
-            {
-                throw new ArgumentNullException("propertyName");
-            }
+            ArgumentNullException.ThrowIfNull(propertyName);
 
             lock (_syncObject)
             {
@@ -427,10 +418,7 @@ namespace System.Windows.Baml2006
 
         internal void AddString(Int16 stringId, string value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             lock (_syncObject)
             {
@@ -725,10 +713,7 @@ namespace System.Windows.Baml2006
             /// <param name="name">A fully qualified assembly name</param>
             public BamlAssembly(string name)
             {
-                if (name == null)
-                {
-                    throw new ArgumentNullException("name");
-                }
+                ArgumentNullException.ThrowIfNull(name);
 
                 Name = name;
                 Assembly = null;
@@ -736,10 +721,7 @@ namespace System.Windows.Baml2006
 
             public BamlAssembly(Assembly assembly)
             {
-                if (assembly == null)
-                {
-                    throw new ArgumentNullException("assembly");
-                }
+                ArgumentNullException.ThrowIfNull(assembly);
 
                 Name = null;
                 Assembly = assembly;
@@ -756,10 +738,7 @@ namespace System.Windows.Baml2006
         {
             public BamlType(Int16 assemblyId, string name)
             {
-                if (name == null)
-                {
-                    throw new ArgumentNullException("name");
-                }
+                ArgumentNullException.ThrowIfNull(name);
 
                 AssemblyId = assemblyId;
                 Name = name;
@@ -778,10 +757,7 @@ namespace System.Windows.Baml2006
         {
             public BamlProperty(Int16 declaringTypeId, string name)
             {
-                if (name == null)
-                {
-                    throw new ArgumentNullException("name");
-                }
+                ArgumentNullException.ThrowIfNull(name);
 
                 DeclaringTypeId = declaringTypeId;
                 Name = name;

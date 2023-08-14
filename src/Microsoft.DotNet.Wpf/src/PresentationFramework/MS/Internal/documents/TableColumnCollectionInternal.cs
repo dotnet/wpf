@@ -39,10 +39,7 @@ namespace MS.Internal.Documents
         {
             Version++;
 
-            if (item == null)
-            {
-                throw new ArgumentNullException("item");
-            }
+            ArgumentNullException.ThrowIfNull(item);
             if (Size == Items.Length)
             {
                 EnsureCapacity(Size + 1);
@@ -107,10 +104,7 @@ namespace MS.Internal.Documents
             {
                 throw new ArgumentOutOfRangeException(SR.TableCollectionOutOfRange);
             }
-            if (item == null)
-            {
-                throw new ArgumentNullException("item");
-            }
+            ArgumentNullException.ThrowIfNull(item);
             if (Size == Items.Length)
             {
                 EnsureCapacity(Size + 1);
@@ -217,10 +211,7 @@ namespace MS.Internal.Documents
         {
             Version++;
 
-            if (item == null)
-            {
-                throw new ArgumentNullException("item");
-            }
+            ArgumentNullException.ThrowIfNull(item);
             if (!BelongsToOwner(item))
             {
                 return false;
@@ -341,10 +332,7 @@ namespace MS.Internal.Documents
                     throw new ArgumentOutOfRangeException(SR.TableCollectionOutOfRange);
                 }
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 PrivateDisconnectChild(Items[index]);
                 PrivateConnectChild(index, value);

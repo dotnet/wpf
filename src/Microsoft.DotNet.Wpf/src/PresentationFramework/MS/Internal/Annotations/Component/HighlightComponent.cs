@@ -52,10 +52,7 @@ namespace MS.Internal.Annotations.Component
         public HighlightComponent(int priority, bool highlightContent, XmlQualifiedName type)
             : base()
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException("type");
-            }
+            ArgumentNullException.ThrowIfNull(type);
             _priority = priority;
             _type = type;
             _highlightContent = highlightContent;
@@ -272,10 +269,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="attachedAnnotation">The attached annotation to be removed from the component</param>
         public void RemoveAttachedAnnotation(IAttachedAnnotation attachedAnnotation)
         {
-            if (attachedAnnotation == null)
-            {
-                throw new ArgumentNullException("attachedAnnotation");
-            }
+            ArgumentNullException.ThrowIfNull(attachedAnnotation);
 
             if (attachedAnnotation != _attachedAnnotation)
             {
@@ -457,10 +451,7 @@ namespace MS.Internal.Annotations.Component
         #region Internal Methods
         internal bool IsSelected(ITextRange selection)
         {
-            if (selection == null)
-            {
-                throw new ArgumentNullException("selection");
-            }
+            ArgumentNullException.ThrowIfNull(selection);
             Invariant.Assert(_attachedAnnotation != null, "No _attachedAnnotation");
 
             // For activation based on the selection state, we need to use anchors that
@@ -522,10 +513,7 @@ namespace MS.Internal.Annotations.Component
         /// <returns>The AttachedAnchor TextContainer</returns>
         private ITextContainer CheckInputData(IAttachedAnnotation attachedAnnotation)
         {
-            if (attachedAnnotation == null)
-            {
-                throw new ArgumentNullException("attachedAnnotation");
-            }
+            ArgumentNullException.ThrowIfNull(attachedAnnotation);
 
             TextAnchor textAnchor = attachedAnnotation.AttachedAnchor as TextAnchor;
             if (textAnchor == null)

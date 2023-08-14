@@ -36,10 +36,7 @@ namespace System.Windows.Controls
         /// </summary>
         public InkCanvasStrokeCollectedEventArgs(Swi.Stroke stroke) : base(InkCanvas.StrokeCollectedEvent)
         {
-            if (stroke == null)
-            {
-                throw new ArgumentNullException("stroke");
-            }
+            ArgumentNullException.ThrowIfNull(stroke);
             _stroke = stroke;
         }
 
@@ -85,14 +82,8 @@ namespace System.Windows.Controls
         /// </summary>
         internal InkCanvasStrokesReplacedEventArgs(Swi.StrokeCollection newStrokes, Swi.StrokeCollection previousStrokes)
         {
-            if (newStrokes == null)
-            {
-                throw new ArgumentNullException("newStrokes");
-            }
-            if (previousStrokes == null)
-            {
-                throw new ArgumentNullException("previousStrokes");
-            }
+            ArgumentNullException.ThrowIfNull(newStrokes);
+            ArgumentNullException.ThrowIfNull(previousStrokes);
             _newStrokes = newStrokes;
             _previousStrokes = previousStrokes;
         }
@@ -140,14 +131,8 @@ namespace System.Windows.Controls
         /// </summary>
         internal InkCanvasSelectionChangingEventArgs(StrokeCollection selectedStrokes, IEnumerable<UIElement> selectedElements)
         {
-            if (selectedStrokes == null)
-            {
-                throw new ArgumentNullException("selectedStrokes");
-            }
-            if (selectedElements == null)
-            {
-                throw new ArgumentNullException("selectedElements");
-            }
+            ArgumentNullException.ThrowIfNull(selectedStrokes);
+            ArgumentNullException.ThrowIfNull(selectedElements);
             _strokes = selectedStrokes;
             List<UIElement> elements =
                 new List<UIElement>(selectedElements);
@@ -185,10 +170,7 @@ namespace System.Windows.Controls
         /// <param name="selectedElements">The new selected elements</param>
         public void SetSelectedElements(IEnumerable<UIElement> selectedElements)
         {
-            if ( selectedElements == null )
-            {
-                throw new ArgumentNullException("selectedElements");
-            }
+            ArgumentNullException.ThrowIfNull(selectedElements);
 
             List<UIElement> elements =
                 new List<UIElement>(selectedElements);
@@ -211,10 +193,7 @@ namespace System.Windows.Controls
         /// <param name="selectedStrokes">The new selected strokes</param>
         public void SetSelectedStrokes(StrokeCollection selectedStrokes)
         {
-            if ( selectedStrokes == null )
-            {
-                throw new ArgumentNullException("selectedStrokes");
-            }
+            ArgumentNullException.ThrowIfNull(selectedStrokes);
 
             _strokes = selectedStrokes;
             _strokesChanged = true;
@@ -291,10 +270,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal InkCanvasStrokeErasingEventArgs(Swi.Stroke stroke) 
         {
-            if (stroke == null)
-            {
-                throw new ArgumentNullException("stroke");
-            }
+            ArgumentNullException.ThrowIfNull(stroke);
             _stroke = stroke;
         }
 
@@ -331,18 +307,12 @@ namespace System.Windows.Controls
         public InkCanvasGestureEventArgs(StrokeCollection strokes, IEnumerable<GestureRecognitionResult> gestureRecognitionResults)
             : base(InkCanvas.GestureEvent)
         {
-            if (strokes == null)
-            {
-                throw new ArgumentNullException("strokes");
-            }
+            ArgumentNullException.ThrowIfNull(strokes);
             if (strokes.Count < 1)
             {
                 throw new ArgumentException(SR.InvalidEmptyStrokeCollection, "strokes");
             }
-            if (gestureRecognitionResults == null)
-            {
-                throw new ArgumentNullException("strokes");
-            }
+            ArgumentNullException.ThrowIfNull(gestureRecognitionResults);
             List<GestureRecognitionResult> results = 
                 new List<GestureRecognitionResult>(gestureRecognitionResults);
             if (results.Count == 0)

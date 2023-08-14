@@ -486,10 +486,7 @@ namespace System.Windows.Documents
         /// <param name="value">The property value to set</param>
         public static void SetFontFamily(DependencyObject element, FontFamily value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(FontFamilyProperty, value);
         }
@@ -500,10 +497,7 @@ namespace System.Windows.Documents
         /// <param name="element">The element from which to read the attached property.</param>
         public static FontFamily GetFontFamily(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (FontFamily)element.GetValue(FontFamilyProperty);
         }
@@ -537,10 +531,7 @@ namespace System.Windows.Documents
         /// <param name="value">The property value to set</param>
         public static void SetFontStyle(DependencyObject element, FontStyle value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(FontStyleProperty, value);
         }
@@ -551,10 +542,7 @@ namespace System.Windows.Documents
         /// <param name="element">The element from which to read the attached property.</param>
         public static FontStyle GetFontStyle(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (FontStyle)element.GetValue(FontStyleProperty);
         }
@@ -588,10 +576,7 @@ namespace System.Windows.Documents
         /// <param name="value">The property value to set</param>
         public static void SetFontWeight(DependencyObject element, FontWeight value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(FontWeightProperty, value);
         }
@@ -602,10 +587,7 @@ namespace System.Windows.Documents
         /// <param name="element">The element from which to read the attached property.</param>
         public static FontWeight GetFontWeight(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (FontWeight)element.GetValue(FontWeightProperty);
         }
@@ -639,10 +621,7 @@ namespace System.Windows.Documents
         /// <param name="value">The property value to set</param>
         public static void SetFontStretch(DependencyObject element, FontStretch value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(FontStretchProperty, value);
         }
@@ -653,10 +632,7 @@ namespace System.Windows.Documents
         /// <param name="element">The element from which to read the attached property.</param>
         public static FontStretch GetFontStretch(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (FontStretch)element.GetValue(FontStretchProperty);
         }
@@ -693,10 +669,7 @@ namespace System.Windows.Documents
         /// <param name="value">The property value to set</param>
         public static void SetFontSize(DependencyObject element, double value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(FontSizeProperty, value);
         }
@@ -708,10 +681,7 @@ namespace System.Windows.Documents
         [TypeConverter(typeof(FontSizeConverter))]
         public static double GetFontSize(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (double)element.GetValue(FontSizeProperty);
         }
@@ -747,10 +717,7 @@ namespace System.Windows.Documents
         /// <param name="value">The property value to set</param>
         public static void SetForeground(DependencyObject element, Brush value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(ForegroundProperty, value);
         }
@@ -761,10 +728,7 @@ namespace System.Windows.Documents
         /// <param name="element">The element from which to read the attached property.</param>
         public static Brush GetForeground(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (Brush)element.GetValue(ForegroundProperty);
         }
@@ -906,10 +870,7 @@ namespace System.Windows.Documents
         /// <ExternalAPI/>
         void IAddChild.AddText(string text)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException("text");
-            }
+            ArgumentNullException.ThrowIfNull(text);
 
             // Check if text run is allowed in this element,
             // and create implicit Run if possible.
@@ -1543,10 +1504,7 @@ namespace System.Windows.Documents
         {
             TextContainer tree;
 
-            if (textData == null)
-            {
-                throw new ArgumentNullException("textData");
-            }
+            ArgumentNullException.ThrowIfNull(textData);
 
             tree = EnsureTextContainer();
 
@@ -1580,10 +1538,7 @@ namespace System.Windows.Documents
             TextContainer tree;
             TextPointer position;
 
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             tree = EnsureTextContainer();
 

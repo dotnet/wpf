@@ -151,10 +151,7 @@ namespace System.Windows.Controls
         ///</param>
         void IAddChild.AddChild(Object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             if (!(value is FlowDocument))
             {
@@ -179,10 +176,7 @@ namespace System.Windows.Controls
         ///</param> 
         void IAddChild.AddText(string text)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException("text");
-            }
+            ArgumentNullException.ThrowIfNull(text);
 
             XamlSerializerUtil.ThrowIfNonWhiteSpaceInAddText(text, this);
         }
@@ -360,10 +354,7 @@ namespace System.Windows.Controls
 
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (value != _document &&
                     value.StructuralCache != null && value.StructuralCache.TextContainer != null && 
@@ -582,10 +573,7 @@ namespace System.Windows.Controls
 
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
                 if (!Selection.Start.IsInSameDocument(value))
                 {
                     throw new ArgumentException(SR.RichTextBox_PointerNotInSameDocument, "value");

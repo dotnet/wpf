@@ -108,11 +108,9 @@ namespace MS.Internal.Annotations.Anchoring
         public void RegisterSubTreeProcessor(SubTreeProcessor processor, String processorId)
         {
             VerifyAccess();
-            if (processor == null)
-                throw new ArgumentNullException("processor");
 
-            if (processorId == null)
-                throw new ArgumentNullException("processorId");
+            ArgumentNullException.ThrowIfNull(processor);
+            ArgumentNullException.ThrowIfNull(processorId);
 
             XmlQualifiedName[] locatorPartTypes = processor.GetLocatorPartTypes();
 
@@ -143,8 +141,7 @@ namespace MS.Internal.Annotations.Anchoring
         {
             VerifyAccess();
 
-            if (node == null)
-                throw new ArgumentNullException("node");
+            ArgumentNullException.ThrowIfNull(node);
 
             // This property should contain one or more (comma-delimited) 
             // registered string IDs for subtree processors.
@@ -176,8 +173,7 @@ namespace MS.Internal.Annotations.Anchoring
         public SubTreeProcessor GetSubTreeProcessorForLocatorPart(ContentLocatorPart locatorPart)
         {
             VerifyAccess();
-            if (locatorPart == null)
-                throw new ArgumentNullException("locatorPart");
+            ArgumentNullException.ThrowIfNull(locatorPart);
 
             return _locatorPartHandlers[locatorPart.PartType] as SubTreeProcessor;
         }
@@ -202,11 +198,9 @@ namespace MS.Internal.Annotations.Anchoring
         public void RegisterSelectionProcessor(SelectionProcessor processor, Type selectionType)
         {
             VerifyAccess();
-            if (processor == null)
-                throw new ArgumentNullException("processor");
 
-            if (selectionType == null)
-                throw new ArgumentNullException("selectionType");
+            ArgumentNullException.ThrowIfNull(processor);
+            ArgumentNullException.ThrowIfNull(selectionType);
 
             XmlQualifiedName[] locatorPartTypes = processor.GetLocatorPartTypes();
             _selectionProcessors[selectionType] = processor;
@@ -237,8 +231,7 @@ namespace MS.Internal.Annotations.Anchoring
         public SelectionProcessor GetSelectionProcessor(Type selectionType)
         {
             VerifyAccess();
-            if (selectionType == null)
-                throw new ArgumentNullException("selectionType");
+            ArgumentNullException.ThrowIfNull(selectionType);
 
             SelectionProcessor processor = null;
 
@@ -266,8 +259,7 @@ namespace MS.Internal.Annotations.Anchoring
         public SelectionProcessor GetSelectionProcessorForLocatorPart(ContentLocatorPart locatorPart)
         {
             VerifyAccess();
-            if (locatorPart == null)
-                throw new ArgumentNullException("locatorPart");
+            ArgumentNullException.ThrowIfNull(locatorPart);
 
             return _locatorPartHandlers[locatorPart.PartType] as SelectionProcessor;
         }
@@ -289,8 +281,7 @@ namespace MS.Internal.Annotations.Anchoring
         public IList<IAttachedAnnotation> ProcessAnnotations(DependencyObject node)
         {
             VerifyAccess();
-            if (node == null)
-                throw new ArgumentNullException("node");
+            ArgumentNullException.ThrowIfNull(node);
 
             IList<IAttachedAnnotation> attachedAnnotations = new List<IAttachedAnnotation>();
             IList<ContentLocatorBase> locators = GenerateLocators(node);
@@ -366,8 +357,7 @@ namespace MS.Internal.Annotations.Anchoring
         public IList<ContentLocatorBase> GenerateLocators(Object selection)
         {
             VerifyAccess();
-            if (selection == null)
-                throw new ArgumentNullException("selection");
+            ArgumentNullException.ThrowIfNull(selection);
 
             ICollection nodes = null;
             SelectionProcessor selProcessor = GetSelectionProcessor(selection.GetType());
@@ -420,11 +410,8 @@ namespace MS.Internal.Annotations.Anchoring
         {
             VerifyAccess();
 
-            if (locator == null)
-                throw new ArgumentNullException("locator");
-
-            if (startNode == null)
-                throw new ArgumentNullException("startNode");
+            ArgumentNullException.ThrowIfNull(locator);
+            ArgumentNullException.ThrowIfNull(startNode);
 
             // Offset need only be checked for Locators
             ContentLocator realLocator = locator as ContentLocator;
@@ -485,8 +472,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">d is null</exception>
         public static void SetSubTreeProcessorId(DependencyObject d, String id)
         {
-            if (d == null)
-                throw new ArgumentNullException("d");
+            ArgumentNullException.ThrowIfNull(d);
 
             //d will check the  context
             d.SetValue(SubTreeProcessorIdProperty, id);
@@ -502,8 +488,7 @@ namespace MS.Internal.Annotations.Anchoring
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public static String GetSubTreeProcessorId(DependencyObject d)
         {
-            if (d == null)
-                throw new ArgumentNullException("d");
+            ArgumentNullException.ThrowIfNull(d);
 
             //d will check the  context
             return d.GetValue(SubTreeProcessorIdProperty) as String;
@@ -530,8 +515,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">subtree is null</exception>
         internal IList<IAttachedAnnotation> ProcessSubTree(DependencyObject subTree)
         {
-            if (subTree == null)
-                throw new ArgumentNullException("subTree");
+            ArgumentNullException.ThrowIfNull(subTree);
 
             ProcessingTreeState data = new ProcessingTreeState();
             PrePostDescendentsWalker<ProcessingTreeState> walker = new PrePostDescendentsWalker<ProcessingTreeState>(TreeWalkPriority.VisualTree, PreVisit, PostVisit, data);
@@ -558,11 +542,8 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">startNode or locator is null</exception>
         internal Object FindAttachedAnchor(DependencyObject startNode, ContentLocator[] prefixes, ContentLocatorBase locator, out AttachmentLevel attachmentLevel)
         {
-            if (startNode == null)
-                throw new ArgumentNullException("startNode");
-
-            if (locator == null)
-                throw new ArgumentNullException("locator");
+            ArgumentNullException.ThrowIfNull(startNode);
+            ArgumentNullException.ThrowIfNull(locator);
 
             // Set it to unresolved initially
             attachmentLevel = AttachmentLevel.Unresolved;

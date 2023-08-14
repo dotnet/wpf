@@ -194,10 +194,7 @@ namespace System.Windows.Controls.Primitives
         /// <returns></returns>
         public static bool GetIsSelectionActive(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool) element.GetValue(IsSelectionActiveProperty);
         }
 
@@ -221,10 +218,7 @@ namespace System.Windows.Controls.Primitives
         [AttachedPropertyBrowsableForChildren()]
         public static bool GetIsSelected(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool) element.GetValue(IsSelectedProperty);
         }
@@ -237,10 +231,7 @@ namespace System.Windows.Controls.Primitives
         /// <param name="isSelected">The new value of the attached property.</param>
         public static void SetIsSelected(DependencyObject element, bool isSelected)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(IsSelectedProperty, BooleanBoxes.Box(isSelected));
         }

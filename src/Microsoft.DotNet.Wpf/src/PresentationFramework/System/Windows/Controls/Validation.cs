@@ -90,8 +90,7 @@ namespace System.Windows.Controls
         /// <exception cref="ArgumentNullException"> DependencyObject element cannot be null </exception>
         public static ReadOnlyObservableCollection<ValidationError> GetErrors(DependencyObject element)
         {
-            if (element == null)
-                throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
 
             return (ReadOnlyObservableCollection<ValidationError>) element.GetValue(ErrorsProperty);
         }
@@ -162,8 +161,7 @@ namespace System.Windows.Controls
         /// <exception cref="ArgumentNullException"> DependencyObject element cannot be null </exception>
         public static bool GetHasError(DependencyObject element)
         {
-            if (element == null)
-                throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool) element.GetValue(HasErrorProperty);
         }
@@ -191,8 +189,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static ControlTemplate GetErrorTemplate(DependencyObject element)
         {
-            if (element == null)
-                throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
 
             return element.GetValue(ErrorTemplateProperty) as ControlTemplate;
         }
@@ -201,8 +198,7 @@ namespace System.Windows.Controls
         /// <exception cref="ArgumentNullException"> DependencyObject element cannot be null </exception>
         public static void SetErrorTemplate(DependencyObject element, ControlTemplate value)
         {
-            if (element == null)
-                throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
 
             // (perf) don't set if the existing value is already correct
             object oldValue = element.ReadLocalValue(ErrorTemplateProperty);
@@ -237,8 +233,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static DependencyObject GetValidationAdornerSite(DependencyObject element)
         {
-            if (element == null)
-                throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
 
             return element.GetValue(ValidationAdornerSiteProperty) as DependencyObject;
         }
@@ -247,8 +242,7 @@ namespace System.Windows.Controls
         /// <exception cref="ArgumentNullException"> DependencyObject element cannot be null </exception>
         public static void SetValidationAdornerSite(DependencyObject element, DependencyObject value)
         {
-            if (element == null)
-                throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(ValidationAdornerSiteProperty, value);
         }
@@ -305,8 +299,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static DependencyObject GetValidationAdornerSiteFor(DependencyObject element)
         {
-            if (element == null)
-                throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
 
             return element.GetValue(ValidationAdornerSiteForProperty) as DependencyObject;
         }
@@ -315,8 +308,7 @@ namespace System.Windows.Controls
         /// <exception cref="ArgumentNullException"> DependencyObject element cannot be null </exception>
         public static void SetValidationAdornerSiteFor(DependencyObject element, DependencyObject value)
         {
-            if (element == null)
-                throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(ValidationAdornerSiteForProperty, value);
         }
@@ -500,10 +492,8 @@ namespace System.Windows.Controls
         /// </summary>
         public static void MarkInvalid(BindingExpressionBase bindingExpression, ValidationError validationError)
         {
-            if (bindingExpression == null)
-                throw new ArgumentNullException("bindingExpression");
-            if (validationError == null)
-                throw new ArgumentNullException("validationError");
+            ArgumentNullException.ThrowIfNull(bindingExpression);
+            ArgumentNullException.ThrowIfNull(validationError);
 
             bindingExpression.UpdateValidationError(validationError);
         }
@@ -514,8 +504,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static void ClearInvalid(BindingExpressionBase bindingExpression)
         {
-            if (bindingExpression == null)
-                throw new ArgumentNullException("bindingExpression");
+            ArgumentNullException.ThrowIfNull(bindingExpression);
             bindingExpression.UpdateValidationError(null);
         }
 

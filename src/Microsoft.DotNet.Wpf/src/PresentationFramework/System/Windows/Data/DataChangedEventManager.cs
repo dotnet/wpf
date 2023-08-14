@@ -40,10 +40,8 @@ namespace System.Windows.Data
         /// </summary>
         public static void AddListener(DataSourceProvider source, IWeakEventListener listener)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(listener);
 
             CurrentManager.ProtectedAddListener(source, listener);
         }
@@ -57,8 +55,7 @@ namespace System.Windows.Data
             if (source == null)
                 throw new ArgumentNullException("source");
             */
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(listener);
 
             CurrentManager.ProtectedRemoveListener(source, listener);
         }
@@ -68,8 +65,7 @@ namespace System.Windows.Data
         /// </summary>
         public static void AddHandler(DataSourceProvider source, EventHandler<EventArgs> handler)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.ProtectedAddHandler(source, handler);
         }
@@ -79,8 +75,7 @@ namespace System.Windows.Data
         /// </summary>
         public static void RemoveHandler(DataSourceProvider source, EventHandler<EventArgs> handler)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.ProtectedRemoveHandler(source, handler);
         }

@@ -131,10 +131,7 @@ namespace System.Windows.Controls
         ///</param>
         void IAddChild.AddChild(Object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             EnsureComplexContent();
 
@@ -187,10 +184,7 @@ namespace System.Windows.Controls
         ///</param>
         void IAddChild.AddText(string text)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException("text");
-            }
+            ArgumentNullException.ThrowIfNull(text);
 
             if (_complexContent == null)
             {
@@ -283,10 +277,7 @@ namespace System.Windows.Controls
         /// </returns>
         object IServiceProvider.GetService(Type serviceType)
         {
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
             //             VerifyAccess();
 
             if (serviceType == typeof(ITextView))
@@ -358,10 +349,7 @@ namespace System.Windows.Controls
             : base()
         {
             Initialize();
-            if (inline == null)
-            {
-                throw new ArgumentNullException("inline");
-            }
+            ArgumentNullException.ThrowIfNull(inline);
 
             this.Inlines.Add(inline);
         }
@@ -561,10 +549,7 @@ namespace System.Windows.Controls
         /// <param name="value">The property value to set</param>
         public static void SetBaselineOffset(DependencyObject element, double value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(BaselineOffsetProperty, value);
         }
@@ -575,10 +560,7 @@ namespace System.Windows.Controls
         /// <param name="element">The element to which to read the attached property.</param>
         public static double GetBaselineOffset(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (double)element.GetValue(BaselineOffsetProperty);
         }
@@ -667,10 +649,7 @@ namespace System.Windows.Controls
         /// <param name="value">The property value to set</param>
         public static void SetFontFamily(DependencyObject element, FontFamily value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(FontFamilyProperty, value);
         }
@@ -681,10 +660,7 @@ namespace System.Windows.Controls
         /// <param name="element">The element from which to read the attached property.</param>
         public static FontFamily GetFontFamily(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (FontFamily)element.GetValue(FontFamilyProperty);
         }
@@ -712,10 +688,7 @@ namespace System.Windows.Controls
         /// <param name="value">The property value to set</param>
         public static void SetFontStyle(DependencyObject element, FontStyle value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(FontStyleProperty, value);
         }
@@ -726,10 +699,7 @@ namespace System.Windows.Controls
         /// <param name="element">The element from which to read the attached property.</param>
         public static FontStyle GetFontStyle(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (FontStyle)element.GetValue(FontStyleProperty);
         }
@@ -757,10 +727,7 @@ namespace System.Windows.Controls
         /// <param name="value">The property value to set</param>
         public static void SetFontWeight(DependencyObject element, FontWeight value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(FontWeightProperty, value);
         }
@@ -771,10 +738,7 @@ namespace System.Windows.Controls
         /// <param name="element">The element from which to read the attached property.</param>
         public static FontWeight GetFontWeight(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (FontWeight)element.GetValue(FontWeightProperty);
         }
@@ -802,10 +766,7 @@ namespace System.Windows.Controls
         /// <param name="value">The property value to set</param>
         public static void SetFontStretch(DependencyObject element, FontStretch value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(FontStretchProperty, value);
         }
@@ -816,10 +777,7 @@ namespace System.Windows.Controls
         /// <param name="element">The element from which to read the attached property.</param>
         public static FontStretch GetFontStretch(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (FontStretch)element.GetValue(FontStretchProperty);
         }
@@ -850,10 +808,7 @@ namespace System.Windows.Controls
         /// <param name="value">The property value to set</param>
         public static void SetFontSize(DependencyObject element, double value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(FontSizeProperty, value);
         }
@@ -865,10 +820,7 @@ namespace System.Windows.Controls
         [TypeConverter(typeof(FontSizeConverter))]
         public static double GetFontSize(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (double)element.GetValue(FontSizeProperty);
         }
@@ -897,10 +849,7 @@ namespace System.Windows.Controls
         /// <param name="value">The property value to set</param>
         public static void SetForeground(DependencyObject element, Brush value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(ForegroundProperty, value);
         }
@@ -911,10 +860,7 @@ namespace System.Windows.Controls
         /// <param name="element">The element from which to read the attached property.</param>
         public static Brush GetForeground(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (Brush)element.GetValue(ForegroundProperty);
         }
@@ -1002,10 +948,7 @@ namespace System.Windows.Controls
         /// <param name="value">The property value to set</param>
         public static void SetLineHeight(DependencyObject element, double value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(LineHeightProperty, value);
         }
@@ -1017,10 +960,7 @@ namespace System.Windows.Controls
         [TypeConverter(typeof(LengthConverter))]
         public static double GetLineHeight(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (double)element.GetValue(LineHeightProperty);
         }
@@ -1047,10 +987,7 @@ namespace System.Windows.Controls
         /// <param name="value">The property value to set</param>
         public static void SetLineStackingStrategy(DependencyObject element, LineStackingStrategy value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(LineStackingStrategyProperty, value);
         }
@@ -1061,10 +998,7 @@ namespace System.Windows.Controls
         /// <param name="element">The element from which to read the attached property.</param>
         public static LineStackingStrategy GetLineStackingStrategy(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (LineStackingStrategy)element.GetValue(LineStackingStrategyProperty);
         }
@@ -1110,10 +1044,7 @@ namespace System.Windows.Controls
         /// <param name="value">The property value to set</param>
         public static void SetTextAlignment(DependencyObject element, TextAlignment value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(TextAlignmentProperty, value);
         }
@@ -1124,10 +1055,7 @@ namespace System.Windows.Controls
         /// <param name="element">The element from which to read the attached property.</param>
         public static TextAlignment GetTextAlignment(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (TextAlignment)element.GetValue(TextAlignmentProperty);
         }
@@ -1567,10 +1495,7 @@ Debug.Assert(lineCount == LineCount);
         {
             VerifyReentrancy();
 
-            if (ctx == null)
-            {
-                throw new ArgumentNullException("ctx");
-            }
+            ArgumentNullException.ThrowIfNull(ctx);
 
             // If layout data is not updated do not render the content.
             if (!IsLayoutDataValid) { return; }
@@ -1718,10 +1643,7 @@ Debug.Assert(lineCount == LineCount);
         {
             VerifyReentrancy();
 
-            if (hitTestParameters == null)
-            {
-                throw new ArgumentNullException("hitTestParameters");
-            }
+            ArgumentNullException.ThrowIfNull(hitTestParameters);
 
             Rect r = new Rect(new Point(), RenderSize);
 
@@ -1819,10 +1741,7 @@ Debug.Assert(lineCount == LineCount);
         /// </remarks>
         protected virtual ReadOnlyCollection<Rect> GetRectanglesCore(ContentElement child)
         {
-            if (child == null)
-            {
-                throw new ArgumentNullException("child");
-            }
+            ArgumentNullException.ThrowIfNull(child);
 
             // If layout data is not updated we assume that we will not be able to find the element we need and throw excception
             if (!IsLayoutDataValid)

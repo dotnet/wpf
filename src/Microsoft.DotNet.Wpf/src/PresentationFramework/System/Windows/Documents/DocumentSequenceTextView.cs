@@ -258,11 +258,8 @@ namespace System.Windows.Documents
         /// </remarks>
         internal override bool IsAtCaretUnitBoundary(ITextPointer position)
         {
-            Invariant.Assert(position != null);            
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            Invariant.Assert(position != null);
+            ArgumentNullException.ThrowIfNull(position);
 
             //Verify the position and propagate the call to the child text view
             Invariant.Assert(ChildTextView != null);
@@ -308,11 +305,8 @@ namespace System.Windows.Documents
         /// </remarks>
         internal override ITextPointer GetNextCaretUnitPosition(ITextPointer position, LogicalDirection direction)
         {
-            Invariant.Assert(position != null);            
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            Invariant.Assert(position != null);
+            ArgumentNullException.ThrowIfNull(position);
 
             //Verify the position and propagate the call to the child text view
             Invariant.Assert(ChildTextView != null);
@@ -337,11 +331,8 @@ namespace System.Windows.Documents
         /// </exception>
         internal override ITextPointer GetBackspaceCaretUnitPosition(ITextPointer position)
         {
-            Invariant.Assert(position != null);            
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            Invariant.Assert(position != null);
+            ArgumentNullException.ThrowIfNull(position);
 
             //Verify the position and propagate the call to the child text view
             Invariant.Assert(ChildTextView != null);

@@ -71,10 +71,7 @@ namespace System.Windows
 
         private void CheckValidProperty( DependencyProperty property)
         {
-            if (property == null)
-            {
-                throw new ArgumentNullException("property");
-            }
+            ArgumentNullException.ThrowIfNull(property);
             if (property.ReadOnly)
             {
                 // Read-only properties will not be consulting Style/Template/Trigger Setter for value.
@@ -230,14 +227,8 @@ namespace System.Windows
 
         public static void ReceiveMarkupExtension(object targetObject, XamlSetMarkupExtensionEventArgs eventArgs)
         {
-            if (targetObject == null)
-            {
-                throw new ArgumentNullException("targetObject");
-            }
-            if (eventArgs == null)
-            {
-                throw new ArgumentNullException("eventArgs");
-            }
+            ArgumentNullException.ThrowIfNull(targetObject);
+            ArgumentNullException.ThrowIfNull(eventArgs);
 
             Setter setter = targetObject as Setter;
 
@@ -268,10 +259,7 @@ namespace System.Windows
             {
                 throw new ArgumentNullException("targetObject");
             }
-            if (eventArgs == null)
-            {
-                throw new ArgumentNullException("eventArgs");
-            }
+            ArgumentNullException.ThrowIfNull(eventArgs);
 
             if (eventArgs.Member.Name == "Property")
             {

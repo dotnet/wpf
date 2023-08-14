@@ -1046,10 +1046,7 @@ namespace System.Windows.Controls.Primitives
         /// <param name="e">MouseWheelEventArgs</param>
         protected override void OnMouseWheel(MouseWheelEventArgs e)
         {
-            if (e == null)
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
 
             if (this.ScrollViewer != null)
             {
@@ -1583,10 +1580,7 @@ namespace System.Windows.Controls.Primitives
         {
             Point offset;
 
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
 
             // Validate layout information on TextView
             if (TextEditor.GetTextView(this.RenderScope).Validate(position))

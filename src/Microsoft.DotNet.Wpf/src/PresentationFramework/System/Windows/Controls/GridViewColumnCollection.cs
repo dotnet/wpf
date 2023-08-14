@@ -431,10 +431,7 @@ namespace System.Windows.Controls
         // Throw if column is null or already existed in a GVCC
         private void ValidateColumnForInsert(GridViewColumn column)
         {
-            if (column == null)
-            {
-                throw new ArgumentNullException("column");
-            }
+            ArgumentNullException.ThrowIfNull(column);
 
             if (column.ActualIndex >= 0)
             {

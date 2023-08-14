@@ -30,15 +30,8 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         public DataGridItemAutomationPeer(object item, DataGridAutomationPeer dataGridPeer): base(item, dataGridPeer)
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException("item");
-            }
-
-            if (dataGridPeer == null)
-            {
-                throw new ArgumentNullException("dataGridPeer");
-            }
+            ArgumentNullException.ThrowIfNull(item);
+            ArgumentNullException.ThrowIfNull(dataGridPeer);
 
             _dataGridAutomationPeer = dataGridPeer;
         }

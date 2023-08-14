@@ -41,10 +41,7 @@ namespace System.Windows.Interop
         /// <param name="scriptObject">Object to be wrapped.</param>
         internal DynamicScriptObject(UnsafeNativeMethods.IDispatch scriptObject)
         {
-            if (scriptObject == null)
-            {
-                throw new ArgumentNullException("scriptObject");
-            }
+            ArgumentNullException.ThrowIfNull(scriptObject);
 
             _scriptObject = scriptObject;
 
@@ -72,10 +69,7 @@ namespace System.Windows.Interop
         /// <returns>true - We never defer behavior to the call site, and throw if invalid access is attempted.</returns>
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
-            if (binder == null)
-            {
-                throw new ArgumentNullException("binder");
-            }
+            ArgumentNullException.ThrowIfNull(binder);
 
             result = InvokeAndReturn(binder.Name, NativeMethods.DISPATCH_METHOD, args);
             return true;
@@ -89,10 +83,7 @@ namespace System.Windows.Interop
         /// <returns>true - We never defer behavior to the call site, and throw if invalid access is attempted.</returns>
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
-            if (binder == null)
-            {
-                throw new ArgumentNullException("binder");
-            }
+            ArgumentNullException.ThrowIfNull(binder);
 
             result = InvokeAndReturn(binder.Name, NativeMethods.DISPATCH_PROPERTYGET, null);
             return true;
@@ -106,10 +97,7 @@ namespace System.Windows.Interop
         /// <returns>true - We never defer behavior to the call site, and throw if invalid access is attempted.</returns>
         public override bool TrySetMember(SetMemberBinder binder, object value)
         {
-            if (binder == null)
-            {
-                throw new ArgumentNullException("binder");
-            }
+            ArgumentNullException.ThrowIfNull(binder);
 
             int flags = GetPropertyPutMethod(value);
             object result = InvokeAndReturn(binder.Name, flags, new object[] { value });
@@ -125,15 +113,9 @@ namespace System.Windows.Interop
         /// <returns>true - We never defer behavior to the call site, and throw if invalid access is attempted.</returns>
         public override bool TryGetIndex(GetIndexBinder binder, object[] indexes, out object result)
         {
-            if (binder == null)
-            {
-                throw new ArgumentNullException("binder");
-            }
+            ArgumentNullException.ThrowIfNull(binder);
 
-            if (indexes == null)
-            {
-                throw new ArgumentNullException("indexes");
-            }
+            ArgumentNullException.ThrowIfNull(indexes);
 
             // IE supports a default member for indexers. Try that first. This accommodates for indexing
             // in collection types, using a default method called "item".
@@ -171,15 +153,9 @@ namespace System.Windows.Interop
         /// <returns>true - We never defer behavior to the call site, and throw if invalid access is attempted.</returns>
         public override bool TrySetIndex(SetIndexBinder binder, object[] indexes, object value)
         {
-            if (binder == null)
-            {
-                throw new ArgumentNullException("binder");
-            }
+            ArgumentNullException.ThrowIfNull(binder);
 
-            if (indexes == null)
-            {
-                throw new ArgumentNullException("indexes");
-            }
+            ArgumentNullException.ThrowIfNull(indexes);
 
             if (indexes.Length != 1)
             {
@@ -210,10 +186,7 @@ namespace System.Windows.Interop
         /// <returns>true - We never defer behavior to the call site, and throw if invalid access is attempted.</returns>
         public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
         {
-            if (binder == null)
-            {
-                throw new ArgumentNullException("binder");
-            }
+            ArgumentNullException.ThrowIfNull(binder);
 
             result = InvokeAndReturn(null, NativeMethods.DISPATCH_METHOD, args);
             return true;

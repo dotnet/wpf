@@ -11001,10 +11001,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override double GetItemOffsetCore(UIElement child)
         {
-            if (child == null)
-            {
-                throw new ArgumentNullException("child");
-            }
+            ArgumentNullException.ThrowIfNull(child);
 
             bool isHorizontal = (Orientation == Orientation.Horizontal);
             ItemsControl itemsControl;

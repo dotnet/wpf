@@ -279,10 +279,7 @@ namespace System.Windows.Navigation
         /// <param name="journalEntry"></param>
         internal void UpdateCurrentEntry(JournalEntry journalEntry)
         {
-            if (journalEntry == null)
-            {
-                throw new ArgumentNullException("journalEntry");
-            }
+            ArgumentNullException.ThrowIfNull(journalEntry);
             Debug.Assert(journalEntry.ContentId != 0);
             Debug.Assert(!(journalEntry.IsAlive() && journalEntry.JEGroupState.JournalDataStreams != null),
                 "Keep-alive content state should not be serialized.");

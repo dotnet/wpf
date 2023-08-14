@@ -133,10 +133,7 @@ namespace System.Windows
                     throw new InvalidOperationException(SR.FrameworkElementFactoryCannotAddText);
                 }
 
-                if ( value == null )
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _text = value;
             }
@@ -175,10 +172,7 @@ namespace System.Windows
                 throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "FrameworkElementFactory"));
             }
 
-            if (child == null)
-            {
-                throw new ArgumentNullException("child");
-            }
+            ArgumentNullException.ThrowIfNull(child);
 
             if (child._parent != null)
             {
@@ -217,10 +211,7 @@ namespace System.Windows
                 throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "FrameworkElementFactory"));
             }
 
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             // Value needs to be valid for the DP, or Binding/MultiBinding/PriorityBinding.
             //  (They all have MarkupExtension, which we don't actually support, see above check.)
@@ -299,10 +290,7 @@ namespace System.Windows
                 throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "FrameworkElementFactory"));
             }
 
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             UpdatePropertyValueList( dp, PropertyValueType.Resource, name );
         }
@@ -327,15 +315,8 @@ namespace System.Windows
                 throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "FrameworkElementFactory"));
             }
 
-            if (routedEvent == null)
-            {
-                throw new ArgumentNullException("routedEvent");
-            }
-
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
+            ArgumentNullException.ThrowIfNull(routedEvent);
+            ArgumentNullException.ThrowIfNull(handler);
 
             if (handler.GetType() != routedEvent.HandlerType)
             {
@@ -370,15 +351,8 @@ namespace System.Windows
                 throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "FrameworkElementFactory"));
             }
 
-            if (routedEvent == null)
-            {
-                throw new ArgumentNullException("routedEvent");
-            }
-
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
+            ArgumentNullException.ThrowIfNull(routedEvent);
+            ArgumentNullException.ThrowIfNull(handler);
 
             if (handler.GetType() != routedEvent.HandlerType)
             {

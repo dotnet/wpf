@@ -153,10 +153,7 @@ namespace System.Windows.Controls
         protected override void ValidateTemplatedParent(FrameworkElement templatedParent)
         {
             // Must have a non-null feTemplatedParent
-            if (templatedParent == null)
-            {
-                throw new ArgumentNullException("templatedParent");
-            }
+            ArgumentNullException.ThrowIfNull(templatedParent);
 
             // A ItemsPanelTemplate must be applied to an ItemsPresenter
             if (!(templatedParent is ItemsPresenter))

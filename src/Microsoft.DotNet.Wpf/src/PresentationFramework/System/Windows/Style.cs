@@ -178,10 +178,7 @@ namespace System.Windows
                     throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Style"));
                 }
 
-                if( value == null )
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (!typeof(FrameworkElement).IsAssignableFrom(value) &&
                     !typeof(FrameworkContentElement).IsAssignableFrom(value) &&
@@ -411,10 +408,7 @@ namespace System.Windows
             // Verify Context Access
             VerifyAccess();
 
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             SetterBase sb = value as SetterBase;
 

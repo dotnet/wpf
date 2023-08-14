@@ -74,8 +74,7 @@ namespace MS.Internal.IO.Packaging
             }
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 _name = value;
                 _id = 0;

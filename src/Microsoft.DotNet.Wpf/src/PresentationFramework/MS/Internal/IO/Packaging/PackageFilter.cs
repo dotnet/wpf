@@ -59,10 +59,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="package">package to filter</param>
         internal PackageFilter(Package package)
         {
-            if (package == null)
-            {
-                throw new ArgumentNullException("package");
-            }
+            ArgumentNullException.ThrowIfNull(package);
 
             _package = package;
             _partIterator = _package.GetParts().GetEnumerator();

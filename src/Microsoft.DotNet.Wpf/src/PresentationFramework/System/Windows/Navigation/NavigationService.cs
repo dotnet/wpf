@@ -1332,10 +1332,7 @@ namespace System.Windows.Navigation
         /// <returns></returns>
         public static NavigationService GetNavigationService(DependencyObject dependencyObject)
         {
-            if (dependencyObject == null)
-            {
-                throw new ArgumentNullException("dependencyObject");
-            }
+            ArgumentNullException.ThrowIfNull(dependencyObject);
 
             return dependencyObject.GetValue(NavigationServiceProperty) as NavigationService;
         }

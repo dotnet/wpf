@@ -217,10 +217,7 @@ namespace MS.Internal.Documents
         public override void GetPageNumberAsync(ContentPosition contentPosition, object userState)
         {
             // Content position cannot be null.
-            if (contentPosition == null)
-            {
-                throw new ArgumentNullException("contentPosition");
-            }
+            ArgumentNullException.ThrowIfNull(contentPosition);
             // Content position cannot be Missing.
             if (contentPosition == ContentPosition.Missing)
             {
@@ -283,10 +280,7 @@ namespace MS.Internal.Documents
             _dispatcherObject.VerifyAccess();
 
             // ContentPosition cannot be null.
-            if (contentPosition == null)
-            {
-                throw new ArgumentNullException("contentPosition");
-            }
+            ArgumentNullException.ThrowIfNull(contentPosition);
             // ContentPosition must be of appropriate type and must be part of
             // the content.
             flowContentPosition = contentPosition as TextPointer;
@@ -364,10 +358,7 @@ namespace MS.Internal.Documents
             _dispatcherObject.VerifyAccess();
 
             // ContentPosition cannot be null.
-            if (page == null)
-            {
-                throw new ArgumentNullException("page");
-            }
+            ArgumentNullException.ThrowIfNull(page);
             // DocumentPage must be of appropriate type.
             flowDocumentPage = page as FlowDocumentPage;
             if (flowDocumentPage == null || flowDocumentPage.IsDisposed)
@@ -426,10 +417,7 @@ namespace MS.Internal.Documents
             _dispatcherObject.VerifyAccess();
 
             // Object cannot be null.
-            if (o == null)
-            {
-                throw new ArgumentNullException("o");
-            }
+            ArgumentNullException.ThrowIfNull(o);
             return _document.GetObjectPosition(o);
         }
 

@@ -67,7 +67,7 @@ namespace System.ComponentModel
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public static bool GetIsInDesignMode(DependencyObject element)
         {
-            if (element == null) throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(IsInDesignModeProperty);
         }        
 
@@ -77,7 +77,7 @@ namespace System.ComponentModel
         /// </summary>
         public static void SetIsInDesignMode(DependencyObject element, bool value)
         {
-            if (element == null) throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(IsInDesignModeProperty, value);
         }        
     }

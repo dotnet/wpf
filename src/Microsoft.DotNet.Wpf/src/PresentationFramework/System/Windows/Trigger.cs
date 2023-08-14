@@ -179,10 +179,7 @@ namespace System.Windows
         // Shared by PropertyTrigger, MultiPropertyTrigger, DataTrigger, MultiDataTrigger
         internal static Setter CheckChildIsSetter( object o )
         {
-            if (o == null)
-            {
-                throw new ArgumentNullException("o");
-            }
+            ArgumentNullException.ThrowIfNull(o);
 
             Setter setter = o as Setter;
 
@@ -294,10 +291,7 @@ namespace System.Windows
             {
                 throw new ArgumentNullException("targetObject");
             }
-            if (eventArgs == null)
-            {
-                throw new ArgumentNullException("eventArgs");
-            }
+            ArgumentNullException.ThrowIfNull(eventArgs);
 
             if (eventArgs.Member.Name == "Property")
             {

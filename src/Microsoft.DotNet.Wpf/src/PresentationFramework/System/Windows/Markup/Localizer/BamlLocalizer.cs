@@ -62,10 +62,7 @@ namespace System.Windows.Markup.Localizer
             TextReader                  comments
             )
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
+            ArgumentNullException.ThrowIfNull(source);
 
             _tree = BamlResourceDeserializer.LoadBaml(source);
 
@@ -91,15 +88,9 @@ namespace System.Windows.Markup.Localizer
             Stream                      target, 
             BamlLocalizationDictionary  updates
             )
-        {            
-            if (target  == null)
-            {
-                throw new ArgumentNullException("target");
-            }
-            if (updates == null)
-            {
-                throw new ArgumentNullException("updates");
-            }
+        {
+            ArgumentNullException.ThrowIfNull(target);
+            ArgumentNullException.ThrowIfNull(updates);
 
             // we duplicate the internal baml tree here because 
             // we will need to modify the tree to do generation

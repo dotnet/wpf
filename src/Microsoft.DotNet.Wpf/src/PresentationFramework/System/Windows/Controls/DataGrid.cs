@@ -1540,10 +1540,7 @@ namespace System.Windows.Controls
         /// <param name="item">The data item of the row to bring into view.</param>
         public void ScrollIntoView(object item)
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException("item");
-            }
+            ArgumentNullException.ThrowIfNull(item);
 
             ScrollIntoView(NewItemInfo(item));
         }
@@ -7859,10 +7856,7 @@ namespace System.Windows.Controls
         /// <returns></returns>
         public static Collection<DataGridColumn> GenerateColumns(IItemProperties itemProperties)
         {
-            if (itemProperties == null)
-            {
-                throw new ArgumentNullException("itemProperties");
-            }
+            ArgumentNullException.ThrowIfNull(itemProperties);
 
             Collection<DataGridColumn> columnCollection = new Collection<DataGridColumn>();
             DataGrid.GenerateColumns(

@@ -79,8 +79,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">node is null</exception>
         public override IList<IAttachedAnnotation> PreProcessNode(DependencyObject node, out bool calledProcessAnnotations)
         {
-            if (node == null)
-                throw new ArgumentNullException("node");
+            ArgumentNullException.ThrowIfNull(node);
 
             // We get the local value so we can distinguish between the property
             // being set or not.  We don't want to rely on null or String.Empty because
@@ -119,8 +118,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// </returns>
         public override IList<IAttachedAnnotation> PostProcessNode(DependencyObject node, bool childrenCalledProcessAnnotations, out bool calledProcessAnnotations)
         {
-            if (node == null)
-                throw new ArgumentNullException("node");
+            ArgumentNullException.ThrowIfNull(node);
 
             // We get the local value so we can distinguish between the property
             // being set or not.  We don't want to rely on null or String.Empty because
@@ -165,8 +163,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">node is null</exception>
         public override ContentLocator GenerateLocator(PathNode node, out bool continueGenerating)
         {
-            if (node == null)
-                throw new ArgumentNullException("node");
+            ArgumentNullException.ThrowIfNull(node);
 
             continueGenerating = true;
 
@@ -198,11 +195,8 @@ namespace MS.Internal.Annotations.Anchoring
         /// type</exception>
         public override DependencyObject ResolveLocatorPart(ContentLocatorPart locatorPart, DependencyObject startNode, out bool continueResolving)
         {
-            if (locatorPart == null)
-                throw new ArgumentNullException("locatorPart");
-
-            if (startNode == null)
-                throw new ArgumentNullException("startNode");
+            ArgumentNullException.ThrowIfNull(locatorPart);
+            ArgumentNullException.ThrowIfNull(startNode);
 
             if (DataIdElementName != locatorPart.PartType)
                 throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, locatorPart.PartType.Namespace + ":" + locatorPart.PartType.Name), "locatorPart");
@@ -300,8 +294,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">d is null</exception>
         public static void SetDataId(DependencyObject d, String id)
         {
-            if (d == null)
-                throw new ArgumentNullException("d");
+            ArgumentNullException.ThrowIfNull(d);
 
             d.SetValue(DataIdProperty, id);
         }
@@ -316,8 +309,7 @@ namespace MS.Internal.Annotations.Anchoring
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public static String GetDataId(DependencyObject d)
         {
-            if (d == null)
-                throw new ArgumentNullException("d");
+            ArgumentNullException.ThrowIfNull(d);
 
             return d.GetValue(DataIdProperty) as String;
         }
@@ -343,8 +335,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">d is null</exception>
         public static void SetFetchAnnotationsAsBatch(DependencyObject d, bool id)
         {
-            if (d == null)
-                throw new ArgumentNullException("d");
+            ArgumentNullException.ThrowIfNull(d);
 
             d.SetValue(FetchAnnotationsAsBatchProperty, id);
         }
@@ -360,8 +351,7 @@ namespace MS.Internal.Annotations.Anchoring
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public static bool GetFetchAnnotationsAsBatch(DependencyObject d)
         {
-            if (d == null)
-                throw new ArgumentNullException("d");
+            ArgumentNullException.ThrowIfNull(d);
 
             return (bool)d.GetValue(FetchAnnotationsAsBatchProperty);
         }

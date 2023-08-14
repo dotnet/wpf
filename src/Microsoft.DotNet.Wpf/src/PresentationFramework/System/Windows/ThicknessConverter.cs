@@ -130,15 +130,8 @@ namespace System.Windows
         /// <param name="destinationType">The type to which to convert the Thickness instance. </param>
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value, Type destinationType)
         {
-            if (null == value)
-            {
-                throw new ArgumentNullException("value");
-            }
-
-            if (null == destinationType)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(value);
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             if (!(value is Thickness))
             {

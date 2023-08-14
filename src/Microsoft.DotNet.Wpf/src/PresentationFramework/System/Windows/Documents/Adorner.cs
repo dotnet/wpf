@@ -44,8 +44,7 @@ namespace System.Windows.Documents
         /// </summary>
         protected Adorner(UIElement adornedElement)
         {
-            if (adornedElement == null)
-                throw new ArgumentNullException("adornedElement");
+            ArgumentNullException.ThrowIfNull(adornedElement);
 
             _adornedElement = adornedElement;
             _isClipEnabled = false;

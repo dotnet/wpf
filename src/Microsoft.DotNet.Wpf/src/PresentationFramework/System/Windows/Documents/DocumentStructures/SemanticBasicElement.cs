@@ -65,10 +65,7 @@ namespace System.Windows.Documents.DocumentStructures
 
         public void Add(BlockElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
             ((IAddChild) this).AddChild(element);
         }
         
@@ -114,10 +111,7 @@ namespace System.Windows.Documents.DocumentStructures
 
         public void Add(NamedElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
             ((IAddChild) this).AddChild(element);
         }
         
@@ -174,10 +168,7 @@ namespace System.Windows.Documents.DocumentStructures
         
         public void Add(NamedElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
             ((IAddChild) this).AddChild(element);
         }
         
@@ -207,10 +198,7 @@ namespace System.Windows.Documents.DocumentStructures
 
         public void Add(ListItemStructure listItem)
         {
-            if (listItem == null)
-            {
-                throw new ArgumentNullException(nameof(listItem));
-            }
+            ArgumentNullException.ThrowIfNull(listItem);
             ((IAddChild) this).AddChild(listItem);
         }
         
@@ -252,10 +240,7 @@ namespace System.Windows.Documents.DocumentStructures
 
         public void Add(BlockElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
             ((IAddChild) this).AddChild(element);
         }
 
@@ -309,10 +294,7 @@ namespace System.Windows.Documents.DocumentStructures
 
         public void Add(TableRowGroupStructure tableRowGroup)
         {
-            if (tableRowGroup == null)
-            {
-                throw new ArgumentNullException(nameof(tableRowGroup));
-            }
+            ArgumentNullException.ThrowIfNull(tableRowGroup);
             ((IAddChild) this).AddChild(tableRowGroup);
         }
         
@@ -354,10 +336,7 @@ namespace System.Windows.Documents.DocumentStructures
 
         public void Add(TableRowStructure tableRow)
         {
-            if (tableRow == null)
-            {
-                throw new ArgumentNullException(nameof(tableRow));
-            }
+            ArgumentNullException.ThrowIfNull(tableRow);
             ((IAddChild) this).AddChild(tableRow);
         }
         
@@ -400,10 +379,7 @@ namespace System.Windows.Documents.DocumentStructures
 
         public void Add(TableCellStructure tableCell)
         {
-            if (tableCell == null)
-            {
-                throw new ArgumentNullException(nameof(tableCell));
-            }
+            ArgumentNullException.ThrowIfNull(tableCell);
             ((IAddChild) this).AddChild(tableCell);
         }
     
@@ -447,10 +423,7 @@ namespace System.Windows.Documents.DocumentStructures
 
         public void Add(BlockElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
             ((IAddChild) this).AddChild(element);
         }
         

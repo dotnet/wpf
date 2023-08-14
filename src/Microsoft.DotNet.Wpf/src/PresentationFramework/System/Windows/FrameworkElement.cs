@@ -463,10 +463,7 @@ namespace System.Windows
         /// </summary>
         public void BeginStoryboard(Storyboard storyboard, HandoffBehavior handoffBehavior, bool isControllable)
         {
-            if( storyboard == null )
-            {
-                throw new ArgumentNullException("storyboard");
-            }
+            ArgumentNullException.ThrowIfNull(storyboard);
 
             // Storyboard.Begin is a public API and needs to be validating handoffBehavior anyway.
 
@@ -834,10 +831,7 @@ namespace System.Windows
             // Verify Context Access
             // VerifyAccess();
 
-            if (resourceKey == null)
-            {
-                throw new ArgumentNullException("resourceKey");
-            }
+            ArgumentNullException.ThrowIfNull(resourceKey);
 
             object resource = FrameworkElement.FindResourceInternal(this, null /* fce */, resourceKey);
 
@@ -865,10 +859,7 @@ namespace System.Windows
             // Verify Context Access
             // VerifyAccess();
 
-            if (resourceKey == null)
-            {
-                throw new ArgumentNullException("resourceKey");
-            }
+            ArgumentNullException.ThrowIfNull(resourceKey);
 
             object resource = FrameworkElement.FindResourceInternal(this, null /* fce */, resourceKey);
 
@@ -3703,7 +3694,7 @@ namespace System.Windows
         /// <seealso cref="DockPanel.DockProperty" />
         public static FlowDirection GetFlowDirection(DependencyObject element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             return (FlowDirection)element.GetValue(FlowDirectionProperty);
         }
 
@@ -3713,7 +3704,7 @@ namespace System.Windows
         /// <seealso cref="DockPanel.DockProperty" />
         public static void SetFlowDirection(DependencyObject element, FlowDirection value)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(FlowDirectionProperty, value);
         }
 
@@ -5317,10 +5308,7 @@ namespace System.Windows
         /// <returns> Returns true if focus is moved successfully. Returns false if there is no next element</returns>
         public sealed override bool MoveFocus(TraversalRequest request)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException("request");
-            }
+            ArgumentNullException.ThrowIfNull(request);
 
             return KeyboardNavigation.Current.Navigate(this, request);
         }

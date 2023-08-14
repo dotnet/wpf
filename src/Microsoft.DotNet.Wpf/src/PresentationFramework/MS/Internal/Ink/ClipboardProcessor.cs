@@ -56,10 +56,7 @@ namespace MS.Internal.Ink
 
         internal ClipboardProcessor(InkCanvas inkCanvas)
         {
-            if ( inkCanvas == null )
-            {
-                throw new ArgumentNullException("inkCanvas");
-            }
+            ArgumentNullException.ThrowIfNull(inkCanvas);
 
             _inkCanvas = inkCanvas;
 

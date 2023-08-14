@@ -615,10 +615,7 @@ namespace System.Windows.Controls
         /// <returns>The element if found, null otherwise.</returns>
         public FrameworkElement GetCellContent(object dataItem)
         {
-            if (dataItem == null)
-            {
-                throw new ArgumentNullException("dataItem");
-            }
+            ArgumentNullException.ThrowIfNull(dataItem);
 
             if (_dataGridOwner != null)
             {
@@ -639,10 +636,7 @@ namespace System.Windows.Controls
         /// <returns>The element if found, null otherwise.</returns>
         public FrameworkElement GetCellContent(DataGridRow dataGridRow)
         {
-            if (dataGridRow == null)
-            {
-                throw new ArgumentNullException("dataGridRow");
-            }
+            ArgumentNullException.ThrowIfNull(dataGridRow);
 
             if (_dataGridOwner != null)
             {

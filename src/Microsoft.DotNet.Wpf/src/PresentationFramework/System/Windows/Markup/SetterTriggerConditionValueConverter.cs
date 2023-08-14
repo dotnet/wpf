@@ -92,14 +92,8 @@ namespace System.Windows.Markup
         internal static object ResolveValue(ITypeDescriptorContext serviceProvider,
             DependencyProperty property, CultureInfo culture, object source)
         {
-            if (serviceProvider == null)
-            {
-                throw new ArgumentNullException("serviceProvider");
-            }
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
+            ArgumentNullException.ThrowIfNull(serviceProvider);
+            ArgumentNullException.ThrowIfNull(source);
 
             // Only need to type convert strings and byte[]
             if (!(source is byte[] || source is String || source is Stream))

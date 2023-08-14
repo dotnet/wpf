@@ -50,12 +50,9 @@ namespace System.Windows
         /// </remarks>
         public Condition( DependencyProperty conditionProperty, object conditionValue, string sourceName )
         {
-            if(conditionProperty == null)
-            {
-                throw new ArgumentNullException(nameof(conditionProperty));
-            }
+            ArgumentNullException.ThrowIfNull(conditionProperty);
 
-            if(!conditionProperty.IsValidValue(conditionValue))
+            if (!conditionProperty.IsValidValue(conditionValue))
             {
                 throw new ArgumentException(SR.Format(SR.InvalidPropertyValue, conditionValue, conditionProperty.Name));
             }
@@ -71,10 +68,7 @@ namespace System.Windows
         /// </summary>
         public Condition( BindingBase binding, object conditionValue )
         {
-            if(binding == null)
-            {
-                throw new ArgumentNullException(nameof(binding));
-            }
+            ArgumentNullException.ThrowIfNull(binding);
 
             Binding = binding;
             Value  = conditionValue;
@@ -269,14 +263,8 @@ namespace System.Windows
 
         public static void ReceiveMarkupExtension(object targetObject, XamlSetMarkupExtensionEventArgs eventArgs)
         {
-            if (targetObject == null)
-            {
-                throw new ArgumentNullException(nameof(targetObject));
-            }
-            if (eventArgs == null)
-            {
-                throw new ArgumentNullException(nameof(eventArgs));
-            }
+            ArgumentNullException.ThrowIfNull(targetObject);
+            ArgumentNullException.ThrowIfNull(eventArgs);
 
             Condition condition = targetObject as Condition;
             if (condition != null && eventArgs.Member.Name == "Binding" && eventArgs.MarkupExtension is BindingBase)
@@ -294,10 +282,7 @@ namespace System.Windows
             {
                 throw new ArgumentNullException(nameof(targetObject));
             }
-            if (eventArgs == null)
-            {
-                throw new ArgumentNullException(nameof(eventArgs));
-            }
+            ArgumentNullException.ThrowIfNull(eventArgs);
 
             if (eventArgs.Member.Name == "Property")
             {

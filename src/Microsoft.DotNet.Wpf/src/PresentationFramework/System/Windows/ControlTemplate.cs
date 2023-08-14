@@ -62,10 +62,7 @@ namespace System.Windows.Controls
         protected override void ValidateTemplatedParent(FrameworkElement templatedParent)
         {
             // Must have a non-null feTemplatedParent
-            if (templatedParent == null)
-            {
-                throw new ArgumentNullException("templatedParent");
-            }
+            ArgumentNullException.ThrowIfNull(templatedParent);
 
             // The target type of a ControlTemplate must match the 
             // type of the Control that it is being applied to

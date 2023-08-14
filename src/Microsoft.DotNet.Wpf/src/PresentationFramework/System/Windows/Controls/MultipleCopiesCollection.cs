@@ -241,20 +241,14 @@ namespace System.Windows.Controls
 
         public bool Contains(object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             return _item == value;
         }
 
         public int IndexOf(object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             return (_item == value) ? 0 : -1;
         }

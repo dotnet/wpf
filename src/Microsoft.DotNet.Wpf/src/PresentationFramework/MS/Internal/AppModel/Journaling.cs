@@ -539,8 +539,7 @@ namespace MS.Internal.AppModel
         //
         internal override void RestoreState(object contentObject)
         {
-            if (contentObject == null)
-                throw new ArgumentNullException("contentObject");
+            ArgumentNullException.ThrowIfNull(contentObject);
 
             PageFunctionBase pageFunction = (PageFunctionBase)contentObject;
 

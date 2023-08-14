@@ -77,10 +77,7 @@ namespace System.Windows
             get { return _property; }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
                 _property = value;
             }
         }
@@ -94,10 +91,7 @@ namespace System.Windows
             get { return _converter; }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
                 _converter = value;
             }
         }

@@ -90,14 +90,8 @@ namespace System.Windows.Documents
         // Used for fine-grained control by IMEs.
         internal TextRange(ITextPointer position1, ITextPointer position2, bool ignoreTextUnitBoundaries)
         {
-            if (position1 == null)
-            {
-                throw new ArgumentNullException("position1");
-            }
-            if (position2 == null)
-            {
-                throw new ArgumentNullException("position2");
-            }
+            ArgumentNullException.ThrowIfNull(position1);
+            ArgumentNullException.ThrowIfNull(position2);
 
             SetFlags(ignoreTextUnitBoundaries, Flags.IgnoreTextUnitBoundaries);
 
@@ -792,10 +786,7 @@ namespace System.Windows.Documents
         {
             Invariant.Assert(this.HasConcreteTextContainer, "Can't apply property to non-TextContainer range!");
 
-            if (formattingProperty == null)
-            {
-                throw new ArgumentNullException("formattingProperty");
-            }
+            ArgumentNullException.ThrowIfNull(formattingProperty);
 
             if (!TextSchema.IsCharacterProperty(formattingProperty) &&
                 !TextSchema.IsParagraphProperty(formattingProperty))
@@ -865,10 +856,7 @@ namespace System.Windows.Documents
         /// </returns>
         public object GetPropertyValue(DependencyProperty formattingProperty)
         {
-            if (formattingProperty == null)
-            {
-                throw new ArgumentNullException("formattingProperty");
-            }
+            ArgumentNullException.ThrowIfNull(formattingProperty);
             if (!TextSchema.IsCharacterProperty(formattingProperty) &&
                 !TextSchema.IsParagraphProperty(formattingProperty))
             {

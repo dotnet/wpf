@@ -25,14 +25,8 @@ namespace System.Windows
         /// </param>
         internal SizeChangedEventArgs(UIElement element, SizeChangedInfo info)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException("info");
-            }
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(info);
+            ArgumentNullException.ThrowIfNull(element);
             _element = element;
             _previousSize = info.PreviousSize;
             if(info.WidthChanged) _bits |= _widthChangedBit;

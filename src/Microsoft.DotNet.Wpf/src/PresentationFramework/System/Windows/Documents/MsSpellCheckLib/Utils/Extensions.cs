@@ -36,10 +36,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
         {
             var result = new List<string>();
 
-            if (enumString == null)
-            {
-                throw new ArgumentNullException(nameof(enumString));
-            }
+            ArgumentNullException.ThrowIfNull(enumString);
 
             try
             {
@@ -83,10 +80,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
             bool shouldSuppressCOMExceptions = true,
             bool shouldReleaseCOMObject = true)
         {
-            if (spellingErrors == null)
-            {
-                throw new ArgumentNullException(nameof(spellingErrors));
-            }
+            ArgumentNullException.ThrowIfNull(spellingErrors);
 
             var result = new List<SpellingError>();
 
@@ -129,10 +123,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
         /// </summary>
         internal static bool IsClean(this List<SpellingError> errors)
         {
-            if (errors == null)
-            {
-                throw new ArgumentNullException(nameof(errors));
-            }
+            ArgumentNullException.ThrowIfNull(errors);
 
             bool isClean = true;
             foreach (var error in errors)
@@ -156,10 +147,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
             bool shouldSuppressCOMExceptions = true,
             bool shouldReleaseCOMObject = true)
         {
-            if (spellingErrors == null)
-            {
-                throw new ArgumentNullException(nameof(spellingErrors));
-            }
+            ArgumentNullException.ThrowIfNull(spellingErrors);
 
             bool result = false;
 

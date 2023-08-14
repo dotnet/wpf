@@ -40,10 +40,7 @@ namespace MS.Internal.Controls
 
         internal ActiveXSite(ActiveXHost host)
         {
-            if (host == null)
-            {
-                throw new ArgumentNullException("host");
-            }
+            ArgumentNullException.ThrowIfNull(host);
             _host = host;
         }
 

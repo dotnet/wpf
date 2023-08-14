@@ -93,10 +93,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
             ValidationHelper.VerifyPosition(_textContainer, position, "position");
 
             return _owner.GetRectangleFromTextPosition(position);
@@ -115,14 +112,8 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            if (startPosition == null)
-            {
-                throw new ArgumentNullException("startPosition");
-            }
-            if (endPosition == null)
-            {
-                throw new ArgumentNullException("endPosition");
-            }
+            ArgumentNullException.ThrowIfNull(startPosition);
+            ArgumentNullException.ThrowIfNull(endPosition);
             ValidationHelper.VerifyPosition(_textContainer, startPosition, "startPosition");
             ValidationHelper.VerifyDirection(startPosition.LogicalDirection, "startPosition.LogicalDirection");
             ValidationHelper.VerifyPosition(_textContainer, endPosition, "endPosition");
@@ -146,10 +137,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
             ValidationHelper.VerifyPosition(_textContainer, position, "position");
 
             // TextBlock element does not support columns, hence suggestedX does not change
@@ -278,10 +266,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
             ValidationHelper.VerifyPosition(_textContainer, position, "position");
 
             lines = Lines;
@@ -300,10 +285,7 @@ namespace MS.Internal.Documents
         internal override bool Contains(ITextPointer position)
         {
             // Verify that layout information is valid. Cannot continue if not valid.
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
             ValidationHelper.VerifyPosition(_textContainer, position, "position");
             if (!IsValid)
             {

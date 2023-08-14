@@ -44,10 +44,7 @@ namespace System.Windows
         /// </summary>
         protected override void InsertItem(int index, ResourceDictionary item)
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException("item");
-            }
+            ArgumentNullException.ThrowIfNull(item);
 
             base.InsertItem(index, item);
         }
@@ -58,10 +55,7 @@ namespace System.Windows
         /// </summary>
         protected override void SetItem(int index, ResourceDictionary item)
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException("item");
-            }
+            ArgumentNullException.ThrowIfNull(item);
 
             base.SetItem(index, item);
         }

@@ -25,10 +25,7 @@ namespace System.Windows.Controls
         /// </remarks>
         public DataGridCellInfo(object item, DataGridColumn column)
         {
-            if (column == null)
-            {
-                throw new ArgumentNullException("column");
-            }
+            ArgumentNullException.ThrowIfNull(column);
 
             _info = new ItemsControl.ItemInfo(item);
             _column = column;
@@ -49,10 +46,7 @@ namespace System.Windows.Controls
         /// </remarks>
         public DataGridCellInfo(DataGridCell cell)
         {
-            if (cell == null)
-            {
-                throw new ArgumentNullException("cell");
-            }
+            ArgumentNullException.ThrowIfNull(cell);
 
             DataGrid owner = cell.DataGridOwner;
             _info = owner.NewItemInfo(cell.RowDataItem, cell.RowOwner);

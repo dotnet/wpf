@@ -1951,10 +1951,7 @@ namespace System.Windows.Controls
         /// <remarks>FlowDocumentScrollViewer only supports a single child of type IDocumentPaginator.</remarks>
         void IAddChild.AddChild(Object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
             // Check if Content has already been set.
             if (this.Document != null)
             {

@@ -80,8 +80,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">node is null</exception>
         public override IList<IAttachedAnnotation> PreProcessNode(DependencyObject node, out bool calledProcessAnnotations)
         {
-            if (node == null)
-                throw new ArgumentNullException("node");
+            ArgumentNullException.ThrowIfNull(node);
 
             DocumentPageView dpv = node as DocumentPageView;
 
@@ -113,8 +112,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// doesn't contain a FixedDocumentPage</exception>
         public override ContentLocator GenerateLocator(PathNode node, out bool continueGenerating)
         {
-            if (node == null)
-                throw new ArgumentNullException("node");
+            ArgumentNullException.ThrowIfNull(node);
 
             // Initial value
             continueGenerating = true;
@@ -173,11 +171,8 @@ namespace MS.Internal.Annotations.Anchoring
         /// type</exception>
         public override DependencyObject ResolveLocatorPart(ContentLocatorPart locatorPart, DependencyObject startNode, out bool continueResolving)
         {
-            if (locatorPart == null)
-                throw new ArgumentNullException("locatorPart");
-
-            if (startNode == null)
-                throw new ArgumentNullException("startNode");
+            ArgumentNullException.ThrowIfNull(locatorPart);
+            ArgumentNullException.ThrowIfNull(startNode);
 
             if (PageNumberElementName != locatorPart.PartType)
                 throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, locatorPart.PartType.Namespace + ":" + locatorPart.PartType.Name), "locatorPart");

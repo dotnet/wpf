@@ -56,10 +56,7 @@ namespace System.Windows.Documents
         /// </exception>
         public int Add(PageContent newPageContent)
         {
-            if (newPageContent == null)
-            {
-                throw new ArgumentNullException("newPageContent");
-            }
+            ArgumentNullException.ThrowIfNull(newPageContent);
 
             _logicalParent.AddLogicalChild(newPageContent);
 

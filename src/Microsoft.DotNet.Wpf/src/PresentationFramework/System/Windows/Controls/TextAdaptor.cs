@@ -573,10 +573,7 @@ namespace MS.Internal.Automation
         /// <returns>A range that spans the child element.</returns>
         ITextRangeProvider ITextProvider.RangeFromChild(IRawElementProviderSimple childElementProvider)
         {
-            if (childElementProvider == null)
-            {
-                throw new ArgumentNullException("childElementProvider");
-            }
+            ArgumentNullException.ThrowIfNull(childElementProvider);
 
             // Retrieve DependencyObject from AutomationElement
             DependencyObject childElement;

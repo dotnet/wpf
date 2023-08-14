@@ -537,10 +537,7 @@ namespace System.Windows
         /// <returns>Window</returns>
         public static Window GetWindow(DependencyObject dependencyObject)
         {
-            if (dependencyObject == null)
-            {
-                throw new ArgumentNullException("dependencyObject");
-            }
+            ArgumentNullException.ThrowIfNull(dependencyObject);
 
             // Window.IWindowServiceProperty is an internal inheritable dependency property
             // Normally this value is set to the root Window element, all the element

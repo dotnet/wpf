@@ -25,10 +25,7 @@ namespace System.Windows.Automation.Peers
         public DataGridCellAutomationPeer(DataGridCell owner)
             : base(owner)
         {
-            if (owner == null)
-            {
-                throw new ArgumentNullException("owner");
-            }
+            ArgumentNullException.ThrowIfNull(owner);
         }
 
         #endregion

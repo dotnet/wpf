@@ -382,11 +382,8 @@ namespace System.Windows
         /// <param name="resourceLocator">Resource Locator</param>
         public static void LoadComponent(Object component, Uri resourceLocator)
         {
-            if (component == null)
-                throw new ArgumentNullException("component");
-
-            if (resourceLocator == null)
-                throw new ArgumentNullException("resourceLocator");
+            ArgumentNullException.ThrowIfNull(component);
+            ArgumentNullException.ThrowIfNull(resourceLocator);
 
             if (resourceLocator.OriginalString == null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull,"resourceLocator", "OriginalString"));
@@ -475,8 +472,7 @@ namespace System.Windows
         /// <param name="resourceLocator">Resource Locator</param>
         public static object LoadComponent(Uri resourceLocator)
         {
-            if (resourceLocator == null)
-                throw new ArgumentNullException("resourceLocator");
+            ArgumentNullException.ThrowIfNull(resourceLocator);
 
             if (resourceLocator.OriginalString == null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull,"resourceLocator", "OriginalString"));
@@ -611,8 +607,7 @@ namespace System.Windows
         /// <returns>PackagePart or null</returns>
         public static StreamResourceInfo GetResourceStream(Uri uriResource)
         {
-            if (uriResource == null)
-                throw new ArgumentNullException("uriResource");
+            ArgumentNullException.ThrowIfNull(uriResource);
 
             if (uriResource.OriginalString == null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "uriResource", "OriginalString"));
@@ -644,8 +639,7 @@ namespace System.Windows
         /// <returns>PackagePart or null</returns>
         public static StreamResourceInfo GetContentStream(Uri uriContent)
         {
-            if (uriContent == null)
-                throw new ArgumentNullException("uriContent");
+            ArgumentNullException.ThrowIfNull(uriContent);
 
             if (uriContent.OriginalString == null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "uriContent", "OriginalString"));
@@ -674,8 +668,7 @@ namespace System.Windows
         {
             SiteOfOriginPart sooPart = null;
 
-            if (uriRemote == null)
-                throw new ArgumentNullException("uriRemote");
+            ArgumentNullException.ThrowIfNull(uriRemote);
 
             if (uriRemote.OriginalString == null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "uriRemote", "OriginalString"));
@@ -994,10 +987,7 @@ namespace System.Windows
             set
             {
                 VerifyAccess();
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _startupUri = value;
             }

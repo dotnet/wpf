@@ -95,10 +95,7 @@ namespace System.Windows
 
         private void CopyToWithoutLock(DictionaryEntry[] array, int arrayIndex)
         {
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             _baseDictionary.CopyTo(array, arrayIndex);
 

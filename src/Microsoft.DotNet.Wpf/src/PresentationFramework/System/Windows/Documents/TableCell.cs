@@ -71,10 +71,7 @@ namespace System.Windows.Documents
         {
             PrivateInitialize();
 
-            if (blockItem == null)
-            {
-                throw new ArgumentNullException("blockItem");
-            }
+            ArgumentNullException.ThrowIfNull(blockItem);
 
             this.Blocks.Add(blockItem);
         }

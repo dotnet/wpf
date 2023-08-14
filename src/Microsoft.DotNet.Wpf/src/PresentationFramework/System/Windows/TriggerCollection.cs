@@ -137,10 +137,7 @@ namespace System.Windows
 
         private void TriggerBaseValidation(TriggerBase triggerBase)
         {
-            if (triggerBase == null)
-            {
-                throw new ArgumentNullException("triggerBase");
-            }
+            ArgumentNullException.ThrowIfNull(triggerBase);
         }
 
         // Called by GenericCollection.tb when a trigger is added to the collection.

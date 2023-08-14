@@ -49,10 +49,7 @@ namespace System.Windows.Documents
         public BlockUIContainer(UIElement uiElement)
             : base()
         {
-            if (uiElement == null)
-            {
-                throw new ArgumentNullException("uiElement");
-            }
+            ArgumentNullException.ThrowIfNull(uiElement);
             this.Child = uiElement;
         }
 

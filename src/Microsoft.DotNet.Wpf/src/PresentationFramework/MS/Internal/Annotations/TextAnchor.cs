@@ -102,10 +102,7 @@ namespace System.Windows.Annotations
         /// <param name="textPointer">text pointer to test</param>
         internal bool Contains(ITextPointer textPointer)
         {
-            if (textPointer == null)
-            {
-                throw new ArgumentNullException("textPointer");
-            }
+            ArgumentNullException.ThrowIfNull(textPointer);
 
             if (textPointer.TextContainer != this.Start.TextContainer)
             {

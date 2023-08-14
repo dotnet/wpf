@@ -40,10 +40,7 @@ namespace System.Windows.Markup
         public BamlWriter(
             Stream stream)
         {
-            if (null == stream)
-            {
-                throw new ArgumentNullException( "stream" );
-            }
+            ArgumentNullException.ThrowIfNull(stream);
             if (!stream.CanWrite)
             {
                 throw new ArgumentException(SR.BamlWriterBadStream);

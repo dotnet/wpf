@@ -25,20 +25,9 @@ namespace System.Windows.Markup.Localizer
             string assemblyName
             )
         {
-            if (uid == null)
-            {
-                throw new ArgumentNullException("uid");
-            }
-
-            if (className == null)
-            {
-                throw new ArgumentNullException("className");
-            }
-
-            if (propertyName == null)
-            {
-                throw new ArgumentNullException("propertyName");
-            }
+            ArgumentNullException.ThrowIfNull(uid);
+            ArgumentNullException.ThrowIfNull(className);
+            ArgumentNullException.ThrowIfNull(propertyName);
 
             _uid          = uid;
             _className    = className;

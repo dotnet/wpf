@@ -93,12 +93,9 @@ namespace System.Windows
             }
             set
             {
-                if ( value == null )
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
-                if( IsSealed )
+                if ( IsSealed )
                 {
                     throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "EventTrigger"));
                 }

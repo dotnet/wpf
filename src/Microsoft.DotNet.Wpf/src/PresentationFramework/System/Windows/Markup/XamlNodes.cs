@@ -431,15 +431,9 @@ namespace System.Windows.Markup
                         linePosition,
                         depth)
             {
-                if (typeFullName == null)
-                {
-                    throw new ArgumentNullException("typeFullName");
-                }
-                if (propertyName == null)
-                {
-                    throw new ArgumentNullException("propertyName");
-                }
-                
+                ArgumentNullException.ThrowIfNull(typeFullName);
+                ArgumentNullException.ThrowIfNull(propertyName);
+
                 _propertyMember = propertyMember;
                 _assemblyName = assemblyName;
                 _typeFullName = typeFullName;
@@ -2210,15 +2204,9 @@ namespace System.Windows.Markup
                         linePosition,
                         depth)
             {
-                if (typeFullName == null)
-                {
-                    throw new ArgumentNullException("typeFullName");
-                }
-                if (propertyName == null)
-                {
-                    throw new ArgumentNullException("propertyName");
-                }
-                
+                ArgumentNullException.ThrowIfNull(typeFullName);
+                ArgumentNullException.ThrowIfNull(propertyName);
+
                 _propertyMember = propertyMember;
                 _assemblyName = assemblyName;
                 _typeFullName = typeFullName;

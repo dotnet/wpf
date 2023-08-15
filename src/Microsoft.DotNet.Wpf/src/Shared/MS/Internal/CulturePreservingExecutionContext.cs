@@ -148,10 +148,7 @@ namespace MS.Internal
         /// </remarks>
         public static void Run(CulturePreservingExecutionContext executionContext, ContextCallback callback, object state)
         {
-            if (executionContext == null)
-            {
-                throw new ArgumentNullException(nameof(executionContext));
-            }
+            ArgumentNullException.ThrowIfNull(executionContext);
 
             if (callback == null) return; // Bail out early if callback is null
 

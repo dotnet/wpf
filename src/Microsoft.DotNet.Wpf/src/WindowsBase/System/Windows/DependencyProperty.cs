@@ -244,25 +244,16 @@ namespace System.Windows
 
         private static void RegisterParameterValidation(string name, Type propertyType, Type ownerType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
+            ArgumentNullException.ThrowIfNull(name);
 
             if (name.Length == 0)
             {
                 throw new ArgumentException(SR.StringEmpty, "name");
             }
 
-            if (ownerType == null)
-            {
-                throw new ArgumentNullException("ownerType");
-            }
+            ArgumentNullException.ThrowIfNull(ownerType);
 
-            if (propertyType == null)
-            {
-                throw new ArgumentNullException("propertyType");
-            }
+            ArgumentNullException.ThrowIfNull(propertyType);
         }
 
         private static DependencyProperty RegisterCommon(string name, Type propertyType, Type ownerType, PropertyMetadata defaultMetadata, ValidateValueCallback validateValueCallback)
@@ -468,15 +459,9 @@ namespace System.Windows
             out DependencyObjectType dType,
             out PropertyMetadata baseMetadata )
         {
-            if (forType == null)
-            {
-                throw new ArgumentNullException("forType");
-            }
+            ArgumentNullException.ThrowIfNull(forType);
 
-            if (typeMetadata == null)
-            {
-                throw new ArgumentNullException("typeMetadata");
-            }
+            ArgumentNullException.ThrowIfNull(typeMetadata);
 
             if (typeMetadata.Sealed)
             {
@@ -547,10 +532,7 @@ namespace System.Windows
 
             SetupOverrideMetadata(forType, typeMetadata, out dType, out baseMetadata);
 
-            if (key == null)
-            {
-                throw new ArgumentNullException("key");
-            }
+            ArgumentNullException.ThrowIfNull(key);
 
             if (ReadOnly)
             {
@@ -783,10 +765,7 @@ namespace System.Windows
         /// <returns>This property</returns>
         public DependencyProperty AddOwner(Type ownerType, PropertyMetadata typeMetadata)
         {
-            if (ownerType == null)
-            {
-                throw new ArgumentNullException("ownerType");
-            }
+            ArgumentNullException.ThrowIfNull(ownerType);
 
             // Map owner type to this property
             // Build key

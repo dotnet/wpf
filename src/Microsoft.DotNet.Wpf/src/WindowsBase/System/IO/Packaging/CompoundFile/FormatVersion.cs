@@ -70,14 +70,10 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                                 VersionPair readerVersion,
                                 VersionPair updaterVersion)
         {
-            if (featureId == null)
-                throw new ArgumentNullException("featureId");
-            if (writerVersion == null)
-                throw new ArgumentNullException("writerVersion");
-            if (readerVersion == null)
-                throw new ArgumentNullException("readerVersion");
-            if (updaterVersion == null)
-                throw new ArgumentNullException("updaterVersion");
+            ArgumentNullException.ThrowIfNull(featureId);
+            ArgumentNullException.ThrowIfNull(writerVersion);
+            ArgumentNullException.ThrowIfNull(readerVersion);
+            ArgumentNullException.ThrowIfNull(updaterVersion);
 
             if (featureId.Length == 0)
             {
@@ -113,10 +109,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _reader = value;
             }
@@ -133,10 +126,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _writer = value;
             }
@@ -154,10 +144,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _updater = value;
             }
@@ -377,10 +364,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// </remarks>
         public bool IsReadableBy(VersionPair version)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException("version");
-            }
+            ArgumentNullException.ThrowIfNull(version);
 
             return (_reader <= version);
         }
@@ -396,10 +380,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// </remarks>
         public bool IsUpdatableBy(VersionPair version)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException("version");
-            }
+            ArgumentNullException.ThrowIfNull(version);
 
             return (_updater <= version);
         }
@@ -446,10 +427,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             checked
             {
-                if (reader == null)
-                {
-                    throw new ArgumentNullException("reader");
-                }
+                ArgumentNullException.ThrowIfNull(reader);
 
                 FormatVersion ver = new FormatVersion();
 
@@ -518,10 +496,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// </remarks>
         internal static FormatVersion LoadFromStream(Stream stream, out Int32 bytesRead)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
             // Suppress 56518 Local IDisposable object not disposed: 
             // Reason: The stream is not owned by the BlockManager, therefore we can 
             // close the BinaryWriter as it will Close the stream underneath.

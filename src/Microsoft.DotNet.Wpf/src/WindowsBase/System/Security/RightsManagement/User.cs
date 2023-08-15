@@ -39,10 +39,7 @@ namespace System.Security.RightsManagement
         public ContentUser(string name, AuthenticationType authenticationType)
         {
 
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
+            ArgumentNullException.ThrowIfNull(name);
 
             if (name.Trim().Length == 0)
             {

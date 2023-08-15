@@ -21,10 +21,7 @@ namespace System.Xaml.Replacements
         /// <inheritdoc />
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
-            if (sourceType == null)
-            {
-                throw new ArgumentNullException(nameof(sourceType));
-            }
+            ArgumentNullException.ThrowIfNull(sourceType);
 
             return sourceType == typeof(string) || sourceType == typeof(Uri);
         }

@@ -46,8 +46,7 @@ namespace System.Windows
         /// </summary>
         public static void AddHandler(TEventSource source, string eventName, EventHandler<TEventArgs> handler)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager(eventName).ProtectedAddHandler(source, handler);
         }
@@ -57,8 +56,7 @@ namespace System.Windows
         /// </summary>
         public static void RemoveHandler(TEventSource source, string eventName, EventHandler<TEventArgs> handler)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager(eventName).ProtectedRemoveHandler(source, handler);
         }

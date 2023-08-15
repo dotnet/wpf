@@ -206,10 +206,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                                                         UnsafeNativeCompoundFileMethods.UnsafeLockBytesOnStream lockBytesStream)
             {
 
-                if (storage == null)
-                {
-                    throw new ArgumentNullException("storage");
-                }
+                ArgumentNullException.ThrowIfNull(storage);
 
                 _unsafeStorage = storage;
                 _unsafePropertySetStorage = (UnsafeNativeCompoundFileMethods.UnsafeNativeIPropertySetStorage) _unsafeStorage;

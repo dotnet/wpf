@@ -200,11 +200,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <param name="versionOwner"></param>
         internal VersionedStream(Stream baseStream, VersionedStreamOwner versionOwner)
         {
-            if (baseStream == null)
-                throw new ArgumentNullException("baseStream");
+            ArgumentNullException.ThrowIfNull(baseStream);
 
-            if (versionOwner == null)
-                throw new ArgumentNullException("versionOwner");
+            ArgumentNullException.ThrowIfNull(versionOwner);
 
             _stream = baseStream;
             _versionOwner = versionOwner;
@@ -221,8 +219,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <param name="baseStream"></param>
         protected VersionedStream(Stream baseStream)
         {
-            if (baseStream == null)
-                throw new ArgumentNullException("baseStream");
+            ArgumentNullException.ThrowIfNull(baseStream);
 
             _stream = baseStream;
 

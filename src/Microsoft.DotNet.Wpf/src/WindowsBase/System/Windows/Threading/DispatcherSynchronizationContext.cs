@@ -39,11 +39,8 @@ namespace System.Windows.Threading
         /// </summary>
         public DispatcherSynchronizationContext(Dispatcher dispatcher, DispatcherPriority priority)
         {
-            if(dispatcher == null)
-            {
-                throw new ArgumentNullException("dispatcher");
-            }
-            
+            ArgumentNullException.ThrowIfNull(dispatcher);
+
             Dispatcher.ValidatePriority(priority, "priority");
             
             _dispatcher = dispatcher;

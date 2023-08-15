@@ -49,11 +49,8 @@ namespace System.Windows.Threading
         /// </param>
         public DispatcherTimer(DispatcherPriority priority, Dispatcher dispatcher)  // NOTE: should be Priority
         {
-            if(dispatcher == null)
-            {
-                throw new ArgumentNullException("dispatcher");
-            }
-            
+            ArgumentNullException.ThrowIfNull(dispatcher);
+
             Initialize(dispatcher, priority, TimeSpan.FromMilliseconds(0));
         }
 
@@ -76,14 +73,8 @@ namespace System.Windows.Threading
         /// </param>
         public DispatcherTimer(TimeSpan interval, DispatcherPriority priority, EventHandler callback, Dispatcher dispatcher) // NOTE: should be Priority
         {
-            if(callback == null)
-            {
-                throw new ArgumentNullException("callback");
-            }
-            if(dispatcher == null)
-            {
-                throw new ArgumentNullException("dispatcher");
-            }
+            ArgumentNullException.ThrowIfNull(callback);
+            ArgumentNullException.ThrowIfNull(dispatcher);
 
             if (interval.TotalMilliseconds < 0)
                 throw new ArgumentOutOfRangeException("interval", SR.TimeSpanPeriodOutOfRange_TooSmall);

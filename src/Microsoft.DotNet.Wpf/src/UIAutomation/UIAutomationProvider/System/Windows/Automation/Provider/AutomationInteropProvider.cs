@@ -76,10 +76,7 @@ namespace System.Windows.Automation.Provider
         public static IntPtr ReturnRawElementProvider (IntPtr hwnd, IntPtr wParam, IntPtr lParam, IRawElementProviderSimple el )
         {
             ValidateArgument( hwnd != IntPtr.Zero, nameof(SR.HwndMustBeNonNULL));
-            if (el == null)
-            {
-                throw new ArgumentNullException("el");
-            }
+            ArgumentNullException.ThrowIfNull(el);
 
             return UiaCoreProviderApi.UiaReturnRawElementProvider(hwnd, wParam, lParam, el);
         }
@@ -102,14 +99,8 @@ namespace System.Windows.Automation.Provider
         /// <param name="e">Contains information about the property that changed.</param>
         public static void RaiseAutomationPropertyChangedEvent(IRawElementProviderSimple element, AutomationPropertyChangedEventArgs e)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-            if (e == null)
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(element);
+            ArgumentNullException.ThrowIfNull(e);
 
             // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
             // False positive, e is checked, see above
@@ -126,18 +117,9 @@ namespace System.Windows.Automation.Provider
         /// <param name="e">Contains information about the event (may be null).</param>
         public static void RaiseAutomationEvent(AutomationEvent eventId, IRawElementProviderSimple provider, AutomationEventArgs e)
         {
-            if (eventId == null)
-            {
-                throw new ArgumentNullException("eventId");
-            }
-            if (provider == null)
-            {
-                throw new ArgumentNullException("provider");
-            }
-            if (e == null)
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(eventId);
+            ArgumentNullException.ThrowIfNull(provider);
+            ArgumentNullException.ThrowIfNull(e);
 
             // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
             // False positive, e is checked, see above
@@ -202,14 +184,8 @@ namespace System.Windows.Automation.Provider
         /// <param name="e">Contains information about the event.</param>
         public static void RaiseStructureChangedEvent(IRawElementProviderSimple provider, StructureChangedEventArgs e)
         {
-            if (provider == null)
-            {
-                throw new ArgumentNullException("provider");
-            }
-            if (e == null)
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(provider);
+            ArgumentNullException.ThrowIfNull(e);
 
             // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
             // False positive, e is checked, see above

@@ -291,7 +291,6 @@ namespace System.Windows.Automation
         public AutomationElement Normalize(AutomationElement element, CacheRequest request)
         {
             ArgumentNullException.ThrowIfNull(element);
-
             ArgumentNullException.ThrowIfNull(request);
             return element.Normalize(_condition, request);
         }

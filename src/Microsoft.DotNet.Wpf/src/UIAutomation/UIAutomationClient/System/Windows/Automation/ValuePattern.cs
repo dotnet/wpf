@@ -72,10 +72,7 @@ namespace System.Windows.Automation
         /// <param name="value">Value to set the UI to, the provider is responsible for converting from a string into the appropriate data type</param>
         public void SetValue( string value )
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             // Test the Enabled state prior to the more general Read-Only state.            
             object enabled = _el.GetCurrentPropertyValue(AutomationElementIdentifiers.IsEnabledProperty);

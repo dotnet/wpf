@@ -35,11 +35,7 @@ namespace System.Windows.Automation
         /// <param name="condition">Condition defining the view - nodes that do not satisfy this condition are skipped over</param>
         public TreeWalker(Condition condition)
         {
-            if (condition == null)
-            {
-                throw new ArgumentNullException("condition");
-            }
-
+            ArgumentNullException.ThrowIfNull(condition);
             _condition = condition;
         }
 
@@ -91,11 +87,7 @@ namespace System.Windows.Automation
         /// are skipped over</remarks>
         public AutomationElement GetParent(AutomationElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-
+            ArgumentNullException.ThrowIfNull(element);
             return element.Navigate(NavigateDirection.Parent, _condition, null);
         }
 
@@ -110,11 +102,7 @@ namespace System.Windows.Automation
         /// are skipped over</remarks>
         public AutomationElement GetFirstChild(AutomationElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-
+            ArgumentNullException.ThrowIfNull(element);
             return element.Navigate(NavigateDirection.FirstChild, _condition, null);
         }
 
@@ -129,11 +117,7 @@ namespace System.Windows.Automation
         /// are skipped over</remarks>
         public AutomationElement GetLastChild(AutomationElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-
+            ArgumentNullException.ThrowIfNull(element);
             return element.Navigate(NavigateDirection.LastChild, _condition, null);
         }
 
@@ -148,11 +132,7 @@ namespace System.Windows.Automation
         /// are skipped over</remarks>
         public AutomationElement GetNextSibling(AutomationElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-
+            ArgumentNullException.ThrowIfNull(element);
             return element.Navigate(NavigateDirection.NextSibling, _condition, null);
         }
 
@@ -167,11 +147,7 @@ namespace System.Windows.Automation
         /// are skipped over</remarks>
         public AutomationElement GetPreviousSibling(AutomationElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-
+            ArgumentNullException.ThrowIfNull(element);
             return element.Navigate(NavigateDirection.PreviousSibling, _condition, null);
         }
 
@@ -196,11 +172,7 @@ namespace System.Windows.Automation
         /// </remarks>
         public AutomationElement Normalize(AutomationElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-
+            ArgumentNullException.ThrowIfNull(element);
             return element.Normalize(_condition, null);
         }
 
@@ -218,16 +190,8 @@ namespace System.Windows.Automation
         /// are skipped over</remarks>
         public AutomationElement GetParent(AutomationElement element, CacheRequest request)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-
-            if (request == null)
-            {
-                throw new ArgumentNullException("request");
-            }
-
+            ArgumentNullException.ThrowIfNull(element);
+            ArgumentNullException.ThrowIfNull(request);
             return element.Navigate(NavigateDirection.Parent, _condition, request);
         }
 
@@ -244,16 +208,8 @@ namespace System.Windows.Automation
         /// are skipped over</remarks>
         public AutomationElement GetFirstChild(AutomationElement element, CacheRequest request)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-
-            if (request == null)
-            {
-                throw new ArgumentNullException("request");
-            }
-
+            ArgumentNullException.ThrowIfNull(element);
+            ArgumentNullException.ThrowIfNull(request);
             return element.Navigate(NavigateDirection.FirstChild, _condition, request);
         }
 
@@ -270,16 +226,8 @@ namespace System.Windows.Automation
         /// are skipped over</remarks>
         public AutomationElement GetLastChild(AutomationElement element, CacheRequest request)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-
-            if (request == null)
-            {
-                throw new ArgumentNullException("request");
-            }
-
+            ArgumentNullException.ThrowIfNull(element);
+            ArgumentNullException.ThrowIfNull(request);
             return element.Navigate(NavigateDirection.LastChild, _condition, request);
         }
 
@@ -296,16 +244,8 @@ namespace System.Windows.Automation
         /// are skipped over</remarks>
         public AutomationElement GetNextSibling(AutomationElement element, CacheRequest request)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-
-            if (request == null)
-            {
-                throw new ArgumentNullException("request");
-            }
-
+            ArgumentNullException.ThrowIfNull(element);
+            ArgumentNullException.ThrowIfNull(request);
             return element.Navigate(NavigateDirection.NextSibling, _condition, request);
         }
 
@@ -322,16 +262,8 @@ namespace System.Windows.Automation
         /// are skipped over</remarks>
         public AutomationElement GetPreviousSibling(AutomationElement element, CacheRequest request)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-
-            if (request == null)
-            {
-                throw new ArgumentNullException("request");
-            }
-
+            ArgumentNullException.ThrowIfNull(element);
+            ArgumentNullException.ThrowIfNull(request);
             return element.Navigate(NavigateDirection.PreviousSibling, _condition, request);
         }
 
@@ -358,16 +290,9 @@ namespace System.Windows.Automation
         /// </remarks>
         public AutomationElement Normalize(AutomationElement element, CacheRequest request)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
-            if (request == null)
-            {
-                throw new ArgumentNullException("request");
-            }
-
+            ArgumentNullException.ThrowIfNull(request);
             return element.Normalize(_condition, request);
         }
 

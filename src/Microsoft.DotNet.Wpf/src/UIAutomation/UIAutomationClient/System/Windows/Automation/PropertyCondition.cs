@@ -122,10 +122,7 @@ namespace System.Windows.Automation
 
         void Init(AutomationProperty property, object val, PropertyConditionFlags flags )
         {
-            if (property == null)
-            {
-                throw new ArgumentNullException("property");
-            }
+            ArgumentNullException.ThrowIfNull(property);
 
             AutomationPropertyInfo info;
             if (!Schema.GetPropertyInfo(property, out info))

@@ -177,15 +177,8 @@ namespace System.Windows.Automation.Text
         /// <returns>A subrange with the specified attribute, or null if no such subrange exists.</returns>
         public TextPatternRange FindAttribute(AutomationTextAttribute attribute, object value, bool backward)
         {
-            if (attribute == null)
-            {
-                throw new ArgumentNullException("attribute");
-            }
-
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(attribute);
+            ArgumentNullException.ThrowIfNull(value);
 
             // Check that attribute value is of expected type...
             AutomationAttributeInfo ai;
@@ -226,11 +219,7 @@ namespace System.Windows.Automation.Text
             // PerSharp/PreFast will flag this as warning 6507/56507: Prefer 'string.IsNullOrEmpty(text)' over checks for null and/or emptiness.
             // A null string is not should throw an ArgumentNullException while an empty string should throw an ArgumentException.
             // Therefore we can not use IsNullOrEmpty() here, suppress the warning.
-            if (text == null)
-            {
-                throw new ArgumentNullException("text");
-            }
-
+            ArgumentNullException.ThrowIfNull(text);
 #pragma warning suppress 6507
             Misc.ValidateArgument(text.Length != 0, nameof(SR.TextMustNotBeNullOrEmpty));
 
@@ -246,10 +235,7 @@ namespace System.Windows.Automation.Text
         /// If the attribute's value varies over the range then the value is TextPattern.MixedAttributeValue</returns>
         public object GetAttributeValue(AutomationTextAttribute attribute)
         {
-            if (attribute == null)
-            {
-                throw new ArgumentNullException("attribute");
-            }
+            ArgumentNullException.ThrowIfNull(attribute);
 
             AutomationAttributeInfo ai;
             if(!Schema.GetAttributeInfo(attribute, out ai))

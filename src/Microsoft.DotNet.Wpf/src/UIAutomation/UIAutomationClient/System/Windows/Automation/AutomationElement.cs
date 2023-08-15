@@ -459,7 +459,10 @@ namespace System.Windows.Automation
         /// </remarks>
         public static AutomationElement FromLocalProvider(IRawElementProviderSimple localImpl)
         {
-            Misc.ValidateArgumentNonNull(localImpl, "localImpl");
+            if (localImpl == null)
+            {
+                throw new ArgumentNullException("localImpl");
+            }
 
             return AutomationElement.Wrap(UiaCoreApi.UiaNodeFromProvider(localImpl));
         }
@@ -502,7 +505,11 @@ namespace System.Windows.Automation
         /// </remarks>
         public object GetCurrentPropertyValue(AutomationProperty property, bool ignoreDefaultValue)
         {
-            Misc.ValidateArgumentNonNull(property, "property");
+            if (property == null)
+            {
+                throw new ArgumentNullException("property");
+            }
+
             CheckElement();
 
             AutomationPropertyInfo pi;
@@ -585,7 +592,11 @@ namespace System.Windows.Automation
         public bool TryGetCurrentPattern(AutomationPattern pattern, out object patternObject)
         {
             patternObject = null;
-            Misc.ValidateArgumentNonNull(pattern, "pattern");
+            if (pattern == null)
+            {
+                throw new ArgumentNullException("pattern");
+            }
+
             CheckElement();
             // Need to catch non-critical exceptions. The WinFormsSpinner will raise an
             // InvalidOperationException if it is a domain spinner and the SelectionPattern is asked for.
@@ -652,7 +663,10 @@ namespace System.Windows.Automation
         /// </remarks>
         public object GetCachedPropertyValue(AutomationProperty property, bool ignoreDefaultValue)
         {
-            Misc.ValidateArgumentNonNull(property, "property");
+            if (property == null)
+            {
+                throw new ArgumentNullException("property");
+            }
 
             // true -> throw if not available, true -> wrap
             object val = LookupCachedValue(property, true, true);
@@ -704,7 +718,10 @@ namespace System.Windows.Automation
             // Lookup a cached remote reference - but even if we get
             // back null, still go ahead an create a pattern wrapper
             // to provide access to cached properties
-            Misc.ValidateArgumentNonNull(pattern, "pattern");
+            if (pattern == null)
+            {
+                throw new ArgumentNullException("pattern");
+            }
 
             // false -> don't throw, false -> don't wrap
             object obj = LookupCachedValue(pattern, false, false);
@@ -738,7 +755,11 @@ namespace System.Windows.Automation
         /// </remarks>
         public AutomationElement GetUpdatedCache(CacheRequest request)
         {
-            Misc.ValidateArgumentNonNull(request, "request");
+            if (request == null)
+            {
+                throw new ArgumentNullException("request");
+            }
+
             CheckElement();
 
             UiaCoreApi.UiaCacheRequest cacheRequest = request.GetUiaCacheRequest();
@@ -758,7 +779,11 @@ namespace System.Windows.Automation
         /// or null if no match is found.</returns>
         public AutomationElement FindFirst(TreeScope scope, Condition condition)
         {
-            Misc.ValidateArgumentNonNull(condition, "condition");
+            if (condition == null)
+            {
+                throw new ArgumentNullException("condition");
+            }
+
             UiaCoreApi.UiaCacheResponse[] responses = Find(scope, condition, CacheRequest.CurrentUiaCacheRequest, true, null);
             if (responses.Length < 1)
             {
@@ -781,7 +806,11 @@ namespace System.Windows.Automation
         /// no matches found.</returns>
         public AutomationElementCollection FindAll(TreeScope scope, Condition condition)
         {
-            Misc.ValidateArgumentNonNull(condition, "condition");
+            if (condition == null)
+            {
+                throw new ArgumentNullException("condition");
+            }
+
             UiaCoreApi.UiaCacheRequest request = CacheRequest.CurrentUiaCacheRequest;
             UiaCoreApi.UiaCacheResponse[] responses = Find(scope, condition, request, false, null);
 
@@ -1299,7 +1328,11 @@ namespace System.Windows.Automation
         // called by FindFirst and FindAll
         private UiaCoreApi.UiaCacheResponse[] Find(TreeScope scope, Condition condition, UiaCoreApi.UiaCacheRequest request, bool findFirst, BackgroundWorker worker)
         {
-            Misc.ValidateArgumentNonNull(condition, "condition");
+            if (condition == null)
+            {
+                throw new ArgumentNullException("condition");
+            }
+
             if (scope == 0)
             {
                 throw new ArgumentException(SR.TreeScopeNeedAtLeastOne);

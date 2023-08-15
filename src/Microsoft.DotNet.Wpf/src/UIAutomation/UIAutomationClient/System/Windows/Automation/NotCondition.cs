@@ -32,7 +32,10 @@ namespace System.Windows.Automation
         /// <param name="condition">Condition to negate</param>
         public NotCondition( Condition condition )
         {
-            Misc.ValidateArgumentNonNull( condition, "condition" );
+            if (condition == null)
+            {
+                throw new ArgumentNullException("condition");
+            }
 
             _condition = condition;
 

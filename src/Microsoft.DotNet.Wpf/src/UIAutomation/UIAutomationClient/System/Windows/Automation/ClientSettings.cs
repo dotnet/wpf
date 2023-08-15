@@ -45,7 +45,10 @@ namespace System.Windows.Automation
         /// </param>
         public static void RegisterClientSideProviderAssembly(AssemblyName assemblyName)
         {
-            Misc.ValidateArgumentNonNull( assemblyName, "assemblyName" );
+            if (assemblyName == null)
+            {
+                throw new ArgumentNullException("assemblyName");
+            }
 
             ProxyManager.RegisterProxyAssembly( assemblyName );
         } 
@@ -56,7 +59,10 @@ namespace System.Windows.Automation
         /// <param name="clientSideProviderDescription">Array of ClientSideProviderDescription structs that specify window class names and factory delegate</param>
         public static void RegisterClientSideProviders(ClientSideProviderDescription[] clientSideProviderDescription)
         {
-            Misc.ValidateArgumentNonNull(clientSideProviderDescription, "clientSideProviderDescription ");
+            if (clientSideProviderDescription == null)
+            {
+                throw new ArgumentNullException("clientSideProviderDescription ");
+            }
 
             ProxyManager.RegisterWindowHandlers(clientSideProviderDescription);
         } 

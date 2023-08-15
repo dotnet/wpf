@@ -98,7 +98,11 @@ namespace System.Windows.Automation
         /// <returns>Sting containing human-readable name of specified property</returns>
         public static string PropertyName( AutomationProperty property )
         {
-            Misc.ValidateArgumentNonNull(property, "property");
+            if (property == null)
+            {
+                throw new ArgumentNullException("property");
+            }
+
             // Suppress PRESHARP Parameter to this public method must be validated; element is checked above.
 #pragma warning suppress 56506
             string full = property.ProgrammaticName.Split('.')[1]; // remove portion before the ".", leaving just "NameProperty" or similar
@@ -112,7 +116,11 @@ namespace System.Windows.Automation
         /// <returns>Sting containing human-readable name of specified pattern</returns>
         public static string PatternName( AutomationPattern pattern )
         {
-            Misc.ValidateArgumentNonNull(pattern, "pattern");
+            if (pattern == null)
+            {
+                throw new ArgumentNullException("pattern");
+            }
+
             // Suppress PRESHARP Parameter to this public method must be validated; element is checked above.
 #pragma warning suppress 56506
             string full = pattern.ProgrammaticName;
@@ -135,8 +143,16 @@ namespace System.Windows.Automation
             AutomationEventHandler eventHandler
             )
         {
-            Misc.ValidateArgumentNonNull(element, "element" );
-            Misc.ValidateArgumentNonNull(eventHandler, "eventHandler" );
+            if (element == null)
+            {
+                throw new ArgumentNullException("element");
+            }
+
+            if (eventHandler == null)
+            {
+                throw new ArgumentNullException("eventHandler");
+            }
+
             Misc.ValidateArgument( eventId != AutomationElement.AutomationFocusChangedEvent, nameof(SR.EventIdMustNotBeAutomationFocusChanged) );
             Misc.ValidateArgument( eventId != AutomationElement.StructureChangedEvent, nameof(SR.EventIdMustNotBeStructureChanged) );
             Misc.ValidateArgument( eventId != AutomationElement.AutomationPropertyChangedEvent, nameof(SR.EventIdMustNotBeAutomationPropertyChanged) );
@@ -206,8 +222,16 @@ namespace System.Windows.Automation
             AutomationEventHandler eventHandler
             )
         {
-            Misc.ValidateArgumentNonNull(element, "element" );
-            Misc.ValidateArgumentNonNull(eventHandler, "eventHandler" );
+            if (element == null)
+            {
+                throw new ArgumentNullException("element");
+            }
+
+            if (eventHandler == null)
+            {
+                throw new ArgumentNullException("eventHandler");
+            }
+
             Misc.ValidateArgument( eventId != AutomationElement.AutomationFocusChangedEvent, nameof(SR.EventIdMustNotBeAutomationFocusChanged) );
             Misc.ValidateArgument( eventId != AutomationElement.StructureChangedEvent, nameof(SR.EventIdMustNotBeStructureChanged) );
             Misc.ValidateArgument( eventId != AutomationElement.AutomationPropertyChangedEvent, nameof(SR.EventIdMustNotBeAutomationPropertyChanged) );
@@ -230,9 +254,21 @@ namespace System.Windows.Automation
             params AutomationProperty [] properties           // listen for changes to these properties
             )
         {
-            Misc.ValidateArgumentNonNull(element, "element" );
-            Misc.ValidateArgumentNonNull(eventHandler, "eventHandler" );
-            Misc.ValidateArgumentNonNull(properties, "properties" );
+            if (element == null)
+            {
+                throw new ArgumentNullException("element");
+            }
+
+            if (eventHandler == null)
+            {
+                throw new ArgumentNullException("eventHandler");
+            }
+
+            if (properties == null)
+            {
+                throw new ArgumentNullException("properties");
+            }
+
             if (properties.Length == 0)
             {
                 throw new ArgumentException( SR.AtLeastOnePropertyMustBeSpecified );
@@ -243,7 +279,10 @@ namespace System.Windows.Automation
             // on interpreted properties to the real property that raises events.
             foreach (AutomationProperty property in properties)
             {
-                Misc.ValidateArgumentNonNull(property, "properties" );
+                if (property == null)
+                {
+                    throw new ArgumentNullException("properties");
+                }
             }
 
             // Add a client-side listener for for this event request
@@ -261,8 +300,15 @@ namespace System.Windows.Automation
             AutomationPropertyChangedEventHandler eventHandler     // callback object (used as cookie here)
             )
         {
-            Misc.ValidateArgumentNonNull(element, "element" );
-            Misc.ValidateArgumentNonNull(eventHandler, "eventHandler" );
+            if (element == null)
+            {
+                throw new ArgumentNullException("element");
+            }
+
+            if (eventHandler == null)
+            {
+                throw new ArgumentNullException("eventHandler");
+            }
 
             // Remove the client-side listener for for this event
             ClientEventManager.RemoveListener(AutomationElement.AutomationPropertyChangedEvent, element, eventHandler);
@@ -276,8 +322,15 @@ namespace System.Windows.Automation
         /// <param name="eventHandler">Delegate to call when a structure change event occurs.</param>
         public static void AddStructureChangedEventHandler(AutomationElement element, TreeScope scope, StructureChangedEventHandler eventHandler)
         {
-            Misc.ValidateArgumentNonNull(element, "element");
-            Misc.ValidateArgumentNonNull(eventHandler, "eventHandler");
+            if (element == null)
+            {
+                throw new ArgumentNullException("element");
+            }
+
+            if (eventHandler == null)
+            {
+                throw new ArgumentNullException("eventHandler");
+            }
 
             // Add a client-side listener for for this event request
             EventListener l = new EventListener(AutomationElement.StructureChangedEvent, scope, null, CacheRequest.CurrentUiaCacheRequest);
@@ -292,8 +345,15 @@ namespace System.Windows.Automation
         /// <param name="eventHandler">The handler object that was passed to AddStructureChangedListener</param>
         public static void RemoveStructureChangedEventHandler(AutomationElement element, StructureChangedEventHandler eventHandler)
         {
-            Misc.ValidateArgumentNonNull(element, "element");
-            Misc.ValidateArgumentNonNull(eventHandler, "eventHandler");
+            if (element == null)
+            {
+                throw new ArgumentNullException("element");
+            }
+
+            if (eventHandler == null)
+            {
+                throw new ArgumentNullException("eventHandler");
+            }
 
             // Remove the client-side listener for for this event
             ClientEventManager.RemoveListener(AutomationElement.StructureChangedEvent, element, eventHandler);
@@ -307,7 +367,10 @@ namespace System.Windows.Automation
             AutomationFocusChangedEventHandler eventHandler
             )
         {
-            Misc.ValidateArgumentNonNull(eventHandler, "eventHandler" );
+            if (eventHandler == null)
+            {
+                throw new ArgumentNullException("eventHandler");
+            }
 
             // Add a client-side listener for for this event request
             EventListener l = new EventListener(AutomationElement.AutomationFocusChangedEvent, 
@@ -325,7 +388,10 @@ namespace System.Windows.Automation
             AutomationFocusChangedEventHandler eventHandler
             )
         {
-            Misc.ValidateArgumentNonNull(eventHandler, "eventHandler" );
+            if (eventHandler == null)
+            {
+                throw new ArgumentNullException("eventHandler");
+            }
 
             // Remove the client-side listener for for this event
             ClientEventManager.RemoveFocusListener(eventHandler);

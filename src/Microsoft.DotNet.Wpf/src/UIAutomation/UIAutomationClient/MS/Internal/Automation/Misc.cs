@@ -168,15 +168,6 @@ namespace MS.Internal.Automation
 
         #region Param validation & Error related
 
-        // Check that specified argument is non-null, if so, throw exception
-        internal static void ValidateArgumentNonNull(object obj, string argName)
-        {
-            if (obj == null)
-            {
-                throw new ArgumentNullException(argName);
-            }
-        }
-
         // Throw an argument Exception with a generic error
         internal static void ThrowInvalidArgument(string argName)
         {

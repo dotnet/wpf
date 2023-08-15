@@ -35,11 +35,18 @@ namespace System.Windows.Automation
         /// <param name="conditions">One or more sub-condition</param>
         public OrCondition( params Condition [ ] conditions )
         {
-            Misc.ValidateArgumentNonNull( conditions, "conditions" );
+            if (conditions == null)
+            {
+                throw new ArgumentNullException("conditions");
+            }
+
             Misc.ValidateArgument( conditions.Length >= 2, nameof(SR.MustBeAtLeastTwoConditions) );
             foreach( Condition condition in conditions )
             {
-                Misc.ValidateArgumentNonNull( condition, "conditions" );
+                if (condition == null)
+                {
+                    throw new ArgumentNullException("conditions");
+                }
             }
 
             // clone array to prevent accidental tampering

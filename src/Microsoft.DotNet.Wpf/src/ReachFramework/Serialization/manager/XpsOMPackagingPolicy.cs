@@ -397,29 +397,23 @@ namespace System.Windows.Xps.Packaging
             PrintTicket printTicket
             )
         {
-            if (printTicket == null)
+            ArgumentNullException.ThrowIfNull(printTicket);
+
+            // We need to figure out at which level of the package
+            // is this printTicket targeted, if the document ref 
+            // count is 0, that means we're about to start a new 
+            // document, otherwise we assume it is a page print ticket
+            // We don't support setting FixedDocumentSequence print ticket via serialization,
+            // since it can only be set when starting the print job
+            if (_currentFixedDocumentSequenceWriter != null)
             {
-                throw new ArgumentNullException(nameof(printTicket));
-            }
-            else
-            {
-                //
-                // We need to figure out at which level of the package
-                // is this printTicket targeted, if the document ref 
-                // count is 0, that means we're about to start a new 
-                // document, otherwise we assume it is a page print ticket
-                // We don't support setting FixedDocumentSequence print ticket via serialization,
-                // since it can only be set when starting the print job
-                if (_currentFixedDocumentSequenceWriter != null)
+                if (_currentFixedDocumentWriterRef == 0)
                 {
-                    if (_currentFixedDocumentWriterRef == 0)
-                    {
-                        _currentDocumentPrintTicket = printTicket;
-                    }
-                    else
-                    {
-                        _currentPagePrintTicket = printTicket;
-                    }
+                    _currentDocumentPrintTicket = printTicket;
+                }
+                else
+                {
+                    _currentPagePrintTicket = printTicket;
                 }
             }
         }

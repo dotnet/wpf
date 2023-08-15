@@ -452,10 +452,7 @@ namespace System.Windows.Xps.Packaging
             )
             : base(xpsManager)
         {
-            if (null == part)
-            {
-                throw new ArgumentNullException(String.Format(CultureInfo.InvariantCulture, "part"));
-            }
+            ArgumentNullException.ThrowIfNull(part);
 
             this.Uri = part.Uri;
             _metroPart = part;

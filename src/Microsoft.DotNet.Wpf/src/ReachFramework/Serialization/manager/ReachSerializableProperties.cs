@@ -394,7 +394,6 @@ namespace System.Windows.Xps.Serialization
             // Validate Input Arguments
             //
             ArgumentNullException.ThrowIfNull(target);
-
             ArgumentNullException.ThrowIfNull(propertyCache);
 
             _targetObject   = target;

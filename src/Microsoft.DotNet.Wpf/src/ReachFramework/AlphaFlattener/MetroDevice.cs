@@ -788,7 +788,6 @@ namespace Microsoft.Internal.AlphaFlattener
         public void CacheDevMode(string ticket, byte [] devMode)
         {
             ArgumentNullException.ThrowIfNull(ticket);
-
             ArgumentNullException.ThrowIfNull(devMode);
 
             EnsurePacketForKey(ticket).DevMode = devMode;

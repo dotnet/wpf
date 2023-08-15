@@ -759,28 +759,23 @@ namespace System.Windows.Xps.Serialization
             PrintTicket printTicket
             )
         {
-            if(printTicket == null)
+            ArgumentNullException.ThrowIfNull(printTicket);
+
+            //
+            // We need to figure out at which level of the package
+            // is this printTicket targeted
+            //
+            if(_currentFixedPageWriter != null)
             {
-                throw new ArgumentNullException("printTicket");
+                _pagePrintTicket = printTicket.Clone();
             }
-            else
+            else if(_currentFixedDocumentWriter != null)
             {
-                //
-                // We need to figure out at which level of the package
-                // is this printTicket targeted
-                //
-                if(_currentFixedPageWriter != null)
-                {
-                    _pagePrintTicket = printTicket.Clone();
-                }
-                else if(_currentFixedDocumentWriter != null)
-                {
-                    _documentPrintTicket = printTicket.Clone();
-                }
-                else if(_currentFixedDocumentSequenceWriter != null)
-                {
-                    _documentSequencePrintTicket = printTicket.Clone();
-                }
+                _documentPrintTicket = printTicket.Clone();
+            }
+            else if(_currentFixedDocumentSequenceWriter != null)
+            {
+                _documentSequencePrintTicket = printTicket.Clone();
             }
         }
 

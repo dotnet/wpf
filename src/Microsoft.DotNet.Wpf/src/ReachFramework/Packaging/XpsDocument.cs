@@ -165,10 +165,7 @@ namespace System.Windows.Xps.Packaging
                                      )
                   )
         {
-            if( null == path )
-            {
-                throw new ArgumentNullException("path");
-            }
+            ArgumentNullException.ThrowIfNull(path);
             this.Uri = new Uri(path, UriKind.RelativeOrAbsolute);
             //
             //The URI has to be absolute
@@ -484,11 +481,8 @@ namespace System.Windows.Xps.Packaging
             )
         {
             CheckDisposed();
-        
-            if (null == signature)
-            {
-                throw new ArgumentNullException("signature");
-            }
+
+            ArgumentNullException.ThrowIfNull(signature);
             if (null == signature.PackageSignature)
             {
                 throw new NullReferenceException("signature.PackageSignature");
@@ -851,11 +845,8 @@ namespace System.Windows.Xps.Packaging
             bool                                    testIsSignable
             )
         {
-            if (null == certificate)
-            {
-                throw new ArgumentNullException("certificate");
-            }
-            
+            ArgumentNullException.ThrowIfNull(certificate);
+
             if( CurrentXpsManager == null )
             {
                 throw new InvalidOperationException(SR.ReachPackaging_DocumentWasClosed);

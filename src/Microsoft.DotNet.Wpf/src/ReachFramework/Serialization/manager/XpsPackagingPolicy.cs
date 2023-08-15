@@ -531,11 +531,8 @@ namespace System.Windows.Xps.Serialization
             ):
         base()
         {
-            if( xpsPackage == null)
-            {
-                throw new ArgumentNullException("xpsPackage");
-            }                
-            
+            ArgumentNullException.ThrowIfNull(xpsPackage);
+
             this._reachPackage = xpsPackage;
             Initialize();
 

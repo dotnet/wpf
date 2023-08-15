@@ -68,14 +68,11 @@ namespace MS.Internal.Printing.Configuration
         public InternalPrintTicket(Stream xmlStream)
         {
             // Verify input parameter
-            if (xmlStream == null)
-            {
-                throw new ArgumentNullException("xmlStream");
-            }
+            ArgumentNullException.ThrowIfNull(xmlStream);
 
-            #if _DEBUG
+#if _DEBUG
             InitTrace();
-            #endif
+#endif
 
             _xmlDoc = new XmlDocument();
 
@@ -159,10 +156,7 @@ namespace MS.Internal.Printing.Configuration
         public void SaveTo(Stream outStream)
         {
             // Verify input parameter
-            if (outStream == null)
-            {
-                throw new ArgumentNullException("outStream");
-            }
+            ArgumentNullException.ThrowIfNull(outStream);
 
             // After writing the data to the user supplied output stream, we do NOT
             // reset the stream position. This allows us to provide consistent behavior

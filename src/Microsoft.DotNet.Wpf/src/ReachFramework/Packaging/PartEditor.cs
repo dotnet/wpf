@@ -46,10 +46,7 @@ namespace System.Windows.Xps.Packaging
             PackagePart     metroPart
             )
         {
-            if (null == metroPart)
-            {
-                throw new ArgumentNullException("metroPart");
-            }
+            ArgumentNullException.ThrowIfNull(metroPart);
 
             _metroPart = metroPart;
         }

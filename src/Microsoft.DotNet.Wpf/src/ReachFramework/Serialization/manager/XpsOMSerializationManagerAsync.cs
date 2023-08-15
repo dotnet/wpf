@@ -56,10 +56,7 @@ namespace System.Windows.Xps.Serialization
             Object serializedObject
             )
         {
-            if (serializedObject == null)
-            {
-                throw new ArgumentNullException(nameof(serializedObject));
-            }
+            ArgumentNullException.ThrowIfNull(serializedObject);
 
             if (!XpsSerializationManager.IsSerializedObjectTypeSupported(serializedObject, IsBatchMode))
             {

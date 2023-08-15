@@ -113,15 +113,9 @@ namespace MS.Internal.Printing.Configuration
 
         public static bool TryEmbedDevMode(InternalPrintTicket ticket, string oemDriverNamespace, DevMode devMode)
         {
-            if (ticket == null)
-            {
-                throw new ArgumentNullException("ticket");
-            }
+            ArgumentNullException.ThrowIfNull(ticket);
 
-            if (oemDriverNamespace == null)
-            {
-                throw new ArgumentNullException("ticket");
-            }
+            ArgumentNullException.ThrowIfNull(oemDriverNamespace);
 
             if (devMode == null)
             {

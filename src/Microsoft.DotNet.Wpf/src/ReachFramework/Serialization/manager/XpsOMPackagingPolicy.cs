@@ -30,10 +30,7 @@ namespace System.Windows.Xps.Packaging
             IXpsDocumentPackageTarget packageTarget
             )
         {
-            if (packageTarget == null)
-            {
-                throw new ArgumentNullException(nameof(packageTarget));
-            }
+            ArgumentNullException.ThrowIfNull(packageTarget);
             try
             {
                 _xpsManager = new XpsManager();
@@ -545,10 +542,7 @@ namespace System.Windows.Xps.Packaging
         {
             XpsResourceStream resourceStream = null;
 
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            ArgumentNullException.ThrowIfNull(resourceId);
 
             ContentType contentType = new ContentType(resourceId);
 
@@ -826,10 +820,7 @@ namespace System.Windows.Xps.Packaging
             ContentType contentType
             )
         {
-            if (contentType == null)
-            {
-                throw new ArgumentNullException(nameof(contentType));
-            }
+            ArgumentNullException.ThrowIfNull(contentType);
 
             if (contentType.AreTypeAndSubTypeEqual(XpsS0Markup.JpgContentType))
             {

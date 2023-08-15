@@ -68,10 +68,7 @@ namespace System.Windows.Xps.Serialization
 
                 XmlWriter pageWriter = null;
 
-                if (serializedObject == null)
-                {
-                    throw new ArgumentNullException(nameof(serializedObject));
-                }
+                ArgumentNullException.ThrowIfNull(serializedObject);
 
                 if (!XpsSerializationManager.IsSerializedObjectTypeSupported(serializedObject, _isBatchMode))
                 {

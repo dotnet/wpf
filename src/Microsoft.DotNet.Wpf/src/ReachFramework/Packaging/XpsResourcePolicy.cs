@@ -82,14 +82,8 @@ namespace System.Windows.Xps.Packaging
             Type        serviceType
             )
         {
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
-            if (service == null)
-            {
-                throw new ArgumentNullException("service");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
+            ArgumentNullException.ThrowIfNull(service);
 
             if (!_objDict.ContainsKey(serviceType))
             {

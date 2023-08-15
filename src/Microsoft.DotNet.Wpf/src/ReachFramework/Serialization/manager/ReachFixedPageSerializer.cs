@@ -147,12 +147,9 @@ namespace System.Windows.Xps.Serialization
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXSerializationBegin);
 
-            if(serializableObjectContext == null)
-            {
-                throw new ArgumentNullException("serializableObjectContext");
-            }
+            ArgumentNullException.ThrowIfNull(serializableObjectContext);
 
-            if( SerializationManager is IXpsSerializationManager)
+            if ( SerializationManager is IXpsSerializationManager)
             {
                 (SerializationManager as IXpsSerializationManager).RegisterPageStart();
             }
@@ -300,10 +297,7 @@ namespace System.Windows.Xps.Serialization
             SerializablePropertyContext serializablePropertyContext
             )
         {
-            if(serializablePropertyContext == null)
-            {
-                throw new ArgumentNullException("serializablePropertyContext");
-            }
+            ArgumentNullException.ThrowIfNull(serializablePropertyContext);
 
             String attributeValue = String.Empty;
 
@@ -332,10 +326,7 @@ namespace System.Windows.Xps.Serialization
             SerializablePropertyContext serializablePropertyContext
             )
         {
-            if(serializablePropertyContext == null)
-            {
-                throw new ArgumentNullException("serializablePropertyContext");
-            }
+            ArgumentNullException.ThrowIfNull(serializablePropertyContext);
 
             String valueAsString                  = null;
             Object targetObjectContainingProperty = serializablePropertyContext.TargetObject;

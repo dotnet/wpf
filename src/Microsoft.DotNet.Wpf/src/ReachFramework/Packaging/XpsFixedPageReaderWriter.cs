@@ -1229,10 +1229,7 @@ namespace System.Windows.Xps.Packaging
             {
                 throw new ObjectDisposedException("FixedPageReader");
             }
-            if (null == mimeType)
-            {
-                throw new ArgumentNullException("mimeType");
-            }
+            ArgumentNullException.ThrowIfNull(mimeType);
             if (0 == mimeType.Length)
             {
                 throw new ArgumentException(SR.ReachPackaging_InvalidType);
@@ -1252,10 +1249,7 @@ namespace System.Windows.Xps.Packaging
             {
                 throw new ObjectDisposedException("FixedPageReader");
             }
-            if (null == mimeType)
-            {
-                throw new ArgumentNullException("mimeType");
-            }
+            ArgumentNullException.ThrowIfNull(mimeType);
             if (ContentType.Empty.AreTypeAndSubTypeEqual(mimeType))
             {
                 throw new ArgumentException(SR.Format(SR.ReachPackaging_InvalidContentType, mimeType.ToString()));

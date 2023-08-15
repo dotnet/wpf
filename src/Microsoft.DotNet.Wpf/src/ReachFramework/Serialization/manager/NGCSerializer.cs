@@ -79,10 +79,7 @@ namespace System.Windows.Xps.Serialization
             ):
         base(manager)
         {
-            if (manager == null)
-            {
-                throw new ArgumentNullException("manager");
-            }
+            ArgumentNullException.ThrowIfNull(manager);
         }
 
         /// <summary>
@@ -95,10 +92,7 @@ namespace System.Windows.Xps.Serialization
             Object serializedObject
             )
         {
-            if (serializedObject == null)
-            {
-                throw new ArgumentNullException("serializedObject");
-            }
+            ArgumentNullException.ThrowIfNull(serializedObject);
             FixedDocument fd = serializedObject as FixedDocument;
             if( fd == null )
             {
@@ -152,10 +146,7 @@ namespace System.Windows.Xps.Serialization
             ):
         base(manager)
         {
-            if (manager == null)
-            {
-                throw new ArgumentNullException("manager");
-            }
+            ArgumentNullException.ThrowIfNull(manager);
         }
 
         /// <summary>
@@ -169,10 +160,7 @@ namespace System.Windows.Xps.Serialization
             )
         {
             NgcSerializationManager ngcManager = SerializationManager as NgcSerializationManager;
-            if (serializedObject == null)
-            {
-                throw new ArgumentNullException("serializedObject");
-            }
+            ArgumentNullException.ThrowIfNull(serializedObject);
 
             FixedPage fp = serializedObject as FixedPage;
             if( fp == null )
@@ -237,10 +225,7 @@ namespace System.Windows.Xps.Serialization
             ):
         base(manager)
         {
-            if (manager == null)
-            {
-                throw new ArgumentNullException("manager");
-            }
+            ArgumentNullException.ThrowIfNull(manager);
         }
 
         /// <summary>
@@ -319,10 +304,7 @@ namespace System.Windows.Xps.Serialization
             ):
         base(manager)
         {
-            if (manager == null)
-            {
-                throw new ArgumentNullException("manager");
-            }
+            ArgumentNullException.ThrowIfNull(manager);
         }
 
 
@@ -496,10 +478,7 @@ namespace System.Windows.Xps.Serialization
             Object serializedObject
             )
         {
-            if (serializedObject == null)
-            {
-                throw new ArgumentNullException("serializedObject");
-            }
+            ArgumentNullException.ThrowIfNull(serializedObject);
             FixedDocumentSequence fds = serializedObject as FixedDocumentSequence;
             if( fds == null )
             {

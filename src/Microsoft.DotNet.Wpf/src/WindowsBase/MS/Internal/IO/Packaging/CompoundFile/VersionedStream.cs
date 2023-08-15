@@ -201,7 +201,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         internal VersionedStream(Stream baseStream, VersionedStreamOwner versionOwner)
         {
             ArgumentNullException.ThrowIfNull(baseStream);
-
             ArgumentNullException.ThrowIfNull(versionOwner);
 
             _stream = baseStream;

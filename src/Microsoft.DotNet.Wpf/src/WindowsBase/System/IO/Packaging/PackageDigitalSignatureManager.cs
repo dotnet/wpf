@@ -647,7 +647,6 @@ namespace System.IO.Packaging
         public PackageDigitalSignature Countersign(X509Certificate certificate, IEnumerable<Uri> signatures)
         {
             ArgumentNullException.ThrowIfNull(certificate);
-
             ArgumentNullException.ThrowIfNull(signatures);
 
             // Counter-sign makes no sense if we are not already signed

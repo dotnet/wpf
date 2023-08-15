@@ -280,12 +280,12 @@ public class StorageInfo
     {
         CheckDisposedStatus();
 
-            //check the arguments
-            ArgumentNullException.ThrowIfNull(name);
+        //check the arguments
+        ArgumentNullException.ThrowIfNull(name);
 
-            // Stream names: we preserve casing, but do case-insensitive comparison (Native CompoundFile API behavior)
-            if (((IEqualityComparer) CU.StringCaseInsensitiveComparer).Equals(name,
-                    EncryptedPackageEnvelope.PackageStreamName))
+        // Stream names: we preserve casing, but do case-insensitive comparison (Native CompoundFile API behavior)
+        if (((IEqualityComparer) CU.StringCaseInsensitiveComparer).Equals(name,
+                EncryptedPackageEnvelope.PackageStreamName))
             throw new ArgumentException(SR.Format(SR.StreamNameNotValid,name));
 
         //create a new streaminfo object
@@ -392,10 +392,10 @@ public class StorageInfo
     {
         CheckDisposedStatus();
 
-            //check the arguments
-            ArgumentNullException.ThrowIfNull(name);
+        //check the arguments
+        ArgumentNullException.ThrowIfNull(name);
 
-            StreamInfo streamInfo = new StreamInfo(this, name);
+        StreamInfo streamInfo = new StreamInfo(this, name);
         if (streamInfo.InternalExists())
         {
             return streamInfo;
@@ -431,10 +431,10 @@ public class StorageInfo
     {
         CheckDisposedStatus();
 
-            //check the arguments
-            ArgumentNullException.ThrowIfNull(name);
+        //check the arguments
+        ArgumentNullException.ThrowIfNull(name);
 
-            StreamInfo streamInfo = new StreamInfo(this, name);
+        StreamInfo streamInfo = new StreamInfo(this, name);
         if (streamInfo.InternalExists())
         {
             streamInfo.Delete();
@@ -450,10 +450,10 @@ public class StorageInfo
     {
         CheckDisposedStatus();
 
-            //check the arguments
-            ArgumentNullException.ThrowIfNull(name);
+        //check the arguments
+        ArgumentNullException.ThrowIfNull(name);
 
-            return CreateStorage(name);
+        return CreateStorage(name);
     }
 
     /// <summary>
@@ -495,10 +495,10 @@ public class StorageInfo
     {
         CheckDisposedStatus();
 
-            //check the arguments
-            ArgumentNullException.ThrowIfNull(name);
+        //check the arguments
+        ArgumentNullException.ThrowIfNull(name);
 
-            StorageInfo storageInfo = new StorageInfo(this, name);
+        StorageInfo storageInfo = new StorageInfo(this, name);
         if (storageInfo.InternalExists(name))
         {
             InvalidateEnumerators();

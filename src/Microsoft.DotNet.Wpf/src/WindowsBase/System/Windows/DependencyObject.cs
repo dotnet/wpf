@@ -596,21 +596,16 @@ namespace System.Windows
         /// </summary>
         private PropertyMetadata SetupPropertyChange(DependencyProperty dp)
         {
-            if ( dp != null )
+            ArgumentNullException.ThrowIfNull(dp);
+
+            if (!dp.ReadOnly)
             {
-                if ( !dp.ReadOnly )
-                {
-                    // Get type-specific metadata for this property
-                    return dp.GetMetadata(DependencyObjectType);
-                }
-                else
-                {
-                    throw new InvalidOperationException(SR.Format(SR.ReadOnlyChangeNotAllowed, dp.Name));
-                }
+                // Get type-specific metadata for this property
+                return dp.GetMetadata(DependencyObjectType);
             }
             else
             {
-                throw new ArgumentNullException("dp");
+                throw new InvalidOperationException(SR.Format(SR.ReadOnlyChangeNotAllowed, dp.Name));
             }
         }
 
@@ -620,20 +615,15 @@ namespace System.Windows
         /// </summary>
         private PropertyMetadata SetupPropertyChange(DependencyPropertyKey key, out DependencyProperty dp)
         {
-            if ( key != null )
-            {
-                dp = key.DependencyProperty;
-                Debug.Assert(dp != null);
+            ArgumentNullException.ThrowIfNull(key);
 
-                dp.VerifyReadOnlyKey(key);
+            dp = key.DependencyProperty;
+            Debug.Assert(dp != null);
 
-                // Get type-specific metadata for this property
-                return dp.GetMetadata(DependencyObjectType);
-            }
-            else
-            {
-                throw new ArgumentNullException("key");
-            }
+            dp.VerifyReadOnlyKey(key);
+
+            // Get type-specific metadata for this property
+            return dp.GetMetadata(DependencyObjectType);
         }
 
         /// <summary>

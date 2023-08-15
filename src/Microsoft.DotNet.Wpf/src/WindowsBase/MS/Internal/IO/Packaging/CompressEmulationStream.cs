@@ -272,7 +272,6 @@ namespace MS.Internal.IO.Packaging
                 throw new InvalidOperationException(SR.ReadNotSupported);
 
             ArgumentNullException.ThrowIfNull(tempStream);
-
             ArgumentNullException.ThrowIfNull(transformer);
 
             _baseStream = baseStream;

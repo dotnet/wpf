@@ -174,7 +174,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         public void Compress(Stream source, Stream sink)
         {
             ArgumentNullException.ThrowIfNull(source);
-
             ArgumentNullException.ThrowIfNull(sink);
 
             Invariant.Assert(source.CanRead);

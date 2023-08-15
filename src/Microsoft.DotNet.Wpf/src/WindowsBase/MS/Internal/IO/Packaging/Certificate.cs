@@ -142,7 +142,6 @@ namespace MS.Internal.IO.Packaging
         internal CertificatePart(System.IO.Packaging.Package container, Uri partName)
         {
             ArgumentNullException.ThrowIfNull(container);
-
             ArgumentNullException.ThrowIfNull(partName);
 
             partName = PackUriHelper.ValidatePartUri(partName);

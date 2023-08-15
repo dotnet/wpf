@@ -147,7 +147,6 @@ namespace System.IO.Packaging
             )
         {
             ArgumentNullException.ThrowIfNull(envelopeFileName);
-
             ArgumentNullException.ThrowIfNull(packageStream);
 
             ThrowIfRMEncryptionInfoInvalid(publishLicense, cryptoProvider);
@@ -191,7 +190,6 @@ namespace System.IO.Packaging
             )
         {
             ArgumentNullException.ThrowIfNull(envelopeStream);
-
             ArgumentNullException.ThrowIfNull(packageStream);
 
             ThrowIfRMEncryptionInfoInvalid(publishLicense, cryptoProvider);
@@ -1167,7 +1165,6 @@ namespace System.IO.Packaging
             CryptoProvider cryptoProvider)
         {
             ArgumentNullException.ThrowIfNull(publishLicense);
-
             ArgumentNullException.ThrowIfNull(cryptoProvider);
         }
 

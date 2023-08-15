@@ -41,7 +41,6 @@ namespace System.Security.RightsManagement
         {
 
             ArgumentNullException.ThrowIfNull(name);
-
             ArgumentNullException.ThrowIfNull(description);
 
             _name = name;

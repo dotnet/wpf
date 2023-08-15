@@ -51,7 +51,6 @@ namespace System.Windows.Markup
         public void AddService(Type serviceType, Object service)
         {
             ArgumentNullException.ThrowIfNull(serviceType);
-
             ArgumentNullException.ThrowIfNull(service);
 
             if (_objDict.ContainsKey(serviceType) == false)

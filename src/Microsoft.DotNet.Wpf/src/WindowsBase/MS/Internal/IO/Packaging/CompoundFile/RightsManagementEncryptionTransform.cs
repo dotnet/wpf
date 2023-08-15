@@ -343,7 +343,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             )
         {
             ArgumentNullException.ThrowIfNull(user);
-
             ArgumentNullException.ThrowIfNull(useLicense);
 
             if (user.AuthenticationType != AuthenticationType.Windows &&

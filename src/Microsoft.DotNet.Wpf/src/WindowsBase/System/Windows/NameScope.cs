@@ -42,7 +42,6 @@ namespace System.Windows
         public void RegisterName(string name, object scopedElement)
         {
             ArgumentNullException.ThrowIfNull(name);
-
             ArgumentNullException.ThrowIfNull(scopedElement);
 
             if (name.Length == 0)
@@ -297,7 +296,6 @@ namespace System.Windows
             set
             {
                 ArgumentNullException.ThrowIfNull(key);
-
                 ArgumentNullException.ThrowIfNull(value);
 
                 RegisterName(key, value);

@@ -251,7 +251,6 @@ namespace System.Security.RightsManagement
         private static SecureEnvironment CriticalCreate(string applicationManifest, ContentUser user)
         {
             ArgumentNullException.ThrowIfNull(applicationManifest);
-
             ArgumentNullException.ThrowIfNull(user);
 
             // we only let specifically identifyed users to be used here  

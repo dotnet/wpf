@@ -37,14 +37,9 @@ namespace System.Windows
         /// </summary>
         public ThemeDictionaryExtension(string assemblyName)
         {
-            if (assemblyName != null)
-            {
-                _assemblyName = assemblyName;
-            }
-            else
-            {
-                throw new ArgumentNullException("assemblyName");
-            }
+            ArgumentNullException.ThrowIfNull(assemblyName);
+
+            _assemblyName = assemblyName;
         }
 
         #endregion 

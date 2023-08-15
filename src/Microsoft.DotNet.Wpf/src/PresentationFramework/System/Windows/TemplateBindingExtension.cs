@@ -39,14 +39,9 @@ namespace System.Windows
         public TemplateBindingExtension(
             DependencyProperty property)
         {
-            if (property != null)
-            {
-                _property = property;
-            }
-            else
-            {
-                throw new ArgumentNullException("property");
-            }
+            ArgumentNullException.ThrowIfNull(property);
+
+            _property = property;
         }
 
         /// <summary>

@@ -64,10 +64,9 @@ namespace MS.Internal.Annotations
         /// <exception cref="ArgumentException">a value for key is already present in the locator part</exception>
         public void Add(string key, string val)
         {
-            if (key == null || val == null)
-            {
-                throw new ArgumentNullException(key == null ? "key" : "val");
-            }
+            ArgumentNullException.ThrowIfNull(key);
+            ArgumentNullException.ThrowIfNull(val);
+
             _nameValues.Add(key, val);
             FireDictionaryChanged();
         }

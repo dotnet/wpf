@@ -766,23 +766,18 @@ namespace System.Windows.Controls
             set
             {
                 VerifyAccess();
-                if (value == null)
+                ArgumentNullException.ThrowIfNull(value);
+
+                // Invoke getter since this property is lazily created.
+                StylusShape oldShape = EraserShape;
+
+                _eraserShape = value;
+
+
+                if ( oldShape.Width != _eraserShape.Width || oldShape.Height != _eraserShape.Height
+                    || oldShape.Rotation != _eraserShape.Rotation || oldShape.GetType() != _eraserShape.GetType())
                 {
-                    throw new ArgumentNullException("value");
-                }
-                else
-                {
-                    // Invoke getter since this property is lazily created.
-                    StylusShape oldShape = EraserShape;
-
-                    _eraserShape = value;
-
-
-                    if ( oldShape.Width != _eraserShape.Width || oldShape.Height != _eraserShape.Height
-                        || oldShape.Rotation != _eraserShape.Rotation || oldShape.GetType() != _eraserShape.GetType())
-                    {
-                        EditingCoordinator.UpdatePointEraserCursor();
-                    }
+                    EditingCoordinator.UpdatePointEraserCursor();
                 }
             }
         }

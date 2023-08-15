@@ -301,16 +301,11 @@ namespace System.Windows
         {
             TriggerAction action = value as TriggerAction;
 
-            if( action == null )
+            if ( action == null )
             {
-                if( value == null )
-                {
-                    throw new ArgumentNullException("value");
-                }
-                else
-                {
-                    throw new ArgumentException(SR.MustBeTriggerAction);
-                }
+                ArgumentNullException.ThrowIfNull(value);
+
+                throw new ArgumentException(SR.MustBeTriggerAction);
             }
 
             return action;

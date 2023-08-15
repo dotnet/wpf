@@ -59,11 +59,9 @@ namespace System.Windows.Markup
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) 
         {
             // Validate Input Arguments
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
-            else if( destinationType == typeof(MarkupExtension) && context is IValueSerializerContext  )
+            ArgumentNullException.ThrowIfNull(destinationType);
+
+            if ( destinationType == typeof(MarkupExtension) && context is IValueSerializerContext  )
             {
                 return true;
             }

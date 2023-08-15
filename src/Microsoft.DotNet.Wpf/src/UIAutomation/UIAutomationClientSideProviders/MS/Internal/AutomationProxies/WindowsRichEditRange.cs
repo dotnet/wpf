@@ -129,10 +129,7 @@ namespace MS.Internal.AutomationProxies
             // A null string is not should throw an ArgumentNullException while an empty string should throw an ArgumentException.
             // Therefore we can not use IsNullOrEmpty() here, suppress the warning.
 #pragma warning suppress 6507
-            if (text == null)
-            {
-                throw new ArgumentNullException("text");
-            }
+            ArgumentNullException.ThrowIfNull(text);
 #pragma warning suppress 6507
             if (text.Length == 0)
             {

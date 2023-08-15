@@ -76,10 +76,7 @@ namespace System.Windows.Automation
         public StructureChangedEventArgs(StructureChangeType structureChangeType, int [] runtimeId) 
             : base(AutomationElementIdentifiers.StructureChangedEvent) 
         {
-            if (runtimeId == null)
-            {
-                throw new ArgumentNullException("runtimeId");
-            }
+            ArgumentNullException.ThrowIfNull(runtimeId);
             _structureChangeType = structureChangeType;
             _runtimeID = (int [])runtimeId.Clone();
         }

@@ -45,7 +45,11 @@ namespace MS.Internal.Automation
         // compare two arrays
         internal static bool Compare(int[] a1, int[] a2)
         {
-            CheckNonNull(a1, a2);
+            if (a1 == null)
+                throw new ArgumentNullException("el1");
+
+            if (a2 == null)
+                throw new ArgumentNullException("el2");
 
             int l = a1.Length;
 
@@ -66,7 +70,11 @@ namespace MS.Internal.Automation
         // compare two AutomationElements
         internal static bool Compare(AutomationElement el1, AutomationElement el2)
         {
-            CheckNonNull(el1, el2);
+            if (el1 == null)
+                throw new ArgumentNullException("el1");
+
+            if (el2 == null)
+                throw new ArgumentNullException("el2");
             return Compare(el1.GetRuntimeId(), el2.GetRuntimeId());
         }
         #endregion Element Comparisons
@@ -738,16 +746,6 @@ namespace MS.Internal.Automation
         //------------------------------------------------------
 
         #region Private Methods
-
-        // Helper used by the various comparison functions above
-        private static void CheckNonNull(object el1, object el2)
-        {
-            if (el1 == null)
-                throw new ArgumentNullException("el1");
-
-            if (el2 == null)
-                throw new ArgumentNullException("el2");
-        }
 
         //This function throws corresponding exception depending on the last error.
         private static void EvaluateSendMessageTimeoutError(int error)

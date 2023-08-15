@@ -95,8 +95,11 @@ namespace System.Windows.Markup
         /// <param name="xmlnsDictionary">The dictionary on which to base the new one</param>
         public XmlnsDictionary(XmlnsDictionary xmlnsDictionary)
         {
-            ArgumentNullException.ThrowIfNull(xmlnsDictionary);
-
+            if(null == xmlnsDictionary)
+            {
+                throw new ArgumentNullException( "xmlnsDictionary" );
+            }
+            
             // Copy the Declarations if they exists 
             if (xmlnsDictionary != null && xmlnsDictionary.Count > 0)
             {
@@ -334,8 +337,11 @@ namespace System.Windows.Markup
         /// <returns>The namespace corresponding to the given prefix if it exists, null otherwise</returns>
         public string LookupNamespace(string prefix)
         {
-            ArgumentNullException.ThrowIfNull(prefix);
-
+            if (prefix == null)
+            {
+                throw new ArgumentNullException( "prefix" ); 
+            }
+            
             if (_lastDecl >0)
             {
                 for (int thisDecl = _lastDecl-1; thisDecl >= 0; thisDecl--)
@@ -362,7 +368,10 @@ namespace System.Windows.Markup
         /// </returns>
         public string LookupPrefix(string xmlNamespace)
         {
-            ArgumentNullException.ThrowIfNull(xmlNamespace);
+            if (xmlNamespace == null)
+            {
+                throw new ArgumentNullException( "xmlNamespace" ); 
+            }
 
             if (_lastDecl > 0)
             {
@@ -600,9 +609,12 @@ namespace System.Windows.Markup
         private void AddNamespace(string prefix, string xmlNamespace)
         {
             CheckSealed();
+            
+            if (xmlNamespace == null)
+                throw new ArgumentNullException("xmlNamespace");
 
-            ArgumentNullException.ThrowIfNull(xmlNamespace);
-            ArgumentNullException.ThrowIfNull(prefix);
+            if (prefix == null)
+                throw new ArgumentNullException("prefix");
 
             int lastScopeCount = _nsDeclarations[_lastDecl].ScopeCount;
 
@@ -647,8 +659,15 @@ namespace System.Windows.Markup
             CheckSealed();
             if (_lastDecl > 0)
             {
-               ArgumentNullException.ThrowIfNull(xmlNamespace);
-               ArgumentNullException.ThrowIfNull(prefix);
+                if (xmlNamespace == null)
+                {
+                    throw new ArgumentNullException("xmlNamespace");
+                }
+
+                if (prefix == null)
+                {
+                    throw new ArgumentNullException("prefix");
+                }
 
                int lastScopeCount = _nsDeclarations[_lastDecl-1].ScopeCount;
                for (int thisDecl = _lastDecl-1; 

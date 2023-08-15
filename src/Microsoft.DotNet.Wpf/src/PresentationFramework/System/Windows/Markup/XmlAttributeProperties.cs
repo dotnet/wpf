@@ -189,7 +189,10 @@ namespace System.Windows.Markup
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static string GetXmlSpace(DependencyObject dependencyObject)
         {
-            ArgumentNullException.ThrowIfNull(dependencyObject);
+            if (dependencyObject == null)
+            {
+                throw new ArgumentNullException( "dependencyObject" );
+            }
 
             return (string)dependencyObject.GetValue(XmlSpaceProperty);
         }
@@ -199,7 +202,10 @@ namespace System.Windows.Markup
         /// </summary>
         public static void SetXmlSpace(DependencyObject dependencyObject, string value)
         {
-            ArgumentNullException.ThrowIfNull(dependencyObject);
+            if (dependencyObject == null)
+            {
+                throw new ArgumentNullException( "dependencyObject" );
+            }
 
             dependencyObject.SetValue(XmlSpaceProperty, value);
         }
@@ -217,7 +223,10 @@ namespace System.Windows.Markup
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static XmlnsDictionary GetXmlnsDictionary(DependencyObject dependencyObject)
         {
-            ArgumentNullException.ThrowIfNull(dependencyObject);
+            if (dependencyObject == null)
+            {
+                throw new ArgumentNullException( "dependencyObject" );
+            }
 
             return (XmlnsDictionary)dependencyObject.GetValue(XmlnsDictionaryProperty);
         }
@@ -227,7 +236,10 @@ namespace System.Windows.Markup
         /// </summary>
         public static void SetXmlnsDictionary(DependencyObject dependencyObject, XmlnsDictionary value)
         {
-            ArgumentNullException.ThrowIfNull(dependencyObject);
+            if (dependencyObject == null)
+            {
+                throw new ArgumentNullException( "dependencyObject" );
+            }
 
             if (dependencyObject.IsSealed == false)
             {
@@ -249,7 +261,10 @@ namespace System.Windows.Markup
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static string GetXmlnsDefinition(DependencyObject dependencyObject)
         {
-            ArgumentNullException.ThrowIfNull(dependencyObject);
+            if (dependencyObject == null)
+            {
+                throw new ArgumentNullException( "dependencyObject" );
+            }
 
             return (string)dependencyObject.GetValue(XmlnsDefinitionProperty);
         }
@@ -259,7 +274,10 @@ namespace System.Windows.Markup
         /// </summary>
         public static void SetXmlnsDefinition(DependencyObject dependencyObject, string value)
         {
-            ArgumentNullException.ThrowIfNull(dependencyObject);
+            if (dependencyObject == null)
+            {
+                throw new ArgumentNullException( "dependencyObject" );
+            }
 
             dependencyObject.SetValue(XmlnsDefinitionProperty, value);
         }
@@ -280,7 +298,10 @@ namespace System.Windows.Markup
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static string GetXmlNamespaceMaps(DependencyObject dependencyObject)
         {
-            ArgumentNullException.ThrowIfNull(dependencyObject);
+            if (dependencyObject == null)
+            {
+                throw new ArgumentNullException( "dependencyObject" );
+            }
 
             return (string)dependencyObject.GetValue(XmlNamespaceMapsProperty);
         }
@@ -293,7 +314,10 @@ namespace System.Windows.Markup
         /// </remarks>
         public static void SetXmlNamespaceMaps(DependencyObject dependencyObject, string value)
         {
-            ArgumentNullException.ThrowIfNull(dependencyObject);
+            if (dependencyObject == null)
+            {
+                throw new ArgumentNullException( "dependencyObject" );
+            }
 
             dependencyObject.SetValue(XmlNamespaceMapsProperty, value);
         }

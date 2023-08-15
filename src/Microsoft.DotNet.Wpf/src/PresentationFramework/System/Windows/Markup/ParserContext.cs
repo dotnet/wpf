@@ -92,7 +92,10 @@ namespace System.Windows.Markup
 
         public ParserContext(XmlParserContext xmlParserContext)
         {
-            ArgumentNullException.ThrowIfNull(xmlParserContext);
+            if (xmlParserContext == null)
+            {
+                throw new ArgumentNullException( "xmlParserContext" );
+            }
 
             _xmlLang     = xmlParserContext.XmlLang;
 
@@ -418,7 +421,10 @@ namespace System.Windows.Markup
         /// <returns>XmlParserContext</returns>
         public static XmlParserContext ToXmlParserContext(ParserContext parserContext)
         {
-            ArgumentNullException.ThrowIfNull(parserContext);
+            if (parserContext == null)
+            {
+                throw new ArgumentNullException( "parserContext" );
+            }
 
             XmlNamespaceManager xmlnsMgr = new XmlNamespaceManager(new NameTable());
             XmlSpace xmlSpace = System.Xml.XmlSpace.None;

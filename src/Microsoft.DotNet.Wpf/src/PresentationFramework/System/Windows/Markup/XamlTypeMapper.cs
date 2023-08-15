@@ -67,7 +67,10 @@ namespace System.Windows.Markup
         /// <param name="assemblyNames">Assemblies XamlTypeMapper should use when resolving XAML</param>
         public XamlTypeMapper(string[] assemblyNames)
         {
-            ArgumentNullException.ThrowIfNull(assemblyNames);
+            if(null == assemblyNames)
+            {
+                throw new ArgumentNullException( "assemblyNames" );
+            }
 
             _assemblyNames = assemblyNames;
             _namespaceMaps = null;
@@ -83,7 +86,10 @@ namespace System.Windows.Markup
             string[] assemblyNames,
             NamespaceMapEntry[] namespaceMaps)
         {
-            ArgumentNullException.ThrowIfNull(assemblyNames);
+            if(null == assemblyNames)
+            {
+                throw new ArgumentNullException( "assemblyNames" );
+            }
 
             _assemblyNames = assemblyNames;
             _namespaceMaps = namespaceMaps;
@@ -111,8 +117,14 @@ namespace System.Windows.Markup
             string xmlNamespace,
             string localName)
         {
-            ArgumentNullException.ThrowIfNull(xmlNamespace);
-            ArgumentNullException.ThrowIfNull(localName);
+            if(null == xmlNamespace)
+            {
+                throw new ArgumentNullException( "xmlNamespace" );
+            }
+            if(null == localName)
+            {
+                throw new ArgumentNullException( "localName" );
+            }
 
             TypeAndSerializer typeAndSerializer =
                 GetTypeOnly(xmlNamespace,localName);
@@ -139,9 +151,18 @@ namespace System.Windows.Markup
             string  clrNamespace,
             string  assemblyName )
         {
-            ArgumentNullException.ThrowIfNull(xmlNamespace);
-            ArgumentNullException.ThrowIfNull(clrNamespace);
-            ArgumentNullException.ThrowIfNull(assemblyName);
+            if( null == xmlNamespace )
+            {
+                throw new ArgumentNullException("xmlNamespace");
+            }
+            if( null == clrNamespace )
+            {
+                throw new ArgumentNullException("clrNamespace");
+            }
+            if( null == assemblyName )
+            {
+                throw new ArgumentNullException("assemblyName");
+            }
 
             // Parameter validation : Check for String.Empty as well?
 
@@ -176,8 +197,14 @@ namespace System.Windows.Markup
             string assemblyName,
             string assemblyPath)
         {
-            ArgumentNullException.ThrowIfNull(assemblyName);
-            ArgumentNullException.ThrowIfNull(assemblyPath);
+            if( null == assemblyName )
+            {
+                throw new ArgumentNullException("assemblyName");
+            }
+            if( null == assemblyPath )
+            {
+                throw new ArgumentNullException("assemblyPath");
+            }
             if (assemblyPath == string.Empty)
             {
                 _lineNumber = 0;  // Public API, so we don't know the line number.
@@ -434,8 +461,14 @@ namespace System.Windows.Markup
             Type baseType = null;
             string dynamicObjectName = null;
 
-            ArgumentNullException.ThrowIfNull(localName);
-            ArgumentNullException.ThrowIfNull(xmlNamespace);
+            if(null == localName)
+            {
+                throw new ArgumentNullException( "localName" );
+            }
+            if(null == xmlNamespace)
+            {
+                throw new ArgumentNullException( "xmlNamespace" );
+            }
             if (owner != null && !ReflectionHelper.IsPublicType(owner))
             {
                 _lineNumber = 0;  // Public API, so we don't know the line number.
@@ -1762,7 +1795,10 @@ namespace System.Windows.Markup
                 ownerType = typeAndSerializer.ObjectType;
             }
 
-            ArgumentNullException.ThrowIfNull(ownerType);
+            if(null == ownerType)
+            {
+                throw new ArgumentNullException( "ownerType" );
+            }
 
             return DependencyProperty.FromName(localName, ownerType);
         }
@@ -2129,8 +2165,14 @@ namespace System.Windows.Markup
         /// </returns>
         internal static Type GetTypeFromName(string typeName, DependencyObject element)
         {
-            ArgumentNullException.ThrowIfNull(element);
-            ArgumentNullException.ThrowIfNull(typeName);
+            if (element == null)
+            {
+                throw new ArgumentNullException( "element" );
+            }
+            if (typeName == null)
+            {
+                throw new ArgumentNullException( "typeName" );
+            }
 
             // Now map the prefix to an xml namespace uri
             int colonIndex = typeName.IndexOf(':');
@@ -4200,9 +4242,14 @@ namespace System.Windows.Markup
         /// <param name="clrNamespace">Namespace within the assembly</param>
         public NamespaceMapEntry(string xmlNamespace,string assemblyName,string clrNamespace)
         {
-            ArgumentNullException.ThrowIfNull(xmlNamespace);
-            ArgumentNullException.ThrowIfNull(assemblyName);
-            ArgumentNullException.ThrowIfNull(clrNamespace);
+            if (xmlNamespace == null)
+                throw new ArgumentNullException("xmlNamespace");
+
+            if (assemblyName == null)
+                throw new ArgumentNullException("assemblyName");
+
+            if (clrNamespace == null)
+                throw new ArgumentNullException("clrNamespace");
 
             _xmlNamespace = xmlNamespace;
             _assemblyName = assemblyName;
@@ -4238,7 +4285,10 @@ namespace System.Windows.Markup
             get { return _xmlNamespace; }
             set
             {
-                ArgumentNullException.ThrowIfNull(value);
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
                 if (_xmlNamespace == null)
                 {
                     _xmlNamespace = value;
@@ -4254,7 +4304,10 @@ namespace System.Windows.Markup
             get { return _assemblyName; }
             set
             {
-                ArgumentNullException.ThrowIfNull(value);
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
                 if (_assemblyName == null)
                 {
                     _assemblyName = value;
@@ -4270,7 +4323,10 @@ namespace System.Windows.Markup
             get { return _clrNamespace; }
             set
             {
-                ArgumentNullException.ThrowIfNull(value);
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
                 if (_clrNamespace == null)
                 {
                     _clrNamespace = value;

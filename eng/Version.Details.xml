@@ -21,7 +21,7 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>1eb702ce1efe3581488a37704cee47603a291069</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="8.0.0-rc.1.23368.2">
+    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="8.0.0-rc.1.23416.6">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</Uri>
       <Sha>8fd21692fdf495c9d20e8a25d27ee0952f085dc4</Sha>
     </Dependency>

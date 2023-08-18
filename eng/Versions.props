@@ -48,8 +48,8 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
-    <MicrosoftDotNetApiCompatVersion>8.0.0-beta.23414.5</MicrosoftDotNetApiCompatVersion>
-    <MicrosoftDotNetCodeAnalysisPackageVersion>8.0.0-beta.23414.5</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetApiCompatVersion>8.0.0-beta.23417.3</MicrosoftDotNetApiCompatVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>8.0.0-beta.23417.3</MicrosoftDotNetCodeAnalysisPackageVersion>
   </PropertyGroup>
   <!-- Sourcelink -->
   <PropertyGroup>

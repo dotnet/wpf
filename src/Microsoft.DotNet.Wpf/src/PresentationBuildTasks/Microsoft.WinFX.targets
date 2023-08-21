@@ -454,6 +454,7 @@
                 Analyzers="@(Analyzer)"
                 TemporaryTargetAssemblyProjectName="$(_TemporaryTargetAssemblyProjectName)"
                 MSBuildProjectExtensionsPath="$(MSBuildProjectExtensionsPath)"
+                RootNamespace="$(RootNamespace)"
                  >
 
           <Output TaskParameter="TemporaryAssemblyForLocalTypeReference" PropertyName="_AssemblyForLocalTypeReference" />

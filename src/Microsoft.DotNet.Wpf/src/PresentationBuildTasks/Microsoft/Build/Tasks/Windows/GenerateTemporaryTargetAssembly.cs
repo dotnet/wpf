@@ -277,6 +277,7 @@ namespace Microsoft.Build.Tasks.Windows
                     ( nameof(BaseIntermediateOutputPath), BaseIntermediateOutputPath ),
                     ( nameof(MSBuildProjectExtensionsPath), MSBuildProjectExtensionsPath ),
                     ( "_TargetAssemblyProjectName", Path.GetFileNameWithoutExtension(CurrentProject) ),
+                    ( nameof(RootNamespace), RootNamespace ),
                 };
 
                 //Removing duplicate AssemblyName
@@ -499,6 +500,14 @@ namespace Microsoft.Build.Tasks.Windows
         /// </summary>
         [Required]
         public string AnalyzerTypeName { get; set; }
+
+        /// <summary>
+        /// RootNamespace 
+        /// 
+        /// Required for Source Generator support. May be null.
+        /// 
+        /// </summary>
+        public string RootNamespace { get; set; }
 
         /// <summary>
         /// BaseIntermediateOutputPath

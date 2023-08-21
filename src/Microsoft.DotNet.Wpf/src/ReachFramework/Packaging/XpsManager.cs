@@ -1278,8 +1278,7 @@ namespace System.Windows.Xps.Packaging
             }
             else
             {
-                if (String.CompareOrdinal(contentType.TypeComponent.ToUpper(CultureInfo.InvariantCulture),
-                                          "Image".ToUpper(CultureInfo.InvariantCulture))==0)
+                if (string.Equals(contentType.TypeComponent, "Image", StringComparison.OrdinalIgnoreCase))
                 {
                     key = "Image";
                 }

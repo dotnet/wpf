@@ -700,12 +700,12 @@ namespace System.Windows.Markup
                 KnownProperties knownId = (KnownProperties)(-id);
                 string propertyName = GetAttributeNameFromKnownId(knownId);
                 KnownElements knownElement = KnownTypes.GetKnownElementFromKnownCommonProperty(knownId);
-                return  (ownerTypeId == -(short)knownElement && (String.CompareOrdinal(propertyName, name) == 0));
+                return  (ownerTypeId == -(short)knownElement && (string.Equals(propertyName, name, StringComparison.Ordinal)));
             }
             else
             {
                 BamlAttributeInfoRecord record = (BamlAttributeInfoRecord)AttributeIdMap[id];
-                return (record.OwnerTypeId == ownerTypeId) && (String.CompareOrdinal(record.Name, name) == 0);
+                return (record.OwnerTypeId == ownerTypeId) && (string.Equals(record.Name, name, StringComparison.Ordinal));
             }
         }
 
@@ -714,7 +714,7 @@ namespace System.Windows.Markup
             string propertyName = GetAttributeNameFromId(id);
             if (null == propertyName)
                 return false;
-            return (String.CompareOrdinal(propertyName, name) == 0);
+            return (string.Equals(propertyName, name, StringComparison.Ordinal));
         }
 
         internal bool DoesAttributeMatch(short id, BamlAttributeUsage attributeUsage)

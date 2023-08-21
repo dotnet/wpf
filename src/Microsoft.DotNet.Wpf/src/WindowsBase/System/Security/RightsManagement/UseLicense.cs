@@ -158,7 +158,7 @@ namespace System.Security.RightsManagement
 
             // Note that because of the GetType() checking above, the casting must be valid.
             UseLicense obj = (UseLicense)x;
-            return (String.CompareOrdinal(_serializedUseLicense, obj._serializedUseLicense) == 0);
+            return (string.Equals(_serializedUseLicense, obj._serializedUseLicense, StringComparison.Ordinal));
 }
 
         /// <summary>

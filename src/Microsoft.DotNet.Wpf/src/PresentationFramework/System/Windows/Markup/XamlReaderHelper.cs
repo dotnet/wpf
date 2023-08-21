@@ -6874,7 +6874,7 @@ namespace System.Windows.Markup
         public override bool Equals(object o)
         {
             XamlPropertyFullName other = (XamlPropertyFullName)o;
-            return (_ownerType == other.OwnerType && (0==string.CompareOrdinal(_name, other.Name)));
+            return (_ownerType == other.OwnerType && (string.Equals(_name, other.Name, StringComparison.Ordinal)));
         }
 
         public override int GetHashCode()

@@ -18,8 +18,6 @@ namespace System.Xaml
     /// </summary>
     internal class NameScope : INameScopeDictionary
     {        
-        #region INameScope
-        
         /// <summary>
         /// Register Name-Object Map 
         /// </summary>
@@ -31,7 +29,9 @@ namespace System.Xaml
             ArgumentNullException.ThrowIfNull(scopedElement);
 
             if (name.Length == 0)
+            {
                 throw new ArgumentException(SR.NameScopeNameNotEmptyString);
+            }
 
             if (!NameValidationHelper.IsValidIdentifierName(name))
             {
@@ -56,14 +56,6 @@ namespace System.Xaml
                     throw new ArgumentException(SR.Format(SR.NameScopeDuplicateNamesNotAllowed, name));
                 }   
             }
-
-            //if( TraceNameScope.IsEnabled )
-            //{
-            //    TraceNameScope.TraceActivityItem( TraceNameScope.RegisterName,
-            //                                      this, 
-            //                                      name,
-            //                                      scopedElement );
-            //}
         }
 
         /// <summary>
@@ -75,22 +67,16 @@ namespace System.Xaml
             ArgumentNullException.ThrowIfNull(name);
 
             if (name.Length == 0)
-                throw new ArgumentException(SR.NameScopeNameNotEmptyString);
-
-            if (_nameMap != null && _nameMap[name] != null)
             {
-                _nameMap.Remove(name);
+                throw new ArgumentException(SR.NameScopeNameNotEmptyString);
             }
-            else
+
+            if (_nameMap?[name] == null)
             {
                 throw new ArgumentException(SR.Format(SR.NameScopeNameNotFound, name));
             }
 
-            //if( TraceNameScope.IsEnabled )
-            //{
-            //    TraceNameScope.TraceActivityItem( TraceNameScope.UnregisterName,
-            //                                      this, name );
-            //}
+            _nameMap.Remove(name);
         }
 
         /// <summary>
@@ -101,64 +87,27 @@ namespace System.Xaml
         public object FindName(string name)
         {
             if (_nameMap == null || string.IsNullOrEmpty(name))
+            {
                 return null;
+            }
 
             return _nameMap[name];
         }
-
-        #endregion INameScope
-
-        #region Data
         
         // This is a HybridDictionary of Name-Object maps
         private HybridDictionary _nameMap;
 
-        #endregion Data
+        IEnumerator<KeyValuePair<string, object>> GetEnumerator() => new Enumerator(_nameMap);
 
-        IEnumerator<KeyValuePair<string, object>> GetEnumerator()
-        {
-            return new Enumerator(_nameMap);
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        #region IEnumerable methods
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-        #endregion
+        IEnumerator<KeyValuePair<string, object>> IEnumerable<KeyValuePair<string, object>>.GetEnumerator() => GetEnumerator();
 
-        #region IEnumerable<KeyValuePair<string, object> methods
-        IEnumerator<KeyValuePair<string, object>> IEnumerable<KeyValuePair<string, object>>.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-        #endregion
+        public int Count => _nameMap?.Count ?? 0;
 
-        #region ICollection<KeyValuePair<string, object> methods
-        public int Count
-        {
-            get
-            {
-                if (_nameMap == null)
-                {
-                    return 0;
-                }
-                return _nameMap.Count;
-            }
-        }
+        public bool IsReadOnly => false;
 
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public void Clear()
-        {
-            _nameMap = null;
-        }
+        public void Clear() => _nameMap = null;
 
         public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
         {
@@ -210,9 +159,7 @@ namespace System.Xaml
             }
             return ContainsKey(item.Key);
         }
-        #endregion
 
-        #region IDictionary<string, object> methods
         public object this[string key]
         {
             get
@@ -241,7 +188,7 @@ namespace System.Xaml
             ArgumentNullException.ThrowIfNull(key);
 
             object value = FindName(key);
-            return (value != null);
+            return value != null;
         }
 
         public bool Remove(string key)
@@ -250,6 +197,7 @@ namespace System.Xaml
             {
                 return false;
             }
+
             UnregisterName(key);
             return true;
         }
@@ -261,6 +209,7 @@ namespace System.Xaml
                 value = null;
                 return false;
             }
+
             value = FindName(key);
             return true;
         }
@@ -300,27 +249,17 @@ namespace System.Xaml
                 return list;
             }
         }
-        #endregion
 
-        #region class Enumerator
-        class Enumerator : IEnumerator<KeyValuePair<string, object>>
+        private class Enumerator : IEnumerator<KeyValuePair<string, object>>
         {
-            IDictionaryEnumerator _enumerator;
+            private IDictionaryEnumerator _enumerator;
             
             public Enumerator(HybridDictionary nameMap)
             {
-                _enumerator = null;
-
-                if (nameMap != null)
-                {
-                    _enumerator = nameMap.GetEnumerator();
-                }
+                _enumerator = nameMap?.GetEnumerator();
             }
 
-            public void Dispose()
-            {
-                GC.SuppressFinalize(this);
-            }
+            public void Dispose() => GC.SuppressFinalize(this);
 
             public KeyValuePair<string, object> Current
             {
@@ -330,35 +269,16 @@ namespace System.Xaml
                     {
                         return default(KeyValuePair<string, object>);
                     }
+
                     return new KeyValuePair<string, object>((string)_enumerator.Key, _enumerator.Value);
                 }
             }
 
-            public bool MoveNext()
-            {
-                if (_enumerator == null)
-                {
-                    return false;
-                }
-                return _enumerator.MoveNext();
-            }
+            public bool MoveNext() => _enumerator?.MoveNext() ?? false;
 
-            object IEnumerator.Current
-            {
-                get
-                {
-                    return Current;
-                }
-            }
+            object IEnumerator.Current => Current;
 
-            void IEnumerator.Reset()
-            {
-                if (_enumerator != null)
-                {
-                    _enumerator.Reset();
-                }
-            }
+            void IEnumerator.Reset() => _enumerator?.Reset();
         }
-        #endregion
     }
 }

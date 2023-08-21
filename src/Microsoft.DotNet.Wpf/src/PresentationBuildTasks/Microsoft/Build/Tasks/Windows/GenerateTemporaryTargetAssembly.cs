@@ -279,6 +279,9 @@ namespace Microsoft.Build.Tasks.Windows
                     ( "_TargetAssemblyProjectName", Path.GetFileNameWithoutExtension(CurrentProject) ),
                 };
 
+                //Removing duplicate AssemblyName
+                RemovePropertiesByName(xmlProjectDoc, nameof(AssemblyName));
+
                 AddNewProperties(xmlProjectDoc, properties);
 
                 // Save the xmlDocument content into the temporary project file.
@@ -568,10 +571,11 @@ namespace Microsoft.Build.Tasks.Windows
         #region Private Methods
 
         //
-        // Remove specific items from project file. Every item should be under an ItemGroup.
+        // Remove specific entity from project file.
         //
-        private void RemoveItemsByName(XmlDocument xmlProjectDoc, string sItemName)
+        private void RemoveEntityByName(XmlDocument xmlProjectDoc, string sItemName, string groupName)
         {
+            
             if (xmlProjectDoc == null || String.IsNullOrEmpty(sItemName))
             {
                 // When the parameters are not valid, simply return it, instead of throwing exceptions.
@@ -617,7 +621,7 @@ namespace Microsoft.Build.Tasks.Windows
             {
                 XmlElement nodeGroup = root.ChildNodes[i] as XmlElement;
 
-                if (nodeGroup != null && String.Compare(nodeGroup.Name, ITEMGROUP_NAME, StringComparison.OrdinalIgnoreCase) == 0)
+                if (nodeGroup != null && String.Compare(nodeGroup.Name, groupName, StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     //
                     // This is ItemGroup element.
@@ -668,7 +672,22 @@ namespace Microsoft.Build.Tasks.Windows
                 }
 
             }   // end of "for i" statement.
+        }
+        
+        //
+        // Remove specific items from project file. Every item should be under an ItemGroup.
+        //
+        private void RemoveItemsByName(XmlDocument xmlProjectDoc, string sItemName)
+        {
+            RemoveEntityByName(xmlProjectDoc, sItemName, ITEMGROUP_NAME);
+        }
 
+        //
+        // Remove specific property from project file. Every property should be under an PropertyGroup.
+        //
+        private void RemovePropertiesByName(XmlDocument xmlProjectDoc, string sPropertyName)
+        {
+            RemoveEntityByName(xmlProjectDoc, sPropertyName, PROPERTYGROUP_NAME);
         }
 
         //
@@ -911,6 +930,7 @@ namespace Microsoft.Build.Tasks.Windows
         private const string RESOURCENAME = "Resource";
 
         private const string ITEMGROUP_NAME = "ItemGroup";
+        private const string PROPERTYGROUP_NAME = "PropertyGroup";
         private const string INCLUDE_ATTR_NAME = "Include";
 
         private const string WPFTMP = "wpftmp";

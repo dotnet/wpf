@@ -99,15 +99,8 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// <returns>converted value</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (null == value)
-            {
-                throw new ArgumentNullException("value");
-            }
-
-            if (null == destinationType)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(value);
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             StringCollection stringCollectionValue = value as StringCollection;
             if (stringCollectionValue != null)

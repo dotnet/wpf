@@ -907,61 +907,56 @@ namespace System.Windows
 
             WritePreamble();
 
-            if (collection != null)
+            ArgumentNullException.ThrowIfNull(collection);
+
+            bool needsItemValidation = true;
+            ICollection<TextDecoration> icollectionOfT = collection as ICollection<TextDecoration>;
+
+            if (icollectionOfT != null)
             {
-                bool needsItemValidation = true;
-                ICollection<TextDecoration> icollectionOfT = collection as ICollection<TextDecoration>;
+                _collection = new FrugalStructList<TextDecoration>(icollectionOfT);
+            }
+            else
+            {
+                ICollection icollection = collection as ICollection;
 
-                if (icollectionOfT != null)
+                if (icollection != null) // an IC but not and IC<T>
                 {
-                    _collection = new FrugalStructList<TextDecoration>(icollectionOfT);
+                    _collection = new FrugalStructList<TextDecoration>(icollection);
                 }
-                else
+                else // not a IC or IC<T> so fall back to the slower Add
                 {
-                    ICollection icollection = collection as ICollection;
+                    _collection = new FrugalStructList<TextDecoration>();
 
-                    if (icollection != null) // an IC but not and IC<T>
-                    {
-                        _collection = new FrugalStructList<TextDecoration>(icollection);
-                    }
-                    else // not a IC or IC<T> so fall back to the slower Add
-                    {
-                        _collection = new FrugalStructList<TextDecoration>();
-
-                        foreach (TextDecoration item in collection)
-                        {
-                            if (item == null)
-                            {
-                                throw new System.ArgumentException(SR.Collection_NoNull);
-                            }
-                            TextDecoration newValue = item;
-                            OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
-                            _collection.Add(newValue);
-                        }
-
-                        needsItemValidation = false;
-                    }
-                }
-
-                if (needsItemValidation)
-                {
                     foreach (TextDecoration item in collection)
                     {
                         if (item == null)
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
-                        OnFreezablePropertyChanged(/* oldValue = */ null, item);
+                        TextDecoration newValue = item;
+                        OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
+                        _collection.Add(newValue);
                     }
+
+                    needsItemValidation = false;
                 }
-
-
-                WritePostscript();
             }
-            else
+
+            if (needsItemValidation)
             {
-                throw new ArgumentNullException("collection");
+                foreach (TextDecoration item in collection)
+                {
+                    if (item == null)
+                    {
+                        throw new System.ArgumentException(SR.Collection_NoNull);
+                    }
+                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
+                }
             }
+
+
+            WritePostscript();
         }
 
         #endregion Constructors

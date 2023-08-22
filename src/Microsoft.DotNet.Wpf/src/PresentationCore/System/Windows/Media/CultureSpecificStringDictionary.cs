@@ -324,10 +324,9 @@ namespace System.Windows.Media
             string s = value as string;
             if (s == null)
             {
-                if (value == null)
-                    throw new ArgumentNullException("value");
-                else
-                    throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(string)), "value");
+                ArgumentNullException.ThrowIfNull(value);
+
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(string)), "value");
             }
             return s;
         }
@@ -338,10 +337,9 @@ namespace System.Windows.Media
             XmlLanguage language = TryConvertKey(key);
             if (language == null)
             {
-                if (key == null)
-                    throw new ArgumentNullException("key");
-                else
-                    throw new ArgumentException(SR.Format(SR.CannotConvertType, key.GetType(), typeof(XmlLanguage)), "key");
+                ArgumentNullException.ThrowIfNull(key);
+
+                throw new ArgumentException(SR.Format(SR.CannotConvertType, key.GetType(), typeof(XmlLanguage)), "key");
             }
             return language;
         }

@@ -532,10 +532,9 @@ namespace System.Windows.Media
             if (metrics != null)
                 return metrics;
 
-            if (value != null)
-                throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(CharacterMetrics), value.GetType()));
-            else
-                throw new ArgumentNullException("value");
+            ArgumentNullException.ThrowIfNull(value);
+
+            throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(CharacterMetrics), value.GetType()));
         }
 
         private struct Enumerator : SC.IDictionaryEnumerator, IEnumerator<KeyValuePair<int, CharacterMetrics>>

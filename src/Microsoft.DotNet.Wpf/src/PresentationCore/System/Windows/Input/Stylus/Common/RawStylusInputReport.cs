@@ -191,9 +191,9 @@ namespace System.Windows.Input
             {
                 throw new InvalidEnumArgumentException(SR.Format(SR.Enum_Invalid, nameof(actions)));
             }
-            if (data == null && actions != RawStylusActions.InRange)
+            if (actions != RawStylusActions.InRange)
             {
-                throw new ArgumentNullException(nameof(data));
+                ArgumentNullException.ThrowIfNull(data);
             }
 
             _actions = actions;
@@ -247,9 +247,9 @@ namespace System.Windows.Input
             {
                 throw new InvalidEnumArgumentException(SR.Format(SR.Enum_Invalid, nameof(actions)));
             }
-            if (data == null && actions != RawStylusActions.InRange)
+            if (actions != RawStylusActions.InRange)
             {
-                throw new ArgumentNullException(nameof(data));
+                ArgumentNullException.ThrowIfNull(data);
             }
 
             _actions = actions;

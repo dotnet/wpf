@@ -114,12 +114,10 @@ namespace System.Windows.Input
                 //
                 // additionalValues can be null if PropertyCount == 3 (X, Y, P)
                 //
-                if (stylusPointDescription.PropertyCount > StylusPointDescription.RequiredCountOfProperties &&
-                    null == additionalValues)
+                if (stylusPointDescription.PropertyCount > StylusPointDescription.RequiredCountOfProperties)
                 {
-                    throw new ArgumentNullException("additionalValues");
+                    ArgumentNullException.ThrowIfNull(additionalValues);
                 }
-
 
                 if (additionalValues != null)
                 {

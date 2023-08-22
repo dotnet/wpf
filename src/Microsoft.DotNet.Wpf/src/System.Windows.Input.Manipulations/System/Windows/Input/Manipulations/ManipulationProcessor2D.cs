@@ -311,7 +311,7 @@ namespace System.Windows.Input.Manipulations
         EditorBrowsable(EditorBrowsableState.Never)]
         public void SetParameters(ManipulationParameters2D parameters)
         {
-            Validations.CheckNotNull(parameters, "parameters");
+            ArgumentNullException.ThrowIfNull(parameters);
             parameters.Set(this);
         }
 

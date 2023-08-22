@@ -56,15 +56,9 @@ namespace System.Windows
         public DataObjectPastingEventArgs(IDataObject dataObject, bool isDragDrop, string formatToApply) //
             : base(System.Windows.DataObject.PastingEvent, isDragDrop)
         {
-            if (dataObject == null)
-            {
-                throw new ArgumentNullException("dataObject");
-            }
+            ArgumentNullException.ThrowIfNull(dataObject);
 
-            if (formatToApply == null)
-            {
-                throw new ArgumentNullException("formatToApply");
-            }
+            ArgumentNullException.ThrowIfNull(formatToApply);
 
             if (formatToApply == string.Empty)
             {
@@ -136,10 +130,7 @@ namespace System.Windows
             {
                 string[] availableFormats;
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 availableFormats = value.GetFormats(/*autoConvert:*/false);
                 if (availableFormats == null || availableFormats.Length == 0)
@@ -169,10 +160,7 @@ namespace System.Windows
             }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (!_dataObject.GetDataPresent(value))
                 {

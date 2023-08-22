@@ -119,12 +119,9 @@ namespace MS.Internal.TextFormatting
         }
 
         public void CopyTo(Point[] array, int arrayIndex)
-        {            
+        {
             // parameter validations
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             if (array.Rank != 1)
             {

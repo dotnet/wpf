@@ -205,14 +205,8 @@ namespace System.Windows.Ink
         /// </remarks>
         public DrawingAttributesReplacedEventArgs(DrawingAttributes newDrawingAttributes, DrawingAttributes previousDrawingAttributes)
         {
-            if ( newDrawingAttributes == null )
-            {
-                throw new ArgumentNullException("newDrawingAttributes");
-            }
-            if ( previousDrawingAttributes == null )
-            {
-                throw new ArgumentNullException("previousDrawingAttributes");
-            }
+            ArgumentNullException.ThrowIfNull(newDrawingAttributes);
+            ArgumentNullException.ThrowIfNull(previousDrawingAttributes);
             _newDrawingAttributes = newDrawingAttributes;
             _previousDrawingAttributes = previousDrawingAttributes;
         }
@@ -255,14 +249,8 @@ namespace System.Windows.Ink
         /// </remarks>
         public StylusPointsReplacedEventArgs(StylusPointCollection newStylusPoints, StylusPointCollection previousStylusPoints)
         {
-            if ( newStylusPoints == null )
-            {
-                throw new ArgumentNullException("newStylusPoints");
-            }
-            if ( previousStylusPoints == null )
-            {
-                throw new ArgumentNullException("previousStylusPoints");
-            }
+            ArgumentNullException.ThrowIfNull(newStylusPoints);
+            ArgumentNullException.ThrowIfNull(previousStylusPoints);
             _newStylusPoints = newStylusPoints;
             _previousStylusPoints = previousStylusPoints;
         }

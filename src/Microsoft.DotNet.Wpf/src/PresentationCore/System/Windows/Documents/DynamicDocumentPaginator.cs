@@ -71,10 +71,7 @@ namespace System.Windows.Documents
             int pageNumber;
 
             // Content position cannot be null.
-            if (contentPosition == null)
-            {
-                throw new ArgumentNullException("contentPosition");
-            }
+            ArgumentNullException.ThrowIfNull(contentPosition);
             // Content position cannot be Missing.
             if (contentPosition == ContentPosition.Missing)
             {

@@ -296,10 +296,7 @@ namespace System.Windows.Media
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -411,10 +408,7 @@ namespace System.Windows.Media
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -526,10 +520,7 @@ namespace System.Windows.Media
 
         private PathFigure Cast(object value)
         {
-            if( value == null )
-            {
-                throw new System.ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             if (!(value is PathFigure))
             {

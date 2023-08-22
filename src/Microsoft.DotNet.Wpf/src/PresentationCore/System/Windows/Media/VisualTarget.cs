@@ -35,10 +35,7 @@ namespace System.Windows.Media
         /// </summary>
         public VisualTarget(HostVisual hostVisual)
         {
-            if (hostVisual == null)
-            {
-                throw new ArgumentNullException("hostVisual");
-            }
+            ArgumentNullException.ThrowIfNull(hostVisual);
 
             _hostVisual = hostVisual;
             _connected = false;

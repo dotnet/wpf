@@ -89,10 +89,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="testDelDel"></param>
         internal byte FindPacketAlgoByte(int[] input, bool testDelDel)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException("input");
-            }
+            ArgumentNullException.ThrowIfNull(input);
 
             // Check for the input item count
             if (0 == input.Length)
@@ -520,18 +517,12 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="outputBufferIndex">the index of the output buffer to write to</param>
         internal uint Uncompress(int bitCount, byte[] input, int inputIndex, DeltaDelta dtxf, int[] outputBuffer, int outputBufferIndex)
         {
-            if (null == input)
-            {
-                throw new ArgumentNullException("input");
-            }
+            ArgumentNullException.ThrowIfNull(input);
             if (inputIndex >= input.Length)
             {
                 throw new ArgumentOutOfRangeException("inputIndex");
             }
-            if (null == outputBuffer)
-            {
-                throw new ArgumentNullException("outputBuffer");
-            }
+            ArgumentNullException.ThrowIfNull(outputBuffer);
             if (outputBufferIndex >= outputBuffer.Length)
             {
                 throw new ArgumentOutOfRangeException("outputBufferIndex");
@@ -611,10 +602,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns>Uncompressed byte[]</returns>
         internal byte[] Uncompress(int bitCount, BitStreamReader reader, GorillaEncodingType encodingType, int unitsToDecode)
         {
-            if (null == reader)
-            {
-                throw new ArgumentNullException("reader");
-            }
+            ArgumentNullException.ThrowIfNull(reader);
             if (bitCount < 0)
             {
                 throw new ArgumentOutOfRangeException("bitCount");

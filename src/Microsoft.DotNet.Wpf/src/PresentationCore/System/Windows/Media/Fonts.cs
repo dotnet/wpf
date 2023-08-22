@@ -53,8 +53,7 @@ namespace System.Windows.Media
         /// </remarks>
         public static ICollection<FontFamily> GetFontFamilies(string location)
         {
-            if (location == null)
-                throw new ArgumentNullException("location");
+            ArgumentNullException.ThrowIfNull(location);
 
             return GetFontFamilies(null, location);
         }
@@ -71,8 +70,7 @@ namespace System.Windows.Media
         /// </remarks>
         public static ICollection<FontFamily> GetFontFamilies(Uri baseUri)
         {
-            if (baseUri == null)
-                throw new ArgumentNullException("baseUri");
+            ArgumentNullException.ThrowIfNull(baseUri);
 
             return GetFontFamilies(baseUri, null);
         }
@@ -148,8 +146,7 @@ namespace System.Windows.Media
         /// </remarks>
         public static ICollection<Typeface> GetTypefaces(string location)
         {
-            if (location == null)
-                throw new ArgumentNullException("location");
+            ArgumentNullException.ThrowIfNull(location);
 
             return new TypefaceCollection(GetFontFamilies(null, location));
         }
@@ -166,9 +163,8 @@ namespace System.Windows.Media
         /// </remarks>
         public static ICollection<Typeface> GetTypefaces(Uri baseUri)
         {
-            if (baseUri == null)
-                throw new ArgumentNullException("baseUri");
-            
+            ArgumentNullException.ThrowIfNull(baseUri);
+
             return new TypefaceCollection(GetFontFamilies(baseUri, null));
         }
 
@@ -326,10 +322,7 @@ namespace System.Windows.Media
 
             public void CopyTo(Typeface[] array, int arrayIndex)
             {
-                if (array == null)
-                {
-                    throw new ArgumentNullException("array");
-                }
+                ArgumentNullException.ThrowIfNull(array);
 
                 if (array.Rank != 1)
                 {

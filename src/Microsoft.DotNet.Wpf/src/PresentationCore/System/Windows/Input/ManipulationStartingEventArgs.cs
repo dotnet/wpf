@@ -113,15 +113,9 @@ namespace System.Windows.Input
         /// </summary>
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            if (genericHandler == null)
-            {
-                throw new ArgumentNullException("genericHandler");
-            }
+            ArgumentNullException.ThrowIfNull(genericHandler);
 
-            if (genericTarget == null)
-            {
-                throw new ArgumentNullException("genericTarget");
-            }
+            ArgumentNullException.ThrowIfNull(genericTarget);
 
             if (RoutedEvent == Manipulation.ManipulationStartingEvent)
             {

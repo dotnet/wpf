@@ -46,10 +46,7 @@ namespace System.Windows.Ink
         /// <summary>Creates a StrokeCollection based on a collection of existing strokes</summary>
         public StrokeCollection(IEnumerable<Stroke> strokes)
         {
-            if ( strokes == null )
-            {
-                throw new ArgumentNullException("strokes");
-            }
+            ArgumentNullException.ThrowIfNull(strokes);
 
             List<Stroke> items = (List<Stroke>)this.Items;
 
@@ -70,10 +67,7 @@ namespace System.Windows.Ink
         /// <param name="stream">Stream of ISF data</param>
         public StrokeCollection(Stream stream)
         {
-            if ( stream == null )
-            {
-                throw new ArgumentNullException("stream");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
             if ( !stream.CanRead )
             {
                 throw new ArgumentException(SR.Image_StreamRead, "stream");
@@ -97,10 +91,7 @@ namespace System.Windows.Ink
         /// reduce the output buffer size in exchange for slower Save performance.</param>
         public virtual void Save(Stream stream, bool compress)
         {
-            if ( stream == null )
-            {
-                throw new ArgumentNullException("stream");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
             if ( !stream.CanWrite )
             {
                 throw new ArgumentException(SR.Image_StreamWrite, "stream");
@@ -331,10 +322,7 @@ namespace System.Windows.Ink
         /// </summary>
         protected override sealed void InsertItem(int index, Stroke stroke)
         {
-            if ( stroke == null )
-            {
-                throw new ArgumentNullException("stroke");
-            }
+            ArgumentNullException.ThrowIfNull(stroke);
             if ( this.IndexOf(stroke) != -1 )
             {
                 throw new ArgumentException(SR.StrokeIsDuplicated, "stroke");
@@ -352,10 +340,7 @@ namespace System.Windows.Ink
         /// </summary>
         protected override sealed void SetItem(int index, Stroke stroke)
         {
-            if ( stroke == null )
-            {
-                throw new ArgumentNullException("stroke");
-            }
+            ArgumentNullException.ThrowIfNull(stroke);
             if ( IndexOf(stroke) != -1 )
             {
                 throw new ArgumentException(SR.StrokeIsDuplicated, "stroke");
@@ -401,10 +386,7 @@ namespace System.Windows.Ink
         /// <remarks>Changes to the collection trigger a StrokesChanged event.</remarks>
         public void Remove(StrokeCollection strokes)
         {
-            if ( strokes == null )
-            {
-                throw new ArgumentNullException("strokes");
-            }
+            ArgumentNullException.ThrowIfNull(strokes);
             if ( strokes.Count == 0 )
             {
                 // NOTICE-2004/06/08-WAYNEZEN:
@@ -445,10 +427,7 @@ namespace System.Windows.Ink
         /// If the item already exists in the collection, then the item is not added again.</remarks>
         public void Add(StrokeCollection strokes)
         {
-            if ( strokes == null )
-            {
-                throw new ArgumentNullException("strokes");
-            }
+            ArgumentNullException.ThrowIfNull(strokes);
             if ( strokes.Count == 0 )
             {
                 // NOTICE-2004/06/08-WAYNEZEN:

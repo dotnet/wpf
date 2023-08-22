@@ -55,20 +55,14 @@ namespace System.Windows.Input
         /// <param name="inputGestures">Default Input Gestures associated</param>
         public RoutedCommand(string name, Type ownerType, InputGestureCollection inputGestures)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
+            ArgumentNullException.ThrowIfNull(name);
 
             if (name.Length == 0)
             {
                 throw new ArgumentException(SR.StringEmpty, "name");
             }
 
-            if (ownerType == null)
-            {
-                throw new ArgumentNullException("ownerType");
-            }
+            ArgumentNullException.ThrowIfNull(ownerType);
 
             _name = name;
             _ownerType = ownerType;

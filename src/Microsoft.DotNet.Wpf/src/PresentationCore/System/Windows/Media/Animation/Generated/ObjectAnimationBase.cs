@@ -91,15 +91,12 @@ namespace System.Windows.Media.Animation
         {
             ReadPreamble();
 
-            if (animationClock == null)
-            {
-                throw new ArgumentNullException("animationClock");
-            }
+            ArgumentNullException.ThrowIfNull(animationClock);
 
             // We check for null above but presharp doesn't notice so we suppress the 
             // warning here.
 
-            #pragma warning suppress 6506
+#pragma warning suppress 6506
             if (animationClock.CurrentState == ClockState.Stopped)
             {
                 return defaultDestinationValue;

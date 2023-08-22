@@ -67,10 +67,7 @@ namespace System.Windows
         /// </summary>
         public DataObject(object data)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             IDataObject dataObject = data as IDataObject;
 
@@ -100,20 +97,14 @@ namespace System.Windows
         /// </summary>
         public DataObject(string format, object data)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
                 throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             _innerData = new DataStore();
             SetData(format, data);
@@ -125,14 +116,8 @@ namespace System.Windows
         /// </summary>
         public DataObject(Type format, object data)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(format);
+            ArgumentNullException.ThrowIfNull(data);
             _innerData = new DataStore();
             SetData(format.FullName, data);
         }
@@ -143,20 +128,14 @@ namespace System.Windows
         /// </summary>
         public DataObject(string format, object data, bool autoConvert)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
                 throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             _innerData = new DataStore();
             SetData(format, data, autoConvert);
@@ -167,10 +146,7 @@ namespace System.Windows
         /// </summary>
         internal DataObject(System.Windows.IDataObject data)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             _innerData = data;
         }
@@ -180,10 +156,7 @@ namespace System.Windows
         /// </summary>
         internal DataObject(IComDataObject data)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             _innerData = new OleConverter(data);
         }
@@ -205,10 +178,7 @@ namespace System.Windows
         /// </summary>
         public object GetData(string format, bool autoConvert)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
@@ -224,10 +194,7 @@ namespace System.Windows
         /// </summary>
         public object GetData(string format)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
@@ -243,10 +210,7 @@ namespace System.Windows
         /// </summary>
         public object GetData(Type format)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
             return GetData(format.FullName);
         }
 
@@ -258,10 +222,7 @@ namespace System.Windows
         public bool GetDataPresent(Type format)
         {
             bool dataPresent;
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
             dataPresent = GetDataPresent(format.FullName);
             return dataPresent;
         }
@@ -275,10 +236,7 @@ namespace System.Windows
         {
             bool dataPresent;
 
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
@@ -296,10 +254,7 @@ namespace System.Windows
         /// </summary>
         public bool GetDataPresent(string format)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
@@ -336,10 +291,7 @@ namespace System.Windows
         /// </summary>
         public void SetData(object data)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(data);
             _innerData.SetData(data);
         }
 
@@ -349,20 +301,14 @@ namespace System.Windows
         /// </summary>
         public void SetData(string format, object data)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
                 throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             _innerData.SetData(format, data);
         }
@@ -373,14 +319,8 @@ namespace System.Windows
         /// </summary>
         public void SetData(Type format, object data)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(format);
+            ArgumentNullException.ThrowIfNull(data);
 
             _innerData.SetData(format, data);
         }
@@ -397,10 +337,7 @@ namespace System.Windows
         [FriendAccessAllowed]
         public void SetData(string format, Object data, bool autoConvert)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
@@ -526,10 +463,7 @@ namespace System.Windows
         /// </summary>
         public void SetAudio(byte[] audioBytes)
         {
-            if (audioBytes == null)
-            {
-                throw new ArgumentNullException("audioBytes");
-            }
+            ArgumentNullException.ThrowIfNull(audioBytes);
 
             SetAudio(new MemoryStream(audioBytes));
         }
@@ -539,10 +473,7 @@ namespace System.Windows
         /// </summary>
         public void SetAudio(Stream audioStream)
         {
-            if (audioStream == null)
-            {
-                throw new ArgumentNullException("audioStream");
-            }
+            ArgumentNullException.ThrowIfNull(audioStream);
 
             SetData(DataFormats.WaveAudio, audioStream, /*autoConvert*/false);
         }
@@ -552,10 +483,7 @@ namespace System.Windows
         /// </summary>
         public void SetFileDropList(StringCollection fileDropList)
         {
-            if (fileDropList == null)
-            {
-                throw new ArgumentNullException("fileDropList");
-            }
+            ArgumentNullException.ThrowIfNull(fileDropList);
 
             if (fileDropList.Count == 0)
             {
@@ -587,10 +515,7 @@ namespace System.Windows
         /// </summary>
         public void SetImage(BitmapSource image)
         {
-            if (image == null)
-            {
-                throw new ArgumentNullException("image");
-            }
+            ArgumentNullException.ThrowIfNull(image);
 
             SetData(DataFormats.Bitmap, image, /*audoConvert*/true);
         }
@@ -600,10 +525,7 @@ namespace System.Windows
         /// </summary>
         public void SetText(string textData)
         {
-            if (textData == null)
-            {
-                throw new ArgumentNullException("textData");
-            }
+            ArgumentNullException.ThrowIfNull(textData);
 
             SetText(textData, TextDataFormat.UnicodeText);
         }
@@ -613,10 +535,7 @@ namespace System.Windows
         /// </summary>
         public void SetText(string textData, TextDataFormat format)
         {
-            if (textData == null)
-            {
-                throw new ArgumentNullException("textData");
-            }
+            ArgumentNullException.ThrowIfNull(textData);
 
             if (!DataFormats.IsValidTextDataFormat(format))
             {

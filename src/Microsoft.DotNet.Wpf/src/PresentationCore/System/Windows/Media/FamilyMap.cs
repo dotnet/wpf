@@ -100,8 +100,7 @@ namespace System.Windows.Media
         {
             set 
             {
-                if (value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 _ranges = ParseUnicodeRanges(value); 
             }

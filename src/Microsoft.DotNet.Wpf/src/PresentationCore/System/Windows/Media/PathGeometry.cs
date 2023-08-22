@@ -387,10 +387,7 @@ namespace System.Windows.Media
         /// </summary>
         public void AddGeometry(Geometry geometry)
         {
-            if (geometry == null)
-            {
-                throw new System.ArgumentNullException("geometry");
-            }
+            ArgumentNullException.ThrowIfNull(geometry);
 
             if (geometry.IsEmpty())
             {

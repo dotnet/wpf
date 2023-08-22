@@ -44,8 +44,7 @@ namespace System.Windows.Media.TextFormatting
             TextParagraphProperties     textParagraphProperties
             ) 
         {
-            if (textParagraphProperties == null)
-                throw new ArgumentNullException("textParagraphProperties");
+            ArgumentNullException.ThrowIfNull(textParagraphProperties);
 
             _offset = offset;
 

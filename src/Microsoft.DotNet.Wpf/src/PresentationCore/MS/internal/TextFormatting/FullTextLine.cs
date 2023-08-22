@@ -546,10 +546,7 @@ namespace MS.Internal.TextFormatting
                 InvertAxes          inversion
                 )
             {
-                if (drawingContext == null)
-                {
-                    throw new ArgumentNullException("drawingContext");
-                }
+                ArgumentNullException.ThrowIfNull(drawingContext);
 
                 if ((_statusFlags & StatusFlags.IsDisposed) != 0)
                 {

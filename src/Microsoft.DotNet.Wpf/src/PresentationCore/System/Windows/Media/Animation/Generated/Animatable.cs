@@ -78,10 +78,7 @@ namespace System.Windows.Media.Animation
             AnimationClock clock,
             HandoffBehavior handoffBehavior)
         {
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
@@ -150,10 +147,7 @@ namespace System.Windows.Media.Animation
         /// </param>
         public void BeginAnimation(DependencyProperty dp, AnimationTimeline animation, HandoffBehavior handoffBehavior)
         {
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
@@ -209,10 +203,7 @@ namespace System.Windows.Media.Animation
         /// </returns>
         public object GetAnimationBaseValue(DependencyProperty dp)
         {
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             return this.GetValueEntry(
                     LookupEntry(dp.GlobalIndex),

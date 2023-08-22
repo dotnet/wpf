@@ -60,11 +60,8 @@ namespace System.Windows.Input
                 return _srgsMarkup; 
             }
             set 
-            { 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+            {
+                ArgumentNullException.ThrowIfNull(value);
                 _srgsMarkup = value; 
             }
         }
@@ -81,11 +78,8 @@ namespace System.Windows.Input
                 return _regexString; 
             }
             set 
-            { 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+            {
+                ArgumentNullException.ThrowIfNull(value);
                 _regexString = value; 
             }
         }
@@ -293,10 +287,7 @@ namespace System.Windows.Input
         ///</summary>
         public InputScopePhrase(String name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
+            ArgumentNullException.ThrowIfNull(name);
             _phraseName = name;
         }
 
@@ -320,10 +311,7 @@ namespace System.Windows.Input
         ///</param>
         public void AddText(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
+            ArgumentNullException.ThrowIfNull(name);
             _phraseName = name;
         }
 

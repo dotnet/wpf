@@ -141,8 +141,7 @@ namespace System.Windows.Input
         /// <returns></returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType == null)
-                throw new ArgumentNullException("destinationType");
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             if (destinationType == typeof(string))
             {

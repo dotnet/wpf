@@ -72,10 +72,7 @@ namespace System.Windows
             AnimationClock clock,
             HandoffBehavior handoffBehavior)
         {
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
@@ -144,10 +141,7 @@ namespace System.Windows
         /// </param>
         public void BeginAnimation(DependencyProperty dp, AnimationTimeline animation, HandoffBehavior handoffBehavior)
         {
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
@@ -203,10 +197,7 @@ namespace System.Windows
         /// </returns>
         public object GetAnimationBaseValue(DependencyProperty dp)
         {
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             return this.GetValueEntry(
                     LookupEntry(dp.GlobalIndex),
@@ -410,10 +401,7 @@ namespace System.Windows
         {
             // VerifyAccess();
 
-            if (e == null)
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
             e.ClearUserInitiated();
 
             UIElement.RaiseEventImpl(this, e);
@@ -425,10 +413,7 @@ namespace System.Windows
         /// </summary>
         internal void RaiseEvent(RoutedEventArgs args, bool trusted)
         {
-            if (args == null)
-            {
-                throw new ArgumentNullException("args");
-            }
+            ArgumentNullException.ThrowIfNull(args);
 
             if (trusted)
             {
@@ -444,10 +429,7 @@ namespace System.Windows
 
         internal void RaiseTrustedEvent(RoutedEventArgs args)
         {
-            if (args == null)
-            {
-                throw new ArgumentNullException("args");
-            }
+            ArgumentNullException.ThrowIfNull(args);
 
             // Try/finally to ensure that UserInitiated bit is cleared.
             args.MarkAsUserInitiated();
@@ -547,15 +529,9 @@ namespace System.Windows
         {
             // VerifyAccess();
 
-            if (routedEvent == null)
-            {
-                throw new ArgumentNullException("routedEvent");
-            }
+            ArgumentNullException.ThrowIfNull(routedEvent);
 
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
+            ArgumentNullException.ThrowIfNull(handler);
 
             if (!routedEvent.IsLegalHandler(handler))
             {
@@ -608,15 +584,9 @@ namespace System.Windows
         {
             // VerifyAccess();
 
-            if (routedEvent == null)
-            {
-                throw new ArgumentNullException("routedEvent");
-            }
+            ArgumentNullException.ThrowIfNull(routedEvent);
 
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
+            ArgumentNullException.ThrowIfNull(handler);
 
             if (!routedEvent.IsLegalHandler(handler))
             {
@@ -674,14 +644,8 @@ namespace System.Windows
         /// </summary>
         public void AddToEventRoute(EventRoute route, RoutedEventArgs e)
         {
-            if (route == null)
-            {
-                throw new ArgumentNullException("route");
-            }
-            if (e == null)
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(route);
+            ArgumentNullException.ThrowIfNull(e);
 
             // Get class listeners for this ContentElement
             RoutedEventHandlerInfoList classListeners =

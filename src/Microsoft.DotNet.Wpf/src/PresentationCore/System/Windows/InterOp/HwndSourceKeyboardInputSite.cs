@@ -19,15 +19,9 @@ namespace System.Windows.Interop
     {
         public HwndSourceKeyboardInputSite(HwndSource source, IKeyboardInputSink sink)
         {
-            if(source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
-            if(sink == null)
-            {
-                throw new ArgumentNullException("sink");
-            }
-            if(!(sink is UIElement))
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(sink);
+            if (!(sink is UIElement))
             {
                 throw new ArgumentException(SR.KeyboardSinkMustBeAnElement, "sink");
             }

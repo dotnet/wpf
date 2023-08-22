@@ -749,10 +749,7 @@ namespace System.Windows.Media.Imaging
             BitmapSource source
             )
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
+            ArgumentNullException.ThrowIfNull(source);
 
             if (source.PixelWidth < 0)
             {

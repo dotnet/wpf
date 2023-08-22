@@ -120,8 +120,7 @@ namespace System.Windows.Media
         [CLSCompliant(false)]
         public void CopyTo(KeyValuePair<XmlLanguage, string>[] array, int index)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
 
             if (index < 0)
                 throw new ArgumentOutOfRangeException("index");
@@ -156,8 +155,7 @@ namespace System.Windows.Media
 
         void SC.ICollection.CopyTo(Array array, int index)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
 
             if (index < 0)
                 throw new ArgumentOutOfRangeException("index");
@@ -315,8 +313,7 @@ namespace System.Windows.Media
         // make sure value is not null
         private string ValidateValue(string value)
         {
-            if (value == null)
-                throw new ArgumentNullException("value");
+            ArgumentNullException.ThrowIfNull(value);
 
             return value;
         }

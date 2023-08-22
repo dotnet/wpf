@@ -20,14 +20,8 @@ namespace MS.Internal.Automation
 
         internal InteropAutomationProvider(HostedWindowWrapper wrapper, AutomationPeer parent)
         {
-            if (wrapper == null)
-            {
-                throw new ArgumentNullException("wrapper");
-            }
-            if (parent == null)
-            {
-                throw new ArgumentNullException("parent");
-            }
+            ArgumentNullException.ThrowIfNull(wrapper);
+            ArgumentNullException.ThrowIfNull(parent);
 
             _wrapper = wrapper;
             _parent = parent;

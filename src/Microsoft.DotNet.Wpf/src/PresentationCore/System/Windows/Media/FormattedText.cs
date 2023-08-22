@@ -219,11 +219,9 @@ namespace System.Windows.Media
         private void InitFormattedText(string textToFormat, CultureInfo culture, FlowDirection flowDirection, Typeface typeface,
             double emSize, Brush foreground, NumberSubstitution numberSubstitution, TextFormattingMode textFormattingMode, double pixelsPerDip)
         {
-            if (textToFormat == null)
-                throw new ArgumentNullException("textToFormat");
+            ArgumentNullException.ThrowIfNull(textToFormat);
 
-            if (typeface == null)
-                throw new ArgumentNullException("typeface");
+            ArgumentNullException.ThrowIfNull(typeface);
 
             ValidateCulture(culture);
             ValidateFlowDirection(flowDirection, "flowDirection");
@@ -287,8 +285,7 @@ namespace System.Windows.Media
 
         private static void ValidateCulture(CultureInfo culture)
         {
-            if (culture == null)
-                throw new ArgumentNullException("culture");
+            ArgumentNullException.ThrowIfNull(culture);
         }
 
         private static void ValidateFontSize(double emSize)
@@ -395,8 +392,7 @@ namespace System.Windows.Media
         /// <param name="count">The number of characters the change should be applied to.</param>
         public void SetFontFamily(string fontFamily, int startIndex, int count)
         {
-            if (fontFamily == null)
-                throw new ArgumentNullException("fontFamily");
+            ArgumentNullException.ThrowIfNull(fontFamily);
 
             SetFontFamily(new FontFamily(fontFamily), startIndex, count);
         }
@@ -418,8 +414,7 @@ namespace System.Windows.Media
         /// <param name="count">The number of characters the change should be applied to.</param>
         public void SetFontFamily(FontFamily fontFamily, int startIndex, int count)
         {
-            if (fontFamily == null)
-                throw new ArgumentNullException("fontFamily");
+            ArgumentNullException.ThrowIfNull(fontFamily);
 
             int limit = ValidateRange(startIndex, count);
             for (int i = startIndex; i < limit;)

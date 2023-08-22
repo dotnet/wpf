@@ -293,10 +293,7 @@ namespace System.Windows.Media.Effects
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -408,10 +405,7 @@ namespace System.Windows.Media.Effects
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -523,10 +517,7 @@ namespace System.Windows.Media.Effects
 
         private BitmapEffect Cast(object value)
         {
-            if( value == null )
-            {
-                throw new System.ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             if (!(value is BitmapEffect))
             {

@@ -88,11 +88,8 @@ namespace System.Windows.Media
             // and duplicates the code below to avoid pulling in SCB & base classes as well.
             // ********* VERY IMPORTANT NOTE *****************
 
-            if (writer == null)
-            {
-                throw new ArgumentNullException("writer");
-            }
-            
+            ArgumentNullException.ThrowIfNull(writer);
+
             KnownColor knownColor = KnownColors.ColorStringToKnownColor(stringValue);
 #if !PBTCOMPILER
             // ***************** NOTE *****************
@@ -147,10 +144,7 @@ namespace System.Windows.Media
         /// </exception>
         public static object DeserializeFrom(BinaryReader reader)
         {
-            if (reader == null)
-            {
-                throw new ArgumentNullException("reader");
-            }
+            ArgumentNullException.ThrowIfNull(reader);
 
             return DeserializeFrom(reader, null);
         }

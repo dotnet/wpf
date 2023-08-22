@@ -41,10 +41,7 @@ namespace System.Windows.Media
         /// <param name="glyphRun"></param>
         public GlyphsSerializer(GlyphRun glyphRun)
         {
-            if (glyphRun == null)
-            {
-                throw new ArgumentNullException("glyphRun");
-            }
+            ArgumentNullException.ThrowIfNull(glyphRun);
 
             _glyphTypeface = glyphRun.GlyphTypeface;
             _milToEm = EmScaleFactor / glyphRun.FontRenderingEmSize;

@@ -259,13 +259,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns></returns>
         internal static byte[] CompressPropertyData(byte[] data, byte algorithm)
         {
-            if (data == null)
-            {
-                //we don't raise any information that could be used to attack our ISF code
-                //a simple 'ISF Operation Failed' is sufficient since the user can't do 
-                //anything to fix bogus ISF
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             return AlgoModule.CompressPropertyData(data, algorithm);
         }

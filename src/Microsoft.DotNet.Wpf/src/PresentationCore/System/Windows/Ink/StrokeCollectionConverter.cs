@@ -124,10 +124,7 @@ namespace System.Windows
         /// <returns>An Object that represents the converted value</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(destinationType);
 
 
             //if someone wants to convert to a string...

@@ -338,10 +338,7 @@ namespace System.Windows.Input
         ///</summary>
         public void PushMenuMode(PresentationSource menuSite)
         {
-            if (menuSite == null)
-            {
-                throw new ArgumentNullException("menuSite");
-            }
+            ArgumentNullException.ThrowIfNull(menuSite);
             menuSite.VerifyAccess();
 
             menuSite.PushMenuMode();
@@ -362,10 +359,7 @@ namespace System.Windows.Input
         ///</summary>
         public void PopMenuMode(PresentationSource menuSite)
         {
-            if (menuSite == null)
-            {
-                throw new ArgumentNullException("menuSite");
-            }
+            ArgumentNullException.ThrowIfNull(menuSite);
             menuSite.VerifyAccess();
 
             if (_menuModeCount <= 0)
@@ -528,12 +522,9 @@ namespace System.Windows.Input
         /// </returns>
         public bool ProcessInput(InputEventArgs input)
         {
-//             VerifyAccess();
+            //             VerifyAccess();
 
-            if(input == null)
-            {
-                throw new ArgumentNullException("input");
-            }
+            ArgumentNullException.ThrowIfNull(input);
 
             // Push a marker indicating the portion of the staging area
             // that needs to be processed.

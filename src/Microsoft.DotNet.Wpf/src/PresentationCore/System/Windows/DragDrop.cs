@@ -377,15 +377,9 @@ namespace System.Windows
         {
             DataObject dataObject;
 
-            if (dragSource == null)
-            {
-                throw new ArgumentNullException("dragSource");
-            }
+            ArgumentNullException.ThrowIfNull(dragSource);
 
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             RoutedEventArgs args = new RoutedEventArgs(DragDropStartedEvent, dragSource);
             

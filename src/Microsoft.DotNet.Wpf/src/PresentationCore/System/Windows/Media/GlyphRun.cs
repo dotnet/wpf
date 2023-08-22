@@ -459,11 +459,9 @@ namespace System.Windows.Media
                 if (renderingEmSize < 0.0)
                     throw new ArgumentOutOfRangeException("renderingEmSize", SR.ParameterValueCannotBeNegative);
 
-                if (glyphTypeface == null)
-                    throw new ArgumentNullException("glyphTypeface");
+                ArgumentNullException.ThrowIfNull(glyphTypeface);
 
-                if (glyphIndices == null)
-                    throw new ArgumentNullException("glyphIndices");
+                ArgumentNullException.ThrowIfNull(glyphIndices);
 
                 if (glyphIndices.Count <= 0)
                     throw new ArgumentException(SR.CollectionNumberOfElementsMustBeGreaterThanZero, "glyphIndices");
@@ -473,8 +471,7 @@ namespace System.Windows.Media
                     throw new ArgumentException(SR.Format(SR.CollectionNumberOfElementsMustBeLessOrEqualTo, MaxGlyphCount), "glyphIndices");
                 }
 
-                if (advanceWidths == null)
-                    throw new ArgumentNullException("advanceWidths");
+                ArgumentNullException.ThrowIfNull(advanceWidths);
 
                 if (advanceWidths.Count != glyphIndices.Count)
                     throw new ArgumentException(SR.Format(SR.CollectionNumberOfElementsShouldBeEqualTo, glyphIndices.Count), "advanceWidths");
@@ -937,10 +934,7 @@ namespace System.Windows.Media
             {
                 CheckInitializing(); // This can only be set during initialization.
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _glyphTypeface = value;
             }
@@ -1118,8 +1112,7 @@ namespace System.Windows.Media
 
                 // The list must be non-empty list.
                 // The consistency with other lists would be checked at EndInit() time.
-                if (value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (value.Count <= 0)
                     throw new ArgumentException(SR.CollectionNumberOfElementsMustBeGreaterThanZero, "value");
@@ -1149,8 +1142,7 @@ namespace System.Windows.Media
 
                 // The list must be non-empty list.
                 // The consistency with other lists would be checked at EndInit() time.
-                if (value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (value.Count <= 0)
                     throw new ArgumentException(SR.CollectionNumberOfElementsMustBeGreaterThanZero, "value");

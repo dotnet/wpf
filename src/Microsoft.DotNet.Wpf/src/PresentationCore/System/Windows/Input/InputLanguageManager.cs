@@ -48,10 +48,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetInputLanguage(DependencyObject target, CultureInfo inputLanguage)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(InputLanguageProperty, inputLanguage);
         }
@@ -63,10 +60,7 @@ namespace System.Windows.Input
         [TypeConverter(typeof(System.Windows.CultureInfoIetfLanguageTagConverter))]
         public static CultureInfo GetInputLanguage(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (CultureInfo)(target.GetValue(InputLanguageProperty));
         }
@@ -91,10 +85,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetRestoreInputLanguage(DependencyObject target, bool restore)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(RestoreInputLanguageProperty, restore);
         }
@@ -105,10 +96,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetRestoreInputLanguage(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (bool)(target.GetValue(RestoreInputLanguageProperty));
         }
@@ -143,11 +131,8 @@ namespace System.Windows.Input
         /// </param>
         public void RegisterInputLanguageSource(IInputLanguageSource inputLanguageSource)
         {
-            if (inputLanguageSource == null)
-            {
-                throw new ArgumentNullException("inputLanguageSource");
-            }
-            
+            ArgumentNullException.ThrowIfNull(inputLanguageSource);
+
             _source = inputLanguageSource;
 
             if (((_InputLanguageChanged != null) || 
@@ -171,15 +156,9 @@ namespace System.Windows.Input
                         CultureInfo newLanguageId, 
                         CultureInfo previousLanguageId)
         {
-            if (newLanguageId == null)
-            {
-                throw new ArgumentNullException("newLanguageId");
-            }
+            ArgumentNullException.ThrowIfNull(newLanguageId);
 
-            if (previousLanguageId == null)
-            {
-                throw new ArgumentNullException("previousLanguageId");
-            }
+            ArgumentNullException.ThrowIfNull(previousLanguageId);
 
             //
             // if this language change was not done by SetFocus() and
@@ -213,15 +192,9 @@ namespace System.Windows.Input
                         CultureInfo newLanguageId, 
                         CultureInfo previousLanguageId)
         {
-            if (newLanguageId == null)
-            {
-                throw new ArgumentNullException("newLanguageId");
-            }
+            ArgumentNullException.ThrowIfNull(newLanguageId);
 
-            if (previousLanguageId == null)
-            {
-                throw new ArgumentNullException("previousLanguageId");
-            }
+            ArgumentNullException.ThrowIfNull(previousLanguageId);
 
             bool accepted = true;
 
@@ -296,10 +269,7 @@ namespace System.Windows.Input
             }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 SetSourceCurrentLanguageId(value);
             }
@@ -334,10 +304,7 @@ namespace System.Windows.Input
         {
             add
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if ((_InputLanguageChanged == null) && 
                     (_InputLanguageChanging == null) &&
@@ -349,10 +316,7 @@ namespace System.Windows.Input
             }
             remove
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _InputLanguageChanged -= value;
                 if ((_InputLanguageChanged == null) && 
@@ -370,10 +334,7 @@ namespace System.Windows.Input
         {
             add
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if ((_InputLanguageChanged == null) && 
                     (_InputLanguageChanging == null) &&
@@ -385,10 +346,7 @@ namespace System.Windows.Input
             }
             remove
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _InputLanguageChanging -= value;
                 if ((_InputLanguageChanged == null) && 

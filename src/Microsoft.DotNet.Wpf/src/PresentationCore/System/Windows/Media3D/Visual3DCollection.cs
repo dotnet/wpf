@@ -145,10 +145,7 @@ namespace System.Windows.Media.Media3D
         {
             VerifyAPIReadOnly();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // The extra "index >= array.Length" check in because even if _collection.Count
             // is 0 the index is not allowed to be equal or greater than the length
@@ -165,10 +162,7 @@ namespace System.Windows.Media.Media3D
         {
             VerifyAPIReadOnly();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // The extra "index >= array.Length" check in because even if _collection.Count
             // is 0 the index is not allowed to be equal or greater than the length
@@ -471,11 +465,8 @@ namespace System.Windows.Media.Media3D
 
         private Visual3D Cast(object value)
         {
-            if( value == null )
-            {
-                throw new System.ArgumentNullException("value");
-            }
-            
+            ArgumentNullException.ThrowIfNull(value);
+
             if (!(value is Visual3D))
             {
                 throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, "Visual3D"));

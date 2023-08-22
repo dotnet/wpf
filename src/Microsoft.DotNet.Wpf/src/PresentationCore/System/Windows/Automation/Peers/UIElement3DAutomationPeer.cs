@@ -24,11 +24,8 @@ namespace System.Windows.Automation.Peers
         ///
         public UIElement3DAutomationPeer(UIElement3D owner)
         {
-            if(owner == null)
-            {
-                throw new ArgumentNullException("owner");
-            }
-            
+            ArgumentNullException.ThrowIfNull(owner);
+
             _owner = owner;
         }
 
@@ -54,21 +51,15 @@ namespace System.Windows.Automation.Peers
         ///</summary>
         public static AutomationPeer CreatePeerForElement(UIElement3D element)
         {
-            if(element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-            
+            ArgumentNullException.ThrowIfNull(element);
+
             return element.CreateAutomationPeer();
         }
 
         ///
         public static AutomationPeer FromElement(UIElement3D element)
         {
-            if(element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return element.GetAutomationPeer();
         }

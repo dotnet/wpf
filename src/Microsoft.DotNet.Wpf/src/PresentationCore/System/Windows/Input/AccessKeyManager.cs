@@ -36,10 +36,7 @@ namespace System.Windows.Input
         /// <param name="element">The registration element</param>
         public static void Register(string key, IInputElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             key = NormalizeKey(key);
 
             AccessKeyManager akm = AccessKeyManager.Current;
@@ -70,10 +67,7 @@ namespace System.Windows.Input
         /// <param name="element"></param>
         public static void Unregister(string key, IInputElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             key = NormalizeKey(key);
 
             AccessKeyManager akm = AccessKeyManager.Current;
@@ -135,10 +129,7 @@ namespace System.Windows.Input
         /// <returns></returns>
         private static string NormalizeKey(string key)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException("key");
-            }
+            ArgumentNullException.ThrowIfNull(key);
 
             string firstCharacter = StringInfo.GetNextTextElement(key);
 

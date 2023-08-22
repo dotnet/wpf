@@ -60,10 +60,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be added</param>
         public static void AddPreviewTextInputStartHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.AddHandler(element, PreviewTextInputStartEvent, handler);
         }
@@ -75,10 +72,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be removed</param>
         public static void RemovePreviewTextInputStartHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.RemoveHandler(element, PreviewTextInputStartEvent, handler);
         }
@@ -95,10 +89,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be added</param>
         public static void AddTextInputStartHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.AddHandler(element, TextInputStartEvent, handler);
         }
@@ -110,10 +101,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be removed</param>
         public static void RemoveTextInputStartHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.RemoveHandler(element, TextInputStartEvent, handler);
         }
@@ -130,10 +118,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be added</param>
         public static void AddPreviewTextInputUpdateHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.AddHandler(element, PreviewTextInputUpdateEvent, handler);
         }
@@ -145,10 +130,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be removed</param>
         public static void RemovePreviewTextInputUpdateHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.RemoveHandler(element, PreviewTextInputUpdateEvent, handler);
         }
@@ -165,10 +147,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be added</param>
         public static void AddTextInputUpdateHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.AddHandler(element, TextInputUpdateEvent, handler);
         }
@@ -180,10 +159,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be removed</param>
         public static void RemoveTextInputUpdateHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.RemoveHandler(element, TextInputUpdateEvent, handler);
         }
@@ -200,10 +176,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be added</param>
         public static void AddPreviewTextInputHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.AddHandler(element, PreviewTextInputEvent, handler);
         }
@@ -215,10 +188,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be removed</param>
         public static void RemovePreviewTextInputHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.RemoveHandler(element, PreviewTextInputEvent, handler);
         }
@@ -235,10 +205,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be added</param>
         public static void AddTextInputHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.AddHandler(element, TextInputEvent, handler);
         }
@@ -250,10 +217,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be removed</param>
         public static void RemoveTextInputHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.RemoveHandler(element, TextInputEvent, handler);
         }
@@ -349,10 +313,7 @@ namespace System.Windows.Input
 
         private static bool UnsafeStartComposition(TextComposition composition)
         {
-            if (composition == null)
-            {
-                throw new ArgumentNullException("composition");
-            }
+            ArgumentNullException.ThrowIfNull(composition);
 
             if (composition._InputManager == null)
             {
@@ -373,10 +334,7 @@ namespace System.Windows.Input
 
         private static bool UnsafeUpdateComposition(TextComposition composition)
         {
-            if (composition == null)
-            {
-                throw new ArgumentNullException("composition");
-            }
+            ArgumentNullException.ThrowIfNull(composition);
 
             if (composition._InputManager == null)
             {
@@ -401,10 +359,7 @@ namespace System.Windows.Input
 
         private static bool UnsafeCompleteComposition(TextComposition composition)
         {
-            if (composition == null)
-            {
-                throw new ArgumentNullException("composition");
-            }
+            ArgumentNullException.ThrowIfNull(composition);
 
             if (composition._InputManager == null)
             {

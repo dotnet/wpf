@@ -113,10 +113,7 @@ namespace System.Windows.Media
                                          object value,
                                          Type destinationType)
         {
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             HttpRequestCachePolicy httpPolicy = value as HttpRequestCachePolicy;
             if(httpPolicy != null)

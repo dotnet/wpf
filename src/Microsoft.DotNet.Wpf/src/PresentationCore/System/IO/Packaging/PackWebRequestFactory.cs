@@ -51,8 +51,7 @@ namespace System.IO.Packaging
         /// the "pack" scheme and associating this factory class as its default handler.</remarks>
         WebRequest IWebRequestCreate.Create(Uri uri)
         {
-            if (uri == null)
-                throw new ArgumentNullException("uri");
+            ArgumentNullException.ThrowIfNull(uri);
 
             // Ensure uri is absolute - if we don't check now, the get_Scheme property will throw 
             // InvalidOperationException which would be misleading to the caller.

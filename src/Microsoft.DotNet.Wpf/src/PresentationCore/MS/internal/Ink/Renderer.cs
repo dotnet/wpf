@@ -46,10 +46,7 @@ namespace System.Windows.Ink
             {
                 Debug.Assert(renderer != null);
 
-                if (stroke == null)
-                {
-                    throw new System.ArgumentNullException("stroke");
-                }
+                ArgumentNullException.ThrowIfNull(stroke);
 
                 _stroke = stroke;
                 _renderer = renderer;
@@ -232,10 +229,7 @@ namespace System.Windows.Ink
             }
             set
             {
-                if (value == null)
-                {
-                    throw new System.ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
                 if (value == _strokes)
                 {
                     return;
@@ -288,14 +282,8 @@ namespace System.Windows.Ink
         internal void AttachIncrementalRendering(Visual visual, DrawingAttributes drawingAttributes)
         {
             // Check the input parameters
-            if (visual == null)
-            {
-                throw new System.ArgumentNullException("visual");
-            }
-            if (drawingAttributes == null)
-            {
-                throw new System.ArgumentNullException("drawingAttributes");
-            }
+            ArgumentNullException.ThrowIfNull(visual);
+            ArgumentNullException.ThrowIfNull(drawingAttributes);
 
             //harden against eaten exceptions
             bool exceptionRaised = false;
@@ -339,10 +327,7 @@ namespace System.Windows.Ink
         /// <param name="visual">the visual to detach</param>
         internal void DetachIncrementalRendering(Visual visual)
         {
-            if (visual == null)
-            {
-                throw new System.ArgumentNullException("visual");
-            }
+            ArgumentNullException.ThrowIfNull(visual);
 
             // Remove the visual in the list of attached via AttachIncrementalRendering
             if ((_attachedVisuals == null) || (_attachedVisuals.Remove(visual) == false))

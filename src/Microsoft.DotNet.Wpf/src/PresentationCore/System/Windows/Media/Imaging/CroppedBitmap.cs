@@ -48,10 +48,7 @@ namespace System.Windows.Media.Imaging
         public CroppedBitmap(BitmapSource source, Int32Rect sourceRect)
             : base(true) // Use base class virtuals
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
+            ArgumentNullException.ThrowIfNull(source);
 
             _bitmapInit.BeginInit();
 

@@ -256,8 +256,7 @@ namespace System.Windows.Media.TextFormatting
             GlyphRun            glyphRun
             )
         {
-            if (drawingContext == null)
-                throw new ArgumentNullException("drawingContext");
+            ArgumentNullException.ThrowIfNull(drawingContext);
 
             glyphRun.EmitBackground(drawingContext, _properties.BackgroundBrush);
 

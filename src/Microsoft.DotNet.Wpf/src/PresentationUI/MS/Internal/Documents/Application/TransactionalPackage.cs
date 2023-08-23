@@ -64,12 +64,9 @@ internal class TransactionalPackage : Package, IDisposable
     internal TransactionalPackage(Stream original)
         : base(FileAccess.ReadWrite)
     {
-        if (original == null)
-        {
-            throw new ArgumentNullException("original");
-        }
+            ArgumentNullException.ThrowIfNull(original);
 
-        Package originalPackage = Package.Open(original);
+            Package originalPackage = Package.Open(original);
 
         _originalPackage = new SecurityCriticalDataForSet<Package>(originalPackage);
         _tempPackage = new SecurityCriticalDataForSet<Package>(null);
@@ -84,12 +81,9 @@ internal class TransactionalPackage : Package, IDisposable
     /// <exception cref="System.ArgumentNullException" />
     internal void EnableEditMode(Stream workspace)
     {
-        if (workspace == null)
-        {
-            throw new ArgumentNullException("workspace");
-        }
+            ArgumentNullException.ThrowIfNull(workspace);
 
-        if (!workspace.CanWrite)
+            if (!workspace.CanWrite)
         {
             throw new ArgumentException(
                 SR.PackagingWriteNotSupported,
@@ -106,12 +100,9 @@ internal class TransactionalPackage : Package, IDisposable
     /// <exception cref="System.ArgumentException" />
     internal virtual void MergeChanges(Stream target)
     {
-        if (target == null)
-        {
-            throw new ArgumentNullException("target");
-        }
+            ArgumentNullException.ThrowIfNull(target);
 
-        if (!target.CanWrite)
+            if (!target.CanWrite)
         {
             throw new InvalidOperationException();
         }
@@ -156,13 +147,10 @@ internal class TransactionalPackage : Package, IDisposable
 
     internal void Rebind(Stream newOriginal)
     {
-        if (newOriginal == null)
-        {
-            throw new ArgumentNullException("newOriginal");
-        }
+            ArgumentNullException.ThrowIfNull(newOriginal);
 
-        // close this as we will open a new one
-        _originalPackage.Value.Close();
+            // close this as we will open a new one
+            _originalPackage.Value.Close();
         _trashCan.Add(_originalPackage.Value);
         _isDirty = false;
 
@@ -536,12 +524,9 @@ internal class TransactionalPackage : Package, IDisposable
     /// <returns>A writeable PackagePart.</returns>
     private PackagePart TempPackagePartFactory(PackagePart packagePart)
     {
-        if (packagePart == null)
-        {
-            throw new ArgumentNullException("packagePart");
-        }
+            ArgumentNullException.ThrowIfNull(packagePart);
 
-        EnsureTempPackage();
+            EnsureTempPackage();
 
         Uri partUri = packagePart.Uri;
 

@@ -65,22 +65,13 @@ internal sealed class WriteableOnDemandPackagePart : PackagePart
         WriteablePackagePartFactoryDelegate writeablePartFactory)
         : base(container, readingPart.Uri)
     {
-        if (container == null)
-        {
-            throw new ArgumentNullException("container");
-        }
+            ArgumentNullException.ThrowIfNull(container);
 
-        if (readingPart == null)
-        {
-            throw new ArgumentNullException("readingPart");
-        }
+            ArgumentNullException.ThrowIfNull(readingPart);
 
-        if (writeablePartFactory == null)
-        {
-            throw new ArgumentNullException("writeablePartFactory");
-        }
+            ArgumentNullException.ThrowIfNull(writeablePartFactory);
 
-        _activePart = readingPart;
+            _activePart = readingPart;
         _getWriteablePartInstance = writeablePartFactory;
     }
     #endregion Constructors

@@ -33,15 +33,9 @@ namespace MS.Internal.Documents
         /// </summary>
         internal SigningDialog(X509Certificate2 x509Certificate2, DigitalSignature digitalSignatureRequest, DocumentSignatureManager docSigManager)
         {
-            if (x509Certificate2 == null)
-            {
-                throw new ArgumentNullException("x509Certificate2");
-            } 
-            if (docSigManager == null)
-            {
-                throw new ArgumentNullException("docSigManager");
-            }
-            
+            ArgumentNullException.ThrowIfNull(x509Certificate2);
+            ArgumentNullException.ThrowIfNull(docSigManager);
+
             _docSigManager = docSigManager;
             _x509Certificate2 = x509Certificate2;   // setting critical data.
 

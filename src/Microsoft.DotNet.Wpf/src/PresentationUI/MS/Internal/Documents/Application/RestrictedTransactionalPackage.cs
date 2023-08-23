@@ -46,12 +46,9 @@ internal sealed class RestrictedTransactionalPackage : TransactionalPackage
     /// <exception cref="System.ArgumentException" />
     internal override void MergeChanges(Stream target)
     {
-        if (target == null)
-        {
-            throw new ArgumentNullException("target");
-        }
+            ArgumentNullException.ThrowIfNull(target);
 
-        if (TempPackage.Value != null)
+            if (TempPackage.Value != null)
         {
             foreach (PackagePart part in TempPackage.Value.GetParts())
             {

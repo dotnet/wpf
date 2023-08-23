@@ -388,12 +388,9 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
     /// <returns>An DocumentStream.</returns>
     internal static DocumentStream Open(Stream existing)
     {
-        if (existing == null)
-        {
-            throw new ArgumentNullException("existing");
-        }
+            ArgumentNullException.ThrowIfNull(existing);
 
-        Trace.SafeWrite(
+            Trace.SafeWrite(
             Trace.File,
             "Opened {0}#{1} as existing stream.",
             existing,
@@ -987,11 +984,8 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
     /// <exception cref="System.InvalidOperationException"/>
     private static void ThrowIfInvalidXpsFileForOpen(Uri location)
     {
-        if (location == null)
-        {
-            throw new ArgumentNullException("location");
-        }
-        if (!location.IsFile)
+            ArgumentNullException.ThrowIfNull(location);
+            if (!location.IsFile)
         {
             throw new InvalidOperationException(
                 SR.DocumentStreamMustBeFileSource);

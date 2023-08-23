@@ -1095,10 +1095,7 @@ namespace MS.Internal.Documents
         {
             CertificatePriorityStatus certificatePriorityStatus = CertificatePriorityStatus.Corrupted;
 
-            if (digitalSignature == null)
-            {
-                throw new ArgumentNullException("digitalSignature");
-            }
+            ArgumentNullException.ThrowIfNull(digitalSignature);
 
             // Signature requests and invalid signatures with missing certificates
             // both get the certificate status NoCertificate

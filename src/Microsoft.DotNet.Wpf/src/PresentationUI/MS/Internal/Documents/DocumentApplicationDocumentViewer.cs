@@ -234,15 +234,9 @@ namespace MS.Internal.Documents
         /// <param name="docSigManager">A reference to the DocumentSignatureManager</param>
         public void InitializeUI(DocumentSignatureManager docSigManager, DocumentRightsManagementManager rmManager)
         {
-            if (docSigManager == null)
-            {
-                throw new ArgumentNullException("docSigManager");
-            }
+            ArgumentNullException.ThrowIfNull(docSigManager);
 
-            if (rmManager == null)
-            {
-                throw new ArgumentNullException("rmManager");
-            }
+            ArgumentNullException.ThrowIfNull(rmManager);
 
             // Set DocumentSignatureManager reference.
             _docSigManager = docSigManager;

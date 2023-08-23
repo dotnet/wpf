@@ -636,7 +636,6 @@ namespace MS.Internal.Documents
             private void UpdateRowFromEveryone(DataGridViewRow everyoneRow, DataGridViewRow targetRow)
             {
                 ArgumentNullException.ThrowIfNull(everyoneRow);
-
                 ArgumentNullException.ThrowIfNull(targetRow);
 
                 int ownerColumnIndex = RightsTableColumnToIndex(RightsTableColumn.AllowOwner);

@@ -42,14 +42,9 @@ namespace MS.Internal.Documents
         /// </summary>
         private DocumentSignatureManager(IDigitalSignatureProvider digSigProvider)
         {
-            if (digSigProvider != null)
-            {
-                DigitalSignatureProvider = digSigProvider;
-            }
-            else
-            {
-                throw new ArgumentNullException("digSigProvider");
-            }
+            ArgumentNullException.ThrowIfNull(digSigProvider);
+
+            DigitalSignatureProvider = digSigProvider;
 
             _changeLog = new List<ChangeLogEntity>();
 
@@ -1163,20 +1158,15 @@ namespace MS.Internal.Documents
         /// <param name="args"></param>
         private void OnRMPolicyChanged(object sender, DocumentRightsManagementManager.RightsManagementPolicyEventArgs args)
         {
-            if (args != null)
+            ArgumentNullException.ThrowIfNull(args);
+
+            if ((args.RMPolicy & RightsManagementPolicy.AllowSign) == RightsManagementPolicy.AllowSign)
             {
-                if ((args.RMPolicy & RightsManagementPolicy.AllowSign) == RightsManagementPolicy.AllowSign)
-                {
-                    _allowSign.Value = true;
-                }
-                else
-                {
-                    _allowSign.Value = false;
-                }
+                _allowSign.Value = true;
             }
             else
             {
-                throw new ArgumentNullException("args");
+                _allowSign.Value = false;
             }
         }
 

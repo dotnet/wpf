@@ -26,15 +26,10 @@ namespace MS.Internal.Documents
         /// </summary>
         internal RequestedSignatureDialog(DocumentSignatureManager docSigManager)
         {
-            if (docSigManager != null)
-            {
-                //Init private fields
-                _documentSignatureManager = docSigManager;
-            }
-            else
-            {
-                throw new ArgumentNullException("docSigManager");
-            }
+            ArgumentNullException.ThrowIfNull(docSigManager);
+
+            //Init private fields
+            _documentSignatureManager = docSigManager;
 
             // Initialize the "Must Sign By:" field
             _dateTimePicker.MinDate = DateTime.Now;

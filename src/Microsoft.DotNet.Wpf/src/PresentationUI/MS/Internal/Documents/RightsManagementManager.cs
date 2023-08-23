@@ -44,14 +44,9 @@ namespace MS.Internal.Documents
         /// </summary>
         private DocumentRightsManagementManager(IRightsManagementProvider rmProvider)
         {
-            if (rmProvider != null)
-            {
-                _rmProviderCache.Value = rmProvider;
-            }
-            else
-            {
-                throw new ArgumentNullException("rmProvider");
-            }
+            ArgumentNullException.ThrowIfNull(rmProvider);
+
+            _rmProviderCache.Value = rmProvider;
 
             //Create dictionary for Credential Management
             //used to map between CredManResources and RM Users

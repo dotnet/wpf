@@ -81,9 +81,9 @@ internal class TransactionalPackage : Package, IDisposable
     /// <exception cref="System.ArgumentNullException" />
     internal void EnableEditMode(Stream workspace)
     {
-            ArgumentNullException.ThrowIfNull(workspace);
+        ArgumentNullException.ThrowIfNull(workspace);
 
-            if (!workspace.CanWrite)
+        if (!workspace.CanWrite)
         {
             throw new ArgumentException(
                 SR.PackagingWriteNotSupported,
@@ -100,9 +100,9 @@ internal class TransactionalPackage : Package, IDisposable
     /// <exception cref="System.ArgumentException" />
     internal virtual void MergeChanges(Stream target)
     {
-            ArgumentNullException.ThrowIfNull(target);
+        ArgumentNullException.ThrowIfNull(target);
 
-            if (!target.CanWrite)
+        if (!target.CanWrite)
         {
             throw new InvalidOperationException();
         }
@@ -147,10 +147,10 @@ internal class TransactionalPackage : Package, IDisposable
 
     internal void Rebind(Stream newOriginal)
     {
-            ArgumentNullException.ThrowIfNull(newOriginal);
+        ArgumentNullException.ThrowIfNull(newOriginal);
 
-            // close this as we will open a new one
-            _originalPackage.Value.Close();
+        // close this as we will open a new one
+        _originalPackage.Value.Close();
         _trashCan.Add(_originalPackage.Value);
         _isDirty = false;
 
@@ -524,9 +524,9 @@ internal class TransactionalPackage : Package, IDisposable
     /// <returns>A writeable PackagePart.</returns>
     private PackagePart TempPackagePartFactory(PackagePart packagePart)
     {
-            ArgumentNullException.ThrowIfNull(packagePart);
+        ArgumentNullException.ThrowIfNull(packagePart);
 
-            EnsureTempPackage();
+        EnsureTempPackage();
 
         Uri partUri = packagePart.Uri;
 

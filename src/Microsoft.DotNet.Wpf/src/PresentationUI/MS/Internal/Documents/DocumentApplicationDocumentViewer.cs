@@ -235,7 +235,6 @@ namespace MS.Internal.Documents
         public void InitializeUI(DocumentSignatureManager docSigManager, DocumentRightsManagementManager rmManager)
         {
             ArgumentNullException.ThrowIfNull(docSigManager);
-
             ArgumentNullException.ThrowIfNull(rmManager);
 
             // Set DocumentSignatureManager reference.
@@ -1630,16 +1629,11 @@ namespace MS.Internal.Documents
         /// <param name="args"></param>
         private void OnRMPolicyChanged(object sender, DocumentRightsManagementManager.RightsManagementPolicyEventArgs args)
         {
-            if (args != null)
-            {
-                //Invoke the CommandEnforcer to enable/disable commands as appropriate.
-                _rightsManagementPolicy.Value = args.RMPolicy;
-                CommandEnforcer.Enforce();
-            }
-            else
-            {
-                throw new ArgumentNullException("args");
-            }
+            ArgumentNullException.ThrowIfNull(args);
+
+            //Invoke the CommandEnforcer to enable/disable commands as appropriate.
+            _rightsManagementPolicy.Value = args.RMPolicy;
+            CommandEnforcer.Enforce();
         }
 
         /// <summary>

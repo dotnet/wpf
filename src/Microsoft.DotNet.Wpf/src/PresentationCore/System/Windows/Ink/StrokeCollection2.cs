@@ -16,7 +16,6 @@ using MS.Internal;
 using MS.Internal.Ink;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Ink
 {
@@ -76,7 +75,7 @@ namespace System.Windows.Ink
         {
             if (Double.IsNaN(diameter) || diameter < DrawingAttributes.MinWidth || diameter > DrawingAttributes.MaxWidth)
             {
-                throw new ArgumentOutOfRangeException("diameter", SR.Get(SRID.InvalidDiameter));
+                throw new ArgumentOutOfRangeException("diameter", SR.InvalidDiameter);
             }
             return PointHitTest(point, new EllipseStylusShape(diameter, diameter));
         }
@@ -258,7 +257,7 @@ namespace System.Windows.Ink
             int length = IEnumerablePointHelper.GetCount(lassoPoints);
             if (length == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.EmptyArray));
+                throw new ArgumentException(SR.EmptyArray);
             }
 
             if (length < 3)
@@ -311,7 +310,7 @@ namespace System.Windows.Ink
             int length = IEnumerablePointHelper.GetCount(lassoPoints);
             if (length == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.EmptyArray));
+                throw new ArgumentException(SR.EmptyArray);
             }
 
             if (length < 3)
@@ -354,11 +353,11 @@ namespace System.Windows.Ink
             // Check the input parameters
             if (eraserShape == null)
             {
-                throw new System.ArgumentNullException(SR.Get(SRID.SCEraseShape));
+                throw new System.ArgumentNullException(SR.SCEraseShape);
             }
             if (eraserPath == null)
             {
-                throw new System.ArgumentNullException(SR.Get(SRID.SCErasePath));
+                throw new System.ArgumentNullException(SR.SCErasePath);
             }
             if (IEnumerablePointHelper.GetCount(eraserPath) == 0)
             {

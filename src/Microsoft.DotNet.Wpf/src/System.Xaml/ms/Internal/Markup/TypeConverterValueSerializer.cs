@@ -2,11 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//  Contents:  TypeConverter to ValueSerializer adapter
-
 using System.ComponentModel;
-using System.Windows.Markup;
 using System.Xaml;
+using System.Windows.Markup;
 
 namespace MS.Internal.Serialization
 {

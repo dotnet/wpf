@@ -10,7 +10,6 @@
 using System;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -69,12 +68,12 @@ namespace System.Windows
 
             if (formatToApply == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             if (!dataObject.GetDataPresent(formatToApply))
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_DataFormatNotPresentOnDataObject, formatToApply));
+                throw new ArgumentException(SR.Format(SR.DataObject_DataFormatNotPresentOnDataObject, formatToApply));
             }
 
             _originalDataObject = dataObject;
@@ -145,7 +144,7 @@ namespace System.Windows
                 availableFormats = value.GetFormats(/*autoConvert:*/false);
                 if (availableFormats == null || availableFormats.Length == 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.DataObject_DataObjectMustHaveAtLeastOneFormat));
+                    throw new ArgumentException(SR.DataObject_DataObjectMustHaveAtLeastOneFormat);
                 }
 
                 _dataObject = value;
@@ -177,7 +176,7 @@ namespace System.Windows
 
                 if (!_dataObject.GetDataPresent(value))
                 {
-                    throw new ArgumentException(SR.Get(SRID.DataObject_DataFormatNotPresentOnDataObject, value));
+                    throw new ArgumentException(SR.Format(SR.DataObject_DataFormatNotPresentOnDataObject, value));
                 }
 
                 _formatToApply = value;

@@ -51,7 +51,7 @@ namespace System.Windows.Data
         {
             XmlNamespaceMapping mapping = value as XmlNamespaceMapping;
             if (mapping == null)
-                throw new ArgumentException(SR.Get(SRID.RequiresXmlNamespaceMapping, value.GetType().FullName), "value");
+                throw new ArgumentException(SR.Format(SR.RequiresXmlNamespaceMapping, value.GetType().FullName), "value");
 
             Add(mapping);
         }
@@ -91,7 +91,7 @@ namespace System.Windows.Data
                 throw new ArgumentNullException(nameof(mapping));
 
             if (mapping.Uri == null)
-                throw new ArgumentException(SR.Get(SRID.RequiresXmlNamespaceMappingUri), nameof(mapping));
+                throw new ArgumentException(SR.RequiresXmlNamespaceMappingUri, nameof(mapping));
 
             // BUG 983685: change this to take Uri when AddNamespace is fixed to use Uri instead of String.
             // SECURITY: this workaround (passing the original string) defeats the security benefits of using Uri.
@@ -126,7 +126,7 @@ namespace System.Windows.Data
                 throw new ArgumentNullException(nameof(mapping));
 
             if (mapping.Uri == null)
-                throw new ArgumentException(SR.Get(SRID.RequiresXmlNamespaceMappingUri), nameof(mapping));
+                throw new ArgumentException(SR.RequiresXmlNamespaceMappingUri, nameof(mapping));
 
             return (this.LookupNamespace(mapping.Prefix) == mapping.Uri.OriginalString);
         }
@@ -144,7 +144,7 @@ namespace System.Windows.Data
             foreach (XmlNamespaceMapping mapping in this)
             {
                 if (i >= maxLength)
-                    throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_NumberOfElementsExceedsArrayLength, nameof(arrayIndex), nameof(array)));
+                    throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, nameof(arrayIndex), nameof(array)));
                 array[i] = mapping;
                 ++ i;
             }
@@ -163,7 +163,7 @@ namespace System.Windows.Data
                 throw new ArgumentNullException(nameof(mapping));
 
             if (mapping.Uri == null)
-                throw new ArgumentException(SR.Get(SRID.RequiresXmlNamespaceMappingUri), nameof(mapping));
+                throw new ArgumentException(SR.RequiresXmlNamespaceMappingUri, nameof(mapping));
 
             if (Contains(mapping))
             {

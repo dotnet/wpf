@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//
+//
 
 #region Using directives
 
@@ -27,7 +27,7 @@ namespace System.Windows.Media.Effects
         /// </summary>
         public DropShadowBitmapEffect()
         {
-}
+        }
 
         /// <summary>
         /// Creates the unmanaged effect handle

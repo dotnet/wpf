@@ -18,7 +18,6 @@ using System.Runtime.InteropServices;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {    
@@ -89,7 +88,7 @@ namespace System.Windows.Media
 
             if (null == s)
             {
-                throw new ArgumentException(SR.Get(SRID.General_BadType, "ConvertFrom"), "value");
+                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), "value");
             }
             
             return Parsers.ParseColor(value as string, ci, td);        

@@ -101,7 +101,7 @@ namespace System.Windows.Data
                 // User is only allowed to set one of ObjectType or ObjectInstance.
                 // To change "mode", the user must null the other property first.
                 if (_mode == SourceMode.FromInstance)
-                    throw new InvalidOperationException(SR.Get(SRID.ObjectDataProviderCanHaveOnlyOneSource));
+                    throw new InvalidOperationException(SR.ObjectDataProviderCanHaveOnlyOneSource);
                 _mode = (value == null) ? SourceMode.NoSource : SourceMode.FromType;
 
                 _constructorParameters.SetReadOnly(false);
@@ -154,7 +154,7 @@ namespace System.Windows.Data
                 // User is only allowed to set one of ObjectType or ObjectInstance.
                 // To change mode, the user must null the property first.
                 if (_mode == SourceMode.FromType)
-                    throw new InvalidOperationException(SR.Get(SRID.ObjectDataProviderCanHaveOnlyOneSource));
+                    throw new InvalidOperationException(SR.ObjectDataProviderCanHaveOnlyOneSource);
                 _mode = (value == null) ? SourceMode.NoSource : SourceMode.FromInstance;
 
                 if (ObjectInstance == value)   // instance or provider has not changed, do nothing
@@ -293,7 +293,7 @@ namespace System.Windows.Data
         {
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.ProviderQuery))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotify(TraceEventType.Warning,
                                     TraceData.BeginQuery(
                                         TraceData.Identify(this),
                                         IsAsynchronous ? "asynchronous" : "synchronous"));
@@ -385,8 +385,8 @@ namespace System.Windows.Data
             if (_mode == SourceMode.NoSource || _objectType == null)
             {
                 if (TraceData.IsEnabled)
-                    TraceData.Trace(TraceEventType.Error, TraceData.ObjectDataProviderHasNoSource);
-                e = new InvalidOperationException(SR.Get(SRID.ObjectDataProviderHasNoSource));
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.ObjectDataProviderHasNoSource);
+                e = new InvalidOperationException(SR.ObjectDataProviderHasNoSource);
             }
             else
             {
@@ -425,7 +425,7 @@ namespace System.Windows.Data
 
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.ProviderQuery))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotify(TraceEventType.Warning,
                                     TraceData.QueryFinished(
                                         TraceData.Identify(this),
                                         Dispatcher.CheckAccess() ? "synchronous" : "asynchronous",
@@ -491,7 +491,7 @@ namespace System.Windows.Data
             catch // non CLS compliant exception
             {
                 error = null;   // indicate unknown error
-                e = new InvalidOperationException(SR.Get(SRID.ObjectDataProviderNonCLSException, _objectType.Name));
+                e = new InvalidOperationException(SR.Format(SR.ObjectDataProviderNonCLSException, _objectType.Name));
             }
 
             #pragma warning restore 56500
@@ -501,7 +501,11 @@ namespace System.Windows.Data
             {
                 // report known errors through TraceData (instead of throwing exceptions)
                 if (TraceData.IsEnabled)
-                    TraceData.Trace(TraceEventType.Error, TraceData.ObjDPCreateFailed, _objectType.Name, error, e);
+                {
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.ObjDPCreateFailed, null,
+                        traceParameters: new object[] { _objectType.Name, error, e },
+                        eventParameters: new object[] { e });
+                }
 
                 // in async mode we pass all exceptions to main thread;
                 // in sync mode we don't handle unknown exceptions.
@@ -577,7 +581,7 @@ namespace System.Windows.Data
             catch   //FXCop Fix: CatchNonClsCompliantExceptionsInGeneralHandlers
             {
                 error = null;   // indicate unknown error
-                e = new InvalidOperationException(SR.Get(SRID.ObjectDataProviderNonCLSExceptionInvoke, MethodName, _objectType.Name));
+                e = new InvalidOperationException(SR.Format(SR.ObjectDataProviderNonCLSExceptionInvoke, MethodName, _objectType.Name));
             }
 
             #pragma warning restore 56500
@@ -587,7 +591,11 @@ namespace System.Windows.Data
             {
                 // report known errors through TraceData (instead of throwing exceptions)
                 if (TraceData.IsEnabled)
-                    TraceData.Trace(TraceEventType.Error, TraceData.ObjDPInvokeFailed, MethodName, _objectType.Name, error, e);
+                {
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.ObjDPInvokeFailed, null,
+                        traceParameters: new object[] { MethodName, _objectType.Name, error, e },
+                        eventParameters: new object[] { e });
+                }
 
                 // in async mode we pass all exceptions to main thread;
                 // in sync mode we don't handle unknown exceptions.

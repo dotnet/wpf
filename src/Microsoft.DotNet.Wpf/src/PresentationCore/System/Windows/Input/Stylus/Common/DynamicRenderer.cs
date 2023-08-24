@@ -25,7 +25,6 @@ using MS.Internal.Ink;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
     
 namespace System.Windows.Input.StylusPlugIns
 {
@@ -263,7 +262,7 @@ namespace System.Windows.Input.StylusPlugIns
             
             if (inAir)
             {
-                throw new ArgumentException(SR.Get(SRID.Stylus_MustBeDownToCallReset), "stylusDevice");
+                throw new ArgumentException(SR.Stylus_MustBeDownToCallReset, "stylusDevice");
             }
 
             // Avoid reentrancy due to lock() call.
@@ -1234,7 +1233,7 @@ namespace System.Windows.Input.StylusPlugIns
         // For OnRenderComplete support (for UI Thread)
         EventHandler  _onRenderComplete;
         bool          _waitingForRenderComplete;
-        object        __siLock = new object();
+        readonly object        __siLock = new object();
         private StrokeInfo  _renderCompleteStrokeInfo;
 
         // On internal real time ink rendering thread.

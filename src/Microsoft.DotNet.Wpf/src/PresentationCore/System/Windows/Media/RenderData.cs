@@ -15,6 +15,7 @@
 using MS.Internal;
 using MS.Utility;
 using System;
+using System.Buffers;
 using System.ComponentModel;
 using System.Collections;
 using System.Collections.Generic;
@@ -470,7 +471,7 @@ namespace System.Windows.Media
             // If we don't have a buffer, this is easy: we simply allocate a new one of the appropriate size.
             if (_buffer == null)
             {
-                _buffer = new byte[cbRequiredSize];
+                _buffer = ArrayPool<byte>.Shared.Rent(cbRequiredSize);
             }
             else
             {
@@ -487,11 +488,20 @@ namespace System.Windows.Media
                 // this growth function is broken.
                 Debug.Assert(newSize >= cbRequiredSize);
 
-                byte[] _newBuffer = new byte[newSize];
+                byte[] newBuffer = ArrayPool<byte>.Shared.Rent(newSize);
 
-                _buffer.CopyTo(_newBuffer, 0);
+                unsafe
+                {
+                    fixed (byte* pBuffer = _buffer)
+                    fixed (byte* pNewBuffer = newBuffer)
+                    {
+                        Buffer.MemoryCopy(pBuffer, pNewBuffer, _buffer.Length, _buffer.Length);
+                    }
+                }
 
-                _buffer = _newBuffer;
+                var oldBuffer = _buffer;
+                _buffer = newBuffer;
+                ArrayPool<byte>.Shared.Return(oldBuffer);
             }
         }
 

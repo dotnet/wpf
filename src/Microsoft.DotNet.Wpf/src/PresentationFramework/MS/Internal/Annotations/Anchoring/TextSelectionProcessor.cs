@@ -146,7 +146,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             TextSelectionHelper.CheckSelection(selection, out start, out end, out textSegments);
             if (!(start is TextPointer))
-                throw new ArgumentException(SR.Get(SRID.WrongSelectionType), "selection");
+                throw new ArgumentException(SR.WrongSelectionType, "selection");
 
             ITextPointer elementStart;
             ITextPointer elementEnd;
@@ -156,10 +156,10 @@ namespace MS.Internal.Annotations.Anchoring
                 return null;
 
             if (elementStart.CompareTo(end) > 0)
-                throw new ArgumentException(SR.Get(SRID.InvalidStartNodeForTextSelection), "startNode");
+                throw new ArgumentException(SR.InvalidStartNodeForTextSelection, "startNode");
 
             if (elementEnd.CompareTo(start) < 0)
-                throw new ArgumentException(SR.Get(SRID.InvalidStartNodeForTextSelection), "startNode");
+                throw new ArgumentException(SR.InvalidStartNodeForTextSelection, "startNode");
 
             ContentLocatorPart part = new ContentLocatorPart(CharacterRangeElementName);
 
@@ -169,7 +169,7 @@ namespace MS.Internal.Annotations.Anchoring
             {
                 GetTextSegmentValues(textSegments[i], elementStart, elementEnd, out startOffset, out endOffset);
 
-                part.NameValuePairs.Add(SegmentAttribute + i.ToString(NumberFormatInfo.InvariantInfo), startOffset.ToString(NumberFormatInfo.InvariantInfo) + TextSelectionProcessor.Separator[0] + endOffset.ToString(NumberFormatInfo.InvariantInfo));
+                part.NameValuePairs.Add(SegmentAttribute + i.ToString(NumberFormatInfo.InvariantInfo), startOffset.ToString(NumberFormatInfo.InvariantInfo) + TextSelectionProcessor.Separator + endOffset.ToString(NumberFormatInfo.InvariantInfo));
             }
 
             part.NameValuePairs.Add(CountAttribute, textSegments.Count.ToString(NumberFormatInfo.InvariantInfo));
@@ -206,7 +206,7 @@ namespace MS.Internal.Annotations.Anchoring
                 throw new ArgumentNullException("locatorPart");
 
             if (CharacterRangeElementName != locatorPart.PartType)
-                throw new ArgumentException(SR.Get(SRID.IncorrectLocatorPartType, locatorPart.PartType.Namespace + ":" + locatorPart.PartType.Name), "locatorPart");
+                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, locatorPart.PartType.Namespace + ":" + locatorPart.PartType.Name), "locatorPart");
 
             // First we extract the offset and length of the 
             // text range from the locator part.
@@ -215,7 +215,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             string stringCount = locatorPart.NameValuePairs[CountAttribute];
             if (stringCount == null)
-                throw new ArgumentException(SR.Get(SRID.InvalidLocatorPart, TextSelectionProcessor.CountAttribute));
+                throw new ArgumentException(SR.Format(SR.InvalidLocatorPart, TextSelectionProcessor.CountAttribute));
             int count = Int32.Parse(stringCount, NumberFormatInfo.InvariantInfo);
 
             TextAnchor anchor = new TextAnchor();
@@ -256,7 +256,7 @@ namespace MS.Internal.Annotations.Anchoring
             //we do not support 0 or negative length selection
             if (anchor.IsEmpty)
             {
-                throw new ArgumentException(SR.Get(SRID.IncorrectAnchorLength), "locatorPart");
+                throw new ArgumentException(SR.IncorrectAnchorLength, "locatorPart");
             }
 
             attachmentLevel = AttachmentLevel.Full;
@@ -372,7 +372,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             string stringCount = locatorPart.NameValuePairs[CountAttribute];
             if (stringCount == null)
-                throw new ArgumentException(SR.Get(SRID.InvalidLocatorPart, TextSelectionProcessor.CountAttribute));
+                throw new ArgumentException(SR.Format(SR.InvalidLocatorPart, TextSelectionProcessor.CountAttribute));
             int count = Int32.Parse(stringCount, NumberFormatInfo.InvariantInfo);
 
             startOffset = Int32.MaxValue;
@@ -424,7 +424,7 @@ namespace MS.Internal.Annotations.Anchoring
         internal const String IncludeOverlaps = "IncludeOverlaps";
 
         // Potential separators for values in segment name/value pairs
-        internal static readonly Char[] Separator = new Char[] { ',' };
+        internal const Char Separator = ',';
 
         // Name of locator part element
         internal static readonly XmlQualifiedName CharacterRangeElementName = new XmlQualifiedName("CharacterRange", AnnotationXmlConstants.Namespaces.BaseSchemaNamespace);
@@ -456,7 +456,7 @@ namespace MS.Internal.Annotations.Anchoring
             string[] values = segmentString.Split(Separator);
             if (values.Length != 2)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidLocatorPart, SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)));
+                throw new ArgumentException(SR.Format(SR.InvalidLocatorPart, SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)));
             }
 
             startOffset = Int32.Parse(values[0], NumberFormatInfo.InvariantInfo);

@@ -157,7 +157,7 @@ namespace MS.Internal.Data
 
                     if (args.IsTracing)
                     {
-                        TraceData.Trace(TraceEventType.Warning,
+                        TraceData.TraceAndNotify(TraceEventType.Warning,
                                             TraceData.ElementNameQueryTemplate(
                                                 _name,
                                                 TraceData.Identify(d)));
@@ -203,7 +203,7 @@ namespace MS.Internal.Data
 
                 if (args.IsTracing)
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotify(TraceEventType.Warning,
                                         TraceData.ElementNameQuery(
                                             _name,
                                             TraceData.Identify(fo.DO)));
@@ -417,7 +417,7 @@ namespace MS.Internal.Data
 
             if (args.IsTracing)
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotify(TraceEventType.Warning,
                                     TraceData.RelativeSource(
                                         _relativeSource.Mode,
                                         TraceData.Identify(d)));
@@ -528,7 +528,7 @@ namespace MS.Internal.Data
             if (ic == null)
             {
                 if (TraceData.IsEnabled)
-                    TraceData.Trace(TraceEventType.Error, TraceData.RefPreviousNotInContext);
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.RefPreviousNotInContext);
                 return null;
             }
 
@@ -550,7 +550,7 @@ namespace MS.Internal.Data
             {
                 d = null;
                 if ((j < 0) && TraceData.IsEnabled)
-                    TraceData.Trace(TraceEventType.Error, TraceData.RefNoWrapperInChildren);
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.RefNoWrapperInChildren);
             }
             return d;
         }
@@ -560,13 +560,13 @@ namespace MS.Internal.Data
             if (type == null)
             {
                 if (TraceData.IsEnabled)
-                    TraceData.Trace(TraceEventType.Error, TraceData.RefAncestorTypeNotSpecified);
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.RefAncestorTypeNotSpecified);
                 return null;
             }
             if (level < 1)
             {
                 if (TraceData.IsEnabled)
-                    TraceData.Trace(TraceEventType.Error, TraceData.RefAncestorLevelInvalid);
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.RefAncestorLevelInvalid);
                 return null;
             }
 
@@ -578,7 +578,7 @@ namespace MS.Internal.Data
             {
                 if (isTracing)
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotify(TraceEventType.Warning,
                                         TraceData.AncestorLookup(
                                             type.Name,
                                             TraceData.Identify(fo.DO)));

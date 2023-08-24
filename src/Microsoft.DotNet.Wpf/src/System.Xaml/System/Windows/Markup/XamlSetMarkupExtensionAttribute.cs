@@ -12,6 +12,6 @@ namespace System.Windows.Markup
             XamlSetMarkupExtensionHandler = xamlSetMarkupExtensionHandler;
         }
 
-        public String XamlSetMarkupExtensionHandler { get; private set; }
+        public string XamlSetMarkupExtensionHandler { get; }
     }
 }

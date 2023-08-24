@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿
+
 namespace System.Windows
 {
     using System;
@@ -76,6 +76,7 @@ namespace System.Windows
         {
             const uint TPM_RETURNCMD = 0x0100;
             const uint TPM_LEFTBUTTON = 0x0;
+            const uint TPM_RIGHTBUTTON = 0x2;
 
             Verify.IsNotNull(window, "window");
             IntPtr hwnd = new WindowInteropHelper(window).Handle;
@@ -86,7 +87,7 @@ namespace System.Windows
 
             IntPtr hmenu = NativeMethods.GetSystemMenu(hwnd, false);
 
-            uint cmd = NativeMethods.TrackPopupMenuEx(hmenu, TPM_LEFTBUTTON | TPM_RETURNCMD, (int)physicalScreenLocation.X, (int)physicalScreenLocation.Y, hwnd, IntPtr.Zero);
+            uint cmd = NativeMethods.TrackPopupMenuEx(hmenu, TPM_LEFTBUTTON | TPM_RIGHTBUTTON | TPM_RETURNCMD, (int)physicalScreenLocation.X, (int)physicalScreenLocation.Y, hwnd, IntPtr.Zero);
             if (0 != cmd)
             {
                 NativeMethods.PostMessage(hwnd, WM.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);

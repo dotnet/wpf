@@ -19,7 +19,6 @@ using MS.Internal;
 using MS.Internal.Media3D;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Media3D
 {

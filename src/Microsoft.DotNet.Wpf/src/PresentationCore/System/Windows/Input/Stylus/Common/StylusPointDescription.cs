@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -25,11 +24,11 @@ namespace System.Windows.Input
         /// <summary>
         /// Internal statics for our magic numbers
         /// </summary>
-        internal static readonly int RequiredCountOfProperties = 3;
-        internal static readonly int RequiredXIndex = 0;
-        internal static readonly int RequiredYIndex = 1;
-        internal static readonly int RequiredPressureIndex = 2;
-        internal static readonly int MaximumButtonCount = 31;
+        internal const int RequiredCountOfProperties = 3;
+        internal const int RequiredXIndex = 0;
+        internal const int RequiredYIndex = 1;
+        internal const int RequiredPressureIndex = 2;
+        internal const int MaximumButtonCount = 31;
 
         private int                         _buttonCount = 0;
         private int                         _originalPressureIndex = RequiredPressureIndex;
@@ -67,7 +66,7 @@ namespace System.Windows.Input
                 infos[RequiredYIndex].Id != StylusPointPropertyIds.Y ||
                 infos[RequiredPressureIndex].Id != StylusPointPropertyIds.NormalPressure)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidStylusPointDescription), "stylusPointPropertyInfos");
+                throw new ArgumentException(SR.InvalidStylusPointDescription, "stylusPointPropertyInfos");
             }
 
             //
@@ -83,7 +82,7 @@ namespace System.Windows.Input
             {
                 if (seenIds.Contains(infos[x].Id))
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidStylusPointDescriptionDuplicatesFound), "stylusPointPropertyInfos");
+                    throw new ArgumentException(SR.InvalidStylusPointDescriptionDuplicatesFound, "stylusPointPropertyInfos");
                 }
                 if (infos[x].IsButton)
                 {
@@ -94,14 +93,14 @@ namespace System.Windows.Input
                     //this is not a button, make sure we haven't seen one before
                     if (buttonCount > 0)
                     {
-                        throw new ArgumentException(SR.Get(SRID.InvalidStylusPointDescriptionButtonsMustBeLast), "stylusPointPropertyInfos");
+                        throw new ArgumentException(SR.InvalidStylusPointDescriptionButtonsMustBeLast, "stylusPointPropertyInfos");
                     }
                 }
                 seenIds.Add(infos[x].Id);
             }
             if (buttonCount > MaximumButtonCount)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidStylusPointDescriptionTooManyButtons), "stylusPointPropertyInfos");
+                throw new ArgumentException(SR.InvalidStylusPointDescriptionTooManyButtons, "stylusPointPropertyInfos");
             }
 
             _buttonCount = buttonCount;

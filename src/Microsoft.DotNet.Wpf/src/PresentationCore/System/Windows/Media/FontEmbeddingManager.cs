@@ -27,7 +27,6 @@ using MS.Internal.Shaping;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 // Allow suppression of presharp warnings
 #pragma warning disable 1634, 1691
@@ -119,7 +118,7 @@ namespace System.Windows.Media
             Dictionary<ushort, bool> glyphsUsed = _collectedGlyphTypefaces[glyphTypeface];
             if (glyphsUsed == null)
             {
-                throw new ArgumentException(SR.Get(SRID.GlyphTypefaceNotRecorded), "glyphTypeface");
+                throw new ArgumentException(SR.GlyphTypefaceNotRecorded, "glyphTypeface");
             }
             return glyphsUsed.Keys;
         }

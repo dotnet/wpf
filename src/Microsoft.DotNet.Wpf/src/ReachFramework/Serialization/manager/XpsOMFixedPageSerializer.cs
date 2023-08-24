@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -115,7 +115,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_WrongPropertyTypeForFixedPage));
+                throw new XpsSerializationException(SR.ReachSerialization_WrongPropertyTypeForFixedPage);
             }
 
             EndPersistObjectData(needEndVisual, treeWalker);
@@ -308,16 +308,13 @@ namespace System.Windows.Xps.Serialization
                                                                        propertyValue);
 
 
-                if (typeof(Type).IsInstanceOfType(propertyValue))
+                if (propertyValue is Type)
                 {
                     int index = valueAsString.LastIndexOf('.');
-
-                    if (index > 0)
-                    {
-                        valueAsString = valueAsString.Substring(index + 1);
-                    }
-
-                    valueAsString = XpsSerializationManager.TypeOfString + valueAsString + "}";
+                    valueAsString = string.Concat(
+                        XpsSerializationManager.TypeOfString,
+                        index > 0 ? valueAsString.AsSpan(index + 1) : valueAsString,
+                        "}");
                 }
             }
             else
@@ -377,7 +374,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoSerializer));
+                throw new XpsSerializationException(SR.ReachSerialization_NoSerializer);
             }
 
             return needEndVisual;

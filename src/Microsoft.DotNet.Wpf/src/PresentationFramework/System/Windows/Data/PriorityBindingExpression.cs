@@ -151,7 +151,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
         FrameworkPropertyMetadata fwMetaData = dp.GetMetadata(d.DependencyObjectType) as FrameworkPropertyMetadata;
 
         if ((fwMetaData != null && !fwMetaData.IsDataBindingAllowed) || dp.ReadOnly)
-            throw new ArgumentException(SR.Get(SRID.PropertyNotBindable, dp.Name), "dp");
+            throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), "dp");
 
         // create the BindingExpression
         PriorityBindingExpression bindExpr = new PriorityBindingExpression(binding, owner);
@@ -257,12 +257,13 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
 
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Transfer))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.PriorityTransfer(
                                         TraceData.Identify(this),
                                         TraceData.Identify(newValue),
                                         _activeIndex,
-                                        TraceData.Identify(bindExpr)));
+                                        TraceData.Identify(bindExpr)),
+                                    this);
             }
 
             // don't invalidate during Attach.  The property engine does it
@@ -576,11 +577,12 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
 
         if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Events))
         {
-            TraceData.Trace(TraceEventType.Warning,
+            TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                 TraceData.GotPropertyChanged(
                                     TraceData.Identify(this),
                                     TraceData.Identify(d),
-                                    dp.Name));
+                                    dp.Name),
+                                this);
         }
 
         for (int i=0; i<AttentiveBindingExpressions; ++i)

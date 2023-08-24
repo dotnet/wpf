@@ -30,7 +30,7 @@ namespace MS.Internal.AutomationProxies
         public WindowsGrip (IntPtr hwnd, ProxyHwnd parent, int item)
             : base( hwnd, parent, item)
         {
-            _sType = SR.Get(SRID.LocalizedControlTypeGrip);
+            _sType = SR.LocalizedControlTypeGrip;
             _sAutomationId = "Window.Grip"; // This string is a non-localizable string
         }
 

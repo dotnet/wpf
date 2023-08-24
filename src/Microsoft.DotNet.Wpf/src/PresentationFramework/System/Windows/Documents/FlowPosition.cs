@@ -74,7 +74,7 @@ namespace System.Windows.Documents
             FlowPosition flow = o as FlowPosition;
             if (flow == null)
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, o.GetType(), typeof(FlowPosition)), "o");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, o.GetType(), typeof(FlowPosition)), "o");
             }
 
             return _OverlapAwareCompare(flow);

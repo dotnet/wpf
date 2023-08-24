@@ -25,7 +25,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace System.Windows
@@ -405,7 +404,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "dragSource");
+                throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "dragSource");
             }
 
             dataObject = data as DataObject;
@@ -436,7 +435,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "dragSource");
+                throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "dragSource");
             }
 
             return ret;
@@ -699,7 +698,7 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// Raise QueryContinueDrag event for Tunel and Bubble.
+        /// Raise QueryContinueDrag event for Tunnel and Bubble.
         /// </summary>
         private void RaiseQueryContinueDragEvent(QueryContinueDragEventArgs args)
         {
@@ -721,7 +720,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "scope");
+                throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "scope");
             }
 
             // Set QueryContinueDrag(Bubble).
@@ -744,7 +743,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "scope");
+                    throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "scope");
                 }
             }
 
@@ -778,7 +777,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "scope");
+                throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "scope");
             }
 
             // Set GiveFeedback event ID(Bubble).
@@ -801,7 +800,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "scope");
+                    throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "scope");
                 }
             }
 
@@ -822,9 +821,9 @@ namespace System.Windows
         ///     Hence if any two mouse buttons are pressed at any point of time,
         ///     then we cancel the drapdrop. Also if no mouse buttons are pressed at
         ///     any point of time, then we complete the drop. If an application intends
-        ///     to privide multi-button press dragging (like dragging by pressing 
+        ///     to provide multi-button press dragging (like dragging by pressing 
         ///     both left and right buttons of mouse) applications will have
-        ///     to handle (Preview)QueryContiueDragEvent to the allow 
+        ///     to handle (Preview)QueryContinueDragEvent to the allow 
         ///     such valid combinations explicitly.
         /// </remarks>
         private void OnDefaultQueryContinueDrag(QueryContinueDragEventArgs e)
@@ -947,7 +946,7 @@ namespace System.Windows
 
             if (target != null)
             {
-                // Create DragEvent agrument and then raise DragEnter event for Tunnel or Buuble event.
+                // Create DragEvent argument and then raise DragEnter event for Tunnel or Bubble event.
                 RaiseDragEvent(
                     DragDrop.DragEnterEvent,
                     dragDropKeyStates,
@@ -1130,7 +1129,7 @@ namespace System.Windows
         #region Private Methods
 
         /// <summary>
-        /// Raise Drag(Enter/Over/Leave/Drop) events to the taret.
+        /// Raise Drag(Enter/Over/Leave/Drop) events to the target.
         /// </summary>
         private void RaiseDragEvent(RoutedEvent dragEvent, int dragDropKeyStates, ref int effects, DependencyObject target, Point targetPoint)
         {
@@ -1139,7 +1138,7 @@ namespace System.Windows
             Invariant.Assert(_dataObject != null);
             Invariant.Assert(target != null);
 
-            // Create DragEvent argement to raise DragEnter events to the target.
+            // Create DragEvent argument to raise DragEnter events to the target.
             dragEventArgs = new DragEventArgs(
                 _dataObject,
                 (DragDropKeyStates)dragDropKeyStates,
@@ -1180,7 +1179,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "scope");
+                throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "scope");
             }
 
             // Raise the bubble DragEvent event if the preview DragEvent isn't handled.
@@ -1204,7 +1203,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "scope");
+                    throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "scope");
                 }
             }
 

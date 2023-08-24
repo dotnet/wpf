@@ -17,7 +17,6 @@ using MS.Internal.Ink;
 using MS.Internal.Ink.InkSerializedFormat;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Ink
 {
@@ -143,7 +142,7 @@ namespace System.Windows.Ink
                 Matrix m = (Matrix) value;
                 if (m.OffsetX != 0 || m.OffsetY != 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidSttValue), "value");
+                    throw new ArgumentException(SR.InvalidSttValue, "value");
                 }
                 //no need to raise change events, they will bubble up from the EPC
                 //underneath us
@@ -171,7 +170,7 @@ namespace System.Windows.Ink
             {
                 if (double.IsNaN(value) || value < MinHeight || value > MaxHeight)
                 {
-                    throw new ArgumentOutOfRangeException("Height", SR.Get(SRID.InvalidDrawingAttributesHeight));
+                    throw new ArgumentOutOfRangeException("Height", SR.InvalidDrawingAttributesHeight);
                 }
                 //no need to raise change events, they will bubble up from the EPC
                 //underneath us
@@ -198,7 +197,7 @@ namespace System.Windows.Ink
             {
                 if (double.IsNaN(value) || value < MinWidth || value > MaxWidth)
                 {
-                    throw new ArgumentOutOfRangeException("Width", SR.Get(SRID.InvalidDrawingAttributesWidth));
+                    throw new ArgumentOutOfRangeException("Width", SR.InvalidDrawingAttributesWidth);
                 }
                 //no need to raise change events, they will bubble up from the EPC
                 //underneath us
@@ -600,7 +599,7 @@ namespace System.Windows.Ink
         {
             if (null == e)
             {
-                throw new ArgumentNullException("e", SR.Get(SRID.EventArgIsNull));
+                throw new ArgumentNullException("e", SR.EventArgIsNull);
             }
 
             try
@@ -629,7 +628,7 @@ namespace System.Windows.Ink
         {
             if (null == e)
             {
-                throw new ArgumentNullException("e", SR.Get(SRID.EventArgIsNull));
+                throw new ArgumentNullException("e", SR.EventArgIsNull);
             }
 
             if (this.PropertyDataChanged != null)
@@ -720,7 +719,7 @@ namespace System.Windows.Ink
                 Type t = propertyData.GetType();
                 if (t == typeof(String))
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidValueType, typeof(Matrix)), "propertyData");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(Matrix)), "propertyData");
                 }
             }
         }
@@ -955,7 +954,7 @@ namespace System.Windows.Ink
                 {
                     return DrawingAttributes.GetDefaultDrawingAttributeValue(id);
                 }
-                throw new ArgumentException(SR.Get(SRID.EPGuidNotFound), "id");
+                throw new ArgumentException(SR.EPGuidNotFound, "id");
             }
             else
             {
@@ -1030,9 +1029,9 @@ namespace System.Windows.Ink
         /// <summary>
         /// Statics
         /// </summary>
-        internal static readonly float StylusPrecision = 1000.0f;
-        internal static readonly double DefaultWidth = 2.0031496062992127;
-        internal static readonly double DefaultHeight = 2.0031496062992127;
+        internal const float StylusPrecision = 1000.0f;
+        internal const double DefaultWidth = 2.0031496062992127;
+        internal const double DefaultHeight = 2.0031496062992127;
 
 
         #endregion

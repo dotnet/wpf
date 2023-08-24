@@ -71,7 +71,7 @@ namespace System.Windows.Input
         }
 
         private InputDevice _inputDevice;
-        private static int _timestamp;
+        private int _timestamp;
      }
 }
 

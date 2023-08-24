@@ -7,7 +7,6 @@
 // Description:
 //              SaveFileDialog is a sealed class derived from FileDialog that
 //              implements File Save dialog-specific functions.  It contains
-//              the actual commdlg.dll call to GetSaveFileName() as well as
 //              additional properties relevant only to save dialogs.
 //
 // 
@@ -44,8 +43,7 @@ namespace Microsoft.Win32
         /// <summary>
         ///  Initializes a new instance of the SaveFileDialog class.
         /// </summary>
-        public SaveFileDialog()
-            : base()
+        public SaveFileDialog() : base()
         {
             Initialize();
         }
@@ -73,16 +71,14 @@ namespace Microsoft.Win32
         public Stream OpenFile()
         {
 
-            // Extract the first filename from the FileNamesInternal list.
-            // We can do this safely because FileNamesInternal never returns
-            // null - if _fileNames is null, FileNamesInternal returns Array.Empty<string>();
-            string filename = FileNamesInternal.Length > 0 ? FileNamesInternal[0] : null;
+            // Extract the first filename from the ItemNames list.
+            string filename = CriticalItemName;
 
             // If we got an empty or null filename, throw an exception to
             // tell the user we don't have any files to open.
-            if (String.IsNullOrEmpty(filename))
+            if (string.IsNullOrEmpty(filename))
             {
-                throw new InvalidOperationException(SR.Get(SRID.FileNameMustNotBeNull));
+                throw new InvalidOperationException(SR.FileNameMustNotBeNull);
             }
 
             // Create a new FileStream from the file and return it.
@@ -91,7 +87,7 @@ namespace Microsoft.Win32
 
         //
         //   We override the FileDialog implementation to set a default
-        //   for OFN_FILEMUSTEXIST in addition to the other option flags
+        //   for FOS_FILEMUSTEXIST in addition to the other option flags
         //   defined in FileDialog.
         /// <summary>
         ///  Resets all properties to their default values.
@@ -122,11 +118,12 @@ namespace Microsoft.Win32
         //---------------------------------------------------
         #region Public Properties
 
-        //   OFN_CREATEPROMPT
         //   If the user specifies a file that does not exist, this flag causes our code
         //   to prompt the user for permission to create the file. If the user chooses 
         //   to create the file, the dialog box closes and the function returns the 
         //   specified name; otherwise, the dialog box remains open.
+        //
+        //   We use our own prompt, so not using FOS_CREATEPROMPT (which is for open dialogs only).
         // 
         /// <summary>
         ///  Gets or sets a value indicating whether the dialog box prompts the user for
@@ -135,23 +132,31 @@ namespace Microsoft.Win32
         /// <Remarks>
         ///     Callers must have UIPermission.AllWindows to call this API.
         /// </Remarks>
-        public bool CreatePrompt
+        public bool CreatePrompt { get; set; }
+
+        /// <summary>
+        ///  Gets or sets a value indicating whether the dialog box will attempt to create
+        ///  a test file at the selected path (default is true). If this flag is not set,
+        ///  the calling application must handle errors, such as denial of access,
+        ///  discovered when the item is created.
+        /// </summary>
+        public bool CreateTestFile
         {
             get
             {
-                return GetOption(NativeMethods.OFN_CREATEPROMPT);
+                return !GetOption(FOS.NOTESTFILECREATE);
             }
             set
             {
-
-                SetOption(NativeMethods.OFN_CREATEPROMPT, value);
+                SetOption(FOS.NOTESTFILECREATE, !value);
             }
         }
 
-        //   OFN_OVERWRITEPROMPT
         //   Causes our code to generate a message box if the selected file already 
         //   exists. The user must confirm whether to overwrite the file.
         //  
+        //   We use our own prompt, so not using FOS_OVERWRITEPROMPT (for backward compatibility).
+        //
         /// <summary>
         /// Gets or sets a value indicating whether the Save As dialog box displays a 
         /// warning if the user specifies a file name that already exists.
@@ -159,18 +164,7 @@ namespace Microsoft.Win32
         /// <Remarks>
         ///     Callers must have UIPermission.AllWindows to call this API.
         /// </Remarks>
-        public bool OverwritePrompt
-        {
-            get
-            {
-                return GetOption(NativeMethods.OFN_OVERWRITEPROMPT);
-            }
-            set
-            {
-
-                SetOption(NativeMethods.OFN_OVERWRITEPROMPT, value);
-            }
-        }
+        public bool OverwritePrompt { get; set; }
 
         #endregion Public Properties
 
@@ -208,8 +202,8 @@ namespace Microsoft.Win32
         /// </summary>
         /// <remarks>
         ///   We first call the base class implementation to deal with any messages handled there.
-        ///   Then, if OFN_OVERWRITEPROMPT (for a message box if the selected file already exists)
-        ///   or OFN_CREATEPROMPT (for a message box if a file is specified that does not exist)
+        ///   Then, if FOS_OVERWRITEPROMPT (for a message box if the selected file already exists)
+        ///   or FOS_CREATEPROMPT (for a message box if a file is specified that does not exist)
         ///   flags are set, we check to see if it is appropriate to show the dialog(s) in this
         ///   method.  If so, we then call PromptFileOverwrite or PromptFileCreate, respectively.
         /// </remarks>
@@ -224,10 +218,9 @@ namespace Microsoft.Win32
                 return false;
             }
          
-            bool fExist = File.Exists(Path.GetFullPath(fileName));
+            bool fExist = File.Exists(fileName);
 
-
-            // If the file does not exist, check if OFN_CREATEPROMPT is
+            // If the file does not exist, check if CreatePrompt is
             // set.  If so, display the appropriate message box and act
             // on the user's choice.
             // Note that File.Exists requires a full path as a parameter.
@@ -239,7 +232,7 @@ namespace Microsoft.Win32
                 }
             }
 
-            // If the file already exists, check if OFN_OVERWRITEPROMPT is
+            // If the file already exists, check if OverwritePrompt is
             // set.  If so, display the appropriate message box and act
             // on the user's choice.
             // Note that File.Exists requires a full path as a parameter.
@@ -250,90 +243,12 @@ namespace Microsoft.Win32
                     return false;
                 }
             }
-
             // Since all dialog boxes we showed resulted in a positive outcome,
             // returning true allows the file dialog box to close.
             return true;
         }
 
-        /// <summary>
-        ///  Performs the actual call to display a file save dialog.
-        /// </summary>
-        /// <remarks>
-        ///  The call chain is ShowDialog > RunDialog > 
-        ///  RunFileDialog (this function).  In
-        ///  FileDialog.RunDialog, we created the OPENFILENAME
-        ///  structure - so all this function needs to do is
-        ///  call GetSaveFileName and process the result code.
-        /// </remarks>
-        /// <exception cref="InvalidOperationException">
-        /// Thrown if there is an invalid filename, if
-        /// a subclass failure occurs or if the buffer length
-        /// allocated to store the filenames occurs.
-        /// </exception>
-        internal override bool RunFileDialog(NativeMethods.OPENFILENAME_I ofn)
-        {
-            bool result = false;
-
-            // Make the actual call to GetSaveFileName.  This function
-            // blocks on GetSaveFileName until the entire dialog display
-            // is completed - any interaction we have with the dialog
-            // while it's open takes place through our HookProc.  The
-            // return value is a bool;  true = success.
-            result = UnsafeNativeMethods.GetSaveFileName(ofn);
-
-            if (!result)    // result was 0 (false), so an error occurred.
-            {
-                // Something may have gone wrong - check for error conditions
-                // by calling CommDlgExtendedError to get the specific error.
-                int errorCode = UnsafeNativeMethods.CommDlgExtendedError();
-
-                // Throw an appropriate exception if we know what happened:
-                switch (errorCode)
-                {
-                    // FNERR_INVALIDFILENAME is usually triggered when an invalid initial filename is specified
-                    case NativeMethods.FNERR_INVALIDFILENAME:
-                        throw new InvalidOperationException(SR.Get(SRID.FileDialogInvalidFileName, SafeFileName));
-
-                    case NativeMethods.FNERR_SUBCLASSFAILURE:
-                        throw new InvalidOperationException(SR.Get(SRID.FileDialogSubClassFailure));
-
-                    // note for FNERR_BUFFERTOOSMALL:
-                    // This error likely indicates a problem with our buffer size growing code;
-                    // take a look at that part of HookProc if customers report this error message is occurring.
-                    case NativeMethods.FNERR_BUFFERTOOSMALL:
-                        throw new InvalidOperationException(SR.Get(SRID.FileDialogBufferTooSmall));
-
-                        /* 
-                         * According to MSDN, the following errors can also occur, but we do not handle them as
-                         * they are very unlikely, and if they do occur, they indicate a catastrophic failure.
-                         * Most are related to features we do not wrap in our implementation.
-                         *
-                         * CDERR_DIALOGFAILURE 
-                         * CDERR_FINDRESFAILURE 
-                         * CDERR_INITIALIZATION 
-                         * CDERR_LOADRESFAILURE 
-                         * CDERR_LOADSTRFAILURE 
-                         * CDERR_LOCKRESFAILURE 
-                         * CDERR_MEMALLOCFAILURE 
-                         * CDERR_MEMLOCKFAILURE 
-                         * CDERR_NOHINSTANCE 
-                         * CDERR_NOHOOK 
-                         * CDERR_NOTEMPLATE 
-                         * CDERR_STRUCTSIZE 
-                         */
-                }
-            }
-            return result;
-        }
-
-        internal override string[] ProcessVistaFiles(IFileDialog dialog)
-        {
-            IShellItem item = dialog.GetResult();
-            return new[] { item.GetDisplayName(SIGDN.DESKTOPABSOLUTEPARSING) };
-        }
-
-        internal override IFileDialog CreateVistaDialog()
+        private protected override IFileDialog CreateDialog()
         {
             return (IFileDialog)Activator.CreateInstance(Type.GetTypeFromCLSID(new Guid(CLSID.FileSaveDialog)));
         }
@@ -373,11 +288,10 @@ namespace Microsoft.Win32
         //  base is initialized first.
         private void Initialize()
         {
-            // OFN_OVERWRITEPROMPT
             // Causes the Save As dialog box to generate a message box if 
             // the selected file already exists. The user must confirm 
             // whether to overwrite the file.  Default is true.
-            SetOption(NativeMethods.OFN_OVERWRITEPROMPT, true);
+            OverwritePrompt = true;
         }
 
         /// <summary>
@@ -388,7 +302,7 @@ namespace Microsoft.Win32
         /// </summary>
         private bool PromptFileCreate(string fileName)
         {
-            return MessageBoxWithFocusRestore(SR.Get(SRID.FileDialogCreatePrompt, fileName),
+            return MessageBoxWithFocusRestore(SR.Format(SR.FileDialogCreatePrompt, fileName),
                     MessageBoxButton.YesNo, MessageBoxImage.Warning);
         }
 
@@ -400,7 +314,7 @@ namespace Microsoft.Win32
         /// </summary>
         private bool PromptFileOverwrite(string fileName)
         {
-            return MessageBoxWithFocusRestore(SR.Get(SRID.FileDialogOverwritePrompt, fileName),
+            return MessageBoxWithFocusRestore(SR.Format(SR.FileDialogOverwritePrompt, fileName),
                     MessageBoxButton.YesNo, MessageBoxImage.Warning);
         }
 

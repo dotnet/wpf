@@ -496,7 +496,7 @@ namespace System.Windows
 
                 if( targetObject == null )
                 {
-                    throw new ArgumentException( SR.Get(SRID.TargetNameNotFound, targetName));
+                    throw new ArgumentException( SR.Format(SR.TargetNameNotFound, targetName));
                 }
 
                 FrameworkObject fo = new FrameworkObject(targetObject);
@@ -506,7 +506,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.NamedObjectMustBeFrameworkElement, targetName));
+                    throw new InvalidOperationException(SR.Format(SR.NamedObjectMustBeFrameworkElement, targetName));
                 }
             }
 
@@ -655,11 +655,11 @@ namespace System.Windows
         {
             if (_templateChild == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             if (index != 0)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             return _templateChild;
         }
@@ -1194,7 +1194,7 @@ namespace System.Windows
                 {
                     // We suspect a loop here because the loop count
                     // has exceeded the MAX_TREE_DEPTH expected
-                    throw new InvalidOperationException(SR.Get(SRID.LogicalTreeLoop));
+                    throw new InvalidOperationException(SR.LogicalTreeLoop);
                 }
                 else
                 {
@@ -1894,7 +1894,7 @@ namespace System.Windows
                     // Commented this because the implicit fetch could also return a DeferredDictionaryReference
                     // if (!(implicitValue is Style))
                     // {
-                    //     throw new InvalidOperationException(SR.Get(SRID.InvalidImplicitStyleResource, this.GetType().Name, implicitValue));
+                    //     throw new InvalidOperationException(SR.Format(SR.InvalidImplicitStyleResource, this.GetType().Name, implicitValue));
                     // }
 
                     // This style has been fetched from resources
@@ -2233,8 +2233,10 @@ namespace System.Windows
                                 {
                                     //let incrementally-updating FrameworkElements to mark the vicinity of the affected child
                                     //to perform partial update.
-                                    if(FrameworkElement.DType.IsInstanceOfType(layoutParent))
-                                        ((FrameworkElement)layoutParent).ParentLayoutInvalidated(this);
+                                    if(layoutParent is FrameworkElement fe)
+                                    {
+                                        fe.ParentLayoutInvalidated(this);
+                                    }
 
                                     if (affectsParentMeasure)
                                     {
@@ -2667,7 +2669,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Illegal_InheritanceBehaviorSettor));
+                    throw new InvalidOperationException(SR.Illegal_InheritanceBehaviorSettor);
                 }
             }
         }
@@ -3458,19 +3460,19 @@ namespace System.Windows
         private static bool IsWidthHeightValid(object value)
         {
             double v = (double)value;
-            return (DoubleUtil.IsNaN(v)) || (v >= 0.0d && !Double.IsPositiveInfinity(v));
+            return (double.IsNaN(v)) || (v >= 0.0d && !Double.IsPositiveInfinity(v));
         }
 
         private static bool IsMinWidthHeightValid(object value)
         {
             double v = (double)value;
-            return (!DoubleUtil.IsNaN(v) && v >= 0.0d && !Double.IsPositiveInfinity(v));
+            return (!double.IsNaN(v) && v >= 0.0d && !Double.IsPositiveInfinity(v));
         }
 
         private static bool IsMaxWidthHeightValid(object value)
         {
             double v = (double)value;
-            return (!DoubleUtil.IsNaN(v) && v >= 0.0d);
+            return (!double.IsNaN(v) && v >= 0.0d);
         }
 
         private static void OnTransformDirty(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -4062,20 +4064,20 @@ namespace System.Windows
                 minHeight = e.MinHeight;
                 double l  = e.Height;
 
-                double height = (DoubleUtil.IsNaN(l) ? Double.PositiveInfinity : l);
+                double height = (double.IsNaN(l) ? Double.PositiveInfinity : l);
                 maxHeight = Math.Max(Math.Min(height, maxHeight), minHeight);
 
-                height = (DoubleUtil.IsNaN(l) ? 0 : l);
+                height = (double.IsNaN(l) ? 0 : l);
                 minHeight = Math.Max(Math.Min(maxHeight, height), minHeight);
 
                 maxWidth = e.MaxWidth;
                 minWidth = e.MinWidth;
                 l        = e.Width;
 
-                double width = (DoubleUtil.IsNaN(l) ? Double.PositiveInfinity : l);
+                double width = (double.IsNaN(l) ? Double.PositiveInfinity : l);
                 maxWidth = Math.Max(Math.Min(width, maxWidth), minWidth);
 
-                width = (DoubleUtil.IsNaN(l) ? 0 : l);
+                width = (double.IsNaN(l) ? 0 : l);
                 minWidth = Math.Max(Math.Min(maxWidth, width), minWidth);
             }
 
@@ -4589,7 +4591,8 @@ namespace System.Windows
                 // First, get clipped, transformed, unrounded size.
                 if (useLayoutRounding)
                 {
-                    if (ltd != null && ltd.TransformedUnroundedDS != null)
+                    // 'transformUnroundedDS' is a non-nullable value type and can never be null.
+                    if (ltd != null)
                     {
                         transformedUnroundedDS = ltd.TransformedUnroundedDS;
                         transformedUnroundedDS.Width = Math.Max(0, transformedUnroundedDS.Width - marginWidth);
@@ -5413,7 +5416,7 @@ namespace System.Windows
             // Nested BeginInits on the same instance aren't permitted
             if (ReadInternalFlag(InternalFlags.InitPending))
             {
-                throw new InvalidOperationException(SR.Get(SRID.NestedBeginInitNotSupported));
+                throw new InvalidOperationException(SR.NestedBeginInitNotSupported);
             }
 
             // Mark the element as pending initialization
@@ -5428,7 +5431,7 @@ namespace System.Windows
             // Every EndInit must be preceeded by a BeginInit
             if (!ReadInternalFlag(InternalFlags.InitPending))
             {
-                throw new InvalidOperationException(SR.Get(SRID.EndInitWithoutBeginInitNotSupported));
+                throw new InvalidOperationException(SR.EndInitWithoutBeginInitNotSupported);
             }
 
             // Reset the pending flag
@@ -5845,14 +5848,6 @@ namespace System.Windows
                 // STA Requirement are checked in InputManager cctor where InputManager.Current is used in KeyboardNavigation cctor
                 _keyboardNavigation = new KeyboardNavigation();
                 _popupControlService = new PopupControlService();
-
-                // Tooltips should show on Keyboard focus.
-                // This event lets PopupControlService know when keyboard focus changed, so it can
-                // inspect for tooltips. Don't add the event handler when the compat flag is on.
-                if (!AccessibilitySwitches.UseLegacyToolTipDisplay)
-                {
-                    _keyboardNavigation.FocusChanged += _popupControlService.FocusChangedEventHandler;
-                }
             }
 
             internal KeyboardNavigation _keyboardNavigation;
@@ -6267,7 +6262,7 @@ namespace System.Windows
                 // Thus we support any indices in the range [-1, 65535).
                 if (value < -1 || value >= 0xFFFF)
                 {
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.TemplateChildIndexOutOfRange));
+                    throw new ArgumentOutOfRangeException("value", SR.TemplateChildIndexOutOfRange);
                 }
 
                 uint childIndex = (value == -1) ? 0xFFFF : (uint)value;

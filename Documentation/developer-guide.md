@@ -6,9 +6,7 @@ The [Issue Guide](issue-guide.md) describes our approach to using GitHub issues.
 
 ## Machine Setup
 
-Follow the [Building CoreFX on Windows](https://github.com/dotnet/corefx/blob/master/Documentation/building/windows-instructions.md) instructions.
-
-WPF requires the following workloads and  components be selected when installing Visual Studio:
+WPF requires the following workloads and components be selected when installing Visual Studio 2022 (17.0.0):
 
 * Required Workloads: [wpf.vsconfig](wpf.vsconfig)
     *  Also see [Import or export installation configurations](https://docs.microsoft.com/en-us/visualstudio/install/import-export-installation-configurations?view=vs-2019)
@@ -17,7 +15,7 @@ WPF requires the following workloads and  components be selected when installing
 
 We use the following workflow for building and testing features and fixes.
 
-You first need to [Fork](https://github.com/dotnet/corefx/wiki/Checking-out-the-code-repository#fork-the-repository) and [Clone](https://github.com/dotnet/corefx/wiki/Checking-out-the-code-repository#clone-the-repository) this WPF repository. This is a one-time task.
+You first need to [Fork](https://guides.github.com/activities/forking) and [Clone](https://www.git-scm.com/docs/git-clone) this WPF repository. This is a one-time task.
 
 
 ### Running DRTs locally ###
@@ -46,6 +44,24 @@ If there were any failures, you can cd into $(RepoRoot)\artifacts\test\$(Configu
 *Note: To run a specific test, you can pass the name of the test like this: `/name=DrtXaml`. The names of these tests are contained in DrtList.xml.*
 
 *NOTE: This requires being run from an admin window at the moment. Removing this restriction is tracked by https://github.com/dotnet/wpf/issues/816.*
+
+### Debugging locally built WPF assemblies with WPF Application
+This section is intended to simplify the steps needed to be able to debug the locally built WPF Assemblies, with any sample app. 
+Configure the project to build x86 or x64, as per the platform architecture you have selected while performing the build for WPF assemblies.
+Go to the csproj file and append this line at the bottom of it. `<Import Project="$(WpfRepoRoot)\eng\wpf-debug.targets" />`. The resultant csproj will look like this:
+```xml
+    <PropertyGroup>
+      <OutputType>WinExe</OutputType>
+      <TargetFramework>net6.0-windows</TargetFramework>
+      <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <WpfRepoRoot>C:\wpf</WpfRepoRoot>
+    </PropertyGroup>
+    <Import Project="$(WpfRepoRoot)\eng\wpf-debug.targets" />
+```
+
 
 ### Testing Locally built WPF assemblies (excluding PresentationBuildTasks)
 This section of guide is intended to discuss the different approaches for ad-hoc testing of WPF assemblies,
@@ -98,18 +114,20 @@ installed, we can then simply reference those local binaries directly from the p
 
 ```xml
   <PropertyGroup>
-     <!-- Change this value based on where your local repo is located -->
-     <WpfRepoRoot>d:\dev\src\dotnet\wpf</WpfRepoRoot>
-     <!-- Change based on which assemblies you build (Release/Debug) -->
-     <WpfConfig>Debug</WpfConfig>
-     <!-- Publishing a self-contained app ensures our binaries are used. -->
-     <SelfContained>true</SelfContained>
+    <!-- Change this value based on where your local repo is located -->
+    <WpfRepoRoot>d:\dev\src\dotnet\wpf</WpfRepoRoot>
+    <!-- Change based on which assemblies you build (Release/Debug) -->
+    <WpfConfig>Debug</WpfConfig>
+    <WpfOuputFolder>Microsoft.DotNet.Wpf.GitHub.Debug</WpfOuputFolder>
+    <!-- Publishing a self-contained app ensures our binaries are used. -->
+    <SelfContained>true</SelfContained>
     <!-- The runtime identifier needs to match the architecture you built WPF assemblies for. -->
     <RuntimeIdentifier>win-x86</RuntimeIdentifier>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="$(WpfRepoRoot)\artifacts\packaging\$(WpfConfig)\Microsoft.DotNet.Wpf.GitHub\lib\netcoreapp3.0\*.dll" />
-    <ReferenceCopyLocalPaths Include="$(WpfRepoRoot)\artifacts\packaging\$(WpfConfig)\Microsoft.DotNet.Wpf.GitHub\lib\$(RuntimeIdentifier)\*.dll" />
+    <Reference Include="$(WpfRepoRoot)\artifacts\packaging\$(WpfConfig)\$(WpfOuputFolder)\lib\net6.0\*.dll" />
+    <ReferenceCopyLocalPaths Include="$(WpfRepoRoot)\artifacts\packaging\$(WpfConfig)\$(WpfOuputFolder)\lib\$(RuntimeIdentifier)\*.dll" />
+    <ReferenceCopyLocalPaths Include="$(WpfRepoRoot)\artifacts\packaging\$(WpfConfig)\$(WpfOuputFolder)\runtimes\$(RuntimeIdentifier)\native\*.dll" />
   </ItemGroup>
 ```
 
@@ -174,10 +192,51 @@ If you don't have the ability to build from source, you can update the *.runtime
 ```
 
 #### Finding a specific version of Microsoft.WindowsDesktop.App that interests you
-Follow the steps defined [here](https://github.com/dotnet/arcade/blob/master/Documentation/SeePackagesLatestVersion.md) to get setup for [swagger API](https://maestro-prod.westus2.cloudapp.azure.com/swagger/ui/index.html). Note that you need to authorize each time you login, so keep note of your token or you'll have to generate a new one. Assuming you have a commit (and therefore an Azure DevOps build id) that you are interested in, you can enter the build id into your query.
+Follow the steps defined [here](https://github.com/dotnet/arcade/blob/main/Documentation/SeePackagesLatestVersion.md) to get setup for [swagger API](https://maestro-prod.westus2.cloudapp.azure.com/swagger/ui/index.html). Note that you need to authorize each time you login, so keep note of your token or you'll have to generate a new one. Assuming you have a commit (and therefore an Azure DevOps build id) that you are interested in, you can enter the build id into your query.
 
 ### Testing PresentationBuildTasks
--- add more content here --
+
+#### Debugging Presentation Build Task
+Debugging Presentation Build Task(hereafter called PBT)  can be required for various reasons. One of them can be if there is something you wanted to know about markup compilation. In this section you will learn how to debug PBT.
+
+For the sake of explaining the debugging steps, we will try to stop the debugger at execute (public function) of markupCompilatonPass2.
+
+Follow the following steps sequentially.
+1.  Replace the`PresentationBuildTasks.dll` located at `C:\Program Files\dotnet\sdk\<your sdk version>\Sdks\Microsoft.NET.Sdk.WindowsDesktop\tools\net472` with your binaries (`<wpf clone directory>\artifacts\packaging\Debug\Microsoft.NET.Sdk.WindowsDesktop.Debug\tools\net472`).
+2. Launch Visual Studio and open the `Msbuild.exe` (generally located at `C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Current\Bin\MSBuild.exe`)
+3. Go to Debug->Options->Symbols
+4. Check option - `Load only specified modules` and click on `Specify included modules`
+5. Symbols to Load automatically dialog box will pop up
+6. Click on `+` button on top right and add `PresentationBuildTasks.dll`.
+7. Click OK.
+8. Right click on `MsBuild.exe` in solution explorer and select Properties.
+9. In the Parameters textbox enter the fullpath to a solution file (.sln ||.csproj) of a test repo.
+10. Click Save.
+11. Open "`<wpf clone directory>\src\Microsoft.DotNet.Wpf\src\PresentationBuildTasks\Microsoft\Build\Tasks\Windows\MarkupCompilePass2.cs`" (File -> Open -> File) in editor
+12. Insert a breakpoint at start of `execute` function.
+13. Hit F5 to start debugging.
+
+## Commonly Encountered Errors
+#### The specified RuntimeIdentifier `win-` is not recognized (Code: NETSDK1083)
+If you are seeing this error it means you are possibly missing `<PlatformTarget>` tag from your `.csproj` file. Please add the tag with apropriate value.
+
+For example:- if your wpf binaries are build for platform `x86` you should add `<PlatformTarget>x86</PlatformTarget>` to your `.csproj` file.
+Your final csproj file should look like as below:
+
+```xml
+    <PropertyGroup>
+      <OutputType>WinExe</OutputType>
+      <TargetFramework>net6.0-windows</TargetFramework>
+      <UseWPF>true</UseWPF>
+      <PlatformTarget>x86</PlatformTarget>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <WpfRepoRoot>C:\wpf</WpfRepoRoot>
+    </PropertyGroup>
+    <Import Project="$(WpfRepoRoot)\eng\wpf-debug.targets" />
+```
+
 
 ## More Information
 

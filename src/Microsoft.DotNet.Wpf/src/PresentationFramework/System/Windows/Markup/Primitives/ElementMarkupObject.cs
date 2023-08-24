@@ -406,7 +406,7 @@ namespace System.Windows.Markup.Primitives
             return false;
         }
 
-        private static object _shouldSerializeCacheLock = new object();
+        private static readonly object _shouldSerializeCacheLock = new object();
         private static Hashtable _shouldSerializeCache = new Hashtable();
         private static Type[] _shouldSerializeArgsObject = new Type[] { typeof(DependencyObject) };
         private static Type[] _shouldSerializeArgsManager = new Type[] { typeof(XamlDesignerSerializationManager) };

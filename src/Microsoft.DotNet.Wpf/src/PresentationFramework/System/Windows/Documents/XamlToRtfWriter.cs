@@ -533,17 +533,17 @@ namespace System.Windows.Documents
             {
                 FontTableEntry entry = fontTable.EntryAt(i);
 
-                _rtfBuilder.Append("{");
+                _rtfBuilder.Append('{');
                 _rtfBuilder.Append("\\f");
                 _rtfBuilder.Append(entry.Index.ToString(CultureInfo.InvariantCulture));
                 _rtfBuilder.Append("\\fcharset");
                 _rtfBuilder.Append(entry.CharSet.ToString(CultureInfo.InvariantCulture));
-                _rtfBuilder.Append(" ");
+                _rtfBuilder.Append(' ');
                 XamlParserHelper.AppendRTFText(_rtfBuilder, entry.Name, entry.CodePage);
                 _rtfBuilder.Append(";}");
             }
 
-            _rtfBuilder.Append("}");
+            _rtfBuilder.Append('}');
         }
 
         private void WriteColorTable()
@@ -563,10 +563,10 @@ namespace System.Windows.Documents
                 _rtfBuilder.Append(color.G.ToString(CultureInfo.InvariantCulture));
                 _rtfBuilder.Append("\\blue");
                 _rtfBuilder.Append(color.B.ToString(CultureInfo.InvariantCulture));
-                _rtfBuilder.Append(";");
+                _rtfBuilder.Append(';');
             }
 
-            _rtfBuilder.Append("}");
+            _rtfBuilder.Append('}');
         }
 
         private void WriteListTable()
@@ -631,13 +631,13 @@ namespace System.Windows.Documents
                         _rtfBuilder.Append(indent);
                         _rtfBuilder.Append("\\jclisttab\\tx");
                         _rtfBuilder.Append(indent);
-                        _rtfBuilder.Append("}");
+                        _rtfBuilder.Append('}');
                     }
 
                     _rtfBuilder.Append("\r\n{\\listname ;}");
                     _rtfBuilder.Append("\\listid");
                     _rtfBuilder.Append(listTableEntry.ID.ToString(CultureInfo.InvariantCulture));
-                    _rtfBuilder.Append("}");
+                    _rtfBuilder.Append('}');
                 }
 
                 _rtfBuilder.Append("}\r\n");
@@ -664,7 +664,7 @@ namespace System.Windows.Documents
                     }
                     _rtfBuilder.Append("\\ls");
                     _rtfBuilder.Append(lo.Index.ToString(CultureInfo.InvariantCulture));
-                    _rtfBuilder.Append("}");
+                    _rtfBuilder.Append('}');
                 }
 
                 _rtfBuilder.Append("\r\n}\r\n");
@@ -717,7 +717,7 @@ namespace System.Windows.Documents
             // Start a context so any properties only apply here
             if (outAny)
             {
-                _rtfBuilder.Append("{");
+                _rtfBuilder.Append('{');
             }
 
             // Write properties
@@ -828,7 +828,7 @@ namespace System.Windows.Documents
             // Ensure space delimiter after control word
             if (outAny)
             {
-                _rtfBuilder.Append(" ");
+                _rtfBuilder.Append(' ');
             }
 
             // Write contents here
@@ -889,13 +889,13 @@ namespace System.Windows.Documents
             // End context
             if (outAny)
             {
-                _rtfBuilder.Append("}");
+                _rtfBuilder.Append('}');
             }
         }
 
         private void WriteUIContainerChild(DocumentNode documentNode)
         {
-            _rtfBuilder.Append("{");
+            _rtfBuilder.Append('{');
 
             DocumentNodeArray dna = _converterState.DocumentNodeArray;
 
@@ -921,7 +921,7 @@ namespace System.Windows.Documents
             }
 
             // Close Section writing
-            _rtfBuilder.Append("}");
+            _rtfBuilder.Append('}');
             _rtfBuilder.Append("\r\n");
         }
 
@@ -935,7 +935,7 @@ namespace System.Windows.Documents
             FormatState fsParent = dnThis.Parent != null ? dnThis.Parent.FormatState : FormatState.EmptyFormatState;
             DocumentNodeArray dna = _converterState.DocumentNodeArray;
 
-            _rtfBuilder.Append("{");
+            _rtfBuilder.Append('{');
 
             // CultureInfo
             if (fsThis.Lang != fsParent.Lang && fsThis.Lang > 0)
@@ -953,7 +953,7 @@ namespace System.Windows.Documents
             // Write the font information
             if (WriteParagraphFontInfo(dnThis, fsThis, fsParent))
             {
-                _rtfBuilder.Append(" ");
+                _rtfBuilder.Append(' ');
             }
 
             // Foreground
@@ -1018,7 +1018,7 @@ namespace System.Windows.Documents
             }
 
             // Close Section writing
-            _rtfBuilder.Append("}");
+            _rtfBuilder.Append('}');
             _rtfBuilder.Append("\r\n");
         }
 
@@ -1032,7 +1032,7 @@ namespace System.Windows.Documents
             FormatState fsParent = dnThis.Parent != null ? dnThis.Parent.FormatState : FormatState.EmptyFormatState;
             DocumentNodeArray dna = _converterState.DocumentNodeArray;
 
-            _rtfBuilder.Append("{");
+            _rtfBuilder.Append('{');
 
             bool bOutControl = WriteParagraphFontInfo(dnThis, fsThis, fsParent);
 
@@ -1045,13 +1045,13 @@ namespace System.Windows.Documents
             }
             if (bOutControl)
             {
-                _rtfBuilder.Append(" ");
+                _rtfBuilder.Append(' ');
             }
 
             bOutControl = WriteParagraphListInfo(dnThis, fsThis);
             if (bOutControl)
             {
-                _rtfBuilder.Append(" ");
+                _rtfBuilder.Append(' ');
             }
 
             // FlowDirection control - state it before writing nested inline node.
@@ -1176,7 +1176,7 @@ namespace System.Windows.Documents
             {
                 _rtfBuilder.Append("\\par");
             }
-            _rtfBuilder.Append("}");
+            _rtfBuilder.Append('}');
             _rtfBuilder.Append("\r\n");
         }
 
@@ -1301,7 +1301,7 @@ namespace System.Windows.Documents
                         if (dnList.FormatState.Marker != MarkerStyle.MarkerBullet
                             && dnList.FormatState.Marker != MarkerStyle.MarkerNone)
                         {
-                            _rtfBuilder.Append(".");
+                            _rtfBuilder.Append('.');
                         }
                         _rtfBuilder.Append("\\tab}");
 
@@ -1326,7 +1326,7 @@ namespace System.Windows.Documents
                         if (dnList.FormatState.Marker != MarkerStyle.MarkerBullet
                             && dnList.FormatState.Marker != MarkerStyle.MarkerNone)
                         {
-                            _rtfBuilder.Append(".");
+                            _rtfBuilder.Append('.');
                         }
                         _rtfBuilder.Append("\\tab}{\\*\\pn");
                         _rtfBuilder.Append(Converters.MarkerStyleToOldRTFString(dnList.FormatState.Marker));
@@ -1376,7 +1376,7 @@ namespace System.Windows.Documents
             //  [Repeat] \row
             //
             _rtfBuilder.Append("\r\n");
-            _rtfBuilder.Append("{");
+            _rtfBuilder.Append('{');
             if (nDepth == 1)
             {
                 WriteRowStart(dnRow);
@@ -1396,7 +1396,7 @@ namespace System.Windows.Documents
                 _rtfBuilder.Append("\\intbl\\itap");
                 _rtfBuilder.Append(nDepth.ToString(CultureInfo.InvariantCulture));
             }
-            _rtfBuilder.Append("{");
+            _rtfBuilder.Append('{');
             if (nDepth > 1)
             {
                 _rtfBuilder.Append("\\*\\nesttableprops");
@@ -1521,14 +1521,14 @@ namespace System.Windows.Documents
         {
             DocumentNodeArray cellArray = dnRow.GetRowsCells();
 
-            _rtfBuilder.Append("{");
+            _rtfBuilder.Append('{');
             for (int i = 0; i < cellArray.Count; i++)
             {
                 DocumentNode dnCell = cellArray.EntryAt(i);
 
                 WriteStructure(dnCell);
             }
-            _rtfBuilder.Append("}");
+            _rtfBuilder.Append('}');
         }
 
         private long WriteCellProperties(DocumentNode dnCell, int nCol, long lastCellX)
@@ -1991,7 +1991,7 @@ namespace System.Windows.Documents
 
         private void WriteEpilog()
         {
-            _rtfBuilder.Append("}");
+            _rtfBuilder.Append('}');
         }
 
         private void WriteOutput()
@@ -2231,7 +2231,7 @@ namespace System.Windows.Documents
         {
             RtfImageFormat imageFormat = RtfImageFormat.Unknown;
 
-            int extensionIndex = imageName.LastIndexOf(".", StringComparison.OrdinalIgnoreCase);
+            int extensionIndex = imageName.LastIndexOf('.');
 
             if (extensionIndex >= 0)
             {
@@ -2737,14 +2737,11 @@ namespace System.Windows.Documents
                     xamlToRtfError = XamlToRtfError.InvalidFormat;
                     if (name.Length >= 5)
                     {
-                        string num = name.Substring(3, name.Length - 4);
                         int i = 0;
-                        bool ret = Converters.HexStringToInt(num, ref i);
+                        bool ret = Converters.HexStringToInt(name.AsSpan(3, name.Length - 4), ref i);
                         if (i >= 0 && i <= 0xFFFF)
                         {
-                            char[] ac = new char[1];
-                            ac[0] = (char)i;
-                            string s = new string(ac);
+                            string s = char.ToString((char)i);
                             return ((IXamlContentHandler)this).Characters(s);
                         }
                     }
@@ -2753,14 +2750,12 @@ namespace System.Windows.Documents
                 {
                     if (name.Length >= 4)
                     {
-                        string num = name.Substring(2, name.Length - 3);
+                        ReadOnlySpan<char> num = name.AsSpan(2, name.Length - 3);
                         int i = 0;
                         bool ret = Converters.StringToInt(num, ref i);
                         if (i >= 0 && i <= 0xFFFF)
                         {
-                            char[] ac = new char[1];
-                            ac[0] = (char)i;
-                            string s = new string(ac);
+                            string s = char.ToString((char)i);
                             return ((IXamlContentHandler)this).Characters(s);
                         }
                     }
@@ -3547,7 +3542,7 @@ namespace System.Windows.Documents
                 return true;
             }
 
-            internal static bool ConvertToFontSize(ConverterState converterState, string s, ref double d)
+            internal static bool ConvertToFontSize(ConverterState converterState, ReadOnlySpan<char> s, ref double d)
             {
                 if (s.Length == 0)
                 {
@@ -3561,11 +3556,11 @@ namespace System.Windows.Documents
                     n--;
                 }
 
-                string units = null;
+                ReadOnlySpan<char> units = default;
                 if (n < s.Length - 1)
                 {
-                    units = s.Substring(n + 1);
-                    s = s.Substring(0, n + 1);
+                    units = s.Slice(n + 1);
+                    s = s.Slice(0, n + 1);
                 }
 
                 // Now convert number part
@@ -3574,7 +3569,7 @@ namespace System.Windows.Documents
                 if (ret)
                 {
                     // No units mean pixels
-                    if (units == null || units.Length == 0)
+                    if (units.IsEmpty)
                     {
                         d = Converters.PxToPt(d);
                     }
@@ -3813,7 +3808,7 @@ namespace System.Windows.Documents
                 return ret;
             }
 
-            internal static bool ConvertToThickness(ConverterState converterState, string thickness, ref XamlThickness xthickness)
+            internal static bool ConvertToThickness(ConverterState converterState, ReadOnlySpan<char> thickness, ref XamlThickness xthickness)
             {
                 int numints = 0;
                 int s = 0;
@@ -3827,7 +3822,7 @@ namespace System.Windows.Documents
                         e++;
                     }
 
-                    string onenum = thickness.Substring(s, e - s);
+                    ReadOnlySpan<char> onenum = thickness.Slice(s, e - s);
                     if (onenum.Length > 0)
                     {
                         double d = 0.0f;
@@ -4038,7 +4033,7 @@ namespace System.Windows.Documents
                     sb.Append("\\u");
                     short sc = (short)c;
                     sb.Append(sc.ToString(CultureInfo.InvariantCulture));
-                    sb.Append("?");
+                    sb.Append('?');
                 }
             }
 

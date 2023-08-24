@@ -80,11 +80,11 @@ namespace MS.Internal.IO.Packaging
             foreach (DataObject dataObject in signature.ObjectList)
             {
                 // direct reference to Object id - supported for all reference typs
-                if (String.CompareOrdinal(idValue, dataObject.Id) == 0)
+                if (string.Equals(idValue, dataObject.Id, StringComparison.Ordinal))
                 {
                     // anticipate duplicate ID's and throw if any found
                     if (node != null)
-                        throw new XmlException(SR.Get(SRID.DuplicateObjectId));
+                        throw new XmlException(SR.DuplicateObjectId);
 
                     node = dataObject.GetXml();
                 }
@@ -116,7 +116,7 @@ namespace MS.Internal.IO.Packaging
             foreach (Reference reference in signature.SignedInfo.References)
             {
                 // if we get a match by Type?
-                if (String.CompareOrdinal(reference.Type, _XAdESTargetType) == 0)
+                if (string.Equals(reference.Type, _XAdESTargetType, StringComparison.Ordinal))
                 {
                     // now try to match by Uri
                     // strip off any preceding # mark to facilitate matching
@@ -128,7 +128,7 @@ namespace MS.Internal.IO.Packaging
 
                     // if we have a XAdES type reference and the ID matches the requested one
                     // search all object tags for the XML with this ID
-                    if (String.CompareOrdinal(uri, idValue) == 0)
+                    if (string.Equals(uri, idValue, StringComparison.Ordinal))
                     {
                         node = SelectSubObjectNodeForXAdESInDataObjects(signature, idValue);
                         break;
@@ -155,7 +155,7 @@ namespace MS.Internal.IO.Packaging
             foreach (DataObject dataObject in signature.ObjectList)
             {
                 // skip the package object
-                if (String.CompareOrdinal(dataObject.Id, XTable.Get(XTable.ID.OpcAttrValue)) != 0)
+                if (!string.Equals(dataObject.Id, XTable.Get(XTable.ID.OpcAttrValue), StringComparison.Ordinal))
                 {
                     XmlElement element = dataObject.GetXml();
 
@@ -169,7 +169,7 @@ namespace MS.Internal.IO.Packaging
                         if (!AllowAmbiguousReferenceTargets() &&
                             (nodeList.Count > 1 || foundMatch))
                         {
-                            throw new XmlException(SR.Get(SRID.DuplicateObjectId));
+                            throw new XmlException(SR.DuplicateObjectId);
                         }
 
                         foundMatch = true;
@@ -184,7 +184,7 @@ namespace MS.Internal.IO.Packaging
                                 temp = temp.ParentNode;
 
                             // only match if the target is in the XAdES namespace
-                            if ((temp != null) && (String.CompareOrdinal(temp.NamespaceURI, _XAdESNameSpace) == 0))
+                            if ((temp != null) && (string.Equals(temp.NamespaceURI, _XAdESNameSpace, StringComparison.Ordinal)))
                             {
                                 node = local as XmlElement;
                                 // continue searching, to find duplicates from different objects

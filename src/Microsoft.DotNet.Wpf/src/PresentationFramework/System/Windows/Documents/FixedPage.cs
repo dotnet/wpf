@@ -194,7 +194,7 @@ namespace System.Windows.Documents
 
             if (uie == null)
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
             }
 
             Children.Add(uie);
@@ -667,9 +667,7 @@ namespace System.Windows.Documents
                 Uri absoluteUri = BindUriHelper.GetUriToNavigate(dpo, baseUri, inputUri);
                 if (fragmentLength != 0)
                 {
-                    StringBuilder absoluteUriString = new StringBuilder(absoluteUri.ToString());
-                    absoluteUriString.Append(fragment);
-                    absoluteUri = new Uri(absoluteUriString.ToString(), UriKind.RelativeOrAbsolute);
+                    absoluteUri = new Uri(absoluteUri.ToString() + fragment, UriKind.RelativeOrAbsolute);
                 }
 
                 return absoluteUri;
@@ -716,7 +714,7 @@ namespace System.Windows.Documents
         {
             if (_uiElementCollection == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             return _uiElementCollection[index];            
         }
@@ -785,7 +783,7 @@ namespace System.Windows.Documents
                 //If Left is not specified, then Right is used
                 //If both are not there, then 0
                 double left = GetLeft(child);
-                if(!DoubleUtil.IsNaN(left)) 
+                if(!double.IsNaN(left)) 
                 {
                     x = left; 
                 }
@@ -793,14 +791,14 @@ namespace System.Windows.Documents
                 {
                     double right = GetRight(child);
 
-                    if(!DoubleUtil.IsNaN(right)) 
+                    if(!double.IsNaN(right)) 
                     {
                         x = arrangeSize.Width - child.DesiredSize.Width - right;
                     }
                 }
                 
                 double top = GetTop(child);
-                if(!DoubleUtil.IsNaN(top)) 
+                if(!double.IsNaN(top)) 
                 {
                     y = top; 
                 }
@@ -808,7 +806,7 @@ namespace System.Windows.Documents
                 {
                     double bottom = GetBottom(child);
 
-                    if(!DoubleUtil.IsNaN(bottom)) 
+                    if(!double.IsNaN(bottom)) 
                     {
                         y = arrangeSize.Height - child.DesiredSize.Height - bottom;
                     }

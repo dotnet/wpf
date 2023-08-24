@@ -59,7 +59,7 @@ namespace MS.Internal.PtsHost
             double baseline = desiredSize.Height;
             double baselineOffsetValue = (double)UIElementIsland.Root.GetValue(TextBlock.BaselineOffsetProperty);
 
-            if(!DoubleUtil.IsNaN(baselineOffsetValue))
+            if(!double.IsNaN(baselineOffsetValue))
             {
                 baseline = baselineOffsetValue;
             }
@@ -82,7 +82,7 @@ namespace MS.Internal.PtsHost
             double baseline = !sideways ? size.Height : size.Width;
             double baselineOffsetValue = (double)UIElementIsland.Root.GetValue(TextBlock.BaselineOffsetProperty);
 
-            if (!sideways && !DoubleUtil.IsNaN(baselineOffsetValue))
+            if (!sideways && !double.IsNaN(baselineOffsetValue))
             {
                 baseline = (double) baselineOffsetValue;
             }

@@ -1,0 +1,21 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Issue with .NET runtime or core .NET libraries
+    url:  https://github.com/dotnet/runtime/issues/new/choose
+    about: Please open issues with the .NET runtime or core .NET libraries in the dotnet/runtime repo
+  - name: Issue with Windows Forms
+    url:  https://github.com/dotnet/winforms/issues/new/choose
+    about: Please open issues with Windows Forms in the dotnet/winforms repo
+  - name: Issue with .NET Core SDK
+    url:  https://github.com/dotnet/sdk/issues/new/choose
+    about: Please open issues with the .NET Core SDK in the dotnet/sdk repo
+  - name: Issue with Entity Framework
+    url:  https://github.com/dotnet/efcore/issues/new/choose
+    about: Please open issues with Entity Framework in the dotnet/efcore repo
+  - name: Issue with Roslyn compiler
+    url:  https://github.com/dotnet/roslyn/issues/new/choose
+    about: Please open issues with the Roslyn compiler in the dotnet/roslyn repo
+  - name: Issue with ASP.NET
+    url:  https://github.com/dotnet/aspnetcore/issues/new/choose
+    about: Please open issues with ASP.NET Core in the dotnet/aspnetcore repo
+

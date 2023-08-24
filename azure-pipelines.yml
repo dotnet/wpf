@@ -9,12 +9,16 @@ variables:
     # clean the local repo on the build agents
   - name: Build.Repository.Clean
     value: true
-  - name: _PublishUsingPipelines
-    value: true
   - name: _DotNetArtifactsCategory
     value: WINDOWSDESKTOP
   - name: _DotNetValidationArtifactsCategory
     value: WINDOWSDESKTOP
+  - ${{ if or(startswith(variables['Build.SourceBranch'], 'refs/heads/release/'), startswith(variables['Build.SourceBranch'], 'refs/heads/internal/release/'), eq(variables['Build.Reason'], 'Manual')) }}:
+    - name: PostBuildSign
+      value: false
+  - ${{ else }}:
+    - name: PostBuildSign
+      value: true
   
   - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
     - group: DotNet-Wpf-SDLValidation-Params
@@ -34,11 +38,15 @@ trigger:
   batch: true 
   branches:
     include: 
-    - master
+    - main
     - release/3.*
     - release/5.*
+    - release/6.*
+    - release/7.*
+    - release/8.*
+    - internal/release/5.*
+    - internal/release/6.*
     - experimental/*
-    # - arcade
   paths:
     exclude:
     - Documentation/*
@@ -47,10 +55,13 @@ pr:
   autoCancel: true
   branches:
     include:
-    - master
+    - main
     - release/3.* 
     - internal/release/3.*
     - release/5.*
+    - release/6.*
+    - release/7.*
+    - release/8.*
     - experimental/*
   paths:
     exclude:
@@ -63,27 +74,20 @@ stages:
   jobs:
   - template: /eng/pipeline.yml
     parameters:
-      enablePublishUsingPipelines: $(_PublishUsingPipelines)
       ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-        # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
-        pool:
-          name: NetCoreInternal-Pool
-          queue: buildpool.windows.10.amd64.vs2019.pre
-        # runAsPublic is used in expressions, which can't read from user-defined variables
         runAsPublic: false
 
 - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
   - template: eng\common\templates\post-build\post-build.yml
     parameters:
-      # Symbol validation isn't being very reliable lately. This should be enabled back
-      # once this issue is resolved: https://github.com/dotnet/arcade/issues/2871
+      publishingInfraVersion: 3
       enableSymbolValidation: false
-      # Sourcelink validation isn't passing for Arcade due to some regressions. This should be
-      # enabled back once this issue is resolved: https://github.com/dotnet/arcade/issues/2912
+      enableSigningValidation: false
+      enableNugetValidation: false
       enableSourceLinkValidation: false
       # This is to enable SDL runs part of Post-Build Validation Stage
       SDLValidationParameters:
-        enable: true
+        enable: false
         params: ' -SourceToolsList @("policheck","credscan")
         -TsaInstanceURL $(_TsaInstanceURL)
         -TsaProjectName $(_TsaProjectName)

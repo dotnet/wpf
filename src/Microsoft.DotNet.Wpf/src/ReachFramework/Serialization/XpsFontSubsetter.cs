@@ -356,7 +356,7 @@ namespace System.Windows.Xps.Serialization
            if( policy == FontSubsetterCommitPolicies.CommitEntireSequence &&
                 _commitCountPolicy != 1 )
             {
-                throw new ArgumentOutOfRangeException(SR.Get(SRID.ReachPackaging_SequenceCntMustBe1));
+                throw new ArgumentOutOfRangeException(SR.ReachPackaging_SequenceCntMustBe1);
             }
           _commitPolicy = policy;
         }
@@ -371,12 +371,12 @@ namespace System.Windows.Xps.Serialization
             if( _commitPolicy == FontSubsetterCommitPolicies.CommitEntireSequence &&
                 commitCount != 1 )
             {
-                throw new ArgumentOutOfRangeException(SR.Get(SRID.ReachPackaging_SequenceCntMustBe1));
+                throw new ArgumentOutOfRangeException(SR.ReachPackaging_SequenceCntMustBe1);
             }
             else
             if( commitCount < 1 )
             {
-                throw new ArgumentOutOfRangeException(SR.Get(SRID.ReachPackaging_CommitCountPolicyLessThan1));
+                throw new ArgumentOutOfRangeException(SR.ReachPackaging_CommitCountPolicyLessThan1);
             }
             _commitCountPolicy = commitCount;
         }
@@ -698,23 +698,19 @@ namespace System.Windows.Xps.Serialization
         void
         ObfuscateData( byte[] fontData, Guid guid )
         {
-            byte[] guidByteArray = new byte[16];
-          // Convert the GUID into string in 32 digits format (xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx)
+            // Convert the GUID into string in 32 digits format (xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx)
+            Span<byte> guidByteArray = stackalloc byte[16];
             string guidString = guid.ToString("N");
-
   
             for (int i = 0; i < guidByteArray.Length; i++)
             {
-
                 guidByteArray[i] = Convert.ToByte(guidString.Substring(i * 2, 2), 16);
-
             }
- 
-
  
             for( int j = 0; j < 2; j++ )
             {
-                for( int i = 0; i < 16; i ++ )                {
+                for( int i = 0; i < 16; i ++ )
+                {
                     fontData[i+j*16] ^= guidByteArray[15-i];
                 }
             }

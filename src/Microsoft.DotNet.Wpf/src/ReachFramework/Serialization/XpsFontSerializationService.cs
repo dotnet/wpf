@@ -57,7 +57,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NotSupported));
+                throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
             }
             return _fontSubsetter.CommitFontSubsetsSignal(signal);
         }

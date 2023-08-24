@@ -19,7 +19,6 @@ using System.ComponentModel.Design.Serialization;
 using MS.Internal.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -186,7 +185,7 @@ namespace System.Windows.Input
             { 
                 if (!IsValidInputScopeNameValue(value))
                 {
-                    throw new ArgumentException(SR.Get(SRID.InputScope_InvalidInputScopeName, "value"));
+                    throw new ArgumentException(SR.Format(SR.InputScope_InvalidInputScopeName, "value"));
                 }
                 _nameValue = value; 
             }

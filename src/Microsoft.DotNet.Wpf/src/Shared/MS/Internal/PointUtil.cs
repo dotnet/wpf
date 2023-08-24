@@ -178,7 +178,7 @@ namespace MS.Internal
             NativeMethods.POINT ptClient            = FromPoint(pointClient);
             NativeMethods.POINT ptClientRTLAdjusted = AdjustForRightToLeft(ptClient, handleRef);
 
-            UnsafeNativeMethods.ClientToScreen(handleRef, ptClientRTLAdjusted);
+            UnsafeNativeMethods.ClientToScreen(handleRef, ref ptClientRTLAdjusted);
 
             return ToPoint(ptClientRTLAdjusted);
         }
@@ -200,7 +200,7 @@ namespace MS.Internal
 
             NativeMethods.POINT ptClient = FromPoint(pointScreen);
 
-            SafeNativeMethods.ScreenToClient(handleRef, ptClient);
+            SafeNativeMethods.ScreenToClient(handleRef, ref ptClient);
 
             ptClient = AdjustForRightToLeft(ptClient, handleRef);
 

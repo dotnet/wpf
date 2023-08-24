@@ -23,7 +23,6 @@ using System.Windows.Input;
 using MS.Internal;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -158,7 +157,7 @@ namespace System.Windows.Input
             {
                 InputBinding inputBinding = value as InputBinding;
                 if (inputBinding == null)
-                   throw new NotSupportedException(SR.Get(SRID.CollectionOnlyAcceptsInputBindings));
+                   throw new NotSupportedException(SR.CollectionOnlyAcceptsInputBindings);
 
                 this[index] = inputBinding;
             }
@@ -230,7 +229,7 @@ namespace System.Windows.Input
             }
             else
             {
-                throw new NotSupportedException(SR.Get(SRID.CollectionOnlyAcceptsInputBindings));
+                throw new NotSupportedException(SR.CollectionOnlyAcceptsInputBindings);
             }
         }
 
@@ -287,7 +286,7 @@ namespace System.Windows.Input
                     }
                     else
                     {
-                        throw new NotSupportedException(SR.Get(SRID.CollectionOnlyAcceptsInputBindings));
+                        throw new NotSupportedException(SR.CollectionOnlyAcceptsInputBindings);
                     }
                 }
             }
@@ -302,7 +301,7 @@ namespace System.Windows.Input
         {
             if (inputBinding == null)
             {
-                throw new NotSupportedException(SR.Get(SRID.CollectionOnlyAcceptsInputBindings));
+                throw new NotSupportedException(SR.CollectionOnlyAcceptsInputBindings);
             }
 
             if (_innerBindingList != null)

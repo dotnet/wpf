@@ -49,7 +49,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                return SR.Get(SRID.XpsSerializerFactory_DisplayName);
+                return SR.XpsSerializerFactory_DisplayName;
             }
         }
         /// <summary>
@@ -59,7 +59,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                return SR.Get(SRID.XpsSerializerFactory_ManufacturerName);
+                return SR.XpsSerializerFactory_ManufacturerName;
             }
         }
         /// <summary>
@@ -69,7 +69,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                return new Uri(SR.Get(SRID.XpsSerializerFactory_ManufacturerWebsite));
+                return new Uri(SR.XpsSerializerFactory_ManufacturerWebsite);
             }
         }
         /// <summary>

@@ -28,7 +28,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 using UnsafeNativeMethodsMilCoreApi = MS.Win32.PresentationCore.UnsafeNativeMethods;
 using IWICCC = MS.Win32.PresentationCore.UnsafeNativeMethods.IWICColorContext;
 
@@ -511,7 +510,7 @@ namespace System.Windows.Media
 
             if (!profileUri.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.Get(SRID.UriNotAbsolute), "profileUri");
+                throw new ArgumentException(SR.UriNotAbsolute, "profileUri");
             }
 
             _profileUri = new SecurityCriticalData<Uri>(profileUri);
@@ -553,7 +552,7 @@ namespace System.Windows.Media
                     // this is safe because it can only happen when the URI is given to us by the user.
                     //
                     Invariant.Assert(!isStandardProfileUriNotFromUser);
-                    throw new FileNotFoundException(SR.Get(SRID.FileNotFoundExceptionWithFileName, profileUri.AbsolutePath), profileUri.AbsolutePath);
+                    throw new FileNotFoundException(SR.Format(SR.FileNotFoundExceptionWithFileName, profileUri.AbsolutePath), profileUri.AbsolutePath);
                 }
             }
 
@@ -637,7 +636,7 @@ namespace System.Windows.Media
                 }
             }
 
-            throw new ArgumentException(SR.Get(SRID.ColorContext_FileTooLarge), filename);
+            throw new ArgumentException(SR.ColorContext_FileTooLarge, filename);
         }
 
         /// Note: often the data buffer is larger than the actual data in it.
@@ -834,9 +833,9 @@ namespace System.Windows.Media
                 NativeMethods.COLORTYPE.COLOR_8_CHANNEL
                 };
 
-        private readonly static string _colorProfileResources = "ColorProfiles";
+        private const string _colorProfileResources = "ColorProfiles";
 
-        private readonly static string _sRGBProfileName = "sRGB_icm";
+        private const string _sRGBProfileName = "sRGB_icm";
 
         [StructLayout(LayoutKind.Sequential)]
         private struct AbbreviatedPROFILEHEADER

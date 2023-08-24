@@ -101,8 +101,6 @@ namespace System.Windows
 
             Window.DpiChangedEvent = EventManager.RegisterRoutedEvent("DpiChanged", RoutingStrategy.Bubble,
                 typeof (System.Windows.DpiChangedEventHandler), typeof (Window));
-
-            WpfDllVerifier.VerifyWpfDllSet();
         }
 
         /// <summary>
@@ -271,7 +269,7 @@ namespace System.Windows
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.DragMoveFail));
+                throw new InvalidOperationException(SR.DragMoveFail);
             }
 }
 
@@ -294,11 +292,11 @@ namespace System.Windows
 
             if ( _isVisible == true )
             {
-                throw new InvalidOperationException(SR.Get(SRID.ShowDialogOnVisible));
+                throw new InvalidOperationException(SR.ShowDialogOnVisible);
             }
             else if ( _showingAsDialog == true )
             {
-                throw new InvalidOperationException(SR.Get(SRID.ShowDialogOnModal));
+                throw new InvalidOperationException(SR.ShowDialogOnModal);
             }
 
             _dialogOwnerHandle = _ownerHandle;
@@ -639,7 +637,7 @@ namespace System.Windows
                     // Explorer being non-responsive should be a transient issue.  Post back to apply the full TaskbarItemInfo.
                     _taskbarRetryTimer.Start();
                 }
-                else if (hr == (HRESULT)Win32Error.ERROR_INVALID_WINDOW_HANDLE)
+                else if (hr == (HRESULT)Win32Error.ERROR_INVALID_WINDOW_HANDLE || hr == HRESULT.E_NOTIMPL)
                 {
                     // We'll get this when Explorer's not running.  This means there's no Shell to integrate with.
                     if (TraceShell.IsEnabled)
@@ -750,7 +748,7 @@ namespace System.Windows
 
             if (!((Window) d).IsSourceWindowNull)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ChangeNotAllowedAfterShow));
+                throw new InvalidOperationException(SR.ChangeNotAllowedAfterShow);
             }
 
             return value;
@@ -1184,12 +1182,12 @@ namespace System.Windows
                 VerifyContextAndObjectState();
                 if (value == this)
                 {
-                    throw new ArgumentException(SR.Get(SRID.CannotSetOwnerToItself));
+                    throw new ArgumentException(SR.CannotSetOwnerToItself);
                 }
 
                 if ( _showingAsDialog == true )
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CantSetOwnerAfterDialogIsShown));
+                    throw new InvalidOperationException(SR.CantSetOwnerAfterDialogIsShown);
                 }
 
                 if (value != null && value.IsSourceWindowNull == true)
@@ -1197,9 +1195,9 @@ namespace System.Windows
                     // Try to be specific in the error message.
                     if (value._disposed)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.CantSetOwnerToClosedWindow));
+                        throw new InvalidOperationException(SR.CantSetOwnerToClosedWindow);
                     }
-                    throw new InvalidOperationException(SR.Get(SRID.CantSetOwnerWhosHwndIsNotCreated));
+                    throw new InvalidOperationException(SR.CantSetOwnerWhosHwndIsNotCreated);
                 }
 
                 if ( _ownerWindow == value )
@@ -1218,7 +1216,7 @@ namespace System.Windows
                         {
                             if (ownedWindows[i] == value)
                             {
-                                throw new ArgumentException(SR.Get(SRID.CircularOwnerChild, value, this));
+                                throw new ArgumentException(SR.Format(SR.CircularOwnerChild, value, this));
                             }
                         }
                     }
@@ -1282,6 +1280,17 @@ namespace System.Windows
         }
 
         /// <summary>
+        /// Gets Showing as dialog
+        /// </summary>
+        internal bool IsShowingAsDialog
+        {
+            get
+            {
+                return _showingAsDialog;
+            }
+        }
+
+        /// <summary>
         /// Sets/gets DialogResult
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), TypeConverter(typeof(DialogResultConverter))]
@@ -1333,7 +1342,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.DialogResultMustBeSetAfterShowDialog));
+                    throw new InvalidOperationException(SR.DialogResultMustBeSetAfterShowDialog);
 }
             }
         }
@@ -1728,7 +1737,7 @@ namespace System.Windows
 
             if ( VisualTreeHelper.GetParent(this) != null )
             {
-                throw new InvalidOperationException(SR.Get(SRID.WindowMustBeRoot));
+                throw new InvalidOperationException(SR.WindowMustBeRoot);
             }
         }
 
@@ -2321,7 +2330,7 @@ namespace System.Windows
             base.OnAncestorChanged();
             if (Parent != null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.WindowMustBeRoot));
+                throw new InvalidOperationException(SR.WindowMustBeRoot);
             }
         }
 
@@ -2599,7 +2608,7 @@ namespace System.Windows
             Point requestedLocationDeviceUnits = LogicalToDeviceUnits(new Point(requestedLeft, requestedTop));
 
             // if Width was specified and is not the same as the current width, then update it
-            if ((!DoubleUtil.IsNaN(requestedWidth)) && (!DoubleUtil.AreClose(sizeDeviceUnits.Width, requestedSizeDeviceUnits.X)))
+            if ((!double.IsNaN(requestedWidth)) && (!DoubleUtil.AreClose(sizeDeviceUnits.Width, requestedSizeDeviceUnits.X)))
             {
                 // at this stage, ActualWidth/Height is not set since
                 // layout has not happened (it happens when we set the
@@ -2616,7 +2625,7 @@ namespace System.Windows
             }
 
             // if Height was specified and is not the same as the current height, then update it
-            if (!DoubleUtil.IsNaN(requestedHeight) && (!DoubleUtil.AreClose(sizeDeviceUnits.Height, requestedSizeDeviceUnits.Y)))
+            if (!double.IsNaN(requestedHeight) && (!DoubleUtil.AreClose(sizeDeviceUnits.Height, requestedSizeDeviceUnits.Y)))
             {
                 // at this stage, ActualWidth/Height is not set since
                 // layout has not happened (it happens when we set the
@@ -2633,7 +2642,7 @@ namespace System.Windows
             }
 
             // if left was specified and is not the same as the current left, then update it
-            if (!DoubleUtil.IsNaN(requestedLeft) && (!DoubleUtil.AreClose(xDeviceUnits, requestedLocationDeviceUnits.X)))
+            if (!double.IsNaN(requestedLeft) && (!DoubleUtil.AreClose(xDeviceUnits, requestedLocationDeviceUnits.X)))
             {
                 updateHwndPlacement = true;
                 xDeviceUnits = requestedLocationDeviceUnits.X;
@@ -2646,7 +2655,7 @@ namespace System.Windows
             }
 
             // if top was specified and is not the same as the current top, then update it
-            if (!DoubleUtil.IsNaN(requestedTop) && (!DoubleUtil.AreClose(yDeviceUnits, requestedLocationDeviceUnits.Y)))
+            if (!double.IsNaN(requestedTop) && (!DoubleUtil.AreClose(yDeviceUnits, requestedLocationDeviceUnits.Y)))
             {
                 updateHwndPlacement = true;
                 yDeviceUnits = requestedLocationDeviceUnits.Y;
@@ -3076,7 +3085,7 @@ namespace System.Windows
 
                 if ( _showingAsDialog == true )
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CantSetOwnerAfterDialogIsShown));
+                    throw new InvalidOperationException(SR.CantSetOwnerAfterDialogIsShown);
                 }
 
                 SetOwnerHandle(value);
@@ -3375,13 +3384,14 @@ namespace System.Windows
                 _contentRenderedCallback.Abort();
             }
             _contentRenderedCallback = Dispatcher.BeginInvoke(DispatcherPriority.Input,
-                                   (DispatcherOperationCallback) delegate (object unused)
+                                   (DispatcherOperationCallback) delegate (object arg)
                                    {
                                        // Event handler exception continuality: there are no state related/depending on ContentRendered event.
                                        // If an exception occurs in event handler, our state will not be corrupted.
                                        // Please check event handler exception continuality if the logic changes.
-                                       _contentRenderedCallback = null;
-                                       OnContentRendered(EventArgs.Empty);
+                                       Window thisRef = (Window)arg;
+                                       thisRef._contentRenderedCallback = null;
+                                       thisRef.OnContentRendered(EventArgs.Empty);
                                        return null;
                                    },
                                    this);
@@ -3536,7 +3546,7 @@ namespace System.Windows
 #if DISPOSE
             if (_disposed)
             {
-                throw new ObjectDisposedException(null, SR.Get(SRID.WindowDisposed));
+                throw new ObjectDisposedException(null, SR.WindowDisposed);
             }
 #endif
         }
@@ -3545,7 +3555,7 @@ namespace System.Windows
         {
             if (_disposed == true)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ReshowNotAllowed));
+                throw new InvalidOperationException(SR.ReshowNotAllowed);
             }
         }
 
@@ -3553,12 +3563,12 @@ namespace System.Windows
         {
             if (_isClosing == true)
             {
-                throw new InvalidOperationException(SR.Get(SRID.InvalidOperationDuringClosing));
+                throw new InvalidOperationException(SR.InvalidOperationDuringClosing);
             }
 
             if (IsSourceWindowNull == false && IsCompositionTargetInvalid == true)
             {
-                throw new InvalidOperationException(SR.Get(SRID.InvalidCompositionTarget));
+                throw new InvalidOperationException(SR.InvalidCompositionTarget);
             }
         }
 
@@ -3566,7 +3576,7 @@ namespace System.Windows
         {
             if (HwndCreatedButNotShown)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NotAllowedBeforeShow));
+                throw new InvalidOperationException(SR.NotAllowedBeforeShow);
             }
         }
 
@@ -3584,12 +3594,11 @@ namespace System.Windows
         IntPtr GetCurrentMonitorFromMousePosition()
         {
             // center on the screen on which the mouse is on
-            NativeMethods.POINT pt = new NativeMethods.POINT();
+            NativeMethods.POINT pt = default;
 
-            UnsafeNativeMethods.TryGetCursorPos(pt);
+            UnsafeNativeMethods.TryGetCursorPos(ref pt);
 
-            NativeMethods.POINTSTRUCT ptStruct = new NativeMethods.POINTSTRUCT(pt.x, pt.y);
-            return SafeNativeMethods.MonitorFromPoint(ptStruct, NativeMethods.MONITOR_DEFAULTTONEAREST);
+            return SafeNativeMethods.MonitorFromPoint(pt, NativeMethods.MONITOR_DEFAULTTONEAREST);
         }
 
         // <summary>
@@ -3779,16 +3788,16 @@ namespace System.Windows
                 // then we cannot CenterOwner
                 if (Owner.IsSourceWindowNull)
                 {
-                    if ((DoubleUtil.IsNaN(Owner.Width)) ||
-                        (DoubleUtil.IsNaN(Owner.Height)))
+                    if ((double.IsNaN(Owner.Width)) ||
+                        (double.IsNaN(Owner.Height)))
                     {
                         return false;
                     }
                 }
 
                 // if Owner's Top or Left is not specified, we cannot CenterOwner
-                if ((DoubleUtil.IsNaN(Owner.Left)) ||
-                    (DoubleUtil.IsNaN(Owner.Top)))
+                if ((double.IsNaN(Owner.Left)) ||
+                    (double.IsNaN(Owner.Top)))
                 {
                     return false;
                 }
@@ -3850,10 +3859,10 @@ namespace System.Windows
                     break;
 #if THEATRE_FULLSCREEN
                 case WindowState.Theatre:
-                    throw new NotImplementedException(SR.Get(SRID.NotImplementedException));
+                    throw new NotImplementedException(SR.NotImplementedException);
 
                 case WindowState.FullScreen:
-                    throw new NotImplementedException(SR.Get(SRID.NotImplementedException));
+                    throw new NotImplementedException(SR.NotImplementedException);
 #endif //THEATRE_FULLSCREEN
             }
         }
@@ -4701,7 +4710,11 @@ namespace System.Windows
 
         private bool WmGetMinMaxInfo( IntPtr lParam )
         {
-            NativeMethods.MINMAXINFO mmi = (NativeMethods.MINMAXINFO)UnsafeNativeMethods.PtrToStructure( lParam, typeof(NativeMethods.MINMAXINFO));
+            NativeMethods.MINMAXINFO mmi;
+            unsafe
+            {
+                mmi = *(NativeMethods.MINMAXINFO*)lParam;
+            }
 
             //
             // For Bug 1380569: Window SizeToContent does not work after changing Max size properties
@@ -4762,7 +4775,10 @@ namespace System.Windows
 
                 // Notify Win32 of the new Min/Max value for this HWND.
 
-                Marshal.StructureToPtr(mmi, lParam, true);
+                unsafe
+                {
+                    *(NativeMethods.MINMAXINFO*)lParam = mmi;
+                }
             }
 
             return true;
@@ -5524,10 +5540,10 @@ namespace System.Windows
         {
             //basically, NaN and PositiveInfinity are ok, and then anything
             //that can be converted to Int32
-            if (!Double.IsPositiveInfinity(l) && !DoubleUtil.IsNaN(l) &&
+            if (!Double.IsPositiveInfinity(l) && !double.IsNaN(l) &&
                 ((l > Int32.MaxValue) || (l < Int32.MinValue)))
             {
-                throw new ArgumentException(SR.Get(SRID.ValueNotBetweenInt32MinMax, l));
+                throw new ArgumentException(SR.Format(SR.ValueNotBetweenInt32MinMax, l));
             }
         }
 
@@ -5538,13 +5554,13 @@ namespace System.Windows
             if (Double.IsPositiveInfinity(length) ||
                 Double.IsNegativeInfinity(length))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidValueForTopLeft, length));
+                throw new ArgumentException(SR.Format(SR.InvalidValueForTopLeft, length));
             }
 
             if ((length > Int32.MaxValue) ||
                 (length < Int32.MinValue))
             {
-                throw new ArgumentException(SR.Get(SRID.ValueNotBetweenInt32MinMax, length));
+                throw new ArgumentException(SR.Format(SR.ValueNotBetweenInt32MinMax, length));
             }
         }
 
@@ -5565,7 +5581,7 @@ namespace System.Windows
             ValidateLengthForHeightWidth(height);
 
             // Adding check for IsCompositionTargetInvalid
-            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false && !DoubleUtil.IsNaN(height))
+            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false && !double.IsNaN(height))
             {
                 UpdateHeight(height);
             }
@@ -5663,7 +5679,7 @@ namespace System.Windows
             ValidateLengthForHeightWidth(width);
 
             // Adding check for IsCompositionTargetInvalid
-            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false && !DoubleUtil.IsNaN(width))
+            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false && !double.IsNaN(width))
             {
                 UpdateWidth(width);
             }
@@ -5954,7 +5970,7 @@ namespace System.Windows
             {
                 // NaN is special and indicates using Win32 default,
                 // so we exclude that.
-                if (DoubleUtil.IsNaN(newTop) == false)
+                if (double.IsNaN(newTop) == false)
                 {
                     if (WindowState == WindowState.Normal)
                     {
@@ -6049,7 +6065,7 @@ namespace System.Windows
             {
                 // NaN is special and indicates using Win32 default,
                 // so we exclude that here.
-                if (DoubleUtil.IsNaN(newLeft) == false)
+                if (double.IsNaN(newLeft) == false)
                 {
                     if (WindowState == WindowState.Normal)
                     {
@@ -6150,13 +6166,13 @@ namespace System.Windows
             Transform renderTransformValue = (Transform)value;
 
             if ((value == null) ||
-                (renderTransformValue != null && renderTransformValue.Value != null && renderTransformValue.Value.IsIdentity == true))
+                (renderTransformValue != null && renderTransformValue.Value.IsIdentity == true))
             {
                 // setting this value is allowed.
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.TransformNotSupported));
+                throw new InvalidOperationException(SR.TransformNotSupported);
             }
 
             return value;
@@ -6170,7 +6186,7 @@ namespace System.Windows
         {
             if ((bool)value != false)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ClipToBoundsNotSupported));
+                throw new InvalidOperationException(SR.ClipToBoundsNotSupported);
             }
             return value;
         }
@@ -6276,6 +6292,7 @@ namespace System.Windows
                 return;
             }
 
+            HRESULT hr = HRESULT.S_OK;
             if (_taskbarList == null)
             {
                 // If we don't have a handle and there isn't a TaskbarItemInfo, then we don't have anything to apply or remove.
@@ -6288,12 +6305,19 @@ namespace System.Windows
                 try
                 {
                     taskbarList = (ITaskbarList)Activator.CreateInstance(Type.GetTypeFromCLSID(new Guid(CLSID.TaskbarList)));
-                    taskbarList.HrInit();
+
+                    hr = taskbarList.HrInit();
+                    if (hr != HRESULT.S_OK)
+                    {
+                        // Taskbar not available (no user logged in, running under terminal service, custom shell, etc.)
+                        HandleTaskbarListError(hr);
+                        return;
+                    }
 
                     // This QI will only work on Win7.
                     _taskbarList = (ITaskbarList3)taskbarList;
                     taskbarList = null;
-}
+                }
                 finally
                 {
                     Utilities.SafeRelease(ref taskbarList);
@@ -6318,7 +6342,6 @@ namespace System.Windows
             }
 
             // Apply (or clear) all aspects of the TaskbarItemInfo to this Window.
-            HRESULT hr = HRESULT.S_OK;
             hr = RegisterTaskbarThumbButtons();
 
             if (hr.Succeeded)
@@ -6664,7 +6687,7 @@ namespace System.Windows
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.IncorrectFlowDirection));
+                throw new InvalidOperationException(SR.IncorrectFlowDirection);
             }
 }
 
@@ -6780,7 +6803,7 @@ namespace System.Windows
         {
             if (AllowsTransparency && style != WindowStyle.None)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MustUseWindowStyleNone));
+                throw new InvalidOperationException(SR.MustUseWindowStyleNone);
             }
         }
 
@@ -6791,7 +6814,7 @@ namespace System.Windows
             // Don't check this consistency in a RBW (would break because Visibility is set when launching the RBW).
             //
             if (!_inTrustedSubWindow && WindowState == WindowState.Maximized && !ShowActivated)
-                throw new InvalidOperationException(SR.Get(SRID.ShowNonActivatedAndMaximized));
+                throw new InvalidOperationException(SR.ShowNonActivatedAndMaximized);
         }
 
         private static bool IsValidSizeToContent(SizeToContent value)
@@ -7279,7 +7302,7 @@ namespace System.Windows
                 private NativeMethods.POINT GetWindowScreenLocation(FlowDirection flowDirection)
                 {
                     Debug.Assert(IsSourceWindowNull != true, "IsSourceWindowNull cannot be true here");
-                    NativeMethods.POINT pt = new NativeMethods.POINT(0, 0);
+                    NativeMethods.POINT pt = default;
                     if (flowDirection == FlowDirection.RightToLeft)
                     {
                         NativeMethods.RECT rc = new NativeMethods.RECT(0, 0, 0, 0);
@@ -7290,7 +7313,7 @@ namespace System.Windows
                         // note that we use rc.right here for the RTL case and client to screen that point
                         pt = new NativeMethods.POINT(rc.right, rc.top);
                     }
-                    UnsafeNativeMethods.ClientToScreen(new HandleRef(this, _sourceWindow.CriticalHandle), pt);
+                    UnsafeNativeMethods.ClientToScreen(new HandleRef(this, _sourceWindow.CriticalHandle), ref pt);
 
                     return pt;
                 }

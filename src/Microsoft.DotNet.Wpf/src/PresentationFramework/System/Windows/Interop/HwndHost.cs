@@ -212,7 +212,7 @@ namespace System.Windows.Interop
         /// </summary>
         protected virtual IKeyboardInputSite RegisterKeyboardInputSinkCore(IKeyboardInputSink sink)
         {
-            throw new InvalidOperationException(SR.Get(SRID.HwndHostDoesNotSupportChildKeyboardSinks));
+            throw new InvalidOperationException(SR.HwndHostDoesNotSupportChildKeyboardSinks);
         }
 
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
@@ -983,7 +983,6 @@ namespace System.Windows.Interop
                     // window later when a new parent is available
                     var hwnd = SystemResources.GetDpiAwarenessCompatibleNotificationWindow(_hwnd);
                     Debug.Assert(hwnd != null);
-                    Trace.WriteLineIf(hwnd == null, $"- Warning - Notification Window is null\n{new System.Diagnostics.StackTrace(true).ToString()}");
                     if (hwnd != null)
                     {
                         UnsafeNativeMethods.SetParent(_hwnd, new HandleRef(null, hwnd.Handle));
@@ -997,6 +996,10 @@ namespace System.Windows.Interop
                         // To avoid this situation, we make sure SystemResources responds to the Dispatcher 
                         // shutdown event after this HwndHost.
                         SystemResources.DelayHwndShutdown();
+                    }
+                    else
+                    {
+                        Trace.WriteLineIf(hwnd == null, $"- Warning - Notification Window is null\n{new System.Diagnostics.StackTrace(true).ToString()}");
                     }
                 }
             }
@@ -1018,20 +1021,20 @@ namespace System.Windows.Interop
 
             if(_hwnd.Handle == IntPtr.Zero || !UnsafeNativeMethods.IsWindow(_hwnd))
             {
-                throw new InvalidOperationException(SR.Get(SRID.ChildWindowNotCreated));
+                throw new InvalidOperationException(SR.ChildWindowNotCreated);
             }
 
             // Make sure that the window that was created is indeed a child window.
             int windowStyle = UnsafeNativeMethods.GetWindowLong(new HandleRef(this,_hwnd.Handle), NativeMethods.GWL_STYLE);
             if((windowStyle & NativeMethods.WS_CHILD) == 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.HostedWindowMustBeAChildWindow));
+                throw new InvalidOperationException(SR.HostedWindowMustBeAChildWindow);
             }
 
             // Make sure the child window is the child of the expected parent window.
             if(hwndParent.Handle != UnsafeNativeMethods.GetParent(_hwnd))
             {
-                throw new InvalidOperationException(SR.Get(SRID.ChildWindowMustHaveCorrectParent));
+                throw new InvalidOperationException(SR.ChildWindowMustHaveCorrectParent);
             }
 
             // Test to see if hwndParent and _hwnd have different DPI_AWARENESS_CONTEXT's

@@ -20,9 +20,9 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     private ref class FontFileStream : public IDWriteFontFileStreamMirror
     {  
         private:
-            Stream^                            _fontSourceStream;
+            UnmanagedMemoryStream^             _fontSourceStream;
+            Byte*                              _fontSourcePointer;
             INT64                              _lastWriteTime;
-            Object^                            _fontSourceStreamLock;
 
         public:
 

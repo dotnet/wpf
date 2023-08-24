@@ -24,7 +24,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Windows.Markup;
 using System.Net.Cache;
 
@@ -52,7 +51,7 @@ namespace System.Windows.Media.Imaging
         public BitmapImage(Uri uriSource)
             : this(uriSource, null)
         {
-}
+        }
 
         /// <summary>
         /// Construct a BitmapImage with the given Uri and RequestCachePolicy
@@ -94,7 +93,7 @@ namespace System.Windows.Media.Imaging
 
             if (UriSource == null && StreamSource == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_NeitherArgument, "UriSource", "StreamSource"));
+                throw new InvalidOperationException(SR.Format(SR.Image_NeitherArgument, "UriSource", "StreamSource"));
             }
 
             // If the Uri is relative, use delay creation as the BaseUri could be set at a later point
@@ -155,7 +154,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                throw new System.NotSupportedException(SR.Get(SRID.Image_MetadataNotSupported));
+                throw new System.NotSupportedException(SR.Image_MetadataNotSupported);
             }
         }
 
@@ -388,7 +387,7 @@ namespace System.Windows.Media.Imaging
 
             if (decoder.Frames.Count == 0)
             {
-                throw new System.ArgumentException(SR.Get(SRID.Image_NoDecodeFrames));
+                throw new System.ArgumentException(SR.Image_NoDecodeFrames);
             }
 
             BitmapFrame frame = decoder.Frames[0];

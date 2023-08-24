@@ -22,7 +22,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {

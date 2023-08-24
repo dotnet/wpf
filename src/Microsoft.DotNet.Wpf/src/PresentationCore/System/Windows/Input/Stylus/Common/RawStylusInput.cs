@@ -10,7 +10,6 @@ using MS.Internal;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input.StylusPlugIns
 {
@@ -38,7 +37,7 @@ namespace System.Windows.Input.StylusPlugIns
             }
             if (tabletToElementTransform.Inverse == null)
             {
-                throw new ArgumentException(SR.Get(SRID.Stylus_MatrixNotInvertable), "tabletToElementTransform");
+                throw new ArgumentException(SR.Stylus_MatrixNotInvertable, "tabletToElementTransform");
             }
             if (targetPlugInCollection == null)
             {
@@ -89,7 +88,10 @@ namespace System.Windows.Input.StylusPlugIns
                     group.Children.Add(new MatrixTransform(_report.InputSource.CompositionTarget.TransformFromDevice));
                 }
                 group.Children.Add(_tabletToElementTransform);
-                group.Children.Add(transform);
+                if(transform != null)
+                {
+                    group.Children.Add(transform);
+                }
                 return new StylusPointCollection(_report.StylusPointDescription, _report.GetRawPacketData(), group, Matrix.Identity);
             }
             else
@@ -115,11 +117,11 @@ namespace System.Windows.Input.StylusPlugIns
             if (!StylusPointDescription.AreCompatible(  stylusPoints.Description,
                                                         _report.StylusPointDescription))
             {
-                throw new ArgumentException(SR.Get(SRID.IncompatibleStylusPointDescriptions), "stylusPoints");
+                throw new ArgumentException(SR.IncompatibleStylusPointDescriptions, "stylusPoints");
             }
             if (stylusPoints.Count == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.Stylus_StylusPointsCantBeEmpty), "stylusPoints");
+                throw new ArgumentException(SR.Stylus_StylusPointsCantBeEmpty, "stylusPoints");
             }
 
             _stylusPoints = stylusPoints.Clone();
@@ -133,7 +135,7 @@ namespace System.Windows.Input.StylusPlugIns
         {
             if (_currentNotifyPlugIn == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Stylus_CanOnlyCallForDownMoveOrUp));
+                throw new InvalidOperationException(SR.Stylus_CanOnlyCallForDownMoveOrUp);
             }
             if (_customData == null)
             {

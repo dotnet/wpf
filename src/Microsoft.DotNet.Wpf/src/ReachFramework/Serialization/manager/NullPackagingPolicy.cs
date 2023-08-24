@@ -127,7 +127,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CannotReleaseXmlWriter));
+                throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
             }
         }
 
@@ -196,7 +196,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CannotReleaseXmlWriter));
+                throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
             }
         }
 
@@ -278,7 +278,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CannotReleaseXmlWriter));
+                throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
             }
         }
 
@@ -317,7 +317,7 @@ namespace System.Windows.Xps.Serialization
                     }
                     else
                     {
-                        throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoFixedPageWriter));
+                        throw new XpsSerializationException(SR.ReachSerialization_NoFixedPageWriter);
                     }
 
                     //
@@ -423,7 +423,7 @@ namespace System.Windows.Xps.Serialization
                     }
                     else
                     {
-                        throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoFixedPageWriter));
+                        throw new XpsSerializationException(SR.ReachSerialization_NoFixedPageWriter);
                     }
                 }
                 else
@@ -466,7 +466,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CannotReleaseXmlWriter));
+                    throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
                 }
             }
             else
@@ -506,7 +506,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CannotReleaseXmlWriter));
+                    throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
                 }
             }
             else
@@ -577,7 +577,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CannotReleaseXmlWriter));
+                throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
             }
         }
 
@@ -641,7 +641,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CannotReleaseXmlWriter));
+                throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
             }
         }
 
@@ -705,7 +705,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CannotReleaseXmlWriter));
+                throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
             }
         }
 

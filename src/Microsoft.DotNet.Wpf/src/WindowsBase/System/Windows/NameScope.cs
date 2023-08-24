@@ -42,17 +42,17 @@ namespace System.Windows
         public void RegisterName(string name, object scopedElement)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (scopedElement == null)
-                throw new ArgumentNullException("scopedElement");
+                throw new ArgumentNullException(nameof(scopedElement));
 
-            if (name == String.Empty)
-                throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
+            if (name.Length == 0)
+                throw new ArgumentException(SR.NameScopeNameNotEmptyString);
 
             if (!NameValidationHelper.IsValidIdentifierName(name))
             {
-                throw new ArgumentException(SR.Get(SRID.NameScopeInvalidIdentifierName, name));
+                throw new ArgumentException(SR.Format(SR.NameScopeInvalidIdentifierName, name));
             }
 
             if (_nameMap == null)
@@ -70,11 +70,11 @@ namespace System.Windows
                 }
                 else if (scopedElement != nameContext)
                 {
-                    throw new ArgumentException(SR.Get(SRID.NameScopeDuplicateNamesNotAllowed, name));
+                    throw new ArgumentException(SR.Format(SR.NameScopeDuplicateNamesNotAllowed, name));
                 }   
             }
 
-            if( TraceNameScope.IsEnabled )
+            if (TraceNameScope.IsEnabled)
             {
                 TraceNameScope.TraceActivityItem( TraceNameScope.RegisterName,
                                                   this, 
@@ -90,10 +90,10 @@ namespace System.Windows
         public void UnregisterName(string name)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
-            if (name == String.Empty)
-                throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
+            if (name.Length == 0)
+                throw new ArgumentException(SR.NameScopeNameNotEmptyString);
 
             if (_nameMap != null && _nameMap[name] != null)
             {
@@ -101,10 +101,10 @@ namespace System.Windows
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.NameScopeNameNotFound, name));
+                throw new ArgumentException(SR.Format(SR.NameScopeNameNotFound, name));
             }
 
-            if( TraceNameScope.IsEnabled )
+            if (TraceNameScope.IsEnabled)
             {
                 TraceNameScope.TraceActivityItem( TraceNameScope.UnregisterName,
                                                   this, name );
@@ -118,7 +118,7 @@ namespace System.Windows
         /// <returns>corresponding Context if found, else null</returns>
         public object FindName(string name)
         {
-            if (_nameMap == null || name == null || name == String.Empty)
+            if (_nameMap == null || string.IsNullOrEmpty(name))
                 return null;
 
             return _nameMap[name];
@@ -166,7 +166,7 @@ namespace System.Windows
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException("dependencyObject");
+                throw new ArgumentNullException(nameof(dependencyObject));
             }
 
             dependencyObject.SetValue(NameScopeProperty, value);
@@ -182,7 +182,7 @@ namespace System.Windows
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException("dependencyObject");
+                throw new ArgumentNullException(nameof(dependencyObject));
             }
 
             return ((INameScope)dependencyObject.GetValue(NameScopeProperty));
@@ -275,11 +275,11 @@ namespace System.Windows
         {
             if (item.Key == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "item.Key"), "item");
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), "item");
             }
             if (item.Value == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "item.Value"), "item");
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Value"), "item");
             }
 
             Add(item.Key, item.Value);
@@ -289,7 +289,7 @@ namespace System.Windows
         {
             if (item.Key == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "item.Key"), "item");
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), "item");
             }
             return ContainsKey(item.Key);
         }

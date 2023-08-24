@@ -2,19 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//  Microsoft Windows Client Platform
-//
-//
-//  Contents: Attribute that keep mapping between Xml namespace and  
-//            the known types in assembly.   
-
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup
 {
     /// <summary>
-    ///
     /// XmlnsDefinitionAttribute keeps a mapping between Xml namespace and CLR namespace in an Assembly.
     /// The Xml namespace can be used in a Xaml Markup file.
     /// 
@@ -38,7 +30,6 @@ namespace System.Windows.Markup
     ///   Page xmlns:myns="http://schemas.fabrikam.com/mynamespace" .... 
     ///      myns:MyButton ...../myns:MyButton
     ///   /Page
-    /// 
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     [TypeForwardedFrom("WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")]
@@ -66,7 +57,6 @@ namespace System.Windows.Markup
         /// 
         /// The markup file can have definition like
         /// xmlns:myns="http://schemas.fabrikam.com/mynamespace" 
-        /// 
         /// </summary>
         public string XmlNamespace { get; }
 
@@ -85,4 +75,3 @@ namespace System.Windows.Markup
         public string AssemblyName { get; set; }
    }
 }
-

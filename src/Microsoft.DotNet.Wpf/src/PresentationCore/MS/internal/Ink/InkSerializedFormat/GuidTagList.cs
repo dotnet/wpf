@@ -15,7 +15,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
     /// </summary>
     internal class GuidList
     {
-        private System.Collections.Generic.List<Guid> _CustomGuids = new System.Collections.Generic.List<Guid>();
+        private readonly System.Collections.Generic.List<Guid> _customGuids = new System.Collections.Generic.List<Guid>();
 
 
         public GuidList()
@@ -35,7 +35,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             // add that to the custom guid list
             if (0 == FindTag(guid, true))
             {
-                _CustomGuids.Add(guid);
+                _customGuids.Add(guid);
                 return true;
             }
             else
@@ -69,9 +69,9 @@ namespace MS.Internal.Ink.InkSerializedFormat
         {
             int i;
 
-            for (i = 0; i < _CustomGuids.Count; i++)
+            for (i = 0; i < _customGuids.Count; i++)
             {
-                if (guid.Equals(_CustomGuids[i]))
+                if (guid.Equals(_customGuids[i]))
                     return (KnownTagCache.KnownTagIndex)(KnownIdCache.CustomGuidBaseIndex + i);
             }
 
@@ -146,11 +146,11 @@ namespace MS.Internal.Ink.InkSerializedFormat
             int nIndex = (int)(tag - KnownIdCache.CustomGuidBaseIndex);
 
             // If invalid, return Guid.Empty
-            if ((0 > nIndex) || (_CustomGuids.Count <= nIndex))
+            if ((0 > nIndex) || (_customGuids.Count <= nIndex))
                 return Guid.Empty;
 
             // Otherwise, return the guid
-            return (Guid)_CustomGuids[(int)nIndex];
+            return (Guid)_customGuids[(int)nIndex];
         }
 
 
@@ -209,7 +209,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         {
                 // calculate the number of custom guids to persist
                 //   custom guids are those which are not reserved in ISF via 'tags'
-            uint ul = (uint)(_CustomGuids.Count * Native.SizeOfGuid);
+            uint ul = (uint)(_customGuids.Count * Native.SizeOfGuid);
 
                 // if there are no custom guids, then the guid list can be persisted
                 //      without any cost ('tags' are freely storeable)
@@ -231,9 +231,9 @@ namespace MS.Internal.Ink.InkSerializedFormat
             cbWrote += SerializationHelper.Encode(stream, ul);
 
                 // encode each guid in the table
-            for (int i = 0; i < _CustomGuids.Count; i++)
+            for (int i = 0; i < _customGuids.Count; i++)
             {
-                Guid guid = (Guid)_CustomGuids[i];
+                Guid guid = (Guid)_customGuids[i];
 
                 stream.Write(guid.ToByteArray(), 0, (int)Native.SizeOfGuid);
             }
@@ -253,7 +253,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         {
             uint cbsize = 0;
 
-            _CustomGuids.Clear();
+            _customGuids.Clear();
 
             uint count = size / Native.SizeOfGuid;
             byte[] guids = new byte[Native.SizeOfGuid];
@@ -267,7 +267,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 cbsize += bytesRead;
                 if ( bytesRead == Native.SizeOfGuid )
                 {
-                    _CustomGuids.Add(new Guid(guids));
+                    _customGuids.Add(new Guid(guids));
                 }
                 else
                 {

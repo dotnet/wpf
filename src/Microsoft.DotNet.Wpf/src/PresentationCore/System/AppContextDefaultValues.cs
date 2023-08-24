@@ -60,6 +60,7 @@ namespace System
             LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.ShouldNotRenderInNonInteractiveWindowStationSwitchName, false);
             LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.DoNotUsePresentationDpiCapabilityTier3OrGreaterSwitchName, false);
             LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.AllowExternalProcessToBlockAccessToTemporaryFilesSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.EnableHardwareAccelerationInRdpSwitchName, false);
         }
     }
 #pragma warning restore 436

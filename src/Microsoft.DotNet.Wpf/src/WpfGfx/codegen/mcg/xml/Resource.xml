@@ -351,7 +351,7 @@
             <Field Name="Enabled" Value="1"
                    Comment="Rendering engine will enable ClearType for this element subtree.  Where an intermediate render target is introduced in this subtree, ClearType will once again be disabled." />
             <Field Name="Last" UnmanagedOnly="true" />
-        </Enum>        
+        </Enum>
 
         <Enum Name="CachingHint" UnmanagedName="MilCachingHint" NeedsValidateValueCallback="true"
               Comment="Enum used for hinting the rendering engine that rendered content can be cached">
@@ -373,7 +373,7 @@
             <Field Name="ClearType" Value="3"
                    Comment="Rendering engine will render text with ClearType filtering when possible" />
             <Field Name="Last" UnmanagedOnly="true" />
-        </Enum>        
+        </Enum>
 
         <Enum Name="TextHintingMode" UnmanagedName="MilTextHintingMode" NeedsValidateValueCallback="true"
               Comment="Enum used for specifying how text should be rendered with respect to animated or static text">
@@ -384,7 +384,7 @@
             <Field Name="Animated" Value="2"
                    Comment="Rendering engine will render text for highest animated quality" />
              <Field Name="Last" UnmanagedOnly="true" />
-        </Enum>        
+        </Enum>
 
 <!--
         <Enum Name="PixelFormatEnum"
@@ -458,7 +458,7 @@
             <Field Name="BulgedUp" Value="3" Comment="Use a bulged up edge profile" />
         </Enum>
 
-        <Enum Name="ShaderRenderMode" UnmanagedName="ShaderEffectShaderRenderMode" 
+        <Enum Name="ShaderRenderMode" UnmanagedName="ShaderEffectShaderRenderMode"
                 Comment="Policy for rendering the shader in software.">
             <Field Name="Auto" Value="0" Comment="Allow hardware and software" />
             <Field Name="SoftwareOnly" Value="1" Comment="Force software rendering" />
@@ -470,7 +470,7 @@
             <Field Name="Performance" Value="0" Comment="Bias towards performance" />
             <Field Name="Quality" Value="1" Comment="Bias towards quality" />
         </Enum>
-        
+
     </Enums>
 
     <Enums ManagedNamespace="System.Windows">
@@ -635,25 +635,29 @@
             <Field Name="ForceCompatible" Value="0x00002000"
                     Comment="This flag forces the creation of a render target bitmap to match its
                              parent's type, so a software surface only creates software RTs and a
-                             hardware surface only creates hardware RTs.  This is necessary for the 
+                             hardware surface only creates hardware RTs.  This is necessary for the
                              hardware-accelerated bitmap effects pipeline to guarantee that we do
-                             not encounter a situation where we're trying to run shaders sampling 
+                             not encounter a situation where we're trying to run shaders sampling
                              from a hardware texture to render into a software intermediate." />
-          
+
             <Field Name="DisableMultimonDisplayClipping" Value="0x00004000"
-                   Comment="This flag is the same as DisableDisplayClipping except that it disables 
-                   display clipping on multi-monitor configurations in all OS'. This flag is automatically 
-                   set on Windows 8 and newer systems. If WPF decides to unset 
-                   DisableDisplayClipping, then DisableMultimonDisplayClipping flag will not be 
+                   Comment="This flag is the same as DisableDisplayClipping except that it disables
+                   display clipping on multi-monitor configurations in all OS'. This flag is automatically
+                   set on Windows 8 and newer systems. If WPF decides to unset
+                   DisableDisplayClipping, then DisableMultimonDisplayClipping flag will not be
                    respected even if set by an applicaiton via its manifest" />
 
             <Field Name="IsDisableMultimonDisplayClippingValid" Value="0x00008000"
-                   Comment ="This flag is passed down by PresentationCore to tell wpfgfx that 
-                   the DisableMultimonDisplayClipping compatibity flag is set by the user. This 
+                   Comment ="This flag is passed down by PresentationCore to tell wpfgfx that
+                   the DisableMultimonDisplayClipping compatibity flag is set by the user. This
                    allows us to distinguish between when DisableMultimonDisplayClipping == 0 means
-                   that the user set it to false explicitly, versus when the user didn't set it 
+                   that the user set it to false explicitly, versus when the user didn't set it
                    and the DisableMultimonDisplayClipping bit happens to be implicitly set to 0" />
-          
+
+            <Field Name="DisableDirtyRectangles" Value="0x00010000"
+                   Comment ="This flag directs the render target to render the full scene,
+                   bypassing D3D's dirty-rectangle optimizations." />
+
             <BlockCommentedFields Comment="Test only / internal flags">
                 <Field Name="UseRefRast" Value="0x01000000"
                        Comment="This flag forces the render target to use the d3d9 reference raster
@@ -2322,7 +2326,6 @@
             <Namespace Name="System.Security" />
             <Namespace Name="System.Security.Permissions" />
             <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
-            <Namespace Name="SRID=MS.Internal.PresentationCore.SRID" />
             <Namespace Name="System.Windows.Media.Imaging"/>
         </Namespaces>
 
@@ -2726,7 +2729,6 @@
             <Namespace Name="System.Security" />
             <Namespace Name="System.Security.Permissions" />
             <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
-            <Namespace Name="SRID=MS.Internal.PresentationCore.SRID" />
         </Namespaces>
 
         <Resource Name="PixelShader" SkipToString="true" SkipUpdate="true" CanIntroduceCycles="false" >
@@ -2740,7 +2742,7 @@
 
         <Resource Name="ImplicitInputBrush" Extends="Brush" SkipToString="true" CanIntroduceCycles="false">
         </Resource>
-        
+
 
         <Resource Name="Effect" SkipToString="true" IsAbstract="true">
         </Resource>
@@ -2764,7 +2766,7 @@
             </Fields>
         </Resource>
 
-        <Resource Name="ShaderEffect" Extends="Effect" LeaveUnsealed="true" SkipUpdate="true" UseProcessUpdateWrapper="true" SkipToString="true" 
+        <Resource Name="ShaderEffect" Extends="Effect" LeaveUnsealed="true" SkipUpdate="true" UseProcessUpdateWrapper="true" SkipToString="true"
                                       UseOnChannelCoreWrapper="true" CreateInstanceCoreViaActivator="true" CanIntroduceCycles="false">
             <Fields>
                 <Field Name="PixelShader"                     Type="PixelShader"      IsProtected="true" PropertyChangedHook="true"/>
@@ -2889,7 +2891,6 @@
             <Namespace Name="System.Security" />
             <Namespace Name="System.Security.Permissions" />
             <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
-            <Namespace Name="SRID=MS.Internal.PresentationCore.SRID" />
         </Namespaces>
 
         <!--
@@ -3358,7 +3359,7 @@
                        Comment="If true, this Brush wrap its Target visual in a ContainerVisual, which will allow the brush to support rendering all properties on the visual above the cache to match VisualBrush's behavior."/>
             </Fields>
         </Resource>
-        
+
         <Resource Name="DashStyle" SkipToString="true" CanIntroduceCycles="false">
             <Fields>
                 <Field Name="Offset" Type="Double" Default="0.0" Animate="true" />
@@ -3398,7 +3399,7 @@
                        Comment="The glyph or codepoint count, based on the graunularity" />
             </Fields>
         </Resource>
-        
+
         <!--
             Drawing Classes
         -->
@@ -3466,7 +3467,7 @@
                 <Field Name="IsDynamic" Type="Boolean" Default="false" IsInternal="true"/>
             </Fields>
         </Resource>
-        
+
         <!-- Caching -->
         <Resource Name="CacheMode" SkipToString="true" IsAbstract="true" />
         <Resource Name="BitmapCache" Extends="CacheMode" SkipToString="true" CanIntroduceCycles="false">
@@ -3506,7 +3507,6 @@
             <Namespace Name="System.Security" />
             <Namespace Name="System.Security.Permissions" />
             <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
-            <Namespace Name="SRID=MS.Internal.PresentationCore.SRID" />
         </Namespaces>
 
         <Resource Name="Timeline" IsAbstract="true" IsAnimatable="true" HasUnmanagedResource="false" SkipToString="true" />
@@ -3547,7 +3547,6 @@
             <Namespace Name="MS.Internal.Collections" />
             <Namespace Name="MS.Utility"/>
             <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
-            <Namespace Name="SRID=MS.Internal.PresentationCore.SRID" />
         </Namespaces>
 
         <Resource Name="TextDecoration" IsAnimatable="true" IsAbstract="false" SkipToString="true" HasUnmanagedResource="false" >
@@ -3686,7 +3685,7 @@
             <Namespace Name="System.Windows.Media.Media3D"/>
             <Namespace Name="System.Diagnostics"/>
         </Namespaces>
-        
+
         <Resource Name="D3DImage" Extends="ImageSource" LeaveUnsealed="true" IsAnimatable="true" SkipToString="true" CanIntroduceCycles="false" />
     </Resources>
 
@@ -3717,7 +3716,6 @@
             <Namespace Name="System.Windows.Media.Media3D"/>
             <Namespace Name="System.Diagnostics"/>
             <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
-            <Namespace Name="SRID=MS.Internal.PresentationCore.SRID" />
             <Namespace Name="System.Security" />
             <Namespace Name="System.Security.Permissions" />
         </Namespaces>
@@ -4082,7 +4080,7 @@
         ManagedSharedDestinationDir="src\Shared\Ms\Internal\Generated">
 
         <Generate Name="BlurBitmapEffect" ManagedClass="true"/>
-        <Generate Name="DropShadowBitmapEffect" ManagedClass="true"/>  
+        <Generate Name="DropShadowBitmapEffect" ManagedClass="true"/>
         <Generate Name="EmbossBitmapEffect" ManagedClass="true"/>
         <Generate Name="OuterGlowBitmapEffect" ManagedClass="true"/>
         <Generate Name="BevelBitmapEffect" ManagedClass="true"/>
@@ -4621,7 +4619,7 @@
             <TemplateInstance ModuleName="Core\CSharp" TypeName="Vector3D"  />
             <TemplateInstance ModuleName="Framework" TypeName="Thickness" />
         </Template>
-        
+
         <Template Name="MS.Internal.MilCodeGen.ResourceModel.EasingKeyFrameTemplate">
             <TemplateInstance ModuleName="Core\CSharp" TypeName="Byte"/>
             <TemplateInstance ModuleName="Core\CSharp" TypeName="Color"/>

@@ -1289,7 +1289,7 @@
       </trans-unit>
       <trans-unit id="PackageSpecificReferenceTagMustBeUnique">
         <source>Specified reference object conflicts with predefined Package specific reference.</source>
-        <target state="translated">Указанный контрольный объект противоречит предопределенному значению для заданного пакета Package.</target>
+        <target state="translated">Указанный эталонный объект конфликтует с предопределенной ссылкой для заданного пакета.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParameterCannotBeNegative">
@@ -1415,11 +1415,6 @@
       <trans-unit id="PublishLicenseStreamHeaderTooLong">
         <source>Variable-length header in publish license stream is {0} bytes, which exceeds the maximum length of {1} bytes.</source>
         <target state="translated">Заголовок переменной длины в потоке лицензии на публикацию имеет длину в байтах: {0}. Это значение превышает максимальную длину в байтах: {1}.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Формат имени типа "{0}" отличается от ожидаемого формата "имя класса, сборка".</target>
         <note />
       </trans-unit>
       <trans-unit id="ReachOutOfRange">
@@ -2509,7 +2504,7 @@
       </trans-unit>
       <trans-unit id="Unsupported_Modifier">
         <source>Unrecognized ModifierKeys '{0}'.</source>
-        <target state="translated">Нераспознанные ключи ModifierKeys "{0}".</target>
+        <target state="translated">Нераспознанные клавиши ModifierKeys "{0}".</target>
         <note />
       </trans-unit>
       <trans-unit id="UpdaterVersionError">

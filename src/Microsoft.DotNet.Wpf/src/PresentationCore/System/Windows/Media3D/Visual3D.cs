@@ -16,7 +16,6 @@ using System.Windows.Media.Composition;
 using System.Windows.Media;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Media3D
 {
@@ -238,7 +237,7 @@ namespace System.Windows.Media.Media3D
             // might be iterating during a property invalidation tree walk.
             if (IsVisualChildrenIterationInProgress)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotModifyVisualChildrenDuringTreeWalk));
+                throw new InvalidOperationException(SR.CannotModifyVisualChildrenDuringTreeWalk);
             }
 
             // invalid during a VisualTreeChanged event
@@ -289,7 +288,7 @@ namespace System.Windows.Media.Media3D
             // might be iterating during a property invalidation tree walk.
             if (IsVisualChildrenIterationInProgress)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotModifyVisualChildrenDuringTreeWalk));
+                throw new InvalidOperationException(SR.CannotModifyVisualChildrenDuringTreeWalk);
             }
 
             Debug.Assert(child != null);
@@ -1004,7 +1003,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected virtual Visual3D GetVisual3DChild(int index)
         {
-           throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+           throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
         }
 
         /// <summary>
@@ -1759,7 +1758,7 @@ namespace System.Windows.Media.Media3D
 
             if (g != ancestor)
             {
-                throw new System.InvalidOperationException(SR.Get(inverse ? SRID.Visual_NotADescendant : SRID.Visual_NotAnAncestor));
+                throw new System.InvalidOperationException(inverse ? SR.Visual_NotADescendant : SR.Visual_NotAnAncestor);
             }
 
             // construct the generaltransform3d to return and invert it if necessary

@@ -172,8 +172,8 @@ namespace MS.Internal.IO.Packaging
             {
                 //Looking for <SignatureProperty> tag
                 if (reader.MoveToContent() == XmlNodeType.Element
-                    && (String.CompareOrdinal(reader.NamespaceURI, w3cSignatureNameSpace) == 0)
-                    && (String.CompareOrdinal(reader.LocalName, signaturePropertyTag) == 0)
+                    && (string.Equals(reader.NamespaceURI, w3cSignatureNameSpace, StringComparison.Ordinal))
+                    && (string.Equals(reader.LocalName, signaturePropertyTag, StringComparison.Ordinal))
                     && reader.Depth == 2)
                 {
                     //Verify Attributes
@@ -183,7 +183,7 @@ namespace MS.Internal.IO.Packaging
                         //If we encounter more than one <SignatureProperty> tag with the expected
                         //id, then its an error.
                         if (signatureTimeIdFound)
-                            throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                            throw new XmlException(SR.PackageSignatureCorruption);
                         else
                             signatureTimeIdFound = true;
                         
@@ -201,23 +201,23 @@ namespace MS.Internal.IO.Packaging
                     //Look for end tag corresponding to </SignatureProperty> or 
                     //if these are other custom defined properties, then anything with
                     //depth greater than 2 should be ignored as these can be nested elements.
-                    if (((String.CompareOrdinal(signaturePropertyTag, reader.LocalName) == 0
+                    if (((string.Equals(signaturePropertyTag, reader.LocalName, StringComparison.Ordinal)
                         && (reader.NodeType == XmlNodeType.EndElement)))
                         || reader.Depth > 2)
                         continue;
                     else
                         //If we find the end tag for </SignatureProperties> then we can stop parsing
-                        if ((String.CompareOrdinal(signaturePropertiesTag, reader.LocalName) == 0
+                        if ((string.Equals(signaturePropertiesTag, reader.LocalName, StringComparison.Ordinal)
                         && (reader.NodeType == XmlNodeType.EndElement)))
                             break;
                         else
-                            throw new XmlException(SR.Get(SRID.RequiredTagNotFound, signaturePropertyTag));
+                            throw new XmlException(SR.Format(SR.RequiredTagNotFound, signaturePropertyTag));
             }
 
             //We did find one or more <SignatureProperty> tags but there were none that
             //defined the id attribute and target attribute and <SignatureTime> element tag correctly.
             if(!signatureTimePropertyFound)
-                throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                throw new XmlException(SR.PackageSignatureCorruption);
 
             return signingTime;
         }
@@ -255,19 +255,19 @@ namespace MS.Internal.IO.Packaging
             //Look for <SignatureTime> Tag
             if (reader.Read()
                 && reader.MoveToContent() == XmlNodeType.Element
-                && (String.CompareOrdinal(reader.NamespaceURI, opcSignatureNameSpace) == 0)
-                && (String.CompareOrdinal(reader.LocalName, signatureTimeTag) == 0)
+                && (string.Equals(reader.NamespaceURI, opcSignatureNameSpace, StringComparison.Ordinal))
+                && (string.Equals(reader.LocalName, signatureTimeTag, StringComparison.Ordinal))
                 && reader.Depth == 3
                 && PackagingUtilities.GetNonXmlnsAttributeCount(reader) == expectedAttributeCount)
             {
                 while (reader.Read())
                 {
-                    if (String.CompareOrdinal(reader.NamespaceURI, opcSignatureNameSpace) == 0
+                    if (string.Equals(reader.NamespaceURI, opcSignatureNameSpace, StringComparison.Ordinal)
                         && reader.MoveToContent() == XmlNodeType.Element
                         && reader.Depth == 4)
                     {
                         // which tag do we have?
-                        if ((String.CompareOrdinal(reader.LocalName, timeValueTagName) == 0)
+                        if ((string.Equals(reader.LocalName, timeValueTagName, StringComparison.Ordinal))
                             && PackagingUtilities.GetNonXmlnsAttributeCount(reader) == expectedAttributeCount)
                         {
                             if (timeValue == null
@@ -285,9 +285,9 @@ namespace MS.Internal.IO.Packaging
                             else
                                 //This would happen if we found more than one Value tags or if there
                                 //are other nested elements of if they are of a different XmlNodeType type
-                                throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                                throw new XmlException(SR.PackageSignatureCorruption);
 }
-                        else if ((String.CompareOrdinal(reader.LocalName, timeFormatTagName) == 0)
+                        else if ((string.Equals(reader.LocalName, timeFormatTagName, StringComparison.Ordinal))
                                  && PackagingUtilities.GetNonXmlnsAttributeCount(reader) == expectedAttributeCount)
                         {
                             if (timeFormat == null
@@ -305,16 +305,16 @@ namespace MS.Internal.IO.Packaging
                             else
                                 //This would happen if we found more than one Format tags or if there
                                 //are other nested elements of if they are of a different XmlNodeType type
-                                throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                                throw new XmlException(SR.PackageSignatureCorruption);
                         }
                         else
                             //If we encounter any tag other than <Format> or <Time> nested within the <SignatureTime> tag
-                            throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                            throw new XmlException(SR.PackageSignatureCorruption);
                     }
                     else
                         //If we have encountered the end tag for the <SignatureTime> tag
                         //then we are done parsing the tag, and we can stop the parsing.
-                        if (String.CompareOrdinal(signatureTimeTag, reader.LocalName) == 0
+                        if (string.Equals(signatureTimeTag, reader.LocalName, StringComparison.Ordinal)
                         && (reader.NodeType == XmlNodeType.EndElement))
                         {
                             //We must find a  </SignatureProperty> tag at this point, 
@@ -322,25 +322,25 @@ namespace MS.Internal.IO.Packaging
                             //other tags nested here and that is an error.
                             if (reader.Read()
                                 && reader.MoveToContent() == XmlNodeType.EndElement
-                                && String.CompareOrdinal(signaturePropertyTag, reader.LocalName) == 0)
+                                && string.Equals(signaturePropertyTag, reader.LocalName, StringComparison.Ordinal))
                                 break;
                             else
-                                throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                                throw new XmlException(SR.PackageSignatureCorruption);
                         }
                         else
                             // if we do not find the nested elements as expected
-                            throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                            throw new XmlException(SR.PackageSignatureCorruption);
                 }
             }
             else
-                throw new XmlException(SR.Get(SRID.RequiredTagNotFound, signatureTimeTag));
+                throw new XmlException(SR.Format(SR.RequiredTagNotFound, signatureTimeTag));
 
 
             // generate an equivalent DateTime object
             if (timeValue != null && timeFormat != null)
                 return XmlFormattedTimeToDateTime(timeValue, timeFormat);
             else
-                throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                throw new XmlException(SR.PackageSignatureCorruption);
         }
         
         /// <summary>
@@ -386,7 +386,7 @@ namespace MS.Internal.IO.Packaging
         {
             for (int i = 0; i < _dateTimePatternMap.GetLength(0); i++)
             {
-                if (String.CompareOrdinal(_dateTimePatternMap[i].Format, format) == 0)
+                if (string.Equals(_dateTimePatternMap[i].Format, format, StringComparison.Ordinal))
                 {
                     return i;
                 }
@@ -414,7 +414,7 @@ namespace MS.Internal.IO.Packaging
             string idAttrValue = reader.GetAttribute(XTable.Get(XTable.ID.SignaturePropertyIdAttrName));
 
             if(idAttrValue!=null 
-                && (String.CompareOrdinal(idAttrValue,XTable.Get(XTable.ID.SignaturePropertyIdAttrValue)) == 0))
+                && (string.Equals(idAttrValue, XTable.Get(XTable.ID.SignaturePropertyIdAttrValue), StringComparison.Ordinal)))
                 return true;
             else
                 return false;
@@ -435,13 +435,13 @@ namespace MS.Internal.IO.Packaging
                 //whether there is an Id attribute on the <Signature> tag or no,
                 //an empty Target attribute on <SignatureProperty> tag, is allowed.
                 //Empty string means current document 
-                if (String.CompareOrdinal(idTargetValue, String.Empty) == 0)
+                if (string.Equals(idTargetValue, String.Empty, StringComparison.Ordinal))
                     return true;
                 else
                 {
                     //If the Target attribute has a non-empty string then
                     //it must match the <Signature> tag Id attribute value
-                    if (signatureId != null && String.CompareOrdinal(idTargetValue, "#" + signatureId) == 0)
+                    if (signatureId != null && string.Equals(idTargetValue, "#" + signatureId, StringComparison.Ordinal))
                         return true;
                     else
                         return false;

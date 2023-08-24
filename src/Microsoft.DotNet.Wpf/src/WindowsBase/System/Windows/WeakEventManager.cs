@@ -804,8 +804,8 @@ namespace System.Windows
                             if (!handled)
                             {
                                 Invariant.Assert(handled,
-                                            SR.Get(SRID.ListenerDidNotHandleEvent),
-                                            SR.Get(SRID.ListenerDidNotHandleEventDetail, iwel.GetType(), managerType));
+                                            SR.ListenerDidNotHandleEvent,
+                                            SR.Format(SR.ListenerDidNotHandleEventDetail, iwel.GetType(), managerType));
                             }
                         }
                     }

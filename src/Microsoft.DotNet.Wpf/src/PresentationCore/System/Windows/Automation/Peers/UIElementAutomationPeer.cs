@@ -15,7 +15,6 @@ using MS.Internal.Automation;
 
 using MS.Internal;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Automation.Peers
 {
@@ -366,6 +365,12 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
+        override protected bool IsDialogCore()
+        {
+            return AutomationProperties.GetIsDialog(_owner);
+        }
+
+        ///
         override protected bool IsPasswordCore()
         {
             return false;
@@ -487,6 +492,15 @@ namespace System.Windows.Automation.Peers
             return sizeOfSet;
         }
 
+        /// <summary>
+        /// Provides a value for UIAutomation's HeadingLevel property
+        /// Reads <see cref="AutomationProperties.HeadingLevelProperty"/> and returns the value
+        /// </summary>
+        override protected AutomationHeadingLevel GetHeadingLevelCore()
+        {
+            return AutomationProperties.GetHeadingLevel(_owner);
+        }
+
         //
         // M E T H O D S
         //
@@ -522,7 +536,7 @@ namespace System.Windows.Automation.Peers
         override protected void SetFocusCore() 
         { 
             if (!_owner.Focus())
-                throw new InvalidOperationException(SR.Get(SRID.SetFocusFailed));
+                throw new InvalidOperationException(SR.SetFocusFailed);
         }
 
         private UIElement _owner;

@@ -25,7 +25,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Diagnostics;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Security;
 
 namespace System.Windows.Media
@@ -219,7 +218,7 @@ namespace System.Windows.Media
 
             if (_currentPathFigureDataOffset == -1)
             {
-                throw new InvalidOperationException(SR.Get(SRID.StreamGeometry_NeedBeginFigure));
+                throw new InvalidOperationException(SR.StreamGeometry_NeedBeginFigure);
             }
 
             FinishSegment();
@@ -278,7 +277,7 @@ namespace System.Windows.Media
         {
             if (_currentPathFigureDataOffset == -1)
             {
-                throw new InvalidOperationException(SR.Get(SRID.StreamGeometry_NeedBeginFigure));
+                throw new InvalidOperationException(SR.StreamGeometry_NeedBeginFigure);
             }
 
             // Clear out the IsClosed flag, then set it as appropriate.
@@ -644,7 +643,7 @@ namespace System.Windows.Media
         {
             if (_currentPathFigureDataOffset == -1)
             {
-                throw new InvalidOperationException(SR.Get(SRID.StreamGeometry_NeedBeginFigure));
+                throw new InvalidOperationException(SR.StreamGeometry_NeedBeginFigure);
             }
 
             if (points == null)
@@ -687,7 +686,7 @@ namespace System.Windows.Media
 
             if (_currentPathFigureDataOffset == -1)
             {
-                throw new InvalidOperationException(SR.Get(SRID.StreamGeometry_NeedBeginFigure));
+                throw new InvalidOperationException(SR.StreamGeometry_NeedBeginFigure);
             }
 
             GenericPolyToHelper(isStroked, isSmoothJoin, hasCurves, segmentType);

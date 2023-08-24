@@ -75,15 +75,15 @@ namespace MS.Internal.Documents
             }
             if (array.Rank != 1)
             {
-                throw new ArgumentException(SR.Get(SRID.TableCollectionRankMultiDimNotSupported));
+                throw new ArgumentException(SR.TableCollectionRankMultiDimNotSupported);
             }
             if (index < 0)
             {
-                throw new ArgumentOutOfRangeException("index", SR.Get(SRID.TableCollectionOutOfRangeNeedNonNegNum));
+                throw new ArgumentOutOfRangeException("index", SR.TableCollectionOutOfRangeNeedNonNegNum);
             }
             if (array.Length - index < Size)
             {
-                throw new ArgumentException(SR.Get(SRID.TableCollectionInvalidOffLen));
+                throw new ArgumentException(SR.TableCollectionInvalidOffLen);
             }
 
             Array.Copy(Items, 0, array, index, Size);
@@ -114,11 +114,11 @@ namespace MS.Internal.Documents
             }
             if (index < 0)
             {
-                throw new ArgumentOutOfRangeException("index", SR.Get(SRID.TableCollectionOutOfRangeNeedNonNegNum));
+                throw new ArgumentOutOfRangeException("index", SR.TableCollectionOutOfRangeNeedNonNegNum);
             }
             if (array.Length - index < Size)
             {
-                throw new ArgumentException(SR.Get(SRID.TableCollectionInvalidOffLen));
+                throw new ArgumentException(SR.TableCollectionInvalidOffLen);
             }
 
             Array.Copy(Items, 0, array, index, Size);
@@ -327,7 +327,7 @@ namespace MS.Internal.Documents
             {
                 if (Version != _collection.Version)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.EnumeratorVersionChanged));
+                    throw new InvalidOperationException(SR.EnumeratorVersionChanged);
                 }
 
                 if (_index < (_collection.Size - 1))
@@ -352,11 +352,11 @@ namespace MS.Internal.Documents
                     {
                         if (_index == -1)
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.EnumeratorNotStarted));
+                            throw new InvalidOperationException(SR.EnumeratorNotStarted);
                         }
                         else
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.EnumeratorReachedEnd));
+                            throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                         }
                     }
                     return (TItem)_currentElement;
@@ -379,7 +379,7 @@ namespace MS.Internal.Documents
             {
                 if (Version != _collection.Version)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.EnumeratorVersionChanged));
+                    throw new InvalidOperationException(SR.EnumeratorVersionChanged);
                 }
                 _currentElement = _collection;
                 _index = -1;
@@ -422,7 +422,7 @@ namespace MS.Internal.Documents
             // <CR NOTE>: This chunk is moved to the correcponding override in TableCollumnCollection, to keep same behavior
             //if (item == null)
             //{
-            //    throw new ArgumentException(SR.Get(SRID.TableCollectionElementTypeExpected, typeof(TItem).Name), "value");
+            //    throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TItem).Name), "value");
             //}
 
             this.Add(item);
@@ -470,7 +470,7 @@ namespace MS.Internal.Documents
 
             if (newItem == null)
             {
-                throw new ArgumentException(SR.Get(SRID.TableCollectionElementTypeExpected, typeof(TItem).Name), "value");
+                throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TItem).Name), "value");
             }
 
             this.Insert(index, newItem);
@@ -527,7 +527,7 @@ namespace MS.Internal.Documents
 
                 if (item == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.TableCollectionElementTypeExpected, typeof(TItem).Name), "value");
+                    throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TItem).Name), "value");
                 }
 
                 this[index] = item;
@@ -775,7 +775,7 @@ namespace MS.Internal.Documents
                 {
                     if (value < Size)
                     {
-                        throw new ArgumentOutOfRangeException(SR.Get(SRID.TableCollectionNotEnoughCapacity));
+                        throw new ArgumentOutOfRangeException(SR.TableCollectionNotEnoughCapacity);
                     }
 
                     if (value > 0)

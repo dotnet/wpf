@@ -62,10 +62,7 @@ namespace System.Xaml.Schema
 
         public virtual void AddToCollection(object instance, object item)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
+            ArgumentNullException.ThrowIfNull(instance);
             IList list = instance as IList;
             if (list != null)
             {
@@ -76,7 +73,7 @@ namespace System.Xaml.Schema
             ThrowIfUnknown();
             if (!_xamlType.IsCollection)
             {
-                throw new NotSupportedException(SR.Get(SRID.OnlySupportedOnCollections));
+                throw new NotSupportedException(SR.OnlySupportedOnCollections);
             }
             XamlType itemType;
             if (item != null)
@@ -90,17 +87,14 @@ namespace System.Xaml.Schema
             MethodInfo addMethod = GetAddMethod(itemType);
             if (addMethod == null)
             {
-                throw new XamlSchemaException(SR.Get(SRID.NoAddMethodFound, _xamlType, itemType));
+                throw new XamlSchemaException(SR.Format(SR.NoAddMethodFound, _xamlType, itemType));
             }
-            SafeReflectionInvoker.InvokeMethod(addMethod, instance, new object[] { item });
+            addMethod.Invoke(instance, new object[] { item });
         }
 
         public virtual void AddToDictionary(object instance, object key, object item)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
+            ArgumentNullException.ThrowIfNull(instance);
             IDictionary dictionary = instance as IDictionary;
             if (dictionary != null)
             {
@@ -111,7 +105,7 @@ namespace System.Xaml.Schema
             ThrowIfUnknown();
             if (!_xamlType.IsDictionary)
             {
-                throw new NotSupportedException(SR.Get(SRID.OnlySupportedOnDictionaries));
+                throw new NotSupportedException(SR.OnlySupportedOnDictionaries);
             }
             XamlType itemType;
             if (item != null)
@@ -125,9 +119,9 @@ namespace System.Xaml.Schema
             MethodInfo addMethod = GetAddMethod(itemType);
             if (addMethod == null)
             {
-                throw new XamlSchemaException(SR.Get(SRID.NoAddMethodFound, _xamlType, itemType));
+                throw new XamlSchemaException(SR.Format(SR.NoAddMethodFound, _xamlType, itemType));
             }
-            SafeReflectionInvoker.InvokeMethod(addMethod, instance, new object[] { key, item });
+            addMethod.Invoke(instance, new object[] { key, item });
         }
 
         public virtual object CreateInstance(object[] arguments)
@@ -141,15 +135,12 @@ namespace System.Xaml.Schema
                     return result;
                 }
             }
-            return CreateInstanceWithActivator(_xamlType.UnderlyingType, arguments);
+            return Activator.CreateInstance(_xamlType.UnderlyingType, arguments);
         }
 
         public virtual MethodInfo GetAddMethod(XamlType contentType)
         {
-            if (contentType == null)
-            {
-                throw new ArgumentNullException(nameof(contentType));
-            }
+            ArgumentNullException.ThrowIfNull(contentType);
             if (IsUnknown || _xamlType.ItemType == null)
             {
                 return null;
@@ -180,7 +171,9 @@ namespace System.Xaml.Schema
                         _xamlType.UnderlyingType, type.UnderlyingType);
                     if (addMethod != null)
                     {
-                        addMethods.Add(type, addMethod);
+                        // Use TryAdd as AllowedContentTypes can contain
+                        // duplicate types.
+                        addMethods.TryAdd(type, addMethod);
                     }
                 }
                 _addMethods = addMethods;
@@ -206,15 +199,17 @@ namespace System.Xaml.Schema
 
         public virtual MethodInfo GetEnumeratorMethod()
         {
+            if (IsUnknown)
+            {
+                return null;
+            }
+
             return _xamlType.GetEnumeratorMethod;
         }
 
         public virtual IEnumerator GetItems(object instance)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
+            ArgumentNullException.ThrowIfNull(instance);
             IEnumerable enumerable = instance as IEnumerable;
             if (enumerable != null)
             {
@@ -223,10 +218,10 @@ namespace System.Xaml.Schema
             ThrowIfUnknown();
             if (!_xamlType.IsCollection && !_xamlType.IsDictionary)
             {
-                throw new NotSupportedException(SR.Get(SRID.OnlySupportedOnCollectionsAndDictionaries));
+                throw new NotSupportedException(SR.OnlySupportedOnCollectionsAndDictionaries);
             }
             MethodInfo getEnumMethod = GetEnumeratorMethod();
-            return (IEnumerator)SafeReflectionInvoker.InvokeMethod(getEnumMethod, instance, s_emptyObjectArray);
+            return (IEnumerator)getEnumMethod.Invoke(instance, s_emptyObjectArray);
         }
 
         // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
@@ -264,16 +259,11 @@ namespace System.Xaml.Schema
             get { return _xamlType == null || _xamlType.UnderlyingType == null; }
         }
 
-        private object CreateInstanceWithActivator(Type type, object[] arguments)
-        {
-            return SafeReflectionInvoker.CreateInstance(type, arguments);
-        }
-
         private void ThrowIfUnknown()
         {
             if (IsUnknown)
             {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnUnknownType));
+                throw new NotSupportedException(SR.NotSupportedOnUnknownType);
             }
         }
 
@@ -293,25 +283,19 @@ namespace System.Xaml.Schema
                 object inst = CallCtorDelegate(type);
                 return inst;
             }
-
-#if TARGETTING35SP1
-#else
-#endif
+#pragma warning disable SYSLIB0050
             private static object CallCtorDelegate(XamlTypeInvoker type)
             {
                 object inst = FormatterServices.GetUninitializedObject(type._xamlType.UnderlyingType);
                 InvokeDelegate(type._constructorDelegate, inst);
                 return inst;
             }
-
+#pragma warning restore SYSLIB0050
             private static void InvokeDelegate(Action<object> action, object argument)
             {
                 action.Invoke(argument);
             }
 
-#if TARGETTING35SP1
-#else
-#endif
             // returns true if a delegate is available, false if not
             private static bool EnsureConstructorDelegate(XamlTypeInvoker type)
             {
@@ -339,7 +323,7 @@ namespace System.Xaml.Schema
                 if (tConstInfo == null)
                 {
                     // Throwing MissingMethodException for equivalence with Activator.CreateInstance
-                    throw new MissingMethodException(SR.Get(SRID.NoDefaultConstructor, underlyingType.FullName));
+                    throw new MissingMethodException(SR.Format(SR.NoDefaultConstructor, underlyingType.FullName));
                 }
                 if ((tConstInfo.IsSecurityCritical && !tConstInfo.IsSecuritySafeCritical) ||
                     (tConstInfo.Attributes & MethodAttributes.HasSecurity) == MethodAttributes.HasSecurity ||
@@ -356,29 +340,6 @@ namespace System.Xaml.Schema
                     (Action<object>)s_actionCtor.Invoke(new object[] { null, constPtr });
                 type._constructorDelegate = ctorDelegate;
                 return true;
-            }
-        }
-
-        private class UnknownTypeInvoker : XamlTypeInvoker
-        {
-            public override void AddToCollection(object instance, object item)
-            {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnUnknownType));
-            }
-
-            public override void AddToDictionary(object instance, object key, object item)
-            {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnUnknownType));
-            }
-
-            public override object CreateInstance(object[] arguments)
-            {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnUnknownType));
-            }
-
-            public override IEnumerator GetItems(object instance)
-            {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnUnknownType));
             }
         }
     }

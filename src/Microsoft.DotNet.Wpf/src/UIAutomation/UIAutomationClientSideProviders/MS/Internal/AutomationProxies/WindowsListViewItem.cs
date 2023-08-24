@@ -402,7 +402,7 @@ namespace MS.Internal.AutomationProxies
             // Select the specified item.
             if (!WindowsListView.SelectItem(_hwnd, _item))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
         }
 
@@ -431,7 +431,7 @@ namespace MS.Internal.AutomationProxies
                 // an AddToSelection is valid.
                 if (selectionRequired || WindowsListView.GetSelectedItemCount(_hwnd) > 0)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.DoesNotSupportMultipleSelection));
+                    throw new InvalidOperationException(SR.DoesNotSupportMultipleSelection);
                 }
             }
 
@@ -440,7 +440,7 @@ namespace MS.Internal.AutomationProxies
             // Try to select an item
             if (!WindowsListView.SelectItem(_hwnd, _item))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
         }
 
@@ -469,14 +469,14 @@ namespace MS.Internal.AutomationProxies
                 // RemoveFromSelection is valid.
                 if (selectionRequired)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.SelectionRequired));
+                    throw new InvalidOperationException(SR.SelectionRequired);
                 }
             }
 
             // try to unselect the item
             if (!WindowsListView.UnSelectItem(_hwnd, _item))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
         }
 
@@ -533,7 +533,7 @@ namespace MS.Internal.AutomationProxies
             // try to obtaine the clickable point
             if (!GetListviewitemClickablePoint (out clickPoint))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             Click(clickPoint);
@@ -666,7 +666,7 @@ namespace MS.Internal.AutomationProxies
             // Currently this ignores the alignToTop, as there is no easy way to set something to the bottom of a listbox
             if (!WindowsListView.Scrollable(_hwnd))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             // ensure item vertical visibility
@@ -756,7 +756,7 @@ namespace MS.Internal.AutomationProxies
 
             if (!WindowsListView.ListViewEditable (hwnd))
             {
-                throw new InvalidOperationException(SR.Get(SRID.ValueReadonly));
+                throw new InvalidOperationException(SR.ValueReadonly);
             }
 
             Misc.SetFocus(hwnd);
@@ -769,7 +769,7 @@ namespace MS.Internal.AutomationProxies
 
             if (IntPtr.Zero == hwndEdit)
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             // re-use editbox proxy to do the job
@@ -810,7 +810,7 @@ namespace MS.Internal.AutomationProxies
             }
             if (!wasTextSet)
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
         }

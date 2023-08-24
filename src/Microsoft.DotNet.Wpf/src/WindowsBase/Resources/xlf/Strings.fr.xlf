@@ -1417,11 +1417,6 @@
         <target state="translated">L'en-tête de longueur variable du flux de licence de publication est de {0} octets, ce qui dépasse la longueur maximale fixée à {1} octets.</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Le nom de type '{0}' n'a pas le format attendu 'className, assembly'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReachOutOfRange">
         <source>'{0}' index is beyond maximum '{1}'.</source>
         <target state="translated">L'index '{0}' se situe au-delà de la limite maximale fixée à '{1}'.</target>
@@ -2099,7 +2094,7 @@
       </trans-unit>
       <trans-unit id="SignatureOriginNotFound">
         <source>Relationship was found to the signature origin but the part is missing. Package signature structures are corrupted.</source>
-        <target state="translated">Une relation a été trouvée avec l'origine de la signature, mais le composant est manquant. Les structures de signature du package sont endommagées.</target>
+        <target state="translated">Une relation a été trouvée avec l'origine de la signature, mais le composant est manquant. Les structures de signature de package sont endommagées.</target>
         <note />
       </trans-unit>
       <trans-unit id="SignaturePackageObjectTagMustBeUnique">

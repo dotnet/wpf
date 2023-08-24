@@ -797,7 +797,7 @@ namespace System.Windows.Documents
                             if (_structuralCache.IsFormattingInProgress)
                             {
                                 _structuralCache.OnInvalidOperationDetected();
-                                throw new InvalidOperationException(SR.Get(SRID.FlowDocumentInvalidContnetChange));
+                                throw new InvalidOperationException(SR.FlowDocumentInvalidContnetChange);
                             }
 
                             // None of FlowDocument properties can invalidate structural caches (the NameTable),
@@ -1008,19 +1008,19 @@ namespace System.Windows.Documents
             Thickness pageMargin = this.PagePadding;
 
             // If Padding value is 'Auto', treat it as 1*LineHeight.
-            if (DoubleUtil.IsNaN(pageMargin.Left))
+            if (double.IsNaN(pageMargin.Left))
             {
                 pageMargin.Left = lineHeight;
             }
-            if (DoubleUtil.IsNaN(pageMargin.Top))
+            if (double.IsNaN(pageMargin.Top))
             {
                 pageMargin.Top = lineHeight;
             }
-            if (DoubleUtil.IsNaN(pageMargin.Right))
+            if (double.IsNaN(pageMargin.Right))
             {
                 pageMargin.Right = lineHeight;
             }
-            if (DoubleUtil.IsNaN(pageMargin.Bottom))
+            if (double.IsNaN(pageMargin.Bottom))
             {
                 pageMargin.Bottom = lineHeight;
             }
@@ -1335,7 +1335,7 @@ namespace System.Windows.Documents
             FlowDocument fd = (FlowDocument) d;
             double width = (double) value;
 
-            if (!DoubleUtil.IsNaN(width))
+            if (!double.IsNaN(width))
             {
                 double max = fd.MaxPageWidth;
                 if (width > max)
@@ -1361,7 +1361,7 @@ namespace System.Windows.Documents
             FlowDocument fd = (FlowDocument) d;
             double height = (double) value;
 
-            if (!DoubleUtil.IsNaN(height))
+            if (!double.IsNaN(height))
             {
                 double max = fd.MaxPageHeight;
                 if (height > max)
@@ -1397,7 +1397,7 @@ namespace System.Windows.Documents
             if (_structuralCache.IsFormattingInProgress)
             {
                 _structuralCache.OnInvalidOperationDetected();
-                throw new InvalidOperationException(SR.Get(SRID.FlowDocumentInvalidContnetChange));
+                throw new InvalidOperationException(SR.FlowDocumentInvalidContnetChange);
             }
 
             // The only supported highlight type for FlowDocument is SpellerHightlight.
@@ -1450,7 +1450,7 @@ namespace System.Windows.Documents
             if (_structuralCache.IsFormattingInProgress)
             {
                 _structuralCache.OnInvalidOperationDetected();
-                throw new InvalidOperationException(SR.Get(SRID.FlowDocumentInvalidContnetChange));
+                throw new InvalidOperationException(SR.FlowDocumentInvalidContnetChange);
             }
 
             // Remember the fact that content is changing.
@@ -1485,7 +1485,7 @@ namespace System.Windows.Documents
                 if (_structuralCache.IsFormattingInProgress)
                 {
                     _structuralCache.OnInvalidOperationDetected();
-                    throw new InvalidOperationException(SR.Get(SRID.FlowDocumentInvalidContnetChange));
+                    throw new InvalidOperationException(SR.FlowDocumentInvalidContnetChange);
                 }
 
                 // Since content is changeing, do partial invalidation of BreakRecordTable.
@@ -1645,13 +1645,13 @@ namespace System.Windows.Documents
 
             if (!TextSchema.IsValidChildOfContainer(/*parentType:*/_typeofThis, /*childType:*/value.GetType()))
             {
-                throw new ArgumentException(SR.Get(SRID.TextSchema_ChildTypeIsInvalid, _typeofThis.Name, value.GetType().Name));
+                throw new ArgumentException(SR.Format(SR.TextSchema_ChildTypeIsInvalid, _typeofThis.Name, value.GetType().Name));
             }
 
             // Checking that the element inserted does not have a parent
             if (value is TextElement && ((TextElement)value).Parent != null)
             {
-                throw new ArgumentException(SR.Get(SRID.TextSchema_TheChildElementBelongsToAnotherTreeAlready, value.GetType().Name));
+                throw new ArgumentException(SR.Format(SR.TextSchema_TheChildElementBelongsToAnotherTreeAlready, value.GetType().Name));
             }
 
             if (value is Block)

@@ -1607,11 +1607,6 @@
         <target state="translated">Nepodařilo se převést zdroj na objekt.</target>
         <note />
       </trans-unit>
-      <trans-unit id="FileDialogBufferTooSmall">
-        <source>Too many files selected. Select fewer files and try again.</source>
-        <target state="translated">Bylo vybráno příliš mnoho souborů. Vyberte menší počet souborů a akci zopakujte.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FileDialogCreatePrompt">
         <source>'{0}' does not exist.
 Do you want to create it?</source>
@@ -1624,11 +1619,6 @@ Chcete ho vytvořit?</target>
 Verify that the file name is correct.</source>
         <target state="translated">Prvek {0} neexistuje.
 Ověřte, zda je správný název souboru.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileDialogInvalidFileName">
-        <source>'{0}' is not a valid file name.</source>
-        <target state="translated">Název {0} není platným názvem souboru.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogInvalidFilter">
@@ -1646,11 +1636,6 @@ Ověřte, zda je správný název souboru.</target>
 Do you want to replace it?</source>
         <target state="translated">Prvek {0} již existuje.
 Chcete ho nahradit?</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileDialogSubClassFailure">
-        <source>Cannot subclass a file dialog because sufficient memory is not available.</source>
-        <target state="translated">Nelze vytvořit podtřídu dialogu souboru, protože není k dispozici dostatek paměti.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileFormatException">
@@ -6115,12 +6100,12 @@ Chcete ho nahradit?</target>
       </trans-unit>
       <trans-unit id="UndoNoOpenParentUnit">
         <source>Cannot add nonparent undo unit when there is no open IParentUndoUnit.</source>
-        <target state="translated">Nelze přidat nenadřazenou jednotku bez otevřené jednotky IParentUndoUnit.</target>
+        <target state="translated">Nelze přidat nenadřazenou jednotku vrácení bez otevřené jednotky IParentUndoUnit.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoNoOpenUnit">
         <source>Cannot close undo unit because no opened unit exists.</source>
-        <target state="translated">Nelze zavřít jednotku, protože neexistuje žádná otevřená jednotka.</target>
+        <target state="translated">Nelze zavřít jednotku vrácení, protože neexistuje žádná otevřená jednotka.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoNotInNormalState">
@@ -6135,17 +6120,17 @@ Chcete ho nahradit?</target>
       </trans-unit>
       <trans-unit id="UndoUnitAlreadyOpen">
         <source>Cannot Reopen undo unit while another unit is already open.</source>
-        <target state="translated">Nelze znovu otevřít zrušenou jednotku, pokud je otevřena jiná jednotka.</target>
+        <target state="translated">Nelze znovu otevřít zrušenou jednotku vrácení, pokud je otevřena jiná jednotka.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitCantBeAddedTwice">
         <source>Cannot add undo unit to itself or one of its own children.</source>
-        <target state="translated">Nelze přidat jednotku samu k sobě nebo k některé z jejích podřízených jednotek.</target>
+        <target state="translated">Nelze přidat jednotku vrácení samu k sobě nebo k některé z jejích podřízených jednotek.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitCantBeOpenedTwice">
         <source>Cannot open undo unit that is already open.</source>
-        <target state="translated">Nelze otevřít jednotku, která je již otevřena.</target>
+        <target state="translated">Nelze otevřít jednotku vrácení, která je již otevřena.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitLocked">
@@ -6160,12 +6145,12 @@ Chcete ho nahradit?</target>
       </trans-unit>
       <trans-unit id="UndoUnitNotOnTopOfStack">
         <source>Cannot Reopen undo unit that is not on top of stack.</source>
-        <target state="translated">Nelze znovu otevřít zrušenou jednotku, která není ve stohu nahoře.</target>
+        <target state="translated">Nelze znovu otevřít zrušenou jednotku vrácení, která není ve stacku nahoře.</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoUnitOpen">
         <source>Cannot Undo or Redo while undo unit is open.</source>
-        <target state="translated">Nelze provést funkce Zpět nebo Znovu, pokud je jednotka otevřena.</target>
+        <target state="translated">Nelze provést funkce Zpět nebo Znovu, pokud je jednotka vrácení otevřena.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnexpectedAttribute">

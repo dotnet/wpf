@@ -61,7 +61,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             // Ensures the predefined Win32 data formats into our format list.
@@ -94,7 +94,7 @@ namespace System.Windows
 
                     formatItem = (DataFormat)_formatList[n];
 
-                    if (String.Compare(formatItem.Name, format, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(formatItem.Name, format, StringComparison.OrdinalIgnoreCase))
                     {
                         return formatItem;
                     }
@@ -274,11 +274,11 @@ namespace System.Windows
         /// format is to store the permission set of the source application where the content came from.
         /// This is then compared at paste time
         /// </summary>
-        internal static readonly string ApplicationTrust = "ApplicationTrust";
+        internal const string ApplicationTrust = "ApplicationTrust";
 
-        internal static readonly string FileName = "FileName";
-        internal static readonly string FileNameW = "FileNameW";
-        
+        internal const string FileName = "FileName";
+        internal const string FileNameW = "FileNameW";
+
         #endregion  Internal Fields
 
         //------------------------------------------------------
@@ -470,7 +470,7 @@ namespace System.Windows
         private static ArrayList _formatList;
 
         // This object is for locking the _formatList to access safe in the multi-thread.
-        private static Object _formatListlock = new Object();
+        private static readonly Object _formatListlock = new Object();
 
         #endregion Private Fields
     }

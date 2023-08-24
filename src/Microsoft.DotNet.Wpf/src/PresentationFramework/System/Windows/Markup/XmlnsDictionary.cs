@@ -143,7 +143,7 @@ namespace System.Windows.Markup
             // Check for the parameters to be strings as this is IDictionary implementation with object type params.
             if (!(prefix is string) || !(xmlNamespace is string))
             {
-                throw new ArgumentException(SR.Get(SRID.ParserKeysAreStrings));
+                throw new ArgumentException(SR.ParserKeysAreStrings);
             }
             // Add calls gets delegated to AddNamespace which adds a NamespaceDeclaration to the list of Declarations
             AddNamespace((string)prefix, (string)xmlNamespace);
@@ -347,8 +347,7 @@ namespace System.Windows.Markup
                 for (int thisDecl = _lastDecl-1; thisDecl >= 0; thisDecl--)
                 {
                     if ((_nsDeclarations[thisDecl].Prefix == prefix) && 
-                        _nsDeclarations[thisDecl].Uri != null && 
-                        _nsDeclarations[thisDecl].Uri != String.Empty)
+                        !string.IsNullOrEmpty(_nsDeclarations[thisDecl].Uri))
                     {
                         return _nsDeclarations[thisDecl].Uri;
                     }
@@ -473,7 +472,7 @@ namespace System.Windows.Markup
             {
                 if (!(prefix is string))
                 {
-                    throw new ArgumentException(SR.Get(SRID.ParserKeysAreStrings));
+                    throw new ArgumentException(SR.ParserKeysAreStrings);
                 }
                 return LookupNamespace((string)prefix); 
             }
@@ -481,7 +480,7 @@ namespace System.Windows.Markup
             {   
                 if (!(prefix is string) || !(value is string))
                 {
-                    throw new ArgumentException(SR.Get(SRID.ParserKeysAreStrings));
+                    throw new ArgumentException(SR.ParserKeysAreStrings);
                 }
                 AddNamespace((string)prefix, (string)value); 
             }
@@ -597,7 +596,7 @@ namespace System.Windows.Markup
         {
             if (IsReadOnly)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ParserDictionarySealed));
+                throw new InvalidOperationException(SR.ParserDictionarySealed);
             }
         }
 
@@ -777,4 +776,3 @@ namespace System.Windows.Markup
 
     } //XmlNamespaceManager
 }
-

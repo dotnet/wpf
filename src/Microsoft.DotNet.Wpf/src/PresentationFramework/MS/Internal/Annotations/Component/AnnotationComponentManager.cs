@@ -183,7 +183,7 @@ namespace MS.Internal.Annotations.Component
                     return;
                 }
 
-                throw new InvalidOperationException(SR.Get(SRID.NoPresentationContextForGivenElement, annotatedElement));
+                throw new InvalidOperationException(SR.Format(SR.NoPresentationContextForGivenElement, annotatedElement));
             }
 
             // add to the attachedAnnotations

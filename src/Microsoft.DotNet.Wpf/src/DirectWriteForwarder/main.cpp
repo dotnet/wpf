@@ -39,24 +39,6 @@ using namespace System::Diagnostics;
 // code in this Assembly when the assembly is loaded into any AppDomain.
 //
 
-//
-// We want to call SetProcessDPIAware from user32.dll only on machines
-// running Vista or later OSs.  We provide our own declaration (the
-// original is in winuser.h) here so we can specify the DllImport attribute
-// which allows delayed loading of the function - thereby allowing us to
-// run on pre-Vista OSs.
-//
-
-[DllImport("user32.dll", EntryPoint="SetProcessDPIAware")]
-WINUSERAPI
-BOOL
-WINAPI
-SetProcessDPIAware_Internal(
-    VOID);
-
-
-#define WINNT_VISTA_VERSION     0x06
-
  namespace MS { namespace Internal {
 private ref class NativeWPFDLLLoader sealed
 {
@@ -121,7 +103,6 @@ public:
     // Constructor of class CModuleInitialize
     __declspec(noinline) CModuleInitialize(void (*cleaningUpFunc)())
     {
-        IsProcessDpiAware();
         MS::Internal::NativeWPFDLLLoader::LoadDwrite();
 
         // Initialize some global arrays.
@@ -159,52 +140,6 @@ public:
     {
         return MS::Internal::NativeWPFDLLLoader::GetDWriteCreateFactoryFunctionPointer();
     }
-
-private :
-
-    //
-    // A private helper method to handle the DpiAwareness issue for current application.
-    // This method is set as noinline since the MC++ compiler may otherwise inline it in a 
-    // Security Transparent method which will lead to a security violation where the transparent
-    // method will be calling security critical code in this method.
-    //
-    __declspec(noinline) void IsProcessDpiAware( )
-    {
-        Version  ^osVersion = (Environment::OSVersion)->Version;
-
-        if (osVersion->Major < WINNT_VISTA_VERSION)
-        {
-            // DPIAware feature is available only in Vista and after.
-            return;
-        }
-
-        //
-        // Below code is only for Vista and newer platform.
-        //
-        Assembly ^ assemblyApp;
-        Type ^  disableDpiAwareType = System::Windows::Media::DisableDpiAwarenessAttribute::typeid;
-        bool    bDisableDpiAware = false;
-
-        // By default, Application is DPIAware.
-        assemblyApp = Assembly::GetEntryAssembly();
-
-        // Check if the Application has explicitly set DisableDpiAwareness attribute.
-        if (assemblyApp != nullptr && Attribute::IsDefined(assemblyApp, disableDpiAwareType))
-        {
-            bDisableDpiAware = true;
-        }
-
-
-        if (!bDisableDpiAware)
-        {
-            // DpiAware composition is enabled for this application.
-            SetProcessDPIAware_Internal( );
-        }
-
-        // Only when DisableDpiAwareness attribute is set in Application assembly,
-        // It will ignore the SetProcessDPIAware API call.
-    }
-
 };
 
 void CleanUp();

@@ -17,7 +17,6 @@ using System.Windows.Media.Animation;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -75,7 +74,7 @@ namespace System.Windows
 
             if (value == null)
             {
-                throw new NotSupportedException(SR.Get(SRID.Converter_ConvertFromNotSupported));
+                throw new NotSupportedException(SR.Converter_ConvertFromNotSupported);
             }
 
             TokenizerHelper th = new TokenizerHelper(stringValue, cultureInfo);

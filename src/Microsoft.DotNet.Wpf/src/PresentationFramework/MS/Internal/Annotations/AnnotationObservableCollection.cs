@@ -113,7 +113,7 @@ namespace MS.Internal.Annotations
         protected override void InsertItem(int index, T item)
         {
             if (ItemOwned(item))
-                throw new ArgumentException(SR.Get(SRID.AlreadyHasParent));
+                throw new ArgumentException(SR.AlreadyHasParent);
 
             base.InsertItem(index, item);
 
@@ -127,7 +127,7 @@ namespace MS.Internal.Annotations
         protected override void SetItem(int index, T item)
         {
             if (ItemOwned(item))
-                throw new ArgumentException(SR.Get(SRID.AlreadyHasParent));
+                throw new ArgumentException(SR.AlreadyHasParent);
 
             T originalItem = this[index];
 

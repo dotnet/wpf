@@ -154,7 +154,7 @@
       </trans-unit>
       <trans-unit id="InvalidAssemblyVersion">
         <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
-        <target state="translated">MC1005: Обнаружена недопустимая версия AssemblyVersion: {0}.</target>
+        <target state="translated">MC1005: обнаружена недопустимая версия AssemblyVersion: {0}.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidBaseClassName">
@@ -810,11 +810,6 @@
       <trans-unit id="PreparingCompile">
         <source>Preparing for the markup compilation...</source>
         <target state="translated">Подготовка компиляции разметки...</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</source>
-        <target state="translated">MC4301: имя типа "{0}" не имеет ожидаемый формат "имя_класса, сборка".</target>
         <note />
       </trans-unit>
       <trans-unit id="ReadResourceFile">

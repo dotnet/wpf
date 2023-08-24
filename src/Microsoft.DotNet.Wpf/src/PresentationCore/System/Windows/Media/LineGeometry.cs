@@ -22,7 +22,6 @@ using System.Runtime.InteropServices;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media 
 {
@@ -107,9 +106,6 @@ namespace System.Windows.Media
         internal static Rect GetBoundsHelper(Pen pen, Matrix worldMatrix, Point pt1, Point pt2,
                                              Matrix geometryMatrix, double tolerance, ToleranceType type)
         {
-            Debug.Assert(worldMatrix != null);
-            Debug.Assert(geometryMatrix != null);
-
             if (pen == null  &&  worldMatrix.IsIdentity && geometryMatrix.IsIdentity)
             {
                 return new Rect(pt1, pt2);

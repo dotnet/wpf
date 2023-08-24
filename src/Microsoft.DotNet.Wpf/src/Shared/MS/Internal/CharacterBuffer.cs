@@ -25,7 +25,6 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Security;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal
 {
@@ -396,7 +395,7 @@ namespace MS.Internal
 
             if (length <= 0)
             {
-                throw new ArgumentOutOfRangeException("length", SR.Get(SRID.ParameterValueMustBeGreaterThanZero));
+                throw new ArgumentOutOfRangeException("length", SR.ParameterValueMustBeGreaterThanZero);
             }
             
             _unsafeString = characterString;
@@ -411,7 +410,7 @@ namespace MS.Internal
         {
             get {
                 if (characterOffset >= _length || characterOffset < 0)
-                    throw new ArgumentOutOfRangeException("characterOffset", SR.Get(SRID.ParameterMustBeBetween,0,_length));
+                    throw new ArgumentOutOfRangeException("characterOffset", SR.Format(SR.ParameterMustBeBetween,0,_length));
                 return _unsafeString[characterOffset];
             }
             set { throw new NotSupportedException(); }
@@ -468,12 +467,12 @@ namespace MS.Internal
 
             if (characterOffset >= _length || characterOffset < 0)
             {
-                throw new ArgumentOutOfRangeException("characterOffset", SR.Get(SRID.ParameterMustBeBetween,0,_length));
+                throw new ArgumentOutOfRangeException("characterOffset", SR.Format(SR.ParameterMustBeBetween,0,_length));
             }
 
             if (characterLength < 0 || characterOffset + characterLength > _length)
             {
-                throw new ArgumentOutOfRangeException("characterLength", SR.Get(SRID.ParameterMustBeBetween,0, _length - characterOffset));
+                throw new ArgumentOutOfRangeException("characterLength", SR.Format(SR.ParameterMustBeBetween,0, _length - characterOffset));
             }
 
             stringBuilder.Append(new string(_unsafeString, characterOffset, characterLength));

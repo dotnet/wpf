@@ -109,14 +109,18 @@ namespace System.Windows.Input
 
             if (null != stringSource)
             {
-                stringSource = stringSource.Trim();
+                ReadOnlySpan<char> spanSource = stringSource;
+                spanSource = spanSource.Trim();
 
-                if (-1 != stringSource.LastIndexOf('.'))
-                    stringSource = stringSource.Substring(stringSource.LastIndexOf('.')+1);
-                    
-                if (!stringSource.Equals(String.Empty))
+                int periodPos = spanSource.LastIndexOf('.');
+                if (periodPos != -1)
                 {
-                    sn = (InputScopeNameValue)Enum.Parse(typeof(InputScopeNameValue), stringSource);
+                    spanSource = spanSource.Slice(periodPos + 1);
+                }
+                
+                if (!spanSource.IsEmpty)
+                {
+                    sn = Enum.Parse<InputScopeNameValue>(spanSource);
                 }
             }
             

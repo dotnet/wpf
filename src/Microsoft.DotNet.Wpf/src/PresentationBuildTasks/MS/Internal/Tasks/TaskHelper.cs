@@ -58,8 +58,8 @@ namespace MS.Internal.Tasks
             string avalonFileVersion = acFileVersionInfo.FileVersion;
 
             log.LogMessage(MessageImportance.Low,Environment.NewLine);
-            log.LogMessageFromResources(MessageImportance.Low, SRID.TaskLogo, taskName, avalonFileVersion);
-            log.LogMessageFromResources(MessageImportance.Low, SRID.TaskRight);
+            log.LogMessageFromResources(MessageImportance.Low, nameof(SR.TaskLogo), taskName, avalonFileVersion);
+            log.LogMessageFromResources(MessageImportance.Low, nameof(SR.TaskRight));
             log.LogMessage(MessageImportance.Low, Environment.NewLine);
         }
 
@@ -73,14 +73,13 @@ namespace MS.Internal.Tasks
         internal static string CreateFullFilePath(string thePath, string rootPath)
         {
             // make it an absolute path if not already so
-            if ( !Path.IsPathRooted(thePath) )
+            if (!Path.IsPathRooted(thePath) )
             {
                 thePath = rootPath + thePath;
             }
 
             // get rid of '..' and '.' if any
             thePath = Path.GetFullPath(thePath);
-
             return thePath;
         }
 
@@ -100,7 +99,7 @@ namespace MS.Internal.Tasks
             string fullpath1;
             string fullpath2;
 
-            string sourceDir = Directory.GetCurrentDirectory() + "\\";
+            string sourceDir = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar;
 
             // make sure path1 and Path2 are both full path
             // so that they can be compared on right base.
@@ -224,7 +223,7 @@ namespace MS.Internal.Tasks
         //
         // Helper to create CompilerWrapper.
         //
-        internal static CompilerWrapper CreateCompilerWrapper(bool fInSeparateDomain, ref AppDomain  appDomain)
+        internal static CompilerWrapper CreateCompilerWrapper()
         {
             return new CompilerWrapper();
         }

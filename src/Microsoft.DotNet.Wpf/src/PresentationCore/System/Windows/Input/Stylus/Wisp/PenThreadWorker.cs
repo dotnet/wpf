@@ -20,7 +20,6 @@ using System.Collections.ObjectModel;
 using MS.Win32.Penimc;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -520,7 +519,7 @@ namespace System.Windows.Input
         {
             if (__disposed)
             {
-                throw new ObjectDisposedException(null, SR.Get(SRID.Penservice_Disposed));
+                throw new ObjectDisposedException(null, SR.Penservice_Disposed);
             }
 
             Debug.Assert(penContext != null);
@@ -792,7 +791,7 @@ namespace System.Windows.Input
             // marshal the data to our cache
             if (cbPacket % 4 != 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.PenService_InvalidPacketData));
+                throw new InvalidOperationException(SR.PenService_InvalidPacketData);
             }
 
             int cItems = cPackets * (cbPacket / 4);
@@ -1164,7 +1163,12 @@ namespace System.Windows.Input
                     Debug.WriteLine(String.Format("PenThreadWorker::ThreadProc():  Update __penContextWeakRefList loop"));
 #endif
 
-                    WorkerOperation [] workerOps = null;
+                    // We need to ensure that the PenIMC COM objects can be used from this thread.
+                    // Try this every outer loop since we're, generally, about to do management
+                    // operations.
+                    MS.Win32.Penimc.UnsafeNativeMethods.EnsurePenImcClassesActivated();
+
+                    WorkerOperation[] workerOps = null;
 
                     lock(_workerOperationLock)
                     {
@@ -1288,6 +1292,9 @@ namespace System.Windows.Input
                     // Ensure that all native references are released.
                     _pimcContexts[i].ShutdownComm();
                 }
+
+                // Ensure that any activation contexts used on this thread are cleaned.
+                MS.Win32.Penimc.UnsafeNativeMethods.DeactivatePenImcClasses();
 
                 // Make sure the _pimcResetHandle is still valid after Dispose is called and before
                 // our thread exits.

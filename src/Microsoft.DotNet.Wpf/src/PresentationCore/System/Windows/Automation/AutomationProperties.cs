@@ -594,6 +594,75 @@ namespace System.Windows.Automation
         }
         #endregion
 
+        #region HeadingLevel
+        public static readonly DependencyProperty HeadingLevelProperty =
+            DependencyProperty.RegisterAttached(
+                        "HeadingLevel",
+                        typeof(AutomationHeadingLevel),
+                        typeof(AutomationProperties),
+                        new UIPropertyMetadata(AutomationHeadingLevel.None));
+
+        /// <summary>
+        /// Helper for setting HeadingLevel property on a DependencyObject. 
+        /// </summary>
+        public static void SetHeadingLevel(DependencyObject element, AutomationHeadingLevel value)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+
+            element.SetValue(HeadingLevelProperty, value);
+        }
+
+        /// <summary>
+        /// Helper for reading HeadingLevel property from a DependencyObject.
+        /// </summary>
+        public static AutomationHeadingLevel GetHeadingLevel(DependencyObject element)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+
+            return ((AutomationHeadingLevel)element.GetValue(HeadingLevelProperty));
+        }
+        #endregion
+
+        #region isDialog
+        public static readonly DependencyProperty IsDialogProperty = 
+            DependencyProperty.RegisterAttached(
+                "IsDialog",
+                typeof(bool),
+                typeof(AutomationProperties),
+                new UIPropertyMetadata(false));
+
+        /// <summary>
+        /// Helper for setting IsDialog property on a DependencyObject. 
+        /// </summary>
+        public static void SetIsDialog(DependencyObject element, bool value)
+        {
+            if(element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+            element.SetValue(IsDialogProperty, value);
+        }
+
+        /// <summary>
+        /// Helper for reading IsDialog property from a DependencyObject.
+        /// </summary>
+        public static bool GetIsDialog(DependencyObject element)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+
+            return (bool)element.GetValue(IsDialogProperty);
+        }
+        #endregion
+
         #region private implementation
         // Validation callback for string properties
         private static bool IsNotNull(object value)
@@ -608,4 +677,3 @@ namespace System.Windows.Automation
         #endregion
     }
 }
-

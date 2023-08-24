@@ -869,7 +869,7 @@
       </trans-unit>
       <trans-unit id="InvalidPublishLicense">
         <source>Signed Publish License is not valid.</source>
-        <target state="translated">Licença Pública Assinada inválida.</target>
+        <target state="translated">Licença de Publicação Assinada inválida.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidRelationshipType">
@@ -1415,11 +1415,6 @@
       <trans-unit id="PublishLicenseStreamHeaderTooLong">
         <source>Variable-length header in publish license stream is {0} bytes, which exceeds the maximum length of {1} bytes.</source>
         <target state="translated">O cabeçalho de comprimento variável no fluxo de licença de publicação tem {0} bytes, o que ultrapassa o comprimento máximo de {1} bytes.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">O nome de tipo '{0}' não tem o formato esperado 'nomeDaClasse, assembly'.</target>
         <note />
       </trans-unit>
       <trans-unit id="ReachOutOfRange">
@@ -2099,7 +2094,7 @@
       </trans-unit>
       <trans-unit id="SignatureOriginNotFound">
         <source>Relationship was found to the signature origin but the part is missing. Package signature structures are corrupted.</source>
-        <target state="translated">Foi encontrada uma relação com a origem da assinatura, mas a parte está faltando. Estruturas de assinatura do pacote estão corrompidas.</target>
+        <target state="translated">Foi encontrada uma relação com a origem da assinatura, mas a parte está faltando. As estruturas de assinatura de pacote estão corrompidas.</target>
         <note />
       </trans-unit>
       <trans-unit id="SignaturePackageObjectTagMustBeUnique">

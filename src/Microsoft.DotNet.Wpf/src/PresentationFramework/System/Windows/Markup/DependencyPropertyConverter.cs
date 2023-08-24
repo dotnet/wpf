@@ -170,7 +170,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                throw new NotSupportedException(SR.Get(SRID.ParserCannotConvertPropertyValue, "Property", typeof(DependencyProperty).FullName));
+                throw new NotSupportedException(SR.Format(SR.ParserCannotConvertPropertyValue, "Property", typeof(DependencyProperty).FullName));
             }
 
             // We got additional info from either Trigger.SourceName or Setter.TargetName
@@ -193,7 +193,7 @@ namespace System.Windows.Markup
                     as IXamlSchemaContextProvider);
                 if (ixscp == null)
                 {
-                    throw new NotSupportedException(SR.Get(SRID.ParserCannotConvertPropertyValue, "Property", typeof(DependencyProperty).FullName));
+                    throw new NotSupportedException(SR.Format(SR.ParserCannotConvertPropertyValue, "Property", typeof(DependencyProperty).FullName));
                 }
                 XamlSchemaContext schemaContext = ixscp.SchemaContext;
 
@@ -217,7 +217,7 @@ namespace System.Windows.Markup
                     as System.Xaml.IAmbientProvider;
                 if (ambientProvider == null)
                 {
-                    throw new NotSupportedException(SR.Get(SRID.ParserCannotConvertPropertyValue, "Property", typeof(DependencyProperty).FullName));
+                    throw new NotSupportedException(SR.Format(SR.ParserCannotConvertPropertyValue, "Property", typeof(DependencyProperty).FullName));
                 }
                 AmbientPropertyValue firstAmbientValue = ambientProvider.GetFirstAmbientValue(ceilingTypes, styleTargetType,
                     templateProperty, controlTemplateTargetType);
@@ -237,7 +237,7 @@ namespace System.Windows.Markup
                     }
                     else
                     {
-                        throw new NotSupportedException(SR.Get(SRID.ParserCannotConvertPropertyValue, "Property", typeof(DependencyProperty).FullName));
+                        throw new NotSupportedException(SR.Format(SR.ParserCannotConvertPropertyValue, "Property", typeof(DependencyProperty).FullName));
                     }
                 }
             }
@@ -247,7 +247,7 @@ namespace System.Windows.Markup
                 return DependencyProperty.FromName(property, type);
             }
 
-            throw new NotSupportedException(SR.Get(SRID.ParserCannotConvertPropertyValue, "Property", typeof(DependencyProperty).FullName));
+            throw new NotSupportedException(SR.Format(SR.ParserCannotConvertPropertyValue, "Property", typeof(DependencyProperty).FullName));
         }
 
         // Setters and triggers may have a sourceName which we need to resolve

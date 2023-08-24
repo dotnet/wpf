@@ -145,7 +145,7 @@ namespace System.Windows
             if (!(value is CornerRadius))
             {
                 #pragma warning suppress 6506 // value is obviously not null
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(CornerRadius)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(CornerRadius)), "value");
             }
 
             CornerRadius cr = (CornerRadius)value;
@@ -156,7 +156,7 @@ namespace System.Windows
                 return new InstanceDescriptor(ci, new object[] { cr.TopLeft, cr.TopRight, cr.BottomRight, cr.BottomLeft });
             }
 
-            throw new ArgumentException(SR.Get(SRID.CannotConvertType, typeof(CornerRadius), destinationType.FullName));
+            throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(CornerRadius), destinationType.FullName));
         }
 
 //Workaround for PreSharp bug - it complains about value being possibly null even though there is a check above
@@ -176,20 +176,7 @@ namespace System.Windows
         {
             char listSeparator = TokenizerHelper.GetNumericListSeparator(cultureInfo);
 
-            // Initial capacity [64] is an estimate based on a sum of:
-            // 48 = 4x double (twelve digits is generous for the range of values likely)
-            //  8 = 4x UnitType string (approx two characters)
-            //  4 = 4x separator characters
-            StringBuilder sb = new StringBuilder(64);
-
-            sb.Append(cr.TopLeft.ToString(cultureInfo));
-            sb.Append(listSeparator);
-            sb.Append(cr.TopRight.ToString(cultureInfo));
-            sb.Append(listSeparator);
-            sb.Append(cr.BottomRight.ToString(cultureInfo));
-            sb.Append(listSeparator);
-            sb.Append(cr.BottomLeft.ToString(cultureInfo));
-            return sb.ToString();
+            return string.Create(cultureInfo, stackalloc char[64], $"{cr.TopLeft}{listSeparator}{cr.TopRight}{listSeparator}{cr.BottomRight}{listSeparator}{cr.BottomLeft}");
         }
 
         static internal CornerRadius FromString(string s, CultureInfo cultureInfo)
@@ -222,7 +209,7 @@ namespace System.Windows
                     return (new CornerRadius(radii[0], radii[1], radii[2], radii[3]));
             }
 
-            throw new FormatException(SR.Get(SRID.InvalidStringCornerRadius, s));
+            throw new FormatException(SR.Format(SR.InvalidStringCornerRadius, s));
         }
         #endregion
     }

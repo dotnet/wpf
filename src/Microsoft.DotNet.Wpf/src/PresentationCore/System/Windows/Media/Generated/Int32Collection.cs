@@ -35,7 +35,6 @@ using System.Windows.Markup;
 using System.Windows.Media.Converters;
 using System.Security;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 // These types are aliased to match the unamanaged names used in interop
 using BOOL = System.UInt32;
 using WORD = System.UInt16;
@@ -390,7 +389,7 @@ namespace System.Windows.Media
 
             if (array.Rank != 1)
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                throw new ArgumentException(SR.Collection_BadRank);
             }
 
             // Elsewhere in the collection we throw an AE when the type is
@@ -405,7 +404,7 @@ namespace System.Windows.Media
             }
             catch (InvalidCastException e)
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadDestArray, this.GetType().Name), e);
+                throw new ArgumentException(SR.Format(SR.Collection_BadDestArray, this.GetType().Name), e);
             }
         }
 
@@ -481,7 +480,7 @@ namespace System.Windows.Media
 
             if (!(value is int))
             {
-                throw new System.ArgumentException(SR.Get(SRID.Collection_BadType, this.GetType().Name, value.GetType().Name, "int"));
+                throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, "int"));
             }
 
             return (int) value;
@@ -723,7 +722,7 @@ namespace System.Windows.Media
 
                 if (i != _collection.Count-1)
                 {
-                    str.Append(" ");
+                    str.Append(' ');
                 }
             }
 
@@ -808,7 +807,7 @@ namespace System.Windows.Media
 
             void IDisposable.Dispose()
             {
-}
+            }
 
             /// <summary>
             /// Advances the enumerator to the next element of the collection.
@@ -836,7 +835,7 @@ namespace System.Windows.Media
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                    throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                 }
             }
 
@@ -854,7 +853,7 @@ namespace System.Windows.Media
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                    throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                 }
             }
 
@@ -888,12 +887,12 @@ namespace System.Windows.Media
                     }
                     else if (_index == -1)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_NotStarted));
+                        throw new InvalidOperationException(SR.Enumerator_NotStarted);
                     }
                     else
                     {
                         Debug.Assert(_index == -2, "expected -2, got " + _index + "\n");
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_ReachedEnd));
+                        throw new InvalidOperationException(SR.Enumerator_ReachedEnd);
                     }
                 }
             }

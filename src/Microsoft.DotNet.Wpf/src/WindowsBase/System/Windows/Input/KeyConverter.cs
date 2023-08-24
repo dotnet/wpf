@@ -93,7 +93,7 @@ namespace System.Windows.Input
                 }
                 else
                 {
-                    throw new NotSupportedException(SR.Get(SRID.Unsupported_Key, fullName));
+                    throw new NotSupportedException(SR.Format(SR.Unsupported_Key, fullName));
                 }
             }
             throw GetConvertFromException(source);
@@ -132,7 +132,7 @@ namespace System.Windows.Input
                 }
 
                 String strKey = MatchKey(key, culture);
-                if (strKey != null && (strKey.Length != 0 || strKey == String.Empty))
+                if (strKey != null)
                 {
                     return strKey;
                 }
@@ -142,7 +142,7 @@ namespace System.Windows.Input
 
         private object GetKey(string keyToken, CultureInfo culture)
         {
-            if (keyToken == String.Empty)
+            if (keyToken.Length == 0)
             {
                 return Key.None;
             }
@@ -161,7 +161,7 @@ namespace System.Windows.Input
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Get(SRID.CannotConvertStringToType, keyToken, typeof(Key)));
+                        throw new ArgumentException(SR.Format(SR.CannotConvertStringToType, keyToken, typeof(Key)));
                     }
                 }
                 else

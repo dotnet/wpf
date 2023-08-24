@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
-  <file datatype="xml" source-language="en" target-language="zh-HANS" original="../Strings.resx">
+  <file datatype="xml" source-language="en" target-language="zh-Hans" original="../Strings.resx">
     <body>
       <trans-unit id="AccessibilitySwitchDependencyNotSatisfied">
         <source>Desktop applications setting AppContext switch '{0}' to false are required to opt in to all earlier accessibility improvements. To do this, ensure that the AppContext switch '{1}' is set to 'false', then 'Switch.UseLegacyAccessibilityFeatures' and all 'Switch.UseLegacyAccessibilityFeatures.M' switches, when M &lt; {2}, evaluate to false as well. Note that, if a switch for a particular set of accessibility improvements is not present, its value is determined by the target framework version. You can remedy this by adding these switches and setting their value to false.</source>
@@ -1415,11 +1415,6 @@
       <trans-unit id="PublishLicenseStreamHeaderTooLong">
         <source>Variable-length header in publish license stream is {0} bytes, which exceeds the maximum length of {1} bytes.</source>
         <target state="translated">发布许可证流中的可变长度标头为 {0} 个字节，它超过 {1} 个字节的最大长度。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">“{0}”类型名称不具有要求的格式“className, assembly”。</target>
         <note />
       </trans-unit>
       <trans-unit id="ReachOutOfRange">

@@ -26,7 +26,6 @@ using System.Security;
 using System.Threading;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Interop
 {
@@ -61,7 +60,7 @@ namespace System.Windows.Interop
         /// </summary>
         public D3DImage() : this(96.0, 96.0)
         {
-}
+        }
 
         /// <summary>
         ///     DPI constructor
@@ -71,12 +70,12 @@ namespace System.Windows.Interop
             
             if (dpiX < 0)
             {
-                throw new ArgumentOutOfRangeException("dpiX", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+                throw new ArgumentOutOfRangeException("dpiX", SR.ParameterMustBeGreaterThanZero);
             }
 
             if (dpiY < 0)
             {
-                throw new ArgumentOutOfRangeException("dpiY", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+                throw new ArgumentOutOfRangeException("dpiY", SR.ParameterMustBeGreaterThanZero);
             }
    
             _canWriteEvent = new ManualResetEvent(true);
@@ -85,7 +84,7 @@ namespace System.Windows.Interop
             _dpiX = dpiX;
             _dpiY = dpiY;
 
-            _listener = new WeakReference(this);
+            _listener = new WeakReference<IAppDomainShutdownListener>(this);
             AppDomainShutdownMonitor.Add(_listener);
         }
 
@@ -147,7 +146,7 @@ namespace System.Windows.Interop
             
             if (_lockCount == 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_MustBeLocked));
+                throw new InvalidOperationException(SR.Image_MustBeLocked);
             }
 
             // In case the user passed in something like "(D3DResourceType)-1"
@@ -276,7 +275,7 @@ namespace System.Windows.Interop
             
             if (_lockCount == 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_MustBeLocked));
+                throw new InvalidOperationException(SR.Image_MustBeLocked);
             }
 
             --_lockCount;
@@ -311,12 +310,12 @@ namespace System.Windows.Interop
 
             if (_lockCount == 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_MustBeLocked));
+                throw new InvalidOperationException(SR.Image_MustBeLocked);
             }
 
             if (_pInteropDeviceBitmap == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.D3DImage_MustHaveBackBuffer));
+                throw new InvalidOperationException(SR.D3DImage_MustHaveBackBuffer);
             }
 
             dirtyRect.ValidateForDirtyRect("dirtyRect", PixelWidth, PixelHeight);
@@ -605,7 +604,7 @@ namespace System.Windows.Interop
 
             if (_lockCount == UInt32.MaxValue)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_LockCountLimit));
+                throw new InvalidOperationException(SR.Image_LockCountLimit);
             }
             
             if (_lockCount == 0)
@@ -944,7 +943,7 @@ namespace System.Windows.Interop
         private EventHandler _sendPresentDelegate;
 
         // WeakReference to this used to listen to AddDomain shutdown
-        private WeakReference _listener;
+        private WeakReference<IAppDomainShutdownListener> _listener;
 
         // Keeps track of how many times the user has nested Lock
         private uint _lockCount;

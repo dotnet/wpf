@@ -36,6 +36,11 @@ namespace System.Windows.Documents
         internal interface ISpellerSegment
         {
             /// <summary>
+            /// Source String for which <see cref="TextRange"/> provides a position
+            /// </summary>
+            string SourceString { get; }
+
+            /// <summary>
             /// Identifies sub-words, if any. 
             /// </summary>
             IReadOnlyList<ISpellerSegment> SubSegments { get; }
@@ -44,6 +49,11 @@ namespace System.Windows.Documents
             /// Obtains the position of this segment in it's source text string
             /// </summary>
             ITextRange TextRange { get; }
+
+            /// <summary>
+            /// Text represented by <see cref="TextRange"/>
+            /// </summary>
+            string Text { get; }
 
             /// <summary>
             /// Queries the spell-checker to obtain suggestions for this segment

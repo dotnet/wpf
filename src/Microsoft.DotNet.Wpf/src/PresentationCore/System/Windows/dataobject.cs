@@ -33,7 +33,6 @@ namespace System.Windows
     using MS.Internal.PresentationCore;                        // SecurityHelper
 
     using SR=MS.Internal.PresentationCore.SR;
-    using SRID=MS.Internal.PresentationCore.SRID;
     using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 // PreSharp uses message numbers that the C# compiler doesn't know about.
@@ -108,7 +107,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             if (data == null)
@@ -151,7 +150,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             if (data == null)
@@ -213,7 +212,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             return _innerData.GetData(format, autoConvert);
@@ -232,7 +231,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             return GetData(format, true);
@@ -283,7 +282,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             dataPresent = _innerData.GetDataPresent(format, autoConvert);
@@ -304,7 +303,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             return GetDataPresent(format, true);
@@ -357,7 +356,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             if (data == null)
@@ -405,7 +404,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             _innerData.SetData(format, data, autoConvert);
@@ -560,7 +559,7 @@ namespace System.Windows
 
             if (fileDropList.Count == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_FileDropListIsEmpty, fileDropList));
+                throw new ArgumentException(SR.Format(SR.DataObject_FileDropListIsEmpty, fileDropList));
             }
 
             foreach (string fileDrop in fileDropList)
@@ -571,7 +570,7 @@ namespace System.Windows
                 }
                 catch (ArgumentException e)
                 {
-                    throw new ArgumentException(SR.Get(SRID.DataObject_FileDropListHasInvalidFileDropPath, e));
+                    throw new ArgumentException(SR.Format(SR.DataObject_FileDropListHasInvalidFileDropPath, e));
                 }
             }
 
@@ -688,7 +687,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ExternalException(SR.Get(SRID.DataObject_NotImplementedEnumFormatEtc, dwDirection), NativeMethods.E_NOTIMPL);
+                throw new ExternalException(SR.Format(SR.DataObject_NotImplementedEnumFormatEtc, dwDirection), NativeMethods.E_NOTIMPL);
             }
         }
 
@@ -910,7 +909,7 @@ namespace System.Windows
         /// <param name="handler">
         /// An event handler for a DataObject.Pasting event.
         /// It is called when ah editor already made a decision
-        /// what format (from available on the Cliipboard)
+        /// what format (from available on the Clipboard)
         /// to apply to selection. With this handler an application
         /// has a chance to inspect a content of DataObject extracted
         /// from the Clipboard and decide what format to use instead.
@@ -1621,12 +1620,14 @@ namespace System.Windows
                 // since we directly support TYMED.TYMED_ENHMF.
                 hr = DV_E_TYMED;
             }
+#pragma warning disable SYSLIB0050
             else if (IsFormatEqual(format, DataFormats.Serializable)
                 || data is ISerializable
                 || (data != null && data.GetType().IsSerializable))
             {
                 hr = SaveObjectToHandle(medium.unionmember, data, doNotReallocate);
             }
+#pragma warning restore SYSLIB0050
             else
             {
                 // Couldn't find the proper data for the current TYMED_HGLOBAL
@@ -1753,7 +1754,7 @@ namespace System.Windows
 
             return hr;
         }
-
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
         private int SaveObjectToHandle(IntPtr handle, Object data, bool doNotReallocate)
         {
             Stream stream;
@@ -1768,11 +1769,14 @@ namespace System.Windows
 
                     formatter = new BinaryFormatter();
 
+                    #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
                     formatter.Serialize(stream, data);
+                    #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete
                     return SaveStreamToHandle(handle, stream, doNotReallocate);
                 }
             }
         }
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
 
         /// <summary>
         /// Saves stream out to handle.
@@ -1937,7 +1941,10 @@ namespace System.Windows
                     currentPtr = (IntPtr)((long)currentPtr + (files[i].Length * 2));
 
                     // Terminate the each of file string.
-                    Marshal.Copy(new char[] { '\0' }, 0, currentPtr, 1);
+                    unsafe
+                    {
+                        *(char*)currentPtr = '\0';
+                    }
 
                     // Increase the current pointer by 2 since it is a unicode.
                     currentPtr = (IntPtr)((long)currentPtr + 2);
@@ -1946,7 +1953,10 @@ namespace System.Windows
 #pragma warning restore 6523
 
                 // Terminate the string and add 2bytes since it is a unicode.
-                Marshal.Copy(new char[] { '\0' }, 0, currentPtr, 1);
+                unsafe
+                {
+                    *(char*)currentPtr = '\0';
+                }
             }
             finally
             {
@@ -1998,7 +2008,10 @@ namespace System.Windows
                     // Terminate the string becasue of GlobalReAlloc GMEM_ZEROINIT will zero
                     // out only the bytes it adds to the memory object. It doesn't initialize
                     // any of the memory that existed before the call.
-                    Marshal.Copy(new char[] { '\0' }, 0, (IntPtr)((ulong)ptr + (ulong)chars.Length * 2), 1);
+                    unsafe
+                    {
+                        *(char*)(IntPtr)((ulong)ptr + (ulong)chars.Length * 2) = '\0';
+                    }
                 }
                 finally
                 {
@@ -2149,6 +2162,7 @@ namespace System.Windows
         /// true if the data is likely to be serializated
         /// through CLR serialization
         /// </returns>
+#pragma warning disable SYSLIB0050
         private static bool IsFormatAndDataSerializable(string format, object data)
         {
             return
@@ -2156,14 +2170,14 @@ namespace System.Windows
                   || data is ISerializable
                   || (data != null && data.GetType().IsSerializable);
         }
-
+#pragma warning restore SYSLIB0050
 
         /// <summary>
         /// Return true if the format string are equal(Case-senstive).
         /// </summary>
         private static bool IsFormatEqual(string format1, string format2)
         {
-            return (String.CompareOrdinal(format1, format2) == 0);
+            return (string.Equals(format1, format2, StringComparison.Ordinal));
         }
 
         /// <summary>
@@ -2739,7 +2753,7 @@ namespace System.Windows
             {
                 // If we want to support setting data into an OLE data Object,
                 // the code should be here.
-                throw new InvalidOperationException(SR.Get(SRID.DataObject_CannotSetDataOnAFozenOLEDataDbject));
+                throw new InvalidOperationException(SR.DataObject_CannotSetDataOnAFozenOLEDataDbject);
             }
 
             /// <summary>
@@ -3101,6 +3115,7 @@ namespace System.Windows
             /// Creates a new instance of the Object that has been persisted into the
             /// handle.
             /// </summary>
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
             private Object ReadObjectFromHandle(IntPtr handle, bool restrictDeserialization)
             {
                 object value;
@@ -3122,7 +3137,9 @@ namespace System.Windows
                     }
                     try
                     {
+                        #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
                         value = formatter.Deserialize(stream);
+                        #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
                     }
                     catch (RestrictedTypeDeserializationException)
                     {
@@ -3136,7 +3153,7 @@ namespace System.Windows
 
                 return value;
             }
-
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
             /// <summary>
             /// Creates a new instance of BitmapSource that has been saved to the
             /// handle as the memory stream of BitmapSource.
@@ -3348,7 +3365,7 @@ namespace System.Windows
             /// </summary>
             private class RestrictedTypeDeserializationException : Exception
             {
-}
+            }
         }
 
         #endregion OleConverter Class

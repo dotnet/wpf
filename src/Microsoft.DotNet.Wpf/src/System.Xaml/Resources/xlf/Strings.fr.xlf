@@ -988,8 +988,8 @@
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeCannotRoundtrip">
-        <source>Unable to read objects of the type �{0}� because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
-        <target state="translated">Impossible de lire les objets de type �{0}�, car il aucun constructeur n'est accessible. Pour que ce type puisse être utilisé en XAML, ajoutez un constructeur par défaut, utilisez ConstructorArgumentAttribute ou fournissez un InstanceDescriptor.</target>
+        <source>Unable to read objects of the type '{0}' because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
+        <target state="translated">Impossible de lire les objets du type '{0}', car aucun constructeur n'est accessible. Pour permettre l'utilisation de ce type en XAML, ajoutez un constructeur par défaut, utilisez ConstructorArgumentAttribute ou indiquez un InstanceDescriptor.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeIsNested">
@@ -1009,7 +1009,7 @@
       </trans-unit>
       <trans-unit id="ObjectReaderXamlNameScopeResultsInClonedObject">
         <source>The object graph contains multiple references to an instance of type '{0}' and the serializer cannot find a commonly visible location to write the instance. You should examine your use of name scopes.</source>
-        <target state="translated">Le graphique d'objet contient plusieurs références à une instance de type '{0}' et le sérialiseur ne peut pas trouver d'emplacement commun visible pour écrire l'instance. Examinez l'utilisation de vos portées de nom.</target>
+        <target state="translated">Le graphe d'objets contient plusieurs références à une instance de type '{0}' et le sérialiseur ne peut pas trouver d'emplacement commun visible pour écrire l'instance. Examinez l'utilisation de vos portées de nom.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderXamlNamedElementAlreadyRegistered">
@@ -1110,11 +1110,6 @@
       <trans-unit id="ProvideValueCycle">
         <source>Cannot call MarkupExtension.ProvideValue because of a cyclical dependency. Properties inside a MarkupExtension cannot reference objects that reference the result of the MarkupExtension. The affected MarkupExtensions are:</source>
         <target state="translated">Impossible d'appeler MarkupExtension.ProvideValue en raison d'une dépendance cyclique. Les propriétés dans un MarkupExtension ne peuvent pas référencer des objets qui référencent le résultat de MarkupExtension. Les MarkupExtensions affectés sont :</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Le nom de type '{0}' n'a pas le format attendu 'className, assembly'.</target>
         <note />
       </trans-unit>
       <trans-unit id="QuoteCharactersOutOfPlace">

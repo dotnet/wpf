@@ -16,7 +16,6 @@ using System.Windows.Media;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Imaging
 {
@@ -120,7 +119,7 @@ namespace System.Windows.Media.Imaging
         {
             if (pixelHeight <= 0)
             {
-                throw new System.ArgumentOutOfRangeException("pixelHeight", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+                throw new System.ArgumentOutOfRangeException("pixelHeight", SR.ParameterMustBeGreaterThanZero);
             }
 
             BitmapSizeOptions sizeOptions = new BitmapSizeOptions();
@@ -141,7 +140,7 @@ namespace System.Windows.Media.Imaging
         {
             if (pixelWidth <= 0)
             {
-                throw new System.ArgumentOutOfRangeException("pixelWidth", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+                throw new System.ArgumentOutOfRangeException("pixelWidth", SR.ParameterMustBeGreaterThanZero);
             }
 
             BitmapSizeOptions sizeOptions = new BitmapSizeOptions();
@@ -164,12 +163,12 @@ namespace System.Windows.Media.Imaging
         {
             if (pixelWidth <= 0)
             {
-                throw new System.ArgumentOutOfRangeException("pixelWidth", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+                throw new System.ArgumentOutOfRangeException("pixelWidth", SR.ParameterMustBeGreaterThanZero);
             }
 
             if (pixelHeight <= 0)
             {
-                throw new System.ArgumentOutOfRangeException("pixelHeight", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+                throw new System.ArgumentOutOfRangeException("pixelHeight", SR.ParameterMustBeGreaterThanZero);
             }
 
             BitmapSizeOptions sizeOptions = new BitmapSizeOptions();
@@ -197,7 +196,7 @@ namespace System.Windows.Media.Imaging
                 case Rotation.Rotate270:
                     break;
                 default:
-                    throw new ArgumentException(SR.Get(SRID.Image_SizeOptionsAngle), "rotation");
+                    throw new ArgumentException(SR.Image_SizeOptionsAngle, "rotation");
             }
 
             BitmapSizeOptions sizeOptions = new BitmapSizeOptions();

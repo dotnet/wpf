@@ -105,7 +105,7 @@ namespace MS.Internal.IO.Packaging
             // ensure the interface rules are followed
             // string must also be null terminated so we restrict the length to buf size - 1
             if ((uint)(s.Length) > bufCharacterCount - 1)
-                throw new InvalidOperationException(SR.Get(SRID.FilterGetTextBufferOverflow));
+                throw new InvalidOperationException(SR.FilterGetTextBufferOverflow);
 
             // Return the number of characters written, including the terminating null.
             bufCharacterCount = (UInt32)s.Length + 1;
@@ -210,13 +210,14 @@ namespace MS.Internal.IO.Packaging
                 else
                 {
                     throw new InvalidOperationException(
-                        SR.Get(SRID.FilterGetValueMustBeStringOrDateTime));
+                        SR.FilterGetValueMustBeStringOrDateTime);
                 }
 
                 // allocate an unmanaged PROPVARIANT to return
                 pNative = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(PROPVARIANT)));
-                // Per MSDN, AllocCoTaskMem never returns null. One can't be too careful, though.
-                Invariant.Assert(pNative != null);
+
+                // Per MSDN, AllocCoTaskMem never returns null: check for IntPtr.Zero instead.
+                Invariant.Assert(pNative != IntPtr.Zero);
 
                 // marshal the managed PROPVARIANT into the unmanaged block and return it
                 Marshal.StructureToPtr(v, pNative, false);
@@ -274,7 +275,7 @@ namespace MS.Internal.IO.Packaging
                 if (ThrowOnEndOfChunks)
                 {
                     // Throw exception.
-                    throw new COMException(SR.Get(SRID.FilterEndOfChunks),
+                    throw new COMException(SR.FilterEndOfChunks,
                         (int)FilterErrorCode.FILTER_E_END_OF_CHUNKS);
                 }
 
@@ -325,7 +326,7 @@ namespace MS.Internal.IO.Packaging
         public IntPtr BindRegion(FILTERREGION origPos, ref Guid riid)
         {
             // The following exception maps to E_NOTIMPL.
-            throw new NotImplementedException(SR.Get(SRID.FilterBindRegionNotImplemented));
+            throw new NotImplementedException(SR.FilterBindRegionNotImplemented);
         }
         #endregion IFilter implementation
 

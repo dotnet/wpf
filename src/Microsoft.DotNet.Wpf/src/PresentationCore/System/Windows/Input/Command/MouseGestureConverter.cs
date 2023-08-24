@@ -62,7 +62,7 @@ namespace System.Windows.Input
                 string mouseActionToken;
                 string modifiersToken;
 
-                if (fullName == String.Empty)
+                if (fullName.Length == 0)
                     return new MouseGesture(MouseAction.None, ModifierKeys.None); ;
 
                 // break apart LocalName and Prefix

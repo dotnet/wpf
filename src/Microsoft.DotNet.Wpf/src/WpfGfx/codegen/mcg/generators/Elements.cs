@@ -416,7 +416,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                         if (!routedEvent.IsLegalHandler(handler))
                         {
-                            throw new ArgumentException(SR.Get(SRID.HandlerTypeIllegal));
+                            throw new ArgumentException(SR.HandlerTypeIllegal);
                         }
 
                         EnsureEventHandlersStore();
@@ -477,7 +477,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                         if (!routedEvent.IsLegalHandler(handler))
                         {
-                            throw new ArgumentException(SR.Get(SRID.HandlerTypeIllegal));
+                            throw new ArgumentException(SR.HandlerTypeIllegal);
                         }
 
                         EventHandlersStore store = EventHandlersStore;

@@ -12,7 +12,6 @@ using System.Collections.ObjectModel;
 using MS.Utility;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Ink
 {
@@ -26,7 +25,7 @@ namespace MS.Internal.Ink
     {
         #region Statics
 
-        private static Quad s_empty = new Quad(new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0, 0));
+        private static readonly Quad s_empty = new Quad(new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0, 0));
 
         #endregion 
         

@@ -125,7 +125,7 @@ namespace MS.Internal.IO.Packaging
 
             if (_progress == Progress.FilteringCompleted)
             {
-                throw new COMException(SR.Get(SRID.FilterEndOfChunks), 
+                throw new COMException(SR.FilterEndOfChunks, 
                     (int)FilterErrorCode.FILTER_E_END_OF_CHUNKS);
             }
                 
@@ -189,14 +189,14 @@ namespace MS.Internal.IO.Packaging
                     // In general, we don't really care: when an external filter gets in trouble
                     // we simply move to the next filter.
                 }
-                catch (IOException exc)
+                catch (IOException)
                 {
                     // Internal filters do not throw expected exceptions; so something bad
                     // must have happened. Let the client code get the exception and possibly
                     // choose to ignore it.
                     if (_isInternalFilter)
                     {
-                        throw exc;
+                        throw;
                     }
                 }
 
@@ -218,7 +218,7 @@ namespace MS.Internal.IO.Packaging
                     // Throw FILTER_E_END_OF_CHUNKS exception.
                     //
 
-                    throw new COMException(SR.Get(SRID.FilterEndOfChunks),
+                    throw new COMException(SR.FilterEndOfChunks,
                         (int)FilterErrorCode.FILTER_E_END_OF_CHUNKS);
                 }
             } 
@@ -231,7 +231,7 @@ namespace MS.Internal.IO.Packaging
         {
             if (_progress != Progress.FilteringContent)
             {
-                throw new COMException(SR.Get(SRID.FilterGetTextNotSupported), 
+                throw new COMException(SR.FilterGetTextNotSupported, 
                     (int)FilterErrorCode.FILTER_E_NO_TEXT);
             }
 
@@ -246,7 +246,7 @@ namespace MS.Internal.IO.Packaging
         {
             if (_progress != Progress.FilteringCoreProperties)
             {
-                throw new COMException(SR.Get(SRID.FilterGetValueNotSupported),
+                throw new COMException(SR.FilterGetValueNotSupported,
                     (int)FilterErrorCode.FILTER_E_NO_VALUES);
             }
 
@@ -263,7 +263,7 @@ namespace MS.Internal.IO.Packaging
         /// </remarks>
         public IntPtr BindRegion(FILTERREGION origPos, ref Guid riid)
         {
-            throw new NotImplementedException(SR.Get(SRID.FilterBindRegionNotImplemented));
+            throw new NotImplementedException(SR.FilterBindRegionNotImplemented);
         }
         
         #endregion IFilter methods

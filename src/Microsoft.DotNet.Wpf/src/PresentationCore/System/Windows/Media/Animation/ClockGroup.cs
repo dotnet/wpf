@@ -6,7 +6,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Animation
 {
@@ -131,7 +130,7 @@ namespace System.Windows.Media.Animation
                        (_timeline.AccelerationRatio > 0) ||
                        (_timeline.DecelerationRatio > 0))
                     {
-                        throw new NotSupportedException(SR.Get(SRID.Timing_SlipBehavior_SlipOnlyOnSimpleTimelines));
+                        throw new NotSupportedException(SR.Timing_SlipBehavior_SlipOnlyOnSimpleTimelines);
                     }
 
                     for (int index = 0; index < _children.Count; index++)

@@ -1,5 +1,12 @@
 <Project>
-  
+   <PropertyGroup>
+    <_DotnetApiDocsFilesRoot>$([MSBuild]::NormalizeDirectory('$(NuGetPackageRoot)', 'microsoft.private.intellisense', '$(MicrosoftPrivateIntellisenseVersion)', 'IntellisenseFiles', 'windowsdesktop', '1033'))</_DotnetApiDocsFilesRoot>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageDownload Include="Microsoft.Private.Intellisense" Version="[$(MicrosoftPrivateIntellisenseVersion)]" />
+  </ItemGroup>
+
   <PropertyGroup>
     <EnsureReferenceAssemblyPrerequisitesDependsOn>
       $(EnsureReferenceAssemblyPrerequisitesDependsOn);
@@ -45,14 +52,14 @@
           Condition="'$(ReferenceProjectRepoLocation)'=='External' and '$(RepositoryName)'=='wpf'"
           Outputs="$(IntellisenseXmlDir)$(AssemblyName).xml">
     <PropertyGroup>
-      <!-- Also in global.json -->
-      <DotNetApiDocsNetCoreApp30>0.0.0.2</DotNetApiDocsNetCoreApp30>
-      <IntellisenseXmlDir>$(RepositoryToolsDir)native\bin\dotnet-api-docs_netcoreapp3.0\$(DotNetApiDocsNetCoreApp30)\_intellisense\netcore-3.0\</IntellisenseXmlDir>
+      <!-- The intellisense provided by the Docs system -->
+      <IntellisenseXmlFileSource>$([MSBuild]::NormalizePath('$(_DotnetApiDocsFilesRoot)', '$(AssemblyName).xml'))</IntellisenseXmlFileSource>
+      
+      <!-- Set the xml destination (for a later step that copies files from the dotnet-api-docs to local build artifacts) -->
+      <IntellisenseXmlDest Condition="'$(ProduceReferenceAssembly)' == 'true' And '$(PackageAsRefAndLib)' != 'true'" >$([System.IO.Path]::ChangeExtension('$(TargetRefPath)', '.xml'))</IntellisenseXmlDest>
+      <IntellisenseXmlDest Condition="'$(PackageAsRefAndLib)' == 'true'" >$([System.IO.Path]::ChangeExtension('$(TargetPath)', '.xml'))</IntellisenseXmlDest>
+      <IntellisenseXmlDestDir Condition="'$(IntellisenseXmlDest)' != ''">$([System.IO.Path]::GetDirectoryName('$(IntellisenseXmlDest)'))</IntellisenseXmlDestDir>
     </PropertyGroup>
-    
-    <Error Condition="!Exists('$(IntellisenseXmlDir)')"
-           Text="Intellisense Xml sources not found: IntellisenseXmlDir=$(IntellisenseXmlDir)" />
-
     <!-- 
       EnsureReferenceDestination guarantees that there is exactly 1 ref assembly 
     -->
@@ -60,11 +67,11 @@
       <IntellisenseXmlFile>$(IntellisenseXmlDir)$(AssemblyName).xml</IntellisenseXmlFile>
     </PropertyGroup>
 
-    <Message Condition="!Exists('$(IntellisenseXmlFile)')"
-             Text="$(IntellisenseXmlFile) is missing" />
+    <Message Condition="!Exists('$(IntellisenseXmlFileSource)')"
+             Text="$(IntellisenseXmlFileSource) is missing" />
     
-    <Copy SourceFiles="$(IntellisenseXmlFile)"
-          Condition="Exists('$(IntellisenseXmlFile)')"
+    <Copy SourceFiles="$(IntellisenseXmlFileSource)"
+          Condition="Exists('$(IntellisenseXmlFileSource)')"
           DestinationFolder="$(ReferenceAssemblyDir)"          
           SkipUnchangedFiles="true"/>
   </Target>

@@ -270,19 +270,19 @@ public class Storyboard : ParallelTimeline
         else
         {
             throw new InvalidOperationException(
-                SR.Get(SRID.Storyboard_NoNameScope, targetName));
+                SR.Format(SR.Storyboard_NoNameScope, targetName));
         }
 
         if( namedObject == null )
         {
             throw new InvalidOperationException(
-                SR.Get(SRID.Storyboard_NameNotFound, targetName, nameScopeUsed.GetType().ToString()));
+                SR.Format(SR.Storyboard_NameNotFound, targetName, nameScopeUsed.GetType().ToString()));
         }
 
         targetObject = namedObject as DependencyObject;
         if( targetObject == null )
         {
-            throw new InvalidOperationException(SR.Get(SRID.Storyboard_TargetNameNotDependencyObject, targetName ));
+            throw new InvalidOperationException(SR.Format(SR.Storyboard_TargetNameNotDependencyObject, targetName ));
         }
 
         return targetObject;
@@ -318,7 +318,7 @@ public class Storyboard : ParallelTimeline
             if( namedObject == null )
             {
                 throw new InvalidOperationException(
-                    SR.Get(SRID.Storyboard_NameNotFound, targetName, nameScope.GetType().ToString()));
+                    SR.Format(SR.Storyboard_NameNotFound, targetName, nameScope.GetType().ToString()));
             }
         }
         else if( fe != null )
@@ -327,7 +327,7 @@ public class Storyboard : ParallelTimeline
             if( namedObject == null )
             {
                 throw new InvalidOperationException(
-                    SR.Get(SRID.Storyboard_NameNotFound, targetName, fe.GetType().ToString()));
+                    SR.Format(SR.Storyboard_NameNotFound, targetName, fe.GetType().ToString()));
             }
         }
         else if( fce != null )
@@ -336,20 +336,20 @@ public class Storyboard : ParallelTimeline
             if( namedObject == null )
             {
                 throw new InvalidOperationException(
-                    SR.Get(SRID.Storyboard_NameNotFound, targetName, fce.GetType().ToString()));
+                    SR.Format(SR.Storyboard_NameNotFound, targetName, fce.GetType().ToString()));
             }
         }
         else
         {
             throw new InvalidOperationException(
-                SR.Get(SRID.Storyboard_NoNameScope, targetName));
+                SR.Format(SR.Storyboard_NoNameScope, targetName));
         }
 
         beginStoryboard = namedObject as BeginStoryboard;
 
         if( beginStoryboard == null )
         {
-            throw new InvalidOperationException(SR.Get(SRID.Storyboard_BeginStoryboardNameNotFound, targetName));
+            throw new InvalidOperationException(SR.Format(SR.Storyboard_BeginStoryboardNameNotFound, targetName));
         }
 
         return beginStoryboard;
@@ -396,7 +396,7 @@ public class Storyboard : ParallelTimeline
                 // We are inside a Style - we don't let people target anything.
                 //  They're only allowed to modify the Styled object, which is
                 //  already the implicit target.
-                throw new InvalidOperationException(SR.Get(SRID.Storyboard_TargetNameNotAllowedInStyle, nameString));
+                throw new InvalidOperationException(SR.Format(SR.Storyboard_TargetNameNotAllowedInStyle, nameString));
             }
             currentObjectName = nameString;
         }
@@ -444,7 +444,7 @@ public class Storyboard : ParallelTimeline
                     if( targetObject == null )
                     {
                         // The containing object is not an FE or FCE.
-                        throw new InvalidOperationException(SR.Get(SRID.Storyboard_NoTarget, currentTimeline.GetType().ToString() ));
+                        throw new InvalidOperationException(SR.Format(SR.Storyboard_NoTarget, currentTimeline.GetType().ToString() ));
                     }
                 }
             }
@@ -452,7 +452,7 @@ public class Storyboard : ParallelTimeline
             // See if we have a property name to use.
             if( currentPropertyPath == null )
             {
-                throw new InvalidOperationException(SR.Get(SRID.Storyboard_TargetPropertyRequired, currentTimeline.GetType().ToString() ));
+                throw new InvalidOperationException(SR.Format(SR.Storyboard_TargetPropertyRequired, currentTimeline.GetType().ToString() ));
             }
 
             // A property name can be a straightforward property name (like "Angle")
@@ -462,7 +462,7 @@ public class Storyboard : ParallelTimeline
             {
                 if( currentPropertyPath.Length < 1 )
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Storyboard_PropertyPathEmpty));
+                    throw new InvalidOperationException(SR.Storyboard_PropertyPathEmpty);
                 }
 
                 VerifyPathIsAnimatable(currentPropertyPath);
@@ -475,7 +475,7 @@ public class Storyboard : ParallelTimeline
                     if( targetProperty == null )
                     {
                         // Unfortunately it's not a DependencyProperty.
-                        throw new InvalidOperationException(SR.Get(SRID.Storyboard_PropertyPathMustPointToDependencyProperty, currentPropertyPath.Path ));
+                        throw new InvalidOperationException(SR.Format(SR.Storyboard_PropertyPathMustPointToDependencyProperty, currentPropertyPath.Path ));
                     }
 
                     VerifyAnimationIsValid(targetProperty, animationClock);
@@ -541,7 +541,7 @@ public class Storyboard : ParallelTimeline
 
             if( targetMediaElement == null )
             {
-                throw new InvalidOperationException(SR.Get(SRID.Storyboard_MediaElementNotFound, currentObjectName ));
+                throw new InvalidOperationException(SR.Format(SR.Storyboard_MediaElementNotFound, currentObjectName ));
             }
         }
         else if( currentObject != null )
@@ -555,7 +555,7 @@ public class Storyboard : ParallelTimeline
 
         if( targetMediaElement == null )
         {
-            throw new InvalidOperationException(SR.Get(SRID.Storyboard_MediaElementRequired));
+            throw new InvalidOperationException(SR.Storyboard_MediaElementRequired);
         }
 
         targetMediaElement.Clock = mediaClock;
@@ -689,14 +689,14 @@ public class Storyboard : ParallelTimeline
             if( intermediateObject == null )
             {
                 Debug.Assert( i > 0, "The caller should not have set the PropertyPath context to a null object." );
-                throw new InvalidOperationException(SR.Get(SRID.Storyboard_PropertyPathObjectNotFound, AccessorName(path, i-1), path.Path ));
+                throw new InvalidOperationException(SR.Format(SR.Storyboard_PropertyPathObjectNotFound, AccessorName(path, i-1), path.Path ));
             }
 
             if( intermediateProperty == null )
             {
                 // Would love to throw error with the name of the property we couldn't find,
                 //  but that information is not exposed from the PropertyPath class.
-                throw new InvalidOperationException(SR.Get(SRID.Storyboard_PropertyPathPropertyNotFound, path.Path ));
+                throw new InvalidOperationException(SR.Format(SR.Storyboard_PropertyPathPropertyNotFound, path.Path ));
             }
 
             // If the first property value is an immutable Freezable, then turn
@@ -723,13 +723,13 @@ public class Storyboard : ParallelTimeline
                 {
                     if( i > 0 )
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Storyboard_PropertyPathFrozenCheckFailed, AccessorName(path, i-1), path.Path, intermediateFreezable.GetType().ToString() ));
+                        throw new InvalidOperationException(SR.Format(SR.Storyboard_PropertyPathFrozenCheckFailed, AccessorName(path, i-1), path.Path, intermediateFreezable.GetType().ToString() ));
                     }
                     else
                     {
                         // i == 0 means the targeted object itself is a frozen Freezable.
                         //  This need a different error message.
-                        throw new InvalidOperationException(SR.Get(SRID.Storyboard_ImmutableTargetNotSupported, path.Path));
+                        throw new InvalidOperationException(SR.Format(SR.Storyboard_ImmutableTargetNotSupported, path.Path));
                     }
                 }
             }
@@ -744,22 +744,22 @@ public class Storyboard : ParallelTimeline
                 if( intermediateDO == null )
                 {
                     Debug.Assert( i > 0, "The caller should not have set the PropertyPath context to a non DependencyObject." );
-                    throw new InvalidOperationException(SR.Get(SRID.Storyboard_PropertyPathMustPointToDependencyObject, AccessorName(path, i-1), path.Path));
+                    throw new InvalidOperationException(SR.Format(SR.Storyboard_PropertyPathMustPointToDependencyObject, AccessorName(path, i-1), path.Path));
                 }
 
                 if( intermediateDP == null )
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Storyboard_PropertyPathMustPointToDependencyProperty, path.Path ));
+                    throw new InvalidOperationException(SR.Format(SR.Storyboard_PropertyPathMustPointToDependencyProperty, path.Path ));
                 }
 
                 if( checkingFrozenState && intermediateDO.IsSealed )
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Storyboard_PropertyPathSealedCheckFailed, intermediateDP.Name, path.Path, intermediateDO));
+                    throw new InvalidOperationException(SR.Format(SR.Storyboard_PropertyPathSealedCheckFailed, intermediateDP.Name, path.Path, intermediateDO));
                 }
 
                 if(!AnimationStorage.IsPropertyAnimatable(intermediateDO, intermediateDP) )
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Storyboard_PropertyPathIncludesNonAnimatableProperty, path.Path, intermediateDP.Name));
+                    throw new InvalidOperationException(SR.Format(SR.Storyboard_PropertyPathIncludesNonAnimatableProperty, path.Path, intermediateDP.Name));
                 }
             }
         }
@@ -795,7 +795,7 @@ public class Storyboard : ParallelTimeline
     {
         if( !AnimationStorage.IsAnimationClockValid(targetProperty, animationClock) )
         {
-            throw new InvalidOperationException(SR.Get(SRID.Storyboard_AnimationMismatch, animationClock.Timeline.GetType(), targetProperty.Name, targetProperty.PropertyType));
+            throw new InvalidOperationException(SR.Format(SR.Storyboard_AnimationMismatch, animationClock.Timeline.GetType(), targetProperty.Name, targetProperty.PropertyType));
         }
     }
 
@@ -842,7 +842,7 @@ public class Storyboard : ParallelTimeline
             animatedProperty == null ||
             targetProperty == null )
         {
-            throw new InvalidOperationException(SR.Get(SRID.Storyboard_PropertyPathUnresolved, path.Path));
+            throw new InvalidOperationException(SR.Format(SR.Storyboard_PropertyPathUnresolved, path.Path));
         }
 
         VerifyAnimationIsValid(animatedProperty, animationClock);
@@ -873,7 +873,7 @@ public class Storyboard : ParallelTimeline
             //  the frozen object.
             if( targetObject.GetValue(targetProperty) != clone )
             {
-                throw new InvalidOperationException(SR.Get(SRID.Storyboard_ImmutableTargetNotSupported, path.Path));
+                throw new InvalidOperationException(SR.Format(SR.Storyboard_ImmutableTargetNotSupported, path.Path));
             }
 
             // Now that we have a clone, update the animatedObject and animatedProperty
@@ -929,13 +929,13 @@ public class Storyboard : ParallelTimeline
     /// </summary>
     private void VerifyComplexPathSupport( DependencyObject targetObject )
     {
-        if( FrameworkElement.DType.IsInstanceOfType(targetObject) )
+        if(targetObject is FrameworkElement)
         {
             // FrameworkElement and derived types are supported.
             return;
         }
 
-        if( FrameworkContentElement.DType.IsInstanceOfType(targetObject) )
+        if(targetObject is FrameworkContentElement)
         {
             // FrameworkContentElement and derived types are supported.
             return;
@@ -944,7 +944,7 @@ public class Storyboard : ParallelTimeline
         // ... and anything else that knows to call into Storyboard.GetComplexPathValue.
 
         // Otherwise - throw.
-        throw new InvalidOperationException(SR.Get(SRID.Storyboard_ComplexPathNotSupported, targetObject.GetType().ToString()));
+        throw new InvalidOperationException(SR.Format(SR.Storyboard_ComplexPathNotSupported, targetObject.GetType().ToString()));
     }
 
     /// <summary>
@@ -1217,7 +1217,7 @@ public class Storyboard : ParallelTimeline
 
         if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
         {
-            throw new ArgumentException(SR.Get(SRID.Storyboard_UnrecognizedHandoffBehavior));
+            throw new ArgumentException(SR.Storyboard_UnrecognizedHandoffBehavior);
         }
 
         if (BeginTime == null)
@@ -1973,7 +1973,7 @@ public class Storyboard : ParallelTimeline
                 // This exception indicates that the storyboard has never been applied.
                 // We check the weak reference because the only way it can be null
                 // is if it had never been put in the dictionary.
-                throw new InvalidOperationException(SR.Get(SRID.Storyboard_NeverApplied));
+                throw new InvalidOperationException(SR.Storyboard_NeverApplied);
             }
             else  if (TraceAnimation.IsEnabledOverride )
             {

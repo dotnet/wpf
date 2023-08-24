@@ -427,7 +427,7 @@ namespace MS.Internal.Csp
             _stringBuilder.Append(text);
             _stringBuilder.Append("),");
             _stringBuilder.Append(_tagStart.Column - _inline.Column - 4);
-            _stringBuilder.Append(")");
+            _stringBuilder.Append(')');
             _inMiddleOfOutputLine = true;
         }
         

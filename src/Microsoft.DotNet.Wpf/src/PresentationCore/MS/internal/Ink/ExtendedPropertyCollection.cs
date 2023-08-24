@@ -16,7 +16,6 @@ using System.Windows.Media;
 using System.Reflection;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Ink
 {
@@ -164,7 +163,7 @@ namespace System.Windows.Ink
         {
             if (this.Contains(id))
             {
-                throw new ArgumentException(SR.Get(SRID.EPExists), "id");
+                throw new ArgumentException(SR.EPExists, "id");
             }
 
             ExtendedProperty extendedProperty = new ExtendedProperty(id, value);
@@ -182,7 +181,7 @@ namespace System.Windows.Ink
         {
             if (!Contains(id))
             {
-                throw new ArgumentException(SR.Get(SRID.EPGuidNotFound), "id");
+                throw new ArgumentException(SR.EPGuidNotFound, "id");
             }
 
             ExtendedProperty propertyToRemove = GetExtendedPropertyById(id);
@@ -242,7 +241,7 @@ namespace System.Windows.Ink
                 ExtendedProperty ep = GetExtendedPropertyById(attributeId);
                 if (ep == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.EPNotFound), "attributeId");
+                    throw new ArgumentException(SR.EPNotFound, "attributeId");
                 }
                 return ep.Value;
             }

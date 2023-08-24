@@ -9,7 +9,6 @@ using System.Windows.Media;
 using System.Windows.Input;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Interop
 {
@@ -303,7 +302,7 @@ namespace System.Windows.Interop
                     // Applications aware of the new property should not set the old one too
                     if (_usesPerPixelOpacity)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.UsesPerPixelOpacityIsObsolete));
+                        throw new InvalidOperationException(SR.UsesPerPixelOpacityIsObsolete);
                     }
 
                     // If not running on Windows 8, we must clear the parameter for child windows
@@ -424,7 +423,7 @@ namespace System.Windows.Interop
         /// <remarks>Not intended to be tested outside test code</remarks>
         internal static void SetPlatformSupportsTransparentChildWindowsForTestingOnly(bool value)
         {
-            if (string.Compare(System.Reflection.Assembly.GetEntryAssembly().GetName().Name, "drthwndsource", true) == 0)
+            if (string.Equals(System.Reflection.Assembly.GetEntryAssembly().GetName().Name, "drthwndsource", StringComparison.CurrentCultureIgnoreCase))
             {
                 _platformSupportsTransparentChildWindows = value;
             }

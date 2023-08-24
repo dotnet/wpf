@@ -514,7 +514,7 @@ namespace System.Windows.Controls
                 // Undo new document assignment.
                 Document = null;
                 // Throw exception.
-                throw new NotSupportedException(SR.Get(SRID.FlowDocumentPageViewerOnlySupportsFlowDocument));
+                throw new NotSupportedException(SR.FlowDocumentPageViewerOnlySupportsFlowDocument);
             }
 
             if(Document != null)
@@ -1447,7 +1447,7 @@ namespace System.Windows.Controls
         private static bool ZoomValidateValue(object o)
         {
             double value = (double)o;
-            return (!Double.IsNaN(value) && !Double.IsInfinity(value) && DoubleUtil.GreaterThan(value, 0d));
+            return (!Double.IsNaN(value) && !Double.IsInfinity(value) && DoubleUtil.GreaterThanZero(value));
         }
 
         /// <summary>

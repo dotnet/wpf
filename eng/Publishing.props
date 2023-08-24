@@ -17,4 +17,8 @@
   <Import Project="WpfArcadeSdk\tools\Publishing.targets"
         Condition="'$(MicrosoftDotNetArcadeWpfSdkVersion)' == '' And 
                       Exists('WpfArcadeSdk\Sdk\Sdk.props') And Exists('WpfArcadeSdk\Sdk\Sdk.targets')"/>
+
+  <PropertyGroup>
+    <PublishingVersion>3</PublishingVersion>
+  </PropertyGroup>
 </Project>

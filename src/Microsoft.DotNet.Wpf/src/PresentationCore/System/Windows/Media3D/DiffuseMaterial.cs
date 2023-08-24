@@ -39,7 +39,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public DiffuseMaterial()
         {
-}
+        }
 
         /// <summary>
         ///     Constructor that sets the Brush property to "brush"

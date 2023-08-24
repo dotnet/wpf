@@ -118,7 +118,7 @@ namespace System.Windows.Documents
         protected override void Dispose(bool disposing)
         {
             if (_isDisposed)
-                throw new ObjectDisposedException(SR.Get(SRID.TextEditorSpellerInteropHasBeenDisposed));
+                throw new ObjectDisposedException(SR.TextEditorSpellerInteropHasBeenDisposed);
 
             if (_textChunk != null)
             {
@@ -643,6 +643,12 @@ namespace System.Windows.Documents
 
             #region SpellerInteropBase.ISpellerSegment
 
+            /// <inheritdoc/>
+            public string SourceString { get; }
+
+            /// <inheritdoc/>
+            public string Text => SourceString?.Substring(TextRange.Start, TextRange.Length);
+
             /// <summary>
             /// Returns a read-only list of sub-segments of this segment
             /// </summary>
@@ -973,7 +979,7 @@ namespace System.Windows.Documents
                 // Otherwise it's a security concern to disclose this data.
                 if (hasDemand)
                 {
-                    throw new ArgumentException(SR.Get(SRID.CustomDictionaryFailedToLoadDictionaryUri, lexiconFilePath), e);
+                    throw new ArgumentException(SR.Format(SR.CustomDictionaryFailedToLoadDictionaryUri, lexiconFilePath), e);
                 }
                 else
                 {

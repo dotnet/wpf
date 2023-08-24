@@ -91,7 +91,7 @@ namespace System.Windows.Controls
 
             CommandHelpers.RegisterCommandHandler(ownerType, InkCanvas.DeselectCommand,
                 new ExecutedRoutedEventHandler(_OnCommandExecuted), new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled),
-                KeyGesture.CreateFromResourceStrings(InkCanvasDeselectKey, SRID.InkCanvasDeselectKeyDisplayString));
+                KeyGesture.CreateFromResourceStrings(InkCanvasDeselectKey, nameof(SR.InkCanvasDeselectKeyDisplayString)));
 
             //
             //set our clipping
@@ -379,7 +379,7 @@ namespace System.Windows.Controls
             if (    (_localAdornerDecorator == null)
                 ||  (index != 0))
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
 
             return _localAdornerDecorator;
@@ -1892,12 +1892,12 @@ namespace System.Windows.Controls
         {
             VerifyAccess();
 
-            if (DoubleUtil.IsNaN(point.X) ||
-                DoubleUtil.IsNaN(point.Y) ||
+            if (double.IsNaN(point.X) ||
+                double.IsNaN(point.Y) ||
                 Double.IsInfinity(point.X)||
                 Double.IsInfinity(point.Y) )
             {
-                    throw new ArgumentException(SR.Get(SRID.InvalidPoint), "point");
+                    throw new ArgumentException(SR.InvalidPoint, "point");
             }
 
 
@@ -2525,15 +2525,15 @@ namespace System.Windows.Controls
 
             CommandHelpers.RegisterCommandHandler(ownerType, ApplicationCommands.Cut,
                 new ExecutedRoutedEventHandler(_OnCommandExecuted), new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled),
-                KeyGesture.CreateFromResourceStrings(KeyShiftDelete, SRID.KeyShiftDeleteDisplayString));
+                KeyGesture.CreateFromResourceStrings(KeyShiftDelete, nameof(SR.KeyShiftDeleteDisplayString)));
             CommandHelpers.RegisterCommandHandler(ownerType, ApplicationCommands.Copy,
                 new ExecutedRoutedEventHandler(_OnCommandExecuted), new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled),
-                KeyGesture.CreateFromResourceStrings(KeyCtrlInsert, SRID.KeyCtrlInsertDisplayString));
+                KeyGesture.CreateFromResourceStrings(KeyCtrlInsert, nameof(SR.KeyCtrlInsertDisplayString)));
 
             // Use temp variables to reduce code under elevation
             ExecutedRoutedEventHandler pasteExecuteEventHandler = new ExecutedRoutedEventHandler(_OnCommandExecuted);
             CanExecuteRoutedEventHandler pasteQueryEnabledEventHandler = new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled);
-            InputGesture pasteInputGesture = KeyGesture.CreateFromResourceStrings(KeyShiftInsert, SR.Get(SRID.KeyShiftInsertDisplayString));
+            InputGesture pasteInputGesture = KeyGesture.CreateFromResourceStrings(KeyShiftInsert, SR.KeyShiftInsertDisplayString);
 
             CommandHelpers.RegisterCommandHandler(ownerType, ApplicationCommands.Paste,
                 pasteExecuteEventHandler, pasteQueryEnabledEventHandler, pasteInputGesture);

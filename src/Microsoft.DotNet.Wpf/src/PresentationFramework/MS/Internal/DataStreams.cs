@@ -126,7 +126,9 @@ namespace MS.Internal.AppModel
                         {
                             // Convert the value of the DP into a byte array
                             MemoryStream byteStream = new MemoryStream();
+                            #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
                             this.Formatter.Serialize(byteStream, currentValue);
+                            #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
                             
                             bytes = byteStream.ToArray();
                             // Dispose the stream
@@ -236,7 +238,9 @@ namespace MS.Internal.AppModel
                     object newValue = null;
                     if (subStream._data != null)
                     {
+                        #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
                         newValue = this.Formatter.Deserialize(new MemoryStream(subStream._data));
+                        #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
                     }
                     element.SetValue(dp, newValue);
                 }
@@ -349,7 +353,7 @@ namespace MS.Internal.AppModel
             _subStreams = null;
             _customJournaledObjects = null; 
         }
-
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
         #region Private and internal fields and properties
         private BinaryFormatter Formatter
         {
@@ -378,4 +382,5 @@ namespace MS.Internal.AppModel
         #endregion Private and internal fields and properties
     }
     #endregion DataStreams class
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
 }

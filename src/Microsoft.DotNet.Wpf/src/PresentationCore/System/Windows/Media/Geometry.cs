@@ -26,7 +26,6 @@ using System.Windows.Media.Animation;
 using System.Runtime.InteropServices;
 using System.Windows.Markup;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media 
 {

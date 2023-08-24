@@ -23,7 +23,7 @@ using System.Runtime.Serialization;
 using System.Diagnostics;               // For Assert
 using MS.Utility;                       // for EventTrace
 using MS.Internal.IO.Packaging;         // for PackageCacheEntry
-using MS.Internal.PresentationCore;     // for SRID exception strings
+using MS.Internal.PresentationCore;     // for SR exception strings
 using MS.Internal;
 
 namespace MS.Internal.IO.Packaging
@@ -46,6 +46,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="packageUri">uri of the package</param>
         /// <param name="partUri">uri of the part - may be null</param>
         /// <param name="cacheEntry">cache entry to base this response on</param>
+        #pragma warning disable SYSLIB0014 
         internal PseudoWebRequest(Uri uri, Uri packageUri, Uri partUri, Package cacheEntry)
         {
             Debug.Assert(uri != null, "PackWebRequest uri cannot be null");
@@ -61,6 +62,7 @@ namespace MS.Internal.IO.Packaging
             // set defaults
             SetDefaults();
         }
+        #pragma warning restore SYSLIB0014 
 
         //------------------------------------------------------
         //
@@ -329,7 +331,7 @@ namespace MS.Internal.IO.Packaging
         //------------------------------------------------------
         private bool IsScheme(String schemeName)
         {
-            return (String.CompareOrdinal(_innerUri.Scheme, schemeName) == 0);
+            return (string.Equals(_innerUri.Scheme, schemeName, StringComparison.Ordinal));
         }
 
         /// <summary>

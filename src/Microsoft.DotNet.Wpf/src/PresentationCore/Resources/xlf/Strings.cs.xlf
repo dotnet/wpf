@@ -234,7 +234,7 @@
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderDisposed">
         <source>Cannot access a disposed HTTP byte range downloader.</source>
-        <target state="translated">Není přístup k nástroji pro stahování použitého rozsahu bajtů HTTP.</target>
+        <target state="translated">Není přístup k nástroji načítání použitého rozsahu bajtů HTTP.</target>
         <note />
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderErroredOut">
@@ -1908,8 +1908,8 @@
         <note />
       </trans-unit>
       <trans-unit id="Invalid_IInputElement">
-        <source>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</source>
-        <target state="translated">Prvek {0} není platný typ prvku IInputElement. Platnými typy jsou UIElement nebo ContentElement.</target>
+        <source>'{0}' is not a valid type for IInputElement. UIElement, ContentElement or UIElement3D expected.</source>
+        <target state="translated">Prvek {0} není platný typ pro IInputElement. Platnými typy jsou UIElement, ContentElement nebo UIElement3D.</target>
         <note />
       </trans-unit>
       <trans-unit id="Invalid_URI">
@@ -2199,7 +2199,7 @@
       </trans-unit>
       <trans-unit id="Media_PlaylistFormatNotSupported">
         <source>Unrecognized playlist file format.</source>
-        <target state="translated">Neznámý formát souboru playlist.</target>
+        <target state="translated">Neznámý formát souboru seznamu stop.</target>
         <note />
       </trans-unit>
       <trans-unit id="Media_StreamClosed">

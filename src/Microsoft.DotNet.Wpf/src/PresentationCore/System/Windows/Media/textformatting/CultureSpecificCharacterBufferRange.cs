@@ -12,7 +12,6 @@ using System.Globalization;
 using System.Windows.Media.TextFormatting;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.TextFormatting
 {

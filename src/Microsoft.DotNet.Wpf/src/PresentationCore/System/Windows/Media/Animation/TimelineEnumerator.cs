@@ -15,7 +15,6 @@ using System.Collections;
 using MS.Internal;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Animation
 {
@@ -94,7 +93,7 @@ namespace System.Windows.Media.Animation
                 if (_currentIndex < 0 || _currentIndex == _owner.Count)
                 {
 #pragma warning suppress 56503 // Suppress presharp warning: Follows a pattern similar to Nullable.
-                    throw new InvalidOperationException(SR.Get(SRID.Timing_EnumeratorOutOfRange));
+                    throw new InvalidOperationException(SR.Timing_EnumeratorOutOfRange);
                 }
 
                 return _owner[_currentIndex];
@@ -133,7 +132,7 @@ namespace System.Windows.Media.Animation
         {
             if (_version != _owner.Version)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Timing_EnumeratorInvalidated));
+                throw new InvalidOperationException(SR.Timing_EnumeratorInvalidated);
             }
         }
 

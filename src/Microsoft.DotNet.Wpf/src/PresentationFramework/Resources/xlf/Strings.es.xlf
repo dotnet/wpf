@@ -1607,28 +1607,18 @@
         <target state="translated">Error al convertir el recurso en un objeto.</target>
         <note />
       </trans-unit>
-      <trans-unit id="FileDialogBufferTooSmall">
-        <source>Too many files selected. Select fewer files and try again.</source>
-        <target state="translated">Demasiados archivos seleccionados. Seleccione menos archivos e inténtelo de nuevo.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FileDialogCreatePrompt">
         <source>'{0}' does not exist.
 Do you want to create it?</source>
-        <target state="translated">"{0}" no existe.
+        <target state="translated">'{0}' no existe.
 ¿Desea crearlo?</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogFileNotFound">
         <source>'{0}' does not exist.
 Verify that the file name is correct.</source>
-        <target state="translated">"{0}" no existe.
+        <target state="translated">'{0}' no existe.
 Compruebe que el nombre de archivo sea correcto.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileDialogInvalidFileName">
-        <source>'{0}' is not a valid file name.</source>
-        <target state="translated">'{0}' no es un nombre de archivo válido.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogInvalidFilter">
@@ -1644,13 +1634,8 @@ Compruebe que el nombre de archivo sea correcto.</target>
       <trans-unit id="FileDialogOverwritePrompt">
         <source>'{0}' already exists.
 Do you want to replace it?</source>
-        <target state="translated">{0} ya existe.
+        <target state="translated">'{0}' ya existe.
 ¿Desea reemplazarlo?</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileDialogSubClassFailure">
-        <source>Cannot subclass a file dialog because sufficient memory is not available.</source>
-        <target state="translated">No se puede asignar como subclase un cuadro de diálogo de archivo porque no hay suficiente memoria disponible.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileFormatException">
@@ -1880,7 +1865,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="Generator_MoreErrors">
         <source>(... {0} more instances ...)</source>
-        <target state="translated">(... {0} más instancias ...)</target>
+        <target state="translated">(... {0} instancias más ...)</target>
         <note />
       </trans-unit>
       <trans-unit id="Generator_Readme0">
@@ -3680,7 +3665,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="ParserBadConstructorParams">
         <source>Cannot find public constructor for '{0}' that takes '{1}' arguments.</source>
-        <target state="translated">No se puede encontrar el constructor público para "{0}" que acepta parámetros "{1}".</target>
+        <target state="translated">No se encuentra el constructor público para "{0}" que acepta argumentos "{1}".</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserBadEncoding">
@@ -6165,7 +6150,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="UndoUnitOpen">
         <source>Cannot Undo or Redo while undo unit is open.</source>
-        <target state="translated">No se puede deshacer ni rehacer cuando la unidad está abierta.</target>
+        <target state="translated">No se puede deshacer ni rehacer cuando la unidad de deshacer está abierta.</target>
         <note />
       </trans-unit>
       <trans-unit id="UnexpectedAttribute">

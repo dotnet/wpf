@@ -745,31 +745,37 @@ BEGIN_MILFLAGENUM( MilRTInitialization )
     //
     // This flag forces the creation of a render target bitmap to match its
     // parent's type, so a software surface only creates software RTs and a
-    // hardware surface only creates hardware RTs.  This is necessary for the 
+    // hardware surface only creates hardware RTs.  This is necessary for the
     // hardware-accelerated bitmap effects pipeline to guarantee that we do
-    // not encounter a situation where we're trying to run shaders sampling 
+    // not encounter a situation where we're trying to run shaders sampling
     // from a hardware texture to render into a software intermediate.
     //
     ForceCompatible = 0x00002000,
 
     //
-    // This flag is the same as DisableDisplayClipping except that it disables 
+    // This flag is the same as DisableDisplayClipping except that it disables
     // display clipping on multi-monitor configurations in all OS'. This flag is 
-    // automatically 
-    // set on Windows 8 and newer systems. If WPF decides to unset 
-    // DisableDisplayClipping, then DisableMultimonDisplayClipping flag will not be 
+    // automatically
+    // set on Windows 8 and newer systems. If WPF decides to unset
+    // DisableDisplayClipping, then DisableMultimonDisplayClipping flag will not be
     // respected even if set by an applicaiton via its manifest
     //
     DisableMultimonDisplayClipping = 0x00004000,
 
     //
-    // This flag is passed down by PresentationCore to tell wpfgfx that 
-    // the DisableMultimonDisplayClipping compatibity flag is set by the user. This 
+    // This flag is passed down by PresentationCore to tell wpfgfx that
+    // the DisableMultimonDisplayClipping compatibity flag is set by the user. This
     // allows us to distinguish between when DisableMultimonDisplayClipping == 0 means
-    // that the user set it to false explicitly, versus when the user didn't set it 
+    // that the user set it to false explicitly, versus when the user didn't set it
     // and the DisableMultimonDisplayClipping bit happens to be implicitly set to 0
     //
     IsDisableMultimonDisplayClippingValid = 0x00008000,
+
+    //
+    // This flag directs the render target to render the full scene,
+    // bypassing D3D's dirty-rectangle optimizations.
+    //
+    DisableDirtyRectangles = 0x00010000,
 
 
     //

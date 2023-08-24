@@ -52,14 +52,8 @@ namespace System.Xaml
 
         internal XamlMember(PropertyInfo propertyInfo, XamlSchemaContext schemaContext, XamlMemberInvoker invoker, MemberReflector reflector)
         {
-            if (propertyInfo == null)
-            {
-                throw new ArgumentNullException(nameof(propertyInfo));
-            }
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
+            ArgumentNullException.ThrowIfNull(propertyInfo);
+            ArgumentNullException.ThrowIfNull(schemaContext);
             _name = propertyInfo.Name;
             _declaringType = schemaContext.GetXamlType(propertyInfo.DeclaringType);
             _memberType = MemberType.Instance;
@@ -81,14 +75,8 @@ namespace System.Xaml
 
         internal XamlMember(EventInfo eventInfo, XamlSchemaContext schemaContext, XamlMemberInvoker invoker, MemberReflector reflector)
         {
-            if (eventInfo == null)
-            {
-                throw new ArgumentNullException(nameof(eventInfo));
-            }
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
+            ArgumentNullException.ThrowIfNull(eventInfo);
+            ArgumentNullException.ThrowIfNull(schemaContext);
             _name = eventInfo.Name;
             _declaringType = schemaContext.GetXamlType(eventInfo.DeclaringType);
             _memberType = MemberType.Instance;
@@ -113,14 +101,11 @@ namespace System.Xaml
         internal XamlMember(string attachablePropertyName, MethodInfo getter, MethodInfo setter,
             XamlSchemaContext schemaContext, XamlMemberInvoker invoker, MemberReflector reflector)
         {
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
+            ArgumentNullException.ThrowIfNull(schemaContext);
             MethodInfo accessor = getter ?? setter;
             if (accessor == null)
             {
-                throw new ArgumentNullException(SR.Get(SRID.GetterOrSetterRequired), (Exception)null);
+                throw new ArgumentNullException(SR.GetterOrSetterRequired, (Exception)null);
             }
             _name = attachablePropertyName ?? throw new ArgumentNullException(nameof(attachablePropertyName));
 
@@ -149,14 +134,8 @@ namespace System.Xaml
         internal XamlMember(string attachableEventName, MethodInfo adder, XamlSchemaContext schemaContext,
             XamlMemberInvoker invoker, MemberReflector reflector)
         {
-            if (adder == null)
-            {
-                throw new ArgumentNullException(nameof(adder));
-            }
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
+            ArgumentNullException.ThrowIfNull(adder);
+            ArgumentNullException.ThrowIfNull(schemaContext);
             ValidateSetter(adder, "adder");
 
             _name = attachableEventName ?? throw new ArgumentNullException(nameof(attachableEventName));
@@ -823,7 +802,7 @@ namespace System.Xaml
             }
             if ((method.GetParameters().Length != 1) || (method.ReturnType == typeof(void)))
             {
-                throw new ArgumentException(SR.Get(SRID.IncorrectGetterParamNum), argumentName);
+                throw new ArgumentException(SR.IncorrectGetterParamNum, argumentName);
             }
         }
 
@@ -831,7 +810,7 @@ namespace System.Xaml
         {
             if ((method != null) && (method.GetParameters().Length != 2))
             {
-                throw new ArgumentException(SR.Get(SRID.IncorrectSetterParamNum), argumentName);
+                throw new ArgumentException(SR.IncorrectSetterParamNum, argumentName);
             }
         }
 

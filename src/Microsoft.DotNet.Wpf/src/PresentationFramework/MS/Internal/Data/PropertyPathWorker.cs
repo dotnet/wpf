@@ -305,7 +305,7 @@ namespace MS.Internal.Data
                     }
                     else
                     {
-                        throw new NotSupportedException(SR.Get(SRID.IndexedPropDescNotImplemented));
+                        throw new NotSupportedException(SR.IndexedPropDescNotImplemented);
                     }
                     break;
 
@@ -320,13 +320,14 @@ namespace MS.Internal.Data
                 if (accessor == DependencyProperty.UnsetValue)
                     accessor = null;
 
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.GetValue(
                                         TraceData.Identify(_host.ParentBindingExpression),
                                         level,
                                         TraceData.Identify(item),
                                         TraceData.IdentifyAccessor(accessor),
-                                        TraceData.Identify(value)));
+                                        TraceData.Identify(value)),
+                                    _host.ParentBindingExpression);
             }
 
             return value;
@@ -344,13 +345,14 @@ namespace MS.Internal.Data
 
             if (isExtendedTraceEnabled)
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.SetValue(
                                         TraceData.Identify(_host.ParentBindingExpression),
                                         level,
                                         TraceData.Identify(item),
                                         TraceData.IdentifyAccessor(_arySVS[level].info),
-                                        TraceData.Identify(value)));
+                                        TraceData.Identify(value)),
+                                    _host.ParentBindingExpression);
             }
 
             switch (SVI[level].type)
@@ -390,7 +392,7 @@ namespace MS.Internal.Data
                     }
                     else
                     {
-                        throw new NotSupportedException(SR.Get(SRID.IndexedPropDescNotImplemented));
+                        throw new NotSupportedException(SR.IndexedPropDescNotImplemented);
                     }
                     break;
             }
@@ -756,11 +758,12 @@ namespace MS.Internal.Data
 
                 if (isExtendedTraceEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                         TraceData.ReplaceItemShort(
                                             TraceData.Identify(_host.ParentBindingExpression),
                                             k,
-                                            TraceData.Identify(newO)));
+                                            TraceData.Identify(newO)),
+                                        _host.ParentBindingExpression);
                 }
 
                 return;
@@ -849,12 +852,13 @@ namespace MS.Internal.Data
 
             if (isExtendedTraceEnabled)
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.ReplaceItemLong(
                                         TraceData.Identify(_host.ParentBindingExpression),
                                         k,
                                         TraceData.Identify(newO),
-                                        TraceData.IdentifyAccessor(svs.info)));
+                                        TraceData.IdentifyAccessor(svs.info)),
+                                    _host.ParentBindingExpression);
             }
 
             // start listening to new item
@@ -933,9 +937,10 @@ namespace MS.Internal.Data
                     if (!SystemXmlHelper.IsEmptyXmlDataCollection(parent))
                     {
                         SourceValueInfo svi = SVI[k];
+                        bool inCollection = (svi.drillIn == DrillIn.Always);
                         string cs = (svi.type != SourceValueType.Indexer) ? svi.name : "[" + svi.name + "]";
                         string ps = TraceData.DescribeSourceObject(parent);
-                        string os = (svi.drillIn == DrillIn.Always) ? "current item of collection" : "object";
+                        string os = inCollection ? "current item of collection" : "object";
 
                         // if the parent is null, the path error probably only means the
                         // data provider hasn't produced any data yet.  When it does,
@@ -943,18 +948,20 @@ namespace MS.Internal.Data
                         // feedback for this special case, so as not to alarm users unduly.
                         if (parent == null)
                         {
-                            TraceData.Trace(TraceEventType.Information, TraceData.NullItem(cs, os), bindingExpression);
+                            TraceData.TraceAndNotify(TraceEventType.Information, TraceData.NullItem(cs, os), bindingExpression);
                         }
                         // Similarly, if the parent is the NewItemPlaceholder.
                         else if (parent == CollectionView.NewItemPlaceholder ||
                                 parent == DataGrid.NewItemPlaceholder)
                         {
-                            TraceData.Trace(TraceEventType.Information, TraceData.PlaceholderItem(cs, os), bindingExpression);
+                            TraceData.TraceAndNotify(TraceEventType.Information, TraceData.PlaceholderItem(cs, os), bindingExpression);
                         }
                         else
                         {
                             TraceEventType traceType = (bindingExpression != null) ? bindingExpression.TraceLevel : TraceEventType.Error;
-                            TraceData.Trace(traceType, TraceData.ClrReplaceItem(cs, ps, os), bindingExpression);
+                            TraceData.TraceAndNotify(traceType, TraceData.ClrReplaceItem(cs, ps, os), bindingExpression,
+                                traceParameters: new object[] { bindingExpression },
+                                eventParameters: new object[] { cs, parent, inCollection });
                         }
                     }
                     else
@@ -1042,11 +1049,12 @@ namespace MS.Internal.Data
 
                 if (isExtendedTraceEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                         TraceData.GetInfo_Reuse(
                                             TraceData.Identify(_host.ParentBindingExpression),
                                             k,
-                                            TraceData.IdentifyAccessor(svs.info)));
+                                            TraceData.IdentifyAccessor(svs.info)),
+                                        _host.ParentBindingExpression);
                 }
                 return;
             }
@@ -1061,10 +1069,11 @@ namespace MS.Internal.Data
 
                 if (isExtendedTraceEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                         TraceData.GetInfo_Null(
                                             TraceData.Identify(_host.ParentBindingExpression),
-                                            k));
+                                            k),
+                                        _host.ParentBindingExpression);
                 }
                 return;
             }
@@ -1093,13 +1102,14 @@ namespace MS.Internal.Data
 
                     if (isExtendedTraceEnabled)
                     {
-                        TraceData.Trace(TraceEventType.Warning,
+                        TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                             TraceData.GetInfo_Cache(
                                                 TraceData.Identify(_host.ParentBindingExpression),
                                                 k,
                                                 newType.Name,
                                                 SVI[k].name,
-                                                TraceData.IdentifyAccessor(svs.info)));
+                                                TraceData.IdentifyAccessor(svs.info)),
+                                            _host.ParentBindingExpression);
                     }
 
 #if DEBUG   // compute the answer the old-fashioned way, and compare
@@ -1120,13 +1130,14 @@ namespace MS.Internal.Data
 
                     if (isExtendedTraceEnabled)
                     {
-                        TraceData.Trace(TraceEventType.Warning,
+                        TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                             TraceData.GetInfo_Property(
                                                 TraceData.Identify(_host.ParentBindingExpression),
                                                 k,
                                                 newType.Name,
                                                 SVI[k].name,
-                                                TraceData.IdentifyAccessor(info)));
+                                                TraceData.IdentifyAccessor(info)),
+                                            _host.ParentBindingExpression);
                     }
 
                     DependencyProperty dp;
@@ -1224,13 +1235,14 @@ namespace MS.Internal.Data
 
                     if (isExtendedTraceEnabled)
                     {
-                        TraceData.Trace(TraceEventType.Warning,
+                        TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                             TraceData.GetInfo_Indexer(
                                                 TraceData.Identify(_host.ParentBindingExpression),
                                                 k,
                                                 newType.Name,
                                                 SVI[k].name,
-                                                TraceData.IdentifyAccessor(info)));
+                                                TraceData.IdentifyAccessor(info)),
+                                            _host.ParentBindingExpression);
                     }
 
                     break;
@@ -1456,13 +1468,13 @@ namespace MS.Internal.Data
                 {
                     // We can't recognize such properties in general, but we can
                     // recognize the most common cases - properties declared by .Net
-                    // types on a whitelist.
+                    // types on an allowlist.
                     Type type = pi.DeclaringType;
                     if (type.IsGenericType)
                     {
                         type = type.GetGenericTypeDefinition();
                     }
-                    shouldWrap = IListIndexerWhitelist.Contains(type);
+                    shouldWrap = IListIndexerAllowlist.Contains(type);
                 }
 
                 if (shouldWrap)
@@ -1561,7 +1573,7 @@ namespace MS.Internal.Data
                 catch // non CLS compliant exception
                 {
                     if (_host != null)
-                        _host.ReportGetValueError(k, item, new InvalidOperationException(SR.Get(SRID.NonCLSException, "GetValue")));
+                        _host.ReportGetValueError(k, item, new InvalidOperationException(SR.Format(SR.NonCLSException, "GetValue")));
                 }
 
                 // catch the pseudo-exception as well
@@ -1617,22 +1629,22 @@ namespace MS.Internal.Data
             if (pi != null)
             {
                 if (IsPropertyReadOnly(item, pi))
-                    throw new InvalidOperationException(SR.Get(SRID.CannotWriteToReadOnly, item.GetType(), pi.Name));
+                    throw new InvalidOperationException(SR.Format(SR.CannotWriteToReadOnly, item.GetType(), pi.Name));
             }
             else if (pd != null)
             {
                 if (pd.IsReadOnly)
-                    throw new InvalidOperationException(SR.Get(SRID.CannotWriteToReadOnly, item.GetType(), pd.Name));
+                    throw new InvalidOperationException(SR.Format(SR.CannotWriteToReadOnly, item.GetType(), pd.Name));
             }
             else if (dp != null)
             {
                 if (dp.ReadOnly)
-                    throw new InvalidOperationException(SR.Get(SRID.CannotWriteToReadOnly, item.GetType(), dp.Name));
+                    throw new InvalidOperationException(SR.Format(SR.CannotWriteToReadOnly, item.GetType(), dp.Name));
             }
             else if (dpa != null)
             {
                 if (dpa.IsReadOnly)
-                    throw new InvalidOperationException(SR.Get(SRID.CannotWriteToReadOnly, item.GetType(), dpa.PropertyName));
+                    throw new InvalidOperationException(SR.Format(SR.CannotWriteToReadOnly, item.GetType(), dpa.PropertyName));
             }
         }
 
@@ -1733,11 +1745,12 @@ namespace MS.Internal.Data
         {
             if (IsExtendedTraceEnabled(TraceDataLevel.Events))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.GotEvent(
                                         TraceData.Identify(_host.ParentBindingExpression),
                                         "PropertyChanged",
-                                        TraceData.Identify(sender)));
+                                        TraceData.Identify(sender)),
+                                    _host.ParentBindingExpression);
             }
 
             _host.OnSourcePropertyChanged(sender, e.PropertyName);
@@ -1747,11 +1760,12 @@ namespace MS.Internal.Data
         {
             if (IsExtendedTraceEnabled(TraceDataLevel.Events))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.GotEvent(
                                         TraceData.Identify(_host.ParentBindingExpression),
                                         "ValueChanged",
-                                        TraceData.Identify(sender)));
+                                        TraceData.Identify(sender)),
+                                    _host.ParentBindingExpression);
             }
 
             _host.OnSourcePropertyChanged(sender, e.PropertyDescriptor.Name);
@@ -1769,11 +1783,12 @@ namespace MS.Internal.Data
         {
             if (IsExtendedTraceEnabled(TraceDataLevel.Events))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.GotEvent(
                                         TraceData.Identify(_host.ParentBindingExpression),
                                         "PropertyChanged",
-                                        "(static)"));
+                                        "(static)"),
+                                    _host.ParentBindingExpression);
             }
 
             _host.OnSourcePropertyChanged(sender, e.PropertyName);
@@ -1859,7 +1874,7 @@ namespace MS.Internal.Data
         // a list of types that declare indexers known to be consistent
         // with IList.Item[int index].  It is safe to replace these indexers
         // with the IList one.
-        static readonly IList<Type> IListIndexerWhitelist = new Type[]
+        static readonly IList<Type> IListIndexerAllowlist = new Type[]
         {
             typeof(System.Collections.ArrayList),
             typeof(System.Collections.IList),

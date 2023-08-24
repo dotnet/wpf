@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.DotNet.Helix.Sdk" DefaultTargets="Test">
   <Import Project="$(WpfArcadeSdkToolsDir)DrtsToRun.props" />
   <PropertyGroup>
-    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <IncludeDotNetCli>true</IncludeDotNetCli>
 
     <!--
     Ideally we could use $(MicrosoftNetCoreAppVersion) for DotNetCliVersion and 'runtime' for DotNetCliPackageType.
     However, we need a full install on the Helix machine that includes the WindowsDesktop SDK since QV is dependent on it.
-    Once we move it into the open we can put these back to how they should be. See https://github.com/dotnet/wpf/issues/816 
+    Once we move it into the open we can put these back to how they should be. See https://github.com/dotnet/wpf/issues/816
     for any more details.
 
     Right now, we set it to match global.json.tools.dotnet set by pre-build.ps1. Both of these can be removed once the above
@@ -29,11 +29,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <HelixCorrelationPayload Include="$(ArtifactsDir)\test\$(Configuration)\$(Platform)" /> 
+    <HelixCorrelationPayload Include="$(ArtifactsDir)\test\$(Configuration)\$(Platform)" />
     <HelixWorkItem Include="@(DRT)">
       <Timeout>00:20:00</Timeout>
       <Command>call %HELIX_CORRELATION_PAYLOAD%\runtests.cmd /Area=%(Area) -ci</Command>
     </HelixWorkItem>
-   
+
   </ItemGroup>
 </Project>

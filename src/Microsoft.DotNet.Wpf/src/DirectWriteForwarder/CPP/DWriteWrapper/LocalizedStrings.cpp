@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 #include "LocalizedStrings.h"
-#include "wpfvcclr.h"
 
 namespace MS { namespace Internal { namespace Text { namespace TextInterface
 {
@@ -144,7 +143,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         }
         else
         {
-            pin_ptr<const wchar_t> localeNameWChar = CriticalPtrToStringChars(localeName);
+            pin_ptr<const wchar_t> localeNameWChar = PtrToStringChars(localeName);
             BOOL exists = FALSE;
             UINT32 localeNameIndex = 0;
             HRESULT hr = _localizedStrings->Value->FindLocaleName(

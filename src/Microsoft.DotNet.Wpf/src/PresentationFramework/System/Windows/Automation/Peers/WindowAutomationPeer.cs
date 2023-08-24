@@ -38,18 +38,24 @@ namespace System.Windows.Automation.Peers
         {
             string name = base.GetNameCore();
 
-            if(name == string.Empty)
+            if(name.Length == 0)
             {
                 Window window = (Window)Owner;
 
                 if(!window.IsSourceWindowNull)
                 {
-                    StringBuilder sb = new StringBuilder(512);
-                    UnsafeNativeMethods.GetWindowText(new HandleRef(null, window.CriticalHandle), sb, sb.Capacity);
-                    name = sb.ToString();
+                    try
+                    {
+                        StringBuilder sb = new StringBuilder(512);
+                        UnsafeNativeMethods.GetWindowText(new HandleRef(null, window.CriticalHandle), sb, sb.Capacity);
+                        name = sb.ToString();
+                    }
+                    catch (Win32Exception)
+                    {
+                        name = window.Title;
+                    }
 
-                    if (name == null)
-                        name = string.Empty;
+                    name ??= "";
                 }
             }
 
@@ -88,7 +94,19 @@ namespace System.Windows.Automation.Peers
 
             return bounds;
         }
+
+        protected override bool IsDialogCore()
+        {
+            Window window = (Window)Owner;
+            if (MS.Internal.Helper.IsDefaultValue(AutomationProperties.IsDialogProperty, window))
+            {
+                return window.IsShowingAsDialog;
+            }
+            else
+            {
+                return AutomationProperties.GetIsDialog(window);
+            }
+        }
     }
 }
-
 

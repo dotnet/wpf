@@ -168,6 +168,11 @@ namespace System.IO
                     // We may not be able to delete the file if it's being used by some other process (e.g. Anti-virus check).
                     // There's nothing we can do in that case, so just eat the exception and leave the file behind
                 }
+                catch(System.UnauthorizedAccessException)
+                {
+                    // We may not be able to delete the file if we do not have rights to delete from the file folder.
+                    // There's nothing we can do in that case, so just eat the exception and leave the file behind
+                }
             }
         }
         #pragma warning restore 56502

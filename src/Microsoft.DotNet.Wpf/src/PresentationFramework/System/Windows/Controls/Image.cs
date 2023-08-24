@@ -496,12 +496,7 @@ namespace System.Windows.Controls
         /// </summary>
         bool IProvidePropertyFallback.CanProvidePropertyFallback(string property)
         {
-            if (String.CompareOrdinal(property, "Source") == 0)
-            {
-                return true;
-            }
-
-            return false;
+            return string.Equals(property, "Source", StringComparison.Ordinal);
         }
 
         /// <summary>
@@ -509,7 +504,7 @@ namespace System.Windows.Controls
         /// </summary>
         object IProvidePropertyFallback.ProvidePropertyFallback(string property, Exception cause)
         {
-            if (String.CompareOrdinal(property, "Source") == 0)
+            if (string.Equals(property, "Source", StringComparison.Ordinal))
             {
                 RaiseEvent(new ExceptionRoutedEventArgs(ImageFailedEvent, this, cause));
             }

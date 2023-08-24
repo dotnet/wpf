@@ -452,6 +452,19 @@ namespace System.Windows.Controls
             SetFlag(ignoreFlag, false);
         }
 
+        // Set column header width and associated column width
+        internal void UpdateColumnHeaderWidth(double width)
+        {
+            if (Column != null)
+            {
+                Column.Width = width;
+            }
+            else
+            {
+                Width = width;
+            }
+        }
+
         #endregion Internal Methods
 
         //-------------------------------------------------------------------
@@ -788,19 +801,6 @@ namespace System.Windows.Controls
             }
         }
 
-        // Set column header width and associated column width
-        private void UpdateColumnHeaderWidth(double width)
-        {
-            if (Column != null)
-            {
-                Column.Width = width;
-            }
-            else
-            {
-                Width = width;
-            }
-        }
-
         private bool IsMouseOutside()
         {
             Point pos = Mouse.PrimaryDevice.GetPosition(this);
@@ -979,7 +979,7 @@ namespace System.Windows.Controls
             // Define a Style with ContentTemplate and assign it to GridViewColumn.HeaderContainerStyle property. GridViewColumnHeader.OnPropertyChagned method will be called twice.
             // The first call is for ContentTemplate property. In this call, IgnoreContentTemplate is false.
             // The second call is for Style property. In this call, IgnoreStyle is true.
-            // One flag can’t distinguish them.
+            // One flag canÂ’t distinguish them.
             None                                = 0,
             StyleSetByUser                      = 0x00000001,
             IgnoreStyle                         = 0x00000002,

@@ -17,7 +17,6 @@ using System.Runtime.InteropServices;
 using MS.Internal.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 
@@ -564,7 +563,7 @@ namespace System.Windows.Media
         {
             if (this.dataStream == null)
             {
-                throw new System.ObjectDisposedException(SR.Get(SRID.Media_StreamClosed));
+                throw new System.ObjectDisposedException(SR.Media_StreamClosed);
             }
         }
         #endregion

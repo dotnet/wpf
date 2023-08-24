@@ -1031,7 +1031,12 @@ ComputePrefilteredSize(
 #undef pow
 #define RESTORE_POW
 #endif 
-            uPrefiltered = CFloatFPU::Ceiling(uOriginal * std::pow(rScaleThreshold, nExp));
+            // The result of std::pow should be safe to static_cast to REAL since 
+            // rScaleThreshold <= 1 (this is assert'ed early in the method).
+            //
+            //   Assert(rScaleThreshold <= 1.0f);    // Failure is handled with log check
+
+            uPrefiltered = CFloatFPU::Ceiling(uOriginal * TOREAL(std::pow(rScaleThreshold, nExp)));
 #if defined(RESTORE_POW)
 #pragma pop_macro("pow")
 #endif 

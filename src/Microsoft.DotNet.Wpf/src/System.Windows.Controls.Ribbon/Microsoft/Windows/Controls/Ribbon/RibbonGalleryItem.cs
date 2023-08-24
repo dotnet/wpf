@@ -102,11 +102,11 @@ namespace Microsoft.Windows.Controls.Ribbon
         protected internal virtual void OnSelected(RoutedEventArgs e)
         {
             RaiseEvent(e);
-            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (DispatcherOperationCallback)delegate(object unused)
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (DispatcherOperationCallback)delegate(object arg)
             {
-                BringIntoView();
+                ((RibbonGalleryItem)arg).BringIntoView();
                 return null;
-            }, null);
+            }, this);
 
             RibbonGalleryItemAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this) as RibbonGalleryItemAutomationPeer;
             if (peer != null)

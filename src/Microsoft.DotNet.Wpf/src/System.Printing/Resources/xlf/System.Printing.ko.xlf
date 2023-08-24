@@ -179,7 +179,7 @@
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintQueue.XpsDeviceQuery">
         <source>An exception occurred while querying the identity of the device.</source>
-        <target state="translated">장치의 ID를 쿼리하는 동안 예외가 발생했습니다.</target>
+        <target state="translated">디바이스의 ID를 쿼리하는 동안 예외가 발생했습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintSystemException.PrintQueueStream.Flush">

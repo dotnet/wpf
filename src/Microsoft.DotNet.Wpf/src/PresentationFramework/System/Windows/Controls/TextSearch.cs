@@ -335,15 +335,17 @@ namespace System.Windows.Controls
                 // mostly compression or expansion is not involved. So start with length of newText
                 int i = newText.Length;
                 int j = i + 1;
-                
+
+                CompareInfo compareInfo = (cultureInfo ?? CultureInfo.CurrentCulture).CompareInfo;
+                CompareOptions options = ignoreCase ? CompareOptions.IgnoreCase : CompareOptions.None;
                 do
                 {
-                    string temp;
+                    ReadOnlySpan<char> temp;
 
                     if (i >= 1)
                     {
-                        temp = matchedText.Substring(0, i);
-                        if (String.Compare(newText, temp, ignoreCase, cultureInfo) == 0)
+                        temp = matchedText.AsSpan(0, i);
+                        if (compareInfo.Compare(newText, temp, options) == 0)
                         {
                             matchedPrefixLength = i;
                             textExcludingPrefixLength = matchedText.Length - i;
@@ -352,8 +354,8 @@ namespace System.Windows.Controls
                     }
                     if (j <= matchedText.Length)
                     {
-                        temp = matchedText.Substring(0, j);
-                        if (String.Compare(newText, temp, ignoreCase, cultureInfo) == 0)
+                        temp = matchedText.AsSpan(0, j);
+                        if (compareInfo.Compare(newText, temp, options) == 0)
                         {
                             matchedPrefixLength = j;
                             textExcludingPrefixLength = matchedText.Length - j;

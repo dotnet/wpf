@@ -1048,7 +1048,7 @@ namespace System.Windows.Media.Imaging
 
             if (_readOnly)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.Image_MetadataReadOnly));
+                throw new System.InvalidOperationException(SR.Image_MetadataReadOnly);
             }
 
             // Store these for debugging stress failures.
@@ -1176,7 +1176,7 @@ namespace System.Windows.Media.Imaging
 
             if (_readOnly)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.Image_MetadataReadOnly));
+                throw new System.InvalidOperationException(SR.Image_MetadataReadOnly);
             }
 
             EnsureBitmapMetadata();
@@ -1548,7 +1548,7 @@ namespace System.Windows.Media.Imaging
 
             if (_metadataHandle == null)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.Image_MetadataInitializationIncomplete));
+                throw new System.InvalidOperationException(SR.Image_MetadataInitializationIncomplete);
             }
         }
 

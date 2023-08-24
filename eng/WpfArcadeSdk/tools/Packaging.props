@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
-    <ArtifactsPackagingDir Condition="'$(ArtifactsPackagingDir)'=='' and $(Platform.EndsWith('64'))">$(ArtifactsDir)packaging\$(Configuration)\$(Platform)\</ArtifactsPackagingDir>
-    <ArtifactsPackagingDir Condition="'$(ArtifactsPackagingDir)'=='' and !$(Platform.EndsWith('64'))">$(ArtifactsDir)packaging\$(Configuration)\</ArtifactsPackagingDir>
+    <ArtifactsPackagingDir Condition="'$(ArtifactsPackagingDir)'=='' and $(Platform.EndsWith('x64'))">$(ArtifactsDir)packaging\$(Configuration)\$(Platform)\</ArtifactsPackagingDir>
+    <ArtifactsPackagingDir Condition="'$(ArtifactsPackagingDir)'=='' and !$(Platform.EndsWith('x64'))">$(ArtifactsDir)packaging\$(Configuration)\</ArtifactsPackagingDir>
 
     <!-- We like using RID prefix when generating nuget package names -->
     <PackageRuntimeIdentifierPrefix Condition="'$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32'">runtime.win-$(Platform)</PackageRuntimeIdentifierPrefix>

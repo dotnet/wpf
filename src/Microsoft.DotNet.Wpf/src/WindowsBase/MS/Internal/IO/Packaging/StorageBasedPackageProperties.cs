@@ -546,8 +546,8 @@ namespace MS.Internal.IO.Packaging
                     if (vals[0].vt != vtExpected)
                     {
                         throw new FileFormatException(
-                                        SR.Get(
-                                            SRID.WrongDocumentPropertyVariantType,
+                                        SR.Format(
+                                            SR.WrongDocumentPropertyVariantType,
                                             propId,
                                             fmtid.ToString(),
                                             vals[0].vt,
@@ -594,7 +594,7 @@ namespace MS.Internal.IO.Packaging
 
                         default:
                             throw new FileFormatException(
-                                        SR.Get(SRID.InvalidDocumentPropertyVariantType, vals[0].vt));
+                                        SR.Format(SR.InvalidDocumentPropertyVariantType, vals[0].vt));
                     }
                 }
                 finally
@@ -710,7 +710,7 @@ namespace MS.Internal.IO.Packaging
                     pszVal = Marshal.StringToCoTaskMemAnsi(inputString);
                     string convertedString = Marshal.PtrToStringAnsi(pszVal);
 
-                    if (String.CompareOrdinal(inputString, convertedString) != 0)
+                    if (!string.Equals(inputString, convertedString, StringComparison.Ordinal))
                     {
                         // The string is not an ASCII string. Use UTF-8 to encode it!
                         byte[] byteArray = UTF8Encoding.UTF8.GetBytes(inputString);
@@ -746,7 +746,7 @@ namespace MS.Internal.IO.Packaging
                 else
                 {
                     throw new ArgumentException(
-                                SR.Get(SRID.InvalidDocumentPropertyType, propVal.GetType().ToString()),
+                                SR.Format(SR.InvalidDocumentPropertyType, propVal.GetType().ToString()),
                                 "propVal");
                 }
 
@@ -839,7 +839,7 @@ namespace MS.Internal.IO.Packaging
 
                     default:
                         throw new ArgumentException(
-                            SR.Get(SRID.UnknownDocumentProperty, fmtid.ToString(), propId),
+                            SR.Format(SR.UnknownDocumentProperty, fmtid.ToString(), propId),
                             "propId"
                             );
                 }
@@ -858,7 +858,7 @@ namespace MS.Internal.IO.Packaging
 
                     default:
                         throw new ArgumentException(
-                            SR.Get(SRID.UnknownDocumentProperty, fmtid.ToString(), propId),
+                            SR.Format(SR.UnknownDocumentProperty, fmtid.ToString(), propId),
                             "propId"
                             );
                 }
@@ -866,7 +866,7 @@ namespace MS.Internal.IO.Packaging
             else
             {
                 throw new ArgumentException(
-                    SR.Get(SRID.UnknownDocumentProperty, fmtid.ToString(), propId),
+                    SR.Format(SR.UnknownDocumentProperty, fmtid.ToString(), propId),
                     "fmtid"
                     );
             }
@@ -876,7 +876,7 @@ namespace MS.Internal.IO.Packaging
         CheckDisposed()
         {
             if (_disposed)
-                throw new ObjectDisposedException(null, SR.Get(SRID.StorageBasedPackagePropertiesDiposed));
+                throw new ObjectDisposedException(null, SR.StorageBasedPackagePropertiesDiposed);
         }
 
         #endregion Private Methods

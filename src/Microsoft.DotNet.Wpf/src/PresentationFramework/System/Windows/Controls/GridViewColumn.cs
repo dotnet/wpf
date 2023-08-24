@@ -60,7 +60,7 @@ namespace System.Windows.Controls
         /// <returns></returns>
         public override string ToString()
         {
-            return SR.Get(SRID.ToStringFormatString_GridViewColumn, this.GetType(), Header);
+            return SR.Format(SR.ToStringFormatString_GridViewColumn, this.GetType(), Header);
         }
 
         #endregion

@@ -73,7 +73,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 string sridReference = 
                     [[inline]]
                         using SR=System.Windows.SR;
-                        using SRID=System.Windows.SRID;
                     [[/inline]];
 
                 // Duplicate AnimatedTypeHelpers class across Core/Framework causes name conflicts,
@@ -85,7 +84,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                         sridReference = 
                             [[inline]]
                                 using SR=MS.Internal.PresentationCore.SR;
-                                using SRID=MS.Internal.PresentationCore.SRID;
                             [[/inline]];
                         break;
                     case "Framework":
@@ -344,8 +342,8 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                     if (!AnimatedTypeHelpers.IsValidAnimationValue[[instance.TypeName]](defaultDestinationValue))
                     {
                         throw new ArgumentException(
-                            SR.Get(
-                                SRID.Animation_InvalidBaseValue,
+                            SR.Format(
+                                SR.Animation_InvalidBaseValue,
                                 defaultDestinationValue, 
                                 defaultDestinationValue.GetType(), 
                                 GetType()),

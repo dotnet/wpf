@@ -25,7 +25,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace System.Windows
@@ -93,9 +92,9 @@ namespace System.Windows
                 throw new ArgumentNullException(nameof(format));
             }
 
-            if (format == string.Empty)
+            if (format.Length == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             return ContainsDataInternal(format);
@@ -187,7 +186,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             return GetDataInternal(format);
@@ -288,7 +287,7 @@ namespace System.Windows
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             if (data == null)
@@ -311,7 +310,7 @@ namespace System.Windows
 
             if (fileDropList.Count == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_FileDropListIsEmpty, fileDropList));
+                throw new ArgumentException(SR.Format(SR.DataObject_FileDropListIsEmpty, fileDropList));
             }
 
             foreach (string fileDrop in fileDropList)
@@ -322,7 +321,7 @@ namespace System.Windows
                 }
                 catch (ArgumentException)
                 {
-                    throw new ArgumentException(SR.Get(SRID.DataObject_FileDropListHasInvalidFileDropPath, fileDropList));
+                    throw new ArgumentException(SR.Format(SR.DataObject_FileDropListHasInvalidFileDropPath, fileDropList));
                 }
             }
 
@@ -763,8 +762,8 @@ namespace System.Windows
         {
             bool autoConvert;
 
-            if (String.CompareOrdinal(format, DataFormats.FileDrop) == 0 ||
-                String.CompareOrdinal(format, DataFormats.Bitmap) == 0)
+            if (string.Equals(format, DataFormats.FileDrop, StringComparison.Ordinal) ||
+                string.Equals(format, DataFormats.Bitmap, StringComparison.Ordinal))
             {
                 autoConvert = true;
             }

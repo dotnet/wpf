@@ -86,13 +86,6 @@ namespace System.Windows.Automation.Provider
     {
         System.Windows.Automation.Provider.IRawElementProviderSimple GetOverrideProviderForHwnd(System.IntPtr hwnd);
     }
-    public partial interface IRawElementProviderSimple
-    {
-        System.Windows.Automation.Provider.IRawElementProviderSimple HostRawElementProvider { get; }
-        System.Windows.Automation.Provider.ProviderOptions ProviderOptions { get; }
-        object GetPatternProvider(int patternId);
-        object GetPropertyValue(int propertyId);
-    }
     public partial interface IScrollItemProvider
     {
         void ScrollIntoView();
@@ -147,27 +140,6 @@ namespace System.Windows.Automation.Provider
         System.Windows.Automation.Provider.ITextRangeProvider RangeFromChild(System.Windows.Automation.Provider.IRawElementProviderSimple childElement);
         System.Windows.Automation.Provider.ITextRangeProvider RangeFromPoint(System.Windows.Point screenLocation);
     }
-    public partial interface ITextRangeProvider
-    {
-        void AddToSelection();
-        System.Windows.Automation.Provider.ITextRangeProvider Clone();
-        bool Compare(System.Windows.Automation.Provider.ITextRangeProvider range);
-        int CompareEndpoints(System.Windows.Automation.Text.TextPatternRangeEndpoint endpoint, System.Windows.Automation.Provider.ITextRangeProvider targetRange, System.Windows.Automation.Text.TextPatternRangeEndpoint targetEndpoint);
-        void ExpandToEnclosingUnit(System.Windows.Automation.Text.TextUnit unit);
-        System.Windows.Automation.Provider.ITextRangeProvider FindAttribute(int attribute, object value, bool backward);
-        System.Windows.Automation.Provider.ITextRangeProvider FindText(string text, bool backward, bool ignoreCase);
-        object GetAttributeValue(int attribute);
-        double[] GetBoundingRectangles();
-        System.Windows.Automation.Provider.IRawElementProviderSimple[] GetChildren();
-        System.Windows.Automation.Provider.IRawElementProviderSimple GetEnclosingElement();
-        string GetText(int maxLength);
-        int Move(System.Windows.Automation.Text.TextUnit unit, int count);
-        void MoveEndpointByRange(System.Windows.Automation.Text.TextPatternRangeEndpoint endpoint, System.Windows.Automation.Provider.ITextRangeProvider targetRange, System.Windows.Automation.Text.TextPatternRangeEndpoint targetEndpoint);
-        int MoveEndpointByUnit(System.Windows.Automation.Text.TextPatternRangeEndpoint endpoint, System.Windows.Automation.Text.TextUnit unit, int count);
-        void RemoveFromSelection();
-        void ScrollIntoView(bool alignToTop);
-        void Select();
-    }
     public partial interface IToggleProvider
     {
         System.Windows.Automation.ToggleState ToggleState { get; }
@@ -211,15 +183,5 @@ namespace System.Windows.Automation.Provider
         PreviousSibling = 2,
         FirstChild = 3,
         LastChild = 4,
-    }
-    [System.FlagsAttribute]
-    public enum ProviderOptions
-    {
-        ClientSideProvider = 1,
-        ServerSideProvider = 2,
-        NonClientAreaProvider = 4,
-        OverrideProvider = 8,
-        ProviderOwnsSetFocus = 16,
-        UseComThreading = 32,
     }
 }

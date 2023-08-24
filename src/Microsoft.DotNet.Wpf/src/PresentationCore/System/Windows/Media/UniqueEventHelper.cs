@@ -2,8 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace System.Windows.Media
@@ -17,62 +16,19 @@ namespace System.Windows.Media
     /// handlers that throw exceptions will crash the app, making the developer
     /// aware of the problem.
     /// </summary>
-    internal class UniqueEventHelper<TEventArgs>
-            where TEventArgs : EventArgs
+    internal sealed class UniqueEventHelper<TEventArgs> : UniqueEventHelperBase<EventHandler<TEventArgs>>
+        where TEventArgs : EventArgs
     {
-        /// <summary>
-        /// Add the handler to the list of handlers associated with this event.
-        /// If the handler has already been added, we simply increment the ref
-        /// count. That way if this same handler has already been added, it
-        /// won't be invoked multiple times when the event is raised.
-        /// </summary>
-        internal void AddEvent(EventHandler<TEventArgs> handler)
+        /// <summary>Clones the event helper</summary>
+        internal UniqueEventHelper<TEventArgs> Clone()
         {
-            if (handler == null)
+            var ueh = new UniqueEventHelper<TEventArgs>();
+            if (_delegates != null)
             {
-                throw new System.ArgumentNullException("handler");
+                ueh._delegates = new Dictionary<EventHandler<TEventArgs>, int>(_delegates);
             }
 
-            EnsureEventTable();
-
-            if (_htDelegates[handler] == null)
-            {
-                _htDelegates.Add(handler, 1);
-            }
-            else
-            {
-                int refCount = (int)_htDelegates[handler] + 1;
-                _htDelegates[handler] = refCount;
-            }
-        }
-
-        /// <summary>
-        /// Removed the handler from the list of handlers associated with this
-        /// event. If the handler has been added multiple times (more times than
-        /// it has been removed), we simply decrement its ref count.
-        /// </summary>
-        internal void RemoveEvent(EventHandler<TEventArgs> handler)
-        {
-            if (handler == null)
-            {
-                throw new System.ArgumentNullException("handler");
-            }
-
-            EnsureEventTable();
-
-            if (_htDelegates[handler] != null)
-            {
-                int refCount = (int)_htDelegates[handler];
-
-                if (refCount == 1)
-                {
-                    _htDelegates.Remove(handler);
-                }
-                else
-                {
-                    _htDelegates[handler] = refCount - 1;
-                }
-            }
+            return ueh;
         }
 
         /// <summary>
@@ -83,107 +39,27 @@ namespace System.Windows.Media
         /// <param name="args">The args object to be sent by the delegate</param>
         internal void InvokeEvents(object sender, TEventArgs args)
         {
-            Debug.Assert((sender != null), "Sender is null");
-
-            if (_htDelegates != null)
+            Debug.Assert(sender != null, "Sender is null");
+            foreach (EventHandler<TEventArgs> handler in CopyHandlers())
             {
-                Hashtable htDelegates = (Hashtable)_htDelegates.Clone();
-                foreach (EventHandler<TEventArgs> handler in htDelegates.Keys)
-                {
-                    Debug.Assert((handler != null), "Event handler is null");
-                    handler(sender, args);
-                }
+                Debug.Assert(handler != null, "Event handler is null");
+                handler(sender, args);
             }
         }
-
-        /// <summary>
-        /// Clones the event helper
-        /// </summary>
-        internal UniqueEventHelper<TEventArgs> Clone()
-        {
-            UniqueEventHelper<TEventArgs> ueh = new UniqueEventHelper<TEventArgs>();
-            if (_htDelegates != null)
-            {
-                ueh._htDelegates = (Hashtable)_htDelegates.Clone();
-            }
-            return ueh;
-        }
-
-        /// <summary>
-        /// Ensures Hashtable is created so that event handlers can be added/removed
-        /// </summary>
-        private void EnsureEventTable()
-        {
-            if (_htDelegates == null)
-            {
-                _htDelegates = new Hashtable();
-            }
-        }
-
-        private Hashtable _htDelegates;
     }
 
-
-
-    // (if possible) figure out a way so that the
-    // previous class can be used in place of this one. This class is needed
-    // in addition to the above generic one because EventHandler cannot be
-    // cast to its generic counterpart
-    internal class UniqueEventHelper
+    internal sealed class UniqueEventHelper : UniqueEventHelperBase<EventHandler>
     {
-        /// <summary>
-        /// Add the handler to the list of handlers associated with this event.
-        /// If the handler has already been added, we simply increment the ref
-        /// count. That way if this same handler has already been added, it
-        /// won't be invoked multiple times when the event is raised.
-        /// </summary>
-        internal void AddEvent(EventHandler handler)
+        /// <summary>Clones the event helper</summary>
+        internal UniqueEventHelper Clone()
         {
-            if (handler == null)
+            var ueh = new UniqueEventHelper();
+            if (_delegates != null)
             {
-                throw new System.ArgumentNullException("handler");
+                ueh._delegates = new Dictionary<EventHandler, int>(_delegates);
             }
 
-            EnsureEventTable();
-
-            if (_htDelegates[handler] == null)
-            {
-                _htDelegates.Add(handler, 1);
-            }
-            else
-            {
-                int refCount = (int)_htDelegates[handler] + 1;
-                _htDelegates[handler] = refCount;
-            }
-        }
-
-        /// <summary>
-        /// Removed the handler from the list of handlers associated with this
-        /// event. If the handler has been added multiple times (more times than
-        /// it has been removed), we simply decrement its ref count.
-        /// </summary>
-        internal void RemoveEvent(EventHandler handler)
-        {
-            if (handler == null)
-            {
-                throw new System.ArgumentNullException("handler");
-            }
-
-            EnsureEventTable();
-
-            if (_htDelegates[handler] != null)
-            {
-                int refCount = (int)_htDelegates[handler];
-
-                if (refCount == 1)
-                {
-                    _htDelegates.Remove(handler);
-                }
-                else
-                {
-                    _htDelegates[handler] = refCount - 1;
-                }
-            }
+            return ueh;
         }
 
         /// <summary>
@@ -194,43 +70,73 @@ namespace System.Windows.Media
         /// <param name="args">The args object to be sent by the delegate</param>
         internal void InvokeEvents(object sender, EventArgs args)
         {
-            Debug.Assert((sender != null), "Sender is null");
-
-            if (_htDelegates != null)
+            Debug.Assert(sender != null, "Sender is null");
+            foreach (EventHandler handler in CopyHandlers())
             {
-                Hashtable htDelegates = (Hashtable)_htDelegates.Clone();
-                foreach (EventHandler handler in htDelegates.Keys)
+                Debug.Assert(handler != null, "Event handler is null");
+                handler(sender, args);
+            }
+        }
+    }
+
+    internal abstract class UniqueEventHelperBase<TEventHandler> where TEventHandler : Delegate
+    {
+        protected Dictionary<TEventHandler, int> _delegates;
+
+        /// <summary>
+        /// Add the handler to the list of handlers associated with this event.
+        /// If the handler has already been added, we simply increment the ref
+        /// count. That way if this same handler has already been added, it
+        /// won't be invoked multiple times when the event is raised.
+        /// </summary>
+        internal void AddEvent(TEventHandler handler)
+        {
+            ArgumentNullException.ThrowIfNull(handler);
+
+            if (_delegates is Dictionary<TEventHandler, int> delegates)
+            {
+                delegates.TryGetValue(handler, out int refCount);
+                delegates[handler] = refCount + 1;
+            }
+            else
+            {
+                _delegates = new Dictionary<TEventHandler, int>() { { handler, 1 } };
+            }
+        }
+
+        /// <summary>
+        /// Removed the handler from the list of handlers associated with this
+        /// event. If the handler has been added multiple times (more times than
+        /// it has been removed), we simply decrement its ref count.
+        /// </summary>
+        internal void RemoveEvent(TEventHandler handler)
+        {
+            ArgumentNullException.ThrowIfNull(handler);
+
+            if (_delegates is Dictionary<TEventHandler, int> delegates &&
+                delegates.TryGetValue(handler, out int refCount))
+            {
+                if (refCount == 1)
                 {
-                    Debug.Assert((handler != null), "Event handler is null");
-                    handler(sender, args);
+                    delegates.Remove(handler);
+                }
+                else
+                {
+                    delegates[handler] = refCount - 1;
                 }
             }
         }
 
-        /// <summary>
-        /// Clones the event helper
-        /// </summary>
-        internal UniqueEventHelper Clone()
+        protected TEventHandler[] CopyHandlers()
         {
-            UniqueEventHelper ueh = new UniqueEventHelper();
-            if (_htDelegates != null)
+            if (_delegates is { Count: > 0 } delegates)
             {
-                ueh._htDelegates = (Hashtable)_htDelegates.Clone();
+                var handlers = new TEventHandler[delegates.Count];
+                delegates.Keys.CopyTo(handlers, 0);
+                return handlers;
             }
-            return ueh;
-        }
 
-        /// <summary>
-        /// Ensures Hashtable is created so that event handlers can be added/removed
-        /// </summary>
-        private void EnsureEventTable()
-        {
-            if (_htDelegates == null)
-            {
-                _htDelegates = new Hashtable();
-            }
+            return Array.Empty<TEventHandler>();
         }
-
-        private Hashtable _htDelegates;
     }
 }

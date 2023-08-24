@@ -30,7 +30,6 @@ using System.Security;
 using MS.Win32;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media

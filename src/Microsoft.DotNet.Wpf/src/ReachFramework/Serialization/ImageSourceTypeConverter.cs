@@ -121,7 +121,7 @@ namespace System.Windows.Xps.Serialization
 
             if (!IsSupportedType(value.GetType()))
             {
-                throw new NotSupportedException(SR.Get(SRID.Converter_ConvertFromNotSupported));
+                throw new NotSupportedException(SR.Converter_ConvertFromNotSupported);
             }
 
             throw new NotImplementedException();
@@ -165,7 +165,7 @@ namespace System.Windows.Xps.Serialization
             }
             if (!IsSupportedType(destinationType))
             {
-                throw new NotSupportedException(SR.Get(SRID.Converter_ConvertToNotSupported));
+                throw new NotSupportedException(SR.Converter_ConvertToNotSupported);
             }
 
             //
@@ -174,7 +174,7 @@ namespace System.Windows.Xps.Serialization
             BitmapSource bitmapSource = (BitmapSource)value;
             if (bitmapSource == null)
             {
-                throw new ArgumentException(SR.Get(SRID.MustBeOfType, "value", "BitmapSource"));
+                throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "BitmapSource"));
             }
 
             //
@@ -213,7 +213,7 @@ namespace System.Windows.Xps.Serialization
                 XpsImageSerializationService imageService = (XpsImageSerializationService)resourceServiceProvider.GetService(typeof(XpsImageSerializationService));
                 if (imageService == null)
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoImageService));
+                    throw new XpsSerializationException(SR.ReachSerialization_NoImageService);
                 }
 
                 //
@@ -242,9 +242,10 @@ namespace System.Windows.Xps.Serialization
                     try
                     {
                         Uri sourceUri = new Uri(decoder.ToString());
-                        Stream srcStream = MS.Internal.WpfWebRequestHelper.CreateRequestAndGetResponseStream(sourceUri);
-                        CopyImageStream(srcStream, resourceStream.Stream);
-                        srcStream.Close();
+                        using (Stream srcStream = MS.Internal.WpfWebRequestHelper.CreateRequestAndGetResponseStream(sourceUri))
+                        {
+                            CopyImageStream(srcStream, resourceStream.Stream);
+                        }
                         bCopiedStream = true;
                     }
                     catch (UriFormatException)
@@ -331,18 +332,7 @@ namespace System.Windows.Xps.Serialization
             Type            type
             )
         {
-            bool isSupported = false;
-
-            foreach (Type t in SupportedTargetTypes)
-            {
-                if (t.Equals(type))
-                {
-                    isSupported = true;
-                    break;
-                }
-            }
-
-            return isSupported;
+            return typeof(Uri).Equals(type);
         }
 
         private
@@ -533,13 +523,7 @@ namespace System.Windows.Xps.Serialization
         #endregion Private static helper methods
 
         #region Private static data
-
-        /// <summary>
-        /// A table of supported types for this type converter
-        /// </summary>
-        private static Type[] SupportedTargetTypes = {
-            typeof(Uri)
-        };
+        
         private static readonly int _readBlockSize = 1048576; //1MB
 
         /// <summary>

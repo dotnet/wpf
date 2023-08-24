@@ -17,7 +17,6 @@ using System.Collections;
 using System.Windows;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.TextFormatting
 {
@@ -50,7 +49,7 @@ namespace System.Windows.Media.TextFormatting
             )
         {
             if (length <= 0)
-                throw new ArgumentOutOfRangeException("length", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+                throw new ArgumentOutOfRangeException("length", SR.ParameterMustBeGreaterThanZero);
 
             if (textRunProperties != null && textRunProperties.Typeface == null)
                 throw new ArgumentNullException("textRunProperties.Typeface");

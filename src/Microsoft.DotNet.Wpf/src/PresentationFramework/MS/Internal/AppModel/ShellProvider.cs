@@ -482,6 +482,72 @@ namespace MS.Internal.AppModel
     [
         ComImport,
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
+        Guid(IID.FileDialog2),
+    ]
+    internal interface IFileDialog2 : IFileDialog
+    {
+        #region IFileDialog redeclarations
+        #region IModalWindow redeclarations
+        [PreserveSig]
+        new HRESULT Show(IntPtr parent);
+        #endregion
+
+        new void SetFileTypes(uint cFileTypes, [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] COMDLG_FILTERSPEC[] rgFilterSpec);
+
+        new void SetFileTypeIndex(uint iFileType);
+
+        new uint GetFileTypeIndex();
+
+        new uint Advise(IFileDialogEvents pfde);
+
+        new void Unadvise(uint dwCookie);
+
+        new void SetOptions(FOS fos);
+
+        new FOS GetOptions();
+
+        new void SetDefaultFolder(IShellItem psi);
+
+        new void SetFolder(IShellItem psi);
+
+        new IShellItem GetFolder();
+
+        new IShellItem GetCurrentSelection();
+
+        new void SetFileName([MarshalAs(UnmanagedType.LPWStr)] string pszName);
+
+        [return: MarshalAs(UnmanagedType.LPWStr)]
+        new string GetFileName();
+
+        new void SetTitle([MarshalAs(UnmanagedType.LPWStr)] string pszTitle);
+
+        new void SetOkButtonLabel([MarshalAs(UnmanagedType.LPWStr)] string pszText);
+
+        new void SetFileNameLabel([MarshalAs(UnmanagedType.LPWStr)] string pszLabel);
+
+        new IShellItem GetResult();
+
+        new void AddPlace(IShellItem psi, FDAP alignment);
+
+        new void SetDefaultExtension([MarshalAs(UnmanagedType.LPWStr)] string pszDefaultExtension);
+
+        new void Close([MarshalAs(UnmanagedType.Error)] int hr);
+
+        new void SetClientGuid([In] ref Guid guid);
+
+        new void ClearClientData();
+
+        new void SetFilter([MarshalAs(UnmanagedType.Interface)] object pFilter);
+        #endregion
+
+        void SetCancelButtonLabel([MarshalAs(UnmanagedType.LPWStr)] string pszLabel);
+
+        void SetNavigationRoot(IShellItem psi);
+    }
+
+    [
+        ComImport,
+        InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
         Guid(IID.FileOpenDialog),
     ]
     internal interface IFileOpenDialog : IFileDialog
@@ -697,7 +763,8 @@ namespace MS.Internal.AppModel
         /// <summary>
         /// This function must be called first to validate use of other members.
         /// </summary>
-        void HrInit();
+        [PreserveSig]
+        HRESULT HrInit();
 
         /// <summary>
         /// This function adds a tab for hwnd to the taskbar.

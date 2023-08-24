@@ -157,7 +157,7 @@ namespace MS.Internal.PtsHost
             int dvrTopSpace;
             PTS.FSPAP fspap;
 
-            if(CellParagraph.StructuralCache.DtrList != null && breakRecordIn != null)
+            if(CellParagraph.StructuralCache.DtrList != null && breakRecordIn != IntPtr.Zero)
             {
                 CellParagraph.InvalidateStructure(TextContainerHelper.GetCPFromElement(CellParagraph.StructuralCache.TextContainer, CellParagraph.Element, ElementEdge.BeforeStart));
             }

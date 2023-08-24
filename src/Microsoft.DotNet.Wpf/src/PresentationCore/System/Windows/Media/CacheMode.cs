@@ -7,7 +7,6 @@
 using System.ComponentModel;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -15,7 +14,7 @@ namespace System.Windows.Media
     {
         internal CacheMode ()
         {
-}
+        }
         
         /// <summary>
         /// Parse - this method is called by the type converter to parse a CacheMode's string 
@@ -34,7 +33,7 @@ namespace System.Windows.Media
             }
             else
             {
-                throw new FormatException(SR.Get(SRID.Parsers_IllegalToken));
+                throw new FormatException(SR.Parsers_IllegalToken);
             }
     
             return cacheMode;

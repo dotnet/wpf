@@ -6,6 +6,7 @@
 #define __COMMON_H
 
 #include "precomp.hxx"
+#include <vcclr.h>
 
 using namespace System::Security;
 
@@ -64,7 +65,7 @@ public:
 
     __declspec(noinline) const cli::interior_ptr<const System::Char> static GetPtrToStringChars(System::String^ s)
     {
-        return CriticalPtrToStringChars(s);
+        return PtrToStringChars(s);
     }
 
 
@@ -84,8 +85,8 @@ private:
 
     /// <summary>
     /// Exceptions known to have security sensitive data are sanitized in this method,
-    /// by creating copy of original exception without sensitive data and re-thrown.
-    /// Or, to put another way - this funciton acts only on a known whitelist of HRESULT/IErrorInfo combinations, throwing for matches.
+    /// by throwing a copy of the original exception without security sensitive data. 
+    /// Or, to put another way - this function acts only on a list of security sensitive HRESULT/IErrorInfo combinations, throwing for matches.
     /// The IErrorInfo is taken into account in a call to GetExceptionForHR(HRESULT), see MSDN for more details.
     /// </summary>
 

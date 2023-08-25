@@ -192,7 +192,7 @@ jobs:
           $(_OfficialBuildIdArgs)
           $(_PlatformArgs)
           $(_InternalRuntimeDownloadArgs)
-        displayName: Windows Build / Publish
+        displayName: Run xUnit Tests
         condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), ne(variables['_Platform'], 'arm64'))
 
       - task: PublishTestResults@2
@@ -203,7 +203,7 @@ jobs:
           searchFolder: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)'
           mergeTestResults: true
         continueOnError: true
-        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))     
+        condition: and(eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))     
 
       - task: PowerShell@2
         displayName: Install .NET Core

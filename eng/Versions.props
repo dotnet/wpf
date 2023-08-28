@@ -21,26 +21,26 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/winforms -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>9.0.0-alpha.1.23426.1</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>9.0.0-alpha.1.23427.1</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/runtime -->
   <PropertyGroup>
     <VSRedistCommonNetCoreSharedFrameworkx6480PackageVersion>8.0.0-rc.1.23421.3</VSRedistCommonNetCoreSharedFrameworkx6480PackageVersion>
-    <MicrosoftNETCoreAppRefVersion>8.0.0-rc.1.23421.3</MicrosoftNETCoreAppRefVersion>
-    <MicrosoftNETCoreAppRuntimewinx64Version>8.0.0-rc.1.23421.3</MicrosoftNETCoreAppRuntimewinx64Version>
-    <MicrosoftNETCorePlatformsVersion>8.0.0-rc.1.23421.3</MicrosoftNETCorePlatformsVersion>
-    <SystemCodeDomPackageVersion>8.0.0-rc.1.23421.3</SystemCodeDomPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>8.0.0-rc.1.23421.3</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>8.0.0-rc.1.23421.3</SystemDiagnosticsEventLogPackageVersion>
-    <SystemDrawingCommonVersion>9.0.0-alpha.1.23426.1</SystemDrawingCommonVersion>
-    <SystemDirectoryServicesVersion>8.0.0-rc.1.23421.3</SystemDirectoryServicesVersion>
-    <SystemIOPackagingVersion>8.0.0-rc.1.23421.3</SystemIOPackagingVersion>
-    <SystemReflectionMetadataLoadContextVersion>8.0.0-rc.1.23421.3</SystemReflectionMetadataLoadContextVersion>
+    <MicrosoftNETCoreAppRefVersion>9.0.0-alpha.1.23426.3</MicrosoftNETCoreAppRefVersion>
+    <MicrosoftNETCoreAppRuntimewinx64Version>9.0.0-alpha.1.23426.3</MicrosoftNETCoreAppRuntimewinx64Version>
+    <MicrosoftNETCorePlatformsVersion>9.0.0-alpha.1.23426.3</MicrosoftNETCorePlatformsVersion>
+    <SystemCodeDomPackageVersion>9.0.0-alpha.1.23426.3</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>9.0.0-alpha.1.23426.3</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>9.0.0-alpha.1.23426.3</SystemDiagnosticsEventLogPackageVersion>
+    <SystemDrawingCommonVersion>9.0.0-alpha.1.23427.1</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>9.0.0-alpha.1.23426.3</SystemDirectoryServicesVersion>
+    <SystemIOPackagingVersion>9.0.0-alpha.1.23426.3</SystemIOPackagingVersion>
+    <SystemReflectionMetadataLoadContextVersion>9.0.0-alpha.1.23426.3</SystemReflectionMetadataLoadContextVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemResourcesExtensionsVersion>8.0.0-rc.1.23421.3</SystemResourcesExtensionsVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>8.0.0-rc.1.23421.3</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>8.0.0-rc.1.23421.3</SystemSecurityPermissionsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>8.0.0-rc.1.23421.3</SystemWindowsExtensionsPackageVersion>
+    <SystemResourcesExtensionsVersion>9.0.0-alpha.1.23426.3</SystemResourcesExtensionsVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>9.0.0-alpha.1.23426.3</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>9.0.0-alpha.1.23426.3</SystemSecurityPermissionsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>9.0.0-alpha.1.23426.3</SystemWindowsExtensionsPackageVersion>
   </PropertyGroup>
   <!-- Docs / Intellisense -->
   <PropertyGroup>

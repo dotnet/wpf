@@ -19,7 +19,7 @@
     "version": "8.0.100-preview.7.23376.3"
   },
   "native-tools": {
-    "strawberry-perl": "5.28.1.1-1",
+    "strawberry-perl": "5.38.0.1",
     "net-framework-48-ref-assemblies": "0.0.0.1"
   }
 }

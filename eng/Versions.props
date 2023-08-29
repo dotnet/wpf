@@ -79,7 +79,7 @@
     -->
     <MicrosoftDotNetWpfTestPackageVersion>1.0.0-beta.19263.1</MicrosoftDotNetWpfTestPackageVersion>
     <!-- These versions are specified in global.json -->
-    <StrawberryPerlVersion>5.28.1.1-1</StrawberryPerlVersion>
+    <StrawberryPerlVersion>5.38.0.1</StrawberryPerlVersion>
     <NetFramework48RefAssembliesVersion>0.0.0.1</NetFramework48RefAssembliesVersion>
   </PropertyGroup>
   <!-- External Analyzers -->

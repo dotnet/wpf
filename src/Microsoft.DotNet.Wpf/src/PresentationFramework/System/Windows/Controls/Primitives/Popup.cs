@@ -3534,7 +3534,6 @@ namespace System.Windows.Controls.Primitives
             ///     a. WPF supports DPI scaling (HwndTarget.IsPerMonitorDpiScalingEnabled), and
             ///     b. The process is PMA (HwndTarget.IsProcessPerMonitorDpiAware)
             /// </summary>
-            /// <remarks>
             internal static bool IsPerMonitorDpiScalingActive
             {
                 get

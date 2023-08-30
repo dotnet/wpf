@@ -221,7 +221,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     Cancels editing the current cell & notifies the cell of a change to IsReadOnly.
+        ///     Cancels editing the current cell and notifies the cell of a change to IsReadOnly.
         /// </summary>
         private static void OnNotifyIsReadOnlyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

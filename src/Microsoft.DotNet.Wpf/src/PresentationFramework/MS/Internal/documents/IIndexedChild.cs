@@ -13,7 +13,7 @@ namespace MS.Internal.Documents
     /// For example TableRow contains collection of rows, each Row in turn contains collection of cells.
     /// This interface should be implemented by the child types described above. see example section.
     /// And Parent types should impelement <see cref="IAcceptInsertion"/>
-    /// <seealso cref="ContentElementCollection<TParent, TItem>"/>
+    /// <seealso cref="ContentElementCollection{TParent, TItem}"/>
     /// </summary>
     /// <example>
     /// <see cref="TableCell"/> implements IIndexedChild with TParent == TableRow

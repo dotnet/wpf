@@ -9,7 +9,6 @@ namespace MS.Internal.Documents
     /// This interface should be implemented by <see cref="System.Windows.Documents.Table"/> related types
     /// which can hold collection of other Table related objects.
     /// to provide insertion index where item will be inserted.
-    /// Refer to <see cref="IIndexedChild<TParent>"/> for additional information.
     /// For an example of usage see <see cref="TableTextElementCollectionInternal"/>
     /// </summary>
     internal interface IAcceptInsertion

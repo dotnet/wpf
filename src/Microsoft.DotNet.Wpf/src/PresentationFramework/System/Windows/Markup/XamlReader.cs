@@ -798,9 +798,6 @@ namespace System.Windows.Markup
         }
 
         /// <summary>
-
-
-        /// <summary>
         /// Reads XAML from the passed stream, building an object tree and returning the
         /// root of that tree.  Wrap a CompatibilityReader with another XmlReader that
         /// uses the passed reader settings to allow validation of xaml.

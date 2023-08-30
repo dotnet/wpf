@@ -1109,7 +1109,7 @@ namespace System.Windows.Data
 
         /// <summary>
         /// Get the raw proposed value
-        /// <summary>
+        /// </summary>
         internal virtual object GetRawProposedValue()
         {
             object value = Value;
@@ -1125,27 +1125,27 @@ namespace System.Windows.Data
 
         /// <summary>
         /// Get the converted proposed value
-        /// <summary>
+        /// </summary>
         internal abstract object ConvertProposedValue(object rawValue);
 
         /// <summary>
         /// Get the converted proposed value and inform the binding group
-        /// <summary>
+        /// </summary>
         internal abstract bool ObtainConvertedProposedValue(BindingGroup bindingGroup);
 
         /// <summary>
         /// Update the source value
-        /// <summary>
+        /// </summary>
         internal abstract object UpdateSource(object convertedValue);
 
         /// <summary>
         /// Update the source value and inform the binding group
-        /// <summary>
+        /// </summary>
         internal abstract bool UpdateSource(BindingGroup bindingGroup);
 
         /// <summary>
         /// Commit the source value
-        /// <summary>
+        /// </summary>
         internal virtual object CommitSource(object value)
         {
             return value;
@@ -1158,7 +1158,7 @@ namespace System.Windows.Data
 
         /// <summary>
         /// Run validation rules for the given step
-        /// <summary>
+        /// </summary>
         internal virtual bool Validate(object value, ValidationStep validationStep)
         {
             if (value == Binding.DoNothing)
@@ -1222,7 +1222,7 @@ namespace System.Windows.Data
 
         /// <summary>
         /// Run validation rules for the given step, and inform the binding group
-        /// <summary>
+        /// </summary>
         internal abstract bool CheckValidationRules(BindingGroup bindingGroup, ValidationStep validationStep);
 
         /// <summary>

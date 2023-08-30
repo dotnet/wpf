@@ -605,7 +605,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        /// Restores visual state changes & updates the visual state without transitions.
+        /// Restores visual state changes &amp; updates the visual state without transitions.
         /// </summary>
         internal override void OnPostApplyTemplate()
         {

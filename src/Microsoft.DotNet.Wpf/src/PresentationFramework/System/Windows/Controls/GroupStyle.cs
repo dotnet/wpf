@@ -176,6 +176,7 @@ namespace System.Windows.Controls
         /// AlternationCount controls the range of values assigned to the
         /// ItemsControl.AlternationIndex property on containers generated
         /// for this level of grouping.
+        /// </summary>
         [DefaultValue(0)]
         public int AlternationCount
         {

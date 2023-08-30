@@ -1246,7 +1246,7 @@ namespace System.Windows.Data
         /// <summary>
         ///     Obsolete.   Retained for compatibility.
         ///     Use OnAllowsCrossThreadChangesChanged instead.
-        /// </summary.
+        /// </summary>
         /// <param name="args">
         ///     The NotifyCollectionChangedEventArgs that is added to the change log
         /// </param>

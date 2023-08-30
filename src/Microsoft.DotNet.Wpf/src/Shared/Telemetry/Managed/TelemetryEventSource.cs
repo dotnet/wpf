@@ -36,7 +36,6 @@ namespace MS.Internal.Telemetry
     /// CriticalDataOptions() methods to efficiently create an eventSourceOptions
     /// object with the corresponding keyword set.
     /// </para>
-    /// For the authoritative source for the keywords and values <see cref="$(MINWIN_PRIV_SDK_INC_PATH)\telemetry\TelemetryEventSource.cs"/>
     /// </summary>
     internal class TelemetryEventSource : EventSource
     {

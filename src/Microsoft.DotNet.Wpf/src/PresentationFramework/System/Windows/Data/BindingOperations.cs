@@ -297,7 +297,7 @@ namespace System.Windows.Data
         /// Register a callback used to synchronize access to a given collection.
         /// </summary>
         /// <param name="collection"> The collection that needs synchronized access. </param>
-        /// </param name="context"> An arbitrary object.  This object is passed back into
+        /// <param name="context"> An arbitrary object.  This object is passed back into
         ///     the callback;  it is not used otherwise.   It provides a way for the
         ///     application to store information it knows at registration time, which it
         ///     can then use at collection-access time.  Typically this information will

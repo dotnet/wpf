@@ -329,7 +329,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
 
     /// <summary>
     /// Get the raw proposed value
-    /// <summary>
+    /// </summary>
     internal override object GetRawProposedValue()
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
@@ -342,7 +342,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
 
     /// <summary>
     /// Get the converted proposed value
-    /// <summary>
+    /// </summary>
     internal override object ConvertProposedValue(object rawValue)
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
@@ -355,7 +355,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
 
     /// <summary>
     /// Get the converted proposed value and inform the binding group
-    /// <summary>
+    /// </summary>
     internal override bool ObtainConvertedProposedValue(BindingGroup bindingGroup)
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
@@ -369,7 +369,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
 
     /// <summary>
     /// Update the source value
-    /// <summary>
+    /// </summary>
     internal override object UpdateSource(object convertedValue)
     {
         object result;
@@ -394,7 +394,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
 
     /// <summary>
     /// Update the source value and inform the binding group
-    /// <summary>
+    /// </summary>
     internal override bool UpdateSource(BindingGroup bindingGroup)
     {
         bool result = true;
@@ -425,7 +425,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
 
     /// <summary>
     /// Run validation rules for the given step
-    /// <summary>
+    /// </summary>
     internal override bool Validate(object value, ValidationStep validationStep)
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
@@ -438,7 +438,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
 
     /// <summary>
     /// Run validation rules for the given step, and inform the binding group
-    /// <summary>
+    /// </summary>
     internal override bool CheckValidationRules(BindingGroup bindingGroup, ValidationStep validationStep)
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;

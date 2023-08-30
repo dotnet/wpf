@@ -78,7 +78,7 @@ namespace System.Windows
         /// <param name="genericHandler">The handler to invoke.</param>
         /// <param name="genericTarget">The current object along the event's route.</param>
         /// <returns>Nothing.</returns>
-        /// <seealso cref="RoutedPropertyChangedEventHandler<T>" />
+        /// <seealso cref="RoutedPropertyChangedEventHandler{T}" />
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
             RoutedPropertyChangedEventHandler<T> handler = (RoutedPropertyChangedEventHandler<T>)genericHandler;

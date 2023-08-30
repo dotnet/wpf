@@ -130,7 +130,6 @@ namespace System.Windows.Automation.Peers
             return wrapperPeer;
         }
 
-        /// <summary>
         internal void ThrowElementNotAvailableException()
         {
             // To avoid the situation on legacy systems which may not have new unmanaged core. this check with old unmanaged core
@@ -178,7 +177,6 @@ namespace System.Windows.Automation.Peers
             }
         }
 
-        /// <summary>
         override internal Rect GetVisibleBoundingRectCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
@@ -189,13 +187,11 @@ namespace System.Windows.Automation.Peers
             return GetBoundingRectangle();
         }
 
-        ///
         override protected string GetItemTypeCore()
         {
             return string.Empty;
         }
 
-        ///
         protected override List<AutomationPeer> GetChildrenCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();

@@ -610,7 +610,6 @@ namespace System.Windows.Documents
         ///     <paramref name="sourcePath"/> to Unicode (UTL16-LE) if necessary and ensures that <paramref name="targetPath"/>
         ///     has the right BOM (Byte Order Mark) for UTF16-LE (FF FE)
         /// </summary>
-        /// <see cref = "// See http://www.unicode.org/faq/utf_bom.html" />
         /// <param name="sourcePath"></param>
         /// <param name="targetPath"></param>
         private static void CopyToUnicodeFile(string sourcePath, FileStream targetStream)

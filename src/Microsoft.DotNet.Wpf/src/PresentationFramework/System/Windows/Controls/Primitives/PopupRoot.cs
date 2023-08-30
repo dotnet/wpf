@@ -219,7 +219,7 @@ namespace System.Windows.Controls.Primitives
         }
 
         /// <summary>
-        ///     Gets teh restricted size of a popup & computes which dimensions were affected.
+        ///     Gets teh restricted size of a popup and computes which dimensions were affected.
         /// </summary>
         private Size GetPopupSizeRestrictions(Popup popup, Size desiredSize, out bool restrictWidth, out bool restrictHeight)
         {

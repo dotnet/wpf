@@ -810,7 +810,6 @@ namespace System.Windows.Automation.Peers
             }
         }
 
-        /// <summary>
         private void ThrowElementNotAvailableException()
         {
             // To avoid the situation on legacy systems which may not have new unmanaged core. this check with old unmanaged core

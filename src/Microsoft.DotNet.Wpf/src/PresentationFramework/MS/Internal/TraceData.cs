@@ -333,7 +333,7 @@ namespace MS.Internal
 
         /// <summary>
         /// Writes trace output for a data failure (with no BindingExpression context available) plus triggers the event <see cref="BindingDiagnostics.BindingFailed"/>.
-        // The event will not be triggered if the TraceEventType is filtered out.
+        /// The event will not be triggered if the TraceEventType is filtered out.
         /// </summary>
         /// <param name="exception">If not null, used as both a trace and event parameter.</param>
         public static void TraceAndNotify(TraceEventType eventType, AvTraceDetails traceDetails, Exception exception = null)

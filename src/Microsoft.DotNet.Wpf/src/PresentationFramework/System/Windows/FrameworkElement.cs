@@ -207,6 +207,7 @@ namespace System.Windows
             set { SetValue(OverridesDefaultStyleProperty, BooleanBoxes.Box(value)); }
         }
 
+        /// <summary>
         ///     The UseLayoutRounding property.
         /// </summary>
         public static readonly DependencyProperty UseLayoutRoundingProperty =

@@ -96,12 +96,13 @@ namespace MS.Internal.AppModel
             get { throw new System.NotImplementedException(); }
         }
 
-        /// <SecurityNOoe>
+        /// <SecurityNote>
         /// Critical: Calls a SUC'd COM interface method.
         /// TreatAsSafe: 1) The publisher name is coming from the manifest, so it could be anything.
         ///       This means the input doesn't need to be trusted. 
         ///     2) Setting arbitrary application/publisher can be considered spoofing, but a malicious website
         ///       could fake the whole progress page and still achieve the same.
+        /// </SecurityNote>
         public string PublisherName
         {
             set
@@ -113,9 +114,10 @@ namespace MS.Internal.AppModel
             get { throw new System.NotImplementedException(); }
         }
 
-        /// <SecurityNOoe>
+        /// <SecurityNote>
         /// Critical: Calls a SUC'd COM interface method.
         /// TreatAsSafe: Sending even arbitrary progress updates not considered harmful.
+        /// </SecurityNote>
         public void UpdateProgress(long bytesDownloaded, long bytesTotal)
         {
             // Ignore the error code.  This page is transient and it's not the end of the world if this doesn't show up.

@@ -110,7 +110,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     <see cref="ICollection<T>.CopyTo"/>
+        ///     <see cref="ICollection{T}.CopyTo"/>
         /// </summary>
         public void CopyTo(ColumnDefinition[] array, int index) //  void ICollection<T>.CopyTo(T[] array, int arrayIndex)
         {
@@ -150,7 +150,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     <see cref="ICollection<T>.Add"/>
+        ///     <see cref="ICollection{T}.Add"/>
         /// </summary>
         public void Add(ColumnDefinition value) //  void ICollection<T>.Add(T item)
         {
@@ -160,7 +160,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     <see cref="ICollection<T>.Clear"/>
+        ///     <see cref="ICollection{T}.Clear"/>
         /// </summary>
         public void Clear() //  void ICollection<T>.Clear();
         {
@@ -195,7 +195,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     <see cref="ICollection<T>.Contains"/>
+        ///     <see cref="ICollection{T}.Contains"/>
         /// </summary>
         public bool Contains(ColumnDefinition value)    //  bool ICollection<T>.Contains(T item)
         {
@@ -218,7 +218,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     <see cref="IList<T>.IndexOf"/>
+        ///     <see cref="ILis{T}.IndexOf"/>
         /// </summary>
         public int IndexOf(ColumnDefinition value)  //  int IList<T>.IndexOf(T item);
         {
@@ -251,7 +251,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     <see cref="IList<T>.Insert"/>
+        ///     <see cref="IList{T}.Insert"/>
         /// </summary>
         public void Insert(int index, ColumnDefinition value)   //  void IList<T>.Insert(int index, T item)
         {
@@ -281,7 +281,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     <see cref="ICollection<T>.Remove"/>
+        ///     <see cref="ICollection{T}.Remove"/>
         /// </summary>
         public bool Remove(ColumnDefinition value)  //  bool ICollection<T>.Remove(T item)
         {
@@ -294,7 +294,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     <see cref="IList<T>.RemoveAt"/>
+        ///     <see cref="IList{T}.RemoveAt"/>
         ///     <seealso cref="IList.RemoveAt"/>
         /// </summary>
         public void RemoveAt(int index) //  void IList.RemoveAt(int index); void IList<T>.RemoveAt(int index)
@@ -366,7 +366,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     <see cref="IEnumerable<T>.GetEnumerator"/>
+        ///     <see cref="IEnumerable{T}.GetEnumerator"/>
         /// </summary>
         IEnumerator<ColumnDefinition> IEnumerable<ColumnDefinition>.GetEnumerator()
         {
@@ -384,7 +384,7 @@ namespace System.Windows.Controls
         #region Public Properties 
 
         /// <summary>
-        ///     <see cref="ICollection<T>.Count"/>
+        ///     <see cref="ICollection{T}.Count"/>
         ///     <seealso cref="ICollection.Count"/>
         /// </summary>
         public int Count    //  int ICollection.Count {get;}; int ICollection<T>.Count {get;}
@@ -405,7 +405,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     <see cref="ICollection<T>.IsReadOnly"/>
+        ///     <see cref="ICollection{T}.IsReadOnly"/>
         ///     <seealso cref="IList.IsReadOnly"/>
         /// </summary>
         public bool IsReadOnly  //  bool IList.IsReadOnly {get;}; bool ICollection<T>.IsReadOnly {get;}
@@ -464,7 +464,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     <see cref="IList<T>.Item"/>
+        ///     <see cref="IList{T}.Item"/>
         /// </summary>
         public ColumnDefinition this[int index] //  T IList<T>.this[int index] {get; set;}
         {
@@ -759,7 +759,7 @@ namespace System.Windows.Controls
         #region Private Structures Classes 
 
         /// <summary>
-        ///     Dual purpose IEnumerator / IEnumerator<T> implementation.
+        ///     Dual purpose IEnumerator / IEnumerator%lt;T&gt; implementation.
         /// </summary>
         /// <remarks>
         ///     Enumerator can be initialized with null as a collection reference.
@@ -779,7 +779,7 @@ namespace System.Windows.Controls
             }
 
             /// <summary>
-            ///     <see cref="IEnumerator<T>.MoveNext"/>
+            ///     <see cref="IEnumerator{T}.MoveNext"/>
             ///     <seealso cref="IEnumerator.MoveNext"/>
             /// </summary>
             public bool MoveNext() 
@@ -834,7 +834,7 @@ namespace System.Windows.Controls
             }
 
             /// <summary>
-            ///     <see cref="IEnumerator<T>.Current"/>
+            ///     <see cref="IEnumerator{T}.Current"/>
             /// </summary>
             public ColumnDefinition Current
             {

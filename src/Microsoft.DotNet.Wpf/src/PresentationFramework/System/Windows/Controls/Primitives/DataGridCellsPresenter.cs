@@ -361,7 +361,7 @@ namespace System.Windows.Controls.Primitives
         #region Notification Propagation
 
         /// <summary>
-        /// Notification of Height & MinHeight changes.
+        /// Notification of Height and MinHeight changes.
         /// </summary>
         private static void OnNotifyHeightPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

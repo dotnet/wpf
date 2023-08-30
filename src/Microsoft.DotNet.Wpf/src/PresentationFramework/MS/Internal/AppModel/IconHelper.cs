@@ -352,7 +352,7 @@ namespace MS.Internal.AppModel
         ///
         /// MatchImage
         /// 
-        /// This function takes LPINTs for width & height in case of "real size".
+        /// This function takes LPINTs for width and height in case of "real size".
         /// For this option, we use dimensions of 1st icon in resdir as size to
         /// load, instead of system metrics.
         /// Returns a number that measures how "far away" the given image is
@@ -415,8 +415,8 @@ namespace MS.Internal.AppModel
         /// MyAbs (also from core\ntuser\client\clres.c)
         ///
         /// Calcules my weighted absolute value of the difference between 2 nums.
-        /// This of course normalizes values to >= zero.  But it can also "punish" the
-        /// returned value by a factor of two if valueHave < valueWant.  This is
+        /// This of course normalizes values to &gt;= zero. But it can also "punish" the
+        /// returned value by a factor of two if valueHave &lt; valueWant. This is
         /// because you get worse results trying to extrapolate from less info up then
         /// interpolating from more info down.
         ///

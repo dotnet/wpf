@@ -23,7 +23,7 @@ namespace System.Windows.Data
     ///<param name="context"> An object supplied by the application at registration
     ///     time.  See BindingOperations.EnableCollectionSynchronization.  </param>
     ///<param name="accessMethod"> The method that performs the caller's desired access. </param>
-    ///<param name="writeAccess"/> True if the caller needs write access to the collection,
+    ///<param name="writeAccess"> True if the caller needs write access to the collection,
     ///     false if the caller needs only read access. </param>
     ///<notes>
     /// The method supplied by the application should do the following steps:

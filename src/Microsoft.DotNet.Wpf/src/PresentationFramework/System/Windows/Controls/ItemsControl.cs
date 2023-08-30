@@ -1514,7 +1514,7 @@ namespace System.Windows.Controls
 
         /// <summary>
         /// The AlternationCount
-        /// <summary>
+        /// </summary>
         int IGeneratorHost.AlternationCount { get { return AlternationCount; } }
 
         #endregion IGeneratorHost

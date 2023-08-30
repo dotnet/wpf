@@ -13,7 +13,7 @@ using System.Diagnostics;
 namespace MS.Internal.Documents
 {
     /// <summary>
-    /// This class is specialization of <see cref="ContentElementCollection<TParent, TItem>"/> to be used for 
+    /// This class is specialization of <see cref="ContentElementCollection{TParent, TItem}"/> to be used for 
     /// TableColumn collections
     /// </summary>
     internal class TableColumnCollectionInternal : ContentElementCollection<Table, TableColumn>

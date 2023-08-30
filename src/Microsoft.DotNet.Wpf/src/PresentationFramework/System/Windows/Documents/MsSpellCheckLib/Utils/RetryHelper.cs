@@ -152,7 +152,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
         /// See common summary for RetryHelper
         /// </summary>
         /// <typeparam name="TResult">The type of return value of <paramref name="func"/></typeparam>
-        /// <param name="func">The Func<out TResult> delegate to be executed until success</param>
+        /// <param name="func">The Func{out TResult} delegate to be executed until success</param>
         /// <param name="result">The return value from the execution of <paramref name="func"/></param>
         /// <param name="preamble">
         /// The delegate to be executed in-between retries. This should be called with <paramref name="func"/> supplied as the out parameter.
@@ -216,7 +216,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
         /// See common summary for RetryHelper
         /// </summary>
         /// <typeparam name="TResult">The type of return value of <paramref name="func"/></typeparam>
-        /// <param name="func">The Func<out TResult> delegate to be executed until success</param>
+        /// <param name="func">The Func{out TResult} delegate to be executed until success</param>
         /// <param name="result">The return value from the execution of <paramref name="func"/></param>
         /// <param name="preamble"> The delegate to be executed in-between retries. </param>
         /// <param name="ignoredExceptions">List if exception types against which resilience is desired</param>
@@ -308,7 +308,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
     }
 
     /// <summary>
-    /// Exception type thrown by RetryHelper.TryExecuteFunction or RetryHelper.TryCallFunction<T>
+    /// Exception type thrown by RetryHelper.TryExecuteFunction or RetryHelper.TryCallFunction{T}
     /// </summary>
     internal class RetriesExhaustedException : Exception
     {

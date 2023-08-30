@@ -488,7 +488,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
 
     /// <summary>
     /// Get the converted proposed value
-    /// <summary>
+    /// </summary>
     internal override object ConvertProposedValue(object value)
     {
         object result;
@@ -646,7 +646,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
 
     /// <summary>
     /// Get the converted proposed value and inform the binding group
-    /// <summary>
+    /// </summary>
     internal override bool ObtainConvertedProposedValue(BindingGroup bindingGroup)
     {
         bool result = true;
@@ -685,7 +685,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
 
     /// <summary>
     /// Update the source value
-    /// <summary>
+    /// </summary>
     internal override object UpdateSource(object convertedValue)
     {
         if (convertedValue == DependencyProperty.UnsetValue)
@@ -734,7 +734,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
 
     /// <summary>
     /// Update the source value and inform the binding group
-    /// <summary>
+    /// </summary>
     internal override bool UpdateSource(BindingGroup bindingGroup)
     {
         bool result = true;
@@ -780,7 +780,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
 
     /// <summary>
     /// Run validation rules for the given step
-    /// <summary>
+    /// </summary>
     internal override bool Validate(object value, ValidationStep validationStep)
     {
         if (value == Binding.DoNothing)
@@ -842,7 +842,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
 
     /// <summary>
     /// Run validation rules for the given step, and inform the binding group
-    /// <summary>
+    /// </summary>
     internal override bool CheckValidationRules(BindingGroup bindingGroup, ValidationStep validationStep)
     {
         if (!NeedsValidation)

@@ -28,7 +28,7 @@ namespace System.Windows.Documents
             /// CreateSpellCheckerImplWithRetries are: 
             /// 
             ///     public ISpellChecker CreateSpellChecker()
-            ///     public bool CreateSpellCheckerRetryPreamble(out Func<ISpellChecker> func)
+            ///     public bool CreateSpellCheckerRetryPreamble(out Func{ISpellChecker} func)
             /// </summary>
             private class SpellCheckerCreationHelper
             {

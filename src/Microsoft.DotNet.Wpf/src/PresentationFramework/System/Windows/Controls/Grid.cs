@@ -2814,9 +2814,9 @@ namespace System.Windows.Controls
         ///                 if the max constraint has higher discrepancy
         ///     null    if proportion doesn't fail a min or max constraint
         /// The discrepancy is the ratio of the proportion to the max- or min-ratio.
-        /// When both ratios hit the constraint,  minRatio < proportion < maxRatio,
+        /// When both ratios hit the constraint,  minRatio &lt; proportion &lt; maxRatio,
         /// and the minRatio has higher discrepancy if
-        ///         (proportion / minRatio) > (maxRatio / proportion)
+        ///         (proportion / minRatio) &gt; (maxRatio / proportion)
         /// </summary>
         private static bool? Choose(double minRatio, double maxRatio, double proportion)
         {

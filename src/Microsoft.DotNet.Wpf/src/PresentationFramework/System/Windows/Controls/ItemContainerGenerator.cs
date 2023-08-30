@@ -138,7 +138,7 @@ namespace System.Windows.Controls
 
         /// <summary>
         /// Read-only access to the list of items.
-        /// <summary>
+        /// </summary>
         /// <notes>
         /// The returned collection is only valid until the next Refresh.  Users
         /// should not cache a reference to this collection.

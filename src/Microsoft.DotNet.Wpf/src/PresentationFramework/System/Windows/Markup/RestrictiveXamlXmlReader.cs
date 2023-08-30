@@ -87,8 +87,8 @@ namespace System.Windows.Markup
                 }
             }
         }
+        
         /// <summary>
-
         /// Calls the base Read method to extract a node from the Xaml parser, if it's found to be a StartObject node for a type we want to restrict we skip that node.
         /// </summary>
         /// <returns>

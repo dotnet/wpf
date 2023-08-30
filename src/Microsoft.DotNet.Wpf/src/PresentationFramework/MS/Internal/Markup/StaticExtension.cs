@@ -25,7 +25,7 @@ using SR = System.Windows.SR;
 namespace MS.Internal.Markup
 {
     /// <summary>
-    ///  WPF wrapper for StaticExtension.  Optimizes some common SystemResourceKeys & Commands
+    ///  WPF wrapper for StaticExtension.  Optimizes some common SystemResourceKeys &amp; Commands
     /// </summary>
     internal class StaticExtension : System.Windows.Markup.StaticExtension
     {

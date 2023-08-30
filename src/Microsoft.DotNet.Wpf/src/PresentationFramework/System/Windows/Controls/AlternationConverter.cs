@@ -25,7 +25,7 @@ namespace System.Windows.Controls
     {
         ///<summary>
         /// A list of values.
-        ///<summary>
+        ///</summary>
         public IList Values
         {
             get { return _values; }

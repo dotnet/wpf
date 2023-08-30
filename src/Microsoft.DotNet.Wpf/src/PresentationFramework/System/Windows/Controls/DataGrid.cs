@@ -490,7 +490,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     Notifies the Column & Column Headers about property changes.
+        ///     Notifies the Column and Column Headers about property changes.
         /// </summary>
         private static void OnNotifyColumnAndColumnHeaderPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -555,7 +555,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     Notifies the Row & Row Headers about property changes.
+        ///     Notifies the Row and Row Headers about property changes.
         /// </summary>
         private static void OnNotifyRowAndRowHeaderPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -563,7 +563,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     Notifies the Row & Details about property changes.
+        ///     Notifies the Row and Details about property changes.
         /// </summary>
         private static void OnNotifyRowAndDetailsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -1240,7 +1240,7 @@ namespace System.Windows.Controls
             DependencyProperty.Register("ColumnHeaderHeight", typeof(double), typeof(DataGrid), new FrameworkPropertyMetadata(double.NaN, OnNotifyColumnHeaderPropertyChanged));
 
         /// <summary>
-        ///     A property that specifies the visibility of the column & row headers.
+        ///     A property that specifies the visibility of the column and row headers.
         /// </summary>
         public DataGridHeadersVisibility HeadersVisibility
         {

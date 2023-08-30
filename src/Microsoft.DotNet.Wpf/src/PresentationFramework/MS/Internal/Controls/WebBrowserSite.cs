@@ -41,7 +41,7 @@ namespace MS.Internal.Controls
     /// THREADING ISSUE: When WebBrowser.IsWebOCHostedInBrowserProcess, calls on the interfaces implemented here
     ///   (and on ActiveXSite) arrive on RPC worker threads. This is because CLR objects don't like to stick to 
     ///   STA threads. Fortunately, most of the current implementation methods are okay to be called on any thread.
-    ///   And if not, switching to the WebBrowser object's thread via the Dispatcher is usually possible & safe.
+    ///   And if not, switching to the WebBrowser object's thread via the Dispatcher is usually possible and safe.
     ///   In a few scenarios, when we need to call a WebOC method from one of these callback interfaces, we get
     ///   RPC_E_CANTCALLOUT_ININPUTSYNCCALL, which happens because the CLR actually tries to switch to the right
     ///   thread to make the COM call, but that thread is already blocked on an outgoing call (to the WebOC). 

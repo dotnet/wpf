@@ -1003,7 +1003,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        /// Recursively & syncronously expand all the nodes in this subtree.
+        /// Recursively and syncronously expand all the nodes in this subtree.
         /// </summary>
         private static void ExpandRecursive(TreeViewItem item)
         {

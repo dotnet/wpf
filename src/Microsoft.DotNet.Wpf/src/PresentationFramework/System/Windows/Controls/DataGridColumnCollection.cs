@@ -300,6 +300,7 @@ namespace System.Windows.Controls
 
         /// <summary>
         ///     Called when a column's display index has changed.
+        /// </summary>
         /// <param name="oldDisplayIndex">the old display index of the column</param>
         /// <param name="newDisplayIndex">the new display index of the column</param>
         private void OnColumnDisplayIndexChanged(DataGridColumn column, int oldDisplayIndex, int newDisplayIndex)

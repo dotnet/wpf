@@ -5,7 +5,7 @@ Param(
   [string] $projects,
   [string][Alias('v')]$verbosity = "minimal",
   [string] $msbuildEngine = $null,
-  [bool] $warnAsError = $true,
+  [bool] $warnAsError = $false,
   [bool] $nodeReuse = $true,
   [switch][Alias('r')]$restore,
   [switch] $deployDeps,

@@ -64,7 +64,7 @@ namespace MS.Internal.Controls
 
         /// <summary>
         /// The AlternationCount
-        /// <summary>
+        /// </summary>
         int AlternationCount { get; }
     }
 }

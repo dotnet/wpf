@@ -835,7 +835,7 @@ namespace System.Windows.Data
         }
 
         /// <summary>
-        /// Returns true if an </seealso cref="AddNew"> transaction is in progress.
+        /// Returns true if an <seealso cref="AddNew"/> transaction is in progress.
         /// </summary>
         public bool IsAddingNew
         {
@@ -843,7 +843,7 @@ namespace System.Windows.Data
         }
 
         /// <summary>
-        /// When an </seealso cref="AddNew"> transaction is in progress, this property
+        /// When an <seealso cref="AddNew"/> transaction is in progress, this property
         /// returns the new item.  Otherwise it returns null.
         /// </summary>
         public object CurrentAddItem
@@ -1076,7 +1076,7 @@ namespace System.Windows.Data
         }
 
         /// <summary>
-        /// Returns true if an </seealso cref="EditItem"> transaction is in progress.
+        /// Returns true if an <seealso cref="EditItem"/> transaction is in progress.
         /// </summary>
         public bool IsEditingItem
         {
@@ -1084,7 +1084,7 @@ namespace System.Windows.Data
         }
 
         /// <summary>
-        /// When an </seealso cref="EditItem"> transaction is in progress, this property
+        /// When an <seealso cref="EditItem"/> transaction is in progress, this property
         /// returns the affected item.  Otherwise it returns null.
         /// </summary>
         public object CurrentEditItem
@@ -1136,7 +1136,7 @@ namespace System.Windows.Data
         /// The value may be null if the view does not know whether live sorting is enabled.
         /// Calling the setter when CanChangeLiveSorting is false will throw an
         /// InvalidOperationException.
-        ///</summary
+        ///</summary>
         public bool? IsLiveSorting
         {
             get { return IsDataView ? (bool?)true : (bool?)null; }

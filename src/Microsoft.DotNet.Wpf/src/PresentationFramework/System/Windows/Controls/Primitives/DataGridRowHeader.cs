@@ -178,7 +178,7 @@ namespace System.Windows.Controls.Primitives
         /// Measure this element and it's child elements.
         /// </summary>
         /// <remarks>
-        /// DataGridRowHeader needs to update the DataGrid's RowHeaderActualWidth & use this as it's width so that they all end up the
+        /// DataGridRowHeader needs to update the DataGrid's RowHeaderActualWidth and use this as it's width so that they all end up the
         /// same size.
         /// </remarks>
         /// <param name="availableSize"></param>

@@ -23,7 +23,7 @@ namespace System.Windows.Controls
         /// <param name="targetType">Visibility</param>
         /// <param name="parameter">DataGridHeadersVisibility that represents the minimum DataGridHeadersVisibility that is needed for a Visibility of Visible</param>
         /// <param name="culture">null</param>
-        /// <returns>Visible or Collapsed based on the value & converter mode</returns>
+        /// <returns>Visible or Collapsed based on the value and converter mode</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var visible = false;

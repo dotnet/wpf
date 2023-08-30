@@ -249,7 +249,6 @@ namespace System.Windows.Automation.Peers
             return null;
         }
 
-        /// <summary>
         internal void AddDataPeerInfo(TreeViewDataItemAutomationPeer dataPeer)
         {
             EventsSource = dataPeer;

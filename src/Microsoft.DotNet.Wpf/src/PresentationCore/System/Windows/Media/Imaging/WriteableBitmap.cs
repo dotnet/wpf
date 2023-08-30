@@ -1034,7 +1034,7 @@ namespace System.Windows.Media.Imaging
                     }
                     finally
                     {
-                        // The MILUtilities.MILCopyPixelBuffer may throw ArgumentException. We put Unlock method within the finally block to ensure that the Lock and Unlock methods are called in pairs
+                        // MILUtilities.MILCopyPixelBuffer may throw ArgumentException (e.g. for invalid stride)
                         // See https://github.com/dotnet/wpf/issues/8134
                         Unlock();
                     }

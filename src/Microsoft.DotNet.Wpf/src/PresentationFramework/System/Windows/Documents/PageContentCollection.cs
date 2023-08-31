@@ -20,7 +20,7 @@ namespace System.Windows.Documents
     /// <summary>
     /// PageContentCollection is an ordered collection of PageContent 
     /// </summary>
-    public sealed class PageContentCollection : IEnumerable<PageContent>
+    public sealed class PageContentCollection : IList, IEnumerable<PageContent>
     {
         //--------------------------------------------------------------------
         //
@@ -58,7 +58,7 @@ namespace System.Windows.Documents
         {
             if (newPageContent == null)
             {
-                throw new ArgumentNullException("newPageContent");
+                throw new ArgumentNullException(nameof(newPageContent));
             }
 
             _logicalParent.AddLogicalChild(newPageContent);
@@ -67,6 +67,51 @@ namespace System.Windows.Documents
             int index = InternalList.Count - 1;
             _logicalParent.OnPageContentAppended(index);
             return index;
+        }
+
+        int IList.Add(object value)
+        {
+            return Add(Cast(value));
+        }
+
+        void IList.Clear()
+        {
+            throw new NotSupportedException();
+        }
+
+        bool IList.Contains(object value)
+        {
+            return ((IList)InternalList).Contains(value);
+        }
+
+        int IList.IndexOf(object value)
+        {
+            return ((IList)InternalList).IndexOf(value);
+        }
+
+        void IList.Insert(int index, object value)
+        {
+            if (index != Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
+            Add(Cast(value));
+        }
+
+        void IList.Remove(object value)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IList.RemoveAt(int index)
+        {
+            throw new NotSupportedException();
+        }
+
+        void ICollection.CopyTo(Array array, int index)
+        {
+            ((ICollection)InternalList).CopyTo(array, index);
         }
 
         #endregion Public Methods
@@ -95,6 +140,15 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
 
         #region Public Properties
+
+        /// <summary>
+        /// Number of PageContent items in this collection
+        /// </summary>
+        public int Count
+        {
+            get { return InternalList.Count; }
+        }
+
         /// <summary>
         /// Indexer to retrieve individual PageContent contained within this collection
         /// </summary>
@@ -106,15 +160,38 @@ namespace System.Windows.Documents
             }
         }
 
-        /// <summary>
-        /// Number of PageContent items in this collection
-        /// </summary>
-
-        public int Count
+        bool IList.IsFixedSize
         {
-            get { return InternalList.Count; }
+            get { return false; }
         }
-        
+
+        bool IList.IsReadOnly
+        {
+            get { return false; }
+        }
+
+        object IList.this[int index]
+        {
+            get
+            {
+                return this[index];
+            }
+            set
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        bool ICollection.IsSynchronized
+        {
+            get { return false; }
+        }
+
+        object ICollection.SyncRoot
+        {
+            get { return this; }
+        }
+
         #endregion Public Properties
 
         //--------------------------------------------------------------------
@@ -174,6 +251,22 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
 
         #region Private Methods
+
+        private PageContent Cast(object value)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            if (!(value is PageContent))
+            {
+                throw new ArgumentException(SR.Get(SRID.Collection_BadType, nameof(PageContentCollection), value.GetType().Name, nameof(PageContent)));
+            }
+
+            return (PageContent) value;
+        }
+
         #endregion Private Methods
 
         //--------------------------------------------------------------------

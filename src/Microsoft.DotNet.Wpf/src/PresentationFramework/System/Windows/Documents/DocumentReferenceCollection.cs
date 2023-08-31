@@ -12,6 +12,7 @@ namespace System.Windows.Documents
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections;
     using System.Collections.Specialized;
     using System.Diagnostics;
 
@@ -21,7 +22,7 @@ namespace System.Windows.Documents
     /// DocumentReferenceCollection is an ordered collection of DocumentReference
     /// </summary>
     [CLSCompliant(false)]
-    public sealed class DocumentReferenceCollection : IEnumerable<DocumentReference>, INotifyCollectionChanged
+    public sealed class DocumentReferenceCollection : IList, IEnumerable<DocumentReference>, INotifyCollectionChanged
     {
         //--------------------------------------------------------------------
         //
@@ -41,24 +42,6 @@ namespace System.Windows.Documents
         //
         //---------------------------------------------------------------------
         #region Public Methods
-        
-        #region IEnumerable
-        /// <summary>
-        /// <!-- see cref="System.Collections.Generic.IEnumerable&lt;&gt;.GetEnumerator" / -->
-        /// </summary>
-        public IEnumerator<DocumentReference> GetEnumerator()
-        {
-            return _InternalList.GetEnumerator();
-        }
-
-
-	 System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable<DocumentReference>)this).GetEnumerator();
-        }
-       
-
-        #endregion IEnumerable
 
         ///<summary>
         ///
@@ -80,6 +63,69 @@ namespace System.Windows.Documents
             _InternalList.CopyTo(array, arrayIndex);
         }
 
+        int IList.Add(object value)
+        {
+            Add(Cast(value));
+
+            return Count - 1;
+        }
+
+        void IList.Clear()
+        {
+            throw new NotSupportedException();
+        }
+
+        bool IList.Contains(object value)
+        {
+            return ((IList)_InternalList).Contains(value);
+        }
+
+        int IList.IndexOf(object value)
+        {
+            return ((IList)_InternalList).IndexOf(value);
+        }
+
+        void IList.Insert(int index, object value)
+        {
+            if (index != Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
+            Add(Cast(value));
+        }
+
+        void IList.Remove(object value)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IList.RemoveAt(int index)
+        {
+            throw new NotSupportedException();
+        }
+
+        void ICollection.CopyTo(Array array, int index)
+        {
+            ((ICollection)_InternalList).CopyTo(array, index);
+        }
+
+        #region IEnumerable
+        /// <summary>
+        /// <!-- see cref="System.Collections.Generic.IEnumerable&lt;&gt;.GetEnumerator" / -->
+        /// </summary>
+        public IEnumerator<DocumentReference> GetEnumerator()
+        {
+            return _InternalList.GetEnumerator();
+        }
+
+	    IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable<DocumentReference>)this).GetEnumerator();
+        }
+
+        #endregion IEnumerable
+
         #endregion Public Methods
 
         #region Public Properties
@@ -89,10 +135,7 @@ namespace System.Windows.Documents
         /// </summary>
         public int Count
         {
-            get
-            {
-                return _InternalList.Count;
-            }
+            get { return _InternalList.Count; }
         }
 
         /// <summary>
@@ -106,8 +149,37 @@ namespace System.Windows.Documents
             }
         }
 
+        bool IList.IsFixedSize
+        {
+            get { return false; }
+        }
 
-        
+        bool IList.IsReadOnly
+        {
+            get { return false; }
+        }
+
+        object IList.this[int index]
+        {
+            get
+            {
+                return this[index];
+            }
+            set
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        bool ICollection.IsSynchronized
+        {
+            get { return false; }
+        }
+
+        object ICollection.SyncRoot
+        {
+            get { return this; }
+        }
 
         #endregion Public Properties
 
@@ -158,6 +230,21 @@ namespace System.Windows.Documents
         //
         //---------------------------------------------------------------------
 
+        private DocumentReference Cast(object value)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            if (!(value is DocumentReference))
+            {
+                throw new ArgumentException(SR.Get(SRID.Collection_BadType, nameof(DocumentReferenceCollection), value.GetType().Name, nameof(DocumentReference)));
+            }
+
+            return (DocumentReference) value;
+        }
+
         // fire CollectionChanged event to any listeners
         private void OnCollectionChanged(NotifyCollectionChangedAction action, object item, int index)
         {
@@ -183,4 +270,3 @@ namespace System.Windows.Documents
         #endregion Private Fields
     }
 }
-

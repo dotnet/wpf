@@ -114,7 +114,6 @@
     <Compile Include="MS\Internal\IO\Packaging\CompoundFile\UserUseLicenseDictionaryLoader.cs" />
     <Compile Include="MS\Internal\IO\Packaging\CompoundFile\VersionedStream.cs" />
     <Compile Include="MS\Internal\IO\Packaging\CompoundFile\VersionedStreamOwner.cs" />
-    <Compile Include="MS\Internal\IO\Packaging\CaseInsensitiveOrdinalStringComparer.cs" />
     <Compile Include="MS\Internal\IO\Packaging\Certificate.cs" />
     <Compile Include="MS\Internal\IO\Packaging\DeflateEmulationStream.cs" />
     <Compile Include="MS\Internal\IO\Packaging\CompressEmulationStream.cs" />

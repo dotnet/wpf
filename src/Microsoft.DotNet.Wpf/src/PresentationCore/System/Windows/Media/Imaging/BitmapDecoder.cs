@@ -1212,6 +1212,7 @@ namespace System.Windows.Media.Imaging
             finally
             {
                 UnsafeNativeMethods.MILUnknown.ReleaseInterface(ref comStream);
+                bitmapStream.Close();
             }
 
             string decoderMimeTypes;

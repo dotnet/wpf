@@ -150,9 +150,7 @@ namespace MS.Internal.IO.Packaging
                             // Compare ordinal case-sensitive which is more strict than normal ContentType
                             // comparision because this is manadated by the OPC specification.
                             PackagePart part = _manager.Package.GetPart(partEntry.Uri);
-                            if (String.CompareOrdinal(
-                                partEntry.ContentType.OriginalString,
-                                part.ValidatedContentType().OriginalString) != 0)
+                            if (!string.Equals(partEntry.ContentType.OriginalString, part.ValidatedContentType().OriginalString, StringComparison.Ordinal))
                             {
                                 result = false;     // content type mismatch
                                 break;
@@ -164,7 +162,7 @@ namespace MS.Internal.IO.Packaging
                         {
                             // ensure hash algorithm object is available - re-use if possible
                             if (((hashAlgorithm != null) && (!hashAlgorithm.CanReuseTransform)) ||
-                                String.CompareOrdinal(partEntry.HashAlgorithm, currentHashAlgorithmName) != 0)
+                                !string.Equals(partEntry.HashAlgorithm, currentHashAlgorithmName, StringComparison.Ordinal))
                             {
                                 if (hashAlgorithm != null)
                                     ((IDisposable)hashAlgorithm).Dispose();
@@ -185,7 +183,7 @@ namespace MS.Internal.IO.Packaging
                             String base64EncodedHashValue = GenerateDigestValue(s, partEntry.Transforms, hashAlgorithm);
 
                             // now compare the hash - must be identical
-                            if (String.CompareOrdinal(base64EncodedHashValue, partEntry.HashValue) != 0)
+                            if (!string.Equals(base64EncodedHashValue, partEntry.HashValue, StringComparison.Ordinal))
                             {
                                 result = false;     // hash mismatch
                                 break;
@@ -459,7 +457,7 @@ namespace MS.Internal.IO.Packaging
                 {
                     // ignore empty strings at this point (as well as Relationship Transforms) - these are legal
                     if ((transformName.Length == 0)
-                        || (String.CompareOrdinal(transformName, XTable.Get(XTable.ID.RelationshipsTransformName)) == 0))
+                        || (string.Equals(transformName, XTable.Get(XTable.ID.RelationshipsTransformName), StringComparison.Ordinal)))
                     {
                         continue;
                     }
@@ -556,11 +554,11 @@ namespace MS.Internal.IO.Packaging
         {
             Invariant.Assert(transformName != null);
 
-            if (String.CompareOrdinal(transformName, SignedXml.XmlDsigC14NTransformUrl) == 0)
+            if (string.Equals(transformName, SignedXml.XmlDsigC14NTransformUrl, StringComparison.Ordinal))
             {
                 return new XmlDsigC14NTransform();
             }
-            else if (String.CompareOrdinal(transformName, SignedXml.XmlDsigC14NWithCommentsTransformUrl) == 0)
+            else if (string.Equals(transformName, SignedXml.XmlDsigC14NWithCommentsTransformUrl, StringComparison.Ordinal))
             {
                 return new XmlDsigC14NWithCommentsTransform();
             }
@@ -582,8 +580,8 @@ namespace MS.Internal.IO.Packaging
         {
             Invariant.Assert(transformName != null);
 
-            if (String.CompareOrdinal(transformName, SignedXml.XmlDsigC14NTransformUrl) == 0 ||
-                String.CompareOrdinal(transformName, SignedXml.XmlDsigC14NWithCommentsTransformUrl) == 0)
+            if (string.Equals(transformName, SignedXml.XmlDsigC14NTransformUrl, StringComparison.Ordinal) ||
+                string.Equals(transformName, SignedXml.XmlDsigC14NWithCommentsTransformUrl, StringComparison.Ordinal))
             {
                 return true;
             }
@@ -650,8 +648,8 @@ namespace MS.Internal.IO.Packaging
                         }
 
                         if ((node.NodeType != XmlNodeType.Element) ||
-                           (String.CompareOrdinal(node.NamespaceURI, SignedXml.XmlDsigNamespaceUrl) != 0) ||
-                           (String.CompareOrdinal(node.LocalName, XTable.Get(XTable.ID.SignatureTagName)) != 0))
+                           (!string.Equals(node.NamespaceURI, SignedXml.XmlDsigNamespaceUrl, StringComparison.Ordinal)) ||
+                           (!string.Equals(node.LocalName, XTable.Get(XTable.ID.SignatureTagName), StringComparison.Ordinal)))
                         {
                             throw new XmlException(SR.PackageSignatureCorruption);
                         }
@@ -993,7 +991,7 @@ namespace MS.Internal.IO.Packaging
 
                 // parse the <Object> tag - ensure that it is in the correct namespace
                 reader.Read();  // enter the Object tag
-                if (String.CompareOrdinal(reader.NamespaceURI, SignedXml.XmlDsigNamespaceUrl) != 0)
+                if (!string.Equals(reader.NamespaceURI, SignedXml.XmlDsigNamespaceUrl, StringComparison.Ordinal))
                     throw new XmlException(SR.XmlSignatureParseError);
 
                 string signaturePropertiesTagName = XTable.Get(XTable.ID.SignaturePropertiesTagName);
@@ -1003,10 +1001,10 @@ namespace MS.Internal.IO.Packaging
                 while (reader.Read() && (reader.NodeType == XmlNodeType.Element))
                 {
                     if (reader.MoveToContent() == XmlNodeType.Element
-                        && (String.CompareOrdinal(reader.NamespaceURI, SignedXml.XmlDsigNamespaceUrl) == 0)
+                        && (string.Equals(reader.NamespaceURI, SignedXml.XmlDsigNamespaceUrl, StringComparison.Ordinal))
                         && reader.Depth == 1)
                     {
-                        if (!signaturePropertiesTagFound && String.CompareOrdinal(reader.LocalName, signaturePropertiesTagName) == 0)
+                        if (!signaturePropertiesTagFound && string.Equals(reader.LocalName, signaturePropertiesTagName, StringComparison.Ordinal))
                         {
                             signaturePropertiesTagFound = true;
 
@@ -1016,7 +1014,7 @@ namespace MS.Internal.IO.Packaging
 
                             continue;
                         }
-                        else if (!manifestTagFound && String.CompareOrdinal(reader.LocalName, manifestTagName) == 0)
+                        else if (!manifestTagFound && string.Equals(reader.LocalName, manifestTagName, StringComparison.Ordinal))
                         {
                             manifestTagFound = true;
 
@@ -1052,7 +1050,7 @@ namespace MS.Internal.IO.Packaging
             DataObject returnValue = null;
             foreach (DataObject dataObject in _signedXml.Signature.ObjectList)
             {
-                if (String.CompareOrdinal(dataObject.Id, opcId) == 0)
+                if (string.Equals(dataObject.Id, opcId, StringComparison.Ordinal))
                 {
                     // duplicates not allowed
                     if (returnValue != null)
@@ -1179,7 +1177,7 @@ namespace MS.Internal.IO.Packaging
                 {
                     //As per the OPC spec, there MUST be exactly one package specific reference to the 
                     //package specific <Object> element 
-                    if (String.CompareOrdinal(currentReference.Uri, XTable.Get(XTable.ID.OpcLinkAttrValue)) == 0)
+                    if (string.Equals(currentReference.Uri, XTable.Get(XTable.ID.OpcLinkAttrValue), StringComparison.Ordinal))
                     {
                         if (!allowPackageSpecificReferences)
                             throw new ArgumentException(SR.PackageSpecificReferenceTagMustBeUnique);

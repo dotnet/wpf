@@ -195,7 +195,7 @@ namespace MS.Internal.IO.Packaging
             //to verify the uri correctly.
             //We perform the comparison in a case-insensitive manner, as at this point,
             //only escaped hex digits (A-F) might vary in casing.
-            if (String.CompareOrdinal(partUri.OriginalString.ToUpperInvariant(), wellFormedPartName.ToUpperInvariant()) != 0)
+            if (!string.Equals(partUri.OriginalString, wellFormedPartName, StringComparison.OrdinalIgnoreCase))
                 return new ArgumentException(SR.InvalidPartUri);
 
             //if we get here, the partUri is valid and so we return null, as there is no exception.
@@ -513,7 +513,7 @@ namespace MS.Internal.IO.Packaging
                     (segments[segments.Length - 1].Length > _relationshipPartExtensionName.Length))
                 {
                     // look for "_RELS" segment which must be second last segment
-                    result = (String.CompareOrdinal(segments[segments.Length - 2], _relationshipPartUpperCaseSegmentName) == 0);
+                    result = string.Equals(segments[segments.Length - 2], _relationshipPartUpperCaseSegmentName, StringComparison.Ordinal);
                 }
 
                 // In addition we need to make sure that the relationship is not created by taking another relationship

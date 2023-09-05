@@ -710,7 +710,7 @@ namespace MS.Internal.IO.Packaging
                     pszVal = Marshal.StringToCoTaskMemAnsi(inputString);
                     string convertedString = Marshal.PtrToStringAnsi(pszVal);
 
-                    if (String.CompareOrdinal(inputString, convertedString) != 0)
+                    if (!string.Equals(inputString, convertedString, StringComparison.Ordinal))
                     {
                         // The string is not an ASCII string. Use UTF-8 to encode it!
                         byte[] byteArray = UTF8Encoding.UTF8.GetBytes(inputString);

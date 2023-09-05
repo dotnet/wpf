@@ -663,7 +663,7 @@ namespace MS.Internal.Security.RightsManagement
 
                 foreach (string oldElement in oldList)
                 {
-                    if (String.CompareOrdinal(newElement, oldElement) == 0)
+                    if (string.Equals(newElement, oldElement, StringComparison.Ordinal))
                     {
                         matchFound = true;
                         break;
@@ -1331,9 +1331,7 @@ namespace MS.Internal.Security.RightsManagement
                         0);
 
                     // We recognise authentication type Windows everything else is assumed to be Passport 
-                    if (String.CompareOrdinal(
-                        AuthenticationType.Windows.ToString().ToUpper(CultureInfo.InvariantCulture),
-                        authenticationType.ToUpper(CultureInfo.InvariantCulture)) == 0)
+                    if (string.Equals(AuthenticationType.Windows.ToString(), authenticationType, StringComparison.OrdinalIgnoreCase))
                     {
                         return new ContentUser(name, AuthenticationType.Windows);
                     }
@@ -1853,7 +1851,7 @@ namespace MS.Internal.Security.RightsManagement
                                                 distributionPointQueryHandle,
                                                 NativeConstants.QUERY_OBJECTTYPE,
                                                 0);
-                        if (String.CompareOrdinal(addressType, distributionPointType) == 0)
+                        if (string.Equals(addressType, distributionPointType, StringComparison.Ordinal))
                         {
                             nameAttributeValue = GetUnboundLicenseStringAttribute(
                                                 distributionPointQueryHandle,
@@ -1936,7 +1934,7 @@ namespace MS.Internal.Security.RightsManagement
 
             for (int i = 0; i < _rightEnums.Length; i++)
             {
-                if (String.CompareOrdinal(_rightNames[i], rightName) == 0)
+                if (string.Equals(_rightNames[i], rightName, StringComparison.Ordinal))
                 {
                     return _rightEnums[i];
                 }

@@ -1375,7 +1375,7 @@ namespace System.Windows.Documents
                 CompositionEventRecord previousRecord = (this.CompositionEventList.Count == 0) ? null : this.CompositionEventList[this.CompositionEventList.Count - 1];
 
                 if (_lastCompositionText == null ||
-                    String.CompareOrdinal(compositionText, _lastCompositionText) != 0)
+                    !string.Equals(compositionText, _lastCompositionText, StringComparison.Ordinal))
                 {
                     // Add the new update event.
                     this.CompositionEventList.Add(record);

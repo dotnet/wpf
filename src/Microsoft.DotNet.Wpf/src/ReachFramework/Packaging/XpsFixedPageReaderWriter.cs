@@ -1913,11 +1913,11 @@ namespace System.Windows.Xps.Packaging
         {
             //Extract file extension
             String path = fontUri.OriginalString;
-            String extension = Path.GetExtension(path).ToLower(CultureInfo.InvariantCulture);
+            String extension = Path.GetExtension(path);
             String fileName = Path.GetFileNameWithoutExtension(path);
 
             ContentType contentType = null;
-            if (String.CompareOrdinal(extension, XpsS0Markup.ObfuscatedFontExt.ToLower(CultureInfo.InvariantCulture)) == 0)
+            if (string.Equals(extension, XpsS0Markup.ObfuscatedFontExt, StringComparison.OrdinalIgnoreCase))
             {
                 // Verify that the filename is a valid GUID string
                 // Until Guid has a TryParse method we will have to depend on an exception being thrown

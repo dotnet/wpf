@@ -29,8 +29,7 @@ namespace MS.Internal.IO.Packaging
         bool IEqualityComparer.Equals(Object x, Object y)
         {
             Invariant.Assert((x is String) && (y is String));
-            return (String.CompareOrdinal(((String) x).ToUpperInvariant(),
-                                ((String) y).ToUpperInvariant()) == 0);
+            return string.Equals(((string) x), ((string) y), StringComparison.OrdinalIgnoreCase);
         }
 
         int IComparer.Compare(Object x, Object y)

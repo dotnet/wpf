@@ -135,7 +135,7 @@ namespace System.Security.RightsManagement
 
             ContentUser userObj = (ContentUser)obj;
 
-            return (String.CompareOrdinal(_name.ToUpperInvariant(), userObj._name.ToUpperInvariant()) == 0)
+            return (string.Equals(_name, userObj._name, StringComparison.OrdinalIgnoreCase))
                         &&
                             _authenticationType.Equals(userObj._authenticationType);
         }
@@ -228,7 +228,7 @@ namespace System.Security.RightsManagement
             }
             else
             {
-                return (String.CompareOrdinal(_name.ToUpperInvariant(), userObj._name.ToUpperInvariant()) == 0)
+                return (string.Equals(_name, userObj._name, StringComparison.OrdinalIgnoreCase))
                             &&
                                 _authenticationType.Equals(userObj._authenticationType);
             }
@@ -263,12 +263,12 @@ namespace System.Security.RightsManagement
 
         internal static bool CompareToAnyone(string name)
         {
-            return (0 == String.CompareOrdinal(AnyoneUserName.ToUpperInvariant(), name.ToUpperInvariant()));
+            return string.Equals(AnyoneUserName, name, StringComparison.OrdinalIgnoreCase);
         }
 
         internal static bool CompareToOwner(string name)
         {
-            return (0 == String.CompareOrdinal(OwnerUserName.ToUpperInvariant(), name.ToUpperInvariant()));
+            return string.Equals(OwnerUserName, name, StringComparison.OrdinalIgnoreCase);
         }
 
         private const string WindowsAuthProvider = "WindowsAuthProvider";

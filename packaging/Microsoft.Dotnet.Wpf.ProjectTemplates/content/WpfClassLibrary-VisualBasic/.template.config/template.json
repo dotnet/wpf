@@ -6,8 +6,8 @@
   "generatorVersions": "[1.0.0.0-*)",
   "description": "A project for creating a class library that targets a .NET WPF Application",
   "groupIdentity": "Microsoft.Common.WPF.Library",
-  "precedence": "8000",
-  "identity": "Microsoft.Common.WPF.Library.VisualBasic.8.0",
+  "precedence": "9000",
+  "identity": "Microsoft.Common.WPF.Library.VisualBasic.9.0",
   "shortName": "wpflib",
   "tags": {
     "language": "VB",
@@ -58,10 +58,15 @@
               "choice": "net8.0",
               "description": "Target net8.0",
               "displayName": ".NET 8.0"
+          },
+          {
+              "choice": "net9.0",
+              "description": "Target net9.0",
+              "displayName": ".NET 9.0"
           }
         ],
       "replaces": "FrameworkParameter",
-      "defaultValue": "net8.0",
+      "defaultValue": "net9.0",
       "displayName": "Framework"
     },
     "UseWindowsDesktopSdk": {

@@ -3577,10 +3577,7 @@ namespace MS.Win32 {
             }
             public LOGFONT( LOGFONT lf )
             {
-                if (lf == null)
-                {
-                    throw new ArgumentNullException("lf");
-                }
+                ArgumentNullException.ThrowIfNull(lf);
 
                 this.lfHeight           = lf.lfHeight;
                 this.lfWidth            = lf.lfWidth;

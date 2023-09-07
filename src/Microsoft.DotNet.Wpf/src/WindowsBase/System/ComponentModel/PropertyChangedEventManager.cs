@@ -49,10 +49,8 @@ namespace System.ComponentModel
         /// </summary>
         public static void AddListener(INotifyPropertyChanged source, IWeakEventListener listener, string propertyName)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(listener);
 
             CurrentManager.PrivateAddListener(source, listener, propertyName);
         }
@@ -66,8 +64,7 @@ namespace System.ComponentModel
             if (source == null)
                 throw new ArgumentNullException("source");
             */
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(listener);
 
             CurrentManager.PrivateRemoveListener(source, listener, propertyName);
         }
@@ -77,8 +74,7 @@ namespace System.ComponentModel
         /// </summary>
         public static void AddHandler(INotifyPropertyChanged source, EventHandler<PropertyChangedEventArgs> handler, string propertyName)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.PrivateAddHandler(source, handler, propertyName);
         }
@@ -88,8 +84,7 @@ namespace System.ComponentModel
         /// </summary>
         public static void RemoveHandler(INotifyPropertyChanged source, EventHandler<PropertyChangedEventArgs> handler, string propertyName)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.PrivateRemoveHandler(source, handler, propertyName);
         }

@@ -32,8 +32,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="stream"></param>
         internal IgnoreFlushAndCloseStream(Stream stream)
         {
-            if (stream == null)
-                throw new ArgumentNullException("stream");
+            ArgumentNullException.ThrowIfNull(stream);
 
             _stream = stream;
         }

@@ -114,10 +114,7 @@ namespace MS.Internal.IO.Packaging
             if (!s.CanRead)
                 throw new NotSupportedException(SR.ReadNotSupported);
 
-            if (buffer == null)
-            {
-                throw new ArgumentNullException("buffer");
-            }
+            ArgumentNullException.ThrowIfNull(buffer);
 
             if (offset < 0)
             {
@@ -151,10 +148,7 @@ namespace MS.Internal.IO.Packaging
             if (!s.CanWrite)
                 throw new NotSupportedException(SR.WriteNotSupported);
 
-            if (buffer == null)
-            {
-                throw new ArgumentNullException("buffer");
-            }
+            ArgumentNullException.ThrowIfNull(buffer);
 
             if (offset < 0)
             {
@@ -579,8 +573,7 @@ namespace MS.Internal.IO.Packaging
                 FileShare share, ReliableIsolatedStorageFileFolder folder)
                 : base(path, mode, access, share, folder.IsoFile)
             {
-                if (path == null)
-                    throw new ArgumentNullException("path");
+                ArgumentNullException.ThrowIfNull(path);
 
                 _path = path;
                 _folder = folder;

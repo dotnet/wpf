@@ -171,10 +171,7 @@ namespace System.Windows
             //
             this.VerifyAccess();
 
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             // Call Forwarded
             return GetValueEntry(
@@ -599,21 +596,16 @@ namespace System.Windows
         /// </summary>
         private PropertyMetadata SetupPropertyChange(DependencyProperty dp)
         {
-            if ( dp != null )
+            ArgumentNullException.ThrowIfNull(dp);
+
+            if (!dp.ReadOnly)
             {
-                if ( !dp.ReadOnly )
-                {
-                    // Get type-specific metadata for this property
-                    return dp.GetMetadata(DependencyObjectType);
-                }
-                else
-                {
-                    throw new InvalidOperationException(SR.Format(SR.ReadOnlyChangeNotAllowed, dp.Name));
-                }
+                // Get type-specific metadata for this property
+                return dp.GetMetadata(DependencyObjectType);
             }
             else
             {
-                throw new ArgumentNullException("dp");
+                throw new InvalidOperationException(SR.Format(SR.ReadOnlyChangeNotAllowed, dp.Name));
             }
         }
 
@@ -623,20 +615,15 @@ namespace System.Windows
         /// </summary>
         private PropertyMetadata SetupPropertyChange(DependencyPropertyKey key, out DependencyProperty dp)
         {
-            if ( key != null )
-            {
-                dp = key.DependencyProperty;
-                Debug.Assert(dp != null);
+            ArgumentNullException.ThrowIfNull(key);
 
-                dp.VerifyReadOnlyKey(key);
+            dp = key.DependencyProperty;
+            Debug.Assert(dp != null);
 
-                // Get type-specific metadata for this property
-                return dp.GetMetadata(DependencyObjectType);
-            }
-            else
-            {
-                throw new ArgumentNullException("key");
-            }
+            dp.VerifyReadOnlyKey(key);
+
+            // Get type-specific metadata for this property
+            return dp.GetMetadata(DependencyObjectType);
         }
 
         /// <summary>
@@ -1215,10 +1202,7 @@ namespace System.Windows
             //
             this.VerifyAccess();
 
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             EffectiveValueEntry newEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Unknown);
             newEntry.IsCoercedWithCurrentValue = preserveCurrentValue;
@@ -1251,12 +1235,9 @@ namespace System.Windows
                 bool                coerceWithCurrentValue,
                 OperationType       operationType)
         {
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
-#region EventTracing
+            #region EventTracing
 #if VERBOSE_PROPERTY_EVENT
             bool isDynamicTracing = EventTrace.IsEnabled(EventTrace.Flags.performance, EventTrace.Level.verbose); // This was under "normal"
             if (isDynamicTracing)
@@ -1278,7 +1259,7 @@ namespace System.Windows
 #endif
 
 
-#endregion EventTracing
+            #endregion EventTracing
 
 #if NESTED_OPERATIONS_CHECK
             // Are we invalidating out of control?
@@ -2101,10 +2082,7 @@ namespace System.Windows
         internal BaseValueSourceInternal GetValueSource(DependencyProperty dp, PropertyMetadata metadata,
                 out bool hasModifiers, out bool isExpression, out bool isAnimated, out bool isCoerced, out bool isCurrent)
         {
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             EntryIndex entryIndex = LookupEntry(dp.GlobalIndex);
 
@@ -2180,10 +2158,7 @@ namespace System.Windows
             //
             this.VerifyAccess();
 
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             EntryIndex entryIndex = LookupEntry(dp.GlobalIndex);
 

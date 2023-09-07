@@ -568,10 +568,7 @@ namespace System.Windows
         /// <param name="dp">DependencyProperty that this metadata is being applied to</param>
         protected virtual void Merge(PropertyMetadata baseMetadata, DependencyProperty dp)
         {
-            if (baseMetadata == null)
-            {
-                throw new ArgumentNullException("baseMetadata");
-            }
+            ArgumentNullException.ThrowIfNull(baseMetadata);
 
             if (Sealed)
             {

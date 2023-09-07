@@ -41,11 +41,8 @@ namespace System.Windows
         /// <param name="scopedElement">object mapped to name</param>
         public void RegisterName(string name, object scopedElement)
         {
-            if (name == null)
-                throw new ArgumentNullException(nameof(name));
-
-            if (scopedElement == null)
-                throw new ArgumentNullException(nameof(scopedElement));
+            ArgumentNullException.ThrowIfNull(name);
+            ArgumentNullException.ThrowIfNull(scopedElement);
 
             if (name.Length == 0)
                 throw new ArgumentException(SR.NameScopeNameNotEmptyString);
@@ -89,8 +86,7 @@ namespace System.Windows
         /// <param name="name">name to be registered</param>
         public void UnregisterName(string name)
         {
-            if (name == null)
-                throw new ArgumentNullException(nameof(name));
+            ArgumentNullException.ThrowIfNull(name);
 
             if (name.Length == 0)
                 throw new ArgumentException(SR.NameScopeNameNotEmptyString);
@@ -164,10 +160,7 @@ namespace System.Windows
         /// <param name="value">NameScope property value.</param>
         public static void SetNameScope(DependencyObject dependencyObject, INameScope value)
         {
-            if (dependencyObject == null)
-            {
-                throw new ArgumentNullException(nameof(dependencyObject));
-            }
+            ArgumentNullException.ThrowIfNull(dependencyObject);
 
             dependencyObject.SetValue(NameScopeProperty, value);
         }
@@ -180,10 +173,7 @@ namespace System.Windows
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public static INameScope GetNameScope(DependencyObject dependencyObject)
         {
-            if (dependencyObject == null)
-            {
-                throw new ArgumentNullException(nameof(dependencyObject));
-            }
+            ArgumentNullException.ThrowIfNull(dependencyObject);
 
             return ((INameScope)dependencyObject.GetValue(NameScopeProperty));
         }
@@ -300,23 +290,13 @@ namespace System.Windows
         {
             get
             {
-                if (key == null)
-                {
-                    throw new ArgumentNullException("key");
-                }
+                ArgumentNullException.ThrowIfNull(key);
                 return FindName(key);
             }
             set
             {
-                if (key == null)
-                {
-                    throw new ArgumentNullException("key");
-                }
-
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(key);
+                ArgumentNullException.ThrowIfNull(value);
 
                 RegisterName(key, value);
             }
@@ -324,20 +304,14 @@ namespace System.Windows
 
         public void Add(string key, object value)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException("key");
-            }
+            ArgumentNullException.ThrowIfNull(key);
 
             RegisterName(key, value);
         }
 
         public bool ContainsKey(string key)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException("key");
-            }
+            ArgumentNullException.ThrowIfNull(key);
 
             object value = FindName(key);
             return (value != null);

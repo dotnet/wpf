@@ -228,8 +228,7 @@ namespace System.Windows
         /// </summary>
         protected void ProtectedAddListener(object source, IWeakEventListener listener)
         {
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(listener);
 
             AddListener(source, listener, null);
         }
@@ -239,8 +238,7 @@ namespace System.Windows
         /// </summary>
         protected void ProtectedRemoveListener(object source, IWeakEventListener listener)
         {
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(listener);
 
             RemoveListener(source, listener, null);
         }
@@ -250,8 +248,7 @@ namespace System.Windows
         /// </summary>
         protected void ProtectedAddHandler(object source, Delegate handler)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             AddListener(source, null, handler);
         }
@@ -261,8 +258,7 @@ namespace System.Windows
         /// </summary>
         protected void ProtectedRemoveHandler(object source, Delegate handler)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             RemoveListener(source, null, handler);
         }

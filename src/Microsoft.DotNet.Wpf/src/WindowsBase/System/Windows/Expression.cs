@@ -200,14 +200,10 @@ namespace System.Windows
         /// <param name="newSources">New sources</param>
         internal void ChangeSources(DependencyObject d, DependencyProperty dp, DependencySource[] newSources)
         {
-            if (d == null && !ForwardsInvalidations)
+            if (!ForwardsInvalidations)
             {
-                throw new ArgumentNullException("d");
-            }
-
-            if (dp == null && !ForwardsInvalidations)
-            {
-                throw new ArgumentNullException("dp");
+                ArgumentNullException.ThrowIfNull(d);
+                ArgumentNullException.ThrowIfNull(dp);
             }
 
             if (Shareable)

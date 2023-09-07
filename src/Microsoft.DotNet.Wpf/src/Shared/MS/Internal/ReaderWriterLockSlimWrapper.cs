@@ -262,10 +262,7 @@ namespace MS.Internal
         /// </remarks>
         private bool ExecuteWithinLockInternal(Action lockAcquire, Action lockRelease, ref object result, Delegate criticalAction, params object[] args)
         {
-            if (criticalAction == null)
-            {
-                throw new ArgumentNullException(nameof(criticalAction));
-            }
+            ArgumentNullException.ThrowIfNull(criticalAction);
 
             bool lockAcquired = false;
             DispatcherProcessingDisabled? dispatcherProcessingDisabled = null;

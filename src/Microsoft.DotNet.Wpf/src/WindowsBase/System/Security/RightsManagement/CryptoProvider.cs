@@ -71,14 +71,11 @@ namespace System.Security.RightsManagement
         public byte[] Encrypt(byte[] clearText)
         {
             CheckDisposed();
-            
-            if (clearText == null)
-            {
-                throw new ArgumentNullException("clearText");
-            }
+
+            ArgumentNullException.ThrowIfNull(clearText);
 
             // validation of the proper size of the clearText is done by the unmanaged libraries 
-            
+
             if (!CanEncrypt)
             {
                 throw new RightsManagementException(RightsManagementFailureCode.EncryptionNotPermitted);
@@ -130,14 +127,11 @@ namespace System.Security.RightsManagement
         public byte[] Decrypt(byte[] cryptoText)
         {
             CheckDisposed();
-        
-            if (cryptoText == null)
-            {
-                throw new ArgumentNullException("cryptoText");
-            }
+
+            ArgumentNullException.ThrowIfNull(cryptoText);
 
             // validation of the proper size of the cryptoText is done by the unmanaged libraries 
-            
+
             if (!CanDecrypt)
             {
                 throw new RightsManagementException(RightsManagementFailureCode.RightNotGranted);

@@ -29,7 +29,7 @@ namespace System.Windows
         /// </summary>
         public AttachedPropertyBrowsableWhenAttributePresentAttribute(Type attributeType)
         {
-            if (attributeType == null) throw new ArgumentNullException("attributeType");
+            ArgumentNullException.ThrowIfNull(attributeType);
 
             _attributeType = attributeType;
         }
@@ -94,8 +94,8 @@ namespace System.Windows
         /// </summary>
         internal override bool IsBrowsable(DependencyObject d, DependencyProperty dp)
         {
-            if (d == null) throw new ArgumentNullException("d");
-            if (dp == null) throw new ArgumentNullException("dp");
+            ArgumentNullException.ThrowIfNull(d);
+            ArgumentNullException.ThrowIfNull(dp);
 
             Attribute a = TypeDescriptor.GetAttributes(d)[_attributeType];
             return (a != null && !a.IsDefaultAttribute());

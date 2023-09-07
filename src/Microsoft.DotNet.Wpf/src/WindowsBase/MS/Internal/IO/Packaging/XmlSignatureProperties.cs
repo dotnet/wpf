@@ -65,8 +65,7 @@ namespace MS.Internal.IO.Packaging
         /// <returns>true if legal</returns>
         internal static bool LegalFormat(String candidateFormat)
         {
-            if (candidateFormat == null)
-                throw new ArgumentNullException("candidateFormat");
+            ArgumentNullException.ThrowIfNull(candidateFormat);
 
             return (GetIndex(candidateFormat) != -1);
         }
@@ -153,8 +152,7 @@ namespace MS.Internal.IO.Packaging
         /// <returns>signing time</returns>
         internal static DateTime ParseSigningTime(XmlReader reader, string signatureId, out String timeFormat)
         {
-            if (reader == null)
-                throw new ArgumentNullException("reader");
+            ArgumentNullException.ThrowIfNull(reader);
 
             bool signatureTimePropertyFound = false;
             bool signatureTimeIdFound = false;

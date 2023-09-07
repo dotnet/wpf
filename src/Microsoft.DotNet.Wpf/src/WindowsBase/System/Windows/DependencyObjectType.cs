@@ -45,10 +45,7 @@ namespace System.Windows
         /// </returns>
         public static DependencyObjectType FromSystemType(Type systemType)
         {
-            if (systemType == null)
-            {
-                throw new ArgumentNullException("systemType");
-            }
+            ArgumentNullException.ThrowIfNull(systemType);
 
             if (!typeof(DependencyObject).IsAssignableFrom(systemType))
             {

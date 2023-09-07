@@ -39,17 +39,10 @@ namespace System.Security.RightsManagement
         /// </summary>
         public LocalizedNameDescriptionPair(string name, string description)
         {
-        
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
 
-            if (description == null)
-            {
-                throw new ArgumentNullException("description");
-            }
-            
+            ArgumentNullException.ThrowIfNull(name);
+            ArgumentNullException.ThrowIfNull(description);
+
             _name = name;
             _description = description;
         }

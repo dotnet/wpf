@@ -74,11 +74,8 @@ namespace System.Security.RightsManagement
         /// </summary>
         public static bool IsUserActivated(ContentUser user)
         {
-        
-            if (user == null)
-            {
-                throw new ArgumentNullException("user");
-            }
+
+            ArgumentNullException.ThrowIfNull(user);
 
             // we only let specifically identified users to be used here  
             if ((user.AuthenticationType != AuthenticationType.Windows) && 
@@ -99,11 +96,8 @@ namespace System.Security.RightsManagement
         /// </summary>
         public static void RemoveActivatedUser(ContentUser user)
         {
-            
-            if (user == null)
-            {
-                throw new ArgumentNullException("user");
-            }
+
+            ArgumentNullException.ThrowIfNull(user);
 
             // we only let specifically identifyed users to be used here  
             if ((user.AuthenticationType != AuthenticationType.Windows) && 
@@ -256,15 +250,8 @@ namespace System.Security.RightsManagement
         /// </summary>
         private static SecureEnvironment CriticalCreate(string applicationManifest, ContentUser user)
         {
-            if (applicationManifest == null)
-            {
-                throw new ArgumentNullException("applicationManifest");
-            }
-
-            if (user == null)
-            {
-                throw new  ArgumentNullException("user");
-            }
+            ArgumentNullException.ThrowIfNull(applicationManifest);
+            ArgumentNullException.ThrowIfNull(user);
 
             // we only let specifically identifyed users to be used here  
             if ((user.AuthenticationType != AuthenticationType.Windows) && 
@@ -298,10 +285,7 @@ namespace System.Security.RightsManagement
             AuthenticationType authentication,
             UserActivationMode userActivationMode)
         {
-            if (applicationManifest == null)
-            {
-                throw new ArgumentNullException("applicationManifest");
-            }
+            ArgumentNullException.ThrowIfNull(applicationManifest);
 
             if ((authentication != AuthenticationType.Windows) && 
                  (authentication != AuthenticationType.Passport))

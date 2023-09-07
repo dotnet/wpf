@@ -31,7 +31,7 @@ namespace System.Windows
         /// </summary>
         public AttachedPropertyBrowsableForTypeAttribute(Type targetType)
         {
-            if (targetType == null) throw new ArgumentNullException("targetType");
+            ArgumentNullException.ThrowIfNull(targetType);
             _targetType = targetType;
         }
         
@@ -109,8 +109,8 @@ namespace System.Windows
         /// </summary>
         internal override bool IsBrowsable(DependencyObject d, DependencyProperty dp)
         {
-            if (d == null) throw new ArgumentNullException("d");
-            if (dp == null) throw new ArgumentNullException("dp");
+            ArgumentNullException.ThrowIfNull(d);
+            ArgumentNullException.ThrowIfNull(dp);
 
             // Get the dependency object type for our target type.
             // We cannot assume the user didn't do something wrong and

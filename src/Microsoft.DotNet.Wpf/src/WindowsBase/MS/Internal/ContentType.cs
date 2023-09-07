@@ -83,8 +83,7 @@ namespace MS.Internal
         /// <exception cref="ArgumentException">If the contentType string invalid CR-LF characters</exception>
         internal ContentType(string contentType)
         {
-            if (contentType == null)
-                throw new ArgumentNullException("contentType");
+            ArgumentNullException.ThrowIfNull(contentType);
 
             if (contentType.Length == 0)
             {

@@ -148,8 +148,7 @@ namespace System.Security.RightsManagement
 #pragma warning disable SYSLIB0051 // Type or member is obsolete
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            if (info == null)
-                throw new ArgumentNullException("info");
+            ArgumentNullException.ThrowIfNull(info);
 
             base.GetObjectData(info, context);
             info.AddValue(_serializationFailureCodeAttributeName, (Int32)_failureCode);

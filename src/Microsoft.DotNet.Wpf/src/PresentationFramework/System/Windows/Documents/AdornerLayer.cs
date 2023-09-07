@@ -149,8 +149,7 @@ namespace System.Windows.Documents
         /// </remarks>
         internal AdornerLayer(Dispatcher context)
         {
-            if (context == null)
-                throw new ArgumentNullException("context");
+            ArgumentNullException.ThrowIfNull(context);
 
             LayoutUpdated += new EventHandler(OnLayoutUpdated);
             _children = new VisualCollection(this);
@@ -182,8 +181,7 @@ namespace System.Windows.Documents
         /// <param name="adorner">adorner to remove</param>
         public void Remove(Adorner adorner)
         {
-            if (adorner == null)
-                throw new ArgumentNullException("adorner");
+            ArgumentNullException.ThrowIfNull(adorner);
 
             ArrayList adornerInfos = ElementMap[adorner.AdornedElement] as ArrayList;
             if (adornerInfos == null)
@@ -234,8 +232,7 @@ namespace System.Windows.Documents
         /// <param name="element">element key for redraw</param>
         public void Update(UIElement element)
         {
-            if (element == null)
-                throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
 
             ArrayList adornerInfos = ElementMap[element] as ArrayList;
 
@@ -260,8 +257,7 @@ namespace System.Windows.Documents
         /// no adorners exist</returns>
         public Adorner[] GetAdorners(UIElement element)
         {
-            if (element == null)
-                throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
 
             ArrayList adornerInfos = ElementMap[element] as ArrayList;
 
@@ -315,8 +311,7 @@ namespace System.Windows.Documents
         /// <returns>First AdornerLayer above given element, or null</returns>
         static public AdornerLayer GetAdornerLayer(Visual visual)
         {
-            if (visual == null)
-                throw new ArgumentNullException("visual");
+            ArgumentNullException.ThrowIfNull(visual);
 
             Visual parent = VisualTreeHelper.GetParent(visual) as Visual;
 
@@ -517,8 +512,7 @@ namespace System.Windows.Documents
         /// <param name="zOrder">z-order</param>
         internal void Add(Adorner adorner, int zOrder)
         {
-            if (adorner == null)
-                throw new ArgumentNullException("adorner");
+            ArgumentNullException.ThrowIfNull(adorner);
 
             AdornerInfo adornerInfo = new AdornerInfo(adorner);
             adornerInfo.ZOrder = zOrder;
@@ -683,8 +677,7 @@ namespace System.Windows.Documents
         /// <param name="element">element key for removal</param>
         private void Clear(UIElement element)
         {
-            if (element == null)
-                throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
 
             ArrayList adornerInfos = ElementMap[element] as ArrayList;
 

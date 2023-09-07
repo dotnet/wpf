@@ -65,18 +65,8 @@ public static class LogicalTreeHelper
     /// </remarks>
     public static DependencyObject FindLogicalNode( DependencyObject logicalTreeNode, string elementName )
     {
-        if( logicalTreeNode == null )
-        {
-            throw new ArgumentNullException("logicalTreeNode");
-        }
-        if( elementName == null )
-        {
-            throw new ArgumentNullException("elementName");
-        }
-        if( elementName == String.Empty )
-        {
-            throw new ArgumentException(SR.StringEmpty, "elementName");
-        }
+        ArgumentNullException.ThrowIfNull(logicalTreeNode);
+        ArgumentException.ThrowIfNullOrEmpty(elementName);
 
         DependencyObject namedElement = null;
         DependencyObject childNode = null;
@@ -126,10 +116,7 @@ public static class LogicalTreeHelper
     /// </summary>
     public static DependencyObject GetParent(DependencyObject current)
     {
-        if (current == null)
-        {
-            throw new ArgumentNullException("current"); 
-        }
+        ArgumentNullException.ThrowIfNull(current);
 
         FrameworkElement fe = current as FrameworkElement;
         if (fe != null)
@@ -153,10 +140,7 @@ public static class LogicalTreeHelper
     /// </summary>
     public static IEnumerable GetChildren(DependencyObject current)
     {
-        if (current == null)
-        {
-            throw new ArgumentNullException("current"); 
-        }
+        ArgumentNullException.ThrowIfNull(current);
 
         FrameworkElement fe = current as FrameworkElement;
         if (fe != null)
@@ -178,10 +162,7 @@ public static class LogicalTreeHelper
     /// </summary>
     public static IEnumerable GetChildren(FrameworkElement current)
     {
-        if (current == null)
-        {
-            throw new ArgumentNullException("current"); 
-        }
+        ArgumentNullException.ThrowIfNull(current);
 
         return new EnumeratorWrapper(current.LogicalChildren);
     }
@@ -191,10 +172,7 @@ public static class LogicalTreeHelper
     /// </summary>
     public static IEnumerable GetChildren(FrameworkContentElement current)
     {
-        if (current == null)
-        {
-            throw new ArgumentNullException("current"); 
-        }
+        ArgumentNullException.ThrowIfNull(current);
 
         return new EnumeratorWrapper(current.LogicalChildren);
     }
@@ -204,10 +182,7 @@ public static class LogicalTreeHelper
     /// </summary>
     public static void BringIntoView(DependencyObject current)
     {
-        if (current == null)
-        {
-            throw new ArgumentNullException("current"); 
-        }
+        ArgumentNullException.ThrowIfNull(current);
 
         FrameworkElement fe = current as FrameworkElement;
         if (fe != null)

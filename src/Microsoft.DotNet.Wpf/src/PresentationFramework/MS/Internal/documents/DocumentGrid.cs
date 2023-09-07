@@ -1719,10 +1719,7 @@ namespace MS.Internal.Documents
         /// We expect e.UserState to be a MakeVisibleData.</param>
         private void OnGetPageNumberCompleted(object sender, GetPageNumberCompletedEventArgs e)
         {
-            if (e == null)
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
             //Ensure that the UserState passed with this event contains an
             //MakeVisibleData object. If not, we ignore it as this event
             //could have originated from someone else calling GetPageNumberAsync.
@@ -2701,10 +2698,7 @@ namespace MS.Internal.Documents
         /// <returns>The Horizontal offset of the page in the document.</returns>
         private double GetHorizontalOffsetForPage(RowInfo row, int pageNumber)
         {
-            if (row == null)
-            {
-                throw new ArgumentNullException("row");
-            }
+            ArgumentNullException.ThrowIfNull(row);
 
             if (pageNumber < row.FirstPage ||
                 pageNumber > row.FirstPage + row.PageCount)

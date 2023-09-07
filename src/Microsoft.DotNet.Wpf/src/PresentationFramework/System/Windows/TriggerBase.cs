@@ -190,10 +190,7 @@ namespace System.Windows
         /// </summary>
         internal string ProcessParametersVisualTreeChild(DependencyProperty dp, string target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             if (target.Length == 0)
             {

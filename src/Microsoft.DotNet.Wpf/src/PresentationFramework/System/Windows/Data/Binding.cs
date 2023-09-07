@@ -180,8 +180,7 @@ namespace System.Windows.Data
         /// <exception cref="ArgumentNullException"> DependencyObject target cannot be null </exception>
         public static XmlNamespaceManager GetXmlNamespaceManager(DependencyObject target)
         {
-            if (target == null)
-                throw new ArgumentNullException("target");
+            ArgumentNullException.ThrowIfNull(target);
 
             return (XmlNamespaceManager)target.GetValue(XmlNamespaceManagerProperty);
         }
@@ -190,8 +189,7 @@ namespace System.Windows.Data
         /// <exception cref="ArgumentNullException"> DependencyObject target cannot be null </exception>
         public static void SetXmlNamespaceManager(DependencyObject target, XmlNamespaceManager value)
         {
-            if (target == null)
-                throw new ArgumentNullException("target");
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(XmlNamespaceManagerProperty, value);
         }

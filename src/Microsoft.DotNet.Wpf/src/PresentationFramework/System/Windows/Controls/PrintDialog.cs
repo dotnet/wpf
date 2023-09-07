@@ -349,10 +349,7 @@ namespace System.Windows.Controls
             String description
             )
         {
-            if (visual == null)
-            {
-                throw new ArgumentNullException("visual");
-            }
+            ArgumentNullException.ThrowIfNull(visual);
 
             XpsDocumentWriter writer = CreateWriter(description);
 
@@ -381,10 +378,7 @@ namespace System.Windows.Controls
             String             description
             )
         {
-            if (documentPaginator == null)
-            {
-                throw new ArgumentNullException("documentPaginator");
-            }
+            ArgumentNullException.ThrowIfNull(documentPaginator);
 
             XpsDocumentWriter writer = CreateWriter(description);
 

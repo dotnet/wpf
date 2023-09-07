@@ -100,10 +100,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">writer is null</exception>
         public void WriteXml(XmlWriter writer)
         {
-            if (writer == null)
-            {
-                throw new ArgumentNullException("writer");
-            }
+            ArgumentNullException.ThrowIfNull(writer);
 
             string prefix = writer.LookupPrefix(AnnotationXmlConstants.Namespaces.CoreSchemaNamespace);
             if (prefix == null)
@@ -129,10 +126,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">reader is null</exception>
         public void ReadXml(XmlReader reader)
         {
-            if (reader == null)
-            {
-                throw new ArgumentNullException("reader");
-            }
+            ArgumentNullException.ThrowIfNull(reader);
 
             // We expect no attributes on a "ContentLocatorGroup", 
             // so throw using the name of one of the unexpected attributes

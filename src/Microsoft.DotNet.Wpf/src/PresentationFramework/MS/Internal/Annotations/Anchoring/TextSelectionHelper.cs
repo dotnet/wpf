@@ -112,8 +112,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentException">selection is of wrong type</exception>
         public static IList<DependencyObject> GetSelectedNodes(Object selection)
         {
-            if (selection == null)
-                throw new ArgumentNullException("selection");
+            ArgumentNullException.ThrowIfNull(selection);
 
             IList<TextSegment> segments;
             ITextPointer start = null;
@@ -157,8 +156,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentException">selection is of wrong type</exception>
         public static UIElement GetParent(Object selection)
         {
-            if (selection == null)
-                throw new ArgumentNullException("selection");
+            ArgumentNullException.ThrowIfNull(selection);
 
             ITextPointer start = null;
             ITextPointer end = null;
@@ -178,8 +176,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">pointer is null</exception>
         public static UIElement GetParent(ITextPointer pointer)
         {
-            if (pointer == null)
-                throw new ArgumentNullException("pointer");
+            ArgumentNullException.ThrowIfNull(pointer);
 
             DependencyObject document = pointer.TextContainer.Parent;
             DependencyObject parent = PathNode.GetParent(document);
@@ -233,8 +230,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentException">anchor is of wrong type</exception>
         public static Point GetAnchorPoint(Object selection)
         {
-            if (selection == null)
-                throw new ArgumentNullException("selection");
+            ArgumentNullException.ThrowIfNull(selection);
 
             TextAnchor anchor = selection as TextAnchor;
 
@@ -254,8 +250,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">pointer is null</exception>
         public static Point GetAnchorPointForPointer(ITextPointer pointer)
         {
-            if (pointer == null)
-                throw new ArgumentNullException("pointer");
+            ArgumentNullException.ThrowIfNull(pointer);
 
             Rect rect = GetAnchorRectangle(pointer);
 
@@ -279,8 +274,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">pointer is null</exception>
         public static Point GetPointForPointer(ITextPointer pointer)
         {
-            if (pointer == null)
-                throw new ArgumentNullException("pointer");
+            ArgumentNullException.ThrowIfNull(pointer);
 
             Rect rect = GetAnchorRectangle(pointer);
 
@@ -303,8 +297,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">pointer is null</exception>
         public static Rect GetAnchorRectangle(ITextPointer pointer)
         {
-            if (pointer == null)
-                throw new ArgumentNullException("pointer");
+            ArgumentNullException.ThrowIfNull(pointer);
             bool extension = false;
 
             ITextView textView = GetDocumentPageTextView(pointer);

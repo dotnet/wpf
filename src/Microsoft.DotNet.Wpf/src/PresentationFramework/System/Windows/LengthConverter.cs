@@ -141,10 +141,7 @@ namespace System.Windows
                                          object value,
                                          Type destinationType)
         {
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             if (    value != null
                 &&  value is double )

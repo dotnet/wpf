@@ -509,10 +509,7 @@ namespace System.Windows.Controls.Primitives
         protected object GetService(Type serviceType)
         {
             object service = null;
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
             CheckDisposed();
 
             // No service is available if the Content does not provide

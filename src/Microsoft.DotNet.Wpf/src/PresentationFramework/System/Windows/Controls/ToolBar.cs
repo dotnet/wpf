@@ -365,10 +365,7 @@ namespace System.Windows.Controls
         /// <returns>The property's value.</returns>
         public static bool GetIsOverflowItem(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(IsOverflowItemProperty);
         }
 
@@ -434,10 +431,7 @@ namespace System.Windows.Controls
         /// <param name="mode">The property value to set</param>
         public static void SetOverflowMode(DependencyObject element, OverflowMode mode)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(OverflowModeProperty, mode);
         }
 
@@ -449,10 +443,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForChildren(IncludeDescendants = true)]
         public static OverflowMode GetOverflowMode(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (OverflowMode)element.GetValue(OverflowModeProperty);
         }
         #endregion

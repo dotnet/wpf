@@ -102,15 +102,8 @@ namespace MS.Internal.Documents
         /// </param>
         internal static void AttachUndoManager(DependencyObject scope, UndoManager undoManager)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-
-            if (undoManager == null)
-            {
-                throw new ArgumentNullException(nameof(undoManager));
-            }
+            ArgumentNullException.ThrowIfNull(scope);
+            ArgumentNullException.ThrowIfNull(undoManager);
 
             if (undoManager is UndoManager && ((UndoManager)undoManager)._scope != null)
             {
@@ -144,10 +137,7 @@ namespace MS.Internal.Documents
         {
             UndoManager undoManager;
 
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            ArgumentNullException.ThrowIfNull(scope);
 
             // Detach existing undo service if any
             undoManager = scope.ReadLocalValue(UndoManager.UndoManagerInstanceProperty) as UndoManager;
@@ -210,10 +200,7 @@ namespace MS.Internal.Documents
                 throw new InvalidOperationException(SR.UndoServiceDisabled);
             }
 
-            if (unit == null)
-            {
-                throw new ArgumentNullException(nameof(unit));
-            }
+            ArgumentNullException.ThrowIfNull(unit);
 
             deepestOpen = DeepestOpenUnit;
             if (deepestOpen == unit)
@@ -262,10 +249,7 @@ namespace MS.Internal.Documents
                 throw new InvalidOperationException(SR.UndoServiceDisabled);
             }
 
-            if (unit == null)
-            {
-                throw new ArgumentNullException(nameof(unit));
-            }
+            ArgumentNullException.ThrowIfNull(unit);
 
             if (OpenedUnit != null)
             {
@@ -341,10 +325,7 @@ namespace MS.Internal.Documents
                 throw new InvalidOperationException(SR.UndoServiceDisabled);
             }
 
-            if (unit == null)
-            {
-                throw new ArgumentNullException(nameof(unit));
-            }
+            ArgumentNullException.ThrowIfNull(unit);
 
             if (OpenedUnit == null)
             {
@@ -437,10 +418,7 @@ namespace MS.Internal.Documents
                 throw new InvalidOperationException(SR.UndoServiceDisabled);
             }
 
-            if (unit == null)
-            {
-                throw new ArgumentNullException(nameof(unit));
-            }
+            ArgumentNullException.ThrowIfNull(unit);
 
             parent = DeepestOpenUnit;
             if (parent != null)

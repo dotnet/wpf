@@ -58,9 +58,9 @@ namespace System.Windows.Annotations
         /// <param name="attachedAnnotation">The IAttachedAnnotation that needs an IAnnotationComponent </param>
         /// <returns></returns>
         public IAnnotationComponent ChooseAnnotationComponent(IAttachedAnnotation attachedAnnotation)
-        {           
-            if (attachedAnnotation == null) throw new ArgumentNullException("attachedAnnotation");
-                                    
+        {
+            ArgumentNullException.ThrowIfNull(attachedAnnotation);
+
             IAnnotationComponent ac = null;
 
             // Text StickyNote

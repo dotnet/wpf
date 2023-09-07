@@ -83,7 +83,7 @@ public class Storyboard : ParallelTimeline
     /// </summary>
     public static void SetTarget(DependencyObject element, DependencyObject value)
     {
-        if (element == null) { throw new ArgumentNullException("element"); }
+        ArgumentNullException.ThrowIfNull(element);
         element.SetValue(TargetProperty, value);
     }
 
@@ -98,7 +98,7 @@ public class Storyboard : ParallelTimeline
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public static DependencyObject GetTarget(DependencyObject element)
     {
-        if (element == null) { throw new ArgumentNullException("element"); }
+        ArgumentNullException.ThrowIfNull(element);
         return (DependencyObject)element.GetValue(TargetProperty);
     }
 
@@ -132,8 +132,8 @@ public class Storyboard : ParallelTimeline
     /// </summary>
     public static void SetTargetName(DependencyObject element, String name)
     {
-        if (element == null) { throw new ArgumentNullException("element"); }
-        if (name == null) { throw new ArgumentNullException("name"); }
+        ArgumentNullException.ThrowIfNull(element);
+        ArgumentNullException.ThrowIfNull(name);
         element.SetValue(TargetNameProperty, name);
     }
 
@@ -142,7 +142,7 @@ public class Storyboard : ParallelTimeline
     /// </summary>
     public static string GetTargetName(DependencyObject element)
     {
-        if (element == null) { throw new ArgumentNullException("element"); }
+        ArgumentNullException.ThrowIfNull(element);
         return (string)element.GetValue(TargetNameProperty);
     }
 
@@ -162,8 +162,8 @@ public class Storyboard : ParallelTimeline
     /// </summary>
     public static void SetTargetProperty(DependencyObject element, PropertyPath path)
     {
-        if (element == null) { throw new ArgumentNullException("element"); }
-        if (path == null) { throw new ArgumentNullException("path"); }
+        ArgumentNullException.ThrowIfNull(element);
+        ArgumentNullException.ThrowIfNull(path);
         element.SetValue(TargetPropertyProperty, path);
     }
 
@@ -172,7 +172,7 @@ public class Storyboard : ParallelTimeline
     /// </summary>
     public static PropertyPath GetTargetProperty(DependencyObject element)
     {
-        if (element == null) { throw new ArgumentNullException("element"); }
+        ArgumentNullException.ThrowIfNull(element);
         return (PropertyPath)element.GetValue(TargetPropertyProperty);
     }
 
@@ -1210,10 +1210,7 @@ public class Storyboard : ParallelTimeline
     internal void BeginCommon( DependencyObject containingObject, INameScope nameScope,
         HandoffBehavior handoffBehavior, bool isControllable, Int64 layer)
     {
-        if (containingObject == null)
-        {
-            throw new ArgumentNullException("containingObject");
-        }
+        ArgumentNullException.ThrowIfNull(containingObject);
 
         if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
         {

@@ -70,10 +70,7 @@ namespace System.Windows.Controls
         /// <param name="changes">ReadOnlyCollection</param>
         public TextChangedEventArgs(RoutedEvent id, UndoAction action, ICollection<TextChange> changes) : base()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException("id");
-            }
+            ArgumentNullException.ThrowIfNull(id);
 
             if (action < UndoAction.None || action > UndoAction.Create)
             {

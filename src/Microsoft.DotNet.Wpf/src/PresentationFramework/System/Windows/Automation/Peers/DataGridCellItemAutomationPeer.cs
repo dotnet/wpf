@@ -29,15 +29,8 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         public DataGridCellItemAutomationPeer(object item, DataGridColumn dataGridColumn) : base()
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException("item");
-            }
-
-            if (dataGridColumn == null)
-            {
-                throw new ArgumentNullException("dataGridColumn");
-            }
+            ArgumentNullException.ThrowIfNull(item);
+            ArgumentNullException.ThrowIfNull(dataGridColumn);
 
             _item = new WeakReference(item);
             _column = dataGridColumn;

@@ -142,10 +142,7 @@ namespace System.Windows.Markup
         /// <returns>object root generated after xml parsed</returns>
         public static object Load(XmlReader reader, bool useRestrictiveXamlReader)
         {
-            if (reader == null)
-            {
-                throw new ArgumentNullException(nameof(reader));
-            }
+            ArgumentNullException.ThrowIfNull(reader);
 
             return Load(reader, null, XamlParseMode.Synchronous, useRestrictiveXamlReader);
         }
@@ -173,10 +170,7 @@ namespace System.Windows.Markup
         /// <returns>object root generated after xml parsed</returns>
         public static object Load(Stream stream, ParserContext parserContext, bool useRestrictiveXamlReader )
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
+            ArgumentNullException.ThrowIfNull(stream);
             if (parserContext == null)
             {
                 parserContext = new ParserContext();
@@ -217,10 +211,7 @@ namespace System.Windows.Markup
         /// </remarks>
         public object LoadAsync(Stream stream, bool useRestrictiveXamlReader)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
+            ArgumentNullException.ThrowIfNull(stream);
             _stream = stream;
 
             if (_objectWriter != null)
@@ -263,10 +254,7 @@ namespace System.Windows.Markup
         /// </remarks>
         public object LoadAsync(XmlReader reader, bool useRestrictiveXamlReader)
         {
-            if (reader == null)
-            {
-                throw new ArgumentNullException(nameof(reader));
-            }
+            ArgumentNullException.ThrowIfNull(reader);
             return LoadAsync(reader, null, useRestrictiveXamlReader);
         }
 
@@ -302,10 +290,7 @@ namespace System.Windows.Markup
         /// </remarks>
         public object LoadAsync(Stream stream, ParserContext parserContext , bool useRestrictiveXamlReader)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
+            ArgumentNullException.ThrowIfNull(stream);
             _stream = stream;
 
             if (_objectWriter != null)
@@ -343,10 +328,7 @@ namespace System.Windows.Markup
 
         private object LoadAsync(XmlReader reader, ParserContext parserContext, bool useRestrictiveXamlReader)
         {
-            if (reader == null)
-            {
-                throw new ArgumentNullException(nameof(reader));
-            }
+            ArgumentNullException.ThrowIfNull(reader);
 
             if (parserContext == null)
             {
@@ -989,10 +971,7 @@ namespace System.Windows.Markup
 
         public static object Load(System.Xaml.XamlReader reader)
         {
-            if (reader == null)
-            {
-                throw new ArgumentNullException(nameof(reader));
-            }
+            ArgumentNullException.ThrowIfNull(reader);
             object root = null;
             try
             {

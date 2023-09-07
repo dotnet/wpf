@@ -74,10 +74,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
             /// </summary>
             internal SpellingError(ISpellingError error, SpellChecker spellChecker, string text, bool shouldSuppressCOMExceptions = true, bool shouldReleaseCOMObject = true)
             {
-                if (error == null)
-                {
-                    throw new ArgumentNullException(nameof(error));
-                }
+                ArgumentNullException.ThrowIfNull(error);
 
                 StartIndex = error.StartIndex;
                 Length = error.Length;

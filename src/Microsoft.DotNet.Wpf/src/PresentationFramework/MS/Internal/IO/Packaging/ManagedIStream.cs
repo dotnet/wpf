@@ -30,10 +30,7 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         internal ManagedIStream(Stream ioStream)
         {
-            if (ioStream == null)
-            {
-                throw new ArgumentNullException("ioStream");
-            }
+            ArgumentNullException.ThrowIfNull(ioStream);
             _ioStream = ioStream;
         }
 

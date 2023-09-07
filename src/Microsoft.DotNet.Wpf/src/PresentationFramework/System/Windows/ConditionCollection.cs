@@ -109,11 +109,8 @@ namespace System.Windows
         
         private void ConditionValidation(object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
-            
+            ArgumentNullException.ThrowIfNull(value);
+
             Condition condition = value as Condition;
             if (condition == null)
             {

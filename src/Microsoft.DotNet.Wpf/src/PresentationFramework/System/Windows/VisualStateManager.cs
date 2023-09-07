@@ -31,11 +31,8 @@ namespace System.Windows
         /// <returns>true if the state changed successfully, false otherwise.</returns>
         private static bool GoToStateCommon(FrameworkElement control, FrameworkElement stateGroupsRoot, string stateName, bool useTransitions)
         {
-            if (stateName == null)
-            {
-                throw new ArgumentNullException("stateName");
-            }
-            
+            ArgumentNullException.ThrowIfNull(stateName);
+
             if (stateGroupsRoot == null)
             {
                 return false; // Ignore state changes if a stateGroupsRoot doesn't exist yet
@@ -76,10 +73,7 @@ namespace System.Windows
         /// <returns>true if the state changed successfully, false otherwise.</returns>
         public static bool GoToState(FrameworkElement control, string stateName, bool useTransitions)
         {
-            if (control == null)
-            {
-                throw new ArgumentNullException("control");
-            }
+            ArgumentNullException.ThrowIfNull(control);
 
             FrameworkElement stateGroupsRoot = control.StateGroupsRoot;
 
@@ -95,10 +89,7 @@ namespace System.Windows
         /// <returns>true if the state changed successfully, false otherwise.</returns>
         public static bool GoToElementState(FrameworkElement stateGroupsRoot, string stateName, bool useTransitions)
         {
-            if (stateGroupsRoot == null)
-            {
-                throw new ArgumentNullException("stateGroupsRoot");
-            }
+            ArgumentNullException.ThrowIfNull(stateGroupsRoot);
 
             return GoToStateCommon(null, stateGroupsRoot, stateName, useTransitions);
         }
@@ -122,20 +113,14 @@ namespace System.Windows
 
         public static VisualStateManager GetCustomVisualStateManager(FrameworkElement obj)
         {
-            if (obj == null)
-            {
-                throw new ArgumentNullException("obj");
-            }
+            ArgumentNullException.ThrowIfNull(obj);
 
             return obj.GetValue(VisualStateManager.CustomVisualStateManagerProperty) as VisualStateManager;
         }
 
         public static void SetCustomVisualStateManager(FrameworkElement obj, VisualStateManager value)
         {
-            if (obj == null)
-            {
-                throw new ArgumentNullException("obj");
-            }
+            ArgumentNullException.ThrowIfNull(obj);
 
             obj.SetValue(VisualStateManager.CustomVisualStateManagerProperty, value);
         }
@@ -159,10 +144,7 @@ namespace System.Windows
 
         internal static Collection<VisualStateGroup> GetVisualStateGroupsInternal(FrameworkElement obj)
         {
-            if (obj == null)
-            {
-                throw new ArgumentNullException("obj");
-            }
+            ArgumentNullException.ThrowIfNull(obj);
 
             // We don't want to get the default value because it will create/return an empty colleciton.
             bool hasModifiers;
@@ -178,10 +160,7 @@ namespace System.Windows
         [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public static IList GetVisualStateGroups(FrameworkElement obj)
         {
-            if (obj == null)
-            {
-                throw new ArgumentNullException("obj");
-            }
+            ArgumentNullException.ThrowIfNull(obj);
 
             return obj.GetValue(VisualStateManager.VisualStateGroupsProperty) as IList;
         }
@@ -211,15 +190,8 @@ namespace System.Windows
 
         private static bool GoToStateInternal(FrameworkElement control, FrameworkElement stateGroupsRoot, VisualStateGroup group, VisualState state, bool useTransitions)
         {
-            if (stateGroupsRoot == null)
-            {
-                throw new ArgumentNullException("stateGroupsRoot");
-            }
-
-            if (state == null)
-            {
-                throw new ArgumentNullException("state");
-            }
+            ArgumentNullException.ThrowIfNull(stateGroupsRoot);
+            ArgumentNullException.ThrowIfNull(state);
 
             if (group == null)
             {
@@ -359,15 +331,8 @@ namespace System.Windows
 
         protected void RaiseCurrentStateChanging(VisualStateGroup stateGroup, VisualState oldState, VisualState newState, FrameworkElement control, FrameworkElement stateGroupsRoot)
         {
-            if (stateGroup == null)
-            {
-                throw new ArgumentNullException("stateGroup");
-            }
-
-            if (newState == null)
-            {
-                throw new ArgumentNullException("newState");
-            }
+            ArgumentNullException.ThrowIfNull(stateGroup);
+            ArgumentNullException.ThrowIfNull(newState);
 
             if (stateGroupsRoot == null)
             {
@@ -379,15 +344,8 @@ namespace System.Windows
 
         protected void RaiseCurrentStateChanged(VisualStateGroup stateGroup, VisualState oldState, VisualState newState, FrameworkElement control, FrameworkElement stateGroupsRoot)
         {
-            if (stateGroup == null)
-            {
-                throw new ArgumentNullException("stateGroup");
-            }
-
-            if (newState == null)
-            {
-                throw new ArgumentNullException("newState");
-            }
+            ArgumentNullException.ThrowIfNull(stateGroup);
+            ArgumentNullException.ThrowIfNull(newState);
 
             if (stateGroupsRoot == null)
             {
@@ -574,20 +532,9 @@ namespace System.Windows
         /// </returns>
         internal static VisualTransition GetTransition(FrameworkElement element, VisualStateGroup group, VisualState from, VisualState to)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-
-            if (group == null)
-            {
-                throw new ArgumentNullException("group");
-            }
-
-            if (to == null)
-            {
-                throw new ArgumentNullException("to");
-            }
+            ArgumentNullException.ThrowIfNull(element);
+            ArgumentNullException.ThrowIfNull(group);
+            ArgumentNullException.ThrowIfNull(to);
 
             VisualTransition best = null;
             VisualTransition defaultTransition = null;

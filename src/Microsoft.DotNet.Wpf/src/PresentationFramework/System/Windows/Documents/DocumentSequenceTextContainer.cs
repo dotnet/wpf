@@ -357,10 +357,7 @@ namespace System.Windows.Documents
         // Verify parameter. Throw Exception if necessary.
         internal DocumentSequenceTextPointer VerifyPosition(ITextPointer position)
         {
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
 
             if (position.TextContainer != this)
             {

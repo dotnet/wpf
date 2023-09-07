@@ -93,10 +93,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentException">annotationType's Name or Namespace is null or empty string</exception>
         public Annotation(XmlQualifiedName annotationType)
         {
-            if (annotationType == null)
-            {
-                throw new ArgumentNullException("annotationType");
-            }
+            ArgumentNullException.ThrowIfNull(annotationType);
             if (String.IsNullOrEmpty(annotationType.Name))
             {
                 throw new ArgumentException(SR.TypeNameMustBeSpecified, "annotationType.Name");// needs better message
@@ -132,10 +129,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentException">id is equal to Guid.Empty</exception>
         public Annotation(XmlQualifiedName annotationType, Guid id, DateTime creationTime, DateTime lastModificationTime)
         {
-            if (annotationType == null)
-            {
-                throw new ArgumentNullException("annotationType");
-            }
+            ArgumentNullException.ThrowIfNull(annotationType);
             if (String.IsNullOrEmpty(annotationType.Name))
             {
                 throw new ArgumentException(SR.TypeNameMustBeSpecified, "annotationType.Name");//needs better message
@@ -190,10 +184,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">writer is null</exception>
         public void WriteXml(XmlWriter writer)
         {
-            if (writer == null)
-            {
-                throw new ArgumentNullException("writer");
-            }
+            ArgumentNullException.ThrowIfNull(writer);
 
             //fire trace event
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordAnnotation, EventTrace.Event.SerializeAnnotationBegin);
@@ -279,10 +270,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">reader is null</exception>
         public void ReadXml(XmlReader reader)
         {
-            if (reader == null)
-            {
-                throw new ArgumentNullException("reader");
-            }
+            ArgumentNullException.ThrowIfNull(reader);
 
             //fire trace event
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordAnnotation, EventTrace.Event.DeserializeAnnotationBegin);

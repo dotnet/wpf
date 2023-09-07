@@ -52,10 +52,7 @@ namespace System.Windows.Annotations
             // The author parameter can be null here - it is possible to add a null to
             // the list of authors and we must fire an event signalling a change in the collection.
 
-            if (annotation == null)
-            {
-                throw new ArgumentNullException("annotation");
-            }
+            ArgumentNullException.ThrowIfNull(annotation);
             if (action < AnnotationAction.Added || action > AnnotationAction.Modified)
             {
                 throw new InvalidEnumArgumentException("action", (int)action, typeof(AnnotationAction));

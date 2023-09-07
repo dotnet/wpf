@@ -84,8 +84,7 @@ namespace MS.Internal.Data
         /// </summary>
         protected override void InsertItem(int index, BindingBase item)
         {
-            if (item == null)
-                throw new ArgumentNullException("item");
+            ArgumentNullException.ThrowIfNull(item);
             ValidateItem(item);
             _owner.CheckSealed();
 
@@ -99,8 +98,7 @@ namespace MS.Internal.Data
         /// </summary>
         protected override void SetItem(int index, BindingBase item)
         {
-            if (item == null)
-                throw new ArgumentNullException("item");
+            ArgumentNullException.ThrowIfNull(item);
             ValidateItem(item);
             _owner.CheckSealed();
 

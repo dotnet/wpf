@@ -217,14 +217,8 @@ namespace System.Windows.Documents
 
 //             VerifyAccess();
 
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
-            if (property == null)
-            {
-                throw new ArgumentNullException("property");
-            }
+            ArgumentNullException.ThrowIfNull(position);
+            ArgumentNullException.ThrowIfNull(property);
 
             EmptyDeadPositionList();
 
@@ -265,10 +259,7 @@ namespace System.Windows.Documents
 
 //             VerifyAccess();
 
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
 
             // LocalValueEnumerator is a struct.
             // if (values == null)

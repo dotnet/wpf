@@ -57,10 +57,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="coreProperties">core properties to filter</param>
         internal CorePropertiesFilter(PackageProperties coreProperties)
         {
-            if (coreProperties == null)
-            {
-                throw new ArgumentNullException("coreProperties");
-            }
+            ArgumentNullException.ThrowIfNull(coreProperties);
 
             _coreProperties = coreProperties;
         }

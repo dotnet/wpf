@@ -458,10 +458,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static void SetCanContentScroll(DependencyObject element, bool canContentScroll)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(CanContentScrollProperty, canContentScroll);
         }
@@ -471,10 +468,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static bool GetCanContentScroll(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return ((bool)element.GetValue(CanContentScrollProperty));
         }
@@ -498,10 +492,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static void SetHorizontalScrollBarVisibility(DependencyObject element, ScrollBarVisibility horizontalScrollBarVisibility)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(HorizontalScrollBarVisibilityProperty, horizontalScrollBarVisibility);
         }
@@ -511,10 +502,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static ScrollBarVisibility GetHorizontalScrollBarVisibility(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return ((ScrollBarVisibility)element.GetValue(HorizontalScrollBarVisibilityProperty));
         }
@@ -538,10 +526,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static void SetVerticalScrollBarVisibility(DependencyObject element, ScrollBarVisibility verticalScrollBarVisibility)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(VerticalScrollBarVisibilityProperty, verticalScrollBarVisibility);
         }
@@ -551,10 +536,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static ScrollBarVisibility GetVerticalScrollBarVisibility(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return ((ScrollBarVisibility)element.GetValue(VerticalScrollBarVisibilityProperty));
         }
@@ -808,10 +790,7 @@ namespace System.Windows.Controls
         /// <returns>The value of the property.</returns>
         public static bool GetIsDeferredScrollingEnabled(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(IsDeferredScrollingEnabledProperty);
         }
@@ -823,10 +802,7 @@ namespace System.Windows.Controls
         /// <param name="value">The new value of the property.</param>
         public static void SetIsDeferredScrollingEnabled(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(IsDeferredScrollingEnabledProperty, BooleanBoxes.Box(value));
         }
@@ -1465,10 +1441,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static void SetPanningMode(DependencyObject element, PanningMode panningMode)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(PanningModeProperty, panningMode);
         }
@@ -1478,10 +1451,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static PanningMode GetPanningMode(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return ((PanningMode)element.GetValue(PanningModeProperty));
         }
@@ -1547,10 +1517,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static void SetPanningDeceleration(DependencyObject element, double value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(PanningDecelerationProperty, value);
         }
@@ -1560,10 +1527,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static double GetPanningDeceleration(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return ((double)element.GetValue(PanningDecelerationProperty));
         }
@@ -1593,10 +1557,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static void SetPanningRatio(DependencyObject element, double value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(PanningRatioProperty, value);
         }
@@ -1606,10 +1567,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static double GetPanningRatio(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return ((double)element.GetValue(PanningRatioProperty));
         }

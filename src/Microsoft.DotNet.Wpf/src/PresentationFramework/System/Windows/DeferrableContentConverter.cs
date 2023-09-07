@@ -44,10 +44,7 @@ namespace System.Windows
         {
             if (value != null)
             {
-                if (context == null)
-                {
-                    throw new ArgumentNullException("context");
-                }
+                ArgumentNullException.ThrowIfNull(context);
 
                 XamlSchemaContext xamlSchemaContext =
                     RequireService<IXamlSchemaContextProvider>(context).SchemaContext;

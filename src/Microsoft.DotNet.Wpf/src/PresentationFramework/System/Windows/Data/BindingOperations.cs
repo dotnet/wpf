@@ -70,12 +70,9 @@ namespace System.Windows.Data
         /// <exception cref="ArgumentNullException"> target and dp and binding cannot be null </exception>
         public static BindingExpressionBase SetBinding(DependencyObject target, DependencyProperty dp, BindingBase binding)
         {
-            if (target == null)
-                throw new ArgumentNullException("target");
-            if (dp == null)
-                throw new ArgumentNullException("dp");
-            if (binding == null)
-                throw new ArgumentNullException("binding");
+            ArgumentNullException.ThrowIfNull(target);
+            ArgumentNullException.ThrowIfNull(dp);
+            ArgumentNullException.ThrowIfNull(binding);
 //            target.VerifyAccess();
 
             BindingExpressionBase bindExpr = binding.CreateBindingExpression(target, dp);
@@ -161,10 +158,8 @@ namespace System.Windows.Data
         /// <exception cref="ArgumentNullException"> target and dp cannot be null </exception>
         public static BindingExpressionBase GetBindingExpressionBase(DependencyObject target, DependencyProperty dp)
         {
-            if (target == null)
-                throw new ArgumentNullException("target");
-            if (dp == null)
-                throw new ArgumentNullException("dp");
+            ArgumentNullException.ThrowIfNull(target);
+            ArgumentNullException.ThrowIfNull(dp);
 //            target.VerifyAccess();
 
             Expression expr = StyleHelper.GetExpression(target, dp);
@@ -236,10 +231,8 @@ namespace System.Windows.Data
         /// <exception cref="ArgumentNullException"> target and dp cannot be null </exception>
         public static void ClearBinding(DependencyObject target, DependencyProperty dp)
         {
-            if (target == null)
-                throw new ArgumentNullException("target");
-            if (dp == null)
-                throw new ArgumentNullException("dp");
+            ArgumentNullException.ThrowIfNull(target);
+            ArgumentNullException.ThrowIfNull(dp);
 //            target.VerifyAccess();
 
             if (IsDataBound(target, dp))
@@ -253,8 +246,7 @@ namespace System.Windows.Data
         /// <exception cref="ArgumentNullException"> DependencyObject target cannot be null </exception>
         public static void ClearAllBindings(DependencyObject target)
         {
-            if (target == null)
-                throw new ArgumentNullException("target");
+            ArgumentNullException.ThrowIfNull(target);
 //            target.VerifyAccess();
 
             LocalValueEnumerator lve = target.GetLocalValueEnumerator();
@@ -283,10 +275,8 @@ namespace System.Windows.Data
         /// <exception cref="ArgumentNullException"> DependencyObject target cannot be null </exception>
         public static bool IsDataBound(DependencyObject target, DependencyProperty dp)
         {
-            if (target == null)
-                throw new ArgumentNullException("target");
-            if (dp == null)
-                throw new ArgumentNullException("dp");
+            ArgumentNullException.ThrowIfNull(target);
+            ArgumentNullException.ThrowIfNull(dp);
 //            target.VerifyAccess();
 
             object o = StyleHelper.GetExpression(target, dp);
@@ -310,10 +300,8 @@ namespace System.Windows.Data
                             object context,
                             CollectionSynchronizationCallback synchronizationCallback)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (synchronizationCallback == null)
-                throw new ArgumentNullException("synchronizationCallback");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(synchronizationCallback);
 
             ViewManager.Current.RegisterCollectionSynchronizationCallback(
                 collection, context, synchronizationCallback);
@@ -328,10 +316,8 @@ namespace System.Windows.Data
                             IEnumerable collection,
                             object lockObject)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (lockObject == null)
-                throw new ArgumentNullException("lockObject");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(lockObject);
 
             ViewManager.Current.RegisterCollectionSynchronizationCallback(
                 collection, lockObject, null);
@@ -345,8 +331,7 @@ namespace System.Windows.Data
         public static void DisableCollectionSynchronization(
                             IEnumerable collection)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            ArgumentNullException.ThrowIfNull(collection);
 
             ViewManager.Current.RegisterCollectionSynchronizationCallback(
                 collection, null, null);

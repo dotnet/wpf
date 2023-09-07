@@ -23,14 +23,8 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         internal ElementTableKey(string xmlNamespace, string baseName)
         {
-            if (xmlNamespace == null)
-            {
-                throw new ArgumentNullException("xmlNamespace");
-            }
-            if (baseName == null)
-            {
-                throw new ArgumentNullException("baseName");
-            }
+            ArgumentNullException.ThrowIfNull(xmlNamespace);
+            ArgumentNullException.ThrowIfNull(baseName);
             _xmlNamespace = xmlNamespace;
             _baseName = baseName;
         }

@@ -63,10 +63,7 @@ namespace System.Windows.Annotations
         public AnnotationResource(string name)
             : this()
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
+            ArgumentNullException.ThrowIfNull(name);
 
             _name = name;
             _id = Guid.NewGuid();
@@ -117,10 +114,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">writer is null</exception>
         public void WriteXml(XmlWriter writer)
         {
-            if (writer == null)
-            {
-                throw new ArgumentNullException("writer");
-            }
+            ArgumentNullException.ThrowIfNull(writer);
 
             if (String.IsNullOrEmpty(writer.LookupPrefix(AnnotationXmlConstants.Namespaces.CoreSchemaNamespace)))
             {
@@ -172,10 +166,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">reader is null</exception>        
         public void ReadXml(XmlReader reader)
         {
-            if (reader == null)
-            {
-                throw new ArgumentNullException("reader");
-            }
+            ArgumentNullException.ThrowIfNull(reader);
 
             XmlDocument doc = new XmlDocument();
 

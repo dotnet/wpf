@@ -32,10 +32,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="encryptedPackage">EncryptedPackageEnvelope to filter on</param>
         internal EncryptedPackageFilter(EncryptedPackageEnvelope encryptedPackage)
         {
-            if (encryptedPackage == null)
-            {
-                throw new ArgumentNullException("encryptedPackage");
-            }
+            ArgumentNullException.ThrowIfNull(encryptedPackage);
 
             //
             // Since CorePropertiesFilter is implemented as

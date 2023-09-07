@@ -569,8 +569,7 @@ namespace System.Windows.Controls
         /// </summary>
         public object ItemFromContainer(DependencyObject container)
         {
-            if (container == null)
-                throw new ArgumentNullException("container");
+            ArgumentNullException.ThrowIfNull(container);
 
             object item = container.ReadLocalValue(ItemForItemContainerProperty);
 
@@ -617,10 +616,7 @@ namespace System.Windows.Controls
         /// </summary>
         public int IndexFromContainer(DependencyObject container, bool returnLocalIndex)
         {
-            if (container == null)
-            {
-                throw new ArgumentNullException("container");
-            }
+            ArgumentNullException.ThrowIfNull(container);
 
             int index;
             object item;

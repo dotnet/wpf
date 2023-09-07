@@ -109,10 +109,7 @@ namespace System.Windows
 
         private void SetterBaseValidation(SetterBase setterBase)
         {
-            if (setterBase == null)
-            {
-                throw new ArgumentNullException("setterBase");
-            }
+            ArgumentNullException.ThrowIfNull(setterBase);
         }
 
         #endregion PrivateMethods

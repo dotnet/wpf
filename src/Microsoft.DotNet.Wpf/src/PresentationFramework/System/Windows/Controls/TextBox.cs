@@ -127,10 +127,7 @@ namespace System.Windows.Controls
         ///</remarks>
         void IAddChild.AddChild(Object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             // TextBox only accepts plain text, via IAddChild.AddText.
             throw new InvalidOperationException(SR.Format(SR.TextBoxInvalidChild, value.ToString()));
@@ -144,10 +141,7 @@ namespace System.Windows.Controls
         ///</param>
         void IAddChild.AddText(string text)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException("text");
-            }
+            ArgumentNullException.ThrowIfNull(text);
 
             this.TextContainer.End.InsertTextInRun(text);
         }

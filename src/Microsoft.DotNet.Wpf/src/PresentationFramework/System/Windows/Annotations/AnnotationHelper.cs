@@ -188,8 +188,7 @@ namespace System.Windows.Annotations
         {
             CheckInputs(service);
 
-            if (annotation == null)
-                throw new ArgumentNullException("annotation");
+            ArgumentNullException.ThrowIfNull(annotation);
 
             bool isFlow = true;
 
@@ -1093,10 +1092,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentException">service is not enabled</exception>
         private static void CheckInputs(AnnotationService service)
         {
-            if (service == null)
-            {
-                throw new ArgumentNullException("service");
-            }
+            ArgumentNullException.ThrowIfNull(service);
 
             if (!service.IsEnabled)
             {

@@ -545,8 +545,7 @@ namespace System.Windows.Controls
             /// </summary>
             public static void AddHandler(BitmapSource source, EventHandler<EventArgs> handler)
             {
-                if (handler == null)
-                    throw new ArgumentNullException("handler");
+                ArgumentNullException.ThrowIfNull(handler);
 
                 CurrentManager.ProtectedAddHandler(source, handler);
             }
@@ -556,8 +555,7 @@ namespace System.Windows.Controls
             /// </summary>
             public static void RemoveHandler(BitmapSource source, EventHandler<EventArgs> handler)
             {
-                if (handler == null)
-                    throw new ArgumentNullException("handler");
+                ArgumentNullException.ThrowIfNull(handler);
 
                 CurrentManager.ProtectedRemoveHandler(source, handler);
             }
@@ -671,8 +669,7 @@ namespace System.Windows.Controls
             /// </summary>
             public static void AddHandler(BitmapSource source, EventHandler<ExceptionEventArgs> handler)
             {
-                if (handler == null)
-                    throw new ArgumentNullException("handler");
+                ArgumentNullException.ThrowIfNull(handler);
 
                 CurrentManager.ProtectedAddHandler(source, handler);
             }
@@ -682,8 +679,7 @@ namespace System.Windows.Controls
             /// </summary>
             public static void RemoveHandler(BitmapSource source, EventHandler<ExceptionEventArgs> handler)
             {
-                if (handler == null)
-                    throw new ArgumentNullException("handler");
+                ArgumentNullException.ThrowIfNull(handler);
 
                 CurrentManager.ProtectedRemoveHandler(source, handler);
             }
@@ -797,8 +793,7 @@ namespace System.Windows.Controls
             /// </summary>
             public static void AddHandler(BitmapSource source, EventHandler<ExceptionEventArgs> handler)
             {
-                if (handler == null)
-                    throw new ArgumentNullException("handler");
+                ArgumentNullException.ThrowIfNull(handler);
 
                 CurrentManager.ProtectedAddHandler(source, handler);
             }
@@ -808,8 +803,7 @@ namespace System.Windows.Controls
             /// </summary>
             public static void RemoveHandler(BitmapSource source, EventHandler<ExceptionEventArgs> handler)
             {
-                if (handler == null)
-                    throw new ArgumentNullException("handler");
+                ArgumentNullException.ThrowIfNull(handler);
 
                 CurrentManager.ProtectedRemoveHandler(source, handler);
             }

@@ -85,10 +85,7 @@ namespace System.Windows.Controls
         /// </summary>
         void ICollection.CopyTo(Array array, int index)
         {
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
             if (array.Rank != 1)
             {
                 throw new ArgumentException(SR.GridCollection_DestArrayInvalidRank);
@@ -114,10 +111,7 @@ namespace System.Windows.Controls
         /// </summary>
         public void CopyTo(RowDefinition[] array, int index) //  void ICollection<T>.CopyTo(T[] array, int arrayIndex)
         {
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
             if (index < 0)
             {
                 throw new ArgumentOutOfRangeException(SR.Format(SR.GridCollection_DestArrayInvalidLowerBound, "index"));
@@ -559,11 +553,8 @@ namespace System.Windows.Controls
         /// </summary>
         private void PrivateValidateValueForAddition(object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
-            
+            ArgumentNullException.ThrowIfNull(value);
+
             RowDefinition item = value as RowDefinition;
 
             if (item == null)
@@ -583,11 +574,8 @@ namespace System.Windows.Controls
         /// </summary>
         private bool PrivateValidateValueForRemoval(object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
-            
+            ArgumentNullException.ThrowIfNull(value);
+
             RowDefinition item = value as RowDefinition;
 
             if (item == null)

@@ -43,8 +43,7 @@ namespace System.Windows.Documents
             TextEffect              effect
             )
         {
-            if (effect == null)
-                throw new ArgumentNullException("effect");
+            ArgumentNullException.ThrowIfNull(effect);
 
             ValidationHelper.VerifyPositionPair(startPosition, endPosition);            
             TextPointer   effectStart   = new TextPointer(startPosition);            
@@ -133,12 +132,9 @@ namespace System.Windows.Documents
             TextEffect       effect
             )
         {
-            if (element == null)
-                throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
+            ArgumentNullException.ThrowIfNull(effect);
 
-            if (effect == null)
-                throw new ArgumentNullException("effect");
-            
             _element = element;
             _effect  = effect;
         }

@@ -73,10 +73,7 @@ namespace System.Windows.Documents
         /// </summary>
         void IAddChild.AddChild(object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             TableRowGroup rowGroup = value as TableRowGroup;
             if (rowGroup != null)

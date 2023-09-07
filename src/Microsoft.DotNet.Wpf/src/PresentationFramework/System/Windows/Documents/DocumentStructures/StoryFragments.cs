@@ -39,11 +39,8 @@ namespace System.Windows.Documents.DocumentStructures
 
         public void Add(StoryFragment storyFragment)
         {
-            if (storyFragment == null)
-            {
-                throw new ArgumentNullException("storyFragment");
-            }
-            
+            ArgumentNullException.ThrowIfNull(storyFragment);
+
             ((IAddChild) this).AddChild(storyFragment);
         }
 
@@ -100,10 +97,7 @@ namespace System.Windows.Documents.DocumentStructures
 
         public void Add(BlockElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             ((IAddChild) this).AddChild(element);
         }
         

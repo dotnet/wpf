@@ -363,8 +363,7 @@ namespace System.Windows.Annotations
 
         private IList<IAttachedAnnotation> ProcessAnnotations(DocumentPageView dpv)
         {
-            if (dpv == null)
-                throw new ArgumentNullException("dpv");
+            ArgumentNullException.ThrowIfNull(dpv);
 
             IList<IAttachedAnnotation> attachedAnnotations = new List<IAttachedAnnotation>();
             IList<ContentLocatorBase> locators = _locatorManager.GenerateLocators(dpv);

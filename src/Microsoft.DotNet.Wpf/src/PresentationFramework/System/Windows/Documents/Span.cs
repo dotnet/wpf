@@ -96,14 +96,8 @@ namespace System.Windows.Documents
         /// </remarks>
         public Span(TextPointer start, TextPointer end)
         {
-            if (start == null)
-            {
-                throw new ArgumentNullException("start");
-            }
-            if (end == null)
-            {
-                throw new ArgumentNullException("start");
-            }
+            ArgumentNullException.ThrowIfNull(start);
+            ArgumentNullException.ThrowIfNull(end);
             if (start.TextContainer != end.TextContainer)
             {
                 throw new ArgumentException(SR.Format(SR.InDifferentTextContainers, "start", "end"));

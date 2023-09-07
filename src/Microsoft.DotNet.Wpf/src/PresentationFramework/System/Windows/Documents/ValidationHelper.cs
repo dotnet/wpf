@@ -55,14 +55,8 @@ namespace System.Windows.Documents
         //                             startPosition > endPosition
         internal static void VerifyPositionPair(ITextPointer startPosition, ITextPointer endPosition)
         {
-            if (startPosition == null)
-            {
-                throw new ArgumentNullException("startPosition");
-            }
-            if (endPosition == null)
-            {
-                throw new ArgumentNullException("endPosition");
-            }
+            ArgumentNullException.ThrowIfNull(startPosition);
+            ArgumentNullException.ThrowIfNull(endPosition);
             if (startPosition.TextContainer != endPosition.TextContainer)
             {
                 throw new ArgumentException(SR.Format(SR.InDifferentTextContainers, "startPosition", "endPosition"));

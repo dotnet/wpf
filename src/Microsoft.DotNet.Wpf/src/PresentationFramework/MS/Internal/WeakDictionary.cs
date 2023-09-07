@@ -296,10 +296,7 @@ namespace MS.Internal
             {
                 throw new ArgumentOutOfRangeException("arrayIndex");
             }
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             int count = 0;
             foreach (KeyValuePair<TKey, TValue> item in this)

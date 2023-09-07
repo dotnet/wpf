@@ -109,10 +109,7 @@ namespace System.Windows.Documents
         /// <returns>-1, 0, 1</returns>
         public int CompareTo(object o)
         {
-            if (o == null)
-            {
-                throw new ArgumentNullException("o");
-            }
+            ArgumentNullException.ThrowIfNull(o);
 
             FlowNode fp = o as FlowNode;
             if (fp == null)

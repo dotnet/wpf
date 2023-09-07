@@ -69,10 +69,7 @@ namespace System.Windows.Documents
         /// </summary>
         void IAddChild.AddChild(object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             TableCell cell = value as TableCell;
             if (cell != null)

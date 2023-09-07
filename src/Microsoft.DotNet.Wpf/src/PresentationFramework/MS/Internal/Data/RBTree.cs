@@ -574,8 +574,7 @@ namespace MS.Internal.Data
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
             if (arrayIndex < 0)
                 throw new ArgumentOutOfRangeException("arrayIndex");
             if (arrayIndex + Count > array.Length)

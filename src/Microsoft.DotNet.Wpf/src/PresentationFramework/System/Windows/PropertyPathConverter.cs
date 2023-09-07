@@ -101,10 +101,7 @@ namespace System.Windows
                                            CultureInfo cultureInfo,
                                            object source)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
+            ArgumentNullException.ThrowIfNull(source);
 
             if (source is string)
             {
@@ -138,15 +135,8 @@ namespace System.Windows
                                          object value,
                                          Type destinationType)
         {
-            if (null == value)
-            {
-                throw new ArgumentNullException("value");
-            }
-
-            if (null == destinationType)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(value);
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             if (destinationType != typeof(String))
             {

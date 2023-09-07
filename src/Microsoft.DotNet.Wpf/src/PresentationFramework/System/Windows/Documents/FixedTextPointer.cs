@@ -134,10 +134,7 @@ namespace System.Windows.Documents
         int ITextPointer.GetTextInRun(LogicalDirection direction, char[] textBuffer, int startIndex, int count)
         {
             ValidationHelper.VerifyDirection(direction, "direction");
-            if (textBuffer == null)
-            {
-                throw new ArgumentNullException("textBuffer");
-            }
+            ArgumentNullException.ThrowIfNull(textBuffer);
             if (count < 0)
             {
                 throw new ArgumentException(SR.Format(SR.NegativeValue, "count"));
@@ -204,10 +201,7 @@ namespace System.Windows.Documents
         /// <remarks>return property values even if there is no scoping element</remarks>
         object ITextPointer.GetValue(DependencyProperty property)
         {
-            if (property == null)
-            {
-                throw new ArgumentNullException("property");
-            }
+            ArgumentNullException.ThrowIfNull(property);
 
             FixedElement e = _flowPosition.GetScopingElement();
             return e.GetValue(property);
@@ -219,10 +213,7 @@ namespace System.Windows.Documents
         /// <remarks>Throws InvalidOperationException if there is no scoping element</remarks>
         object ITextPointer.ReadLocalValue(DependencyProperty property)
         {
-            if (property == null)
-            {
-                throw new ArgumentNullException("property");
-            }
+            ArgumentNullException.ThrowIfNull(property);
 
             FixedElement e = _flowPosition.GetScopingElement();
             if (!e.IsTextElement)
@@ -511,10 +502,7 @@ namespace System.Windows.Documents
         /// </summary>
         void ITextPointer.InsertTextInRun(string textData)
         {
-            if (textData == null)
-            {
-                throw new ArgumentNullException("textData");
-            }
+            ArgumentNullException.ThrowIfNull(textData);
 
             throw new InvalidOperationException(SR.FixedDocumentReadonly);
         }

@@ -77,10 +77,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IAddChild.AddChild(object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             UIElement cell = value as UIElement;
             if (cell != null)
@@ -136,10 +133,7 @@ namespace System.Windows.Controls
         /// <param name="value">Column property value.</param>
         public static void SetColumn(UIElement element, int value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(ColumnProperty, value);
         }
@@ -152,10 +146,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForChildren()]
         public static int GetColumn(UIElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return ((int)element.GetValue(ColumnProperty));
         }
@@ -167,10 +158,7 @@ namespace System.Windows.Controls
         /// <param name="value">Row property value.</param>
         public static void SetRow(UIElement element, int value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(RowProperty, value);
         }
@@ -183,10 +171,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForChildren()]
         public static int GetRow(UIElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return ((int)element.GetValue(RowProperty));
         }
@@ -198,10 +183,7 @@ namespace System.Windows.Controls
         /// <param name="value">ColumnSpan property value.</param>
         public static void SetColumnSpan(UIElement element, int value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(ColumnSpanProperty, value);
         }
@@ -214,10 +196,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForChildren()]
         public static int GetColumnSpan(UIElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return ((int)element.GetValue(ColumnSpanProperty));
         }
@@ -229,10 +208,7 @@ namespace System.Windows.Controls
         /// <param name="value">RowSpan property value.</param>
         public static void SetRowSpan(UIElement element, int value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(RowSpanProperty, value);
         }
@@ -245,10 +221,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForChildren()]
         public static int GetRowSpan(UIElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return ((int)element.GetValue(RowSpanProperty));
         }
@@ -260,10 +233,7 @@ namespace System.Windows.Controls
         /// <param name="value">IsSharedSizeScope property value.</param>
         public static void SetIsSharedSizeScope(UIElement element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(IsSharedSizeScopeProperty, value);
         }
@@ -275,10 +245,7 @@ namespace System.Windows.Controls
         /// <returns>IsSharedSizeScope property value.</returns>
         public static bool GetIsSharedSizeScope(UIElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return ((bool)element.GetValue(IsSharedSizeScopeProperty));
         }

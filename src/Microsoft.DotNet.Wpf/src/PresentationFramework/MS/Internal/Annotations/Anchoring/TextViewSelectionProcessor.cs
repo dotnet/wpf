@@ -134,8 +134,7 @@ namespace MS.Internal.Annotations.Anchoring
         public override IList<ContentLocatorPart>
             GenerateLocatorParts(Object selection, DependencyObject startNode)
         {
-            if (startNode == null)
-                throw new ArgumentNullException("startNode");
+            ArgumentNullException.ThrowIfNull(startNode);
 
             List<ContentLocatorPart> res = null;
 
@@ -177,11 +176,8 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">locatorPart or startNode are null</exception>
         public override Object ResolveLocatorPart(ContentLocatorPart locatorPart, DependencyObject startNode, out AttachmentLevel attachmentLevel)
         {
-            if (locatorPart == null)
-                throw new ArgumentNullException("locatorPart");
-
-            if (startNode == null)
-                throw new ArgumentNullException("startNode");
+            ArgumentNullException.ThrowIfNull(locatorPart);
+            ArgumentNullException.ThrowIfNull(startNode);
 
             attachmentLevel = AttachmentLevel.Unresolved;
 
@@ -274,8 +270,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>the selection cast to the necessary type</returns>
         private ITextView VerifySelection(object selection)
         {
-            if (selection == null)
-                throw new ArgumentNullException("selection");
+            ArgumentNullException.ThrowIfNull(selection);
 
             IServiceProvider provider = selection as IServiceProvider;
             if (provider == null)

@@ -12,14 +12,8 @@ namespace System.Windows
     {
         public override object Load(XamlReader xamlReader, IServiceProvider serviceProvider)
         {
-            if (serviceProvider == null)
-            {
-                throw new ArgumentNullException("serviceProvider");
-            }
-            else if (xamlReader == null)
-            {
-                throw new ArgumentNullException("xamlReader");
-            }
+            ArgumentNullException.ThrowIfNull(serviceProvider);
+            ArgumentNullException.ThrowIfNull(xamlReader);
 
             IXamlObjectWriterFactory factory = RequireService<IXamlObjectWriterFactory>(serviceProvider);
             return new TemplateContent(xamlReader, factory, serviceProvider);

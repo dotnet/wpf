@@ -135,10 +135,7 @@ namespace System.Windows.Controls
         /// <param name="destinationType">The type to which to convert the VirtualizationCacheLength instance. </param>
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value, Type destinationType)
         {
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             if (value != null
                 && value is VirtualizationCacheLength)

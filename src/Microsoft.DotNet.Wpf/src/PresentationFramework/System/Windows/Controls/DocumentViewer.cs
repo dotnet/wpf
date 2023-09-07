@@ -1953,50 +1953,45 @@ namespace System.Windows.Controls
         private static void DoFitToMaxPagesAcross(DocumentViewer dv, object data)
         {
             // Check that args is valid
-            if (data != null)
+            ArgumentNullException.ThrowIfNull(data);
+
+            int columnValue = 0;
+            bool isValidArg = true;
+
+            // If data is an int, then cast
+            if (data is int)
             {
-                int columnValue = 0;
-                bool isValidArg = true;
-
-                // If data is an int, then cast
-                if (data is int)
-                {
-                    columnValue = (int)data;
-                }
-                // If args.Data is a string, then parse
-                else if (data is string)
-                {
-                    try
-                    {
-                        columnValue = System.Convert.ToInt32((string)data, CultureInfo.CurrentCulture);
-                    }
-                    // Catch only the expected parse exceptions
-                    catch (ArgumentNullException)
-                    {
-                        isValidArg = false;
-                    }
-                    catch (FormatException)
-                    {
-                        isValidArg = false;
-                    }
-                    catch (OverflowException)
-                    {
-                        isValidArg = false;
-                    }
-                }
-
-                // Argument wasn't a valid int, throw an exception.
-                if (!isValidArg)
-                {
-                    throw new ArgumentException(SR.DocumentViewerArgumentMustBeInteger, "data");
-                }
-
-                dv.OnFitToMaxPagesAcrossCommand(columnValue);
+                columnValue = (int)data;
             }
-            else
+            // If args.Data is a string, then parse
+            else if (data is string)
             {
-                throw new ArgumentNullException("data");
+                try
+                {
+                    columnValue = System.Convert.ToInt32((string)data, CultureInfo.CurrentCulture);
+                }
+                // Catch only the expected parse exceptions
+                catch (ArgumentNullException)
+                {
+                    isValidArg = false;
+                }
+                catch (FormatException)
+                {
+                    isValidArg = false;
+                }
+                catch (OverflowException)
+                {
+                    isValidArg = false;
+                }
             }
+
+            // Argument wasn't a valid int, throw an exception.
+            if (!isValidArg)
+            {
+                throw new ArgumentException(SR.DocumentViewerArgumentMustBeInteger, "data");
+            }
+
+            dv.OnFitToMaxPagesAcrossCommand(columnValue);
         }
 
         /// <summary>
@@ -2009,31 +2004,26 @@ namespace System.Windows.Controls
         private static void DoZoom(DocumentViewer dv, object data)
         {
             // Check that args is valid
-            if (data != null)
-            {
-                // If a ZoomConverter doesn't exist, create one.
-                if (dv._zoomPercentageConverter == null)
-                {
-                    dv._zoomPercentageConverter = new ZoomPercentageConverter();
-                }
+            ArgumentNullException.ThrowIfNull(data);
 
-                // Use ZoomConverter to convert argument to zoom value.
-                // We use InvariantCulture because the Command arguments are typically
-                // defined in XAML or code, which is culture invariant.
-                object zoomValue = dv._zoomPercentageConverter.ConvertBack(data, typeof(double),
-                    null, CultureInfo.InvariantCulture);
-
-                // Argument wasn't a valid percent, throw an exception.
-                if (zoomValue == DependencyProperty.UnsetValue)
-                {
-                    throw new ArgumentException(SR.DocumentViewerArgumentMustBePercentage, "data");
-                }
-                dv.Zoom = (double)zoomValue;
-            }
-            else
+            // If a ZoomConverter doesn't exist, create one.
+            if (dv._zoomPercentageConverter == null)
             {
-                throw new ArgumentNullException("data");
+                dv._zoomPercentageConverter = new ZoomPercentageConverter();
             }
+
+            // Use ZoomConverter to convert argument to zoom value.
+            // We use InvariantCulture because the Command arguments are typically
+            // defined in XAML or code, which is culture invariant.
+            object zoomValue = dv._zoomPercentageConverter.ConvertBack(data, typeof(double),
+                null, CultureInfo.InvariantCulture);
+
+            // Argument wasn't a valid percent, throw an exception.
+            if (zoomValue == DependencyProperty.UnsetValue)
+            {
+                throw new ArgumentException(SR.DocumentViewerArgumentMustBePercentage, "data");
+            }
+            dv.Zoom = (double)zoomValue;
         }
 
         #endregion Commands

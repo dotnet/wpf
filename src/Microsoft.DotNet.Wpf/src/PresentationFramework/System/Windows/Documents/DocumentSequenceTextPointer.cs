@@ -662,10 +662,7 @@ namespace System.Windows.Documents
         {
             ValidationHelper.VerifyDirection(direction, "direction");
 
-            if (textBuffer == null)
-            {
-                throw new ArgumentNullException("textBuffer");
-            }
+            ArgumentNullException.ThrowIfNull(textBuffer);
             if (startIndex < 0)
             {
                 throw new ArgumentException(SR.Format(SR.NegativeValue, "startIndex"));
@@ -739,10 +736,7 @@ namespace System.Windows.Documents
         /// <remarks>return property values even if there is no scoping element</remarks>
         public static object GetValue(DocumentSequenceTextPointer thisTp, DependencyProperty property)
         {
-            if (property == null)
-            {
-                throw new ArgumentNullException("property");
-            }
+            ArgumentNullException.ThrowIfNull(property);
 
             return thisTp.ChildPointer.GetValue(property);
         }
@@ -753,10 +747,7 @@ namespace System.Windows.Documents
         /// <remarks>Throws InvalidOperationException if there is no scoping element</remarks>
         public static object ReadLocalValue(DocumentSequenceTextPointer thisTp, DependencyProperty property)
         {
-            if (property == null)
-            {
-                throw new ArgumentNullException("property");
-            }
+            ArgumentNullException.ThrowIfNull(property);
 
             return thisTp.ChildPointer.ReadLocalValue(property);
         }

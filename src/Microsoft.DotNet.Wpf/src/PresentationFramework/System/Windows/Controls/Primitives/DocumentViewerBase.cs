@@ -336,10 +336,7 @@ namespace System.Windows.Controls.Primitives
         /// <param name="element">The element from which to read the attached property.</param>
         public static bool GetIsMasterPage(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(IsMasterPageProperty);
         }
 
@@ -350,10 +347,7 @@ namespace System.Windows.Controls.Primitives
         /// <param name="value">The property value to set</param>
         public static void SetIsMasterPage(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(IsMasterPageProperty, value);
         }
 
@@ -505,10 +499,7 @@ namespace System.Windows.Controls.Primitives
         /// <param name="pageNumber"></param>
         protected virtual void OnBringIntoView(DependencyObject element, Rect rect, int pageNumber)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             OnGoToPageCommand(pageNumber);
         }
 
@@ -1739,10 +1730,7 @@ namespace System.Windows.Controls.Primitives
         /// <remarks>DocumentViewerBase only supports a single child of type IDocumentPaginatorSource.</remarks>
         void IAddChild.AddChild(Object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
             // Check if Content has already been set.
             if (this.Document != null)
             {
@@ -1784,10 +1772,7 @@ namespace System.Windows.Controls.Primitives
         object IServiceProvider.GetService(Type serviceType)
         {
             object service = null;
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
 
             // Following services are available:
             // (1) TextView - wrapper for TextViews exposed by PageViews.

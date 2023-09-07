@@ -46,10 +46,8 @@ namespace MS.Internal.Data
         /// </summary>
         public static void AddHandler(Type type, EventHandler<PropertyChangedEventArgs> handler, string propertyName)
         {
-            if (type == null)
-                throw new ArgumentNullException("type");
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(type);
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.PrivateAddHandler(type, handler, propertyName);
         }
@@ -59,10 +57,8 @@ namespace MS.Internal.Data
         /// </summary>
         public static void RemoveHandler(Type type, EventHandler<PropertyChangedEventArgs> handler, string propertyName)
         {
-            if (type == null)
-                throw new ArgumentNullException("type");
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(type);
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.PrivateRemoveHandler(type, handler, propertyName);
         }

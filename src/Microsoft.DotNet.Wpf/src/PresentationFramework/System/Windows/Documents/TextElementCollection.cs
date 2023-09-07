@@ -78,10 +78,7 @@ namespace System.Windows.Documents
         /// <param name="item"></param>
         public void Add(TextElementType item)
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException("item");
-            }
+            ArgumentNullException.ThrowIfNull(item);
 
             ValidateChild(item);
 
@@ -245,15 +242,9 @@ namespace System.Windows.Documents
         /// </param>
         public void InsertAfter(TextElementType previousSibling, TextElementType newItem)
         {
-            if (previousSibling == null)
-            {
-                throw new ArgumentNullException("previousSibling");
-            }
+            ArgumentNullException.ThrowIfNull(previousSibling);
 
-            if (newItem == null)
-            {
-                throw new ArgumentNullException("newItem");
-            }
+            ArgumentNullException.ThrowIfNull(newItem);
 
             if (previousSibling.Parent != this.Parent)
             {
@@ -290,15 +281,9 @@ namespace System.Windows.Documents
         /// </param>
         public void InsertBefore(TextElementType nextSibling, TextElementType newItem)
         {
-            if (nextSibling == null)
-            {
-                throw new ArgumentNullException("nextSibling");
-            }
+            ArgumentNullException.ThrowIfNull(nextSibling);
 
-            if (newItem == null)
-            {
-                throw new ArgumentNullException("newItem");
-            }
+            ArgumentNullException.ThrowIfNull(newItem);
 
             if (nextSibling.Parent != this.Parent)
             {
@@ -331,10 +316,7 @@ namespace System.Windows.Documents
         /// </param>
         public void AddRange(IEnumerable range)
         {
-            if (range == null)
-            {
-                throw new ArgumentNullException("range");
-            }
+            ArgumentNullException.ThrowIfNull(range);
 
             IEnumerator enumerator = range.GetEnumerator();
             if (enumerator == null)
@@ -412,10 +394,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal virtual int OnAdd(object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             if (!(value is TextElementType))
             {
@@ -468,10 +447,7 @@ namespace System.Windows.Documents
 
         void IList.Insert(int index, object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             TextElementType newItem = value as TextElementType;
 
@@ -584,10 +560,7 @@ namespace System.Windows.Documents
 
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (!(value is TextElementType))
                 {
@@ -624,10 +597,7 @@ namespace System.Windows.Documents
         {
             int count = this.Count;
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             Type elementType = array.GetType().GetElementType();
             if (elementType == null || !elementType.IsAssignableFrom(typeof(TextElementType)))

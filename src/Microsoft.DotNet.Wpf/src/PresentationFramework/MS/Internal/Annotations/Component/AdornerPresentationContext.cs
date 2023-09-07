@@ -41,7 +41,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="adorner">AnnotationAdorner that wraps the annotation component.  Will be null in case of creating enclosing context</param>
         private AdornerPresentationContext(AdornerLayer adornerLayer, AnnotationAdorner adorner)
         {
-            if (adornerLayer == null) throw new ArgumentNullException("adornerLayer");
+            ArgumentNullException.ThrowIfNull(adornerLayer);
 
             _adornerLayer = adornerLayer;
             if (adorner != null)
@@ -177,7 +177,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="component">Component to add to host</param>
         public override void AddToHost(IAnnotationComponent component)
         {
-            if (component == null) throw new ArgumentNullException("component");
+            ArgumentNullException.ThrowIfNull(component);
 
             AdornerPresentationContext.HostComponent(_adornerLayer, component, component.AnnotatedElement, false);
         }
@@ -192,7 +192,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="reorder">if true - recalculate z-order</param>
         public override void RemoveFromHost(IAnnotationComponent component, bool reorder)
         {
-            if (component == null) throw new ArgumentNullException("component");
+            ArgumentNullException.ThrowIfNull(component);
 
             if (IsInternalComponent(component))
             {
@@ -491,7 +491,7 @@ namespace MS.Internal.Annotations.Component
         /// <returns></returns>
         private AnnotationAdorner GetAnnotationAdorner(IAnnotationComponent component)
         {
-            if (component == null) throw new ArgumentNullException("component");
+            ArgumentNullException.ThrowIfNull(component);
 
             //find the adornerLayer
             AnnotationAdorner adorner = _annotationAdorner;

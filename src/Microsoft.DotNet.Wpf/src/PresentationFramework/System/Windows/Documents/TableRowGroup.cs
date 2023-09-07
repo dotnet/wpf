@@ -83,10 +83,7 @@ namespace System.Windows.Documents
         /// </summary>
         void IAddChild.AddChild(object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             TableRow row = value as TableRow;
             if (row != null)

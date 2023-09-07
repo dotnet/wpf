@@ -41,10 +41,8 @@ namespace MS.Internal.Data
         /// </summary>
         public static void AddListener(XmlDocument source, IWeakEventListener listener)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(listener);
 
             CurrentManager.ProtectedAddListener(source, listener);
         }
@@ -54,10 +52,8 @@ namespace MS.Internal.Data
         /// </summary>
         public static void RemoveListener(XmlDocument source, IWeakEventListener listener)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(listener);
 
             CurrentManager.ProtectedRemoveListener(source, listener);
         }
@@ -67,8 +63,7 @@ namespace MS.Internal.Data
         /// </summary>
         public static void AddHandler(XmlDocument source, EventHandler<XmlNodeChangedEventArgs> handler)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.ProtectedAddHandler(source, handler);
         }
@@ -78,8 +73,7 @@ namespace MS.Internal.Data
         /// </summary>
         public static void RemoveHandler(XmlDocument source, EventHandler<XmlNodeChangedEventArgs> handler)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.ProtectedRemoveHandler(source, handler);
         }

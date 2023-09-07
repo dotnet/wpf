@@ -56,10 +56,7 @@ namespace System.Windows.Documents
         public List(ListItem listItem)
             : base()
         {
-            if (listItem == null)
-            {
-                throw new ArgumentNullException("listItem");
-            }
+            ArgumentNullException.ThrowIfNull(listItem);
             this.ListItems.Add(listItem);
         }
 
@@ -182,10 +179,7 @@ namespace System.Windows.Documents
         internal int GetListItemIndex(ListItem item)
         {
             // Check for valid arg
-            if (item == null)
-            {
-                throw new ArgumentNullException("item");
-            }
+            ArgumentNullException.ThrowIfNull(item);
             if (item.Parent != this)
             {
                 throw new InvalidOperationException(SR.ListElementItemNotAChildOfList);

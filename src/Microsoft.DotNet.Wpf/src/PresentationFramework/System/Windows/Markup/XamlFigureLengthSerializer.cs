@@ -70,11 +70,8 @@ namespace System.Windows.Markup
             BinaryWriter   writer,           // Writer into the baml stream
             string         stringValue)      // String to convert
         {
-            if (writer == null)
-            {
-                throw new ArgumentNullException( "writer" );
-            }
-            
+            ArgumentNullException.ThrowIfNull(writer);
+
             FigureUnitType figureUnitType;
             double   value;
             FromString(stringValue, TypeConverterHelper.InvariantEnglishUS,
@@ -144,11 +141,8 @@ namespace System.Windows.Markup
         public override object ConvertCustomBinaryToObject(
             BinaryReader reader)
         {
-            if (reader == null)
-            {
-                throw new ArgumentNullException( "reader" );
-            }
-            
+            ArgumentNullException.ThrowIfNull(reader);
+
             FigureUnitType unitType;
             double unitValue;
             byte unitAndFlags = reader.ReadByte();

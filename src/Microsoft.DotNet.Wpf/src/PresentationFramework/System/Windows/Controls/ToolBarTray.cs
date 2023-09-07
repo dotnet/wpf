@@ -156,10 +156,7 @@ namespace System.Windows.Controls
         /// <param name="value">The property value to set</param>
         public static void SetIsLocked(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(IsLockedProperty, value);
         }
 
@@ -170,10 +167,7 @@ namespace System.Windows.Controls
         /// <returns>The property's value.</returns>
         public static bool GetIsLocked(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(IsLockedProperty);
         }
 
@@ -279,10 +273,7 @@ namespace System.Windows.Controls
         /// <ExternalAPI/>
         void IAddChild.AddChild(Object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             ToolBar toolBar = value as ToolBar;
             if (toolBar == null)

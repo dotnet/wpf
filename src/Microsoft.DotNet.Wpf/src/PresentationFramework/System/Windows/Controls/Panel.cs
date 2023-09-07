@@ -86,11 +86,8 @@ namespace System.Windows.Controls
         /// <ExternalAPI/>
         void IAddChild.AddChild (Object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
-            if(IsItemsHost)
+            ArgumentNullException.ThrowIfNull(value);
+            if (IsItemsHost)
             {
                 throw new InvalidOperationException(SR.Panel_BoundPanel_NoChildren);
             }
@@ -924,10 +921,7 @@ namespace System.Windows.Controls
         /// <param name="value">ZIndex property value.</param>
         public static void SetZIndex(UIElement element, int value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(ZIndexProperty, value);
         }
@@ -939,10 +933,7 @@ namespace System.Windows.Controls
         /// <returns>ZIndex property value.</returns>
         public static int GetZIndex(UIElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return ((int)element.GetValue(ZIndexProperty));
         }

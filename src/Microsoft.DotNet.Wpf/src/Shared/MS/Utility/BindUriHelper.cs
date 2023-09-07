@@ -62,11 +62,8 @@ namespace MS.Internal.Utility
         //
         internal static string UriToString(Uri uri)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException("uri");
-            }            
-         
+            ArgumentNullException.ThrowIfNull(uri);
+
             return new StringBuilder(
                 uri.GetComponents(
                     uri.IsAbsoluteUri ? UriComponents.AbsoluteUri : UriComponents.SerializationInfoString, 

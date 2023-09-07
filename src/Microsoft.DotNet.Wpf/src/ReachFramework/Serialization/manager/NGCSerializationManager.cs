@@ -48,10 +48,7 @@ namespace System.Windows.Xps.Serialization
             ):
         base()
         {
-            if (queue == null)
-            {
-                throw new ArgumentNullException("queue");
-            }
+            ArgumentNullException.ThrowIfNull(queue);
             _printQueue                 = queue;
             this._isBatchMode           = isBatchMode;
             this._isSimulating          = false;
@@ -75,12 +72,9 @@ namespace System.Windows.Xps.Serialization
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXSaveXpsBegin);
 
-            if (serializedObject == null)
-            {
-                throw new ArgumentNullException("serializedObject");
-            }
+            ArgumentNullException.ThrowIfNull(serializedObject);
 
-            if(!IsSerializedObjectTypeSupported(serializedObject))
+            if (!IsSerializedObjectTypeSupported(serializedObject))
             {
                 throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
             }

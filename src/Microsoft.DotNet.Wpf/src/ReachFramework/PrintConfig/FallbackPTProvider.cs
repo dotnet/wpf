@@ -304,10 +304,7 @@ namespace MS.Internal.Printing.Configuration
         {
             VerifyAccess();
 
-            if (devMode == null)
-            {
-                throw new ArgumentNullException("devMode");
-            }
+            ArgumentNullException.ThrowIfNull(devMode);
 
             InternalPrintTicket result = DevModeToPrintTicket(new DevMode(devMode), scope, DevModeFields.All);
             return result.XmlStream;

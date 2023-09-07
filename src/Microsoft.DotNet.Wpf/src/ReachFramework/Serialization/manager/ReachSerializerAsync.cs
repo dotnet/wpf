@@ -48,10 +48,7 @@ namespace System.Windows.Xps.Serialization
             PackageSerializationManager   manager
             )
         {
-            if(manager == null)
-            {
-                throw new ArgumentNullException("manager");
-            }
+            ArgumentNullException.ThrowIfNull(manager);
 
             _serializationManager = manager as IXpsSerializationManagerAsync;
 
@@ -145,12 +142,9 @@ namespace System.Windows.Xps.Serialization
             SerializablePropertyContext serializedProperty
             )
         {
-            if(serializedProperty == null)
-            {
-                throw new ArgumentNullException("serializedProperty");
-            }
+            ArgumentNullException.ThrowIfNull(serializedProperty);
 
-            if(SerializationManager == null)
+            if (SerializationManager == null)
             {
                 throw new XpsSerializationException(SR.ReachSerialization_MustHaveSerializationManager);
             }
@@ -193,11 +187,8 @@ namespace System.Windows.Xps.Serialization
             Object serializedObject
             )
         {
-            if(serializedObject == null)
-            {
-                throw new ArgumentNullException("serializedObject");
-            }
-            if(SerializationManager == null)
+            ArgumentNullException.ThrowIfNull(serializedObject);
+            if (SerializationManager == null)
             {
                 throw new XpsSerializationException(SR.ReachSerialization_MustHaveSerializationManager);
             }
@@ -301,10 +292,7 @@ namespace System.Windows.Xps.Serialization
             SerializableObjectContext   serializableObjectContext
             )
         {
-            if (serializableObjectContext == null)
-            {
-                throw new ArgumentNullException("serializableObjectContext");
-            }
+            ArgumentNullException.ThrowIfNull(serializableObjectContext);
 
             if (!serializableObjectContext.IsReadOnlyValue && 
                 serializableObjectContext.IsComplexValue)
@@ -327,10 +315,7 @@ namespace System.Windows.Xps.Serialization
             SerializablePropertyContext serializablePropertyContext
             )
         {
-            if(serializablePropertyContext == null)
-            {
-                throw new ArgumentNullException("serializablePropertyContext");
-            }
+            ArgumentNullException.ThrowIfNull(serializablePropertyContext);
         }
 
         #endregion Internal Methods
@@ -395,10 +380,7 @@ namespace System.Windows.Xps.Serialization
             SerializableObjectContext   serializableObjectContext
             )
         {
-            if (serializableObjectContext == null)
-            {
-                throw new ArgumentNullException("serializableObjectContext");
-            }
+            ArgumentNullException.ThrowIfNull(serializableObjectContext);
 
             SerializablePropertyCollection propertyCollection = serializableObjectContext.PropertiesCollection;
 
@@ -460,12 +442,9 @@ namespace System.Windows.Xps.Serialization
             SerializablePropertyContext serializablePropertyContext
             )
         {
-            if(serializablePropertyContext == null)
-            {
-                throw new ArgumentNullException("serializablePropertyContext");
-            }
+            ArgumentNullException.ThrowIfNull(serializablePropertyContext);
 
-            if(!serializablePropertyContext.IsComplex)
+            if (!serializablePropertyContext.IsComplex)
             {
                 //
                 // Non-Complex Properties are serialized as attributes

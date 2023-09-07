@@ -158,10 +158,7 @@ namespace System.Windows.Xps.Serialization
             Object serializedObject
             )
         {
-            if (serializedObject == null)
-            {
-                throw new ArgumentNullException("serializedObject");
-            }
+            ArgumentNullException.ThrowIfNull(serializedObject);
 
             return TypeDescriptor.GetConverter(serializedObject.GetType());
         }
@@ -513,10 +510,7 @@ namespace System.Windows.Xps.Serialization
             Object  serializedObject
             )
         {
-            if (serializedObject == null)
-            {
-                throw new ArgumentNullException("serializedObject");
-            }
+            ArgumentNullException.ThrowIfNull(serializedObject);
 
             ReachSerializer reachSerializer = null;
 
@@ -708,10 +702,7 @@ namespace System.Windows.Xps.Serialization
             Object  serializableObject
             )
         {
-            if(serializableObject == null)
-            {
-                throw new ArgumentNullException("serializableObject");
-            }
+            ArgumentNullException.ThrowIfNull(serializableObject);
 
             Type type = serializableObject.GetType();
 
@@ -770,10 +761,7 @@ namespace System.Windows.Xps.Serialization
             Object  serializableObject
             )
         {
-            if(serializableObject == null)
-            {
-                throw new ArgumentNullException("serializableObject");
-            }
+            ArgumentNullException.ThrowIfNull(serializableObject);
 
             Type type = serializableObject.GetType();
 
@@ -960,10 +948,7 @@ namespace System.Windows.Xps.Serialization
             Type  serializableObjectType
             )
         {
-            if(serializableObjectType == null)
-            {
-                throw new ArgumentNullException("serializableObjectType");
-            }
+            ArgumentNullException.ThrowIfNull(serializableObjectType);
 
             TypeCacheItem typeCacheItem = (TypeCacheItem)_typesCacheTable[serializableObjectType];
 

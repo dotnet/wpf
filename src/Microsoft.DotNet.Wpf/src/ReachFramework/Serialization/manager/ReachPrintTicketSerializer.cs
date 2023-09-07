@@ -111,10 +111,7 @@ namespace System.Windows.Xps.Serialization
             SerializablePropertyContext serializedProperty
             )
         {
-            if(serializedProperty == null)
-            {
-                throw new ArgumentNullException("serializedProperty");
-            }
+            ArgumentNullException.ThrowIfNull(serializedProperty);
 
             SerializeObject(serializedProperty.Value);
         }

@@ -104,12 +104,9 @@ namespace System.Windows.Xps.Serialization
 
             XmlWriter pageXmlWriter             = null;
 
-            if (serializedObject == null)
-            {
-                throw new ArgumentNullException("serializedObject");
-            }
+            ArgumentNullException.ThrowIfNull(serializedObject);
 
-            if(!IsSerializedObjectTypeSupported(serializedObject))
+            if (!IsSerializedObjectTypeSupported(serializedObject))
             {
                 throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
             }

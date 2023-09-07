@@ -119,10 +119,7 @@ namespace System.Windows.Xps.Serialization
             SerializableObjectContext serializableObjectContext
         )
         {
-            if (serializableObjectContext == null)
-            {
-                throw new ArgumentNullException(nameof(serializableObjectContext));
-            }
+            ArgumentNullException.ThrowIfNull(serializableObjectContext);
 
             _xpsOMSerializationManager.RegisterDocumentStart();
 

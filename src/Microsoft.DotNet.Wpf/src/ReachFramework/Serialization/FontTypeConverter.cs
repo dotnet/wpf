@@ -105,10 +105,7 @@ namespace System.Windows.Xps.Serialization
             object                              value
             )
         {
-            if( value == null )
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
             if (!IsSupportedType(value.GetType()))
             {
                 throw new NotSupportedException(SR.Converter_ConvertFromNotSupported);
@@ -147,10 +144,7 @@ namespace System.Windows.Xps.Serialization
             Type                                destinationType
             )
         {
-            if( context == null )
-            {
-                throw new ArgumentNullException("context");
-            }
+            ArgumentNullException.ThrowIfNull(context);
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXConvertFontBegin);
 
             if (!IsSupportedType(destinationType))

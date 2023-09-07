@@ -213,10 +213,7 @@ namespace System.Printing
         public PrintTicketManager(string deviceName, int clientPrintSchemaVersion)
         {
             // Check input argument
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException("deviceName");
-            }
+            ArgumentNullException.ThrowIfNull(deviceName);
 
             // Check if we can support the schema version client has requested
             if ((clientPrintSchemaVersion > MaxPrintSchemaVersion) ||
@@ -386,10 +383,7 @@ namespace System.Printing
             }
 
             // Base PrintTicket is required. Delta PrintTicket is optional.
-            if (basePrintTicket == null)
-            {
-                throw new ArgumentNullException("basePrintTicket");
-            }
+            ArgumentNullException.ThrowIfNull(basePrintTicket);
 
             // validate scope value
             if ((scope != PrintTicketScope.PageScope) &&

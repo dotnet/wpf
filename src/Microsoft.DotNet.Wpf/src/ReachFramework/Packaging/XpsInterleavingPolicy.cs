@@ -277,10 +277,7 @@ namespace System.Windows.Xps.Packaging
             INode       node
             )
         {
-            if ( null == node )
-            {
-                throw new ArgumentNullException("node");
-            }
+            ArgumentNullException.ThrowIfNull(node);
 
             //
             // If the current node is not part of the flush order sequence

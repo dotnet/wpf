@@ -290,11 +290,8 @@ namespace System.Windows.Xps.Serialization
         TypePropertyCache(
             PropertyInfo propertyInfo
             )
-        {  
-            if(propertyInfo == null)
-            {
-                throw new ArgumentNullException("propertyInfo");
-            }
+        {
+            ArgumentNullException.ThrowIfNull(propertyInfo);
             this.propertyInfo                   = propertyInfo;
             this.visibility                     = DesignerSerializationVisibility.Visible;
             this.serializerTypeForProperty      = null;
@@ -313,11 +310,8 @@ namespace System.Windows.Xps.Serialization
             DefaultValueAttribute                   defaultValueAttr,
             DesignerSerializationOptionsAttribute     designerSerializationFlagsAttr
             )
-        {  
-            if(propertyInfo == null)
-            {
-                throw new ArgumentNullException("propertyInfo");
-            }
+        {
+            ArgumentNullException.ThrowIfNull(propertyInfo);
             this.propertyInfo                   = propertyInfo;
             this.visibility                     = visibility;
             this.serializerTypeForProperty      = serializerTypeForProperty;

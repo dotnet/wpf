@@ -77,10 +77,7 @@ namespace System.Printing.Interop
         public PrintTicketConverter(string deviceName, int clientPrintSchemaVersion)
         {
             // Check input argument
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
+            ArgumentNullException.ThrowIfNull(deviceName);
 
             // Check if we can support the schema version client has requested
             if ((clientPrintSchemaVersion > MaxPrintSchemaVersion) ||
@@ -251,10 +248,7 @@ namespace System.Printing.Interop
                                                                         PrintTicketScope scope)
         {
             // validate devMode parameter
-            if (devMode == null)
-            {
-                throw new ArgumentNullException(nameof(devMode));
-            }
+            ArgumentNullException.ThrowIfNull(devMode);
 
             // validate sope parameter
             if ((scope != PrintTicketScope.PageScope) &&
@@ -275,10 +269,7 @@ namespace System.Printing.Interop
                                                                    PrintTicketScope scope)
         {
             // Input PrinTicket can't be null.
-            if (printTicket == null)
-            {
-                throw new ArgumentNullException(nameof(printTicket));
-            }
+            ArgumentNullException.ThrowIfNull(printTicket);
 
             // Validate the base type value.
             if ((baseType != BaseDevModeType.UserDefault) &&

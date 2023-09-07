@@ -37,10 +37,7 @@ namespace System.Windows.Xps.Packaging
             XpsManager    xpsManager
             )
         {
-            if (null == xpsManager)
-            {
-                throw new ArgumentNullException("xpsManager");
-            }
+            ArgumentNullException.ThrowIfNull(xpsManager);
 
             _xpsManager = xpsManager;
         }

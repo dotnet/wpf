@@ -30,10 +30,7 @@ namespace MS.Internal.Printing.Configuration
 
         public DevMode(byte[] devModeBytes)
         {
-            if (devModeBytes == null)
-            {
-                throw new ArgumentNullException("devModeBytes");
-            }
+            ArgumentNullException.ThrowIfNull(devModeBytes);
 
             this._isDevModeW = true;
             this.ByteData = devModeBytes;

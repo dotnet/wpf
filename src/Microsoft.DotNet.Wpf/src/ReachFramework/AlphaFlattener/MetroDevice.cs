@@ -434,8 +434,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public MetroToGdiConverter(PrintQueue queue)
         {
-            if (queue == null)
-                throw new ArgumentNullException("queue");
+            ArgumentNullException.ThrowIfNull(queue);
 
             m_PrintQueue  = queue;
             m_Flattener   = new MetroDevice0();
@@ -781,35 +780,22 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public void CachePageSize(string ticket, double width, double height)
         {
-            if(ticket == null)
-            {
-                throw new ArgumentNullException("ticket");
-            }
+            ArgumentNullException.ThrowIfNull(ticket);
 
             EnsurePacketForKey(ticket).PageSize = new Size(width, height);
         }
 
         public void CacheDevMode(string ticket, byte [] devMode)
         {
-            if(ticket == null)
-            {
-                throw new ArgumentNullException("ticket");
-            }
-
-            if(devMode == null)
-            {
-                throw new ArgumentNullException("devMode");
-            }
+            ArgumentNullException.ThrowIfNull(ticket);
+            ArgumentNullException.ThrowIfNull(devMode);
 
             EnsurePacketForKey(ticket).DevMode = devMode;
         }
 
         public bool TryGetPageSize(string ticket, out double width, out double height)
         {
-            if(ticket == null)
-            {
-                throw new ArgumentNullException("ticket");
-            }
+            ArgumentNullException.ThrowIfNull(ticket);
 
             CachePacket packet;
             if(this.m_innerCache.TryGetValue(ticket, out packet))
@@ -829,10 +815,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public bool TryGetDevMode(string ticket, out byte [] devMode)
         {
-            if(ticket == null)
-            {
-                throw new ArgumentNullException("ticket");
-            }
+            ArgumentNullException.ThrowIfNull(ticket);
 
             CachePacket packet;
             if(this.m_innerCache.TryGetValue(ticket, out packet))

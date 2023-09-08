@@ -53,16 +53,11 @@ namespace System.Windows.Media
             StartPoint = start;
             PathSegmentCollection mySegments = Segments;
 
-            if (segments != null)
+            ArgumentNullException.ThrowIfNull(segments);
+
+            foreach (PathSegment item in segments)
             {
-                foreach (PathSegment item in segments)
-                {
-                    mySegments.Add(item);
-                }
-            }
-            else
-            {
-                throw new ArgumentNullException("segments");
+                mySegments.Add(item);
             }
 
             IsClosed = closed;

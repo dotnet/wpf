@@ -36,10 +36,7 @@ namespace System.Windows.Input
         /// </param>
         public TouchPoint(TouchDevice device, Point position, Rect bounds, TouchAction action)
         {
-            if (device == null)
-            {
-                throw new ArgumentNullException("device");
-            }
+            ArgumentNullException.ThrowIfNull(device);
 
             TouchDevice = device;
             Position = position;

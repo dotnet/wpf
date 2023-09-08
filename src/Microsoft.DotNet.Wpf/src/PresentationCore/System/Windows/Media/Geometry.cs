@@ -678,10 +678,7 @@ namespace System.Windows.Media
         {
             ReadPreamble();
 
-            if (pen == null)
-            {
-                throw new System.ArgumentNullException("pen");
-            }
+            ArgumentNullException.ThrowIfNull(pen);
 
             if (IsObviouslyEmpty())
             {

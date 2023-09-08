@@ -90,10 +90,7 @@ namespace System.Windows.Ink
         public StrokeCollection HitTest(IEnumerable<Point> lassoPoints, int percentageWithinLasso)
         {
             // Check the input parameters
-            if (lassoPoints == null)
-            {
-                throw new System.ArgumentNullException("lassoPoints");
-            }
+            ArgumentNullException.ThrowIfNull(lassoPoints);
             if ((percentageWithinLasso < 0) || (percentageWithinLasso > 100))
             {
                 throw new System.ArgumentOutOfRangeException("percentageWithinLasso");
@@ -202,14 +199,8 @@ namespace System.Windows.Ink
         public StrokeCollection HitTest(IEnumerable<Point> path, StylusShape stylusShape)
         {
             // Check the input parameters
-            if (stylusShape == null)
-            {
-                throw new System.ArgumentNullException("stylusShape");
-            }
-            if (path == null)
-            {
-                throw new System.ArgumentNullException("path");
-            }
+            ArgumentNullException.ThrowIfNull(stylusShape);
+            ArgumentNullException.ThrowIfNull(path);
             if (IEnumerablePointHelper.GetCount(path) == 0)
             {
                 return new StrokeCollection();
@@ -249,10 +240,7 @@ namespace System.Windows.Ink
         public void Clip(IEnumerable<Point> lassoPoints)
         {
             // Check the input parameters
-            if (lassoPoints == null)
-            {
-                throw new System.ArgumentNullException("lassoPoints");
-            }
+            ArgumentNullException.ThrowIfNull(lassoPoints);
 
             int length = IEnumerablePointHelper.GetCount(lassoPoints);
             if (length == 0)
@@ -303,10 +291,7 @@ namespace System.Windows.Ink
         public void Erase(IEnumerable<Point> lassoPoints)
         {
             // Check the input parameters
-            if (lassoPoints == null)
-            {
-                throw new System.ArgumentNullException("lassoPoints");
-            }
+            ArgumentNullException.ThrowIfNull(lassoPoints);
             int length = IEnumerablePointHelper.GetCount(lassoPoints);
             if (length == 0)
             {
@@ -383,10 +368,7 @@ namespace System.Windows.Ink
         /// <param name="context"></param>
         public void Draw(DrawingContext context)
         {
-             if (null == context)
-            {
-                throw new System.ArgumentNullException("context");
-            }
+            ArgumentNullException.ThrowIfNull(context);
 
             //The verification of UI context affinity is done in Stroke.Draw()
 
@@ -449,10 +431,7 @@ namespace System.Windows.Ink
         /// <returns>an instance of IncrementalStrokeHitTester</returns>
         public IncrementalStrokeHitTester GetIncrementalStrokeHitTester(StylusShape eraserShape)
         {
-            if (eraserShape == null)
-            {
-                throw new System.ArgumentNullException("eraserShape");
-            }
+            ArgumentNullException.ThrowIfNull(eraserShape);
             return new IncrementalStrokeHitTester(this, eraserShape);
         }
 

@@ -709,11 +709,9 @@ namespace System.Windows.Ink
             // Calling AddPropertyData(KnownIds.StylusTipTransform, "d") does not throw an ArgumentException.
             //  ExtendedPropertySerializer.Validate take a string as a valid type since StylusTipTransform
             //  gets serialized as a String, but at runtime is a Matrix
-            if (propertyData == null)
-            {
-                throw new ArgumentNullException("propertyData");
-            }
-            else if (propertyDataId == KnownIds.StylusTipTransform)
+            ArgumentNullException.ThrowIfNull(propertyData);
+
+            if (propertyDataId == KnownIds.StylusTipTransform)
             {
                 // StylusTipTransform gets serialized as a String, but at runtime is a Matrix
                 Type t = propertyData.GetType();

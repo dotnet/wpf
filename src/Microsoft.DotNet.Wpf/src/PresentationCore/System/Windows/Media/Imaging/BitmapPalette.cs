@@ -45,10 +45,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         public BitmapPalette(IList<Color> colors)
         {
-            if (colors == null)
-            {
-                throw new ArgumentNullException("colors");
-            }
+            ArgumentNullException.ThrowIfNull(colors);
 
             int count = colors.Count;
 
@@ -84,10 +81,7 @@ namespace System.Windows.Media.Imaging
         {
             // Note: we will never return a palette from BitmapPalettes.
 
-            if (bitmapSource == null)
-            {
-                throw new ArgumentNullException("bitmapSource");
-            }
+            ArgumentNullException.ThrowIfNull(bitmapSource);
 
             SafeMILHandle unmanagedBitmap = bitmapSource.WicSourceHandle;
 

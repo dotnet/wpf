@@ -43,11 +43,8 @@ namespace System.Windows
         /// </param>
         public EventRoute(RoutedEvent routedEvent)
         {
-            if (routedEvent == null)
-            {
-                throw new ArgumentNullException("routedEvent"); 
-            }
-            
+            ArgumentNullException.ThrowIfNull(routedEvent);
+
             _routedEvent = routedEvent;
 
             // Changed the initialization size to 16 
@@ -83,16 +80,10 @@ namespace System.Windows
         /// </param>
         public void Add(object target, Delegate handler, bool handledEventsToo)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target"); 
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler"); 
-            }
-            
+            ArgumentNullException.ThrowIfNull(handler);
+
             RouteItem routeItem = new RouteItem(target, new RoutedEventHandlerInfo(handler, handledEventsToo));
 
             _routeItemList.Add(routeItem);
@@ -134,15 +125,9 @@ namespace System.Windows
 
         private void InvokeHandlersImpl(object source, RoutedEventArgs args, bool reRaised)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source"); 
-            }
+            ArgumentNullException.ThrowIfNull(source);
 
-            if (args == null)
-            {
-                throw new ArgumentNullException("args"); 
-            }
+            ArgumentNullException.ThrowIfNull(args);
 
             if (args.Source == null)
             {

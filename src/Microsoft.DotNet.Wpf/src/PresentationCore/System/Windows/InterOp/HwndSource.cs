@@ -1927,10 +1927,7 @@ namespace System.Windows.Interop
         {
             CheckDisposed(true);
 
-            if (sink == null)
-            {
-                throw new ArgumentNullException("sink");
-            }
+            ArgumentNullException.ThrowIfNull(sink);
 
             if (sink.KeyboardInputSite != null)
             {
@@ -1984,10 +1981,7 @@ namespace System.Windows.Interop
         {
             bool traversed = false;
 
-            if(request == null)
-            {
-                throw new ArgumentNullException("request");
-            }
+            ArgumentNullException.ThrowIfNull(request);
 
             UIElement root =_rootVisual.Value as UIElement;
             if(root != null)
@@ -2003,10 +1997,7 @@ namespace System.Windows.Interop
 
         bool IKeyboardInputSink.TabInto(TraversalRequest request)
         {
-            if(request == null)
-            {
-                throw new ArgumentNullException("request");
-            }
+            ArgumentNullException.ThrowIfNull(request);
 
             return TabIntoCore(request);
         }

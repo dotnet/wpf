@@ -24,10 +24,7 @@ namespace System.Windows.Automation.Peers
         ///
         public ContentElementAutomationPeer(ContentElement owner)
         {
-            if (owner == null)
-            {
-                throw new ArgumentNullException("owner");
-            }
+            ArgumentNullException.ThrowIfNull(owner);
             _owner = owner;
         }
 
@@ -53,20 +50,14 @@ namespace System.Windows.Automation.Peers
         ///</summary>
         public static AutomationPeer CreatePeerForElement(ContentElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return element.CreateAutomationPeer();
         }
 
         ///
         public static AutomationPeer FromElement(ContentElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return element.GetAutomationPeer();
         }
 

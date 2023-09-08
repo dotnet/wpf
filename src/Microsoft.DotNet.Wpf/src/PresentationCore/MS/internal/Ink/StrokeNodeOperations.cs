@@ -29,10 +29,7 @@ namespace MS.Internal.Ink
         /// <returns></returns>
         internal static StrokeNodeOperations CreateInstance(StylusShape nodeShape)
         {
-            if (nodeShape == null)
-            {
-                throw new ArgumentNullException("nodeShape");
-            }
+            ArgumentNullException.ThrowIfNull(nodeShape);
             if (nodeShape.IsEllipse)
             {
                 return new EllipticalNodeOperations(nodeShape);

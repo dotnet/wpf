@@ -307,10 +307,7 @@ namespace System.Windows.Input
         internal CommandDeviceEventArgs(CommandDevice commandDevice, int timestamp, ICommand command)
             : base(commandDevice, timestamp)
         {
-            if (command == null)
-            {
-                throw new ArgumentNullException("command");
-            }
+            ArgumentNullException.ThrowIfNull(command);
 
             _command = command;
         }

@@ -192,8 +192,7 @@ namespace System.Windows.Input
         /// <param name="collection">collection to append</param>
         public void AddRange(ICollection collection) 
         {
-            if (collection==null)
-                throw new ArgumentNullException(nameof(collection));
+            ArgumentNullException.ThrowIfNull(collection);
 
             if (collection.Count <= 0) return;
             _innerCBList ??= new System.Collections.Generic.List<CommandBinding>(collection.Count);

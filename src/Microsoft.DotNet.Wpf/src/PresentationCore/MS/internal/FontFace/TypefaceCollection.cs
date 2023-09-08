@@ -69,10 +69,7 @@ namespace MS.Internal.FontFace
 
         public void CopyTo(Typeface[] array, int arrayIndex)
         {
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             if (array.Rank != 1)
             {

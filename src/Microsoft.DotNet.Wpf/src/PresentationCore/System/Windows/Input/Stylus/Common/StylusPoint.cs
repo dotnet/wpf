@@ -109,20 +109,15 @@ namespace System.Windows.Input
                 //
                 // called from the public verbose ctor
                 //
-                if (null == stylusPointDescription)
-                {
-                    throw new ArgumentNullException("stylusPointDescription");
-                }
+                ArgumentNullException.ThrowIfNull(stylusPointDescription);
 
                 //
                 // additionalValues can be null if PropertyCount == 3 (X, Y, P)
                 //
-                if (stylusPointDescription.PropertyCount > StylusPointDescription.RequiredCountOfProperties &&
-                    null == additionalValues)
+                if (stylusPointDescription.PropertyCount > StylusPointDescription.RequiredCountOfProperties)
                 {
-                    throw new ArgumentNullException("additionalValues");
+                    ArgumentNullException.ThrowIfNull(additionalValues);
                 }
-
 
                 if (additionalValues != null)
                 {
@@ -283,10 +278,7 @@ namespace System.Windows.Input
         /// <param name="stylusPointProperty">The StylusPointPropertyIds of the property to retrieve</param>
         public int GetPropertyValue(StylusPointProperty stylusPointProperty)
         {
-            if (null == stylusPointProperty)
-            {
-                throw new ArgumentNullException("stylusPointProperty");
-            }
+            ArgumentNullException.ThrowIfNull(stylusPointProperty);
             if (stylusPointProperty.Id == StylusPointPropertyIds.X)
             {
                 return (int)_x;
@@ -351,10 +343,7 @@ namespace System.Windows.Input
         /// <param name="copyBeforeWrite"></param>
         internal void SetPropertyValue(StylusPointProperty stylusPointProperty, int value, bool copyBeforeWrite)
         {
-            if (null == stylusPointProperty)
-            {
-                throw new ArgumentNullException("stylusPointProperty");
-            }
+            ArgumentNullException.ThrowIfNull(stylusPointProperty);
             if (stylusPointProperty.Id == StylusPointPropertyIds.X)
             {
                 double dVal = (double)value;

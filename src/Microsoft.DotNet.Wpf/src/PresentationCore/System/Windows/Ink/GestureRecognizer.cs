@@ -172,10 +172,7 @@ namespace System.Windows.Ink
         /// <returns></returns>
         private ReadOnlyCollection<GestureRecognitionResult> RecognizeImpl(StrokeCollection strokes)
         {
-            if (strokes == null)
-            {
-                throw new ArgumentNullException("strokes"); // Null is not allowed as the argument value
-            }
+            ArgumentNullException.ThrowIfNull(strokes);
             if (strokes.Count > 2)
             {
                 throw new ArgumentException(SR.StrokeCollectionCountTooBig, "strokes");

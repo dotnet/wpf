@@ -39,10 +39,7 @@ namespace System.Windows.Media.Imaging
         /// <param name="bitmapTarget">Where the resulting bitmap is rendered</param>
         public BitmapVisualManager(RenderTargetBitmap bitmapTarget)
         {
-            if (bitmapTarget == null)
-            {
-                throw new ArgumentNullException("bitmapTarget");
-            }
+            ArgumentNullException.ThrowIfNull(bitmapTarget);
 
             if (bitmapTarget.IsFrozen)
             {
@@ -75,10 +72,7 @@ namespace System.Windows.Media.Imaging
         /// 
         internal void Render(Visual visual, Matrix worldTransform, Rect windowClip)
         {
-            if (visual == null)
-            {
-                throw new ArgumentNullException("visual");
-            }
+            ArgumentNullException.ThrowIfNull(visual);
 
             // If the bitmapTarget we're writing to is frozen then we can't proceed.  Note that
             // it's possible for the BitmapVisualManager to be constructed with a mutable BitmapImage

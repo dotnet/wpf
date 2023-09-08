@@ -147,10 +147,7 @@ namespace MS.Internal.Ink.GestureRecognition
             // note that we validate this argument from GestureRecognizer 
             // but since this is marked TAS, we want to do it here as well
             //
-            if (strokes == null)
-            {
-                throw new ArgumentNullException("strokes"); // Null is not allowed as the argument value
-            }
+            ArgumentNullException.ThrowIfNull(strokes);
             if (strokes.Count > 2)
             {
                 throw new ArgumentException(SR.StrokeCollectionCountTooBig, "strokes");
@@ -216,11 +213,7 @@ namespace MS.Internal.Ink.GestureRecognition
 
         internal static ApplicationGesture[] GetApplicationGestureArrayAndVerify(IEnumerable<ApplicationGesture> applicationGestures)
         {
-            if (applicationGestures == null)
-            {
-                // Null is not allowed as the argument value
-                throw new ArgumentNullException("applicationGestures");
-            }
+            ArgumentNullException.ThrowIfNull(applicationGestures);
 
             uint count = 0;
             //we need to make a disconnected copy

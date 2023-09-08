@@ -150,10 +150,7 @@ namespace System.Windows.Media
 
         internal static SafeMILHandle CreateEventProxyWrapper(IInvokable invokable)
         {
-            if (invokable == null)
-            {
-                throw new System.ArgumentNullException("invokable");
-            }
+            ArgumentNullException.ThrowIfNull(invokable);
 
             SafeMILHandle eventProxy = null;
 

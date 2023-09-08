@@ -218,10 +218,7 @@ namespace System.Windows.Media
         {
             PixelFormatEnum format = PixelFormatEnum.Default;
 
-            if (pixelFormatString == null)
-            {
-                throw new System.ArgumentNullException("pixelFormatString");
-            }
+            ArgumentNullException.ThrowIfNull(pixelFormatString);
 
             string upperPixelFormatString = pixelFormatString.ToUpper(System.Globalization.CultureInfo.InvariantCulture);
 

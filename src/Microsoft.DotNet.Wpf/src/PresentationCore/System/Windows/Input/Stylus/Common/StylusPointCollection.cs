@@ -62,10 +62,7 @@ namespace System.Windows.Input
         /// <param name="stylusPointDescription">stylusPointDescription</param>
         public StylusPointCollection(StylusPointDescription stylusPointDescription)
         {
-            if (null == stylusPointDescription)
-            {
-                throw new ArgumentNullException();
-            }
+            ArgumentNullException.ThrowIfNull(stylusPointDescription);
             _stylusPointDescription = stylusPointDescription;
         }
 
@@ -92,10 +89,7 @@ namespace System.Windows.Input
         public StylusPointCollection(IEnumerable<StylusPoint> stylusPoints)
             //: this() //don't call the base ctor, we want to use the first sp
         {
-            if (stylusPoints == null)
-            {
-                throw new ArgumentNullException("stylusPoints");
-            }
+            ArgumentNullException.ThrowIfNull(stylusPoints);
 
             List<StylusPoint> points = new List<StylusPoint>(stylusPoints);
             if (points.Count == 0)
@@ -122,10 +116,7 @@ namespace System.Windows.Input
         public StylusPointCollection(IEnumerable<Point> points)
             : this()
         {
-            if (points == null)
-            {
-                throw new ArgumentNullException("points");
-            }
+            ArgumentNullException.ThrowIfNull(points);
 
             List<StylusPoint> stylusPoints = new List<StylusPoint>();
             foreach (Point point in points)
@@ -154,10 +145,7 @@ namespace System.Windows.Input
         /// <param name="tabletToViewMatrix">tabletToView</param>
         internal StylusPointCollection(StylusPointDescription stylusPointDescription, int[] rawPacketData, GeneralTransform tabletToView, Matrix tabletToViewMatrix)
         {
-            if (null == stylusPointDescription)
-            {
-                throw new ArgumentNullException("stylusPointDescription");
-            }
+            ArgumentNullException.ThrowIfNull(stylusPointDescription);
             _stylusPointDescription = stylusPointDescription;
 
             int lengthPerPoint = stylusPointDescription.GetInputArrayLengthPerPoint();
@@ -218,10 +206,7 @@ namespace System.Windows.Input
         public void Add(StylusPointCollection stylusPoints)
         {
             //note that we don't raise an exception if stylusPoints.Count == 0
-            if (null == stylusPoints)
-            {
-                throw new ArgumentNullException("stylusPoints");
-            }
+            ArgumentNullException.ThrowIfNull(stylusPoints);
             if (!StylusPointDescription.AreCompatible(stylusPoints.Description,
                                                         _stylusPointDescription))
             {
@@ -422,10 +407,7 @@ namespace System.Windows.Input
         /// <param name="e"></param>
         protected virtual void OnChanged(EventArgs e)
         {
-            if (e == null)
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
             if (this.Changed != null)
             {
                 this.Changed(this, e);

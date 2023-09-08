@@ -121,10 +121,7 @@ namespace System.Windows.Media.TextFormatting
                 throw new ArgumentOutOfRangeException("length", SR.ParameterMustBeGreaterThanZero);
             }
 
-            if (textRunProperties == null)
-            {
-                throw new ArgumentNullException("textRunProperties");
-            }
+            ArgumentNullException.ThrowIfNull(textRunProperties);
 
             if (textRunProperties.Typeface == null)
             {

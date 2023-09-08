@@ -41,8 +41,7 @@ namespace System.Windows.Input
         /// </param>
         protected InputReport(PresentationSource inputSource, InputType type, InputMode mode, int timestamp)
         {
-            if (inputSource == null)
-                throw new ArgumentNullException("inputSource");
+            ArgumentNullException.ThrowIfNull(inputSource);
 
             Validate_InputType( type );
             Validate_InputMode( mode );

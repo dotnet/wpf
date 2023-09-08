@@ -358,8 +358,7 @@ namespace System.Windows.Automation.Peers
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         public void RaiseAsyncContentLoadedEvent(AsyncContentLoadedEventArgs args)
         {
-            if(args == null)
-                throw new ArgumentNullException("args");
+            ArgumentNullException.ThrowIfNull(args);
 
             if (EventMap.HasRegisteredEvent(AutomationEvents.AsyncContentLoaded))
             {
@@ -471,10 +470,9 @@ namespace System.Windows.Automation.Peers
         // walk up from the given connectedPeer up to find a root)
         internal AutomationPeer ValidateConnected(AutomationPeer connectedPeer)
         {
-            if(connectedPeer == null)
-                throw new ArgumentNullException("connectedPeer");
+            ArgumentNullException.ThrowIfNull(connectedPeer);
 
-            if(_parent != null && _hwnd != IntPtr.Zero) return this;
+            if (_parent != null && _hwnd != IntPtr.Zero) return this;
 
             if((connectedPeer._hwnd) != IntPtr.Zero)
             {
@@ -556,8 +554,7 @@ namespace System.Windows.Automation.Peers
         }
         private bool isDescendantOf(AutomationPeer parent)
         {
-            if(parent == null)
-                throw new ArgumentNullException("parent");
+            ArgumentNullException.ThrowIfNull(parent);
 
             List<AutomationPeer> children  = parent.GetChildren();
 

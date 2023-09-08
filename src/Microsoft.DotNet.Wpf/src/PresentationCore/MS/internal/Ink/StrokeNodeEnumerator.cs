@@ -33,14 +33,8 @@ namespace MS.Internal.Ink
         /// </summary>
         internal static StrokeNodeIterator GetIterator(Stroke stroke, DrawingAttributes drawingAttributes)
         {
-            if (stroke == null)
-            {
-                throw new System.ArgumentNullException("stroke");
-            }
-            if (drawingAttributes == null)
-            {
-                throw new System.ArgumentNullException("drawingAttributes");
-            }
+            ArgumentNullException.ThrowIfNull(stroke);
+            ArgumentNullException.ThrowIfNull(drawingAttributes);
 
             StylusPointCollection stylusPoints =
                 drawingAttributes.FitToCurve ? stroke.GetBezierStylusPoints() : stroke.StylusPoints;
@@ -54,14 +48,8 @@ namespace MS.Internal.Ink
         /// </summary>
         internal static StrokeNodeIterator GetIterator(StylusPointCollection stylusPoints, DrawingAttributes drawingAttributes)
         {
-            if (stylusPoints == null)
-            {
-                throw new System.ArgumentNullException("stylusPoints");
-            }
-            if (drawingAttributes == null)
-            {
-                throw new System.ArgumentNullException("drawingAttributes");
-            }
+            ArgumentNullException.ThrowIfNull(stylusPoints);
+            ArgumentNullException.ThrowIfNull(drawingAttributes);
 
             StrokeNodeOperations operations =
                 StrokeNodeOperations.CreateInstance(drawingAttributes.StylusShape);
@@ -120,10 +108,7 @@ namespace MS.Internal.Ink
         {
             //Note, StylusPointCollection can be null
             _stylusPoints = stylusPoints;
-            if (operations == null)
-            {
-                throw new ArgumentNullException("operations");
-            }
+            ArgumentNullException.ThrowIfNull(operations);
             _operations = operations;
             _usePressure = usePressure;
         }
@@ -136,10 +121,7 @@ namespace MS.Internal.Ink
         /// <returns>yields StrokeNode objects one by one</returns>
         internal StrokeNodeIterator GetIteratorForNextSegment(StylusPointCollection stylusPoints)
         {
-            if (stylusPoints == null)
-            {
-                throw new System.ArgumentNullException("stylusPoints");
-            }
+            ArgumentNullException.ThrowIfNull(stylusPoints);
 
             if (_stylusPoints != null && _stylusPoints.Count > 0 && stylusPoints.Count > 0)
             {
@@ -167,11 +149,8 @@ namespace MS.Internal.Ink
         /// <param name="points">an array of points representing a stroke increment</param>
         /// <returns>yields StrokeNode objects one by one</returns>
         internal StrokeNodeIterator GetIteratorForNextSegment(Point[] points)
-        {   
-            if (points == null)
-            {
-                throw new System.ArgumentNullException("points");
-            }
+        {
+            ArgumentNullException.ThrowIfNull(points);
             StylusPointCollection newStylusPoints = new StylusPointCollection(points);
             if (_stylusPoints != null && _stylusPoints.Count > 0)
             {

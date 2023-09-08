@@ -465,14 +465,11 @@ namespace MS.Internal.TextFormatting
             TextRunCache                textRunCache
             )
         {
-            if (textSource == null)
-                throw new ArgumentNullException("textSource");
+            ArgumentNullException.ThrowIfNull(textSource);
 
-            if (textRunCache == null)
-                throw new ArgumentNullException("textRunCache");
+            ArgumentNullException.ThrowIfNull(textRunCache);
 
-            if (paragraphProperties == null)
-                throw new ArgumentNullException("paragraphProperties");
+            ArgumentNullException.ThrowIfNull(paragraphProperties);
 
             if (paragraphProperties.DefaultTextRunProperties == null)
                 throw new ArgumentNullException("paragraphProperties.DefaultTextRunProperties");

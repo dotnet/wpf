@@ -47,10 +47,7 @@ namespace System.Windows.Input
         /// <param name="impl">The base of the internal hierarchy</param>
         internal StylusDevice(StylusDeviceBase impl)
         {
-            if (impl == null)
-            {
-                throw new ArgumentNullException(nameof(impl));
-            }
+            ArgumentNullException.ThrowIfNull(impl);
 
             StylusDeviceImpl = impl;
         }

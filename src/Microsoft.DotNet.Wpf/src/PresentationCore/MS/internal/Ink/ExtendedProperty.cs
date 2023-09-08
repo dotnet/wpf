@@ -163,10 +163,7 @@ namespace System.Windows.Ink
             }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 // validate the type information for the id against the id
                 ExtendedPropertySerializer.Validate(_id, value);

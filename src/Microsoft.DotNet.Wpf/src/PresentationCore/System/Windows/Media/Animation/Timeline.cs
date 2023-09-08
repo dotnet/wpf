@@ -384,7 +384,7 @@ namespace System.Windows.Media.Animation
         /// <seealso cref="Timeline.DesiredFrameRateProperty" />
         public static Int32? GetDesiredFrameRate(Timeline timeline)
         {
-            if (timeline == null) { throw new ArgumentNullException("timeline"); }
+            ArgumentNullException.ThrowIfNull(timeline);
 
             return (Int32?)timeline.GetValue(DesiredFrameRateProperty);
         }
@@ -397,7 +397,7 @@ namespace System.Windows.Media.Animation
         /// <seealso cref="Timeline.DesiredFrameRateProperty" />
         public static void SetDesiredFrameRate(Timeline timeline, Int32? desiredFrameRate)
         {
-            if (timeline == null) { throw new ArgumentNullException("timeline"); }
+            ArgumentNullException.ThrowIfNull(timeline);
 
             timeline.SetValue(DesiredFrameRateProperty, desiredFrameRate);
         }

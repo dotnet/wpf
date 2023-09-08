@@ -366,10 +366,7 @@ namespace MS.Internal.Ink
         /// <param name="bufferToWriteTo"></param>
         internal BitStreamWriter(List<byte> bufferToWriteTo)
         {
-            if (bufferToWriteTo == null)
-            {
-                throw new ArgumentNullException("bufferToWriteTo");
-            }
+            ArgumentNullException.ThrowIfNull(bufferToWriteTo);
             _targetBuffer = bufferToWriteTo;
         }
 

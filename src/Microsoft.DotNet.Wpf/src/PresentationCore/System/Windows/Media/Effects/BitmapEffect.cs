@@ -109,10 +109,7 @@ namespace System.Windows.Media.Effects
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         public BitmapSource GetOutput(BitmapEffectInput input)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException("input");
-            }
+            ArgumentNullException.ThrowIfNull(input);
 
             // if we don't have the input set, we should not be calling the output property
             if (input.Input == null)

@@ -43,10 +43,7 @@ namespace MS.Internal.Media
         [FriendAccessAllowed]   // used by Framework
         public static void SetTextHintingMode(DependencyObject element, TextHintingMode value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(TextHintingModeProperty, value);
         }
@@ -54,10 +51,7 @@ namespace MS.Internal.Media
         [FriendAccessAllowed]   // used by Framework
         public static TextHintingMode GetTextHintingMode(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (TextHintingMode)element.GetValue(TextHintingModeProperty);
         }

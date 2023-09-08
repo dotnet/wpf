@@ -81,10 +81,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns></returns>
         internal byte[] CompressPacketData(int[] input, byte compression)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException("input");
-            }
+            ArgumentNullException.ThrowIfNull(input);
 
             List<byte> compressedData = new List<byte>();
             //leave room at the beginning of 
@@ -162,18 +159,12 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns></returns>
         internal uint DecompressPacketData(byte[] input, int[] outputBuffer)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException("input");
-            }
+            ArgumentNullException.ThrowIfNull(input);
             if (input.Length < 2)
             {
                 throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Input buffer passed was shorter than expected"));
             }
-            if (outputBuffer == null)
-            {
-                throw new ArgumentNullException("outputBuffer");
-            }
+            ArgumentNullException.ThrowIfNull(outputBuffer);
             if (outputBuffer.Length == 0)
             {
                 throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("output buffer length was zero"));
@@ -328,10 +319,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns></returns>
         internal byte[] DecompressPropertyData(byte[] input)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException("input");
-            }
+            ArgumentNullException.ThrowIfNull(input);
             if (input.Length < 2)
             {
                 throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("input.Length must be at least 2"));

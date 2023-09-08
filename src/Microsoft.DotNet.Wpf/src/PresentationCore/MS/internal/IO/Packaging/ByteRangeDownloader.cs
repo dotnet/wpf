@@ -56,10 +56,7 @@ namespace MS.Internal.IO.Packaging
         internal ByteRangeDownloader(Uri requestedUri, string tempFileName, SafeWaitHandle eventHandle)
             : this(requestedUri, eventHandle)
         {
-            if (tempFileName == null)
-            {
-                throw new ArgumentNullException("tempFileName");
-            }
+            ArgumentNullException.ThrowIfNull(tempFileName);
 
             if (tempFileName.Length <= 0)
             {
@@ -186,10 +183,7 @@ namespace MS.Internal.IO.Packaging
             // The worker thread will never call dispose nor this method; no need to lock
             CheckDisposed();
 
-            if (byteRanges == null)
-            {
-                throw new ArgumentNullException("byteRanges");
-            }
+            ArgumentNullException.ThrowIfNull(byteRanges);
 
             CheckTwoDimensionalByteRanges(byteRanges);
 
@@ -303,10 +297,7 @@ namespace MS.Internal.IO.Packaging
             set
             {
                 CheckDisposed();
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (!_firstRequestMade)
                 {
@@ -411,10 +402,7 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         private ByteRangeDownloader(Uri requestedUri, SafeWaitHandle eventHandle)
         {
-            if (requestedUri == null)
-            {
-                throw new ArgumentNullException("requestedUri");
-            }
+            ArgumentNullException.ThrowIfNull(requestedUri);
 
             // Ensure uri is correct scheme (http or https) Do case-sensitive comparison since Uri.Scheme contract is to return in lower case only.
             if (!string.Equals(requestedUri.Scheme, Uri.UriSchemeHttp, StringComparison.Ordinal) && !string.Equals(requestedUri.Scheme, Uri.UriSchemeHttps, StringComparison.Ordinal))
@@ -422,10 +410,7 @@ namespace MS.Internal.IO.Packaging
                 throw new ArgumentException(SR.InvalidScheme, "requestedUri");
             }
 
-            if (eventHandle == null)
-            {
-                throw new ArgumentNullException("eventHandle");
-            }
+            ArgumentNullException.ThrowIfNull(eventHandle);
 
             if (eventHandle.IsInvalid || eventHandle.IsClosed)
             {

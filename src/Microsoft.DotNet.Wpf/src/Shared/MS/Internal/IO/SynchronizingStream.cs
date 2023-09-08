@@ -36,11 +36,9 @@ namespace MS.Internal.IO.Packaging
         /// <param name="syncRoot">object to lock on</param>
         internal SynchronizingStream(Stream stream, Object syncRoot)
         {
-            if (stream == null)
-                throw new ArgumentNullException("stream");
+            ArgumentNullException.ThrowIfNull(stream);
 
-            if (syncRoot == null)
-                throw new ArgumentNullException("syncRoot");
+            ArgumentNullException.ThrowIfNull(syncRoot);
 
             _baseStream = stream;
             _syncRoot = syncRoot;

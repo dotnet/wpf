@@ -196,10 +196,7 @@ namespace MS.Internal.IO.Packaging
         /// <remarks>streamUri has to be a pack Uri</remarks>
         internal DeobfuscatingStream(Stream obfuscatedStream, Uri streamUri, bool leaveOpen)
         {
-            if (obfuscatedStream == null)
-            {
-                throw new ArgumentNullException("obfuscatedStream");
-            }
+            ArgumentNullException.ThrowIfNull(obfuscatedStream);
 
             // Make sure streamUri is in the correct form; getting partUri from it will do all necessary checks for error
             //    conditions; We also have to make sure that it has a part name

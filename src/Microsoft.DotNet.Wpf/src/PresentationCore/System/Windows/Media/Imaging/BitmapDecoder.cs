@@ -78,10 +78,7 @@ namespace System.Windows.Media.Imaging
             Guid clsId = Guid.Empty;
             bool isOriginalWritable = false;
 
-            if (bitmapUri == null)
-            {
-                throw new ArgumentNullException("bitmapUri");
-            }
+            ArgumentNullException.ThrowIfNull(bitmapUri);
 
             if ((createOptions & BitmapCreateOptions.IgnoreImageCache) != 0)
             {
@@ -138,10 +135,7 @@ namespace System.Windows.Media.Imaging
             Guid clsId = Guid.Empty;
             bool isOriginalWritable = false;
 
-            if (bitmapStream == null)
-            {
-                throw new ArgumentNullException("bitmapStream");
-            }
+            ArgumentNullException.ThrowIfNull(bitmapStream);
 
             _decoderHandle = SetupDecoderFromUriOrStream(
                 null,
@@ -488,10 +482,7 @@ namespace System.Windows.Media.Imaging
             RequestCachePolicy uriCachePolicy
             )
         {
-            if (bitmapUri == null)
-            {
-                throw new ArgumentNullException("bitmapUri");
-            }
+            ArgumentNullException.ThrowIfNull(bitmapUri);
 
             return CreateFromUriOrStream(
                 null,
@@ -517,10 +508,7 @@ namespace System.Windows.Media.Imaging
             BitmapCacheOption cacheOption
             )
         {
-            if (bitmapStream == null)
-            {
-                throw new ArgumentNullException("bitmapStream");
-            }
+            ArgumentNullException.ThrowIfNull(bitmapStream);
 
             return CreateFromUriOrStream(
                 null,

@@ -44,10 +44,7 @@ namespace System.Windows.Media.Imaging
         public CachedBitmap(BitmapSource source, BitmapCreateOptions createOptions, BitmapCacheOption cacheOption)
             : base(true) // Use base class virtuals
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
+            ArgumentNullException.ThrowIfNull(source);
 
             BeginInit();
             _source = source;
@@ -86,10 +83,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         internal CachedBitmap(BitmapSourceSafeMILHandle bitmap) : base(true)
         {
-            if (bitmap == null)
-            {
-                throw new ArgumentNullException("bitmap");
-            }
+            ArgumentNullException.ThrowIfNull(bitmap);
 
             // We're not calling CachedBitmap.Begin/EndInit because that would
             // invoke FinalizeCreation which calls CreateCachedBitmap that does
@@ -137,8 +131,7 @@ namespace System.Windows.Media.Imaging
             )
             : base(true) // Use base class virtuals
         {
-            if (pixels == null)
-                throw new System.ArgumentNullException ("pixels");
+            ArgumentNullException.ThrowIfNull(pixels);
 
             if (pixels.Rank != 1)
                 throw new ArgumentException(SR.Collection_BadRank, "pixels");

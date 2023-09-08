@@ -242,10 +242,7 @@ namespace System.Windows.Media.Media3D
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -370,10 +367,7 @@ namespace System.Windows.Media.Media3D
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -469,10 +463,7 @@ namespace System.Windows.Media.Media3D
 
         private Vector3D Cast(object value)
         {
-            if( value == null )
-            {
-                throw new System.ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             if (!(value is Vector3D))
             {
@@ -944,45 +935,40 @@ namespace System.Windows.Media.Media3D
 
             WritePreamble();
 
-            if (collection != null)
+            ArgumentNullException.ThrowIfNull(collection);
+
+            ICollection<Vector3D> icollectionOfT = collection as ICollection<Vector3D>;
+
+            if (icollectionOfT != null)
             {
-                ICollection<Vector3D> icollectionOfT = collection as ICollection<Vector3D>;
-
-                if (icollectionOfT != null)
-                {
-                    _collection = new FrugalStructList<Vector3D>(icollectionOfT);
-                }
-                else
-                {       
-                    ICollection icollection = collection as ICollection;
-
-                    if (icollection != null) // an IC but not and IC<T>
-                    {
-                        _collection = new FrugalStructList<Vector3D>(icollection);
-                    }
-                    else // not a IC or IC<T> so fall back to the slower Add
-                    {
-                        _collection = new FrugalStructList<Vector3D>();
-
-                        foreach (Vector3D item in collection)
-                        {
-                            _collection.Add(item);
-                        }
-}
-                }
-
-
-
-
-
-
-
-                WritePostscript();
+                _collection = new FrugalStructList<Vector3D>(icollectionOfT);
             }
             else
             {
-                throw new ArgumentNullException("collection");
+                ICollection icollection = collection as ICollection;
+
+                if (icollection != null) // an IC but not and IC<T>
+                {
+                    _collection = new FrugalStructList<Vector3D>(icollection);
+                }
+                else // not a IC or IC<T> so fall back to the slower Add
+                {
+                    _collection = new FrugalStructList<Vector3D>();
+
+                    foreach (Vector3D item in collection)
+                    {
+                        _collection.Add(item);
+                    }
+                }
             }
+
+
+
+
+
+
+
+            WritePostscript();
         }
 
         #endregion Constructors

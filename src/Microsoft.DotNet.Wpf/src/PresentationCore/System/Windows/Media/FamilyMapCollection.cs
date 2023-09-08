@@ -84,8 +84,7 @@ namespace System.Windows.Media
         /// </summary>
         public void CopyTo(FontFamilyMap[] array, int index)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
 
             if (index >= array.Length)
                 throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
@@ -99,8 +98,7 @@ namespace System.Windows.Media
 
         void SC.ICollection.CopyTo(Array array, int index)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
 
             if (array.Rank != 1)
                 throw new ArgumentException(SR.Collection_CopyTo_ArrayCannotBeMultidimensional);
@@ -258,8 +256,7 @@ namespace System.Windows.Media
 
         private int InsertItem(int index, FontFamilyMap item)
         {
-            if (item == null)
-                throw new ArgumentNullException("item");
+            ArgumentNullException.ThrowIfNull(item);
 
             VerifyChangeable();
 
@@ -307,8 +304,7 @@ namespace System.Windows.Media
 
         private void SetItem(int index, FontFamilyMap item)
         {
-            if (item == null)
-                throw new ArgumentNullException("item");
+            ArgumentNullException.ThrowIfNull(item);
 
             VerifyChangeable();
             RangeCheck(index);
@@ -377,8 +373,7 @@ namespace System.Windows.Media
 
         private FontFamilyMap ConvertValue(object obj)
         {
-            if (obj == null)
-                throw new ArgumentNullException("obj");
+            ArgumentNullException.ThrowIfNull(obj);
 
             FontFamilyMap familyMap = obj as FontFamilyMap;
             if (familyMap == null)

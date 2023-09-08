@@ -309,10 +309,7 @@ namespace System.Windows.Media
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -424,10 +421,7 @@ namespace System.Windows.Media
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -539,10 +533,7 @@ namespace System.Windows.Media
 
         private Geometry Cast(object value)
         {
-            if( value == null )
-            {
-                throw new System.ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             if (!(value is Geometry))
             {
@@ -965,63 +956,58 @@ namespace System.Windows.Media
 
             WritePreamble();
 
-            if (collection != null)
+            ArgumentNullException.ThrowIfNull(collection);
+
+            bool needsItemValidation = true;
+            ICollection<Geometry> icollectionOfT = collection as ICollection<Geometry>;
+
+            if (icollectionOfT != null)
             {
-                bool needsItemValidation = true;
-                ICollection<Geometry> icollectionOfT = collection as ICollection<Geometry>;
+                _collection = new FrugalStructList<Geometry>(icollectionOfT);
+            }
+            else
+            {
+                ICollection icollection = collection as ICollection;
 
-                if (icollectionOfT != null)
+                if (icollection != null) // an IC but not and IC<T>
                 {
-                    _collection = new FrugalStructList<Geometry>(icollectionOfT);
+                    _collection = new FrugalStructList<Geometry>(icollection);
                 }
-                else
-                {       
-                    ICollection icollection = collection as ICollection;
-
-                    if (icollection != null) // an IC but not and IC<T>
-                    {
-                        _collection = new FrugalStructList<Geometry>(icollection);
-                    }
-                    else // not a IC or IC<T> so fall back to the slower Add
-                    {
-                        _collection = new FrugalStructList<Geometry>();
-
-                        foreach (Geometry item in collection)
-                        {
-                            if (item == null)
-                            {
-                                throw new System.ArgumentException(SR.Collection_NoNull);
-                            }
-                            Geometry newValue = item;
-                            OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
-                            _collection.Add(newValue);
-                            OnInsert(newValue);
-                        }
-
-                        needsItemValidation = false;
-                    }
-                }
-
-                if (needsItemValidation)
+                else // not a IC or IC<T> so fall back to the slower Add
                 {
+                    _collection = new FrugalStructList<Geometry>();
+
                     foreach (Geometry item in collection)
                     {
                         if (item == null)
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
-                        OnFreezablePropertyChanged(/* oldValue = */ null, item);
-                        OnInsert(item);
+                        Geometry newValue = item;
+                        OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
+                        _collection.Add(newValue);
+                        OnInsert(newValue);
                     }
+
+                    needsItemValidation = false;
                 }
-
-
-                WritePostscript();
             }
-            else
+
+            if (needsItemValidation)
             {
-                throw new ArgumentNullException("collection");
+                foreach (Geometry item in collection)
+                {
+                    if (item == null)
+                    {
+                        throw new System.ArgumentException(SR.Collection_NoNull);
+                    }
+                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
+                    OnInsert(item);
+                }
             }
+
+
+            WritePostscript();
         }
 
         #endregion Constructors

@@ -503,10 +503,7 @@ namespace System.Windows.Media
         {
             bool tryProfileFromResource = false;
 
-            if (profileUri == null)
-            {
-                throw new ArgumentNullException("profileUri");
-            }
+            ArgumentNullException.ThrowIfNull(profileUri);
 
             if (!profileUri.IsAbsoluteUri)
             {

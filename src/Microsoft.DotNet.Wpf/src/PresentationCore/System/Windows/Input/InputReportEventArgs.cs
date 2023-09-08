@@ -27,8 +27,7 @@ namespace System.Windows.Input
         public InputReportEventArgs(InputDevice inputDevice, 
                                     InputReport report) : base(inputDevice, ((report != null) ? report.Timestamp : -1))
         {
-            if (report == null)
-                throw new ArgumentNullException("report");
+            ArgumentNullException.ThrowIfNull(report);
 
             _report = report;
         }

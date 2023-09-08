@@ -41,10 +41,7 @@ namespace System.Windows.Input
         /// <remarks>Protected - used by the StylusPointPropertyInfo ctor</remarks>
         protected StylusPointProperty(StylusPointProperty stylusPointProperty)
         {
-            if (null == stylusPointProperty)
-            {
-                throw new ArgumentNullException("stylusPointProperty");
-            }
+            ArgumentNullException.ThrowIfNull(stylusPointProperty);
             Initialize(stylusPointProperty.Id, stylusPointProperty.IsButton);
         }
 

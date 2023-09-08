@@ -61,10 +61,7 @@ namespace System.Windows.Media.Imaging
         public BitmapImage(Uri uriSource, RequestCachePolicy uriCachePolicy)
             : base(true) // Use base class virtuals
         {
-            if (uriSource == null)
-            {
-                throw new ArgumentNullException("uriSource");
-            }
+            ArgumentNullException.ThrowIfNull(uriSource);
 
             BeginInit();
             UriSource = uriSource;

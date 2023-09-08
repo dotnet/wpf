@@ -45,10 +45,8 @@ namespace System.Windows.Input
         /// </summary>
         public static void AddHandler(ICommand source, EventHandler<EventArgs> handler)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.PrivateAddHandler(source, handler);
         }
@@ -57,10 +55,8 @@ namespace System.Windows.Input
         /// </summary>
         public static void RemoveHandler(ICommand source, EventHandler<EventArgs> handler)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.PrivateRemoveHandler(source, handler);
         }

@@ -120,8 +120,7 @@ namespace System.Windows.Media
         [CLSCompliant(false)]
         public void CopyTo(KeyValuePair<XmlLanguage, string>[] array, int index)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
 
             if (index < 0)
                 throw new ArgumentOutOfRangeException("index");
@@ -156,8 +155,7 @@ namespace System.Windows.Media
 
         void SC.ICollection.CopyTo(Array array, int index)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
 
             if (index < 0)
                 throw new ArgumentOutOfRangeException("index");
@@ -315,8 +313,7 @@ namespace System.Windows.Media
         // make sure value is not null
         private string ValidateValue(string value)
         {
-            if (value == null)
-                throw new ArgumentNullException("value");
+            ArgumentNullException.ThrowIfNull(value);
 
             return value;
         }
@@ -327,10 +324,9 @@ namespace System.Windows.Media
             string s = value as string;
             if (s == null)
             {
-                if (value == null)
-                    throw new ArgumentNullException("value");
-                else
-                    throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(string)), "value");
+                ArgumentNullException.ThrowIfNull(value);
+
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(string)), "value");
             }
             return s;
         }
@@ -341,10 +337,9 @@ namespace System.Windows.Media
             XmlLanguage language = TryConvertKey(key);
             if (language == null)
             {
-                if (key == null)
-                    throw new ArgumentNullException("key");
-                else
-                    throw new ArgumentException(SR.Format(SR.CannotConvertType, key.GetType(), typeof(XmlLanguage)), "key");
+                ArgumentNullException.ThrowIfNull(key);
+
+                throw new ArgumentException(SR.Format(SR.CannotConvertType, key.GetType(), typeof(XmlLanguage)), "key");
             }
             return language;
         }

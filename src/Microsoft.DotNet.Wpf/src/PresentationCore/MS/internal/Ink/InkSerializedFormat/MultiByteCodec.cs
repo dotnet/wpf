@@ -37,10 +37,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="output"></param>
         internal void Encode(uint data, List<byte> output)
         {
-            if (output == null)
-            {
-                throw new ArgumentNullException("output");
-            }
+            ArgumentNullException.ThrowIfNull(output);
             while (data > 0x7f)
             {
                 byte byteToAdd = (byte)(0x80 | (byte)data & 0x7f);

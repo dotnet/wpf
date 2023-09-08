@@ -54,10 +54,7 @@ namespace System.Windows
         /// </remarks>
         public static DataFormat GetDataFormat(string format)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {

@@ -51,10 +51,7 @@ namespace System.Windows.Media.Imaging
         public FormatConvertedBitmap(BitmapSource source, PixelFormat destinationFormat, BitmapPalette destinationPalette, double alphaThreshold)
             : base(true) // Use base class virtuals
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
+            ArgumentNullException.ThrowIfNull(source);
             if (alphaThreshold < (double)(0.0) || alphaThreshold > (double)(100.0))
             {
                 throw new ArgumentException(SR.Image_AlphaThresholdOutOfRange);

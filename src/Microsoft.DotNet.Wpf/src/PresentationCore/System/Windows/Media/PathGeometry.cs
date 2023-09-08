@@ -66,17 +66,11 @@ namespace System.Windows.Media
         /// <param name="figures">A collection of figures</param>
         public PathGeometry(IEnumerable<PathFigure> figures)
         {
-            if (figures != null)
-            {
-                foreach (PathFigure item in figures)
-                {
-                    Figures.Add(item);
-                }
-            }
-            else
-            {
-                throw new ArgumentNullException("figures");   
+            ArgumentNullException.ThrowIfNull(figures);
 
+            foreach (PathFigure item in figures)
+            {
+                Figures.Add(item);
             }
 
             SetDirty();
@@ -95,16 +89,11 @@ namespace System.Windows.Media
             {
                 FillRule = fillRule;
 
-                if (figures != null)
+                ArgumentNullException.ThrowIfNull(figures);
+
+                foreach (PathFigure item in figures)
                 {
-                    foreach (PathFigure item in figures)
-                    {
-                        Figures.Add(item);
-                    }
-                }
-                else
-                {
-                    throw new ArgumentNullException("figures");
+                    Figures.Add(item);
                 }
 
                 SetDirty();
@@ -387,10 +376,7 @@ namespace System.Windows.Media
         /// </summary>
         public void AddGeometry(Geometry geometry)
         {
-            if (geometry == null)
-            {
-                throw new System.ArgumentNullException("geometry");
-            }
+            ArgumentNullException.ThrowIfNull(geometry);
 
             if (geometry.IsEmpty())
             {

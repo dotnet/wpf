@@ -87,10 +87,7 @@ namespace System.Windows
         /// </summary>
         public static bool ContainsData(string format)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException(nameof(format));
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format.Length == 0)
             {
@@ -179,10 +176,7 @@ namespace System.Windows
         /// </summary>
         public static object GetData(string format)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException(nameof(format));
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
@@ -254,10 +248,7 @@ namespace System.Windows
         /// </summary>
         public static void SetAudio(byte[] audioBytes)
         {
-            if (audioBytes == null)
-            {
-                throw new ArgumentNullException(nameof(audioBytes));
-            }
+            ArgumentNullException.ThrowIfNull(audioBytes);
 
             SetAudio(new MemoryStream(audioBytes));
         }
@@ -267,10 +258,7 @@ namespace System.Windows
         /// </summary>
         public static void SetAudio(Stream audioStream)
         {
-            if (audioStream == null)
-            {
-                throw new ArgumentNullException(nameof(audioStream));
-            }
+            ArgumentNullException.ThrowIfNull(audioStream);
 
             SetDataInternal(DataFormats.WaveAudio, audioStream);
         }
@@ -280,20 +268,14 @@ namespace System.Windows
         /// </summary>
         public static void SetData(string format, object data)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException(nameof(format));
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
                 throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             SetDataInternal(format, data);
         }
@@ -303,10 +285,7 @@ namespace System.Windows
         /// </summary>
         public static void SetFileDropList(StringCollection fileDropList)
         {
-            if (fileDropList == null)
-            {
-                throw new ArgumentNullException(nameof(fileDropList));
-            }
+            ArgumentNullException.ThrowIfNull(fileDropList);
 
             if (fileDropList.Count == 0)
             {
@@ -338,10 +317,7 @@ namespace System.Windows
         /// </summary>
         public static void SetImage(BitmapSource image)
         {
-            if (image == null)
-            {
-                throw new ArgumentNullException(nameof(image));
-            }
+            ArgumentNullException.ThrowIfNull(image);
 
             SetDataInternal(DataFormats.Bitmap, image);
         }
@@ -351,10 +327,7 @@ namespace System.Windows
         /// </summary>
         public static void SetText(string text)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            ArgumentNullException.ThrowIfNull(text);
 
             SetText(text, TextDataFormat.UnicodeText);
         }
@@ -364,10 +337,7 @@ namespace System.Windows
         /// </summary>
         public static void SetText(string text, TextDataFormat format)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            ArgumentNullException.ThrowIfNull(text);
 
             if (!DataFormats.IsValidTextDataFormat(format))
             {
@@ -401,10 +371,7 @@ namespace System.Windows
         {
             bool bReturn;
 
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             bReturn = false;
 
@@ -453,10 +420,7 @@ namespace System.Windows
         public static void SetDataObject(object data) 
         {
 
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             SetDataObject(data, false);
         }
@@ -502,10 +466,7 @@ namespace System.Windows
         [FriendAccessAllowed]
         internal static void CriticalSetDataObject(object data, bool copy)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             IComDataObject dataObject;
 

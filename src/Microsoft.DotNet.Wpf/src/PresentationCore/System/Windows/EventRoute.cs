@@ -10,6 +10,7 @@ using MS.Utility;
 
 using SR=MS.Internal.PresentationCore.SR;
 using MS.Internal;
+using MS.Internal.KnownBoxes;
 
 namespace System.Windows
 {
@@ -177,27 +178,28 @@ namespace System.Windows
                     
                     // Invoke listeners
 
-                    if( TraceRoutedEvent.IsEnabled )
+                    var traceRoutedEventIsEnabled = TraceRoutedEvent.IsEnabled;
+                    if ( traceRoutedEventIsEnabled )
                     {
+                        _traceArguments ??= new object[3];
+                        _traceArguments[0] = _routeItemList[i].Target;
+                        _traceArguments[1] = args;
+                        _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                         TraceRoutedEvent.Trace(
                             TraceEventType.Start,
-                            TraceRoutedEvent.InvokeHandlers,  
-                            _routeItemList[i].Target,
-                            args,
-                            args.Handled );
-
+                            TraceRoutedEvent.InvokeHandlers,
+                            _traceArguments);
                     }
                     
                     _routeItemList[i].InvokeHandler(args);
 
-                    if( TraceRoutedEvent.IsEnabled )
+                    if( traceRoutedEventIsEnabled )
                     {
+                        _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                         TraceRoutedEvent.Trace(
                             TraceEventType.Stop,
-                            TraceRoutedEvent.InvokeHandlers,  
-                            _routeItemList[i].Target,
-                            args,
-                            args.Handled );
+                            TraceRoutedEvent.InvokeHandlers,
+                            _traceArguments);
                     }
 
 
@@ -248,27 +250,29 @@ namespace System.Windows
                         }
                         
                         
-                        if( TraceRoutedEvent.IsEnabled )
+                        var traceRoutedEventIsEnabled = TraceRoutedEvent.IsEnabled;
+                        if ( traceRoutedEventIsEnabled )
                         {
+                            _traceArguments ??= new object[3];
+                            _traceArguments[0] = _routeItemList[i].Target;
+                            _traceArguments[1] = args;
+                            _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                             TraceRoutedEvent.Trace(
                                 TraceEventType.Start,
-                                TraceRoutedEvent.InvokeHandlers,  
-                                _routeItemList[i].Target,
-                                args,
-                                args.Handled );
+                                TraceRoutedEvent.InvokeHandlers,
+                                _traceArguments);
                         }
 
                         // Invoke listeners
                         _routeItemList[i].InvokeHandler(args);
 
-                        if( TraceRoutedEvent.IsEnabled )
+                        if (traceRoutedEventIsEnabled)
                         {
+                            _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                             TraceRoutedEvent.Trace(
                                 TraceEventType.Stop,
-                                TraceRoutedEvent.InvokeHandlers,  
-                                _routeItemList[i].Target,
-                                args,
-                                args.Handled );
+                                TraceRoutedEvent.InvokeHandlers,
+                                _traceArguments);
                         }
 
                     }
@@ -535,6 +539,9 @@ namespace System.Windows
 
         // Stores Source Items for separated trees
         private FrugalStructList<SourceItem> _sourceItemList;
+
+        // Stores arguments that are passed to TraceRoutedEvent.Trace (to reduce allocations)
+        private object[] _traceArguments;
 
         #endregion Data
     }

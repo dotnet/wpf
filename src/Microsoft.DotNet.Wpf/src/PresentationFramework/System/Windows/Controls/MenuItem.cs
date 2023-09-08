@@ -2501,7 +2501,7 @@ namespace System.Windows.Controls
             if (!IsKeyboardFocusWithin
                 // but only aquire focus the window we are inside is currently active
                 // otherwise we would potentially steal focus from other applications.
-                && Window.GetWindow(this)?.IsActive == true)
+                && Window.GetWindow(this)?.IsActive ?? true)
             {
                 Focus();
             }

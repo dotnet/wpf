@@ -106,6 +106,10 @@ namespace System.Windows.Input
             {
                 return ComponentCommands.GetUIText(CommandId);
             }
+            else if(OwnerType == typeof(ItemsCommands))
+            {
+                return ItemsCommands.GetUIText(CommandId);
+            }
             return null;
         }
 

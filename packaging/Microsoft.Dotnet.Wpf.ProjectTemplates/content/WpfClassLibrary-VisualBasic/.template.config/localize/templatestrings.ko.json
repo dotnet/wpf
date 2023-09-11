@@ -17,6 +17,8 @@
   "symbols/Framework/choices/net7.0/displayName": ".NET 7.0",
   "symbols/Framework/choices/net8.0/description": "대상 net8.0",
   "symbols/Framework/choices/net8.0/displayName": ".NET 8.0",
+  "symbols/Framework/choices/net9.0/description": "Target net9.0",
+  "symbols/Framework/choices/net9.0/displayName": ".NET 9.0",
   "symbols/Framework/displayName": "프레임워크",
   "symbols/langVersion/description": "만든 프로젝트 파일의 langVersion를 설정합니다",
   "symbols/langVersion/displayName": "언어 버전",

@@ -452,7 +452,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
 
         //Get AvailableCreds list so we can match new default user.
         ReadOnlyCollection<RightsManagementUser> users =
-        ((IRightsManagementProvider)this).GetAvailableCredentials();
+            ((IRightsManagementProvider)this).GetAvailableCredentials();
 
         int index = users.IndexOf(user);
 

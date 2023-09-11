@@ -64,9 +64,9 @@ internal class TransactionalPackage : Package, IDisposable
     internal TransactionalPackage(Stream original)
         : base(FileAccess.ReadWrite)
     {
-            ArgumentNullException.ThrowIfNull(original);
+        ArgumentNullException.ThrowIfNull(original);
 
-            Package originalPackage = Package.Open(original);
+        Package originalPackage = Package.Open(original);
 
         _originalPackage = new SecurityCriticalDataForSet<Package>(originalPackage);
         _tempPackage = new SecurityCriticalDataForSet<Package>(null);

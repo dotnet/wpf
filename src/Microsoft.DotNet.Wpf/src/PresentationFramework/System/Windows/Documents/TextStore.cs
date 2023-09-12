@@ -2788,7 +2788,7 @@ namespace System.Windows.Documents
             }
             else
             {
-                _preparedattributes.Clear();
+                ClearPrepareAttributes();
             }
 
             int i;
@@ -2907,6 +2907,20 @@ namespace System.Windows.Documents
 
                 _preparedattributes.Add(attrval);
             }
+        }
+
+        private void ClearPrepareAttributes()
+        {
+            for (int i = 0; i < _preparedattributes.Count; i++)
+            {
+                var attributeVal = (UnsafeNativeMethods.TS_ATTRVAL)_preparedattributes[i];
+                if (attributeVal.val != null && attributeVal.val.vt == (short)NativeMethods.tagVT.VT_UNKNOWN && attrval.val.data1?.Value != null)
+                {
+                    Marshal.Release(attrval.val.data1.Value);
+                }
+            }
+
+            _preparedattributes.Clear();
         }
 
         // retrieve the TextPositions from ITfRange.

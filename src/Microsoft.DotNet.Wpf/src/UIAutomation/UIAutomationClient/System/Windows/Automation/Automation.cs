@@ -243,10 +243,7 @@ namespace System.Windows.Automation
             // on interpreted properties to the real property that raises events.
             foreach (AutomationProperty property in properties)
             {
-                if (property == null)
-                {
-                    throw new ArgumentNullException("properties");
-                }
+                ArgumentNullException.ThrowIfNull(property, nameof(properties));
             }
 
             // Add a client-side listener for for this event request

@@ -337,7 +337,7 @@ namespace System.Windows.Automation
             
             set
             {
-                ArgumentNullException.ThrowIfNull(value);
+                ArgumentNullException.ThrowIfNull(value, nameof(TreeFilter));
                 lock (_instanceLock)
                 {
                     CheckAccess();

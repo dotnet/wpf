@@ -178,7 +178,7 @@ namespace System.Windows.Automation.Text
         public TextPatternRange FindAttribute(AutomationTextAttribute attribute, object value, bool backward)
         {
             ArgumentNullException.ThrowIfNull(attribute);
-            ArgumentNullException.ThrowIfNull(value);
+            ArgumentNullException.ThrowIfNull(value); // no text attributes can have null as a valid value
 
             // Check that attribute value is of expected type...
             AutomationAttributeInfo ai;

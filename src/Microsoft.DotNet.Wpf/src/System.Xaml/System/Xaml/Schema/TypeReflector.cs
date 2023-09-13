@@ -448,7 +448,6 @@ namespace System.Xaml.Schema
             out ICollection<EventInfo> newEvents, out List<XamlMember> knownMembers)
         {
             Debug.Assert(UnderlyingType != null, "Caller should check for UnderlyingType == null");
-            Debug.Assert(_nonAttachableMemberCache != null, "Members property should have been invoked before this");
 
             PropertyInfo[] propList = UnderlyingType.GetProperties(AllProperties_BF);
             EventInfo[] eventList = UnderlyingType.GetEvents(AllProperties_BF);
@@ -948,7 +947,6 @@ namespace System.Xaml.Schema
         internal IList<XamlMember> LookupAllAttachableMembers(XamlSchemaContext schemaContext)
         {
             Debug.Assert(UnderlyingType != null, "Caller should check for UnderlyingType == null");
-            Debug.Assert(_attachableMemberCache != null, "AttachableMembers property should have been invoked before this");
 
             List<XamlMember> result = new List<XamlMember>();
 

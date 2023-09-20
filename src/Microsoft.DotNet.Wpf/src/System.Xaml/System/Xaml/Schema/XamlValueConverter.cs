@@ -29,8 +29,9 @@ namespace System.Xaml.Schema
         {
             if (converterType == null && targetType == null && name == null)
             {
-                throw new ArgumentException(SR.Format(SR.ArgumentRequired, "converterType, targetType, name"));
+                throw new ArgumentException(SR.Format(SR.ArgumentRequired, $"{nameof(converterType)}, {nameof(targetType)}, {nameof(name)}"));
             }
+
             ConverterType = converterType;
             TargetType = targetType;
             Name = name ?? GetDefaultName();
@@ -45,14 +46,12 @@ namespace System.Xaml.Schema
                     Interlocked.CompareExchange(ref _instance, CreateInstance(), null);
                     _instanceIsSet = true;
                 }
+
                 return _instance;
             }
         }
 
-        public override string ToString()
-        {
-            return Name;
-        }
+        public override string ToString() => Name;
 
         internal virtual bool IsPublic
         {
@@ -62,6 +61,7 @@ namespace System.Xaml.Schema
                 {
                     _isPublic = (ConverterType == null || ConverterType.IsVisible) ? ThreeValuedBool.True : ThreeValuedBool.False;
                 }
+
                 return _isPublic == ThreeValuedBool.True;
             }
         }
@@ -80,8 +80,10 @@ namespace System.Xaml.Schema
                     throw new XamlSchemaException(SR.Format(SR.ConverterMustDeriveFromBase,
                        ConverterType, typeof(TConverterBase)));
                 }
+
                 return (TConverterBase)Activator.CreateInstance(ConverterType, null);
             }
+
             return null;
         }
 
@@ -93,12 +95,12 @@ namespace System.Xaml.Schema
                 {
                     return ConverterType.Name + "(" + TargetType.Name + ")";
                 }
+
                 return ConverterType.Name;
             }
+
             return TargetType.Name;
         }
-
-        #region IEquatable<XamlValueConverter<TConverterBaseType>> Members
 
         public override bool Equals(object obj)
         {
@@ -107,6 +109,7 @@ namespace System.Xaml.Schema
             {
                 return false;
             }
+
             return this == other;
         }
 
@@ -121,13 +124,11 @@ namespace System.Xaml.Schema
             {
                 result ^= TargetType.GetHashCode();
             }
+
             return result;
         }
 
-        public bool Equals(XamlValueConverter<TConverterBase> other)
-        {
-            return this == other;
-        }
+        public bool Equals(XamlValueConverter<TConverterBase> other) => this == other;
 
         public static bool operator ==(XamlValueConverter<TConverterBase> converter1, XamlValueConverter<TConverterBase> converter2)
         {
@@ -139,16 +140,13 @@ namespace System.Xaml.Schema
             {
                 return false;
             }
+
             return converter1.ConverterType == converter2.ConverterType &&
                 converter1.TargetType == converter2.TargetType &&
                 converter1.Name == converter2.Name;
         }
 
         public static bool operator !=(XamlValueConverter<TConverterBase> converter1, XamlValueConverter<TConverterBase> converter2)
-        {
-            return !(converter1 == converter2);
-        }
-
-        #endregion
+            => !(converter1 == converter2);
     }
 }

@@ -41,10 +41,8 @@ namespace System.ComponentModel
         /// </summary>
         public static void AddListener(ICollectionView source, IWeakEventListener listener)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(listener);
 
             CurrentManager.ProtectedAddListener(source, listener);
         }
@@ -58,8 +56,7 @@ namespace System.ComponentModel
             if (source == null)
                 throw new ArgumentNullException("source");
             */
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(listener);
 
             CurrentManager.ProtectedRemoveListener(source, listener);
         }
@@ -69,8 +66,7 @@ namespace System.ComponentModel
         /// </summary>
         public static void AddHandler(ICollectionView source, EventHandler<EventArgs> handler)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.ProtectedAddHandler(source, handler);
         }
@@ -80,8 +76,7 @@ namespace System.ComponentModel
         /// </summary>
         public static void RemoveHandler(ICollectionView source, EventHandler<EventArgs> handler)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.ProtectedRemoveHandler(source, handler);
         }

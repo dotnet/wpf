@@ -279,10 +279,7 @@ namespace System.Windows.Documents
 
         public void ProcessPath(Path path, Matrix transform)
         {
-            if (path == null)
-            {
-                throw new ArgumentNullException("path");
-            }
+            ArgumentNullException.ThrowIfNull(path);
 
             Geometry geom   = path.Data;
             bool     fill   = path.Fill != null;

@@ -531,11 +531,8 @@ namespace System.Windows.Xps.Serialization
             ):
         base()
         {
-            if( xpsPackage == null)
-            {
-                throw new ArgumentNullException("xpsPackage");
-            }                
-            
+            ArgumentNullException.ThrowIfNull(xpsPackage);
+
             this._reachPackage = xpsPackage;
             Initialize();
 
@@ -1266,28 +1263,23 @@ namespace System.Windows.Xps.Serialization
             PrintTicket printTicket
             )
         {
-            if(printTicket == null)
+            ArgumentNullException.ThrowIfNull(printTicket);
+
+            //
+            // We need to figure out at which level of the package
+            // is this printTicket targeted
+            //
+            if (_currentFixedPageWriter != null)
             {
-                throw new ArgumentNullException("printTicket");
+                _currentFixedPageWriter.PrintTicket = printTicket;
             }
-            else
+            else if(_currentFixedDocumentWriter != null)
             {
-                //
-                // We need to figure out at which level of the package
-                // is this printTicket targeted
-                //
-                if(_currentFixedPageWriter != null)
-                {
-                    _currentFixedPageWriter.PrintTicket = printTicket;
-                }
-                else if(_currentFixedDocumentWriter != null)
-                {
-                    _currentFixedDocumentWriter.PrintTicket = printTicket;
-                }
-                else if(_currentFixedDocumentSequenceWriter != null)
-                {
-                    _currentFixedDocumentSequenceWriter.PrintTicket = printTicket;
-                }
+                _currentFixedDocumentWriter.PrintTicket = printTicket;
+            }
+            else if(_currentFixedDocumentSequenceWriter != null)
+            {
+                _currentFixedDocumentSequenceWriter.PrintTicket = printTicket;
             }
         }
 

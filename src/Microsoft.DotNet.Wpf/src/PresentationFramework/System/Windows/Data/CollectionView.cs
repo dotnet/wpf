@@ -57,8 +57,7 @@ namespace System.Windows.Data
 
         internal CollectionView(IEnumerable collection, int moveToFirst)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            ArgumentNullException.ThrowIfNull(collection);
 
             // Constructing a CollectionView itself (as opposed to a derived class)
             // is deprecated in NetFx3.5.  This used to use IndexedEnumerable to
@@ -170,8 +169,7 @@ namespace System.Windows.Data
             get { return _culture; }
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (_culture != value)
                 {
@@ -918,8 +916,7 @@ namespace System.Windows.Data
         /// </param>
         protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs args)
         {
-            if (args == null)
-                throw new ArgumentNullException("args");
+            ArgumentNullException.ThrowIfNull(args);
 
             unchecked { ++ _timestamp; }    // invalidate enumerators because of a change
 
@@ -1031,8 +1028,7 @@ namespace System.Windows.Data
         /// </exception>
         protected virtual void OnCurrentChanging(CurrentChangingEventArgs args)
         {
-            if (args == null)
-                throw new ArgumentNullException("args");
+            ArgumentNullException.ThrowIfNull(args);
 
             if (_currentChangedMonitor.Busy)
             {

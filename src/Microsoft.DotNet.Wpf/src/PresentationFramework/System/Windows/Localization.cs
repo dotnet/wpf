@@ -54,10 +54,7 @@ namespace System.Windows
         [AttachedPropertyBrowsableForType(typeof(object))]
         public static string GetComments(object element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return GetValue(element, CommentsProperty);
         }
@@ -69,10 +66,7 @@ namespace System.Windows
         /// <param name="comments">The property value to set</param>
         public static void SetComments(object element, string comments)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             LocComments.ParsePropertyComments(comments);
             SetValue(element, CommentsProperty, comments);
@@ -86,10 +80,7 @@ namespace System.Windows
         [AttachedPropertyBrowsableForType(typeof(object))]
         public static string GetAttributes(object element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return GetValue(element, AttributesProperty);
         }
@@ -101,10 +92,7 @@ namespace System.Windows
         /// <param name="attributes">The property value to set</param>
         public static void SetAttributes(object element, string attributes)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             LocComments.ParsePropertyLocalizabilityAttributes(attributes);
             SetValue(element, AttributesProperty, attributes);

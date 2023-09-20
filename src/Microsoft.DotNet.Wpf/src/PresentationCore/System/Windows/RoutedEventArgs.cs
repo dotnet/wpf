@@ -279,15 +279,9 @@ namespace System.Windows
         /// </param>
         protected virtual void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            if (genericHandler == null)
-            {
-                throw new ArgumentNullException("genericHandler");
-            }
+            ArgumentNullException.ThrowIfNull(genericHandler);
 
-            if (genericTarget == null)
-            {
-                throw new ArgumentNullException("genericTarget");
-            }
+            ArgumentNullException.ThrowIfNull(genericTarget);
 
             if (_routedEvent == null)
             {

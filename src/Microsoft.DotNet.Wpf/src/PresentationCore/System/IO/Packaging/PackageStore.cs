@@ -102,10 +102,7 @@ namespace System.IO.Packaging
                 throw new ArgumentException(SR.NotAllowedPackageUri, nameof(uri));
             }
 
-            if (package == null)
-            {
-                throw new ArgumentNullException(nameof(package));
-            }
+            ArgumentNullException.ThrowIfNull(package);
 
             lock (_globalLock)
             {
@@ -150,10 +147,7 @@ namespace System.IO.Packaging
 
         private static void ValidatePackageUri(Uri uri)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException("uri");
-            }
+            ArgumentNullException.ThrowIfNull(uri);
 
             if (!uri.IsAbsoluteUri)
             {

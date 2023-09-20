@@ -33,20 +33,11 @@ namespace System.Windows.Input
             bool isInertial)
             : base(manipulationDevice, timestamp)
         {
-            if (delta == null)
-            {
-                throw new ArgumentNullException("delta");
-            }
+            ArgumentNullException.ThrowIfNull(delta);
 
-            if (cumulative == null)
-            {
-                throw new ArgumentNullException("cumulative");
-            }
+            ArgumentNullException.ThrowIfNull(cumulative);
 
-            if (velocities == null)
-            {
-                throw new ArgumentNullException("velocities");
-            }
+            ArgumentNullException.ThrowIfNull(velocities);
 
             RoutedEvent = Manipulation.ManipulationDeltaEvent;
 
@@ -63,15 +54,9 @@ namespace System.Windows.Input
         /// </summary>
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            if (genericHandler == null)
-            {
-                throw new ArgumentNullException("genericHandler");
-            }
+            ArgumentNullException.ThrowIfNull(genericHandler);
 
-            if (genericTarget == null)
-            {
-                throw new ArgumentNullException("genericTarget");
-            }
+            ArgumentNullException.ThrowIfNull(genericTarget);
 
             if (RoutedEvent == Manipulation.ManipulationDeltaEvent)
             {
@@ -144,10 +129,7 @@ namespace System.Windows.Input
         /// </summary>
         public void ReportBoundaryFeedback(ManipulationDelta unusedManipulation)
         {
-            if (unusedManipulation == null)
-            {
-                throw new ArgumentNullException("unusedManipulation");
-            }
+            ArgumentNullException.ThrowIfNull(unusedManipulation);
 
             UnusedManipulation = unusedManipulation;
         }

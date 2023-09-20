@@ -330,10 +330,7 @@ namespace System.Windows.Xps.Packaging
         void
         WriteXML(XmlWriter writer)
         {
-            if (writer == null)
-            {
-                throw new ArgumentNullException("writer");
-            }
+            ArgumentNullException.ThrowIfNull(writer);
 
             writer.WriteStartElement(
              XpsS0Markup.SignatureDefinition,
@@ -414,11 +411,8 @@ namespace System.Windows.Xps.Packaging
         void
         ReadXML( XmlReader reader )
         {
-            if( reader == null )
-            {
-                throw new ArgumentNullException("reader");
-            }
-                
+            ArgumentNullException.ThrowIfNull(reader);
+
             //
             // Assume the calling function has already read the 
             // SignatureDefinition start element

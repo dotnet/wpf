@@ -50,20 +50,11 @@ namespace System.Windows.Media.Imaging
         public ColorConvertedBitmap(BitmapSource source, ColorContext sourceColorContext, ColorContext destinationColorContext, PixelFormat format)
             : base(true) // Use base class virtuals
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
+            ArgumentNullException.ThrowIfNull(source);
 
-            if (sourceColorContext == null)
-            {
-                throw new ArgumentNullException("sourceColorContext");
-            }
+            ArgumentNullException.ThrowIfNull(sourceColorContext);
 
-            if (destinationColorContext == null)
-            {
-                throw new ArgumentNullException("destinationColorContext");
-            }
+            ArgumentNullException.ThrowIfNull(destinationColorContext);
 
             _bitmapInit.BeginInit();
 

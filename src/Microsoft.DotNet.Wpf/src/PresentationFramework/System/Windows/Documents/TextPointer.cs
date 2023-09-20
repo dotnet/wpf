@@ -259,10 +259,7 @@ namespace System.Windows.Documents
         /// </remarks>
         internal TextPointer(TextPointer textPointer)
         {
-            if (textPointer == null)
-            {
-                throw new ArgumentNullException("textPointer");
-            }
+            ArgumentNullException.ThrowIfNull(textPointer);
 
             InitializeOffset(textPointer, 0, textPointer.GetGravityInternal());
         }
@@ -270,10 +267,7 @@ namespace System.Windows.Documents
         // Creates a new TextPointer instance.
         internal TextPointer(TextPointer position, int offset)
         {
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
 
             InitializeOffset(position, offset, position.GetGravityInternal());
         }
@@ -440,10 +434,7 @@ namespace System.Windows.Documents
         /// </example>
         public bool IsInSameDocument(TextPointer textPosition)
         {
-            if (textPosition == null)
-            {
-                throw new ArgumentNullException("textPosition");
-            }
+            ArgumentNullException.ThrowIfNull(textPosition);
 
             _tree.EmptyDeadPositionList();
 
@@ -1283,10 +1274,7 @@ namespace System.Windows.Documents
         /// </remarks>
         public void InsertTextInRun(string textData)
         {
-            if (textData == null)
-            {
-                throw new ArgumentNullException("textData");
-            }
+            ArgumentNullException.ThrowIfNull(textData);
 
             _tree.EmptyDeadPositionList();
             SyncToTreeGeneration();
@@ -1764,10 +1752,7 @@ namespace System.Windows.Documents
             int skipCount;
             int finalCount;
 
-            if (textBuffer == null)
-            {
-                throw new ArgumentNullException("textBuffer");
-            }
+            ArgumentNullException.ThrowIfNull(textBuffer);
             if (startIndex < 0)
             {
                 throw new ArgumentException(SR.Format(SR.NegativeValue, "startIndex"));
@@ -2156,10 +2141,7 @@ namespace System.Windows.Documents
         /// </exception>
         internal void InsertUIElement(UIElement uiElement)
         {
-            if (uiElement == null)
-            {
-                throw new ArgumentNullException("uiElement");
-            }
+            ArgumentNullException.ThrowIfNull(uiElement);
 
             _tree.EmptyDeadPositionList();
             SyncToTreeGeneration();
@@ -2520,10 +2502,7 @@ namespace System.Windows.Documents
             DependencyObject parent;
             object val;
 
-            if (formattingProperty == null)
-            {
-                throw new ArgumentNullException("formattingProperty");
-            }
+            ArgumentNullException.ThrowIfNull(formattingProperty);
 
             _tree.EmptyDeadPositionList();
 
@@ -2547,10 +2526,7 @@ namespace System.Windows.Documents
         {
             TextElement element;
 
-            if (formattingProperty == null)
-            {
-                throw new ArgumentNullException("formattingProperty");
-            }
+            ArgumentNullException.ThrowIfNull(formattingProperty);
 
             _tree.EmptyDeadPositionList();
 

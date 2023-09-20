@@ -56,10 +56,8 @@ namespace System.Windows.Input.StylusPlugIns
         /// </summary>
         public static void AddListener(Dispatcher source, IWeakEventListener listener)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(listener);
 
             CurrentManager.ProtectedAddListener(source, listener);
         }

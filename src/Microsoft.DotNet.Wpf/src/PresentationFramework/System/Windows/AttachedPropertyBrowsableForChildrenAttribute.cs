@@ -99,8 +99,8 @@ namespace System.Windows
         /// </summary>
         internal override bool IsBrowsable(DependencyObject d, DependencyProperty dp)
         {
-            if (d == null) throw new ArgumentNullException("d");
-            if (dp == null) throw new ArgumentNullException("dp");
+            ArgumentNullException.ThrowIfNull(d);
+            ArgumentNullException.ThrowIfNull(dp);
 
             DependencyObject walk = d;
             Type ownerType = dp.OwnerType;

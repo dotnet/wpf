@@ -215,10 +215,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             PublishLicense publishLicense
             )
         {
-            if (publishLicense == null)
-            {
-                throw new ArgumentNullException("publishLicense");
-            }
+            ArgumentNullException.ThrowIfNull(publishLicense);
 
             if (_fixedSettings)
             {
@@ -306,10 +303,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             ContentUser user
             )
         {
-            if (user == null)
-            {
-                throw new ArgumentNullException("user");
-            }
+            ArgumentNullException.ThrowIfNull(user);
 
             LoadUseLicenseForUserParams param = new LoadUseLicenseForUserParams(user);
 
@@ -348,15 +342,8 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             UseLicense useLicense
             )
         {
-            if (user == null)
-            {
-                throw new ArgumentNullException("user");
-            }
-
-            if (useLicense == null)
-            {
-                throw new ArgumentNullException("useLicense");
-            }
+            ArgumentNullException.ThrowIfNull(user);
+            ArgumentNullException.ThrowIfNull(useLicense);
 
             if (user.AuthenticationType != AuthenticationType.Windows &&
                 user.AuthenticationType != AuthenticationType.Passport)
@@ -400,10 +387,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             ContentUser user
             )
         {
-            if (user == null)
-            {
-                throw new ArgumentNullException("user");
-            }
+            ArgumentNullException.ThrowIfNull(user);
 
             EnumUseLicenseStreams(
                 new UseLicenseStreamCallback(this.DeleteUseLicenseForUser),
@@ -532,11 +516,8 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     throw new InvalidOperationException(SR.CannotChangeCryptoProvider);
                 }
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
-                
+                ArgumentNullException.ThrowIfNull(value);
+
                 if (!value.CanEncrypt && !value.CanDecrypt)
                 {
                     throw new ArgumentException(SR.CryptoProviderIsNotReady, "value");
@@ -674,10 +655,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             object param
             )
         {
-            if (callback == null)
-            {
-                throw new ArgumentNullException("callback");
-            }
+            ArgumentNullException.ThrowIfNull(callback);
 
             bool stop = false;
 

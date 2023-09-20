@@ -236,10 +236,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetIsInputMethodEnabled(DependencyObject target, bool value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(IsInputMethodEnabledProperty, value);
         }
@@ -250,10 +247,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetIsInputMethodEnabled(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (bool)(target.GetValue(IsInputMethodEnabledProperty));
         }
@@ -275,10 +269,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetIsInputMethodSuspended(DependencyObject target, bool value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(IsInputMethodSuspendedProperty, value);
         }
@@ -289,10 +280,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetIsInputMethodSuspended(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (bool)(target.GetValue(IsInputMethodSuspendedProperty));
         }
@@ -315,10 +303,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetPreferredImeState(DependencyObject target, InputMethodState value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(PreferredImeStateProperty, value);
         }
@@ -329,10 +314,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static InputMethodState GetPreferredImeState(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (InputMethodState)(target.GetValue(PreferredImeStateProperty));
         }
@@ -354,10 +336,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetPreferredImeConversionMode(DependencyObject target, ImeConversionModeValues value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(PreferredImeConversionModeProperty, value);
         }
@@ -368,10 +347,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static ImeConversionModeValues GetPreferredImeConversionMode(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (ImeConversionModeValues)(target.GetValue(PreferredImeConversionModeProperty));
         }
@@ -393,10 +369,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetPreferredImeSentenceMode(DependencyObject target, ImeSentenceModeValues value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(PreferredImeSentenceModeProperty, value);
         }
@@ -407,10 +380,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static ImeSentenceModeValues GetPreferredImeSentenceMode(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (ImeSentenceModeValues)(target.GetValue(PreferredImeSentenceModeProperty));
         }
@@ -431,10 +401,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetInputScope(DependencyObject target, InputScope value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(InputScopeProperty, value);
         }
@@ -445,10 +412,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static InputScope GetInputScope(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (InputScope)(target.GetValue(InputScopeProperty));
         }
@@ -1217,10 +1181,7 @@ namespace System.Windows.Input
         {
             add
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 // Advise compartment event sink to Win32 Cicero only when someone
                 // has StateChanged event handler.
@@ -1233,10 +1194,7 @@ namespace System.Windows.Input
             }
             remove
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _StateChanged -= value;
                 if ((_StateChanged == null) && TextServicesLoader.ServicesInstalled)

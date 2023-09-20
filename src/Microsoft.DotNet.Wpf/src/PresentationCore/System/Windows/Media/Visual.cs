@@ -1932,15 +1932,9 @@ namespace System.Windows.Media
             HitTestResultCallback resultCallback,
             HitTestParameters hitTestParameters)
         {
-            if (resultCallback == null)
-            {
-                throw new ArgumentNullException("resultCallback");
-            }
+            ArgumentNullException.ThrowIfNull(resultCallback);
 
-            if (hitTestParameters == null)
-            {
-                throw new ArgumentNullException("hitTestParameters");
-            }
+            ArgumentNullException.ThrowIfNull(hitTestParameters);
 
             VerifyAPIReadWrite();
 
@@ -2422,10 +2416,7 @@ namespace System.Windows.Media
         /// </summary>
         protected virtual HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)
         {
-            if (hitTestParameters == null)
-            {
-                throw new ArgumentNullException("hitTestParameters");
-            }
+            ArgumentNullException.ThrowIfNull(hitTestParameters);
 
             // If we don't have a clip, or if the clip contains the point, keep going.
             if (GetHitTestBounds().Contains(hitTestParameters.HitPoint))
@@ -2443,10 +2434,7 @@ namespace System.Windows.Media
         /// </summary>
         protected virtual GeometryHitTestResult HitTestCore(GeometryHitTestParameters hitTestParameters)
         {
-            if (hitTestParameters == null)
-            {
-                throw new ArgumentNullException("hitTestParameters");
-            }
+            ArgumentNullException.ThrowIfNull(hitTestParameters);
 
             IntersectionDetail intersectionDetail;
 
@@ -4174,10 +4162,7 @@ namespace System.Windows.Media
         /// </summary>
         public bool IsDescendantOf(DependencyObject ancestor)
         {
-            if (ancestor == null)
-            {
-                throw new ArgumentNullException("ancestor");
-            }
+            ArgumentNullException.ThrowIfNull(ancestor);
 
             VisualTreeUtils.EnsureVisual(ancestor);
 
@@ -4288,10 +4273,7 @@ namespace System.Windows.Media
         {
             VerifyAPIReadOnly(otherVisual);
 
-            if (otherVisual == null)
-            {
-                throw new System.ArgumentNullException("otherVisual");
-            }
+            ArgumentNullException.ThrowIfNull(otherVisual);
 
             // Since we can't rely on code running in the CLR, we need to first make sure
             // that the FindCommonAncestor flag is not set. It is enought to ensure this
@@ -4343,10 +4325,7 @@ namespace System.Windows.Media
         public GeneralTransform TransformToAncestor(
             Visual ancestor)
         {
-            if (ancestor == null)
-            {
-                throw new ArgumentNullException("ancestor");
-            }
+            ArgumentNullException.ThrowIfNull(ancestor);
 
             VerifyAPIReadOnly(ancestor);
 
@@ -4366,10 +4345,7 @@ namespace System.Windows.Media
         /// <exception cref="InvalidOperationException">If the Visuals are not connected.</exception>
         public GeneralTransform2DTo3D TransformToAncestor(Visual3D ancestor)
         {
-            if (ancestor == null)
-            {
-                throw new ArgumentNullException("ancestor");
-            }
+            ArgumentNullException.ThrowIfNull(ancestor);
 
             VerifyAPIReadOnly(ancestor);
 
@@ -4388,10 +4364,7 @@ namespace System.Windows.Media
         /// <exception cref="InvalidOperationException">If the Visuals are not connected.</exception>
         public GeneralTransform TransformToDescendant(Visual descendant)
         {
-            if (descendant == null)
-            {
-                throw new ArgumentNullException("descendant");
-            }
+            ArgumentNullException.ThrowIfNull(descendant);
 
             VerifyAPIReadOnly(descendant);
 

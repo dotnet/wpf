@@ -641,15 +641,9 @@ namespace System.Windows.Media.Media3D
             HitTestResultCallback resultCallback,
             HitTestParameters3D hitTestParameters)
         {
-            if (resultCallback == null)
-            {
-                throw new ArgumentNullException("resultCallback");
-            }
+            ArgumentNullException.ThrowIfNull(resultCallback);
 
-            if (hitTestParameters == null)
-            {
-                throw new ArgumentNullException("hitTestParameters");
-            }
+            ArgumentNullException.ThrowIfNull(hitTestParameters);
 
             VerifyAPIReadWrite();
 
@@ -1327,10 +1321,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public bool IsDescendantOf(DependencyObject ancestor)
         {
-            if (ancestor == null)
-            {
-                throw new ArgumentNullException("ancestor");
-            }
+            ArgumentNullException.ThrowIfNull(ancestor);
 
             VisualTreeUtils.EnsureVisual(ancestor);
 
@@ -1420,10 +1411,7 @@ namespace System.Windows.Media.Media3D
         {
             VerifyAPIReadOnly(otherVisual);
 
-            if (otherVisual == null)
-            {
-                throw new System.ArgumentNullException("otherVisual");
-            }
+            ArgumentNullException.ThrowIfNull(otherVisual);
 
             // Since we can't rely on code running in the CLR, we need to first make sure
             // that the FindCommonAncestor flag is not set. It is enought to ensure this
@@ -1633,10 +1621,7 @@ namespace System.Windows.Media.Media3D
         /// <exception cref="InvalidOperationException">If the Visual3Ds are not connected.</exception>
         public GeneralTransform3D TransformToAncestor(Visual3D ancestor)
         {
-            if (ancestor == null)
-            {
-                throw new ArgumentNullException("ancestor");
-            }
+            ArgumentNullException.ThrowIfNull(ancestor);
 
             VerifyAPIReadOnly(ancestor);
 
@@ -1657,10 +1642,7 @@ namespace System.Windows.Media.Media3D
         /// <exception cref="InvalidOperationException">If the Visual3Ds are not connected.</exception>
         public GeneralTransform3D TransformToDescendant(Visual3D descendant)
         {
-            if (descendant == null)
-            {
-                throw new ArgumentNullException("descendant");
-            }
+            ArgumentNullException.ThrowIfNull(descendant);
 
             VerifyAPIReadOnly(descendant);
 
@@ -1807,10 +1789,7 @@ namespace System.Windows.Media.Media3D
         /// <exception cref="InvalidOperationException">If the Visual3D and Visual are not connected.</exception>
         public GeneralTransform3DTo2D TransformToAncestor(Visual ancestor)
         {
-            if (ancestor == null)
-            {
-                throw new ArgumentNullException("ancestor");
-            }
+            ArgumentNullException.ThrowIfNull(ancestor);
 
             VerifyAPIReadOnly(ancestor);
 

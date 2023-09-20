@@ -228,10 +228,7 @@ namespace System.Windows.Controls
 
         void IAddChild.AddChild(Object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             Visual3D visual3D = value as Visual3D;
 

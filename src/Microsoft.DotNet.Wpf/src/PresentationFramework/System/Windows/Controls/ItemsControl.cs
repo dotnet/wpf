@@ -1097,8 +1097,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static int GetAlternationIndex(DependencyObject element)
         {
-            if (element == null)
-                throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
 
             return (int)element.GetValue(AlternationIndexProperty);
         }
@@ -1196,8 +1195,7 @@ namespace System.Windows.Controls
         ///</summary>
         public static DependencyObject ContainerFromElement(ItemsControl itemsControl, DependencyObject element)
         {
-            if (element == null)
-                throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
 
             // if the element is itself the desired container, return it
             if (IsContainerForItemsControl(element, itemsControl))

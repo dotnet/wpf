@@ -69,10 +69,7 @@ namespace System.Windows.Xps.Serialization
             //
             // Validate Input Arguments
             //
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             _targetObject            = target;
             _isComplexValue          = false;

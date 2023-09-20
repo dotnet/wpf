@@ -58,10 +58,7 @@ namespace MS.Internal.Annotations.Component
         public MarkedHighlightComponent(XmlQualifiedName type, DependencyObject host)
             : base()
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException("type");
-            }
+            ArgumentNullException.ThrowIfNull(type);
 
             _DPHost = host == null ? this : host;
             ClipToBounds = false;
@@ -238,10 +235,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="attachedAnnotation">The attached annotation to be removed from the component</param>
         public void RemoveAttachedAnnotation(IAttachedAnnotation attachedAnnotation)
         {
-            if (attachedAnnotation == null)
-            {
-                throw new ArgumentNullException("attachedAnnotation");
-            }
+            ArgumentNullException.ThrowIfNull(attachedAnnotation);
 
             if (attachedAnnotation != _attachedAnnotation)
             {

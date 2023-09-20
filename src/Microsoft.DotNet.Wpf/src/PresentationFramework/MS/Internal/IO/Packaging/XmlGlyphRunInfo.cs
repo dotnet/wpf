@@ -39,8 +39,8 @@ namespace MS.Internal.IO.Packaging
             // Assert that XmlFixedPageInfo (only caller) has correctly identified glyph runs
             // prior to invoking this constructor.
             Debug.Assert(_glyphsNode != null 
-                && String.CompareOrdinal(_glyphsNode.LocalName, _glyphRunName) == 0
-                && String.CompareOrdinal(_glyphsNode.NamespaceURI, ElementTableKey.FixedMarkupNamespace) == 0);
+                && string.Equals(_glyphsNode.LocalName, _glyphRunName, StringComparison.Ordinal)
+                && string.Equals(_glyphsNode.NamespaceURI, ElementTableKey.FixedMarkupNamespace, StringComparison.Ordinal));
         }
         #endregion Constructors
 
@@ -176,7 +176,7 @@ namespace MS.Internal.IO.Packaging
                             // That's what the Indexing Search team told us to do.
                             // There's no CultureInfo for "und". 
                             // CultureInfo("und") will cause an error.
-                            if (string.CompareOrdinal(languageString.ToUpperInvariant(), _undeterminedLanguageStringUpper) == 0)
+                            if (string.Equals(languageString.ToUpperInvariant(), _undeterminedLanguageStringUpper, StringComparison.Ordinal))
                             {
                                 _languageID = 0;
                             }

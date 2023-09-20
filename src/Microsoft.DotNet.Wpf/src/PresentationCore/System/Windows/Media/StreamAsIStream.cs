@@ -691,10 +691,7 @@ namespace System.Windows.Media
         #region IStreamFrom System.IO.Stream
         internal static IntPtr IStreamFrom(System.IO.Stream stream)
         {
-            if (stream == null)
-            {
-                throw new System.ArgumentNullException("stream");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
 
             IntPtr pStream = IntPtr.Zero;
 

@@ -1589,10 +1589,7 @@ namespace MS.Internal.Automation
         /// <returns>true if both ranges span the same text.</returns>
         bool ITextRangeProvider.Compare(ITextRangeProvider range)
         {
-            if (range == null)
-            {
-                throw new ArgumentNullException("range");
-            }
+            ArgumentNullException.ThrowIfNull(range);
 
             TextRangeAdaptor rangeAdaptor = ValidateAndThrow(range);
 
@@ -1614,10 +1611,7 @@ namespace MS.Internal.Automation
         /// Returns &gt;0 if this endpoint occurs later in the text than the target endpoint.</returns>
         int ITextRangeProvider.CompareEndpoints(TextPatternRangeEndpoint endpoint, ITextRangeProvider targetRange, TextPatternRangeEndpoint targetEndpoint)
         {
-            if (targetRange == null)
-            {
-                throw new ArgumentNullException("targetRange");
-            }
+            ArgumentNullException.ThrowIfNull(targetRange);
 
             TextRangeAdaptor rangeAdaptor = ValidateAndThrow(targetRange);
 
@@ -1663,10 +1657,7 @@ namespace MS.Internal.Automation
             {
                 throw new ArgumentNullException("attributeId");
             }
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
             if (!_textPatternAttributes.ContainsKey(attribute))
             {
                 return null;
@@ -1757,10 +1748,7 @@ namespace MS.Internal.Automation
         /// <returns>A subrange with the specified text, or null if no such subrange exists.</returns>
         ITextRangeProvider ITextRangeProvider.FindText(string text, bool backward, bool ignoreCase)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException("text");
-            }
+            ArgumentNullException.ThrowIfNull(text);
             if (text.Length == 0)
             {
                 throw new ArgumentException(SR.Format(SR.TextRangeProvider_EmptyStringParameter, "text"));
@@ -2016,10 +2004,7 @@ namespace MS.Internal.Automation
         /// <param name="targetEndpoint">An endpoint on the other range.</param>
         void ITextRangeProvider.MoveEndpointByRange(TextPatternRangeEndpoint endpoint, ITextRangeProvider targetRange, TextPatternRangeEndpoint targetEndpoint)
         {
-            if (targetRange == null)
-            {
-                throw new ArgumentNullException("targetRange");
-            }
+            ArgumentNullException.ThrowIfNull(targetRange);
             TextRangeAdaptor rangeAdaptor = ValidateAndThrow(targetRange);
             ITextPointer targetPointer = (targetEndpoint == TextPatternRangeEndpoint.Start) ? rangeAdaptor._start : rangeAdaptor._end;
             if (endpoint == TextPatternRangeEndpoint.Start)

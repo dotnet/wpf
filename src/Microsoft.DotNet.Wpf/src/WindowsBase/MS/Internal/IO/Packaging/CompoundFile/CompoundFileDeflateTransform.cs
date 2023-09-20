@@ -53,11 +53,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <param name="sink">stream to write to</param>
         public void Decompress(Stream source, Stream sink)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
+            ArgumentNullException.ThrowIfNull(source);
 
-            if (sink == null)
-                throw new ArgumentNullException("sink");
+            ArgumentNullException.ThrowIfNull(sink);
 
             Invariant.Assert(source.CanRead);
             Invariant.Assert(sink.CanWrite, "Logic Error - Cannot decompress into a read-only stream");
@@ -175,11 +173,8 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// they need not be restored.  We also assume that destination stream length need not be truncated.</remarks>
         public void Compress(Stream source, Stream sink)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-
-            if (sink == null)
-                throw new ArgumentNullException("sink");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(sink);
 
             Invariant.Assert(source.CanRead);
             Invariant.Assert(sink.CanWrite, "Logic Error - Cannot compress into a read-only stream");

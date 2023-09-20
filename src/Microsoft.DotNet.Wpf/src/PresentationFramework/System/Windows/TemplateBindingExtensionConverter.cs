@@ -47,8 +47,7 @@ namespace System.Windows
         {
             if (destinationType == typeof(InstanceDescriptor))
             {
-                if(value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 TemplateBindingExtension templateBinding = value as TemplateBindingExtension;
 

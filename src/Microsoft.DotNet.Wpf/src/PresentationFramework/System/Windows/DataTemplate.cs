@@ -185,10 +185,7 @@ namespace System.Windows
         protected override void ValidateTemplatedParent(FrameworkElement templatedParent)
         {
             // Must have a non-null feTemplatedParent
-            if (templatedParent == null)
-            {
-                throw new ArgumentNullException("templatedParent");
-            }
+            ArgumentNullException.ThrowIfNull(templatedParent);
 
             // A DataTemplate must be applied to a ContentPresenter
             if (!(templatedParent is ContentPresenter))

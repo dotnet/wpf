@@ -62,14 +62,11 @@ namespace System.IO.Packaging
         /// <remarks>intended for use only by PackWebRequest</remarks>
         internal PackWebResponse(Uri uri, Uri innerUri, Uri partName, WebRequest innerRequest)
         {
-            if (uri == null)
-                throw new ArgumentNullException("uri");
+            ArgumentNullException.ThrowIfNull(uri);
 
-            if (innerUri == null)
-                throw new ArgumentNullException("innerUri");
+            ArgumentNullException.ThrowIfNull(innerUri);
 
-            if (innerRequest == null)
-                throw new ArgumentNullException("innerRequest");
+            ArgumentNullException.ThrowIfNull(innerRequest);
 
             _lockObject = new Object();     // required for synchronization
 
@@ -133,17 +130,13 @@ namespace System.IO.Packaging
         {
             _lockObject = new Object();     // required for synchronization
 
-            if (uri == null)
-                throw new ArgumentNullException("uri");
+            ArgumentNullException.ThrowIfNull(uri);
 
-            if (innerUri == null)
-                throw new ArgumentNullException("innerUri");
+            ArgumentNullException.ThrowIfNull(innerUri);
 
-            if (partName == null)
-                throw new ArgumentNullException("partName");
+            ArgumentNullException.ThrowIfNull(partName);
 
-            if (cacheEntry == null)
-                throw new ArgumentNullException("cacheEntry");
+            ArgumentNullException.ThrowIfNull(cacheEntry);
 
 #if DEBUG
             if (PackWebRequestFactory._traceSwitch.Enabled)

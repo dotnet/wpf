@@ -152,8 +152,7 @@ namespace System.Windows.Automation.Peers
         //[CodeAnalysis("AptcaMethodsShouldOnlyCallAptcaMethods")] //Tracking Bug: 29647
         void IValueProvider.SetValue(string val)
         {
-            if (val == null)
-                throw new ArgumentNullException("val");
+            ArgumentNullException.ThrowIfNull(val);
 
             ComboBox owner = (ComboBox)Owner;
 

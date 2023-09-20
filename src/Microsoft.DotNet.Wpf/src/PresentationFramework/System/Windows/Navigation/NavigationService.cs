@@ -1332,10 +1332,7 @@ namespace System.Windows.Navigation
         /// <returns></returns>
         public static NavigationService GetNavigationService(DependencyObject dependencyObject)
         {
-            if (dependencyObject == null)
-            {
-                throw new ArgumentNullException("dependencyObject");
-            }
+            ArgumentNullException.ThrowIfNull(dependencyObject);
 
             return dependencyObject.GetValue(NavigationServiceProperty) as NavigationService;
         }
@@ -2945,7 +2942,7 @@ namespace System.Windows.Navigation
                 // o will be null.
                 // We don't support browser hosting since .NET Core 3.0, so therefore canUseTopLevelBrowserForHTMLRendering = false
                 bool canUseTopLevelBrowserForHTMLRendering = false;
-                Object o = MimeObjectFactory.GetObjectAndCloseStream(bindStream, contentType, destinationUri, canUseTopLevelBrowserForHTMLRendering, sandBoxContent, true /*allowAsync*/, IsJournalNavigation(navigateInfo), out _asyncObjectConverter);
+                Object o = MimeObjectFactory.GetObjectAndCloseStreamCore(bindStream, contentType, destinationUri, canUseTopLevelBrowserForHTMLRendering, sandBoxContent, true /*allowAsync*/, IsJournalNavigation(navigateInfo), out _asyncObjectConverter, IsUnsafe);
 
                 if (o != null)
                 {
@@ -3641,7 +3638,9 @@ namespace System.Windows.Navigation
             _parentNavigationService = null;
             _webBrowser = null;
         }
-
+        
+        // This is set when the navigationservice is loaded from unsafe xps doc. 
+        internal bool IsUnsafe { get; set; }
         #region Private Functions
 
         /// <summary>

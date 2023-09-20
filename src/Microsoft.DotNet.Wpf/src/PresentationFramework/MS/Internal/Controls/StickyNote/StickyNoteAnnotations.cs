@@ -913,10 +913,7 @@ namespace System.Windows.Controls
         /// <param name="attachedAnnotation">An IAttachedAnnotation instance</param>
         void IAnnotationComponent.AddAttachedAnnotation(IAttachedAnnotation attachedAnnotation)
         {
-            if (attachedAnnotation == null)
-            {
-                throw new ArgumentNullException("attachedAnnotation");
-            }
+            ArgumentNullException.ThrowIfNull(attachedAnnotation);
 
             if (_attachedAnnotation == null)
             {
@@ -940,10 +937,7 @@ namespace System.Windows.Controls
         /// <param name="attachedAnnotation">An IAttachedAnnotation instance</param>
         void IAnnotationComponent.RemoveAttachedAnnotation(IAttachedAnnotation attachedAnnotation)
         {
-            if (attachedAnnotation == null)
-            {
-                throw new ArgumentNullException("attachedAnnotation");
-            }
+            ArgumentNullException.ThrowIfNull(attachedAnnotation);
 
             if (attachedAnnotation == _attachedAnnotation)
             {
@@ -1086,7 +1080,8 @@ namespace System.Windows.Controls
 
                 if (offsetTransform != null)
                     transformations.Children.Add(offsetTransform);
-                transformations.Children.Add(transform);
+                if (transform != null)
+                    transformations.Children.Add(transform);                
                 return transformations;
             }
 

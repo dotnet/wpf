@@ -60,8 +60,7 @@ namespace System.Windows.Media
         /// <param name="metrics">Value of the Metrics property.</param>
         public CharacterMetrics(string metrics)
         {
-            if (metrics == null)
-                throw new ArgumentNullException("metrics");
+            ArgumentNullException.ThrowIfNull(metrics);
             Metrics = metrics;
         }
 

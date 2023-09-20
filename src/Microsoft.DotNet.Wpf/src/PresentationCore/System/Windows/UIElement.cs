@@ -1649,15 +1649,9 @@ namespace System.Windows
 
         internal static void BuildRouteHelper(DependencyObject e, EventRoute route, RoutedEventArgs args)
         {
-            if (route == null)
-            {
-                throw new ArgumentNullException("route");
-            }
+            ArgumentNullException.ThrowIfNull(route);
 
-            if (args == null)
-            {
-                throw new ArgumentNullException("args");
-            }
+            ArgumentNullException.ThrowIfNull(args);
 
             if (args.Source == null)
             {
@@ -1894,10 +1888,7 @@ namespace System.Windows
         [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static void AddHandler(DependencyObject d, RoutedEvent routedEvent, Delegate handler)
         {
-            if (d == null)
-            {
-                throw new ArgumentNullException("d");
-            }
+            ArgumentNullException.ThrowIfNull(d);
 
             Debug.Assert(routedEvent != null, "RoutedEvent must not be null");
 
@@ -1934,10 +1925,7 @@ namespace System.Windows
         [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static void RemoveHandler(DependencyObject d, RoutedEvent routedEvent, Delegate handler)
         {
-            if (d == null)
-            {
-                throw new ArgumentNullException("d");
-            }
+            ArgumentNullException.ThrowIfNull(d);
 
             Debug.Assert(routedEvent != null, "RoutedEvent must not be null");
 
@@ -4587,10 +4575,7 @@ namespace System.Windows
         /// <returns>True if capture was taken.</returns>
         public bool CaptureTouch(TouchDevice touchDevice)
         {
-            if (touchDevice == null)
-            {
-                throw new ArgumentNullException("touchDevice");
-            }
+            ArgumentNullException.ThrowIfNull(touchDevice);
 
             return touchDevice.Capture(this);
         }
@@ -4602,10 +4587,7 @@ namespace System.Windows
         /// <returns>true if capture was released, false otherwise.</returns>
         public bool ReleaseTouchCapture(TouchDevice touchDevice)
         {
-            if (touchDevice == null)
-            {
-                throw new ArgumentNullException("touchDevice");
-            }
+            ArgumentNullException.ThrowIfNull(touchDevice);
 
             if (touchDevice.Captured == this)
             {

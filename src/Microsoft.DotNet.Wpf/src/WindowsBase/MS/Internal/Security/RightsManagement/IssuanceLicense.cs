@@ -594,7 +594,7 @@ namespace MS.Internal.Security.RightsManagement
             string userIdTypeStr = null;
             if (userIdType != null)
             {
-                userIdTypeStr = userIdType.ToString().ToUpperInvariant();
+                userIdTypeStr = userIdType.ToString();
             }
 
             string userIdStr = null;
@@ -604,15 +604,15 @@ namespace MS.Internal.Security.RightsManagement
             }
 
             // based on the UserTypeId build appropriate instance of User class 
-            if (String.CompareOrdinal(userIdTypeStr, AuthenticationType.Windows.ToString().ToUpperInvariant()) == 0)
+            if (string.Equals(userIdTypeStr, AuthenticationType.Windows.ToString(), StringComparison.OrdinalIgnoreCase))
             {
                 return new ContentUser(userNameStr, AuthenticationType.Windows);
             }
-            else if (String.CompareOrdinal(userIdTypeStr, AuthenticationType.Passport.ToString().ToUpperInvariant()) == 0)
+            else if (string.Equals(userIdTypeStr, AuthenticationType.Passport.ToString(), StringComparison.OrdinalIgnoreCase))
             {
                 return new ContentUser(userNameStr, AuthenticationType.Passport);
             }
-            else if (String.CompareOrdinal(userIdTypeStr, AuthenticationType.Internal.ToString().ToUpperInvariant()) == 0)
+            else if (string.Equals(userIdTypeStr, AuthenticationType.Internal.ToString(), StringComparison.OrdinalIgnoreCase))
             {
                 // internal anyone user 
                 if (ContentUser.CompareToAnyone(userIdStr))
@@ -624,7 +624,7 @@ namespace MS.Internal.Security.RightsManagement
                     return ContentUser.OwnerUser;
                 }
             }
-            else if (String.CompareOrdinal(userIdTypeStr, UnspecifiedAuthenticationType.ToUpperInvariant()) == 0)
+            else if (string.Equals(userIdTypeStr, UnspecifiedAuthenticationType, StringComparison.OrdinalIgnoreCase))
             {
                 return new ContentUser(userNameStr, AuthenticationType.WindowsPassport);
             }

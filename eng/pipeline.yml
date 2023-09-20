@@ -168,7 +168,7 @@ jobs:
             Token: $(dn-bot-dnceng-artifact-feeds-rw)
 
       # Use utility script to run script command dependent on agent OS.
-      - script: eng\common\cibuild.cmd
+      - script: eng\scripts\cibuild.cmd
           -configuration $(_BuildConfig) 
           -prepareMachine
           $(_PublishArgs)
@@ -184,32 +184,53 @@ jobs:
         #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
         condition: or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')))
 
+      - script: eng\scripts\ciunittest.cmd
+          -configuration $(_BuildConfig) 
+          -prepareMachine
+          $(_PublishArgs)
+          $(_SignArgs)
+          $(_OfficialBuildIdArgs)
+          $(_PlatformArgs)
+          $(_InternalRuntimeDownloadArgs)
+        displayName: Run xUnit Tests
+        condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), ne(variables['_Platform'], 'arm64'))
+
+      - task: PublishTestResults@2
+        displayName: Publish XUnit Test Results
+        inputs:
+          testResultsFormat: 'xUnit'
+          testResultsFiles: '*.xml' 
+          searchFolder: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)'
+          mergeTestResults: true
+        continueOnError: true
+        condition: and(eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))     
+
       - task: PowerShell@2
         displayName: Install .NET Core
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
-          arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime dotnet -Version 8.0.0-preview.3.23174.8
+          arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime dotnet  -Channel 8.0 -Quality preview
           condition: eq(variables['_Platform'], 'x64')
       
       - task: PowerShell@2
         displayName: Install .NET Core(x86)
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
-          arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime dotnet -Version 8.0.0-preview.3.23174.8
+          arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime dotnet  -Channel 8.0 -Quality preview
         condition: eq(variables['_Platform'], 'x86')
   
       - task: PowerShell@2
         displayName: Install .NET WindowsDesktop
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
-          arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime windowsdesktop -Version 8.0.0-preview.3.23178.1
+          arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime windowsdesktop  -Channel 8.0 -Quality preview
         condition: eq(variables['_Platform'], 'x64')
      
       - task: PowerShell@2
         displayName: Install .NET WindowsDesktop(x86)
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
-          arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime windowsdesktop -Version 8.0.0-preview.3.23178.1
+          arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime windowsdesktop  -Channel 8.0 -Quality preview
         condition: eq(variables['_Platform'], 'x86')  
 
       - task: PowerShell@2
@@ -284,5 +305,6 @@ jobs:
           testResultsFormat: 'XUnit'
           testResultsFiles: 'testResults.xml'
           searchFolder: '$(System.DefaultWorkingDirectory)\Results\'
-          testRunTitle: 'CTP results'
-          condition: eq(variables['System.TeamProject'], 'public')
+          testRunTitle: 'Test results'
+          mergeTestResults: true
+        condition: eq(variables['System.TeamProject'], 'public')

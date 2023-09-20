@@ -81,10 +81,7 @@ namespace System.Windows.Media
         /// </summary>
         public VisualCollection(Visual parent)
         {
-            if (parent == null)
-            {
-                throw new ArgumentNullException(nameof(parent));
-            }
+            ArgumentNullException.ThrowIfNull(parent);
             _owner = parent;
         }
 
@@ -190,10 +187,7 @@ namespace System.Windows.Media
         {
             VerifyAPIReadOnly();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException(nameof(array));
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             if (array.Rank != 1)
             {
@@ -224,10 +218,7 @@ namespace System.Windows.Media
 
             VerifyAPIReadOnly();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException(nameof(array));
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             if ((index < 0) ||
                 (array.Length - index < _size))

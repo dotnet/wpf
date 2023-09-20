@@ -294,8 +294,7 @@ namespace System.Windows.Controls
         /// </param>
         public void CopyTo(Array array, int index)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
             if (array.Rank > 1)
                 throw new ArgumentException(SR.BadTargetArray, "array"); // array is multidimensional.
             if (index < 0)

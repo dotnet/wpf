@@ -246,10 +246,7 @@ namespace System.Windows.Media
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -374,10 +371,7 @@ namespace System.Windows.Media
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -473,10 +467,7 @@ namespace System.Windows.Media
 
         private double Cast(object value)
         {
-            if( value == null )
-            {
-                throw new System.ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             if (!(value is double))
             {
@@ -945,45 +936,40 @@ namespace System.Windows.Media
 
             WritePreamble();
 
-            if (collection != null)
+            ArgumentNullException.ThrowIfNull(collection);
+
+            ICollection<double> icollectionOfT = collection as ICollection<double>;
+
+            if (icollectionOfT != null)
             {
-                ICollection<double> icollectionOfT = collection as ICollection<double>;
-
-                if (icollectionOfT != null)
-                {
-                    _collection = new FrugalStructList<double>(icollectionOfT);
-                }
-                else
-                {       
-                    ICollection icollection = collection as ICollection;
-
-                    if (icollection != null) // an IC but not and IC<T>
-                    {
-                        _collection = new FrugalStructList<double>(icollection);
-                    }
-                    else // not a IC or IC<T> so fall back to the slower Add
-                    {
-                        _collection = new FrugalStructList<double>();
-
-                        foreach (double item in collection)
-                        {
-                            _collection.Add(item);
-                        }
-}
-                }
-
-
-
-
-
-
-
-                WritePostscript();
+                _collection = new FrugalStructList<double>(icollectionOfT);
             }
             else
             {
-                throw new ArgumentNullException("collection");
+                ICollection icollection = collection as ICollection;
+
+                if (icollection != null) // an IC but not and IC<T>
+                {
+                    _collection = new FrugalStructList<double>(icollection);
+                }
+                else // not a IC or IC<T> so fall back to the slower Add
+                {
+                    _collection = new FrugalStructList<double>();
+
+                    foreach (double item in collection)
+                    {
+                        _collection.Add(item);
+                    }
+                }
             }
+
+
+
+
+
+
+
+            WritePostscript();
         }
 
         #endregion Constructors

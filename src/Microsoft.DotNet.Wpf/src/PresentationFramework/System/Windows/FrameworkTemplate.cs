@@ -309,10 +309,7 @@ namespace System.Windows
             // Verify Context Access
             VerifyAccess();
 
-            if (templatedParent == null)
-            {
-                throw new ArgumentNullException("templatedParent");
-            }
+            ArgumentNullException.ThrowIfNull(templatedParent);
 
             if (this != templatedParent.TemplateInternal)
             {

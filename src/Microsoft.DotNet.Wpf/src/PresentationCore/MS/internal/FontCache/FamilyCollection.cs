@@ -382,7 +382,7 @@ namespace MS.Internal.FontCache
                 // For example, "Arial Bold"
                 // We will strip off the styling info (one word at a time from the end) and try to find the family name.
                 int indexOfSpace = -1;
-                System.Text.StringBuilder potentialFaceName = new System.Text.StringBuilder();
+                string originalFamilyName = familyName;
 
                 // Start removing off strings from the end hoping they are
                 // style info so as to get down to the family name.
@@ -396,12 +396,11 @@ namespace MS.Internal.FontCache
                     else
                     {
                         // store the stripped off style names to look for the specific face later.
-                        potentialFaceName.Insert(0, familyName.AsSpan(indexOfSpace));
                         familyName = familyName.Substring(0, indexOfSpace);
                     }
 
                     fontFamilyDWrite = _fontCollection[familyName];
-} while (fontFamilyDWrite == null);
+                } while (fontFamilyDWrite == null);
 
 
                 if (fontFamilyDWrite == null)
@@ -410,10 +409,12 @@ namespace MS.Internal.FontCache
                 }
 
                 // If there was styling information.
-                if (potentialFaceName.Length > 0)
+                if (familyName.Length != originalFamilyName.Length)
                 {
-                    // The first character in the potentialFaceName will be a space so we need to strip it off.
-                    Text.TextInterface.Font font = GetFontFromFamily(fontFamilyDWrite, potentialFaceName.ToString(1, potentialFaceName.Length - 1));
+                    // To obtain the face name, we remove the family name and the next char (A space) from the original family name.
+                    int faceNameIndex = familyName.Length + 1;
+                    ReadOnlySpan<char> faceName = originalFamilyName.AsSpan(faceNameIndex);
+                    Text.TextInterface.Font font = GetFontFromFamily(fontFamilyDWrite, faceName);
 
                     if (font != null)
                     {
@@ -464,10 +465,8 @@ namespace MS.Internal.FontCache
         /// <param name="fontFamily">The font family to look in.</param>
         /// <param name="faceName">The face to look for.</param>
         /// <returns>The font face if found and null if nothing was found.</returns>
-        private static Text.TextInterface.Font GetFontFromFamily(Text.TextInterface.FontFamily fontFamily, string faceName)
+        private static Text.TextInterface.Font GetFontFromFamily(Text.TextInterface.FontFamily fontFamily, ReadOnlySpan<char> faceName)
         {
-            faceName = faceName.ToUpper(CultureInfo.InvariantCulture);
-
             // The search that DWrite supports is a linear search.
             // Look at every font face.
             foreach (Text.TextInterface.Font font in fontFamily)
@@ -475,8 +474,7 @@ namespace MS.Internal.FontCache
                 // and at every locale name this font face has.
                 foreach (KeyValuePair<CultureInfo, string> name in font.FaceNames)
                 {
-                    string currentFontName = name.Value.ToUpper(CultureInfo.InvariantCulture);
-                    if (currentFontName == faceName)
+                    if (faceName.Equals(name.Value, StringComparison.OrdinalIgnoreCase))
                     {
                         return font;
                     }
@@ -488,7 +486,7 @@ namespace MS.Internal.FontCache
             // thus we will start again removing words (separated by ' ') from its end and looking
             // for the resulting faceName in that dictionary. So this dictionary is 
             // used to speed the search.
-            Dictionary<string, Text.TextInterface.Font> faces = new Dictionary<string, Text.TextInterface.Font>();
+            Dictionary<string, Text.TextInterface.Font> faces = new Dictionary<string, Text.TextInterface.Font>(StringComparer.OrdinalIgnoreCase);
 
             //We could have merged this loop with the one above. However this will degrade the performance 
             //of the scenario where the user entered  a correct face name (which is the common scenario).
@@ -498,8 +496,7 @@ namespace MS.Internal.FontCache
             {
                 foreach (KeyValuePair<CultureInfo, string> name in font.FaceNames)
                 {
-                    string currentFontName = name.Value.ToUpper(CultureInfo.InvariantCulture);
-                    faces.TryAdd(currentFontName, font);
+                    faces.TryAdd(name.Value, font);
                 }
             }
 
@@ -509,8 +506,8 @@ namespace MS.Internal.FontCache
 
             while (indexOfSpace > 0)
             {
-                faceName = faceName.Substring(0, indexOfSpace);
-                if (faces.TryGetValue(faceName, out matchingFont))
+                faceName = faceName.Slice(0, indexOfSpace);
+                if (faces.TryGetValue(faceName.ToString(), out matchingFont))
                 {
                     return matchingFont;
                 }

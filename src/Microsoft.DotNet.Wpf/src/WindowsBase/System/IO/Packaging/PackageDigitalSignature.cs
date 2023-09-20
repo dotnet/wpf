@@ -221,8 +221,7 @@ namespace System.IO.Packaging
             set
             {
                 ThrowIfInvalidated();
-                if (value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 _processor.Signature = value;
             }
@@ -302,8 +301,7 @@ namespace System.IO.Packaging
 
             VerifyResult result = VerifyResult.NotSigned;
 
-            if (signingCertificate == null)
-                throw new ArgumentNullException("signingCertificate");
+            ArgumentNullException.ThrowIfNull(signingCertificate);
 
             // Check for part existence
             foreach (Uri partUri in SignedParts)

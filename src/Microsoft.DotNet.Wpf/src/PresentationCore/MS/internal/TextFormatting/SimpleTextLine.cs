@@ -487,10 +487,7 @@ namespace MS.Internal.TextFormatting
             InvertAxes          inversion
             )
         {
-            if (drawingContext == null)
-            {
-                throw new ArgumentNullException("drawingContext");
-            }
+            ArgumentNullException.ThrowIfNull(drawingContext);
 
             MatrixTransform antiInversion = TextFormatterImp.CreateAntiInversionTransform(
                 inversion,

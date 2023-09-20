@@ -654,8 +654,7 @@ namespace System.Windows.Media.Imaging
             _bitmapInit.EnsureInitializedComplete();
             CompleteDelayedCreation();
 
-            if (pixels == null)
-                throw new System.ArgumentNullException("pixels");
+            ArgumentNullException.ThrowIfNull(pixels);
 
             if (pixels.Rank != 1)
                 throw new ArgumentException(SR.Collection_BadRank, "pixels");
@@ -1747,10 +1746,7 @@ namespace System.Windows.Media.Imaging
 
             public ManagedBitmapSource(BitmapSource bitmapSource)
             {
-                if (bitmapSource == null)
-                {
-                    throw new System.ArgumentNullException("bitmapSource");
-                }
+                ArgumentNullException.ThrowIfNull(bitmapSource);
                 _bitmapSource = new WeakReference<BitmapSource>(bitmapSource);
             }
 

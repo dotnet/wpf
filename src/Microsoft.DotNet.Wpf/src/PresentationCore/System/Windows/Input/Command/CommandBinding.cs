@@ -61,7 +61,8 @@ namespace System.Windows.Input
         /// <param name="canExecute">Handler associated with determining if the command can execute.</param>
         public CommandBinding(ICommand command, ExecutedRoutedEventHandler executed, CanExecuteRoutedEventHandler canExecute)
         {
-            _command = command ?? throw new ArgumentNullException(nameof(command));
+            ArgumentNullException.ThrowIfNull(command);
+            _command = command;
 
             if (executed is not null)
             {
@@ -84,7 +85,11 @@ namespace System.Windows.Input
         public ICommand Command
         {
             get => _command;
-            set => _command = value ?? throw new ArgumentNullException(nameof(value));
+            set
+            {
+                ArgumentNullException.ThrowIfNull(value);
+                _command = value;
+            }
         }
 
         #endregion

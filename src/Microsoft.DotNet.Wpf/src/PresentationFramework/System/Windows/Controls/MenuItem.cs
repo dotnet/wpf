@@ -2515,7 +2515,10 @@ namespace System.Windows.Controls
             // but if we fail to focus we should still select.
             // (This is to help enable focusless menus).
             // Check IsKeyboardFocusWithin to allow rich content within the menuitem.
-            if (!IsKeyboardFocusWithin)
+            if (!IsKeyboardFocusWithin
+                // But only acquire focus if the window we are inside of is currently active or there is no window.
+                // Otherwise we would potentially steal focus from other applications.
+                && (Window.GetWindow(this)?.IsActive ?? true))
             {
                 Focus();
             }

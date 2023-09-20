@@ -101,8 +101,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">viewer is null</exception>
         public AnnotationService(DocumentViewerBase viewer)
         {
-            if (viewer == null)
-                throw new ArgumentNullException("viewer");
+            ArgumentNullException.ThrowIfNull(viewer);
 
             Initialize(viewer);
         }
@@ -115,8 +114,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">viewer is null</exception>
         public AnnotationService(FlowDocumentScrollViewer viewer)
         {
-            if (viewer == null)
-                throw new ArgumentNullException("viewer");
+            ArgumentNullException.ThrowIfNull(viewer);
 
             Initialize(viewer);
         }
@@ -129,8 +127,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">viewer is null</exception>
         public AnnotationService(FlowDocumentReader viewer)
         {
-            if (viewer == null)
-                throw new ArgumentNullException("viewer");
+            ArgumentNullException.ThrowIfNull(viewer);
 
             Initialize(viewer);
         }
@@ -145,8 +142,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentException">element is not a FrameworkElement or FrameworkContentElement</exception>
         internal AnnotationService(DependencyObject root)
         {
-            if (root == null)
-                throw new ArgumentNullException("root");
+            ArgumentNullException.ThrowIfNull(root);
 
             if (!(root is FrameworkElement || root is FrameworkContentElement))
                 throw new ArgumentException(SR.ParameterMustBeLogicalNode, "root");
@@ -175,8 +171,7 @@ namespace System.Windows.Annotations
         /// enabled for the DocumentViewerBase</exception>
         public void Enable(AnnotationStore annotationStore)
         {
-            if (annotationStore == null)
-                throw new ArgumentNullException("annotationStore");
+            ArgumentNullException.ThrowIfNull(annotationStore);
 
             VerifyAccess();
 
@@ -303,8 +298,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">viewer is null</exception>
         public static AnnotationService GetService(DocumentViewerBase viewer)
         {
-            if (viewer == null)
-                throw new ArgumentNullException("viewer");
+            ArgumentNullException.ThrowIfNull(viewer);
 
             return viewer.GetValue(AnnotationService.ServiceProperty) as AnnotationService;
         }
@@ -319,8 +313,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">reader is null</exception>
         public static AnnotationService GetService(FlowDocumentReader reader)
         {
-            if (reader == null)
-                throw new ArgumentNullException("reader");
+            ArgumentNullException.ThrowIfNull(reader);
 
             return reader.GetValue(AnnotationService.ServiceProperty) as AnnotationService;
         }
@@ -335,8 +328,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">viewer is null</exception>
         public static AnnotationService GetService(FlowDocumentScrollViewer viewer)
         {
-            if (viewer == null)
-                throw new ArgumentNullException("viewer");
+            ArgumentNullException.ThrowIfNull(viewer);
 
             return viewer.GetValue(AnnotationService.ServiceProperty) as AnnotationService;
         }
@@ -369,8 +361,7 @@ namespace System.Windows.Annotations
             if (_asyncLoadOperation != null)
                 return;
 
-            if (element == null)
-                throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
 
             if (!(element is FrameworkElement || element is FrameworkContentElement))
                 throw new ArgumentException(SR.ParameterMustBeLogicalNode, "element");
@@ -405,8 +396,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentException">element is not a FrameworkElement or FrameworkContentElement</exception>
         internal void UnloadAnnotations(DependencyObject element)
         {
-            if (element == null)
-                throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
 
             if (!(element is FrameworkElement || element is FrameworkContentElement))
                 throw new ArgumentException(SR.ParameterMustBeLogicalNode, "element");
@@ -542,8 +532,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">d is null</exception>
         internal static AnnotationService GetService(DependencyObject d)
         {
-            if (d == null)
-                throw new ArgumentNullException("d");
+            ArgumentNullException.ThrowIfNull(d);
 
             return d.GetValue(AnnotationService.ServiceProperty) as AnnotationService;
         }
@@ -564,8 +553,7 @@ namespace System.Windows.Annotations
         /// <returns>AnnotationComponentChooser to use for this subtree </returns>
         internal static AnnotationComponentChooser GetChooser(DependencyObject d)
         {
-            if (d == null)
-                throw new ArgumentNullException("d");
+            ArgumentNullException.ThrowIfNull(d);
 
             return (AnnotationComponentChooser)d.GetValue(ChooserProperty);
         }
@@ -591,11 +579,8 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">d is null</exception>
         internal static void SetSubTreeProcessorId(DependencyObject d, String id)
         {
-            if (d == null)
-                throw new ArgumentNullException("d");
-
-            if (id == null)
-                throw new ArgumentNullException("id");
+            ArgumentNullException.ThrowIfNull(d);
+            ArgumentNullException.ThrowIfNull(id);
 
             //d will check the context if needed
             d.SetValue(SubTreeProcessorIdProperty, id);
@@ -610,8 +595,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">d is null</exception>
         internal static String GetSubTreeProcessorId(DependencyObject d)
         {
-            if (d == null)
-                throw new ArgumentNullException("d");
+            ArgumentNullException.ThrowIfNull(d);
 
             //d will check the context if needed
             return d.GetValue(SubTreeProcessorIdProperty) as String;
@@ -634,11 +618,8 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">d is null</exception>
         internal static void SetDataId(DependencyObject d, String id)
         {
-            if (d == null)
-                throw new ArgumentNullException("d");
-
-            if (id == null)
-                throw new ArgumentNullException("id");
+            ArgumentNullException.ThrowIfNull(d);
+            ArgumentNullException.ThrowIfNull(id);
 
             //d will check the context if needed
             d.SetValue(DataIdProperty, id);
@@ -653,8 +634,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">d is null</exception>
         internal static String GetDataId(DependencyObject d)
         {
-            if (d == null)
-                throw new ArgumentNullException("d");
+            ArgumentNullException.ThrowIfNull(d);
 
             //d will check the context if needed
             return d.GetValue(DataIdProperty) as String;

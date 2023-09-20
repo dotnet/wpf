@@ -314,10 +314,7 @@ namespace System.Windows.Xps.Packaging
             {
                 throw new XpsPackagingException(SR.ReachPackaging_OnlyWriters);
             }
-            if (null == contentType)
-            {
-                throw new ArgumentNullException("contentType");
-            }
+            ArgumentNullException.ThrowIfNull(contentType);
             if (0 == contentType.ToString().Length)
             {
                 throw new ArgumentException(SR.Format(SR.ReachPackaging_InvalidContentType, contentType), "contentType");
@@ -370,10 +367,7 @@ namespace System.Windows.Xps.Packaging
             {
                 throw new XpsPackagingException(SR.ReachPackaging_OnlyWriters);
             }
-            if (null == contentType)
-            {
-                throw new ArgumentNullException("contentType");
-            }
+            ArgumentNullException.ThrowIfNull(contentType);
             if (ContentType.Empty.AreTypeAndSubTypeEqual(contentType))
             {
                 throw new ArgumentException(SR.ReachPackaging_InvalidType);
@@ -463,18 +457,9 @@ namespace System.Windows.Xps.Packaging
             PrintTicket     printTicket
             )
         {
-            if (null == relatedPart)
-            {
-                throw new ArgumentNullException("relatedPart");
-            }
-            if (null == metroPart)
-            {
-                throw new ArgumentNullException("metroPart");
-            }
-            if (null == printTicket)
-            {
-                throw new ArgumentNullException("printTicket");
-            }
+            ArgumentNullException.ThrowIfNull(relatedPart);
+            ArgumentNullException.ThrowIfNull(metroPart);
+            ArgumentNullException.ThrowIfNull(printTicket);
 
             //
             // Generate Uri
@@ -527,14 +512,8 @@ namespace System.Windows.Xps.Packaging
             PackagePart     metroPart
             )
         {
-            if (null == relatedPart)
-            {
-                throw new ArgumentNullException("relatedPart");
-            }
-            if (null == metroPart)
-            {
-                throw new ArgumentNullException("metroPart");
-            }
+            ArgumentNullException.ThrowIfNull(relatedPart);
+            ArgumentNullException.ThrowIfNull(metroPart);
             if( Streaming )
             {
                 // Generate Uri
@@ -1025,10 +1004,7 @@ namespace System.Windows.Xps.Packaging
             bool                        streaming
             )
         {
-            if (null == metroPackage)
-            {
-                throw new ArgumentNullException("metroPackage");
-            }
+            ArgumentNullException.ThrowIfNull(metroPackage);
 
             _xpsDocument = null;
             _metroPackage = metroPackage;
@@ -1058,10 +1034,7 @@ namespace System.Windows.Xps.Packaging
             object relatedPart
             )
         {
-            if (null == relatedPart)
-            {
-                throw new ArgumentNullException("relatedPart");
-            }
+            ArgumentNullException.ThrowIfNull(relatedPart);
             string uniqueUri = "";
             
             if( relatedPart is XpsFixedDocumentSequenceReaderWriter )
@@ -1094,10 +1067,7 @@ namespace System.Windows.Xps.Packaging
             ContentType contentType
             )
         {
-            if (null == contentType)
-            {
-                throw new ArgumentNullException(nameof(contentType));
-            }
+            ArgumentNullException.ThrowIfNull(contentType);
 
             string uniqueUri = "";
 
@@ -1278,8 +1248,7 @@ namespace System.Windows.Xps.Packaging
             }
             else
             {
-                if (String.CompareOrdinal(contentType.TypeComponent.ToUpper(CultureInfo.InvariantCulture),
-                                          "Image".ToUpper(CultureInfo.InvariantCulture))==0)
+                if (string.Equals(contentType.TypeComponent, "Image", StringComparison.OrdinalIgnoreCase))
                 {
                     key = "Image";
                 }
@@ -1528,10 +1497,7 @@ namespace System.Windows.Xps.Packaging
             //
             // Throw If the part provided is null
             //
-            if (startingPart == null)
-            {
-                throw new ArgumentNullException("startingPart");
-            }
+            ArgumentNullException.ThrowIfNull(startingPart);
 
             //
             // Throw If the part provided is from a different container

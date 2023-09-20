@@ -324,10 +324,7 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
         internal FixedTextPointer VerifyPosition(ITextPointer position)
         {
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
 
             if (position.TextContainer != this)
             {

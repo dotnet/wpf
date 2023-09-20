@@ -167,7 +167,7 @@ namespace System.Windows.Controls
         /// <returns>The property's value.</returns>
         public static GridViewColumnCollection GetColumnCollection(DependencyObject element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             return (GridViewColumnCollection)element.GetValue(ColumnCollectionProperty);
         }
 
@@ -178,7 +178,7 @@ namespace System.Windows.Controls
         /// <param name="collection">The collection to set</param>
         public static void SetColumnCollection(DependencyObject element, GridViewColumnCollection collection)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(ColumnCollectionProperty, collection);
         }
 

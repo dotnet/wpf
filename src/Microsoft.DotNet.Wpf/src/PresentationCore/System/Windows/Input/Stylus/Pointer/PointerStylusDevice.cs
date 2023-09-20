@@ -709,10 +709,7 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         internal override StylusPointCollection GetStylusPoints(IInputElement relativeTo, StylusPointDescription subsetToReformatTo)
         {
-            if (null == subsetToReformatTo)
-            {
-                throw new ArgumentNullException("subsetToReformatTo");
-            }
+            ArgumentNullException.ThrowIfNull(subsetToReformatTo);
             // Fake up an empty one if we have to.
             if (_currentStylusPoints == null)
             {

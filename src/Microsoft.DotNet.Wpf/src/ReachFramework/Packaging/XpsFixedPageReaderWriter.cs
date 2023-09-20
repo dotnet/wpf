@@ -452,10 +452,7 @@ namespace System.Windows.Xps.Packaging
             )
             : base(xpsManager)
         {
-            if (null == part)
-            {
-                throw new ArgumentNullException(String.Format(CultureInfo.InvariantCulture, "part"));
-            }
+            ArgumentNullException.ThrowIfNull(part);
 
             this.Uri = part.Uri;
             _metroPart = part;
@@ -1229,10 +1226,7 @@ namespace System.Windows.Xps.Packaging
             {
                 throw new ObjectDisposedException("FixedPageReader");
             }
-            if (null == mimeType)
-            {
-                throw new ArgumentNullException("mimeType");
-            }
+            ArgumentNullException.ThrowIfNull(mimeType);
             if (0 == mimeType.Length)
             {
                 throw new ArgumentException(SR.ReachPackaging_InvalidType);
@@ -1252,10 +1246,7 @@ namespace System.Windows.Xps.Packaging
             {
                 throw new ObjectDisposedException("FixedPageReader");
             }
-            if (null == mimeType)
-            {
-                throw new ArgumentNullException("mimeType");
-            }
+            ArgumentNullException.ThrowIfNull(mimeType);
             if (ContentType.Empty.AreTypeAndSubTypeEqual(mimeType))
             {
                 throw new ArgumentException(SR.Format(SR.ReachPackaging_InvalidContentType, mimeType.ToString()));
@@ -1913,11 +1904,11 @@ namespace System.Windows.Xps.Packaging
         {
             //Extract file extension
             String path = fontUri.OriginalString;
-            String extension = Path.GetExtension(path).ToLower(CultureInfo.InvariantCulture);
+            String extension = Path.GetExtension(path);
             String fileName = Path.GetFileNameWithoutExtension(path);
 
             ContentType contentType = null;
-            if (String.CompareOrdinal(extension, XpsS0Markup.ObfuscatedFontExt.ToLower(CultureInfo.InvariantCulture)) == 0)
+            if (string.Equals(extension, XpsS0Markup.ObfuscatedFontExt, StringComparison.OrdinalIgnoreCase))
             {
                 // Verify that the filename is a valid GUID string
                 // Until Guid has a TryParse method we will have to depend on an exception being thrown

@@ -108,11 +108,8 @@ namespace System.Windows.Input.StylusPlugIns
             { 
                 get { return _strokeNodeIterator; }
                 set 
-                { 
-                    if (value == null) 
-                    {
-                        throw new ArgumentNullException("StrokeNodeIterator");
-                    }
+                {
+                    ArgumentNullException.ThrowIfNull(value);
                     _strokeNodeIterator = value; 
                 }
             }
@@ -746,10 +743,7 @@ namespace System.Windows.Input.StylusPlugIns
                                         Geometry geometry, 
                                         Brush fillBrush)
         {
-            if (drawingContext == null)
-            {
-                throw new ArgumentNullException("drawingContext");
-            }
+            ArgumentNullException.ThrowIfNull(drawingContext);
             drawingContext.DrawGeometry(fillBrush, null, geometry);
         }
         
@@ -1074,9 +1068,8 @@ namespace System.Windows.Input.StylusPlugIns
             }
             set // (called in UIContext)
             {
-                if (value == null)
-                    throw new ArgumentNullException("value");
-                
+                ArgumentNullException.ThrowIfNull(value);
+
                 _drawAttrsSource = value;
 
                 OnDrawingAttributesReplaced();

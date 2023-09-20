@@ -69,10 +69,7 @@ namespace MS.Internal.Documents
         /// <param name="index"><see cref="ICollection.CopyTo"/></param>
         public void CopyTo(Array array, int index)
         {
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
             if (array.Rank != 1)
             {
                 throw new ArgumentException(SR.TableCollectionRankMultiDimNotSupported);
@@ -108,10 +105,7 @@ namespace MS.Internal.Documents
         /// </remarks>
         public void CopyTo(TItem[] array, int index)
         {
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
             if (index < 0)
             {
                 throw new ArgumentOutOfRangeException("index", SR.TableCollectionOutOfRangeNeedNonNegNum);
@@ -412,10 +406,7 @@ namespace MS.Internal.Documents
 
         int IList.Add(object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             TItem item = value as TItem;
 
@@ -461,10 +452,7 @@ namespace MS.Internal.Documents
 
         void IList.Insert(int index, object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             TItem newItem = value as TItem;
 
@@ -518,10 +506,7 @@ namespace MS.Internal.Documents
 
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 TItem item = value as TItem;
 

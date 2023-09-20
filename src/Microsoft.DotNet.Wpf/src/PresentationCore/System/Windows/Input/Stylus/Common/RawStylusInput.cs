@@ -31,18 +31,12 @@ namespace System.Windows.Input.StylusPlugIns
             GeneralTransform        tabletToElementTransform,
             StylusPlugInCollection targetPlugInCollection)
         {
-            if (report == null)
-            {
-                throw new ArgumentNullException("report");
-            }
+            ArgumentNullException.ThrowIfNull(report);
             if (tabletToElementTransform.Inverse == null)
             {
                 throw new ArgumentException(SR.Stylus_MatrixNotInvertable, "tabletToElementTransform");
             }
-            if (targetPlugInCollection == null)
-            {
-                throw new ArgumentNullException("targetPlugInCollection");
-            }
+            ArgumentNullException.ThrowIfNull(targetPlugInCollection);
 
             // We should always see this GeneralTransform is frozen since we access this from multiple threads.
             System.Diagnostics.Debug.Assert(tabletToElementTransform.IsFrozen);
@@ -88,7 +82,10 @@ namespace System.Windows.Input.StylusPlugIns
                     group.Children.Add(new MatrixTransform(_report.InputSource.CompositionTarget.TransformFromDevice));
                 }
                 group.Children.Add(_tabletToElementTransform);
-                group.Children.Add(transform);
+                if(transform != null)
+                {
+                    group.Children.Add(transform);
+                }
                 return new StylusPointCollection(_report.StylusPointDescription, _report.GetRawPacketData(), group, Matrix.Identity);
             }
             else
@@ -105,11 +102,8 @@ namespace System.Windows.Input.StylusPlugIns
         /// </remarks>
         /// <param name="stylusPoints">stylusPoints</param>
         public void SetStylusPoints(StylusPointCollection stylusPoints)
-        {            
-            if (null == stylusPoints)
-            {
-                throw new ArgumentNullException("stylusPoints");
-            }
+        {
+            ArgumentNullException.ThrowIfNull(stylusPoints);
 
             if (!StylusPointDescription.AreCompatible(  stylusPoints.Description,
                                                         _report.StylusPointDescription))

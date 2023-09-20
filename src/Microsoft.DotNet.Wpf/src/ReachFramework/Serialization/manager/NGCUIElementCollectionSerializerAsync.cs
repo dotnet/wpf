@@ -131,10 +131,7 @@ namespace System.Windows.Xps.Serialization
             SerializableObjectContext   serializableObjectContext
             )
         {
-            if (serializableObjectContext == null)
-            {
-                throw new ArgumentNullException("serializableObjectContext");
-            }
+            ArgumentNullException.ThrowIfNull(serializableObjectContext);
 
             IEnumerable enumerableObject = serializableObjectContext.TargetObject as IEnumerable;
 

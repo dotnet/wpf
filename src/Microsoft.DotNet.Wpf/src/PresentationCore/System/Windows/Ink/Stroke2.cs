@@ -58,10 +58,7 @@ namespace System.Windows.Ink
         /// <param name="context"></param>
         public void Draw(DrawingContext context)
         {
-            if (null == context)
-            {
-                throw new System.ArgumentNullException("context");
-            }
+            ArgumentNullException.ThrowIfNull(context);
 
             //our code never calls this public API so we can assume that opacity
             //has not been set up
@@ -79,15 +76,9 @@ namespace System.Windows.Ink
         /// <param name="drawingAttributes"></param>
         public void Draw(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
         {
-            if (null == drawingContext)
-            {
-                throw new System.ArgumentNullException("context");
-            }
+            ArgumentNullException.ThrowIfNull(drawingContext);
 
-            if (null == drawingAttributes)
-            {
-                throw new System.ArgumentNullException("drawingAttributes");
-            }
+            ArgumentNullException.ThrowIfNull(drawingAttributes);
 
             //             context.VerifyAccess();
 
@@ -132,10 +123,7 @@ namespace System.Windows.Ink
         public StrokeCollection GetClipResult(IEnumerable<Point> lassoPoints)
         {
             // Check the input parameters
-            if (lassoPoints == null)
-            {
-                throw new System.ArgumentNullException("lassoPoints");
-            }
+            ArgumentNullException.ThrowIfNull(lassoPoints);
 
             if (IEnumerablePointHelper.GetCount(lassoPoints) == 0)
             {
@@ -166,10 +154,7 @@ namespace System.Windows.Ink
         public StrokeCollection GetEraseResult(IEnumerable<Point> lassoPoints)
         {
             // Check the input parameters
-            if (lassoPoints == null)
-            {
-                throw new System.ArgumentNullException("lassoPoints");
-            }
+            ArgumentNullException.ThrowIfNull(lassoPoints);
 
             if (IEnumerablePointHelper.GetCount(lassoPoints) == 0)
             {
@@ -190,14 +175,8 @@ namespace System.Windows.Ink
         public StrokeCollection GetEraseResult(IEnumerable<Point> eraserPath, StylusShape eraserShape)
         {
             // Check the input parameters
-            if (eraserShape == null)
-            {
-                throw new System.ArgumentNullException("eraserShape");
-            }
-            if (eraserPath == null)
-            {
-                throw new System.ArgumentNullException("eraserPath");
-            }
+            ArgumentNullException.ThrowIfNull(eraserShape);
+            ArgumentNullException.ThrowIfNull(eraserPath);
 
             return this.Erase(this.EraseTest(eraserPath, eraserShape));
         }
@@ -286,10 +265,7 @@ namespace System.Windows.Ink
         /// <returns></returns>
         public bool HitTest(IEnumerable<Point> lassoPoints, int percentageWithinLasso)
         {
-            if (lassoPoints == null)
-            {
-                throw new System.ArgumentNullException("lassoPoints");
-            }
+            ArgumentNullException.ThrowIfNull(lassoPoints);
 
             if ((percentageWithinLasso < 0) || (percentageWithinLasso > 100))
             {
@@ -346,14 +322,8 @@ namespace System.Windows.Ink
         public bool HitTest(IEnumerable<Point> path, StylusShape stylusShape)
         {
             // Check the input parameters
-            if (path == null)
-            {
-                throw new System.ArgumentNullException("path");
-            }
-            if (stylusShape == null)
-            {
-                throw new System.ArgumentNullException("stylusShape");
-            }
+            ArgumentNullException.ThrowIfNull(path);
+            ArgumentNullException.ThrowIfNull(stylusShape);
 
             if (IEnumerablePointHelper.GetCount(path) == 0)
             {
@@ -408,15 +378,9 @@ namespace System.Windows.Ink
         /// <param name="drawingAttributes">DrawingAttributes to draw with</param>
         protected virtual void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
         {
-            if (null == drawingContext)
-            {
-                throw new System.ArgumentNullException("drawingContext");
-            }
+            ArgumentNullException.ThrowIfNull(drawingContext);
 
-            if (null == drawingAttributes)
-            {
-                throw new System.ArgumentNullException("drawingAttributes");
-            }
+            ArgumentNullException.ThrowIfNull(drawingAttributes);
 
             if (_drawAsHollow == true)
             {
@@ -496,10 +460,7 @@ namespace System.Windows.Ink
         /// <returns></returns>
         public Geometry GetGeometry(DrawingAttributes drawingAttributes)
         {
-            if (drawingAttributes == null)
-            {
-                throw new ArgumentNullException("drawingAttributes");
-            }
+            ArgumentNullException.ThrowIfNull(drawingAttributes);
 
             bool geometricallyEqual = DrawingAttributes.GeometricallyEqual(drawingAttributes, this.DrawingAttributes);
 

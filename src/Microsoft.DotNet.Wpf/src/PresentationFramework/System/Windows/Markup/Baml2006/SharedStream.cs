@@ -24,10 +24,7 @@ namespace System.Windows.Baml2006
 
         public SharedStream(Stream baseStream)
         {
-            if (baseStream == null)
-            {
-                throw new ArgumentNullException(nameof(baseStream));
-            }
+            ArgumentNullException.ThrowIfNull(baseStream);
 
             Initialize(baseStream, 0, baseStream.Length);
         }
@@ -40,10 +37,7 @@ namespace System.Windows.Baml2006
         /// <param name="length"></param>
         public SharedStream(Stream baseStream, long offset, long length)
         {
-            if (baseStream == null)
-            {
-                throw new ArgumentNullException(nameof(baseStream));
-            }
+            ArgumentNullException.ThrowIfNull(baseStream);
 
             Initialize(baseStream, offset, length);
         }
@@ -176,10 +170,7 @@ namespace System.Windows.Baml2006
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            if (buffer == null)
-            {
-                throw new ArgumentNullException(nameof(buffer));
-            }
+            ArgumentNullException.ThrowIfNull(buffer);
 
             if (offset < 0 || offset >= buffer.Length)
             {

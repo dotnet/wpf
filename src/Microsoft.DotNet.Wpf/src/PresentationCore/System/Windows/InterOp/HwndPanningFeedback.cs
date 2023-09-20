@@ -27,10 +27,7 @@ namespace System.Windows.Interop
         /// <param name="hwndSource">The HWND on which to provide feedback.</param>
         public HwndPanningFeedback(HwndSource hwndSource)
         {
-            if (hwndSource == null)
-            {
-                throw new ArgumentNullException("hwndSource");
-            }
+            ArgumentNullException.ThrowIfNull(hwndSource);
 
             _hwndSource = hwndSource;
         }

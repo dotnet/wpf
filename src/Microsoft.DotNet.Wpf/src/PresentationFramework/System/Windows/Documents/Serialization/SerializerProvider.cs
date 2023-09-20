@@ -84,10 +84,7 @@ namespace System.Windows.Documents.Serialization
         public static void RegisterSerializer(SerializerDescriptor serializerDescriptor, bool overwrite)
         {
 
-            if (serializerDescriptor == null)
-            {
-                throw new ArgumentNullException("serializerDescriptor");
-            }
+            ArgumentNullException.ThrowIfNull(serializerDescriptor);
 
             RegistryKey plugIns = _rootKey.CreateSubKey(_registryPath);
             string serializerKey = serializerDescriptor.DisplayName + "/" + serializerDescriptor.AssemblyName + "/" + serializerDescriptor.AssemblyVersion + "/" + serializerDescriptor.WinFXVersion;
@@ -113,10 +110,7 @@ namespace System.Windows.Documents.Serialization
         public static void UnregisterSerializer(SerializerDescriptor serializerDescriptor)
         {
 
-            if (serializerDescriptor == null)
-            {
-                throw new ArgumentNullException("serializerDescriptor");
-            }
+            ArgumentNullException.ThrowIfNull(serializerDescriptor);
 
             RegistryKey plugIns = _rootKey.CreateSubKey(_registryPath);
             string serializerKey = serializerDescriptor.DisplayName + "/" + serializerDescriptor.AssemblyName + "/" + serializerDescriptor.AssemblyVersion + "/" + serializerDescriptor.WinFXVersion;
@@ -143,10 +137,7 @@ namespace System.Windows.Documents.Serialization
 
             SerializerWriter serializerWriter = null;
 
-            if (serializerDescriptor == null)
-            {
-                throw new ArgumentNullException("serializerDescriptor");
-            }
+            ArgumentNullException.ThrowIfNull(serializerDescriptor);
 
             string serializerKey = serializerDescriptor.DisplayName + "/" + serializerDescriptor.AssemblyName + "/" + serializerDescriptor.AssemblyVersion + "/" + serializerDescriptor.WinFXVersion;
 
@@ -154,10 +145,7 @@ namespace System.Windows.Documents.Serialization
             {
                 throw new ArgumentException(SR.SerializerProviderWrongVersion, serializerKey);
             }
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
 
             bool found = false;
             foreach (SerializerDescriptor sd in InstalledSerializers)

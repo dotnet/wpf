@@ -265,10 +265,7 @@ namespace System.Windows.Input
         /// <param name="collection">collection to append</param>
         public void AddRange(ICollection collection)
         {
-            if (collection == null)
-            {
-                throw new ArgumentNullException("collection");
-            }
+            ArgumentNullException.ThrowIfNull(collection);
 
             if ( collection.Count > 0)
             {

@@ -114,10 +114,7 @@ namespace System.Windows.Documents
         {
             Initialize(null); // null means to create its own TextContainer
 
-            if (block == null)
-            {
-                throw new ArgumentNullException("block");
-            }
+            ArgumentNullException.ThrowIfNull(block);
 
             this.Blocks.Add(block);
         }
@@ -1638,10 +1635,7 @@ namespace System.Windows.Documents
         ///</param>
         void IAddChild.AddChild(Object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             if (!TextSchema.IsValidChildOfContainer(/*parentType:*/_typeofThis, /*childType:*/value.GetType()))
             {
@@ -1701,10 +1695,7 @@ namespace System.Windows.Documents
         /// </returns>
         object IServiceProvider.GetService(Type serviceType)
         {
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
             if (serviceType == typeof(ITextContainer))
             {
                 return _structuralCache.TextContainer;

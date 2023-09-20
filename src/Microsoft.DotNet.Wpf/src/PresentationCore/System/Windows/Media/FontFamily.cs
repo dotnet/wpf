@@ -88,8 +88,7 @@ namespace System.Windows.Media
         /// (e.g., "file:///c:/windows/fonts/#Arial").</param>
         public FontFamily(Uri baseUri, string familyName)
         {
-            if (familyName == null)
-                throw new ArgumentNullException("familyName");
+            ArgumentNullException.ThrowIfNull(familyName);
 
             if (baseUri != null && !baseUri.IsAbsoluteUri)
                 throw new ArgumentException(SR.UriNotAbsolute, "baseUri");

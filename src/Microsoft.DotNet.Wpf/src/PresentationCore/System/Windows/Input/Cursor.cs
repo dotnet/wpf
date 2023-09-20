@@ -58,8 +58,7 @@ namespace System.Windows.Input
         public Cursor(string cursorFile, bool scaleWithDpi)
         {
             _scaleWithDpi = scaleWithDpi;
-            if (cursorFile == null)
-                throw new ArgumentNullException("cursorFile");
+            ArgumentNullException.ThrowIfNull(cursorFile);
 
             if ((cursorFile != String.Empty) &&
                 (cursorFile.EndsWith(".cur", StringComparison.OrdinalIgnoreCase) ||
@@ -90,10 +89,7 @@ namespace System.Windows.Input
         public Cursor(Stream cursorStream, bool scaleWithDpi)
         {
             _scaleWithDpi = scaleWithDpi;
-            if (cursorStream == null)
-            {
-                throw new ArgumentNullException("cursorStream");
-            }
+            ArgumentNullException.ThrowIfNull(cursorStream);
             LoadFromStream(cursorStream);
         }
 

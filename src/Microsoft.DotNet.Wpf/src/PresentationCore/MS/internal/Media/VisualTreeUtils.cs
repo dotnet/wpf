@@ -235,10 +235,7 @@ namespace MS.Internal.Media
         /// </summary>
         internal static void AsNonNullVisual(DependencyObject element, out Visual visual, out Visual3D visual3D)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             AsVisual(element, out visual, out visual3D);
 

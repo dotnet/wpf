@@ -51,10 +51,8 @@ namespace System.Windows.Data
         /// <param name="targetType">the target type to which this ValueConverter can convert to</param>
         public ValueConversionAttribute(Type sourceType, Type targetType)
         {
-            if (sourceType == null)
-                throw new ArgumentNullException("sourceType");
-            if (targetType == null)
-                throw new ArgumentNullException("targetType");
+            ArgumentNullException.ThrowIfNull(sourceType);
+            ArgumentNullException.ThrowIfNull(targetType);
             _sourceType = sourceType;
             _targetType = targetType;
         }

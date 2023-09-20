@@ -50,10 +50,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="managedFilter">IManagedFilter implementation</param>
         internal IndexingFilterMarshaler(IManagedFilter managedFilter)
         {
-            if (managedFilter == null)
-            {
-                throw new ArgumentNullException("managedFilter");
-            }
+            ArgumentNullException.ThrowIfNull(managedFilter);
 
             _implementation = managedFilter;
         }

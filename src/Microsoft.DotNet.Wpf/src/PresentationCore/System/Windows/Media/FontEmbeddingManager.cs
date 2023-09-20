@@ -70,8 +70,7 @@ namespace System.Windows.Media
         /// <param name="glyphRun">Glyph run to obtain typeface and index information from.</param>
         public void RecordUsage(GlyphRun glyphRun)
         {
-            if (glyphRun == null)
-                throw new ArgumentNullException("glyphRun");
+            ArgumentNullException.ThrowIfNull(glyphRun);
 
             // Suppress PRESharp parameter validation warning about glyphRun.GlyphTypeface because
             // GlyphRun.GlyphTypeface property cannot be null.

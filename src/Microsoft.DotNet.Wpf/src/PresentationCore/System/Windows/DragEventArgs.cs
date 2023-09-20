@@ -93,10 +93,7 @@ namespace System.Windows
         {
             Point dropPoint;
 
-            if (relativeTo == null)
-            {
-                throw new ArgumentNullException("relativeTo");
-            }
+            ArgumentNullException.ThrowIfNull(relativeTo);
 
             dropPoint = new Point(0, 0);
 

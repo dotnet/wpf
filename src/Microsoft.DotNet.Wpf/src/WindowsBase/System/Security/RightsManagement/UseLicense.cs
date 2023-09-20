@@ -40,10 +40,7 @@ namespace System.Security.RightsManagement
         public UseLicense(string useLicense)
         {
 
-            if (useLicense == null)
-            {
-                throw new ArgumentNullException("useLicense");
-            }
+            ArgumentNullException.ThrowIfNull(useLicense);
             _serializedUseLicense = useLicense;
 
 
@@ -115,10 +112,7 @@ namespace System.Security.RightsManagement
         public CryptoProvider Bind (SecureEnvironment secureEnvironment)
         {
 
-            if (secureEnvironment == null)
-            {
-                throw new ArgumentNullException("secureEnvironment");
-            }
+            ArgumentNullException.ThrowIfNull(secureEnvironment);
 
             // The SecureEnvironment constructor makes sure ClientSession cannot be null.
             // Accordingly suppressing preSharp warning about having to validate ClientSession.
@@ -158,7 +152,7 @@ namespace System.Security.RightsManagement
 
             // Note that because of the GetType() checking above, the casting must be valid.
             UseLicense obj = (UseLicense)x;
-            return (String.CompareOrdinal(_serializedUseLicense, obj._serializedUseLicense) == 0);
+            return (string.Equals(_serializedUseLicense, obj._serializedUseLicense, StringComparison.Ordinal));
 }
 
         /// <summary>

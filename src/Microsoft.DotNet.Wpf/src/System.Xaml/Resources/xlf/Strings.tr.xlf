@@ -1112,11 +1112,6 @@
         <target state="translated">Döngüsel bağımlılık nedeniyle MarkupExtension.ProvideValue çağrılamıyor. MarkupExtension'ın içindeki özellikler, MarkupExtension'ın sonucuna başvurun nesneler başvuruda bulunamaz. Etkilenen MarkupExtension öğeleri:</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">'{0}' tür adı beklenen 'className, assembly' biçiminde değil.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="QuoteCharactersOutOfPlace">
         <source>Quote characters ' or " are only allowed at the start of values.</source>
         <target state="translated">Tırnak işareti karakterlerine (' veya ") yalnızca değerlerin başında izin verilir.</target>

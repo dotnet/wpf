@@ -309,10 +309,7 @@ namespace System.Windows.Media
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -424,10 +421,7 @@ namespace System.Windows.Media
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -539,10 +533,7 @@ namespace System.Windows.Media
 
         private Transform Cast(object value)
         {
-            if( value == null )
-            {
-                throw new System.ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             if (!(value is Transform))
             {
@@ -965,63 +956,58 @@ namespace System.Windows.Media
 
             WritePreamble();
 
-            if (collection != null)
+            ArgumentNullException.ThrowIfNull(collection);
+
+            bool needsItemValidation = true;
+            ICollection<Transform> icollectionOfT = collection as ICollection<Transform>;
+
+            if (icollectionOfT != null)
             {
-                bool needsItemValidation = true;
-                ICollection<Transform> icollectionOfT = collection as ICollection<Transform>;
+                _collection = new FrugalStructList<Transform>(icollectionOfT);
+            }
+            else
+            {
+                ICollection icollection = collection as ICollection;
 
-                if (icollectionOfT != null)
+                if (icollection != null) // an IC but not and IC<T>
                 {
-                    _collection = new FrugalStructList<Transform>(icollectionOfT);
+                    _collection = new FrugalStructList<Transform>(icollection);
                 }
-                else
-                {       
-                    ICollection icollection = collection as ICollection;
-
-                    if (icollection != null) // an IC but not and IC<T>
-                    {
-                        _collection = new FrugalStructList<Transform>(icollection);
-                    }
-                    else // not a IC or IC<T> so fall back to the slower Add
-                    {
-                        _collection = new FrugalStructList<Transform>();
-
-                        foreach (Transform item in collection)
-                        {
-                            if (item == null)
-                            {
-                                throw new System.ArgumentException(SR.Collection_NoNull);
-                            }
-                            Transform newValue = item;
-                            OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
-                            _collection.Add(newValue);
-                            OnInsert(newValue);
-                        }
-
-                        needsItemValidation = false;
-                    }
-                }
-
-                if (needsItemValidation)
+                else // not a IC or IC<T> so fall back to the slower Add
                 {
+                    _collection = new FrugalStructList<Transform>();
+
                     foreach (Transform item in collection)
                     {
                         if (item == null)
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
-                        OnFreezablePropertyChanged(/* oldValue = */ null, item);
-                        OnInsert(item);
+                        Transform newValue = item;
+                        OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
+                        _collection.Add(newValue);
+                        OnInsert(newValue);
                     }
+
+                    needsItemValidation = false;
                 }
-
-
-                WritePostscript();
             }
-            else
+
+            if (needsItemValidation)
             {
-                throw new ArgumentNullException("collection");
+                foreach (Transform item in collection)
+                {
+                    if (item == null)
+                    {
+                        throw new System.ArgumentException(SR.Collection_NoNull);
+                    }
+                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
+                    OnInsert(item);
+                }
             }
+
+
+            WritePostscript();
         }
 
         #endregion Constructors

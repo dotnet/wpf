@@ -23,10 +23,17 @@ RenderOptions_IsSoftwareRenderingForcedForProcess()
     return RenderOptions::IsSoftwareRenderingForcedForProcess();
 }
 
+void WINAPI
+RenderOptions_EnableHardwareAccelerationInRdp(BOOL fEnable)
+{
+    RenderOptions::EnableHardwareAccelerationInRdp(fEnable);
+}
+
 // m_cs must be entered before accessing m_fForceSoftware because multiple
 // managed threads plus the render thread could try to access it
 static CCriticalSection m_cs;
 static bool m_fForceSoftware;
+static bool m_fHwAccelerationInRdpEnabled;
 
 //+---------------------------------------------------------------------------------
 //
@@ -41,6 +48,7 @@ HRESULT
 RenderOptions::Init()
 {
     m_fForceSoftware = false;
+    m_fHwAccelerationInRdpEnabled = false;
     RRETURN(m_cs.Init());
 }
 
@@ -94,4 +102,30 @@ RenderOptions::IsSoftwareRenderingForcedForProcess()
     return m_fForceSoftware;
 }
 
+//+---------------------------------------------------------------------------------
+//
+//  RenderOptions::EnableGraphicHWAccelerationInRdp
+//
+//  Synopsis:   Sets whether or not Hardware Acceleration should be enabled for RDP.
+//
+//----------------------------------------------------------------------------------
+void
+RenderOptions::EnableHardwareAccelerationInRdp(BOOL fEnable)
+{
+    CGuard<CCriticalSection> guard(m_cs);
+    m_fHwAccelerationInRdpEnabled = !!fEnable;
+}
+
+//+---------------------------------------------------------------------------------
+//
+//  RenderOptions::IsHardwareAccelerationInRdpEnabled
+//
+//  Synopsis:   return whether or not Hardware Acceleration for RDP is enabled.
+//
+//----------------------------------------------------------------------------------
+BOOL
+RenderOptions::IsHardwareAccelerationInRdpEnabled()
+{
+    return m_fHwAccelerationInRdpEnabled;
+}
 

@@ -201,8 +201,7 @@ namespace MS.Internal.IO.Packaging
             }
             set
             {
-                if (value == null)
-                   throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 _headers = value;
             }
@@ -222,8 +221,7 @@ namespace MS.Internal.IO.Packaging
             }
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 _method = value;
             }
@@ -331,7 +329,7 @@ namespace MS.Internal.IO.Packaging
         //------------------------------------------------------
         private bool IsScheme(String schemeName)
         {
-            return (String.CompareOrdinal(_innerUri.Scheme, schemeName) == 0);
+            return (string.Equals(_innerUri.Scheme, schemeName, StringComparison.Ordinal));
         }
 
         /// <summary>

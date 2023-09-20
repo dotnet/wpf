@@ -62,8 +62,7 @@ namespace MS.Internal.IO.Packaging
         /// </remarks>
         internal UnsafeIndexingFilterStream(IStream oleStream)
         {
-            if (oleStream == null)
-                throw new ArgumentNullException("oleStream");
+            ArgumentNullException.ThrowIfNull(oleStream);
 
             _oleStream = oleStream;
             _disposed = false;

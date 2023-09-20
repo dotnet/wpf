@@ -122,8 +122,7 @@ namespace MS.Internal.IO.Packaging
 
         internal void SetCertificate(X509Certificate2 certificate)
         {
-            if (certificate == null)
-                throw new ArgumentNullException("certificate");
+            ArgumentNullException.ThrowIfNull(certificate);
 
             _certificate = certificate;
 
@@ -142,11 +141,8 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         internal CertificatePart(System.IO.Packaging.Package container, Uri partName)
         {
-            if (container == null)
-                throw new ArgumentNullException("container");
-            
-            if (partName == null)
-                throw new ArgumentNullException("partName");
+            ArgumentNullException.ThrowIfNull(container);
+            ArgumentNullException.ThrowIfNull(partName);
 
             partName = PackUriHelper.ValidatePartUri(partName);
             

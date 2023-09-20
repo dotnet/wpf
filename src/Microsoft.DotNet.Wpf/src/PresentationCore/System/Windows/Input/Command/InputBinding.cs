@@ -38,12 +38,10 @@ namespace System.Windows.Input
         /// <param name="command">Command</param>
         /// <param name="gesture">Input Gesture</param>
         public InputBinding(ICommand command, InputGesture gesture) 
-        {   
-            if (command == null)
-                throw new ArgumentNullException("command");
+        {
+            ArgumentNullException.ThrowIfNull(command);
 
-            if (gesture == null)
-                throw new ArgumentNullException("gesture");
+            ArgumentNullException.ThrowIfNull(gesture);
 
             Command = command;
             _gesture = gesture;
@@ -145,8 +143,7 @@ namespace System.Windows.Input
             set
             {
                 WritePreamble();
-                if (value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 lock (_dataLock)
                 {

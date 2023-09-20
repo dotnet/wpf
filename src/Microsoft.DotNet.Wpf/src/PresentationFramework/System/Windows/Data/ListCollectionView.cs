@@ -1678,8 +1678,7 @@ namespace System.Windows.Data
         /// </summary>
         protected override void ProcessCollectionChanged(NotifyCollectionChangedEventArgs args)
         {
-            if (args == null)
-                throw new ArgumentNullException("args");
+            ArgumentNullException.ThrowIfNull(args);
 
             ValidateCollectionChangedEventArgs(args);
 

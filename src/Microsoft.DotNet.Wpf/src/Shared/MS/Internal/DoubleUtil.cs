@@ -109,6 +109,19 @@ namespace MS.Internal
         }
 
         /// <summary>
+        /// GreaterThanZero - Returns whether or not the value is greater than zero
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static bool GreaterThanZero(double value)
+        {
+            // return value > 0 && !IsZero(value)
+            // = value > 0 && !(Math.Abs(value) < 10.0 * DBL_EPSILON)
+            // = !(value < 10.0 * DBL_EPSILON)
+            return value >= 10.0 * DBL_EPSILON;
+        }
+
+        /// <summary>
         /// LessThanOrClose - Returns whether or not the first double is less than or close to
         /// the second double.  That is, whether or not the first is strictly less than or within
         /// epsilon of the other number.  Note that this epsilon is proportional to the numbers 

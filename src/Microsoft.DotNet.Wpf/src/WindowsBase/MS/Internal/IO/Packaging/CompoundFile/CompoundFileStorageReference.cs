@@ -76,7 +76,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             // Note that because of the GetType() checking above, the casting must be valid.
             CompoundFileStorageReference r = (CompoundFileStorageReference)o;
-            return (String.CompareOrdinal(_fullName.ToUpperInvariant(), r._fullName.ToUpperInvariant()) == 0);
+            return (string.Equals(_fullName, r._fullName, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>Returns an integer suitable for including this object in a hash table</summary>

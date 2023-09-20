@@ -264,10 +264,7 @@ namespace System.Windows.Input
                 throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
             }
 
-	    if (inputGesture == null)
-            {
-		throw new ArgumentNullException("inputGesture");
-            }
+            ArgumentNullException.ThrowIfNull(inputGesture);
 
             EnsureList();
             _innerGestureList.Add(inputGesture);
@@ -287,10 +284,9 @@ namespace System.Windows.Input
                 throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
             }
 
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            
-            if( collection.Count > 0) 
+            ArgumentNullException.ThrowIfNull(collection);
+
+            if ( collection.Count > 0) 
             {
                 if (_innerGestureList == null)
                     _innerGestureList = new System.Collections.Generic.List<InputGesture>(collection.Count);
@@ -350,10 +346,7 @@ namespace System.Windows.Input
                  throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
             }
 
-            if (inputGesture == null)
- 	        {
-                throw new ArgumentNullException("inputGesture");
-	        }
+            ArgumentNullException.ThrowIfNull(inputGesture);
 
             if (_innerGestureList != null && _innerGestureList.Contains(inputGesture))
             {

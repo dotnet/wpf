@@ -69,10 +69,7 @@ namespace System.Windows.Documents
         /// </summary>
         object IServiceProvider.GetService(Type serviceType)
         {
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
 
             if (serviceType == typeof(ITextContainer))
             {
@@ -105,10 +102,7 @@ namespace System.Windows.Documents
         ///</param>
         void IAddChild.AddChild(Object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
 //             Dispatcher.VerifyAccess();
 
@@ -284,10 +278,7 @@ namespace System.Windows.Documents
                 throw new ArgumentOutOfRangeException("fixedDocPageNumber", SR.IDPNegativePageNumber);
             }
 
-            if (document == null)
-            {
-                throw new ArgumentNullException("document");
-            }
+            ArgumentNullException.ThrowIfNull(document);
 
             DocumentPage innerDP = document.GetPage(fixedDocPageNumber);
             Debug.Assert(innerDP != null);
@@ -312,10 +303,7 @@ namespace System.Windows.Documents
                 throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
             }
 
-            if (userState == null)
-            {
-                throw new ArgumentNullException("userState");
-            }
+            ArgumentNullException.ThrowIfNull(userState);
 
             // Add to outstanding AsyncOp list
             GetPageAsyncRequest asyncRequest = new GetPageAsyncRequest(new RequestedPage(pageNumber/*childPaginator, childPageNumber*/), userState);
@@ -329,10 +317,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal int GetPageNumber(ContentPosition contentPosition)
         {
-            if (contentPosition == null)
-            {
-                throw new ArgumentNullException("contentPosition");
-            }
+            ArgumentNullException.ThrowIfNull(contentPosition);
 
             // ContentPosition may be only created by DynamicDocumentPaginator.GetObjectPosition or
             // DynamicDocumentPaginator.GetPagePosition.
@@ -366,10 +351,7 @@ namespace System.Windows.Documents
         {
             DocumentsTrace.FixedFormat.IDF.Trace(string.Format("IDP.GetPageAsyncCancel([{0}])", userState));
 
-            if (userState == null)
-            {
-                throw new ArgumentNullException("userState");
-            }
+            ArgumentNullException.ThrowIfNull(userState);
 
             if (_asyncOps.ContainsKey(userState))
             {
@@ -390,10 +372,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal ContentPosition GetObjectPosition(Object o)
         {
-            if (o == null)
-            {
-                throw new ArgumentNullException("o");
-            }
+            ArgumentNullException.ThrowIfNull(o);
 
             foreach (DocumentReference docRef in References)
             {
@@ -1110,10 +1089,7 @@ namespace System.Windows.Documents
         /// </param>
         object IServiceProvider.GetService(Type serviceType)
         {
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
 
             if (serviceType == typeof(ITextView))
             {

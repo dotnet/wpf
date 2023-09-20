@@ -550,16 +550,13 @@ namespace System.Windows.Navigation
             Uri baseUri = null;
             DependencyObject doCurrent;
 
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
-                //
-                // Search the tree to find the closest parent which implements
-                // IUriContext or have set value for BaseUri property.
-                //
-                doCurrent = element;
+            //
+            // Search the tree to find the closest parent which implements
+            // IUriContext or have set value for BaseUri property.
+            //
+            doCurrent = element;
 
                 while (doCurrent != null)
                 {

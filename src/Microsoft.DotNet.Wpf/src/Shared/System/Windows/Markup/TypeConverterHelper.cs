@@ -454,10 +454,7 @@ namespace System.Windows.Markup
         /// <returns>A TypeConverter for the Type type if found. Null otherwise.</returns>
         internal static TypeConverter GetTypeConverter(Type type)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            ArgumentNullException.ThrowIfNull(type);
 
             TypeConverter typeConverter = GetCoreConverterFromCoreType(type);
 

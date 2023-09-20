@@ -47,10 +47,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentException">partType.Namespace or partType.Name is null or empty string</exception>
         public ContentLocatorPart(XmlQualifiedName partType) 
         {
-            if (partType == null)
-            {
-                throw new ArgumentNullException("partType");
-            }
+            ArgumentNullException.ThrowIfNull(partType);
             if (String.IsNullOrEmpty(partType.Name))
             {
                 throw new ArgumentException(SR.TypeNameMustBeSpecified, "partType.Name");

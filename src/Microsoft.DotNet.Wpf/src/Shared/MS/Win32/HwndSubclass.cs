@@ -78,10 +78,7 @@ namespace MS.Win32
         /// </returns>
         internal HwndSubclass(HwndWrapperHook hook)
         {
-            if(hook == null)
-            {
-                throw new ArgumentNullException("hook");
-            }
+            ArgumentNullException.ThrowIfNull(hook);
 
             _bond = Bond.Unattached;
             _hook = new WeakReference(hook);

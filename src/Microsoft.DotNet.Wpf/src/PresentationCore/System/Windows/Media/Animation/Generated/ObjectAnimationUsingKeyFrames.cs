@@ -213,10 +213,7 @@ namespace System.Windows.Media.Animation
         {
             WritePreamble();
 
-            if (child == null)
-            {
-                throw new ArgumentNullException("child");
-            }
+            ArgumentNullException.ThrowIfNull(child);
 
             AddChild(child);
 
@@ -257,10 +254,7 @@ namespace System.Windows.Media.Animation
         /// null.</exception>
         void IAddChild.AddText(string childText)
         {
-            if (childText == null)
-            {
-                throw new ArgumentNullException("childText");
-            }
+            ArgumentNullException.ThrowIfNull(childText);
 
             AddText(childText);
         }
@@ -504,10 +498,7 @@ namespace System.Windows.Media.Animation
             }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 WritePreamble();
 

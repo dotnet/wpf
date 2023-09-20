@@ -1417,11 +1417,6 @@
         <target state="translated">Заголовок переменной длины в потоке лицензии на публикацию имеет длину в байтах: {0}. Это значение превышает максимальную длину в байтах: {1}.</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Формат имени типа "{0}" отличается от ожидаемого формата "имя класса, сборка".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReachOutOfRange">
         <source>'{0}' index is beyond maximum '{1}'.</source>
         <target state="translated">Индекс "{0}" превышает максимальное значение "{1}".</target>

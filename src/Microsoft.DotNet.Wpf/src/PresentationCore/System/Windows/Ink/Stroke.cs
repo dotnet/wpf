@@ -60,18 +60,12 @@ namespace System.Windows.Ink
         /// <param name="extendedProperties">extendedProperties</param>
         internal Stroke(StylusPointCollection stylusPoints, DrawingAttributes drawingAttributes, ExtendedPropertyCollection extendedProperties)
         {
-            if (stylusPoints == null)
-            {
-                throw new ArgumentNullException("stylusPoints");
-            }
+            ArgumentNullException.ThrowIfNull(stylusPoints);
             if (stylusPoints.Count == 0)
             {
                 throw new ArgumentException(SR.InvalidStylusPointCollectionZeroCount, "stylusPoints");
             }
-            if (drawingAttributes == null)
-            {
-                throw new ArgumentNullException("drawingAttributes");
-            }
+            ArgumentNullException.ThrowIfNull(drawingAttributes);
 
             _drawingAttributes = drawingAttributes;
             _stylusPoints = stylusPoints;
@@ -482,10 +476,7 @@ namespace System.Windows.Ink
             }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _drawingAttributes.AttributeChanged -= new PropertyDataChangedEventHandler(DrawingAttributes_Changed);
 
@@ -524,10 +515,7 @@ namespace System.Windows.Ink
             }
             set
             {
-                if (null == value)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
                 if (value.Count == 0)
                 {
                     //we don't allow this
@@ -627,10 +615,7 @@ namespace System.Windows.Ink
         /// <param name="e">DrawingAttributesReplacedEventArgs to raise the event with</param>
         protected virtual void OnDrawingAttributesReplaced(DrawingAttributesReplacedEventArgs e)
         {
-            if (e == null)
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
             if (null != this.DrawingAttributesReplaced)
             {
                 DrawingAttributesReplaced(this, e);

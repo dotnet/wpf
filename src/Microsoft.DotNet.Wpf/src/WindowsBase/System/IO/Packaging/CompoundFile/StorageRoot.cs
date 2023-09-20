@@ -104,12 +104,9 @@ internal  class StorageRoot : StorageInfo
     /// <returns>New StorageRoot object built on the given Stream</returns>
     internal static StorageRoot CreateOnStream( Stream baseStream )
     {
-        if (baseStream == null)
-        {
-            throw new ArgumentNullException("baseStream");
-        }
-        
-        if( 0 == baseStream.Length )
+        ArgumentNullException.ThrowIfNull(baseStream);
+
+        if ( 0 == baseStream.Length )
         {
             return CreateOnStream( baseStream, FileMode.Create );
         }
@@ -127,9 +124,8 @@ internal  class StorageRoot : StorageInfo
     /// <returns>New StorageRoot object built on the given Stream</returns>
     internal static StorageRoot CreateOnStream(Stream baseStream, FileMode mode)
     {
-        if( null == baseStream )
-            throw new ArgumentNullException("baseStream");
-        
+        ArgumentNullException.ThrowIfNull(baseStream);
+
         IStorage storageOnStream;
         int returnValue;
         int openFlags = SafeNativeCompoundFileConstants.STGM_SHARE_EXCLUSIVE;

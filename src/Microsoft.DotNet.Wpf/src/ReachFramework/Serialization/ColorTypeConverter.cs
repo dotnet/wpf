@@ -108,10 +108,7 @@ namespace System.Windows.Xps.Serialization
             object                              value
             )
         {
-            if( value == null )
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
             if (!IsSupportedType(value.GetType()))
             {
                 throw new NotSupportedException(SR.Converter_ConvertFromNotSupported);
@@ -284,10 +281,7 @@ namespace System.Windows.Xps.Serialization
         {
             Uri profileUri = null;
 
-            if( colorContext == null )
-            {
-                throw new ArgumentNullException("colorContext");
-            }
+            ArgumentNullException.ThrowIfNull(colorContext);
             if ( context!= null )
             {
                 PackageSerializationManager manager = (PackageSerializationManager)context.GetService(typeof(XpsSerializationManager));

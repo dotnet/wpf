@@ -38,8 +38,7 @@ namespace System.Windows.Markup.Primitives
         /// </returns>
         public static MarkupObject GetMarkupObjectFor(object instance)
         {
-            if (instance == null)
-                throw new ArgumentNullException("instance");
+            ArgumentNullException.ThrowIfNull(instance);
             XamlDesignerSerializationManager manager = new XamlDesignerSerializationManager(null);
             manager.XamlWriterMode = XamlWriterMode.Expression;
             return new ElementMarkupObject(instance, manager);
@@ -59,10 +58,8 @@ namespace System.Windows.Markup.Primitives
         /// </returns>
         public static MarkupObject GetMarkupObjectFor(object instance, XamlDesignerSerializationManager manager)
         {
-            if (instance == null)
-                throw new ArgumentNullException("instance");
-            if (manager == null)
-                throw new ArgumentNullException("manager");
+            ArgumentNullException.ThrowIfNull(instance);
+            ArgumentNullException.ThrowIfNull(manager);
             return new ElementMarkupObject(instance, manager);
         }
 
@@ -77,8 +74,7 @@ namespace System.Windows.Markup.Primitives
         /// </param>
         internal static void SaveAsXml(XmlWriter writer, object instance)
         {
-            if (writer == null)
-                throw new ArgumentNullException("writer");
+            ArgumentNullException.ThrowIfNull(writer);
 
             SaveAsXml(writer, GetMarkupObjectFor(instance));
         }
@@ -97,10 +93,8 @@ namespace System.Windows.Markup.Primitives
         /// </param>
         internal static void SaveAsXml(XmlWriter writer, object instance, XamlDesignerSerializationManager manager)
         {
-            if (writer == null)
-                throw new ArgumentNullException("writer");
-            if (manager == null)
-                throw new ArgumentNullException("manager");
+            ArgumentNullException.ThrowIfNull(writer);
+            ArgumentNullException.ThrowIfNull(manager);
 
             manager.ClearXmlWriter();
 
@@ -121,10 +115,8 @@ namespace System.Windows.Markup.Primitives
             // Consider turning Debug.Assert's in the WriteItem into exceptions
             // if this method is public.
 
-            if (writer == null)
-                throw new ArgumentNullException("writer");
-            if (item == null)
-                throw new ArgumentNullException("item");
+            ArgumentNullException.ThrowIfNull(writer);
+            ArgumentNullException.ThrowIfNull(item);
 
             try
             {

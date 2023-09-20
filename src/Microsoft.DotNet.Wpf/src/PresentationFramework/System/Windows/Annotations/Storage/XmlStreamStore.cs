@@ -73,8 +73,7 @@ namespace System.Windows.Annotations.Storage
         public XmlStreamStore(Stream stream)
             : base()
         {
-            if (stream == null)
-                throw new ArgumentNullException("stream");
+            ArgumentNullException.ThrowIfNull(stream);
 
             if (!stream.CanSeek)
                 throw new ArgumentException(SR.StreamDoesNotSupportSeek);
@@ -102,8 +101,7 @@ namespace System.Windows.Annotations.Storage
         public XmlStreamStore(Stream stream, IDictionary<Uri, IList<Uri>> knownNamespaces)
             : base()
         {
-            if (stream == null)
-                throw new ArgumentNullException("stream");
+            ArgumentNullException.ThrowIfNull(stream);
 
             SetStream(stream, knownNamespaces);
         }
@@ -129,8 +127,7 @@ namespace System.Windows.Annotations.Storage
         /// <exception cref="ObjectDisposedException">if object has been Disposed</exception>
         public override void AddAnnotation(Annotation newAnnotation)
         {
-            if (newAnnotation == null)
-                throw new ArgumentNullException("newAnnotation");
+            ArgumentNullException.ThrowIfNull(newAnnotation);
 
             // We are going to modify internal data. Lock the object
             // to avoid modifications from other threads
@@ -241,8 +238,7 @@ namespace System.Windows.Annotations.Storage
         public override IList<Annotation> GetAnnotations(ContentLocator anchorLocator)
         {
             // First we generate the XPath expression
-            if (anchorLocator == null)
-                throw new ArgumentNullException("anchorLocator");
+            ArgumentNullException.ThrowIfNull(anchorLocator);
 
             if (anchorLocator.Parts == null)
                 throw new ArgumentNullException("anchorLocator.Parts");
@@ -402,10 +398,7 @@ namespace System.Windows.Annotations.Storage
         /// registered with the XmlStreamStore ctor</remarks>
         public static IList<Uri> GetWellKnownCompatibleNamespaces(Uri name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
+            ArgumentNullException.ThrowIfNull(name);
             if (_predefinedNamespaces.ContainsKey(name))
                 return _predefinedNamespaces[name];
             return null;

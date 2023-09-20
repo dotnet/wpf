@@ -9,41 +9,40 @@ using System.Runtime.CompilerServices;
 namespace System.Windows.Markup
 {
     /// <summary>
-    ///  Class for Xaml markup extension for static field and property references.
+    /// Class for Xaml markup extension for static field and property references.
     /// </summary>
     [TypeForwardedFrom("PresentationFramework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")]
     [TypeConverter(typeof(StaticExtensionConverter))]
     [MarkupExtensionReturnType(typeof(object))]
-    public class StaticExtension : MarkupExtension 
+    public class StaticExtension : MarkupExtension
     {
+        private string _member;
+        private Type _memberType;
+
         /// <summary>
-        ///  Constructor that takes no parameters
+        /// Constructor that takes no parameters
         /// </summary>
         public StaticExtension()
         {
         }
-        
+
         /// <summary>
-        ///  Constructor that takes the member that this is a static reference to.  
-        ///  This string is of the format 
-        ///     Prefix:ClassName.FieldOrPropertyName.  The Prefix is 
-        ///  optional, and refers to the XML prefix in a Xaml file.
+        /// Constructor that takes the member that this is a static reference to.
+        /// This string is of the format Prefix:ClassName.FieldOrPropertyName.
+        /// The Prefix is optional, and refers to the XML prefix in a Xaml file.
         /// </summary>
-        public StaticExtension(
-            string   member)
+        public StaticExtension(string member)
         {
             _member = member ?? throw new ArgumentNullException(nameof(member));
         }
 
         /// <summary>
-        ///  Return an object that should be set on the targetObject's targetProperty
-        ///  for this markup extension.  For a StaticExtension this is a static field
-        ///  or property value.
+        /// Return an object that should be set on the targetObject's targetProperty
+        /// for this markup extension. For a StaticExtension this is a static field
+        /// or property value.
         /// </summary>
         /// <param name="serviceProvider">Object that can provide services for the markup extension.</param>
-        /// <returns>
-        ///  The object to set on this property.
-        /// </returns>
+        /// <returns> The object to set on this property.</returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (_member == null)
@@ -51,7 +50,6 @@ namespace System.Windows.Markup
                 throw new InvalidOperationException(SR.MarkupExtensionStaticMember);
             }
 
-            object value;
             Type type = MemberType;
             string fieldString;
             string typeNameForError = null;
@@ -63,7 +61,6 @@ namespace System.Windows.Markup
             else
             {
                 // Validate the _member
-
                 int dotIndex = _member.IndexOf('.');
                 if (dotIndex < 0)
                 {
@@ -71,7 +68,6 @@ namespace System.Windows.Markup
                 }
 
                 // Pull out the type substring (this will include any XML prefix, e.g. "av:Button")
-
                 string typeString = _member.Substring(0, dotIndex);
                 if (string.IsNullOrEmpty(typeString))
                 {
@@ -85,15 +81,13 @@ namespace System.Windows.Markup
                 IXamlTypeResolver xamlTypeResolver = serviceProvider.GetService(typeof(IXamlTypeResolver)) as IXamlTypeResolver;
                 if (xamlTypeResolver == null)
                 {
-                    throw new ArgumentException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, "IXamlTypeResolver"));
+                    throw new ArgumentException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, nameof(IXamlTypeResolver)));
                 }
 
-                // Use the type resolver to get a Type instance
-
+                // Use the type resolver to get a Type instance.
                 type = xamlTypeResolver.Resolve(typeString);
 
-                // Get the member name substring
-
+                // Get the member name substring.
                 fieldString = _member.Substring(dotIndex + 1, _member.Length - dotIndex - 1);
                 if (string.IsNullOrEmpty(typeString))
                 {
@@ -101,89 +95,74 @@ namespace System.Windows.Markup
                 }
             }
 
-            // Use the built-in parser for enum types
-            
+            // Use the built-in parser for enum types.
             if (type.IsEnum)
             {
                 return Enum.Parse(type, fieldString);
             }
 
-            // For other types, reflect
-            if (GetFieldOrPropertyValue(type, fieldString, out value))
+            // For other types, reflect.
+            if (GetFieldOrPropertyValue(type, fieldString, out object value))
             {
                 return value;
             }
-            else
-            {
-                throw new ArgumentException(SR.Format(SR.MarkupExtensionBadStatic, typeNameForError is not null ? $"{typeNameForError}.{_member}" : _member));
-            }
+
+            throw new ArgumentException(SR.Format(SR.MarkupExtensionBadStatic, typeNameForError is not null ? $"{typeNameForError}.{_member}" : _member));
         }
 
-        // return false if a public static field or property with the same name cannot be found.
+        /// <summary>
+        /// Return false if a public static field or property with the same
+        /// name cannot be found.
+        /// <summary>
         private bool GetFieldOrPropertyValue(Type type, string name, out object value)
         {
-            FieldInfo field = null;
-            Type temp = type;
-
+            Type currentType = type;
             do
             {
-                field = temp.GetField(name, BindingFlags.Public | BindingFlags.Static);
+                FieldInfo field = currentType.GetField(name, BindingFlags.Public | BindingFlags.Static);
                 if (field != null)
                 {
                     value = field.GetValue(null);
                     return true;
                 }
 
-                temp = temp.BaseType;
-            } while(temp != null);
+                currentType = currentType.BaseType;
+            } while(currentType != null);
 
-
-            PropertyInfo prop = null;
-            temp = type;
-
+            currentType = type;
             do
             {
-                prop = temp.GetProperty(name, BindingFlags.Public | BindingFlags.Static);
+                PropertyInfo prop = currentType.GetProperty(name, BindingFlags.Public | BindingFlags.Static);
                 if (prop != null)
                 {
                     value = prop.GetValue(null,null);
                     return true;
                 }
 
-                temp = temp.BaseType;
-            } while(temp != null);
+                currentType = currentType.BaseType;
+            } while(currentType != null);
 
             value = null;
             return false;
         }
 
         /// <summary>
-        ///  The static field or property represented by a string.  This string is
-        ///  of the format Prefix:ClassName.FieldOrPropertyName.  The Prefix is 
-        ///  optional, and refers to the XML prefix in a Xaml file.
+        /// The static field or property represented by a string. This string is
+        /// of the format Prefix:ClassName.FieldOrPropertyName. The Prefix is
+        /// optional, and refers to the XML prefix in a Xaml file.
         /// </summary>
         [ConstructorArgument("member")]
         public string Member
         {
-            get { return _member; }
-            set 
-            {
-                _member = value ?? throw new ArgumentNullException(nameof(value));
-            }
+            get => _member;
+            set => _member = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         [DefaultValue(null)]
         public Type MemberType
         {
-            get { return _memberType; }
-            set
-            {
-                _memberType = value ?? throw new ArgumentNullException(nameof(value));
-            }
+            get => _memberType;
+            set => _memberType = value ?? throw new ArgumentNullException(nameof(value));
         }
-
-        private string _member;
-        private Type _memberType;
     }
 }
-

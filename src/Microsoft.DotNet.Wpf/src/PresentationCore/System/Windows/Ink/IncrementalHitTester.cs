@@ -44,10 +44,7 @@ namespace System.Windows.Ink
         /// <param name="points">points representing an incremental move of the hitting tool</param>
         public void AddPoints(IEnumerable<Point> points)
         {
-            if (points == null)
-            {
-                throw new System.ArgumentNullException("points");
-            }
+            ArgumentNullException.ThrowIfNull(points);
 
             if (IEnumerablePointHelper.GetCount(points) == 0)
             {
@@ -70,10 +67,7 @@ namespace System.Windows.Ink
         /// <param name="stylusPoints">stylusPoints</param>
         public void AddPoints(StylusPointCollection stylusPoints)
         {
-            if (stylusPoints == null)
-            {
-                throw new System.ArgumentNullException("stylusPoints");
-            }
+            ArgumentNullException.ThrowIfNull(stylusPoints);
 
             if (stylusPoints.Count == 0)
             {

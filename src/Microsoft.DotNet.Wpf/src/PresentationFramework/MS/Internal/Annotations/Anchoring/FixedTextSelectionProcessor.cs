@@ -194,11 +194,8 @@ namespace MS.Internal.Annotations.Anchoring
         public override IList<ContentLocatorPart>
             GenerateLocatorParts(Object selection, DependencyObject startNode)
         {
-            if (startNode == null)
-                throw new ArgumentNullException("startNode");
-
-            if (selection == null)
-                throw new ArgumentNullException("selection");
+            ArgumentNullException.ThrowIfNull(startNode);
+            ArgumentNullException.ThrowIfNull(selection);
 
             CheckSelection(selection);
 
@@ -266,8 +263,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentException">startNode does not belong to the DocumentViewer</exception>
         public override Object ResolveLocatorPart(ContentLocatorPart locatorPart, DependencyObject startNode, out AttachmentLevel attachmentLevel)
         {
-            if (startNode == null)
-                throw new ArgumentNullException("startNode");
+            ArgumentNullException.ThrowIfNull(startNode);
 
             DocumentPage docPage = null;
             FixedPage page = startNode as FixedPage;
@@ -297,8 +293,7 @@ namespace MS.Internal.Annotations.Anchoring
                 throw new ArgumentException(SR.StartNodeMustBeDocumentPageViewOrFixedPage, "startNode");
             }
 
-            if (locatorPart == null)
-                throw new ArgumentNullException("locatorPart");
+            ArgumentNullException.ThrowIfNull(locatorPart);
 
             attachmentLevel = AttachmentLevel.Unresolved;
 
@@ -442,8 +437,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>ITextRange interface, implemented by the object</returns>
         private IList<TextSegment> CheckSelection(object selection)
         {
-            if (selection == null)
-                throw new ArgumentNullException("selection");
+            ArgumentNullException.ThrowIfNull(selection);
 
             IList<TextSegment> textSegments = null;
             ITextPointer start = null;
@@ -483,8 +477,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>ITextRange interface, implemented by the object</returns>
         private TextAnchor CheckAnchor(object selection)
         {
-            if (selection == null)
-                throw new ArgumentNullException("selection");
+            ArgumentNullException.ThrowIfNull(selection);
 
             TextAnchor anchor = selection as TextAnchor;
 
@@ -506,8 +499,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <param name="end">the end point value based on EndXAttribyte and EndYattribute values</param>
         private void GetLocatorPartSegmentValues(ContentLocatorPart locatorPart, int segmentNumber, out Point start, out Point end)
         {
-            if (locatorPart == null)
-                throw new ArgumentNullException("locatorPart");
+            ArgumentNullException.ThrowIfNull(locatorPart);
 
             if (FixedTextElementName != locatorPart.PartType)
                 throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, locatorPart.PartType.Namespace + ":" + locatorPart.PartType.Name), "locatorPart");

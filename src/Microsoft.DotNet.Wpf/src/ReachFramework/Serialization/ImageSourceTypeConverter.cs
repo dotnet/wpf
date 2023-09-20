@@ -114,10 +114,7 @@ namespace System.Windows.Xps.Serialization
             object                              value
             )
         {
-            if( value == null )
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             if (!IsSupportedType(value.GetType()))
             {
@@ -159,10 +156,7 @@ namespace System.Windows.Xps.Serialization
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXConvertImageBegin);
 
-            if( context == null )
-            {
-                throw new ArgumentNullException("context");
-            }
+            ArgumentNullException.ThrowIfNull(context);
             if (!IsSupportedType(destinationType))
             {
                 throw new NotSupportedException(SR.Converter_ConvertToNotSupported);

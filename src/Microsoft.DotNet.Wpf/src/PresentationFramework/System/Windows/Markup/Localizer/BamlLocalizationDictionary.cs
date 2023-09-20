@@ -16,6 +16,7 @@ using System.Windows.Markup;
 using System.Diagnostics;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 
 namespace System.Windows.Markup.Localizer
 {
@@ -201,12 +202,12 @@ namespace System.Windows.Markup.Localizer
         {
             get 
             { 
-                CheckNonNullParam(key, "key");
+                ArgumentNullException.ThrowIfNull(key);
                 return _dictionary[key];
             }
             set
             {
-                CheckNonNullParam(key, "key");
+                ArgumentNullException.ThrowIfNull(key);
                 _dictionary[key] = value;                
             }
         }
@@ -218,7 +219,7 @@ namespace System.Windows.Markup.Localizer
         /// <param name="value">the BamlLocalizableResource</param>
         public void Add(BamlLocalizableResourceKey key, BamlLocalizableResource value)
         {
-            CheckNonNullParam(key, "key");
+            ArgumentNullException.ThrowIfNull(key);
             _dictionary.Add(key, value);
         }
 
@@ -247,7 +248,7 @@ namespace System.Windows.Markup.Localizer
         /// <returns></returns>
         public bool Contains(BamlLocalizableResourceKey key)
         {
-            CheckNonNullParam(key, "key");
+            ArgumentNullException.ThrowIfNull(key);
             return _dictionary.ContainsKey(key);
         }
 
@@ -280,7 +281,7 @@ namespace System.Windows.Markup.Localizer
         /// </summary>
         public void CopyTo(DictionaryEntry[] array, int arrayIndex)
         {
-            CheckNonNullParam(array, "array");
+            ArgumentNullException.ThrowIfNull(array);
 
             if (arrayIndex < 0)
             {
@@ -327,19 +328,19 @@ namespace System.Windows.Markup.Localizer
         
         bool IDictionary.Contains(object key)
         {
-            CheckNonNullParam(key, "key");
+            ArgumentNullException.ThrowIfNull(key);
             return ((IDictionary)_dictionary).Contains(key);
         }
 
         void IDictionary.Add(object key, object value)
         {
-            CheckNonNullParam(key, "key");
+            ArgumentNullException.ThrowIfNull(key);
             ((IDictionary) _dictionary).Add(key, value);
         }
 
         void IDictionary.Remove(object key)
         {
-            CheckNonNullParam(key, "key");
+            ArgumentNullException.ThrowIfNull(key);
             ((IDictionary) _dictionary).Remove(key);
         }
 
@@ -347,12 +348,12 @@ namespace System.Windows.Markup.Localizer
         {
             get
             {
-                CheckNonNullParam(key, "key");
+                ArgumentNullException.ThrowIfNull(key);
                 return ((IDictionary)_dictionary)[key];
             }
             set
             {
-                CheckNonNullParam(key, "key");
+                ArgumentNullException.ThrowIfNull(key);
                 ((IDictionary)_dictionary)[key] = value;  
             }
         }
@@ -431,15 +432,6 @@ namespace System.Windows.Markup.Localizer
         internal void SetRootElementKey(BamlLocalizableResourceKey key)
         {
             _rootElementKey = key;
-        }
-        
-        //------------------------------
-        // private methods
-        //------------------------------
-        private void CheckNonNullParam(object param, string paramName)
-        {
-            if (param == null)
-                throw new ArgumentNullException(paramName);
         }
         
         //------------------------------

@@ -119,8 +119,7 @@ namespace System.Windows.Media
 
         private void Initialize(Uri typefaceSource, StyleSimulations styleSimulations)
         {
-            if (typefaceSource == null)
-                throw new ArgumentNullException("typefaceSource");
+            ArgumentNullException.ThrowIfNull(typefaceSource);
 
             if (!typefaceSource.IsAbsoluteUri)
                 throw new ArgumentException(SR.UriNotAbsolute, "typefaceSource");
@@ -233,8 +232,7 @@ namespace System.Windows.Media
         {
             CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
 
-            if (glyphs == null)
-                throw new ArgumentNullException("glyphs");
+            ArgumentNullException.ThrowIfNull(glyphs);
 
             if (glyphs.Count <= 0)
                 throw new ArgumentException(SR.CollectionNumberOfElementsMustBeGreaterThanZero, "glyphs");
@@ -299,8 +297,7 @@ namespace System.Windows.Media
             {
                 CheckInitializing(); // This can only be called in initialization
 
-                if (value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (!value.IsAbsoluteUri)
                     throw new ArgumentException(SR.UriNotAbsolute, "value");
@@ -1822,10 +1819,7 @@ namespace System.Windows.Media
 
             public void CopyTo(KeyValuePair<ushort, double>[] array, int arrayIndex)
             {
-                if (array == null)
-                {
-                    throw new ArgumentNullException("array");
-                }
+                ArgumentNullException.ThrowIfNull(array);
 
                 if (array.Rank != 1)
                 {
@@ -1911,10 +1905,7 @@ namespace System.Windows.Media
 
                 public void CopyTo(double[] array, int arrayIndex)
                 {
-                    if (array == null)
-                    {
-                        throw new ArgumentNullException("array");
-                    }
+                    ArgumentNullException.ThrowIfNull(array);
 
                     if (array.Rank != 1)
                     {

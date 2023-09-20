@@ -34,10 +34,7 @@ namespace System.Windows
         /// </summary>
         public DataFormat(string name, int id)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
+            ArgumentNullException.ThrowIfNull(name);
 
             if (name.Length == 0)
             {

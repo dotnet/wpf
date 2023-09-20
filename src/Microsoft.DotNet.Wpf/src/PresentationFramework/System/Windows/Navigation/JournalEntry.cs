@@ -125,10 +125,7 @@ namespace System.Windows.Navigation
         /// </summary>
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException("info");
-            }
+            ArgumentNullException.ThrowIfNull(info);
 
             info.AddValue("_id", _id);
             info.AddValue("_source", _source);
@@ -169,10 +166,7 @@ namespace System.Windows.Navigation
         {
             // not verifying Context on static method
 
-            if (dependencyObject == null)
-            {
-                throw new ArgumentNullException("dependencyObject");
-            }
+            ArgumentNullException.ThrowIfNull(dependencyObject);
 
             dependencyObject.SetValue(NameProperty, name);
         }
@@ -188,10 +182,7 @@ namespace System.Windows.Navigation
         public static bool GetKeepAlive(DependencyObject dependencyObject)
         {
             // not verifying Context on static method
-            if (dependencyObject == null)
-            {
-                throw new ArgumentNullException("dependencyObject");
-            }
+            ArgumentNullException.ThrowIfNull(dependencyObject);
 
             return (bool)dependencyObject.GetValue(KeepAliveProperty);
         }
@@ -206,10 +197,7 @@ namespace System.Windows.Navigation
         {
             // not verifying Context on static method
 
-            if (dependencyObject == null)
-            {
-                throw new ArgumentNullException("dependencyObject");
-            }
+            ArgumentNullException.ThrowIfNull(dependencyObject);
 
             dependencyObject.SetValue(KeepAliveProperty, keepAlive);
         }
@@ -284,8 +272,7 @@ namespace System.Windows.Navigation
 
         internal virtual void SaveState(object contentObject)
         {
-            if (contentObject == null)
-                throw new ArgumentNullException("contentObject");
+            ArgumentNullException.ThrowIfNull(contentObject);
             if (!IsAlive())
             {
                 if (_jeGroupState.JournalDataStreams != null)
@@ -303,8 +290,7 @@ namespace System.Windows.Navigation
 
         internal virtual void RestoreState(object contentObject)
         {
-            if (contentObject == null)
-                throw new ArgumentNullException("contentObject");
+            ArgumentNullException.ThrowIfNull(contentObject);
             if (IsAlive())
             {
                 Debug.Assert(_jeGroupState.JournalDataStreams == null);

@@ -131,8 +131,7 @@ namespace System.Windows.Media
         [CLSCompliant(false)]
         public void CopyTo(KeyValuePair<int, CharacterMetrics>[] array, int index)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
 
             if (index < 0)
                 throw new ArgumentOutOfRangeException("index");
@@ -190,8 +189,7 @@ namespace System.Windows.Media
 
         void SC.ICollection.CopyTo(Array array, int index)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
 
             if (index < 0)
                 throw new ArgumentOutOfRangeException("index");
@@ -376,8 +374,7 @@ namespace System.Windows.Media
             if (key < 0 || key > LastDeviceFontCharacterCode)
                 throw new ArgumentOutOfRangeException(SR.Format(SR.CodePointOutOfRange, key));
 
-            if (value == null)
-                throw new ArgumentNullException("value");
+            ArgumentNullException.ThrowIfNull(value);
 
             CharacterMetrics[] page = GetPageFromUnicodeScalar(key);
             int i = key & PageMask;
@@ -503,8 +500,7 @@ namespace System.Windows.Media
 
         internal static int ConvertKey(object key)
         {
-            if (key == null)
-                throw new ArgumentNullException("key");
+            ArgumentNullException.ThrowIfNull(key);
 
             int value;
 
@@ -536,10 +532,9 @@ namespace System.Windows.Media
             if (metrics != null)
                 return metrics;
 
-            if (value != null)
-                throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(CharacterMetrics), value.GetType()));
-            else
-                throw new ArgumentNullException("value");
+            ArgumentNullException.ThrowIfNull(value);
+
+            throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(CharacterMetrics), value.GetType()));
         }
 
         private struct Enumerator : SC.IDictionaryEnumerator, IEnumerator<KeyValuePair<int, CharacterMetrics>>

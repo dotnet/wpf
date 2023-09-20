@@ -87,11 +87,8 @@ namespace System.Windows.Media.Media3D
         
         void IAddChild.AddChild(Object value)
         {
-            if( value == null )
-            {
-                throw new System.ArgumentNullException("value");
-            }
-            
+            ArgumentNullException.ThrowIfNull(value);
+
             Visual3D visual3D = value as Visual3D;
 
             if (visual3D == null)

@@ -95,10 +95,7 @@ namespace System.Windows
 
         private void CopyToWithoutLock(DictionaryEntry[] array, int arrayIndex)
         {
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             _baseDictionary.CopyTo(array, arrayIndex);
 
@@ -112,6 +109,9 @@ namespace System.Windows
                 entry.Value = value; // refresh the entry value in case it was changed in the previous call
             }
         }
+        
+        // This is set when the RD is loaded from unsafe xps doc. This will be checked while creating reader for RD source.
+        internal bool IsUnsafe { get; set; }
 
         ///<summary>
         ///     List of ResourceDictionaries merged into this Resource Dictionary
@@ -226,7 +226,7 @@ namespace System.Windows
                 // It can be a sync/async converter. It's the converter's responsiblity to close the stream.
                 // If it fails to find a convert, this call will return null.
                 System.Windows.Markup.XamlReader asyncObjectConverter;
-                ResourceDictionary loadedRD = MimeObjectFactory.GetObjectAndCloseStream(s, contentType, uri, false, false, false /*allowAsync*/, false /*isJournalNavigation*/, out asyncObjectConverter)
+                ResourceDictionary loadedRD = MimeObjectFactory.GetObjectAndCloseStreamCore(s, contentType, uri, false, false, false /*allowAsync*/, false /*isJournalNavigation*/, out asyncObjectConverter, IsUnsafe)
                                             as ResourceDictionary;
 
                 if (loadedRD == null)
@@ -2467,6 +2467,7 @@ namespace System.Windows
             _reader = loadedRD._reader;
             _numDefer = loadedRD._numDefer;
             _deferredLocationList = loadedRD._deferredLocationList;
+            IsUnsafe = loadedRD.IsUnsafe;
         }
 
         private void  MoveDeferredResourceReferencesFrom(ResourceDictionary loadedRD)

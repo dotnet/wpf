@@ -147,10 +147,7 @@ namespace System.Windows.Documents
         // IComparable Override
         public int CompareTo(object o)
         {
-            if (o == null)
-            {
-                throw new ArgumentNullException("o");
-            }
+            ArgumentNullException.ThrowIfNull(o);
 
             if (o.GetType() != typeof(FixedNode))
             {

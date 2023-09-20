@@ -524,10 +524,7 @@ namespace MS.Internal.IO.Packaging
         void IPersistStream.Load(MS.Internal.Interop.IStream stream)
         {
             // Check argument.
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
 
             // Only one of _package and _encryptedPackage can be non-null at a time.
             Invariant.Assert(_package == null || _encryptedPackage == null);

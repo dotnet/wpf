@@ -42,10 +42,7 @@ namespace System.Windows
         public ColorConvertedBitmapExtension(
             object image) 
         {
-            if (image == null)
-            {
-                throw new ArgumentNullException("image");
-            }
+            ArgumentNullException.ThrowIfNull(image);
 
             string[] tokens = ((string)image).Split(' ');
 

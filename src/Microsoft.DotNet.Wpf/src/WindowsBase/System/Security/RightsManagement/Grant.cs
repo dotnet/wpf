@@ -42,10 +42,7 @@ namespace System.Security.RightsManagement
         {
             // Add validation here 
 
-            if (user == null)
-            {
-                throw new ArgumentNullException("user");
-            }
+            ArgumentNullException.ThrowIfNull(user);
 
             if ((right != ContentRight.View) && 
                 (right != ContentRight.Edit) && 

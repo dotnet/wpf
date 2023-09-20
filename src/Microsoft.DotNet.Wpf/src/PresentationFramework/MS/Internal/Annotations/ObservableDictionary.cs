@@ -64,10 +64,9 @@ namespace MS.Internal.Annotations
         /// <exception cref="ArgumentException">a value for key is already present in the locator part</exception>
         public void Add(string key, string val)
         {
-            if (key == null || val == null)
-            {
-                throw new ArgumentNullException(key == null ? "key" : "val");
-            }
+            ArgumentNullException.ThrowIfNull(key);
+            ArgumentNullException.ThrowIfNull(val);
+
             _nameValues.Add(key, val);
             FireDictionaryChanged();
         }
@@ -143,8 +142,7 @@ namespace MS.Internal.Annotations
         /// <exception cref="ArgumentNullException">key is null</exception>
         public bool TryGetValue(string key, out string value)
         {
-            if (key == null)
-                throw new ArgumentNullException("key");
+            ArgumentNullException.ThrowIfNull(key);
 
             return _nameValues.TryGetValue(key, out value);
         }
@@ -190,8 +188,7 @@ namespace MS.Internal.Annotations
         /// <exception cref="ArgumentOutOfRangeException">startIndex is less than zero or greater than the lenght of target</exception>
         void ICollection<KeyValuePair<string, string>>.CopyTo(KeyValuePair<string, string>[] target, int startIndex)
         {
-            if (target == null)
-                throw new ArgumentNullException("target");
+            ArgumentNullException.ThrowIfNull(target);
             if (startIndex < 0 || startIndex > target.Length)
                 throw new ArgumentOutOfRangeException("startIndex");
 
@@ -241,10 +238,7 @@ namespace MS.Internal.Annotations
         {
             get
             {
-                if (key == null)
-                {
-                    throw new ArgumentNullException("key");
-                }
+                ArgumentNullException.ThrowIfNull(key);
 
                 string value = null;
                 _nameValues.TryGetValue(key, out value);
@@ -252,15 +246,9 @@ namespace MS.Internal.Annotations
             }
             set
             {
-                if (key == null)
-                {
-                    throw new ArgumentNullException("key");
-                }
+                ArgumentNullException.ThrowIfNull(key);
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 string oldValue = null;
                 _nameValues.TryGetValue(key, out oldValue);

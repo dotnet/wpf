@@ -79,6 +79,10 @@ namespace System.Windows.Media
                 }
                 s_refCount++;
             }
+
+            // Setting renderOption for Hardware acceleration in RDP as per appcontext switch.
+            UnsafeNativeMethods.RenderOptions_EnableHardwareAccelerationInRdp(CoreAppContextSwitches.EnableHardwareAccelerationInRdp);
+
             // Consider making MediaSystem.ConnectTransport return the state of transport connectedness so
             // that we can initialize the media system to a disconnected state.
 

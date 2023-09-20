@@ -102,10 +102,7 @@ namespace System.Windows.Documents
         object IServiceProvider.GetService(Type serviceType)
         {
 //             Dispatcher.VerifyAccess();
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
 
             if (serviceType == typeof(ITextContainer))
             {
@@ -139,10 +136,7 @@ namespace System.Windows.Documents
         ///</param>
         void IAddChild.AddChild(Object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
 //             Dispatcher.VerifyAccess();
 
@@ -385,10 +379,7 @@ namespace System.Windows.Documents
                 throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
             }
 
-            if (userState == null)
-            {
-                throw new ArgumentNullException("userState");
-            }
+            ArgumentNullException.ThrowIfNull(userState);
 
             if (pageNumber < Pages.Count)
             {
@@ -416,10 +407,7 @@ namespace System.Windows.Documents
         {
 //             Dispatcher.VerifyAccess();
 
-            if (contentPosition == null)
-            {
-                throw new ArgumentNullException("contentPosition");
-            }
+            ArgumentNullException.ThrowIfNull(contentPosition);
 
             FixedTextPointer fixedTextPointer = contentPosition as FixedTextPointer;
             if (fixedTextPointer == null)
@@ -439,10 +427,7 @@ namespace System.Windows.Documents
             DocumentsTrace.FixedFormat.IDF.Trace(string.Format("IDP.GetPageAsyncCancel([{0}])", userState));
 //             Dispatcher.VerifyAccess();
 
-            if (userState == null)
-            {
-                throw new ArgumentNullException("userState");
-            }
+            ArgumentNullException.ThrowIfNull(userState);
 
             GetPageAsyncRequest asyncRequest;
             if (_asyncOps.TryGetValue(userState,out asyncRequest))
@@ -461,11 +446,8 @@ namespace System.Windows.Documents
         /// <exception cref="ArgumentNullException">element is NULL.</exception>
         internal ContentPosition GetObjectPosition(Object o)
         {
-            if (o == null)
-            {
-                throw new ArgumentNullException("o");
-            }
-            
+            ArgumentNullException.ThrowIfNull(o);
+
             DependencyObject element = o as DependencyObject;
 
             if (element == null)
@@ -1403,10 +1385,7 @@ namespace System.Windows.Documents
         /// </param>
         object IServiceProvider.GetService(Type serviceType)
         {
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
 
             if (serviceType == typeof(ITextView))
             {

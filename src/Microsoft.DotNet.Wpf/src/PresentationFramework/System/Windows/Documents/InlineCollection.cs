@@ -187,10 +187,7 @@ namespace System.Windows.Documents
         // Run, otherwise returns -1.
         private int AddText(string text, bool returnIndex)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException("text");
-            }
+            ArgumentNullException.ThrowIfNull(text);
 
             // Special case for TextBlock - to keep its simple content in simple state
             if (this.Parent is TextBlock)
@@ -237,10 +234,7 @@ namespace System.Windows.Documents
         // Run, otherwise returns -1.
         private int AddUIElement(UIElement uiElement, bool returnIndex)
         {
-            if (uiElement == null)
-            {
-                throw new ArgumentNullException("uiElement");
-            }
+            ArgumentNullException.ThrowIfNull(uiElement);
 
             InlineUIContainer implicitInlineUIContainer = Run.CreateImplicitInlineUIContainer(this.Parent);
             int index;

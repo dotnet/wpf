@@ -43,10 +43,7 @@ namespace System.Windows
 
         public SplashScreen(Assembly resourceAssembly, string resourceName)
         {
-            if (resourceAssembly == null)
-            {
-                throw new ArgumentNullException("resourceAssembly");
-            }
+            ArgumentNullException.ThrowIfNull(resourceAssembly);
             if (String.IsNullOrEmpty(resourceName))
             {
                 throw new ArgumentNullException("resourceName");

@@ -1112,11 +1112,6 @@
         <target state="translated">Не удается вызвать MarkupExtension.ProvideValue из-за циклической зависимости. Свойства внутри MarkupExtension не могут ссылаться на объекты, ссылающиеся на результат MarkupExtension. Связанные объекты MarkupExtension:</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Формат имени типа "{0}" отличается от ожидаемого формата "имя класса, сборка".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="QuoteCharactersOutOfPlace">
         <source>Quote characters ' or " are only allowed at the start of values.</source>
         <target state="translated">Символы кавычек ' и " допустимы только в начале значений.</target>

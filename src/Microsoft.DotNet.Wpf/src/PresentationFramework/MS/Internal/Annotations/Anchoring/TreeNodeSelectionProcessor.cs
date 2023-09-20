@@ -68,11 +68,8 @@ namespace MS.Internal.Annotations.Anchoring
         /// null</exception>
         public override bool MergeSelections(Object selection1, Object selection2, out Object newSelection)
         {
-            if (selection1 == null)
-                throw new ArgumentNullException(nameof(selection1));
-
-            if (selection2 == null)
-                throw new ArgumentNullException(nameof(selection2));
+            ArgumentNullException.ThrowIfNull(selection1);
+            ArgumentNullException.ThrowIfNull(selection2);
 
             newSelection = null;
             return false;
@@ -100,8 +97,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentException">selection is of wrong type</exception>
         public override UIElement GetParent(Object selection)
         {
-            if (selection == null)
-                throw new ArgumentNullException(nameof(selection));
+            ArgumentNullException.ThrowIfNull(selection);
 
             UIElement element = selection as UIElement;
             if (element == null)
@@ -121,8 +117,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentException">selection is of wrong type</exception>
         public override Point GetAnchorPoint(Object selection)
         {
-            if (selection == null)
-                throw new ArgumentNullException(nameof(selection));
+            ArgumentNullException.ThrowIfNull(selection);
 
             Visual element = selection as Visual;
 
@@ -149,11 +144,8 @@ namespace MS.Internal.Annotations.Anchoring
         /// selection is of the wrong type</exception>
         public override IList<ContentLocatorPart> GenerateLocatorParts(Object selection, DependencyObject startNode)
         {
-            if (startNode == null)
-                throw new ArgumentNullException(nameof(startNode));
-
-            if (selection == null)
-                throw new ArgumentNullException(nameof(selection));
+            ArgumentNullException.ThrowIfNull(startNode);
+            ArgumentNullException.ThrowIfNull(selection);
 
             return new List<ContentLocatorPart>(0);
         }
@@ -173,11 +165,8 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentException">locatorPart is of the incorrect type</exception>
         public override Object ResolveLocatorPart(ContentLocatorPart locatorPart, DependencyObject startNode, out AttachmentLevel attachmentLevel)
         {
-            if (startNode == null)
-                throw new ArgumentNullException(nameof(startNode));
-
-            if (locatorPart == null)
-                throw new ArgumentNullException(nameof(locatorPart));
+            ArgumentNullException.ThrowIfNull(startNode);
+            ArgumentNullException.ThrowIfNull(locatorPart);
 
             attachmentLevel = AttachmentLevel.Full;
 

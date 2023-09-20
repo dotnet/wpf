@@ -242,8 +242,7 @@ namespace System.Windows.Media
 
         private int InsertItem(int index, FamilyTypeface item)
         {
-            if (item == null)
-                throw new ArgumentNullException("item");
+            ArgumentNullException.ThrowIfNull(item);
 
             VerifyChangeable();
 
@@ -310,8 +309,7 @@ namespace System.Windows.Media
 
         private void SetItem(int index, FamilyTypeface item)
         {
-            if (item == null)
-                throw new ArgumentNullException("item");
+            ArgumentNullException.ThrowIfNull(item);
 
             VerifyChangeable();
             RangeCheck(index);
@@ -368,8 +366,7 @@ namespace System.Windows.Media
 
         private FamilyTypeface ConvertValue(object obj)
         {
-            if (obj == null)
-                throw new ArgumentNullException("obj");
+            ArgumentNullException.ThrowIfNull(obj);
 
             FamilyTypeface familyTypeface = obj as FamilyTypeface;
             if (familyTypeface == null)
@@ -380,8 +377,7 @@ namespace System.Windows.Media
 
         private void CopyItems(Array array, int index)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
 
             if (array.Rank != 1)
                 throw new ArgumentException(SR.Collection_CopyTo_ArrayCannotBeMultidimensional);

@@ -287,14 +287,8 @@ namespace System.Windows.Xps.Serialization
             Object                        serializedObject
             )
         {
-            if(manager == null)
-            {
-                throw new ArgumentNullException("manager");
-            }
-            if(serializedObject == null)
-            {
-                throw new ArgumentNullException("manager");
-            }
+            ArgumentNullException.ThrowIfNull(manager);
+            ArgumentNullException.ThrowIfNull(serializedObject);
 
             this._serializationManager      = manager;
             this._serializedObject          = serializedObject;

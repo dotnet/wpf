@@ -1,6 +1,6 @@
 <Project>
    <PropertyGroup>
-    <_DotnetApiDocsFilesRoot>$([MSBuild]::NormalizeDirectory('$(NuGetPackageRoot)', '$(_DotnetApiDocsPackageName.ToLower())', '$(MicrosoftPrivateIntellisenseVersion)', 'IntellisenseFiles', 'windowsdesktop', '1033'))</_DotnetApiDocsFilesRoot>
+    <_DotnetApiDocsFilesRoot>$([MSBuild]::NormalizeDirectory('$(NuGetPackageRoot)', 'microsoft.private.intellisense', '$(MicrosoftPrivateIntellisenseVersion)', 'IntellisenseFiles', 'windowsdesktop', '1033'))</_DotnetApiDocsFilesRoot>
   </PropertyGroup>
 
   <ItemGroup>
@@ -67,11 +67,11 @@
       <IntellisenseXmlFile>$(IntellisenseXmlDir)$(AssemblyName).xml</IntellisenseXmlFile>
     </PropertyGroup>
 
-    <Message Condition="!Exists('$(IntellisenseXmlFile)')"
-             Text="$(IntellisenseXmlFile) is missing" />
+    <Message Condition="!Exists('$(IntellisenseXmlFileSource)')"
+             Text="$(IntellisenseXmlFileSource) is missing" />
     
-    <Copy SourceFiles="$(IntellisenseXmlFile)"
-          Condition="Exists('$(IntellisenseXmlFile)')"
+    <Copy SourceFiles="$(IntellisenseXmlFileSource)"
+          Condition="Exists('$(IntellisenseXmlFileSource)')"
           DestinationFolder="$(ReferenceAssemblyDir)"          
           SkipUnchangedFiles="true"/>
   </Target>

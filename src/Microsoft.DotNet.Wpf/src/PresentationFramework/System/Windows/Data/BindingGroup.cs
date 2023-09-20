@@ -1997,10 +1997,7 @@ namespace System.Windows.Data
             /// </summary>
             protected override void InsertItem(int index, BindingExpressionBase item)
             {
-                if (item == null)
-                {
-                    throw new ArgumentNullException("item");
-                }
+                ArgumentNullException.ThrowIfNull(item);
 
                 base.InsertItem(index, item);
             }
@@ -2011,10 +2008,7 @@ namespace System.Windows.Data
             /// </summary>
             protected override void SetItem(int index, BindingExpressionBase item)
             {
-                if (item == null)
-                {
-                    throw new ArgumentNullException("item");
-                }
+                ArgumentNullException.ThrowIfNull(item);
 
                 base.SetItem(index, item);
             }

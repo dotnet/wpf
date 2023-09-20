@@ -1828,7 +1828,7 @@ namespace System.Windows.Controls
         private static bool ZoomValidateValue(object o)
         {
             double value = (double)o;
-            return (!Double.IsNaN(value) && !Double.IsInfinity(value) && DoubleUtil.GreaterThan(value, 0d));
+            return (!Double.IsNaN(value) && !Double.IsInfinity(value) && DoubleUtil.GreaterThanZero(value));
         }
 
         /// <summary>
@@ -1951,10 +1951,7 @@ namespace System.Windows.Controls
         /// <remarks>FlowDocumentScrollViewer only supports a single child of type IDocumentPaginator.</remarks>
         void IAddChild.AddChild(Object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
             // Check if Content has already been set.
             if (this.Document != null)
             {

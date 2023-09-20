@@ -162,10 +162,7 @@ namespace System.Windows.Controls
         /// <param name="stream">The stream that contains the content of a html document</param>
         public void NavigateToStream(Stream stream)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
 
             DocumentStream = stream;            
             // We navigate to "about:blank" when Source is set to null. 

@@ -146,10 +146,7 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltIn();
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (!_supportsColorContext)
                 {
@@ -176,10 +173,7 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltIn();
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (!_supportsGlobalThumbnail)
                 {
@@ -208,10 +202,7 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltIn();
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (value.GuidFormat != ContainerFormat)
                 {
@@ -243,10 +234,7 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltIn();
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (!_supportsPreview)
                 {
@@ -301,10 +289,7 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltIn();
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _palette = value;
             }
@@ -331,10 +316,7 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltIn();
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _frames = value;
             }

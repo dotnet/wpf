@@ -57,8 +57,7 @@ namespace MS.Internal.FontFace
         internal void PrepareToAddFamilyMap(FontFamilyMap familyMap)
         {
             // Validate parameters.
-            if (familyMap == null)
-                throw new ArgumentNullException("familyMap");
+            ArgumentNullException.ThrowIfNull(familyMap);
 
             if (string.IsNullOrEmpty(familyMap.Target))
                 throw new ArgumentException(SR.FamilyMap_TargetNotSet);

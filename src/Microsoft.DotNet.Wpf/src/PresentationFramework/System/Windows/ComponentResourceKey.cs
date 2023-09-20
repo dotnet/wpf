@@ -29,14 +29,8 @@ namespace System.Windows
         /// <param name="resourceId">A unique ID to differentiate this key from others associated with this type.</param>
         public ComponentResourceKey(Type typeInTargetAssembly, object resourceId)
         {
-            if (typeInTargetAssembly == null)
-            {
-                throw new ArgumentNullException("typeInTargetAssembly");
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException("resourceId");
-            }
+            ArgumentNullException.ThrowIfNull(typeInTargetAssembly);
+            ArgumentNullException.ThrowIfNull(resourceId);
 
             _typeInTargetAssembly = typeInTargetAssembly;
             _typeInTargetAssemblyInitialized = true;
@@ -57,10 +51,7 @@ namespace System.Windows
 
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
                 if (_typeInTargetAssemblyInitialized)
                 {
                     throw new InvalidOperationException(SR.ChangingTypeNotAllowed);

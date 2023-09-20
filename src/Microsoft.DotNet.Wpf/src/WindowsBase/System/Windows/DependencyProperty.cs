@@ -244,25 +244,15 @@ namespace System.Windows
 
         private static void RegisterParameterValidation(string name, Type propertyType, Type ownerType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
+            ArgumentNullException.ThrowIfNull(name);
 
             if (name.Length == 0)
             {
                 throw new ArgumentException(SR.StringEmpty, "name");
             }
 
-            if (ownerType == null)
-            {
-                throw new ArgumentNullException("ownerType");
-            }
-
-            if (propertyType == null)
-            {
-                throw new ArgumentNullException("propertyType");
-            }
+            ArgumentNullException.ThrowIfNull(ownerType);
+            ArgumentNullException.ThrowIfNull(propertyType);
         }
 
         private static DependencyProperty RegisterCommon(string name, Type propertyType, Type ownerType, PropertyMetadata defaultMetadata, ValidateValueCallback validateValueCallback)
@@ -468,15 +458,8 @@ namespace System.Windows
             out DependencyObjectType dType,
             out PropertyMetadata baseMetadata )
         {
-            if (forType == null)
-            {
-                throw new ArgumentNullException("forType");
-            }
-
-            if (typeMetadata == null)
-            {
-                throw new ArgumentNullException("typeMetadata");
-            }
+            ArgumentNullException.ThrowIfNull(forType);
+            ArgumentNullException.ThrowIfNull(typeMetadata);
 
             if (typeMetadata.Sealed)
             {
@@ -547,10 +530,7 @@ namespace System.Windows
 
             SetupOverrideMetadata(forType, typeMetadata, out dType, out baseMetadata);
 
-            if (key == null)
-            {
-                throw new ArgumentNullException("key");
-            }
+            ArgumentNullException.ThrowIfNull(key);
 
             if (ReadOnly)
             {
@@ -651,11 +631,8 @@ namespace System.Windows
         /// <returns>Property metadata</returns>
         public PropertyMetadata GetMetadata(Type forType)
         {
-            if (forType != null)
-            {
-                return GetMetadata(DependencyObjectType.FromSystemType(forType));
-            }
-            throw new ArgumentNullException("forType");
+            ArgumentNullException.ThrowIfNull(forType);
+            return GetMetadata(DependencyObjectType.FromSystemType(forType));
         }
 
         /// <summary>
@@ -665,11 +642,8 @@ namespace System.Windows
         /// <returns>Property metadata</returns>
         public PropertyMetadata GetMetadata(DependencyObject dependencyObject)
         {
-            if (dependencyObject != null)
-            {
-                return GetMetadata(dependencyObject.DependencyObjectType);
-            }
-            throw new ArgumentNullException("dependencyObject");
+            ArgumentNullException.ThrowIfNull(dependencyObject);
+            return GetMetadata(dependencyObject.DependencyObjectType);
         }
 
         /// <summary>
@@ -783,10 +757,7 @@ namespace System.Windows
         /// <returns>This property</returns>
         public DependencyProperty AddOwner(Type ownerType, PropertyMetadata typeMetadata)
         {
-            if (ownerType == null)
-            {
-                throw new ArgumentNullException("ownerType");
-            }
+            ArgumentNullException.ThrowIfNull(ownerType);
 
             // Map owner type to this property
             // Build key
@@ -1005,37 +976,27 @@ namespace System.Windows
         {
             DependencyProperty dp = null;
 
-            if (name != null)
+            ArgumentNullException.ThrowIfNull(name);
+            ArgumentNullException.ThrowIfNull(ownerType);
+
+            FromNameKey key = new FromNameKey(name, ownerType);
+
+            while ((dp == null) && (ownerType != null))
             {
-                if (ownerType != null)
+                // Ensure static constructor of type has run
+                MS.Internal.WindowsBase.SecurityHelper.RunClassConstructor(ownerType);
+
+                // Locate property
+                key.UpdateNameKey(ownerType);
+
+                lock (Synchronized)
                 {
-                    FromNameKey key = new FromNameKey(name, ownerType);
-
-                    while ((dp == null) && (ownerType != null))
-                    {
-                        // Ensure static constructor of type has run
-                        MS.Internal.WindowsBase.SecurityHelper.RunClassConstructor(ownerType);
-
-                        // Locate property
-                        key.UpdateNameKey(ownerType);
-
-                        lock (Synchronized)
-                        {
-                            dp = (DependencyProperty)PropertyFromName[key];
-                        }
-
-                        ownerType = ownerType.BaseType;
-                    }
+                    dp = (DependencyProperty)PropertyFromName[key];
                 }
-                else
-                {
-                    throw new ArgumentNullException("ownerType");
-                }
+
+                ownerType = ownerType.BaseType;
             }
-            else
-            {
-                throw new ArgumentNullException("name");
-            }
+
             return dp;
         }
 

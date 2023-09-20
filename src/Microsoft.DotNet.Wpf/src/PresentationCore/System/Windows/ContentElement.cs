@@ -865,10 +865,7 @@ namespace System.Windows
         /// <returns>True if capture was taken.</returns>
         public bool CaptureTouch(TouchDevice touchDevice)
         {
-            if (touchDevice == null)
-            {
-                throw new ArgumentNullException("touchDevice");
-            }
+            ArgumentNullException.ThrowIfNull(touchDevice);
 
             return touchDevice.Capture(this);
         }
@@ -880,10 +877,7 @@ namespace System.Windows
         /// <returns>true if capture was released, false otherwise.</returns>
         public bool ReleaseTouchCapture(TouchDevice touchDevice)
         {
-            if (touchDevice == null)
-            {
-                throw new ArgumentNullException("touchDevice");
-            }
+            ArgumentNullException.ThrowIfNull(touchDevice);
 
             if (touchDevice.Captured == this)
             {

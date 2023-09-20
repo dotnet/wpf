@@ -180,10 +180,7 @@ namespace System.Windows.Baml2006
         //
         public override XamlType GetXamlType(Type type)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException("type");
-            }
+            ArgumentNullException.ThrowIfNull(type);
 
             XamlType xamlType = GetKnownXamlType(type);
             if (xamlType == null)

@@ -49,8 +49,7 @@ namespace MS.Internal.Data
         /// </param>
         public void OnCollectionChanged(NotifyCollectionChangedEventArgs args)
         {
-            if (args == null)
-                throw new ArgumentNullException("args");
+            ArgumentNullException.ThrowIfNull(args);
 
             if (CollectionChanged != null)
                 CollectionChanged(this, args);

@@ -86,10 +86,7 @@ namespace MS.Internal.Controls.StickyNote
         {
             public AutoLocker(LockHelper helper, LockFlag flag)
             {
-                if (helper == null)
-                {
-                    throw new ArgumentNullException("helper");
-                }
+                ArgumentNullException.ThrowIfNull(helper);
 
                 Debug.Assert(!helper.IsLocked(flag));
                 _helper = helper;

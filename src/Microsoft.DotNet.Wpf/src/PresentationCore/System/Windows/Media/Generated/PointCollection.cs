@@ -246,10 +246,7 @@ namespace System.Windows.Media
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -374,10 +371,7 @@ namespace System.Windows.Media
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -473,10 +467,7 @@ namespace System.Windows.Media
 
         private Point Cast(object value)
         {
-            if( value == null )
-            {
-                throw new System.ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             if (!(value is Point))
             {
@@ -947,45 +938,40 @@ namespace System.Windows.Media
 
             WritePreamble();
 
-            if (collection != null)
+            ArgumentNullException.ThrowIfNull(collection);
+
+            ICollection<Point> icollectionOfT = collection as ICollection<Point>;
+
+            if (icollectionOfT != null)
             {
-                ICollection<Point> icollectionOfT = collection as ICollection<Point>;
-
-                if (icollectionOfT != null)
-                {
-                    _collection = new FrugalStructList<Point>(icollectionOfT);
-                }
-                else
-                {       
-                    ICollection icollection = collection as ICollection;
-
-                    if (icollection != null) // an IC but not and IC<T>
-                    {
-                        _collection = new FrugalStructList<Point>(icollection);
-                    }
-                    else // not a IC or IC<T> so fall back to the slower Add
-                    {
-                        _collection = new FrugalStructList<Point>();
-
-                        foreach (Point item in collection)
-                        {
-                            _collection.Add(item);
-                        }
-}
-                }
-
-
-
-
-
-
-
-                WritePostscript();
+                _collection = new FrugalStructList<Point>(icollectionOfT);
             }
             else
             {
-                throw new ArgumentNullException("collection");
+                ICollection icollection = collection as ICollection;
+
+                if (icollection != null) // an IC but not and IC<T>
+                {
+                    _collection = new FrugalStructList<Point>(icollection);
+                }
+                else // not a IC or IC<T> so fall back to the slower Add
+                {
+                    _collection = new FrugalStructList<Point>();
+
+                    foreach (Point item in collection)
+                    {
+                        _collection.Add(item);
+                    }
+                }
             }
+
+
+
+
+
+
+
+            WritePostscript();
         }
 
         #endregion Constructors

@@ -118,9 +118,8 @@ namespace System.Windows.Markup
         public static XmlLanguage GetLanguage(string ietfLanguageTag)
         {
             XmlLanguage language;
-            
-            if (ietfLanguageTag == null)
-                throw new ArgumentNullException("ietfLanguageTag");
+
+            ArgumentNullException.ThrowIfNull(ietfLanguageTag);
 
             string lowercase = AsciiToLower(ietfLanguageTag);   // throws on non-ascii
 
@@ -189,7 +188,7 @@ namespace System.Windows.Markup
                 // see http://www.w3.org/International/questions/qa-no-language
                 //
                 // Just treat it the same as xml:lang=""
-                if(String.CompareOrdinal(lowerCaseTag, "und") == 0)
+                if(string.Equals(lowerCaseTag, "und", StringComparison.Ordinal))
                 {
                     lowerCaseTag = String.Empty;
                 }            
@@ -229,7 +228,7 @@ namespace System.Windows.Markup
         {
             if (_specificCulture == null)
             {
-                if (_lowerCaseTag.Length == 0 || String.CompareOrdinal(_lowerCaseTag, "und") == 0)
+                if (_lowerCaseTag.Length == 0 || string.Equals(_lowerCaseTag, "und", StringComparison.Ordinal))
                 {
                     _specificCulture = GetEquivalentCulture();
                 }
@@ -348,13 +347,10 @@ namespace System.Windows.Markup
         /// </remarks>
         internal bool RangeIncludes(CultureInfo culture)
         {
-            if (culture == null)
-            {
-                throw new ArgumentNullException("culture");
-            }
+            ArgumentNullException.ThrowIfNull(culture);
 
             // no need for special cases for InvariantCulture, which has IetfLanguageTag == ""
-            
+
             // Limit how far we'll walk up the hierarchy to avoid security threat.
             // We could check for cycles (e.g., culture.Parent.Parent == culture)
             // but in in the case of non-malicious code there should be no cycles,
@@ -719,10 +715,7 @@ namespace System.Windows.Markup
         /// <exception cref="ArgumentException">tag is non-empty, but does not conform to RFC 3066.</exception>
         private static void ValidateLowerCaseTag(string ietfLanguageTag)
         {
-            if (ietfLanguageTag == null)
-            {
-                throw new ArgumentNullException("ietfLanguageTag");
-            }
+            ArgumentNullException.ThrowIfNull(ietfLanguageTag);
 
             if (ietfLanguageTag.Length > 0)
             {

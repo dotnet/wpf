@@ -134,11 +134,8 @@ namespace MS.Internal.Annotations.Anchoring
         public override IList<ContentLocatorPart>
             GenerateLocatorParts(Object selection, DependencyObject startNode)
         {
-            if (startNode == null)
-                throw new ArgumentNullException("startNode");
-
-            if (selection == null)
-                throw new ArgumentNullException("selection");
+            ArgumentNullException.ThrowIfNull(startNode);
+            ArgumentNullException.ThrowIfNull(selection);
 
             ITextPointer start;
             ITextPointer end;
@@ -199,11 +196,8 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentException">locatorPart is of the incorrect type</exception>
         public override Object ResolveLocatorPart(ContentLocatorPart locatorPart, DependencyObject startNode, out AttachmentLevel attachmentLevel)
         {
-            if (startNode == null)
-                throw new ArgumentNullException("startNode");
-
-            if (locatorPart == null)
-                throw new ArgumentNullException("locatorPart");
+            ArgumentNullException.ThrowIfNull(startNode);
+            ArgumentNullException.ThrowIfNull(locatorPart);
 
             if (CharacterRangeElementName != locatorPart.PartType)
                 throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, locatorPart.PartType.Namespace + ":" + locatorPart.PartType.Name), "locatorPart");
@@ -367,8 +361,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// </summary>
         internal static void GetMaxMinLocatorPartValues(ContentLocatorPart locatorPart, out int startOffset, out int endOffset)
         {
-            if (locatorPart == null)
-                throw new ArgumentNullException("locatorPart");
+            ArgumentNullException.ThrowIfNull(locatorPart);
 
             string stringCount = locatorPart.NameValuePairs[CountAttribute];
             if (stringCount == null)

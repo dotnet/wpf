@@ -46,10 +46,7 @@ namespace System.Windows.Controls
         /// <param name="itemsControl"></param>
         private TextSearch(ItemsControl itemsControl)
         {
-            if (itemsControl == null)
-            {
-                throw new ArgumentNullException("itemsControl");
-            }
+            ArgumentNullException.ThrowIfNull(itemsControl);
 
             _attachedTo = itemsControl;
 
@@ -91,10 +88,7 @@ namespace System.Windows.Controls
         /// <param name="path"></param>
         public static void SetTextPath(DependencyObject element, string path)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(TextPathProperty, path);
         }
@@ -107,10 +101,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static string GetTextPath(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (string)element.GetValue(TextPathProperty);
         }
@@ -129,10 +120,7 @@ namespace System.Windows.Controls
         /// <param name="text"></param>
         public static void SetText(DependencyObject element, string text)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(TextProperty, text);
         }
@@ -145,10 +133,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static string GetText(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (string)element.GetValue(TextProperty);
         }
@@ -770,10 +755,7 @@ namespace System.Windows.Controls
 
         internal static string GetPrimaryText(FrameworkElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             string text = (string)element.GetValue(TextProperty);
 

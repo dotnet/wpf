@@ -332,10 +332,7 @@ namespace System.Windows.Input
         /// <seealso cref="KeyboardNavigation.TabIndexProperty" />
         public static void SetTabIndex(DependencyObject element, int index)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(TabIndexProperty, index);
         }
 
@@ -348,10 +345,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static int GetTabIndex(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return GetTabIndexHelper(element);
         }
 
@@ -363,10 +357,7 @@ namespace System.Windows.Input
         /// <seealso cref="KeyboardNavigation.IsTabStopProperty" />
         public static void SetIsTabStop(DependencyObject element, bool isTabStop)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(IsTabStopProperty, BooleanBoxes.Box(isTabStop));
         }
 
@@ -379,10 +370,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetIsTabStop(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(IsTabStopProperty);
         }
 
@@ -394,10 +382,7 @@ namespace System.Windows.Input
         /// <seealso cref="KeyboardNavigation.TabNavigationProperty" />
         public static void SetTabNavigation(DependencyObject element, KeyboardNavigationMode mode)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(TabNavigationProperty, mode);
         }
 
@@ -411,10 +396,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static KeyboardNavigationMode GetTabNavigation(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (KeyboardNavigationMode)element.GetValue(TabNavigationProperty);
         }
 
@@ -426,10 +408,7 @@ namespace System.Windows.Input
         /// <seealso cref="KeyboardNavigation.ControlTabNavigationProperty" />
         public static void SetControlTabNavigation(DependencyObject element, KeyboardNavigationMode mode)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(ControlTabNavigationProperty, mode);
         }
 
@@ -443,10 +422,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static KeyboardNavigationMode GetControlTabNavigation(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (KeyboardNavigationMode)element.GetValue(ControlTabNavigationProperty);
         }
 
@@ -458,10 +434,7 @@ namespace System.Windows.Input
         /// <seealso cref="KeyboardNavigation.DirectionalNavigationProperty" />
         public static void SetDirectionalNavigation(DependencyObject element, KeyboardNavigationMode mode)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(DirectionalNavigationProperty, mode);
         }
 
@@ -475,10 +448,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static KeyboardNavigationMode GetDirectionalNavigation(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (KeyboardNavigationMode)element.GetValue(DirectionalNavigationProperty);
         }
 
@@ -490,10 +460,7 @@ namespace System.Windows.Input
         /// <seealso cref="KeyboardNavigation.AcceptsReturnProperty" />
         public static void SetAcceptsReturn(DependencyObject element, bool enabled)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(AcceptsReturnProperty, BooleanBoxes.Box(enabled));
         }
 
@@ -506,10 +473,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetAcceptsReturn(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(AcceptsReturnProperty);
         }
 

@@ -39,10 +39,7 @@ namespace System.Windows
         public DynamicResourceExtension(
             object resourceKey)
         {
-            if (resourceKey == null)
-            {
-                throw new ArgumentNullException("resourceKey");
-            }
+            ArgumentNullException.ThrowIfNull(resourceKey);
             _resourceKey = resourceKey;
         }
 
@@ -86,10 +83,7 @@ namespace System.Windows
             get { return _resourceKey; }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
                 _resourceKey = value;
             }
         }

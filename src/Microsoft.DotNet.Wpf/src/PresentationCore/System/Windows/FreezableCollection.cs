@@ -89,37 +89,32 @@ namespace System.Windows
 
             WritePreamble();
 
-            if (collection != null)
+            ArgumentNullException.ThrowIfNull(collection);
+
+            int count = GetCount(collection);
+
+            if (count > 0)
             {
-                int count = GetCount(collection);
-
-                if (count > 0)
-                {
-                    _collection = new List<T>(count);
-                }
-                else
-                {
-                    _collection = new List<T>();
-                }
-
-                foreach (T item in collection)
-                {
-                    if (item == null)
-                    {
-                        throw new System.ArgumentException(SR.Collection_NoNull);
-                    }
-
-                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
-
-                    _collection.Add(item);
-                }
-
-                WritePostscript();
+                _collection = new List<T>(count);
             }
             else
             {
-                throw new ArgumentNullException("collection");
+                _collection = new List<T>();
             }
+
+            foreach (T item in collection)
+            {
+                if (item == null)
+                {
+                    throw new System.ArgumentException(SR.Collection_NoNull);
+                }
+
+                OnFreezablePropertyChanged(/* oldValue = */ null, item);
+
+                _collection.Add(item);
+            }
+
+            WritePostscript();
         }
 
         #endregion Constructors
@@ -391,10 +386,7 @@ namespace System.Windows
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -506,10 +498,7 @@ namespace System.Windows
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -675,10 +664,7 @@ namespace System.Windows
 
         private T Cast(object value)
         {
-            if( value == null )
-            {
-                throw new System.ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             if (!(value is T))
             {

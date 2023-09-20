@@ -39,11 +39,8 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static ContextMenu GetContextMenu(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-            
+            ArgumentNullException.ThrowIfNull(element);
+
             ContextMenu cm = (ContextMenu)element.GetValue(ContextMenuProperty);
 
             if ((cm != null) && (element.Dispatcher != cm.Dispatcher))
@@ -67,10 +64,7 @@ namespace System.Windows.Controls
         /// </param>
         public static void SetContextMenu(DependencyObject element, ContextMenu value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(ContextMenuProperty, value);
         }
 
@@ -92,10 +86,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static double GetHorizontalOffset(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (double)element.GetValue(HorizontalOffsetProperty);
         }
 
@@ -106,10 +97,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         public static void SetHorizontalOffset(DependencyObject element, double value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(HorizontalOffsetProperty, value);
         }
 
@@ -131,10 +119,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static double GetVerticalOffset(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (double)element.GetValue(VerticalOffsetProperty);
         }
 
@@ -145,10 +130,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         public static void SetVerticalOffset(DependencyObject element, double value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(VerticalOffsetProperty, value);
         }
 
@@ -168,10 +150,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetHasDropShadow(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(HasDropShadowProperty);
         }
 
@@ -182,10 +161,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         public static void SetHasDropShadow(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(HasDropShadowProperty, BooleanBoxes.Box(value));
         }
 
@@ -206,10 +182,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static UIElement GetPlacementTarget(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (UIElement)element.GetValue(PlacementTargetProperty);
         }
 
@@ -220,10 +193,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         public static void SetPlacementTarget(DependencyObject element, UIElement value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(PlacementTargetProperty, value);
         }
 
@@ -244,10 +214,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static Rect GetPlacementRectangle(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (Rect)element.GetValue(PlacementRectangleProperty);
         }
 
@@ -258,10 +225,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         public static void SetPlacementRectangle(DependencyObject element, Rect value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(PlacementRectangleProperty, value);
         }
 
@@ -282,10 +246,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static PlacementMode GetPlacement(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (PlacementMode)element.GetValue(PlacementProperty);
         }
 
@@ -296,10 +257,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         public static void SetPlacement(DependencyObject element, PlacementMode value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(PlacementProperty, value);
         }
 
@@ -320,10 +278,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetShowOnDisabled(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(ShowOnDisabledProperty);
         }
 
@@ -334,10 +289,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         public static void SetShowOnDisabled(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(ShowOnDisabledProperty, BooleanBoxes.Box(value));
         }
 
@@ -358,10 +310,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetIsEnabled(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(IsEnabledProperty);
         }
 
@@ -372,10 +321,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         public static void SetIsEnabled(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(IsEnabledProperty, BooleanBoxes.Box(value));
         }
 

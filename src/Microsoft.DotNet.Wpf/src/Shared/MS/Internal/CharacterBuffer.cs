@@ -179,11 +179,8 @@ namespace MS.Internal
             char[]  characterArray
             )
         {
-            if (characterArray == null) 
-            {
-                throw new ArgumentNullException("characterArray");
-            }
-            
+            ArgumentNullException.ThrowIfNull(characterArray);
+
             _characterArray = characterArray;
         }
 
@@ -281,11 +278,8 @@ namespace MS.Internal
             string  characterString
             )
         {
-            if (characterString == null)
-            {
-                throw new ArgumentNullException("characterString");
-            }
-            
+            ArgumentNullException.ThrowIfNull(characterString);
+
             _string = characterString;
         }
 

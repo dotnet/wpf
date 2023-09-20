@@ -129,8 +129,7 @@ namespace System.Windows.Data
         /// <summary> Constructor </summary>
         internal BindingExpressionBase(BindingBase binding, BindingExpressionBase parent) : base(ExpressionMode.SupportsUnboundSources)
         {
-            if (binding == null)
-                throw new ArgumentNullException("binding");
+            ArgumentNullException.ThrowIfNull(binding);
 
             _binding = binding;
             SetValue(Feature.ParentBindingExpressionBase, parent, null);
@@ -367,10 +366,8 @@ namespace System.Windows.Data
         /// <param name="dp">Property being set</param>
         internal sealed override void OnAttach(DependencyObject d, DependencyProperty dp)
         {
-            if (d == null)
-                throw new ArgumentNullException("d");
-            if (dp == null)
-                throw new ArgumentNullException("dp");
+            ArgumentNullException.ThrowIfNull(d);
+            ArgumentNullException.ThrowIfNull(dp);
 
             Attach(d, dp);
         }

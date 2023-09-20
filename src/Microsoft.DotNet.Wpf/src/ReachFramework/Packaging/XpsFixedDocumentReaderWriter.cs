@@ -265,10 +265,7 @@ namespace System.Windows.Xps.Packaging
             )
             : base(xpsManager)
         {
-            if (null == part)
-            {
-                throw new ArgumentNullException("part");
-            }
+            ArgumentNullException.ThrowIfNull(part);
 
             this.Uri = part.Uri;
 

@@ -39,10 +39,7 @@ namespace System.Windows.Markup
         /// </returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
-            if (sourceType == null)
-            {
-                throw new ArgumentNullException("sourceType");
-            }
+            ArgumentNullException.ThrowIfNull(sourceType);
 
             return base.CanConvertFrom(context, sourceType);
         }
@@ -62,11 +59,9 @@ namespace System.Windows.Markup
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) 
         {
             // Validate Input Arguments
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
-            else if( destinationType == typeof(MarkupExtension) && context is IValueSerializerContext  )
+            ArgumentNullException.ThrowIfNull(destinationType);
+
+            if ( destinationType == typeof(MarkupExtension) && context is IValueSerializerContext  )
             {
                 return true;
             }
@@ -114,15 +109,11 @@ namespace System.Windows.Markup
         /// </returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-                        
-            // Input validation
-            
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
 
-            
+            // Input validation
+
+            ArgumentNullException.ThrowIfNull(destinationType);
+
             if (destinationType == typeof(MarkupExtension)
                 &&
                 CanConvertTo(context, destinationType) )

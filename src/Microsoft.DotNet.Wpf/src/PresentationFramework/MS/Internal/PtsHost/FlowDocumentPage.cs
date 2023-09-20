@@ -1154,10 +1154,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         object IServiceProvider.GetService(Type serviceType)
         {
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
 
             if (serviceType == typeof(ITextView))
             {

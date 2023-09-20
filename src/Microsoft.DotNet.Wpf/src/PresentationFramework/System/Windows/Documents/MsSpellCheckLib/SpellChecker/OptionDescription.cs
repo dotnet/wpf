@@ -62,10 +62,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
             /// </summary>
             internal static OptionDescription Create(IOptionDescription optionDescription, bool shouldSuppressCOMExceptions = true, bool shouldReleaseCOMObject = true)
             {
-                if (optionDescription == null)
-                {
-                    throw new ArgumentNullException(nameof(optionDescription));
-                }
+                ArgumentNullException.ThrowIfNull(optionDescription);
 
                 var od = new OptionDescription(optionDescription.Id, optionDescription.Heading, optionDescription.Description);
 

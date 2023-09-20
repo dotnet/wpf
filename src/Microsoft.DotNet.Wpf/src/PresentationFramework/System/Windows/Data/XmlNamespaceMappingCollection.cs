@@ -71,8 +71,7 @@ namespace System.Windows.Data
         /// <param name="text"></param>
         protected virtual void AddText(string text)
         {
-            if (text == null)
-                throw new ArgumentNullException(nameof(text));
+            ArgumentNullException.ThrowIfNull(text);
 
             XamlSerializerUtil.ThrowIfNonWhiteSpaceInAddText(text, this);
         }
@@ -87,8 +86,7 @@ namespace System.Windows.Data
         /// <exception cref="ArgumentNullException">mapping is null</exception>
         public void Add(XmlNamespaceMapping mapping)
         {
-            if (mapping == null)
-                throw new ArgumentNullException(nameof(mapping));
+            ArgumentNullException.ThrowIfNull(mapping);
 
             if (mapping.Uri == null)
                 throw new ArgumentException(SR.RequiresXmlNamespaceMappingUri, nameof(mapping));
@@ -122,8 +120,7 @@ namespace System.Windows.Data
         /// <exception cref="ArgumentNullException">mapping is null</exception>
         public bool Contains(XmlNamespaceMapping mapping)
         {
-            if (mapping == null)
-                throw new ArgumentNullException(nameof(mapping));
+            ArgumentNullException.ThrowIfNull(mapping);
 
             if (mapping.Uri == null)
                 throw new ArgumentException(SR.RequiresXmlNamespaceMappingUri, nameof(mapping));
@@ -136,8 +133,7 @@ namespace System.Windows.Data
         /// </summary>
         public void CopyTo(XmlNamespaceMapping[] array, int arrayIndex)
         {
-            if (array == null)
-                throw new ArgumentNullException(nameof(array));
+            ArgumentNullException.ThrowIfNull(array);
 
             int i = arrayIndex;
             int maxLength = array.Length;
@@ -159,8 +155,7 @@ namespace System.Windows.Data
         /// <exception cref="ArgumentNullException">mapping is null</exception>
         public bool Remove(XmlNamespaceMapping mapping)
         {
-            if (mapping == null)
-                throw new ArgumentNullException(nameof(mapping));
+            ArgumentNullException.ThrowIfNull(mapping);
 
             if (mapping.Uri == null)
                 throw new ArgumentException(SR.RequiresXmlNamespaceMappingUri, nameof(mapping));

@@ -106,10 +106,7 @@ namespace System.Windows.Media
             FontFamily      fallbackFontFamily
             )
         {
-            if(fontFamily == null)
-            {
-                throw new ArgumentNullException("fontFamily");
-            }
+            ArgumentNullException.ThrowIfNull(fontFamily);
 
             _fontFamily = fontFamily;
             _style = style;

@@ -100,10 +100,7 @@ namespace System.Windows.Media.Animation
         /// <returns></returns>
         public bool Contains(Clock item)
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException("item");
-            }
+            ArgumentNullException.ThrowIfNull(item);
 
             foreach (Clock t in this)
             {

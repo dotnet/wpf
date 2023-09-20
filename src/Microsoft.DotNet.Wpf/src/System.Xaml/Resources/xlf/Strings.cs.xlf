@@ -1112,11 +1112,6 @@
         <target state="translated">Nelze volat metodu MarkupExtension.ProvideValue z důvodu cyklické závislosti. Vlastnosti uvnitř objektu MarkupExtension nemohou odkazovat na objekty, které odkazují na výsledek MarkupExtension. Toto se týká následujících objektů MarkupExtensions:</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Název typu {0} nemá očekávaný formát className, assembly.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="QuoteCharactersOutOfPlace">
         <source>Quote characters ' or " are only allowed at the start of values.</source>
         <target state="translated">Znaky uvozovek ' nebo " jsou povoleny pouze na začátku hodnot.</target>

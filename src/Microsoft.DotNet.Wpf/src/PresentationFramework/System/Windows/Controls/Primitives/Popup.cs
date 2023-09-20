@@ -890,14 +890,8 @@ namespace System.Windows.Controls.Primitives
         /// <param name="bindTreatMousePlacementAsBottomProperty">Whether to bind TreatMousePlacementAsBottomProperty to the child's FromKeyboard property</param>
         internal static void CreateRootPopupInternal(Popup popup, UIElement child, bool bindTreatMousePlacementAsBottomProperty)
         {
-            if (popup == null)
-            {
-                throw new ArgumentNullException("popup");
-            }
-            if (child == null)
-            {
-                throw new ArgumentNullException("child");
-            }
+            ArgumentNullException.ThrowIfNull(popup);
+            ArgumentNullException.ThrowIfNull(child);
 
             Debug.Assert(!bindTreatMousePlacementAsBottomProperty || child is ToolTip, "child must be a Tooltip to bind TreatMousePlacementAsBottomProperty");
 

@@ -1112,11 +1112,6 @@
         <target state="translated">순환 종속으로 인해 MarkupExtension.ProvideValue를 호출할 수 없습니다. MarkupExtension 안의 속성에서 MarkupExtension의 결과를 참조하는 개체를 참조할 수 없습니다. 영향을 받는 MarkupExtension은 다음과 같습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">'{0}' 형식 이름에 'className, assembly' 형식이 없습니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="QuoteCharactersOutOfPlace">
         <source>Quote characters ' or " are only allowed at the start of values.</source>
         <target state="translated">따옴표 문자 ' 또는 "는 값의 시작에서만 사용할 수 있습니다.</target>

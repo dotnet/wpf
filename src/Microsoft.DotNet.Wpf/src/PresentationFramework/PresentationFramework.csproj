@@ -62,11 +62,13 @@
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TraceLoggers\ControlsTraceLogger.cs" />
     <Compile Include="MarshalLocal.cs" />
     <Compile Include="Microsoft\Win32\CommonDialog.cs" />
+    <Compile Include="Microsoft\Win32\CommonItemDialog.cs" />
     <Compile Include="Microsoft\Win32\FileDialog.cs" />
     <Compile Include="Microsoft\Win32\FileDialogCustomPlace.cs" />
     <Compile Include="Microsoft\Win32\FileDialogCustomPlaces.cs" />
     <Compile Include="Microsoft\Win32\OpenFileDialog.cs" />
     <Compile Include="Microsoft\Win32\SaveFileDialog.cs" />
+    <Compile Include="Microsoft\Win32\OpenFolderDialog.cs" />
     <Compile Include="MS\Internal\AnimatedTypeHelpers.cs" />
     <Compile Include="MS\Internal\Annotations\Anchoring\AttachedAnnotation.cs" />
     <Compile Include="MS\Internal\Annotations\Anchoring\DataIdProcessor.cs" />

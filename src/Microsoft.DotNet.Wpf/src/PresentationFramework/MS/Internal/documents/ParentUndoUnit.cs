@@ -62,10 +62,7 @@ namespace MS.Internal.Documents
         {
             IParentUndoUnit deepestOpen;
 
-            if (newUnit == null)
-            {
-                throw new ArgumentNullException("newUnit");
-            }
+            ArgumentNullException.ThrowIfNull(newUnit);
 
             deepestOpen = DeepestOpenUnit;
             if (deepestOpen == null)
@@ -119,10 +116,7 @@ namespace MS.Internal.Documents
         {
             UndoManager undoManager;
 
-            if (unit == null)
-            {
-                throw new ArgumentNullException("unit");
-            }
+            ArgumentNullException.ThrowIfNull(unit);
 
             if (OpenedUnit == null)
             {
@@ -230,10 +224,7 @@ namespace MS.Internal.Documents
         {
             IParentUndoUnit parentUndoUnit;
 
-            if (unit == null)
-            {
-                throw new ArgumentNullException("unit");
-            }
+            ArgumentNullException.ThrowIfNull(unit);
 
             parentUndoUnit = DeepestOpenUnit;
 

@@ -146,10 +146,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns>number of bits encoded, 0 for failure</returns>
         internal byte Encode(int data, int extra, BitStreamWriter writer)
         {
-            if (writer == null)
-            {
-                throw new ArgumentNullException("writer");
-            }
+            ArgumentNullException.ThrowIfNull(writer);
             if (data == 0)
             {
                 writer.Write((byte)0, 1); //more efficent

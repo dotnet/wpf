@@ -53,10 +53,7 @@ namespace System.Windows.Documents
         /// <param name="scope">the scope, typically a DocumentGrid</param>
         internal void AttachRubberbandSelector(FrameworkElement scope)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException("scope");
-            }
+            ArgumentNullException.ThrowIfNull(scope);
 
             ClearSelection();
             scope.MouseLeftButtonDown += new MouseButtonEventHandler(OnLeftMouseDown);

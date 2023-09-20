@@ -134,10 +134,7 @@ namespace System.Windows.Media
         /// </summary>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (null == value)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             FontFamily fontFamily = value as FontFamily;
             if (fontFamily == null)
@@ -145,10 +142,7 @@ namespace System.Windows.Media
                 throw new ArgumentException(SR.Format(SR.General_Expected_Type, "FontFamily"), "value");
             }
 
-            if (null == destinationType)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             if (destinationType == typeof(string))
             {

@@ -382,11 +382,8 @@ namespace System.Windows
         /// <param name="resourceLocator">Resource Locator</param>
         public static void LoadComponent(Object component, Uri resourceLocator)
         {
-            if (component == null)
-                throw new ArgumentNullException("component");
-
-            if (resourceLocator == null)
-                throw new ArgumentNullException("resourceLocator");
+            ArgumentNullException.ThrowIfNull(component);
+            ArgumentNullException.ThrowIfNull(resourceLocator);
 
             if (resourceLocator.OriginalString == null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull,"resourceLocator", "OriginalString"));
@@ -475,8 +472,7 @@ namespace System.Windows
         /// <param name="resourceLocator">Resource Locator</param>
         public static object LoadComponent(Uri resourceLocator)
         {
-            if (resourceLocator == null)
-                throw new ArgumentNullException("resourceLocator");
+            ArgumentNullException.ThrowIfNull(resourceLocator);
 
             if (resourceLocator.OriginalString == null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull,"resourceLocator", "OriginalString"));
@@ -611,8 +607,7 @@ namespace System.Windows
         /// <returns>PackagePart or null</returns>
         public static StreamResourceInfo GetResourceStream(Uri uriResource)
         {
-            if (uriResource == null)
-                throw new ArgumentNullException("uriResource");
+            ArgumentNullException.ThrowIfNull(uriResource);
 
             if (uriResource.OriginalString == null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "uriResource", "OriginalString"));
@@ -644,8 +639,7 @@ namespace System.Windows
         /// <returns>PackagePart or null</returns>
         public static StreamResourceInfo GetContentStream(Uri uriContent)
         {
-            if (uriContent == null)
-                throw new ArgumentNullException("uriContent");
+            ArgumentNullException.ThrowIfNull(uriContent);
 
             if (uriContent.OriginalString == null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "uriContent", "OriginalString"));
@@ -674,8 +668,7 @@ namespace System.Windows
         {
             SiteOfOriginPart sooPart = null;
 
-            if (uriRemote == null)
-                throw new ArgumentNullException("uriRemote");
+            ArgumentNullException.ThrowIfNull(uriRemote);
 
             if (uriRemote.OriginalString == null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "uriRemote", "OriginalString"));
@@ -994,10 +987,7 @@ namespace System.Windows
             set
             {
                 VerifyAccess();
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _startupUri = value;
             }
@@ -1979,20 +1969,22 @@ namespace System.Windows
             // and mark it as thread-safe so PackWebResponse won't protect returned streams with a synchronizing wrapper
             PreloadedPackages.AddPackage(PackUriHelper.GetPackageUri(BaseUriHelper.PackAppBaseUri), new ResourceContainer(), true);
 
-            MimeObjectFactory.Register(MimeTypeMapper.BamlMime, new StreamToObjectFactoryDelegate(AppModelKnownContentFactory.BamlConverter));
 
-            StreamToObjectFactoryDelegate xamlFactoryDelegate = new StreamToObjectFactoryDelegate(AppModelKnownContentFactory.XamlConverter);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.BamlMime, new StreamToObjectFactoryDelegateCore(AppModelKnownContentFactory.BamlConverterCore));
 
-            MimeObjectFactory.Register(MimeTypeMapper.XamlMime, xamlFactoryDelegate);
-            MimeObjectFactory.Register(MimeTypeMapper.FixedDocumentMime, xamlFactoryDelegate);
-            MimeObjectFactory.Register(MimeTypeMapper.FixedDocumentSequenceMime, xamlFactoryDelegate);
-            MimeObjectFactory.Register(MimeTypeMapper.FixedPageMime, xamlFactoryDelegate);
-            MimeObjectFactory.Register(MimeTypeMapper.ResourceDictionaryMime, xamlFactoryDelegate);
+            StreamToObjectFactoryDelegateCore xamlFactoryDelegate = new StreamToObjectFactoryDelegateCore(AppModelKnownContentFactory.XamlConverterCore);
 
-            StreamToObjectFactoryDelegate htmlxappFactoryDelegate = new StreamToObjectFactoryDelegate(AppModelKnownContentFactory.HtmlXappConverter);
-            MimeObjectFactory.Register(MimeTypeMapper.HtmMime, htmlxappFactoryDelegate);
-            MimeObjectFactory.Register(MimeTypeMapper.HtmlMime, htmlxappFactoryDelegate);
-            MimeObjectFactory.Register(MimeTypeMapper.XbapMime, htmlxappFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.XamlMime, xamlFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.FixedDocumentMime, xamlFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.FixedDocumentSequenceMime, xamlFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.FixedPageMime, xamlFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.ResourceDictionaryMime, xamlFactoryDelegate);
+
+            StreamToObjectFactoryDelegateCore htmlxappFactoryDelegate = new StreamToObjectFactoryDelegateCore(AppModelKnownContentFactory.HtmlXappConverterCore);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.HtmMime, htmlxappFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.HtmlMime, htmlxappFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.XbapMime, htmlxappFactoryDelegate);
+ 
         }
 
         // This function returns the resource stream including resource and content file.

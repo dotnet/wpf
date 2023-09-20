@@ -52,12 +52,9 @@ namespace System.Security.RightsManagement
         public UnsignedPublishLicense(string publishLicenseTemplate) :this ()
         {
 
-            if (publishLicenseTemplate == null)
-            {   
-                throw new ArgumentNullException("publishLicenseTemplate");
-            }
-            
-            using(IssuanceLicense issuanceLicense = new IssuanceLicense(
+            ArgumentNullException.ThrowIfNull(publishLicenseTemplate);
+
+            using (IssuanceLicense issuanceLicense = new IssuanceLicense(
                                         DateTime.MinValue,  // validFrom, - default 
                                         DateTime.MaxValue,  // validUntil, - default 
                                         null,  // referralInfoName,
@@ -84,10 +81,7 @@ namespace System.Security.RightsManagement
         public PublishLicense Sign(SecureEnvironment secureEnvironment, out UseLicense authorUseLicense)
         {
 
-            if (secureEnvironment == null)
-            {
-                throw new ArgumentNullException("secureEnvironment");
-            }
+            ArgumentNullException.ThrowIfNull(secureEnvironment);
 
             // in case owner wasn't specified we can just assume default owner 
             // based on the user identity that was used to build the secure environment

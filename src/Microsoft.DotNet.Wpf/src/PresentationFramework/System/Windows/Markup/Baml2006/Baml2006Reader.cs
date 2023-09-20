@@ -50,10 +50,7 @@ namespace System.Windows.Baml2006
 
         public Baml2006Reader(string fileName)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException("fileName");
-            }
+            ArgumentNullException.ThrowIfNull(fileName);
 
             var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
             var schemaContext = new Baml2006SchemaContext(null);
@@ -65,10 +62,7 @@ namespace System.Windows.Baml2006
 
         public Baml2006Reader(Stream stream)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
 
             var schemaContext = new Baml2006SchemaContext(null);
             var settings = new Baml2006ReaderSettings();
@@ -78,14 +72,8 @@ namespace System.Windows.Baml2006
 
         public Baml2006Reader(Stream stream, XamlReaderSettings xamlReaderSettings)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
-            if (xamlReaderSettings == null)
-            {
-                throw new ArgumentNullException("xamlReaderSettings");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
+            ArgumentNullException.ThrowIfNull(xamlReaderSettings);
             Baml2006SchemaContext schemaContext;
             if (xamlReaderSettings.ValuesMustBeString)
             {
@@ -104,15 +92,8 @@ namespace System.Windows.Baml2006
             Baml2006SchemaContext schemaContext,
             Baml2006ReaderSettings settings)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
-
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException("schemaContext");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
+            ArgumentNullException.ThrowIfNull(schemaContext);
 
             Initialize(stream, schemaContext, settings ?? new Baml2006ReaderSettings());
         }

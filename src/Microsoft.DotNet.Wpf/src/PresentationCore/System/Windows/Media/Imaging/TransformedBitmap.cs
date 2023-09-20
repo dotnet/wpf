@@ -49,10 +49,7 @@ namespace System.Windows.Media.Imaging
         public TransformedBitmap(BitmapSource source, Transform newTransform)
             : base(true) // Use base class virtuals
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
+            ArgumentNullException.ThrowIfNull(source);
 
             if (newTransform == null)
             {

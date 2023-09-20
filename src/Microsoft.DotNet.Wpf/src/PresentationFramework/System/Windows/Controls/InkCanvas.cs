@@ -435,7 +435,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForChildren()]
         public static double GetTop(UIElement element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             return (double)element.GetValue(TopProperty);
         }
 
@@ -447,7 +447,7 @@ namespace System.Windows.Controls
         /// <seealso cref="InkCanvas.TopProperty" />
         public static void SetTop(UIElement element, double length)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(TopProperty, length);
         }
 
@@ -469,7 +469,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForChildren()]
         public static double GetBottom(UIElement element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             return (double)element.GetValue(BottomProperty);
         }
 
@@ -481,7 +481,7 @@ namespace System.Windows.Controls
         /// <seealso cref="InkCanvas.BottomProperty" />
         public static void SetBottom(UIElement element, double length)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(BottomProperty, length);
         }
 
@@ -503,7 +503,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForChildren()]
         public static double GetLeft(UIElement element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             return (double)element.GetValue(LeftProperty);
         }
 
@@ -515,7 +515,7 @@ namespace System.Windows.Controls
         /// <seealso cref="InkCanvas.LeftProperty" />
         public static void SetLeft(UIElement element, double length)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(LeftProperty, length);
         }
 
@@ -537,7 +537,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForChildren()]
         public static double GetRight(UIElement element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             return (double)element.GetValue(RightProperty);
         }
 
@@ -549,7 +549,7 @@ namespace System.Windows.Controls
         /// <seealso cref="InkCanvas.RightProperty" />
         public static void SetRight(UIElement element, double length)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(RightProperty, length);
         }
 
@@ -766,23 +766,18 @@ namespace System.Windows.Controls
             set
             {
                 VerifyAccess();
-                if (value == null)
+                ArgumentNullException.ThrowIfNull(value);
+
+                // Invoke getter since this property is lazily created.
+                StylusShape oldShape = EraserShape;
+
+                _eraserShape = value;
+
+
+                if ( oldShape.Width != _eraserShape.Width || oldShape.Height != _eraserShape.Height
+                    || oldShape.Rotation != _eraserShape.Rotation || oldShape.GetType() != _eraserShape.GetType())
                 {
-                    throw new ArgumentNullException("value");
-                }
-                else
-                {
-                    // Invoke getter since this property is lazily created.
-                    StylusShape oldShape = EraserShape;
-
-                    _eraserShape = value;
-
-
-                    if ( oldShape.Width != _eraserShape.Width || oldShape.Height != _eraserShape.Height
-                        || oldShape.Rotation != _eraserShape.Rotation || oldShape.GetType() != _eraserShape.GetType())
-                    {
-                        EditingCoordinator.UpdatePointEraserCursor();
-                    }
+                    EditingCoordinator.UpdatePointEraserCursor();
                 }
             }
         }
@@ -966,10 +961,7 @@ namespace System.Windows.Controls
                 //
                 // no nulls allowed
                 //
-                if ( value == null )
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _defaultStylusPointDescription = value;
             }
@@ -992,11 +984,7 @@ namespace System.Windows.Controls
                 VerifyAccess();
 
                 // Cannot be null
-                if ( value == null )
-                {
-                    // Null is not allowed as the argument value
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 ClipboardProcessor.PreferredFormats = value;
             }
@@ -1038,10 +1026,7 @@ namespace System.Windows.Controls
         {
             // No need to invoke VerifyAccess since this method is thread free.
 
-            if ( e == null )
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
 
             RaiseEvent(e);
         }
@@ -1172,10 +1157,7 @@ namespace System.Windows.Controls
         {
             // No need to invoke VerifyAccess since this method is thread free.
 
-            if ( e == null )
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
 
             RaiseEvent(e);
         }
@@ -1194,10 +1176,7 @@ namespace System.Windows.Controls
         {
             // No need to invoke VerifyAccess since this method is thread free.
 
-            if ( e == null )
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
             if (null != this.StrokesReplaced)
             {
                 StrokesReplaced(this, e);
@@ -1218,10 +1197,7 @@ namespace System.Windows.Controls
         {
             // No need to invoke VerifyAccess since this method is thread free.
 
-            if (e == null)
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
             if (null != this.DefaultDrawingAttributesReplaced)
             {
                 DefaultDrawingAttributesReplaced(this, e);
@@ -1271,10 +1247,7 @@ namespace System.Windows.Controls
         {
             // No need to invoke VerifyAccess since this method is thread free.
 
-            if (e == null)
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
 
             RaiseEvent(e);
         }
@@ -1331,10 +1304,7 @@ namespace System.Windows.Controls
         {
             // No need to invoke VerifyAccess since this method is thread free.
 
-            if ( e == null )
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
 
             RaiseEvent(e);
         }
@@ -1388,10 +1358,7 @@ namespace System.Windows.Controls
         {
             // No need to invoke VerifyAccess since this method is thread free.
 
-            if ( e == null )
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
 
             RaiseEvent(e);
         }
@@ -1423,10 +1390,7 @@ namespace System.Windows.Controls
         {
             // No need to invoke VerifyAccess since this method is thread free.
 
-            if ( e == null )
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
             if (null != SelectionMoving)
             {
                 SelectionMoving(this, e);
@@ -1457,10 +1421,7 @@ namespace System.Windows.Controls
         {
             // No need to invoke VerifyAccess since this method is thread free.
 
-            if ( e == null )
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
             if (null != SelectionMoved)
             {
                 SelectionMoved(this, e);
@@ -1496,10 +1457,7 @@ namespace System.Windows.Controls
         {
             // No need to invoke VerifyAccess since this method is thread free.
 
-            if ( e == null )
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
             if (null != StrokeErasing)
             {
                 StrokeErasing(this, e);
@@ -1548,10 +1506,7 @@ namespace System.Windows.Controls
         {
             // No need to invoke VerifyAccess since this method is thread free.
 
-            if ( e == null )
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
             RaiseEvent(e);
         }
 
@@ -1578,10 +1533,7 @@ namespace System.Windows.Controls
         {
             // No need to invoke VerifyAccess since this method is thread free.
 
-            if ( e == null )
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
             if (null != SelectionResizing)
             {
                 SelectionResizing(this, e);
@@ -1611,10 +1563,7 @@ namespace System.Windows.Controls
         {
             // No need to invoke VerifyAccess since this method is thread free.
 
-            if ( e == null )
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
             if (null != SelectionResized)
             {
                 SelectionResized(this, e);
@@ -1648,10 +1597,7 @@ namespace System.Windows.Controls
         {
             // No need to invoke VerifyAccess since this method is thread free.
 
-            if ( e == null )
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
             if (null != SelectionChanging)
             {
                 SelectionChanging(this, e);
@@ -1681,10 +1627,7 @@ namespace System.Windows.Controls
         {
             // No need to invoke VerifyAccess since this method is thread free.
 
-            if ( e == null )
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
             if (null != SelectionChanged)
             {
                 SelectionChanged(this, e);
@@ -1966,10 +1909,7 @@ namespace System.Windows.Controls
         {
             //             VerifyAccess();
 
-            if ( value == null )
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             ( (IAddChild)InnerCanvas ).AddChild(value);
         }

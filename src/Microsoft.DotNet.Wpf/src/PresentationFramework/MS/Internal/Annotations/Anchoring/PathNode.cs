@@ -46,8 +46,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">node is null</exception>
         internal PathNode(DependencyObject node)
         {
-            if (node == null)
-                throw new ArgumentNullException("node");
+            ArgumentNullException.ThrowIfNull(node);
 
             _node = node;
         }
@@ -155,8 +154,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">nodes is null</exception>
         internal static PathNode BuildPathForElements(ICollection nodes)
         {
-            if (nodes == null)
-                throw new ArgumentNullException("nodes");
+            ArgumentNullException.ThrowIfNull(nodes);
 
             PathNode firstPathNode = null;
             foreach (DependencyObject node in nodes)

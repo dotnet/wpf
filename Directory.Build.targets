@@ -37,6 +37,16 @@
       <DefaultRuntimeFrameworkVersion Condition=" '$(IsServicingBuild)' != 'true' AND
           '%(TargetFramework)' == '$(TargetFramework)'">$(MicrosoftNETCoreAppRuntimeVersion)</DefaultRuntimeFrameworkVersion>
     </KnownFrameworkReference>
+
+    <KnownAppHostPack Update="Microsoft.NETCore.App">
+      <AppHostPackVersion
+        Condition=" '%(TargetFramework)' == '$(TargetFramework)' ">$(MicrosoftNETCoreAppRuntimewinx64Version)</AppHostPackVersion>
+    </KnownAppHostPack>
+
+    <KnownRuntimePack Update="Microsoft.NETCore.App">
+      <LatestRuntimeFrameworkVersion
+        Condition=" '%(TargetFramework)' == '$(TargetFramework)' ">$(MicrosoftNETCoreAppRuntimewinx64Version)</LatestRuntimeFrameworkVersion>
+    </KnownRuntimePack>
   </ItemGroup>
 
 </Project>

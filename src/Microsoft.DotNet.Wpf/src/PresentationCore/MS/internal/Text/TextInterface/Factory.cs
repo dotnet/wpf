@@ -141,7 +141,7 @@ namespace MS.Internal.Text.TextInterface
         internal FontFile CreateFontFile(Uri filePathUri)
         {
             Native.IDWriteFontFile* dwriteFontFile = null;
-            int hr = InternalFactory.CreateFontFile((Native.IDWriteFactory*)_factory.Value, null, filePathUri, &dwriteFontFile);
+            int hr = InternalFactory.CreateFontFile((Native.IDWriteFactory*)_factory.Value, _wpfFontFileLoader, filePathUri, &dwriteFontFile);
 
             // If DWrite's CreateFontFileReference fails then try opening the file using WPF's logic.
             // The failures that WPF returns are more granular than the HRESULTs that DWrite returns

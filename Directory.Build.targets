@@ -7,46 +7,4 @@
           Project="Sdk.targets"
           Condition="!Exists('$(WpfArcadeSdkProps)') Or !Exists('$(WpfArcadeSdkTargets)')"/>
 
-  <ItemGroup>
-    <FrameworkReference Update="Microsoft.NETCore.App"
-                        RuntimeFrameworkVersion="$(MicrosoftNETCoreAppRuntimewinx64Version)" />
-
-    <!-- Workaround when there is no vNext SDK available; copy known packs info from 8.0. -->
-    <KnownAppHostPack Include="@(KnownAppHostPack->WithMetadataValue('TargetFramework', 'net8.0'))"
-                     TargetFramework="$(TargetFramework)"
-                     Condition="'@(KnownAppHostPack->Count())' != '0' AND
-                                 !(@(KnownAppHostPack->AnyHaveMetadataValue('TargetFramework', '$(TargetFramework)')))" />
-    <KnownRuntimePack Include="@(KnownRuntimePack->WithMetadataValue('TargetFramework', 'net8.0'))"
-                     TargetFramework="$(TargetFramework)"
-                     Condition="'@(KnownRuntimePack->Count())' != '0' AND
-                                 !(@(KnownRuntimePack->AnyHaveMetadataValue('TargetFramework', '$(TargetFramework)')))" />
-    <KnownFrameworkReference Include="@(KnownFrameworkReference->WithMetadataValue('TargetFramework', 'net8.0'))"
-                     TargetFramework="$(TargetFramework)"
-                     Condition="'@(KnownFrameworkReference->Count())' != '0' AND
-                                 !(@(KnownFrameworkReference->AnyHaveMetadataValue('TargetFramework', '$(TargetFramework)')))" />
-
-    <KnownFrameworkReference Update="Microsoft.NETCore.App">
-      <LatestRuntimeFrameworkVersion
-          Condition=" '%(TargetFramework)' == '$(TargetFramework)' ">$(MicrosoftNETCoreAppRuntimewinx64Version)</LatestRuntimeFrameworkVersion>
-      <TargetingPackVersion
-          Condition=" '%(TargetFramework)' == '$(TargetFramework)' ">$(MicrosoftNETCoreAppRefVersion)</TargetingPackVersion>
-      <!--
-        Change the default shared framework version only when _not_ servicing. Avoid bumping version used in most
-        projects.
-      -->
-      <DefaultRuntimeFrameworkVersion Condition=" '$(IsServicingBuild)' != 'true' AND
-          '%(TargetFramework)' == '$(TargetFramework)'">$(MicrosoftNETCoreAppRuntimeVersion)</DefaultRuntimeFrameworkVersion>
-    </KnownFrameworkReference>
-
-    <KnownAppHostPack Update="Microsoft.NETCore.App">
-      <AppHostPackVersion
-        Condition=" '%(TargetFramework)' == '$(TargetFramework)' ">$(MicrosoftNETCoreAppRuntimewinx64Version)</AppHostPackVersion>
-    </KnownAppHostPack>
-
-    <KnownRuntimePack Update="Microsoft.NETCore.App">
-      <LatestRuntimeFrameworkVersion
-        Condition=" '%(TargetFramework)' == '$(TargetFramework)' ">$(MicrosoftNETCoreAppRuntimewinx64Version)</LatestRuntimeFrameworkVersion>
-    </KnownRuntimePack>
-  </ItemGroup>
-
 </Project>

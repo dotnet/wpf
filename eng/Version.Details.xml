@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="6.0.23-servicing.23477.14">
+    <Dependency Name="Microsoft.Private.Winforms" Version="6.0.23-servicing.23479.10">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-winforms</Uri>
-      <Sha>8b4c9d0ea07f702c35873b8f5b773510ca0d8941</Sha>
+      <Sha>5589f30c2c75e37b50934791b7f98e26973b03c4</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="6.0.23-servicing.23477.14">
+    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="6.0.23-servicing.23479.10">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-winforms</Uri>
-      <Sha>8b4c9d0ea07f702c35873b8f5b773510ca0d8941</Sha>
+      <Sha>5589f30c2c75e37b50934791b7f98e26973b03c4</Sha>
     </Dependency>
     <Dependency Name="System.CodeDom" Version="6.0.0" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
@@ -57,11 +57,11 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>4822e3c3aa77eb82b2fb33c9321f923cf11ddde6</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.ILDAsm" Version="6.0.23-servicing.23475.15" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="Microsoft.NETCore.ILDAsm" Version="6.0.23-servicing.23479.5" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>301ba1ee5d1cfff28a8866924733603f3adf4936</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.ILAsm" Version="6.0.23-servicing.23475.15" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="Microsoft.NETCore.ILAsm" Version="6.0.23-servicing.23479.5" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>301ba1ee5d1cfff28a8866924733603f3adf4936</Sha>
     </Dependency>
@@ -77,7 +77,7 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>301ba1ee5d1cfff28a8866924733603f3adf4936</Sha>
     </Dependency>
-    <Dependency Name="VS.Redist.Common.NetCore.SharedFramework.x64.6.0" Version="6.0.23-servicing.23475.15" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="VS.Redist.Common.NetCore.SharedFramework.x64.6.0" Version="6.0.23-servicing.23479.5" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>301ba1ee5d1cfff28a8866924733603f3adf4936</Sha>
     </Dependency>

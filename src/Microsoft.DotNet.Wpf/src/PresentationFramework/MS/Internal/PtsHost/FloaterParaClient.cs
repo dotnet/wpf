@@ -71,7 +71,7 @@ namespace MS.Internal.PtsHost
 
             // Query subpage details
             PTS.FSSUBPAGEDETAILS subpageDetails;
-            PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle.Value, out subpageDetails));
+            PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle, out subpageDetails));
 
             _pageContext.AddFloatingParaClient(this);
 
@@ -102,7 +102,7 @@ namespace MS.Internal.PtsHost
                 {
                     // Retrieve description for each column.
                     PTS.FSTRACKDESCRIPTION[] arrayColumnDesc;
-                    PtsHelper.TrackListFromSubpage(PtsContext, _paraHandle.Value, ref subpageDetails, out arrayColumnDesc);
+                    PtsHelper.TrackListFromSubpage(PtsContext, _paraHandle, ref subpageDetails, out arrayColumnDesc);
 
                     // Arrange each track
                     for (int index = 0; index < arrayColumnDesc.Length; index++)
@@ -126,7 +126,7 @@ namespace MS.Internal.PtsHost
         {
             // Query subpage details
             PTS.FSSUBPAGEDETAILS subpageDetails;
-            PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle.Value, out subpageDetails));
+            PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle, out subpageDetails));
 
             PTS.FSRECT viewportSubpage = new PTS.FSRECT();
 
@@ -152,7 +152,7 @@ namespace MS.Internal.PtsHost
                 {
                     // Retrieve description for each column.
                     PTS.FSTRACKDESCRIPTION[] arrayColumnDesc;
-                    PtsHelper.TrackListFromSubpage(PtsContext, _paraHandle.Value, ref subpageDetails, out arrayColumnDesc);
+                    PtsHelper.TrackListFromSubpage(PtsContext, _paraHandle, ref subpageDetails, out arrayColumnDesc);
 
                     emptySubpage = (arrayColumnDesc.Length == 0);
                     if (!emptySubpage)
@@ -238,7 +238,7 @@ namespace MS.Internal.PtsHost
             {
                 // Query subpage details
                 PTS.FSSUBPAGEDETAILS subpageDetails;
-                PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle.Value, out subpageDetails));
+                PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle, out subpageDetails));
 
                 if(Rect.Contains(pt))
                 {
@@ -262,7 +262,7 @@ namespace MS.Internal.PtsHost
                             {
                                 // Retrieve description for each column.
                                 PTS.FSTRACKDESCRIPTION[] arrayColumnDesc;
-                                PtsHelper.TrackListFromSubpage(PtsContext, _paraHandle.Value, ref subpageDetails, out arrayColumnDesc);
+                                PtsHelper.TrackListFromSubpage(PtsContext, _paraHandle, ref subpageDetails, out arrayColumnDesc);
 
                                 // Arrange each track
                                 for (int index = 0; index < arrayColumnDesc.Length && ie == null; index++)
@@ -302,7 +302,7 @@ namespace MS.Internal.PtsHost
             {
                 // Query subpage details
                 PTS.FSSUBPAGEDETAILS subpageDetails;
-                PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle.Value, out subpageDetails));
+                PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle, out subpageDetails));
 
                 // Check subpage content for element. Subpage content may be simple or complex -
                 // depending of set of features used in the content of the page.
@@ -321,7 +321,7 @@ namespace MS.Internal.PtsHost
                     {
                         // Retrieve description for each column.
                         PTS.FSTRACKDESCRIPTION[] arrayColumnDesc;
-                        PtsHelper.TrackListFromSubpage(PtsContext, _paraHandle.Value, ref subpageDetails, out arrayColumnDesc);
+                        PtsHelper.TrackListFromSubpage(PtsContext, _paraHandle, ref subpageDetails, out arrayColumnDesc);
 
                         // Arrange each track
                         for (int index = 0; index < arrayColumnDesc.Length; index++)
@@ -358,7 +358,7 @@ namespace MS.Internal.PtsHost
 
             // Query subpage details
             PTS.FSSUBPAGEDETAILS subpageDetails;
-            PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle.Value, out subpageDetails));
+            PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle, out subpageDetails));
 
             // Obtain all mbd info
             MbpInfo mbp = MbpInfo.FromElement(Paragraph.Element, Paragraph.StructuralCache.TextFormatterHost.PixelsPerDip);
@@ -424,7 +424,7 @@ namespace MS.Internal.PtsHost
                 {
                     // Retrieve description for each column.
                     PTS.FSTRACKDESCRIPTION[] arrayColumnDesc;
-                    PtsHelper.TrackListFromSubpage(PtsContext, _paraHandle.Value, ref subpageDetails, out arrayColumnDesc);
+                    PtsHelper.TrackListFromSubpage(PtsContext, _paraHandle, ref subpageDetails, out arrayColumnDesc);
 
                     emptySubpage = (arrayColumnDesc.Length == 0);
                     if (!emptySubpage)
@@ -504,7 +504,7 @@ namespace MS.Internal.PtsHost
 
             // Query subpage details
             PTS.FSSUBPAGEDETAILS subpageDetails;
-            PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle.Value, out subpageDetails));
+            PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle, out subpageDetails));
 
             // Subpage content may be simple or complex -
             // depending of set of features used in the content of the page.
@@ -525,7 +525,7 @@ namespace MS.Internal.PtsHost
                 {
                     // Retrieve description for each column.
                     PTS.FSTRACKDESCRIPTION[] arrayColumnDesc;
-                    PtsHelper.TrackListFromSubpage(PtsContext, _paraHandle.Value, ref subpageDetails, out arrayColumnDesc);
+                    PtsHelper.TrackListFromSubpage(PtsContext, _paraHandle, ref subpageDetails, out arrayColumnDesc);
 
                     // Arrange each track
                     for (int index = 0; index < arrayColumnDesc.Length; index++)
@@ -566,7 +566,7 @@ namespace MS.Internal.PtsHost
 
             // Query subpage details
             PTS.FSSUBPAGEDETAILS subpageDetails;
-            PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle.Value, out subpageDetails));
+            PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle, out subpageDetails));
 
             // hasTextContent is set to true if any of the children paragraphs has text content, not just attached objects
             hasTextContent = false;
@@ -616,7 +616,7 @@ namespace MS.Internal.PtsHost
 
                 // Retrieve description for each column.
                 PTS.FSTRACKDESCRIPTION[] arrayColumnDesc;
-                PtsHelper.TrackListFromSubpage(PtsContext, _paraHandle.Value, ref subpageDetails, out arrayColumnDesc);
+                PtsHelper.TrackListFromSubpage(PtsContext, _paraHandle, ref subpageDetails, out arrayColumnDesc);
                 Debug.Assert(arrayColumnDesc.Length == 1);
 
                 // Get track details
@@ -666,7 +666,7 @@ namespace MS.Internal.PtsHost
 
             // Query subpage details
             PTS.FSSUBPAGEDETAILS subpageDetails;
-            PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle.Value, out subpageDetails));
+            PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle, out subpageDetails));
 
             // Subpage content may be simple or complex -
             // depending of set of features used in the content of the page.
@@ -696,7 +696,7 @@ namespace MS.Internal.PtsHost
                 {
                     // Retrieve description for each column.
                     PTS.FSTRACKDESCRIPTION[] arrayColumnDesc;
-                    PtsHelper.TrackListFromSubpage(PtsContext, _paraHandle.Value, ref subpageDetails, out arrayColumnDesc);
+                    PtsHelper.TrackListFromSubpage(PtsContext, _paraHandle, ref subpageDetails, out arrayColumnDesc);
 
                     // Floaters are held at one column; just add the first one
                     columnResults = new List<ColumnResult>(1);
@@ -773,7 +773,7 @@ namespace MS.Internal.PtsHost
         {
             // getter removed (unused internal API).  If needed, recall from history.
 
-            set { _paraHandle.Value = value; }
+            set { _paraHandle = value; }
         }
 
         // ------------------------------------------------------------------

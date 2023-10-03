@@ -42,7 +42,7 @@ namespace MS.Utility
         protected EventTrace.Level _level = EventTrace.Level.LogAlways;
         protected EventTrace.Keyword _keywords = (EventTrace.Keyword)0; /* aka Flags */
         protected EventTrace.Keyword _matchAllKeyword = (EventTrace.Keyword)0; /*Vista only*/
-        protected SecurityCriticalDataForSet<ulong> _registrationHandle;
+        protected ulong _registrationHandle;
 
         private const int s_basicTypeAllocationBufferSize = sizeof(decimal);
         private const int s_traceEventMaximumSize = 65482; // maximum buffer size is 64k - header size
@@ -53,7 +53,7 @@ namespace MS.Utility
 
         internal TraceProvider()
         {
-            _registrationHandle = new SecurityCriticalDataForSet<ulong>(0);
+            _registrationHandle = 0;
         }
 
         internal abstract void Register(Guid providerGuid);
@@ -443,7 +443,7 @@ namespace MS.Utility
             guidReg.RegHandle = null;
 
             ClassicEtw.RegisterTraceGuidsW(_etwProc, IntPtr.Zero, ref providerGuid, 1, ref guidReg, null, null, out registrationHandle);
-            _registrationHandle.Value = registrationHandle;
+            _registrationHandle = registrationHandle;
         }
 
         //
@@ -490,7 +490,7 @@ namespace MS.Utility
         ~ClassicTraceProvider()
         {
             #pragma warning suppress 6031  //presharp suppression
-            ClassicEtw.UnregisterTraceGuids(_registrationHandle.Value);
+            ClassicEtw.UnregisterTraceGuids(_registrationHandle);
         }
 
         // pack the argv data and emit the event using TraceEvent
@@ -537,7 +537,7 @@ namespace MS.Utility
             _etwEnabledCallback =new ManifestEtw.EtwEnableCallback(EtwEnableCallback);
             ulong registrationHandle = 0;
             ManifestEtw.EventRegister(ref providerGuid, _etwEnabledCallback, null, ref registrationHandle);
-            _registrationHandle.Value = registrationHandle;
+            _registrationHandle = registrationHandle;
         }
 
         private unsafe void EtwEnableCallback(ref Guid sourceId, int isEnabled, byte level, long matchAnyKeywords, long matchAllKeywords, ManifestEtw.EVENT_FILTER_DESCRIPTOR* filterData, void* callbackContext)
@@ -552,15 +552,15 @@ namespace MS.Utility
 
         ~ManifestTraceProvider()
         {
-            if(_registrationHandle.Value != 0)
+            if(_registrationHandle != 0)
             {
                 try
                 {
-                    ManifestEtw.EventUnregister(_registrationHandle.Value);
+                    ManifestEtw.EventUnregister(_registrationHandle);
                 }
                 finally
                 {
-                    _registrationHandle.Value = 0;
+                    _registrationHandle = 0;
                 }
             }
         }
@@ -580,7 +580,7 @@ namespace MS.Utility
                 argv = null;
             }
 
-            return ManifestEtw.EventWrite(_registrationHandle.Value, ref eventDescriptor, (uint)argc, argv);
+            return ManifestEtw.EventWrite(_registrationHandle, ref eventDescriptor, (uint)argc, argv);
         }
 }
 }

@@ -70,7 +70,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     /// </summary>
     RightsManagementLicense IRightsManagementProvider.CurrentUseLicense
     {
-        get { return _rmUseLicense.Value; }
+        get { return _rmUseLicense; }
     }
 
     /// <summary>
@@ -89,8 +89,8 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
             _currentPublishLicense = value;
 
             // Invalidate the saved use license and grants
-            _useLicense.Value = null;
-            _rmUseLicense.Value = null;
+            _useLicense = null;
+            _rmUseLicense = null;
         }
     }
 
@@ -99,7 +99,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     /// </summary>
     RightsManagementUser IRightsManagementProvider.CurrentUser
     {
-        get { return _user.Value; }
+        get { return _user; }
     }
 
     /// <summary>
@@ -144,7 +144,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
                     }
             }
 
-            _secureEnvironment.Value = SecureEnvironment.Create(
+            _secureEnvironment = SecureEnvironment.Create(
                                                                 GetApplicationManifest(),
                                                                 authType,
                                                                 userActMode);                
@@ -173,12 +173,12 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         InitializeMembers();
         CleanUpSecureEnvironment();
 
-        _secureEnvironment.Value = SecureEnvironment.Create(
+        _secureEnvironment = SecureEnvironment.Create(
                                                             GetApplicationManifest(),
                                                             user);
 
         Trace.SafeWriteIf(
-            (_secureEnvironment.Value != null),
+            (_secureEnvironment != null),
             Trace.Rights,
             "SecureEnvironment was initialized for a specific user.");
 
@@ -202,12 +202,12 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         UseLicense useLicense;
 
         useLicense = _encryptedPackageEnvelope
-                .RightsManagementInformation.LoadUseLicense(_user.Value);
+                .RightsManagementInformation.LoadUseLicense(_user);
 
         if (useLicense != null)
         {
             Trace.SafeWrite(Trace.Rights, "Existing use license was found.");
-            _useLicense.Value = useLicense;
+            _useLicense = useLicense;
         }
 
         return (useLicense != null);
@@ -231,7 +231,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     
         try
         {
-            useLicense = CurrentPublishLicense.AcquireUseLicense(_secureEnvironment.Value);
+            useLicense = CurrentPublishLicense.AcquireUseLicense(_secureEnvironment);
         }
         catch(RightsManagementException e)
         {
@@ -242,7 +242,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         {
             Trace.SafeWrite(Trace.Rights, "A new use license was acquired.");
 
-            _useLicense.Value = useLicense;
+            _useLicense = useLicense;
         }
         else
         {
@@ -267,7 +267,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
                 SR.RMProviderExceptionNoPackageToDecrypt);
         }
 
-        if (_useLicense.Value == null)
+        if (_useLicense == null)
         {
             throw new InvalidOperationException(
                 SR.RMProviderExceptionNoUseLicense);
@@ -281,7 +281,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
             if (package.FileOpenAccess != FileAccess.Read)
             {
                 package.RightsManagementInformation.
-                    SaveUseLicense(_user.Value, _useLicense.Value);
+                    SaveUseLicense(_user, _useLicense);
             }
         }
         else
@@ -303,7 +303,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
                 SR.RMProviderExceptionNoPackageToDecrypt);
         }
 
-        if (_useLicense.Value == null)
+        if (_useLicense == null)
         {
             throw new InvalidOperationException(
                 SR.RMProviderExceptionNoUseLicense);
@@ -344,14 +344,14 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
             grants != null,
             "CryptoProvider had no bound grants.");
 
-        _rmUseLicense.Value = ConvertGrantList(_user.Value, grants);
+        _rmUseLicense = ConvertGrantList(_user, grants);
 
         // If possible use the CryptoProvider to decrypt the publish license
 
         if (HasPermission(
-            _rmUseLicense.Value, RightsManagementPermissions.AllowOwner))
+            _rmUseLicense, RightsManagementPermissions.AllowOwner))
         {
-            _unsignedPublishLicense.Value =
+            _unsignedPublishLicense =
                 CurrentPublishLicense.DecryptUnsignedPublishLicense(
                     cryptoProvider);
 
@@ -502,12 +502,12 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     IRightsManagementProvider.GetAllAccessRights()
     {
         if (IsProtected &&
-            _rightsDictionary.Value == null &&
-            _rmUseLicense.Value != null &&
-            _rmUseLicense.Value.HasPermission(RightsManagementPermissions.AllowOwner) &&
-            _unsignedPublishLicense.Value != null)
+            _rightsDictionary == null &&
+            _rmUseLicense != null &&
+            _rmUseLicense.HasPermission(RightsManagementPermissions.AllowOwner) &&
+            _unsignedPublishLicense != null)
         {
-            UnsignedPublishLicense unsignedLicense = _unsignedPublishLicense.Value;
+            UnsignedPublishLicense unsignedLicense = _unsignedPublishLicense;
 
             IDictionary<RightsManagementUser, IList<ContentGrant>> grantDictionary =
                 new Dictionary<RightsManagementUser, IList<ContentGrant>>();
@@ -565,11 +565,11 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
                 dictionary[user] = currentLicense;
             }
 
-            _rightsDictionary.Value =
+            _rightsDictionary =
                 (IDictionary<RightsManagementUser, RightsManagementLicense>)dictionary;
         }
 
-        return _rightsDictionary.Value;
+        return _rightsDictionary;
     }
 
     /// <summary>
@@ -655,7 +655,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         // If the document is already protected, only owners can republish it
         // with different permissions
         if (IsProtected && !HasPermission(
-            _rmUseLicense.Value, RightsManagementPermissions.AllowOwner))
+            _rmUseLicense, RightsManagementPermissions.AllowOwner))
         {
             throw new InvalidOperationException(
                 SR.RMProviderExceptionNotOwnerOfDocument);
@@ -715,11 +715,11 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
 
         // If the current user was not specified as an owner, add the user to
         // the rights dictionary and grant the user admin privileges forever
-        if (!rights.ContainsKey(_user.Value))
+        if (!rights.ContainsKey(_user))
         {
             ContentGrant ownerGrant =
                 CreateGrant(
-                    _user.Value,
+                    _user,
                     ContentRight.Owner,
                     DateTime.MinValue,
                     DateTime.MaxValue);
@@ -730,14 +730,14 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
             // Add the grant to the rights dictionary
             IList<ContentGrant> grantList = new List<ContentGrant>();
             grantList.Add(ownerGrant);
-            rights[_user.Value] = ConvertGrantList(_user.Value, grantList);
+            rights[_user] = ConvertGrantList(_user, grantList);
         }           
 
         //
         // Set up remaining properties of the unsigned publish license
         //
 
-        unsignedPublishLicense.Owner = _user.Value;
+        unsignedPublishLicense.Owner = _user;
 
         unsignedPublishLicense.ReferralInfoName = referralInfoName;
         unsignedPublishLicense.ReferralInfoUri = referralInfoUri;
@@ -746,8 +746,8 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         // Save temporary unsigned license and rights dictionary for signing
         //
 
-        _temporaryRightsDictionary.Value = rights;
-        _temporaryUnsignedPublishLicense.Value = unsignedPublishLicense;
+        _temporaryRightsDictionary = rights;
+        _temporaryUnsignedPublishLicense = unsignedPublishLicense;
     }
 
     /// <summary>
@@ -783,7 +783,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         // If the listed owner is not the current user, change the listed owner
         // and ensure that the old owner still maintains owner rights on the
         // document
-        if (!_user.Value.Equals(currentOwner))
+        if (!_user.Equals(currentOwner))
         {
             ContentGrant currentOwnerGrant = null;
 
@@ -796,7 +796,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
                     DateTime.MaxValue);
             }
 
-            unsignedPublishLicense.Owner = _user.Value;
+            unsignedPublishLicense.Owner = _user;
 
             if (currentOwnerGrant != null)
             {
@@ -805,8 +805,8 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         }
 
         // Assign the new publish license.
-        _temporaryRightsDictionary.Value = null;
-        _temporaryUnsignedPublishLicense.Value = unsignedPublishLicense;
+        _temporaryRightsDictionary = null;
+        _temporaryUnsignedPublishLicense = unsignedPublishLicense;
     }
 
     /// <summary>
@@ -818,7 +818,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     {
         // If the document is already protected, only owners can republish it
         if (IsProtected &&
-            !HasPermission(_rmUseLicense.Value,
+            !HasPermission(_rmUseLicense,
                            RightsManagementPermissions.AllowOwner))
         {
             throw new InvalidOperationException(
@@ -831,29 +831,29 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
             Trace.Rights, "Signing the publish license for the document.");
 
         CurrentPublishLicense =
-            _temporaryUnsignedPublishLicense.Value.Sign(
-                _secureEnvironment.Value, out useLicense);
+            _temporaryUnsignedPublishLicense.Sign(
+                _secureEnvironment, out useLicense);
 
-        _useLicense.Value = useLicense;
+        _useLicense = useLicense;
 
         // Copy and clear temporary values
-        _unsignedPublishLicense.Value = _temporaryUnsignedPublishLicense.Value;
-        _rightsDictionary.Value = _temporaryRightsDictionary.Value;
-        _temporaryUnsignedPublishLicense.Value = null;
-        _temporaryRightsDictionary.Value = null;
+        _unsignedPublishLicense = _temporaryUnsignedPublishLicense;
+        _rightsDictionary = _temporaryRightsDictionary;
+        _temporaryUnsignedPublishLicense = null;
+        _temporaryRightsDictionary = null;
 
         // If the RightsDictionary exists then set use license.
-        if (_rightsDictionary.Value != null)
+        if (_rightsDictionary != null)
         {
-            _rmUseLicense.Value = _rightsDictionary.Value[_user.Value];
+            _rmUseLicense = _rightsDictionary[_user];
         }
         else
         {
             // Since the RightsDictionary doesn't exist (most likely because we're using
             // a template), generate the owner data.
             List<ContentGrant> grantList = new List<ContentGrant>();
-            grantList.Add(CreateGrant(_user.Value, ContentRight.Owner, DateTime.MinValue, DateTime.MaxValue));
-            _rmUseLicense.Value = ConvertGrantList(_user.Value, grantList);
+            grantList.Add(CreateGrant(_user, ContentRight.Owner, DateTime.MinValue, DateTime.MaxValue));
+            _rmUseLicense = ConvertGrantList(_user, grantList);
         }
     }
 
@@ -864,9 +864,9 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     {
         // Save the current publish license and use licenses for rollback
         _lastSavedPublishLicense = _currentPublishLicense;
-        _lastSavedRMUseLicense.Value = _rmUseLicense.Value;
-        _lastSavedUseLicense.Value = _useLicense.Value;
-        _lastSavedRightsDictionary.Value = _rightsDictionary.Value;
+        _lastSavedRMUseLicense = _rmUseLicense;
+        _lastSavedUseLicense = _useLicense;
+        _lastSavedRightsDictionary = _rightsDictionary;
     }
 
     /// <summary>
@@ -875,14 +875,14 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     void IRightsManagementProvider.RevertToSavedLicenses()
     {
         CurrentPublishLicense = _lastSavedPublishLicense;
-        _useLicense.Value = _lastSavedUseLicense.Value;
-        _rmUseLicense.Value = _lastSavedRMUseLicense.Value;
-        _rightsDictionary.Value = _lastSavedRightsDictionary.Value;
+        _useLicense = _lastSavedUseLicense;
+        _rmUseLicense = _lastSavedRMUseLicense;
+        _rightsDictionary = _lastSavedRightsDictionary;
 
         _lastSavedPublishLicense = null;
-        _lastSavedUseLicense.Value = null;
-        _lastSavedRMUseLicense.Value = null;
-        _lastSavedRightsDictionary.Value = null;
+        _lastSavedUseLicense = null;
+        _lastSavedRMUseLicense = null;
+        _lastSavedRightsDictionary = null;
     }
 
     /// <summary>
@@ -904,8 +904,8 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         if (_publishLicenseFromEnvelope != null)
         {
             savedPublishLicense = _publishLicenseFromEnvelope;
-            savedUseLicense = _useLicense.Value;
-            savedRMLicense = _rmUseLicense.Value;
+            savedUseLicense = _useLicense;
+            savedRMLicense = _rmUseLicense;
         }
 
         _encryptedPackageEnvelope = newPackage;
@@ -945,8 +945,8 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
             // If the publish license hasn't changed, restore the saved use
             // license and generate a new CryptoProvider from it.
 
-            _useLicense.Value = savedUseLicense;
-            _rmUseLicense.Value = savedRMLicense;
+            _useLicense = savedUseLicense;
+            _rmUseLicense = savedRMLicense;
 
             CryptoProvider cryptoProvider = GenerateCryptoProvider();
 
@@ -957,9 +957,9 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         // Since the encrypted package envelope has been changed, the last saved
         // licenses aren't applicable any more.
         _lastSavedPublishLicense = null;
-        _lastSavedUseLicense.Value = null;
-        _lastSavedRMUseLicense.Value = null;
-        _lastSavedRightsDictionary.Value = null;
+        _lastSavedUseLicense = null;
+        _lastSavedRMUseLicense = null;
+        _lastSavedRightsDictionary = null;
 
         Trace.SafeWrite(
             Trace.Rights,
@@ -1017,7 +1017,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     {
         CryptoProvider cryptoProvider = null;
 
-        cryptoProvider = _useLicense.Value.Bind(_secureEnvironment.Value);
+        cryptoProvider = _useLicense.Bind(_secureEnvironment);
 
         Trace.SafeWrite(
             Trace.Rights, "The CryptoProvider was initialized.");
@@ -1302,10 +1302,10 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     /// </summary>
     private void CleanUpSecureEnvironment()
     {
-        if (_secureEnvironment.Value != null)
+        if (_secureEnvironment != null)
         {
-             _secureEnvironment.Value.Dispose();
-            _secureEnvironment.Value = null;
+             _secureEnvironment.Dispose();
+            _secureEnvironment = null;
         }
     }
 
@@ -1313,24 +1313,10 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     /// Sets the currently active user from the value stored in the saved
     /// secure environment.
     /// </summary>
-    /// Critical
-    ///  1) Asserts for RightsManagementPermission to get the value of the
-    ///     _secureEnvironment.Value.User parameter
-    ///  2) Sets SecurityCriticalDataForSet variable _user
-    ///  3) Calls SecurityCritical function RightsManagementUser.CreateUser
-    /// TreatAsSafe
-    ///  1) _secureEnvironment is SecurityCriticalDataForSet, and the call is
-    ///     reading a property value which requires asserts to access any data
-    ///     from it.
-    ///  2) The _user variable is set from SecurityCritical function
-    ///     RightsManagementUser.CreateUser.
-    ///  3) The argument to the CreateUser function is information that is
-    ///     retrieved from the SecureEnvironment created by SecurityCritical
-    ///     method Create.
     private void SetUserFromSecureEnvironment()
     {
-        _user.Value =
-            RightsManagementUser.CreateUser(_secureEnvironment.Value.User);
+        _user =
+            RightsManagementUser.CreateUser(_secureEnvironment.User);
     }
 
     /// <summary>
@@ -1446,9 +1432,9 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
             // in the Use License's ApplicationData, this signifies that license 
             // caching should be disabled (and thus we will return false here)
             result =
-                !(_useLicense.Value != null &&
-                _useLicense.Value.ApplicationData != null &&
-                _useLicense.Value.ApplicationData.Contains(_noLicCacheKeyValuePair));
+                !(_useLicense != null &&
+                _useLicense.ApplicationData != null &&
+                _useLicense.ApplicationData.Contains(_noLicCacheKeyValuePair));
             
             return result;            
         }
@@ -1469,28 +1455,28 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     /// <summary>
     /// The currently active secure environment.
     /// </summary>
-    SecurityCriticalDataForSet<SecureEnvironment> _secureEnvironment;
+    SecureEnvironment _secureEnvironment;
 
     /// <summary>
     /// The use license the user has for the currently open package.
     /// </summary>
-    SecurityCriticalDataForSet<UseLicense> _useLicense;
+    UseLicense _useLicense;
 
     /// <summary>
     /// The last saved use license.
     /// </summary>
-    SecurityCriticalDataForSet<UseLicense> _lastSavedUseLicense;
+    UseLicense _lastSavedUseLicense;
 
     /// <summary>
     /// A copy of the unsigned publish license.
     /// </summary>
-    SecurityCriticalDataForSet<UnsignedPublishLicense> _unsignedPublishLicense;
+    UnsignedPublishLicense _unsignedPublishLicense;
 
     /// <summary>
     /// A generated unsigned publish license that has not yet been signed. Once
     /// it is signed, it will replace the _unsignedPublishLicense above.
     /// </summary>
-    SecurityCriticalDataForSet<UnsignedPublishLicense> _temporaryUnsignedPublishLicense;
+    UnsignedPublishLicense _temporaryUnsignedPublishLicense;
 
     /// <summary>
     /// The publish license saved in the current _encryptedPackage.
@@ -1513,36 +1499,33 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     /// The specially formatted version of the use license describing what
     /// rights the current user has on the document.
     /// </summary>
-    SecurityCriticalDataForSet<RightsManagementLicense> _rmUseLicense;
+    RightsManagementLicense _rmUseLicense;
 
     /// <summary>
     /// The last saved RM use license.
     /// </summary>
-    SecurityCriticalDataForSet<RightsManagementLicense> _lastSavedRMUseLicense;
+    RightsManagementLicense _lastSavedRMUseLicense;
 
     /// <summary>
     /// The user for whom this document has been opened.
     /// </summary>
-    SecurityCriticalDataForSet<RightsManagementUser> _user;
+    RightsManagementUser _user;
 
     /// <summary>
     /// A dictionary of rights granted to users on this document.
     /// </summary>
-    SecurityCriticalDataForSet<
-        IDictionary<RightsManagementUser, RightsManagementLicense>> _rightsDictionary;
+    IDictionary<RightsManagementUser, RightsManagementLicense> _rightsDictionary;
 
     /// <summary>
     /// The last saved version of the dictionary of rights granted to users.
     /// </summary>
-    SecurityCriticalDataForSet<
-        IDictionary<RightsManagementUser, RightsManagementLicense>> _lastSavedRightsDictionary;
+    IDictionary<RightsManagementUser, RightsManagementLicense> _lastSavedRightsDictionary;
 
     /// <summary>
     /// A dictionary of rights corresponding to the rights granted in a
     /// temporary unsigned publish license.
     /// </summary>
-    SecurityCriticalDataForSet<
-        IDictionary<RightsManagementUser, RightsManagementLicense>> _temporaryRightsDictionary;
+    IDictionary<RightsManagementUser, RightsManagementLicense> _temporaryRightsDictionary;
 
     /// <summary>
     /// A list of all the CryptoProviders generated

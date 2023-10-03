@@ -318,10 +318,10 @@ namespace MS.Internal.TextFormatting
             {
                 return new TextLineBreak(
                     _lastRun.TextModifierScope, 
-                    new SecurityCriticalDataForSet<IntPtr>(pbreakrec)
+                    pbreakrec
                     );
             }
-            return (pbreakrec != IntPtr.Zero) ? new TextLineBreak(null, new SecurityCriticalDataForSet<IntPtr>(pbreakrec)) : null;
+            return (pbreakrec != IntPtr.Zero) ? new TextLineBreak(null, pbreakrec) : null;
         }
 
 

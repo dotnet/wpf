@@ -38,12 +38,12 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _signatureState.Value;
+                return _signatureState;
             }
 
             set
             {
-                _signatureState.Value = value;
+                _signatureState = value;
             }
         }
 
@@ -54,12 +54,12 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _subjectName.Value;
+                return _subjectName;
             }
 
             set
             {
-                _subjectName.Value = value;
+                _subjectName = value;
             }
         }
 
@@ -70,12 +70,12 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _reason.Value;
+                return _reason;
             }
 
             set
             {
-                _reason.Value = value;
+                _reason = value;
             }
         }
 
@@ -86,11 +86,11 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _signedOn.Value;
+                return _signedOn;
             }
             set
             {
-                _signedOn.Value = value;
+                _signedOn = value;
             }
         }
 
@@ -101,12 +101,12 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _location.Value;
+                return _location;
             }
 
             set
             {
-                _location.Value = value;
+                _location = value;
             }
         }
 
@@ -117,12 +117,12 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _isDocumentPropertiesRestricted.Value;
+                return _isDocumentPropertiesRestricted;
             }
 
             set
             {
-                _isDocumentPropertiesRestricted.Value = value;
+                _isDocumentPropertiesRestricted = value;
             }
         }
 
@@ -133,12 +133,12 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _isAddingSignaturesRestricted.Value;
+                return _isAddingSignaturesRestricted;
             }
 
             set
             {
-                _isAddingSignaturesRestricted.Value = value;
+                _isAddingSignaturesRestricted = value;
             }
         }
 
@@ -149,12 +149,12 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _guidID.Value;
+                return _guidID;
             }
 
             set
             {
-                _guidID.Value = value;
+                _guidID = value;
             }
         }
 
@@ -165,12 +165,12 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _x509Certificate2.Value;
+                return _x509Certificate2;
             }
 
             set
             {
-                _x509Certificate2.Value = value;
+                _x509Certificate2 = value;
             }
         }
 
@@ -182,12 +182,12 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _xpsDigitalSignature.Value;
+                return _xpsDigitalSignature;
             }
 
             set
             {
-                _xpsDigitalSignature.Value = value;
+                _xpsDigitalSignature = value;
             }
         }
 
@@ -198,49 +198,49 @@ namespace MS.Internal.Documents
         /// <summary>
         /// Status of signature (Valid, Invalid, NotSigned ...)
         /// </summary>
-        private SecurityCriticalDataForSet<SignatureStatus> _signatureState;
+        private SignatureStatus _signatureState;
 
         /// <summary>
         /// Friendly name of the signer (obtained from the certificate)
         /// </summary>
-        private SecurityCriticalDataForSet<string> _subjectName;
+        private string _subjectName;
 
         /// <summary>
         /// Intent:  From the Signature Definition
         /// </summary>
-        private SecurityCriticalDataForSet<string> _reason;
+        private string _reason;
 
         /// <summary>
         /// When this signature was applied (not a trusted time)
         /// </summary>
-        private SecurityCriticalDataForSet<DateTime?> _signedOn;
+        private DateTime? _signedOn;
 
         /// <summary>
         /// Location field (what signer type into signature definition)
         /// </summary>
-        private SecurityCriticalDataForSet<string> _location;
+        private string _location;
 
         /// <summary>
         /// Whether or not document properties changes are restricted by this signature
         /// </summary>
-        private SecurityCriticalDataForSet<bool> _isDocumentPropertiesRestricted;
+        private bool _isDocumentPropertiesRestricted;
 
         /// <summary>
         /// Whether or not adding signatures will invalidate this signature
         /// </summary>
-        private SecurityCriticalDataForSet<bool> _isAddingSignaturesRestricted;
+        private bool _isAddingSignaturesRestricted;
 
         /// <summary>
         /// SignatureID
         /// </summary>
-        private SecurityCriticalDataForSet<Guid?> _guidID;
+        private Guid? _guidID;
 
-        private SecurityCriticalDataForSet<X509Certificate2> _x509Certificate2;
+        private X509Certificate2 _x509Certificate2;
 
         /// <summary>
         /// The XpsDigitalSignature associated with this signature
         /// </summary>
-        private SecurityCriticalDataForSet<XpsDigitalSignature> _xpsDigitalSignature;
+        private XpsDigitalSignature _xpsDigitalSignature;
 
         #endregion Private data
     }

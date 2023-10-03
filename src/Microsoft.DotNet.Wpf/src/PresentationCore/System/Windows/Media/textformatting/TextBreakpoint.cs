@@ -72,7 +72,7 @@ namespace System.Windows.Media.TextFormatting
         /// We would make a correspondent call to notify our unmanaged wrapper to release them from duty of managing this 
         /// resource. 
         /// </remarks>
-        internal abstract SecurityCriticalDataForSet<IntPtr> GetTextPenaltyResource();
+        internal abstract IntPtr GetTextPenaltyResource();
 
 
         /// <summary>

@@ -437,7 +437,7 @@ internal class DataSpaceManager
     static DataSpaceManager()
     {
         // Transform Identifier: we preserve casing, but do case-insensitive comparison
-        _transformLookupTable = new Hashtable(CU.StringCaseInsensitiveComparer);
+        _transformLookupTable = new Hashtable(StringComparer.OrdinalIgnoreCase);
 
         _transformLookupTable[RightsManagementEncryptionTransform.ClassTransformIdentifier]
             = "System.IO.Packaging.RightsManagementEncryptionTransform";
@@ -460,8 +460,8 @@ internal class DataSpaceManager
         // Initialize internal data structures.
         _dataSpaceMap = new SortedList();
         _mapTableHeaderPreservation = Array.Empty<byte>();
-        _dataSpaceDefinitions = new Hashtable(CU.StringCaseInsensitiveComparer);
-        _transformDefinitions = new Hashtable(CU.StringCaseInsensitiveComparer);
+        _dataSpaceDefinitions = new Hashtable(StringComparer.OrdinalIgnoreCase);
+        _transformDefinitions = new Hashtable(StringComparer.OrdinalIgnoreCase);
         _transformedStreams = new ArrayList();
 
         // Check to see if we have any data space information to read
@@ -741,13 +741,11 @@ internal class DataSpaceManager
             throw new NotSupportedException(SR.TransformTypeUnsupported);
 
         // Transform Identifier: we preserve casing, but do case-insensitive comparison
-        if (((IEqualityComparer) CU.StringCaseInsensitiveComparer).Equals(transformClassName,
-                RightsManagementEncryptionTransform.ClassTransformIdentifier))
+        if (string.Equals(transformClassName, RightsManagementEncryptionTransform.ClassTransformIdentifier, StringComparison.OrdinalIgnoreCase))
         {
             transformInstance = new RightsManagementEncryptionTransform( transformEnvironment);
         }
-        else if (((IEqualityComparer) CU.StringCaseInsensitiveComparer).Equals(transformClassName,
-                CompressionTransform.ClassTransformIdentifier))
+        else if (string.Equals(transformClassName, CompressionTransform.ClassTransformIdentifier, StringComparison.OrdinalIgnoreCase))
         {
              transformInstance = new CompressionTransform( transformEnvironment );
         }
@@ -1615,8 +1613,7 @@ internal class DataSpaceManager
                     // Transform Identifier: we preserve casing, but do case-insensitive comparison
                     //Case-insensitive comparison. As per recommendations, we convert both strings
                     //to Upper case and then compare with StringComparison.Ordinal
-                    if (!((IEqualityComparer) CU.StringCaseInsensitiveComparer).Equals(_fileFormatVersion.FeatureIdentifier,
-                                       DataSpaceVersionIdentifier))
+                    if (!string.Equals(_fileFormatVersion.FeatureIdentifier, DataSpaceVersionIdentifier, StringComparison.OrdinalIgnoreCase))
                     {
                         throw new FileFormatException(
                                             SR.Format(SR.InvalidTransformFeatureName,

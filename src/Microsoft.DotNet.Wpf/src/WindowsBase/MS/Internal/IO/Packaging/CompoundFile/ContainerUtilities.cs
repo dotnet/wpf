@@ -46,8 +46,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         ///     ConvertStringArrayPathToBackSlashPath to separate path elements.
         static readonly internal char PathSeparator = Path.DirectorySeparatorChar;
         static readonly internal string PathSeparatorAsString = new string(ContainerUtilities.PathSeparator, 1);
-
-        static private readonly CaseInsensitiveOrdinalStringComparer _stringCaseInsensitiveComparer = new CaseInsensitiveOrdinalStringComparer();
 #endif
 
 
@@ -82,14 +80,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             get
             {
                 return _int64Size;
-            }
-        }
-
-        static internal CaseInsensitiveOrdinalStringComparer StringCaseInsensitiveComparer
-        {
-            get
-            {
-                return _stringCaseInsensitiveComparer;
             }
         }
 #endif

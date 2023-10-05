@@ -125,8 +125,7 @@ namespace System.Windows.Automation
         public int CompareTo(object obj)
         {
             Debug.Assert(obj != null, "Null obj!");
-            if (obj == null)
-                throw new ArgumentNullException("obj");
+            ArgumentNullException.ThrowIfNull(obj);
 
             // Ordering allows arrays of references to these to be sorted - though the sort order is undefined.
             Debug.Assert(obj is AutomationIdentifier, "CompareTo called with unexpected type");

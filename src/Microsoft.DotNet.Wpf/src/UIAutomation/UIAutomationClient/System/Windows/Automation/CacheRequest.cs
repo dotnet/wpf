@@ -242,7 +242,7 @@ namespace System.Windows.Automation
         /// <param name="property">The identifier of the property to add to this CacheRequest</param>
         public void Add(AutomationProperty property)
         {
-            Misc.ValidateArgumentNonNull(property, "property");
+            ArgumentNullException.ThrowIfNull(property);
             lock (_instanceLock)
             {
                 CheckAccess();
@@ -260,7 +260,7 @@ namespace System.Windows.Automation
         /// <param name="pattern">The identifier of the pattern to add to this CacheRequest</param>
         public void Add(AutomationPattern pattern)
         {
-            Misc.ValidateArgumentNonNull(pattern, "pattern");
+            ArgumentNullException.ThrowIfNull(pattern);
             lock (_instanceLock)
             {
                 CheckAccess();
@@ -337,7 +337,7 @@ namespace System.Windows.Automation
             
             set
             {
-                Misc.ValidateArgumentNonNull(value, "TreeFilter");
+                ArgumentNullException.ThrowIfNull(value, nameof(TreeFilter));
                 lock (_instanceLock)
                 {
                     CheckAccess();

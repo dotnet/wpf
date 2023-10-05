@@ -749,10 +749,7 @@ namespace MS.Internal.AutomationProxies
             // An empty strings is valued here, while a null string is not.
             // Therefore we can not use IsNullOrEmpty() here, suppress the warning.
 #pragma warning suppress 6507
-            if (val == null)
-            {
-                throw new ArgumentNullException ("val");
-            }
+            ArgumentNullException.ThrowIfNull(val);
 
             if (!WindowsListView.ListViewEditable (hwnd))
             {

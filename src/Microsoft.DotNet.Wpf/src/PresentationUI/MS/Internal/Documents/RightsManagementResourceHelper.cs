@@ -72,10 +72,7 @@ namespace MS.Internal.Documents
         {
             string accountName = null;
 
-            if (user == null)
-            {
-                throw new ArgumentNullException("user");
-            }
+            ArgumentNullException.ThrowIfNull(user);
 
             switch (user.AuthenticationType)
             {

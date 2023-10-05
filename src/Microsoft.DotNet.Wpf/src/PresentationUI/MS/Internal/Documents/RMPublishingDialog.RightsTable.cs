@@ -614,10 +614,7 @@ namespace MS.Internal.Documents
             /// <param name="everyoneRow">The row containing the Everyone user</param>
             private void UpdateAllRowsFromEveryone(DataGridViewRow everyoneRow)
             {
-                if (everyoneRow == null)
-                {
-                    throw new ArgumentNullException("everyoneRow");
-                }
+                ArgumentNullException.ThrowIfNull(everyoneRow);
 
                 // Update all the non-owner rows from the Everyone row
                 for (int rowIndex = _firstNonOwnerRow; rowIndex < Rows.Count; rowIndex++)
@@ -638,15 +635,8 @@ namespace MS.Internal.Documents
             /// <param name="targetRow">The target row to update</param>
             private void UpdateRowFromEveryone(DataGridViewRow everyoneRow, DataGridViewRow targetRow)
             {
-                if (everyoneRow == null)
-                {
-                    throw new ArgumentNullException("everyoneRow");
-                }
-
-                if (targetRow == null)
-                {
-                    throw new ArgumentNullException("targetRow");
-                }
+                ArgumentNullException.ThrowIfNull(everyoneRow);
+                ArgumentNullException.ThrowIfNull(targetRow);
 
                 int ownerColumnIndex = RightsTableColumnToIndex(RightsTableColumn.AllowOwner);
 
@@ -732,10 +722,7 @@ namespace MS.Internal.Documents
             /// <param name="everyoneRow">The row containing the Everyone user</param>
             private void UpdateAllRowsOnEveryoneRemoval(DataGridViewRow everyoneRow)
             {
-                if (everyoneRow == null)
-                {
-                    throw new ArgumentNullException("everyoneRow");
-                }
+                ArgumentNullException.ThrowIfNull(everyoneRow);
 
                 // Go through all the columns in the Everyone row
                 for (int column = RightsTableColumnToIndex(_leftModifiablePermissionColumn); column < _rightsTableColumnCount; column++)
@@ -766,10 +753,7 @@ namespace MS.Internal.Documents
             /// <param name="row">The row to update.</param>
             private void UpdateAllowOwner(DataGridViewRow row)
             {
-                if (row == null)
-                {
-                    throw new ArgumentNullException("row");
-                }
+                ArgumentNullException.ThrowIfNull(row);
 
                 DataGridViewDisableCheckBoxCell cell =
                     row.Cells[RightsTableColumnToIndex(RightsTableColumn.AllowOwner)]

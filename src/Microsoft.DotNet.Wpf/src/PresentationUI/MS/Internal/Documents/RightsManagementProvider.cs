@@ -448,10 +448,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     /// </summary>
     void IRightsManagementProvider.SetDefaultCredentials(RightsManagementUser user)
     {
-        if (user == null)
-        {
-            throw new ArgumentNullException("user");
-        }
+        ArgumentNullException.ThrowIfNull(user);
 
         //Get AvailableCreds list so we can match new default user.
         ReadOnlyCollection<RightsManagementUser> users =
@@ -485,10 +482,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     /// </summary>
     void IRightsManagementProvider.RemoveCredentials(RightsManagementUser user)
     {
-        if (user == null)
-        {
-            throw new ArgumentNullException("user");
-        }
+        ArgumentNullException.ThrowIfNull(user);
 
         SecureEnvironment.RemoveActivatedUser(user);
     }
@@ -647,10 +641,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     void IRightsManagementProvider.GenerateUnsignedPublishLicense(
         IList<RightsManagementLicense> licenses)
     {
-        if (licenses == null)
-        {
-            throw new ArgumentNullException("licenses");
-        }
+        ArgumentNullException.ThrowIfNull(licenses);
 
         // If the document is already protected, only owners can republish it
         // with different permissions

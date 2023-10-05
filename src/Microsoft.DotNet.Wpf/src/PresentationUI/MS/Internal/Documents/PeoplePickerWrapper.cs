@@ -312,10 +312,7 @@ namespace MS.Internal.Documents
             /// <param name="ptrToDsObjectNames">A pointer to a valid DsObjectNames struct</param>
             internal DsObjectNamesWrapper(System.IO.MemoryStream dataStream)
             {
-                if (dataStream == null)
-                {
-                    throw new ArgumentNullException("dataStream");
-                }
+                ArgumentNullException.ThrowIfNull(dataStream);
 
                 //We need to get a pointer to this data for our DsObjectNamesWrapper
                 //to wrap.

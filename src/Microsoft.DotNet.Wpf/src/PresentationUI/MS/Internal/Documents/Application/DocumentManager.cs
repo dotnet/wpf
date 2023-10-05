@@ -505,10 +505,7 @@ internal sealed class DocumentManager
     /// <param name="document">The document to validate.</param>
     private static void ThrowIfNull(Document document)
     {
-        if (document == null)
-        {
-            throw new ArgumentNullException("document");
-        }
+        ArgumentNullException.ThrowIfNull(document);
     }
     #endregion Private Methods
 

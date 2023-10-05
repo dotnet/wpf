@@ -398,10 +398,7 @@ namespace MS.Internal.Documents.Application
 
             void IValueProvider.SetValue(string value)
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (!IsEnabled())
                 {

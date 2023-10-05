@@ -61,10 +61,7 @@ namespace Microsoft.Windows.Controls
         /// </summary>
         public static string GetKeyTip(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (string)element.GetValue(KeyTipProperty);
         }
 
@@ -73,10 +70,7 @@ namespace Microsoft.Windows.Controls
         /// </summary>
         public static void SetKeyTip(DependencyObject element, string value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(KeyTipProperty, value);
         }
 
@@ -105,19 +99,13 @@ namespace Microsoft.Windows.Controls
 
         public static bool GetIsKeyTipScope(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(IsKeyTipScopeProperty);
         }
 
         public static void SetIsKeyTipScope(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(IsKeyTipScopeProperty, value);
         }
 
@@ -132,19 +120,13 @@ namespace Microsoft.Windows.Controls
 
         public static Style GetKeyTipStyle(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (Style)element.GetValue(KeyTipStyleProperty);
         }
 
         public static void SetKeyTipStyle(DependencyObject element, Style value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(KeyTipStyleProperty, value);
         }
 
@@ -433,19 +415,13 @@ namespace Microsoft.Windows.Controls
 
         internal static IEnumerable<DependencyObject> GetCustomSiblingKeyTipElements(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (IEnumerable<DependencyObject>)element.GetValue(CustomSiblingKeyTipElementsProperty);
         }
 
         internal static void SetCustomSiblingKeyTipElements(DependencyObject element, IEnumerable<DependencyObject> value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(CustomSiblingKeyTipElementsProperty, value);
         }
 
@@ -1307,19 +1283,13 @@ namespace Microsoft.Windows.Controls
 
         internal static bool GetCanClipKeyTip(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(CanClipKeyTipProperty);
         }
 
         internal static void SetCanClipKeyTip(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(CanClipKeyTipProperty, value);
         }
 
@@ -1336,8 +1306,7 @@ namespace Microsoft.Windows.Controls
         /// </summary>
         static private AdornerLayer GetAdornerLayer(Visual visual, out bool isScrollAdornerLayer)
         {
-            if (visual == null)
-                throw new ArgumentNullException("visual");
+            ArgumentNullException.ThrowIfNull(visual);
 
             isScrollAdornerLayer = false;
             Visual parent = VisualTreeHelper.GetParent(visual) as Visual;

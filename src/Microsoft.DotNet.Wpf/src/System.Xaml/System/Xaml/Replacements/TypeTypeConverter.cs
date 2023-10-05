@@ -4,8 +4,8 @@
 
 using System.ComponentModel;
 using System.Globalization;
+using System.Windows.Markup;
 using System.Xaml.Schema;
-using XAML3 = System.Windows.Markup;
 
 namespace System.Xaml.Replacements
 {
@@ -15,22 +15,16 @@ namespace System.Xaml.Replacements
     internal class TypeTypeConverter : TypeConverter
     {
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-        {
-            return sourceType == typeof(string);
-        }
+            => sourceType == typeof(string);
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            string typeName = value as string;
-
-            if (null != context && null != typeName)
+            if (context != null && value is string typeName)
             {
-                var typeResolver = GetService<XAML3.IXamlTypeResolver>(context);
-
-                if (null != typeResolver)
+                IXamlTypeResolver typeResolver = GetService<IXamlTypeResolver>(context);
+                if (typeResolver != null)
                 {
-                    Type type = typeResolver.Resolve(typeName);
-                    return type;
+                    return typeResolver.Resolve(typeName);
                 }
             }
 
@@ -38,15 +32,11 @@ namespace System.Xaml.Replacements
         }
 
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
-        {
-            return destinationType == typeof(string);
-        }
+            => destinationType == typeof(string);
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            Type type = value as Type;
-
-            if (context != null && type != null && destinationType == typeof(string))
+            if (context != null && value is Type type && destinationType == typeof(string))
             {
                 string result = ConvertTypeToString(context, type);
                 if (result != null)
@@ -54,12 +44,13 @@ namespace System.Xaml.Replacements
                     return result;
                 }
             }
+
             return base.ConvertTo(context, culture, value, destinationType);
         }
 
         private static string ConvertTypeToString(ITypeDescriptorContext context, Type type)
         {
-            var schemaContextProvider = GetService<IXamlSchemaContextProvider>(context);
+            IXamlSchemaContextProvider schemaContextProvider = GetService<IXamlSchemaContextProvider>(context);
             if (schemaContextProvider == null)
             {
                 return null;
@@ -68,17 +59,17 @@ namespace System.Xaml.Replacements
             {
                 return null;
             }
+
             XamlType xamlType = schemaContextProvider.SchemaContext.GetXamlType(type);
             if (xamlType == null)
             {
                 return null;
             }
+
             return XamlTypeTypeConverter.ConvertXamlTypeToString(context, xamlType);
         }
 
         private static TService GetService<TService>(ITypeDescriptorContext context) where TService : class
-        {
-            return context.GetService(typeof(TService)) as TService;
-        }
+            => context.GetService(typeof(TService)) as TService;
     }
 }

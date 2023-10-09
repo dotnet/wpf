@@ -1677,7 +1677,7 @@ namespace System.Windows
         {
             Stream stream;
             BinaryWriter binaryWriter;
-            BinaryFormatter formatter;
+            // BinaryFormatter formatter;
 
             using (stream = new MemoryStream())
             {

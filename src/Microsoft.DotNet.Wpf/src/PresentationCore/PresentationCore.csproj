@@ -331,6 +331,8 @@
     <Compile Include="System\Windows\DataFormat.cs" />
     <Compile Include="System\Windows\DataFormats.cs" />
     <Compile Include="System\Windows\dataobject.cs" />
+    <Compile Include="System\Windows\BinaryFormatWriter.cs" />
+    <Compile Include="System\Windows\BinaryFormatWriterScope.cs" />
     <Compile Include="System\Windows\DataObjectCopyingEventArgs.cs" />
     <Compile Include="System\Windows\DataObjectEventArgs.cs" />
     <Compile Include="System\Windows\DataObjectPastingEventArgs.cs" />

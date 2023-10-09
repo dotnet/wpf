@@ -161,7 +161,7 @@ namespace System.Windows.Controls
                         else
                         {
                             // Uncheck all checked RadioButtons different from the current one
-                            if (rb != this && (rb.IsChecked == true) && rootScope == KeyboardNavigation.GetVisualRoot(rb))
+                            if (rb != this && (rb.IsChecked == true) && rootScope == KeyboardNavigation.GetVisualRoot(rb) && rootScope != null)
                                 rb.UncheckRadioButton();
                             i++;
                         }

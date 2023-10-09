@@ -1677,19 +1677,19 @@ namespace System.Windows
         {
             Stream stream;
             BinaryWriter binaryWriter;
-            BinaryFormatter formatter;
+            // BinaryFormatter formatter;
 
             using (stream = new MemoryStream())
             {
                 using (binaryWriter = new BinaryWriter(stream))
                 {
                     binaryWriter.Write(_serializedObjectID);
+                    BinaryFormatWriter.TryWriteFrameworkObject(stream,data);
+                    // formatter = new BinaryFormatter();
 
-                    formatter = new BinaryFormatter();
-
-                    #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
-                    formatter.Serialize(stream, data);
-                    #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete
+                    // #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
+                    // formatter.Serialize(stream, data);
+                    // #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete
                     return SaveStreamToHandle(handle, stream, doNotReallocate);
                 }
             }
@@ -3046,23 +3046,26 @@ namespace System.Windows
 
                 if (isSerializedObject)
                 {
-                    BinaryFormatter formatter;
+                    // BinaryFormatter formatter;
 
-                    formatter = new BinaryFormatter();
-                    if (restrictDeserialization)
-                    {
-                        formatter.Binder = new TypeRestrictingSerializationBinder();
-                    }
-                    try
-                    {
-                        #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
-                        value = formatter.Deserialize(stream);
-                        #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
-                    }
-                    catch (RestrictedTypeDeserializationException)
-                    {
-                        value = null;
-                    }
+                    // formatter = new BinaryFormatter();
+                    // if (restrictDeserialization)
+                    // {
+                    //     formatter.Binder = new TypeRestrictingSerializationBinder();
+                    // }
+                    // try
+                    // {
+                    //     #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
+                    //     
+                    //     value = formatter.Deserialize(stream);
+                    //     #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
+                    // }
+                    // catch (RestrictedTypeDeserializationException)
+                    // {
+                    //     value = null;
+                    // }
+                    BinaryReader Br = new BinaryReader(stream, Encoding.UTF8, leaveOpen: true);
+                    value = Br.ReadString();
                 }
                 else
                 {

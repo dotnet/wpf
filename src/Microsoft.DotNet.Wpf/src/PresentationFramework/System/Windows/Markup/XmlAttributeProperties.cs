@@ -303,7 +303,7 @@ namespace System.Windows.Markup
                 throw new ArgumentNullException( "dependencyObject" );
             }
 
-            return (string)dependencyObject.GetValue(XmlNamespaceMapsProperty);
+            return dependencyObject.GetValue(XmlNamespaceMapsProperty) as string;
         }
 
         /// <summary>

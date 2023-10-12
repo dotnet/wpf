@@ -17,6 +17,8 @@
   "symbols/Framework/choices/net7.0/displayName": ".NET 7.0",
   "symbols/Framework/choices/net8.0/description": "目标 net8.0",
   "symbols/Framework/choices/net8.0/displayName": ".NET 8.0",
+  "symbols/Framework/choices/net9.0/description": "Target net9.0",
+  "symbols/Framework/choices/net9.0/displayName": ".NET 9.0",
   "symbols/Framework/displayName": "框架",
   "symbols/langVersion/description": "在创建的项目文件中设置 langVersion",
   "symbols/langVersion/displayName": "语言版本",

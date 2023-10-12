@@ -247,10 +247,7 @@ namespace Microsoft.Win32
         /// </summary>
         protected override void OnItemOk(CancelEventArgs e)
         {
-            if (FolderOk != null)
-            {
-                FolderOk(this, e);
-            }
+            FolderOk?.Invoke(this, e);
         }
 
         #endregion Protected Methods

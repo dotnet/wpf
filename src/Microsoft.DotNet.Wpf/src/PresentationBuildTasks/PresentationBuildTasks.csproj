@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net472;net8.0</TargetFrameworks>
+    <TargetFrameworks>net472;net9.0</TargetFrameworks>
     <EnableDefaultItems>false</EnableDefaultItems>
     <EnablePInvokeAnalyzer>true</EnablePInvokeAnalyzer>
 
@@ -60,7 +60,7 @@
     <PackagingAssemblyContent Include="System.Reflection.MetadataLoadContext.dll" />
     <PackagingAssemblyContent Include="System.Runtime.CompilerServices.Unsafe.dll" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'=='net8.0'">
+  <ItemGroup Condition="'$(TargetFramework)'=='net9.0'">
     <PackagingAssemblyContent Include="PresentationBuildTasks.dll" />
     <PackagingAssemblyContent Include="System.Reflection.MetadataLoadContext.dll" />
   </ItemGroup>

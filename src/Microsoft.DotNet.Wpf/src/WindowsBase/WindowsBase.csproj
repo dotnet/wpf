@@ -114,7 +114,6 @@
     <Compile Include="MS\Internal\IO\Packaging\CompoundFile\UserUseLicenseDictionaryLoader.cs" />
     <Compile Include="MS\Internal\IO\Packaging\CompoundFile\VersionedStream.cs" />
     <Compile Include="MS\Internal\IO\Packaging\CompoundFile\VersionedStreamOwner.cs" />
-    <Compile Include="MS\Internal\IO\Packaging\CaseInsensitiveOrdinalStringComparer.cs" />
     <Compile Include="MS\Internal\IO\Packaging\Certificate.cs" />
     <Compile Include="MS\Internal\IO\Packaging\DeflateEmulationStream.cs" />
     <Compile Include="MS\Internal\IO\Packaging\CompressEmulationStream.cs" />
@@ -249,7 +248,6 @@
     <Compile Include="System\Windows\WeakEventManagerT.cs" />
     <Compile Include="System\Windows\Data\DataSourceProvider.cs " />
     <Compile Include="System\Windows\Markup\DateTimeConverter2.cs" />
-    <Compile Include="System\Windows\Markup\DateTimeValueSerializerContext.cs" />
     <Compile Include="System\Windows\Markup\InternalTypeHelper.cs" />
     <Compile Include="System\Windows\Markup\IReceiveMarkupExtension.cs" />
     <Compile Include="System\Windows\Markup\ServiceProviders.cs" />

@@ -2,6 +2,7 @@
   <!-- Include dependencies of DirectWriteForwarder, which is not
        analyzed by the linker. -->
   <assembly fullname="System.Diagnostics.Debug" />
+  <assembly fullname="System.Runtime.InteropServices" />
   <assembly fullname="mscorlib" />
   <assembly fullname="netstandard" />  
 </linker>

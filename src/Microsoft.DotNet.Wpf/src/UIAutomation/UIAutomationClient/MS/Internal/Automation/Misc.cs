@@ -45,7 +45,8 @@ namespace MS.Internal.Automation
         // compare two arrays
         internal static bool Compare(int[] a1, int[] a2)
         {
-            CheckNonNull(a1, a2);
+            ArgumentNullException.ThrowIfNull(a1);
+            ArgumentNullException.ThrowIfNull(a2);
 
             int l = a1.Length;
 
@@ -66,7 +67,8 @@ namespace MS.Internal.Automation
         // compare two AutomationElements
         internal static bool Compare(AutomationElement el1, AutomationElement el2)
         {
-            CheckNonNull(el1, el2);
+            ArgumentNullException.ThrowIfNull(el1);
+            ArgumentNullException.ThrowIfNull(el2);
             return Compare(el1.GetRuntimeId(), el2.GetRuntimeId());
         }
         #endregion Element Comparisons
@@ -167,15 +169,6 @@ namespace MS.Internal.Automation
         #endregion Interface & Property Wrapping
 
         #region Param validation & Error related
-
-        // Check that specified argument is non-null, if so, throw exception
-        internal static void ValidateArgumentNonNull(object obj, string argName)
-        {
-            if (obj == null)
-            {
-                throw new ArgumentNullException(argName);
-            }
-        }
 
         // Throw an argument Exception with a generic error
         internal static void ThrowInvalidArgument(string argName)
@@ -747,16 +740,6 @@ namespace MS.Internal.Automation
         //------------------------------------------------------
 
         #region Private Methods
-
-        // Helper used by the various comparison functions above
-        private static void CheckNonNull(object el1, object el2)
-        {
-            if (el1 == null)
-                throw new ArgumentNullException("el1");
-
-            if (el2 == null)
-                throw new ArgumentNullException("el2");
-        }
 
         //This function throws corresponding exception depending on the last error.
         private static void EvaluateSendMessageTimeoutError(int error)

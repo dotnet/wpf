@@ -64,10 +64,7 @@ internal class TransactionalPackage : Package, IDisposable
     internal TransactionalPackage(Stream original)
         : base(FileAccess.ReadWrite)
     {
-        if (original == null)
-        {
-            throw new ArgumentNullException("original");
-        }
+        ArgumentNullException.ThrowIfNull(original);
 
         Package originalPackage = Package.Open(original);
 
@@ -84,10 +81,7 @@ internal class TransactionalPackage : Package, IDisposable
     /// <exception cref="System.ArgumentNullException" />
     internal void EnableEditMode(Stream workspace)
     {
-        if (workspace == null)
-        {
-            throw new ArgumentNullException("workspace");
-        }
+        ArgumentNullException.ThrowIfNull(workspace);
 
         if (!workspace.CanWrite)
         {
@@ -106,10 +100,7 @@ internal class TransactionalPackage : Package, IDisposable
     /// <exception cref="System.ArgumentException" />
     internal virtual void MergeChanges(Stream target)
     {
-        if (target == null)
-        {
-            throw new ArgumentNullException("target");
-        }
+        ArgumentNullException.ThrowIfNull(target);
 
         if (!target.CanWrite)
         {
@@ -156,10 +147,7 @@ internal class TransactionalPackage : Package, IDisposable
 
     internal void Rebind(Stream newOriginal)
     {
-        if (newOriginal == null)
-        {
-            throw new ArgumentNullException("newOriginal");
-        }
+        ArgumentNullException.ThrowIfNull(newOriginal);
 
         // close this as we will open a new one
         _originalPackage.Value.Close();
@@ -536,10 +524,7 @@ internal class TransactionalPackage : Package, IDisposable
     /// <returns>A writeable PackagePart.</returns>
     private PackagePart TempPackagePartFactory(PackagePart packagePart)
     {
-        if (packagePart == null)
-        {
-            throw new ArgumentNullException("packagePart");
-        }
+        ArgumentNullException.ThrowIfNull(packagePart);
 
         EnsureTempPackage();
 

@@ -281,10 +281,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// <returns>The property's value.</returns>
         public static bool GetIsOverflowItem(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(IsOverflowItemProperty);
         }
 

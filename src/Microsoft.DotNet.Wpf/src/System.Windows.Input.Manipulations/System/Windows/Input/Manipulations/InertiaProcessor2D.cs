@@ -326,7 +326,7 @@ namespace System.Windows.Input.Manipulations
         [EditorBrowsable(EditorBrowsableState.Never)]
         public void SetParameters(InertiaParameters2D parameters)
         {
-            Validations.CheckNotNull(parameters, "parameters");
+            ArgumentNullException.ThrowIfNull(parameters);
 
             InertiaTranslationBehavior2D translationParameters = parameters as InertiaTranslationBehavior2D;
             if (translationParameters != null)

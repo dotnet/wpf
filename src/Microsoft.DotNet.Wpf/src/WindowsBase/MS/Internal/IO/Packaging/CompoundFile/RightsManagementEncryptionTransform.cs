@@ -1116,16 +1116,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             bool validEnum = false;
 
             // user names: case-insensitive comparison
-            if (((IEqualityComparer) CU.StringCaseInsensitiveComparer).Equals(
-                    authenticationTypeString,
-                    Enum.GetName(typeof(AuthenticationType), AuthenticationType.Windows)))
+            if (string.Equals(authenticationTypeString, nameof(AuthenticationType.Windows), StringComparison.OrdinalIgnoreCase))
             {
                 authenticationType = AuthenticationType.Windows;
                 validEnum = true;
             }
-            else if (((IEqualityComparer) CU.StringCaseInsensitiveComparer).Equals(
-                    authenticationTypeString,
-                    Enum.GetName(typeof(AuthenticationType), AuthenticationType.Passport)))
+            else if (string.Equals(authenticationTypeString, nameof(AuthenticationType.Passport), StringComparison.OrdinalIgnoreCase))
             {
                 authenticationType = AuthenticationType.Passport;
                 validEnum = true;

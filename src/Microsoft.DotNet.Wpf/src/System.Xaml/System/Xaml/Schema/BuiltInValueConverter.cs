@@ -7,7 +7,6 @@ using System.ComponentModel.Design.Serialization;
 using System.Globalization;
 using System.Windows.Markup;
 using System.Xaml.Replacements;
-using TypeListConverter = System.Xaml.Replacements.TypeListConverter;
 
 namespace System.Xaml.Schema
 {
@@ -22,15 +21,9 @@ namespace System.Xaml.Schema
             _factory = factory;
         }
 
-        internal override bool IsPublic
-        {
-            get { return true; }
-        }
+        internal override bool IsPublic => true;
 
-        protected override TConverterBase CreateInstance()
-        {
-            return _factory.Invoke();
-        }
+        protected override TConverterBase CreateInstance() => _factory.Invoke();
     }
 
     internal static class BuiltInValueConverter
@@ -62,52 +55,16 @@ namespace System.Xaml.Schema
         private static XamlValueConverter<TypeConverter> s_Uri;
 
         internal static XamlValueConverter<TypeConverter> Int32
-        {
-            get
-            {
-                if (s_Int32 is null)
-                {
-                    s_Int32 = new BuiltInValueConverter<TypeConverter>(typeof(Int32Converter), () => new Int32Converter());
-                }
-                return s_Int32;
-            }
-        }
+            => s_Int32 ??= new BuiltInValueConverter<TypeConverter>(typeof(Int32Converter), () => new Int32Converter());
 
         internal static XamlValueConverter<TypeConverter> String
-        {
-            get
-            {
-                if (s_String is null)
-                {
-                    s_String = new BuiltInValueConverter<TypeConverter>(typeof(StringConverter), () => new StringConverter());
-                }
-                return s_String;
-            }
-        }
+            => s_String ??= new BuiltInValueConverter<TypeConverter>(typeof(StringConverter), () => new StringConverter());
 
         internal static XamlValueConverter<TypeConverter> Object
-        {
-            get
-            {
-                if (s_Object is null)
-                {
-                    s_Object = new XamlValueConverter<TypeConverter>(null, XamlLanguage.Object);
-                }
-                return s_Object;
-            }
-        }
+            => s_Object ??= new XamlValueConverter<TypeConverter>(null, XamlLanguage.Object);
 
         internal static XamlValueConverter<TypeConverter> Event
-        {
-            get
-            {
-                if (s_Delegate is null)
-                {
-                    s_Delegate = new BuiltInValueConverter<TypeConverter>(typeof(EventConverter), () => new EventConverter());
-                }
-                return s_Delegate;
-            }
-        }
+            => s_Delegate ??= new BuiltInValueConverter<TypeConverter>(typeof(EventConverter), () => new EventConverter());
 
         internal static XamlValueConverter<TypeConverter> GetTypeConverter(Type targetType)
         {
@@ -125,163 +82,83 @@ namespace System.Xaml.Schema
             }
             if (typeof(Int16) == targetType)
             {
-                if (s_Int16 is null)
-                {
-                    s_Int16 = new BuiltInValueConverter<TypeConverter>(typeof(Int16Converter), () => new Int16Converter());
-                }
-                return s_Int16;
+                return s_Int16 ??= new BuiltInValueConverter<TypeConverter>(typeof(Int16Converter), () => new Int16Converter());
             }
             if (typeof(Int64) == targetType)
             {
-                if (s_Int64 is null)
-                {
-                    s_Int64 = new BuiltInValueConverter<TypeConverter>(typeof(Int64Converter), () => new Int64Converter());
-                }
-                return s_Int64;
+                return s_Int64 ??= new BuiltInValueConverter<TypeConverter>(typeof(Int64Converter), () => new Int64Converter());
             }
             if (typeof(UInt32) == targetType)
             {
-                if (s_UInt32 is null)
-                {
-                    s_UInt32 = new BuiltInValueConverter<TypeConverter>(typeof(UInt32Converter), () => new UInt32Converter());
-                }
-                return s_UInt32;
+                return s_UInt32 ??= new BuiltInValueConverter<TypeConverter>(typeof(UInt32Converter), () => new UInt32Converter());
             }
             if (typeof(UInt16) == targetType)
             {
-                if (s_UInt16 is null)
-                {
-                    s_UInt16 = new BuiltInValueConverter<TypeConverter>(typeof(UInt16Converter), () => new UInt16Converter());
-                }
-                return s_UInt16;
+                return s_UInt16 ??= new BuiltInValueConverter<TypeConverter>(typeof(UInt16Converter), () => new UInt16Converter());
             }
             if (typeof(UInt64) == targetType)
             {
-                if (s_UInt64 is null)
-                {
-                    s_UInt64 = new BuiltInValueConverter<TypeConverter>(typeof(UInt64Converter), () => new UInt64Converter());
-                }
-                return s_UInt64;
+                return s_UInt64 ??= new BuiltInValueConverter<TypeConverter>(typeof(UInt64Converter), () => new UInt64Converter());
             }
             if (typeof(Boolean) == targetType)
             {
-                if (s_Boolean is null)
-                {
-                    s_Boolean = new BuiltInValueConverter<TypeConverter>(typeof(BooleanConverter), () => new BooleanConverter());
-                }
-                return s_Boolean;
+                return s_Boolean ??= new BuiltInValueConverter<TypeConverter>(typeof(BooleanConverter), () => new BooleanConverter());
             }
             if (typeof(Double) == targetType)
             {
-                if (s_Double is null)
-                {
-                    s_Double = new BuiltInValueConverter<TypeConverter>(typeof(DoubleConverter), () => new DoubleConverter());
-                }
-                return s_Double;
+                return s_Double ??= new BuiltInValueConverter<TypeConverter>(typeof(DoubleConverter), () => new DoubleConverter());
             }
             if (typeof(Single) == targetType)
             {
-                if (s_Single is null)
-                {
-                    s_Single = new BuiltInValueConverter<TypeConverter>(typeof(SingleConverter), () => new SingleConverter());
-                }
-                return s_Single;
+                return s_Single ??= new BuiltInValueConverter<TypeConverter>(typeof(SingleConverter), () => new SingleConverter());
             }
             if (typeof(Byte) == targetType)
             {
-                if (s_Byte is null)
-                {
-                    s_Byte = new BuiltInValueConverter<TypeConverter>(typeof(ByteConverter), () => new ByteConverter());
-                }
-                return s_Byte;
+                return s_Byte ??= new BuiltInValueConverter<TypeConverter>(typeof(ByteConverter), () => new ByteConverter());
             }
             if (typeof(SByte) == targetType)
             {
-                if (s_SByte is null)
-                {
-                    s_SByte = new BuiltInValueConverter<TypeConverter>(typeof(SByteConverter), () => new SByteConverter());
-                }
-                return s_SByte;
+                return s_SByte ??= new BuiltInValueConverter<TypeConverter>(typeof(SByteConverter), () => new SByteConverter());
             }
             if (typeof(Char) == targetType)
             {
-                if (s_Char is null)
-                {
-                    s_Char = new BuiltInValueConverter<TypeConverter>(typeof(CharConverter), () => new CharConverter());
-                }
-                return s_Char;
+                return s_Char ??= new BuiltInValueConverter<TypeConverter>(typeof(CharConverter), () => new CharConverter());
             }
             if (typeof(Decimal) == targetType)
             {
-                if (s_Decimal is null)
-                {
-                    s_Decimal = new BuiltInValueConverter<TypeConverter>(typeof(DecimalConverter), () => new DecimalConverter());
-                }
-                return s_Decimal;
+                return s_Decimal ??= new BuiltInValueConverter<TypeConverter>(typeof(DecimalConverter), () => new DecimalConverter());
             }
             if (typeof(TimeSpan) == targetType)
             {
-                if (s_TimeSpan is null)
-                {
-                    s_TimeSpan = new BuiltInValueConverter<TypeConverter>(typeof(TimeSpanConverter), () => new TimeSpanConverter());
-                }
-                return s_TimeSpan;
+                return s_TimeSpan ??= new BuiltInValueConverter<TypeConverter>(typeof(TimeSpanConverter), () => new TimeSpanConverter());
             }
             if (typeof(Guid) == targetType)
             {
-                if (s_Guid is null)
-                {
-                    s_Guid = new BuiltInValueConverter<TypeConverter>(typeof(GuidConverter), () => new GuidConverter());
-                }
-                return s_Guid;
+                return s_Guid ??= new BuiltInValueConverter<TypeConverter>(typeof(GuidConverter), () => new GuidConverter());
             }
             if (typeof(Type).IsAssignableFrom(targetType))
             {
-                if (s_Type is null)
-                {
-                    s_Type = new BuiltInValueConverter<TypeConverter>(typeof(TypeTypeConverter), () => new TypeTypeConverter());
-                }
-                return s_Type;
+                return s_Type ??= new BuiltInValueConverter<TypeConverter>(typeof(System.Xaml.Replacements.TypeTypeConverter), () => new System.Xaml.Replacements.TypeTypeConverter());
             }
             if (typeof(Type[]).IsAssignableFrom(targetType))
             {
-                if (s_TypeList is null)
-                {
-                    s_TypeList = new BuiltInValueConverter<TypeConverter>(typeof(TypeListConverter), () => new TypeListConverter());
-                }
-                return s_TypeList;
+                return s_TypeList ??= new BuiltInValueConverter<TypeConverter>(typeof(System.Xaml.Replacements.TypeListConverter), () => new System.Xaml.Replacements.TypeListConverter());
             }
             if (typeof(DateTime) == targetType)
             {
-                if (s_DateTime is null)
-                {
-                    s_DateTime = new BuiltInValueConverter<TypeConverter>(typeof(DateTimeConverter2), () => new DateTimeConverter2());
-                }
-                return s_DateTime;
+                return s_DateTime ??= new BuiltInValueConverter<TypeConverter>(typeof(System.Xaml.Replacements.DateTimeConverter2), () => new System.Xaml.Replacements.DateTimeConverter2());
             }
             if (typeof(DateTimeOffset) == targetType)
             {
-                if (s_DateTimeOffset is null)
-                {
-                    s_DateTimeOffset = new BuiltInValueConverter<TypeConverter>(typeof(DateTimeOffsetConverter2), () => new DateTimeOffsetConverter2());
-                }
-                return s_DateTimeOffset;
+                return s_DateTimeOffset ??= new BuiltInValueConverter<TypeConverter>(typeof(System.Xaml.Replacements.DateTimeOffsetConverter2), () => new System.Xaml.Replacements.DateTimeOffsetConverter2());
             }
             if (typeof(CultureInfo).IsAssignableFrom(targetType))
             {
-                if (s_CultureInfo is null)
-                {
-                    s_CultureInfo = new BuiltInValueConverter<TypeConverter>(typeof(CultureInfoConverter), () => new CultureInfoConverter());
-                }
-                return s_CultureInfo;
+                return s_CultureInfo ??= new BuiltInValueConverter<TypeConverter>(typeof(CultureInfoConverter), () => new CultureInfoConverter());
             }
             if (typeof(Delegate).IsAssignableFrom(targetType))
             {
-                if (s_Delegate is null)
-                {
-                    s_Delegate = new BuiltInValueConverter<TypeConverter>(typeof(EventConverter), () => new EventConverter());
-                }
-                return s_Delegate;
+                return s_Delegate ??= new BuiltInValueConverter<TypeConverter>(typeof(EventConverter), () => new EventConverter());
             }
             if (typeof(Uri).IsAssignableFrom(targetType))
             {
@@ -317,8 +194,10 @@ namespace System.Xaml.Schema
                         s_Uri = new BuiltInValueConverter<TypeConverter>(stdConverter.GetType(), () => TypeDescriptor.GetConverter(typeof(Uri)));
                     }
                 }
+
                 return s_Uri;
             }
+
             return null;
         }
 
@@ -332,8 +211,10 @@ namespace System.Xaml.Schema
                     ValueSerializer stringSerializer = ValueSerializer.GetSerializerFor(typeof(string));
                     s_StringSerializer = new BuiltInValueConverter<ValueSerializer>(stringSerializer.GetType(), () => stringSerializer);
                 }
+
                 return s_StringSerializer;
             }
+
             return null;
         }
     }

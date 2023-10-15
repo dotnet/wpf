@@ -38,24 +38,20 @@ namespace MS.Internal.Documents
         /// will manipulate</param>
         public DigitalSignatureProvider(Package package)
         {
-            if (package != null)
+            ArgumentNullException.ThrowIfNull(package);
+
+            XpsDocument = new XpsDocument(package);
+            FixedDocumentSequence = XpsDocument.FixedDocumentSequenceReader;
+            if (FixedDocumentSequence == null)
             {
-                XpsDocument = new XpsDocument(package);
-                FixedDocumentSequence = XpsDocument.FixedDocumentSequenceReader;
-                if (FixedDocumentSequence == null)
-                {
-                    throw new ArgumentException(SR.DigitalSignatureNoFixedDocumentSequence);
-                }
-                // We only want to save the first fixed document since all
-                // XPS Viewer signature definitions will be added to the first
-                // fixed document.
-                FixedDocument =
-                    FixedDocumentSequence.FixedDocuments[0];
+                throw new ArgumentException(SR.DigitalSignatureNoFixedDocumentSequence);
             }
-            else
-            {
-                throw new ArgumentNullException("package");
-            }
+            // We only want to save the first fixed document since all
+            // XPS Viewer signature definitions will be added to the first
+            // fixed document.
+            FixedDocument =
+                FixedDocumentSequence.FixedDocuments[0];
+
         }
         #endregion Constructors
 

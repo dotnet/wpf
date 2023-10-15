@@ -36,10 +36,7 @@ namespace MS.Internal.Documents.Application
         /// <param name="uri"></param>
         private DocumentProperties(Uri uri)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException("uri");
-            }
+            ArgumentNullException.ThrowIfNull(uri);
 
             _uri = new SecurityCriticalData<Uri>(uri);
         }

@@ -36,11 +36,11 @@ namespace System.Windows.Automation
         /// <param name="conditions">One or more sub-condition</param>
         public AndCondition( params Condition [ ] conditions )
         {
-            Misc.ValidateArgumentNonNull( conditions, "conditions" );
+            ArgumentNullException.ThrowIfNull(conditions);
             Misc.ValidateArgument( conditions.Length >= 2, nameof(SR.MustBeAtLeastTwoConditions) );
             foreach( Condition condition in conditions )
             {
-                Misc.ValidateArgumentNonNull( condition, "conditions" );
+                ArgumentNullException.ThrowIfNull(condition, nameof(conditions));
             }
 
             // clone array to prevent accidental tampering

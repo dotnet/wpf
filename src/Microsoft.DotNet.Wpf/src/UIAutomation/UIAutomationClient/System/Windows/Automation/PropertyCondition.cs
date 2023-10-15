@@ -122,7 +122,7 @@ namespace System.Windows.Automation
 
         void Init(AutomationProperty property, object val, PropertyConditionFlags flags )
         {
-            Misc.ValidateArgumentNonNull(property, "property");
+            ArgumentNullException.ThrowIfNull(property);
 
             AutomationPropertyInfo info;
             if (!Schema.GetPropertyInfo(property, out info))

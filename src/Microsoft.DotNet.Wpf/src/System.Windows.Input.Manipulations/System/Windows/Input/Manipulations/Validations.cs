@@ -12,20 +12,6 @@ namespace System.Windows.Input.Manipulations
     internal static class Validations
     {
         /// <summary>
-        /// Throws if an argument is null.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="paramName"></param>
-        public static void CheckNotNull(object value, string paramName)
-        {
-            Debug.Assert(paramName != null);
-            if (value == null)
-            {
-                throw new ArgumentNullException(paramName);
-            }
-        }
-
-        /// <summary>
         /// Gets whether the specified value is finite.
         /// </summary>
         /// <param name="value"></param>

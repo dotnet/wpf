@@ -202,10 +202,10 @@
                  Condition="Exists('$(PkgMicrosoft_Private_Winforms)\ref\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll')">
         <NuGetPackageId>Microsoft.Private.Winforms</NuGetPackageId>
       </Reference>
-      <Reference Include="$(PkgMicrosoft_Private_Winforms)\ref\net7.0\%(MicrosoftPrivateWinFormsReference.Identity).dll"
+      <Reference Include="$(PkgMicrosoft_Private_Winforms)\ref\net8.0\%(MicrosoftPrivateWinFormsReference.Identity).dll"
                  Condition="!Exists('$(PkgMicrosoft_Private_Winforms)\ref\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll')
-                 And $(TargetFramework) == 'net8.0'
-                 And Exists('$(PkgMicrosoft_Private_Winforms)\ref\net7.0\%(MicrosoftPrivateWinFormsReference.Identity).dll')">
+                 And $(TargetFramework) == 'net9.0'
+                 And Exists('$(PkgMicrosoft_Private_Winforms)\ref\net8.0\%(MicrosoftPrivateWinFormsReference.Identity).dll')">
         <NuGetPackageId>Microsoft.Private.Winforms</NuGetPackageId>
       </Reference>
     </ItemGroup>

@@ -17,6 +17,8 @@
   "symbols/Framework/choices/net7.0/displayName": ".NET 7.0",
   "symbols/Framework/choices/net8.0/description": ".NET 8.0 de destino",
   "symbols/Framework/choices/net8.0/displayName": ".NET 8.0",
+  "symbols/Framework/choices/net9.0/description": "Target net9.0",
+  "symbols/Framework/choices/net9.0/displayName": ".NET 9.0",
   "symbols/Framework/displayName": "Framework",
   "symbols/langVersion/description": "Define a langVersion no arquivo do projeto criado",
   "symbols/langVersion/displayName": "Versão da Linguagem",

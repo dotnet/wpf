@@ -118,8 +118,7 @@ namespace Microsoft.Windows.Automation.Peers
             if (!owner.IsEnabled)
                 throw new ElementNotEnabledException();
 
-            if (value == null)
-                throw new ArgumentNullException("value");
+            ArgumentNullException.ThrowIfNull(value);
 
             owner.Text = value;
         }

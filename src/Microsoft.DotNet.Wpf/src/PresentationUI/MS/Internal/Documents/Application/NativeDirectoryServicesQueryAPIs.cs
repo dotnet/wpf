@@ -156,7 +156,7 @@ namespace MS.Internal.Documents
             {
                 public Guid clsidNamespace;
                 public UInt32 cItems;
-                [MarshalAs(UnmanagedType.ByValArray)]
+                [MarshalAs(UnmanagedType.ByValArray, SizeConst=1)]
                 public DsObject[] aObjects;
             }
 

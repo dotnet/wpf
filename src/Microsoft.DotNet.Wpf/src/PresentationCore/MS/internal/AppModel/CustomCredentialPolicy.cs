@@ -59,10 +59,13 @@ namespace MS.Internal.AppModel
                         // We do not want to overwrite the application's setting. 
                         // Check whether it is already set before setting it. 
                         // The default of this property is null. It demands ControlPolicy permission to be set.
+
+#pragma warning disable SYSLIB0009
                         if (AuthenticationManager.CredentialPolicy == null)
                         {
                             AuthenticationManager.CredentialPolicy = new CustomCredentialPolicy();
                         }
+#pragma warning restore SYSLIB0009
                         _initialized = true;
                     }
                 }

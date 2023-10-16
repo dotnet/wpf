@@ -14,7 +14,7 @@ namespace System.Windows
         public BinaryFormatWriterScope(Stream stream)
         {
             _writer = new BinaryWriter(stream, Encoding.UTF8, leaveOpen: true);
-            //SerializationHeader.Default.Write(_writer);
+            SerializationHeader.Default.Write(_writer);
         }
 
         public static implicit operator BinaryWriter(in BinaryFormatWriterScope scope) => scope._writer;
@@ -25,7 +25,7 @@ namespace System.Windows
         }
         public void Dispose()
         {
-            //MessageEnd.Instance.Write(_writer);
+            MessageEnd.Instance.Write(_writer);
             _writer.Dispose();
         }
     }

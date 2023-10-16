@@ -40,6 +40,11 @@ namespace MS.Internal.Interop.DWrite
             return ((delegate* unmanaged<IDWriteFactory*, IDWriteFontCollectionLoader*, int>)(lpVtbl[5]))((IDWriteFactory*)Unsafe.AsPointer(ref this), fontCollectionLoader);
         }
 
+        public int UnregisterFontCollectionLoader(IDWriteFontCollectionLoader* fontCollectionLoader)
+        {
+            return ((delegate* unmanaged<IDWriteFactory*, IDWriteFontCollectionLoader*, int>)(lpVtbl[6]))((IDWriteFactory*)Unsafe.AsPointer(ref this), fontCollectionLoader);
+        }
+
         public int CreateFontFace(DWRITE_FONT_FACE_TYPE fontFaceType, uint numberOfFiles, IDWriteFontFile** fontFiles, uint faceIndex, DWRITE_FONT_SIMULATIONS fontFaceSimulationFlags, IDWriteFontFace** fontFace)
         {
             return ((delegate* unmanaged<IDWriteFactory*, DWRITE_FONT_FACE_TYPE, uint, IDWriteFontFile**, uint, DWRITE_FONT_SIMULATIONS, IDWriteFontFace**, int>)(lpVtbl[9]))((IDWriteFactory*)Unsafe.AsPointer(ref this), fontFaceType, numberOfFiles, fontFiles, faceIndex, fontFaceSimulationFlags, fontFace);
@@ -48,6 +53,11 @@ namespace MS.Internal.Interop.DWrite
         public int RegisterFontFileLoader(IDWriteFontFileLoader* fontFileLoader)
         {
             return ((delegate* unmanaged<IDWriteFactory*, IDWriteFontFileLoader*, int>)(lpVtbl[13]))((IDWriteFactory*)Unsafe.AsPointer(ref this), fontFileLoader);
+        }
+
+        public int UnregisterFontFileLoader(IDWriteFontFileLoader* fontFileLoader)
+        {
+            return ((delegate* unmanaged<IDWriteFactory*, IDWriteFontFileLoader*, int>)(lpVtbl[14]))((IDWriteFactory*)Unsafe.AsPointer(ref this), fontFileLoader);
         }
 
         public int CreateTextAnalyzer(IDWriteTextAnalyzer** textAnalyzer)

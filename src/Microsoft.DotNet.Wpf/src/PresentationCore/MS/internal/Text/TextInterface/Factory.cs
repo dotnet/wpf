@@ -22,17 +22,17 @@ namespace MS.Internal.Text.TextInterface
         /// <summary>
         /// A pointer to the wrapped DWrite factory object.
         /// </summary>
-        private NativeIUnknownWrapper<IDWriteFactory> _factory;
+        private NativeFactoryWrapper _factory;
 
         /// <summary>
         /// The custom loader used by WPF to load font files.
         /// </summary>
-        private readonly FontFileLoader _wpfFontFileLoader;
+        private FontFileLoader _wpfFontFileLoader;
 
         /// <summary>
         /// The custom loader used by WPF to load font collections.
         /// </summary>
-        private readonly FontCollectionLoader _wpfFontCollectionLoader;
+        private FontCollectionLoader _wpfFontCollectionLoader;
 
         private readonly IFontSourceFactory _fontSourceFactory;
 
@@ -109,7 +109,7 @@ namespace MS.Internal.Text.TextInterface
 
             DWriteUtil.ConvertHresultToException(hr);
 
-            _factory = new NativeIUnknownWrapper<IDWriteFactory>(factory);
+            _factory = new NativeFactoryWrapper(factory, this);
         }
 
         /// <summary>
@@ -337,6 +337,46 @@ namespace MS.Internal.Text.TextInterface
         internal static bool IsLocalUri(Uri uri)
         {
             return uri.IsFile && uri.IsLoopback && !uri.IsUnc;
+        }
+
+        private sealed unsafe class NativeFactoryWrapper : NativeIUnknownWrapper<IDWriteFactory>
+        {
+            private readonly Factory _managedFactory;
+
+            public NativeFactoryWrapper(void* nativePointer, Factory managedFactory)
+                : base(nativePointer)
+            {
+                _managedFactory = managedFactory;
+            }
+
+            protected override bool ReleaseHandle()
+            {
+                FontCollectionLoader wpfFontCollectionLoader = _managedFactory._wpfFontCollectionLoader;
+                if (wpfFontCollectionLoader != null)
+                {
+                    IntPtr pIDWriteFontCollectionLoaderMirror = Marshal.GetComInterfaceForObject(
+                                                            wpfFontCollectionLoader,
+                                                            typeof(IDWriteFontCollectionLoaderMirror));
+
+                    Value->UnregisterFontCollectionLoader((IDWriteFontCollectionLoader*)pIDWriteFontCollectionLoaderMirror.ToPointer());
+                    Marshal.Release(pIDWriteFontCollectionLoaderMirror);
+                    _managedFactory._wpfFontCollectionLoader = null;
+                }
+
+                FontFileLoader wpfFontFileLoader = _managedFactory._wpfFontFileLoader;
+                if (wpfFontFileLoader != null)
+                {
+                    IntPtr pIDWriteFontFileLoaderMirror = Marshal.GetComInterfaceForObject(
+                                                            wpfFontFileLoader,
+                                                            typeof(IDWriteFontFileLoaderMirror));
+
+                    Value->UnregisterFontFileLoader((IDWriteFontFileLoader*)pIDWriteFontFileLoaderMirror.ToPointer());
+                    Marshal.Release(pIDWriteFontFileLoaderMirror);
+                    _managedFactory._wpfFontFileLoader = null;
+                }
+
+                return base.ReleaseHandle();
+            }
         }
     }
 }

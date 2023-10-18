@@ -474,7 +474,7 @@ namespace System.Windows.Xps.Serialization
                 _device.EndDocument();
 
                 //
-                // Inform any potential listeners that the doucment has been printed
+                // Inform any potential listeners that the document has been printed
                 //
                 XpsSerializationProgressChangedEventArgs e =
                 new XpsSerializationProgressChangedEventArgs(XpsWritingProgressChangeLevel.FixedDocumentWritingProgress,

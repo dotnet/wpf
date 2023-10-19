@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="7.0.14-servicing.23518.4">
+    <Dependency Name="Microsoft.Private.Winforms" Version="7.0.14-servicing.23518.7">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-winforms</Uri>
-      <Sha>fa26bf7ef8dfe0a7c6c88c265a53534b9adeb432</Sha>
+      <Sha>68833eac2e6e87ce9618fc2ea8967c9e5beef9ae</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="7.0.14-servicing.23518.4">
+    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="7.0.14-servicing.23518.7">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-winforms</Uri>
-      <Sha>fa26bf7ef8dfe0a7c6c88c265a53534b9adeb432</Sha>
+      <Sha>68833eac2e6e87ce9618fc2ea8967c9e5beef9ae</Sha>
     </Dependency>
     <Dependency Name="System.CodeDom" Version="7.0.0" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
@@ -63,15 +63,15 @@
     </Dependency>
     <Dependency Name="Microsoft.NETCore.App.Ref" Version="7.0.13" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>282d49406e510cf9aac323caafc9aa15fdbb456c</Sha>
+      <Sha>1fd68c0252f4fc5a75d25731f4407decd4aa218e</Sha>
     </Dependency>
     <Dependency Name="Microsoft.NETCore.App.Runtime.win-x64" Version="7.0.13" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>282d49406e510cf9aac323caafc9aa15fdbb456c</Sha>
+      <Sha>1fd68c0252f4fc5a75d25731f4407decd4aa218e</Sha>
     </Dependency>
-    <Dependency Name="VS.Redist.Common.NetCore.SharedFramework.x64.7.0" Version="7.0.13-servicing.23516.30" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="VS.Redist.Common.NetCore.SharedFramework.x64.7.0" Version="7.0.13-servicing.23517.18" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>282d49406e510cf9aac323caafc9aa15fdbb456c</Sha>
+      <Sha>1fd68c0252f4fc5a75d25731f4407decd4aa218e</Sha>
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>

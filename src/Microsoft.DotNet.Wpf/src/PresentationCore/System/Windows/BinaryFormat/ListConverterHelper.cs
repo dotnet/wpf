@@ -5,6 +5,7 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Collections;
+using System.Linq;
 
 namespace System.Windows
 {
@@ -62,17 +63,17 @@ namespace System.Windows
     }
 
 
-    internal static class ListConverter
-    {
-        public static ListConverter<object?> GetPrimitiveConverter(
-            IList values,
-            StringRecordsCollection strings) => new(
-                values,
-                (object? value) => value switch
-                {
-                    null => ObjectNull.Instance,
-                    string stringValue => strings.GetStringRecord(stringValue),
-                    _ => new MemberPrimitiveTyped(value)
-                });
-    }
+    // internal static class ListConverter
+    // {
+    //     public static ListConverter<object?> GetPrimitiveConverter(
+    //         IList values,
+    //         StringRecordsCollection strings) => new(
+    //             values,
+    //             (object? value) => value switch
+    //             {
+    //                 null => ObjectNull.Instance,
+    //                 string stringValue => strings.GetStringRecord(stringValue),
+    //                 _ => new MemberPrimitiveTyped(value)
+    //             });
+    // }
 }

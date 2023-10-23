@@ -8,17 +8,18 @@ using System.Collections;
 
 namespace System.Windows
 {
-    // internal static class ListConverterH
-    // {
-    //     public static ListConverter<object?, object?> GetPrimitiveConverter(
-    //         IList values,
-    //         StringRecordsCollection strings) => new(
-    //             values,
-    //             (object? value) => value switch
-    //             {
-    //                 null => ObjectNull.Instance,
-    //                 string stringValue => strings.GetStringRecord(stringValue),
-    //                 _ => new MemberPrimitiveTyped(value)
-    //             });
-    // }
+    internal static class ListConverter
+    {
+  
+    public static ListConverter<object?> GetPrimitiveConverter(
+        IList values,
+        StringRecordsCollection strings) => new(
+            values,
+            (object? value) => value switch
+            {
+                null => ObjectNull.Instance,
+                string stringValue => strings.GetStringRecord(stringValue),
+                _ => new MemberPrimitiveTyped(value)
+            });
+    }
 }

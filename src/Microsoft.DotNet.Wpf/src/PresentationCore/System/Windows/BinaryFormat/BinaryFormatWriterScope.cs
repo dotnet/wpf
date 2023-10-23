@@ -19,10 +19,6 @@ namespace System.Windows
 
         public static implicit operator BinaryWriter(in BinaryFormatWriterScope scope) => scope._writer;
 
-        public void Write(string value)
-        {
-            _writer.Write(value);
-        }
         public void Dispose()
         {
             MessageEnd.Instance.Write(_writer);

@@ -1464,6 +1464,8 @@
     <NetCoreReference Include="System.Text.Encoding.Extensions" />
     <NetCoreReference Include="System.Text.RegularExpressions" />
     <NetCoreReference Include="System.Threading" />
+    <NetCoreReference Include="System.Collections.Generic" />
+    <NetCoreReference Include="System.Linq" />
     <NetCoreReference Include="System.Threading.Tasks" />
     <NetCoreReference Include="System.Threading.Thread" />
     <NetCoreReference Include="System.Threading.ThreadPool" />

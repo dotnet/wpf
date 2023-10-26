@@ -42,6 +42,7 @@ trigger:
     - internal/release/5.*
     - internal/release/6.*
     - internal/release/7.*
+    - internal/release/8.*
     - experimental/*
   paths:
     exclude:

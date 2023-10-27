@@ -791,12 +791,17 @@ namespace System.Windows.Media.Imaging
 
                 Lock();
 
-                Int32Rect rcFull = new Int32Rect(0, 0, _pixelWidth, _pixelHeight);
-                int bufferSize = checked(_backBufferStride.Value * source.PixelHeight);
-                source.CriticalCopyPixels(rcFull, _backBuffer, bufferSize, _backBufferStride.Value);
-                AddDirtyRect(rcFull);
-
-                Unlock();
+                try
+                {
+                    Int32Rect rcFull = new Int32Rect(0, 0, _pixelWidth, _pixelHeight);
+                    int bufferSize = checked(_backBufferStride.Value * source.PixelHeight);
+                    source.CriticalCopyPixels(rcFull, _backBuffer, bufferSize, _backBufferStride.Value);
+                    AddDirtyRect(rcFull);
+                }
+                finally
+                {
+                    Unlock();
+                }
             }
 
             EndInit();
@@ -1009,20 +1014,27 @@ namespace System.Windows.Media.Imaging
 
                     Lock();
 
-                    MILUtilities.MILCopyPixelBuffer(
-                        pDest,
-                        outputBufferSize,
-                        (uint) _backBufferStride.Value,
-                        destBufferBitOffset,
-                        pSource,
-                        inputBufferSize,
-                        (uint) sourceBufferStride,
-                        sourceBufferBitOffset,
-                        (uint) sourceRect.Height,
-                        copyWidthInBits);
-
-                    AddDirtyRect(destinationRect);
-                    Unlock();
+                    try
+                    {
+                        MILUtilities.MILCopyPixelBuffer(
+                            pDest,
+                            outputBufferSize,
+                            (uint) _backBufferStride.Value,
+                            destBufferBitOffset,
+                            pSource,
+                            inputBufferSize,
+                            (uint) sourceBufferStride,
+                            sourceBufferBitOffset,
+                            (uint) sourceRect.Height,
+                            copyWidthInBits);
+                        AddDirtyRect(destinationRect);
+                    }
+                    finally
+                    {
+                        // MILUtilities.MILCopyPixelBuffer may throw ArgumentException (e.g. for invalid stride)
+                        // See https://github.com/dotnet/wpf/issues/8134
+                        Unlock();
+                    }
                 }
             }
 

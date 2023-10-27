@@ -1190,6 +1190,7 @@ namespace System.Windows.Media.Imaging
             }
             catch
             {
+                bitmapStream.Close();
                 #pragma warning disable 6500
 
                 decoderHandle = null;

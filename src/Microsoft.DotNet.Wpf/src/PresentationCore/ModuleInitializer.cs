@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using MS.Internal.Text.TextInterface;
 
 internal static class ModuleInitializer
 {
@@ -18,6 +19,13 @@ internal static class ModuleInitializer
     public static void Initialize()
     {
         IsProcessDpiAware();
+
+        DWriteLoader.LoadDWrite();
+
+        AppDomain.CurrentDomain.ProcessExit += static (object sender, EventArgs e) =>
+        {
+            DWriteLoader.UnloadDWrite();
+        };
 
         MS.Internal.NativeWPFDLLLoader.LoadDwrite();
     }

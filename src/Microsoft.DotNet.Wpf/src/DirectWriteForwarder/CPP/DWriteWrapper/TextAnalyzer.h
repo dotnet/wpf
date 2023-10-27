@@ -32,12 +32,6 @@ using namespace MS::Internal::Text::TextInterface::Generics;
 
 namespace MS { namespace Internal { namespace Text { namespace TextInterface
 {
-    /*******************************************************************************************************************************/
-    //Forward declaration of Factory since there was a circular reference between "TextAnalyzer" & "Factory"
-    ref class Factory;
-    /*******************************************************************************************************************************/  
-    
-
     // The 4 delegates below are used to introduce a level of indirection so we can define
     // the external methods that reference PresentationNative*.dll in PresenationCore.dll.
     // The reason we define the methods in PresentationCore.dll is that the string values for the
@@ -157,7 +151,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                 __in_ecount(length) const WCHAR* text,
                 UINT32                     length,
                 CultureInfo^               culture,
-                Factory^                   factory,
+                IDWriteFactory*            pDWriteFactory,
                 bool                       isRightToLeftParagraph,
                 CultureInfo^               numberCulture,
                 bool                       ignoreUserOverride,

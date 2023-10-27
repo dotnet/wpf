@@ -229,6 +229,17 @@
     <Compile Include="MS\Internal\Ink\InkSerializedFormat\StrokeDescriptor.cs" />
     <Compile Include="MS\Internal\Ink\InkSerializedFormat\StrokeSerializer.cs" />
     <Compile Include="MS\Internal\Ink\InkSerializedFormat\TransformDescriptor.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\DWRITE_FONT_FACE_TYPE.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\DWRITE_FONT_SIMULATIONS.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFactory.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontCollection.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontCollectionLoader.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontFace.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontFile.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontFileLoader.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteTextAnalyzer.cs" />
+    <Compile Include="MS\Internal\Interop\IUnknown.cs" />
+    <Compile Include="MS\Internal\Interop\NativePointerCriticalHandle.cs" />
     <Compile Include="MS\Internal\Interop\TipTsfHelper.cs" />
     <Compile Include="MS\Internal\IO\Packaging\ByteRangeDownloader.cs" />
     <Compile Include="MS\Internal\IO\Packaging\DeobfuscatingStream.cs" />
@@ -262,6 +273,9 @@
     <Compile Include="MS\Internal\Shaping\Substitution.cs" />
     <Compile Include="MS\Internal\Shaping\TypefaceMap.cs" />
     <Compile Include="MS\Internal\Shaping\UshortList2.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\DWriteLoader.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\DWriteUtil.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\Factory.cs" />
     <Compile Include="MS\Internal\TextFormatting\Bidi.cs" />
     <Compile Include="MS\Internal\TextFormatting\CultureMapper.cs" />
     <Compile Include="MS\Internal\TextFormatting\DrawingState.cs" />

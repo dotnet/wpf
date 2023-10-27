@@ -22,6 +22,7 @@ using System.Windows.Navigation;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
+
 namespace MS.Internal.AppModel
 {
     #region SubStream struct
@@ -126,9 +127,10 @@ namespace MS.Internal.AppModel
                         {
                             // Convert the value of the DP into a byte array
                             MemoryStream byteStream = new MemoryStream();
-                            #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
-                            this.Formatter.Serialize(byteStream, currentValue);
-                            #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
+                            // #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
+                            // this.Formatter.Serialize(byteStream, currentValue);
+                            // #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
+                            BinaryFormatWriter.TryWriteFrameworkObject(byteStream,currentValue);
                             
                             bytes = byteStream.ToArray();
                             // Dispose the stream
@@ -238,9 +240,14 @@ namespace MS.Internal.AppModel
                     object newValue = null;
                     if (subStream._data != null)
                     {
-                        #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
-                        newValue = this.Formatter.Deserialize(new MemoryStream(subStream._data));
-                        #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
+                        
+                        
+                        // #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
+                        // newValue = this.Formatter.Deserialize(new MemoryStream(subStream._data));
+                        // #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
+
+                        new BinaryFormattedObject(new MemoryStream(subStream._data),leaveOpen: true).TryGetFrameworkObject(out object val);
+                        newValue = val;
                     }
                     element.SetValue(dp, newValue);
                 }

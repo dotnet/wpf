@@ -3,18 +3,18 @@
 // See the LICENSE file in the project root for more information.
 
 /*++
-                                                                              
-                                                       
-                                                                              
+
+
+
     Abstract:
         This file contains the definition  and implementation
         for the XpsSignatureDefinition class.  This class deserializes, provides
         access and serializes the properties associated with a Signature Definition.
-        XpsSignatureDefinitions is the means by which document producers provide 
-        guidance for signers in the case that they are not themselves the ones 
+        XpsSignatureDefinitions is the means by which document producers provide
+        guidance for signers in the case that they are not themselves the ones
         that will ultimately sign this document
-                                                     
-                                                                             
+
+
 --*/
 using System;
 using System.Collections;
@@ -32,9 +32,9 @@ namespace System.Windows.Xps.Packaging
     /// Helper class to group spot location data together
     /// </summary>
     public
-    class 
+    class
     SpotLocation
-    { 
+    {
         /// <summary>
         /// Empty contructor
         /// </summary>
@@ -44,18 +44,18 @@ namespace System.Windows.Xps.Packaging
         }
 
         /// <summary>
-        /// Specifies which page the signature spot should be 
+        /// Specifies which page the signature spot should be
         /// displayed in
         /// </summary>
         public
-        Uri 
+        Uri
         PageUri
         {
             get
             {
                 return _pageUri;
             }
-            
+
             set
             {
                 _pageUri = value;
@@ -63,18 +63,18 @@ namespace System.Windows.Xps.Packaging
         }
 
         /// <summary>
-        /// Specifies the x-coordinate of the point in the page where 
+        /// Specifies the x-coordinate of the point in the page where
         /// the signature spot should be drawn starting from.
         /// </summary>
         public
-        double 
+        double
         StartX
         {
             get
             {
                 return _startX;
             }
-            
+
             set
             {
                 _startX = value;
@@ -82,23 +82,23 @@ namespace System.Windows.Xps.Packaging
         }
 
         /// <summary>
-        /// Specifies the y-coordinate of the point in the page where 
+        /// Specifies the y-coordinate of the point in the page where
         /// the signature spot should be drawn starting from.
         /// </summary>
         public
-        double 
+        double
         StartY
         {
             get
             {
                 return _startY;
             }
-            
+
             set
             {
                 _startY = value;
             }
-        }     
+        }
 
         Uri         _pageUri;
         double      _startX;
@@ -107,9 +107,9 @@ namespace System.Windows.Xps.Packaging
 
     /// <summary>
     /// This class provides de-serialization, access and serialization
-    /// to the core properties of a Xps Dcoument
+    /// to the core properties of a Xps Document
     /// </summary>
-    public class    XpsSignatureDefinition 
+    public class    XpsSignatureDefinition
     {
         /// <summary>
         /// Default creator
@@ -125,8 +125,8 @@ namespace System.Windows.Xps.Packaging
             _hasBeenModified = false;
 }
         /// <summary>
-        /// Any string representing the identity of the individual 
-        /// who is requested to sign this document 
+        /// Any string representing the identity of the individual
+        /// who is requested to sign this document
         /// This property is OPTIONAL.
         /// </summary>
         /// <value>
@@ -140,16 +140,16 @@ namespace System.Windows.Xps.Packaging
             {
                 return _requestedSigner;
             }
-            
+
             set
             {
                 _requestedSigner = value;
                 _hasBeenModified = true;
-            }        
+            }
         }
-        
+
         /// <summary>
-        /// Specifies where the Xps document viewer should place a visual 
+        /// Specifies where the Xps document viewer should place a visual
         /// to indicate to the user that a signature has been requested
         /// This property is OPTIONAL.
         /// </summary>
@@ -157,14 +157,14 @@ namespace System.Windows.Xps.Packaging
         /// Will return null if it has not been set.
         /// </value>
         public
-        SpotLocation 
-        SpotLocation 
+        SpotLocation
+        SpotLocation
         {
             get
             {
                 return _spotLocation;
             }
-            
+
             set
             {
                 _spotLocation = value;
@@ -173,7 +173,7 @@ namespace System.Windows.Xps.Packaging
         }
 
         /// <summary>
-        /// It holds the string value of the signature intention agreement 
+        /// It holds the string value of the signature intention agreement
         /// that the signer is signing against
         /// This property is OPTIONAL.
         /// </summary>
@@ -197,8 +197,8 @@ namespace System.Windows.Xps.Packaging
         }
 
         /// <summary>
-        /// It specifies the date-time by which the requested signer must 
-        /// sign the parts of the document specified. 
+        /// It specifies the date-time by which the requested signer must
+        /// sign the parts of the document specified.
         /// This property is OPTIONAL.
         /// </summary>
         /// <value>
@@ -219,11 +219,11 @@ namespace System.Windows.Xps.Packaging
                 _hasBeenModified = true;
             }
         }
-        
+
         /// <summary>
-        /// It can be set by the original producer of the document or the 
-        /// signer at the time of signing the document. 
-        /// It specifies the location under whose legislature this document 
+        /// It can be set by the original producer of the document or the
+        /// signer at the time of signing the document.
+        /// It specifies the location under whose legislature this document
         /// is being signed
         /// This property is OPTIONAL.
         /// </summary>
@@ -247,7 +247,7 @@ namespace System.Windows.Xps.Packaging
         }
 
         /// <summary>
-        /// This attribute MAY be used to link an existing signature 
+        /// This attribute MAY be used to link an existing signature
         /// to this SignatureDefinition element
         /// This property is REQUIRED.
         /// </summary>
@@ -275,7 +275,7 @@ namespace System.Windows.Xps.Packaging
         /// to the SignatureDefinition element
         /// This property is OPTIONAL
         /// </summary>
-        public 
+        public
         CultureInfo
         Culture
         {
@@ -308,7 +308,7 @@ namespace System.Windows.Xps.Packaging
                 _hasBeenModified = value;
             }
         }
-        
+
 
         private SpotLocation            _spotLocation;
         private string                  _intent;
@@ -318,7 +318,7 @@ namespace System.Windows.Xps.Packaging
         private string                  _signingLocale;
         private CultureInfo         _cultureInfo;
         private bool                    _hasBeenModified;
-        
+
         #region Public methods
         /// <summary>
         /// Writes Signature Definition in XML format
@@ -414,11 +414,11 @@ namespace System.Windows.Xps.Packaging
             ArgumentNullException.ThrowIfNull(reader);
 
             //
-            // Assume the calling function has already read the 
+            // Assume the calling function has already read the
             // SignatureDefinition start element
             //
-            if( reader.NodeType != XmlNodeType.Element || 
-                reader.Name != XpsS0Markup.SignatureDefinition 
+            if( reader.NodeType != XmlNodeType.Element ||
+                reader.Name != XpsS0Markup.SignatureDefinition
               )
             {
                 throw new XpsPackagingException(SR.ReachPackaging_NotSignatureDefinitionElement);
@@ -430,7 +430,7 @@ namespace System.Windows.Xps.Packaging
             // Read the attributes off of SignatureDefinition
             //
             ReadAttributes( reader );
-            
+
             while( !exitLoop && reader.Read() )
             {
                 switch( reader.NodeType )
@@ -438,7 +438,7 @@ namespace System.Windows.Xps.Packaging
                     case XmlNodeType.Element:
                         ReadElement( reader );
                         break;
-                        
+
                     case XmlNodeType.EndElement:
                         if( ReadEndElement( reader ) )
                         {
@@ -452,7 +452,7 @@ namespace System.Windows.Xps.Packaging
 
 
         #region Private methods
-        private 
+        private
         void
         ReadAttributes( XmlReader reader )
         {
@@ -470,11 +470,11 @@ namespace System.Windows.Xps.Packaging
                         ValidateSpotLocationAttribute(reader.Name, reader.Value);
                     }
                 }
-                // Move the reader back to the element node. 
+                // Move the reader back to the element node.
                 reader.MoveToElement();
-            } 
+            }
         }
-        
+
         private
         void
         ValidateSignatureDefinitionAttribute( string attributeName, string attributeValue )
@@ -520,7 +520,7 @@ namespace System.Windows.Xps.Packaging
             }
             else if (attributeName == XpsS0Markup.StartY)
             {
-                SpotLocation.StartY = double.Parse(attributeValue, System.Globalization.CultureInfo.InvariantCulture);   
+                SpotLocation.StartY = double.Parse(attributeValue, System.Globalization.CultureInfo.InvariantCulture);
             }
             else if (attributeName == XpsS0Markup.PageUri)
             {
@@ -616,5 +616,5 @@ namespace System.Windows.Xps.Packaging
         #endregion Private methods
     }
 }
-    
+
 

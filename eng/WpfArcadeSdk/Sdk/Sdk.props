@@ -15,7 +15,7 @@
   <PropertyGroup>
     <GenXmlStringTable>$(WpfArcadeSdkToolsDir)GenXmlStringTable.pl</GenXmlStringTable>
     <LangVersion Condition="'$(LangVersion)'=='' and ($(PreReleaseVersionLabel.Contains('rc')) or $(PreReleaseVersionLabel.Contains('preview')) or $(PreReleaseVersionLabel.Contains('alpha')))">preview</LangVersion>
-    <LangVersion Condition="'$(LangVersion)'==''">10</LangVersion>
+    <LangVersion Condition="'$(LangVersion)'==''">11</LangVersion>
     <CLSCompliant Condition="'$(CLSCompliant)'==''">true</CLSCompliant>
     <IncludeDllSafeSearchPathAttribute Condition="'$(IncludeDllSafeSearchPathAttribute )'==''">true</IncludeDllSafeSearchPathAttribute>
 

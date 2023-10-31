@@ -91,7 +91,7 @@ namespace Microsoft.Build.Tasks.Windows
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public override bool Execute()
         {
-            if (string.Compare(IncludePackageReferencesDuringMarkupCompilation, "false", StringComparison.OrdinalIgnoreCase) != 0)
+            if (IncludePackageReferencesDuringMarkupCompilation)
             {
                 return ExecuteGenerateTemporaryTargetAssemblyWithPackageReferenceSupport();
             }
@@ -516,8 +516,8 @@ namespace Microsoft.Build.Tasks.Windows
         /// Set this property to 'false' to use the .NET Core 3.0 behavior for this task. 
         ///
         /// </summary>
-        public string IncludePackageReferencesDuringMarkupCompilation 
-        { get; set; }
+        public bool IncludePackageReferencesDuringMarkupCompilation
+        { get; set; } = true;
 
         /// <summary>
         /// TemporaryTargetAssemblyProjectName 

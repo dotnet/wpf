@@ -179,7 +179,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                 globalProperties[assemblyNamePropertyName] = AssemblyName;
                 globalProperties[targetAssemblyProjectNamePropertyName] = currentProjectName;
-
+                globalProperties["EmbedUntrackedSources"] = "false";
                 Dictionary<string, ITaskItem[]> targetOutputs = new Dictionary<string, ITaskItem[]>();
                 retValue = BuildEngine.BuildProjectFile(tempProj, new string[] { CompileTargetName }, globalProperties, targetOutputs);
 

@@ -1011,18 +1011,18 @@ namespace System.Windows.Documents
 
         internal int[] _CreateChildIndex(DependencyObject e)
         {
-            ArrayList childPath = new ArrayList();
+            List<int> childPath = new List<int>();
             while (e != this)
             {
                 DependencyObject parent = LogicalTreeHelper.GetParent(e);
                 int childIndex = -1;
-                if (parent is FixedPage)
+                if (parent is FixedPage parentFP)
                 {
-                    childIndex = ((FixedPage)parent).Children.IndexOf((UIElement)e);
+                    childIndex = parentFP.Children.IndexOf((UIElement)e);
                 }
-                else if (parent is Canvas)
+                else if (parent is Canvas parentC)
                 {
-                    childIndex = ((Canvas)parent).Children.IndexOf((UIElement)e);
+                    childIndex = parentC.Children.IndexOf((UIElement)e);
                 }
                 else
                 {
@@ -1046,7 +1046,7 @@ namespace System.Windows.Documents
             }
             while (e != this) ;
 
-            return (int[])childPath.ToArray(typeof(int));
+            return childPath.ToArray();
         }
 
         // Making this function private and only expose the versions

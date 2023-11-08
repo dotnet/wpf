@@ -79,16 +79,9 @@ namespace System.Windows
         // concerns prevent this until a side-by-side release.
         internal void ValidateForDirtyRect(string paramName, int width, int height)
         {
-            if (_x < 0)
-            {
-                throw new ArgumentOutOfRangeException(paramName, SR.ParameterCannotBeNegative);
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(_x, paramName);
+            ArgumentOutOfRangeException.ThrowIfNegative(_y, paramName);
 
-            if (_y < 0)
-            {
-                throw new ArgumentOutOfRangeException(paramName, SR.ParameterCannotBeNegative);
-            }            
-            
             if (_width < 0 || _width > width)
             {
                 throw new ArgumentOutOfRangeException(paramName, SR.Format(SR.ParameterMustBeBetween, 0, width));

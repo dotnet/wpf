@@ -84,10 +84,7 @@ namespace System.Windows.Media.TextFormatting
             int                 offsetToFirstChar
             )
         {
-            if (offsetToFirstChar < 0)
-            {
-                throw new ArgumentOutOfRangeException("offsetToFirstChar", SR.ParameterCannotBeNegative);
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(offsetToFirstChar);
 
             // maximum offset is one less than CharacterBuffer.Count, except that zero is always a valid offset
             // even in the case of an empty or null character buffer

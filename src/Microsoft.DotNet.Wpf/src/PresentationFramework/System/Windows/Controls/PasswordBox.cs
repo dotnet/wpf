@@ -1077,15 +1077,8 @@ namespace System.Windows.Controls
             ITextPointer selectionEnd;
 
             //             VerifyAccess();
-            if (start < 0)
-            {
-                throw new ArgumentOutOfRangeException("start", SR.ParameterCannotBeNegative);
-            }
-
-            if (length < 0)
-            {
-                throw new ArgumentOutOfRangeException("length", SR.ParameterCannotBeNegative);
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(start);
+            ArgumentOutOfRangeException.ThrowIfNegative(length);
 
             // Identify new selection start position
             selectionStart = this.TextContainer.Start.CreatePointer();

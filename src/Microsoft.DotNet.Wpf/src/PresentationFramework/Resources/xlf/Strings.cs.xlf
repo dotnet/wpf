@@ -3608,11 +3608,6 @@ Chcete ho nahradit?</target>
         <target state="translated">Prvek {0} musí být poskytnut při vytváření instance {1}.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Hodnota tohoto parametru musí být větší nebo rovna nule.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeLogicalNode">
         <source>Parameter must be FrameworkElement or FrameworkContentElement.</source>
         <target state="translated">Parametr musí být FrameworkElement nebo FrameworkContentElement.</target>

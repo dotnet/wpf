@@ -3608,11 +3608,6 @@ Do you want to replace it?</source>
         <target state="translated">'{1}' をインスタンス化するには、'{0}' が必要です。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">パラメーターは 0 以上でなければなりません。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeLogicalNode">
         <source>Parameter must be FrameworkElement or FrameworkContentElement.</source>
         <target state="translated">パラメーターは、FrameworkElement または FrameworkContentElement である必要があります。</target>

@@ -151,15 +151,8 @@ namespace System.Windows.Controls
         /// </summary>
         public void Select(int start, int length)
         {
-            if (start < 0)
-            {
-                throw new ArgumentOutOfRangeException("start", SR.ParameterCannotBeNegative);
-            }
-
-            if (length < 0)
-            {
-                throw new ArgumentOutOfRangeException("length", SR.ParameterCannotBeNegative);
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(start);
+            ArgumentOutOfRangeException.ThrowIfNegative(length);
 
             // Identify new position for selection Start
             int maxStart = TextContainer.SymbolCount;
@@ -825,10 +818,7 @@ namespace System.Windows.Controls
             }
             set
             {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException("value", SR.ParameterCannotBeNegative);
-                }
+                ArgumentOutOfRangeException.ThrowIfNegative(value);
 
                 // Identify new position for selection end
                 int maxLength = TextSelectionInternal.Start.GetOffsetToPosition(TextContainer.End);
@@ -869,10 +859,7 @@ namespace System.Windows.Controls
             }
             set
             {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException("value", SR.ParameterCannotBeNegative);
-                }
+                ArgumentOutOfRangeException.ThrowIfNegative(value);
 
                 // Store current length of the selection
                 int selectionLength = TextSelectionInternal.Start.GetOffsetToPosition(TextSelectionInternal.End);

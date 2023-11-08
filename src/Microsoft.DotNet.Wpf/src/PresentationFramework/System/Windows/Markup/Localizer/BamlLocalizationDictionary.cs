@@ -282,14 +282,7 @@ namespace System.Windows.Markup.Localizer
         public void CopyTo(DictionaryEntry[] array, int arrayIndex)
         {
             ArgumentNullException.ThrowIfNull(array);
-
-            if (arrayIndex < 0)
-            {
-                throw new ArgumentOutOfRangeException(
-                    "arrayIndex", 
-                    SR.ParameterCannotBeNegative
-                );
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
 
             if (arrayIndex >= array.Length)
             {

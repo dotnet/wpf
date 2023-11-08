@@ -1275,8 +1275,7 @@ namespace System.Windows.Media
         {
             set
             {
-                if (value < 0)
-                    throw new ArgumentOutOfRangeException("value", SR.ParameterCannotBeNegative);
+                ArgumentOutOfRangeException.ThrowIfNegative(value);
 
                 _defaultParaProps.SetLineHeight(value);
                 InvalidateMetrics();
@@ -1299,8 +1298,7 @@ namespace System.Windows.Media
         {
             set
             {
-                if (value < 0)
-                    throw new ArgumentOutOfRangeException("value", SR.ParameterCannotBeNegative);
+                ArgumentOutOfRangeException.ThrowIfNegative(value);
                 _maxTextWidth = value;
                 InvalidateMetrics();
             }

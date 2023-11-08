@@ -526,10 +526,7 @@ namespace MS.Internal.TextFormatting
                 throw new ArgumentOutOfRangeException("cpFirst", SR.Format(SR.ParameterMustBeBetween, cpFirst, cpFirst + cchLength));
             }
 
-            if (characterHit.TrailingLength < 0)
-            {
-                throw new ArgumentOutOfRangeException("cchLength", SR.ParameterCannotBeNegative);
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(characterHit.TrailingLength, nameof(cchLength));
         }
 
 

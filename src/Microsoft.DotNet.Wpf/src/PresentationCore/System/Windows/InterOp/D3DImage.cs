@@ -252,7 +252,10 @@ namespace System.Windows.Interop
         {
             WritePreamble();
 
-            ArgumentOutOfRangeException.ThrowIfEqual(timeout, Duration.Automatic);
+            if (timeout == Duration.Automatic)
+            {
+                throw new ArgumentOutOfRangeException("timeout");
+            }
 
             return LockImpl(timeout);
         }

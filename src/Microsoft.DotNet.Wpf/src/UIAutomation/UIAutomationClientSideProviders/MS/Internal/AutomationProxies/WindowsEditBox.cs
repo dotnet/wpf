@@ -83,11 +83,7 @@ namespace MS.Internal.AutomationProxies
             // AutomationElement.LogicalMapping, BUT user still can get "edit"
             // from Hwnd
             // Something is wrong if idChild is not zero
-            if (idChild != 0)
-            {
-                System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
-            }
+            ArgumentOutOfRangeException.ThrowIfNotEqual(idChild, 0);
 
             return new WindowsEditBox(hwnd, null, 0);
         }

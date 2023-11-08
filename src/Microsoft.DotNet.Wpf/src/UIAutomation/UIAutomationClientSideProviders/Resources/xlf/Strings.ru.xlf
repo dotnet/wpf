@@ -357,11 +357,6 @@
         <target state="translated">Конечному элементу не удается получить фокус.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ShouldBeZero">
-        <source>Must be zero.</source>
-        <target state="translated">Должно быть нулем.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ValueReadonly">
         <source>Value is read-only.</source>
         <target state="translated">Значение доступно только для чтения.</target>

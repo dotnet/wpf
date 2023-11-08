@@ -252,12 +252,7 @@ namespace System.Windows.Xps.Packaging
                 // This list maintains a reference to _signatures so its enumerator will adapt
                 // as _signatures is updated.  Therefore, we need not regenerate it when _signatures
                 // is modified.
-                if (_reachSignatureList == null)
-                {
-                    _reachSignatureList = new ReadOnlyCollection<XpsDigitalSignature>(_reachSignatures);
-                }
-
-                return _reachSignatureList;
+                return _reachSignatureList ??= new ReadOnlyCollection<XpsDigitalSignature>(_reachSignatures);
            }
         }
 
@@ -318,7 +313,7 @@ namespace System.Windows.Xps.Packaging
                 //
                 List<PackagePart> xmlPartList = new List<PackagePart>();
                 
-                (FixedDocumentSequenceReader as XpsFixedDocumentSequenceReaderWriter).CollectXmlPartsAndDepenedents(xmlPartList);
+                ((XpsFixedDocumentSequenceReaderWriter)FixedDocumentSequenceReader).CollectXmlPartsAndDepenedents(xmlPartList);
 
                 foreach( PackagePart part in xmlPartList )
                 {
@@ -624,11 +619,11 @@ namespace System.Windows.Xps.Packaging
             parserContext.BaseUri = PackUriHelper.Create(Uri, CurrentXpsManager.StartingPart.Uri);
 
             object fixedObject = XamlReader.Load(CurrentXpsManager.StartingPart.GetStream(), parserContext, useRestrictiveXamlReader: true);
-            if (!(fixedObject is FixedDocumentSequence) )
+            if (fixedObject is not FixedDocumentSequence fdseq)
             {
                  throw new XpsPackagingException(SR.ReachPackaging_NotAFixedDocumentSequence);
             }
-            return fixedObject as FixedDocumentSequence;
+            return fdseq;
         }
 
         /// <summary>
@@ -905,10 +900,7 @@ namespace System.Windows.Xps.Packaging
         DisposeXpsDocument(
             )
         {
-            if(_opcPackage != null)
-            {
-                _opcPackage.Close();
-            }
+                _opcPackage?.Close();
         }
 
         internal

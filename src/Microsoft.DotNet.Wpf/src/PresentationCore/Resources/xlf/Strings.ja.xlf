@@ -2542,11 +2542,6 @@
         <target state="translated">パラメーター値は、'{0}' と '{1}' の間である必要があります。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterMustBeGreaterThanZero">
-        <source>The parameter value must be greater than zero.</source>
-        <target state="translated">パラメーター値は、0 より大きい必要があります。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterValueCannotBeInfinity">
         <source>The parameter value must be finite.</source>
         <target state="translated">パラメーター値は、有限である必要があります。</target>

@@ -117,10 +117,7 @@ namespace System.Windows.Media.Imaging
         /// <param name="pixelHeight">Height of the resulting Bitmap</param>
         public static BitmapSizeOptions FromHeight(int pixelHeight)
         {
-            if (pixelHeight <= 0)
-            {
-                throw new System.ArgumentOutOfRangeException("pixelHeight", SR.ParameterMustBeGreaterThanZero);
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelHeight);
 
             BitmapSizeOptions sizeOptions = new BitmapSizeOptions();
 
@@ -138,10 +135,7 @@ namespace System.Windows.Media.Imaging
         /// <param name="pixelWidth">Width of the resulting Bitmap</param>
         public static BitmapSizeOptions FromWidth(int pixelWidth)
         {
-            if (pixelWidth <= 0)
-            {
-                throw new System.ArgumentOutOfRangeException("pixelWidth", SR.ParameterMustBeGreaterThanZero);
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelWidth);
 
             BitmapSizeOptions sizeOptions = new BitmapSizeOptions();
 
@@ -161,15 +155,8 @@ namespace System.Windows.Media.Imaging
         /// <param name="pixelHeight">Height of the resulting Bitmap</param>
         public static BitmapSizeOptions FromWidthAndHeight(int pixelWidth, int pixelHeight)
         {
-            if (pixelWidth <= 0)
-            {
-                throw new System.ArgumentOutOfRangeException("pixelWidth", SR.ParameterMustBeGreaterThanZero);
-            }
-
-            if (pixelHeight <= 0)
-            {
-                throw new System.ArgumentOutOfRangeException("pixelHeight", SR.ParameterMustBeGreaterThanZero);
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelWidth);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelHeight);
 
             BitmapSizeOptions sizeOptions = new BitmapSizeOptions();
 

@@ -37,8 +37,7 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="length">number of characters</param>
         public TextEndOfSegment(int length)
         {
-            if (length <= 0)
-                throw new ArgumentOutOfRangeException("length", SR.ParameterMustBeGreaterThanZero);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
 
             _length = length;
         }

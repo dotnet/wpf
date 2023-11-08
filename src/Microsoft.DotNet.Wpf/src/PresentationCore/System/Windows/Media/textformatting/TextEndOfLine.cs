@@ -48,8 +48,7 @@ namespace System.Windows.Media.TextFormatting
             TextRunProperties   textRunProperties
             )
         {
-            if (length <= 0)
-                throw new ArgumentOutOfRangeException("length", SR.ParameterMustBeGreaterThanZero);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
 
             if (textRunProperties != null && textRunProperties.Typeface == null)
                 throw new ArgumentNullException("textRunProperties.Typeface");

@@ -2542,11 +2542,6 @@
         <target state="translated">Параметр должен принимать значения от "{0}" до "{1}".</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterMustBeGreaterThanZero">
-        <source>The parameter value must be greater than zero.</source>
-        <target state="translated">Значение параметра должно быть больше 0.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterValueCannotBeInfinity">
         <source>The parameter value must be finite.</source>
         <target state="translated">Значение параметра должно быть конечным.</target>

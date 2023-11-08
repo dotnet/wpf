@@ -2542,11 +2542,6 @@
         <target state="translated">参数值必须介于“{0}”到“{1}”之间。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterMustBeGreaterThanZero">
-        <source>The parameter value must be greater than zero.</source>
-        <target state="translated">参数值必须大于零。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterValueCannotBeInfinity">
         <source>The parameter value must be finite.</source>
         <target state="translated">参数值必须有限。</target>

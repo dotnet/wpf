@@ -1834,9 +1834,6 @@
   <data name="ParameterMustBeBetween" xml:space="preserve">
     <value>The parameter value must be between '{0}' and '{1}'.</value>
   </data>
-  <data name="ParameterMustBeGreaterThanZero" xml:space="preserve">
-    <value>The parameter value must be greater than zero.</value>
-  </data>
   <data name="ParameterValueCannotBeInfinity" xml:space="preserve">
     <value>The parameter value must be finite.</value>
   </data>

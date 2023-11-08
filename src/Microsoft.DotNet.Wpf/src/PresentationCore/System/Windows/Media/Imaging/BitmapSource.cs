@@ -730,8 +730,7 @@ namespace System.Windows.Media.Imaging
             if (buffer == IntPtr.Zero)
                 throw new ArgumentNullException("buffer");
 
-            if (stride <= 0)
-                throw new ArgumentOutOfRangeException("stride", SR.ParameterMustBeGreaterThanZero);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(stride);
 
             if (sourceRect.Width <= 0)
                 sourceRect.Width = PixelWidth;

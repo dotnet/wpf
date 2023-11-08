@@ -67,17 +67,10 @@ namespace System.Windows.Interop
         /// </summary>
         public D3DImage(double dpiX, double dpiY)
         {
-            
-            if (dpiX < 0)
-            {
-                throw new ArgumentOutOfRangeException("dpiX", SR.ParameterMustBeGreaterThanZero);
-            }
 
-            if (dpiY < 0)
-            {
-                throw new ArgumentOutOfRangeException("dpiY", SR.ParameterMustBeGreaterThanZero);
-            }
-   
+            ArgumentOutOfRangeException.ThrowIfNegative(dpiX);
+            ArgumentOutOfRangeException.ThrowIfNegative(dpiY);
+
             _canWriteEvent = new ManualResetEvent(true);
             _availableCallback = Callback;
             _sendPresentDelegate = SendPresent;

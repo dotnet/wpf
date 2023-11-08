@@ -2542,11 +2542,6 @@
         <target state="translated">Hodnota tohoto parametru musí být v rozsahu od {0} do {1}.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterMustBeGreaterThanZero">
-        <source>The parameter value must be greater than zero.</source>
-        <target state="translated">Hodnota tohoto parametru musí být větší než nula.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterValueCannotBeInfinity">
         <source>The parameter value must be finite.</source>
         <target state="translated">Hodnota tohoto parametru nesmí být nekonečno.</target>

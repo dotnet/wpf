@@ -2542,11 +2542,6 @@
         <target state="translated">O valor do parâmetro precisa estar entre '{0}' e '{1}'.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterMustBeGreaterThanZero">
-        <source>The parameter value must be greater than zero.</source>
-        <target state="translated">O valor do parâmetro deve ser maior que zero.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterValueCannotBeInfinity">
         <source>The parameter value must be finite.</source>
         <target state="translated">O valor do parâmetro deve ser finito.</target>

@@ -38,10 +38,7 @@ namespace System.Windows.Media.TextFormatting
             int     length
             )
         {
-            if (length <= 0)
-            {
-                throw new ArgumentOutOfRangeException("length", SR.ParameterMustBeGreaterThanZero);
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
 
             _length = length;
         }

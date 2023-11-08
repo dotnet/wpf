@@ -21,8 +21,7 @@ namespace MS.Internal
         {
             Debug.Assert(o != null, "UIElementHelper.IsHitTestVisible called with null argument");
 
-            UIElement oAsUIElement = o as UIElement;
-            if (oAsUIElement != null)
+            if (o is UIElement oAsUIElement)
             {
                 return oAsUIElement.IsHitTestVisible;
             }
@@ -37,8 +36,7 @@ namespace MS.Internal
         {
             Debug.Assert(o != null, "UIElementHelper.IsVisible called with null argument");
 
-            UIElement oAsUIElement = o as UIElement;
-            if (oAsUIElement != null)
+            if (o is UIElement oAsUIElement)
             {
                 return oAsUIElement.IsVisible;
             }
@@ -53,19 +51,15 @@ namespace MS.Internal
         {
             Debug.Assert(o != null, "UIElementHelper.PredictFocus called with null argument");
 
-            UIElement uie;
-            ContentElement ce;
-            UIElement3D uie3d;
-
-            if ((uie = o as UIElement) != null)
+            if (o is UIElement uie)
             {
                 return uie.PredictFocus(direction);
             }
-            else if ((ce = o as ContentElement) != null)
+            else if (o is ContentElement ce)
             {
                 return ce.PredictFocus(direction);
             }
-            else if ((uie3d = o as UIElement3D) != null)
+            else if (o is UIElement3D uie3d)
             {
                 return uie3d.PredictFocus(direction);
             }
@@ -105,9 +99,9 @@ namespace MS.Internal
             DependencyObject myParent = null;
 
             // Try to find a UIElement parent in the visual ancestry.
-            if (child is Visual)
+            if (child is Visual vis)
             {
-                myParent = ((Visual)child).InternalVisualParent;
+                myParent = vis.InternalVisualParent;
             }
             else
             {
@@ -120,15 +114,13 @@ namespace MS.Internal
             // check along the logical branch.
             if(parent == null && continuePastVisualTree)
             {
-                UIElement childAsUIElement = child as UIElement;
-                if (childAsUIElement != null)
+                if (child is UIElement childAsUIElement)
                 {
                     parent = InputElement.GetContainingInputElement(childAsUIElement.GetUIParentCore()) as DependencyObject;
                 }
                 else
                 {
-                    UIElement3D childAsUIElement3D = child as UIElement3D;
-                    if (childAsUIElement3D != null)
+                    if (child is UIElement3D childAsUIElement3D)
                     {
                         parent = InputElement.GetContainingInputElement(childAsUIElement3D.GetUIParentCore()) as DependencyObject;
                     }

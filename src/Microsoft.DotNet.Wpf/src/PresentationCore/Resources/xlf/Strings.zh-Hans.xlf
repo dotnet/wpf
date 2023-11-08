@@ -2542,11 +2542,6 @@
         <target state="translated">“{0}”参数值不能为负数。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterValueMustBeGreaterThanZero">
-        <source>'{0}' parameter value must be greater than zero.</source>
-        <target state="translated">“{0}”参数值必须大于零。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Parser_BadForm">
         <source>Incorrect form '{0}' found parsing '{1}' string.</source>
         <target state="translated">解析“{1}”字符串时发现格式“{0}”错误。</target>

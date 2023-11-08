@@ -2542,11 +2542,6 @@
         <target state="translated">Hodnota parametru {0} nemůže být záporná.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterValueMustBeGreaterThanZero">
-        <source>'{0}' parameter value must be greater than zero.</source>
-        <target state="translated">Hodnota parametru {0} musí být větší než nula.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Parser_BadForm">
         <source>Incorrect form '{0}' found parsing '{1}' string.</source>
         <target state="translated">Nalezena nesprávná forma {0} při analýze řetězce {1}.</target>

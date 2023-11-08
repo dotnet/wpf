@@ -1834,9 +1834,6 @@
   <data name="ParameterValueCannotBeNegative" xml:space="preserve">
     <value>'{0}' parameter value cannot be negative.</value>
   </data>
-  <data name="ParameterValueMustBeGreaterThanZero" xml:space="preserve">
-    <value>'{0}' parameter value must be greater than zero.</value>
-  </data>
   <data name="Parsers_IllegalToken" xml:space="preserve">
     <value>Token is not valid.</value>
   </data>

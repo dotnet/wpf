@@ -2542,11 +2542,6 @@
         <target state="translated">Значение параметра "{0}" не может быть отрицательным.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterValueMustBeGreaterThanZero">
-        <source>'{0}' parameter value must be greater than zero.</source>
-        <target state="translated">Значение параметра "{0}" должно быть больше 0.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Parser_BadForm">
         <source>Incorrect form '{0}' found parsing '{1}' string.</source>
         <target state="translated">При синтаксическом анализе строки "{1}" обнаружена неправильная форма "{0}".</target>

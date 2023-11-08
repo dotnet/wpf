@@ -2542,11 +2542,6 @@
         <target state="translated">Wartość parametru „{0}” nie może być ujemna.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterValueMustBeGreaterThanZero">
-        <source>'{0}' parameter value must be greater than zero.</source>
-        <target state="translated">Wartość parametru „{0}” musi być większa niż zero.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Parser_BadForm">
         <source>Incorrect form '{0}' found parsing '{1}' string.</source>
         <target state="translated">Znaleziono nieprawidłową formę „{0}” podczas analizy ciągu „{1}”.</target>

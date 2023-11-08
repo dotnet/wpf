@@ -497,11 +497,8 @@ namespace MS.Internal.TextFormatting
                 throw new ArgumentOutOfRangeException("paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize", SR.Format(SR.ParameterMustBeBetween, 0, realMaxFontRenderingEmSize));
             }
 
-            if (paragraphProperties.Indent > Constants.RealInfiniteWidth)
-                throw new ArgumentOutOfRangeException("paragraphProperties.Indent", SR.Format(SR.ParameterCannotBeGreaterThan, Constants.RealInfiniteWidth));
-
-            if (paragraphProperties.LineHeight > Constants.RealInfiniteWidth)
-                throw new ArgumentOutOfRangeException("paragraphProperties.LineHeight", SR.Format(SR.ParameterCannotBeGreaterThan, Constants.RealInfiniteWidth));
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(paragraphProperties.Indent, Constants.RealInfiniteWidth, "paragraphProperties.Indent");
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(paragraphProperties.LineHeight, Constants.RealInfiniteWidth, "paragraphProperties.LineHeight");
 
             if (   paragraphProperties.DefaultIncrementalTab < 0
                 || paragraphProperties.DefaultIncrementalTab > Constants.RealInfiniteWidth)

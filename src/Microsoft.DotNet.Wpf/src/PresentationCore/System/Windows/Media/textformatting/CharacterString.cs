@@ -101,10 +101,7 @@ namespace System.Windows.Media.TextFormatting
                 characterBufferReference.CharacterBuffer.Count - characterBufferReference.OffsetToFirstChar :
                 0;
 
-            if (characterLength > maxLength)
-            {
-                throw new ArgumentOutOfRangeException("characterLength", SR.Format(SR.ParameterCannotBeGreaterThan, maxLength));
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(characterLength, maxLength);
 
             _charBufferRef = characterBufferReference;
             _length = characterLength;

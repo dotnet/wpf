@@ -2522,11 +2522,6 @@
         <target state="translated">Sayfa numarası negatif olamaz.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeGreaterThan">
-        <source>The parameter value cannot be greater than '{0}'.</source>
-        <target state="translated">Parametre değeri '{0}' değerinden büyük olamaz.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterCannotBeLessThan">
         <source>The parameter value cannot be less than '{0}'.</source>
         <target state="translated">Parametre değeri '{0}' değerinden küçük olamaz.</target>

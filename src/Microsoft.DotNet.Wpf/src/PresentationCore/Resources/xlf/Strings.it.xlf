@@ -2522,11 +2522,6 @@
         <target state="translated">Il numero di pagina non può essere negativo.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeGreaterThan">
-        <source>The parameter value cannot be greater than '{0}'.</source>
-        <target state="translated">Il valore del parametro non può essere maggiore di '{0}'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterCannotBeLessThan">
         <source>The parameter value cannot be less than '{0}'.</source>
         <target state="translated">Il valore del parametro non può essere minore di '{0}'.</target>

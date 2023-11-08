@@ -291,9 +291,7 @@ namespace System.Windows.Media
         private static void ValidateFontSize(double emSize)
         {
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(emSize);
-
-            if (emSize > MaxFontEmSize)
-                throw new ArgumentOutOfRangeException("emSize", SR.Format(SR.ParameterCannotBeGreaterThan, MaxFontEmSize));
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(emSize, MaxFontEmSize);
 
             if (double.IsNaN(emSize))
                 throw new ArgumentOutOfRangeException("emSize", SR.ParameterValueCannotBeNaN);

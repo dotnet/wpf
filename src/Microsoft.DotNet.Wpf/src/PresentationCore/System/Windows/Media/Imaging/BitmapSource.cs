@@ -738,11 +738,8 @@ namespace System.Windows.Media.Imaging
             if (sourceRect.Height <= 0)
                 sourceRect.Height = PixelHeight;
 
-            if (sourceRect.Width > PixelWidth)
-                throw new ArgumentOutOfRangeException("sourceRect.Width", SR.Format(SR.ParameterCannotBeGreaterThan, PixelWidth));
-
-            if (sourceRect.Height > PixelHeight)
-                throw new ArgumentOutOfRangeException("sourceRect.Height", SR.Format(SR.ParameterCannotBeGreaterThan, PixelHeight));
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(sourceRect.Width, PixelWidth, "sourceRect.Width");
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(sourceRect.Height, PixelHeight, "sourceRect.Height");
 
             int minStride = checked(((sourceRect.Width * Format.BitsPerPixel) + 7) / 8);
             if (stride < minStride)

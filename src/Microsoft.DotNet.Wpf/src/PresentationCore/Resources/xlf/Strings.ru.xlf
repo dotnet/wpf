@@ -2522,11 +2522,6 @@
         <target state="translated">Номер страницы не может быть отрицательным.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeGreaterThan">
-        <source>The parameter value cannot be greater than '{0}'.</source>
-        <target state="translated">Значение параметра не может быть больше "{0}".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterCannotBeLessThan">
         <source>The parameter value cannot be less than '{0}'.</source>
         <target state="translated">Значение параметра не может быть меньше "{0}".</target>

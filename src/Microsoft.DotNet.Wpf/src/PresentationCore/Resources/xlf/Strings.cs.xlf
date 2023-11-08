@@ -2522,11 +2522,6 @@
         <target state="translated">Číslo stránky nemůže být záporné.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeGreaterThan">
-        <source>The parameter value cannot be greater than '{0}'.</source>
-        <target state="translated">Hodnota tohoto parametru nemůže být větší než {0}.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterCannotBeLessThan">
         <source>The parameter value cannot be less than '{0}'.</source>
         <target state="translated">Hodnota tohoto parametru nemůže být menší než {0}.</target>

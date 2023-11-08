@@ -130,10 +130,7 @@ namespace MS.Internal.TextFormatting
                     "array");                
             }
 
-            if (arrayIndex < 0)
-            {
-                throw new ArgumentOutOfRangeException("arrayIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
 
             if (arrayIndex >= array.Length)
             {

@@ -402,8 +402,7 @@ namespace MS.Internal.Automation
 
         bool IWindowProvider.WaitForInputIdle( int milliseconds )
         {
-           if( milliseconds < 0 )
-               throw new ArgumentOutOfRangeException( "milliseconds" );
+            ArgumentOutOfRangeException.ThrowIfNegative(milliseconds);
 
             // Implementation note:  This method is usually used in response to handling a WindowPattern.WindowOpenedEvent.
             // In this case it works for both legacy and WCP windows. This is because the WindowOpenedEvent uses a private

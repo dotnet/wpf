@@ -206,10 +206,7 @@ namespace MS.Internal.Text.TextInterface
                                  &hr
                                  ))
             {
-                if (faceIndex >= numberOfFaces)
-                {
-                    throw new ArgumentOutOfRangeException("faceIndex");
-                }
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(faceIndex, numberOfFaces);
 
                 byte dwriteFontSimulationsFlags = DWriteTypeConverter.Convert(fontSimulationFlags);
                 IDWriteFontFace* dwriteFontFace = null;

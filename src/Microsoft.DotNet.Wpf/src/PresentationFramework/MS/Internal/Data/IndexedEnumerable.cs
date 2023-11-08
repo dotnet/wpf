@@ -218,11 +218,7 @@ namespace MS.Internal.Data
                     return value;
                 }
 
-                if (index < 0)
-                {
-#pragma warning suppress 6503   // "Property get methods should not throw exceptions."
-                    throw new ArgumentOutOfRangeException("index"); // validating the index argument
-                }
+                ArgumentOutOfRangeException.ThrowIfNegative(index);
 
                 int moveBy = (index - _cachedIndex);
                 if (moveBy < 0)

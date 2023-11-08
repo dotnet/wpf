@@ -39,10 +39,7 @@ namespace MS.Internal
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            if (arrayIndex < 0)
-            {
-                throw new ArgumentOutOfRangeException("arrayIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
             ArgumentNullException.ThrowIfNull(array);
 
             int count = 0;

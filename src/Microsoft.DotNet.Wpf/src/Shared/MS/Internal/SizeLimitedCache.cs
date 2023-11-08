@@ -40,10 +40,7 @@ namespace MS.Internal
         /// </param>
         public SizeLimitedCache(int maximumItems)
         {
-            if (maximumItems <= 0)
-            {
-                throw new ArgumentOutOfRangeException("maximumItems");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(maximumItems);
 
             _maximumItems = maximumItems;
             _permanentCount = 0;

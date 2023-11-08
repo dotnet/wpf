@@ -82,13 +82,10 @@ namespace MS.Internal.IO.Packaging
         {
             CheckDisposed();
 
-            if (newLength < 0)
-            {
-                throw new ArgumentOutOfRangeException("newLength");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(newLength);
 
 #if DEBUG
-    DebugAssertConsistentArrayStructure();
+            DebugAssertConsistentArrayStructure();
 #endif
 
             if (_currentStreamLength != newLength)

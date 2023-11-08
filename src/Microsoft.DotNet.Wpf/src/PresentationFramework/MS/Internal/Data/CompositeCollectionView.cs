@@ -198,8 +198,7 @@ namespace MS.Internal.Data
         /// </exception>
         public override object GetItemAt(int index)
         {
-            if (index < 0)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             int positionX, positionY;
             object item = GetItem(index, out positionX, out positionY);
@@ -313,8 +312,7 @@ namespace MS.Internal.Data
         /// </exception>
         public override bool MoveCurrentToPosition(int position)
         {
-            if (position < -1)
-                throw new ArgumentOutOfRangeException("position");
+            ArgumentOutOfRangeException.ThrowIfLessThan(position, -1);
 
             int newPositionX, newPositionY;
             object item = GetItem(position, out newPositionX, out newPositionY);
@@ -325,10 +323,7 @@ namespace MS.Internal.Data
                 {
                     item = null;
                     // check upper-bound only after GetItem() to avoid unnecessary pre-counting
-                    if (position > Count)
-                    {
-                        throw new ArgumentOutOfRangeException("position");
-                    }
+                    ArgumentOutOfRangeException.ThrowIfGreaterThan(position, Count);
                 }
 
                 if (OKToChangeCurrent())

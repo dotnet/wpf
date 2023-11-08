@@ -90,14 +90,8 @@ namespace System.Windows.Automation.Peers
             if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
-            if (width < 0)
-            {
-                throw new ArgumentOutOfRangeException("width");
-            }
-            if (height < 0)
-            {
-                throw new ArgumentOutOfRangeException("height");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(width);
+            ArgumentOutOfRangeException.ThrowIfNegative(height);
 
             GridViewColumnHeader header = Owner as GridViewColumnHeader;
             if (header != null)

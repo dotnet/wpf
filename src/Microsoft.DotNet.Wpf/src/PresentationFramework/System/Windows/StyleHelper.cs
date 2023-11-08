@@ -5443,10 +5443,7 @@ namespace System.Windows
                 return null;
             }
 
-            if (childIndex < 0)
-            {
-                throw new ArgumentOutOfRangeException("childIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(childIndex);
 
             DependencyObject child = styledChildren[childIndex - 1];
 

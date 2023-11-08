@@ -108,7 +108,7 @@ namespace MS.Internal.Printing.Configuration
         {
             bool added = false;
 
-            DuplexOption option = baseOption as DuplexOption;
+            DuplexOption option = (DuplexOption)baseOption;
 
             // validate the option is complete before adding it to the collection
             if (option._optionName != null)

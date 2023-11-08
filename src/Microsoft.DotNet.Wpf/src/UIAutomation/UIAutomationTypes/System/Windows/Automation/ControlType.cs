@@ -233,7 +233,7 @@ namespace System.Windows.Automation
                                                                                                                                                     });
 
         /// <summary>ControlType ID: Document - Lets a user view/manipulate multiple pages of text.</summary>
-        public static readonly ControlType Document = ControlType.Register(AutomationIdentifierConstants.ControlTypes.Document, "ControlType.Document", nameof(SR.LocalizedControlTypeDocument), new AutomationProperty[0],
+        public static readonly ControlType Document = ControlType.Register(AutomationIdentifierConstants.ControlTypes.Document, "ControlType.Document", nameof(SR.LocalizedControlTypeDocument), Array.Empty<AutomationProperty>(),
                                                                                                         new AutomationPattern[] { ValuePatternIdentifiers.Pattern },
                                                                                                         new AutomationPattern[][] {
                                                                                                                                     new AutomationPattern[] { ScrollPatternIdentifiers.Pattern } ,

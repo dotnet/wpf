@@ -203,14 +203,10 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         IRawElementProviderSimple IGridProvider.GetItem(int row, int column)
         {
-            if (row < 0 || row >= ((IGridProvider)this).RowCount)
-            {
-                throw new ArgumentOutOfRangeException("row");
-            }
-            if (column < 0 || column >= ((IGridProvider)this).ColumnCount)
-            {
-                throw new ArgumentOutOfRangeException("column");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(row);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(row, ((IGridProvider)this).RowCount);
+            ArgumentOutOfRangeException.ThrowIfNegative(column);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(column, ((IGridProvider)this).ColumnCount);
 
             ListViewItem lvi = _listview.ItemContainerGenerator.ContainerFromIndex(row) as ListViewItem;
             //If item is virtualized, try to de-virtualize it

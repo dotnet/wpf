@@ -349,10 +349,8 @@ namespace System.Windows.Input
         /// <returns></returns>
         internal StylusPointCollection Clone(int count)
         {
-            if (count > this.Count || count < 1)
-            {
-                throw new ArgumentOutOfRangeException("count");
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(count, this.Count);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(count);
 
             return this.Clone(System.Windows.Media.Transform.Identity, this.Description, count);
 }

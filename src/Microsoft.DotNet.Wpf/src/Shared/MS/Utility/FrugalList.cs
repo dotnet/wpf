@@ -308,15 +308,10 @@ namespace MS.Utility
         public override void RemoveAt(int index)
         {
             // Wipe out the info at index
-            if (0 == index)
-            {
-                _loneEntry = default(T);
-                --_count;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException(nameof(index));
-            }
+            ArgumentOutOfRangeException.ThrowIfNotEqual(index, 0);
+
+            _loneEntry = default(T);
+            --_count;
         }
 
         public override T EntryAt(int index)
@@ -366,14 +361,10 @@ namespace MS.Utility
 
         private void SetCount(int value)
         {
-            if ((value >= 0) && (value <= SIZE))
-            {
-                _count = value;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException(nameof(value));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(value);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(value, SIZE);
+
+            _count = value;
         }
 
         private const int SIZE = 1;
@@ -692,14 +683,10 @@ namespace MS.Utility
 
         private void SetCount(int value)
         {
-            if ((value >= 0) && (value <= SIZE))
-            {
-                _count = value;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException(nameof(value));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(value);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(value, SIZE);
+
+            _count = value;
         }
 
         private const int SIZE = 3;
@@ -1255,14 +1242,10 @@ namespace MS.Utility
 
         private void SetCount(int value)
         {
-            if ((value >= 0) && (value <= SIZE))
-            {
-                _count = value;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException(nameof(value));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(value);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(value, SIZE);
+
+            _count = value;
         }
 
         private const int SIZE = 6;
@@ -1509,14 +1492,10 @@ namespace MS.Utility
 
         private void SetCount(int value)
         {
-            if ((value >= 0) && (value <= _entries.Length))
-            {
-                _count = value;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException(nameof(value));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(value);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(value, _entries.Length);
+
+            _count = value;
         }
 
         // MINSIZE and GROWTH chosen to minimize memory footprint
@@ -1860,25 +1839,22 @@ namespace MS.Utility
 
         public void EnsureIndex(int index)
         {
-            if (index >= 0)
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+
+            int delta = (index + 1) - Count;
+            if (delta > 0)
             {
-                int delta = (index + 1) - Count;
-                if (delta > 0)
+                // Grow the store
+                Capacity = index + 1;
+
+                T filler = default(T);
+
+                // Insert filler structs or objects
+                for (int i = 0; i < delta; ++i)
                 {
-                    // Grow the store
-                    Capacity = index + 1;
-
-                    T filler = default(T);
-
-                    // Insert filler structs or objects
-                    for (int i = 0; i < delta; ++i)
-                    {
-                        _listStore.Add(filler);
-                    }
+                    _listStore.Add(filler);
                 }
-                return;
             }
-            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         public T[] ToArray()
@@ -2238,25 +2214,22 @@ namespace MS.Utility
 
         public void EnsureIndex(int index)
         {
-            if (index >= 0)
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+
+            int delta = (index + 1) - Count;
+            if (delta > 0)
             {
-                int delta = (index + 1) - Count;
-                if (delta > 0)
+                // Grow the store
+                Capacity = index + 1;
+
+                T filler = default(T);
+
+                // Insert filler structs or objects
+                for (int i = 0; i < delta; ++i)
                 {
-                    // Grow the store
-                    Capacity = index + 1;
-
-                    T filler = default(T);
-
-                    // Insert filler structs or objects
-                    for (int i = 0; i < delta; ++i)
-                    {
-                        _listStore.Add(filler);
-                    }
+                    _listStore.Add(filler);
                 }
-                return;
             }
-            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         public T[] ToArray()

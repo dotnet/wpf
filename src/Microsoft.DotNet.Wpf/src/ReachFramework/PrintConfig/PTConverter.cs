@@ -80,11 +80,8 @@ namespace System.Printing.Interop
             ArgumentNullException.ThrowIfNull(deviceName);
 
             // Check if we can support the schema version client has requested
-            if ((clientPrintSchemaVersion > MaxPrintSchemaVersion) ||
-                (clientPrintSchemaVersion <= 0))
-            {
-                throw new ArgumentOutOfRangeException(nameof(clientPrintSchemaVersion));
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(clientPrintSchemaVersion, MaxPrintSchemaVersion);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(clientPrintSchemaVersion);
 
             // Instantiate the provider object this converter instance will use.
             // PTProvider constructor throws exception if it fails for any reason.

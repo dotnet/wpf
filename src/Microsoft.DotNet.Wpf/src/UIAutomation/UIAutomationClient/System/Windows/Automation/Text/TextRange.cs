@@ -290,7 +290,7 @@ namespace System.Windows.Automation.Text
         /// <returns>The text of the range possibly truncated to the specified limit.</returns>
         public string GetText(int maxLength)
         {
-            Misc.ValidateArgumentInRange(maxLength >= -1, "maxLength");
+            ArgumentOutOfRangeException.ThrowIfLessThan(maxLength, -1);
             return UiaCoreApi.TextRange_GetText(_hTextRange, maxLength);
         }
 

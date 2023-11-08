@@ -168,8 +168,8 @@ namespace MS.Internal.FontFace
         {
             if (_technology == FontTechnology.TrueTypeCollection)
             {
-                if (faceIndex < 0 || faceIndex >= _numFaces)
-                    throw new ArgumentOutOfRangeException("faceIndex");
+                ArgumentOutOfRangeException.ThrowIfNegative(faceIndex);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(faceIndex, _numFaces);
             }
             else
             {

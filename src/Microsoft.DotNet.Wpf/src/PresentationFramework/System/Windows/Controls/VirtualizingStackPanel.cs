@@ -1693,8 +1693,8 @@ namespace System.Windows.Controls
         /// <param name="itemIndex">index into the children of this panel</param>
         private void BringContainerIntoView(ItemsControl itemsControl, int itemIndex)
         {
-            if (itemIndex < 0 || itemIndex >= ItemCount)
-                throw new ArgumentOutOfRangeException("itemIndex");
+            ArgumentOutOfRangeException.ThrowIfNegative(itemIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(itemIndex, ItemCount);
 
             UIElement child;
             IItemContainerGenerator generator = Generator;

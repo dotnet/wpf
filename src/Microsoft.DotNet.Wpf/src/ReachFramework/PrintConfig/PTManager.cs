@@ -216,11 +216,8 @@ namespace System.Printing
             ArgumentNullException.ThrowIfNull(deviceName);
 
             // Check if we can support the schema version client has requested
-            if ((clientPrintSchemaVersion > MaxPrintSchemaVersion) ||
-                (clientPrintSchemaVersion <= 0))
-            {
-                throw new ArgumentOutOfRangeException("clientPrintSchemaVersion");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(clientPrintSchemaVersion);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(clientPrintSchemaVersion, MaxPrintSchemaVersion);
 
             // Instantiate a new PTProvider instance. PTProvider constructor throws exception if it fails for any reason.
             _ptProvider = PTProviderBase.Create(deviceName,

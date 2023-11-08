@@ -278,9 +278,11 @@ namespace MS.Internal.IO.Packaging
             }
             set
             {
-                // negative time that is not -1 (infinite) is an error case
-                if (value < 0 && value != System.Threading.Timeout.Infinite)
-                    throw new ArgumentOutOfRangeException("value");
+                if (value != System.Threading.Timeout.Infinite)
+                {
+                    // negative time that is not -1 (infinite) is an error case
+                    ArgumentOutOfRangeException.ThrowIfNegative(value);
+                }
 
                 _timeout = value;
             }

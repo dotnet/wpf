@@ -185,15 +185,6 @@ namespace MS.Internal.Automation
             }
         }
 
-        // Check that specified condition is true; if not, throw exception
-        internal static void ValidateArgumentInRange(bool cond, string argName)
-        {
-            if (!cond)
-            {
-                throw new ArgumentOutOfRangeException(argName);
-            }
-        }
-
         // Called by the patterns before accessing .Cache
         internal static void ValidateCached(bool cached)
         {

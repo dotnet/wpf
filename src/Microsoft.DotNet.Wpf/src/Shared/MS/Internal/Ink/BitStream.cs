@@ -45,10 +45,9 @@ namespace MS.Internal.Ink
         {
             Debug.Assert(buffer != null);
 
-            if (startIndex < 0 || startIndex >= buffer.Length)
-            {
-                throw new ArgumentOutOfRangeException("startIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(startIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(startIndex, buffer.Length);
+
             _byteArray = buffer;
             _byteArrayIndex = startIndex;
             _bufferLengthInBits = (uint)(buffer.Length - startIndex) * (uint)Native.BitsPerByte;

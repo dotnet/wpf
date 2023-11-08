@@ -159,7 +159,7 @@ namespace System.Windows.Automation.Peers
                 return array.ToArray();
             }
 
-            return new IRawElementProviderSimple[0] ;
+            return Array.Empty<IRawElementProviderSimple>();
         }
 
         /// <summary>

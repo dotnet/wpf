@@ -1041,16 +1041,14 @@ namespace System.Windows.Xps.Packaging
             {
                uniqueUri = "/MetaData/Job_PT.xml"; 
             }
-            else if( relatedPart is XpsFixedDocumentReaderWriter )
+            else if( relatedPart is XpsFixedDocumentReaderWriter docRW)
             {
-                XpsFixedDocumentReaderWriter doc = relatedPart as XpsFixedDocumentReaderWriter;
-                uniqueUri = "/Documents/" + doc.DocumentNumber + "/Document_PT.xml"; 
+                uniqueUri = "/Documents/" + docRW.DocumentNumber + "/Document_PT.xml"; 
             }
-            else if( relatedPart is XpsFixedPageReaderWriter )
+            else if( relatedPart is XpsFixedPageReaderWriter pageRW)
             {
-                XpsFixedPageReaderWriter page = relatedPart as XpsFixedPageReaderWriter;
-                XpsFixedDocumentReaderWriter doc = (relatedPart as XpsFixedPageReaderWriter).Parent as XpsFixedDocumentReaderWriter;
-                uniqueUri = "/Documents/" + doc.DocumentNumber + "/Page" + page.PageNumber+ "_PT.xml"; 
+                XpsFixedDocumentReaderWriter doc = (XpsFixedDocumentReaderWriter)pageRW.Parent;
+                uniqueUri = "/Documents/" + doc.DocumentNumber + "/Page" + pageRW.PageNumber+ "_PT.xml"; 
             }
                 
             return PackUriHelper.CreatePartUri(new Uri(uniqueUri, UriKind.Relative));
@@ -1355,7 +1353,7 @@ namespace System.Windows.Xps.Packaging
         private bool                            _ownsPackage;
 
         internal static Dictionary<Uri, int>    _packageCache;
-        internal static Object                  _globalLock;
+        internal static readonly Object         _globalLock;
         
         #endregion Private data
 

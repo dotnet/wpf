@@ -829,7 +829,7 @@ namespace System.Windows.Documents
         {
             _paginator = new FixedDocumentPaginator(this);
             _pages = new PageContentCollection(this);
-            _highlights = new Dictionary<FixedPage, ArrayList>(); // todo: get rid of ArrayLists
+            _highlights = new Dictionary<FixedPage, ArrayList>(); 
             _asyncOps = new Dictionary<Object, GetPageAsyncRequest>();
             _pendingPages = new List<PageContent>();
             _hasExplicitStructure = false;
@@ -1131,7 +1131,7 @@ namespace System.Windows.Documents
                 }
             }
 
-            ArrayList dirtyPages = new ArrayList(); // todo: get rid of ArrayLists
+            ArrayList dirtyPages = new ArrayList(); 
             IList ranges = args.Ranges;
 
             // Find the dirty page

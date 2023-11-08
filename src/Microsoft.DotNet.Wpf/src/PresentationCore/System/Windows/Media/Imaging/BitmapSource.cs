@@ -742,12 +742,10 @@ namespace System.Windows.Media.Imaging
             ArgumentOutOfRangeException.ThrowIfGreaterThan(sourceRect.Height, PixelHeight, "sourceRect.Height");
 
             int minStride = checked(((sourceRect.Width * Format.BitsPerPixel) + 7) / 8);
-            if (stride < minStride)
-                throw new ArgumentOutOfRangeException("stride", SR.Format(SR.ParameterCannotBeLessThan, minStride));
+            ArgumentOutOfRangeException.ThrowIfLessThan(stride, minStride);
 
             int minRequiredDestSize = checked((stride * (sourceRect.Height - 1)) + minStride);
-            if (bufferSize < minRequiredDestSize)
-                throw new ArgumentOutOfRangeException("buffer", SR.Format(SR.ParameterCannotBeLessThan, minRequiredDestSize));
+            ArgumentOutOfRangeException.ThrowIfLessThan(bufferSize, minRequiredDestSize);
 
             lock (_syncObject)
             {

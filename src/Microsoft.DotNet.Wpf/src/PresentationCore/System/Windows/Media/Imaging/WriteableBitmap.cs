@@ -451,15 +451,8 @@ namespace System.Windows.Media.Imaging
         {
             WritePreamble();
 
-            if (bufferSize < 1)
-            {
-                throw new ArgumentOutOfRangeException("bufferSize", SR.Format(SR.ParameterCannotBeLessThan, 1));
-            }
-
-            if (stride < 1)
-            {
-                throw new ArgumentOutOfRangeException("stride", SR.Format(SR.ParameterCannotBeLessThan, 1));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(bufferSize);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(stride);
 
             if (sourceRect.IsEmpty || sourceRect.Width <= 0 || sourceRect.Height <= 0)
             {
@@ -518,15 +511,8 @@ namespace System.Windows.Media.Imaging
                                     out sourceBufferSize, 
                                     out elementType);
 
-            if (stride < 1)
-            {
-                throw new ArgumentOutOfRangeException("stride", SR.Format(SR.ParameterCannotBeLessThan, 1));
-            }
-
-            if (offset < 0)
-            {
-                throw new ArgumentOutOfRangeException("offset", SR.Format(SR.ParameterCannotBeLessThan, 0));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(stride);
+            ArgumentOutOfRangeException.ThrowIfNegative(offset);
 
             // We accept arrays of arbitrary value types - but not reference types.
             if (elementType == null || !elementType.IsValueType)
@@ -946,11 +932,8 @@ namespace System.Windows.Media.Imaging
                 throw new ArgumentNullException(backwardsCompat ? "buffer" : "sourceBuffer");
             }
 
-            if (sourceBufferStride < 1)
-            {
-                Debug.Assert(!backwardsCompat);
-                throw new ArgumentOutOfRangeException("sourceBufferStride", SR.Format(SR.ParameterCannotBeLessThan, 1));
-            }
+            Debug.Assert(!(backwardsCompat && sourceBufferStride < 1));
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(sourceBufferStride);
 
             if (sourceRect.Width == 0 || sourceRect.Height == 0)
             {

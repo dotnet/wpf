@@ -2537,11 +2537,6 @@
         <target state="translated">パラメーター値は、数値である必要があります。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNegative">
-        <source>'{0}' parameter value cannot be negative.</source>
-        <target state="translated">'{0}' パラメーター値を負の値にすることはできません。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Parser_BadForm">
         <source>Incorrect form '{0}' found parsing '{1}' string.</source>
         <target state="translated">'{1}' 文字列の解析中に無効なフォーム '{0}' が見つかりました。</target>

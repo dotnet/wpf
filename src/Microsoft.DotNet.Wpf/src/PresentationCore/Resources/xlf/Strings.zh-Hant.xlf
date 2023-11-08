@@ -2537,11 +2537,6 @@
         <target state="translated">參數值必須是數字。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNegative">
-        <source>'{0}' parameter value cannot be negative.</source>
-        <target state="translated">'{0}' 參數值不能為負數。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Parser_BadForm">
         <source>Incorrect form '{0}' found parsing '{1}' string.</source>
         <target state="translated">剖析 '{1}' 字串時發現不正確的格式 '{0}'。</target>

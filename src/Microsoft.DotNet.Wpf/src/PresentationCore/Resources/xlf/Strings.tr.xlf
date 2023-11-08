@@ -2537,11 +2537,6 @@
         <target state="translated">Parametre değeri bir sayı olmalıdır.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNegative">
-        <source>'{0}' parameter value cannot be negative.</source>
-        <target state="translated">'{0}' parametre değeri negatif olamaz.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Parser_BadForm">
         <source>Incorrect form '{0}' found parsing '{1}' string.</source>
         <target state="translated">'{1}' dizesi ayrıştırılırken yanlış '{0}' biçimi bulundu.</target>

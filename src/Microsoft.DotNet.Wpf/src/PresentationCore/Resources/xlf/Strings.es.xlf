@@ -2537,11 +2537,6 @@
         <target state="translated">El valor del parámetro debe ser un número.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNegative">
-        <source>'{0}' parameter value cannot be negative.</source>
-        <target state="translated">El valor del parámetro '{0}' no puede ser negativo.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Parser_BadForm">
         <source>Incorrect form '{0}' found parsing '{1}' string.</source>
         <target state="translated">Se encontró un formato incorrecto "{0}" al analizar la cadena "{1}".</target>

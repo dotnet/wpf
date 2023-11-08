@@ -2537,11 +2537,6 @@
         <target state="translated">매개 변수 값은 숫자여야 합니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNegative">
-        <source>'{0}' parameter value cannot be negative.</source>
-        <target state="translated">'{0}' 매개 변수 값은 음수일 수 없습니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Parser_BadForm">
         <source>Incorrect form '{0}' found parsing '{1}' string.</source>
         <target state="translated">'{1}' 문자열을 구문 분석하는 동안 잘못된 '{0}' 형식이 검색되었습니다.</target>

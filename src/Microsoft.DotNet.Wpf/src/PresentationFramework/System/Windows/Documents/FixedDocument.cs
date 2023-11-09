@@ -463,14 +463,15 @@ namespace System.Windows.Documents
                 while (el != null)
                 {
                     
-                    if (el is FixedPage fixedPage)
+                    if (el is FixedPage fixedPage2)
                     {
-                        pageIndex = GetIndexOfPage(fixedPage);
+                    fixedPage = fixedPage2;
+                        pageIndex = GetIndexOfPage(fixedPage2);
                         if (pageIndex >= 0)
                         {
                             break;
                         }
-                        el = fixedPage.Parent;
+                        el = fixedPage2.Parent;
                     }
                     else
                     {
@@ -1408,8 +1409,7 @@ namespace System.Windows.Documents
                 {
                     _layedOut = true;
 
-                    UIElement e;
-                    if ((e = (object)base.Visual) is UIElement)
+                    if (base.Visual is UIElement e)
                     {
                         e.Measure(base.Size);
                         e.Arrange(new Rect(base.Size));

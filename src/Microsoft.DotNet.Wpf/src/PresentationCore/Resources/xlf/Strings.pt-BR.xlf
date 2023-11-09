@@ -667,11 +667,6 @@
         <target state="translated">O objeto de dados deve ter pelo menos um formato.</target>
         <note />
       </trans-unit>
-      <trans-unit id="DataObject_EmptyFormatNotAllowed">
-        <source>Empty string is not a valid value for parameter 'format'.</source>
-        <target state="translated">A cadeia de caracteres vazia não é um valor válido para o parâmetro 'format'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="DataObject_FileDropListHasInvalidFileDropPath">
         <source>'{0}' file drop path is not valid.</source>
         <target state="translated">O caminho de depósito do arquivo '{0}' não é válido.</target>

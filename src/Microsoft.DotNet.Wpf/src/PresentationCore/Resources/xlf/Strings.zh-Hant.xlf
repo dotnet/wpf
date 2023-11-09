@@ -667,11 +667,6 @@
         <target state="translated">資料物件至少必須有一個格式。</target>
         <note />
       </trans-unit>
-      <trans-unit id="DataObject_EmptyFormatNotAllowed">
-        <source>Empty string is not a valid value for parameter 'format'.</source>
-        <target state="translated">空字串不是參數 'format' 的有效值。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="DataObject_FileDropListHasInvalidFileDropPath">
         <source>'{0}' file drop path is not valid.</source>
         <target state="translated">'{0}' 檔案置放路徑無效。</target>

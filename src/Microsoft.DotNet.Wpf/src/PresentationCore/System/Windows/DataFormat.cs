@@ -34,12 +34,8 @@ namespace System.Windows
         /// </summary>
         public DataFormat(string name, int id)
         {
+            ArgumentException.ThrowIfNullOrEmpty(name);
             ArgumentNullException.ThrowIfNull(name);
-
-            if (name.Length == 0)
-            {
-                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed); 
-            }
 
             this._name = name;
             this._id = id;

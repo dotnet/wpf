@@ -667,11 +667,6 @@
         <target state="translated">Объект данных должен иметь не менее одного формата.</target>
         <note />
       </trans-unit>
-      <trans-unit id="DataObject_EmptyFormatNotAllowed">
-        <source>Empty string is not a valid value for parameter 'format'.</source>
-        <target state="translated">Пустая строка не является допустимым значением параметра "format".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="DataObject_FileDropListHasInvalidFileDropPath">
         <source>'{0}' file drop path is not valid.</source>
         <target state="translated">Путь размещения файла "{0}" задан неправильно.</target>

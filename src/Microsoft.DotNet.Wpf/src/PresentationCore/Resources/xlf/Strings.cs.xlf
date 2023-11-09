@@ -667,11 +667,6 @@
         <target state="translated">Datový objekt musí mít alespoň jeden formát.</target>
         <note />
       </trans-unit>
-      <trans-unit id="DataObject_EmptyFormatNotAllowed">
-        <source>Empty string is not a valid value for parameter 'format'.</source>
-        <target state="translated">Prázdný řetězec není platnou hodnotou pro parametr format.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="DataObject_FileDropListHasInvalidFileDropPath">
         <source>'{0}' file drop path is not valid.</source>
         <target state="translated">Cesta pro přetažení souboru {0} není platná.</target>

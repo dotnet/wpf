@@ -161,10 +161,7 @@ namespace System.Printing.Interop
         public PrintTicket ConvertDevModeToPrintTicket(byte[]           devMode,
                                                        PrintTicketScope scope)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("PrintTicketConverter");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(PrintTicketConverter));
 
             //Check to insure that the PrintTicketConverter is being called from the same thread that instantiated it
             VerifyAccess();
@@ -228,10 +225,7 @@ namespace System.Printing.Interop
                                                   BaseDevModeType  baseType,
                                                   PrintTicketScope scope)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("PrintTicketConverter");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(PrintTicketConverter));
 
             //Check to insure that the PrintTicketConverter is being called from the same thread that instantiated it
             VerifyAccess();

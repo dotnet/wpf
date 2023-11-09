@@ -25,10 +25,7 @@ namespace System.Xaml
 
         public override bool Read()
         {
-            if (IsDisposed)
-            {
-                throw new ObjectDisposedException("XamlReader");  // can't say "XamlSubreader" it's an internal class.
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlReader)); // Can't say XamlSubreader because its internal.
             if (!_firstRead)
             {
                 return LimitedRead();

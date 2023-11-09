@@ -324,10 +324,7 @@ namespace System.Xaml
 
         private void ThrowIfDisposed()
         {
-            if (IsDisposed)
-            {
-                throw new ObjectDisposedException("XamlXmlReader");
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlXmlReader));
         }
 
         // Return true if the passed namespace is known, meaning that it maps

@@ -803,8 +803,7 @@ namespace MS.Internal.IO.Packaging
 
             void CheckDisposed()
             {
-                if (_disposed)
-                    throw new ObjectDisposedException("ReliableIsolatedStorageFileFolder");
+                ObjectDisposedException.ThrowIf(_disposed, typeof(ReliableIsolatedStorageFileFolder));
             }
 
             //------------------------------------------------------

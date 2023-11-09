@@ -145,10 +145,7 @@ namespace System.Windows.Baml2006
 
         override public bool Read()
         {
-            if (IsDisposed)
-            {
-                throw new ObjectDisposedException("Baml2006Reader");
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(Baml2006Reader));
             if (IsEof)
             {
                 return false;

@@ -38,10 +38,7 @@ namespace System.Xaml
 
         public override bool Read()
         {
-            if (IsDisposed)
-            {
-                throw new ObjectDisposedException("XamlReader"); // Can't say ReaderMultiIndexDelegate because its internal.
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlReader)); // Can't say ReaderMultiIndexDelegate because its internal.
             do
             {
                 if (_idx < _count - 1)

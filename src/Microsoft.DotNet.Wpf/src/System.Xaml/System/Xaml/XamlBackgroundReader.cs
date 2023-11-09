@@ -167,10 +167,7 @@ namespace System.Xaml
 
         private XamlNode Next()
         {
-            if (IsDisposed)
-            {
-                throw new ObjectDisposedException("XamlBackgroundReader");
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlBackgroundReader));
             if (OutgoingEmpty)
             {
                 // This is for users that read PAST the EOF record.

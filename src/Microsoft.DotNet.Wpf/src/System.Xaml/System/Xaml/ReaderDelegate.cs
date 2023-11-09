@@ -25,10 +25,7 @@ namespace System.Xaml
 
         public override bool Read()
         {
-            if (IsDisposed)
-            {
-                throw new ObjectDisposedException("XamlReader"); // Can't say ReaderDelegate because its internal.
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlReader)); // Can't say ReaderDelegate because its internal.
             do
             {
                 _currentNode = _nextDelegate();

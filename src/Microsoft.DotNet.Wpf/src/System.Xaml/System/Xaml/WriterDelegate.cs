@@ -114,10 +114,7 @@ namespace System.Xaml
 
         private void ThrowIsDisposed()
         {
-            if (IsDisposed)
-            {
-                throw new ObjectDisposedException("XamlWriter"); // Can't say ReaderMultiIndexDelegate because its internal.
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlWriter)); // Can't say ReaderMultiIndexDelegate because its internal.
         }
 
     }

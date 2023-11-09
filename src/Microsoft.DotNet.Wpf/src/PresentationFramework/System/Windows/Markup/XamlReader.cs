@@ -936,7 +936,6 @@ namespace System.Windows.Markup
                 }
             }
 
-            Application app = root as Application;
             if (root is Application app)
             {
                 app.ApplicationMarkupBaseUri = GetBaseUri(parserContext.BaseUri);

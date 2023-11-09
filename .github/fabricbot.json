@@ -623,17 +623,6 @@
   },
   {
     "taskType": "trigger",
-    "capabilityId": "ReleaseAnnouncement",
-    "subCapability": "ReleaseAnnouncement",
-    "version": "1.0",
-    "config": {
-      "taskName": "Release announcement",
-      "prReply": "The fix is included in ${pkgName} ${version}.",
-      "issueReply": "Fixed in ${pkgName} ${version}."
-    }
-  },
-  {
-    "taskType": "trigger",
     "capabilityId": "InPrLabel",
     "subCapability": "InPrLabel",
     "version": "1.0",

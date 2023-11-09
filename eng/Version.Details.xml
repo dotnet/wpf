@@ -4,6 +4,7 @@
     <Dependency Name="Microsoft.Private.Winforms" Version="9.0.0-alpha.1.23558.6">
       <Uri>https://github.com/dotnet/winforms</Uri>
       <Sha>92def67d428143804c271e3279ab16f92234c91e</Sha>
+      <SourceBuildTarball RepoName="winforms" ManagedOnly="true" />
     </Dependency>
     <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="9.0.0-alpha.1.23558.6">
       <Uri>https://github.com/dotnet/winforms</Uri>

@@ -372,7 +372,7 @@ namespace System.Windows.Markup
                             uiElement.SetPersistId(_persistId++);
                         }
 
-                        if (args.Instance is DependencyObject dObject && && _stack.CurrentFrame.XmlnsDictionary != null)
+                        if (args.Instance is DependencyObject dObject && _stack.CurrentFrame.XmlnsDictionary != null)
                         {
                             XmlnsDictionary dictionary = _stack.CurrentFrame.XmlnsDictionary;
                             dictionary.Seal();

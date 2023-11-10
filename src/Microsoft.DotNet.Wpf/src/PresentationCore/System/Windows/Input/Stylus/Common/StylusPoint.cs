@@ -682,7 +682,7 @@ namespace System.Windows.Input
         /// <returns></returns>        
         private void CopyAdditionalData()
         {
-            _additionalValues = _additionalValues.AsSpan().ToArray();
+            _additionalValues = _additionalValues?.AsSpan().ToArray();
         }
 
         /// <summary>

@@ -4820,7 +4820,7 @@ Voulez-vous le remplacer ?</target>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_Top">
         <source>Top</source>
-        <target state="translated">Top</target>
+        <target state="translated">Haut</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollViewer_CannotBeNaN">

@@ -682,14 +682,7 @@ namespace System.Windows.Input
         /// <returns></returns>        
         private void CopyAdditionalData()
         {
-            if (_additionalValues != null)
-            {
-                int[] newData = new int[_additionalValues.Length];
-
-                _additionalValues.AsSpan().CopyTo(newData.AsSpan());
-
-                _additionalValues = newData;
-            }
+            _additionalValues = _additionalValues.AsSpan().ToArray();
         }
 
         /// <summary>

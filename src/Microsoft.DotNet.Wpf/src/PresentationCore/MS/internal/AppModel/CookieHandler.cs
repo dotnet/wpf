@@ -104,7 +104,6 @@ static class CookieHandler
         }
     }
 
-    [FriendAccessAllowed] // called by PF.Application.GetCookie()
     [SuppressMessage("Microsoft.Interoperability", "CA1404:CallGetLastErrorImmediatelyAfterPInvoke", 
         Justification="It's okay now. Be careful on change.")]
     internal static string GetCookie(Uri uri, bool throwIfNoCookie)
@@ -128,7 +127,6 @@ static class CookieHandler
         throw new Win32Exception(/*uses last error code*/);
     }
 
-    [FriendAccessAllowed] // called by PF.Application.SetCookie()
     internal static bool SetCookie(Uri uri, string cookieData)
     {
         return SetCookieUnsafe(uri, cookieData, null);

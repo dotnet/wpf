@@ -50,7 +50,6 @@ namespace MS.Internal
 /// </summary>
 static class WpfWebRequestHelper
 {
-    [FriendAccessAllowed]
     internal static WebRequest CreateRequest(Uri uri)
     {
         // Ideally we would want to use RegisterPrefix and WebRequest.Create.
@@ -120,7 +119,6 @@ static class WpfWebRequestHelper
     /// change behavior in SP1/v3.5, ConfigCachePolicy() is called separately by the code that previously
     /// relied on ConfigHttpWebRequest().
     /// </remarks>
-    [FriendAccessAllowed]
     static internal void ConfigCachePolicy(WebRequest request, bool isRefresh)
     {
         HttpWebRequest httpRequest = request as HttpWebRequest;
@@ -168,33 +166,28 @@ static class WpfWebRequestHelper
     }
     private static string _defaultUserAgent;
 
-    [FriendAccessAllowed]
     internal static void HandleWebResponse(WebResponse response)
     {
         CookieHandler.HandleWebResponse(response);
     }
 
-    [FriendAccessAllowed]
     internal static Stream CreateRequestAndGetResponseStream(Uri uri)
     {
         WebRequest request = CreateRequest(uri);
         return GetResponseStream(request);
     }
-    [FriendAccessAllowed]
     internal static Stream CreateRequestAndGetResponseStream(Uri uri, out ContentType contentType)
     {
         WebRequest request = CreateRequest(uri);
         return GetResponseStream(request, out contentType);
     }
 
-    [FriendAccessAllowed]
     internal static WebResponse CreateRequestAndGetResponse(Uri uri)
     {
         WebRequest request = CreateRequest(uri);
         return GetResponse(request);
     }
 
-    [FriendAccessAllowed]
     internal static WebResponse GetResponse(WebRequest request)
     {
         WebResponse response = request.GetResponse();
@@ -215,7 +208,6 @@ static class WpfWebRequestHelper
         HandleWebResponse(response);
         return response;
     }
-    [FriendAccessAllowed]
     internal static WebResponse EndGetResponse(WebRequest request, IAsyncResult ar)
     {
         WebResponse response = request.EndGetResponse(ar);
@@ -232,7 +224,6 @@ static class WpfWebRequestHelper
         return response;
     }
 
-    [FriendAccessAllowed]
     internal static Stream GetResponseStream(WebRequest request)
     {
         WebResponse response = GetResponse(request);
@@ -242,7 +233,6 @@ static class WpfWebRequestHelper
     /// Gets the response from the given request and determines the content type using the special rules 
     /// implemented in GetContentType().
     /// </summary>
-    [FriendAccessAllowed]
     internal static Stream GetResponseStream(WebRequest request, out ContentType contentType)
     {
         WebResponse response = GetResponse(request);
@@ -258,7 +248,6 @@ static class WpfWebRequestHelper
     /// - Unconfigured web servers don't return the right type for WPF content. This method does lookup based on
     ///   file extension.
     /// </summary>
-    [FriendAccessAllowed]
     internal static ContentType GetContentType(WebResponse response)
     {
         ContentType contentType = ContentType.Empty;

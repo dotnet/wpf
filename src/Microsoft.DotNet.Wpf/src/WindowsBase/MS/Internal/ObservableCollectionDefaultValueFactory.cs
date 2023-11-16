@@ -7,7 +7,6 @@
 // Description: DefaultvalueFactory for ObservableCollection
 //
 
-using MS.Internal.WindowsBase;
 using System;
 using System.Diagnostics;
 using System.Windows;
@@ -20,7 +19,6 @@ namespace MS.Internal
     // ObservableCollectionDefaultValueFactory is a DefaultValueFactory implementation which will
     // promote the default value to a local value if the collection is modified.
     // </summary>
-    [FriendAccessAllowed] // built into Base, used by Framework
     internal class ObservableCollectionDefaultValueFactory<T> : DefaultValueFactory
     {
         internal ObservableCollectionDefaultValueFactory()

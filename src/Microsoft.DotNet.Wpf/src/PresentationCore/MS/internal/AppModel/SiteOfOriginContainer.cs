@@ -23,7 +23,6 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Navigation;
 using System.Security;
-using MS.Internal.PresentationCore;
 
 namespace MS.Internal.AppModel
 {
@@ -46,7 +45,6 @@ namespace MS.Internal.AppModel
 
         internal static Uri SiteOfOrigin
         {
-            [FriendAccessAllowed]
             get
             {
                 Uri siteOfOrigin = SiteOfOriginForClickOnceApp;

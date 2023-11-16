@@ -27,7 +27,6 @@ namespace MS.Internal
      ///    "point" and "rect" respectively, whereas Win32 POINT and RECT variables are
      ///    prefixed with "pt" and "rc" respectively.
      /// </remarks>
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
     internal static class PointUtil
     {
         /// <summary>

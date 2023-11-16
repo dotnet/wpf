@@ -23,13 +23,12 @@ namespace System.Collections.ObjectModel
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Windows;
-    using MS.Internal.WindowsBase;      // [FriendAccessAllowed]
+    using MS.Internal.WindowsBase;
 
     [Serializable]
     [System.Runtime.InteropServices.ComVisible(false)]
     //[DebuggerTypeProxy(typeof(Mscorlib_CollectionDebugView<>))]
     [DebuggerDisplay("Count = {Count}")]
-    [FriendAccessAllowed]
     internal class WeakReadOnlyCollection<T>: IList<T>, IList
     {
         //IList<T> list;

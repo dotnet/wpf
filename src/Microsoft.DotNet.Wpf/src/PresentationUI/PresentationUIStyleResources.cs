@@ -7,7 +7,6 @@ using System.Security;
 using System.Windows;
 using System.Windows.Controls;
 
-using MS.Internal.PresentationUI;
 
 
 namespace System.Windows.Documents

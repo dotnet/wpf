@@ -28,11 +28,9 @@ namespace MS.Win32
 #elif DRT
     using MS.Internal.Drt;
 #else
-#error Attempt to use FriendAccessAllowedAttribute from an unknown assembly.
     using MS.Internal.YourAssemblyName;
 #endif
 
-    [FriendAccessAllowed]
     internal partial class NativeMethods
     {
         // Translates Win32 error codes into HRESULTs.

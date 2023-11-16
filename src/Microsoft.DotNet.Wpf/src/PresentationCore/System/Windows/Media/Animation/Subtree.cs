@@ -9,11 +9,8 @@ using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 
-using MS.Internal.PresentationCore;
-
 namespace System.Windows.Media.Animation
 {
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
     [System.Flags]
     internal enum SubtreeFlag
     {
@@ -275,7 +272,6 @@ namespace System.Windows.Media.Animation
     /// An object that enumerates the timelines of a tree of Timeline
     /// objects.
     /// </summary>
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
     internal struct TimelineTreeEnumerator
     {
         #region Constructor

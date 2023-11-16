@@ -6,7 +6,6 @@
 using System;
 using System.Security;
 using MS.Internal;
-using MS.Internal.PresentationCore;
 using MS.Win32;
 using System.Windows;
 
@@ -21,7 +20,6 @@ namespace System.Windows.Input
     ///     blittable types.  This is required so that the report can be
     ///     marshalled across application domains.
     /// </remarks>
-    [FriendAccessAllowed]
     internal abstract class InputReport
     {
         /// <summary>

@@ -60,6 +60,7 @@ namespace System.Windows.Markup
             if (typeMapperContext == null)
             {
                 namespaceMaps = new Hashtable();
+                namespaceMaps.Add("a", "123");
             }
             else
             {

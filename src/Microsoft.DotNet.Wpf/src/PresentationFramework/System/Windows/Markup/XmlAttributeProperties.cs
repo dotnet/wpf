@@ -296,14 +296,14 @@ namespace System.Windows.Markup
         /// </remarks>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
-        public static string GetXmlNamespaceMaps(DependencyObject dependencyObject)
+        public static object GetXmlNamespaceMaps(DependencyObject dependencyObject)
         {
             if (dependencyObject == null)
             {
                 throw new ArgumentNullException( "dependencyObject" );
             }
 
-            return (string)dependencyObject.GetValue(XmlNamespaceMapsProperty);
+            return dependencyObject.GetValue(XmlNamespaceMapsProperty);
         }
 
         /// <summary>

@@ -2526,7 +2526,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return ((_flags & VisualFlags.HasChildren) != 0);
+                return ((_flags & (uint)VisualFlags.HasChildren) != 0);
             }
         }
 
@@ -2768,7 +2768,7 @@ namespace System.Windows.Media
                     throw new InvalidOperationException(SR.Format(SR.LayoutManager_DeepRecursion, TreeLevelLimit));
                 }
 
-                _flags = (VisualFlags)(((uint)_flags & 0x001FFFFF) | (value << 21));
+                _flags = (uint)(VisualFlags)(((uint)_flags & 0x001FFFFF) | (value << 21));
             }
         }
 
@@ -4989,7 +4989,7 @@ namespace System.Windows.Media
         /// </summary>
         internal void SetFlags(bool value, VisualFlags flags)
         {
-            _flags = value ? (_flags | flags) : (_flags & (~flags));
+            _flags = value ? (_flags | (uint) flags) : (_flags & (uint) (~flags));
         }
 
         /// <summary>
@@ -4997,8 +4997,9 @@ namespace System.Windows.Media
         /// </summary>
         internal void SetDpiScaleVisualFlags(DpiRecursiveChangeArgs args)
         {
-            _flags = args.DpiScaleFlag1 ? (_flags | VisualFlags.DpiScaleFlag1) : (_flags & ~VisualFlags.DpiScaleFlag1);
-            _flags = args.DpiScaleFlag2 ? (_flags | VisualFlags.DpiScaleFlag2) : (_flags & ~VisualFlags.DpiScaleFlag2);
+            _flags = args.DpiScaleFlag1 ? (_flags | (uint) VisualFlags.DpiScaleFlag1) : (_flags & (uint) ~VisualFlags.DpiScaleFlag1);
+            _flags = args.DpiScaleFlag2 ? (_flags | (uint) VisualFlags.DpiScaleFlag2) : (_flags & (uint) ~VisualFlags.DpiScaleFlag2);
+
             if (args.DpiScaleFlag1 && args.DpiScaleFlag2)
             {
                 DpiIndex.SetValue(this, args.Index);
@@ -5066,7 +5067,7 @@ namespace System.Windows.Media
         /// returns true</remarks>
         internal bool CheckFlagsAnd(VisualFlags flags)
         {
-            return (_flags & flags) == flags;
+            return (_flags & (uint) flags) == (uint) flags;
         }
 
         /// <summary>
@@ -5091,7 +5092,7 @@ namespace System.Windows.Media
         /// returns true</remarks>
         internal bool CheckFlagsOr(VisualFlags flags)
         {
-            return (flags == 0) || ((_flags & flags) > 0);
+            return (flags == 0) || ((_flags & (uint) flags) > 0);
         }
 
         /// <summary>
@@ -5414,16 +5415,10 @@ namespace System.Windows.Media
         private static readonly UncommonField<TextHintingMode> TextHintingModeField = new UncommonField<TextHintingMode>();
 
         private Vector _offset;
-        private VisualFlags _flags;
+        private uint _flags;
 
         private const uint TreeLevelLimit = 0x7FF;
 
         #endregion Private Fields
     }
 }
-
-
-
-
-
-

@@ -11485,7 +11485,7 @@ namespace System.Windows.Markup
         public static readonly System.Windows.DependencyProperty XmlSpaceProperty;
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         [System.Windows.AttachedPropertyBrowsableForTypeAttribute(typeof(System.Windows.DependencyObject))]
-        public static string GetXmlNamespaceMaps(System.Windows.DependencyObject dependencyObject) { throw null; }
+        public static object GetXmlNamespaceMaps(System.Windows.DependencyObject dependencyObject) { throw null; }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         [System.Windows.AttachedPropertyBrowsableForTypeAttribute(typeof(System.Windows.DependencyObject))]
         [System.Windows.Markup.DesignerSerializationOptionsAttribute(System.Windows.Markup.DesignerSerializationOptions.SerializeAsAttribute)]

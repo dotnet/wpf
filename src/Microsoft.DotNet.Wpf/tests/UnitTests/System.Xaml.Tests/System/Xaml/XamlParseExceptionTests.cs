@@ -51,21 +51,6 @@ public class XamlParseExceptionTests
     }
 
 #pragma warning disable SYSLIB0011, SYSLIB0051 // Type or member is obsolete
-#if NETFRAMEWORK
-    [Fact]
-    public void Ctor_SerializationInfo_StreamingContext()
-    {
-        using (var stream = new MemoryStream())
-        {
-            var formatter = new BinaryFormatter();
-            formatter.Serialize(stream, new XamlParseException());
-
-            stream.Seek(0, SeekOrigin.Begin);
-            Assert.IsType<XamlParseException>(formatter.Deserialize(stream));
-        }
-    }
-#endif
-
     [Fact]
     public void Ctor_NullSerializationInfo_ThrowsArgumentNullException()
     {

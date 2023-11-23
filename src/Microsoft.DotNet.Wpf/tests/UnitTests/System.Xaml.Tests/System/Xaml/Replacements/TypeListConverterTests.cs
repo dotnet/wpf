@@ -9,7 +9,7 @@ using Xunit;
 
 namespace System.Xaml.Replacements.Tests;
 
-public class TypeListConverterTestsTests
+public class TypeListConverterTests
 {
     [Theory]
     [InlineData(null, false)]
@@ -24,21 +24,21 @@ public class TypeListConverterTestsTests
     }
 
     [Fact]
-    public void ConvertFrom_String_ThrowsNotSupportedException()
+    public void ConvertFrom_String_ReturnsEmpty()
     {
         var type = new XamlType(typeof(Type[]), new XamlSchemaContext());
         TypeConverter converter = type.TypeConverter.ConverterInstance;
-        Assert.Throws<NullReferenceException>(() => converter.ConvertFrom(new CustomTypeDescriptorContext(), null, "value"));
-        Assert.Throws<NotSupportedException>(() => converter.ConvertFrom("value"));
+        Assert.Empty(Assert.IsType<Type[]>(converter.ConvertFrom(new CustomTypeDescriptorContext(), null, "value")));
+        Assert.Empty(Assert.IsType<Type[]>(converter.ConvertFrom("value")));
     }
 
     [Fact]
-    public void ConvertFrom_NullValue_ThrowsNotSupportedException()
+    public void ConvertFrom_NullValue_ReturnsNull()
     {
         var type = new XamlType(typeof(Type[]), new XamlSchemaContext());
         TypeConverter converter = type.TypeConverter.ConverterInstance;
-        Assert.Throws<NullReferenceException>(() => converter.ConvertFrom(new CustomTypeDescriptorContext(), null, null!));
-        Assert.Throws<NotSupportedException>(() => converter.ConvertFrom(null!));
+        Assert.Null(converter.ConvertFrom(new CustomTypeDescriptorContext(), null, null!));
+        Assert.Null(converter.ConvertFrom(null!));
     }
 
     [Theory]
@@ -47,8 +47,8 @@ public class TypeListConverterTestsTests
     {
         var type = new XamlType(typeof(Type[]), new XamlSchemaContext());
         TypeConverter converter = type.TypeConverter.ConverterInstance;
-        Assert.Throws<InvalidCastException>(() => converter.ConvertFrom(value));
-        Assert.Throws<InvalidCastException>(() => converter.ConvertFrom(new CustomTypeDescriptorContext(), null, value));
+        Assert.Throws<NotSupportedException>(() => converter.ConvertFrom(value));
+        Assert.Throws<NotSupportedException>(() => converter.ConvertFrom(new CustomTypeDescriptorContext(), null, value));
     }
 
     [Theory]

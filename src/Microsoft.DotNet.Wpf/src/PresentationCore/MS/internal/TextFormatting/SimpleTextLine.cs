@@ -807,10 +807,7 @@ namespace MS.Internal.TextFormatting
             int     textLength
             )
         {
-            if (textLength == 0)
-            {
-                throw new ArgumentOutOfRangeException("textLength", SR.ParameterMustBeGreaterThanZero);
-            }
+            ArgumentOutOfRangeException.ThrowIfZero(textLength);
 
             if (textLength < 0)
             {

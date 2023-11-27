@@ -1052,11 +1052,6 @@
         <target state="translated">Datový proud uzlu XAML: Nebyla nalezena metoda EndMember pro {0}.{1} před metodou StartMember {2}.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Hodnota tohoto parametru musí být větší nebo rovna nule.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentlessPropertyElement">
         <source>The property element '{0}' is not contained by an object element.</source>
         <target state="translated">Element vlastnosti {0} není obsažen v elementu objektu.</target>

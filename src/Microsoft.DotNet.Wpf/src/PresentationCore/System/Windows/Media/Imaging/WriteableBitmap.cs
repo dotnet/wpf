@@ -451,15 +451,8 @@ namespace System.Windows.Media.Imaging
         {
             WritePreamble();
 
-            if (bufferSize < 1)
-            {
-                throw new ArgumentOutOfRangeException("bufferSize", SR.Format(SR.ParameterCannotBeLessThan, 1));
-            }
-
-            if (stride < 1)
-            {
-                throw new ArgumentOutOfRangeException("stride", SR.Format(SR.ParameterCannotBeLessThan, 1));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(bufferSize);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(stride);
 
             if (sourceRect.IsEmpty || sourceRect.Width <= 0 || sourceRect.Height <= 0)
             {
@@ -518,15 +511,8 @@ namespace System.Windows.Media.Imaging
                                     out sourceBufferSize, 
                                     out elementType);
 
-            if (stride < 1)
-            {
-                throw new ArgumentOutOfRangeException("stride", SR.Format(SR.ParameterCannotBeLessThan, 1));
-            }
-
-            if (offset < 0)
-            {
-                throw new ArgumentOutOfRangeException("offset", SR.Format(SR.ParameterCannotBeLessThan, 0));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(stride);
+            ArgumentOutOfRangeException.ThrowIfNegative(offset);
 
             // We accept arrays of arbitrary value types - but not reference types.
             if (elementType == null || !elementType.IsValueType)
@@ -845,17 +831,9 @@ namespace System.Windows.Media.Imaging
             //
             // Sanitize the source rect and assure it will fit within the back buffer.
             //
-            if (sourceRect.X < 0)
-            {
-                Debug.Assert(!backwardsCompat);
-                throw new ArgumentOutOfRangeException("sourceRect", SR.ParameterCannotBeNegative);
-            }
-
-            if (sourceRect.Y < 0)
-            {
-                Debug.Assert(!backwardsCompat);
-                throw new ArgumentOutOfRangeException("sourceRect", SR.ParameterCannotBeNegative);
-            }
+            Debug.Assert(!(backwardsCompat && (sourceRect.X < 0 || sourceRect.Y < 0)));
+            ArgumentOutOfRangeException.ThrowIfNegative(sourceRect.X, nameof(sourceRect));
+            ArgumentOutOfRangeException.ThrowIfNegative(sourceRect.Y, nameof(sourceRect));
 
             if (sourceRect.Width < 0)
             {
@@ -893,18 +871,18 @@ namespace System.Windows.Media.Imaging
                 }
             }
 
-            if (destinationX < 0)
+            if (!backwardsCompat)
             {
-                if (backwardsCompat)
+                ArgumentOutOfRangeException.ThrowIfNegative(destinationX);
+            }
+            else
+            {
+                if (destinationX < 0)
                 {
                     HRESULT.Check((int)WinCodecErrors.WINCODEC_ERR_VALUEOVERFLOW);
                 }
-                else
-                {
-                    throw new ArgumentOutOfRangeException("sourceRect", SR.ParameterCannotBeNegative);
-                }
             }
-        
+
             if (destinationX > _pixelWidth - sourceRect.Width)
             {
                 if (backwardsCompat)
@@ -954,11 +932,8 @@ namespace System.Windows.Media.Imaging
                 throw new ArgumentNullException(backwardsCompat ? "buffer" : "sourceBuffer");
             }
 
-            if (sourceBufferStride < 1)
-            {
-                Debug.Assert(!backwardsCompat);
-                throw new ArgumentOutOfRangeException("sourceBufferStride", SR.Format(SR.ParameterCannotBeLessThan, 1));
-            }
+            Debug.Assert(!(backwardsCompat && sourceBufferStride < 1));
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(sourceBufferStride);
 
             if (sourceRect.Width == 0 || sourceRect.Height == 0)
             {

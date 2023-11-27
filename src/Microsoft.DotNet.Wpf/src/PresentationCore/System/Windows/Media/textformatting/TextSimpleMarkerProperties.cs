@@ -57,10 +57,7 @@ namespace System.Windows.Media.TextFormatting
                 else if (TextMarkerSource.IsKnownIndexMarkerStyle(style))
                 {
                     // validate autoNumberingIndex
-                    if (autoNumberingIndex < 1)
-                    {
-                        throw new ArgumentOutOfRangeException("autoNumberingIndex", SR.Format(SR.ParameterCannotBeLessThan, 1));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegativeOrZero(autoNumberingIndex);
                 }
                 else
                 {

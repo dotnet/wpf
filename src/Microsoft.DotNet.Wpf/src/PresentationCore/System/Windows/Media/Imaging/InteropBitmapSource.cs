@@ -126,15 +126,8 @@ namespace System.Windows.Interop
         {
 
             _bitmapInit.BeginInit();
-            if (pixelWidth <= 0)
-            {
-                throw new ArgumentOutOfRangeException("pixelWidth", SR.ParameterMustBeGreaterThanZero);
-            }
-
-            if (pixelHeight <= 0)
-            {
-                throw new ArgumentOutOfRangeException("pixelHeight", SR.ParameterMustBeGreaterThanZero);
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelWidth);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelHeight);
 
             Guid formatGuid = format.Guid;
 

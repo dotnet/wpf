@@ -51,10 +51,7 @@ namespace System.Windows.Media
             int positionCount
             )            
         {
-            if (positionCount < 0)
-            {
-                throw new ArgumentOutOfRangeException("positionCount", SR.ParameterCannotBeNegative);
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(positionCount);
 
             Transform       = transform;
             Foreground      = foreground;

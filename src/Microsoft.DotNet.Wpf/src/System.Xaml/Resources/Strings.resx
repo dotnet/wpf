@@ -747,9 +747,6 @@
   <data name="OpenPropertyInCurrentFrame_SM" space_="preserve">
     <value>XAML Node Stream: Missing EndMember for '{0}.{1}' before StartMember '{2}'.</value>
   </data>
-  <data name="ParameterCannotBeNegative" space_="preserve">
-    <value>Parameter must be greater than or equal to zero.</value>
-  </data>
   <data name="ParentlessPropertyElement" space_="preserve">
     <value>The property element '{0}' is not contained by an object element.</value>
   </data>

@@ -2522,29 +2522,9 @@
         <target state="translated">Číslo stránky nemůže být záporné.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeGreaterThan">
-        <source>The parameter value cannot be greater than '{0}'.</source>
-        <target state="translated">Hodnota tohoto parametru nemůže být větší než {0}.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeLessThan">
-        <source>The parameter value cannot be less than '{0}'.</source>
-        <target state="translated">Hodnota tohoto parametru nemůže být menší než {0}.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Hodnota tohoto parametru musí být větší nebo rovna nule.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeBetween">
         <source>The parameter value must be between '{0}' and '{1}'.</source>
         <target state="translated">Hodnota tohoto parametru musí být v rozsahu od {0} do {1}.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterMustBeGreaterThanZero">
-        <source>The parameter value must be greater than zero.</source>
-        <target state="translated">Hodnota tohoto parametru musí být větší než nula.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParameterValueCannotBeInfinity">
@@ -2555,16 +2535,6 @@
       <trans-unit id="ParameterValueCannotBeNaN">
         <source>The parameter value must be a number.</source>
         <target state="translated">Hodnota tohoto parametru musí být číslo.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNegative">
-        <source>'{0}' parameter value cannot be negative.</source>
-        <target state="translated">Hodnota parametru {0} nemůže být záporná.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueMustBeGreaterThanZero">
-        <source>'{0}' parameter value must be greater than zero.</source>
-        <target state="translated">Hodnota parametru {0} musí být větší než nula.</target>
         <note />
       </trans-unit>
       <trans-unit id="Parser_BadForm">

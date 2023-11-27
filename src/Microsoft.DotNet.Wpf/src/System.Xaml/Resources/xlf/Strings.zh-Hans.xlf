@@ -1052,11 +1052,6 @@
         <target state="translated">XAML 节点流: StartMember“{2}”前面缺少“{0}.{1}”的 EndMember。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">参数必须大于或等于零。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentlessPropertyElement">
         <source>The property element '{0}' is not contained by an object element.</source>
         <target state="translated">对象元素中未包含属性元素“{0}”。</target>

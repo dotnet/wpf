@@ -115,12 +115,8 @@ namespace System.Windows.Media.TextFormatting
             int                         length,
             TextRunProperties           textRunProperties
             )
-        {        
-            if (length <= 0)
-            {
-                throw new ArgumentOutOfRangeException("length", SR.ParameterMustBeGreaterThanZero);
-            }
-
+        {
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
             ArgumentNullException.ThrowIfNull(textRunProperties);
 
             if (textRunProperties.Typeface == null)
@@ -133,10 +129,7 @@ namespace System.Windows.Media.TextFormatting
                 throw new ArgumentNullException("textRunProperties.CultureInfo");
             }
 
-            if (textRunProperties.FontRenderingEmSize <= 0)
-            {
-                throw new ArgumentOutOfRangeException("textRunProperties.FontRenderingEmSize", SR.ParameterMustBeGreaterThanZero);
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(textRunProperties.FontRenderingEmSize, "textRunProperties.FontRenderingEmSize");
 
             _characterBufferReference = characterBufferReference;
             _length = length;

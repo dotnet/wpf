@@ -351,8 +351,7 @@ namespace MS.Internal.Data
         public override object GetItemAt(int index)
         {
             // only check lower bound because Count could be expensive
-            if (index < 0)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
             return EnumerableWrapper[index];
         }
 

@@ -99,8 +99,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             CheckDisposed();
 
-            if (newLength < 0)
-                throw new ArgumentOutOfRangeException("newLength");
+            ArgumentOutOfRangeException.ThrowIfNegative(newLength);
 
             _versionOwner.WriteAttempt();
             _stream.SetLength(newLength);

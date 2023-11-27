@@ -112,10 +112,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         internal uint SignDecode(byte[] input, int inputIndex, ref int data)
         {
             Debug.Assert(input != null); //already validated at the AlgoModule level
-            if (inputIndex >= input.Length)
-            {
-                throw new ArgumentOutOfRangeException("inputIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(inputIndex, input.Length);
             uint xfData = 0;
             uint cb = Decode(input, inputIndex, ref xfData);
             data = (0 != (0x01 & xfData)) ? -(int)(xfData >> 1) : (int)(xfData >> 1);

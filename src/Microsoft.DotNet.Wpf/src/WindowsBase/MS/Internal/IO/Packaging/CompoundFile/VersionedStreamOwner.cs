@@ -105,8 +105,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// </summary>
         public override void SetLength(long newLength)
         {
-            if (newLength < 0)
-                throw new ArgumentOutOfRangeException("newLength");
+            ArgumentOutOfRangeException.ThrowIfNegative(newLength);
 
             WriteAttempt();
             checked { BaseStream.SetLength(newLength + _dataOffset); }

@@ -122,8 +122,12 @@ namespace Microsoft.Build.Tasks.Windows
                 XmlDocument xmlProjectDoc = null;
 
                 xmlProjectDoc = new XmlDocument( );
-                xmlProjectDoc.Load(CurrentProject);
-
+                //Bugfix for GB chars, exception thrown when using Load(CurrentProject), when project name has GB characters in it.
+                //Using a filestream instead of using string path to avoid the need to properly compose Uri (which is another way of fixing - but more complicated).
+                using(FileStream fs = File.OpenRead(CurrentProject))
+                {
+                    xmlProjectDoc.Load(fs);
+                }
                 //
                 // remove all the WinFX specific item lists
                 // ApplicationDefinition, Page, MarkupResource and Resource
@@ -247,8 +251,12 @@ namespace Microsoft.Build.Tasks.Windows
                 XmlDocument xmlProjectDoc = null;
 
                 xmlProjectDoc = new XmlDocument( );
-                xmlProjectDoc.Load(CurrentProject);
-
+                //Bugfix for GB chars, exception thrown when using Load(CurrentProject), when project name has GB characters in it.
+                //Using a filestream instead of using string path to avoid the need to properly compose Uri (which is another way of fixing - but more complicated).
+                using(FileStream fs = File.OpenRead(CurrentProject))
+                {
+                    xmlProjectDoc.Load(fs);
+                }
                 // remove all the WinFX specific item lists
                 // ApplicationDefinition, Page, MarkupResource and Resource
                 RemoveItemsByName(xmlProjectDoc, APPDEFNAME);

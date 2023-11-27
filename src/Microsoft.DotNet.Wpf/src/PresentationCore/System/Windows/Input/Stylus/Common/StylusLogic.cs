@@ -418,16 +418,38 @@ namespace System.Windows.Input
             var hwndSource = source as HwndSource;
             Matrix toDevice = Matrix.Identity;
 
-            if (hwndSource?.CompositionTarget != null)
+            if (hwndSource?.CompositionTarget is { } compositionTarget)
             {
-                // If we have not yet seen this DPI, store the matrix for it.
-                if (!_transformToDeviceMatrices.ContainsKey(hwndSource.CompositionTarget.CurrentDpiScale))
+                // We can calculate the Matrix fast without any cache and avoid any thread issues.
+                // If others inherit HwndTarget, the following rules may not apply. Because they can override the TransformToDevice property.
+                // Fix https://github.com/dotnet/wpf/issues/6829
+                Type compositionTargetType = compositionTarget.GetType();
+                if (compositionTargetType == typeof(HwndTarget))
                 {
-                    _transformToDeviceMatrices[hwndSource.CompositionTarget.CurrentDpiScale] = hwndSource.CompositionTarget.TransformToDevice;
-                    Debug.Assert(_transformToDeviceMatrices[hwndSource.CompositionTarget.CurrentDpiScale].HasInverse);
+                    DpiScale2 currentDpiScale = compositionTarget.CurrentDpiScale;
+                    toDevice.Scale(currentDpiScale.DpiScaleX, currentDpiScale.DpiScaleY);
                 }
+                else
+                {
+                    // If we have not yet seen this DPI, store the matrix for it.
+                    if (!_transformToDeviceMatrices.TryGetValue(compositionTarget.CurrentDpiScale, out toDevice))
+                    {
+                        // The Stylus Input thread will enter this case.
+                        if (compositionTarget.Dispatcher.CheckAccess())
+                        {
+                            toDevice = compositionTarget.TransformToDevice;
+                        }
+                        else
+                        {
+                            // We have to run it in UI Thread, see https://github.com/dotnet/wpf/issues/6829
+                            compositionTarget.Dispatcher.Invoke(() => toDevice = compositionTarget.TransformToDevice);
+                        }
 
-                toDevice = _transformToDeviceMatrices[hwndSource.CompositionTarget.CurrentDpiScale];
+                        Debug.Assert(toDevice.HasInverse);
+
+                        _transformToDeviceMatrices[compositionTarget.CurrentDpiScale] = toDevice;
+                    }
+                }
             }
 
             return toDevice;

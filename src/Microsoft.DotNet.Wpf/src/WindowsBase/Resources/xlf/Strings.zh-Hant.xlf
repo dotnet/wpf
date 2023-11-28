@@ -1292,11 +1292,6 @@
         <target state="translated">指定的參考物件與預先定義的 Package 專屬參考相衝突。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterMustBeBetween">
-        <source>The parameter value must be between '{0}' and '{1}'.</source>
-        <target state="translated">參數值必須介於 '{0}' 到 '{1}' 之間。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentContainerClosed">
         <source>Cannot access part because parent package was closed.</source>
         <target state="translated">因為父套件已關閉，所以無法存取組件。</target>

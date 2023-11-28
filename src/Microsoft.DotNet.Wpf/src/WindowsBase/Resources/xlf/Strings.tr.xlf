@@ -1292,11 +1292,6 @@
         <target state="translated">Belirtilen başvuru nesnesi önceden tanımlı Pakete özgü başvuru ile çakışıyor.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterMustBeBetween">
-        <source>The parameter value must be between '{0}' and '{1}'.</source>
-        <target state="translated">Parametre değeri '{0}' ile '{1}' arasında olmalıdır.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentContainerClosed">
         <source>Cannot access part because parent package was closed.</source>
         <target state="translated">Üst paket kapatıldığından bölüme erişilemiyor.</target>

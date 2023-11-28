@@ -482,28 +482,17 @@ namespace MS.Internal.TextFormatting
             if (double.IsInfinity(paragraphWidth))
                 throw new ArgumentOutOfRangeException("paragraphWidth", SR.ParameterValueCannotBeInfinity);
 
-            if (    paragraphWidth < 0
-                || paragraphWidth > Constants.RealInfiniteWidth)
-            {
-                throw new ArgumentOutOfRangeException("paragraphWidth", SR.Format(SR.ParameterMustBeBetween, 0, Constants.RealInfiniteWidth));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(paragraphWidth);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(paragraphWidth, Constants.RealInfiniteWidth);
 
             double realMaxFontRenderingEmSize = Constants.RealInfiniteWidth / Constants.GreatestMutiplierOfEm;
 
-            if (    paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize < 0
-                ||  paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize > realMaxFontRenderingEmSize)
-            {
-                throw new ArgumentOutOfRangeException("paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize", SR.Format(SR.ParameterMustBeBetween, 0, realMaxFontRenderingEmSize));
-            }
-
+            ArgumentOutOfRangeException.ThrowIfNegative(paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize, "paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize");
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize, realMaxFontRenderingEmSize, "paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize");
             ArgumentOutOfRangeException.ThrowIfGreaterThan(paragraphProperties.Indent, Constants.RealInfiniteWidth, "paragraphProperties.Indent");
             ArgumentOutOfRangeException.ThrowIfGreaterThan(paragraphProperties.LineHeight, Constants.RealInfiniteWidth, "paragraphProperties.LineHeight");
-
-            if (   paragraphProperties.DefaultIncrementalTab < 0
-                || paragraphProperties.DefaultIncrementalTab > Constants.RealInfiniteWidth)
-            {
-                throw new ArgumentOutOfRangeException("paragraphProperties.DefaultIncrementalTab", SR.Format(SR.ParameterMustBeBetween, 0, Constants.RealInfiniteWidth));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(paragraphProperties.DefaultIncrementalTab, "paragraphProperties.DefaultIncrementalTab");
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(paragraphProperties.DefaultIncrementalTab, Constants.RealInfiniteWidth, "paragraphProperties.DefaultIncrementalTab");
         }
 
 
@@ -516,11 +505,8 @@ namespace MS.Internal.TextFormatting
             int             cchLength
             )
         {
-            if (    characterHit.FirstCharacterIndex < cpFirst
-                ||  characterHit.FirstCharacterIndex > cpFirst + cchLength)
-            {
-                throw new ArgumentOutOfRangeException("cpFirst", SR.Format(SR.ParameterMustBeBetween, cpFirst, cpFirst + cchLength));
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(cpFirst, characterHit.FirstCharacterIndex);
+            ArgumentOutOfRangeException.ThrowIfLessThan(cpFirst, characterHit.FirstCharacterIndex - cchLength);
 
             ArgumentOutOfRangeException.ThrowIfNegative(characterHit.TrailingLength, nameof(cchLength));
         }

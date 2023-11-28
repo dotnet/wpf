@@ -831,92 +831,28 @@ namespace System.Windows.Media.Imaging
             //
             // Sanitize the source rect and assure it will fit within the back buffer.
             //
-            Debug.Assert(!(backwardsCompat && (sourceRect.X < 0 || sourceRect.Y < 0)));
+            Debug.Assert(!(backwardsCompat && (sourceRect.X < 0 || sourceRect.Y < 0 || sourceRect.Width < 0 || sourceRect.Height < 0)));
             ArgumentOutOfRangeException.ThrowIfNegative(sourceRect.X, nameof(sourceRect));
             ArgumentOutOfRangeException.ThrowIfNegative(sourceRect.Y, nameof(sourceRect));
-
-            if (sourceRect.Width < 0)
-            {
-                Debug.Assert(!backwardsCompat);
-                throw new ArgumentOutOfRangeException("sourceRect", SR.Format(SR.ParameterMustBeBetween, 0, _pixelWidth));
-            }
-
-            if (sourceRect.Width > _pixelWidth)
-            {
-                if (backwardsCompat)
-                {
-                    HRESULT.Check(MS.Win32.NativeMethods.E_INVALIDARG);
-                }
-                else
-                {
-                    throw new ArgumentOutOfRangeException("sourceRect", SR.Format(SR.ParameterMustBeBetween, 0, _pixelWidth));
-                }
-            }
-
-            if (sourceRect.Height < 0)
-            {
-                Debug.Assert(!backwardsCompat);
-                throw new ArgumentOutOfRangeException("sourceRect", SR.Format(SR.ParameterMustBeBetween, 0, _pixelHeight));
-            }
-
-            if (sourceRect.Height > _pixelHeight)
-            {
-                if (backwardsCompat)
-                {
-                    HRESULT.Check(MS.Win32.NativeMethods.E_INVALIDARG);
-                }
-                else
-                {
-                    throw new ArgumentOutOfRangeException("sourceRect", SR.Format(SR.ParameterMustBeBetween, 0, _pixelHeight));
-                }
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(sourceRect.Width, nameof(sourceRect));
+            ArgumentOutOfRangeException.ThrowIfNegative(sourceRect.Height, nameof(sourceRect));
 
             if (!backwardsCompat)
             {
+                ArgumentOutOfRangeException.ThrowIfGreaterThan(sourceRect.Width, _pixelWidth, nameof(sourceRect));
+                ArgumentOutOfRangeException.ThrowIfGreaterThan(sourceRect.Height, _pixelHeight, nameof(sourceRect));
                 ArgumentOutOfRangeException.ThrowIfNegative(destinationX);
+                ArgumentOutOfRangeException.ThrowIfNegative(destinationY);
+                ArgumentOutOfRangeException.ThrowIfGreaterThan(destinationX, _pixelWidth - sourceRect.Width);
+                ArgumentOutOfRangeException.ThrowIfGreaterThan(destinationY, _pixelHeight - sourceRect.Height);
             }
-            else
+            else if(sourceRect.Width > _pixelWidth || sourceRect.Height > _pixelHeight || destinationX > _pixelWidth - sourceRect.Width || destinationY > _pixelHeight - sourceRect.Height)
             {
-                if (destinationX < 0)
-                {
-                    HRESULT.Check((int)WinCodecErrors.WINCODEC_ERR_VALUEOVERFLOW);
-                }
+                HRESULT.Check(MS.Win32.NativeMethods.E_INVALIDARG);
             }
-
-            if (destinationX > _pixelWidth - sourceRect.Width)
+            else if (destinationX < 0 || destinationY < 0)
             {
-                if (backwardsCompat)
-                {
-                    HRESULT.Check(MS.Win32.NativeMethods.E_INVALIDARG);
-                }
-                else
-                {
-                    throw new ArgumentOutOfRangeException("destinationX", SR.Format(SR.ParameterMustBeBetween, 0, _pixelWidth - sourceRect.Width));
-                }
-            }
-
-            if (destinationY < 0)
-            {
-                if (backwardsCompat)
-                {
-                    HRESULT.Check((int)WinCodecErrors.WINCODEC_ERR_VALUEOVERFLOW);
-                }
-                else
-                {
-                    throw new ArgumentOutOfRangeException("destinationY", SR.Format(SR.ParameterMustBeBetween, 0, _pixelHeight - sourceRect.Height));
-                }
-            }
-
-            if (destinationY > _pixelHeight - sourceRect.Height)
-            {
-                if (backwardsCompat)
-                {
-                    HRESULT.Check(MS.Win32.NativeMethods.E_INVALIDARG);
-                }
-                else
-                {
-                    throw new ArgumentOutOfRangeException("destinationY", SR.Format(SR.ParameterMustBeBetween, 0, _pixelHeight - sourceRect.Height));
-                }
+                HRESULT.Check((int)WinCodecErrors.WINCODEC_ERR_VALUEOVERFLOW);
             }
 
             //

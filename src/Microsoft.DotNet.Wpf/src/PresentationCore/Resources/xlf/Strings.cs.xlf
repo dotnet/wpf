@@ -2522,11 +2522,6 @@
         <target state="translated">Číslo stránky nemůže být záporné.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterMustBeBetween">
-        <source>The parameter value must be between '{0}' and '{1}'.</source>
-        <target state="translated">Hodnota tohoto parametru musí být v rozsahu od {0} do {1}.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterValueCannotBeInfinity">
         <source>The parameter value must be finite.</source>
         <target state="translated">Hodnota tohoto parametru nesmí být nekonečno.</target>

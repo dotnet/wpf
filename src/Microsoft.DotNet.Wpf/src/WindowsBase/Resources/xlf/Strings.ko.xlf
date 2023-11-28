@@ -1292,11 +1292,6 @@
         <target state="translated">지정한 참조 개체가 미리 정의된 Package 특정 참조와 충돌합니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterMustBeBetween">
-        <source>The parameter value must be between '{0}' and '{1}'.</source>
-        <target state="translated">매개 변수 값은 '{0}'과(와) '{1}' 사이에 있어야 합니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentContainerClosed">
         <source>Cannot access part because parent package was closed.</source>
         <target state="translated">부모 패키지가 닫혔으므로 파트에 액세스할 수 없습니다.</target>

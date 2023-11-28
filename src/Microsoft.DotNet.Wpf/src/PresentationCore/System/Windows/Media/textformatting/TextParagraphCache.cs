@@ -184,12 +184,9 @@ namespace System.Windows.Media.TextFormatting
                 // consider 0 or positive infinity as maximum ideal width
                 return Constants.IdealInfiniteWidth;
             }
-            
-            if (    maxLineWidth < 0 
-                ||  maxLineWidth > Constants.RealInfiniteWidth)
-            {
-                throw new ArgumentOutOfRangeException("maxLineWidth", SR.Format(SR.ParameterMustBeBetween, 0, Constants.RealInfiniteWidth));
-            }
+
+            ArgumentOutOfRangeException.ThrowIfNegative(maxLineWidth);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(maxLineWidth, Constants.RealInfiniteWidth);
 
             // convert real value to ideal value
             return TextFormatterImp.RealToIdeal(maxLineWidth);

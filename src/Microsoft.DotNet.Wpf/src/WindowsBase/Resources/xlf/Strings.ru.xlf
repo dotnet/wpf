@@ -1292,11 +1292,6 @@
         <target state="translated">Указанный эталонный объект конфликтует с предопределенной ссылкой для заданного пакета.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterMustBeBetween">
-        <source>The parameter value must be between '{0}' and '{1}'.</source>
-        <target state="translated">Параметр должен принимать значения от "{0}" до "{1}".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentContainerClosed">
         <source>Cannot access part because parent package was closed.</source>
         <target state="translated">Не удается получить доступ к части, так как родительский пакет был закрыт.</target>

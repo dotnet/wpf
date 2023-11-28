@@ -603,7 +603,7 @@ namespace System.Windows
         IsCoerced           = 0x0040,
         IsPotentiallyADeferredReference = 0x0080,
         HasExpressionMarker = 0x0100,
-        IsCoercedWithCurrentValue = 0x200,
+        IsCoercedWithCurrentValue = 0x0200,
     }
 
     // Note that these enum values are arranged in the reverse order of

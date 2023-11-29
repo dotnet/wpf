@@ -1052,11 +1052,6 @@
         <target state="translated">Flux de nœud XAML : EndMember manquant pour '{0}.{1}' avant StartMember '{2}'.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Le paramètre doit être supérieur ou égal à zéro.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentlessPropertyElement">
         <source>The property element '{0}' is not contained by an object element.</source>
         <target state="translated">L'élément de propriété '{0}' n'est pas contenu dans un élément objet.</target>

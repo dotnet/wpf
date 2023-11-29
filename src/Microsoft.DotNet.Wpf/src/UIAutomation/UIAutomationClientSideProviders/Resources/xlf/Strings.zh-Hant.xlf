@@ -357,11 +357,6 @@
         <target state="translated">目標項目無法接收焦點。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ShouldBeZero">
-        <source>Must be zero.</source>
-        <target state="translated">必須為零。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ValueReadonly">
         <source>Value is read-only.</source>
         <target state="translated">值是唯讀的。</target>

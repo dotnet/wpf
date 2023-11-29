@@ -1052,11 +1052,6 @@
         <target state="translated">XAML ノード ストリーム: StartMember '{2}' の前に '{0}.{1}' の EndMember がありません。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">パラメーターは 0 以上でなければなりません。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentlessPropertyElement">
         <source>The property element '{0}' is not contained by an object element.</source>
         <target state="translated">プロパティ要素 '{0}' はオブジェクト要素に含まれていません。</target>

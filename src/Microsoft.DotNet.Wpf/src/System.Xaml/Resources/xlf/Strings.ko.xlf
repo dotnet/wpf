@@ -1052,11 +1052,6 @@
         <target state="translated">XAML 노드 스트림: StartMember '{2}' 앞에 '{0}.{1}'에 대한 EndMember가 없습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">매개 변수는 0보다 크거나 같아야 합니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentlessPropertyElement">
         <source>The property element '{0}' is not contained by an object element.</source>
         <target state="translated">속성 요소 '{0}'이(가) 개체 요소에서 포함되지 않았습니다.</target>

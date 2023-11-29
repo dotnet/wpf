@@ -1052,11 +1052,6 @@
         <target state="translated">XAML Düğüm Akışı: StartMember '{2}' öncesinde '{0}.{1}' için EndMember yok.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Parametre sıfıra eşit veya daha büyük olmalıdır.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentlessPropertyElement">
         <source>The property element '{0}' is not contained by an object element.</source>
         <target state="translated">'{0}' özellik öğesi bir nesne öğesinin içinde değil.</target>

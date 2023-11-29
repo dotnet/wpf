@@ -1292,11 +1292,6 @@
         <target state="translated">Das angegebene Verweisobjekt verursacht einen Konflikt mit dem vordefinierten Package-spezifischen Verweis.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Der Parameter muss größer oder gleich null sein.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeBetween">
         <source>The parameter value must be between '{0}' and '{1}'.</source>
         <target state="translated">Der Parameterwert muss zwischen "{0}" und "{1}" liegen.</target>

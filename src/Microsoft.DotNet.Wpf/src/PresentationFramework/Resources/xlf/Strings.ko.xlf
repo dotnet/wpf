@@ -3608,11 +3608,6 @@ Do you want to replace it?</source>
         <target state="translated">'{1}'의 인스턴스를 만들 때 '{0}'이(가) 제공되어야 합니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">매개 변수는 0보다 크거나 같아야 합니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeLogicalNode">
         <source>Parameter must be FrameworkElement or FrameworkContentElement.</source>
         <target state="translated">매개 변수는 FrameworkElement 또는 FrameworkContentElement여야 합니다.</target>

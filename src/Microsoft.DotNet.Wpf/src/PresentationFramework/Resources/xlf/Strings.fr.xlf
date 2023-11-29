@@ -3608,11 +3608,6 @@ Voulez-vous le remplacer ?</target>
         <target state="translated">'{0}' doit être fourni durant l'instanciation de '{1}'.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Le paramètre doit être supérieur ou égal à zéro.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeLogicalNode">
         <source>Parameter must be FrameworkElement or FrameworkContentElement.</source>
         <target state="translated">Parameter doit être FrameworkElement ou FrameworkContentElement.</target>

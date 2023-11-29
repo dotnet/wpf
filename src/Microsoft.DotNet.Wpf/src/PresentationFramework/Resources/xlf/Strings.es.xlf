@@ -3608,11 +3608,6 @@ Do you want to replace it?</source>
         <target state="translated">"{0}" se debe proporcionar al crear la instancia de "{1}".</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">El parámetro debe ser mayor que o igual a cero.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeLogicalNode">
         <source>Parameter must be FrameworkElement or FrameworkContentElement.</source>
         <target state="translated">El parámetro debe ser FrameworkElement o FrameworkContentElement.</target>

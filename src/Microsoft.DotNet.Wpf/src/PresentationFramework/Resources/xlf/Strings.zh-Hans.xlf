@@ -3608,11 +3608,6 @@ Do you want to replace it?</source>
         <target state="translated">安装“{1}”时必须提供“{0}”。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">参数必须大于或等于零。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeLogicalNode">
         <source>Parameter must be FrameworkElement or FrameworkContentElement.</source>
         <target state="translated">参数必须是 FrameworkElement 或 FrameworkContentElement。</target>

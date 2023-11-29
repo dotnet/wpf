@@ -3608,11 +3608,6 @@ Czy chcesz go zastąpić?</target>
         <target state="translated">Podczas tworzenia wystąpienia „{1}” należy dostarczyć „{0}”.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Parametr musi być większy lub równy zeru.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeLogicalNode">
         <source>Parameter must be FrameworkElement or FrameworkContentElement.</source>
         <target state="translated">Parametrem musi być FrameworkElement lub FrameworkContentElement.</target>

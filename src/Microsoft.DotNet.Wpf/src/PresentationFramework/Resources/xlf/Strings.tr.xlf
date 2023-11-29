@@ -3608,11 +3608,6 @@ Değiştirmek istiyor musunuz?</target>
         <target state="translated">'{1}' örneği oluşturulurken '{0}' sağlanmalıdır.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Parametre sıfıra eşit veya daha büyük olmalıdır.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeLogicalNode">
         <source>Parameter must be FrameworkElement or FrameworkContentElement.</source>
         <target state="translated">Parametre FrameworkElement veya FrameworkContentElement olmalıdır.</target>

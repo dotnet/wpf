@@ -339,6 +339,8 @@ namespace System.Windows
         {
             ArgumentNullException.ThrowIfNull(format);
 
+            ArgumentNullException.ThrowIfNull(data);
+
             if (format == string.Empty)
             {
                 throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);

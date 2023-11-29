@@ -387,11 +387,8 @@ namespace MS.Internal
                 throw new ArgumentNullException("characterString");
             }
 
-            if (length <= 0)
-            {
-                throw new ArgumentOutOfRangeException("length", SR.ParameterValueMustBeGreaterThanZero);
-            }
-            
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
+
             _unsafeString = characterString;
             _length = length;
         }

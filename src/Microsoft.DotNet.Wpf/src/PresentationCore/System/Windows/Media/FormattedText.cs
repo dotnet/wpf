@@ -290,11 +290,8 @@ namespace System.Windows.Media
 
         private static void ValidateFontSize(double emSize)
         {
-            if (emSize <= 0)
-                throw new ArgumentOutOfRangeException("emSize", SR.ParameterMustBeGreaterThanZero);
-
-            if (emSize > MaxFontEmSize)
-                throw new ArgumentOutOfRangeException("emSize", SR.Format(SR.ParameterCannotBeGreaterThan, MaxFontEmSize));
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(emSize);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(emSize, MaxFontEmSize);
 
             if (double.IsNaN(emSize))
                 throw new ArgumentOutOfRangeException("emSize", SR.ParameterValueCannotBeNaN);
@@ -1276,8 +1273,7 @@ namespace System.Windows.Media
         {
             set
             {
-                if (value < 0)
-                    throw new ArgumentOutOfRangeException("value", SR.ParameterCannotBeNegative);
+                ArgumentOutOfRangeException.ThrowIfNegative(value);
 
                 _defaultParaProps.SetLineHeight(value);
                 InvalidateMetrics();
@@ -1300,8 +1296,7 @@ namespace System.Windows.Media
         {
             set
             {
-                if (value < 0)
-                    throw new ArgumentOutOfRangeException("value", SR.ParameterCannotBeNegative);
+                ArgumentOutOfRangeException.ThrowIfNegative(value);
                 _maxTextWidth = value;
                 InvalidateMetrics();
             }
@@ -1376,8 +1371,7 @@ namespace System.Windows.Media
         {
             set
             {
-                if (value <= 0)
-                    throw new ArgumentOutOfRangeException("value", SR.ParameterMustBeGreaterThanZero);
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero(value);
                 _maxLineCount = value;
                 InvalidateMetrics();
             }

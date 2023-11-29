@@ -3608,11 +3608,6 @@ Do you want to replace it?</source>
         <target state="translated">При создании экземпляра "{1}" необходимо задать "{0}".</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Значение параметра должно быть больше или равно 0.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeLogicalNode">
         <source>Parameter must be FrameworkElement or FrameworkContentElement.</source>
         <target state="translated">Параметр должен быть FrameworkElement или FrameworkContentElement.</target>

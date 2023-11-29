@@ -3608,11 +3608,6 @@ Möchten Sie das Element ersetzen?</target>
         <target state="translated">"{0}" muss beim Instanziieren von "{1}" bereitgestellt werden.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Der Parameter muss größer oder gleich null sein.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeLogicalNode">
         <source>Parameter must be FrameworkElement or FrameworkContentElement.</source>
         <target state="translated">Bei dem Parameter muss es sich um "FrameworkElement" oder "FrameworkContentElement" handeln.</target>

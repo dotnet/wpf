@@ -1498,12 +1498,9 @@ namespace MS.Internal.TextFormatting
                     throw new ObjectDisposedException(SR.TextLineHasBeenDisposed);
                 }
 
-                if(textLength == 0)
-                {
-                    throw new ArgumentOutOfRangeException("textLength", SR.ParameterMustBeGreaterThanZero);
-                }
+                ArgumentOutOfRangeException.ThrowIfZero(textLength);
 
-                if(textLength < 0)
+                if (textLength < 0)
                 {
                     firstTextSourceCharacterIndex += textLength;
                     textLength = -textLength;

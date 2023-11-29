@@ -118,10 +118,7 @@ namespace MS.Internal.TextFormatting
 
                 textRun = settings.TextSource.GetTextRun(cpFetch);
 
-                if (textRun.Length < 1)
-                {
-                    throw new ArgumentOutOfRangeException("textRun.Length", SR.ParameterMustBeGreaterThanZero);
-                }
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero(textRun.Length, "textRun.Length");
 
                 Plsrun plsrun = TextRunInfo.GetRunType(textRun);
 

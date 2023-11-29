@@ -730,8 +730,7 @@ namespace System.Windows.Media.Imaging
             if (buffer == IntPtr.Zero)
                 throw new ArgumentNullException("buffer");
 
-            if (stride <= 0)
-                throw new ArgumentOutOfRangeException("stride", SR.ParameterMustBeGreaterThanZero);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(stride);
 
             if (sourceRect.Width <= 0)
                 sourceRect.Width = PixelWidth;
@@ -739,19 +738,14 @@ namespace System.Windows.Media.Imaging
             if (sourceRect.Height <= 0)
                 sourceRect.Height = PixelHeight;
 
-            if (sourceRect.Width > PixelWidth)
-                throw new ArgumentOutOfRangeException("sourceRect.Width", SR.Format(SR.ParameterCannotBeGreaterThan, PixelWidth));
-
-            if (sourceRect.Height > PixelHeight)
-                throw new ArgumentOutOfRangeException("sourceRect.Height", SR.Format(SR.ParameterCannotBeGreaterThan, PixelHeight));
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(sourceRect.Width, PixelWidth, "sourceRect.Width");
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(sourceRect.Height, PixelHeight, "sourceRect.Height");
 
             int minStride = checked(((sourceRect.Width * Format.BitsPerPixel) + 7) / 8);
-            if (stride < minStride)
-                throw new ArgumentOutOfRangeException("stride", SR.Format(SR.ParameterCannotBeLessThan, minStride));
+            ArgumentOutOfRangeException.ThrowIfLessThan(stride, minStride);
 
             int minRequiredDestSize = checked((stride * (sourceRect.Height - 1)) + minStride);
-            if (bufferSize < minRequiredDestSize)
-                throw new ArgumentOutOfRangeException("buffer", SR.Format(SR.ParameterCannotBeLessThan, minRequiredDestSize));
+            ArgumentOutOfRangeException.ThrowIfLessThan(bufferSize, minRequiredDestSize);
 
             lock (_syncObject)
             {

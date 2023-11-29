@@ -63,11 +63,7 @@ namespace MS.Internal.AutomationProxies
         internal static IRawElementProviderSimple Create(IntPtr hwnd, int idChild)
         {
             // Something is wrong if idChild is not zero
-            if (idChild != 0)
-            {
-                Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
-            }
+            ArgumentOutOfRangeException.ThrowIfNotEqual(idChild, 0);
 
             return new WindowsRichEdit(hwnd, null, 0);
         }

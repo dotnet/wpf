@@ -3608,11 +3608,6 @@ Sostituirlo?</target>
         <target state="translated">È necessario specificare '{0}' quando si crea un'istanza di '{1}'.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Il valore del parametro deve essere maggiore o uguale a zero.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeLogicalNode">
         <source>Parameter must be FrameworkElement or FrameworkContentElement.</source>
         <target state="translated">Il parametro deve essere FrameworkElement o FrameworkContentElement.</target>

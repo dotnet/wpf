@@ -95,19 +95,13 @@ namespace System.Windows.Media.TextFormatting
             int                         characterLength
             )
         {
-            if (characterLength < 0)
-            {
-                throw new ArgumentOutOfRangeException("characterLength", SR.ParameterCannotBeNegative);
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(characterLength);
 
             int maxLength = (characterBufferReference.CharacterBuffer != null) ?
                 characterBufferReference.CharacterBuffer.Count - characterBufferReference.OffsetToFirstChar :
                 0;
 
-            if (characterLength > maxLength)
-            {
-                throw new ArgumentOutOfRangeException("characterLength", SR.Format(SR.ParameterCannotBeGreaterThan, maxLength));
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(characterLength, maxLength);
 
             _charBufferRef = characterBufferReference;
             _length = characterLength;

@@ -1767,9 +1767,6 @@
   <data name="StringEmpty" xml:space="preserve">
     <value>Parameter cannot be a zero-length string.</value>
   </data>
-  <data name="ParameterCannotBeNegative" xml:space="preserve">
-    <value>Parameter must be greater than or equal to zero.</value>
-  </data>
   <data name="Freezable_CantBeFrozen" xml:space="preserve">
     <value>Specified value of type '{0}' must have IsFrozen set to false to modify.</value>
   </data>

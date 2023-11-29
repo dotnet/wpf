@@ -252,12 +252,7 @@ namespace System.Windows.Xps.Packaging
                 // This list maintains a reference to _signatures so its enumerator will adapt
                 // as _signatures is updated.  Therefore, we need not regenerate it when _signatures
                 // is modified.
-                if (_reachSignatureList == null)
-                {
-                    _reachSignatureList = new ReadOnlyCollection<XpsDigitalSignature>(_reachSignatures);
-                }
-
-                return _reachSignatureList;
+                return _reachSignatureList ??= new ReadOnlyCollection<XpsDigitalSignature>(_reachSignatures);
            }
         }
 

@@ -177,8 +177,7 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         private int VerifyMaxLineWidth(double maxLineWidth)
         {
-            if (double.IsNaN(maxLineWidth))
-                throw new ArgumentOutOfRangeException("maxLineWidth", SR.ParameterValueCannotBeNaN);                                        
+            ArgumentOutOfRangeException.ThrowIfEqual(maxLineWidth, double.NaN);
             
             if (maxLineWidth == 0 || double.IsPositiveInfinity(maxLineWidth))
             {

@@ -5183,11 +5183,6 @@ Deseja substituí-lo?</target>
         <target state="translated">O objeto do fluxo atual foi fechado e descartado. Não é possível acessar um fluxo fechado.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">O parâmetro não pode ser uma cadeia de caracteres de comprimento zero.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StringIdOutOfSequence">
         <source>Unexpected String Id {0}. String IDs must be sequential.</source>
         <target state="translated">Id de Cadeia de Caracteres {0} inesperada. As IDs de Cadeia de Caracteres devem ser sequenciais.</target>

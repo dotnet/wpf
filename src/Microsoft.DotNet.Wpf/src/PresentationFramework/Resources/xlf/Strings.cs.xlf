@@ -5183,11 +5183,6 @@ Chcete ho nahradit?</target>
         <target state="translated">Aktuální objekt datového proudu byl právě zavřen a odstraněn. K zavřenému proudu není přístup.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Parametr nemůže být řetězec o nulové délce.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StringIdOutOfSequence">
         <source>Unexpected String Id {0}. String IDs must be sequential.</source>
         <target state="translated">Byl poskytnut neočekávaný identifikátor řetězce {0}. Identifikátory řetězce musejí být sekvenční.</target>

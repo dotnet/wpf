@@ -2119,9 +2119,6 @@
   <data name="StreamGeometry_NeedBeginFigure" xml:space="preserve">
     <value>BeginFigure must be called before this API.</value>
   </data>
-  <data name="StringEmpty" xml:space="preserve">
-    <value>Parameter cannot be a zero-length string.</value>
-  </data>
   <data name="StrokeCollectionCountTooBig" xml:space="preserve">
     <value>Maximum number of strokes is two.</value>
   </data>

@@ -2987,11 +2987,6 @@
         <target state="translated">必須再呼叫此應用程式開發介面之前先呼叫 BeginFigure。</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">參數不能是零長度字串。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StrokeCollectionCountTooBig">
         <source>Maximum number of strokes is two.</source>
         <target state="translated">筆劃數目上限是二。</target>

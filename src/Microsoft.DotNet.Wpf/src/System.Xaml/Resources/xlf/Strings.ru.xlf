@@ -1212,16 +1212,6 @@
         <target state="translated">У напрямую присваиваемых адресных привязок может быть только одно имя.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Параметр не может представлять собой строку нулевой длины.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StringIsNullOrEmpty">
-        <source>The string is null or empty.</source>
-        <target state="translated">Строка является неопределенной (null) или пустой.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="TemplateNotCollected">
         <source>Deferred load section was not collected in '{0}'.</source>
         <target state="translated">Сбор для раздела отложенной загрузки не был выполнен в "{0}".</target>

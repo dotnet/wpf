@@ -357,9 +357,6 @@ SecurityXmlUnexpectedTag=Invalid security XML. Unexpected tag '{0}', expected '{
 SecurityXmlUnexpectedValue=Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.
 SecurityXmlMissingAttribute=Invalid security XML. Missing expected attribute '{0}'.
 
-; XamlServices
-StringIsNullOrEmpty=The string is null or empty.
-
 ; XamlTypeInvoker
 NotSupportedOnUnknownType=This operation is not supported on unknown types.
 OnlySupportedOnCollections=This operation is only supported on collection types.

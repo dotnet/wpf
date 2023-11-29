@@ -5183,11 +5183,6 @@ Do you want to replace it?</source>
         <target state="translated">当前流属性对象已关闭并且已释放。无法访问已关闭的流。</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">参数不能为零长度的字符串。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StringIdOutOfSequence">
         <source>Unexpected String Id {0}. String IDs must be sequential.</source>
         <target state="translated">意外的字符串 ID {0}。字符串 ID 必须按顺序排列。</target>

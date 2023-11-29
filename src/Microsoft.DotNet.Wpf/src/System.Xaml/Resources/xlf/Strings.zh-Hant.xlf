@@ -1212,16 +1212,6 @@
         <target state="translated">可直接指派的修復只能有一個名稱。</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">參數不能是零長度字串。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StringIsNullOrEmpty">
-        <source>The string is null or empty.</source>
-        <target state="translated">字串是 null 或空白。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="TemplateNotCollected">
         <source>Deferred load section was not collected in '{0}'.</source>
         <target state="translated">延後的載入區段未收集在 '{0}' 中。</target>

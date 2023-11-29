@@ -2987,11 +2987,6 @@
         <target state="translated">Необходимо вызвать BeginFigure до этой API-функции.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Параметр не может представлять собой строку нулевой длины.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StrokeCollectionCountTooBig">
         <source>Maximum number of strokes is two.</source>
         <target state="translated">Максимальное число росчерков равно двум.</target>

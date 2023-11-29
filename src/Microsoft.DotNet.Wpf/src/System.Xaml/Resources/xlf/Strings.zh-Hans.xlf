@@ -1212,16 +1212,6 @@
         <target state="translated">可直接指定的链接地址信息只能有一个名称。</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">参数不能为零长度的字符串。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StringIsNullOrEmpty">
-        <source>The string is null or empty.</source>
-        <target state="translated">该字符串为 null 或为空。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="TemplateNotCollected">
         <source>Deferred load section was not collected in '{0}'.</source>
         <target state="translated">在“{0}”中未收集延迟加载节。</target>

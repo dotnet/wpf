@@ -1212,16 +1212,6 @@
         <target state="translated">직접 할당 가능한 픽스업에는 이름이 하나만 있어야 합니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">매개 변수 문자열의 길이는 0일 수 없습니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StringIsNullOrEmpty">
-        <source>The string is null or empty.</source>
-        <target state="translated">문자열이 null이거나 비어 있습니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="TemplateNotCollected">
         <source>Deferred load section was not collected in '{0}'.</source>
         <target state="translated">지연된 로드 섹션이 '{0}'에서 수집되지 않았습니다.</target>

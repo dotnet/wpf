@@ -2987,11 +2987,6 @@
         <target state="translated">이 API를 수행하려면 먼저 BeginFigure를 호출해야 합니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">매개 변수 문자열의 길이는 0일 수 없습니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StrokeCollectionCountTooBig">
         <source>Maximum number of strokes is two.</source>
         <target state="translated">스트로크의 최대 수는 2입니다.</target>

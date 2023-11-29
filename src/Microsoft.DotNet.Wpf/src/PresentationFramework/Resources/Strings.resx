@@ -4005,9 +4005,6 @@ Do you want to replace it?</value>
   <data name="SecurityExceptionForSettingSandboxExternalToTrue" xml:space="preserve">
     <value>Cannot set SandboxExternalContent to true in partial trust.</value>
   </data>
-  <data name="StringEmpty" xml:space="preserve">
-    <value>Parameter cannot be a zero-length string.</value>
-  </data>
   <data name="TokenizerHelperEmptyToken" xml:space="preserve">
     <value>Empty token encountered at position {0} while parsing '{1}'.</value>
   </data>

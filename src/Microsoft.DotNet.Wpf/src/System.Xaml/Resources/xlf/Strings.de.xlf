@@ -1212,16 +1212,6 @@
         <target state="translated">Direkt zuweisbare Fixups dürfen nur einen Namen besitzen.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Der Parameter darf keine Zeichenfolge mit der Länge Null sein.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StringIsNullOrEmpty">
-        <source>The string is null or empty.</source>
-        <target state="translated">Die Zeichenfolge ist NULL oder leer.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="TemplateNotCollected">
         <source>Deferred load section was not collected in '{0}'.</source>
         <target state="translated">Der zurückgestellte Ladeabschnitt wurde nicht in "{0}" gesammelt.</target>

@@ -1212,16 +1212,6 @@
         <target state="translated">Le correzioni assegnabili direttamente devono avere un solo nome.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Il parametro non può essere una stringa di lunghezza zero.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StringIsNullOrEmpty">
-        <source>The string is null or empty.</source>
-        <target state="translated">La stringa è null o vuota.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="TemplateNotCollected">
         <source>Deferred load section was not collected in '{0}'.</source>
         <target state="translated">La sezione di caricamento posticipato non è stata raccolta in '{0}'.</target>

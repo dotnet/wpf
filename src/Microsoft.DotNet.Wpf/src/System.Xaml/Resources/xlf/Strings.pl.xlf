@@ -1212,16 +1212,6 @@
         <target state="translated">Naprawy możliwe do bezpośredniego przypisania muszą mieć tylko jedną nazwę.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Parametr nie może być ciągiem o zerowej długości.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StringIsNullOrEmpty">
-        <source>The string is null or empty.</source>
-        <target state="translated">Ciąg ma wartość null lub jest pusty.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="TemplateNotCollected">
         <source>Deferred load section was not collected in '{0}'.</source>
         <target state="translated">Sekcja odłożonego pobierania nie została pobrana w „{0}”.</target>

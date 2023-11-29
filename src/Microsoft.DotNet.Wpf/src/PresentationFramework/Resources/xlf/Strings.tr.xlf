@@ -5183,11 +5183,6 @@ Değiştirmek istiyor musunuz?</target>
         <target state="translated">Geçerli akış nesnesi kapatıldı ve bırakıldı. Kapalı akışa erişilemez.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Parametre sıfır uzunlukta bir dize olamaz.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StringIdOutOfSequence">
         <source>Unexpected String Id {0}. String IDs must be sequential.</source>
         <target state="translated">Beklenmeyen Dize kimliği {0}. Dize kimlikleri ardışık olmalıdır.</target>

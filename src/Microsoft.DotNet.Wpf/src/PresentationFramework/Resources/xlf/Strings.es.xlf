@@ -5183,11 +5183,6 @@ Do you want to replace it?</source>
         <target state="translated">El objeto de secuencia actual se cerró y eliminó. No se puede obtener acceso a una secuencia cerrada.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">El parámetro no puede ser una cadena de longitud cero.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StringIdOutOfSequence">
         <source>Unexpected String Id {0}. String IDs must be sequential.</source>
         <target state="translated">Identificador de cadena no esperado ({0}). Los identificadores de cadena deben ser secuenciales.</target>

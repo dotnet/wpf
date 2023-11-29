@@ -1212,16 +1212,6 @@
         <target state="translated">Přímo přiřaditelné opravy musí mít pouze jeden název.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Parametr nemůže být řetězec o nulové délce.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StringIsNullOrEmpty">
-        <source>The string is null or empty.</source>
-        <target state="translated">Řetězec je null nebo prázdný.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="TemplateNotCollected">
         <source>Deferred load section was not collected in '{0}'.</source>
         <target state="translated">Sekce odloženého načtení nebyla sebrána v {0}.</target>

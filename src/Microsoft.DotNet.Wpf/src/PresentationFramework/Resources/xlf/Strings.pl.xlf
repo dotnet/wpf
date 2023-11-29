@@ -5183,11 +5183,6 @@ Czy chcesz go zastąpić?</target>
         <target state="translated">Bieżący obiekt strumienia został zamknięty i usunięty. Nie można uzyskać dostępu do zamkniętego strumienia.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Parametr nie może być ciągiem o zerowej długości.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StringIdOutOfSequence">
         <source>Unexpected String Id {0}. String IDs must be sequential.</source>
         <target state="translated">Nieoczekiwany identyfikator ciągu {0}. Identyfikatory ciągów muszą być kolejne.</target>

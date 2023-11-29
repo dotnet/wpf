@@ -5183,11 +5183,6 @@ Sostituirlo?</target>
         <target state="translated">L'oggetto flusso corrente è stato chiuso ed eliminato. Impossibile accedere a un flusso chiuso.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Il parametro non può essere una stringa di lunghezza zero.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StringIdOutOfSequence">
         <source>Unexpected String Id {0}. String IDs must be sequential.</source>
         <target state="translated">ID stringa imprevisto {0}. È necessario che gli ID stringa siano sequenziali.</target>

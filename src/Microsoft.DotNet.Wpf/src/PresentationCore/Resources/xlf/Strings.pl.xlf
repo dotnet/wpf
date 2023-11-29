@@ -2987,11 +2987,6 @@
         <target state="translated">Właściwość BeginFigure należy wywołać przed tą funkcją API.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Parametr nie może być ciągiem o zerowej długości.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StrokeCollectionCountTooBig">
         <source>Maximum number of strokes is two.</source>
         <target state="translated">Maksymalna liczba naciśnięć wynosi dwa.</target>

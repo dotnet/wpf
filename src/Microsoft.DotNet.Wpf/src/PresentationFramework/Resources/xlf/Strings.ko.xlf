@@ -5183,11 +5183,6 @@ Do you want to replace it?</source>
         <target state="translated">현재 스트림 개체가 닫히고 삭제되었습니다. 닫힌 스트림에 액세스할 수 없습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">매개 변수 문자열의 길이는 0일 수 없습니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StringIdOutOfSequence">
         <source>Unexpected String Id {0}. String IDs must be sequential.</source>
         <target state="translated">예기치 않은 문자열 ID {0}입니다. 문자열 ID는 순차적이어야 합니다.</target>

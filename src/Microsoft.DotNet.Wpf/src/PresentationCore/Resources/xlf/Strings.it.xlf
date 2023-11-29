@@ -2987,11 +2987,6 @@
         <target state="translated">È necessario chiamare BeginFigure prima di questa API.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Il parametro non può essere una stringa di lunghezza zero.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StrokeCollectionCountTooBig">
         <source>Maximum number of strokes is two.</source>
         <target state="translated">Il numero massimo di tratti è 2.</target>

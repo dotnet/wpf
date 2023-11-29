@@ -5183,11 +5183,6 @@ Möchten Sie das Element ersetzen?</target>
         <target state="translated">Das aktuelle Datenstromobjekt wurde geschlossen und verworfen. Auf geschlossene Datenströme kann nicht zugegriffen werden.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Der Parameter darf keine Zeichenfolge mit der Länge Null sein.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StringIdOutOfSequence">
         <source>Unexpected String Id {0}. String IDs must be sequential.</source>
         <target state="translated">Unerwartete Zeichenfolgen-ID {0}. Zeichenfolgen-IDs müssen sequenziell sein.</target>

@@ -2987,11 +2987,6 @@
         <target state="translated">Před tímto API musí být vyvolána možnost BeginFigure.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Parametr nemůže být řetězec o nulové délce.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StrokeCollectionCountTooBig">
         <source>Maximum number of strokes is two.</source>
         <target state="translated">Maximální počet zdvihů je dva.</target>

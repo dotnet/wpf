@@ -1212,16 +1212,6 @@
         <target state="translated">Doğrudan Atanabilir Düzeltmelerin tek bir adı olmalıdır.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Parametre sıfır uzunlukta bir dize olamaz.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StringIsNullOrEmpty">
-        <source>The string is null or empty.</source>
-        <target state="translated">Dize null veya boş.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="TemplateNotCollected">
         <source>Deferred load section was not collected in '{0}'.</source>
         <target state="translated">Ertelenmiş yükleme bölümü '{0}' içinde toplanmadı.</target>

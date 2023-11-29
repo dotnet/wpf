@@ -843,12 +843,6 @@
   <data name="SimpleFixupsMustHaveOneName" space_="preserve">
     <value>Directly Assignable Fixups must only have one name.</value>
   </data>
-  <data name="StringEmpty" space_="preserve">
-    <value>Parameter cannot be a zero-length string.</value>
-  </data>
-  <data name="StringIsNullOrEmpty" space_="preserve">
-    <value>The string is null or empty.</value>
-  </data>
   <data name="TemplateNotCollected" space_="preserve">
     <value>Deferred load section was not collected in '{0}'.</value>
   </data>

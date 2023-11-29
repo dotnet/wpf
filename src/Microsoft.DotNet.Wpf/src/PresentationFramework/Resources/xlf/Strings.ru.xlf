@@ -5183,11 +5183,6 @@ Do you want to replace it?</source>
         <target state="translated">Текущий объект потока был закрыт и ликвидирован. Невозможно получить доступ к закрытому потоку.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Параметр не может представлять собой строку нулевой длины.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StringIdOutOfSequence">
         <source>Unexpected String Id {0}. String IDs must be sequential.</source>
         <target state="translated">Непредвиденный идентификатор строки: {0}. Идентификаторы строк должны быть последовательными.</target>

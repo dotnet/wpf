@@ -2987,11 +2987,6 @@
         <target state="translated">Bu API'den önce BeginFigure çağırılmalıdır.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Parametre sıfır uzunlukta bir dize olamaz.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StrokeCollectionCountTooBig">
         <source>Maximum number of strokes is two.</source>
         <target state="translated">En fazla vuruş sayısı ikidir.</target>

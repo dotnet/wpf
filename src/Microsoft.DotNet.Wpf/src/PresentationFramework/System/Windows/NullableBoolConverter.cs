@@ -58,9 +58,9 @@ namespace System.Windows
         public override TypeConverter.StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {
             return _standardValues ??= new TypeConverter.StandardValuesCollection(new Nullable<bool>[]
-{
-    true, false, null
-});
+            {
+                true, false, null
+            });
         }
 
         /// <summary>

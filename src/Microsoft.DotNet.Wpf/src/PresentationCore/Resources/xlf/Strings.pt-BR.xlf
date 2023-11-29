@@ -3047,11 +3047,6 @@
         <target state="translated">'{0}' já existe na coleção.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Stylus_PlugInIsNull">
-        <source>'{0}' must be non-null.</source>
-        <target state="translated">'{0}' deve ser diferente de nulo.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Stylus_PlugInNotExist">
         <source>'{0}' does not exist in the collection.</source>
         <target state="translated">'{0}' não existe na coleção.</target>

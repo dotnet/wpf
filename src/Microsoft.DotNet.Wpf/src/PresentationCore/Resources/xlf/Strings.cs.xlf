@@ -3047,11 +3047,6 @@
         <target state="translated">{0} již v kolekci existuje.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Stylus_PlugInIsNull">
-        <source>'{0}' must be non-null.</source>
-        <target state="translated">Hodnota {0} musí být nenulová.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Stylus_PlugInNotExist">
         <source>'{0}' does not exist in the collection.</source>
         <target state="translated">{0} v kolekci dosud neexistuje.</target>

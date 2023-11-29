@@ -3047,11 +3047,6 @@
         <target state="translated">'{0}'이(가) 컬렉션에 이미 있습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Stylus_PlugInIsNull">
-        <source>'{0}' must be non-null.</source>
-        <target state="translated">'{0}'은(는) null이 아니어야 합니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Stylus_PlugInNotExist">
         <source>'{0}' does not exist in the collection.</source>
         <target state="translated">'{0}'이(가) 컬렉션에 없습니다.</target>

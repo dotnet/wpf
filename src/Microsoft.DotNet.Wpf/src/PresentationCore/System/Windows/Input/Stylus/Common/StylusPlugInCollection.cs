@@ -43,10 +43,7 @@ namespace System.Windows.Input.StylusPlugIns
             _element.VerifyAccess();
 
             // Validate the input parameter
-            if (null == plugIn)
-            {
-                throw new ArgumentNullException(nameof(plugIn), SR.Stylus_PlugInIsNull);
-            }
+            ArgumentNullException.ThrowIfNull(plugIn);
 
             if (IndexOf(plugIn) != -1)
             {
@@ -176,10 +173,7 @@ namespace System.Windows.Input.StylusPlugIns
             // Verify it's called from the app dispatcher
             _element.VerifyAccess();
 
-            if (null == plugIn)
-            {
-                throw new ArgumentNullException("plugIn", SR.Stylus_PlugInIsNull);
-            }
+            ArgumentNullException.ThrowIfNull(plugIn);
 
             if (IndexOf(plugIn) != -1)
             {

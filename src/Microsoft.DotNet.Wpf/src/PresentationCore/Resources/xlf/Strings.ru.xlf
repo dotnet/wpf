@@ -3047,11 +3047,6 @@
         <target state="translated">Семейство уже содержит элемент "{0}".</target>
         <note />
       </trans-unit>
-      <trans-unit id="Stylus_PlugInIsNull">
-        <source>'{0}' must be non-null.</source>
-        <target state="translated">"{0}" не может иметь неопределенное значение.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Stylus_PlugInNotExist">
         <source>'{0}' does not exist in the collection.</source>
         <target state="translated">Элемент "{0}" отсутствует в семействе.</target>

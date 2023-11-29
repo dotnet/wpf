@@ -3047,11 +3047,6 @@
         <target state="translated">“{0}”已存在于集合中。</target>
         <note />
       </trans-unit>
-      <trans-unit id="Stylus_PlugInIsNull">
-        <source>'{0}' must be non-null.</source>
-        <target state="translated">“{0}”必须为非空。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Stylus_PlugInNotExist">
         <source>'{0}' does not exist in the collection.</source>
         <target state="translated">集合中不存在“{0}”。</target>

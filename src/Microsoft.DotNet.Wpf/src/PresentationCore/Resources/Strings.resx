@@ -2155,9 +2155,6 @@
   <data name="Stylus_PlugInIsDuplicated" xml:space="preserve">
     <value>'{0}' already exists in the collection.</value>
   </data>
-  <data name="Stylus_PlugInIsNull" xml:space="preserve">
-    <value>'{0}' must be non-null.</value>
-  </data>
   <data name="Stylus_PlugInNotExist" xml:space="preserve">
     <value>'{0}' does not exist in the collection.</value>
   </data>

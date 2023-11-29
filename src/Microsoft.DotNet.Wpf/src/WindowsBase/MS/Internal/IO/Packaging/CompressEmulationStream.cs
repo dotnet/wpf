@@ -259,8 +259,7 @@ namespace MS.Internal.IO.Packaging
         /// another wrapper Stream class.</remarks>
         internal CompressEmulationStream(Stream baseStream, Stream tempStream, long position, IDeflateTransform transformer)
         {
-            if (position < 0)
-                throw new ArgumentOutOfRangeException("position");
+            ArgumentOutOfRangeException.ThrowIfNegative(position);
 
             ArgumentNullException.ThrowIfNull(baseStream);
 

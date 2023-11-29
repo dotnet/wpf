@@ -49,15 +49,9 @@ namespace System.Windows.Baml2006
                 throw new ArgumentException("can\u2019t seek on baseStream");
             }
 
-            if (offset < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(offset));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(offset);
 
-            if (length < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(length));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(length);
 
             SharedStream subStream = baseStream as SharedStream;
             if (subStream != null)

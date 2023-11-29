@@ -605,10 +605,7 @@ namespace System.Windows.Documents
                 throw new ArgumentException("array");
             }
 
-            if (arrayIndex < 0)
-            {
-                throw new ArgumentOutOfRangeException("arrayIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
 
             if (arrayIndex > array.Length)
             {

@@ -133,8 +133,7 @@ namespace System.Windows.Media
         {
             ArgumentNullException.ThrowIfNull(array);
 
-            if (index < 0)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             if (index >= array.Length)
                 throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
@@ -191,8 +190,7 @@ namespace System.Windows.Media
         {
             ArgumentNullException.ThrowIfNull(array);
 
-            if (index < 0)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             if (index >= array.Length)
                 throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));

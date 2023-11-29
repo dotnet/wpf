@@ -428,10 +428,7 @@ namespace MS.Internal.Documents
         {
             if (!DoubleUtil.AreClose(scale, Scale))
             {
-                if (scale <= 0.0)
-                {
-                    throw new ArgumentOutOfRangeException("scale");
-                }
+                ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(scale, 0.0);
 
                 if (!Helper.IsDoubleValid(scale))
                 {
@@ -448,10 +445,7 @@ namespace MS.Internal.Documents
         /// <param name="columns"></param>
         public void SetColumns(int columns)
         {
-            if (columns < 1)
-            {
-                throw new ArgumentOutOfRangeException("columns");
-            }
+            ArgumentOutOfRangeException.ThrowIfLessThan(columns, 1);
 
             //Perf Tracing - Mark Layout Change Start
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordXPS, EventTrace.Event.WClientDRXLayoutBegin);
@@ -465,10 +459,7 @@ namespace MS.Internal.Documents
         /// <param name="columns"></param>
         public void FitColumns(int columns)
         {
-            if (columns < 1)
-            {
-                throw new ArgumentOutOfRangeException("columns");
-            }
+            ArgumentOutOfRangeException.ThrowIfLessThan(columns, 1);
 
             //Perf Tracing - Mark Layout Change Start
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordXPS, EventTrace.Event.WClientDRXLayoutBegin);

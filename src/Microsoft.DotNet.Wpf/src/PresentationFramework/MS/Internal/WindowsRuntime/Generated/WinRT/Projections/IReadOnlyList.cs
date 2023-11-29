@@ -88,8 +88,7 @@ namespace MS.Internal.WindowsRuntime.ABI.System.Collections.Generic
 
             private T Indexer_Get(int index)
             {
-                if (index < 0)
-                    throw new ArgumentOutOfRangeException(nameof(index));
+                ArgumentOutOfRangeException.ThrowIfNegative(index);
 
                 try
                 {

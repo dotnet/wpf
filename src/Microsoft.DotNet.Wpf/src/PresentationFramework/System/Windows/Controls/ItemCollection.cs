@@ -297,8 +297,7 @@ namespace System.Windows.Controls
             ArgumentNullException.ThrowIfNull(array);
             if (array.Rank > 1)
                 throw new ArgumentException(SR.BadTargetArray, "array"); // array is multidimensional.
-            if (index < 0)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             // use the view instead of the collection, because it may have special sort/filter
             if (!EnsureCollectionView())
@@ -340,23 +339,21 @@ namespace System.Windows.Controls
         /// </exception>
         public override object GetItemAt(int index)
         {
-                // only check lower bound because Count could be expensive
-                if (index < 0)
-                    throw new ArgumentOutOfRangeException("index");
+            // only check lower bound because Count could be expensive
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
 
-                VerifyRefreshNotDeferred();
+            VerifyRefreshNotDeferred();
 
-                if (!EnsureCollectionView())
-                    throw new InvalidOperationException(SR.ItemCollectionHasNoCollection);
+            if (!EnsureCollectionView())
+                throw new InvalidOperationException(SR.ItemCollectionHasNoCollection);
 
-                if (_collectionView == _internalView)
-                {
-                    // check upper bound here because we know it's not expensive
-                    if (index >= _internalView.Count)
-                        throw new ArgumentOutOfRangeException("index");
-                }
+            if (_collectionView == _internalView)
+            {
+                // check upper bound here because we know it's not expensive
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, _internalView.Count);
+            }
 
-                return _collectionView.GetItemAt(index);
+            return _collectionView.GetItemAt(index);
         }
 
 

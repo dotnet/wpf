@@ -551,10 +551,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (index >= this.VisualChildrenCount)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, this.VisualChildrenCount);
 
             return _visualChildren[index];
         }

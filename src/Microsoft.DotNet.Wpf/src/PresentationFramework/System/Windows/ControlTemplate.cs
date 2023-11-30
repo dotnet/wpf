@@ -17,6 +17,7 @@ using System.Windows.Media.Animation;   // Timeline
 using System.Windows.Navigation;        // PageFunctionBase
 using System.ComponentModel;            // DesignerSerializationVisibilityAttribute & DefaultValue
 using System.Windows.Markup;     // DependsOnAttribute
+using System.Runtime.CompilerServices;
 
 namespace System.Windows.Controls
 {
@@ -45,7 +46,7 @@ namespace System.Windows.Controls
         /// </summary>
         public ControlTemplate(Type targetType)
         {
-            ValidateTargetType(targetType, "targetType");
+            ValidateTargetType(targetType);
             _targetType = targetType;
         }
         
@@ -91,7 +92,7 @@ namespace System.Windows.Controls
             get {  return _targetType; }
             set
             {
-                ValidateTargetType(value, "value");
+                ValidateTargetType(value);
                 CheckSealed();
                 _targetType = value;
             }
@@ -129,12 +130,9 @@ namespace System.Windows.Controls
         // Validate against two rules
         //  1. targetType must not null
         //  2. targetType must be a Control or a subclass of it
-        private void ValidateTargetType(Type targetType, string argName)
+        private void ValidateTargetType(Type targetType, [CallerArgumentExpression(nameof(targetType))] string argName = null)
         {
-            if (targetType == null)
-            {
-                throw new ArgumentNullException(argName);
-            }
+            ArgumentNullException.ThrowIfNull(targetType, argName);
             if (!typeof(Control).IsAssignableFrom(targetType) &&
                 !typeof(Page).IsAssignableFrom(targetType) &&
                 !typeof(PageFunctionBase).IsAssignableFrom(targetType))

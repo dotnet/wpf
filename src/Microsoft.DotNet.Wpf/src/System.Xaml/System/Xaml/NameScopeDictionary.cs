@@ -31,8 +31,9 @@ namespace System.Xaml
 
         public NameScopeDictionary(INameScope underlyingNameScope)
         {
+            ArgumentNullException.ThrowIfNull(underlyingNameScope);
             _names = new FrugalObjectList<string>();
-            _underlyingNameScope = underlyingNameScope ?? throw new ArgumentNullException(nameof(underlyingNameScope));
+            _underlyingNameScope = underlyingNameScope;
         }
 
         public void RegisterName(string name, object scopedElement)

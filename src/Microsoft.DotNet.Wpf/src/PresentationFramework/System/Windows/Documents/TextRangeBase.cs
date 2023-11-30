@@ -162,8 +162,8 @@ namespace System.Windows.Documents
             }
             else
             {
-                ValidationHelper.VerifyPosition(thisRange.Start.TextContainer, position1, "position1");
-                ValidationHelper.VerifyPosition(thisRange.Start.TextContainer, position2, "position2");
+                ValidationHelper.VerifyPosition(thisRange.Start.TextContainer, position1);
+                ValidationHelper.VerifyPosition(thisRange.Start.TextContainer, position2);
 
                 TextRangeBase.BeginChange(thisRange);
                 try

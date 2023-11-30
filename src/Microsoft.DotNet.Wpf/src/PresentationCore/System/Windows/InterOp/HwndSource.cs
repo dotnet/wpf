@@ -367,7 +367,7 @@ namespace System.Windows.Interop
         ///</remarks>
         public void AddHook(HwndSourceHook hook)
         {
-            Verify.IsNotNull(hook, "hook");
+            ArgumentNullException.ThrowIfNull(hook);
 
             CheckDisposed(true);
 

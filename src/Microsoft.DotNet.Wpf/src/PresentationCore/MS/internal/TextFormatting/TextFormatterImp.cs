@@ -466,16 +466,10 @@ namespace MS.Internal.TextFormatting
             )
         {
             ArgumentNullException.ThrowIfNull(textSource);
-
             ArgumentNullException.ThrowIfNull(textRunCache);
-
             ArgumentNullException.ThrowIfNull(paragraphProperties);
-
-            if (paragraphProperties.DefaultTextRunProperties == null)
-                throw new ArgumentNullException("paragraphProperties.DefaultTextRunProperties");
-
-            if (paragraphProperties.DefaultTextRunProperties.Typeface == null)
-                throw new ArgumentNullException("paragraphProperties.DefaultTextRunProperties.Typeface");
+            ArgumentNullException.ThrowIfNull(paragraphProperties.DefaultTextRunProperties, "paragraphProperties.DefaultTextRunProperties");
+            ArgumentNullException.ThrowIfNull(paragraphProperties.DefaultTextRunProperties.Typeface, "paragraphProperties.DefaultTextRunProperties.Typeface");
 
             ArgumentOutOfRangeException.ThrowIfEqual(paragraphWidth, double.NaN);
             ArgumentOutOfRangeException.ThrowIfNegative(paragraphWidth);

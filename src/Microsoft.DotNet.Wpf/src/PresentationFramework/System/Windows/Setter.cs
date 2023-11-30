@@ -14,6 +14,7 @@ using System.ComponentModel;
 using System.Windows.Markup;
 using System.Windows.Data;
 using System.Globalization;
+using System.Reflection;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -256,10 +257,7 @@ namespace System.Windows
         public static void ReceiveTypeConverter(object targetObject, XamlSetTypeConverterEventArgs eventArgs)
         {
             Setter setter = targetObject as Setter;
-            if (setter == null)
-            {
-                throw new ArgumentNullException("targetObject");
-            }
+            ArgumentNullException.ThrowIfNull(setter, nameof(targetObject));
             ArgumentNullException.ThrowIfNull(eventArgs);
 
             if (eventArgs.Member.Name == "Property")

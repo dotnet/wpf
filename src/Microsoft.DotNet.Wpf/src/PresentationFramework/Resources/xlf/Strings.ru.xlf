@@ -3318,11 +3318,6 @@ Do you want to replace it?</source>
         <target state="translated">Недопустимое имя "{0}" для идентификатора.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NameScopeNameNotEmptyString">
-        <source>Name cannot be an empty string.</source>
-        <target state="translated">Значение Name не может быть пустой строкой.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>'{0}' Name is not found.</source>
         <target state="translated">Имя Name "{0}" не найдено.</target>

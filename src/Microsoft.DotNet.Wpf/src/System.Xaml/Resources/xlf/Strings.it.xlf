@@ -782,11 +782,6 @@
         <target state="translated">Nome '{0}' non valido per l'identificatore.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NameScopeNameNotEmptyString">
-        <source>Name cannot be an empty string.</source>
-        <target state="translated">Il nome non può essere una stringa vuota.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>Name '{0}' was not found.</source>
         <target state="translated">Name '{0}' non trovato.</target>

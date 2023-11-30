@@ -585,9 +585,6 @@
   <data name="NameScopeInvalidIdentifierName" space_="preserve">
     <value>'{0}' name is not valid for identifier.</value>
   </data>
-  <data name="NameScopeNameNotEmptyString" space_="preserve">
-    <value>Name cannot be an empty string.</value>
-  </data>
   <data name="NameScopeNameNotFound" space_="preserve">
     <value>Name '{0}' was not found.</value>
   </data>

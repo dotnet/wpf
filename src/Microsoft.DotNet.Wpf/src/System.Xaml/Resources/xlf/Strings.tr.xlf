@@ -782,11 +782,6 @@
         <target state="translated">'{0}' adı tanımlayıcı için geçerli değil.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NameScopeNameNotEmptyString">
-        <source>Name cannot be an empty string.</source>
-        <target state="translated">Ad boş bir dize olamaz.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>Name '{0}' was not found.</source>
         <target state="translated">'{0}' adı bulunamadı.</target>

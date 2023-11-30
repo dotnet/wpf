@@ -2079,9 +2079,6 @@ Do you want to replace it?</value>
   <data name="NameScopeInvalidIdentifierName" xml:space="preserve">
     <value>'{0}' name is not valid for identifier.</value>
   </data>
-  <data name="NameScopeNameNotEmptyString" xml:space="preserve">
-    <value>Name cannot be an empty string.</value>
-  </data>
   <data name="NameScopeNameNotFound" xml:space="preserve">
     <value>'{0}' Name is not found.</value>
   </data>

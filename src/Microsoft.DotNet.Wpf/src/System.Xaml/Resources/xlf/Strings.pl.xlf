@@ -782,11 +782,6 @@
         <target state="translated">Nazwa „{0}” jest nieprawidłowa dla identyfikatora.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NameScopeNameNotEmptyString">
-        <source>Name cannot be an empty string.</source>
-        <target state="translated">Element Name nie może być ciągiem pustym.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>Name '{0}' was not found.</source>
         <target state="translated">Nie odnaleziono nazwy „{0}”.</target>

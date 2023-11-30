@@ -3318,11 +3318,6 @@ Czy chcesz go zastąpić?</target>
         <target state="translated">Nazwa „{0}” jest nieprawidłowa dla identyfikatora.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NameScopeNameNotEmptyString">
-        <source>Name cannot be an empty string.</source>
-        <target state="translated">Element Name nie może być ciągiem pustym.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>'{0}' Name is not found.</source>
         <target state="translated">Właściwość Name „{0}” nie została znaleziona.</target>

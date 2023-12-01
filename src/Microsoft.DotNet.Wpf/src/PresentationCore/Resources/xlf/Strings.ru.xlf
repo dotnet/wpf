@@ -2522,11 +2522,6 @@
         <target state="translated">Номер страницы не может быть отрицательным.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterValueCannotBeInfinity">
-        <source>The parameter value must be finite.</source>
-        <target state="translated">Значение параметра должно быть конечным.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Parser_BadForm">
         <source>Incorrect form '{0}' found parsing '{1}' string.</source>
         <target state="translated">При синтаксическом анализе строки "{1}" обнаружена неправильная форма "{0}".</target>

@@ -2522,11 +2522,6 @@
         <target state="translated">页码不能为负数。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterValueCannotBeInfinity">
-        <source>The parameter value must be finite.</source>
-        <target state="translated">参数值必须有限。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Parser_BadForm">
         <source>Incorrect form '{0}' found parsing '{1}' string.</source>
         <target state="translated">解析“{1}”字符串时发现格式“{0}”错误。</target>

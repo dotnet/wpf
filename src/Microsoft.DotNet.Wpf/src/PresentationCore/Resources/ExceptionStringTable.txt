@@ -15,7 +15,6 @@ UsesPerPixelOpacityIsObsolete=UsesPerPixelOpacity is obsolete and should not be 
 ParameterMustBeGreaterThanZero=The parameter value must be greater than zero.
 ParameterCannotBeLessThan=The parameter value cannot be less than '{0}'.
 ParameterCannotBeGreaterThan=The parameter value cannot be greater than '{0}'.
-ParameterValueCannotBeInfinity=The parameter value must be finite.
 ParameterValueCannotBeNegative='{0}' parameter value cannot be negative.
 
 ; General

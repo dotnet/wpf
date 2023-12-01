@@ -2522,11 +2522,6 @@
         <target state="translated">Die Seitenzahl kann nicht negativ sein.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterValueCannotBeInfinity">
-        <source>The parameter value must be finite.</source>
-        <target state="translated">Der Parameterwert muss endlich sein.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Parser_BadForm">
         <source>Incorrect form '{0}' found parsing '{1}' string.</source>
         <target state="translated">Beim Analysieren der Zeichenfolge "{1}" wurde die ungültige Form "{0}" gefunden.</target>

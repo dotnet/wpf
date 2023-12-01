@@ -478,11 +478,8 @@ namespace MS.Internal.TextFormatting
                 throw new ArgumentNullException("paragraphProperties.DefaultTextRunProperties.Typeface");
 
             ArgumentOutOfRangeException.ThrowIfEqual(paragraphWidth, double.NaN);
-
-            if (double.IsInfinity(paragraphWidth))
-                throw new ArgumentOutOfRangeException("paragraphWidth", SR.ParameterValueCannotBeInfinity);
-
             ArgumentOutOfRangeException.ThrowIfNegative(paragraphWidth);
+            ArgumentOutOfRangeException.ThrowIfEqual(paragraphWidth, double.PositiveInfinity);
             ArgumentOutOfRangeException.ThrowIfGreaterThan(paragraphWidth, Constants.RealInfiniteWidth);
 
             double realMaxFontRenderingEmSize = Constants.RealInfiniteWidth / Constants.GreatestMutiplierOfEm;

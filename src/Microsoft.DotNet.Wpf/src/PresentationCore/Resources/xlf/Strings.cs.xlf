@@ -2522,11 +2522,6 @@
         <target state="translated">Číslo stránky nemůže být záporné.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterValueCannotBeInfinity">
-        <source>The parameter value must be finite.</source>
-        <target state="translated">Hodnota tohoto parametru nesmí být nekonečno.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Parser_BadForm">
         <source>Incorrect form '{0}' found parsing '{1}' string.</source>
         <target state="translated">Nalezena nesprávná forma {0} při analýze řetězce {1}.</target>

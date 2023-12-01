@@ -331,20 +331,17 @@ namespace System.Windows
         /// to specify whether the
         /// data can be converted to another format.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionClipboard.AllClipboard) to call this API.
-        /// </remarks>
         [FriendAccessAllowed]
         public void SetData(string format, Object data, bool autoConvert)
         {
             ArgumentNullException.ThrowIfNull(format);
 
-            ArgumentNullException.ThrowIfNull(data);
-
             if (format == string.Empty)
             {
                 throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
+
+            ArgumentNullException.ThrowIfNull(data);
 
             _innerData.SetData(format, data, autoConvert);
         }

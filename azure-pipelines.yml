@@ -63,6 +63,7 @@ pr:
     - release/7.*
     - release/8.*
     - experimental/*
+    - win11themingCI
   paths:
     exclude:
     - Documentation/*

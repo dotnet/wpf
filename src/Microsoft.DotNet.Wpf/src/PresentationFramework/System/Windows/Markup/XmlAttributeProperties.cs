@@ -45,7 +45,7 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
 #region Public Methods
 
-        // This is a dummy contructor to prevent people 
+        // This is a dummy constructor to prevent people 
         // from being able to instantiate this class
         private XmlAttributeProperties()
         {
@@ -296,14 +296,15 @@ namespace System.Windows.Markup
         /// </remarks>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
-        public static object GetXmlNamespaceMaps(DependencyObject dependencyObject)
+        public static System.Collections.Hashtable GetXmlNamespaceMaps(DependencyObject dependencyObject)
         {
             if (dependencyObject == null)
             {
                 throw new ArgumentNullException( "dependencyObject" );
             }
 
-            return dependencyObject.GetValue(XmlNamespaceMapsProperty);
+            var a = dependencyObject.GetValue(XmlNamespaceMapsProperty);
+            return (System.Collections.Hashtable)a;
         }
 
         /// <summary>

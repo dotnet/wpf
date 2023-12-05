@@ -157,25 +157,25 @@
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>
-    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="9.0.0-beta.23601.1">
+    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="9.0.0-beta.23604.3">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>38aa367e014493c6f6ebfe94d9029bea01d072c4</Sha>
+      <Sha>29736c3a40dc33e94b8a7fdf72dad6d441f9e46f</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="9.0.0-beta.23601.1">
+    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="9.0.0-beta.23604.3">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>38aa367e014493c6f6ebfe94d9029bea01d072c4</Sha>
+      <Sha>29736c3a40dc33e94b8a7fdf72dad6d441f9e46f</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="9.0.0-beta.23601.1">
+    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="9.0.0-beta.23604.3">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>38aa367e014493c6f6ebfe94d9029bea01d072c4</Sha>
+      <Sha>29736c3a40dc33e94b8a7fdf72dad6d441f9e46f</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.ApiCompat" Version="9.0.0-beta.23601.1">
+    <Dependency Name="Microsoft.DotNet.ApiCompat" Version="9.0.0-beta.23604.3">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>38aa367e014493c6f6ebfe94d9029bea01d072c4</Sha>
+      <Sha>29736c3a40dc33e94b8a7fdf72dad6d441f9e46f</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.GenAPI" Version="9.0.0-beta.23601.1">
+    <Dependency Name="Microsoft.DotNet.GenAPI" Version="9.0.0-beta.23604.3">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>38aa367e014493c6f6ebfe94d9029bea01d072c4</Sha>
+      <Sha>29736c3a40dc33e94b8a7fdf72dad6d441f9e46f</Sha>
     </Dependency>
     <Dependency Name="Microsoft.SourceLink.AzureRepos.Git" Version="8.0.0-beta.23409.2">
       <Uri>https://github.com/dotnet/sourcelink</Uri>

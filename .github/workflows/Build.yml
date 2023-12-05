@@ -15,13 +15,13 @@ jobs:
     #     nuget-version: '5.x'
     - name: Build
       run: .\build.cmd -pack -ci -configuration Debug -prepareMachine /p:Platform=x86
-    - name: Push
-      uses: actions/upload-artifact@v1
-      with:
-        name: WPF_Debug
-        path: ./artifacts/packages/Debug/NonShipping
+    # - name: Push
+    #   uses: actions/upload-artifact@v1
+    #   with:
+    #     name: WPF_Debug
+    #     path: ./artifacts/packages/Debug/NonShipping
     - name: Debug
-      run: Get-ChildItem -Path "." -Recurse
+      run: dir /b /s
   # BuildRelease:
 
   #   runs-on: windows-latest

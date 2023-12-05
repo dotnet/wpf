@@ -21,7 +21,7 @@ jobs:
     #     name: WPF_Debug
     #     path: ./artifacts/packages/Debug/NonShipping
     - name: Debug
-      run: dir /b /s
+      run: Get-ChildItem -Path "." -Recurse
   # BuildRelease:
 
   #   runs-on: windows-latest

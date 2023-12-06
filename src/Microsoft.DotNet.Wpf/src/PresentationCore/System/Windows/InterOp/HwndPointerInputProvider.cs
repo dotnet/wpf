@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿
+
 using MS.Internal;
 using MS.Internal.Interop;
 using MS.Internal.PresentationCore;
@@ -223,7 +223,7 @@ namespace System.Windows.Interop
             if (data.IsValid
                 && (data.Info.pointerType == UnsafeNativeMethods.POINTER_INPUT_TYPE.PT_TOUCH
                 || data.Info.pointerType == UnsafeNativeMethods.POINTER_INPUT_TYPE.PT_PEN))
-            {               
+            {
                 uint cursorId = 0;
 
                 if (UnsafeNativeMethods.GetPointerCursorId(pointerId, ref cursorId))
@@ -236,7 +236,7 @@ namespace System.Windows.Interop
                     {
                         return false;
                     }
-                                     
+
                     // Convert move to InAirMove if applicable
                     if (action == RawStylusActions.Move
                         && (!data.Info.pointerFlags.HasFlag(UnsafeNativeMethods.POINTER_FLAGS.POINTER_FLAG_INCONTACT)
@@ -325,7 +325,20 @@ namespace System.Windows.Interop
         /// <param name="originOffsetY">The Y offset in logical coordiantes</param>
         private void GetOriginOffsetsLogical(out int originOffsetX, out int originOffsetY)
         {
-            Point originScreenCoord = _source.Value.RootVisual.PointToScreen(new Point(0, 0));
+            Point originScreenCoord = new Point();
+
+            HwndSource hwndSource = PresentationSource.FromVisual(_source.Value.RootVisual) as HwndSource;
+            if (hwndSource != null)
+            {
+                HandleRef handleRef = new HandleRef(hwndSource, hwndSource.CriticalHandle);
+
+                MS.Win32.NativeMethods.POINT point = new MS.Win32.NativeMethods.POINT();
+                MS.Win32.UnsafeNativeMethods.ClientToScreen(handleRef, ref point);
+
+                var displayRect = _currentTabletDevice.DeviceInfo.DisplayRect;
+
+                originScreenCoord = new Point(point.x - displayRect.left, point.y - displayRect.top);
+            }
 
             // Use the inverse of our logical tablet to screen matrix to generate tablet coords
             MatrixTransform screenToTablet = new MatrixTransform(_currentTabletDevice.TabletToScreen);

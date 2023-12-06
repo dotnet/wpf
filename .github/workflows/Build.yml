@@ -5,7 +5,7 @@ on: [push]
 jobs:
   BuildDebug:
 
-    runs-on: windows-latest
+    runs-on: [self-hosted, VSPreview]
 
     steps:
     - uses: actions/checkout@v1
@@ -23,7 +23,7 @@ jobs:
 
   BuildRelease:
 
-    runs-on: windows-latest
+    runs-on: [self-hosted, VSPreview]
 
     steps:
     - uses: actions/checkout@v1

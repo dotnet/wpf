@@ -5,7 +5,7 @@ on: [push]
 jobs:
   BuildDebug:
 
-    runs-on: windows-latest
+    runs-on: [self-hosted, VSPreview]
 
     steps:
     - uses: actions/checkout@v1
@@ -15,27 +15,26 @@ jobs:
     #     nuget-version: '5.x'
     - name: Build
       run: .\build.cmd -pack -ci -configuration Debug -prepareMachine /p:Platform=x86
-    # - name: Push
-    #   uses: actions/upload-artifact@v1
-    #   with:
-    #     name: WPF_Debug
-    #     path: ./artifacts/packages/Debug/NonShipping
-    - name: Debug
-      run: Get-ChildItem -Path "." -Recurse
-  # BuildRelease:
+    - name: Build CustomWPF
+      run: dotnet build CustomWpf
+    - name: Push
+      uses: actions/upload-artifact@v1
+      with:
+        name: WPF_Debug
+        path: ./artifacts/packages/Debug/NonShipping
 
-  #   runs-on: windows-latest
+  BuildRelease:
 
-  #   steps:
-  #   - uses: actions/checkout@v1
-  #   # - name: Install Nuget
-  #   #   uses: nuget/setup-nuget@v1
-  #   #   with:
-  #   #     nuget-version: '5.x'
-  #   - name: Build
-  #     run: .\build.cmd -pack -ci -configuration Release -prepareMachine /p:Platform=x86
-  #   - name: Push
-  #     uses: actions/upload-artifact@v1
-  #     with:
-  #       name: WPF_Release
-  #       path: ./artifacts/packages/Release/NonShipping
+    runs-on: [self-hosted, VSPreview]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build
+      run: .\build.cmd -pack -ci -configuration Release -prepareMachine /p:Platform=x86
+    - name: Build CustomWPF
+      run: dotnet build CustomWpf -c Release
+    - name: Push
+      uses: actions/upload-artifact@v1
+      with:
+        name: WPF_Release
+        path: ./artifacts/packages/Release/NonShipping

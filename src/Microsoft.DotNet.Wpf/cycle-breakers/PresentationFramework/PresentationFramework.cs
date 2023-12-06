@@ -11496,7 +11496,7 @@ namespace System.Windows.Markup
         [System.Windows.AttachedPropertyBrowsableForTypeAttribute(typeof(System.Windows.DependencyObject))]
         [System.Windows.Markup.DesignerSerializationOptionsAttribute(System.Windows.Markup.DesignerSerializationOptions.SerializeAsAttribute)]
         public static string GetXmlSpace(System.Windows.DependencyObject dependencyObject) { throw null; }
-        public static void SetXmlNamespaceMaps(System.Windows.DependencyObject dependencyObject, string value) { }
+        public static void SetXmlNamespaceMaps(System.Windows.DependencyObject dependencyObject, System.Collections.Hashtable value) { }
         public static void SetXmlnsDefinition(System.Windows.DependencyObject dependencyObject, string value) { }
         public static void SetXmlnsDictionary(System.Windows.DependencyObject dependencyObject, System.Windows.Markup.XmlnsDictionary value) { }
         public static void SetXmlSpace(System.Windows.DependencyObject dependencyObject, string value) { }

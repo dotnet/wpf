@@ -296,14 +296,14 @@ namespace System.Windows.Markup
         /// </remarks>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
-        public static System.Collections.Hashtable GetXmlNamespaceMaps(DependencyObject dependencyObject)
+        public static Hashtable GetXmlNamespaceMaps(DependencyObject dependencyObject)
         {
             if (dependencyObject == null)
             {
                 throw new ArgumentNullException( "dependencyObject" );
             }
 
-            return (System.Collections.Hashtable)dependencyObject.GetValue(XmlNamespaceMapsProperty);
+            return (Hashtable)dependencyObject.GetValue(XmlNamespaceMapsProperty);
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace System.Windows.Markup
         /// <remarks>
         /// XmlNamespaceMaps map xml namespace uri to Assembly/CLR namespaces
         /// </remarks>
-        public static void SetXmlNamespaceMaps(DependencyObject dependencyObject, string value)
+        public static void SetXmlNamespaceMaps(DependencyObject dependencyObject, Hashtable value)
         {
             if (dependencyObject == null)
             {

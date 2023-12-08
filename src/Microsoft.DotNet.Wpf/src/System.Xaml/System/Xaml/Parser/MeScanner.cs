@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -35,7 +37,7 @@ namespace MS.Internal.Xaml.Parser
     // 3) All strings are trimmed of whitespace front and back unless they were quoted.
     // 4) Quote characters can only appear at the start and end of strings.
     // 5) TypeNames cannot be quoted.
-    
+
     internal class MeScanner
     {
         public const char Space = ' ';
@@ -204,8 +206,8 @@ namespace MS.Internal.Xaml.Parser
 
             if(readString)
             {
-                if (_context.CurrentType.IsMarkupExtension 
-                    && _context.CurrentBracketModeParseParameters != null 
+                if (_context.CurrentType.IsMarkupExtension
+                    && _context.CurrentBracketModeParseParameters != null
                     && _context.CurrentBracketModeParseParameters.IsConstructorParsingMode)
                 {
                     int currentCtrParam = _context.CurrentBracketModeParseParameters.CurrentConstructorParam;
@@ -241,8 +243,8 @@ namespace MS.Internal.Xaml.Parser
             if (value.StartsWith("{}", StringComparison.OrdinalIgnoreCase))
             {
                 value = value.Substring(2);
-            } 
-            
+            }
+
             if (!value.Contains(Backslash))
             {
                 return value;
@@ -288,15 +290,15 @@ namespace MS.Internal.Xaml.Parser
             {
                 throw new XamlParseException(this, error);
             }
-            
+
             // In curly form, we search for TypeName + 'Extension' before TypeName
             string bareTypeName = typeName.Name;
             typeName.Name = typeName.Name + KnownStrings.Extension;
             XamlType xamlType = _context.GetXamlType(typeName, false);
             // This would be cleaner if we moved the Extension fallback logic out of XSC
-            if (xamlType == null || 
+            if (xamlType == null ||
                 // Guard against Extension getting added twice
-                (xamlType.UnderlyingType != null && 
+                (xamlType.UnderlyingType != null &&
                  KS.Eq(xamlType.UnderlyingType.Name, typeName.Name + KnownStrings.Extension)))
             {
                 typeName.Name = bareTypeName;
@@ -374,7 +376,7 @@ namespace MS.Internal.Xaml.Parser
                     }
                 }
                 // If we are inside of MarkupExtensionBracketCharacters for a particular property or position parameter,
-                // scoop up everything inside one by one, and keep track of nested Bracket Characters in the stack. 
+                // scoop up everything inside one by one, and keep track of nested Bracket Characters in the stack.
                 else if (_context.CurrentBracketModeParseParameters != null && _context.CurrentBracketModeParseParameters.IsBracketEscapeMode)
                 {
                     Stack<char> bracketCharacterStack = _context.CurrentBracketModeParseParameters.BracketCharacterStack;
@@ -551,7 +553,7 @@ namespace MS.Internal.Xaml.Parser
 
             if (ch == KnownStrings.WhitespaceChars[0] ||
                 ch == KnownStrings.WhitespaceChars[1] ||
-                ch == KnownStrings.WhitespaceChars[2] || 
+                ch == KnownStrings.WhitespaceChars[2] ||
                 ch == KnownStrings.WhitespaceChars[3] ||
                 ch == KnownStrings.WhitespaceChars[4])
             {
@@ -588,7 +590,7 @@ namespace MS.Internal.Xaml.Parser
         private SpecialBracketCharacters GetBracketCharacterForProperty(string propertyName)
         {
             SpecialBracketCharacters bracketCharacters = null;
-            if (_context.CurrentEscapeCharacterMapForMarkupExtension != null && 
+            if (_context.CurrentEscapeCharacterMapForMarkupExtension != null &&
                 _context.CurrentEscapeCharacterMapForMarkupExtension.ContainsKey(propertyName))
             {
                 bracketCharacters = _context.CurrentEscapeCharacterMapForMarkupExtension[propertyName];

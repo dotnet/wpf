@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.ComponentModel;
 using System.Globalization;
 using System.Xaml.Schema;
@@ -10,8 +12,8 @@ namespace System.Xaml
 {
     internal class EventConverter : TypeConverter
     {
-        // CanConvertTo and ConvertTo are not implemented here because it is not possible to convert 
-        // an event/delegate to string in the general case, because 
+        // CanConvertTo and ConvertTo are not implemented here because it is not possible to convert
+        // an event/delegate to string in the general case, because
         // 1. an event's getter is private.
         // 2. we currently do not have a syntax for writing down a multi-cast delegate
         // 3. we currently do not have a syntax to write down a method not on the root object.
@@ -44,12 +46,12 @@ namespace System.Xaml
 
         internal static void GetRootObjectAndDelegateType(ITypeDescriptorContext context, out object rootObject, out Type delegateType)
         {
-            rootObject = null; 
+            rootObject = null;
             delegateType = null;
 
-            if (context == null) 
+            if (context == null)
             {
-                return; 
+                return;
             }
 
             IRootObjectProvider rootObjectService = context.GetService(typeof(IRootObjectProvider)) as IRootObjectProvider;

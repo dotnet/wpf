@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -40,7 +42,7 @@ namespace MS.Internal.Xaml.Parser
         // Attribute and Directive values can be markup extensions.
 
         ///////////////////////////
-        //  XamlPullParser Exception Strings 
+        //  XamlPullParser Exception Strings
         //
         private const string ElementRuleException = "Element ::= . EmptyElement | ( StartElement ElementBody ).";
         private const string EmptyElementRuleException = "EmptyElement ::= . EMPTYELEMENT DIRECTIVE* ATTRIBUTE*.";

@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -61,7 +63,7 @@ namespace System.Xaml.Schema
             {
                 return TryGetXamlType(typeName) ?? TryGetXamlType(GetTypeExtensionName(typeName));
             }
-            
+
             Type[] clrTypeArgs = ConvertArrayOfXamlTypesToTypes(typeArgs);
             return TryGetXamlType(typeName, clrTypeArgs) ?? TryGetXamlType(GetTypeExtensionName(typeName), clrTypeArgs);
         }
@@ -263,7 +265,7 @@ namespace System.Xaml.Schema
         // This method should only be called inside SchemaContext._syncExaminingAssemblies lock
         internal void AddAssemblyNamespacePair(AssemblyNamespacePair pair)
         {
-            // To allow the list to be read by multiple threads, we create a new list, add the pair, 
+            // To allow the list to be read by multiple threads, we create a new list, add the pair,
             // then assign it back to the original variable.  Assignments are assured to be atomic.
 
             List<AssemblyNamespacePair> assemblyNamespacesCopy;

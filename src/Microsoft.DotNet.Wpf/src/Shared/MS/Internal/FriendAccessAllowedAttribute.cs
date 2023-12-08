@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 // Description: Implementation of a FriendAccessAllowedAttribute attribute that is used to mark internal metadata
 //              that is allowed to be accessed from friend assemblies.
 
@@ -10,7 +12,7 @@ using System;
 #if WINDOWS_BASE
 namespace MS.Internal.WindowsBase
 #elif PRESENTATION_CORE
-namespace MS.Internal.PresentationCore 
+namespace MS.Internal.PresentationCore
 #elif PRESENTATIONFRAMEWORK
 namespace MS.Internal.PresentationFramework
 #elif PRESENTATION_CFF_RASTERIZER

@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup
@@ -24,7 +26,7 @@ namespace System.Windows.Markup
     public sealed class XmlLangPropertyAttribute : Attribute
     {
         /// <summary>
-        /// Creates a new XmlLangPropertyAttribute with the given string 
+        /// Creates a new XmlLangPropertyAttribute with the given string
         /// as the property name.
         /// </summary>
         public XmlLangPropertyAttribute(string name)
@@ -36,5 +38,5 @@ namespace System.Windows.Markup
         /// The name of the property that is designated to accept the xml:lang value
         /// </summary>
         public string Name { get; }
-    }    
+    }
 }

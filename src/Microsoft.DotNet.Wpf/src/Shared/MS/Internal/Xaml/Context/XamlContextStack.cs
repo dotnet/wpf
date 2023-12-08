@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -111,7 +113,7 @@ namespace MS.Internal.Xaml.Context
             Debug.Assert(CurrentFrame.Depth == Depth);
         }
 
-        //Consumers of this stack call PopScope, and we'll move the currentFrame from the main 
+        //Consumers of this stack call PopScope, and we'll move the currentFrame from the main
         // linked list to the recylced linked list and call .Reset
         public void PopScope()
         {

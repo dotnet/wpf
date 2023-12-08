@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
@@ -235,7 +237,7 @@ namespace System.Xaml
                 return false;
             }
         }
-#else        
+#else
         //***********************************************WARNING************************************************************
         // In CLR4.0 there is ConditionalWeakTable.  This implementation is for 3.5 and uses a WeakKey dictionary.
         //  This implementation does not handle the problem where a key is rooted in a value (or graph of a value).
@@ -244,7 +246,7 @@ namespace System.Xaml
         //******************************************************************************************************************
         sealed class DefaultAttachedPropertyStore
         {
-            Lazy<WeakDictionary<object, Dictionary<AttachableMemberIdentifier, object>>> instanceStorage = 
+            Lazy<WeakDictionary<object, Dictionary<AttachableMemberIdentifier, object>>> instanceStorage =
                 new Lazy<WeakDictionary<object, Dictionary<AttachableMemberIdentifier, object>>>(
                     () => new WeakDictionary<object, Dictionary<AttachableMemberIdentifier, object>>(), LazyInitMode.AllowMultipleThreadSafeExecution);
 
@@ -347,7 +349,7 @@ namespace System.Xaml
                 where K : class
                 where V : class
             {
-                // Optimally this would be a _real_ dictionary implementation that when it ran across WeakKey's that had 
+                // Optimally this would be a _real_ dictionary implementation that when it ran across WeakKey's that had
                 //  gone out of scope would immediately at least clear their value and from time to time schedule a real
                 //  cleanup.
                 Dictionary<WeakKey, V> storage;
@@ -507,7 +509,7 @@ namespace System.Xaml
                     }
                 }
 
-                // This cleanup token will be immediately thrown away and as a result it will 
+                // This cleanup token will be immediately thrown away and as a result it will
                 //  (a couple of GCs later) make it into the finalization queue and when finalized
                 //  will kick off a thread-pool job to cleanup the dictionary.
 
@@ -535,7 +537,7 @@ namespace System.Xaml
                         Justification = "The point of this method is to create one of these and let it float away... To be finalized...")]
                     public static void CreateCleanupToken(WeakDictionary<K, V> storage)
                     {
-                        // Create one of these, the work is done when it is finalized which 
+                        // Create one of these, the work is done when it is finalized which
                         //  will be at some indeterminate point in the future...
                         WeakDictionaryCleanupToken token = new WeakDictionaryCleanupToken(storage);
                     }

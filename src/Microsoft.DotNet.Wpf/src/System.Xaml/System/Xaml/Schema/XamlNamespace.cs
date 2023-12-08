@@ -251,7 +251,7 @@ namespace System.Xaml.Schema
                     // This is a dynamic assembly that got unloaded; ignore it
                     continue;
                 }
-                string longName = assemblyNamespacePair.ClrNamespace + "." + shortName;
+                string longName = $"{assemblyNamespacePair.ClrNamespace}.{shortName}";
 
                 Type type = asm.GetType(longName);
                 if (type != null)

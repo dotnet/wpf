@@ -59,8 +59,7 @@ namespace MS.Internal.Utility
             if (o == null)
                 return "NULL";
             else
-                return String.Format(CultureInfo.InvariantCulture, "{0}.{1}",
-                        o.GetType().Name, o.GetHashCode());
+                return string.Create(CultureInfo.InvariantCulture, $"{o.GetType().Name}.{o.GetHashCode()}");
         }
 
         ArrayList _log;

@@ -883,7 +883,7 @@ namespace System.Windows.Documents
 #if DEBUG
             if (node.ChildLevels > 1)
             {
-                DocumentsTrace.FixedFormat.FixedDocument.Trace(string.Format("FixedPage.GetUIElement {0} is nested element", node));
+                DocumentsTrace.FixedFormat.FixedDocument.Trace($"FixedPage.GetUIElement {node} is nested element");
             }
 #endif
 
@@ -901,11 +901,11 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    DocumentsTrace.FixedFormat.FixedDocument.Trace(string.Format("FixedPage.GeElement {0} is non S0 grouping element in L[{1}]!", node, level));
+                    DocumentsTrace.FixedFormat.FixedDocument.Trace($"FixedPage.GeElement {node} is non S0 grouping element in L[{level}]!");
                     IEnumerable currentChildrens = LogicalTreeHelper.GetChildren((DependencyObject)element);
                     if (currentChildrens == null)
                     {
-                        DocumentsTrace.FixedFormat.FixedDocument.Trace(string.Format("FixedPage.GetElement {0} is NOT a grouping element in L[{1}]!!!", node, level));
+                        DocumentsTrace.FixedFormat.FixedDocument.Trace($"FixedPage.GetElement {node} is NOT a grouping element in L[{level}]!!!");
                         return null;
                     }
 
@@ -928,7 +928,7 @@ namespace System.Windows.Documents
 #if DEBUG
             if (!(element is Glyphs))
             {
-                DocumentsTrace.FixedFormat.FixedDocument.Trace(string.Format("FixedPage.GetElement{0} is non-Glyphs", node));
+                DocumentsTrace.FixedFormat.FixedDocument.Trace($"FixedPage.GetElement{node} is non-Glyphs");
             }
 #endif
             return element;

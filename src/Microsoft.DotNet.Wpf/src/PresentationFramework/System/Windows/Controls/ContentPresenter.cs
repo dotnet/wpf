@@ -1053,7 +1053,7 @@ namespace System.Windows.Controls
                 {
                     if (tracingEnabled)
                     {
-                        EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientStringEnd, EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Info, String.Format(System.Globalization.CultureInfo.InvariantCulture, "ContentPresenter.BuildVisualTree for CP {0}", container.GetHashCode()));
+                        EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientStringEnd, EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Info, string.Create(System.Globalization.CultureInfo.InvariantCulture, $"ContentPresenter.BuildVisualTree for CP {container.GetHashCode()}"));
                     }
                 }
             }

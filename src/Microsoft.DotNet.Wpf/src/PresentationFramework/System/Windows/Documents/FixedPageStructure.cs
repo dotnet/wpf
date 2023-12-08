@@ -66,7 +66,7 @@ namespace System.Windows.Documents
         /// <returns>string - A string representation of this object</returns>
         public override string ToString()
         {
-            return String.Format("Pg{0}- ", _pageIndex);
+            return $"Pg{_pageIndex}- ";
         }
 #endif
         #endregion Public Methods
@@ -99,13 +99,13 @@ namespace System.Windows.Documents
         {
             _lineResults = lineResults;
 #if DEBUG
-            DocumentsTrace.FixedTextOM.Builder.Trace(string.Format("----LineResults Begin Dump-----\r\n"));
+            DocumentsTrace.FixedTextOM.Builder.Trace("----LineResults Begin Dump-----\r\n");
             foreach(FixedLineResult lineResult in _lineResults)
             {
                 Debug.Assert(lineResult != null);
-                DocumentsTrace.FixedTextOM.Builder.Trace(string.Format("{0}\r\n", lineResult.ToString()));
+                DocumentsTrace.FixedTextOM.Builder.Trace($"{lineResult.ToString()}\r\n");
             }
-            DocumentsTrace.FixedTextOM.Builder.Trace(string.Format("----LineResults End Dump-----\r\n"));
+            DocumentsTrace.FixedTextOM.Builder.Trace("----LineResults End Dump-----\r\n");
 #endif
         }
 
@@ -479,9 +479,7 @@ namespace System.Windows.Documents
                         fixedElement = fn.Cookie as FixedElement;
                         String typeString = fixedElement.Type.ToString();
                         int indexofDot = typeString.LastIndexOf('.');
-                        ouptputString = String.Format("{0}-{1}",
-                                fn.ToString(),
-                                typeString.Substring(indexofDot+1));
+                        ouptputString = $"{fn}-{typeString.AsSpan(indexofDot + 1)}";
 
                         ft = new FormattedText(ouptputString,
                                                 EnglishCulture,

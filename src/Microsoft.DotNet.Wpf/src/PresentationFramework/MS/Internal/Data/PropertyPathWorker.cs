@@ -1270,16 +1270,13 @@ namespace MS.Internal.Data
                 StringBuilder sb = new StringBuilder();
 
                 if (!Object.Equals(info, svs.info))
-                    sb.AppendLine(String.Format("  Info is wrong: expected '{0}' got '{1}'",
-                                    info, svs.info));
+                    sb.AppendLine($"  Info is wrong: expected '{info}' got '{svs.info}'");
 
                 if (sourceType != svs.type)
-                    sb.AppendLine(String.Format("  Type is wrong: expected '{0}' got '{1}'",
-                                    sourceType, svs.type));
+                    sb.AppendLine($"  Type is wrong: expected '{sourceType}' got '{svs.type}'");
 
                 if (item != BindingExpression.GetReference(svs.item))
-                    sb.AppendLine(String.Format("  Item is wrong: expected '{0}' got '{1}'",
-                                    item, BindingExpression.GetReference(svs.item)));
+                    sb.AppendLine($"  Item is wrong: expected '{item}' got '{BindingExpression.GetReference(svs.item)}'");
 
                 int len1 = (args != null) ? args.Length : 0;
                 int len2 = (svs.args != null) ? svs.args.Length : 0;
@@ -1289,21 +1286,18 @@ namespace MS.Internal.Data
                     {
                         if (!Object.Equals(args[i], svs.args[i]))
                         {
-                            sb.AppendLine(String.Format("  args[{0}] is wrong:  expected '{1}' got '{2}'",
-                                    i, args[i], svs.args[i]));
+                            sb.AppendLine($"  args[{i}] is wrong:  expected '{args[i]}' got '{svs.args[i]}'");
                         }
                     }
                 }
                 else
-                    sb.AppendLine(String.Format("  Args are wrong: expected length '{0}' got length '{1}'",
-                                    len1, len2));
+                    sb.AppendLine($"  Args are wrong: expected length '{len1}' got length '{len2}'");
 
-                if (sb.Length > 0)
-                {
-                    Debug.Assert(false,
-                        String.Format("Accessor cache returned incorrect result for ({0},{1},{2})\n{3}",
-                            SVI[k].type, newType.Name, SVI[k].name, sb.ToString()));
-                }
+                Debug.Assert(sb.Length == 0,
+                    $"""
+                     Accessor cache returned incorrect result for ({SVI[k].type},{newType.Name},{SVI[k].name})
+                     {sb.ToString()}
+                     """);
 
                 return;
             }

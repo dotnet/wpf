@@ -185,7 +185,7 @@ namespace System.Windows
 
                 themeStyleKey = fe.DefaultStyleKey;
                 overridesDefaultStyle = fe.OverridesDefaultStyle;
-              
+
                 oldThemeStyle = fe.ThemeStyle;
             }
             else
@@ -196,7 +196,7 @@ namespace System.Windows
 
                 themeStyleKey = fce.DefaultStyleKey;
                 overridesDefaultStyle = fce.OverridesDefaultStyle;
-               
+
                 oldThemeStyle = fce.ThemeStyle;
             }
 
@@ -1835,7 +1835,7 @@ namespace System.Windows
                         label = container.GetHashCode().ToString(System.Globalization.CultureInfo.InvariantCulture);
 
                     EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientParseInstVisTreeEnd, EventTrace.Keyword.KeywordXamlBaml, EventTrace.Level.Verbose,
-                                                         String.Format(System.Globalization.CultureInfo.InvariantCulture, "Style.InstantiateSubTree for {0} {1}", container.GetType().Name, label));
+                        $"Style.InstantiateSubTree for {container.GetType().Name} {label}");
                 }
             }
 
@@ -1875,7 +1875,7 @@ namespace System.Windows
                         label = container.GetHashCode().ToString(System.Globalization.CultureInfo.InvariantCulture);
 
                     EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientParseInstVisTreeEnd, EventTrace.Keyword.KeywordXamlBaml, EventTrace.Level.Verbose,
-                                                         String.Format(System.Globalization.CultureInfo.InvariantCulture, "Style.InstantiateSubTree for {0} {1}", container.GetType().Name, label));
+                        $"Style.InstantiateSubTree for {container.GetType().Name} {label}");
                 }
             }
 
@@ -5474,7 +5474,7 @@ namespace System.Windows
                                 new AlternativeExpressionStorageCallback(GetExpressionCore),
                                 out _getExpression);
             }
-            
+
         }
 
         private static Expression GetExpressionCore(

@@ -377,7 +377,7 @@ namespace System.Windows.Documents
             }
             catch(Exception e)
             {
-                System.Diagnostics.Trace.Write(string.Format(CultureInfo.InvariantCulture, "Unloading dictionary failed. Original Uri:{0}, file Uri:{1}, exception:{2}", uri.ToString(), info.PathUri.ToString(), e.ToString()));
+                System.Diagnostics.Trace.Write(string.Create(CultureInfo.InvariantCulture, $"Unloading dictionary failed. Original Uri:{uri}, file Uri:{info.PathUri}, exception:{e}"));
                 throw;
             }
             UriMap.Remove(uri);
@@ -1618,7 +1618,7 @@ namespace System.Windows.Documents
                 }
                 catch (Exception e)
                 {
-                    System.Diagnostics.Trace.Write(string.Format(CultureInfo.InvariantCulture, "Failure to delete temporary file with custom dictionary data. file Uri:{0},exception:{1}", tempLocationUri.ToString(), e.ToString()));
+                    System.Diagnostics.Trace.Write(string.Create(CultureInfo.InvariantCulture, $"Failure to delete temporary file with custom dictionary data. file Uri:{tempLocationUri},exception:{e}"));
                     throw;
                 }
             }

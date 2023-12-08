@@ -2214,7 +2214,7 @@ namespace System.Windows.Markup
                             Assembly assy = ReflectionHelper.LoadAssembly(usd.AssemblyName, null);
                             if (assy != null)
                             {
-                                string fullTypeName = String.Format(TypeConverterHelper.InvariantEnglishUS, "{0}.{1}", usd.ClrNamespace, typeName);
+                                string fullTypeName = $"{usd.ClrNamespace}.{typeName}";
                                 Type t = assy.GetType(fullTypeName);
                                 if (t != null)
                                     return t;
@@ -2234,7 +2234,7 @@ namespace System.Windows.Markup
                 Assembly assy = namespaces[i].Assembly;
                 if (assy != null)
                 {
-                    string fullTypeName = String.Format(TypeConverterHelper.InvariantEnglishUS, "{0}.{1}", namespaces[i].ClrNamespace, typeName);
+                    string fullTypeName = $"{namespaces[i].ClrNamespace}.{typeName}";
                     Type t = assy.GetType(fullTypeName);
                     if (t != null)
                     {

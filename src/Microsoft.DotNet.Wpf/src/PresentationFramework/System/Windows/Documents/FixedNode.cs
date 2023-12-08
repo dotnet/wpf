@@ -4,10 +4,10 @@
 
 //
 // Description:
-//      FixedNode is an immutable type that represents a fast and 
+//      FixedNode is an immutable type that represents a fast and
 //      efficient way to orderly locate an element in a fixed document
 //      It is inserted into Fixed Order, which provides a linear view
-//      of the fixed document. 
+//      of the fixed document.
 //
 
 namespace System.Windows.Documents
@@ -19,47 +19,47 @@ namespace System.Windows.Documents
 
     //=====================================================================
     /// <summary>
-    /// FixedNode is an immutable type that represents a fast and 
+    /// FixedNode is an immutable type that represents a fast and
     /// efficient way to locate an element in a fixed document. All elements
-    /// are leaf nodes of a fixed document tree. 
-    /// 
-    /// It is inserted into Fixed Order to provide a linear view 
-    /// of the fixed document. 
-    /// 
+    /// are leaf nodes of a fixed document tree.
+    ///
+    /// It is inserted into Fixed Order to provide a linear view
+    /// of the fixed document.
+    ///
     /// Usage:
     /// 1. Given a FixedNode, get the element it refers to (Glyphs/Image/etc. GetText etc.)
     /// 2. Given a Glyphs, construct its FixedNode representation (Page Analysis/HitTesting)
-    /// 3. Given a FixedNode, find out which FlowNode it maps to. 
+    /// 3. Given a FixedNode, find out which FlowNode it maps to.
     /// 4. Given a FixedNode, compare its relative position with another FixedNode in Fixed Order.
-    /// 5. Used to represent artifical boundary (page/document) node. 
-    /// 
+    /// 5. Used to represent artifical boundary (page/document) node.
+    ///
     /// Design:
-    /// 
-    /// FixedNode contains a path array that indicates the path from top most container 
+    ///
+    /// FixedNode contains a path array that indicates the path from top most container
     /// to the leaf node. Example:
-    /// 
+    ///
     /// +------------------+
-    /// | P# | ChildIndex  |            1st Level Leaf Node                                      
+    /// | P# | ChildIndex  |            1st Level Leaf Node
     /// +------------------+
-    /// 
+    ///
     /// +--------------------------------+
     /// | P# | ChildIndex  | ChildIndex  |  2nd Level Leaf Node
     /// +--------------------------------+
-    /// 
+    ///
     /// +---------------------------------------------+
     /// | P# | ChildIndex  | ChildIndex  | ChildIndex |  3rd Level Leaf Node
     /// +---------------------------------------------+
-    /// 
+    ///
     /// etc.
-    /// 
-    /// Although I have carefully considered alternative designs that does not 
+    ///
+    /// Although I have carefully considered alternative designs that does not
     /// require using a fixed array, that uses clever schema to fully utilize
-    /// the entire uint32 address space, The Type Safty feature of CLR makes 
+    /// the entire uint32 address space, The Type Safty feature of CLR makes
     /// it difficult to efficiently handle overflow situation (deep nesting
-    /// level leaf node). 
-    /// 
-    /// The Array approach has its virtue of simplicity. 
-    /// 
+    /// level leaf node).
+    ///
+    /// The Array approach has its virtue of simplicity.
+    ///
     /// The real Page index always starts at 0, ends at n-1
     /// The real Index always starts at 0, ends at n-1
     /// Any index outside of the range is position mark.
@@ -74,7 +74,7 @@ namespace System.Windows.Documents
 
         // Factory method to create a fixed node from its path
         // Avoiding create ArrayList if possible
-        // Most common case childLevel is either 1, 2  level deep. 
+        // Most common case childLevel is either 1, 2  level deep.
         // level 0 is always the page
         internal static FixedNode Create(int pageIndex, int childLevels, int level1Index, int level2Index, int[] childPath)
         {
@@ -136,13 +136,13 @@ namespace System.Windows.Documents
             _path = path;
        }
         #endregion Constructors
-        
+
         //--------------------------------------------------------------------
         //
         // Public Methods
         //
         //---------------------------------------------------------------------
-          
+
         #region Public Methods
         // IComparable Override
         public int CompareTo(object o)
@@ -160,7 +160,7 @@ namespace System.Windows.Documents
 
 
         // Strongly typed compare function to avoid boxing
-        // This function wil return 0 if two nodes are parent 
+        // This function wil return 0 if two nodes are parent
         // and child relationship.
         // Positive means this node is before the input node.
         // Negative means this node is after the input node.
@@ -188,7 +188,7 @@ namespace System.Windows.Documents
 
         /// <summary>
         /// childPath doesn't not include the PageNumberIndex
-        /// This function wil return 0 if two nodes are parent 
+        /// This function wil return 0 if two nodes are parent
         /// and child relationship.
         /// Positive means this node is before the input node.
         /// Negative means this node is after the input node.
@@ -206,7 +206,7 @@ namespace System.Windows.Documents
             }
             return 0;
         }
-        
+
         public static bool operator <(FixedNode fp1, FixedNode fp2)
         {
             return fp1.CompareTo(fp2) < 0;
@@ -286,10 +286,10 @@ namespace System.Windows.Documents
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(String.Format(CultureInfo.InvariantCulture, "P{0}-", _path[0]));
+            sb.Append(CultureInfo.InvariantCulture, $"P{_path[0]}-");
             for (int i = 1; i < _path.Length; i++)
             {
-                sb.Append(String.Format(CultureInfo.InvariantCulture, "[{0}]", _path[i]));
+                sb.Append(CultureInfo.InvariantCulture, $"[{_path[i]}]");
             }
             return sb.ToString();
         }
@@ -333,7 +333,7 @@ namespace System.Windows.Documents
         }
 
         // Accessor to different level of the path
-        // Level 0 is always the page index. 
+        // Level 0 is always the page index.
         // element index inside the page start from Level 1.
         internal int this[int level]
         {
@@ -344,8 +344,8 @@ namespace System.Windows.Documents
             }
         }
 
-        // element path levels 
-        // it is always greater than 1.  
+        // element path levels
+        // it is always greater than 1.
         internal int ChildLevels
         {
             get

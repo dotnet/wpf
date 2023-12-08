@@ -2029,7 +2029,7 @@ namespace System.Windows
             {
                 Uri packUri = PackUriHelper.Create(packageUri);
                 Invariant.Assert(packUri == BaseUriHelper.PackAppBaseUri || packUri == BaseUriHelper.SiteOfOriginBaseUri,
-                                "Unknown packageUri passed: "+packageUri);
+                    $"Unknown packageUri passed: {packageUri}");
 
                 Invariant.Assert(IsApplicationObjectShuttingDown);
                 throw new InvalidOperationException(SR.ApplicationShuttingDown);

@@ -71,7 +71,7 @@ namespace System.Windows.Baml2006
             if (!_hasShouldSerializeMethodBeenLookedup)
             {
                 Type declaringType = _member.UnderlyingMember.DeclaringType;
-                string methodName = "ShouldSerialize" + _member.Name;
+                string methodName = $"ShouldSerialize{_member.Name}";
                 BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static;
                 Type[] args = new Type[] { typeof(DependencyObject) }; ;
                 if (_member.IsAttachable)

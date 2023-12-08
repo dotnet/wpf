@@ -143,7 +143,7 @@ namespace System.Windows.Markup
             string returnString = literalString;
             if (!String.IsNullOrEmpty(returnString) && returnString[0] == '{')
             {
-                returnString = "{}" + returnString;
+                returnString = $"{{}}{returnString}";
             }
 
             return returnString;

@@ -111,7 +111,7 @@ namespace MS.Internal.Xaml.Context
             Debug.Assert(CurrentFrame.Depth == Depth);
         }
 
-        //Consumers of this stack call PopScope, and we'll move the currentFrame from the main 
+        //Consumers of this stack call PopScope, and we'll move the currentFrame from the main
         // linked list to the recylced linked list and call .Reset
         public void PopScope()
         {
@@ -142,7 +142,7 @@ namespace MS.Internal.Xaml.Context
             {
                 StringBuilder sb = new StringBuilder();
                 T iteratorFrame = _currentFrame;
-                sb.AppendLine("Stack: " + (_currentFrame == null ? -1 : _currentFrame.Depth + 1).ToString(CultureInfo.InvariantCulture) + " frames");
+                sb.AppendLine(CultureInfo.InvariantCulture, $"Stack: {(_currentFrame == null ? -1 : _currentFrame.Depth + 1)} frames");
                 ShowFrame(sb, _currentFrame);
                 return sb.ToString();
             }
@@ -154,7 +154,7 @@ namespace MS.Internal.Xaml.Context
                 return;
             if (iteratorFrame.Previous != null)
                 ShowFrame(sb, (T)iteratorFrame.Previous);
-            sb.AppendLine("  " + iteratorFrame.Depth + " " + iteratorFrame.ToString());
+            sb.AppendLine($"  {iteratorFrame.Depth} {iteratorFrame}");
         }
     }
 }

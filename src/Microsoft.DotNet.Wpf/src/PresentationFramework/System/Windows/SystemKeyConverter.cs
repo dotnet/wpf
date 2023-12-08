@@ -151,7 +151,7 @@ namespace System.Windows.Markup
                         string systemClassName = typeSerializer.ConvertToString(keyType, valueSerializerContext);
 
                         // And finally create the StaticExtension.
-                        return new StaticExtension( systemClassName + "." + GetSystemKeyName(keyId) );
+                        return new StaticExtension($"{systemClassName}.{GetSystemKeyName(keyId)}");
                     }
                 }
             }
@@ -252,7 +252,7 @@ namespace System.Windows.Markup
                 ((SystemResourceKeyID.GridViewScrollViewerStyle <= id) &&
                  (id <= SystemResourceKeyID.GridViewItemContainerStyle)))
             {
-                return Enum.GetName(typeof(SystemResourceKeyID), id) + "Key";
+                return $"{Enum.GetName(typeof(SystemResourceKeyID), id)}Key";
             }
             else if (SystemResourceKeyID.MenuItemSeparatorStyle == id ||
                      SystemResourceKeyID.StatusBarSeparatorStyle == id)
@@ -262,7 +262,7 @@ namespace System.Windows.Markup
             else if ((SystemResourceKeyID.ToolBarButtonStyle <= id) &&
                      (id <= SystemResourceKeyID.ToolBarMenuStyle))
             {
-                string propName = Enum.GetName(typeof(SystemResourceKeyID), id) + "Key";
+                string propName = $"{Enum.GetName(typeof(SystemResourceKeyID), id)}Key";
                 return propName.Remove(0, 7); // Remove the "ToolBar" prefix
             }
 

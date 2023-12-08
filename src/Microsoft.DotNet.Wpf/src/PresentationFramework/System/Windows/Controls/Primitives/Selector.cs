@@ -256,7 +256,7 @@ namespace System.Windows.Controls.Primitives
         /// Whether this Selector should keep SelectedItem in sync with the ItemCollection's current item.
         /// </summary>
         [Bindable(true), Category("Behavior")]
-        [TypeConverter("System.Windows.NullableBoolConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.NullableBoolConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         [Localizability(LocalizationCategory.NeverLocalize)] // not localizable
         public bool? IsSynchronizedWithCurrentItem
         {

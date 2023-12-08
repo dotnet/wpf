@@ -913,7 +913,7 @@ namespace System.Windows
         ///     PositiveInfinity, NegativeInfinity: These are invalid inputs.
         /// </remarks>
         /// <value></value>
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         public double Top
         {
             get
@@ -964,7 +964,7 @@ namespace System.Windows
         ///     PositiveInfinity, NegativeInfinity: These are invalid inputs.
         /// </remarks>
         /// <value></value>
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         public double Left
         {
             get

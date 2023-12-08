@@ -160,7 +160,7 @@ namespace System.Windows.Automation.Peers
                 MenuItemRole role = menuItem.Role;
                 if (role == MenuItemRole.TopLevelHeader || role == MenuItemRole.TopLevelItem)
                 {
-                    accessKey = "Alt+" + accessKey;
+                    accessKey = $"Alt+{accessKey}";
                 }
             }
             return accessKey;

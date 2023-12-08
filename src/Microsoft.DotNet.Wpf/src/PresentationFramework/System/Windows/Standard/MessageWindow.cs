@@ -43,7 +43,7 @@ namespace Standard
         {
             // A null callback means just use DefWindowProc.
             _wndProcCallback = callback;
-            _className = "MessageWindowClass+" + Guid.NewGuid().ToString();
+            _className = $"MessageWindowClass+{Guid.NewGuid()}";
 
             var wc = new WNDCLASSEX
             {

@@ -310,7 +310,7 @@ namespace MS.Internal
                 ConstructorInfo constructor = type.GetConstructor(Type.EmptyTypes);
                 if (constructor == null)
                 {
-                    string constructorName = type.FullName + "." + type.Name  + "()";
+                    string constructorName = $"{type.FullName}.{type.Name}()";
                     throw new MissingMethodException(constructorName);
                 }
 

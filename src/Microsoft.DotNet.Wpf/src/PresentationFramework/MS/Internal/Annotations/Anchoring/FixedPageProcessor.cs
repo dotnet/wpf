@@ -8,7 +8,7 @@
 //     This processor looks for FixedPage elements.  When generating
 //     locators it produces a locator part identifying the FixedPage's
 //     index in the parent FixedDocument.  When resolving, it looks for
-//     the FixedPage in the required index.  When processing it 
+//     the FixedPage in the required index.  When processing it
 //     processes annotations for any FixedPage it finds.
 //
 //
@@ -33,7 +33,7 @@ namespace MS.Internal.Annotations.Anchoring
     ///     This processor looks for FixedPage elements.  When generating
     ///     locators it produces a locator part identifying the FixedPage's
     ///     index in the parent FixedDocument.  When resolving, it looks for
-    ///     the FixedPage in the required index.  When processing it 
+    ///     the FixedPage in the required index.  When processing it
     ///     processes annotations for any FixedPage it finds.
     /// </summary>
     internal class FixedPageProcessor : SubTreeProcessor
@@ -66,7 +66,7 @@ namespace MS.Internal.Annotations.Anchoring
         #region Public Methods
 
         /// <summary>
-        ///     If the node is a 'chunk' of fingerprintable text, 
+        ///     If the node is a 'chunk' of fingerprintable text,
         ///     LocatorManager.ProcessAnnotations is called.
         /// </summary>
         /// <param name="node">node to process</param>
@@ -95,17 +95,17 @@ namespace MS.Internal.Annotations.Anchoring
         }
 
         /// <summary>
-        ///     Generates locators identifying 'chunks'.  If node is a chunk, 
-        ///     generates a locator with a single locator part containing a 
+        ///     Generates locators identifying 'chunks'.  If node is a chunk,
+        ///     generates a locator with a single locator part containing a
         ///     fingerprint of the chunk.  Otherwise null is returned.
         /// </summary>
         /// <param name="node">the node to generate a locator for</param>
-        /// <param name="continueGenerating">return flag indicating whether the search 
-        /// should continue (presumably because the search was not exhaustive). 
-        /// This processor will always return true because it is possible to locate 
+        /// <param name="continueGenerating">return flag indicating whether the search
+        /// should continue (presumably because the search was not exhaustive).
+        /// This processor will always return true because it is possible to locate
         /// parts of the node (if it is FixedPage or FixedPageProxy)</param>
-        /// <returns>if node is a FixedPage or FixedPageProxy, a ContentLocator 
-        /// with  a single locator part containing the page number; null if node is not 
+        /// <returns>if node is a FixedPage or FixedPageProxy, a ContentLocator
+        /// with  a single locator part containing the page number; null if node is not
         /// FixedPage or FixedPageProxy </returns>
         /// <exception cref="ArgumentNullException">node is null</exception>
         /// <exception cref="ArgumentException">node points to a Document Page View which
@@ -150,24 +150,24 @@ namespace MS.Internal.Annotations.Anchoring
         }
 
         /// <summary>
-        ///     Searches the logical tree for a node matching the values of 
+        ///     Searches the logical tree for a node matching the values of
         ///     locatorPart.  A match must be a chunk which produces the same
-        ///     fingerprint as in the locator part. 
+        ///     fingerprint as in the locator part.
         /// </summary>
-        /// <param name="locatorPart">locator part to be matched, must be of the type 
+        /// <param name="locatorPart">locator part to be matched, must be of the type
         /// handled by this processor</param>
         /// <param name="startNode">logical tree node to start search at</param>
-        /// <param name="continueResolving">return flag indicating whether the search 
+        /// <param name="continueResolving">return flag indicating whether the search
         /// should continue (presumably because the search was not exhaustive). This
         /// processor will return false if the startNode is a FixedPage
         /// with a different page number than the locator part's page number.
         /// Otherwise the return value will be true.
         /// inside the FixedPage(like TextSelection) </param>
-        /// <returns>returns a node that matches the locator part; null if no such 
+        /// <returns>returns a node that matches the locator part; null if no such
         /// node is found</returns>
-        /// <exception cref="ArgumentNullException">locatorPart or startNode are 
+        /// <exception cref="ArgumentNullException">locatorPart or startNode are
         /// null</exception>
-        /// <exception cref="ArgumentException">locatorPart is of the incorrect 
+        /// <exception cref="ArgumentException">locatorPart is of the incorrect
         /// type</exception>
         public override DependencyObject ResolveLocatorPart(ContentLocatorPart locatorPart, DependencyObject startNode, out bool continueResolving)
         {
@@ -175,7 +175,7 @@ namespace MS.Internal.Annotations.Anchoring
             ArgumentNullException.ThrowIfNull(startNode);
 
             if (PageNumberElementName != locatorPart.PartType)
-                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, locatorPart.PartType.Namespace + ":" + locatorPart.PartType.Name), "locatorPart");
+                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), "locatorPart");
 
             // Initial value
             continueResolving = true;
@@ -186,7 +186,7 @@ namespace MS.Internal.Annotations.Anchoring
             if (pageNumberString != null)
                 pageNumber = Int32.Parse(pageNumberString, NumberFormatInfo.InvariantInfo);
             else
-                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, locatorPart.PartType.Namespace + ":" + locatorPart.PartType.Name), "locatorPart");
+                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), "locatorPart");
 
 
             // Get the actual FixedPage for the page number specified in the LocatorPart.  We need
@@ -274,7 +274,7 @@ namespace MS.Internal.Annotations.Anchoring
         //
         //------------------------------------------------------
 
-        #region Public Properties        
+        #region Public Properties
 
         /// <summary>
         ///     Id used to register this processor with the LocatorManager.  Registration
@@ -313,7 +313,7 @@ namespace MS.Internal.Annotations.Anchoring
 
         /// <summary>
         ///     Creates an instance of the locator part type handled by this
-        ///     handler that represents node.  
+        ///     handler that represents node.
         /// </summary>
         /// <param name="page">FixedPage for which a locator part will be created</param>
         /// <returns>

@@ -565,7 +565,7 @@ namespace System.Windows.Markup.Primitives
                         property.VerifyOnlySerializableTypes();
 
                         string propertyPrefix = scope.GetPrefixOf(typeUri);
-                        string localName = dependencyProperty.OwnerType.Name + "." + dependencyProperty.Name;
+                        string localName = $"{dependencyProperty.OwnerType.Name}.{dependencyProperty.Name}";
                         if (string.IsNullOrEmpty(propertyPrefix))
                         {
                             _writer.WriteAttributeString(localName, property.StringValue);
@@ -700,12 +700,13 @@ namespace System.Windows.Markup.Primitives
                                 else
                                 {
                                     string dpUri = scope.MakeAddressable(property.DependencyProperty.OwnerType);
-                                    WritePropertyStart(scope.GetPrefixOf(dpUri), property.DependencyProperty.OwnerType.Name + "." + property.DependencyProperty.Name, dpUri);
+                                    WritePropertyStart(scope.GetPrefixOf(dpUri),
+                                        $"{property.DependencyProperty.OwnerType.Name}.{property.DependencyProperty.Name}", dpUri);
                                 }
                             }
                             else
                             {
-                                WritePropertyStart(prefix, item.ObjectType.Name + "." + property.PropertyDescriptor.Name, uri);
+                                WritePropertyStart(prefix, $"{item.ObjectType.Name}.{property.PropertyDescriptor.Name}", uri);
 
                                 writtenAttributes[property.Name] = property.Name;
                             }
@@ -831,7 +832,7 @@ namespace System.Windows.Markup.Primitives
                     {
                         Debug.Assert(property.PropertyDescriptor != null);
                         writtenAttributes[property.Name] = property.Name;
-                        _writer.WriteStartElement(prefix, item.ObjectType.Name + "." + property.PropertyDescriptor.Name, uri);
+                        _writer.WriteStartElement(prefix, $"{item.ObjectType.Name}.{property.PropertyDescriptor.Name}", uri);
 
                         if (property.IsComposite || property.StringValue.IndexOf('{') == 0)
                         {
@@ -1533,7 +1534,7 @@ namespace System.Windows.Markup.Primitives
                 if (prefix == null || prefix == "")
                     return type.Name;
                 else
-                    return prefix + ":" + type.Name;
+                    return $"{prefix}:{type.Name}";
             }
 
             public override IEnumerable<Type> TypeReferences(object value, IValueSerializerContext context)

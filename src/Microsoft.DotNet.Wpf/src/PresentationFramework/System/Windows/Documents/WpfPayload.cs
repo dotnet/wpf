@@ -12,8 +12,8 @@
 //    can be accessed via abstract Package class api.
 //    This class provides a set of convenience methods
 //    specific for xaml content. It allows WPF packages
-//    creation from avalon objects; it allows inspecting 
-//    a package's structure without instantiating actual 
+//    creation from avalon objects; it allows inspecting
+//    a package's structure without instantiating actual
 //    xaml content; it allows loading from WPF content
 //    (instantiating avalon objects).
 //
@@ -105,13 +105,13 @@ namespace System.Windows.Documents
         private const string XamlPayloadDirectory = "/Xaml"; // This directory must be available as a parameter of Save methods.
 
         // We use this name for entry part of xaml payload.
-        // The application may not make any assumptions about this name 
+        // The application may not make any assumptions about this name
         // when loading or inspecting a WPF package.
         // This string is not specified in the WPF Spec.
         private const string XamlEntryName = "/Document.xaml"; // This name must be available as a parameter of Save methods
 
         // We use this name for image part of xaml payload.
-        // The application may not make any assumptions about this name 
+        // The application may not make any assumptions about this name
         // when loading or inspecting a WPF package.
         // This string is not specified in the WPF Spec.
         private const string XamlImageName = "/Image"; // Shouldn't we use original image name instead?
@@ -265,16 +265,8 @@ namespace System.Windows.Documents
                     StreamWriter xamlPartWriter = new StreamWriter(xamlPartStream);
                     using (xamlPartWriter)
                     {
-                        string xamlText = 
-                            "<Span xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\">" +
-                            "<InlineUIContainer><Image " +
-                            "Width=\"" +
-                            bitmapSource.Width + "\" " +
-                            "Height=\"" +
-                            bitmapSource.Height + "\" " +
-                            "><Image.Source><BitmapImage CacheOption=\"OnLoad\" UriSource=\"" +
-                            imageReference +
-                            "\"/></Image.Source></Image></InlineUIContainer></Span>";
+                        string xamlText =
+                            $"<Span xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"><InlineUIContainer><Image Width=\"{bitmapSource.Width}\" Height=\"{bitmapSource.Height}\" ><Image.Source><BitmapImage CacheOption=\"OnLoad\" UriSource=\"{imageReference}\"/></Image.Source></Image></InlineUIContainer></Span>";
                         xamlPartWriter.Write(xamlText);
                     }
                 }
@@ -328,7 +320,7 @@ namespace System.Windows.Documents
                     // Define a unique uri for this instance of PWF payload.
                     // Uniqueness is required to make sure that cached images are not mixed up.
                     int newWpfPayoutCount = Interlocked.Increment(ref _wpfPayloadCount);
-                    Uri payloadUri = new Uri("payload://wpf" + newWpfPayoutCount, UriKind.Absolute);
+                    Uri payloadUri = new Uri($"payload://wpf{newWpfPayoutCount}", UriKind.Absolute);
                     Uri entryPartUri = System.IO.Packaging.PackUriHelper.Create(payloadUri, xamlEntryPart.Uri); // gives an absolute uri of the entry part
                     Uri packageUri = System.IO.Packaging.PackUriHelper.GetPackageUri(entryPartUri); // extracts package uri from combined package+part uri
                     PackageStore.AddPackage(packageUri, wpfPayload.Package); // Register the package
@@ -416,7 +408,7 @@ namespace System.Windows.Documents
 
         /// <summary>
         /// Gets a BitmapSource from an Image. In the case of a DrawingImage, we must first render
-        /// to an offscreen bitmap since the DrawingImage's previously rendered bits are not kept 
+        /// to an offscreen bitmap since the DrawingImage's previously rendered bits are not kept
         /// in memory.
         /// </summary>
         private BitmapSource GetBitmapSourceFromImage(Image image)
@@ -429,7 +421,7 @@ namespace System.Windows.Documents
             Invariant.Assert(image.Source is DrawingImage);
             DpiScale dpi = image.GetDpi();
             DrawingImage di = (DrawingImage)image.Source;
-            RenderTargetBitmap rtb = new RenderTargetBitmap((int)(di.Width * dpi.DpiScaleX), (int)(di.Height * dpi.DpiScaleY), 
+            RenderTargetBitmap rtb = new RenderTargetBitmap((int)(di.Width * dpi.DpiScaleX), (int)(di.Height * dpi.DpiScaleY),
                 96.0, 96.0, PixelFormats.Default);
             rtb.Render(image);
 
@@ -519,7 +511,7 @@ namespace System.Windows.Documents
                 if (ImagesAreIdentical(GetBitmapSourceFromImage(_images[i]), GetBitmapSourceFromImage(image)))
                 {
                     // Image content types must be consistent
-                    Invariant.Assert(imageContentType == GetImageContentType(_images[i].Source.ToString()), "Image content types expected to be consistent: " + imageContentType + " vs. " + GetImageContentType(_images[i].Source.ToString()));
+                    Invariant.Assert(imageContentType == GetImageContentType(_images[i].Source.ToString()), $"Image content types expected to be consistent: {imageContentType} vs. {GetImageContentType(_images[i].Source.ToString())}");
 
                     // We have this image registered already. Return its part uri
                     imagePartUriString = GetImageName(i, imageContentType);
@@ -594,7 +586,7 @@ namespace System.Windows.Documents
                     bitmapEncoder = new PngBitmapEncoder();
                     break;
                 default:
-                    Invariant.Assert(false, "Unexpected image content type: " + imageContentType);
+                    Invariant.Assert(false, $"Unexpected image content type: {imageContentType}");
                     bitmapEncoder = null;
                     break;
             }
@@ -624,7 +616,7 @@ namespace System.Windows.Documents
                     imageFileExtension = ImagePngFileExtension;
                     break;
                 default:
-                    Invariant.Assert(false, "Unexpected image content type: " + imageContentType);
+                    Invariant.Assert(false, $"Unexpected image content type: {imageContentType}");
                     imageFileExtension = null;
                     break;
             }
@@ -743,7 +735,7 @@ namespace System.Windows.Documents
         /// </returns>
         /// <remarks>
         /// The instance of WpfPayload created by this method is supposed
-        /// to be disposed later (IDispose.Dispose()) or closed by calling 
+        /// to be disposed later (IDispose.Dispose()) or closed by calling
         /// the Close method - to flush all changes to a persistent storage
         /// and free all temporary resources.
         /// </remarks>
@@ -764,7 +756,7 @@ namespace System.Windows.Documents
         /// </returns>
         /// <remarks>
         /// The instance of WpfPayload created by this method is supposed
-        /// to be disposed later (IDispose.Dispose()) or closed by calling 
+        /// to be disposed later (IDispose.Dispose()) or closed by calling
         /// the Close method - to flush all changes to a persistent storage
         /// and free all temporary resources.
         /// </remarks>
@@ -783,13 +775,13 @@ namespace System.Windows.Documents
             PackagePart part = _package.CreatePart(entryPartUri, XamlContentType, CompressionOption.Normal);
                 // Compression is turned off in this mode.
                 //NotCompressed = -1,
-                // Compression is optimized for a resonable compromise between size and performance. 
+                // Compression is optimized for a resonable compromise between size and performance.
                 //Normal = 0,
-                // Compression is optimized for size. 
+                // Compression is optimized for size.
                 //Maximum = 1,
-                // Compression is optimized for performance. 
+                // Compression is optimized for performance.
                 //Fast = 2 ,
-                // Compression is optimized for super performance. 
+                // Compression is optimized for super performance.
                 //SuperFast = 3,
 
             // Create the relationship referring to the entry part
@@ -843,7 +835,7 @@ namespace System.Windows.Documents
         // Generates a relative URL for using from within xaml Image tag.
         private static string GetImageReference(string imageName)
         {
-            return "." + imageName; // imageName is supposed to be created by GetImageName method
+            return $".{imageName}"; // imageName is supposed to be created by GetImageName method
         }
 
         // -------------------------------------------------------------

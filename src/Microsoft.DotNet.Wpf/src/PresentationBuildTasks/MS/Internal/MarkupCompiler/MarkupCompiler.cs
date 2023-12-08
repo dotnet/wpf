@@ -1344,11 +1344,11 @@ namespace MS.Internal
             }
             if (XamlTypeMapper.AssemblyPC == null)
             {
-                asmMissing += (asmMissing.Length > 0 ? ", " : string.Empty) + "PresentationCore";
+                asmMissing += $"{(asmMissing.Length > 0 ? ", " : string.Empty)}PresentationCore";
             }
             if (XamlTypeMapper.AssemblyPF == null)
             {
-                asmMissing += (asmMissing.Length > 0 ? ", " : string.Empty) + "PresentationFramework";
+                asmMissing += $"{(asmMissing.Length > 0 ? ", " : string.Empty)}PresentationFramework";
             }
 
             if (asmMissing.Length > 0)
@@ -2410,7 +2410,7 @@ namespace MS.Internal
                                                    eventName,
                                                    ctrConstructedType.BaseType,
                                                    typeParam.FullName,
-                                                   refTypeFullName + "<" + string.Join(",", typeArgsList) + ">");
+                                                   $"{refTypeFullName}<{string.Join(",", typeArgsList)}>");
                         }
                     }
                     else
@@ -3565,9 +3565,9 @@ namespace MS.Internal
         private const string            SPLASHCLASSNAME = "SplashScreen";
         private const string            ARGS = "args";
         private const string            INITIALIZE_COMPONENT = "InitializeComponent";
-        private const string            SWITCH_STATEMENT = INDENT12 + "switch (" + CONNECTIONID + ")\r\n" + INDENT12 + "{";
-        private const string            BREAK_STATEMENT = INDENT12 + "break;";
-        private const string            CASE_STATEMENT = INDENT12 + "case ";
+        private const string            SWITCH_STATEMENT = $"{INDENT12}switch ({CONNECTIONID})\r\n{INDENT12}{{";
+        private const string            BREAK_STATEMENT = $"{INDENT12}break;";
+        private const string            CASE_STATEMENT = $"{INDENT12}case ";
         private const string            ENDCURLY = "}";
         private const string            COLON = ":";
         private const string            RESOURCE_LOCATER = "resourceLocater";

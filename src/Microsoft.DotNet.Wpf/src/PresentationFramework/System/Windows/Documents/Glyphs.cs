@@ -113,7 +113,7 @@ namespace System.Windows.Documents
 
             if (_measurementGlyphRun != null)
                 _measurementGlyphRun.ComputeInkBoundingBox();
-            
+
             return finalSize;
         }
 
@@ -127,11 +127,11 @@ namespace System.Windows.Documents
                 return;
 
             context.PushGuidelineY1(_glyphRunOrigin.Y);
-            try 
+            try
             {
                 context.DrawGlyphRun(Fill, _measurementGlyphRun);
             }
-            finally 
+            finally
             {
                 context.Pop();
             }
@@ -494,7 +494,7 @@ namespace System.Windows.Documents
         // A glyph entry can be have a cluster size prefix (int or pair of ints separated by a colon)
         // Whitespace adjacent to a delimiter (comma or semicolon) is ignored.
         // Returns the number of glyph specs parsed (number of semicolons plus 1).
-        
+
         // Need to confirm the treatment of missing specifiers - the following code takes ""
         // to mean one glyph of all default values; ";" to mean two glyphs of all defaults;
         // "77,231;" to mean two glyphs, the second one all defaults. Right?
@@ -754,8 +754,8 @@ namespace System.Windows.Documents
         /// </summary>
         public static readonly DependencyProperty IndicesProperty =
             DependencyProperty.Register( "Indices", typeof(string), typeof(Glyphs),
-                new FrameworkPropertyMetadata(string.Empty, 
-                                              FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, 
+                new FrameworkPropertyMetadata(string.Empty,
+                                              FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
                                               new PropertyChangedCallback(GlyphRunPropertyChanged)));
 
         /// <summary>
@@ -828,7 +828,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// FontRenderingEmSize property accessor
         /// </summary>
-        [TypeConverter("System.Windows.FontSizeConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.FontSizeConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         public double FontRenderingEmSize
         {
             get
@@ -851,7 +851,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// OriginX property accessor
         /// </summary>
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         public double OriginX
         {
             get
@@ -874,7 +874,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// OriginY property accessor
         /// </summary>
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         public double OriginY
         {
             get

@@ -333,7 +333,7 @@ namespace Standard
                         var error = (Win32Error)publicStaticField.GetValue(null);
                         if ((HRESULT)error == this)
                         {
-                            return "HRESULT_FROM_WIN32(" + publicStaticField.Name + ")";
+                            return $"HRESULT_FROM_WIN32({publicStaticField.Name})";
                         }
                     }
                 }
@@ -408,7 +408,7 @@ namespace Standard
 #if DEBUG
                 else
                 {
-                    message += " (" + ToString() + ")";
+                    message += $" ({ToString()})";
                 }
 #endif
                 // Wow.  Reflection in a throw call.  Later on this may turn out to have been a bad idea.

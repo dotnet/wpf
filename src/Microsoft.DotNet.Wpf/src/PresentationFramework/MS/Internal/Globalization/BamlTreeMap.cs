@@ -488,7 +488,7 @@ namespace MS.Internal.Globalization
                 return DefaultAttribute;
             }
 
-            string fullName = className + ":" + property;
+            string fullName = $"{className}:{property}";
             if (_propertyAttributeTable.ContainsKey(fullName))
             {
                 // return cached value

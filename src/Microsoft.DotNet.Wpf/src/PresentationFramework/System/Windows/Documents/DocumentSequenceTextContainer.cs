@@ -192,7 +192,7 @@ namespace System.Windows.Documents
                 blocks++;
                 cdb = cdb.NextBlock;
             }
-            return  "DSTC Id=" + DebugId + " Blocks= " + blocks;
+            return $"DSTC Id={DebugId} Blocks= {blocks}";
         }
 #endif // DEBUG
         #endregion Public Methods

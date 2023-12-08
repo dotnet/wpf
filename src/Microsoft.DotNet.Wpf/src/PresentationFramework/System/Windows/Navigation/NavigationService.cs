@@ -1536,7 +1536,7 @@ namespace System.Windows.Navigation
                 EventTrace.EventProvider.TraceEvent(
                     EventTrace.Event.Wpf_NavigationStart, EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info,
                     navInfo != null ? navInfo.NavigationMode.ToString() : NavigationMode.New.ToString(),
-                    source != null ? "\"" + source.ToString() + "\"" : "(null)");
+                    source != null ? $"\"{source}\"" : "(null)");
             }
 
             Invariant.Assert(IsConsistent(navInfo));
@@ -3340,7 +3340,7 @@ namespace System.Windows.Navigation
                         string fragment = BindUriHelper.GetFragment(_currentSource);
                         if (!string.IsNullOrEmpty(fragment))
                         {
-                            name = name + "#" + fragment;
+                            name = $"{name}#{fragment}";
                         }
                     }
                 }
@@ -3968,7 +3968,7 @@ namespace System.Windows.Navigation
             }
             else
             {
-                Debug.Fail("Unhandled scenario: PageFunction returning to " + parentEntry.GetType().Name);
+                Debug.Fail($"Unhandled scenario: PageFunction returning to {parentEntry.GetType().Name}");
             }
         }
 

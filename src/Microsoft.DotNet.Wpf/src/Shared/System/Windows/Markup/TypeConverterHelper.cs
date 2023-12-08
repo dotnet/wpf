@@ -85,7 +85,7 @@ namespace System.Windows.Markup
                     {
                         // Use the Setter of the attached property (if any)
                         memberInfo = methodInfo.DeclaringType.GetMethod(
-                             "Get" + methodInfo.Name.Substring("Set".Length),
+                            $"Get{methodInfo.Name.Substring("Set".Length)}",
                              BindingFlags.Public | BindingFlags.NonPublic |
                              BindingFlags.Static | BindingFlags.FlattenHierarchy);
                     }

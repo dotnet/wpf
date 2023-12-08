@@ -6590,8 +6590,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                string name = (container == null) ? "null" : container.GetType().Name;
-                Debug.Assert(false, "Unexpected container type: " + name);
+                Debug.Fail($"Unexpected container type: {((container == null) ? "null" : container.GetType().Name)}");
             }
 
             return null;

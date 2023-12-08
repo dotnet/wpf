@@ -641,7 +641,7 @@ namespace MS.Internal.Data
                          rawValue == BindingExpressionBase.DisconnectedItem &&
                          _arySVS[k - 1].info == FrameworkElement.DataContextProperty)
                 {
-                    // don't transfer if {DisconnectedItem} shows up on the path 
+                    // don't transfer if {DisconnectedItem} shows up on the path
                     suppressTransfer = true;
                 }
 
@@ -673,7 +673,7 @@ namespace MS.Internal.Data
                     _arySVS[_arySVS.Length - 1].info == FrameworkElement.DataContextProperty &&
                     RawValue() == BindingExpressionBase.DisconnectedItem)
                 {
-                    // don't transfer if {DisconnectedItem} is the final value 
+                    // don't transfer if {DisconnectedItem} is the final value
                     suppressTransfer = true;
                 }
 
@@ -938,7 +938,7 @@ namespace MS.Internal.Data
                     {
                         SourceValueInfo svi = SVI[k];
                         bool inCollection = (svi.drillIn == DrillIn.Always);
-                        string cs = (svi.type != SourceValueType.Indexer) ? svi.name : "[" + svi.name + "]";
+                        string cs = (svi.type != SourceValueType.Indexer) ? svi.name : $"[{svi.name}]";
                         string ps = TraceData.DescribeSourceObject(parent);
                         string os = inCollection ? "current item of collection" : "object";
 
@@ -993,7 +993,7 @@ namespace MS.Internal.Data
                 if (PropertyPath.IsStaticProperty(_arySVS[level].info))
                 {
                     // for static properties, we set svs.item to StaticSource
-                    // at discovery time.  Do the same here. 
+                    // at discovery time.  Do the same here.
                     item = BindingExpression.StaticSource;
                 }
 

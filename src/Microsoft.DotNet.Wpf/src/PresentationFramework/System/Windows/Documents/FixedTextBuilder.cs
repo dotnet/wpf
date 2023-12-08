@@ -1678,13 +1678,13 @@ namespace System.Windows.Documents
 
                         if (i>0 && _builder._IsNonContiguous(_textRuns[i-1], run, comparison))
                         {
-                            _textRuns[i-1].Text = _textRuns[i-1].Text + " ";
+                            _textRuns[i-1].Text = $"{_textRuns[i - 1].Text} ";
                             textRunLength++;
                         }
                     }
                     if (addSpace && run.Text.Length>0 && !run.Text.EndsWith(" ", StringComparison.Ordinal) && !IsHyphen(run.Text[run.Text.Length - 1]))
                     {
-                        run.Text = run.Text + " ";
+                        run.Text = $"{run.Text} ";
                         textRunLength ++;
                     }
 

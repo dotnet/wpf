@@ -909,9 +909,9 @@ namespace System.Windows
                 dictionarySourceUri = null;
 
                 // Create the resource manager that will load the byte array
-                ResourceManager rm = new ResourceManager(assemblyName + ".g", assembly);
+                ResourceManager rm = new ResourceManager($"{assemblyName}.g", assembly);
 
-                resourceName = resourceName + ".baml";
+                resourceName = $"{resourceName}.baml";
                 // Load the resource stream
                 Stream stream = null;
                 try

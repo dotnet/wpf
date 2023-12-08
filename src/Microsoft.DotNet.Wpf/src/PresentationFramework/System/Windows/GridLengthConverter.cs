@@ -217,7 +217,7 @@ namespace System.Windows
                     return (
                         DoubleUtil.IsOne(gl.Value)
                         ? "*"
-                        : Convert.ToString(gl.Value, cultureInfo) + "*");
+                        : $"{Convert.ToString(gl.Value, cultureInfo)}*");
 
                 //  for Pixel print out the numeric value. "px" can be omitted.
                 default:

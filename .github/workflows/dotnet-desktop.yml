@@ -5,7 +5,7 @@ on: [push]
 jobs:
   BuildDebug:
 
-    runs-on: [self-hosted, VSPreview]
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v1

@@ -2689,7 +2689,7 @@ namespace System.Windows.Input.StylusWisp
                     //    The transformTabletToView matrix and plugincollection rects though can change based
                     //    off of layout events which is why we need to lock this.
                     GeneralTransformGroup transformTabletToView = new GeneralTransformGroup();
-                    transformTabletToView.Children.Add(new MatrixTransform(GetTabletToViewTransform(stylusDevice.CriticalActiveSource, stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
+                    transformTabletToView.Children.Add(new MatrixTransform(GetTabletToViewTransform(rawStylusInputReport.InputSource, stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
                     transformTabletToView.Children.Add(targetPIC.ViewToElement); // Make it relative to the element.
                     transformTabletToView.Freeze();  // Must be frozen for multi-threaded access.
 
@@ -2708,7 +2708,7 @@ namespace System.Windows.Input.StylusWisp
                         if (originalRSI == null)
                         {
                             GeneralTransformGroup transformTabletToView = new GeneralTransformGroup();
-                            transformTabletToView.Children.Add(new MatrixTransform(GetTabletToViewTransform(stylusDevice.CriticalActiveSource, stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
+                            transformTabletToView.Children.Add(new MatrixTransform(GetTabletToViewTransform(rawStylusInputReport.InputSource, stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
                             transformTabletToView.Children.Add(currentTarget.ViewToElement); // Make it relative to the element.
                             transformTabletToView.Freeze();  // Must be frozen for multi-threaded access.
                             originalRSI = new RawStylusInput(rawStylusInputReport, transformTabletToView, currentTarget);

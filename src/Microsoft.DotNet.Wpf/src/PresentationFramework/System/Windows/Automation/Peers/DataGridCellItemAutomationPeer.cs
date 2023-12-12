@@ -255,7 +255,7 @@ namespace System.Windows.Automation.Peers
             switch (patternInterface)
             {
                 case PatternInterface.Invoke:
-                    if (this.OwningDataGrid!=null && !this.OwningDataGrid.IsReadOnly && !_column.IsReadOnly)
+                    if (this.OwningDataGrid != null && !this.OwningDataGrid.IsReadOnly && !_column.IsReadOnly)
                     {
                         return this;
                     }

@@ -439,7 +439,7 @@ namespace System.Windows.Input
                 {
                     // Create new RawStylusInput to send
                     GeneralTransformGroup transformTabletToView = new GeneralTransformGroup();
-                    transformTabletToView.Children.Add(new MatrixTransform(_stylusLogic.GetTabletToViewTransform(stylusDevice.CriticalActiveSource, stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
+                    transformTabletToView.Children.Add(new MatrixTransform(_stylusLogic.GetTabletToViewTransform(inputReport.InputSource, stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
                     transformTabletToView.Children.Add(currentPic.ViewToElement); // Make it relative to the element.
                     transformTabletToView.Freeze(); // Must be frozen for multi-threaded access.
                     
@@ -458,7 +458,7 @@ namespace System.Windows.Input
                     //    The transformTabletToView matrix and plugincollection rects though can change based 
                     //    off of layout events which is why we need to lock this.
                     GeneralTransformGroup transformTabletToView = new GeneralTransformGroup();
-                    transformTabletToView.Children.Add(new MatrixTransform(_stylusLogic.GetTabletToViewTransform(stylusDevice.CriticalActiveSource, stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
+                    transformTabletToView.Children.Add(new MatrixTransform(_stylusLogic.GetTabletToViewTransform(inputReport.InputSource, stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
                     transformTabletToView.Children.Add(pic.ViewToElement); // Make it relative to the element.
                     transformTabletToView.Freeze();  // Must be frozen for multi-threaded access.
                     

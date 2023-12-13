@@ -22,7 +22,6 @@ using System.Windows.Navigation;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
-
 namespace MS.Internal.AppModel
 {
     #region SubStream struct

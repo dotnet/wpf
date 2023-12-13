@@ -12,7 +12,6 @@
 //
 
 
-
 namespace System.Windows
 {
     using System;
@@ -1678,7 +1677,6 @@ namespace System.Windows
         {
             Stream stream;
             BinaryWriter binaryWriter;
-            // BinaryFormatter formatter;
 
             using (stream = new MemoryStream())
             {
@@ -3092,6 +3090,8 @@ namespace System.Windows
                     catch (RestrictedTypeDeserializationException)
                     {
                         value = null;
+                        // Couldn't parse for some reason, then need to add a type converter that round trips with string or byte[]
+                        
                     }
                 }
                 else

@@ -2,10 +2,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <!-- <AssemblyName>PresentationFramework.Win11</AssemblyName> -->
-    <PackageId>Wpf.Ui-ref</PackageId>
-    <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
-
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <Platforms>AnyCPU;x64;arm64</Platforms>
     <GenerateDependencyFile>false</GenerateDependencyFile>
@@ -14,52 +10,23 @@
     <DefineConstants>$(DefineConstants);THEME_WIN11</DefineConstants>
     <!-- Explicitly include source files to compile -->
     <EnableDefaultItems>false</EnableDefaultItems>
+
+    <!-- Enable Markup compilation using our own internally build PresentationBuildTasks.dll -->
+    <InternalMarkupCompilation>true</InternalMarkupCompilation>
+    <NoInternalTypeHelper>true</NoInternalTypeHelper>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
 
+  <!-- Compile Targets -->
   <ItemGroup>
-    <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
-    <Compile Include="$(WpfSharedDir)ref\AttributesForReferenceAssemblies.cs" />
-
-    <Resource Include="**\*.xaml">
+    <Page Include="**\*.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Resource>
+    </Page>
+  </ItemGroup>
+
+  <!-- Compile Items -->
+  <ItemGroup>
     <Compile Include="**\*.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Remove="Resources\Accent.xaml" />
-    <Resource Remove="Resources\DefaultContextMenu.xaml" />
-    <Resource Remove="Resources\DefaultFocusVisualStyle.xaml" />
-    <Resource Remove="Resources\Fonts.xaml" />
-    <Resource Remove="Resources\Palette.xaml" />
-    <Resource Remove="Resources\PresentationFramework.Win11.xaml" />
-    <Resource Remove="Resources\StaticColors.xaml" />
-    <Resource Remove="Resources\Theme\Dark.xaml" />
-    <Resource Remove="Resources\Theme\HC1.xaml" />
-    <Resource Remove="Resources\Theme\HC2.xaml" />
-    <Resource Remove="Resources\Theme\HCBlack.xaml" />
-    <Resource Remove="Resources\Theme\HCWhite.xaml" />
-    <Resource Remove="Resources\Theme\Light.xaml" />
-    <Resource Remove="Resources\Typography.xaml" />
-    <Resource Remove="Resources\Variables.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Accent.xaml" />
-    <EmbeddedResource Include="Resources\DefaultContextMenu.xaml" />
-    <EmbeddedResource Include="Resources\DefaultFocusVisualStyle.xaml" />
-    <EmbeddedResource Include="Resources\Fonts.xaml" />
-    <EmbeddedResource Include="Resources\Palette.xaml" />
-    <EmbeddedResource Include="Resources\PresentationFramework.Win11.xaml" />
-    <EmbeddedResource Include="Resources\StaticColors.xaml" />
-    <EmbeddedResource Include="Resources\Theme\Dark.xaml" />
-    <EmbeddedResource Include="Resources\Theme\HC1.xaml" />
-    <EmbeddedResource Include="Resources\Theme\HC2.xaml" />
-    <EmbeddedResource Include="Resources\Theme\HCBlack.xaml" />
-    <EmbeddedResource Include="Resources\Theme\HCWhite.xaml" />
-    <EmbeddedResource Include="Resources\Theme\Light.xaml" />
-    <EmbeddedResource Include="Resources\Typography.xaml" />
-    <EmbeddedResource Include="Resources\Variables.xaml" />
   </ItemGroup>
 
   <!-- Project References -->
@@ -69,6 +36,9 @@
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
     <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
     <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)Themes\PresentationFramework.Win11\ref\PresentationFramework.Win11-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
 
   <!-- Minimal set of .NET core references -->
@@ -89,7 +59,6 @@
     <NetCoreReference Include="System.IO.FileSystem" />
     <NetCoreReference Include="System.ObjectModel" />
     <NetCoreReference Include="System.Resources.ResourceManager" />
-    <NetCoreReference Include="System.Runtime" />
     <NetCoreReference Include="System.Runtime.Extensions" />
     <NetCoreReference Include="System.Runtime.InteropServices" />
     <NetCoreReference Include="System.Security.Cryptography" />

@@ -1,2 +1,1 @@
-Compat issues with assembly System.Windows.Controls.Ribbon:
 Total Issues: 0
